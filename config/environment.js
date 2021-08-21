@@ -21,6 +21,11 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
+    serverVariables: {
+      tagPrefix: 'codecrafters',
+      vars: ['server-url'],
+    },
   };
 
   if (environment === 'development') {
@@ -29,6 +34,10 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+
+    ENV.serverVariables.defaults = {
+      'server-url': 'https://codecrafters.ngrok.io',
+    };
   }
 
   if (environment === 'test') {
