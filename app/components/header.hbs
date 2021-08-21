@@ -1,0 +1,40 @@
+<div class="shadow bg-gray-50">
+  <div class="w-full absolute top-0 left-0 bg-teal-500 h-2px"></div>
+
+  <div class="container lg:max-w-screen-lg mx-auto flex items-stretch flex-col md:flex-row">
+    <div class="flex items-center justify-between">
+      <div class="text-gray-700 pr-5 text-sm px-6 py-4 flex-grow">
+        <a href="/">CodeCrafters</a>
+      </div>
+
+      <button class="md:hidden text-gray-600 pl-10 pr-6 py-3 focus:outline-none"
+              type="button"
+              {{on "click" this.toggleMobileMenu}}>
+        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <path class="heroicon-ui" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+        </svg>
+      </button>
+    </div>
+
+    {{!-- Desktop  --}}
+    <div class="hidden md:flex items-center flex-grow">
+      {{!-- Divider --}}
+      <div class="bg-gray-400 w-px h-5 mr-3"></div>
+
+      {{!-- Top-level links --}}
+      <a href="https://discord.gg/DeqUD2P" class="text-sm px-2">Community</a>
+    </div>
+
+    {{!-- Mobile --}}
+    {{#if this.mobileMenuIsExpanded}}
+      <div class="md:hidden flex-col items-center flex-grow px-6">
+        <div class="bg-gray-300 h-px w-full">
+        </div>
+
+        <div class="py-3">
+          <a href="/test" class="text-sm py-3">Community</a>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>
