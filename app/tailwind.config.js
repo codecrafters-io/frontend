@@ -16,6 +16,7 @@ module.exports = {
       teal: colors.teal,
       transparent: 'transparent',
       yellow: colors.amber,
+      white: 'white',
     },
     fontFamily: {
       sans: 'Montserrat, sans-serif',
@@ -24,7 +25,10 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      width: ['group-hover'],
+      scale: ['group-hover'],
+    },
   },
   plugins: [],
 };

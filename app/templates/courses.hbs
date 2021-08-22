@@ -1,9 +1,17 @@
 {{page-title "Courses"}}
 
-<Header />
+<div class="bg-gray-100 min-h-screen">
+  <Header />
 
-{{#each this.model.courses as |course|}}
-  <div>
-    This is a course: {{course.slug}}!
+  <div class="container mx-auto lg:max-w-screen-lg py-10 px-6">
+    <h1 class="text-2xl font-bold text-gray-700 mb-6">
+      Challenges
+    </h1>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {{#each this.model.courses as |course|}}
+        <CourseCard @course={{course}}></CourseCard>
+      {{/each}}
+    </div>
   </div>
-{{/each}}
+</div>
