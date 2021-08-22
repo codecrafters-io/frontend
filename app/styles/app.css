@@ -5,3 +5,7 @@
 
 @import "tailwindcss/utilities";
 @import "utilities.css";
+
+.ember-basic-dropdown-trigger {
+  outline: none !important;
+}

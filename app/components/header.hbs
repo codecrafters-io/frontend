@@ -3,10 +3,12 @@
 
   <div class="container lg:max-w-screen-lg mx-auto flex items-stretch flex-col md:flex-row">
     <div class="flex items-center justify-between">
+      {{!-- Logo --}}
       <div class="text-gray-600 pr-5 text-sm px-6 py-4 flex-grow">
         <a href="/">CodeCrafters</a>
       </div>
 
+      {{!-- Nav Toggle on Mobile --}}
       <button class="md:hidden text-gray-600 pl-10 pr-6 py-3 focus:outline-none"
               type="button"
               {{on "click" this.toggleMobileMenu}}>
@@ -17,12 +19,19 @@
     </div>
 
     {{!-- Desktop  --}}
-    <div class="hidden md:flex items-center flex-grow">
-      {{!-- Divider --}}
-      <div class="bg-gray-400 w-px h-5 mr-3"></div>
+    <div class="hidden md:flex items-center justify-between flex-grow">
+      <div class="flex items-center">
+        {{!-- Divider --}}
+        <div class="bg-gray-400 w-px h-5 mr-3"></div>
 
-      {{!-- Top-level links --}}
-      <a href="https://discord.gg/DeqUD2P" class="text-sm px-2 text-gray-600">Community</a>
+        {{!-- Top-level links --}}
+        <a href="https://discord.gg/DeqUD2P" class="text-sm px-2 text-gray-600">Community</a>
+      </div>
+
+      {{!-- Account Dropdown on Desktop --}}
+      <div class="invisible md:visible mx-6">
+        <Header::AccountDropdown />
+      </div>
     </div>
 
     {{!-- Mobile --}}

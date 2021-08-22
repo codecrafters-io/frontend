@@ -1,0 +1,22 @@
+<BasicDropdown @horizontalPosition="right" as |dd|>
+  <dd.Trigger>
+    <div class="text-gray-500 flex items-center py-3 outline-none">
+      <span class="mr-1 text-xs">
+        rohitpaulk
+      </span>
+      {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+    </div>
+  </dd.Trigger>
+  <dd.Content>
+    <div class="py-2 border rounded shadow text-sm text-gray-600 w-40">
+      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleGetHelpClick dd.actions)}}>
+        Get Help
+        {{svg-jar "question-mark-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+      </div>
+      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" this.handleLogoutClick}}>
+        Logout
+        {{svg-jar "logout" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+      </div>
+    </div>
+  </dd.Content>
+</BasicDropdown>
