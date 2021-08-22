@@ -1,4 +1,7 @@
-<div class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between">
+<div
+  class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+  role="button"
+  {{on "click" this.navigateToCourse}}>
   {{!-- Content --}}
   <div class="flex items-start">
     {{!-- Text --}}
