@@ -1,0 +1,11 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+@import "components.css";
+
+@import "tailwindcss/utilities";
+@import "utilities.css";
+
+.ember-basic-dropdown-trigger {
+  outline: none !important;
+}
