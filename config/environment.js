@@ -26,8 +26,6 @@ module.exports = function (environment) {
       tagPrefix: 'codecrafters',
       vars: ['server-url'],
     },
-
-    sentryDsn: '',
   };
 
   if (environment === 'development') {
@@ -42,6 +40,14 @@ module.exports = function (environment) {
     };
   }
 
+  ENV['@sentry/ember'] = {
+    sentry: {
+      autoSessionTracking: true,
+      dsn: '',
+      tracesSampleRate: 1.0,
+    },
+  };
+
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
@@ -55,7 +61,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.sentryDsn =
+    ENV['@sentry/ember'].sentry.dsn =
       'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
   }
 
