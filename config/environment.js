@@ -26,6 +26,8 @@ module.exports = function (environment) {
       tagPrefix: 'codecrafters',
       vars: ['server-url'],
     },
+
+    sentryDsn: null,
   };
 
   if (environment === 'development') {
@@ -53,7 +55,8 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+    ENV.sentryDsn =
+      'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
   }
 
   return ENV;
