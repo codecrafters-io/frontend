@@ -30,7 +30,7 @@ jobs:
           node-version: '14'
 
       - run: npm install
-      - run: ember build --environment=production
+      - run: ./node_modules/.bin/ember build --environment=production
 
       - id: tag
         run: |
