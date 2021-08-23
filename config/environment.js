@@ -27,7 +27,7 @@ module.exports = function (environment) {
       vars: ['server-url'],
     },
 
-    sentryDsn: null,
+    sentryDsn: '',
   };
 
   if (environment === 'development') {

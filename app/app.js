@@ -5,6 +5,7 @@ import config from 'codecrafters-frontend/config/environment';
 import * as Sentry from '@sentry/ember';
 
 Sentry.init({
+  autoSessionTracking: true,
   dsn: config.sentryDsn,
 
   // Set tracesSampleRate to 1.0 to capture 100%
