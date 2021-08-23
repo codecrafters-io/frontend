@@ -28,6 +28,7 @@ module.exports = {
     extend: {
       width: ['group-hover'],
       scale: ['group-hover'],
+      translate: ['group-hover'],
     },
   },
   plugins: [],
