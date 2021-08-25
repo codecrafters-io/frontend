@@ -1,19 +1,13 @@
 {{page-title "Courses"}}
 
-<div class="bg-gray-100 min-h-screen">
-  <Header />
+<div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
+  <h1 class="text-2xl font-bold text-gray-700 mb-6">
+    Challenges
+  </h1>
 
-  <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
-    <h1 class="text-2xl font-bold text-gray-700 mb-6">
-      Challenges
-    </h1>
-
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {{#each this.model.courses as |course|}}
-        <CourseCard @course={{course}}></CourseCard>
-      {{/each}}
-    </div>
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    {{#each this.model.courses as |course|}}
+      <CourseCard @course={{course}}></CourseCard>
+    {{/each}}
   </div>
-
-  <Footer />
 </div>
