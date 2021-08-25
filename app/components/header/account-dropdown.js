@@ -4,6 +4,11 @@ import { inject as service } from '@ember/service';
 
 export default class HeaderAccountDropdownComponent extends Component {
   @service serverVariables;
+  @service('currentUser') currentUserService;
+
+  get currentUser() {
+    return this.currentUserService.record;
+  }
 
   @action
   handleGetHelpClick(dropdownActions) {

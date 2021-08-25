@@ -2,7 +2,7 @@
   <dd.Trigger>
     <div class="text-gray-500 flex items-center py-3 outline-none">
       <span class="mr-1 text-xs">
-        rohitpaulk
+        {{this.currentUser.username}}
       </span>
       {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
     </div>
