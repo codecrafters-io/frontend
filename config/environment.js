@@ -24,7 +24,7 @@ module.exports = function (environment) {
 
     serverVariables: {
       tagPrefix: 'codecrafters',
-      vars: ['server-url'],
+      vars: ['server-url', 'current-user-payload'],
     },
   };
 
@@ -37,6 +37,7 @@ module.exports = function (environment) {
 
     ENV.serverVariables.defaults = {
       'server-url': 'https://codecrafters.ngrok.io',
+      'current-user-payload': '',
     };
   }
 
