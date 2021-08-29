@@ -5,7 +5,7 @@ export default class CurrentUserService extends Service {
   @service session;
   @service store;
 
-  get currentUser() {
+  get record() {
     return this.store.peekRecord('user', this.session.data.authenticated.id);
   }
 }
