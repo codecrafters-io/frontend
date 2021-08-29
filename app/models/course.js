@@ -1,8 +1,9 @@
-import { attr } from '@ember-data/model';
+import { attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed';
 import Model from '@ember-data/model';
 
 export default class CourseModel extends Model {
+  @hasMany('course-stage') stages;
   @attr('string') descriptionMarkdown;
   @attr('string') difficulty;
   @attr('string') name;
@@ -18,4 +19,8 @@ export default class CourseModel extends Model {
   @equal('slug', 'react') isReact;
   @equal('slug', 'redis') isRedis;
   @equal('slug', 'sqlite') isSQLite;
+
+  get sortedStages() {
+    return this.stages.sortBy('position');
+  }
 }

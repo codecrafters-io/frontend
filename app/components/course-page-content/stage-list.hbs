@@ -1,7 +1,7 @@
-<CoursePageContent::StepList::CollapsedItem @class="mb-4" @number="1" @text="Setup" @isComplete={{true}} />
-<CoursePageContent::StepList::CollapsedItem @class="mb-4" @number="2" @text="Bind to a port" @isComplete={{true}} />
-<CoursePageContent::StepList::CollapsedItem @class="mb-4" @number="3" @text="Respond to a PING" @isComplete={{false}} />
-<CoursePageContent::StepList::CollapsedItem @class="mb-4" @number="4" @text="Respond to multiple PINGs" @isComplete={{false}} />
-<CoursePageContent::StepList::CollapsedItem @class="mb-4" @number="5" @text="Handle concurrent clients" @isComplete={{false}} />
-<CoursePageContent::StepList::CollapsedItem @class="mb-4" @number="6" @text="Implement the ECHO command" @isComplete={{false}} />
-<CoursePageContent::StepList::CollapsedItem @class="mb-4" @number="7" @text="Expiry" @isComplete={{false}} />
+{{#each @course.sortedStages as |courseStage index|}}
+  <CoursePageContent::StepList::CollapsedItem
+    @class="mb-4"
+    @number={{add 1 index}}
+    @text={{courseStage.name}}
+    @isComplete={{gt 3 index}} />
+{{/each}}
