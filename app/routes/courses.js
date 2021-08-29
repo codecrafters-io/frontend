@@ -4,11 +4,9 @@ import { inject as service } from '@ember/service';
 export default class CoursesRoute extends Route {
   @service session;
 
-  beforeModel() {
-    this.session.authenticate('authenticator:custom');
-  }
-
   async model() {
+    await this.session.authenticate('authenticator:custom');
+
     return {
       courses: await this.store.findAll('course'),
     };
