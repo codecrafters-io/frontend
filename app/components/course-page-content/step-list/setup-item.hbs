@@ -4,25 +4,11 @@
     <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm">IN PROGRESS</span>
   </div>
 
-  <div class="text-gray-700 leading-7">
-    <p class="mb-6">
-      Welcome to the {{@course.name}} challenge!
-    </p>
-    <p class="mb-6">
-      In this challenge, you'll build a Git implementation that can initialize a repository, create commits and clone
-      a public repository from GitHub. Along the way, you'll learn about the .git directory, Git objects (blobs,
-      commits, trees etc.), packfiles, Git's transfer protocols and much more.
-    </p>
-    <p>
-      To get started, let us know what language you'd like to attempt this challenge in...
-    </p>
-  </div>
-
-  <div class="flex items-center flex-wrap mt-2">
-    {{#each @course.supportedLanguages as |supportedLanguage|}}
-      <button type="button" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 hover:text-gray-700 focus:shadow-inner border border-gray-300 rounded mr-3 mt-3 text-gray-600 transition-all">
-        {{supportedLanguage.name}}
-      </button>
-    {{/each}}
-  </div>
+  {{#if this.createdRepository}}
+    <CoursePageContent::StepList::SetupItem::CloneRepositoryStep @repository={{this.createdRepository}} />
+  {{else}}
+    <CoursePageContent::StepList::SetupItem::CreateRepositoryStep
+      @course={{@course}}
+      @onLanguageSelection={{this.handleLanguageSelection}} />
+  {{/if}}
 </div>
