@@ -1,7 +1,0 @@
-{{#each @course.sortedStages as |courseStage index|}}
-  <CoursePageContent::StepList::CollapsedItem
-    @class="mb-4"
-    @number={{add 1 index}}
-    @text={{courseStage.name}}
-    @isComplete={{gt 3 index}} />
-{{/each}}

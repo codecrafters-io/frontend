@@ -1,0 +1,9 @@
+<CoursePageContent::StepList::SetupItem @course={{@course}} @class="mb-4" />
+
+{{#each this.pendingCourseStages as |courseStage|}}
+  <CoursePageContent::StepList::CollapsedItem
+    @class="mb-4"
+    @number={{add 1 courseStage.position}}
+    @text={{courseStage.name}}
+    @isComplete={{gt 3 courseStage.position}} />
+{{/each}}

@@ -9,6 +9,7 @@ export default class CourseModel extends Model {
   @attr('string') name;
   @attr('string') shortDescriptionMarkdown;
   @attr('string') slug;
+  @hasMany('language') supportedLanguages;
 
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
