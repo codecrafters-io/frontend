@@ -9,8 +9,6 @@ export default class CourseRoute extends Route {
 
     let courses = await this.store.findAll('course');
     let course = courses.findBy('slug', params.course_slug);
-    console.log(courses.length);
-    console.log(courses.length);
 
     return {
       course: course,
