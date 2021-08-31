@@ -4,17 +4,22 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class CoursePageContentStepListSetupItemComponent extends Component {
-  @service store;
   @tracked createdRepository;
+  @tracked isCreatingRepository;
+  @service store;
 
   @action
-  handleLanguageSelection(language) {
+  async handleLanguageSelection(language) {
+    this.isCreatingRepository = true;
+
     let repository = this.store.createRecord('repository', {
       course: this.args.course,
       language: language,
     });
 
-    repository.save();
+    await repository.save();
+
     this.createdRepository = repository;
+    this.isCreatingRepository = false;
   }
 }

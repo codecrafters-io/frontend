@@ -1,0 +1,14 @@
+<div class="flex items-stretch {{@class}}">
+  <div class="px-3 py-1.5 flex-grow-1 w-full overflow-x-scroll border border-gray-300 border-r-0 rounded-l bg-gray-100">
+    <span class="whitespace-nowrap font-mono text-gray-600 text-xs">
+      {{@code}}
+    </span>
+  </div>
+
+  <button
+      type="button"
+      class="bg-teal-600 px-3 py-1 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
+      {{on "click" this.handleCopyButtonClick}}>
+    {{if this.codeWasCopiedRecently "COPIED" "COPY"}}
+  </button>
+</div>
