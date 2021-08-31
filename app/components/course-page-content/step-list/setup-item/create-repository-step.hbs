@@ -1,18 +1,8 @@
-<div class="text-gray-700 leading-7">
-  <p class="mb-6">
-    Welcome to the {{@course.name}} challenge!
-  </p>
-  <p class="mb-6">
-    In this challenge, you'll build a Git implementation that can initialize a repository, create commits and clone
-    a public repository from GitHub. Along the way, you'll learn about the .git directory, Git objects (blobs,
-    commits, trees etc.), packfiles, Git's transfer protocols and much more.
-  </p>
-  <p>
-    To get started, let us know what language you'd like to attempt this challenge in...
-  </p>
+<div class="text-gray-700 leading-7 prose">
+  {{markdown-to-html this.instructionsMarkdown}}
 </div>
 
-<div class="my-2">
+<div>
   {{#if this.isCreatingRepository}}
     <div class="flex items-center mt-3">
       <img src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4">
@@ -23,7 +13,7 @@
       {{#each @course.supportedLanguages as |supportedLanguage|}}
       <button
         type="button"
-        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 hover:text-gray-700 focus:shadow-inner border border-gray-300 rounded mr-3 mt-3 text-gray-600 transition-all"
+        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 hover:text-gray-700 focus:shadow-inner border border-gray-300 rounded mr-3 mb-3 text-gray-600 transition-all"
         {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}>
         {{supportedLanguage.name}}
       </button>

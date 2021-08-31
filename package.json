@@ -80,5 +80,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.4.1"
   }
 }

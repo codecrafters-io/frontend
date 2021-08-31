@@ -12,4 +12,14 @@ export default class CoursePageContentStepListSetupItemCreateRepositoryStepCompo
     this.isCreatingRepository = true;
     this.args.onLanguageSelection(language);
   }
+
+  get instructionsMarkdown() {
+    return `
+Welcome to the ${this.args.course.name} challenge!
+
+${this.args.course.descriptionMarkdown}
+
+To get started, let us know what language you'd like to attempt this challenge in...
+    `;
+  }
 }
