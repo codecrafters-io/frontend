@@ -29,6 +29,7 @@ module.exports = {
       width: ['group-hover'],
       scale: ['group-hover'],
       translate: ['group-hover'],
+      display: ['group-hover'],
     },
   },
   plugins: [require('@tailwindcss/typography')],
