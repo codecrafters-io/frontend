@@ -13,6 +13,10 @@ export default class CoursePageContentStepListSetupItemCreateRepositoryStepCompo
     this.args.onLanguageSelection(language);
   }
 
+  get instructionsHTML() {
+    return this.instructionsMarkdown; // TODO: Convert from markdown!
+  }
+
   get instructionsMarkdown() {
     return `
 Welcome to the ${this.args.course.name} challenge!

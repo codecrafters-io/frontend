@@ -4,4 +4,5 @@ export default function () {
   this.timing = 500;
 
   this.get('/courses');
+  this.get('/repositories');
 }

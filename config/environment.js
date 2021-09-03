@@ -37,7 +37,7 @@ module.exports = function (environment) {
 
     ENV.serverVariables.defaults = {
       'server-url': 'https://codecrafters.ngrok.io',
-      'current-user-payload': JSON.stringify({
+      'cprrent-user-payload': JSON.stringify({
         type: 'users',
         id: '63c51e91-e448-4ea9-821b-a80415f266d3',
         attributes: {
@@ -71,8 +71,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV['@sentry/ember'].sentry.dsn =
-      'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
+    ENV['@sentry/ember'].sentry.dsn = 'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
   }
 
   return ENV;
