@@ -2,10 +2,22 @@ import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 
 export default class CurrentUserService extends Service {
-  @service session;
+  @service serverVariables;
   @service store;
 
+  async authenticate() {
+    await this.store.pushPayload({ data: this.currentUserPayload });
+  }
+
+  get currentUserPayload() {
+    return JSON.parse(this.serverVariables.get('currentUserPayload'));
+  }
+
+  get currentUserId() {
+    return this.currentUserPayload.id;
+  }
+
   get record() {
-    return this.store.peekRecord('user', this.session.data.authenticated.id);
+    return this.store.peekRecord('user', this.currentUserId);
   }
 }

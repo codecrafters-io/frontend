@@ -2,10 +2,10 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
 export default class CoursesRoute extends Route {
-  @service session;
+  @service currentUser;
 
   async model() {
-    // await this.session.authenticate('authenticator:custom');
+    await this.currentUser.authenticate();
 
     return {
       courses: await this.store.findAll('course'),
