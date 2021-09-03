@@ -12,7 +12,7 @@ export default class CustomAuthenticator extends Base {
   }
 
   get currentUserPayload() {
-    return this.serverVariables.get('currentUserPayload');
+    return JSON.parse(this.serverVariables.get('currentUserPayload'));
   }
 
   get currentUserId() {

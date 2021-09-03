@@ -5,7 +5,7 @@ export default class CoursesRoute extends Route {
   @service session;
 
   async model() {
-    await this.session.authenticate('authenticator:custom');
+    // await this.session.authenticate('authenticator:custom');
 
     return {
       courses: await this.store.findAll('course'),
