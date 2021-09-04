@@ -5,17 +5,16 @@ export default class RepositoryPoller {
   repository;
   store;
 
-  constructor({ store }) {
-    this.isActive = false;
+  constructor({ store, visibilityService }) {
     this.store = store;
+    this.visibilityService = visibilityService;
+
+    this.isActive = false;
     this.repository = null;
   }
 
-  start(repository, onPoll) {
-    this.repository = repository;
-    this.isActive = true;
-    this.onPoll = onPoll;
-    this.scheduleDelayedPoll();
+  get isPaused() {
+    return this.visibilityService.isHidden;
   }
 
   async poll() {
@@ -26,7 +25,7 @@ export default class RepositoryPoller {
     later(
       this,
       async function () {
-        if (this.isActive) {
+        if (this.isActive && !this.isPaused) {
           await this.poll();
           this.onPoll();
         }
@@ -37,6 +36,13 @@ export default class RepositoryPoller {
       },
       1000
     );
+  }
+
+  start(repository, onPoll) {
+    this.repository = repository;
+    this.isActive = true;
+    this.onPoll = onPoll;
+    this.scheduleDelayedPoll();
   }
 
   stop() {

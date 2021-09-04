@@ -9,12 +9,13 @@ export default class CoursePageContentStepListSetupItemComponent extends Compone
   @tracked createdRepository;
   @tracked isCreatingRepository;
   @service store;
+  @service visibility;
   repositoryPoller;
   transition = fade;
 
   @action
   async handleDidInsert() {
-    this.repositoryPoller = new RepositoryPoller({ store: this.store });
+    this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility });
   }
 
   @action
