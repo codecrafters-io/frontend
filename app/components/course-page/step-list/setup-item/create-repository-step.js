@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import showdown from 'showdown';
 
 export default class CoursePageContentStepListSetupItemCreateRepositoryStepComponent extends Component {
   @service store;
@@ -14,7 +16,7 @@ export default class CoursePageContentStepListSetupItemCreateRepositoryStepCompo
   }
 
   get instructionsHTML() {
-    return this.instructionsMarkdown; // TODO: Convert from markdown!
+    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
   }
 
   get instructionsMarkdown() {
