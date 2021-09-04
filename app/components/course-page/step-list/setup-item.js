@@ -3,12 +3,14 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+import fade from 'ember-animated/transitions/fade';
 
 export default class CoursePageContentStepListSetupItemComponent extends Component {
   @tracked createdRepository;
   @tracked isCreatingRepository;
   @service store;
   repositoryPoller;
+  transition = fade;
 
   @action
   async handleDidInsert() {

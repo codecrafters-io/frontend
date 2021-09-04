@@ -5,6 +5,7 @@ import { later } from '@ember/runloop';
 
 export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItem;
+  @tracked activeItemWillBeReplaced;
 
   get allItems() {
     return [this.setupItem].concat(this.courseStageItems);
@@ -26,13 +27,15 @@ export default class CoursePageContentStepListComponent extends Component {
 
   @action
   async handleItemCompleted() {
-    console.log('handleItemCompleted');
+    this.activeItemWillBeReplaced = true;
+
     later(
       this,
       () => {
         this.activeItem = this.courseStageItems.firstObject;
+        this.activeItemWillBeReplaced = false;
       },
-      5000
+      2000
     );
   }
 

@@ -37,7 +37,7 @@ module.exports = function (environment) {
 
     ENV.serverVariables.defaults = {
       'server-url': 'https://codecrafters.ngrok.io',
-      'cprrent-user-payload': JSON.stringify({
+      'current-user-payload': JSON.stringify({
         type: 'users',
         id: '63c51e91-e448-4ea9-821b-a80415f266d3',
         attributes: {
@@ -47,6 +47,10 @@ module.exports = function (environment) {
           username: 'rohitpaulk',
         },
       }),
+    };
+
+    ENV['ember-cli-mirage'] = {
+      enabled: false,
     };
   }
 

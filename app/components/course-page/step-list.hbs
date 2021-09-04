@@ -3,6 +3,7 @@
     <CoursePage::StepList::SetupItem
       @course={{@course}}
       @class="mb-4"
+      @willBeReplaced={{this.activeItemWillBeReplaced}}
       @onComplete={{this.handleItemCompleted}} />
   {{else}}
     <div class="p-4">

@@ -10,7 +10,7 @@ export default class CurrentUserService extends Service {
   }
 
   get currentUserPayload() {
-    return JSON.parse(this.serverVariables.get('currentUserPayload'));
+    return this.serverVariables.get('currentUserPayload');
   }
 
   get currentUserId() {
