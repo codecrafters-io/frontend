@@ -1,33 +1,37 @@
 {{#each this.items as |item index|}}
   {{#if (eq item.type "SetupItem")}}
-    {{#if (eq index this.activeItemIndex)}}
-      <CoursePage::StepList::SetupItem
-        @course={{@course}}
-        @class="mb-4"
-        @willBeReplaced={{this.activeItemWillBeReplaced}}
-        @onComplete={{this.handleItemCompleted}} />
-    {{else}}
-      <CoursePage::StepList::CollapsedItem
-        @class="mb-4"
-        @number={{add 1 index}}
-        @text="Setup"
-        @isComplete={{true}} />
-    {{/if}}
+    <AnimatedContainer>
+      {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
+        <CoursePage::StepList::SetupItem
+          @course={{@course}}
+          @class="mb-4"
+          @willBeReplaced={{this.activeItemWillBeReplaced}}
+          @onComplete={{this.handleItemCompleted}} />
+      {{else}}
+        <CoursePage::StepList::CollapsedItem
+          @class="mb-4"
+          @number={{add 1 index}}
+          @text="Setup"
+          @isComplete={{true}} />
+      {{/animated-if}}
+    </AnimatedContainer>
   {{/if}}
 
   {{#if (eq item.type "CourseStageItem")}}
-    {{#if (eq index this.activeItemIndex)}}
-      <CoursePage::StepList::CourseStageItem
-        @courseStage={{item.courseStage}}
-        @class="mb-4"
-        @willBeReplaced={{this.activeItemWillBeReplaced}}
-        @onComplete={{this.handleItemCompleted}} />
-    {{else}}
-      <CoursePage::StepList::CollapsedItem
-        @class="mb-4"
-        @number={{add 1 index}}
-        @text={{item.courseStage.name}}
-        @isComplete={{true}} />
-    {{/if}}
+    <AnimatedContainer>
+      {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
+        <CoursePage::StepList::CourseStageItem
+          @courseStage={{item.courseStage}}
+          @class="mb-4"
+          @willBeReplaced={{this.activeItemWillBeReplaced}}
+          @onComplete={{this.handleItemCompleted}} />
+      {{else}}
+        <CoursePage::StepList::CollapsedItem
+          @class="mb-4"
+          @number={{add 1 index}}
+          @text={{item.courseStage.name}}
+          @isComplete={{true}} />
+      {{/animated-if}}
+    </AnimatedContainer>
   {{/if}}
 {{/each}}

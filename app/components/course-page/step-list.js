@@ -3,6 +3,7 @@ import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
+import fade from 'ember-animated/transitions/fade';
 
 class SetupItem {
   type = 'SetupItem';
@@ -20,6 +21,7 @@ class CourseStageItem {
 export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItemIndex;
   @tracked activeItemWillBeReplaced;
+  transition = fade;
 
   constructor() {
     super(...arguments);
