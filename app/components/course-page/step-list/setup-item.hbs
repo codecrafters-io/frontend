@@ -3,9 +3,10 @@
   {{did-insert this.handleDidInsert}}
   {{will-destroy this.handleWillDestroy}}
   data-test-setup-item>
-  <div class="p-8 pb-6 bg-white rounded-t border border-b-0 border-gray-300">
-    <div class="mb-6 flex items-center">
+  <div class="p-8 pb-6 bg-white rounded-t border border-b-0 border-gray-300 relative">
+    <div class="flex items-center mb-6">
       <span class="text-2xl text-gray-700 mr-3">Setup</span>
+
       {{#if this.isComplete}}
         <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
       {{else}}

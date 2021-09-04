@@ -52,6 +52,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
+    await this.pauseTest();
+
     await settled(); // Timer should be cancelled at this point
   });
 });

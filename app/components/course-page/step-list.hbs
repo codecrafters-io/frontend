@@ -1,9 +1,20 @@
-<CoursePage::StepList::SetupItem @course={{@course}} @class="mb-4" />
+<div {{did-insert this.handleDidInsert}}>
+  {{#if (eq this.activeItem.type "Setup")}}
+    <CoursePage::StepList::SetupItem
+      @course={{@course}}
+      @class="mb-4"
+      @onComplete={{this.handleItemCompleted}} />
+  {{else}}
+    <div class="p-4">
+      Active item is not the setup stage!
+    </div>
+  {{/if}}
 
-{{#each this.pendingCourseStages as |courseStage|}}
-  <CoursePage::StepList::CollapsedItem
-    @class="mb-4"
-    @number={{add 1 courseStage.position}}
-    @text={{courseStage.name}}
-    @isComplete={{gt 3 courseStage.position}} />
-{{/each}}
+  {{#each this.pendingCourseStages as |courseStage|}}
+    <CoursePage::StepList::CollapsedItem
+      @class="mb-4"
+      @number={{add 1 courseStage.position}}
+      @text={{courseStage.name}}
+      @isComplete={{gt 3 courseStage.position}} />
+  {{/each}}
+</div>

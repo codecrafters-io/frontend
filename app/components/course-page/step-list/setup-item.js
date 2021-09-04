@@ -40,6 +40,7 @@ export default class CoursePageContentStepListSetupItemComponent extends Compone
   @action
   async onPoll() {
     if (this.isComplete) {
+      this.args.onComplete();
       this.repositoryPoller.stop();
     }
   }
