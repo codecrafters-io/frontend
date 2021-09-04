@@ -11,6 +11,7 @@ export default {
 
   clickOnLanguageButtonRaw: clickOnText('button'), // causes timer to start, override waiting function
   description: text('[data-test-course-description]'),
+  footerText: text('[data-test-setup-item-footer] [data-test-footer-text]'),
   isOnCreateRepositoryStep: isVisible('[data-test-create-repository-step]'),
   isOnCloneRepositoryStep: isVisible('[data-test-clone-repository-step]'),
   scope: '[data-test-setup-item]',

@@ -1,1 +1,5 @@
-<div class="flex h-2.5 w-2.5 bg-gray-400 rounded-full opacity-75 {{@class}}"></div>
+{{#if (eq @color "gray")}}
+  <div class="flex h-2.5 w-2.5 bg-gray-400 rounded-full opacity-75 {{@class}}"></div>
+{{else if (eq @color "green")}}
+  <div class="flex h-2.5 w-2.5 bg-teal-600 rounded-full {{@class}}"></div>
+{{/if}}

@@ -27,6 +27,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed');
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
 
@@ -34,6 +35,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep, 'current step is clone repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+    assert.equal(coursePage.setupItem.footerText, 'Listening for a git push...');
 
     this.clock.tick(5000);
     await finishRender();
@@ -41,14 +43,14 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.equal(this.server.pretender.handledRequests.length, 5); // Ensure poll happened
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
-    let repository = this.server.schema.repositories.find(1);
-    repository.update({ lastSubmissionAt: new Date() });
+    this.server.schema.repositories.find(1).update({ lastSubmissionAt: new Date() });
 
     this.clock.tick(5000);
     await finishRender();
 
     assert.equal(this.server.pretender.handledRequests.length, 6); // Ensure poll happened
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
+    assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
     await settled(); // Timer should be cancelled at this point
   });

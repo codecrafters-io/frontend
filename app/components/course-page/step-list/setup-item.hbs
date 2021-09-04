@@ -7,7 +7,7 @@
     <div class="mb-6 flex items-center">
       <span class="text-2xl text-gray-700 mr-3">Setup</span>
       {{#if this.isComplete}}
-        <span class="bg-teal-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
+        <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
       {{else}}
         <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
       {{/if}}
@@ -23,16 +23,19 @@
     {{/if}}
   </div>
 
-  <div class="border border-gray-300 border-t rounded-b relative">
+  <div class="border border-gray-300 border-t rounded-b relative" data-test-setup-item-footer>
     <div class="h-px w-full bg-gray-200 bg-opacity-50 absolute -top-px"></div>
 
     <div class="px-8 py-3 flex items-center">
-      {{#if (or this.isCreatingRepository this.createdRepository)}}
+      {{#if this.isComplete}}
+        <StaticDot @class="mr-3" @color="green" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Git push received.</span>
+      {{else if (or this.isCreatingRepository this.createdRepository)}}
         <BlinkingDot @class="mr-3" @color="yellow" />
-        <span class="text-gray-600 text-sm">Listening for a git push...</span>
+        <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
       {{else}}
         <StaticDot @class="mr-3" @color="gray" />
-        <span class="text-gray-600 text-sm">Select a language to proceed</span>
+        <span class="text-gray-600 text-sm" data-test-footer-text>Select a language to proceed</span>
       {{/if}}
     </div>
   </div>
