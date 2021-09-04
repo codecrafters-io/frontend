@@ -1,3 +1,4 @@
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -11,6 +12,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | start-course-test', function (hooks) {
   setupApplicationTest(hooks);
+  setupAnimationTest(hooks);
   setupMirage(hooks);
   setupClock(hooks);
 
@@ -45,8 +47,6 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     this.server.schema.repositories.find(1).update({ lastSubmissionAt: new Date() });
 
-    await this.pauseTest();
-
     this.clock.tick(5000);
     await finishRender();
 
@@ -54,7 +54,12 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
-    // TODO: Handle transition to next page!
+    this.clock.tick(5000);
+    await finishRender();
+    await animationsSettled();
+
+    assert.notOk(coursePage.setupItem.isVisible, 'setup item is collapsed');
+
     await settled(); // Timer should be cancelled at this point
   });
 });
