@@ -34,7 +34,14 @@ export default class CoursePageContentStepListSetupItemComponent extends Compone
     this.createdRepository = repository;
     this.isCreatingRepository = false;
 
-    this.repositoryPoller.start(this.createdRepository);
+    this.repositoryPoller.start(this.createdRepository, this.onPoll);
+  }
+
+  @action
+  async onPoll() {
+    if (this.isComplete) {
+      this.repositoryPoller.stop();
+    }
   }
 
   get isComplete() {

@@ -1,5 +1,4 @@
 import { currentURL, settled } from '@ember/test-helpers';
-import fakeTimers from '@sinonjs/fake-timers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -24,11 +23,14 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
 
+    assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
+
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
 
-    coursePage.setupItem.clickOnLanguageButton('Python');
-    await finishRender();
+    await coursePage.setupItem.clickOnLanguageButton('Python');
+
+    assert.equal(this.server.pretender.handledRequests.length, 4); // Create Repository
 
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep, 'current step is clone repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
@@ -36,6 +38,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     this.clock.tick(5000);
     await finishRender();
 
+    assert.equal(this.server.pretender.handledRequests.length, 5); // Ensure poll happened
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     let repository = this.server.schema.repositories.find(1);
@@ -44,6 +47,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     this.clock.tick(5000);
     await finishRender();
 
+    assert.equal(this.server.pretender.handledRequests.length, 6); // Ensure poll happened
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
 
     await settled(); // Timer should be cancelled at this point

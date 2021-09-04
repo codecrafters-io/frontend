@@ -11,18 +11,15 @@ export default class RepositoryPoller {
     this.repository = null;
   }
 
-  start(repository) {
+  start(repository, onPoll) {
     this.repository = repository;
     this.isActive = true;
+    this.onPoll = onPoll;
     this.scheduleDelayedPoll();
   }
 
   async poll() {
     await this.store.query('repository', { course_id: this.repository.course.get('id') });
-
-    if (this.repository.firstSubmissionCreated) {
-      this.isActive = false;
-    }
   }
 
   scheduleDelayedPoll() {
@@ -31,13 +28,14 @@ export default class RepositoryPoller {
       async function () {
         if (this.isActive) {
           await this.poll();
+          this.onPoll();
         }
 
         if (this.isActive) {
           this.scheduleDelayedPoll();
         }
       },
-      5000
+      1000
     );
   }
 
