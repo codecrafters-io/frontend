@@ -19,10 +19,11 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await coursesPage.clickOnCourse('Build Your Own Redis');
 
     assert.equal(currentURL(), '/courses/next/redis');
+
+    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep);
     assert.equal(coursePage.setupItem.statusText, 'IN PROGRESS');
 
-    await this.pauseTest();
-
-    // click on language
+    await coursePage.setupItem.clickOnLanguageButton('Python');
+    assert.ok(coursePage.setupItem.isOnCloneRepositoryStep);
   });
 });
