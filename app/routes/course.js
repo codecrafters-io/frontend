@@ -14,8 +14,6 @@ export default class CourseRoute extends Route {
       course_id: course.id,
     });
 
-    console.log(course.supportedLanguages.length);
-
     return {
       course: course,
       repositories: repositories,

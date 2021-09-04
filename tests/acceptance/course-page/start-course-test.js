@@ -1,4 +1,4 @@
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, isSettled, getSettledState, settled, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -23,7 +23,17 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep);
     assert.equal(coursePage.setupItem.statusText, 'IN PROGRESS');
 
-    await coursePage.setupItem.clickOnLanguageButton('Python');
+    coursePage.setupItem.clickOnLanguageButton('Python');
+
+    await waitUntil(() => getSettledState().hasPendingTimers && !getSettledState().hasRunLoop);
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep);
+
+    assert.equal(coursePage.setupItem.statusText, 'IN PROGRESS');
+    let repository = this.server.schema.repositories.find(1);
+    repository.update({ lastSubmissionAt: new Date() });
+
+    assert.equal(coursePage.setupItem.statusText, 'COMPLETE');
+
+    await this.pauseTest();
   });
 });

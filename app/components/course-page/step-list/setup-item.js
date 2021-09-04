@@ -2,11 +2,23 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 
 export default class CoursePageContentStepListSetupItemComponent extends Component {
   @tracked createdRepository;
   @tracked isCreatingRepository;
   @service store;
+  repositoryPoller;
+
+  @action
+  async handleDidInsert() {
+    this.repositoryPoller = new RepositoryPoller({ store: this.store });
+  }
+
+  @action
+  async handleWillDestroy() {
+    this.repositoryPoller.stop();
+  }
 
   @action
   async handleLanguageSelection(language) {
@@ -21,5 +33,11 @@ export default class CoursePageContentStepListSetupItemComponent extends Compone
 
     this.createdRepository = repository;
     this.isCreatingRepository = false;
+
+    this.repositoryPoller.start(this.createdRepository);
+  }
+
+  get isComplete() {
+    return this.createdRepository && this.createdRepository.firstSubmissionCreated;
   }
 }
