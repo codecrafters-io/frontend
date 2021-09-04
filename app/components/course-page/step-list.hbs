@@ -1,21 +1,33 @@
-<div {{did-insert this.handleDidInsert}}>
-  {{#if (eq this.activeItem.type "Setup")}}
-    <CoursePage::StepList::SetupItem
-      @course={{@course}}
-      @class="mb-4"
-      @willBeReplaced={{this.activeItemWillBeReplaced}}
-      @onComplete={{this.handleItemCompleted}} />
-  {{else}}
-    <div class="p-4">
-      Active item is not the setup stage!
-    </div>
+{{#each this.items as |item index|}}
+  {{#if (eq item.type "SetupItem")}}
+    {{#if (eq index this.activeItemIndex)}}
+      <CoursePage::StepList::SetupItem
+        @course={{@course}}
+        @class="mb-4"
+        @willBeReplaced={{this.activeItemWillBeReplaced}}
+        @onComplete={{this.handleItemCompleted}} />
+    {{else}}
+      <CoursePage::StepList::CollapsedItem
+        @class="mb-4"
+        @number={{add 1 index}}
+        @text="Setup"
+        @isComplete={{true}} />
+    {{/if}}
   {{/if}}
 
-  {{#each this.pendingCourseStages as |courseStage|}}
-    <CoursePage::StepList::CollapsedItem
-      @class="mb-4"
-      @number={{add 1 courseStage.position}}
-      @text={{courseStage.name}}
-      @isComplete={{gt 3 courseStage.position}} />
-  {{/each}}
-</div>
+  {{#if (eq item.type "CourseStageItem")}}
+    {{#if (eq index this.activeItemIndex)}}
+      <CoursePage::StepList::CourseStageItem
+        @courseStage={{item.courseStage}}
+        @class="mb-4"
+        @willBeReplaced={{this.activeItemWillBeReplaced}}
+        @onComplete={{this.handleItemCompleted}} />
+    {{else}}
+      <CoursePage::StepList::CollapsedItem
+        @class="mb-4"
+        @number={{add 1 index}}
+        @text={{item.courseStage.name}}
+        @isComplete={{true}} />
+    {{/if}}
+  {{/if}}
+{{/each}}

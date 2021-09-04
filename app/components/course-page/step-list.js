@@ -1,28 +1,43 @@
 import Component from '@glimmer/component';
+import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 
+class SetupItem {
+  type = 'SetupItem';
+}
+
+class CourseStageItem {
+  @tracked courseStage;
+  type = 'CourseStageItem';
+
+  constructor(courseStage) {
+    this.courseStage = courseStage;
+  }
+}
+
 export default class CoursePageContentStepListComponent extends Component {
-  @tracked activeItem;
+  @tracked activeItemIndex;
   @tracked activeItemWillBeReplaced;
 
-  get allItems() {
-    return [this.setupItem].concat(this.courseStageItems);
+  constructor() {
+    super(...arguments);
+
+    this.items = A(this.buildItems());
+    this.activeItemIndex = 0;
   }
 
-  get courseStageItems() {
-    return this.args.course.sortedStages.map((courseStage) => {
-      return {
-        type: 'CourseStage',
-        model: courseStage,
-      };
+  buildItems() {
+    let items = [];
+
+    items.push(new SetupItem());
+
+    this.args.course.sortedStages.forEach((courseStage) => {
+      items.push(new CourseStageItem(courseStage));
     });
-  }
 
-  @action
-  async handleDidInsert() {
-    this.activeItem = this.setupItem;
+    return items;
   }
 
   @action
@@ -32,22 +47,10 @@ export default class CoursePageContentStepListComponent extends Component {
     later(
       this,
       () => {
-        this.activeItem = this.courseStageItems.firstObject;
+        this.activeItemIndex += 1;
         this.activeItemWillBeReplaced = false;
       },
-      2000
+      1000
     );
-  }
-
-  get nextItems() {
-    return [];
-  }
-
-  get previousItems() {
-    return [];
-  }
-
-  get setupItem() {
-    return { type: 'Setup' };
   }
 }

@@ -7,7 +7,7 @@ export default class CourseRoute extends Route {
   async model(params) {
     await this.currentUser.authenticate();
 
-    let courses = await this.store.findAll('course', { include: 'supported-languages' });
+    let courses = await this.store.findAll('course', { include: 'supported-languages,stages' });
     let course = courses.findBy('slug', params.course_slug);
 
     let repositories = await this.store.query('repository', {

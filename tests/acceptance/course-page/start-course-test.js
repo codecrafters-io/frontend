@@ -45,6 +45,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     this.server.schema.repositories.find(1).update({ lastSubmissionAt: new Date() });
 
+    await this.pauseTest();
+
     this.clock.tick(5000);
     await finishRender();
 
