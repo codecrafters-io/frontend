@@ -5,4 +5,5 @@ export default function () {
 
   this.get('/courses');
   this.get('/repositories');
+  this.post('/repositories');
 }
