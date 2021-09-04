@@ -1,0 +1,19 @@
+<div class="bg-gray-100 rounded-md shadow-sm {{@class}}" ...attributes>
+  <div class="bg-white rounded-t border border-b-0 border-gray-300 relative">
+    <div class="p-8 pb-6">
+      {{yield to="content"}}
+    </div>
+  </div>
+
+  <div class="border border-gray-300 border-t rounded-b relative">
+    <div class="h-px w-full bg-gray-200 bg-opacity-50 absolute -top-px"></div>
+
+    <div class="flex items-center justify-between px-8 py-3">
+      {{yield to="footer-content"}}
+
+      {{#if @willBeReplaced}}
+        {{svg-jar "spinner" class="w-4 h-4 text-teal-600"}}
+      {{/if}}
+    </div>
+  </div>
+</div>

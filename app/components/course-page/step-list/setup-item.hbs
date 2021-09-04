@@ -1,53 +1,44 @@
-<div
-  class="bg-gray-100 rounded-md shadow-sm {{@class}}"
-  {{did-insert this.handleDidInsert}}
-  {{will-destroy this.handleWillDestroy}}
-  data-test-setup-item>
-  <div class="bg-white rounded-t border border-b-0 border-gray-300 relative">
-    <div class="p-8 pb-6">
-      <div class="flex items-center mb-6">
-        <span class="text-2xl text-gray-700 mr-3">Setup</span>
+<CoursePage::StepList::ExpandedItem
+    @class={{@class}}
+    @willBeReplaced={{@willBeReplaced}}
+    {{did-insert this.handleDidInsert}}
+    {{will-destroy this.handleWillDestroy}}
+    data-test-setup-item>
+  <:content>
+    <div class="flex items-center mb-6">
+      <span class="text-2xl text-gray-700 mr-3">Setup</span>
 
-        {{#if this.isComplete}}
-          <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
-        {{else}}
-          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
-        {{/if}}
-      </div>
-
-      <AnimatedContainer>
-        {{#animated-if this.createdRepository use=this.transition}}
-          <CoursePage::StepList::SetupItem::CloneRepositoryStep
-              @repository={{this.createdRepository}} />
-        {{else}}
-          <CoursePage::StepList::SetupItem::CreateRepositoryStep
-              @course={{@course}}
-              @onLanguageSelection={{this.handleLanguageSelection}} />
-        {{/animated-if}}
-      </AnimatedContainer>
-    </div>
-  </div>
-
-  <div class="border border-gray-300 border-t rounded-b relative" data-test-setup-item-footer>
-    <div class="h-px w-full bg-gray-200 bg-opacity-50 absolute -top-px"></div>
-
-    <div class="flex items-center justify-between px-8 py-3">
-      <div class="flex items-center">
-        {{#if this.isComplete}}
-          <StaticDot @class="mr-3" @color="green" />
-          <span class="text-gray-600 text-sm" data-test-footer-text>Git push received.</span>
-        {{else if (or this.isCreatingRepository this.createdRepository)}}
-          <BlinkingDot @class="mr-3" @color="yellow" />
-          <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
-        {{else}}
-          <StaticDot @class="mr-3" @color="gray" />
-          <span class="text-gray-600 text-sm" data-test-footer-text>Select a language to proceed</span>
-        {{/if}}
-      </div>
-
-      {{#if @willBeReplaced}}
-        {{svg-jar "spinner" class="w-4 h-4 text-teal-600"}}
+      {{#if this.isComplete}}
+      <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
+      {{else}}
+      <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
       {{/if}}
     </div>
-  </div>
-</div>
+
+    <AnimatedContainer>
+      {{#animated-if this.createdRepository use=this.transition}}
+      <CoursePage::StepList::SetupItem::CloneRepositoryStep
+        @repository={{this.createdRepository}} />
+      {{else}}
+      <CoursePage::StepList::SetupItem::CreateRepositoryStep
+        @course={{@course}}
+        @onLanguageSelection={{this.handleLanguageSelection}} />
+      {{/animated-if}}
+    </AnimatedContainer>
+  </:content>
+
+  <:footer-content>
+    <div class="flex items-center" data-test-setup-item-footer>
+      {{#if this.isComplete}}
+        <StaticDot @class="mr-3" @color="green" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Git push received.</span>
+      {{else if (or this.isCreatingRepository this.createdRepository)}}
+        <BlinkingDot @class="mr-3" @color="yellow" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
+      {{else}}
+        <StaticDot @class="mr-3" @color="gray" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Select a language to proceed</span>
+      {{/if}}
+    </div>
+  </:footer-content>
+</CoursePage::StepList::ExpandedItem>
