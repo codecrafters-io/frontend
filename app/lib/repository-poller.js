@@ -19,6 +19,10 @@ export default class RepositoryPoller {
 
   async poll() {
     await this.store.query('repository', { course_id: this.repository.course.get('id') });
+
+    if (this.repository.firstSubmissionCreated) {
+      this.isActive = false;
+    }
   }
 
   scheduleDelayedPoll() {
@@ -27,10 +31,13 @@ export default class RepositoryPoller {
       async function () {
         if (this.isActive) {
           await this.poll();
+        }
+
+        if (this.isActive) {
           this.scheduleDelayedPoll();
         }
       },
-      1000
+      5000
     );
   }
 
