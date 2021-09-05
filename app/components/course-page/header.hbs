@@ -5,7 +5,7 @@
 
   {{#if @repositories.firstObject}}
     <div>
-      <CoursePage::RepositoriesDropdown @repositories={{@repositories}} />
+      <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} />
     </div>
   {{/if}}
 </div>

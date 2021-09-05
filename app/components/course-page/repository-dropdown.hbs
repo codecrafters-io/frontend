@@ -1,0 +1,64 @@
+<div data-test-repository-dropdown>
+  <BasicDropdown @horizontalPosition="right" as |dd| >
+    <dd.Trigger>
+      <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none">
+        <span class="mr-1" data-test-active-repository-name>
+          {{@activeRepository.name}}
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div class="bg-white rounded-lg shadow-lg border py-2">
+        <div class="text-sm text-gray-700">
+          <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">
+            Copy Git Repository URL
+            {{svg-jar "clipboard-copy" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+          </div>
+          <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">
+            Try a different language
+            {{svg-jar "beaker" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+          </div>
+          <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">
+            Retry using {{@repositories.firstObject.language.name}}
+            {{svg-jar "refresh" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+          </div>
+        </div>
+        <div class="pl-3 text-sm">
+          <div class="font-bold text-gray-600 mb-2 mt-3">
+            Switch to a different repo:
+          </div>
+          <div class="">
+            <div class="flex justify-between items-center py-2 pl-2 pr-3 hover:bg-gray-50 group">
+              <div class="flex items-center mr-6">
+                <img src="/assets/images/language-logos/python-gray-500.svg" class="w-4 h-4 mr-2 block group-hover:hidden">
+                <img src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 hidden group-hover:block">
+                <span class="text-gray-700">Python #2</span>
+              </div>
+              <span class="text-gray-400 text-xs">(pushed 4 days ago)</span>
+            </div>
+            <div class="flex justify-between items-center py-2 pl-2 pr-3 hover:bg-gray-50 group">
+              <div class="flex items-center mr-6">
+                <img src="/assets/images/language-logos/go-gray-500.svg" class="w-4 h-4 mr-2 block group-hover:hidden">
+                <img src="/assets/images/language-logos/go-teal-500.svg" class="w-4 h-4 mr-2 hidden group-hover:block">
+                <span class="text-gray-700">Go</span>
+              </div>
+              <span class="text-gray-400 text-xs">(pushed 10 days ago)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  <!--    <div class="py-2 border rounded shadow text-sm text-gray-600 w-40">-->
+  <!--      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">-->
+  <!--        Get Help-->
+  <!--        {{svg-jar "question-mark-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}-->
+  <!--      </div>-->
+  <!--      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">-->
+  <!--        Logout-->
+  <!--        {{svg-jar "logout" class="w-5 text-gray-300 group-hover:text-teal-500"}}-->
+  <!--      </div>-->
+  <!--    </div>-->
+    </dd.Content>
+  </BasicDropdown>
+</div>

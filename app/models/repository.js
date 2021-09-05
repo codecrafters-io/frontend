@@ -7,6 +7,7 @@ export default class RepositoryModel extends Model {
   @belongsTo('user') user;
   @belongsTo('language') language;
   @attr('date') lastSubmissionAt;
+  @attr('string') name;
   @hasMany('submission') submissions;
 
   get firstSubmissionCreated() {

@@ -9,7 +9,7 @@ import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import signIn from 'codecrafters-frontend/tests/support/sign-in';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | resume-course-test', function (hooks) {
+module('Acceptance | course-page | switch-repository-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -22,13 +22,23 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     let currentUser = this.owner.lookup('service:currentUser').record;
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let go = this.server.schema.languages.findBy({ name: 'Go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    this.server.create('repository', {
+    let pythonRepository = this.server.create('repository', {
       course: redis,
       language: python,
+      name: 'Python #1',
       user: currentUser,
-      lastSubmissionAt: new Date(),
+      lastSubmissionAt: new Date(2020, 7, 1),
+    });
+
+    let goRepository = this.server.create('repository', {
+      course: redis,
+      language: go,
+      user: currentUser,
+      name: 'Go #1',
+      lastSubmissionAt: new Date(2020, 7, 2),
     });
 
     await coursesPage.visit();
@@ -37,8 +47,7 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
 
-    assert.ok(coursePage.courseStageItemIsActive, 'course stage item is not expanded');
-    assert.notOk(coursePage.setupItemIsActive, 'setup item is not expanded');
+    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name); // Repository with last push should be active
 
     await coursesPage.visit(); // Poller is active
   });

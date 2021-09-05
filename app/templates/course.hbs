@@ -1,6 +1,6 @@
 {{page-title "Courses"}}
 
 <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
-  <CoursePage::Header @course={{this.model.course}} @repositories={{this.model.repositories}} />
+  <CoursePage::Header @course={{this.model.course}} @repositories={{this.model.repositories}} @activeRepository={{this.activeRepository}} />
   <CoursePage::Content @course={{this.model.course}} @repository={{this.activeRepository}} />
 </div>
