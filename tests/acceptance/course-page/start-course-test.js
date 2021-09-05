@@ -1,5 +1,5 @@
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
-import { currentURL, settled } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -21,11 +21,12 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     testScenario(this.server);
 
     await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build Your Own Redis');
+    coursesPage.clickOnCourse('Build Your Own Redis');
+    await finishRender();
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
 
-    assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
+    assert.equal(this.server.pretender.handledRequests.length, 3, 'first 3 requests were executed');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
@@ -33,7 +34,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
 
-    assert.equal(this.server.pretender.handledRequests.length, 4); // Create Repository
+    assert.equal(this.server.pretender.handledRequests.length, 4, 'create repository request was executed');
 
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep, 'current step is clone repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
@@ -42,7 +43,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     this.clock.tick(5000);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 5); // Ensure poll happened
+    assert.equal(this.server.pretender.handledRequests.length, 5, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     this.server.schema.repositories.find(1).update({ lastSubmissionAt: new Date() });
@@ -50,7 +51,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     this.clock.tick(5000);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 6); // Ensure poll happened
+    assert.equal(this.server.pretender.handledRequests.length, 6, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
@@ -58,8 +59,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await finishRender();
     await animationsSettled();
 
-    assert.notOk(coursePage.setupItem.isVisible, 'setup item is collapsed');
-
-    await settled(); // Timer should be cancelled at this point
+    assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');
+    assert.ok(coursePage.courseStageItemIsActive, 'course stage item is visible');
+    await coursesPage.visit(); // Page keeps polling, so tests wouldn't end
   });
 });

@@ -2,7 +2,8 @@
     @class={{@class}}
     @willBeReplaced={{@willBeReplaced}}
     {{did-insert this.handleDidInsert}}
-    {{will-destroy this.handleWillDestroy}}>
+    {{will-destroy this.handleWillDestroy}}
+    data-test-course-stage-item>
   <:content>
     <div class="flex items-center mb-6">
       <span class="text-2xl text-gray-700 mr-3">{{@courseStage.name}}</span>
@@ -20,7 +21,7 @@
   </:content>
 
   <:footer-content>
-    <div class="flex items-center">
+    <div class="flex items-center" data-test-course-stage-item-footer >
       <StaticDot @class="mr-3" @color="gray" />
       <span class="text-gray-600 text-sm" data-test-footer-text>Select a language to proceed</span>
     </div>

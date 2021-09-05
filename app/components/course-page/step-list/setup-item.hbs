@@ -1,17 +1,15 @@
 <CoursePage::StepList::ExpandedItem
     @class={{@class}}
     @willBeReplaced={{@willBeReplaced}}
-    {{did-insert this.handleDidInsert}}
-    {{will-destroy this.handleWillDestroy}}
     data-test-setup-item>
   <:content>
     <div class="flex items-center mb-6">
       <span class="text-2xl text-gray-700 mr-3">Setup</span>
 
       {{#if this.isComplete}}
-      <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
+        <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
       {{else}}
-      <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
+        <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
       {{/if}}
     </div>
 

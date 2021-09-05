@@ -1,8 +1,9 @@
-import { later } from '@ember/runloop';
+import { cancel, later } from '@ember/runloop';
 
 export default class RepositoryPoller {
   isActive;
   repository;
+  scheduledPoll;
   store;
 
   constructor({ store, visibilityService }) {
@@ -18,11 +19,11 @@ export default class RepositoryPoller {
   }
 
   async poll() {
-    await this.store.query('repository', { course_id: this.repository.course.get('id') });
+    await this.store.query('repository', { course_id: this.course.get('id') });
   }
 
   scheduleDelayedPoll() {
-    later(
+    this.scheduledPoll = later(
       this,
       async function () {
         if (this.isActive && !this.isPaused) {
@@ -34,18 +35,19 @@ export default class RepositoryPoller {
           this.scheduleDelayedPoll();
         }
       },
-      1000
+      5000
     );
   }
 
-  start(repository, onPoll) {
-    this.repository = repository;
+  start(course, onPoll) {
+    this.course = course;
     this.isActive = true;
-    this.onPoll = onPoll;
+    this.onPoll = onPoll || (() => {});
     this.scheduleDelayedPoll();
   }
 
   stop() {
     this.isActive = false;
+    cancel(this.scheduledPoll);
   }
 }
