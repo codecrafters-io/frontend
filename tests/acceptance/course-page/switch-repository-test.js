@@ -15,7 +15,7 @@ module('Acceptance | course-page | switch-repository-test', function (hooks) {
   setupMirage(hooks);
   setupClock(hooks);
 
-  test('can resume course', async function (assert) {
+  test('can switch repository', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
@@ -44,10 +44,22 @@ module('Acceptance | course-page | switch-repository-test', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build Your Own Redis');
 
+    await this.pauseTest();
+
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name); // Repository with last push should be active
+
+    console.log(currentURL());
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
+
+    console.log(currentURL());
+
+    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name); // Repository with last push should be active
+    assert.ok(coursePage.repositoryDropdown.isClosed); // Repository with last push should be active
 
     await coursesPage.visit(); // Poller is active
   });

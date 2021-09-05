@@ -6,15 +6,15 @@ export default class LanguageModel extends Model {
 
   get grayLogoUrl() {
     return {
-      PYTHON: '/assets/images/language-logos/python-gray-500.svg',
-      GO: '/assets/images/language-logos/go-gray-500.svg',
-    }[this.id];
+      Python: '/assets/images/language-logos/python-gray-500.svg',
+      Go: '/assets/images/language-logos/go-gray-500.svg',
+    }[this.name];
   }
 
   get tealLogoUrl() {
     return {
-      PYTHON: '/assets/images/language-logos/python-teal-500.svg',
-      GO: '/assets/images/language-logos/go-teal-500.svg',
-    }[this.id];
+      Python: '/assets/images/language-logos/python-teal-500.svg',
+      Go: '/assets/images/language-logos/go-teal-500.svg',
+    }[this.name];
   }
 }

@@ -2,8 +2,19 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 
 export default class CourseController extends Controller {
-  // TODO: Use query params
+  queryParams = [
+    {
+      selectedRepositoryId: 'repo',
+    },
+  ];
+
+  @tracked selectedRepositoryId;
+
   get activeRepository() {
-    return this.model.repositories.firstObject;
+    if (this.selectedRepositoryId) {
+      return this.model.repositories.findBy('id', this.selectedRepositoryId);
+    } else {
+      return this.model.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+    }
   }
 }

@@ -12,6 +12,7 @@ export default class CourseRoute extends Route {
 
     let repositories = await this.store.query('repository', {
       course_id: course.id,
+      include: 'language,course,user',
     });
 
     return {
