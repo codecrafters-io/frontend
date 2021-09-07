@@ -3,6 +3,7 @@ import { text } from 'ember-cli-page-object';
 export default {
   footerText: text('[data-test-course-stage-item-footer] [data-test-footer-text]'),
   scope: '[data-test-course-stage-item]',
+  title: text('[data-test-course-stage-name]'),
 
   get statusIsInProgress() {
     return this.statusText === 'IN PROGRESS';

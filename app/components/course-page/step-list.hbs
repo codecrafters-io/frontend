@@ -1,39 +1,45 @@
-<div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}}>
-  {{#each this.items as |item index|}}
-    {{#if (eq item.type "SetupItem")}}
-      <AnimatedContainer>
-        {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
-          <CoursePage::StepList::SetupItem
-            @course={{@course}}
-            @class="mb-4"
-            @willBeReplaced={{this.activeItemWillBeReplaced}}
-            @onRepositoryCreate={{this.handleRepositoryCreate}} />
-        {{else}}
-          <CoursePage::StepList::CollapsedItem
-            @class="mb-4"
-            @number={{add 1 index}}
-            @text="Setup"
-            @isComplete={{true}} />
-        {{/animated-if}}
-      </AnimatedContainer>
+{{#if this.polledRepositoryNeedsToBeUpdated}}
+  <div {{did-insert this.handleDidInsertPolledRepositoryMismatchLoader}}>
+    Loading...
+  </div>
+{{else}}
+  <div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}}>
+    {{#each this.items as |item index|}}
+        {{#if (eq item.type "SetupItem")}}
+    <AnimatedContainer>
+      {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
+      <CoursePage::StepList::SetupItem
+        @course={{@course}}
+        @class="mb-4"
+        @willBeReplaced={{this.activeItemWillBeReplaced}}
+        @onRepositoryCreate={{this.handleRepositoryCreate}} />
+      {{else}}
+      <CoursePage::StepList::CollapsedItem
+        @class="mb-4"
+        @number={{add 1 index}}
+        @text="Setup"
+        @isComplete={{true}} />
+      {{/animated-if}}
+    </AnimatedContainer>
     {{/if}}
 
-    {{#if (eq item.type "CourseStageItem")}}
-      <AnimatedContainer>
-        {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
-          <CoursePage::StepList::CourseStageItem
-            @courseStage={{item.courseStage}}
-            @class="mb-4"
-            @willBeReplaced={{this.activeItemWillBeReplaced}}
-            @onComplete={{this.handleItemCompleted}} />
-        {{else}}
-          <CoursePage::StepList::CollapsedItem
-            @class="mb-4"
-            @number={{add 1 index}}
-            @text={{item.courseStage.name}}
-            @isComplete={{true}} />
-        {{/animated-if}}
-      </AnimatedContainer>
+        {{#if (eq item.type "CourseStageItem")}}
+    <AnimatedContainer>
+      {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
+      <CoursePage::StepList::CourseStageItem
+        @courseStage={{item.courseStage}}
+        @class="mb-4"
+        @willBeReplaced={{this.activeItemWillBeReplaced}}
+        @onComplete={{this.handleItemCompleted}} />
+      {{else}}
+      <CoursePage::StepList::CollapsedItem
+        @class="mb-4"
+        @number={{add 1 index}}
+        @text={{item.courseStage.name}}
+        @isComplete={{true}} />
+      {{/animated-if}}
+    </AnimatedContainer>
     {{/if}}
-  {{/each}}
-</div>
+      {{/each}}
+  </div>
+{{/if}}

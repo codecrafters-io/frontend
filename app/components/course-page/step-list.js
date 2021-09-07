@@ -13,6 +13,7 @@ class SetupItem {
 
 class CourseStageItem {
   @tracked courseStage;
+
   type = 'CourseStageItem';
 
   constructor(courseStage) {
@@ -24,6 +25,7 @@ export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItemIndex;
   @tracked activeItemWillBeReplaced;
   @tracked createdRepository;
+  @tracked polledRepository;
   @service store;
   transition = fade;
   @service visibility;
@@ -49,15 +51,23 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   computeActiveIndex() {
-    if (!this.repository) {
+    if (!this.repository || !this.repository.firstSubmissionCreated) {
       return 0;
+    } else if (this.repository.highestCompletedStage && this.repository.highestCompletedStage.get('id')) {
+      return this.repository.highestCompletedStage.get('position') + 1;
     } else {
-      return 1; // Implement fetching other stages
+      return 1;
     }
   }
 
   @action
   async handleDidInsert() {
+    this.startRepositoryPoller();
+  }
+
+  @action
+  async handleDidInsertPolledRepositoryMismatchLoader() {
+    this.activeItemIndex = this.computeActiveIndex();
     this.startRepositoryPoller();
   }
 
@@ -74,8 +84,8 @@ export default class CoursePageContentStepListComponent extends Component {
     later(
       this,
       () => {
-        this.activeItemIndex += 1;
         this.activeItemWillBeReplaced = false;
+        this.activeItemIndex = newActiveItemIndex;
       },
       2000
     );
@@ -92,14 +102,21 @@ export default class CoursePageContentStepListComponent extends Component {
     this.stopRepositoryPoller();
   }
 
+  get polledRepositoryNeedsToBeUpdated() {
+    return this.polledRepository && this.polledRepository !== this.repository;
+  }
+
   get repository() {
     return this.args.repository || this.createdRepository;
   }
 
   startRepositoryPoller() {
+    this.stopRepositoryPoller();
+
     if (this.repository) {
       this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility });
       this.repositoryPoller.start(this.repository, this.handlePoll);
+      this.polledRepository = this.repository;
     }
   }
 
@@ -107,5 +124,7 @@ export default class CoursePageContentStepListComponent extends Component {
     if (this.repositoryPoller) {
       this.repositoryPoller.stop();
     }
+
+    this.polledRepository = null;
   }
 }

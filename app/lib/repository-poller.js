@@ -21,7 +21,7 @@ export default class RepositoryPoller {
   async poll() {
     await this.store.query('repository', {
       course_id: this.repository.course.get('id'),
-      include: 'language,course,user',
+      include: 'language,course,user,course-stage-completions.course-stage',
     });
   }
 
@@ -38,7 +38,7 @@ export default class RepositoryPoller {
           this.scheduleDelayedPoll();
         }
       },
-      5000
+      1000
     );
   }
 

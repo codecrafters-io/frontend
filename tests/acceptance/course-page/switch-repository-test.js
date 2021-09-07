@@ -41,25 +41,30 @@ module('Acceptance | course-page | switch-repository-test', function (hooks) {
       lastSubmissionAt: new Date(2020, 7, 2),
     });
 
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.firstObject,
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build Your Own Redis');
-
-    await this.pauseTest();
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
 
-    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name); // Repository with last push should be active
+    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
-    console.log(currentURL());
+    this.clock.tick(5000);
+
+    assert.equal(this.server.pretender.handledRequests.length, 4, 'polling should have run');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
 
-    console.log(currentURL());
-
-    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name); // Repository with last push should be active
-    assert.ok(coursePage.repositoryDropdown.isClosed); // Repository with last push should be active
+    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');
+    assert.ok(coursePage.repositoryDropdown.isClosed, 'repository dropdown should be closed');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
 
     await coursesPage.visit(); // Poller is active
   });
