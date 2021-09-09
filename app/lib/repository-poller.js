@@ -19,8 +19,6 @@ export default class RepositoryPoller {
   }
 
   async poll() {
-    console.log('polling for repository ', this.repository.id);
-
     await this.store.query('repository', {
       course_id: this.repository.course.get('id'),
       include: 'language,course,user,course-stage-completions.course-stage',

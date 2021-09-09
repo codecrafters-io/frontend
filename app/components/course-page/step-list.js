@@ -61,16 +61,12 @@ export default class CoursePageContentStepListComponent extends Component {
 
   @action
   async handleDidInsert() {
-    console.log('did-insert');
     this.startRepositoryPoller();
   }
 
   @action
   async handleDidInsertPolledRepositoryMismatchLoader() {
     this.activeItemIndex = this.computeActiveIndex();
-    console.log(
-      `did-insert mismatch, polledRepositoryId: ${this.polledRepository.id}, repositoryId: ${this.repository.id}, !!repository: ${!!this.repository}`
-    );
     this.startRepositoryPoller();
   }
 
@@ -111,7 +107,6 @@ export default class CoursePageContentStepListComponent extends Component {
     this.stopRepositoryPoller();
 
     if (this.repository) {
-      console.log('starting repository poller');
       this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility });
       this.repositoryPoller.start(this.repository, this.handlePoll);
       this.polledRepository = this.repository;
@@ -120,7 +115,6 @@ export default class CoursePageContentStepListComponent extends Component {
 
   stopRepositoryPoller() {
     if (this.repositoryPoller) {
-      console.log('stop repository poller');
       this.repositoryPoller.stop();
     }
 

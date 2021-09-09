@@ -59,7 +59,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
 
     assert.equal(this.server.pretender.handledRequests.length, 4, 'polling should have run');
 
-    console.log('before click');
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
 
