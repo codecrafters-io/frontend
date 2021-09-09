@@ -9,7 +9,7 @@ import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import signIn from 'codecrafters-frontend/tests/support/sign-in';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | switch-repository-test', function (hooks) {
+module('Acceptance | course-page | switch-repository', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -55,10 +55,11 @@ module('Acceptance | course-page | switch-repository-test', function (hooks) {
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
-    this.clock.tick(5000);
+    this.clock.tick(3000);
 
     assert.equal(this.server.pretender.handledRequests.length, 4, 'polling should have run');
 
+    console.log('before click');
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
 

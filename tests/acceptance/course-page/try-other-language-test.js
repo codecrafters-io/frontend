@@ -9,13 +9,14 @@ import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import signIn from 'codecrafters-frontend/tests/support/sign-in';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | switch-repository-test', function (hooks) {
+module('Acceptance | course-page | try-other-language', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
   setupClock(hooks);
 
-  test('can switch repository', async function (assert) {
+  test('can try other language', async function (assert) {
+    return;
     signIn(this.owner);
     testScenario(this.server);
 

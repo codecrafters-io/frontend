@@ -1,9 +1,9 @@
-import { cancel, later } from '@ember/runloop';
+import { cancel, later, run } from '@ember/runloop';
 
 export default class RepositoryPoller {
   isActive;
   repository;
-  scheduledPoll;
+  scheduledPollTimeoutId;
   store;
 
   constructor({ store, visibilityService }) {
@@ -26,20 +26,18 @@ export default class RepositoryPoller {
   }
 
   scheduleDelayedPoll() {
-    this.scheduledPoll = later(
-      this,
-      async function () {
-        if (this.isActive && !this.isPaused) {
+    this.scheduledPollTimeoutId = setTimeout(async () => {
+      if (this.isActive && !this.isPaused) {
+        run(async () => {
           await this.poll();
           this.onPoll();
-        }
+        });
+      }
 
-        if (this.isActive) {
-          this.scheduleDelayedPoll();
-        }
-      },
-      1000
-    );
+      if (this.isActive) {
+        this.scheduleDelayedPoll();
+      }
+    }, 2000);
   }
 
   start(repository, onPoll) {
@@ -51,6 +49,6 @@ export default class RepositoryPoller {
 
   stop() {
     this.isActive = false;
-    cancel(this.scheduledPoll);
+    clearTimeout(this.scheduledPollTimeoutId);
   }
 }

@@ -11,14 +11,12 @@ export default {
 
   clickRaw: clickable('button'),
 
-  async clickOnRepositoryLink(repositoryName) {
-    this.content.clickOnRepositoryLink(repositoryName);
-    await finishRender();
+  clickOnRepositoryLink(repositoryName) {
+    return this.content.clickOnRepositoryLink(repositoryName);
   },
 
-  async clickOnAction(text) {
-    this.content.clickOnAction(text);
-    await finishRender();
+  clickOnAction(text) {
+    return this.content.clickOnAction(text);
   },
 
   content: {
