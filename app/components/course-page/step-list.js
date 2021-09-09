@@ -24,7 +24,6 @@ class CourseStageItem {
 export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItemIndex;
   @tracked activeItemWillBeReplaced;
-  @tracked createdRepository;
   @tracked polledRepository;
   @service store;
   transition = fade;
@@ -51,7 +50,7 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   computeActiveIndex() {
-    if (!this.repository || !this.repository.firstSubmissionCreated) {
+    if (!this.repository.firstSubmissionCreated) {
       return 0;
     } else if (this.repository.highestCompletedStage && this.repository.highestCompletedStage.get('id')) {
       return this.repository.highestCompletedStage.get('position') + 1;
@@ -62,12 +61,16 @@ export default class CoursePageContentStepListComponent extends Component {
 
   @action
   async handleDidInsert() {
+    console.log('did-insert');
     this.startRepositoryPoller();
   }
 
   @action
   async handleDidInsertPolledRepositoryMismatchLoader() {
     this.activeItemIndex = this.computeActiveIndex();
+    console.log(
+      `did-insert mismatch, polledRepositoryId: ${this.polledRepository.id}, repositoryId: ${this.repository.id}, !!repository: ${!!this.repository}`
+    );
     this.startRepositoryPoller();
   }
 
@@ -92,12 +95,6 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   @action
-  async handleRepositoryCreate(createdRepository) {
-    this.createdRepository = createdRepository;
-    this.startRepositoryPoller();
-  }
-
-  @action
   async handleWillDestroy() {
     this.stopRepositoryPoller();
   }
@@ -107,13 +104,14 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   get repository() {
-    return this.args.repository || this.createdRepository;
+    return this.args.repository;
   }
 
   startRepositoryPoller() {
     this.stopRepositoryPoller();
 
     if (this.repository) {
+      console.log('starting repository poller');
       this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility });
       this.repositoryPoller.start(this.repository, this.handlePoll);
       this.polledRepository = this.repository;
@@ -122,6 +120,7 @@ export default class CoursePageContentStepListComponent extends Component {
 
   stopRepositoryPoller() {
     if (this.repositoryPoller) {
+      console.log('stop repository poller');
       this.repositoryPoller.stop();
     }
 

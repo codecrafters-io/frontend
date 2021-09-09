@@ -7,11 +7,9 @@ import showdown from 'showdown';
 
 export default class CoursePageContentStepListSetupItemCreateRepositoryStepComponent extends Component {
   @service store;
-  @tracked isCreatingRepository;
 
   @action
   handleLanguageButtonClick(language) {
-    this.isCreatingRepository = true;
     this.args.onLanguageSelection(language);
   }
 

@@ -6,8 +6,12 @@ export default function () {
   this.get('/courses');
   this.get('/repositories');
 
-  this.post('/repositories', (schema, request) => {
-    const attrs = JSON.parse(request.requestBody).movie;
+  this.post('/repositories', function (schema, request) {
+    let attrs = this.normalizedRequestAttrs();
+
+    attrs.cloneUrl = 'https://test';
+    attrs.name = 'Language #n';
+
     const repository = schema.repositories.create(attrs);
 
     console.log('scheduling first push to repository to run in 2 seconds');

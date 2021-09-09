@@ -14,13 +14,14 @@
     </div>
 
     <AnimatedContainer>
-      {{#animated-if this.createdRepository use=this.transition}}
-      <CoursePage::StepList::SetupItem::CloneRepositoryStep
-        @repository={{this.createdRepository}} />
+      {{#animated-if @repository.isNew use=this.transition}}
+        <CoursePage::StepList::SetupItem::CreateRepositoryStep
+          @course={{@course}}
+          @repository={{@repository}}
+          @onLanguageSelection={{this.handleLanguageSelection}} />
       {{else}}
-      <CoursePage::StepList::SetupItem::CreateRepositoryStep
-        @course={{@course}}
-        @onLanguageSelection={{this.handleLanguageSelection}} />
+        <CoursePage::StepList::SetupItem::CloneRepositoryStep
+          @repository={{@repository}} />
       {{/animated-if}}
     </AnimatedContainer>
   </:content>
@@ -30,7 +31,7 @@
       {{#if this.isComplete}}
         <StaticDot @class="mr-3" @color="green" />
         <span class="text-gray-600 text-sm" data-test-footer-text>Git push received.</span>
-      {{else if (or this.isCreatingRepository this.createdRepository)}}
+      {{else if (or this.repository.isSaving this.repository.id)}}
         <BlinkingDot @class="mr-3" @color="yellow" />
         <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
       {{else}}

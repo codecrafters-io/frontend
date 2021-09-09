@@ -1,5 +1,5 @@
-import { setupAnimationTest } from 'ember-animated/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -16,7 +16,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
   setupClock(hooks);
 
   test('can try other language', async function (assert) {
-    return;
     signIn(this.owner);
     testScenario(this.server);
 
@@ -35,7 +34,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.firstObject,
+      courseStage: redis.stages.models.sortBy('position').firstObject,
     });
 
     await coursesPage.visit();
@@ -45,28 +44,31 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to a PING');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
 
-    console.log('before click');
     await coursePage.repositoryDropdown.click();
-    console.log('after click');
-    console.log('before click on action');
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
-    console.log('after click on action');
 
-    console.log(currentURL());
+    assert.equal(currentURL(), '/courses/next/redis?fresh=true');
 
-    await this.pauseTest();
-    // //
-    // // this.clock.tick(5000);
-    // //
-    // // assert.equal(this.server.pretender.handledRequests.length, 4, 'polling should have run');
-    // //
-    // //
-    // // assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');
-    // // assert.ok(coursePage.repositoryDropdown.isClosed, 'repository dropdown should be closed');
-    // // assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
-    // //
-    // // await coursesPage.visit(); // Poller is active
+    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+
+    await coursePage.setupItem.clickOnLanguageButton('Go');
+
+    assert.equal(this.server.pretender.handledRequests.length, 4); // Create repository request
+    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Language #n', 'Repository name should change');
+
+    assert.equal(currentURL(), '/courses/next/redis?repo=2');
+
+    await this.clock.tick(2001);
+    await settled();
+
+    assert.equal(this.server.pretender.handledRequests.length, 5, 'polling should have run');
+
+    await this.clock.tick(2001);
+    await settled(); // Not sure why we need this twice
+
+    assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
   });
 });

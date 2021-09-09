@@ -13,7 +13,6 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
 
   @action
   async handleTryDifferentLanguageActionClick(dropdownActions) {
-    console.log('click received!');
     await this.router.transitionTo({ queryParams: { fresh: true } });
     dropdownActions.close();
   }

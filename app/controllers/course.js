@@ -1,20 +1,39 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class CourseController extends Controller {
   queryParams = [
     {
       selectedRepositoryId: 'repo',
+      isCreatingNewRepository: 'fresh',
     },
   ];
 
+  @tracked isCreatingNewRepository = false;
   @tracked selectedRepositoryId;
+  @tracked newRepository;
 
   get activeRepository() {
     if (this.selectedRepositoryId) {
       return this.model.repositories.findBy('id', this.selectedRepositoryId);
+    } else if (this.isCreatingNewRepository) {
+      return this.newRepository;
     } else {
-      return this.model.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+      return this.lastPushedRepository || this.newRepository;
     }
+  }
+
+  @action
+  handleRepositoryCreate() {
+    this.selectedRepositoryId = this.newRepository.id;
+    this.isCreatingNewRepository = false;
+
+    this.model.repositories.pushObject(this.newRepository);
+    this.newRepository = this.store.createRecord('repository', { course: this.model.course });
+  }
+
+  get lastPushedRepository() {
+    return this.model.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
   }
 }

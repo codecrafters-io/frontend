@@ -5,28 +5,17 @@ import { inject as service } from '@ember/service';
 import fade from 'ember-animated/transitions/fade';
 
 export default class CoursePageContentStepListSetupItemComponent extends Component {
-  @tracked createdRepository;
-  @tracked isCreatingRepository;
   @service store;
   transition = fade;
 
   @action
   async handleLanguageSelection(language) {
-    this.isCreatingRepository = true;
-
-    let repository = this.store.createRecord('repository', {
-      course: this.args.course,
-      language: language,
-    });
-
-    await repository.save();
-
-    this.createdRepository = repository;
-    this.isCreatingRepository = false;
-    this.args.onRepositoryCreate(repository);
+    this.args.repository.language = language;
+    await this.args.repository.save();
+    this.args.onRepositoryCreate();
   }
 
   get isComplete() {
-    return this.createdRepository && this.createdRepository.firstSubmissionCreated;
+    return this.args.repository.firstSubmissionCreated;
   }
 }
