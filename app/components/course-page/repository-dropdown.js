@@ -10,4 +10,11 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
     await this.router.transitionTo('course', repository.course.get('slug'), { queryParams: { repo: repository.id } });
     dropdownActions.close();
   }
+
+  @action
+  async handleTryDifferentLanguageActionClick(dropdownActions) {
+    console.log('click received!');
+    await this.router.transitionTo({ queryParams: { fresh: true } });
+    dropdownActions.close();
+  }
 }

@@ -12,15 +12,22 @@
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1" data-test-repository-dropdown-content>
         <div class="text-sm text-gray-700">
-          <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">
+          <div
+            class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+            role="button"
+            data-test-dropdown-action>
             Copy Git Repository URL
             {{svg-jar "clipboard-copy" class="w-5 text-gray-300 group-hover:text-teal-500"}}
           </div>
-          <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">
+          <div
+            class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+            role="button"
+            {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
+            data-test-dropdown-action>
             Try a different language
             {{svg-jar "beaker" class="w-5 text-gray-300 group-hover:text-teal-500"}}
           </div>
-          <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">
+          <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" data-test-dropdown-action>
             Retry using {{@activeRepository.language.name}}
             {{svg-jar "refresh" class="w-5 text-gray-300 group-hover:text-teal-500"}}
           </div>
@@ -47,16 +54,6 @@
           </div>
         </div>
       </div>
-  <!--    <div class="py-2 border rounded shadow text-sm text-gray-600 w-40">-->
-  <!--      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">-->
-  <!--        Get Help-->
-  <!--        {{svg-jar "question-mark-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}-->
-  <!--      </div>-->
-  <!--      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button">-->
-  <!--        Logout-->
-  <!--        {{svg-jar "logout" class="w-5 text-gray-300 group-hover:text-teal-500"}}-->
-  <!--      </div>-->
-  <!--    </div>-->
     </dd.Content>
   </BasicDropdown>
 </div>

@@ -16,8 +16,14 @@ export default {
     await finishRender();
   },
 
+  async clickOnAction(text) {
+    this.content.clickOnAction(text);
+    await finishRender();
+  },
+
   content: {
     clickOnRepositoryLink: clickOnText('[data-test-repository-link]'),
+    clickOnAction: clickOnText('[data-test-dropdown-action]'),
     scope: '[data-test-repository-dropdown-content]',
     resetScope: true,
   },
