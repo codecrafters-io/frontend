@@ -55,7 +55,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
-    this.clock.tick(3000);
+    await this.clock.tick(3000);
 
     assert.equal(this.server.pretender.handledRequests.length, 4, 'polling should have run');
 

@@ -12,16 +12,7 @@ export default function () {
     attrs.cloneUrl = 'https://test';
     attrs.name = 'Language #n';
 
-    const repository = schema.repositories.create(attrs);
-
-    console.log('scheduling first push to repository to run in 2 seconds');
-
-    setTimeout(() => {
-      console.log('emulating first push to repository');
-      repository.update('lastSubmissionAt', new Date());
-    }, 2000);
-
-    return repository;
+    return schema.repositories.create(attrs);
   });
 
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon

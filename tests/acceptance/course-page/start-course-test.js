@@ -39,21 +39,22 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
     assert.equal(coursePage.setupItem.footerText, 'Listening for a git push...');
 
-    this.clock.tick(3000);
+    await this.clock.tick(2001);
+    await finishRender();
 
     assert.equal(this.server.pretender.handledRequests.length, 5, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     this.server.schema.repositories.find(1).update({ lastSubmissionAt: new Date() });
 
-    this.clock.tick(2000);
+    await this.clock.tick(2001);
     await finishRender();
 
     assert.equal(this.server.pretender.handledRequests.length, 6, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
-    this.clock.tick(2000);
+    await this.clock.tick(2001);
     await animationsSettled();
 
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');

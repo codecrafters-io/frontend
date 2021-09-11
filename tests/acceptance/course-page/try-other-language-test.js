@@ -1,10 +1,11 @@
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
-import { currentURL, settled } from '@ember/test-helpers';
+import { setupAnimationTest } from 'ember-animated/test-support';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import signIn from 'codecrafters-frontend/tests/support/sign-in';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -58,17 +59,18 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.equal(this.server.pretender.handledRequests.length, 4); // Create repository request
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Language #n', 'Repository name should change');
-
     assert.equal(currentURL(), '/courses/next/redis?repo=2');
 
-    await this.clock.tick(2001);
-    await settled();
+    this.server.schema.repositories.find(2).update({ lastSubmissionAt: new Date() });
+
+    await this.clock.tick(2001); // Run poller
+    await finishRender();
 
     assert.equal(this.server.pretender.handledRequests.length, 5, 'polling should have run');
 
-    await this.clock.tick(2001);
-    await settled(); // Not sure why we need this twice
+    await this.clock.tick(2001); // Run active item index updater
 
+    assert.equal(this.server.pretender.handledRequests.length, 6, 'polling should have run again');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
   });
 });

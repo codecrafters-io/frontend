@@ -9,30 +9,11 @@ import showdown from 'showdown';
 export default class CoursePageStepListStageItemComponent extends Component {
   @service store;
   @service visibility;
-  repositoryPoller;
   transition = fade;
-
-  @action
-  async handleDidInsert() {
-    this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility });
-  }
-
-  @action
-  async handleWillDestroy() {
-    this.repositoryPoller.stop();
-  }
 
   get instructionsHTML() {
     // TODO: Handle language etc.
     return htmlSafe(new showdown.Converter().makeHtml(this.args.courseStage.descriptionMarkdownTemplate));
-  }
-
-  @action
-  async onPoll() {
-    if (this.isComplete) {
-      this.args.onComplete();
-      this.repositoryPoller.stop();
-    }
   }
 
   get isComplete() {
