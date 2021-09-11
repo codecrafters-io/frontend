@@ -3,6 +3,8 @@ export default function () {
   this.namespace = '/api/v1';
   this.timing = 1000;
 
+  window.server = this; // Hack! Is there a better way?
+
   this.get('/courses');
   this.get('/repositories');
 
@@ -13,15 +15,6 @@ export default function () {
     attrs.name = 'Language #n';
 
     return schema.repositories.create(attrs);
-  });
-
-  this.post('/submissions', function (schema, request) {
-    let attrs = this.normalizedRequestAttrs();
-    let submission = schema.submissions.create(attrs);
-
-    submission.repository.update('lastSubmission', submission);
-
-    return submission;
   });
 
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon

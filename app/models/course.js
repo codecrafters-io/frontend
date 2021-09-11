@@ -3,13 +3,13 @@ import { equal } from '@ember/object/computed';
 import Model from '@ember-data/model';
 
 export default class CourseModel extends Model {
-  @hasMany('course-stage') stages;
+  @hasMany('course-stage', { async: false }) stages;
   @attr('string') descriptionMarkdown;
   @attr('string') difficulty;
   @attr('string') name;
   @attr('string') shortDescriptionMarkdown;
   @attr('string') slug;
-  @hasMany('language') supportedLanguages;
+  @hasMany('language', { async: false }) supportedLanguages;
 
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;

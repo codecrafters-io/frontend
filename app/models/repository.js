@@ -3,15 +3,29 @@ import { attr, belongsTo, hasMany } from '@ember-data/model';
 
 export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
-  @belongsTo('course') course;
-  @hasMany('course-stage-completion') courseStageCompletions;
-  @belongsTo('user') user;
-  @belongsTo('language') language;
-  @belongsTo('submission') lastSubmission;
+  @belongsTo('course', { async: false }) course;
+  @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
+  @belongsTo('user', { async: false }) user;
+  @belongsTo('language', { async: false }) language;
+  @belongsTo('submission', { async: false }) lastSubmission;
   @attr('string') name;
 
   get firstSubmissionCreated() {
-    return !!this.lastSubmission.get('id');
+    return !!this.lastSubmission;
+  }
+
+  get activeStage() {
+    if (!this.highestCompletedStage) {
+      return this.course.get('stages').sortBy('position').firstObject;
+    }
+
+    let lastStagePosition = this.course.get('stages').mapBy('position').sort().lastObject;
+
+    if (this.highestCompletedStage.get('position') === lastStagePosition) {
+      return this.course.get('stages').findBy('position', lastStagePosition);
+    } else {
+      return this.course.get('stages').findBy('position', this.highestCompletedStage.get('position') + 1);
+    }
   }
 
   get highestCompletedStage() {
@@ -23,6 +37,18 @@ export default class RepositoryModel extends Model {
   }
 
   get lastSubmissionAt() {
-    return this.lastSubmission.get('createdAt');
+    return this.lastSubmission && this.lastSubmission.createdAt;
+  }
+
+  get lastSubmissionIsEvaluating() {
+    return this.lastSubmission && this.lastSubmission.statusIsEvaluating;
+  }
+
+  get lastSubmissionIsRecent() {
+    return this.lastSubmission && this.lastSubmission.isRecent;
+  }
+
+  get lastSubmissionHasFailureStatus() {
+    return this.lastSubmission && this.lastSubmission.statusIsFailure;
   }
 }

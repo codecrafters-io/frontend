@@ -19,14 +19,20 @@
   </:content>
 
   <:footer-content>
-    {{#if (eq this.status "waiting")}}
-      <div class="flex items-center" data-test-course-stage-item-footer>
+    <div class="flex items-center" data-test-course-stage-item-footer>
+      {{#if (eq this.status "waiting")}}
         <BlinkingDot @class="mr-3" @color="gray" />
         <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
-      </div>
-    {{else if (eq this.status "complete")}}
-      <StaticDot @class="mr-3" @color="green" />
-      <span class="text-gray-600 text-sm" data-test-footer-text>You've completed this stage.</span>
-    {{/if}}
+      {{else if (eq this.status "evaluating")}}
+        <BlinkingDot @class="mr-3" @color="yellow" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Running tests...</span>
+      {{else if (eq this.status "failed")}}
+        <StaticDot @class="mr-3" @color="red" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Tests failed. Check your git push output for logs.</span>
+      {{else if (eq this.status "complete")}}
+        <StaticDot @class="mr-3" @color="green" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>You've completed this stage.</span>
+      {{/if}}
+    </div>
   </:footer-content>
 </CoursePage::StepList::ExpandedItem>

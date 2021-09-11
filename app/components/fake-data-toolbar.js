@@ -6,24 +6,33 @@ export default class FakeDataToolbarComponent extends Component {
   @service store;
 
   @action
-  async handleFailTestsButtonClick() {
-    let submission = this.store.createRecord('submission', {
+  async handleCreateSubmissionButtonClick() {
+    let submission = window.server.create('submission', {
       createdAt: new Date(),
-      repository: this.args.repository,
-      courseStage: this.args.repository.highestCompletedStage,
+      repository: window.server.schema.repositories.find(this.args.repository.id),
+      courseStage: window.server.schema.courseStages.find(this.args.repository.activeStage.id),
+      status: 'evaluating',
     });
 
-    await submission.save();
+    submission.repository.update('lastSubmission', submission);
+  }
+
+  @action
+  async handleFailTestsButtonClick() {
+    let submission = this.args.repository.lastSubmission;
+    window.server.schema.submissions.find(submission.id).update({ status: 'failure' });
   }
 
   @action
   async handlePassTestsButtonClick() {
-    let submission = this.store.createRecord('submission', {
-      createdAt: new Date(),
-      repository: this.args.repository,
-      courseStage: this.args.repository.highestCompletedStage,
-    });
+    let submission = this.args.repository.lastSubmission;
 
-    await submission.save();
+    window.server.schema.submissions.find(submission.id).update({ status: 'success' });
+
+    window.server.create('course-stage-completion', {
+      completedAt: new Date(),
+      repository: window.server.schema.repositories.find(submission.repository.id),
+      courseStage: window.server.schema.courseStages.find(submission.courseStage.id),
+    });
   }
 }

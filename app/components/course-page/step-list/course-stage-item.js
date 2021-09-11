@@ -21,11 +21,19 @@ export default class CoursePageStepListStageItemComponent extends Component {
   }
 
   get status() {
+    if (this.args.repository.lastSubmissionIsEvaluating && this.args.repository.lastSubmission.courseStage === this.args.courseStage) {
+      return 'evaluating';
+    }
+
     if (this.args.repository.highestCompletedStage && this.args.repository.highestCompletedStage.get('position') >= this.args.courseStage.position) {
       return 'complete';
     }
 
-    if (this.args.repository.hasSubmissions && this.args.repository.lastSubmission.courseStage === this.args.courseStage) {
+    if (
+      this.args.repository.lastSubmissionIsRecent &&
+      this.args.repository.lastSubmissionHasFailureStatus &&
+      this.args.repository.lastSubmission.courseStage === this.args.courseStage
+    ) {
       return 'failed';
     }
 

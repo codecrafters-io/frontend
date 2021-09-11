@@ -10,6 +10,7 @@ export default Factory.extend({
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
         createdAt: new Date(),
+        status: 'evaluating',
       });
 
       repository.update('lastSubmission', submission);
@@ -22,6 +23,7 @@ export default Factory.extend({
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
         createdAt: new Date(),
+        status: 'success',
       });
 
       server.create('course-stage-completion', {
