@@ -17,7 +17,7 @@
             role="button"
             data-test-dropdown-action>
             Copy Git Repository URL
-            {{svg-jar "clipboard-copy" class="w-5 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}"}}
+            {{svg-jar "clipboard-copy" class="w-5 ml-4 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}"}}
           </div>
           <div
             class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
@@ -25,22 +25,22 @@
             {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
             data-test-dropdown-action>
             Try a different language
-            {{svg-jar "beaker" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+            {{svg-jar "beaker" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
           </div>
           {{#unless @activeRepository.isNew}}
             <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" data-test-dropdown-action>
               Retry using {{@activeRepository.language.name}}
-              {{svg-jar "refresh" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+              {{svg-jar "refresh" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
             </div>
           {{/unless}}
         </div>
-        <div class="pl-3 text-sm">
-          <div class="font-bold text-gray-600 mb-2 mt-3">
-            Switch to a different repo:
-          </div>
-          <div class="">
-            {{#each @repositories as |repository|}}
-              {{#unless (eq repository @activeRepository)}}
+        {{#if this.nonActiveRepositories.firstObject}}
+          <div class="pl-3 text-sm">
+            <div class="font-bold text-gray-600 mb-2 mt-3">
+              Switch to a different repo:
+            </div>
+            <div class="">
+              {{#each this.nonActiveRepositories as |repository|}}
                 <div
                     class="flex justify-between items-center py-2 pl-2 pr-3 hover:bg-gray-50 group cursor-pointer"
                     role="button"
@@ -53,10 +53,10 @@
                   </div>
                   <span class="text-gray-400 text-xs">(pushed 4 days ago)</span>
                 </div>
-              {{/unless}}
-            {{/each}}
+              {{/each}}
+            </div>
           </div>
-        </div>
+        {{/if}}
       </div>
     </dd.Content>
   </BasicDropdown>

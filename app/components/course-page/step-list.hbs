@@ -29,6 +29,7 @@
           {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
           <CoursePage::StepList::CourseStageItem
             @courseStage={{item.courseStage}}
+            @repository={{@repository}}
             @class="mb-4"
             @willBeReplaced={{this.activeItemWillBeReplaced}}
             @onComplete={{this.handleItemCompleted}} />

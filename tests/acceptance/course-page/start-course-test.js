@@ -45,7 +45,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.equal(this.server.pretender.handledRequests.length, 5, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
-    this.server.schema.repositories.find(1).update({ lastSubmissionAt: new Date() });
+    let repository = this.server.schema.repositories.find(1);
+    repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await this.clock.tick(2001);
     await finishRender();

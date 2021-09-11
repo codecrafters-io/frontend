@@ -25,12 +25,11 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    let pythonRepository = this.server.create('repository', {
+    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       name: 'Python #1',
       user: currentUser,
-      lastSubmissionAt: new Date(2020, 7, 1),
     });
 
     this.server.create('course-stage-completion', {
@@ -61,7 +60,8 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Language #n', 'Repository name should change');
     assert.equal(currentURL(), '/courses/next/redis?repo=2');
 
-    this.server.schema.repositories.find(2).update({ lastSubmissionAt: new Date() });
+    let repository = this.server.schema.repositories.find(2);
+    repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await this.clock.tick(2001); // Run poller
     await finishRender();

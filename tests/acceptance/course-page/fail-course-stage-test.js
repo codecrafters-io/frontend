@@ -9,13 +9,13 @@ import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import signIn from 'codecrafters-frontend/tests/support/sign-in';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | resume-course-test', function (hooks) {
+module('Acceptance | course-page | fail-course-stage', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
   setupClock(hooks);
 
-  test('can resume course', async function (assert) {
+  test('can fail course stage', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
@@ -36,9 +36,9 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
 
-    assert.ok(coursePage.courseStageItemIsActive, 'course stage item is not expanded');
-    assert.notOk(coursePage.setupItemIsActive, 'setup item is not expanded');
-
-    await coursesPage.visit(); // Poller is active
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
+    assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...');
+    //
+    // await this.pauseTest();
   });
 });

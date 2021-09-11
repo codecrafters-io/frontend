@@ -1,6 +1,7 @@
-import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import Controller from '@ember/controller';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class CourseController extends Controller {
   queryParams = [
@@ -31,6 +32,10 @@ export default class CourseController extends Controller {
 
     this.model.repositories.pushObject(this.newRepository);
     this.newRepository = this.store.createRecord('repository', { course: this.model.course });
+  }
+
+  get isDevelopmentOrTest() {
+    return config.environment !== 'production';
   }
 
   get lastPushedRepository() {

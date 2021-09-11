@@ -15,5 +15,14 @@ export default function () {
     return schema.repositories.create(attrs);
   });
 
+  this.post('/submissions', function (schema, request) {
+    let attrs = this.normalizedRequestAttrs();
+    let submission = schema.submissions.create(attrs);
+
+    submission.repository.update('lastSubmission', submission);
+
+    return submission;
+  });
+
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
 }

@@ -1,4 +1,11 @@
-<span class="relative flex h-2.5 w-2.5 {{@class}}">
-  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-  <span class="inline-flex relative rounded-full h-full w-full bg-yellow-500 opacity-75"></span>
-</span>
+{{#if (eq @color "gray")}}
+  <span class="relative flex h-2.5 w-2.5 {{@class}}">
+    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-300 opacity-75"></span>
+    <span class="inline-flex relative rounded-full h-full w-full bg-gray-400 opacity-75"></span>
+  </span>
+{{else if (eq @color "yellow")}}
+  <span class="relative flex h-2.5 w-2.5 {{@class}}">
+    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+    <span class="inline-flex relative rounded-full h-full w-full bg-yellow-500 opacity-75"></span>
+  </span>
+{{/if}}

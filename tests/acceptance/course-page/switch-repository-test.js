@@ -25,25 +25,18 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     let go = this.server.schema.languages.findBy({ name: 'Go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    let pythonRepository = this.server.create('repository', {
+    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       name: 'Python #1',
       user: currentUser,
-      lastSubmissionAt: new Date(2020, 7, 1),
     });
 
-    let goRepository = this.server.create('repository', {
+    let goRepository = this.server.create('repository', 'withFirstStageInProgress', {
       course: redis,
       language: go,
       user: currentUser,
       name: 'Go #1',
-      lastSubmissionAt: new Date(2020, 7, 2),
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: pythonRepository,
-      courseStage: redis.stages.models.firstObject,
     });
 
     await coursesPage.visit();

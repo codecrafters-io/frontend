@@ -17,6 +17,18 @@ export default class CoursePageStepListStageItemComponent extends Component {
   }
 
   get isComplete() {
-    return false;
+    return false; // TODO: Use course completions
+  }
+
+  get status() {
+    if (this.args.repository.highestCompletedStage && this.args.repository.highestCompletedStage.get('position') >= this.args.courseStage.position) {
+      return 'complete';
+    }
+
+    if (this.args.repository.hasSubmissions && this.args.repository.lastSubmission.courseStage === this.args.courseStage) {
+      return 'failed';
+    }
+
+    return 'waiting';
   }
 }

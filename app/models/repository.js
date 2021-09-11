@@ -7,12 +7,11 @@ export default class RepositoryModel extends Model {
   @hasMany('course-stage-completion') courseStageCompletions;
   @belongsTo('user') user;
   @belongsTo('language') language;
-  @attr('date') lastSubmissionAt;
+  @belongsTo('submission') lastSubmission;
   @attr('string') name;
-  @hasMany('submission') submissions;
 
   get firstSubmissionCreated() {
-    return !!this.lastSubmissionAt;
+    return !!this.lastSubmission.get('id');
   }
 
   get highestCompletedStage() {
@@ -21,5 +20,9 @@ export default class RepositoryModel extends Model {
     }
 
     return this.courseStageCompletions.sortBy('courseStage.position').lastObject.courseStage;
+  }
+
+  get lastSubmissionAt() {
+    return this.lastSubmission.get('createdAt');
   }
 }

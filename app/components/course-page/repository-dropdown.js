@@ -16,4 +16,8 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
     await this.router.transitionTo({ queryParams: { fresh: true } });
     dropdownActions.close();
   }
+
+  get nonActiveRepositories() {
+    return this.args.repositories.reject((repository) => repository === this.args.activeRepository);
+  }
 }

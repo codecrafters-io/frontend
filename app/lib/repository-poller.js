@@ -21,7 +21,7 @@ export default class RepositoryPoller {
   async poll() {
     await this.store.query('repository', {
       course_id: this.repository.course.get('id'),
-      include: 'language,course,user,course-stage-completions.course-stage',
+      include: 'language,course,user,course-stage-completions.course-stage,last-submission',
     });
   }
 
