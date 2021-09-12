@@ -28,4 +28,4 @@ jobs:
             ${{ runner.os }}-
 
       - run: npm install
-      - run: ./node_modules/.bin/ember test
+      - run: COVERAGE=true ./node_modules/.bin/ember test
