@@ -1,5 +1,5 @@
 import { attr, hasMany } from '@ember-data/model';
-import { equal } from '@ember/object/computed';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 
 export default class CourseModel extends Model {

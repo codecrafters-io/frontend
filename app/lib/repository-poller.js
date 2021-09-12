@@ -1,4 +1,4 @@
-import { cancel, later, run } from '@ember/runloop';
+import { run } from '@ember/runloop';
 
 export default class RepositoryPoller {
   isActive;
