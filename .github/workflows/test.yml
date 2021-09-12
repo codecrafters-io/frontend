@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-
 
       - run: npm install
-      - run: COVERAGE=true npm lint
+      - run: COVERAGE=true ./node_modules/bin/ember test
 
   lint:
     runs-on: ubuntu-latest
