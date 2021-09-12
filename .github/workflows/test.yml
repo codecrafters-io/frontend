@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-
 
       - run: npm install
-      - run: COVERAGE=true ./node_modules/bin/ember test --silent --reporter xunit | tee test-results.xml
+      - run: COVERAGE=true ./node_modules/.bin/ember test --silent --reporter xunit | tee test-results.xml
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
