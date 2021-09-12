@@ -19,15 +19,15 @@
     {{!-- Logo --}}
     <div class="w-12 sm:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
       {{#if @course.isDocker}}
-        <img src="/assets/images/challenge-logos/challenge-logo-docker.svg" class="">
+        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-docker.svg">
       {{else if @course.isGit}}
-        <img src="/assets/images/challenge-logos/challenge-logo-git.svg" class="">
+        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-git.svg">
       {{else if @course.isReact}}
-        <img src="/assets/images/challenge-logos/challenge-logo-react.svg" class="">
+        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-react.svg">
       {{else if @course.isRedis}}
-        <img src="/assets/images/challenge-logos/challenge-logo-redis.svg" class="">
+        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-redis.svg">
       {{else if @course.isSQLite}}
-        <img src="/assets/images/challenge-logos/challenge-logo-sqlite.svg" class="">
+        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-sqlite.svg">
       {{/if}}
     </div>
   </div>

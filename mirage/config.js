@@ -8,7 +8,7 @@ export default function () {
   this.get('/courses');
   this.get('/repositories');
 
-  this.post('/repositories', function (schema, request) {
+  this.post('/repositories', function (schema) {
     let attrs = this.normalizedRequestAttrs();
 
     attrs.cloneUrl = 'https://test';

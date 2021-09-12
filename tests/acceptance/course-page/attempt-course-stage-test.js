@@ -38,7 +38,5 @@ module('Acceptance | course-page | fail-course-stage', function (hooks) {
 
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
     assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...');
-
-    await this.pauseTest();
   });
 });
