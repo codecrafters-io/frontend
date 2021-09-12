@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - run: npm install
+      - run: npm ci --ignore-scripts
       - run: COVERAGE=true ./node_modules/.bin/ember test --silent --reporter xunit | tee test-results.xml
 
       - name: "Upload coverage to Codecov"
@@ -70,5 +70,5 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - run: npm install
+      - run: npm ci --ignore-scripts
       - run: npm run lint
