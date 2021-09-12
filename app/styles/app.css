@@ -9,3 +9,7 @@
 .ember-basic-dropdown-trigger {
   outline: none !important;
 }
+
+.ember-basic-dropdown-content {
+  background: none !important;
+}

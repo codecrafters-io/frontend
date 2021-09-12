@@ -1,0 +1,42 @@
+<CoursePage::StepList::ExpandedItem
+    @class={{@class}}
+    @willBeReplaced={{@willBeReplaced}}
+    data-test-setup-item>
+  <:content>
+    <div class="flex items-center mb-6">
+      <span class="text-2xl text-gray-700 mr-3">Setup</span>
+
+      {{#if this.isComplete}}
+        <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
+      {{else}}
+        <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
+      {{/if}}
+    </div>
+
+    <AnimatedContainer>
+      {{#animated-if @repository.isNew use=this.transition}}
+        <CoursePage::StepList::SetupItem::CreateRepositoryStep
+          @repository={{@repository}}
+          @onLanguageSelection={{this.handleLanguageSelection}} />
+      {{else}}
+        <CoursePage::StepList::SetupItem::CloneRepositoryStep
+          @repository={{@repository}} />
+      {{/animated-if}}
+    </AnimatedContainer>
+  </:content>
+
+  <:footer-content>
+    <div class="flex items-center" data-test-setup-item-footer>
+      {{#if this.isComplete}}
+        <StaticDot @class="mr-3" @color="green" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Git push received.</span>
+      {{else if @repository.isNew}}
+        <StaticDot @class="mr-3" @color="gray" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Select a language to proceed</span>
+      {{else}}
+        <BlinkingDot @class="mr-3" @color="yellow" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
+      {{/if}}
+    </div>
+  </:footer-content>
+</CoursePage::StepList::ExpandedItem>

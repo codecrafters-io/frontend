@@ -1,0 +1,23 @@
+<div class="text-gray-700 leading-7 prose mb-4" data-test-create-repository-step>
+  {{this.instructionsHTML}}
+</div>
+
+<div>
+  {{#if @repository.isSaving}}
+    <div class="flex items-center mt-3">
+      <img src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4">
+      <span class="ml-3 text-gray-700">Initializing a Git Repository...</span>
+    </div>
+  {{else}}
+    <div class="flex items-center flex-wrap">
+      {{#each @repository.course.supportedLanguages as |supportedLanguage|}}
+        <button
+          type="button"
+          class="px-4 py-2 bg-gray-100 hover:bg-gray-200 hover:text-gray-700 focus:shadow-inner border border-gray-300 rounded mr-3 mb-3 text-gray-600 transition-all"
+          {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}>
+          {{supportedLanguage.name}}
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

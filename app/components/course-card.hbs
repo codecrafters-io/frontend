@@ -1,16 +1,17 @@
 <div
-  class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+  class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border"
   role="button"
-  {{on "click" this.navigateToCourse}}>
+  {{on "click" this.navigateToCourse}}
+  data-test-course-card>
   {{!-- Content --}}
   <div class="flex items-start">
     {{!-- Text --}}
     <div class="pr-6 mb-8">
-      <div class="text-lg font-bold text-gray-600 mb-3 mr-3">
+      <div class="text-lg font-bold text-gray-600 mb-3 mr-3" data-test-course-name>
         {{@course.name}}
       </div>
 
-      <div class="text-sm leading-relaxed text-gray-500">
+      <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
         {{@course.shortDescriptionMarkdown}}
       </div>
     </div>
@@ -18,15 +19,15 @@
     {{!-- Logo --}}
     <div class="w-12 sm:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
       {{#if @course.isDocker}}
-        <img src="assets/images/challenge-logos/challenge-logo-docker.svg" class="">
+        <img src="/assets/images/challenge-logos/challenge-logo-docker.svg" class="">
       {{else if @course.isGit}}
-        <img src="assets/images/challenge-logos/challenge-logo-git.svg" class="">
+        <img src="/assets/images/challenge-logos/challenge-logo-git.svg" class="">
       {{else if @course.isReact}}
-        <img src="assets/images/challenge-logos/challenge-logo-react.svg" class="">
+        <img src="/assets/images/challenge-logos/challenge-logo-react.svg" class="">
       {{else if @course.isRedis}}
-        <img src="assets/images/challenge-logos/challenge-logo-redis.svg" class="">
+        <img src="/assets/images/challenge-logos/challenge-logo-redis.svg" class="">
       {{else if @course.isSQLite}}
-        <img src="assets/images/challenge-logos/challenge-logo-sqlite.svg" class="">
+        <img src="/assets/images/challenge-logos/challenge-logo-sqlite.svg" class="">
       {{/if}}
     </div>
   </div>

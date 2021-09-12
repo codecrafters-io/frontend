@@ -1,19 +1,31 @@
-import Route from '@ember/routing/route';
+import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
 export default class CourseRoute extends Route {
-  @service session;
+  @service currentUser;
+  @service store;
 
   async model(params) {
-    await this.session.authenticate('authenticator:custom');
+    await this.currentUser.authenticate();
 
-    let courses = await this.store.findAll('course');
+    let courses = await this.store.findAll('course', { include: 'supported-languages,stages' });
     let course = courses.findBy('slug', params.course_slug);
-    console.log(courses.length);
-    console.log(courses.length);
+
+    let repositories = await this.store.query('repository', {
+      course_id: course.id,
+      include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
+    });
 
     return {
       course: course,
+      repositories: A(repositories.toArray()),
     };
+  }
+
+  setupController(controller, model) {
+    super.setupController(controller, model);
+
+    controller.set('newRepository', this.store.createRecord('repository', { course: model.course }));
   }
 }

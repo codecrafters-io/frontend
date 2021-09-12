@@ -15,7 +15,7 @@ module.exports = {
       red: colors.red,
       teal: colors.teal,
       transparent: 'transparent',
-      yellow: colors.amber,
+      yellow: colors.yellow,
       white: 'white',
     },
     fontFamily: {
@@ -29,7 +29,8 @@ module.exports = {
       width: ['group-hover'],
       scale: ['group-hover'],
       translate: ['group-hover'],
+      display: ['group-hover'],
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };

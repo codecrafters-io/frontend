@@ -1,7 +1,12 @@
 {{page-title "Courses"}}
 
+{{#if this.isDevelopmentOrTest}}
+  <div class="relative">
+    <FakeDataToolbar @repository={{this.activeRepository}} />
+  </div>
+{{/if}}
+
 <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
-  <h1 class="text-2xl font-bold text-gray-700 mb-6">
-    Test {{this.model.course.slug}}
-  </h1>
+  <CoursePage::Header @course={{this.model.course}} @repositories={{this.model.repositories}} @activeRepository={{this.activeRepository}} />
+  <CoursePage::Content @course={{this.model.course}} @repository={{this.activeRepository}} @onRepositoryCreate={{this.handleRepositoryCreate}} />
 </div>

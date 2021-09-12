@@ -1,0 +1,22 @@
+<div class="text-gray-700 leading-7" data-test-clone-repository-step>
+  <p class="mb-5">
+    We've prepared a starter repository for you with some boilerplate code. Execute the commands below to activate the
+    first stage.
+  </p>
+
+  <p class="mb-4">
+    <b class="text-teal-600">Step 1:</b> Clone the repository.
+  </p>
+
+  <CopyableCode @code="git clone {{@repository.cloneUrl}}" @class="mb-5" />
+
+  <p class="mb-4">
+    <b class="text-teal-600">Step 2:</b> Push an empty commit.
+  </p>
+
+  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" @class="mb-5" />
+
+  <p>
+    When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
+  </p>
+</div>

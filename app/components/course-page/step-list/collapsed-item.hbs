@@ -1,0 +1,15 @@
+<div class="border border-gray-300 py-4 px-5 rounded-md shadow-sm flex items-center {{@class}}">
+  {{#if @isComplete}}
+    <img src="/assets/images/icons/tick3.png" class="w-6 mr-3">
+  {{else}}
+    <img src="/assets/images/icons/lock4.svg" class="w-6 mr-3">
+  {{/if}}
+
+  <span class="text-lg text-gray-600 flex-grow">
+    {{@text}}
+  </span>
+
+  <span class="text-gray-400 text-lg">
+    #{{@number}}
+  </span>
+</div>

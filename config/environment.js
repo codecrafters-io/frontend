@@ -35,10 +35,25 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.serverVariables.defaults = {
-      'server-url': 'https://codecrafters.ngrok.io',
-      'current-user-payload': '',
-    };
+    ENV.serverVariables.defaults = {};
+
+    ENV.serverVariables.defaults['current-user-payload'] = JSON.stringify({
+      type: 'users',
+      id: '63c51e91-e448-4ea9-821b-a80415f266d3',
+      attributes: {
+        'avatar-url': 'https://github.com/rohitpaulk.png',
+        'created-at': '2021-08-29T16:50:12.551986+00:00',
+        'github-username': 'rohitpaulk',
+        username: 'rohitpaulk',
+      },
+    });
+
+    ENV.serverVariables.defaults['server-url'] = 'https://localhost:4200';
+    ENV['ember-cli-mirage'] = { enabled: true };
+
+    // To run against development server
+    // ENV.serverVariables.defaults['server-url'] = 'https://codecrafters.ngrok.io';
+    // ENV['ember-cli-mirage'] = { enabled: false };
   }
 
   ENV['@sentry/ember'] = {
@@ -59,11 +74,14 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    ENV['ember-cli-mirage'] = {
+      trackRequests: true,
+    };
   }
 
   if (environment === 'production') {
-    ENV['@sentry/ember'].sentry.dsn =
-      'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
+    ENV['@sentry/ember'].sentry.dsn = 'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
   }
 
   return ENV;

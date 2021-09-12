@@ -1,0 +1,38 @@
+<CoursePage::StepList::ExpandedItem
+    @class={{@class}}
+    @willBeReplaced={{@willBeReplaced}}
+    data-test-course-stage-item>
+  <:content>
+    <div class="flex items-center mb-6">
+      <span class="text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
+
+      {{#if this.isComplete}}
+        <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
+      {{else}}
+        <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
+      {{/if}}
+    </div>
+
+    <div class="text-gray-700 leading-7 prose" data-test-stage-instructions>
+      {{this.instructionsHTML}}
+    </div>
+  </:content>
+
+  <:footer-content>
+    <div class="flex items-center" data-test-course-stage-item-footer>
+      {{#if (eq this.status "waiting")}}
+        <BlinkingDot @class="mr-3" @color="gray" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
+      {{else if (eq this.status "evaluating")}}
+        <BlinkingDot @class="mr-3" @color="yellow" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Running tests...</span>
+      {{else if (eq this.status "failed")}}
+        <StaticDot @class="mr-3" @color="red" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>Tests failed. Check your git push output for logs.</span>
+      {{else if (eq this.status "complete")}}
+        <StaticDot @class="mr-3" @color="green" />
+        <span class="text-gray-600 text-sm" data-test-footer-text>You've completed this stage.</span>
+      {{/if}}
+    </div>
+  </:footer-content>
+</CoursePage::StepList::ExpandedItem>

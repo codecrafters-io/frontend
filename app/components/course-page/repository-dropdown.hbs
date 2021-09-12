@@ -1,0 +1,63 @@
+<div data-test-repository-dropdown>
+  <BasicDropdown @horizontalPosition="right" as |dd| >
+    <dd.Trigger>
+      <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 {{if dd.isOpen "bg-gray-50" "bg-white"}} shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none">
+        <span class="mr-1" data-test-active-repository-name>
+          {{or @activeRepository.name "New Repository"}}
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div class="bg-white rounded-lg shadow-lg border py-2 my-1" data-test-repository-dropdown-content>
+        <div class="text-sm text-gray-700">
+          <div
+            class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group {{if @activeRepository.isNew "text-gray-300"}}"
+            role="button"
+            data-test-dropdown-action>
+            Copy Git Repository URL
+            {{svg-jar "clipboard-copy" class="w-5 ml-4 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}"}}
+          </div>
+          <div
+            class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+            role="button"
+            {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
+            data-test-dropdown-action>
+            Try a different language
+            {{svg-jar "beaker" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+          </div>
+          {{#unless @activeRepository.isNew}}
+            <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" data-test-dropdown-action>
+              Retry using {{@activeRepository.language.name}}
+              {{svg-jar "refresh" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+            </div>
+          {{/unless}}
+        </div>
+        {{#if this.nonActiveRepositories.firstObject}}
+          <div class="pl-3 text-sm">
+            <div class="font-bold text-gray-600 mb-2 mt-3">
+              Switch to a different repo:
+            </div>
+            <div class="">
+              {{#each this.nonActiveRepositories as |repository|}}
+                <div
+                    class="flex justify-between items-center py-2 pl-2 pr-3 hover:bg-gray-50 group cursor-pointer"
+                    role="button"
+                    data-test-repository-link
+                    {{on "click" (fn this.handleRepositoryLinkClick repository dd.actions)}} >
+                  <div class="flex items-center mr-6">
+                    <img src={{repository.language.grayLogoUrl}} class="w-4 h-4 mr-2 block group-hover:hidden">
+                    <img src={{repository.language.tealLogoUrl}} class="w-4 h-4 mr-2 hidden group-hover:block">
+                    <span class="text-gray-700">{{repository.name}}</span>
+                  </div>
+                  <span class="text-gray-400 text-xs">(pushed 4 days ago)</span>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>

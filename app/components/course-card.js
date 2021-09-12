@@ -6,7 +6,7 @@ export default class CourseCardComponent extends Component {
   @service router;
 
   @action
-  navigateToCourse() {
-    this.router.transitionTo('course', this.args.course.slug);
+  async navigateToCourse() {
+    await this.router.transitionTo('course', this.args.course.slug, { queryParams: { fresh: null } });
   }
 }
