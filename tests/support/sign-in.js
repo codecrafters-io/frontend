@@ -1,4 +1,4 @@
-export default function (owner) {
+export default function (owner, mirageServer) {
   let serverVariables = owner.lookup('service:serverVariables');
 
   // This is actually a string, but ember-cli-server-variables parses it
@@ -12,4 +12,14 @@ export default function (owner) {
       username: 'rohitpaulk',
     },
   });
+
+  if (mirageServer) {
+    mirageServer.create('user', {
+      id: '63c51e91-e448-4ea9-821b-a80415f266d3',
+      avatarUrl: 'https://github.com/rohitpaulk.png',
+      createdAt: new Date(),
+      githubUsername: 'rohitpaulk',
+      username: 'rohitpaulk',
+    });
+  }
 }

@@ -13,21 +13,23 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
+  // setupClock(hooks);
 
   test('can view leaderboard when no recent players are present', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
-    let currentUser = this.owner.lookup('service:currentUser').record;
+    let currentUser = this.server.schema.users.findBy({ id: this.owner.lookup('service:currentUser').currentUserId });
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', { course: redis, language: python, user: currentUser });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build Your Own Redis');
 
     await this.pauseTest();
 
-    // assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
-    // assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
     //
     // assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
     // assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...');

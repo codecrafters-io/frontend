@@ -7,6 +7,7 @@ export default function () {
 
   this.get('/courses');
   this.get('/repositories');
+  this.get('/leaderboard-entries');
 
   this.post('/repositories', function (schema) {
     let attrs = this.normalizedRequestAttrs();
