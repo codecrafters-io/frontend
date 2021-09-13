@@ -2,12 +2,11 @@ import { Factory } from 'ember-cli-mirage';
 
 export default Factory.extend({
   afterCreate(courseStageCompletion, server) {
-    console.log('afterCreate ran');
-    server.create('leaderboard-entry', {
-      highestCompletedCourseStage: courseStageCompletion.courseStage,
-      language: courseStageCompletion.repository.language,
-      user: courseStageCompletion.repository.user,
-      hasActiveSubmission: false,
+    let leaderboardEntry = server.schema.leaderboardEntries.findOrCreateBy({
+      userId: courseStageCompletion.repository.user.id,
+      languageId: courseStageCompletion.repository.language.id,
     });
+
+    leaderboardEntry.update({ activeCourseStage: courseStageCompletion.courseStage, hasActiveSubmission: false });
   },
 });
