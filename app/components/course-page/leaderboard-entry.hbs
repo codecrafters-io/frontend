@@ -1,0 +1,30 @@
+<div
+  class="flex items-center justify-between py-1.5 group cursor-pointer pl-4
+         border-l-2 {{if (eq @username 'rohitpaulk') 'border-teal-500' 'border-transparent'}}">
+  <div class="flex items-center">
+    <img src="https://github.com/{{@username}}.png" class="w-8 h-8 border rounded shadow-sm group-hover:shadow mr-1.5 transition-shadow rounded-full">
+    <span class="text-xs text-gray-500 group-hover:underline">{{@username}}</span>
+  </div>
+  <div class="flex items-center">
+    {{#if @isActive}}
+      <div class="w-16 h-3.5 bg-white mr-2 rounded flex overflow-hidden border border-yellow-500 group-hover:bg-white transition-colors animate-pulse">
+        <div class="w-2/3 bg-gradient-to-r from-yellow-500 to-yellow-400 transition-colors">
+        </div>
+      </div>
+    {{else}}
+      <div class="w-16 h-3.5 bg-teal-50 mr-2 rounded flex overflow-hidden border border-teal-500 group-hover:bg-white transition-colors">
+        <div class="w-1/2 bg-gradient-to-r from-teal-500 to-teal-400 transition-colors">
+        </div>
+      </div>
+    {{/if}}
+    {{#if @isActive}}
+      <span class="text-xs text-yellow-500 font-bold">
+        4/7
+      </span>
+    {{else}}
+      <span class="text-xs text-teal-500 font-bold">
+        4/7
+      </span>
+    {{/if}}
+  </div>
+</div>
