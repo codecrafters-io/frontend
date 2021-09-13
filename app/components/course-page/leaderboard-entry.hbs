@@ -3,9 +3,14 @@
          border-l-2 {{if (eq @username 'rohitpaulk') 'border-teal-500' 'border-transparent'}}">
   <div class="flex items-center">
     <img src="https://github.com/{{@username}}.png" class="w-8 h-8 border rounded shadow-sm group-hover:shadow mr-1.5 transition-shadow rounded-full">
-    <span class="text-xs text-gray-500 group-hover:underline">{{@username}}</span>
+    <span class="text-xs text-gray-500 group-hover:underline mr-2">{{@username}}</span>
   </div>
   <div class="flex items-center">
+    {{#if @isActive}}
+      <img src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
+    {{else}}
+      <img src="/assets/images/language-logos/go-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
+    {{/if}}
     {{#if @isActive}}
       <div class="w-16 h-3.5 bg-white mr-2 rounded flex overflow-hidden border border-yellow-500 group-hover:bg-white transition-colors animate-pulse">
         <div class="w-2/3 bg-gradient-to-r from-yellow-500 to-yellow-400 transition-colors">
