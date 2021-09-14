@@ -23,7 +23,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build Your Own Redis');
 
-    let currentUser = this.owner.lookup('service:currentUser').record;
+    let currentUser = this.server.schema.users.first();
 
     assert.equal(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
 
@@ -74,5 +74,74 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
     assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must still be 0 if first stage is not completed');
+  });
+
+  test('can view leaderboard when other recent players are present', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let otherUser = this.server.create('user', {
+      id: 'other-user',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    this.server.create('leaderboard-entry', {
+      status: 'idle',
+      activeCourseStage: redis.stages.models.find((x) => x.position === 2),
+      language: python,
+      user: otherUser,
+      lastAttemptAt: new Date(),
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build Your Own Redis');
+
+    assert.equal(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
+    assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+
+    await coursePage.setupItem.clickOnLanguageButton('Python');
+
+    assert.equal(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once course has started');
+    assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should be sorted by last attempt');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entries should be sorted by last attempt');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '0 / 2', 'progress text must be shown');
+
+    let repository = this.server.schema.repositories.find(1);
+    repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating', createdAt: new Date() }) });
+
+    await this.clock.tick(2001); // Wait for poll
+    await finishRender();
+
+    await this.clock.tick(2001); // Wait for transition
+    await finishRender();
+
+    this.server.schema.submissions.find(1).update({ status: 'success' });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: repository.course.stages.models.find((x) => x.position === 1),
+      completedAt: new Date(),
+    });
+
+    await this.clock.tick(2001); // Wait for poll
+    await finishRender();
+
+    await this.clock.tick(2001); // Wait for transition
+    await finishRender();
+
+    assert.equal(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once other user has been passed');
+    assert.equal(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should be sorted by last attempt');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entries should be sorted by last attempt');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
   });
 });

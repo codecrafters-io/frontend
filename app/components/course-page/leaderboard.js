@@ -4,6 +4,8 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import LeaderboardPoller from 'codecrafters-frontend/lib/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
+import move from 'ember-animated/motions/move';
+import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 
 export default class CoursePageLeaderboardComponent extends Component {
   transition = fade;
@@ -18,7 +20,7 @@ export default class CoursePageLeaderboardComponent extends Component {
       return [];
     }
 
-    return this.entriesFromAPI.toArray().concat(this.entriesFromCurrentUser);
+    return this.entriesFromAPI.toArray().concat(this.entriesFromCurrentUser).sortBy('activeCourseStage.position', 'lastAttemptAt').reverse();
   }
 
   get entriesFromCurrentUser() {
@@ -32,6 +34,7 @@ export default class CoursePageLeaderboardComponent extends Component {
         activeCourseStage: this.args.activeRepository.activeStage,
         language: this.args.activeRepository.language,
         user: this.args.activeRepository.user,
+        lastAttemptAt: this.args.activeRepository.lastSubmissionAt || new Date(),
       }),
     ];
   }
@@ -55,6 +58,21 @@ export default class CoursePageLeaderboardComponent extends Component {
   @action
   async handlePoll(entriesFromAPI) {
     this.entriesFromAPI = entriesFromAPI;
+  }
+
+  // eslint-disable-next-line require-yield
+  *listTransition({ insertedSprites, keptSprites, removedSprites }) {
+    for (let sprite of keptSprites) {
+      move(sprite);
+    }
+
+    for (let sprite of insertedSprites) {
+      fadeIn(sprite);
+    }
+
+    for (let sprite of removedSprites) {
+      fadeOut(sprite);
+    }
   }
 
   startLeaderboardPoller() {

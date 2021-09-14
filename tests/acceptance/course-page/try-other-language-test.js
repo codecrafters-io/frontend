@@ -20,8 +20,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     signIn(this.owner);
     testScenario(this.server);
 
-    let currentUser = this.owner.lookup('service:currentUser').record;
-
+    let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 

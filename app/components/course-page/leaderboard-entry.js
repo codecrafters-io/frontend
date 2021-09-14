@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { htmlSafe } from '@ember/template';
 
 export default class CoursePageLeaderboardEntryComponent extends Component {
   get progressNumerator() {
@@ -11,5 +12,9 @@ export default class CoursePageLeaderboardEntryComponent extends Component {
 
   get progressPercentage() {
     return 100 * (this.progressNumerator / this.progressDenominator);
+  }
+
+  get progressBarWidthStyle() {
+    return htmlSafe(`width: ${this.progressPercentage}%;`);
   }
 }
