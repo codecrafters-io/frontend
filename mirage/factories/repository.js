@@ -1,6 +1,7 @@
 import { Factory, trait } from 'ember-cli-mirage';
 
 export default Factory.extend({
+  createdAt: () => new Date(),
   cloneUrl: 'git://test.com',
   name: 'Dummy name',
 
@@ -22,14 +23,14 @@ export default Factory.extend({
       let submission = server.create('submission', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
-        createdAt: new Date(),
+        createdAt: repository.createdAt,
         status: 'success',
       });
 
       server.create('course-stage-completion', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
-        completedAt: new Date(),
+        completedAt: repository.createdAt,
       });
 
       repository.update('lastSubmission', submission);

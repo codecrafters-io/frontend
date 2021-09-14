@@ -12,6 +12,7 @@ export default class CoursePageLeaderboardComponent extends Component {
   @tracked isLoadingEntries = true;
   @tracked entriesFromAPI;
   @tracked polledCourse;
+  @service currentUser;
   @service store;
   @service visibility;
 
@@ -20,7 +21,18 @@ export default class CoursePageLeaderboardComponent extends Component {
       return [];
     }
 
-    return this.entriesFromAPI.toArray().concat(this.entriesFromCurrentUser).sortBy('activeCourseStage.position', 'lastAttemptAt').reverse();
+    let entries = [];
+
+    if (this.entriesFromCurrentUser.length > 0) {
+      entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.currentUser.record));
+    } else {
+      entries = entries.concat(this.entriesFromAPI.toArray());
+    }
+
+    console.log(entries.mapBy('lastAttemptAt'));
+    console.log(this.entriesFromCurrentUser.mapBy('lastAttemptAt'));
+
+    return entries.concat(this.entriesFromCurrentUser).sortBy('activeCourseStage.position', 'lastAttemptAt').reverse();
   }
 
   get entriesFromCurrentUser() {
@@ -34,7 +46,7 @@ export default class CoursePageLeaderboardComponent extends Component {
         activeCourseStage: this.args.activeRepository.activeStage,
         language: this.args.activeRepository.language,
         user: this.args.activeRepository.user,
-        lastAttemptAt: this.args.activeRepository.lastSubmissionAt || new Date(),
+        lastAttemptAt: this.args.activeRepository.lastSubmissionAt || this.args.activeRepository.createdAt,
       }),
     ];
   }

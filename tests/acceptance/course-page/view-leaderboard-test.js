@@ -144,4 +144,44 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.equal(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entries should be sorted by last attempt');
     assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
   });
+
+  test('can view leaderboard when current user has leaderboard entry', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let otherUser = this.server.create('user', {
+      id: 'other-user',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+      createdAt: new Date(2002),
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: otherUser,
+      createdAt: new Date(2003),
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build Your Own Redis');
+
+    assert.equal(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
+    assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
+  });
 });

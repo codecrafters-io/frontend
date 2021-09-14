@@ -1,6 +1,6 @@
 <div
     class="flex items-center justify-between py-1.5 group cursor-pointer pl-4
-           border-l-2 {{if (eq @entry.user.username 'rohitpaulk') 'border-teal-500' 'border-transparent'}}"
+           border-l-2 {{if this.isForCurrentUser 'border-teal-500' 'border-transparent'}}"
     data-test-leaderboard-entry>
   <div class="flex items-center">
     <img src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-full">

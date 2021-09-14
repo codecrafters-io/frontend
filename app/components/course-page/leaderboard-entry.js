@@ -1,7 +1,14 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
+import { inject as service } from '@ember/service';
 
 export default class CoursePageLeaderboardEntryComponent extends Component {
+  @service currentUser;
+
+  get isForCurrentUser() {
+    return this.args.entry.user.id === this.currentUser.record.id;
+  }
+
   get progressNumerator() {
     return this.args.entry.activeCourseStage.position - 1;
   }
