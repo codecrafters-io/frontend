@@ -9,7 +9,7 @@ import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import signIn from 'codecrafters-frontend/tests/support/sign-in';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | fail-course-stage', function (hooks) {
+module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -38,5 +38,7 @@ module('Acceptance | course-page | fail-course-stage', function (hooks) {
 
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
     assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...');
+
+    await coursesPage.visit(); // This interacts with start-course-stage, not sure why
   });
 });

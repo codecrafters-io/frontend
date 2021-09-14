@@ -60,6 +60,5 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is visible');
-    await coursesPage.visit(); // Page keeps polling, so tests wouldn't end
   });
 });
