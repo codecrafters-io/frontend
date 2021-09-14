@@ -32,6 +32,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.equal(coursePage.leaderboard.entries.length, 1, '1 leaderboard entry should be present once course has started');
     assert.equal(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to current user');
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle until user pushes submission');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 2', 'progress text must be shown');
 
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
@@ -49,5 +50,6 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 2', 'progress text must still be 0 if first stage is not completed');
   });
 });

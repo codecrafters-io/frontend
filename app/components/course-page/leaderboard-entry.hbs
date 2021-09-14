@@ -19,7 +19,7 @@
       <div class="bg-gradient-to-r {{if @entry.statusIsEvaluating 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}} transition-all" style="width: {{this.progressPercentage}}%">
       </div>
     </div>
-    <span class="text-xs {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}} font-bold">
+    <span class="text-xs {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}} font-bold" data-test-progress-text>
       {{this.progressNumerator}} / {{this.progressDenominator}}
     </span>
   </div>
