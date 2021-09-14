@@ -107,7 +107,7 @@ export default class CoursePageContentStepListComponent extends Component {
     this.stopRepositoryPoller();
 
     if (this.repository) {
-      this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility });
+      this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility, intervalMilliseconds: 2000 });
       this.repositoryPoller.start(this.repository, this.handlePoll);
       this.polledRepository = this.repository;
     }

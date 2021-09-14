@@ -26,6 +26,6 @@ export default class CourseRoute extends Route {
   setupController(controller, model) {
     super.setupController(controller, model);
 
-    controller.set('newRepository', this.store.createRecord('repository', { course: model.course }));
+    controller.set('newRepository', this.store.createRecord('repository', { course: model.course, user: this.currentUser.record }));
   }
 }

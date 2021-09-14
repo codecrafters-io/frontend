@@ -6,9 +6,10 @@ export default class Poller {
   scheduledPollTimeoutId;
   store;
 
-  constructor({ store, visibilityService }) {
+  constructor({ store, visibilityService, intervalMilliseconds }) {
     this.store = store;
     this.visibilityService = visibilityService;
+    this.intervalMilliseconds = intervalMilliseconds;
 
     this.isActive = false;
     this.model = null;
@@ -37,7 +38,7 @@ export default class Poller {
       if (this.isActive) {
         this.scheduleDelayedPoll();
       }
-    }, 2000);
+    }, this.intervalMilliseconds);
   }
 
   start(model, onPoll) {

@@ -25,7 +25,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
 
-    assert.equal(this.server.pretender.handledRequests.length, 3, 'first 3 requests were executed');
+    assert.equal(this.server.pretender.handledRequests.length, 4, 'first 3 requests were executed');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
@@ -33,7 +33,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
 
-    assert.equal(this.server.pretender.handledRequests.length, 4, 'create repository request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, 5, 'create repository request was executed');
 
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep, 'current step is clone repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
@@ -42,7 +42,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 5, 'poll request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, 6, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     let repository = this.server.schema.repositories.find(1);
@@ -51,7 +51,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 6, 'poll request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, 7, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 

@@ -1,22 +1,26 @@
 <div
-  class="flex items-center justify-between py-1.5 group cursor-pointer pl-4
-         border-l-2 {{if (eq @entry.user.username 'rohitpaulk') 'border-teal-500' 'border-transparent'}}">
+    class="flex items-center justify-between py-1.5 group cursor-pointer pl-4
+           border-l-2 {{if (eq @entry.user.username 'rohitpaulk') 'border-teal-500' 'border-transparent'}}"
+    data-test-leaderboard-entry>
   <div class="flex items-center">
     <img src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-full">
-    <span class="text-xs text-gray-500 group-hover:underline mr-2">{{@entry.user.username}}</span>
+    <span class="text-xs text-gray-500 group-hover:underline mr-2" data-test-username>{{@entry.user.username}}</span>
   </div>
   <div class="flex items-center">
-    {{#if @isActive}}
+    {{#if @entry.statusIsEvaluating}}
       <img src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
     {{else}}
       <img src="/assets/images/language-logos/go-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
     {{/if}}
-    <div class="w-16 h-3.5 bg-teal-50 mr-2 rounded flex overflow-hidden border group-hover:bg-white transition-all {{if @isActive 'border-yellow-500 animate-pulse' 'border-teal-500'}}">
-      <div class="bg-gradient-to-r {{if @isActive 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}} transition-all" style="width: {{this.progressPercentage}}%">
+    <div
+      class="w-16 h-3.5 mr-2 rounded flex overflow-hidden border group-hover:bg-white transition-all
+             {{if @entry.statusIsEvaluating 'bg-yellow-50 border-yellow-500 animate-pulse' 'bg-teal-50 border-teal-500'}}"
+      data-test-progress-bar-container>
+      <div class="bg-gradient-to-r {{if @entry.statusIsEvaluating 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}} transition-all" style="width: {{this.progressPercentage}}%">
       </div>
     </div>
-    <span class="text-xs {{if @isActive 'text-yellow-500' 'text-teal-500'}} font-bold">
-      {{this.progressNumerator}}/{{this.progressDenominator}}
+    <span class="text-xs {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}} font-bold">
+      {{this.progressNumerator}} / {{this.progressDenominator}}
     </span>
   </div>
 </div>

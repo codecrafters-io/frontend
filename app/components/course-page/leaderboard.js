@@ -1,21 +1,44 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import Component from '@glimmer/component';
 import LeaderboardPoller from 'codecrafters-frontend/lib/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
 
 export default class CoursePageLeaderboardComponent extends Component {
   transition = fade;
   @tracked isLoadingEntries = true;
-  @tracked entries;
+  @tracked entriesFromAPI;
   @tracked polledCourse;
   @service store;
   @service visibility;
 
+  get entries() {
+    if (this.isLoadingEntries) {
+      return [];
+    }
+
+    return this.entriesFromAPI.toArray().concat(this.entriesFromCurrentUser);
+  }
+
+  get entriesFromCurrentUser() {
+    if (this.args.repositories.length === 0 && this.args.activeRepository.isNew) {
+      return [];
+    }
+
+    return [
+      this.store.createRecord('leaderboard-entry', {
+        status: this.args.activeRepository.lastSubmissionIsEvaluating ? 'evaluating' : 'idle',
+        activeCourseStage: this.args.activeRepository.activeStage,
+        language: this.args.activeRepository.language,
+        user: this.args.activeRepository.user,
+      }),
+    ];
+  }
+
   @action
   async handleDidInsert() {
-    this.entries = await this.store.query('leaderboard-entry', {
+    this.entriesFromAPI = await this.store.query('leaderboard-entry', {
       course_id: this.args.course.id,
       include: 'language,active-course-stage,user',
     });
@@ -26,17 +49,17 @@ export default class CoursePageLeaderboardComponent extends Component {
 
   @action
   async handleWillDestroy() {
-    this.stopRepositoryPoller();
+    this.stopLeaderboardPoller();
   }
 
   @action
-  async handlePoll(entries) {
-    this.entries = entries;
+  async handlePoll(entriesFromAPI) {
+    this.entriesFromAPI = entriesFromAPI;
   }
 
   startLeaderboardPoller() {
     this.stopLeaderboardPoller();
-    this.leaderboardPoller = new LeaderboardPoller({ store: this.store, visibilityService: this.visibility });
+    this.leaderboardPoller = new LeaderboardPoller({ store: this.store, visibilityService: this.visibility, intervalMilliseconds: 5000 });
     this.leaderboardPoller.start(this.args.course, this.handlePoll);
     this.polledCourse = this.args.course;
   }
