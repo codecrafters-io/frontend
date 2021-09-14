@@ -29,9 +29,6 @@ export default class CoursePageLeaderboardComponent extends Component {
       entries = entries.concat(this.entriesFromAPI.toArray());
     }
 
-    console.log(entries.mapBy('lastAttemptAt'));
-    console.log(this.entriesFromCurrentUser.mapBy('lastAttemptAt'));
-
     return entries.concat(this.entriesFromCurrentUser).sortBy('activeCourseStage.position', 'lastAttemptAt').reverse();
   }
 
@@ -40,11 +37,15 @@ export default class CoursePageLeaderboardComponent extends Component {
       return [];
     }
 
+    let allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]);
+    let anyLastSubmissionIsEvaluating = allRepositories.isAny('lastSubmissionIsEvaluating');
+    let highestStageRepository = allRepositories.sortBy('activeStage.position', 'lastSubmissionAt').lastObject;
+
     return [
       this.store.createRecord('leaderboard-entry', {
-        status: this.args.activeRepository.lastSubmissionIsEvaluating ? 'evaluating' : 'idle',
-        activeCourseStage: this.args.activeRepository.activeStage,
-        language: this.args.activeRepository.language,
+        status: anyLastSubmissionIsEvaluating ? 'evaluating' : 'idle',
+        activeCourseStage: highestStageRepository.activeStage,
+        language: highestStageRepository.language,
         user: this.args.activeRepository.user,
         lastAttemptAt: this.args.activeRepository.lastSubmissionAt || this.args.activeRepository.createdAt,
       }),

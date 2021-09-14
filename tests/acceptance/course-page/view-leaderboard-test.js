@@ -183,5 +183,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
     assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
     assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.clickOnAction('Try a different language');
+
+    assert.equal(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
+    assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
   });
 });
