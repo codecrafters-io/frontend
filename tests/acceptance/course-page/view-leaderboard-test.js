@@ -37,19 +37,42 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await this.clock.tick(2001);
+    await this.clock.tick(2001); // Wait for poll
     await finishRender();
 
-    await this.clock.tick(2001);
+    await this.clock.tick(2001); // Wait for transition
     await finishRender();
 
-    let submission = this.server.schema.submissions.find(1);
-    submission.update({ status: 'failed' });
+    this.server.schema.submissions.find(1).update({ status: 'failed' });
 
     await this.clock.tick(2001);
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
     assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 2', 'progress text must still be 0 if first stage is not completed');
+
+    repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
+
+    await this.clock.tick(2001);
+    await finishRender();
+
+    assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 2', 'progress text must still be 0 if first stage is not completed');
+
+    this.server.schema.submissions.find(2).update({ status: 'success' });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: repository.course.stages.models.find((x) => x.position === 1),
+    });
+
+    await this.clock.tick(2001); // Poll
+    await finishRender();
+
+    await this.clock.tick(2001); // Transition
+    await finishRender();
+
+    assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must still be 0 if first stage is not completed');
   });
 });
