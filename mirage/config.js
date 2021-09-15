@@ -7,7 +7,7 @@ export default function () {
 
   this.get('/courses');
 
-  this.get('/repositories', function (schema, request) {
+  this.get('/repositories', function (schema) {
     return schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
   });
 

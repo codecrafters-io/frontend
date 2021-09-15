@@ -3,9 +3,9 @@
            border-l-2 {{if this.isForCurrentUser 'border-teal-500' 'border-transparent'}}"
     data-test-leaderboard-entry>
   <div class="flex items-center">
-    <img src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-full">
+    <img alt="avatar" src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-full">
     <span class="text-xs text-gray-500 group-hover:underline mr-2" data-test-username>{{@entry.user.username}}</span>
-    <img src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
+    <img alt="{{@entry.language.name}}" src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
   </div>
   <div class="flex items-center">
     <span class="mr-2 text-xs {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}} font-bold" data-test-progress-text>
