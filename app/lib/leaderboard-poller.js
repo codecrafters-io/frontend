@@ -4,7 +4,7 @@ export default class LeaderboardPoller extends Poller {
   async doPoll() {
     return await this.store.query('leaderboard-entry', {
       course_id: this.model.id,
-      include: 'language,active-course-stage,user',
+      include: 'language,current-course-stage,user',
     });
   }
 }

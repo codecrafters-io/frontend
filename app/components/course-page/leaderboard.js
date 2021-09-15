@@ -29,7 +29,7 @@ export default class CoursePageLeaderboardComponent extends Component {
       entries = entries.concat(this.entriesFromAPI.toArray());
     }
 
-    return entries.concat(this.entriesFromCurrentUser).sortBy('activeCourseStage.position', 'lastAttemptAt').reverse();
+    return entries.concat(this.entriesFromCurrentUser).sortBy('currentCourseStage.position', 'lastAttemptAt').reverse();
   }
 
   get entriesFromCurrentUser() {
@@ -41,10 +41,11 @@ export default class CoursePageLeaderboardComponent extends Component {
     let anyLastSubmissionIsEvaluating = allRepositories.isAny('lastSubmissionIsEvaluating');
     let highestStageRepository = allRepositories.sortBy('activeStage.position', 'lastSubmissionAt').lastObject;
 
+    // TODO: Add "completed status"
     return [
       this.store.createRecord('leaderboard-entry', {
         status: anyLastSubmissionIsEvaluating ? 'evaluating' : 'idle',
-        activeCourseStage: highestStageRepository.activeStage,
+        currentCourseStage: highestStageRepository.activeStage,
         language: highestStageRepository.language,
         user: this.args.activeRepository.user,
         lastAttemptAt: this.args.activeRepository.lastSubmissionAt || this.args.activeRepository.createdAt,
@@ -56,7 +57,7 @@ export default class CoursePageLeaderboardComponent extends Component {
   async handleDidInsert() {
     this.entriesFromAPI = await this.store.query('leaderboard-entry', {
       course_id: this.args.course.id,
-      include: 'language,active-course-stage,user',
+      include: 'language,current-course-stage,user',
     });
 
     this.isLoadingEntries = false;

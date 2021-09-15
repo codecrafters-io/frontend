@@ -94,7 +94,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     this.server.create('leaderboard-entry', {
       status: 'idle',
-      activeCourseStage: redis.stages.models.find((x) => x.position === 2),
+      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
       language: python,
       user: otherUser,
       lastAttemptAt: new Date(),

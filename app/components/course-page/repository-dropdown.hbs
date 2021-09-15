@@ -12,13 +12,25 @@
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1" data-test-repository-dropdown-content>
         <div class="text-sm text-gray-700">
-          <div
-            class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group {{if @activeRepository.isNew "text-gray-300"}}"
-            role="button"
-            data-test-dropdown-action>
-            Copy Git Repository URL
-            {{svg-jar "clipboard-copy" class="w-5 ml-4 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}"}}
-          </div>
+            <div
+                class="px-3 py-2 hover:bg-gray-50 flex group {{if @activeRepository.isNew "text-gray-300"}}"
+                role="button"
+                {{on "click" (fn this.handleCopyGitRepositoryURLClick dd.actions)}}
+                data-test-dropdown-action>
+              <AnimatedContainer @class="w-full">
+                {{#animated-if this.gitRepositoryURLWasCopiedRecently use=this.transition}}
+                  <div class="flex items-center justify-between">
+                    <span class="text-teal-500">Copied!</span>
+                    {{svg-jar "check" class="w-5 ml-4 text-teal-500"}}
+                  </div>
+                {{else}}
+                  <div class="flex items-center justify-between">
+                    <span>Copy Git Repository URL</span>
+                    {{svg-jar "clipboard-copy" class="w-5 ml-4 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}"}}
+                  </div>
+                {{/animated-if}}
+              </AnimatedContainer>
+            </div>
           <div
             class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
             role="button"
