@@ -25,6 +25,7 @@ export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItemIndex;
   @tracked activeItemWillBeReplaced;
   @tracked polledRepository;
+  @tracked selectedItemIndex = null;
   @service store;
   transition = fade;
   @service visibility;
@@ -59,6 +60,30 @@ export default class CoursePageContentStepListComponent extends Component {
     }
   }
 
+  get expandedItemIndex() {
+    return this.selectedItemIndex === null ? this.activeItemIndex : this.selectedItemIndex;
+  }
+
+  @action
+  async handleCollapsedSetupItemClick() {
+    console.log('handleCollasedSEtupItemClick');
+    console.log(this.activeItemIndex);
+    if (this.activeItemIndex === 0) {
+      this.selectedItemIndex = null;
+    } else {
+      this.selectedItemIndex = 0;
+    }
+  }
+
+  @action
+  async handleCollapsedStageItemClick(itemIndex) {
+    if (itemIndex === this.activeItemIndex) {
+      this.selectedItemIndex = null;
+    } else {
+      this.selectedItemIndex = itemIndex;
+    }
+  }
+
   @action
   async handleDidInsert() {
     this.startRepositoryPoller();
@@ -72,6 +97,10 @@ export default class CoursePageContentStepListComponent extends Component {
 
   @action
   async handlePoll() {
+    if (this.isViewingNonActiveItem) {
+      return;
+    }
+
     let newActiveItemIndex = this.computeActiveIndex();
 
     if (newActiveItemIndex === this.activeItemIndex) {
@@ -93,6 +122,10 @@ export default class CoursePageContentStepListComponent extends Component {
   @action
   async handleWillDestroy() {
     this.stopRepositoryPoller();
+  }
+
+  get isViewingNonActiveItem() {
+    return this.selectedItemIndex && this.selectedItemIndex !== this.activeItemIndex;
   }
 
   get polledRepositoryNeedsToBeUpdated() {

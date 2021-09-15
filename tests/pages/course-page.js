@@ -1,11 +1,14 @@
-import { create, visitable } from 'ember-cli-page-object';
-import SetupItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/setup-item';
+import { clickOnText, collection, create, visitable } from 'ember-cli-page-object';
+import CollapsedItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/collapsed-item';
 import CourseStageItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/course-stage-item';
-import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
+import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
+import SetupItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/setup-item';
 
 export default create({
   activeCourseStageItem: CourseStageItem,
+  clickOnCollapsedItem: clickOnText('[data-test-collapsed-item]'),
+  collapsedItems: collection('[data-test-collapsed-item]', CollapsedItem),
 
   get courseStageItemIsActive() {
     return this.activeCourseStageItem.isVisible;

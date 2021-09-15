@@ -7,7 +7,7 @@
     {{#each this.items as |item index|}}
       {{#if (eq item.type "SetupItem")}}
         <AnimatedContainer>
-          {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
+          {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
           <CoursePage::StepList::SetupItem
             @course={{@course}}
             @class="mb-4"
@@ -15,30 +15,32 @@
             @repository={{@repository}}
             @onRepositoryCreate={{@onRepositoryCreate}} />
           {{else}}
-          <CoursePage::StepList::CollapsedItem
-            @class="mb-4"
-            @number={{add 1 index}}
-            @text="Setup"
-            @isComplete={{true}} />
+            <CoursePage::StepList::CollapsedItem
+              @class="mb-4"
+              @number={{add 1 index}}
+              @text="Setup"
+              @onClick={{this.handleCollapsedSetupItemClick}}
+              @isComplete={{true}} />
           {{/animated-if}}
         </AnimatedContainer>
       {{/if}}
 
       {{#if (eq item.type "CourseStageItem")}}
         <AnimatedContainer>
-          {{#animated-if (eq index this.activeItemIndex) use=this.transition}}
-          <CoursePage::StepList::CourseStageItem
-            @courseStage={{item.courseStage}}
-            @repository={{@repository}}
-            @class="mb-4"
-            @willBeReplaced={{this.activeItemWillBeReplaced}}
-            @onComplete={{this.handleItemCompleted}} />
+          {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
+            <CoursePage::StepList::CourseStageItem
+              @courseStage={{item.courseStage}}
+              @repository={{@repository}}
+              @class="mb-4"
+              @willBeReplaced={{this.activeItemWillBeReplaced}}
+              @onComplete={{this.handleItemCompleted}} />
           {{else}}
-          <CoursePage::StepList::CollapsedItem
-            @class="mb-4"
-            @number={{add 1 index}}
-            @text={{item.courseStage.name}}
-            @isComplete={{true}} />
+            <CoursePage::StepList::CollapsedItem
+              @class="mb-4"
+              @number={{add 1 index}}
+              @text={{item.courseStage.name}}
+              @isComplete={{true}}
+              @onClick={{fn this.handleCollapsedStageItemClick index}} />
           {{/animated-if}}
         </AnimatedContainer>
       {{/if}}
