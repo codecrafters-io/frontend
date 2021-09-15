@@ -19,8 +19,15 @@ export default class FakeDataToolbarComponent extends Component {
 
   @action
   async handleFailTestsButtonClick() {
-    let submission = this.args.repository.lastSubmission;
-    window.server.schema.submissions.find(submission.id).update({ status: 'failure' });
+    let submission = window.server.schema.submissions.find(this.args.repository.lastSubmission.id);
+
+    let leaderboardEntry = window.server.schema.leaderboardEntries.findBy({
+      userId: submission.repository.user.id,
+      languageId: submission.repository.language.id,
+    });
+
+    submission.update({ status: 'failure' });
+    leaderboardEntry.update({ status: 'idle' });
   }
 
   @action

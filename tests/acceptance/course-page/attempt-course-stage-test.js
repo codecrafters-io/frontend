@@ -9,7 +9,7 @@ import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import signIn from 'codecrafters-frontend/tests/support/sign-in';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | fail-course-stage', function (hooks) {
+module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -19,8 +19,7 @@ module('Acceptance | course-page | fail-course-stage', function (hooks) {
     signIn(this.owner);
     testScenario(this.server);
 
-    let currentUser = this.owner.lookup('service:currentUser').record;
-
+    let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
@@ -34,9 +33,11 @@ module('Acceptance | course-page | fail-course-stage', function (hooks) {
     await coursesPage.clickOnCourse('Build Your Own Redis');
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
-    assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
+    assert.equal(this.server.pretender.handledRequests.length, 4); // Fetch course (courses page + course page) + fetch repositories + leaderboard
 
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
     assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...');
+
+    await coursesPage.visit(); // This interacts with start-course-stage, not sure why
   });
 });

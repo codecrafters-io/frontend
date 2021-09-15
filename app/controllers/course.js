@@ -1,4 +1,5 @@
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 import config from 'codecrafters-frontend/config/environment';
@@ -14,6 +15,7 @@ export default class CourseController extends Controller {
   @tracked isCreatingNewRepository = false;
   @tracked selectedRepositoryId;
   @tracked newRepository;
+  @service currentUser;
 
   get activeRepository() {
     if (this.selectedRepositoryId) {
@@ -31,7 +33,7 @@ export default class CourseController extends Controller {
     this.isCreatingNewRepository = false;
 
     this.model.repositories.pushObject(this.newRepository);
-    this.newRepository = this.store.createRecord('repository', { course: this.model.course });
+    this.newRepository = this.store.createRecord('repository', { course: this.model.course, user: this.currentUser.record });
   }
 
   get isDevelopmentOrTest() {

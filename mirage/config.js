@@ -6,7 +6,12 @@ export default function () {
   window.server = this; // Hack! Is there a better way?
 
   this.get('/courses');
-  this.get('/repositories');
+
+  this.get('/repositories', function (schema) {
+    return schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
+  });
+
+  this.get('/leaderboard-entries');
 
   this.post('/repositories', function (schema) {
     let attrs = this.normalizedRequestAttrs();

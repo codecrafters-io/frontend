@@ -19,7 +19,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     signIn(this.owner);
     testScenario(this.server);
 
-    let currentUser = this.owner.lookup('service:currentUser').record;
+    let currentUser = this.server.schema.users.first();
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let go = this.server.schema.languages.findBy({ name: 'Go' });
@@ -43,14 +43,14 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     await coursesPage.clickOnCourse('Build Your Own Redis');
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
-    assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch course (courses page + course page) + fetch repositories
+    assert.equal(this.server.pretender.handledRequests.length, 4); // Fetch course (courses page + course page) + fetch repositories + leaderboard
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await this.clock.tick(3000);
 
-    assert.equal(this.server.pretender.handledRequests.length, 4, 'polling should have run');
+    assert.equal(this.server.pretender.handledRequests.length, 5, 'polling should have run');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
