@@ -31,7 +31,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.equal(coursePage.leaderboard.entries.length, 1, '1 leaderboard entry should be present once course has started');
     assert.equal(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to current user');
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle until user pushes submission');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 7', 'progress text must be shown');
 
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
@@ -48,7 +48,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 2', 'progress text must still be 0 if first stage is not completed');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 7', 'progress text must still be 0 if first stage is not completed');
 
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
@@ -56,7 +56,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 2', 'progress text must still be 0 if first stage is not completed');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '0 / 7', 'progress text must still be 0 if first stage is not completed');
 
     this.server.schema.submissions.find(2).update({ status: 'success' });
 
@@ -72,7 +72,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must still be 0 if first stage is not completed');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must still be 0 if first stage is not completed');
   });
 
   test('can view leaderboard when other recent players are present', async function (assert) {
@@ -104,15 +104,15 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.equal(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
     assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must be shown');
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
 
     assert.equal(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once course has started');
     assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should be sorted by last attempt');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must be shown');
     assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entries should be sorted by last attempt');
-    assert.equal(coursePage.leaderboard.entries[1].progressText, '0 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '0 / 7', 'progress text must be shown');
 
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating', createdAt: new Date() }) });
@@ -139,9 +139,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.equal(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once other user has been passed');
     assert.equal(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should be sorted by last attempt');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must be shown');
     assert.equal(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entries should be sorted by last attempt');
-    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 7', 'progress text must be shown');
   });
 
   test('can view leaderboard when current user has leaderboard entry', async function (assert) {
@@ -179,17 +179,17 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.equal(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must be shown');
     assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 7', 'progress text must be shown');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
     assert.equal(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must be shown');
     assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 2', 'progress text must be shown');
+    assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 7', 'progress text must be shown');
   });
 });

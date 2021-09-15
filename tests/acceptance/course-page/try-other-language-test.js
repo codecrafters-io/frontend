@@ -1,4 +1,4 @@
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -71,5 +71,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.equal(this.server.pretender.handledRequests.length, 7, 'polling should have run again');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
+
+    await animationsSettled();
   });
 });
