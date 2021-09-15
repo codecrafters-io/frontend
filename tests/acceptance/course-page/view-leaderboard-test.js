@@ -20,7 +20,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     testScenario(this.server);
 
     await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build Your Own Redis');
+    await coursesPage.clickOnCourse('Build your own Redis');
 
     let currentUser = this.server.schema.users.first();
 
@@ -100,7 +100,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build Your Own Redis');
+    await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
     assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
@@ -175,7 +175,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build Your Own Redis');
+    await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');

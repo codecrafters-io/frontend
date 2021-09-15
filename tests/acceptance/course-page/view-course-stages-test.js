@@ -21,7 +21,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
 
     await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build Your Own Redis');
+    await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.ok(coursePage.setupItemIsActive, 'setup item is active by default');
 
