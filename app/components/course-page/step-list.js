@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
