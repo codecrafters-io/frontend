@@ -21,6 +21,10 @@ class CourseStageItem {
   }
 }
 
+class CourseCompletedItem {
+  type = 'CourseCompletedItem';
+}
+
 export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItemIndex;
   @tracked activeItemWillBeReplaced;
@@ -33,12 +37,10 @@ export default class CoursePageContentStepListComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.items = A(this.buildItems());
-
     this.activeItemIndex = this.computeActiveIndex();
   }
 
-  buildItems() {
+  get items() {
     let items = [];
 
     items.push(new SetupItem());
@@ -46,6 +48,10 @@ export default class CoursePageContentStepListComponent extends Component {
     this.args.course.sortedStages.forEach((courseStage) => {
       items.push(new CourseStageItem(courseStage));
     });
+
+    if (this.args.repository.allStagesAreComplete) {
+      items.push(new CourseCompletedItem());
+    }
 
     return items;
   }
@@ -79,6 +85,15 @@ export default class CoursePageContentStepListComponent extends Component {
       this.selectedItemIndex = null;
     } else {
       this.selectedItemIndex = itemIndex;
+    }
+  }
+
+  @action
+  async handleCollapsedCourseCompletedItemClick() {
+    if (this.activeItemIndex === this.items.length - 1) {
+      this.selectedItemIndex = null;
+    } else {
+      this.selectedItemIndex = this.items.length - 1;
     }
   }
 

@@ -40,5 +40,6 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     await animationsSettled();
+    await this.pauseTest();
   });
 });
