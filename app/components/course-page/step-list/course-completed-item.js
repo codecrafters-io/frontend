@@ -15,12 +15,12 @@ export default class CoursePageStepListStageItemComponent extends Component {
 
   get instructionsMarkdownTemplate() {
     return `
-Congratulations are in order. Only ~{{completion_percentage}}% of users that attempt this challenge end up completing all stages, and you're one of them!
+Congratulations are in order. Only ~${this.args.repository.course.roundedCompletionPercentage}% of users that attempt this challenge end up completing all stages, and you're one of them!
 
 If this is your first time completing a CodeCrafters challenge, you'll receive access to the following:
 
-- **Your own profile page.** Like [this one](). This might take 24 hours to activate, it'll be accessible at
-[codecrafters.io/users/{{username}}](codecrafters.io/users/{{username}}).
+- **Your own profile page.** Like [this one](https://codecrafters.io/users/danwilhelm). This might take 24 hours to
+activate, it'll be accessible at [codecrafters.io/users/${this.username}](https://codecrafters.io/users/${this.username}).
 - **Supervotes**. You can use these to [vote on upcoming CodeCrafters challenges](https://vote.codecrafters.io/). Just
 like your profile page, this might take 24 hours to activate.
 
@@ -36,5 +36,9 @@ just like before.
 If you've got any feedback or feature requests, feel free to let us know at
 [hello@codecrafters.io](mailto:hello@codecrafters.io). We respond to every single email.
 `;
+  }
+
+  get username() {
+    return this.args.repository.user.username;
   }
 }
