@@ -40,4 +40,35 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(coursePage.setupItemIsActive, 'setup item is active if clicked on');
   });
+
+  test('can view previous stages after completing them', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs');
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'course stage item is active if clicked on');
+  });
 });
