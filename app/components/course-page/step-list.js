@@ -66,8 +66,6 @@ export default class CoursePageContentStepListComponent extends Component {
 
   @action
   async handleCollapsedSetupItemClick() {
-    console.log('handleCollasedSEtupItemClick');
-    console.log(this.activeItemIndex);
     if (this.activeItemIndex === 0) {
       this.selectedItemIndex = null;
     } else {
