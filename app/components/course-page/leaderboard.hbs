@@ -2,7 +2,7 @@
   <div class="flex items-center mb-2 pl-4">
     <span class="uppercase text-teal-500 text-xs font-bold">RECENT ATTEMPTS</span>
     <span class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2 {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}} transition-all">
-      {{this.entries.length}}
+      {{this.mergedEntries.length}}
     </span>
   </div>
 
@@ -15,7 +15,7 @@
     </div>
   {{else}}
     <div>
-      {{#animated-each this.entries key='userId' use=this.listTransition as |entry|}}
+      {{#animated-each this.mergedEntries key='userId' use=this.listTransition as |entry|}}
         <CoursePage::LeaderboardEntry @entry={{entry}} />
       {{else}}
         <div class="flex px-4 py-2 items-center">

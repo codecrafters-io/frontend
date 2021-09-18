@@ -28,6 +28,10 @@ export default class RepositoryModel extends Model {
     }
   }
 
+  get allStagesAreComplete() {
+    return this.highestCompletedStage && this.highestCompletedStage.position === this.course.stages.mapBy('position').sort().lastObject;
+  }
+
   get highestCompletedStage() {
     if (this.courseStageCompletions.length === 0) {
       return null;

@@ -10,7 +10,11 @@ export default class CoursePageLeaderboardEntryComponent extends Component {
   }
 
   get progressNumerator() {
-    return this.args.entry.currentCourseStage.position - 1;
+    if (this.args.entry.status === 'complete') {
+      return this.args.entry.currentCourseStage.position;
+    } else {
+      return this.args.entry.currentCourseStage.position - 1;
+    }
   }
 
   get progressDenominator() {

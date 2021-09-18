@@ -1,0 +1,18 @@
+<CoursePage::StepList::ExpandedItem
+  @class={{@class}}
+  data-test-course-completed-item>
+  <:content>
+    <div class="flex items-center mb-6">
+      <img src="/assets/images/icons/congratulations.png" alt="Congratulations!" class="mr-3 w-10 h-10">
+      <span class="text-2xl text-gray-700 mr-3">Challenge Complete!</span>
+    </div>
+
+    <div class="text-gray-700 leading-7 prose" data-test-instructions-text>
+      {{this.instructionsHTML}}
+    </div>
+  </:content>
+
+  <:footer-content>
+    <span class="text-gray-600 text-sm" data-test-footer-text>Congratulations!</span>
+  </:footer-content>
+</CoursePage::StepList::ExpandedItem>

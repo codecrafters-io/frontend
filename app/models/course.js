@@ -3,12 +3,13 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import Model from '@ember-data/model';
 
 export default class CourseModel extends Model {
-  @hasMany('course-stage', { async: false }) stages;
+  @attr('number') completionPercentage;
   @attr('string') descriptionMarkdown;
   @attr('string') difficulty;
   @attr('string') name;
   @attr('string') shortDescriptionMarkdown;
   @attr('string') slug;
+  @hasMany('course-stage', { async: false }) stages;
   @hasMany('language', { async: false }) supportedLanguages;
 
   @equal('difficulty', 'easy') difficultyIsEasy;
@@ -20,6 +21,10 @@ export default class CourseModel extends Model {
   @equal('slug', 'react') isReact;
   @equal('slug', 'redis') isRedis;
   @equal('slug', 'sqlite') isSQLite;
+
+  get roundedCompletionPercentage() {
+    return this.completionPercentage; // Same for now, we don't store exact completion percentages yet.
+  }
 
   get sortedStages() {
     return this.stages.sortBy('position');
