@@ -21,7 +21,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     testScenario(this.server);
 
     await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build Your Own Redis');
+    await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
 

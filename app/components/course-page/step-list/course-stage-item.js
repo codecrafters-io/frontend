@@ -14,10 +14,6 @@ export default class CoursePageStepListStageItemComponent extends Component {
     return htmlSafe(new showdown.Converter().makeHtml(this.args.courseStage.descriptionMarkdownTemplate));
   }
 
-  get isComplete() {
-    return false; // TODO: Use course completions
-  }
-
   get status() {
     if (this.args.repository.lastSubmissionIsEvaluating && this.args.repository.lastSubmission.courseStage === this.args.courseStage) {
       return 'evaluating';
@@ -35,6 +31,18 @@ export default class CoursePageStepListStageItemComponent extends Component {
       return 'failed';
     }
 
-    return 'waiting';
+    if (this.args.repository.activeStage === this.args.courseStage) {
+      return 'waiting';
+    } else {
+      return 'locked';
+    }
+  }
+
+  get statusIsComplete() {
+    return this.status === 'complete';
+  }
+
+  get statusIsLocked() {
+    return this.status === 'locked';
   }
 }

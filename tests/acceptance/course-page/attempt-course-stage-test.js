@@ -30,7 +30,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     });
 
     await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build Your Own Redis');
+    await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 4); // Fetch course (courses page + course page) + fetch repositories + leaderboard

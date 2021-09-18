@@ -3,14 +3,22 @@
     @willBeReplaced={{@willBeReplaced}}
     data-test-course-stage-item>
   <:content>
-    <div class="flex items-center mb-6">
-      <span class="text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center">
+        {{#if this.statusIsLocked}}
+          <img alt="lock icon" src="/assets/images/icons/lock4.svg" class="w-6 mr-3">
+        {{/if}}
 
-      {{#if this.isComplete}}
-        <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
-      {{else}}
-        <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
-      {{/if}}
+        <span class="text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
+
+        {{#if this.statusIsComplete}}
+          <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
+        {{else if this.statusIsLocked}}
+          <span class="bg-gray-400 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>PENDING</span>
+        {{else}}
+          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
+        {{/if}}
+      </div>
     </div>
 
     <div class="text-gray-700 leading-7 prose" data-test-stage-instructions>
@@ -32,6 +40,8 @@
       {{else if (eq this.status "complete")}}
         <StaticDot @class="mr-3" @color="green" />
         <span class="text-gray-600 text-sm" data-test-footer-text>You've completed this stage.</span>
+      {{else if (eq this.status "locked")}}
+        <span class="text-gray-600 text-sm" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
       {{/if}}
     </div>
   </:footer-content>
