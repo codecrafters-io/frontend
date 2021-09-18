@@ -17,7 +17,7 @@
           {{else}}
             <CoursePage::StepList::CollapsedItem
               @class="mb-4"
-              @number={{add 1 index}}
+              @number={{index}}
               @text="Setup"
               @onClick={{this.handleCollapsedSetupItemClick}}
               @status={{if @repository.firstSubmissionCreated "completed" "active"}} />
@@ -36,7 +36,7 @@
           {{else}}
             <CoursePage::StepList::CollapsedItem
               @class="mb-4"
-              @number={{add 1 index}}
+              @number={{index}}
               @text={{item.courseStage.name}}
               @status={{if (eq index this.activeItemIndex) "active" (if (gt index this.activeItemIndex) "future" "completed")}}
               @onClick={{fn this.handleCollapsedStageItemClick index}} />

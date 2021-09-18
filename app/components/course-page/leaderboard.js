@@ -29,7 +29,7 @@ export default class CoursePageLeaderboardComponent extends Component {
       entries = entries.concat(this.entriesFromAPI.toArray());
     }
 
-    return entries.concat(this.entriesFromCurrentUser).sortBy('currentCourseStage.position', 'lastAttemptAt').reverse();
+    return entries.concat(this.entriesFromCurrentUser);
   }
 
   get entriesFromCurrentUser() {
@@ -37,20 +37,44 @@ export default class CoursePageLeaderboardComponent extends Component {
       return [];
     }
 
-    let allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]);
-    let anyLastSubmissionIsEvaluating = allRepositories.isAny('lastSubmissionIsEvaluating');
-    let highestStageRepository = allRepositories.sortBy('activeStage.position', 'lastSubmissionAt').lastObject;
+    let allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
 
-    // TODO: Add "completed status"
-    return [
-      this.store.createRecord('leaderboard-entry', {
-        status: anyLastSubmissionIsEvaluating ? 'evaluating' : 'idle',
-        currentCourseStage: highestStageRepository.activeStage,
-        language: highestStageRepository.language,
-        user: this.args.activeRepository.user,
-        lastAttemptAt: this.args.activeRepository.lastSubmissionAt || this.args.activeRepository.createdAt,
-      }),
-    ];
+    return allRepositories.map((repository) => {
+      return this.store.createRecord('leaderboard-entry', {
+        status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'complete' : 'idle',
+        currentCourseStage: repository.activeStage,
+        language: repository.language,
+        user: repository.user,
+        lastAttemptAt: repository.lastSubmissionAt || repository.createdAt,
+      });
+    });
+  }
+
+  get mergedEntries() {
+    let entriesGroupedByUser = {};
+
+    this.entries.forEach((entry) => {
+      entriesGroupedByUser[entry.user.id] ||= [];
+      entriesGroupedByUser[entry.user.id].push(entry);
+    });
+
+    let result = [];
+
+    for (const entriesForUser of Object.values(entriesGroupedByUser)) {
+      let entryWithHighestCourseStage = entriesForUser.sortBy('currentCourseStage.position', 'lastSubmissionAt').lastObject;
+
+      result.push(
+        this.store.createRecord('leaderboard-entry', {
+          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage.status,
+          currentCourseStage: entryWithHighestCourseStage.currentCourseStage,
+          language: entryWithHighestCourseStage.language,
+          user: entryWithHighestCourseStage.user,
+          lastAttemptAt: entryWithHighestCourseStage.lastAttemptAt,
+        })
+      );
+    }
+
+    return result.sortBy('currentCourseStage.position', 'lastAttemptAt').reverse();
   }
 
   @action
