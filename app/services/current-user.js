@@ -17,6 +17,10 @@ export default class CurrentUserService extends Service {
     return this.currentUserPayload.id;
   }
 
+  get currentUserUsername() {
+    return this.currentUserPayload.username;
+  }
+
   get record() {
     return this.store.peekRecord('user', this.currentUserId);
   }
