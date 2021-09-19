@@ -3,20 +3,27 @@
            border-l-2 {{if this.isForCurrentUser 'border-teal-500' 'border-transparent'}}"
     data-test-leaderboard-entry>
   <div class="flex items-center">
-    <img alt="avatar" src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-full">
-    <span class="text-xs text-gray-500 group-hover:underline mr-2" data-test-username>{{@entry.user.username}}</span>
+    <img alt="avatar" src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border border-white rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md">
+    <span class="text-xs text-gray-600 group-hover:underline mr-2" data-test-username>{{@entry.user.username}}</span>
     <img alt="{{@entry.language.name}}" src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
   </div>
   <div class="flex items-center">
-    <span class="mr-2 text-xs {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}} font-bold" data-test-progress-text>
+    <span class="
+      mr-2 text-xs font-bold
+      {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}}
+      {{if this.isForCurrentUser 'opacity-100' 'opacity-0'}} group-hover:opacity-100 transition-opacity"
+      data-test-progress-text>
       {{this.progressNumerator}} / {{this.progressDenominator}}
     </span>
     <div
-      class="w-16 h-3.5 rounded flex overflow-hidden border group-hover:bg-white transition-all
-             {{if @entry.statusIsEvaluating 'bg-yellow-50 border-yellow-500 animate-pulse' 'bg-teal-50 border-teal-500'}}"
+      class="w-12 h-3.5 rounded flex overflow-hidden border group-hover:bg-white transition-all
+             {{if @entry.statusIsEvaluating 'bg-yellow-50 border-yellow-500 animate-pulse' 'bg-teal-50 border-teal-500 group-hover:shadow-sm'}}"
       data-test-progress-bar-container>
       <div
-        class="bg-gradient-to-r {{if @entry.statusIsEvaluating 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}} transition-all"
+        class="
+          bg-gradient-to-r
+          {{if @entry.statusIsEvaluating 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}}
+          transition-all"
         style={{this.progressBarWidthStyle}}>
       </div>
     </div>
