@@ -89,6 +89,7 @@
   "dependencies": {
     "@sinonjs/fake-timers": "^7.1.2",
     "@tailwindcss/typography": "^0.4.1",
+    "mustache": "^4.2.0",
     "showdown": "^1.9.1"
   }
 }

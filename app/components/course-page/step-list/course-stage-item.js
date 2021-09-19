@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import showdown from 'showdown';
+import Mustache from 'mustache';
 
 export default class CoursePageStepListStageItemComponent extends Component {
   @service store;
@@ -10,8 +11,19 @@ export default class CoursePageStepListStageItemComponent extends Component {
   transition = fade;
 
   get instructionsHTML() {
-    // TODO: Handle language etc.
-    return htmlSafe(new showdown.Converter().makeHtml(this.args.courseStage.descriptionMarkdownTemplate));
+    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
+  }
+
+  get instructionsMarkdown() {
+    const variables = {};
+
+    this.store.peekAll('language').forEach((language) => {
+      variables[`lang_is_${language.slug}`] = this.args.repository.language === language;
+    });
+
+    variables['readme_url'] = this.args.repository.readmeUrl || this.args.repository.defaultReadmeUrl;
+
+    return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
   }
 
   get status() {

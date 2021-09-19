@@ -9,6 +9,7 @@ export default class RepositoryModel extends Model {
   @belongsTo('language', { async: false }) language;
   @belongsTo('submission', { async: false }) lastSubmission;
   @attr('string') name;
+  @attr('string') starterRepositoryUrl;
 
   get firstSubmissionCreated() {
     return !!this.lastSubmission;
@@ -54,5 +55,17 @@ export default class RepositoryModel extends Model {
 
   get lastSubmissionHasFailureStatus() {
     return this.lastSubmission && this.lastSubmission.statusIsFailure;
+  }
+
+  get defaultReadmeUrl() {
+    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.supportedLanguages.firstObject.slug}`;
+  }
+
+  get readmeUrl() {
+    if (this.isNew) {
+      return null;
+    }
+
+    return `${this.starterRepositoryUrl}/blob/master/README.md`;
   }
 }
