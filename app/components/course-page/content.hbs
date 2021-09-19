@@ -1,8 +1,12 @@
 <div class="flex">
-  <div class="flex-grow">
-    <CoursePage::StepList @course={{@course}} @repository={{@activeRepository}} @onRepositoryCreate={{@onRepositoryCreate}} />
-  </div>
-  <div class="w-80 flex-shrink-0 border-l ml-4 hidden lg:block">
-    <CoursePage::Leaderboard @course={{@course}} @activeRepository={{@activeRepository}} @repositories={{@repositories}} />
-  </div>
+  <CoursePage::StepList
+    @class="flex-grow min-w-0"
+    @course={{@course}}
+    @repository={{@activeRepository}}
+    @onRepositoryCreate={{@onRepositoryCreate}} />
+  <CoursePage::Leaderboard
+    @class="w-80 flex-shrink-0 border-l ml-4 hidden lg:block"
+    @course={{@course}}
+    @activeRepository={{@activeRepository}}
+    @repositories={{@repositories}} />
 </div>

@@ -1,4 +1,4 @@
-<div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} data-test-leaderboard>
+<div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} class="{{@class}}" data-test-leaderboard>
   <div class="flex items-center mb-2 pl-4">
     <span class="uppercase text-teal-500 text-xs font-bold">RECENT ATTEMPTS</span>
     <span class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2 {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}} transition-all">
