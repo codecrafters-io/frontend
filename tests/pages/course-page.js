@@ -28,5 +28,5 @@ export default create({
     return this.setupItem.isVisible;
   },
 
-  visit: visitable('/courses/next/:course_slug'),
+  visit: visitable('/courses/:course_slug'),
 });

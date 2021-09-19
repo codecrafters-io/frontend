@@ -42,7 +42,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
+    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 4); // Fetch course (courses page + course page) + fetch repositories + leaderboard
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');

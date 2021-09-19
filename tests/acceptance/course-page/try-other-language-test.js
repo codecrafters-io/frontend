@@ -39,7 +39,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
+    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 4); // Fetch course (courses page + course page) + fetch repositories + leaderboard
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
@@ -48,7 +48,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    assert.equal(currentURL(), '/courses/next/redis?fresh=true');
+    assert.equal(currentURL(), '/courses/redis?fresh=true');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
@@ -57,7 +57,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.equal(this.server.pretender.handledRequests.length, 5); // Create repository request
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Language #n', 'Repository name should change');
-    assert.equal(currentURL(), '/courses/next/redis?repo=2');
+    assert.equal(currentURL(), '/courses/redis?repo=2');
 
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });

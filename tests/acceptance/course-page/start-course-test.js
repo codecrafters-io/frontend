@@ -23,7 +23,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/next/redis', 'current URL is course page URL');
+    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
 
     assert.equal(this.server.pretender.handledRequests.length, 4, 'first 3 requests were executed');
 
