@@ -40,7 +40,10 @@
             {{svg-jar "beaker" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
           </div>
           {{#unless @activeRepository.isNew}}
-            <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" data-test-dropdown-action>
+            <div
+              class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button"
+              {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
+              data-test-dropdown-action>
               Retry using {{@activeRepository.language.name}}
               {{svg-jar "refresh" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
             </div>
