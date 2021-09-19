@@ -11,7 +11,7 @@ module.exports = {
       // Build your palette here
       blue: colors.sky,
       current: 'currentColor',
-      gray: colors.coolGray,
+      gray: colors.blueGray,
       red: colors.red,
       teal: colors.teal,
       transparent: 'transparent',
