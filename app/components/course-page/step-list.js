@@ -8,6 +8,10 @@ import fade from 'ember-animated/transitions/fade';
 
 class SetupItem {
   type = 'SetupItem';
+
+  get identifier() {
+    return 'setup';
+  }
 }
 
 class CourseStageItem {
@@ -18,10 +22,18 @@ class CourseStageItem {
   constructor(courseStage) {
     this.courseStage = courseStage;
   }
+
+  get identifier() {
+    return this.courseStage.id;
+  }
 }
 
 class CourseCompletedItem {
   type = 'CourseCompletedItem';
+
+  get identifier() {
+    return 'completed';
+  }
 }
 
 export default class CoursePageContentStepListComponent extends Component {

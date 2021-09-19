@@ -4,7 +4,7 @@
   </div>
 {{else}}
   <div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} class="{{@class}}">
-    {{#each this.items as |item index|}}
+    {{#each this.items key='identifier' as |item index|}}
       {{#if (eq item.type "SetupItem")}}
         <AnimatedContainer>
           {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
