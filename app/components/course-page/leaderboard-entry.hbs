@@ -8,7 +8,11 @@
     <img alt="{{@entry.language.name}}" src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
   </div>
   <div class="flex items-center">
-    <span class="mr-2 text-xs {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}} font-bold" data-test-progress-text>
+    <span class="
+      mr-2 text-xs font-bold
+      {{if @entry.statusIsEvaluating 'text-yellow-500' 'text-teal-500'}}
+      {{if this.isForCurrentUser 'opacity-100' 'opacity-0'}} group-hover:opacity-100 transition-opacity"
+      data-test-progress-text>
       {{this.progressNumerator}} / {{this.progressDenominator}}
     </span>
     <div
