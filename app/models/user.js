@@ -6,4 +6,8 @@ export default class UserModel extends Model {
   @attr('date') createdAt;
   @attr('string') githubUsername;
   @attr('string') username;
+
+  get githubProfileUrl() {
+    return `https://github.com/${this.githubUsername}`;
+  }
 }
