@@ -1,0 +1,15 @@
+<div
+  class="flex justify-between items-center py-2 pl-2 pr-3 hover:bg-gray-50 group cursor-pointer"
+  role="button"
+  data-test-repository-link
+  {{on "click" @onClick}} >
+  <div class="flex items-center mr-6">
+    <img src={{@repository.language.grayLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 mr-2 block group-hover:hidden">
+    <img src={{@repository.language.tealLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 mr-2 hidden group-hover:block">
+    <span class="text-gray-700">{{@repository.name}}</span>
+  </div>
+
+  {{#if @repository.lastSubmissionAt}}
+    <span class="text-gray-400 text-xs">(pushed {{moment-from-now @repository.lastSubmissionAt}})</span>
+  {{/if}}
+</div>

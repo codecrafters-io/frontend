@@ -4,6 +4,9 @@ module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'codecrafters-frontend',
     environment,
+    moment: {
+      outputFormat: 'L',
+    },
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {

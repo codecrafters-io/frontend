@@ -5,7 +5,7 @@
   <div class="flex items-center">
     <img alt="avatar" src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border border-white rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md">
     <span class="text-xs text-gray-600 group-hover:underline mr-2" data-test-username>{{@entry.user.username}}</span>
-    <img alt="{{@entry.language.name}}" src="/assets/images/language-logos/python-teal-500.svg" class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
+    <img alt="{{@entry.language.name}}" src={{@entry.language.tealLogoUrl}} class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
   </div>
   <div class="flex items-center">
     <span class="
