@@ -23,4 +23,5 @@ export default function () {
   });
 
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
+  this.passthrough('https://rs.fullstory.com/*');
 }
