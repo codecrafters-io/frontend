@@ -17,7 +17,7 @@ jobs:
         run: |
           tag=$(echo $GITHUB_REF | sed "s/refs\\/tags\\///")
           sentry-cli releases -o codecrafters -p frontend new ${tag}
-          sentry-cli releases -o codecrafters -p frontend set-commits --auto ${tag}
+          sentry-cli releases -o codecrafters -p frontend set-commits --auto ${tag} --ignore-missing
 
   publish:
     runs-on: ubuntu-latest
