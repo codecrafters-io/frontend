@@ -18,7 +18,7 @@ export default class CurrentUserService extends Service {
   }
 
   get currentUserUsername() {
-    return this.currentUserPayload.username;
+    return this.currentUserPayload.attributes.username;
   }
 
   get record() {
