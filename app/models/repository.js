@@ -11,6 +11,10 @@ export default class RepositoryModel extends Model {
   @attr('string') name;
   @attr('string') starterRepositoryUrl;
 
+  get defaultStarterRepositoryUrl() {
+    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.supportedLanguages.firstObject.slug}`;
+  }
+
   get firstSubmissionCreated() {
     return !!this.lastSubmission;
   }

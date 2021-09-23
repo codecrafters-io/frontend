@@ -22,6 +22,7 @@ export default class CoursePageStepListStageItemComponent extends Component {
     });
 
     variables['readme_url'] = this.args.repository.readmeUrl || this.args.repository.defaultReadmeUrl;
+    variables['starter_repo_url'] = this.args.repository.starterRepositoryUrl || this.args.repository.defaultStarterRepositoryUrl;
 
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
   }
