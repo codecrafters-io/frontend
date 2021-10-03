@@ -8,6 +8,7 @@ export default class LanguageModel extends Model {
   get grayLogoUrl() {
     return {
       c: '/assets/images/language-logos/c-gray-500.svg',
+      clojure: '/assets/images/language-logos/clojure-gray-500.svg',
       crystal: '/assets/images/language-logos/crystal-gray-500.svg',
       elixir: '/assets/images/language-logos/elixir-gray-500.svg',
       go: '/assets/images/language-logos/go-gray-500.svg',
