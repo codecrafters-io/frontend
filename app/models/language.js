@@ -28,6 +28,7 @@ export default class LanguageModel extends Model {
   get tealLogoUrl() {
     return {
       c: '/assets/images/language-logos/c-teal-500.svg',
+      clojure: '/assets/images/language-logos/clojure-teal-500.svg',
       crystal: '/assets/images/language-logos/crystal-teal-500.svg',
       elixir: '/assets/images/language-logos/elixir-teal-500.svg',
       go: '/assets/images/language-logos/go-teal-500.svg',
