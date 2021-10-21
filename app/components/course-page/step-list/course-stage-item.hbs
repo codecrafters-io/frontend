@@ -5,10 +5,6 @@
   <:content>
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center">
-        {{#if this.statusIsLocked}}
-          <img alt="lock icon" src="/assets/images/icons/lock4.svg" class="w-6 mr-3">
-        {{/if}}
-
         <span class="text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
 
         {{#if this.statusIsComplete}}
