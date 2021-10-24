@@ -6,19 +6,29 @@ refresh_course_definitions:
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/redis.json
+		> mirage/course-fixtures/redis.js
 
 	hub api repos/rohitpaulk/codecrafters-server/contents/codecrafters/store/data/docker.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/docker.json
+		> mirage/course-fixtures/docker.js
 
 	hub api repos/rohitpaulk/codecrafters-server/contents/codecrafters/store/data/git.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/git.json
+		> mirage/course-fixtures/git.js
+
+	hub api repos/rohitpaulk/codecrafters-server/contents/codecrafters/store/data/sqlite.yml \
+		| jq -r .content \
+		| base64 -d \
+		| yq -o json eval \
+		> mirage/course-fixtures/sqlite.js
+
+	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
+
+
 
 
 release:
