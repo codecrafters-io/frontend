@@ -7,7 +7,7 @@ import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
-import signIn from 'codecrafters-frontend/tests/support/sign-in';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | start-course-test', function (hooks) {
