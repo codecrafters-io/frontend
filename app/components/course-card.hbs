@@ -7,8 +7,16 @@
   <div class="flex items-start">
     {{!-- Text --}}
     <div class="pr-6 mb-8">
-      <div class="text-lg font-bold text-gray-600 mb-3 mr-3" data-test-course-name>
-        {{@course.name}}
+      <div class="flex items-center mb-3 flex-wrap gap-y-2">
+        <div class="text-lg font-bold text-gray-600 mr-2" data-test-course-name>
+          {{@course.name}}
+        </div>
+
+        {{#if @course.releaseStatusIsBeta}}
+          <div class="text-xs text-teal-500 font-bold border border-teal-500 rounded px-2 py-1 mr-3" data-test-course-beta-label>
+            BETA
+          </div>
+        {{/if}}
       </div>
 
       <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>

@@ -9,6 +9,7 @@ export default class CourseModel extends Model {
   @attr('string') name;
   @attr('string') shortDescriptionMarkdown;
   @attr('string') slug;
+  @attr('string') releaseStatus;
   @hasMany('course-stage', { async: false }) stages;
   @hasMany('language', { async: false }) supportedLanguages;
 
@@ -21,6 +22,9 @@ export default class CourseModel extends Model {
   @equal('slug', 'react') isReact;
   @equal('slug', 'redis') isRedis;
   @equal('slug', 'sqlite') isSQLite;
+
+  @equal('releaseStatus', 'beta') releaseStatusIsBeta;
+  @equal('releaseStatus', 'live') releaseStatusIsLive;
 
   get roundedCompletionPercentage() {
     return this.completionPercentage; // Same for now, we don't store exact completion percentages yet.
