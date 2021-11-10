@@ -3,7 +3,7 @@ export function signIn(owner) {
     'avatar-url': 'https://github.com/rohitpaulk.png',
     'created-at': '2021-08-29T16:50:12.551986+00:00',
     'github-username': 'rohitpaulk',
-    'beta-participant': false,
+    'is-beta-participant': false,
     username: 'rohitpaulk',
   });
 }
@@ -13,7 +13,7 @@ export function signInAsBetaParticipant(owner) {
     'avatar-url': 'https://github.com/rohitpaulk.png',
     'created-at': '2021-08-29T16:50:12.551986+00:00',
     'github-username': 'rohitpaulk',
-    'beta-participant': true,
+    'is-beta-participant': true,
     username: 'rohitpaulk',
   });
 }

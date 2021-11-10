@@ -6,7 +6,7 @@
   </h1>
 
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-    {{#each this.model.courses as |course|}}
+    {{#each this.courses as |course|}}
       <CourseCard @course={{course}}></CourseCard>
     {{/each}}
   </div>

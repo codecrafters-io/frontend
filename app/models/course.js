@@ -23,6 +23,9 @@ export default class CourseModel extends Model {
   @equal('slug', 'redis') isRedis;
   @equal('slug', 'sqlite') isSQLite;
 
+  @equal('releaseStatus', 'beta') releaseStatusIsBeta;
+  @equal('releaseStatus', 'live') releaseStatusIsLive;
+
   get roundedCompletionPercentage() {
     return this.completionPercentage; // Same for now, we don't store exact completion percentages yet.
   }
