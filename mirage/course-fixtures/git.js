@@ -4,6 +4,7 @@ export default {
   "description_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along the\nway, you'll learn about the `.git` directory, Git objects (blobs, commits,\ntrees etc.), packfiles, Git's transfer protocols and much more.\n",
   "short_description_md": "Learn about git objects, plumbing commands, git transfer protocols and more\n",
   "completion_percentage": 10,
+  "state": "live",
   "early_access_languages": [],
   "supported_languages": [
     "python",
