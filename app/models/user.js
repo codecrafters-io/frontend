@@ -3,9 +3,10 @@ import Model from '@ember-data/model';
 
 export default class UserModel extends Model {
   @attr('string') avatarUrl;
-  @attr('boolean') isBetaParticipant;
   @attr('date') createdAt;
   @attr('string') githubUsername;
+  @attr('boolean') hasActiveSubscription;
+  @attr('boolean') isBetaParticipant;
   @attr('string') username;
 
   get githubProfileUrl() {
