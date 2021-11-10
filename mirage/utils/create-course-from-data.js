@@ -1,11 +1,12 @@
 export default function createCourseFromData(server, courseData) {
   const course = server.create('course', {
     completionPercentage: courseData.completion_percentage,
+    descriptionMarkdown: courseData.description_md,
     difficulty: courseData.marketing.difficulty,
     name: courseData.name,
-    slug: courseData.slug,
-    descriptionMarkdown: courseData.description_md,
+    releaseStatus: courseData.releaseStatus,
     shortDescriptionMarkdown: courseData.short_description_md,
+    slug: courseData.slug,
     supportedLanguages: courseData.supported_languages.map((languageSlug) => server.schema.languages.findBy({ slug: languageSlug })),
   });
 

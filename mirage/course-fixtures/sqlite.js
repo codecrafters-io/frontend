@@ -4,7 +4,7 @@ export default {
   "description_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
   "short_description_md": "Learn about parsing SQL syntax, SQLite's file format, how indexed data is stored in B-trees and more\n",
   "completion_percentage": 5,
-  "state": "beta",
+  "release_status": "beta",
   "supported_languages": [
     "python",
     "go",

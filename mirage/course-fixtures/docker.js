@@ -4,7 +4,7 @@ export default {
   "description_md": "In this challenge, you'll build a toy Docker implementation that can pull an\nimage from [Docker Hub](https://hub.docker.com/) and execute commands in it.\nAlong the way, you'll learn about\n[chroot](https://en.wikipedia.org/wiki/Chroot), [kernel\nnamespaces](https://en.wikipedia.org/wiki/Linux_namespaces), the [docker\nregistry API](https://docs.docker.com/registry/spec/api/) and much more.\n",
   "short_description_md": "Learn about chroot, kernel namespaces, the docker registry API and more\n",
   "completion_percentage": 30,
-  "state": "live",
+  "release_status": "live",
   "early_access_languages": [
     "rust"
   ],

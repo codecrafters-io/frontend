@@ -4,7 +4,7 @@ export default {
   "description_md": "In this challenge, you'll build a toy Redis clone\nthat's capable of handling basic commands like PING, GET\nand SET. Along the way, we'll learn about event loops, the Redis\nProtocol and more.\n",
   "short_description_md": "Learn about TCP servers, events loops, the Redis protocol and more\n",
   "completion_percentage": 30,
-  "state": "live",
+  "release_status": "live",
   "early_access_languages": [
     "crystal",
     "clojure"
