@@ -55,8 +55,8 @@ module.exports = function (environment) {
     ENV['ember-cli-mirage'] = { enabled: true };
 
     // To run against development server
-    // ENV.serverVariables.defaults['server-url'] = 'https://codecrafters.ngrok.io';
-    // ENV['ember-cli-mirage'] = { enabled: false };
+    ENV.serverVariables.defaults['server-url'] = 'https://codecrafters.ngrok.io';
+    ENV['ember-cli-mirage'] = { enabled: false };
   }
 
   ENV['@sentry/ember'] = {
