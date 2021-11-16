@@ -5,5 +5,6 @@ export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false }) course;
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
+  @attr('boolean') isFree;
   @attr('number') position;
 }

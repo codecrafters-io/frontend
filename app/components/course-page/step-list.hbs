@@ -38,6 +38,7 @@
               @class="mb-4"
               @number={{index}}
               @text={{item.courseStage.name}}
+              @shouldShowFreeLabel={{and (not @repository.user.hasActiveSubscription) item.courseStage.isFree (not item.courseStage.course.isFree)}}
               @status={{if (eq index this.activeItemIndex) "active" (if (gt index this.activeItemIndex) "future" "completed")}}
               @onClick={{fn this.handleCollapsedStageItemClick index}} />
           {{/animated-if}}
