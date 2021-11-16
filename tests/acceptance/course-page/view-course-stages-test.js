@@ -2,7 +2,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsBetaParticipant, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
@@ -105,6 +105,18 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.notOk(coursePage.collapsedItems[0].hasFreeLabel, 'free stages should not have free labels if course is free');
     assert.notOk(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should not free labels if course is free');
+    assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
+  });
+
+  test('stages should not have free labels if user is course is beta', async function (assert) {
+    signInAsBetaParticipant(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own SQLite');
+
+    assert.notOk(coursePage.collapsedItems[0].hasFreeLabel, 'free stages should not have free labels');
+    assert.notOk(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should not have free labels');
     assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
   });
 });

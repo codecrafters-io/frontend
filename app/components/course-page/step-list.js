@@ -160,6 +160,10 @@ export default class CoursePageContentStepListComponent extends Component {
     return this.args.repository;
   }
 
+  get shouldHideFreeLabels() {
+    return this.repository.user.hasActiveSubscription || this.repository.course.releaseStatusIsBeta || this.repository.course.isFree;
+  }
+
   startRepositoryPoller() {
     this.stopRepositoryPoller();
 
