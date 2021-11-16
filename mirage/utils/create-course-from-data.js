@@ -3,6 +3,7 @@ export default function createCourseFromData(server, courseData) {
     completionPercentage: courseData.completion_percentage,
     descriptionMarkdown: courseData.description_md,
     difficulty: courseData.marketing.difficulty,
+    isFree: courseData.slug === 'redis',
     name: courseData.name,
     releaseStatus: courseData.release_status,
     shortDescriptionMarkdown: courseData.short_description_md,

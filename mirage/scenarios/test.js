@@ -16,8 +16,8 @@ export default function (server) {
 
   createLanguages(server);
 
+  createCourseFromData(server, redisCourseData);
   createCourseFromData(server, dockerCourseData);
   createCourseFromData(server, gitCourseData);
-  createCourseFromData(server, redisCourseData);
   createCourseFromData(server, sqliteCourseData);
 }

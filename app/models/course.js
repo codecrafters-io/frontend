@@ -6,10 +6,11 @@ export default class CourseModel extends Model {
   @attr('number') completionPercentage;
   @attr('string') descriptionMarkdown;
   @attr('string') difficulty;
+  @attr('boolean') isFree;
   @attr('string') name;
+  @attr('string') releaseStatus;
   @attr('string') shortDescriptionMarkdown;
   @attr('string') slug;
-  @attr('string') releaseStatus;
   @hasMany('course-stage', { async: false }) stages;
   @hasMany('language', { async: false }) supportedLanguages;
 

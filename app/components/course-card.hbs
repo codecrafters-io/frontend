@@ -17,6 +17,12 @@
             BETA
           </div>
         {{/if}}
+
+        {{#if this.shouldShowFreeLabel}}
+          <div class="text-xs text-white font-bold bg-teal-500 rounded px-2 py-1 mr-3" data-test-course-free-label>
+            FREE!
+          </div>
+        {{/if}}
       </div>
 
       <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
