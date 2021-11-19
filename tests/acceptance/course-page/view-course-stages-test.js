@@ -119,4 +119,84 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.notOk(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should not have free labels');
     assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
   });
+
+  test('stages should have an upgrade prompt if they are not free', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Docker');
+
+    await coursePage.collapsedItems[1].click();
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+
+    await coursePage.collapsedItems[2].click();
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+
+    await coursePage.collapsedItems[3].click();
+    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsGray, 'course stage prompt should be gray if stage is not current');
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.collapsedItems[1].click();
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+
+    await coursePage.collapsedItems[2].click();
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+
+    await coursePage.collapsedItems[3].click();
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+  });
+
+  test('stages should have a yellow upgrade prompt if they are not free', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: c,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Docker');
+
+    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsYellow, 'course stage prompt should be yellow if stage is current');
+    assert.ok(coursePage.activeCourseStageItem.statusText, 'SUBSCRIPTION REQUIRED');
+  });
+
+  test('stages should not have an upgrade prompt if the user has a subscription', async function (assert) {
+    signInAsSubscriber(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Docker');
+
+    await coursePage.collapsedItems[3].click();
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item should not have upgrade prompt if user is subscriber');
+  });
+
+  test('stages should not have an upgrade prompt if challenge is beta', async function (assert) {
+    signInAsBetaParticipant(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own SQLite');
+
+    await coursePage.collapsedItems[3].click();
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'beta course stage item should not have upgrade prompt');
+  });
 });

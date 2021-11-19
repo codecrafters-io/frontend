@@ -10,12 +10,18 @@
         {{#if this.statusIsComplete}}
           <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
         {{else if this.statusIsLocked}}
-          <span class="bg-gray-400 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>PENDING</span>
+          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>PENDING</span>
+        {{else if (and this.statusIsWaiting @shouldShowUpgradePrompt)}}
+          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>SUBSCRIPTION REQUIRED</span>
         {{else}}
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
         {{/if}}
       </div>
     </div>
+
+    {{#if @shouldShowUpgradePrompt}}
+      <CoursePage::StepList::CourseStageItem::UpgradePrompt @class="mb-4" @color={{if this.statusIsWaiting "yellow" "gray"}} />
+    {{/if}}
 
     <div class="text-gray-700 leading-7 prose" data-test-stage-instructions>
       {{this.instructionsHTML}}
@@ -23,21 +29,21 @@
   </:content>
 
   <:footer-content>
-    <div class="flex items-center" data-test-course-stage-item-footer>
+    <div class="flex items-center text-xs" data-test-course-stage-item-footer>
       {{#if (eq this.status "waiting")}}
         <BlinkingDot @class="mr-3" @color="gray" />
-        <span class="text-gray-600 text-sm" data-test-footer-text>Listening for a git push...</span>
+        <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
       {{else if (eq this.status "evaluating")}}
         <BlinkingDot @class="mr-3" @color="yellow" />
-        <span class="text-gray-600 text-sm" data-test-footer-text>Running tests...</span>
+        <span class="text-gray-600" data-test-footer-text>Running tests...</span>
       {{else if (eq this.status "failed")}}
         <StaticDot @class="mr-3" @color="red" />
-        <span class="text-gray-600 text-sm" data-test-footer-text>Tests failed. Check your git push output for logs.</span>
+        <span class="text-gray-600" data-test-footer-text>Tests failed. Check your git push output for logs.</span>
       {{else if (eq this.status "complete")}}
         <StaticDot @class="mr-3" @color="green" />
-        <span class="text-gray-600 text-sm" data-test-footer-text>You've completed this stage.</span>
+        <span class="text-gray-600" data-test-footer-text>You've completed this stage.</span>
       {{else if (eq this.status "locked")}}
-        <span class="text-gray-600 text-sm" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
+        <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
       {{/if}}
     </div>
   </:footer-content>

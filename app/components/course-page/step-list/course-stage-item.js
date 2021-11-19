@@ -58,4 +58,8 @@ export default class CoursePageStepListStageItemComponent extends Component {
   get statusIsLocked() {
     return this.status === 'locked';
   }
+
+  get statusIsWaiting() {
+    return this.status === 'waiting';
+  }
 }
