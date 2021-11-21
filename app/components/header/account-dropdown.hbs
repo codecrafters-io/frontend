@@ -1,6 +1,6 @@
 <BasicDropdown @horizontalPosition="right" as |dd|>
   <dd.Trigger>
-    <div class="text-gray-500 flex items-center py-3 outline-none">
+    <div class="text-gray-500 flex items-center py-3 outline-none" data-test-account-dropdown-trigger>
       <span class="mr-1 text-xs">
         {{this.currentUser.username}}
       </span>
@@ -8,7 +8,11 @@
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border rounded shadow text-sm text-gray-600 w-40 bg-white">
+    <div class="py-2 border rounded shadow text-sm text-gray-600 w-40 bg-white" data-test-account-dropdown-content>
+      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleGetHelpClick dd.actions)}}>
+        Subscribe
+        {{svg-jar "credit-card" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+      </div>
       <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleGetHelpClick dd.actions)}}>
         Get Help
         {{svg-jar "question-mark-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}
