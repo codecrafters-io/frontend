@@ -3,8 +3,9 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class HeaderAccountDropdownComponent extends Component {
-  @service serverVariables;
   @service('currentUser') currentUserService;
+  @service('globalModals') globalModalsService;
+  @service serverVariables;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -26,5 +27,11 @@ export default class HeaderAccountDropdownComponent extends Component {
 
     document.body.appendChild(f);
     f.submit();
+  }
+
+  @action
+  handleSubscribeClick(dropdownActions) {
+    dropdownActions.close();
+    this.globalModalsService.openSubscribeModal();
   }
 }

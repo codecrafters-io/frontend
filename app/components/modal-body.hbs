@@ -1,0 +1,7 @@
+<div class="p-6 sm:p-8 bg-white rounded-md shadow-sm border-gray-300 max-w-lg relative">
+  <button class="absolute right-6 top-6 sm:right-8 sm:top-8 opacity-60 hover:opacity-100" {{on "click" this.handleCloseButtonClick}}>
+    {{svg-jar "x" class="w-5 h-5 text-gray-400"}}
+  </button>
+
+  {{yield}}
+</div>

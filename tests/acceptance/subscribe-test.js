@@ -16,7 +16,5 @@ module('Acceptance | subscribe-test', function (hooks) {
     await coursesPage.visit();
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Subscribe');
-
-    await this.pauseTest();
   });
 });
