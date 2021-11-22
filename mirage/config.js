@@ -5,6 +5,10 @@ export default function () {
 
   window.server = this; // Hack! Is there a better way?
 
+  this.post('/checkout-sessions', function (schema) {
+    return schema.checkoutSessions.create({ url: 'https://test.com/stripe_checkout_session' });
+  });
+
   this.get('/courses');
 
   this.get('/repositories', function (schema) {

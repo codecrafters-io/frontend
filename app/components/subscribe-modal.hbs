@@ -1,4 +1,4 @@
-<ModalBody>
+<ModalBody data-test-subscribe-modal>
   <h3 class="text-xl font-bold mb-6 text-teal-600">Subscribe</h3>
 
   <div class="leading-relaxed text-gray-800">
@@ -16,8 +16,18 @@
     </p>
   </div>
 
-  <button class="bg-teal-600 px-4 py-3 text-white rounded shadow-sm font-bold">
+  <button
+    type="button"
+    class="bg-teal-600 px-4 py-3 text-white rounded shadow-sm font-bold" {{on "click" this.handleSubscribeButtonClick}}
+    data-test-subscribe-button>
     Subscribe Now
+
+    {{#if this.isCreatingCheckoutSession}}
+      <svg class="animate-spin ml-3 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    {{/if}}
   </button>
 
   <div class="text-gray-600 text-sm mt-4">
