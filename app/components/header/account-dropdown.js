@@ -1,11 +1,15 @@
-import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import Component from '@glimmer/component';
+import window from 'ember-window-mock';
 
 export default class HeaderAccountDropdownComponent extends Component {
   @service('currentUser') currentUserService;
   @service('globalModals') globalModalsService;
+  @tracked isCreatingBillingSession = false;
   @service serverVariables;
+  @service store;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -27,6 +31,15 @@ export default class HeaderAccountDropdownComponent extends Component {
 
     document.body.appendChild(f);
     f.submit();
+  }
+
+  @action
+  async handleManageSubscriptionClick(dropdownActions) {
+    this.isCreatingBillingSession = true;
+    let billingSession = this.store.createRecord('billing-session');
+    await billingSession.save();
+    window.location.href = billingSession.url;
+    dropdownActions.close();
   }
 
   @action
