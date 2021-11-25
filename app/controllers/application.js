@@ -8,6 +8,10 @@ export default class ApplicationController extends Controller {
     return this.globalModalsService.isAnyModalOpen;
   }
 
+  get isCheckoutSessionSuccessfulModalOpen() {
+    return this.globalModalsService.isCheckoutSessionSuccessfulModalOpen;
+  }
+
   get isSubscribeModalOpen() {
     return this.globalModalsService.isSubscribeModalOpen;
   }

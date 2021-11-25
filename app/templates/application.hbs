@@ -11,6 +11,8 @@
     <ModalBackdrop>
       {{#if this.isSubscribeModalOpen}}
         <SubscribeModal />
+      {{else if this.isCheckoutSessionSuccessfulModalOpen}}
+        <CheckoutSessionSuccessfulModal />
       {{/if}}
     </ModalBackdrop>
   {{/if}}

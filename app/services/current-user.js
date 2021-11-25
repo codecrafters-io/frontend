@@ -6,7 +6,7 @@ export default class CurrentUserService extends Service {
   @service store;
 
   async authenticate() {
-    await this.store.pushPayload({ data: this.currentUserPayload });
+    await this.store.pushPayload(this.currentUserPayload);
   }
 
   get currentUserPayload() {
@@ -14,13 +14,12 @@ export default class CurrentUserService extends Service {
   }
 
   get currentUserId() {
-    return this.currentUserPayload.id;
+    return this.currentUserPayload.data.id;
   }
 
   get currentUserUsername() {
-    return this.currentUserPayload.attributes.username;
+    return this.currentUserPayload.data.attributes.username;
   }
-
   get hasActiveSubscription() {
     return this.record.hasActiveSubscription;
   }

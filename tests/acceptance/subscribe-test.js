@@ -12,7 +12,7 @@ module('Acceptance | subscribe-test', function (hooks) {
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  test('new user can subscribe', async function (assert) {
+  test('new user can start checkout session', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
@@ -22,6 +22,14 @@ module('Acceptance | subscribe-test', function (hooks) {
     await coursesPage.subscribeModal.clickOnSubscribeButton();
 
     assert.equal(window.location.href, 'https://test.com/checkout_session', 'Clicking subscribe button should redirect to checkout session URL');
+  });
+
+  test('new user can wait for subscriptions to sync after successful checkout session', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit({ action: 'checkout_session_successful' });
+    await this.pauseTest();
   });
 
   test('subscriber can manage subscription', async function (assert) {
