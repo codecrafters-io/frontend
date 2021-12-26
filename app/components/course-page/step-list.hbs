@@ -32,7 +32,7 @@
               @courseStage={{item.courseStage}}
               @repository={{@repository}}
               @class="mb-4"
-              @shouldShowUpgradePrompt={{and (not this.shouldHideFreeLabels) (not item.courseStage.isFree)}}
+              @shouldShowUpgradePrompt={{and (not this.shouldSuppressUpgradePrompts) (not item.courseStage.isFree)}}
               @willBeReplaced={{this.activeItemWillBeReplaced}} />
           {{else}}
             <CoursePage::StepList::CollapsedItem
