@@ -39,7 +39,6 @@
               @class="mb-4"
               @number={{index}}
               @text={{item.courseStage.name}}
-              @shouldShowFreeLabel={{and (not this.shouldHideFreeLabels) item.courseStage.isFree}}
               @status={{if (eq index this.activeItemIndex) "active" (if (gt index this.activeItemIndex) "future" "completed")}}
               @onClick={{fn this.handleCollapsedStageItemClick index}} />
           {{/animated-if}}
