@@ -24,12 +24,14 @@
           {{/if}}
         </div>
       {{else}}
+        {{!--
         <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleSubscribeClick dd.actions)}}>
           <span class="mr-4">
             Subscribe
           </span>
           {{svg-jar "credit-card" class="w-5 text-gray-300 group-hover:text-teal-500"}}
         </div>
+        --}}
       {{/if}}
 
       <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleGetHelpClick dd.actions)}}>
