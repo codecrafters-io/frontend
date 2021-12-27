@@ -84,7 +84,7 @@ module.exports = function (environment) {
     };
   }
 
-  if (environment === 'production') {
+  if (environment === 'production' || environment === 'development') {
     ENV['@sentry/ember'].sentry.dsn = 'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
   }
 
