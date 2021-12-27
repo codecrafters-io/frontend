@@ -70,56 +70,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'course stage item is active if clicked on');
   });
 
-  test('stages have free labels if user does not have active subscription', async function (assert) {
-    signIn(this.owner);
-    testScenario(this.server);
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
-
-    assert.ok(coursePage.collapsedItems[0].hasFreeLabel, 'free stages should have free labels');
-    assert.ok(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should have free labels');
-    assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
-
-    assert.notOk(coursePage.collapsedItems[0].hasFreeLabel, 'free stages should not have free labels if course is free');
-    assert.notOk(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should not free labels if course is free');
-    assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
-  });
-
-  test('stages should not have free labels if user has active subscription', async function (assert) {
-    signInAsSubscriber(this.owner);
-    testScenario(this.server);
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
-
-    assert.notOk(coursePage.collapsedItems[0].hasFreeLabel, 'free stages should not have free labels');
-    assert.notOk(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should not have free labels');
-    assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
-
-    assert.notOk(coursePage.collapsedItems[0].hasFreeLabel, 'free stages should not have free labels if course is free');
-    assert.notOk(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should not free labels if course is free');
-    assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
-  });
-
-  test('stages should not have free labels if user is course is beta', async function (assert) {
-    signInAsBetaParticipant(this.owner);
-    testScenario(this.server);
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own SQLite');
-
-    assert.notOk(coursePage.collapsedItems[0].hasFreeLabel, 'free stages should not have free labels');
-    assert.notOk(coursePage.collapsedItems[1].hasFreeLabel, 'free stages should not have free labels');
-    assert.notOk(coursePage.collapsedItems[2].hasFreeLabel, 'paid stages should not have free labels');
-  });
-
   test('stages should have an upgrade prompt if they are not free', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
