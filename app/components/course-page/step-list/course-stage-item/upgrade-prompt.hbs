@@ -7,6 +7,6 @@
 
   <div class="{{if (eq @color 'gray') 'text-gray-500' 'text-yellow-700'}} text-sm leading-relaxed">
     <div>This stage requires a CodeCrafters subscription.</div>
-    <div class="underline" role="button"><b>Click here to Subscribe.</b></div>
+    <div class="underline" role="button" {{on "click" this.handleSubscribeLinkClicked}} data-test-subscribe-button><b>Click here to Subscribe.</b></div>
   </div>
 </div>

@@ -78,26 +78,14 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Docker');
 
     await coursePage.collapsedItems[1].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should not have upgrade prompt');
 
     await coursePage.collapsedItems[2].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should not have upgrade prompt');
 
     await coursePage.collapsedItems[3].click();
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-    assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsGray, 'course stage prompt should be gray if stage is not current');
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
-
-    await coursePage.collapsedItems[1].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
-
-    await coursePage.collapsedItems[2].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
-
-    await coursePage.collapsedItems[3].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should have upgrade prompt');
+    assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsGray, 'upgrade prompt should be gray if stage is not current');
   });
 
   test('stages should have a yellow upgrade prompt if they are not free', async function (assert) {

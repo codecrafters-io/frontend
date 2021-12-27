@@ -17,9 +17,9 @@ export default class CheckoutSessionSuccessfulModalComponent extends Component {
 
     while (attempts < 60) {
       try {
-        let repositories = await this.store.findAll('subscription');
+        let subscriptions = await this.store.findAll('subscription');
 
-        if (repositories.firstObject) {
+        if (subscriptions.firstObject) {
           this.globalModalsService.closeModals();
           return;
         }
