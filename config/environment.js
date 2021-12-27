@@ -63,6 +63,7 @@ module.exports = function (environment) {
     sentry: {
       autoSessionTracking: true,
       dsn: '',
+      release: environment,
       tracesSampleRate: 1.0,
     },
   };
