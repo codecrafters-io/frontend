@@ -1,4 +1,4 @@
-import { isPresent, text } from 'ember-cli-page-object';
+import { text } from 'ember-cli-page-object';
 
 export default {
   scope: '[data-test-course-collapsed-item]',
