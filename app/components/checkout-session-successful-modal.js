@@ -6,7 +6,6 @@ import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 
 export default class CheckoutSessionSuccessfulModalComponent extends Component {
-  @tracked isSyncingSubscriptions = true;
   @service('globalModals') globalModalsService;
   @service store;
 
