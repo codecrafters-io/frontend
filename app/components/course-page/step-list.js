@@ -161,7 +161,7 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   get shouldSuppressUpgradePrompts() {
-    return this.repository.user.hasActiveSubscription || this.repository.course.releaseStatusIsBeta || this.repository.course.isFree;
+    return this.repository.user.hasActiveSubscription || this.repository.course.releaseStatusIsBeta;
   }
 
   startRepositoryPoller() {

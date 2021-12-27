@@ -3,7 +3,6 @@ export default function createCourseFromData(server, courseData) {
     completionPercentage: courseData.completion_percentage,
     descriptionMarkdown: courseData.description_md,
     difficulty: courseData.marketing.difficulty,
-    isFree: courseData.slug === 'redis',
     name: courseData.name,
     releaseStatus: courseData.release_status,
     shortDescriptionMarkdown: courseData.short_description_md,
@@ -19,7 +18,7 @@ export default function createCourseFromData(server, courseData) {
       name: courseStageData.name,
       position: courseStagePosition,
       descriptionMarkdownTemplate: courseStageData.description_md,
-      isFree: courseData.slug === 'redis' || courseStagePosition <= 2,
+      isFree: courseStagePosition <= 2,
     });
 
     courseStagePosition++;
