@@ -22,10 +22,6 @@ export default class CurrentUserService extends Service {
     return this.currentUserPayload.data.attributes.username;
   }
 
-  get hasActiveSubscription() {
-    return this.record.hasActiveSubscription;
-  }
-
   get isBetaParticipant() {
     return this.record.isBetaParticipant;
   }
