@@ -16,8 +16,11 @@ export default function createCourseFromData(server, courseData) {
     server.create('course-stage', {
       course: course,
       name: courseStageData.name,
-      position: courseStagePosition++,
+      position: courseStagePosition,
       descriptionMarkdownTemplate: courseStageData.description_md,
+      isFree: courseStagePosition <= 2,
     });
+
+    courseStagePosition++;
   }
 }

@@ -1,0 +1,12 @@
+<div class="
+  border rounded flex items-center p-4
+  {{if (eq @color 'gray') 'border-gray-300' 'border-yellow-300'}}
+  {{if (eq @color 'gray') 'bg-gray-50' 'bg-yellow-50'}}
+  {{@class}}" data-test-upgrade-prompt>
+  {{svg-jar "exclamation" class=(concat "w-8 h-8 mr-4 flex-shrink-0 " (if (eq @color 'gray') 'text-gray-300' 'text-yellow-300'))}}
+
+  <div class="{{if (eq @color 'gray') 'text-gray-500' 'text-yellow-700'}} text-sm leading-relaxed">
+    <div>This stage requires a CodeCrafters subscription.</div>
+    <div class="underline" role="button" {{on "click" this.handleSubscribeLinkClicked}} data-test-subscribe-button><b>Click here to Subscribe.</b></div>
+  </div>
+</div>

@@ -160,6 +160,10 @@ export default class CoursePageContentStepListComponent extends Component {
     return this.args.repository;
   }
 
+  get shouldSuppressUpgradePrompts() {
+    return this.repository.user.hasActiveSubscription || this.repository.course.releaseStatusIsBeta;
+  }
+
   startRepositoryPoller() {
     this.stopRepositoryPoller();
 

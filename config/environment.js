@@ -55,14 +55,15 @@ module.exports = function (environment) {
     ENV['ember-cli-mirage'] = { enabled: true };
 
     // To run against development server
-    // ENV.serverVariables.defaults['server-url'] = 'https://codecrafters.ngrok.io';
-    // ENV['ember-cli-mirage'] = { enabled: false };
+    ENV.serverVariables.defaults['server-url'] = 'https://codecrafters.ngrok.io';
+    ENV['ember-cli-mirage'] = { enabled: false };
   }
 
   ENV['@sentry/ember'] = {
     sentry: {
       autoSessionTracking: true,
       dsn: '',
+      release: environment,
       tracesSampleRate: 1.0,
     },
   };
@@ -83,7 +84,7 @@ module.exports = function (environment) {
     };
   }
 
-  if (environment === 'production') {
+  if (environment === 'production' || environment === 'development') {
     ENV['@sentry/ember'].sentry.dsn = 'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
   }
 

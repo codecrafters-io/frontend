@@ -5,6 +5,14 @@ export default function () {
 
   window.server = this; // Hack! Is there a better way?
 
+  this.post('/billing-sessions', function (schema) {
+    return schema.billingSessions.create({ url: 'https://test.com/billing_session' });
+  });
+
+  this.post('/checkout-sessions', function (schema) {
+    return schema.checkoutSessions.create({ url: 'https://test.com/checkout_session' });
+  });
+
   this.get('/courses');
 
   this.get('/repositories', function (schema) {
@@ -20,6 +28,10 @@ export default function () {
     attrs.name = 'Language #n';
 
     return schema.repositories.create(attrs);
+  });
+
+  this.get('/subscriptions', function (schema) {
+    return schema.subscriptions.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
   });
 
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
