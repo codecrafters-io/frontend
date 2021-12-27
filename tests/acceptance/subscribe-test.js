@@ -29,7 +29,7 @@ module('Acceptance | subscribe-test', function (hooks) {
     testScenario(this.server);
 
     await coursesPage.visit({ action: 'checkout_session_successful' });
-    await this.pauseTest();
+    // TODO: test
   });
 
   test('subscriber can manage subscription', async function (assert) {
