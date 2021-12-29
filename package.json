@@ -28,6 +28,8 @@
     "@fullhuman/postcss-purgecss": "^4.0.3",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
+    "@percy/cli": "^1.0.0-beta.71",
+    "@percy/ember": "^3.0.0",
     "@sentry/ember": "^6.11.0",
     "@types/sinonjs__fake-timers": "^6.0.3",
     "autoprefixer": "^10.3.2",

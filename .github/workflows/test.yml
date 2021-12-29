@@ -31,7 +31,24 @@ jobs:
             ${{ runner.os }}-
 
       - run: npm ci --ignore-scripts
-      - run: COVERAGE=true ./node_modules/.bin/ember test --silent --reporter xunit | tee test-results.xml
+
+      - id: compute_percy_enable_for_branch
+        run: echo "::set-output name=percy_enable::true"
+        if: github.ref == 'refs/heads/master'
+
+      - id: compute_percy_enable_for_commit
+        run: echo "::set-output name=percy_enable::true"
+        if: contains(github.event.head_commit.message, '[percy]')
+
+      - id: compute_percy_enable
+        run: echo "::set-output name=percy_enable::true"
+        if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
+
+      - run: ./node_modules/.bin/percy exec -- ./node_modules/.bin/ember test --silent --reporter xunit | tee test-results.xml
+        env:
+          COVERAGE: true
+          PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
+          PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
 
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v1
