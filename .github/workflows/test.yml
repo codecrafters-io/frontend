@@ -34,11 +34,11 @@ jobs:
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
-        if: github.ref == 'refs/heads/master'
+        if: "github.ref == 'refs/heads/master'"
 
       - id: compute_percy_enable_for_commit
         run: echo "::set-output name=percy_enable::true"
-        if: contains(github.event.head_commit.message, '[percy]')
+        if: "contains(github.event.head_commit.message, '[percy]')"
 
       - id: compute_percy_enable
         run: echo "::set-output name=percy_enable::true"
