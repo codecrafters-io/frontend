@@ -6,7 +6,10 @@
       </div>
 
       {{#each submissionsInGroup as |submission|}}
-        <Admin::Course::SubmissionsPage::TimelineEntryContainer @submission={{submission}} />
+        <Admin::Course::SubmissionsPage::TimelineEntryContainer
+          @onClick={{fn (mut this.selectedSubmission) submission}}
+          @submission={{submission}}
+          @isSelected={{eq submission this.selectedSubmission}} />
       {{/each}}
     {{/each-in}}
   {{else}}

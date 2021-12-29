@@ -1,10 +1,14 @@
-<div class="flex items-center justify-between pl-1 pr-4 border-b hover:bg-gray-100" data-test-timeline-entry>
+<div
+  role="button"
+  class="flex items-center justify-between pl-1 pr-4 border-b hover:bg-gray-100 {{if @isSelected "bg-gray-100"}}"
+  {{on "click" @onClick}}
+  data-test-timeline-entry>
   <div class="flex items-center py-2">
     <div class="w-4 h-4 rounded-full bg-green-600 mr-3 flex items-center justify-center">
       {{svg-jar "check" class="w-3 fill-current text-white"}}
     </div>
     <div>
-      <span class="text-gray-700 text-sm">
+      <span class="text-gray-700 text-sm {{if @isSelected "font-bold"}}">
         Stage #{{@submission.courseStage.position}} using {{@submission.repository.language.name}}
       </span>
       <span class="text-gray-400 text-xs">by {{@submission.repository.user.username}}</span>
