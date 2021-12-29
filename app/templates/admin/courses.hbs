@@ -2,18 +2,7 @@
   <h1 class="text-xl font-bold text-gray-800 my-8">Courses</h1>
   {{#each this.model.courses as |course|}}
     <div class="flex items-center my-3">
-      {{#if course.isDocker}}
-        <img alt={{course.name}} src="/assets/images/challenge-logos/challenge-logo-docker.svg" class="w-10 h-10 mr-3">
-      {{else if course.isGit}}
-        <img alt={{course.name}} src="/assets/images/challenge-logos/challenge-logo-git.svg" class="w-10 h-10 mr-3">
-      {{else if course.isReact}}
-        <img alt={{course.name}} src="/assets/images/challenge-logos/challenge-logo-react.svg" class="w-10 h-10 mr-3">
-      {{else if course.isRedis}}
-        <img alt={{course.name}} src="/assets/images/challenge-logos/challenge-logo-redis.svg" class="w-10 h-10 mr-3">
-      {{else if course.isSQLite}}
-        <img alt={{course.name}} src="/assets/images/challenge-logos/challenge-logo-sqlite.svg" class="w-10 h-10 mr-3">
-      {{/if}}
-
+      <CourseLogo @course={{course}} class="w-10 h-10 mr-3"/>
       <LinkTo @route="admin/course" @model={{course.slug}} class="underline py-2 block">{{course.name}}</LinkTo>
     </div>
   {{/each}}
