@@ -13,6 +13,7 @@ export default class AdminCourseRoute extends Route {
 
     return {
       course: course,
+      submissions: [],
     };
   }
 }
