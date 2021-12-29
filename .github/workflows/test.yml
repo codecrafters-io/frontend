@@ -49,6 +49,9 @@ jobs:
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
           PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
 
+      - run: cat test-results.xml
+        if: always()
+
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v1
         with:
