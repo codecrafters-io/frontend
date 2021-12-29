@@ -10,7 +10,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 11290), // 11.29s
-        logs: '[stage-1] failure',
+        logs: '[stage-1] failure\n[stage-2] failure',
       });
     },
   }),
@@ -22,7 +22,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 4219), // 4.219s
-        logs: '[stage-1] passed',
+        logs: '\\033[92m[stage-1] passed\\033[0m\n[stage-2] passed',
       });
 
       server.create('course-stage-completion', {

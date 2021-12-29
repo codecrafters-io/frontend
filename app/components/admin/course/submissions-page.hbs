@@ -9,7 +9,14 @@
 
 <div class="border-t h-160 pb-4">
   <div class="flex h-full items-stretch">
-    <Admin::Course::SubmissionsPage::TimelineContainer @submissions={{@submissions}} class="w-5/12 border-r" />
-    <Admin::Course::SubmissionsPage::SubmissionDetailsContainer class="w-7/12 pr-0" />
+    <Admin::Course::SubmissionsPage::TimelineContainer
+      @onSubmissionSelect={{mut this.selectedSubmission}}
+      @submissions={{@submissions}}
+      @selectedSubmission={{this.selectedSubmission}}
+      class="w-5/12 border-r" />
+
+    <Admin::Course::SubmissionsPage::SubmissionDetailsContainer
+      @submission={{this.selectedSubmission}}
+      class="w-7/12 pr-0" />
   </div>
 </div>

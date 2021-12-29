@@ -5,6 +5,7 @@ export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
   @belongsTo('course', { async: false }) course;
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
+  @attr('date') createdAt;
   @belongsTo('user', { async: false }) user;
   @belongsTo('language', { async: false }) language;
   @belongsTo('submission', { async: false, inverse: null }) lastSubmission;
