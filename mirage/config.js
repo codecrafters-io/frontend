@@ -15,11 +15,11 @@ export default function () {
 
   this.get('/courses');
 
+  this.get('/leaderboard-entries');
+
   this.get('/repositories', function (schema) {
     return schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
   });
-
-  this.get('/leaderboard-entries');
 
   this.post('/repositories', function (schema) {
     let attrs = this.normalizedRequestAttrs();
@@ -29,6 +29,8 @@ export default function () {
 
     return schema.repositories.create(attrs);
   });
+
+  this.get('/submissions');
 
   this.get('/subscriptions', function (schema) {
     return schema.subscriptions.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });

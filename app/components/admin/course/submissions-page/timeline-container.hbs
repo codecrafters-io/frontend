@@ -1,15 +1,14 @@
 <div data-test-timeline-container ...attributes>
   {{#if @submissions.firstObject}}
-    <div class="py-3 font-semibold uppercase tracking-wide text-gray-400 text-xs border-b">
-      Today
-    </div>
-    <Admin::Course::SubmissionsPage::Timeline::Entry />
-    <Admin::Course::SubmissionsPage::Timeline::Entry />
-    <div class="py-3 font-semibold uppercase tracking-wide text-gray-400 text-xs border-b">
-      Yesterday
-    </div>
-    <Admin::Course::SubmissionsPage::Timeline::Entry />
-    <Admin::Course::SubmissionsPage::Timeline::Entry />
+    {{#each-in this.groupedSubmissions as |dateString submissionsInGroup|}}
+      <div class="py-3 font-semibold uppercase tracking-wide text-gray-400 text-xs border-b">
+        {{dateString}}
+      </div>
+
+      {{#each submissionsInGroup as |submission|}}
+        <Admin::Course::SubmissionsPage::TimelineEntryContainer @submission={{submission}} />
+      {{/each}}
+    {{/each-in}}
   {{else}}
     <div class="py-16 px-3 flex items-center justify-center">
       <span class="text-gray-400 text-xs text-center">

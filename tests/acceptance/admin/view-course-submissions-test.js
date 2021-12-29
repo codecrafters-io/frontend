@@ -22,4 +22,28 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
 
     await percySnapshot('Admin - Course Submissions - No Submissions');
   });
+
+  test('it renders when submissions are present', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await adminCoursesPage.visit();
+    await adminCoursesPage.clickOnLink('Build your own Redis');
+
+    await this.pauseTest();
+
+    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 3);
+
+    await percySnapshot('Admin - Course Submissions - No Submissions');
+  });
 });

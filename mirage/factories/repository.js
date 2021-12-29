@@ -28,6 +28,12 @@ export default Factory.extend({
         status: 'success',
       });
 
+      server.create('submission-evaluation', {
+        submission,
+        createdAt: new Date(),
+        logs: '[stage-1] passed',
+      });
+
       server.create('course-stage-completion', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
