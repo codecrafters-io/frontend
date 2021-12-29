@@ -7,9 +7,10 @@ export default class RepositoryModel extends Model {
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
   @belongsTo('user', { async: false }) user;
   @belongsTo('language', { async: false }) language;
-  @belongsTo('submission', { async: false }) lastSubmission;
+  @belongsTo('submission', { async: false, inverse: null }) lastSubmission;
   @attr('string') name;
   @attr('string') starterRepositoryUrl;
+  @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
   get defaultStarterRepositoryUrl() {
     return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.supportedLanguages.firstObject.slug}`;

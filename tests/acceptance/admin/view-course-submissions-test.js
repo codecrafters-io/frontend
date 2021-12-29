@@ -31,10 +31,15 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    this.server.create('repository', 'withFirstStageCompleted', {
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: currentUser,
+    });
+
+    let submission = this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
     });
 
     await adminCoursesPage.visit();

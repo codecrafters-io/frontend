@@ -4,7 +4,7 @@ import { attr, belongsTo } from '@ember-data/model';
 export default class SubmissionModel extends Model {
   @belongsTo('courseStage', { async: false }) courseStage;
   @hasMany('submission-evaluation', { async: false }) evaluations;
-  @belongsTo('repository', { async: false }) repository;
+  @belongsTo('repository', { async: false, inverse: 'submissions' }) repository;
 
   @attr('date') createdAt;
   @attr('string') status;
