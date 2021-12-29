@@ -32,6 +32,8 @@ jobs:
 
       - run: npm ci --ignore-scripts
 
+      - run: echo "${{toJSON(github.event)}}"
+
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
         if: "github.ref == 'refs/heads/master'"
