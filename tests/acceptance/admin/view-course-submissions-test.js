@@ -37,7 +37,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
       user: currentUser,
     });
 
-    let submission = this.server.create('submission', 'withFailureStatus', {
+    this.server.create('submission', 'withFailureStatus', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[2],
     });
@@ -45,10 +45,8 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     await adminCoursesPage.visit();
     await adminCoursesPage.clickOnLink('Build your own Redis');
 
-    await this.pauseTest();
+    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 2);
 
-    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 3);
-
-    await percySnapshot('Admin - Course Submissions - No Submissions');
+    await percySnapshot('Admin - Course Submissions - With Submissions');
   });
 });
