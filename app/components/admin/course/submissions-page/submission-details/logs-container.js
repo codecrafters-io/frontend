@@ -1,4 +1,6 @@
 import Component from '@glimmer/component';
+import { default as AnsiUp } from 'ansi_up';
+import { htmlSafe } from '@ember/template';
 
 export default class AdminCourseSubmissionsPageSubmissionDetailsLogsContainerComponent extends Component {
   get evaluation() {
@@ -6,7 +8,8 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsLogsContainerCom
   }
 
   get logLines() {
-    console.log(this.evaluation.parsedLogs.split('\n'));
-    return this.evaluation.parsedLogs.split('\n');
+    return this.evaluation.parsedLogs.split('\n').map((line) => {
+      return htmlSafe(new AnsiUp().ansi_to_html(line));
+    });
   }
 }
