@@ -30,6 +30,7 @@ jobs:
       - run: npm ci --prefer-offline --ignore-scripts
 
       - run: echo "${{toJSON(github.event)}}"
+        name: "Print GitHub event"
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
