@@ -6,7 +6,7 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsLogsContainerCom
   }
 
   get logLines() {
-    console.log(this.evaluation.logs.split('\n'));
-    return this.evaluation.logs.split('\n');
+    console.log(this.evaluation.parsedLogs.split('\n'));
+    return this.evaluation.parsedLogs.split('\n');
   }
 }
