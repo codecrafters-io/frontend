@@ -6,6 +6,10 @@ export default class SubmissionEvaluationModel extends Model {
   @attr('string') logs;
 
   get parsedLogs() {
-    return atob(this.logs);
+    try {
+      return atob(this.logs);
+    } catch (DOMException) {
+      return 'Malformed logs.';
+    }
   }
 }
