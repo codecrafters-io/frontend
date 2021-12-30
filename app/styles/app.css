@@ -15,3 +15,7 @@
 .ember-basic-dropdown-content {
   background: none !important;
 }
+
+.h-160 {
+  height: 40rem;
+}

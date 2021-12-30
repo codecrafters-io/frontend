@@ -12,6 +12,7 @@ module.exports = {
       blue: colors.sky,
       current: 'currentColor',
       gray: colors.blueGray,
+      green: colors.green,
       red: colors.red,
       teal: colors.teal,
       transparent: 'transparent',

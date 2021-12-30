@@ -28,6 +28,8 @@
     "@fullhuman/postcss-purgecss": "^4.0.3",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
+    "@percy/cli": "^1.0.0-beta.71",
+    "@percy/ember": "^3.0.0",
     "@sentry/ember": "^6.11.0",
     "@types/sinonjs__fake-timers": "^6.0.3",
     "autoprefixer": "^10.3.2",
@@ -57,6 +59,7 @@
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.0.4",
     "ember-load-initializers": "^2.1.2",
+    "ember-lodash": "^4.19.5",
     "ember-math-helpers": "^2.16.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-moment": "^9.0.0",
@@ -93,6 +96,7 @@
   "dependencies": {
     "@sinonjs/fake-timers": "^7.1.2",
     "@tailwindcss/typography": "^0.4.1",
+    "ansi_up": "^5.1.0",
     "mustache": "^4.2.0",
     "showdown": "^1.9.1"
   }

@@ -8,33 +8,22 @@ export default Factory.extend({
 
   withFirstStageInProgress: trait({
     afterCreate(repository, server) {
-      let submission = server.create('submission', {
+      server.create('submission', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
-        createdAt: new Date(),
+        createdAt: repository.createdAt,
         status: 'evaluating',
       });
-
-      repository.update('lastSubmission', submission);
     },
   }),
 
   withFirstStageCompleted: trait({
     afterCreate(repository, server) {
-      let submission = server.create('submission', {
+      server.create('submission', 'withSuccessStatus', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
         createdAt: repository.createdAt,
-        status: 'success',
       });
-
-      server.create('course-stage-completion', {
-        repository,
-        courseStage: repository.course.stages.models.sortBy('position').firstObject,
-        completedAt: repository.createdAt,
-      });
-
-      repository.update('lastSubmission', submission);
     },
   }),
 });

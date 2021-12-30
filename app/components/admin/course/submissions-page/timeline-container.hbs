@@ -1,0 +1,22 @@
+<div data-test-timeline-container ...attributes>
+  {{#if @submissions.firstObject}}
+    {{#each-in this.groupedSubmissions as |dateString submissionsInGroup|}}
+      <div class="py-3 font-semibold uppercase tracking-wide text-gray-400 text-xs border-b">
+        {{dateString}}
+      </div>
+
+      {{#each submissionsInGroup as |submission|}}
+        <Admin::Course::SubmissionsPage::TimelineEntryContainer
+          @onClick={{fn @onSubmissionSelect submission}}
+          @submission={{submission}}
+          @isSelected={{eq submission @selectedSubmission}} />
+      {{/each}}
+    {{/each-in}}
+  {{else}}
+    <div class="py-16 px-3 flex items-center justify-center">
+      <span class="text-gray-400 text-xs text-center">
+        No recent submissions found.
+      </span>
+    </div>
+  {{/if}}
+</div>

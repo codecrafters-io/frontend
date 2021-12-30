@@ -1,0 +1,9 @@
+<div class="p-6" ...attributes>
+  {{#if @submission}}
+    <Admin::Course::SubmissionsPage::SubmissionDetails::HeaderContainer @submission={{@submission}} />
+    <div class="border-b pb-4 mb-4"></div>
+    <Admin::Course::SubmissionsPage::SubmissionDetails::LogsContainer @submission={{@submission}} />
+  {{else}}
+    No submission selected.
+  {{/if}}
+</div>
