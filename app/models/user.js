@@ -8,12 +8,25 @@ export default class UserModel extends Model {
   @attr('boolean') isBetaParticipant;
   @attr('string') username;
   @hasMany('subscription', { async: false }) subscriptions;
+  @hasMany('team-membership', { async: false }) teamMemberships;
+
+  get githubProfileUrl() {
+    return `https://github.com/${this.githubUsername}`;
+  }
 
   get hasActiveSubscription() {
     return this.subscriptions.isAny('isActive');
   }
 
-  get githubProfileUrl() {
-    return `https://github.com/${this.githubUsername}`;
+  get isTeamAdmin() {
+    return !!this.managedTeams.firstObject;
+  }
+
+  get managedTeams() {
+    return this.teamMemberships.filterBy('isAdmin').mapBy('team');
+  }
+
+  get teams() {
+    return this.teamMemberships.mapBy('team');
   }
 }

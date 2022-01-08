@@ -8,6 +8,7 @@ export default class HeaderAccountDropdownComponent extends Component {
   @service('currentUser') currentUserService;
   @service('globalModals') globalModalsService;
   @tracked isCreatingBillingSession = false;
+  @service router;
   @service serverVariables;
   @service store;
 
@@ -31,6 +32,12 @@ export default class HeaderAccountDropdownComponent extends Component {
 
     document.body.appendChild(f);
     f.submit();
+  }
+
+  @action
+  handleManageTeamClick(dropdownActions, team) {
+    dropdownActions.close();
+    this.router.transitionTo('team', team.id);
   }
 
   @action
