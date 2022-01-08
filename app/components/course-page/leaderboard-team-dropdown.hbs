@@ -1,28 +1,28 @@
 <BasicDropdown @horizontalPosition="right" as |dd|>
   <dd.Trigger>
-    <div class="text-gray-500 flex items-center py-3 outline-none" data-test-leaderboard-team-dropdown-trigger>
-      <span class="mr-1 text-xs">
-        {{if @team @team.name "World"}}
-      </span>
-      {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+    <div class="bg-white border rounded shadow-sm p-1">
+      <div class="text-gray-500 flex items-center outline-none" data-test-leaderboard-team-dropdown-trigger>
+        {{svg-jar (if @team "user-group" "globe") class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </div>
     </div>
   </dd.Trigger>
   <dd.Content>
     <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-leaderboard-team-dropdown-content>
       {{#each @teams as |team|}}
       <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleTeamLinkClick team dd.actions)}}>
-        <span class="mr-4">
+        <span class="mr-4 {{if (eq team @team) 'text-teal-500 font-bold' 'text-gray-700'}}">
           {{team.name}}
         </span>
-        {{svg-jar "user-group" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+        {{svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500"))}}
       </div>
       {{/each}}
 
       <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleTeamLinkClick null dd.actions)}}>
-        <span class="mr-4">
+        <span class="mr-4 {{unless @team 'text-teal-500 font-bold' 'text-gray-700'}}">
           Everyone
         </span>
-        {{svg-jar "globe" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+        {{svg-jar "globe" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (unless @team " text-teal-500"))}}
       </div>
     </div>
   </dd.Content>

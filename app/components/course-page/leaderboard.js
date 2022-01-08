@@ -10,6 +10,7 @@ import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 export default class CoursePageLeaderboardComponent extends Component {
   transition = fade;
   @tracked isLoadingEntries = true;
+  @tracked isReloadingEntries = false;
   @tracked entriesFromAPI;
   @tracked polledCourse;
   @tracked team;
@@ -107,6 +108,7 @@ export default class CoursePageLeaderboardComponent extends Component {
     }
 
     this.isLoadingEntries = false;
+    this.isReloadingEntries = false;
     this.startLeaderboardPoller();
   }
 
@@ -126,7 +128,7 @@ export default class CoursePageLeaderboardComponent extends Component {
 
     this.team = team;
     // this.entriesFromAPI = [];
-    this.isLoadingEntries = true;
+    this.isReloadingEntries = true;
 
     this.handleDidInsert(); // start all over again
   }
