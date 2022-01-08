@@ -28,6 +28,69 @@ export function signInAsSubscriber(owner) {
   ]);
 }
 
+export function signInAsTeamAdmin(owner, server) {
+  const user = server.schema.users.first();
+  const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });
+
+  const teamMembership = server.create('team-membership', {
+    createdAt: new Date(),
+    id: 'dummy-team-membership-id',
+    user: user,
+    team: team,
+    isAdmin: true,
+  });
+
+  doSignIn(owner, {}, [
+    {
+      id: teamMembership.id,
+      type: 'team-memberships',
+      attributes: {
+        'is-admin': teamMembership.isAdmin,
+        'created-at': '2021-08-29T16:50:12.551986+00:00',
+      },
+      relationships: {
+        user: { data: { type: 'users', id: user.id } },
+        team: { data: { type: 'teams', id: team.id } },
+      },
+    },
+    {
+      id: team.id,
+      type: 'teams',
+      attributes: {
+        name: team.name,
+      },
+    },
+  ]);
+}
+
+export function signInAsTeamMember(owner, server) {
+  const user = server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+  const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });
+  const teamMembership = server.create('team-membership', { id: 'dummy-team-membership-id', user: user, team: user, isAdmin: false });
+
+  doSignIn(owner, {}, [
+    {
+      id: teamMembership.id,
+      type: 'team-memberships',
+      attributes: {
+        'created-at': '2021-08-29T16:50:12.551986+00:00',
+        'is-admin': teamMembership.isAdmin,
+      },
+      relationships: {
+        user: { data: { type: 'users', id: user.id } },
+        team: { data: { type: 'teams', id: team.id } },
+      },
+    },
+    {
+      id: team.id,
+      type: 'teams',
+      attributes: {
+        name: team.name,
+      },
+    },
+  ]);
+}
+
 function doSignIn(owner, userAttributes, includedResources) {
   let serverVariables = owner.lookup('service:serverVariables');
 
@@ -36,7 +99,7 @@ function doSignIn(owner, userAttributes, includedResources) {
       type: 'users',
       id: '63c51e91-e448-4ea9-821b-a80415f266d3',
       attributes: {
-        'avatar-url': 'https://github.com/rohitpaulk2.png',
+        'avatar-url': 'https://github.com/rohitpaulk.png',
         'created-at': '2021-08-29T16:50:12.551986+00:00',
         'github-username': 'rohitpaulk',
         'is-beta-participant': false,

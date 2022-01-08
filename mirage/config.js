@@ -36,6 +36,9 @@ export default function () {
     return schema.subscriptions.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
   });
 
+  this.get('/teams');
+  this.delete('/team-memberships/:id');
+
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
   this.passthrough('https://rs.fullstory.com/*');
 }
