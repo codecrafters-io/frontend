@@ -229,6 +229,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.ok(coursePage.leaderboard.teamDropdown.hasLink('Everyone'), 'should have link for everyone');
 
     await coursePage.leaderboard.teamDropdown.clickOnLink('Everyone');
+    await finishRender();
     assert.equal(coursePage.leaderboard.entries.length, 2, 'leaderboard entries should be visible if filtering by world');
 
     await percySnapshot('Leaderboard for teams - Viewing World');
