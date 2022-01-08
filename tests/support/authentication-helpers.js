@@ -49,8 +49,8 @@ export function signInAsTeamAdmin(owner, server) {
         'created-at': '2021-08-29T16:50:12.551986+00:00',
       },
       relationships: {
-        user: { data: { type: 'users', id: user.id } },
-        team: { data: { type: 'teams', id: team.id } },
+        user: { data: { type: 'users', id: teamMembership.user.id } },
+        team: { data: { type: 'teams', id: teamMembership.team.id } },
       },
     },
     {
@@ -66,19 +66,26 @@ export function signInAsTeamAdmin(owner, server) {
 export function signInAsTeamMember(owner, server) {
   const user = server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });
-  const teamMembership = server.create('team-membership', { id: 'dummy-team-membership-id', user: user, team: user, isAdmin: false });
+
+  const teamMembership = server.create('team-membership', {
+    createdAt: new Date(),
+    id: 'dummy-team-membership-id',
+    user: user,
+    team: team,
+    isAdmin: false,
+  });
 
   doSignIn(owner, {}, [
     {
       id: teamMembership.id,
       type: 'team-memberships',
       attributes: {
-        'created-at': '2021-08-29T16:50:12.551986+00:00',
         'is-admin': teamMembership.isAdmin,
+        'created-at': '2021-08-29T16:50:12.551986+00:00',
       },
       relationships: {
-        user: { data: { type: 'users', id: user.id } },
-        team: { data: { type: 'teams', id: team.id } },
+        user: { data: { type: 'users', id: teamMembership.user.id } },
+        team: { data: { type: 'teams', id: teamMembership.team.id } },
       },
     },
     {

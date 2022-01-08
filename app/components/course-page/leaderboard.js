@@ -10,11 +10,26 @@ import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 export default class CoursePageLeaderboardComponent extends Component {
   transition = fade;
   @tracked isLoadingEntries = true;
+  @tracked isReloadingEntries = false;
   @tracked entriesFromAPI;
   @tracked polledCourse;
+  @tracked team;
   @service currentUser;
   @service store;
   @service visibility;
+
+  constructor() {
+    super(...arguments);
+    this.team = this.currentUserIsTeamMember ? this.currentUserTeams.firstObject : null;
+  }
+
+  get currentUserIsTeamMember() {
+    return !!this.currentUserTeams;
+  }
+
+  get currentUserTeams() {
+    return this.currentUser.record.teams;
+  }
 
   get entries() {
     if (this.isLoadingEntries) {
@@ -79,12 +94,21 @@ export default class CoursePageLeaderboardComponent extends Component {
 
   @action
   async handleDidInsert() {
-    this.entriesFromAPI = await this.store.query('leaderboard-entry', {
-      course_id: this.args.course.id,
-      include: 'language,current-course-stage,user',
-    });
+    if (this.team) {
+      this.entriesFromAPI = await this.store.query('leaderboard-entry', {
+        course_id: this.args.course.id,
+        team_id: this.team.id,
+        include: 'language,current-course-stage,user',
+      });
+    } else {
+      this.entriesFromAPI = await this.store.query('leaderboard-entry', {
+        course_id: this.args.course.id,
+        include: 'language,current-course-stage,user',
+      });
+    }
 
     this.isLoadingEntries = false;
+    this.isReloadingEntries = false;
     this.startLeaderboardPoller();
   }
 
@@ -96,6 +120,17 @@ export default class CoursePageLeaderboardComponent extends Component {
   @action
   async handlePoll(entriesFromAPI) {
     this.entriesFromAPI = entriesFromAPI;
+  }
+
+  @action
+  async handleTeamChange(team) {
+    this.stopLeaderboardPoller();
+
+    this.team = team;
+    // this.entriesFromAPI = [];
+    this.isReloadingEntries = true;
+
+    this.handleDidInsert(); // start all over again
   }
 
   // eslint-disable-next-line require-yield
@@ -115,7 +150,14 @@ export default class CoursePageLeaderboardComponent extends Component {
 
   startLeaderboardPoller() {
     this.stopLeaderboardPoller();
-    this.leaderboardPoller = new LeaderboardPoller({ store: this.store, visibilityService: this.visibility, intervalMilliseconds: 5000 });
+
+    this.leaderboardPoller = new LeaderboardPoller({
+      store: this.store,
+      visibilityService: this.visibility,
+      intervalMilliseconds: 5000,
+    });
+
+    this.leaderboardPoller.team = this.team;
     this.leaderboardPoller.start(this.args.course, this.handlePoll);
     this.polledCourse = this.args.course;
   }

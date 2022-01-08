@@ -1,9 +1,20 @@
 <div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} class="{{@class}}" data-test-leaderboard>
-  <div class="flex items-center mb-2 pl-4">
-    <span class="uppercase text-teal-500 text-xs font-bold">RECENT ATTEMPTS</span>
-    <span class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2 {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}} transition-all">
-      {{this.mergedEntries.length}}
-    </span>
+  <div class="flex items-center justify-between mb-2 pl-4">
+    <div class="flex items-center">
+      <span class="uppercase text-teal-500 text-xs font-bold">RECENT ATTEMPTS</span>
+
+      <span class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2 {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}} transition-all">
+        {{this.mergedEntries.length}}
+      </span>
+    </div>
+    <div>
+      {{#if this.currentUserTeams.firstObject}}
+        <CoursePage::LeaderboardTeamDropdown
+          @team={{this.team}}
+          @teams={{this.currentUserTeams}}
+          @onChange={{this.handleTeamChange}} />
+      {{/if}}
+    </div>
   </div>
 
   {{#animated-if this.isLoadingEntries use=this.transition}}
@@ -20,7 +31,13 @@
       {{else}}
         <div class="flex px-4 py-2 items-center">
           <div class="text-sm text-gray-500">
-            <p class="mb-2">No one has attempted this challenge recently.</p>
+              <p class="mb-2">
+                {{#if this.team}}
+                  No one from {{this.team.name}} has attempted this challenge recently.
+                {{else}}
+                  No one has attempted this challenge recently.
+                {{/if}}
+              </p>
           </div>
         </div>
       {{/animated-each}}
