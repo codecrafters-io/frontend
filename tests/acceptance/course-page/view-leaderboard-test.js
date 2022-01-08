@@ -8,6 +8,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import { signIn, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupApplicationTest(hooks);
@@ -197,7 +198,6 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     testScenario(this.server);
     signInAsTeamMember(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
@@ -222,12 +222,15 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.equal(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
 
+    await percySnapshot('Leaderboard for teams - Team has no submissions');
+
     await coursePage.leaderboard.teamDropdown.toggle();
     assert.equal(coursePage.leaderboard.teamDropdown.links.length, 2);
     assert.ok(coursePage.leaderboard.teamDropdown.hasLink('Everyone'), 'should have link for everyone');
 
     await coursePage.leaderboard.teamDropdown.clickOnLink('Everyone');
+    assert.equal(coursePage.leaderboard.entries.length, 2, 'leaderboard entries should be visible if filtering by world');
 
-    await this.pauseTest();
+    await percySnapshot('Leaderboard for teams - Viewing World');
   });
 });
