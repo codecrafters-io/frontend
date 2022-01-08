@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 
-export default class SubscribeModalComponent extends Component {
+export default class SubscribtionSettingsContainerComponent extends Component {
   @tracked isCreatingTeamBillingSession = false;
   @service('globalModals') globalModalsService;
   @service store;

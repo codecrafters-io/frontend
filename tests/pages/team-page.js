@@ -4,6 +4,7 @@ import CheckoutSessionSuccessfulModal from 'codecrafters-frontend/tests/pages/co
 
 export default create({
   accountDropdown: AccountDropdown,
+  clickOnManageSubscriptionButton: clickable('[data-test-manage-subscription-button]'),
   confirmMemberDeletionModal: CheckoutSessionSuccessfulModal,
 
   members: collection('[data-test-members-list-item-container]', {

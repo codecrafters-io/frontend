@@ -39,6 +39,10 @@ export default function () {
   this.get('/teams');
   this.delete('/team-memberships/:id');
 
+  this.post('/team-billing-sessions', function (schema) {
+    return schema.teamBillingSessions.create({ url: 'https://test.com/team_billing_session' });
+  });
+
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
   this.passthrough('https://rs.fullstory.com/*');
 }

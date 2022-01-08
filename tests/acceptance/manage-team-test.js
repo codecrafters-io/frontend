@@ -9,6 +9,7 @@ import teamPage from 'codecrafters-frontend/tests/pages/team-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
+import window from 'ember-window-mock';
 
 module('Acceptance | manage-team-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -115,5 +116,18 @@ module('Acceptance | manage-team-test', function (hooks) {
 
     await teamPage.members[1].clickRemoveButton();
     await waitUntil(() => teamPage.members.length === 1);
+  });
+
+  test('team admin can create team billing session', async function (assert) {
+    testScenario(this.server);
+    signInAsTeamAdmin(this.owner, this.server);
+
+    await coursesPage.visit();
+    await coursesPage.accountDropdown.toggle();
+    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+
+    await teamPage.clickOnManageSubscriptionButton();
+
+    assert.equal(window.location.href, 'https://test.com/team_billing_session', 'should redirect to team billing session URL');
   });
 });

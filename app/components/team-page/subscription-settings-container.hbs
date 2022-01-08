@@ -3,9 +3,9 @@
     Subscription
   </div>
 
-  <div class="text-gray-600 mb-4">
-    Your subscription allows upto <span class="font-bold">5 members</span>.
-  </div>
+<!--  <div class="text-gray-600 mb-4">-->
+<!--    Your subscription allows upto <span class="font-bold">5 members</span>.-->
+<!--  </div>-->
 
   <div class="text-gray-600 mb-4">
     To view invoices or amend your subscription, click on the button below.
@@ -14,7 +14,7 @@
   <button
     type="button"
     class="bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-md" {{on "click" this.handleManageSubscriptionButtonClick}}
-    data-test-subscribe-button>
+    data-test-manage-subscription-button>
     Manage Subscription
 
     {{#if this.isCreatingTeamBillingSession}}
