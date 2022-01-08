@@ -15,7 +15,17 @@ export default function () {
 
   this.get('/courses');
 
-  this.get('/leaderboard-entries');
+  this.get('/leaderboard-entries', function (schema, request) {
+    if (request.queryParams.team_id) {
+      const team = schema.teams.find(request.queryParams.team_id);
+      const teamMemberships = schema.teamMemberships.where({ teamId: team.id }).models;
+
+      const userIds = teamMemberships.map((teamMembership) => teamMembership.user.id);
+      return schema.leaderboardEntries.all().filter((leaderboardEntry) => userIds.includes(leaderboardEntry.user.id));
+    } else {
+      return schema.leaderboardEntries.all();
+    }
+  });
 
   this.get('/repositories', function (schema) {
     return schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });

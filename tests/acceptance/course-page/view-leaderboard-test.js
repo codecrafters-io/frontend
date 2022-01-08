@@ -6,7 +6,7 @@ import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | view-leaderboard', function (hooks) {
@@ -191,5 +191,43 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must be shown');
     assert.equal(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
     assert.equal(coursePage.leaderboard.entries[1].progressText, '1 / 7', 'progress text must be shown');
+  });
+
+  test('team member can view leaderboard when no recent players in organization are present', async function (assert) {
+    testScenario(this.server);
+    signInAsTeamMember(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let otherUser = this.server.create('user', {
+      id: 'other-user',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    this.server.create('leaderboard-entry', {
+      status: 'idle',
+      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+      language: python,
+      user: otherUser,
+      lastAttemptAt: new Date(),
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    assert.equal(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
+
+    await coursePage.leaderboard.teamDropdown.toggle();
+    assert.equal(coursePage.leaderboard.teamDropdown.links.length, 2);
+    assert.ok(coursePage.leaderboard.teamDropdown.hasLink('Everyone'), 'should have link for everyone');
+
+    await coursePage.leaderboard.teamDropdown.clickOnLink('Everyone');
+
+    await this.pauseTest();
   });
 });
