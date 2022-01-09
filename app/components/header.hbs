@@ -25,7 +25,8 @@
         <div class="bg-gray-400 w-px h-5 mr-3"></div>
 
         {{!-- Top-level links --}}
-        <a href="https://discord.gg/DeqUD2P" class="text-sm px-2 text-gray-600">Community</a>
+        <LinkTo @route="courses" class="text-sm px-2 text-gray-600">Challenges</LinkTo>
+        <a href="https://discord.gg/DeqUD2P" class="text-sm px-2 text-gray-600" target="_blank">Discord</a>
       </div>
 
       {{!-- Account Dropdown on Desktop --}}
@@ -41,7 +42,8 @@
         </div>
 
         <div class="py-3">
-          <a href="https://discord.gg/DeqUD2P" class="text-sm py-3 text-gray-600">Community</a>
+          <LinkTo @route="courses" class="text-sm py-3 text-gray-600">Challenges</LinkTo>
+          <a href="https://discord.gg/DeqUD2P" class="text-sm px-2 text-gray-600" target="_blank">Discord</a>
         </div>
       </div>
     {{/if}}
