@@ -43,7 +43,7 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - run: npm install
+      - run: npm ci --prefer-offline --ignore-scripts
       - run: ./node_modules/.bin/ember build --environment=production
 
       - run: zip -r dist.zip dist
