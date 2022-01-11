@@ -20,10 +20,7 @@ export default class Poller {
   }
 
   async doPoll() {
-    await this.store.query('repository', {
-      course_id: this.model.course.get('id'),
-      include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
-    });
+    console.log('doPoll not implemented');
   }
 
   scheduleDelayedPoll() {
