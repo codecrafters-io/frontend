@@ -3,7 +3,7 @@ import Inflector from 'ember-inflector';
 export function initialize(/* application */) {
   const inflector = Inflector.inflector;
 
-  inflector.uncountable('quota'); // By default, the singular form of quota is quotom.
+  inflector.irregular('quota', 'quotas'); // By default, the singular form of quota is quotom.
 }
 
 export default {
