@@ -9,6 +9,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | subscribe-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,12 +21,31 @@ module('Acceptance | subscribe-test', function (hooks) {
     signIn(this.owner);
     testScenario(this.server);
 
+    let currentUser = this.server.schema.users.first();
+    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: c,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    this.server.create('free-usage-quota', {
+      user: currentUser,
+      status: 'exhausted',
+      resetsAt: new Date(),
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
     await coursePage.collapsedItems[3].click();
     await coursePage.activeCourseStageItem.upgradePrompt.clickOnSubscribeButton();
-    await coursePage.subscribeModal.clickOnSubscribeButton();
 
+    await percySnapshot('Subscribe Modal');
+
+    await coursePage.subscribeModal.clickOnSubscribeButton();
     assert.equal(window.location.href, 'https://test.com/checkout_session', 'Clicking subscribe button should redirect to checkout session URL');
   });
 

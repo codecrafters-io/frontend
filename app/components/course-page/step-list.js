@@ -164,6 +164,10 @@ export default class CoursePageContentStepListComponent extends Component {
     return this.repository.user.hasActiveSubscription || this.repository.course.releaseStatusIsBeta;
   }
 
+  get shouldShowUpgradePromptForPendingPaidStages() {
+    return this.repository.user.freeUsageQuotaIsExhausted && !this.shouldSuppressUpgradePrompts;
+  }
+
   startRepositoryPoller() {
     this.stopRepositoryPoller();
 
