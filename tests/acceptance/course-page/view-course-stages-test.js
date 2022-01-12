@@ -99,7 +99,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('free-usage-quota', {
       user: currentUser,
       status: 'exhausted',
-      resetsAt: new Date(Date.now() + 1000 * 60),
+      resetsAt: new Date(),
     });
 
     await coursesPage.visit();
@@ -144,7 +144,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('free-usage-quota', {
       user: currentUser,
       status: 'exhausted',
-      resetsAt: new Date(Date.now() + 1000 * 60),
+      resetsAt: new Date(),
     });
 
     await coursesPage.visit();
@@ -174,7 +174,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('free-usage-quota', {
       user: currentUser,
       status: 'exhausted',
-      resetsAt: new Date(Date.now() + 1000 * 60),
+      resetsAt: new Date(),
     });
 
     await coursesPage.visit();

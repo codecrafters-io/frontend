@@ -15,10 +15,6 @@ export default class UserModel extends Model {
     return this.freeUsageQuotas.firstObject && this.freeUsageQuotas.firstObject.isExhausted;
   }
 
-  get freeUsageQuotaResetsAt() {
-    return this.freeUsageQuotas.firstObject && this.freeUsageQuotas.firstObject.resetsAt;
-  }
-
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;
   }
