@@ -7,8 +7,17 @@ export default class UserModel extends Model {
   @attr('string') githubUsername;
   @attr('boolean') isBetaParticipant;
   @attr('string') username;
+  @hasMany('free-usage-quota', { async: false }) freeUsageQuotas;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
+
+  get freeUsageQuotaIsExhausted() {
+    return this.freeUsageQuotas.firstObject && this.freeUsageQuotas.firstObject.isExhausted;
+  }
+
+  get freeUsageQuotaResetsAt() {
+    return this.freeUsageQuotas.firstObject && this.freeUsageQuotas.firstObject.resetsAt;
+  }
 
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;

@@ -5,6 +5,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsBetaParticipant, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -70,25 +71,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'course stage item is active if clicked on');
   });
 
-  test('stages should have an upgrade prompt if they are not free', async function (assert) {
-    signIn(this.owner);
-    testScenario(this.server);
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
-
-    await coursePage.collapsedItems[1].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should not have upgrade prompt');
-
-    await coursePage.collapsedItems[2].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is free should not have upgrade prompt');
-
-    await coursePage.collapsedItems[3].click();
-    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-    assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsGray, 'upgrade prompt should be gray if stage is not current');
-  });
-
-  test('stages should have a yellow upgrade prompt if they are not free', async function (assert) {
+  test('stages should have an upgrade prompt if free usage quota is exhausted', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
@@ -108,28 +91,87 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[1],
     });
 
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    });
+
+    this.server.create('free-usage-quota', {
+      user: currentUser,
+      status: 'exhausted',
+      resetsAt: new Date(Date.now() + 1000 * 60),
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
     assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsYellow, 'course stage prompt should be yellow if stage is current');
-    assert.ok(coursePage.activeCourseStageItem.statusText, 'SUBSCRIPTION REQUIRED');
+    assert.equal(coursePage.activeCourseStageItem.statusText, 'SUBSCRIPTION REQUIRED', 'status text should be subscription required');
+
+    await coursePage.collapsedItems[3].click(); // The previous completed stage
+    await animationsSettled();
+
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
+
+    await coursePage.collapsedItems[4].click(); // The next pending stage
+    await animationsSettled();
+
+    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should have upgrade prompt');
+    assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsGray, 'course stage prompt should be gray if stage is not current');
+    assert.equal(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
   });
 
   test('stages should not have an upgrade prompt if the user has a subscription', async function (assert) {
     signInAsSubscriber(this.owner);
     testScenario(this.server);
 
+    let currentUser = this.server.schema.users.first();
+    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: c,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    this.server.create('free-usage-quota', {
+      user: currentUser,
+      status: 'exhausted',
+      resetsAt: new Date(Date.now() + 1000 * 60),
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
 
     await coursePage.collapsedItems[3].click();
+    await animationsSettled();
+
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item should not have upgrade prompt if user is subscriber');
   });
 
   test('stages should not have an upgrade prompt if challenge is beta', async function (assert) {
     signInAsBetaParticipant(this.owner);
     testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let sqlite = this.server.schema.courses.findBy({ slug: 'sqlite' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: sqlite,
+      language: c,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    this.server.create('free-usage-quota', {
+      user: currentUser,
+      status: 'exhausted',
+      resetsAt: new Date(Date.now() + 1000 * 60),
+    });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own SQLite');

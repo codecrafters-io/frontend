@@ -11,7 +11,7 @@
           <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
         {{else if this.statusIsLocked}}
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>PENDING</span>
-        {{else if (and this.statusIsWaiting @shouldShowUpgradePrompt)}}
+        {{else if (and this.statusIsWaiting @shouldShowUpgradePromptIfStagePending)}}
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>SUBSCRIPTION REQUIRED</span>
         {{else}}
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    {{#if @shouldShowUpgradePrompt}}
+    {{#if (and @shouldShowUpgradePromptIfStagePending (not this.statusIsComplete))}}
       <CoursePage::StepList::CourseStageItem::UpgradePrompt @class="mb-4" @color={{if this.statusIsWaiting "yellow" "gray"}} />
     {{/if}}
 
