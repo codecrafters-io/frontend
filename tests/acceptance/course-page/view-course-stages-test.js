@@ -5,7 +5,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsBetaParticipant, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
+import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -109,6 +109,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsYellow, 'course stage prompt should be yellow if stage is current');
     assert.equal(coursePage.activeCourseStageItem.statusText, 'SUBSCRIPTION REQUIRED', 'status text should be subscription required');
 
+    await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
+
     await coursePage.collapsedItems[3].click(); // The previous completed stage
     await animationsSettled();
 
@@ -120,6 +122,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should have upgrade prompt');
     assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsGray, 'course stage prompt should be gray if stage is not current');
     assert.equal(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
+
+    await percySnapshot('Course Stages - Upgrade Prompt on Pending Stage');
   });
 
   test('stages should not have an upgrade prompt if the user has a subscription', async function (assert) {
