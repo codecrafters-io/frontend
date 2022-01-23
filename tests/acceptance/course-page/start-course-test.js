@@ -61,4 +61,25 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is visible');
   });
+
+  test('can start repo and abandon halfway (regression)', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.setupItem.clickOnLanguageButton('Python');
+    assert.contains(currentURL(), '/courses/redis?repo=', 'current URL includes repo ID');
+
+    await coursePage.header.clickOnChallengesLink();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    assert.equal(currentURL(), '/courses/redis', 'current URL is changed to not include invalid repo');
+
+    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+
+    await animationsSettled();
+  });
 });
