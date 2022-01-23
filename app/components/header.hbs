@@ -1,4 +1,4 @@
-<div class="shadow bg-gray-50" {{did-insert this.handleDidInsert}}>
+<div class="shadow bg-gray-50" {{did-insert this.handleDidInsert}} data-test-header>
   <div class="w-full absolute top-0 left-0 bg-teal-500 h-2px"></div>
 
   <div class="container lg:max-w-screen-lg mx-auto flex items-stretch flex-col md:flex-row">
@@ -25,7 +25,7 @@
         <div class="bg-gray-400 w-px h-5 mr-3"></div>
 
         {{!-- Top-level links --}}
-        <LinkTo @route="courses" class="text-sm px-2 text-gray-600">Challenges</LinkTo>
+        <LinkTo @route="courses" class="text-sm px-2 text-gray-600" data-test-challenges-link>Challenges</LinkTo>
         <a href="https://discord.gg/DeqUD2P" class="text-sm px-2 text-gray-600" target="_blank" rel="noopener noreferrer">Discord</a>
       </div>
 
