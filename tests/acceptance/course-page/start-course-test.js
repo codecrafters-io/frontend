@@ -79,5 +79,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+
+    await animationsSettled();
   });
 });
