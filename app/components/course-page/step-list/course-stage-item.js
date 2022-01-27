@@ -2,6 +2,7 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
+import moment from 'moment';
 import showdown from 'showdown';
 import Mustache from 'mustache';
 
@@ -9,6 +10,18 @@ export default class CoursePageStepListStageItemComponent extends Component {
   @service store;
   @service visibility;
   transition = fade;
+
+  get completedAt() {
+    return this.args.repository.stageCompletedAt(this.args.courseStage);
+  }
+
+  get completedAtWasToday() {
+    return this.completedAt && moment(this.completedAt).isSame(moment(), 'day');
+  }
+
+  get completedAtWasYesterday() {
+    return this.completedAt && moment(this.completedAt).isSame(moment().subtract(1, 'day'), 'day');
+  }
 
   get instructionsHTML() {
     return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
@@ -32,7 +45,7 @@ export default class CoursePageStepListStageItemComponent extends Component {
       return 'evaluating';
     }
 
-    if (this.args.repository.highestCompletedStage && this.args.repository.highestCompletedStage.get('position') >= this.args.courseStage.position) {
+    if (this.args.repository.stageIsComplete(this.args.courseStage)) {
       return 'complete';
     }
 
