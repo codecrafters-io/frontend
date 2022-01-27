@@ -74,4 +74,13 @@ export default class RepositoryModel extends Model {
 
     return `${this.starterRepositoryUrl}/blob/master/README.md`;
   }
+
+  stageCompletedAt(courseStage) {
+    const firstCompletion = this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt').firstObject;
+    return firstCompletion ? firstCompletion.completedAt : null;
+  }
+
+  stageIsComplete(courseStage) {
+    return this.highestCompletedStage && this.highestCompletedStage.position >= courseStage.position;
+  }
 }

@@ -41,7 +41,17 @@
         <span class="text-gray-600" data-test-footer-text>Tests failed. Check your git push output for logs.</span>
       {{else if (eq this.status "complete")}}
         <StaticDot @class="mr-3" @color="green" />
-        <span class="text-gray-600" data-test-footer-text>You've completed this stage.</span>
+        <span class="text-gray-600" data-test-footer-text>
+          {{#if this.completedAtWasToday}}
+            You completed this stage today.
+          {{else if this.completedAtWasYesterday}}
+            You completed this stage yesterday.
+          {{else if this.completedAt}}
+            You completed this stage {{moment-from-now this.completedAt}}.
+          {{else}}
+            You've completed this stage.
+          {{/if}}
+        </span>
       {{else if (eq this.status "locked")}}
         <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
       {{/if}}

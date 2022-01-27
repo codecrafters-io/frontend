@@ -58,17 +58,45 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
       courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      completedAt: new Date(new Date().getTime() - 1.1 * 86400000), // yesterday
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      completedAt: new Date(new Date().getTime() - 10000), // today
     });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'course stage item is active if clicked on');
+    assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage 5 days ago.', 'footer text for stage completed > 1 day');
+
+    await percySnapshot('Course Stages - Completed stage');
+
+    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await animationsSettled();
+
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
+    assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage yesterday.', 'footer text for stage completed yesterday');
+
+    await coursePage.clickOnCollapsedItem('Handle concurrent clients');
+    await animationsSettled();
+
+    assert.equal(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', 'course stage item is active if clicked on');
+    assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
   test('stages should have an upgrade prompt if free usage quota is exhausted', async function (assert) {
