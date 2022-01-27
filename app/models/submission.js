@@ -10,7 +10,7 @@ export default class SubmissionModel extends Model {
   @attr('string') status;
 
   get isRecent() {
-    return this.createdAt - new Date() <= 300 * 1000; // in last 5 minutes
+    return new Date() - this.createdAt <= 300 * 1000; // in last 5 minutes
   }
 
   get statusIsEvaluating() {
