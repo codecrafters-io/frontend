@@ -52,14 +52,14 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     assert.equal(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer text is tests failed');
 
-    await this.clock.tick(1000 * 301); // Wait for poll + 5 minutes to pass
+    await this.clock.tick(1000 * 601); // Wait for poll + 10 minutes to pass
 
     // force re-computation
     await coursesPage.visit(); // This interacts with start-course-stage, not sure why
     await coursesPage.clickOnCourse('Build your own Redis');
     await animationsSettled();
 
-    assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
+    assert.equal(coursePage.activeCourseStageItem.footerText, 'Last attempt 10 minutes ago. Try again?', 'footer text includes timestamp');
 
     await coursesPage.visit(); // This interacts with start-course-stage, not sure why
   });
