@@ -40,6 +40,18 @@ export default class CoursePageStepListStageItemComponent extends Component {
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
   }
 
+  get lastFailedSubmissionWasWithinLast10Minutes() {
+    return this.lastFailedSubmissionCreatedAt && new Date() - this.lastFailedSubmissionCreatedAt <= 600 * 1000; // in last 10 minutes
+  }
+
+  get lastFailedSubmissionCreatedAt() {
+    if (this.args.repository.lastSubmissionHasFailureStatus) {
+      return this.args.repository.lastSubmission.createdAt;
+    } else {
+      return null;
+    }
+  }
+
   get status() {
     if (this.args.repository.lastSubmissionIsEvaluating && this.args.repository.lastSubmission.courseStage === this.args.courseStage) {
       return 'evaluating';
@@ -49,11 +61,7 @@ export default class CoursePageStepListStageItemComponent extends Component {
       return 'complete';
     }
 
-    if (
-      this.args.repository.lastSubmissionIsRecent &&
-      this.args.repository.lastSubmissionHasFailureStatus &&
-      this.args.repository.lastSubmission.courseStage === this.args.courseStage
-    ) {
+    if (this.args.repository.lastSubmissionHasFailureStatus && this.args.repository.lastSubmission.courseStage === this.args.courseStage) {
       return 'failed';
     }
 
