@@ -99,7 +99,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
-  test('stages should have an upgrade prompt if free usage quota is exhausted', async function (assert) {
+  test('stages should have an upgrade prompt if free usage restriction is active', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
@@ -124,11 +124,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
     });
 
-    this.server.create('free-usage-quota', {
-      user: currentUser,
-      status: 'exhausted',
-      resetsAt: new Date(),
-    });
+    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 60 * 1000) });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
@@ -154,6 +150,49 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await percySnapshot('Course Stages - Upgrade Prompt on Pending Stage');
   });
 
+  test('stages should not have an upgrade prompt if free usage restriction is expired', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: c,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    });
+
+    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 60 * 1000) });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Docker');
+
+    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+
+    this.clock.tick(61 * 1000);
+
+    // Refresh date computation
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Docker');
+
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should not have upgrade prompt');
+
+    await coursesPage.visit(); // Messes with timing?
+  });
+
   test('stages should not have an upgrade prompt if the user has a subscription', async function (assert) {
     signInAsSubscriber(this.owner);
     testScenario(this.server);
@@ -169,11 +208,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       user: currentUser,
     });
 
-    this.server.create('free-usage-quota', {
-      user: currentUser,
-      status: 'exhausted',
-      resetsAt: new Date(),
-    });
+    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 1000) });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
@@ -199,11 +234,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       user: currentUser,
     });
 
-    this.server.create('free-usage-quota', {
-      user: currentUser,
-      status: 'exhausted',
-      resetsAt: new Date(),
-    });
+    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date() });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own SQLite');

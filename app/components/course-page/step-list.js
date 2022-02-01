@@ -165,7 +165,7 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   get shouldShowUpgradePromptForPendingPaidStages() {
-    return this.repository.user.freeUsageQuotaIsExhausted && !this.shouldSuppressUpgradePrompts;
+    return this.repository.user.freeUsageRestrictionIsActive && !this.shouldSuppressUpgradePrompts;
   }
 
   startRepositoryPoller() {

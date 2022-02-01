@@ -32,11 +32,7 @@ module('Acceptance | subscribe-test', function (hooks) {
       user: currentUser,
     });
 
-    this.server.create('free-usage-quota', {
-      user: currentUser,
-      status: 'exhausted',
-      resetsAt: new Date(),
-    });
+    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 1000) });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
