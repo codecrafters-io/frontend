@@ -4,7 +4,7 @@ export default class RepositoryPoller extends Poller {
   async doPoll() {
     return await this.store.query('repository', {
       course_id: this.model.course.id,
-      include: 'language,course,user.free-usage-quotas,course-stage-completions.course-stage,last-submission.course-stage',
+      include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
     });
   }
 }
