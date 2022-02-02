@@ -64,7 +64,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
       courseStage: redis.stages.models.sortBy('position').toArray()[2],
-      completedAt: new Date(new Date().getTime() - 1.1 * 86400000), // yesterday
+      completedAt: new Date(new Date().getTime() - 0.9 * 86400000), // yesterday
     });
 
     this.server.create('course-stage-completion', {
