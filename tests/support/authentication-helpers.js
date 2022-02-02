@@ -2,6 +2,10 @@ export function signIn(owner) {
   doSignIn(owner, {});
 }
 
+export function signInAsAdmin(owner) {
+  doSignIn(owner, { 'is-admin': true });
+}
+
 export function signInAsBetaParticipant(owner) {
   doSignIn(owner, { 'is-beta-participant': true });
 }
