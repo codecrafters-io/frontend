@@ -31,8 +31,13 @@
   <:footer-content>
     <div class="flex items-center text-xs" data-test-course-stage-item-footer>
       {{#if (eq this.status "waiting")}}
-        <BlinkingDot @class="mr-3" @color="gray" />
-        <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
+        {{#if @shouldShowUpgradePromptIfStagePending}}
+          <StaticDot @class="mr-3" @color="gray" />
+          <span class="text-gray-600" data-test-footer-text>Subscription required.</span>
+        {{else}}
+          <BlinkingDot @class="mr-3" @color="gray" />
+          <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
+        {{/if}}
       {{else if (eq this.status "evaluating")}}
         <BlinkingDot @class="mr-3" @color="yellow" />
         <span class="text-gray-600" data-test-footer-text>Running tests...</span>
