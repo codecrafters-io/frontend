@@ -52,6 +52,10 @@ export default class CoursePageStepListStageItemComponent extends Component {
     }
   }
 
+  get isActiveStage() {
+    return this.args.repository.activeStage === this.args.courseStage;
+  }
+
   get status() {
     if (this.args.repository.lastSubmissionIsEvaluating && this.args.repository.lastSubmission.courseStage === this.args.courseStage) {
       return 'evaluating';
