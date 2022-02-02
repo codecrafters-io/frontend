@@ -165,7 +165,8 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   get shouldShowUpgradePromptForPendingPaidStages() {
-    return this.repository.user.freeUsageRestrictionIsActive && !this.shouldSuppressUpgradePrompts;
+    // TODO: Remove the isAdmin restriction
+    return this.repository.user.freeUsageRestrictionIsActive && !this.shouldSuppressUpgradePrompts && this.repository.user.isAdmin;
   }
 
   startRepositoryPoller() {

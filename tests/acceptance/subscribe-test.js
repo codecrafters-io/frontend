@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsAdmin, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
@@ -18,7 +18,7 @@ module('Acceptance | subscribe-test', function (hooks) {
   setupClock(hooks);
 
   test('new user can start checkout session', async function (assert) {
-    signIn(this.owner);
+    signInAsAdmin(this.owner); // TODO: Change to regular user
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
