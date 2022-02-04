@@ -9,4 +9,8 @@ export default class TeamModel extends Model {
   get inviteUrl() {
     return `${window.location.origin}/join_team?invite_code=${this.inviteCode}`;
   }
+
+  get isArrenda() {
+    return this.name === 'Arrenda';
+  }
 }
