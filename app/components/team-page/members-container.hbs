@@ -4,7 +4,11 @@
   </div>
 
   <div class="mb-6 text-gray-600 text-sm">
-    Members of your team are granted access to all CodeCrafters challenges.
+    {{#if @team.isArrenda}}
+      Members of your team have access to the Docker challenge.
+    {{else}}
+      Members of your team are granted access to all CodeCrafters challenges.
+    {{/if}}
   </div>
 
   <div class="mb-6">
