@@ -13,6 +13,7 @@ export default {
     return this.statusText === 'COMPLETE';
   },
 
+  stageInstructionsText: text('[data-test-stage-instructions]'),
   statusText: text('[data-test-status-text]'),
   title: text('[data-test-course-stage-name]'),
 

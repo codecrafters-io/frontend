@@ -24,6 +24,10 @@
     {{/if}}
 
     <div class="text-gray-700 leading-7 prose" data-test-stage-instructions>
+      {{#if this.instructionsPreludeHTML}}
+        {{this.instructionsPreludeHTML}}
+      {{/if}}
+
       {{this.instructionsHTML}}
     </div>
   </:content>

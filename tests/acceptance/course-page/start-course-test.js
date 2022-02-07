@@ -68,6 +68,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is visible');
 
+    assert.ok(coursePage.activeCourseStageItem.stageInstructionsText.startsWith('CodeCrafters runs tests'), 'Instructions prelude must be present');
+
     await percySnapshot('Start Course - Waiting For Second Push');
   });
 
