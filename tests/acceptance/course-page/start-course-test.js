@@ -9,6 +9,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course-page | start-course-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -27,6 +28,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.equal(this.server.pretender.handledRequests.length, 4, 'first 3 requests were executed');
 
+    await percySnapshot('Start Course - Select Language');
+
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
     assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed');
@@ -34,6 +37,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await coursePage.setupItem.clickOnLanguageButton('Python');
 
     assert.equal(this.server.pretender.handledRequests.length, 5, 'create repository request was executed');
+
+    await percySnapshot('Start Course - Clone Repository');
 
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep, 'current step is clone repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
@@ -55,11 +60,17 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
+    await percySnapshot('Start Course - Git Push Received');
+
     await this.clock.tick(2001);
     await animationsSettled();
 
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is visible');
+
+    assert.ok(coursePage.activeCourseStageItem.stageInstructionsText.startsWith('CodeCrafters runs tests'), 'Instructions prelude must be present');
+
+    await percySnapshot('Start Course - Waiting For Second Push');
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {

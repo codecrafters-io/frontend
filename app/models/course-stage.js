@@ -7,4 +7,8 @@ export default class CourseStageModel extends Model {
   @attr('string') descriptionMarkdownTemplate;
   @attr('boolean') isFree;
   @attr('number') position;
+
+  get isFirst() {
+    return this.position === 1;
+  }
 }
