@@ -1,10 +1,10 @@
 export default {
   "slug": "redis",
   "name": "Build your own Redis",
+  "release_status": "live",
   "description_md": "In this challenge, you'll build a toy Redis clone\nthat's capable of handling basic commands like PING, GET\nand SET. Along the way, we'll learn about event loops, the Redis\nProtocol and more.\n",
   "short_description_md": "Learn about TCP servers, events loops, the Redis protocol and more\n",
   "completion_percentage": 30,
-  "release_status": "live",
   "early_access_languages": [
     "crystal",
     "clojure"
@@ -45,7 +45,7 @@ export default {
     {
       "slug": "init",
       "name": "Bind to a port",
-      "description_md": "Let's start out with some basics.\n\nIn this stage, CodeCrafters will try to bind to port 6379, which is the default\nport that Redis uses.\n\nYour task is to start a TCP server on port 6379. We'd like to make the first\nstage easy to pass, so we've included steps on how to pass this stage in the\nreadme.\n",
+      "description_md": "In this stage, your task is start a TCP server on port 6379, the default port that Redis uses.\n\nRead **\"Passing the first stage\"** in [the README]({{readme_url}}) of your repository for instructions on how to\npass this stage.\n",
       "marketing_md": "In this stage, you'll start a TCP server on port 6379, which is the\ndefault port that Redis uses.\n"
     },
     {
