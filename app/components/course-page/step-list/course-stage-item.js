@@ -23,23 +23,23 @@ export default class CoursePageStepListStageItemComponent extends Component {
     return this.completedAt && moment(this.completedAt).isSame(moment().subtract(1, 'day'), 'day');
   }
 
-  get instructionsHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
-  }
-
-  get instructionsPreludeHTML() {
+  get firstStageInstructionsPreludeHTML() {
     if (!this.args.courseStage.isFirst || this.statusIsComplete || this.statusIsLocked) {
       return null;
     }
 
-    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsPreludeMarkdown));
+    return htmlSafe(new showdown.Converter().makeHtml(this.firstStageInstructionsPreludeMarkdown));
   }
 
-  get instructionsPreludeMarkdown() {
+  get firstStageInstructionsPreludeMarkdown() {
     return `
 CodeCrafters runs tests when you do a git push. Your first push should have
 streamed back a \`Test failed\` error — that's expected. Once you implement this stage, you'll pass the test!
     `;
+  }
+
+  get instructionsHTML() {
+    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
   }
 
   get instructionsMarkdown() {
