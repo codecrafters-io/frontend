@@ -1,10 +1,10 @@
 export default {
   "slug": "docker",
   "name": "Build your own Docker",
+  "release_status": "live",
   "description_md": "In this challenge, you'll build a toy Docker implementation that can pull an\nimage from [Docker Hub](https://hub.docker.com/) and execute commands in it.\nAlong the way, you'll learn about\n[chroot](https://en.wikipedia.org/wiki/Chroot), [kernel\nnamespaces](https://en.wikipedia.org/wiki/Linux_namespaces), the [docker\nregistry API](https://docs.docker.com/registry/spec/api/) and much more.\n",
   "short_description_md": "Learn about chroot, kernel namespaces, the docker registry API and more\n",
   "completion_percentage": 30,
-  "release_status": "live",
   "early_access_languages": [
     "rust"
   ],
@@ -30,7 +30,7 @@ export default {
     {
       "slug": "init",
       "name": "Execute a program",
-      "description_md": "In the first couple of stages of this challenge, you'll be using\n[`docker-explorer`](https://github.com/codecrafters-io/docker-explorer), a\ncustom test program that exposes a few commands like `echo` and `ls`.\n\nYou don't need to install `docker-explorer` on your machine, we've included\nit in the [Dockerfile]({{starter_repo_url}}/blob/master/Dockerfile) you'll use to\nrun your program locally. It'll be installed at `/usr/local/bin/docker-explorer`.\n\nIn the first stage, your task is to implement a very basic version of `docker\nrun` that will be executed like this:\n\n```\nyour_docker run ubuntu:latest /usr/local/bin/docker-explorer echo hey\n```\n\n(This is supposed to mimic the [`docker run`](https://docs.docker.com/engine/reference/run/) command)\n\nDon't worry about pulling the `ubuntu:latest` image for now, just execute a program\non your local machine and print its output. We'll work on pulling images from Docker Hub\nin stage 6.\n\nRead **\"Passing the first stage\"** in [the README]({{readme_url}}) of your repository for instructions on how to\npass this stage.\n",
+      "description_md": "Your task for this first stage is to implement a very basic version of [`docker run`](https://docs.docker.com/engine/reference/run/).\n\nIt will be executed similar to `docker run`:\n\n```\nyour_docker run ubuntu:latest /usr/local/bin/docker-explorer echo hey\n```\n\n[docker-explorer](https://github.com/codecrafters-io/docker-explorer) is a custom test program that exposes\ncommands like `echo` and `ls`.\n\nFor now, we're not going to worry about pulling the `ubuntu:latest` image, we'll just execute a local program \nand print its output. We'll work on pulling images from Docker Hub in stage 6.\n\nRead **\"Passing the first stage\"** in [the README]({{readme_url}}) of your repository for instructions on how to\npass this stage.\n",
       "marketing_md": "In this stage, you'll execute a program using `fork` + `exec`.\n"
     },
     {
@@ -61,7 +61,7 @@ export default {
       "slug": "fetch_from_registry",
       "name": "Fetch an image from the Docker Registry",
       "description_md": "Your docker implementation can now execute a program with a fair degree of\nisolation - it can't modify files or interact with processes running on\nthe host.\n\nIn this stage, you'll use [the Docker registry\nAPI](https://docs.docker.com/registry/spec/api/) to fetch the contents of\na public image on [Docker Hub](https://hub.docker.com/) and then execute a\ncommand within it.\n\nYou'll need to:\n\n- Do a small [authentication dance](https://docs.docker.com/registry/spec/auth/token/)\n- Fetch the [image manifest](https://docs.docker.com/registry/spec/api/#pulling-an-image-manifest)\n- [Pull layers](https://docs.docker.com/registry/spec/api/#pulling-a-layer) of an image and extract them to the chroot directory\n\nThe base URL for Docker Hub's public registry is `registry.hub.docker.com`.\n\nThe tester will run your program like this:\n\n```\nyour_docker run ubuntu:latest /bin/echo hey\n```\n\nThe image used will be an [official\nimage](https://docs.docker.com/docker-hub/official_images/) from Docker\nHub. For example: [`alpine:latest`](https://hub.docker.com/_/alpine),\n[`ubuntu:latest`](https://hub.docker.com/_/ubuntu),\n[`busybox:latest`](https://hub.docker.com/_/busybox). When interacting with the\nRegistry API, you'll need to prepend `library/` to the image names.\n\n{{#lang_is_rust}}\nSince Rust doesn't have an archive extraction utility in its stdlib, you\nmight want to shell out and use `tar`.\n\nYou can use the [reqwest](https://crates.io/crates/reqwest) crate to make\nHTTP requests, we've included it in the `Cargo.toml` file. We've also included\n[serde_json](https://crates.io/crates/serde_json) to help with parsing JSON.\n{{/lang_is_rust}}\n\n{{#lang_is_go}}\nSince Go doesn't have an archive extraction utility in its stdlib, you\nmight want to shell out and use `tar`.\n{{/lang_is_go}}\n\n{{#lang_is_nim}}\nSince Nim doesn't have an archive extraction utility in its stdlib, you\nmight want to shell out and use `tar`.\n{{/lang_is_nim}}\n\n{{#lang_is_c}}\nSince C doesn't have an archive extraction utility in its stdlib, you\nmight want to shell out and use `tar`.\n\nYou can assume that `libcurl` is available in the build environment.\n{{/lang_is_c}}\n",
-      "marketing_md": "In this stage, you'll fetch an image from Docker Hub and execute a command\nin it. You'll need to use [the Docker Registry\nAPI](https://docs.docker.com/registry/spec/api/) for this.\n"
+      "marketing_md": "In this stage, you'll fetch an image from Docker Hub and execute a command\nin it. You'll need to use [the Docker Registry\nAPI](https://docs.docker.com/registry/spec/api/) for this."
     }
   ]
 }

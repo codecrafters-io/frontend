@@ -1,10 +1,10 @@
 export default {
   "slug": "sqlite",
   "name": "Build your own SQLite",
+  "release_status": "beta",
   "description_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
   "short_description_md": "Learn about parsing SQL syntax, SQLite's file format, how indexed data is stored in B-trees and more\n",
   "completion_percentage": 5,
-  "release_status": "beta",
   "supported_languages": [
     "python",
     "go",
@@ -28,7 +28,7 @@ export default {
     {
       "slug": "init",
       "name": "Print number of tables",
-      "description_md": "Welcome to Build Your Own SQLite!\n\nNow that we've got your starter repository setup, let's start with the first stage.\n\nIn this stage, you'll implement one of SQLite's\n[dot-commands](https://www.sqlite.org/cli.html#special_commands_to_sqlite3_dot_commands_): `.dbinfo`. This\ncommand prints metadata about a SQLite database file.\n\nThe command is executed like this:\n\n```\n$ sqlite3 sample.db .dbinfo\n```\n\nIt prints output in this format:\n\n```\ndatabase page size:  4096\nwrite format:        1\nread format:         1\n\n...\n\nnumber of tables:    5\nschema size:         330\ndata version:        1\n```\n\nWe're only going to focus on one of these values: `number of tables`. To find the number of tables, you'll need\nto count the number of rows in the\n[`sqlite_schema`](https://www.sqlite.org/fileformat.html#storage_of_the_sql_database_schema) table.\n\nHere's how the tester will execute your program:\n\n```\n$ ./your_sqlite3.sh sample.db .dbinfo\n```\n\nand here's the output it expects:\n\n```\nnumber of tables: 2\n```\n\nRead **\"Passing the first stage\"** in [the README]({{readme_url}}) of your repository for instructions on how to\npass this stage.\n",
+      "description_md": "In this stage, you'll implement one of SQLite's\n[dot-commands](https://www.sqlite.org/cli.html#special_commands_to_sqlite3_dot_commands_): `.dbinfo`. This\ncommand prints metadata about a SQLite database file.\n\nThe command is executed like this:\n\n```\n$ sqlite3 sample.db .dbinfo\n```\n\nIt prints output in this format:\n\n```\ndatabase page size:  4096\nwrite format:        1\nread format:         1\n\n...\n\nnumber of tables:    5\nschema size:         330\ndata version:        1\n```\n\nWe're only going to focus on one of these values: `number of tables`. To find the number of tables, you'll need\nto count the number of rows in the\n[`sqlite_schema`](https://www.sqlite.org/fileformat.html#storage_of_the_sql_database_schema) table.\n\nHere's how the tester will execute your program:\n\n```\n$ ./your_sqlite3.sh sample.db .dbinfo\n```\n\nand here's the output it expects:\n\n```\nnumber of tables: 2\n```\n\nRead **\"Passing the first stage\"** in [the README]({{readme_url}}) of your repository for instructions on how to\npass this stage.\n",
       "marketing_md": "In this stage, you'll implement one of SQLite's\n[dot-commands](https://www.sqlite.org/cli.html#special_commands_to_sqlite3_dot_commands_): `.dbinfo`. This command\nprints metadata related a SQLite database, and you'll implement one of these values: the number of\ntables. You'll do this by parsing a file that uses the\n[SQLite database file format](https://www.sqlite.org/fileformat.html).\n"
     },
     {

@@ -1,10 +1,10 @@
 export default {
   "slug": "git",
   "name": "Build your own Git",
+  "release_status": "live",
   "description_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along the\nway, you'll learn about the `.git` directory, Git objects (blobs, commits,\ntrees etc.), packfiles, Git's transfer protocols and much more.\n",
   "short_description_md": "Learn about git objects, plumbing commands, git transfer protocols and more\n",
   "completion_percentage": 10,
-  "release_status": "live",
   "early_access_languages": [],
   "supported_languages": [
     "python",
@@ -29,7 +29,7 @@ export default {
     {
       "slug": "init",
       "name": "Initialize the .git directory",
-      "description_md": "In this stage, you'll implement the `git init` command. This command\ninitializes a repository by creating a `.git` directory and some files\ninside it.\n\nYou can read more about what's inside the `.git` folder\n[here](http://gitready.com/advanced/2009/03/23/whats-inside-your-git-directory.html).\n\nFor the purposes of this challenge, you'll only need to create the bare\nminimum required for Git to function properly:\n\n```\n- .git/\n  - objects/\n  - refs/\n  - HEAD (should contain \"ref: refs/heads/master\\n\")\n```\n\nWe'd like to make the first stage easy to pass, so we've included steps on\nhow to pass this stage in the readme.\n",
+      "description_md": "In this stage, you'll implement the `git init` command. This command\ninitializes a repository by creating a `.git` directory and some files\ninside it.\n\nYou can read more about what's inside the `.git` folder\n[here](http://gitready.com/advanced/2009/03/23/whats-inside-your-git-directory.html).\n\nFor the purposes of this challenge, you'll only need to create the bare\nminimum required for Git to function properly:\n\n```\n- .git/\n  - objects/\n  - refs/\n  - HEAD (should contain \"ref: refs/heads/master\\n\")\n```\n\nRead **\"Passing the first stage\"** in [the README]({{readme_url}}) of your repository for instructions on how to\npass this stage.\n",
       "marketing_md": "In this stage, you'll implement the `git init` command. You'll initialize\na git repository by creating a `.git` directory and some files inside it.\n"
     },
     {
@@ -53,7 +53,7 @@ export default {
     {
       "slug": "write_tree",
       "name": "Write a tree object",
-      "description_md": "Now that you know how to read a tree object, let's put your new found\nskills to test - can you _write_ a tree?\n\nHere's how the tester will invoke your program:\n\n```\n./your_git.sh write-tree\n```\n\nYou're expected to write the entire working directory as a tree object,\nand return the 40-char SHA.\n\nCaveat: Unlike the official Git implementation, we aren't going to\nimplement a staging area (the place where things go when you run `git\nadd`). We'll just assume that all files in the working directory are\nstaged. If you're testing this against `git` locally, make sure to run\n`git add .` before `git write-tree`.\n\nTo verify your implementation, the tester will read the tree object from\nthe `.git` directory.\n",
+      "description_md": "Now that you know how to read a tree object, let's put your new found\nskills to test - can you _write_ a tree?\n\nHere's how the tester will invoke your program:\n\n```\n./your_git.sh write-tree\n```\n\nYou're expected to write the entire working directory as a tree object,\nand print the 40-char SHA.\n\nCaveat: Unlike the official Git implementation, we aren't going to\nimplement a staging area (the place where things go when you run `git\nadd`). We'll just assume that all files in the working directory are\nstaged. If you're testing this against `git` locally, make sure to run\n`git add .` before `git write-tree`.\n\nTo verify your implementation, the tester will read the tree object from\nthe `.git` directory.\n",
       "marketing_md": "In this stage, you'll write a tree to git storage by implementing the [`git\nwrite-tree`](https://git-scm.com/docs/git-write-tree) command.\n\nTo keep things simple, we won't implement an `index`, we'll just assume\nthat all changes in the worktree are staged.\n"
     },
     {

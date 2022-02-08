@@ -23,23 +23,35 @@ export default class CoursePageStepListStageItemComponent extends Component {
     return this.completedAt && moment(this.completedAt).isSame(moment().subtract(1, 'day'), 'day');
   }
 
-  get instructionsHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
+  get firstStageInstructionsPreludeHTML() {
+    return htmlSafe(new showdown.Converter().makeHtml(this.firstStageInstructionsPreludeMarkdown));
   }
 
-  get instructionsPreludeHTML() {
-    if (!this.args.courseStage.isFirst || this.statusIsComplete || this.statusIsLocked) {
-      return null;
-    }
-
-    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsPreludeMarkdown));
-  }
-
-  get instructionsPreludeMarkdown() {
+  get firstStageInstructionsPreludeMarkdown() {
     return `
 CodeCrafters runs tests when you do a git push. Your first push should have
 streamed back a \`Test failed\` error — that's expected. Once you implement this stage, you'll pass the test!
     `;
+  }
+
+  get firstStageReadmeHintHTML() {
+    return htmlSafe(new showdown.Converter().makeHtml(this.firstStageReadmeHintMarkdown));
+  }
+
+  get firstStageReadmeHintMarkdown() {
+    const variables = {};
+
+    variables['readme_url'] = this.args.repository.readmeUrl || this.args.repository.defaultReadmeUrl;
+
+    return Mustache.render(this.firstStageReadmeHintMarkdownTemplate, variables);
+  }
+
+  get firstStageReadmeHintMarkdownTemplate() {
+    return `Since this is your first stage, you can consult [**the README**]({{readme_url}}) in your repository for instructions on how to pass.`;
+  }
+
+  get instructionsHTML() {
+    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
   }
 
   get instructionsMarkdown() {
@@ -69,6 +81,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get isActiveStage() {
     return this.args.repository.activeStage === this.args.courseStage;
+  }
+
+  get shouldShowFirstStageHints() {
+    return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
   }
 
   get status() {
