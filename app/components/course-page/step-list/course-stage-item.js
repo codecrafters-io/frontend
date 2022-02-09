@@ -35,7 +35,17 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get firstStageReadmeHintHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.firstStageReadmeHintMarkdown));
+    showdown.extension('linkInNewTab', function () {
+      return [
+        {
+          type: 'html',
+          regex: /(<a [^>]+?)(>.*<\/a>)/g,
+          replace: '$1 target="_blank"$2',
+        },
+      ];
+    });
+
+    return htmlSafe(new showdown.Converter({ extensions: ['linkInNewTab'] }).makeHtml(this.firstStageReadmeHintMarkdown));
   }
 
   get firstStageReadmeHintMarkdown() {
@@ -51,7 +61,17 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get instructionsHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
+    showdown.extension('linkInNewTab', function () {
+      return [
+        {
+          type: 'html',
+          regex: /(<a [^>]+?)(>.*<\/a>)/g,
+          replace: '$1 target="_blank"$2',
+        },
+      ];
+    });
+
+    return htmlSafe(new showdown.Converter({ extensions: ['linkInNewTab'] }).makeHtml(this.instructionsMarkdown));
   }
 
   get instructionsMarkdown() {

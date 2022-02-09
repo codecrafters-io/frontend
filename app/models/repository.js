@@ -68,7 +68,7 @@ export default class RepositoryModel extends Model {
   }
 
   get readmeUrl() {
-    if (this.isNew) {
+    if (!this.starterRepositoryUrl) {
       return null;
     }
 
