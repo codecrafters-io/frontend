@@ -2,6 +2,8 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const isProduction = EmberApp.env() === 'production';
+const cdnBaseURL = process.env.CDN_BASE_URL;
+const shouldUseCDN = !!cdnBaseURL;
 
 const purgeCSS = {
   module: require('@fullhuman/postcss-purgecss'),
@@ -20,7 +22,7 @@ const purgeCSS = {
 };
 
 module.exports = function (defaults) {
-  let app = new EmberApp(defaults, {
+  const appOptions = {
     postcssOptions: {
       compile: {
         plugins: [
@@ -37,7 +39,16 @@ module.exports = function (defaults) {
     },
 
     sourcemaps: { enabled: true },
-  });
+  };
+
+  if (shouldUseCDN) {
+    appOptions.fingerprint = {
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
+      prepend: cdnBaseURL,
+    };
+  }
+
+  let app = new EmberApp(defaults, appOptions);
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

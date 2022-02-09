@@ -79,6 +79,8 @@ jobs:
 
       - run: npm ci --prefer-offline --ignore-scripts
       - run: ./node_modules/.bin/ember build --environment=production
+        env:
+          CDN_BASE_URL: "https://d107pcg67ytzfe.cloudfront.net/"
 
       - run: zip -r dist.zip dist
       - name: Upload dist
