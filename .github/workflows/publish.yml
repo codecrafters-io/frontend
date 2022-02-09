@@ -102,6 +102,8 @@ jobs:
         with:
           name: dist-staging.zip
 
+      - run: ls
+
       - name: Create release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
