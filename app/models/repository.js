@@ -13,6 +13,13 @@ export default class RepositoryModel extends Model {
   @attr('string') starterRepositoryUrl;
   @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
+  get cloneDirectory() {
+    return this.cloneUrl
+      .split('/')
+      .pop()
+      .replace(/\.git$/, '');
+  }
+
   get defaultStarterRepositoryUrl() {
     return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.supportedLanguages.firstObject.slug}`;
   }

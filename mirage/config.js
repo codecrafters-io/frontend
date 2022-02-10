@@ -34,7 +34,7 @@ export default function () {
   this.post('/repositories', function (schema) {
     let attrs = this.normalizedRequestAttrs();
 
-    attrs.cloneUrl = 'https://test';
+    attrs.cloneUrl = 'https://git.codecraters.io/a-long-test-string.git';
     attrs.name = 'Language #n';
 
     return schema.repositories.create(attrs);

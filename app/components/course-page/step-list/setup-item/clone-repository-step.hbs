@@ -7,7 +7,7 @@
     <b class="text-teal-600">Step 1:</b> Clone the repository.
   </p>
 
-  <CopyableCode @code="git clone {{@repository.cloneUrl}}" @class="mb-5" />
+  <CopyableCode @code="git clone {{@repository.cloneUrl}} && cd {{@repository.cloneDirectory}}" @class="mb-5" />
 
   <p class="mb-4">
     <b class="text-teal-600">Step 2:</b> Push an empty commit.
