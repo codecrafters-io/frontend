@@ -2,7 +2,7 @@ import { Factory, trait } from 'ember-cli-mirage';
 
 export default Factory.extend({
   createdAt: () => new Date(),
-  cloneUrl: 'git://test.com',
+  cloneUrl: 'https://git.codecraters.io/a-long-test-string.git',
   name: 'Dummy name',
   starterRepositoryUrl: 'https://github.com/codecrafters-io/redis-starter-go',
 
