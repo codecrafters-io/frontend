@@ -1,9 +1,24 @@
 import Component from '@glimmer/component';
-import _ from 'lodash';
+
+function groupBy(collection, keyFn) {
+  const result = {};
+
+  collection.forEach((element) => {
+    const groupKey = keyFn(element);
+
+    if (hasOwnProperty.call(result, groupKey)) {
+      result[groupKey].push(element);
+    } else {
+      result[groupKey] = [element];
+    }
+  });
+
+  return result;
+}
 
 export default class AdminCourseSubmissionsPageTimelineContainerComponent extends Component {
   get groupedSubmissions() {
-    return _.groupBy(this.args.submissions.toArray().sortBy('createdAt').reverse(), (submission) => {
+    return groupBy(this.args.submissions.toArray().sortBy('createdAt').reverse(), (submission) => {
       return submission.createdAt.toISOString().slice(0, 10);
     });
   }
