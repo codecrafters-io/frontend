@@ -3,10 +3,6 @@
     @willBeReplaced={{@willBeReplaced}}
     data-test-course-stage-item>
   <:content>
-    <div class="text-gray-400 text-lg absolute top-0 right-0 p-4 md:p-5">
-      #{{@courseStage.position}}
-    </div>
-
     <div class="flex items-center justify-between mb-6 pr-8"> {{!-- pr-8 interacts with the stage number --}}
       <div class="flex items-center flex-wrap gap-y-3">
         <span class="text-xl md:text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
@@ -48,44 +44,49 @@
   </:content>
 
   <:footer-content>
-    <div class="flex items-center text-xs" data-test-course-stage-item-footer>
-      {{#if (and this.isActiveStage @shouldShowUpgradePromptIfStagePending)}}
-        <StaticDot @class="mr-3" @color="gray" />
-        <span class="text-gray-600" data-test-footer-text>Subscription required.</span>
-      {{else if (eq this.status "waiting")}}
-        <BlinkingDot @class="mr-3" @color="gray" />
-        <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
-      {{else if (eq this.status "evaluating")}}
-        <BlinkingDot @class="mr-3" @color="yellow" />
-        <span class="text-gray-600" data-test-footer-text>Running tests...</span>
-      {{else if (eq this.status "failed")}}
-        <StaticDot @class="mr-3" @color="red" />
+    <div class="flex items-center justify-between w-full">
+      <div class="flex items-center text-xs" data-test-course-stage-item-footer>
+        {{#if (and this.isActiveStage @shouldShowUpgradePromptIfStagePending)}}
+          <StaticDot @class="mr-3" @color="gray" />
+          <span class="text-gray-600" data-test-footer-text>Subscription required.</span>
+        {{else if (eq this.status "waiting")}}
+          <BlinkingDot @class="mr-3" @color="gray" />
+          <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
+        {{else if (eq this.status "evaluating")}}
+          <BlinkingDot @class="mr-3" @color="yellow" />
+          <span class="text-gray-600" data-test-footer-text>Running tests...</span>
+        {{else if (eq this.status "failed")}}
+          <StaticDot @class="mr-3" @color="red" />
 
-        <span class="text-gray-600" data-test-footer-text>
-          {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
-            Tests failed. Check your git push output for logs.
-          {{else if this.lastFailedSubmissionCreatedAt}}
-            Last attempt {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
-          {{else}}
-            Last attempt failed. Try again?
-          {{/if}}
-        </span>
-      {{else if (eq this.status "complete")}}
-        <StaticDot @class="mr-3" @color="green" />
-        <span class="text-gray-600" data-test-footer-text>
-          {{#if this.completedAtWasToday}}
-            You completed this stage today.
-          {{else if this.completedAtWasYesterday}}
-            You completed this stage yesterday.
-          {{else if this.completedAt}}
-            You completed this stage {{moment-from-now this.completedAt}}.
-          {{else}}
-            You've completed this stage.
-          {{/if}}
-        </span>
-      {{else if (eq this.status "locked")}}
-        <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
-      {{/if}}
+          <span class="text-gray-600" data-test-footer-text>
+            {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
+              Tests failed. Check your git push output for logs.
+            {{else if this.lastFailedSubmissionCreatedAt}}
+              Last attempt {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
+            {{else}}
+              Last attempt failed. Try again?
+            {{/if}}
+          </span>
+        {{else if (eq this.status "complete")}}
+          <StaticDot @class="mr-3" @color="green" />
+          <span class="text-gray-600" data-test-footer-text>
+            {{#if this.completedAtWasToday}}
+              You completed this stage today.
+            {{else if this.completedAtWasYesterday}}
+              You completed this stage yesterday.
+            {{else if this.completedAt}}
+              You completed this stage {{moment-from-now this.completedAt}}.
+            {{else}}
+              You've completed this stage.
+            {{/if}}
+          </span>
+        {{else if (eq this.status "locked")}}
+          <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
+        {{/if}}
+      </div>
+      <div class="text-gray-500 text-xs -mr-1 md:-mr-3">
+        Stage #{{@courseStage.position}}
+      </div>
     </div>
   </:footer-content>
 </CoursePage::StepList::ExpandedItem>
