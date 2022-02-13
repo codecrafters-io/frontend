@@ -56,7 +56,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.setupItem.clickOnLanguageButton('Go');
 
     assert.equal(this.server.pretender.handledRequests.length, 5); // Create repository request
-    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Language #n', 'Repository name should change');
+    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.equal(currentURL(), '/courses/redis?repo=2');
 
     let repository = this.server.schema.repositories.find(2);

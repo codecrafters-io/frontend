@@ -32,10 +32,11 @@ export default function () {
   });
 
   this.post('/repositories', function (schema) {
-    let attrs = this.normalizedRequestAttrs();
+    const attrs = this.normalizedRequestAttrs();
+    const language = schema.languages.find(attrs.languageId);
 
     attrs.cloneUrl = 'https://git.codecraters.io/a-long-test-string.git';
-    attrs.name = 'Language #n';
+    attrs.name = `${language.name}`;
 
     return schema.repositories.create(attrs);
   });

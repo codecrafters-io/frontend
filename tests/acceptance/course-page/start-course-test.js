@@ -44,6 +44,11 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
     assert.equal(coursePage.setupItem.footerText, 'Listening for a git push...');
 
+    assert.equal(
+      coursePage.setupItem.copyableCloneRepositoryInstructions,
+      'git clone https://git.codecraters.io/a-long-test-string.git cc-python && cd cc-python'
+    );
+
     await this.clock.tick(2001);
     await finishRender();
 

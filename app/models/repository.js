@@ -1,5 +1,6 @@
 import Model from '@ember-data/model';
 import { attr, belongsTo, hasMany } from '@ember-data/model';
+import { dasherize } from '@ember/string';
 
 export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
@@ -14,10 +15,7 @@ export default class RepositoryModel extends Model {
   @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
   get cloneDirectory() {
-    return this.cloneUrl
-      .split('/')
-      .pop()
-      .replace(/\.git$/, '');
+    return `cc-${dasherize(this.name.replaceAll(/[^a-zA-Z0-9 ]/g, ''))}`;
   }
 
   get defaultStarterRepositoryUrl() {
