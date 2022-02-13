@@ -17,6 +17,10 @@
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
         {{/if}}
       </div>
+
+      <span class="text-gray-400 text-xl">
+        #{{@courseStage.position}}
+      </span>
     </div>
 
     {{#if (and @shouldShowUpgradePromptIfStagePending (not this.statusIsComplete))}}
