@@ -1,11 +1,11 @@
 {{page-title "Courses"}}
 
-<div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6" {{did-insert this.handleDidInsert}}>
-  <h1 class="text-2xl font-bold text-gray-600 mb-8">
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6" {{did-insert this.handleDidInsert}}>
+  <h1 class="text-xl font-bold text-gray-600 mb-4 md:text-2xl md:mb-8">
     Challenges
   </h1>
 
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
     {{#each this.courses as |course|}}
       <CourseCard @course={{course}}></CourseCard>
     {{/each}}
