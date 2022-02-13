@@ -3,13 +3,13 @@
     @willBeReplaced={{@willBeReplaced}}
     data-test-course-stage-item>
   <:content>
-    <div class="text-gray-400 text-lg absolute top-0 right-0 p-5">
+    <div class="text-gray-400 text-lg absolute top-0 right-0 p-4 md:p-5">
       #{{@courseStage.position}}
     </div>
 
-    <div class="flex items-center justify-between mb-6">
-      <div class="flex items-center">
-        <span class="text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
+    <div class="flex items-center justify-between mb-6 pr-8"> {{!-- pr-8 interacts with the stage number --}}
+      <div class="flex items-center flex-wrap gap-y-3">
+        <span class="text-xl md:text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
 
         {{#if this.statusIsComplete}}
           <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>

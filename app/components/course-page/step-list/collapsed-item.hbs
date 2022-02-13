@@ -1,17 +1,17 @@
 <div
   role="button"
-  class="border border-gray-300 py-4 px-5 rounded-md shadow-sm flex items-center {{@class}}"
+  class="border border-gray-300 py-4 px-4 md:px-5 rounded-md shadow-sm flex items-center {{@class}}"
   {{on "click" @onClick}}
   data-test-collapsed-item>
   {{#if (eq @status "active")}}
-    <img alt="tick icon" src="/assets/images/icons/live.svg" class="w-6 mr-3">
+    <img alt="tick icon" src="/assets/images/icons/live.svg" class="w-4 md:w-6 mr-2 md:mr-3">
   {{else if (eq @status "completed")}}
-    <img alt="lock icon" src="/assets/images/icons/tick3.png" class="w-6 mr-3">
+    <img alt="lock icon" src="/assets/images/icons/tick3.png" class="w-4 md:w-6 mr-2 md:mr-3">
   {{else if (eq @status "future")}}
-    <img alt="lock icon" src="/assets/images/icons/lock4.svg" class="w-6 mr-3">
+    <img alt="lock icon" src="/assets/images/icons/lock4.svg" class="w-4 md:w-6 mr-2 md:mr-3">
   {{/if}}
 
-  <span class="text-lg text-gray-600 flex-grow" data-test-collapsed-item-title>
+  <span class="text-md md:text-lg text-gray-600 flex-grow mr-3" data-test-collapsed-item-title>
     {{@text}}
   </span>
 

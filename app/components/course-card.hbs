@@ -1,42 +1,39 @@
 <div
-  class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border"
+  class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border relative"
   role="button"
   {{on "click" this.navigateToCourse}}
   data-test-course-card>
-  {{!-- Content --}}
-  <div class="flex items-start">
-    {{!-- Text --}}
-    <div class="pr-6 mb-8">
-      <div class="flex items-center mb-3 flex-wrap gap-y-2">
-        <div class="text-lg font-bold text-gray-600 mr-2" data-test-course-name>
-          {{@course.name}}
+  {{!-- Logo --}}
+  <div class="w-12 sm:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
+    {{#if @course.isDocker}}
+      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-docker.svg">
+    {{else if @course.isGit}}
+      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-git.svg">
+    {{else if @course.isReact}}
+      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-react.svg">
+    {{else if @course.isRedis}}
+      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-redis.svg">
+    {{else if @course.isSQLite}}
+      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-sqlite.svg">
+    {{/if}}
+  </div>
+
+  {{!-- Text --}}
+  <div class="mb-8">
+    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16">
+      <div class="text-lg font-bold text-gray-600 mr-2" data-test-course-name>
+        {{@course.name}}
+      </div>
+
+      {{#if @course.releaseStatusIsBeta}}
+        <div class="text-xs text-teal-500 font-bold border border-teal-500 rounded px-2 py-1 mr-3" data-test-course-beta-label>
+          BETA
         </div>
-
-        {{#if @course.releaseStatusIsBeta}}
-          <div class="text-xs text-teal-500 font-bold border border-teal-500 rounded px-2 py-1 mr-3" data-test-course-beta-label>
-            BETA
-          </div>
-        {{/if}}
-      </div>
-
-      <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
-        {{@course.shortDescriptionMarkdown}}
-      </div>
+      {{/if}}
     </div>
 
-    {{!-- Logo --}}
-    <div class="w-12 sm:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
-      {{#if @course.isDocker}}
-        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-docker.svg">
-      {{else if @course.isGit}}
-        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-git.svg">
-      {{else if @course.isReact}}
-        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-react.svg">
-      {{else if @course.isRedis}}
-        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-redis.svg">
-      {{else if @course.isSQLite}}
-        <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-sqlite.svg">
-      {{/if}}
+    <div class="text-sm leading-relaxed text-gray-500 pr-12 md:pr-32" data-test-course-description>
+      {{@course.shortDescriptionMarkdown}}
     </div>
   </div>
 
