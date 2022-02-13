@@ -39,6 +39,10 @@ module.exports = function (defaults) {
     },
 
     sourcemaps: { enabled: true },
+
+    svgJar: {
+      sourceDirs: ['public/assets/images/heroicons/solid'],
+    },
   };
 
   if (shouldUseCDN) {
