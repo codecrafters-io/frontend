@@ -47,16 +47,16 @@
     <div class="flex items-center justify-between w-full">
       <div class="flex items-center text-xs" data-test-course-stage-item-footer>
         {{#if (and this.isActiveStage @shouldShowUpgradePromptIfStagePending)}}
-          <StaticDot @class="mr-3" @color="gray" />
+          <StaticDot @class="flex-shrink-0 mr-3" @color="gray" />
           <span class="text-gray-600" data-test-footer-text>Subscription required.</span>
         {{else if (eq this.status "waiting")}}
-          <BlinkingDot @class="mr-3" @color="gray" />
+          <BlinkingDot @class="flex-shrink-0 mr-3" @color="gray" />
           <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
         {{else if (eq this.status "evaluating")}}
-          <BlinkingDot @class="mr-3" @color="yellow" />
+          <BlinkingDot @class="flex-shrink-0 mr-3" @color="yellow" />
           <span class="text-gray-600" data-test-footer-text>Running tests...</span>
         {{else if (eq this.status "failed")}}
-          <StaticDot @class="mr-3" @color="red" />
+          <StaticDot @class="flex-shrink-0 mr-3" @color="red" />
 
           <span class="text-gray-600" data-test-footer-text>
             {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
@@ -68,7 +68,7 @@
             {{/if}}
           </span>
         {{else if (eq this.status "complete")}}
-          <StaticDot @class="mr-3" @color="green" />
+          <StaticDot @class="flex-shrink-0 mr-3" @color="green" />
           <span class="text-gray-600" data-test-footer-text>
             {{#if this.completedAtWasToday}}
               You completed this stage today.
@@ -84,7 +84,7 @@
           <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
         {{/if}}
       </div>
-      <div class="text-gray-500 text-xs -mr-1 md:-mr-3">
+      <div class="text-gray-500 text-xs pl-3 -mr-1 md:-mr-3 flex-shrink-0 hidden sm:block">
         Stage #{{@courseStage.position}}
       </div>
     </div>
