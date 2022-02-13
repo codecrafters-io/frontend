@@ -1,8 +1,12 @@
 <CoursePage::StepList::ExpandedItem
-    @class={{@class}}
+    @class="relative {{@class}}"
     @willBeReplaced={{@willBeReplaced}}
     data-test-course-stage-item>
   <:content>
+    <div class="text-gray-400 text-lg absolute top-0 right-0 p-5">
+      #{{@courseStage.position}}
+    </div>
+
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center">
         <span class="text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
@@ -17,10 +21,6 @@
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
         {{/if}}
       </div>
-
-      <span class="text-gray-400 text-xl">
-        #{{@courseStage.position}}
-      </span>
     </div>
 
     {{#if (and @shouldShowUpgradePromptIfStagePending (not this.statusIsComplete))}}
