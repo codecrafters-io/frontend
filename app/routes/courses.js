@@ -1,7 +1,8 @@
-import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import AuthenticatedRoute from 'codecrafters-frontend/lib/authenticated-route';
 
-export default class CoursesRoute extends Route {
+export default class CoursesRoute extends AuthenticatedRoute {
+  allowsAnonymousAccess = true;
   @service currentUser;
 
   async model() {

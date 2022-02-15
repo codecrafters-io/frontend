@@ -26,6 +26,10 @@ export default class CurrentUserService extends Service {
     return this.currentUserPayload.data.attributes.username;
   }
 
+  get isAnonymous() {
+    return !this.isAuthenticated;
+  }
+
   get isAuthenticated() {
     return !!this.currentUserPayload;
   }
