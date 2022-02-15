@@ -21,4 +21,16 @@ module('Acceptance | view-courses', function (hooks) {
     assert.notOk(coursesPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
     assert.ok(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
   });
+
+  test('it renders if user is not signed in', async function (assert) {
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+
+    assert.notOk(coursesPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(coursesPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
+    assert.ok(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
+  });
 });

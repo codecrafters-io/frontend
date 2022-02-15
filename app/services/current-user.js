@@ -6,6 +6,10 @@ export default class CurrentUserService extends Service {
   @service store;
 
   async authenticate() {
+    if (!this.isAuthenticated) {
+      return;
+    }
+
     let dupedPayload = JSON.parse(JSON.stringify(this.currentUserPayload));
     await this.store.pushPayload(dupedPayload);
   }
@@ -20,6 +24,10 @@ export default class CurrentUserService extends Service {
 
   get currentUserUsername() {
     return this.currentUserPayload.data.attributes.username;
+  }
+
+  get isAuthenticated() {
+    return !!this.currentUserPayload;
   }
 
   get record() {

@@ -31,7 +31,9 @@
 
       {{!-- Account Dropdown on Desktop --}}
       <div class="invisible md:visible mx-6">
-        <Header::AccountDropdown />
+        {{#if this.currentUser.isAuthenticated}}
+          <Header::AccountDropdown />
+        {{/if}}
       </div>
     </div>
 
