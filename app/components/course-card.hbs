@@ -20,7 +20,7 @@
 
   {{!-- Text --}}
   <div class="mb-8">
-    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16">
+    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16 sm:pr-32">
       <div class="text-lg font-bold text-gray-600 mr-2" data-test-course-name>
         {{@course.name}}
       </div>
@@ -32,7 +32,7 @@
       {{/if}}
     </div>
 
-    <div class="text-sm leading-relaxed text-gray-500 pr-12 md:pr-32" data-test-course-description>
+    <div class="text-sm leading-relaxed text-gray-500 pr-16 sm:pr-32" data-test-course-description>
       {{@course.shortDescriptionMarkdown}}
     </div>
   </div>
