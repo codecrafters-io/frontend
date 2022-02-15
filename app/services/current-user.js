@@ -22,10 +22,6 @@ export default class CurrentUserService extends Service {
     return this.currentUserPayload.data.attributes.username;
   }
 
-  get isBetaParticipant() {
-    return this.record.isBetaParticipant;
-  }
-
   get record() {
     return this.store.peekRecord('user', this.currentUserId);
   }

@@ -15,11 +15,7 @@ export default class CourseController extends Controller {
       return this.model.courses.filterBy('slug', 'docker');
     }
 
-    if (this.currentUser.isBetaParticipant) {
-      return this.model.courses;
-    } else {
-      return this.model.courses.filterBy('releaseStatusIsLive');
-    }
+    return this.model.courses;
   }
 
   @action
