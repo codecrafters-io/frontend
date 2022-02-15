@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import AuthenticatedRoute from 'codecrafters-frontend/lib/authenticated-route';
 
-export default class TeamRoute extends Route {
+export default class TeamRoute extends AuthenticatedRoute {
   @service currentUser;
   @service store;
 

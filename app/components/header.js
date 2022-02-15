@@ -9,10 +9,12 @@ export default class HeaderComponent extends Component {
 
   @action
   handleDidInsert() {
-    let username = this.currentUser.currentUserUsername;
+    if (this.currentUser.isAuthenticated) {
+      let username = this.currentUser.currentUserUsername;
 
-    if (username && window.FS) {
-      window.FS.identify(username, { displayName: username });
+      if (username && window.FS) {
+        window.FS.identify(username, { displayName: username });
+      }
     }
   }
 

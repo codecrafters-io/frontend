@@ -2,7 +2,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsAdmin, signInAsBetaParticipant, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsAdmin, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
@@ -220,7 +220,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('stages should not have an upgrade prompt if challenge is beta', async function (assert) {
-    signInAsBetaParticipant(this.owner);
+    signIn(this.owner);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();

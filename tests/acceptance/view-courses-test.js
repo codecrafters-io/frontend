@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsBetaParticipant } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -14,11 +14,15 @@ module('Acceptance | view-courses', function (hooks) {
     testScenario(this.server);
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 3, 'expected 3 course cards to be present');
+    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+
+    assert.notOk(coursesPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(coursesPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
+    assert.ok(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
   });
 
-  test('it renders early access courses if user is beta participant', async function (assert) {
-    signInAsBetaParticipant(this.owner);
+  test('it renders if user is not signed in', async function (assert) {
     testScenario(this.server);
 
     await coursesPage.visit();

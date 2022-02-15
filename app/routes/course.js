@@ -1,8 +1,8 @@
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
-import Route from '@ember/routing/route';
+import AuthenticatedRoute from 'codecrafters-frontend/lib/authenticated-route';
 
-export default class CourseRoute extends Route {
+export default class CourseRoute extends AuthenticatedRoute {
   @service currentUser;
   @service store;
 

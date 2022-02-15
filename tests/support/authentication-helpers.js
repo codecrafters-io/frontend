@@ -6,10 +6,6 @@ export function signInAsAdmin(owner) {
   doSignIn(owner, { 'is-admin': true });
 }
 
-export function signInAsBetaParticipant(owner) {
-  doSignIn(owner, { 'is-beta-participant': true });
-}
-
 export function signInAsSubscriber(owner) {
   doSignIn(owner, {}, [
     {
