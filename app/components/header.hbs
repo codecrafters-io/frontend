@@ -33,6 +33,8 @@
       <div class="invisible md:visible mx-6">
         {{#if this.currentUser.isAuthenticated}}
           <Header::AccountDropdown />
+        {{else}}
+          <Header::SignInWithGithubButton />
         {{/if}}
       </div>
     </div>
