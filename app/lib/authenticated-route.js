@@ -9,7 +9,7 @@ export default class AuthenticatedRoute extends Route {
 
   beforeModel(transition) {
     if (this.currentUser.isAnonymous && !this.allowsAnonymousAccess) {
-      window.location.href = `/login?next=${window.location.pathname}`;
+      window.location.href = `/login?next=${this.router.urlFor(transition.to.name, transition.to.params)}`;
       transition.abort();
     }
   }
