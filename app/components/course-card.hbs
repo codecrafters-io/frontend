@@ -5,17 +5,7 @@
   data-test-course-card>
   {{!-- Logo --}}
   <div class="w-12 sm:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
-    {{#if @course.isDocker}}
-      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-docker.svg">
-    {{else if @course.isGit}}
-      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-git.svg">
-    {{else if @course.isReact}}
-      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-react.svg">
-    {{else if @course.isRedis}}
-      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-redis.svg">
-    {{else if @course.isSQLite}}
-      <img alt={{@course.name}} src="/assets/images/challenge-logos/challenge-logo-sqlite.svg">
-    {{/if}}
+    <CourseLogo @course={{@course}} />
   </div>
 
   {{!-- Text --}}
