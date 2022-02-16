@@ -27,8 +27,16 @@ export default function () {
     }
   });
 
-  this.get('/repositories', function (schema) {
-    return schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' }).filter((repository) => !!repository.lastSubmission); // API doesn't return repositories without submissions
+  this.get('/repositories', function (schema, request) {
+    let repositories;
+
+    if (request.queryParams.course_id) {
+      repositories = schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3', courseId: request.queryParams.course_id });
+    } else {
+      repositories = schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
+    }
+
+    return repositories.filter((repository) => !!repository.lastSubmission); // API doesn't return repositories without submissions
   });
 
   this.post('/repositories', function (schema) {
