@@ -33,7 +33,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.equal(this.server.pretender.handledRequests.length, 4); // Fetch course (courses page + course page) + fetch repositories + leaderboard
+    assert.equal(this.server.pretender.handledRequests.length, 5); // Fetch course (courses page + course page) + fetch repositories + leaderboard
 
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'first stage is active');
     assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
