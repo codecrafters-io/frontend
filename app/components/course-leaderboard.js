@@ -7,7 +7,7 @@ import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 
-export default class CoursePageLeaderboardComponent extends Component {
+export default class CourseLeaderboardComponent extends Component {
   transition = fade;
   @tracked isLoadingEntries = true;
   @tracked isReloadingEntries = false;
@@ -24,7 +24,7 @@ export default class CoursePageLeaderboardComponent extends Component {
   }
 
   get currentUserIsTeamMember() {
-    return !!this.currentUserTeams;
+    return this.currentUser.isAuthenticated && !!this.currentUserTeams;
   }
 
   get currentUserTeams() {

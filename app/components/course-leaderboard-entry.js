@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
-export default class CoursePageLeaderboardEntryComponent extends Component {
+export default class CourseLeaderboardEntryComponent extends Component {
   @service currentUser;
 
   @action
