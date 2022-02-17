@@ -1,0 +1,20 @@
+<div class="bg-white rounded-md shadow-sm border border-gray-200 relative" ...attributes>
+  <div class="p-6">
+    <div class="text-gray-700 leading-7 prose mb-4">
+      {{this.instructionsHTML}}
+    </div>
+
+    <h3 class="font-bold uppercase text-gray-400 text-center text-sm tracking-wider relative mb-3">
+      <span class="block h-px w-full bg-gray-200 absolute top-50-percent -mt-px"></span>
+      <span class="relative px-6 bg-white">Stages</span>
+    </h3>
+
+    {{#each @course.sortedStages as |courseStage|}}
+      <div>
+        <div class="text-gray-700 leading-7 prose mb-4">
+          {{courseStage.name}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

@@ -23,3 +23,7 @@
 .copyable-code .border-text-mask {
   background: linear-gradient(to left, rgba(241, 245, 249, 1) 0%, rgba(241, 245, 249, 1) 20%, rgba(241, 245, 249, 0) 100%);
 }
+
+.top-50-percent {
+  top: 50%;
+}

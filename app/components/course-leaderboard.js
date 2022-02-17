@@ -24,11 +24,15 @@ export default class CourseLeaderboardComponent extends Component {
   }
 
   get currentUserIsTeamMember() {
-    return this.currentUser.isAuthenticated && !!this.currentUserTeams;
+    return this.currentUser.isAuthenticated && !!this.currentUserTeams.firstObject;
   }
 
   get currentUserTeams() {
-    return this.currentUser.record.teams;
+    if (this.currentUser.isAuthenticated) {
+      return this.currentUser.record.teams;
+    } else {
+      return [];
+    }
   }
 
   get entries() {
@@ -48,7 +52,7 @@ export default class CourseLeaderboardComponent extends Component {
   }
 
   get entriesFromCurrentUser() {
-    if (this.args.repositories.length === 0 && this.args.activeRepository.isNew) {
+    if (this.args.repositories.length === 0 || this.args.activeRepository.isNew) {
       return [];
     }
 

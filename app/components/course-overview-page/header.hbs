@@ -1,0 +1,22 @@
+<div class="flex items-center justify-between" ...attributes>
+  <div>
+    <h1 class="text-5xl text-gray-700 font-bold tracking-tighter mb-3">{{@course.name}}</h1>
+
+    <p class="text-gray-500 mb-4">
+      {{@course.shortDescriptionMarkdown}}
+    </p>
+
+    <div class="flex items-center">
+      <div class="bg-teal-500 px-4 py-3 text-white text-lg font-bold rounded inline-flex items-center mr-2">
+        Start Course
+        {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
+      </div>
+      {{#each @course.supportedLanguages as |supportedLanguage|}}
+        <img src={{supportedLanguage.tealLogoUrl}} class="h-6 ml-2">
+      {{/each}}
+    </div>
+  </div>
+  <div class="w-40">
+    <CourseLogo @course={{@course}} />
+  </div>
+</div>
