@@ -52,12 +52,12 @@ module('Acceptance | subscribe-test', function (hooks) {
     await coursesPage.visit({ action: 'checkout_session_successful' });
 
     assert.ok(coursesPage.checkoutSessionSuccessfulModal.isVisible, 'Checkout session successful modal should be visible');
-    assert.equal(this.server.pretender.handledRequests.length, 2); // Fetch courses (courses page) + fetch subscriptions
+    assert.equal(this.server.pretender.handledRequests.length, 3); // Fetch courses (courses page) + fetch subscriptions
 
     await this.clock.tick(1001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 3); // One more subscriptions request
+    assert.equal(this.server.pretender.handledRequests.length, 4); // One more subscriptions request
 
     this.server.create('subscription', {
       user: this.server.schema.users.first(),
@@ -68,13 +68,13 @@ module('Acceptance | subscribe-test', function (hooks) {
     await this.clock.tick(1001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 4); // One more subscriptions request
+    assert.equal(this.server.pretender.handledRequests.length, 5); // One more subscriptions request
     assert.notOk(coursesPage.checkoutSessionSuccessfulModal.isVisible, 'Checkout session successful modal should not be visible');
 
     await this.clock.tick(1001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 4); // No more requests after polling is complete
+    assert.equal(this.server.pretender.handledRequests.length, 5); // No more requests after polling is complete
     assert.notOk(coursesPage.checkoutSessionSuccessfulModal.isVisible, 'Checkout session successful modal should not be visible');
   });
 

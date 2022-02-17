@@ -40,7 +40,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.equal(this.server.pretender.handledRequests.length, 4); // Fetch course (courses page + course page) + fetch repositories + leaderboard
+    assert.equal(this.server.pretender.handledRequests.length, 5); // Fetch course (courses page + course page) + fetch repositories + leaderboard
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
@@ -55,7 +55,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     await coursePage.setupItem.clickOnLanguageButton('Go');
 
-    assert.equal(this.server.pretender.handledRequests.length, 5); // Create repository request
+    assert.equal(this.server.pretender.handledRequests.length, 6); // Create repository request
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.equal(currentURL(), '/courses/redis?repo=2');
 
@@ -65,11 +65,11 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await this.clock.tick(2001); // Run poller
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 6, 'polling should have run');
+    assert.equal(this.server.pretender.handledRequests.length, 7, 'polling should have run');
 
     await this.clock.tick(2001); // Run active item index updater
 
-    assert.equal(this.server.pretender.handledRequests.length, 7, 'polling should have run again');
+    assert.equal(this.server.pretender.handledRequests.length, 8, 'polling should have run again');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await animationsSettled();
