@@ -16,6 +16,7 @@ export default function createCourseFromData(server, courseData) {
     server.create('course-stage', {
       course: course,
       name: courseStageData.name,
+      marketingMarkdown: courseStageData.marketing_md,
       position: courseStagePosition,
       descriptionMarkdownTemplate: courseStageData.description_md,
       isFree: courseStagePosition <= 2,

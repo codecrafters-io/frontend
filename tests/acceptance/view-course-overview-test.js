@@ -16,5 +16,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(currentURL(), '/courses/redis/overview');
+
+    // await this.pauseTest();
   });
 });

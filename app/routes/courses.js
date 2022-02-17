@@ -15,7 +15,7 @@ export default class CoursesRoute extends AuthenticatedRoute {
     }
 
     return {
-      courses: await this.store.query('course', { include: 'stages' }),
+      courses: await this.store.query('course', { include: 'stages,supported-languages' }),
     };
   }
 }
