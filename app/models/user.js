@@ -8,6 +8,7 @@ export default class UserModel extends Model {
   @attr('boolean') isAdmin;
   @attr('string') username;
   @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
+  @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
 

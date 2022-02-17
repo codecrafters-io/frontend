@@ -8,6 +8,12 @@ export default class CoursesRoute extends AuthenticatedRoute {
   async model() {
     await this.currentUser.authenticate();
 
+    if (this.currentUser.isAuthenticated) {
+      await this.store.query('repository', {
+        include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
+      });
+    }
+
     return {
       courses: await this.store.findAll('course'),
     };
