@@ -14,4 +14,14 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
   get userHasStartedCourse() {
     return this.currentUser.isAuthenticated && this.currentUser.record.repositories.filterBy('course', this.args.course).firstObject;
   }
+
+  get recentlyAttemptedUsers() {
+    return this.store
+      .peekAll('leaderboard-entry')
+      .filter((entry) => entry.currentCourseStage.position >= this.args.stage.position)
+      .sortBy('currentCourseStage.position')
+      .uniqBy('user')
+      .slice(0, 3)
+      .mapBy('user');
+  }
 }

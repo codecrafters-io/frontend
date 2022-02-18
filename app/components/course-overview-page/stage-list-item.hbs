@@ -11,9 +11,9 @@
       </div>
 
       <div class="flex -space-x-2 hover:space-x-1 items-center">
-        <CourseOverviewPage::StageListItemAvatar @username="rohitpaulk" />
-        <CourseOverviewPage::StageListItemAvatar @username="gufran" />
-        <CourseOverviewPage::StageListItemAvatar @username="sarupbanskota" />
+        {{#each this.recentlyAttemptedUsers as |user|}}
+          <CourseOverviewPage::StageListItemAvatar @user={{user}} />
+        {{/each}}
       </div>
     </div>
 
