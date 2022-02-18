@@ -13,6 +13,7 @@ module.exports = {
       current: 'currentColor',
       gray: colors.blueGray,
       green: colors.green,
+      indigo: colors.indigo,
       red: colors.red,
       teal: colors.teal,
       transparent: 'transparent',

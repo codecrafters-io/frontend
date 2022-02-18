@@ -12,6 +12,6 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
   }
 
   get userHasStartedCourse() {
-    return this.currentUser.isAuthenticated && this.currentUser.record.repositories;
+    return this.currentUser.isAuthenticated && this.currentUser.record.repositories.filterBy('course', this.args.course).firstObject;
   }
 }

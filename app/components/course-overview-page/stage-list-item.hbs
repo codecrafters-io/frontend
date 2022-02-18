@@ -1,10 +1,10 @@
-<div class="flex items-start justify-between" ...attributes>
+<div class="flex items-start justify-between w-full" ...attributes>
   <div>
-    <div class="flex items-center">
+    <div class="flex items-center mb-2">
       <div class="flex items-center mr-2 transition-all">
-        <div class="text-gray-300 group-hover:text-gray-400 text-md font-bold mr-2">
-          #{{@stage.position}}
-        </div>
+<!--        <div class="text-gray-300 group-hover:text-gray-400 text-md font-bold mr-2">-->
+<!--          #{{@stage.position}}-->
+<!--        </div>-->
         <div class="text-teal-500 text-md font-bold">
           {{@stage.name}}
         </div>
@@ -17,9 +17,13 @@
       </div>
     </div>
 
-    <div class="leading-relaxed prose prose-sm my-3">
+    <div class="leading-relaxed prose prose-sm mb-3">
       {{this.marketingHTML}}
     </div>
+
+    {{#if (and @stage.isFirst (not this.userHasStartedCourse))}}
+      <CourseOverviewPage::StartStageButton @course={{@stage.course}} class="mb-3" />
+    {{/if}}
   </div>
   <div class="flex items-center text-gray-400 text-xs flex-shrink-0 pl-8">
     374 attempts {{svg-jar "user-group" class="fill-current text-gray-300 ml-2 w-4 h-4"}}

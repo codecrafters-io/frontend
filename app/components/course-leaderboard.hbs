@@ -27,7 +27,7 @@
   {{else}}
     <div>
       {{#animated-each this.mergedEntries key='userId' use=this.listTransition as |entry|}}
-        <CourseLeaderboardEntry @entry={{entry}} />
+        <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
       {{else}}
         <div class="flex px-4 py-2 items-center">
           <div class="text-sm text-gray-500">

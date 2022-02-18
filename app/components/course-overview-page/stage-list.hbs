@@ -9,7 +9,7 @@
         {{/unless}}
       </div>
 
-      <CourseOverviewPage::StageListItem @stage={{courseStage}} class="{{if courseStage.isLast "mb-0" "mb-4"}}" />
+      <CourseOverviewPage::StageListItem @stage={{courseStage}} />
     </div>
   {{/animated-each}}
 </AnimatedContainer>

@@ -3,15 +3,22 @@
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
   <CourseOverviewPage::Header @course={{this.model.course}} class="mb-10" />
 
-  <div class="flex">
-    <CourseOverviewPage::IntroductionAndStages
-      @course={{this.model.course}}
-      class="flex-grow min-w-0" />
+  <div class="flex items-start">
+    <div class="flex-grow">
+      <CourseOverviewPage::IntroductionAndStages
+        @course={{this.model.course}}
+        class="w-full mb-4" />
+
+      <CourseOverviewPage::TestimonialList
+        @course={{this.model.course}}
+        class="w-full" />
+    </div>
 
     <CourseLeaderboard
-      @class="w-80 flex-shrink-0 border-l ml-4 hidden lg:block"
+      @class="w-80 flex-shrink-0 ml-2 hidden lg:block"
       @course={{this.model.course}}
       @activeRepository={{this.activeRepository}}
-      @repositories={{this.userRepositories}} />
+      @repositories={{this.userRepositories}}
+      @shouldShowLanguageIconsWithoutHover={{true}} />
   </div>
 </div>

@@ -12,7 +12,7 @@ export default class CourseLeaderboardEntryComponent extends Component {
   }
 
   get isForCurrentUser() {
-    return this.args.entry.user.id === this.currentUser.record.id;
+    return this.currentUser.isAuthenticated && this.args.entry.user.id === this.currentUser.currentUserId;
   }
 
   get progressNumerator() {

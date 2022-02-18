@@ -7,19 +7,8 @@
     </p>
 
     <div class="flex items-center">
-      <LinkTo @route="course" @model={{@course.slug}} class="bg-teal-500 hover:bg-teal-600 transition-colors px-4 py-3 text-white text-lg font-bold rounded inline-flex items-center mr-2" data-test-start-course-button>
-        {{#if this.currentUserIsAnonymous}}
-          {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
-        {{/if}}
+      <CourseOverviewPage::StartCourseButton @course={{@course}} />
 
-        {{#if this.currentUserHasStartedCourse}}
-          Resume Building
-        {{else}}
-          Start Building
-        {{/if}}
-
-        {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
-      </LinkTo>
       {{#each @course.supportedLanguages as |supportedLanguage|}}
         <img src={{supportedLanguage.tealLogoUrl}} class="h-6 ml-2">
       {{/each}}
