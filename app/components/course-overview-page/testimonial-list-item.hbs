@@ -1,33 +1,31 @@
-<a href="https://google.com" class="block py-4 pr-6 group">
+<a href={{@testimonial.link}} class="block py-4 pr-6 group">
   <span class="flex">
     <span class="flex flex-col items-center mr-3 px-1">
-      <span class="w-px bg-gray-200 flex-grow mb-2">
+      <span class="w-px bg-gray-200 group-hover:bg-gray-300 flex-grow mb-2 transition-colors">
       </span>
       <span class="text-4xl text-indigo-400 leading-none font-bold h-5">
         &ldquo;
       </span>
-      <span class="w-px bg-gray-200 flex-grow mb-2">
+      <span class="w-px bg-gray-200 group-hover:bg-gray-300 flex-grow mb-2 transition-colors">
       </span>
     </span>
       <span class="flex-grow flex flex-col">
       <span class="text-gray-500 text-sm mb-2 leading-relaxed flex-grow">
-        The Redis challenge was extremely fun. I ended up having to read the Redis Protocol specification doc pretty
-        carefully in its entirety! The result felt like lightly-guided independent study, if that makes sense.
-        (Which, again, was lots of fun)
+        {{@testimonial.text}}
       </span>
     </span>
   </span>
   <span class="flex items-start">
     <img
       alt="avatar"
-      src="https://github.com/rohitpaulk.png"
+      src={{@testimonial.author_avatar}}
       class="w-6 h-6 filter drop-shadow-sm ring-1 ring-white rounded-full shadow mr-3" />
     <span class="block mt-0.5">
-      <span class="block text-gray-500 group-hover:text-teal-500 text-sm transition-colors font-bold">
-        Charles Guo
+      <span class="block text-gray-500 group-hover:underline text-sm transition-colors font-bold">
+        {{@testimonial.author_name}}
       </span>
-      <span class="block text-gray-500 group-hover:text-teal-500 text-sm transition-colors">
-        Engineer, Stripe Scala Team
+      <span class="block text-gray-500 text-sm">
+        {{@testimonial.author_description}}
       </span>
     </span>
   </span>

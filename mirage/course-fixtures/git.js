@@ -28,14 +28,14 @@ export default {
       {
         "author_name": "Beyang Liu",
         "author_description": "CTO, Sourcegraph",
-        "author_avatar": "/images/testimonials/beyang_liu.jpeg",
+        "author_avatar": "https://codecrafters.io/images/testimonials/beyang_liu.jpeg",
         "link": "https://twitter.com/beyang/status/1271225214886506496",
         "text": "Found out about CodeCrafters from a colleague. It's a tutorial site that has you build your own version of things\nlike Git and Docker from scratch. A cool way to build a stronger mental model of how those tools work.\n"
       },
       {
-        "author": "Lacronicus",
+        "author_name": "Lacronicus",
         "author_description": "Reddit user",
-        "author_avatar": "/images/testimonials/lacronicus.png",
+        "author_avatar": "https://codecrafters.io/images/testimonials/lacronicus.png",
         "link": "https://www.reddit.com/r/programming/comments/fefrka/advanced_programming_challenges/fjoxu7n/",
         "text": "Never in my life have I needed something so much and not known until I received it.\n"
       }

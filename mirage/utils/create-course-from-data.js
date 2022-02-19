@@ -8,6 +8,7 @@ export default function createCourseFromData(server, courseData) {
     shortDescriptionMarkdown: courseData.short_description_md,
     slug: courseData.slug,
     supportedLanguages: courseData.supported_languages.map((languageSlug) => server.schema.languages.findBy({ slug: languageSlug })),
+    testimonials: courseData.marketing.testimonials,
   });
 
   let courseStagePosition = 1;

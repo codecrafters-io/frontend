@@ -27,14 +27,14 @@ export default {
       {
         "author_name": "Ananthalakshmi Sankar",
         "author_description": "Software Engineer",
-        "author_avatar": "/images/testimonials/ananthalakshmi_sankar.jpeg",
+        "author_avatar": "https://codecrafters.io/images/testimonials/ananthalakshmi_sankar.jpeg",
         "link": "https://github.com/anu294",
         "text": "There are few sites I like as much that have a step by step guide. The real-time feedback is so good, it's creepy!\n"
       },
       {
         "author": "Pranjal Paliwal",
         "author_description": "Software Engineer, Headout",
-        "author_avatar": "/images/testimonials/pranjal_paliwal.jpeg",
+        "author_avatar": "https://codecrafters.io/images/testimonials/pranjal_paliwal.jpeg",
         "link": "https://github.com/betterclever",
         "text": "Never in my life have I needed something so much and not known until I received it.\n"
       }

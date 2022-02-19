@@ -4,6 +4,7 @@
 <!--</h3>-->
 
 <div class="grid grid-cols-2 gap-4">
-  <CourseOverviewPage::TestimonialListItem />
-  <CourseOverviewPage::TestimonialListItem />
+  {{#each @course.testimonials as |testimonial|}}
+    <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
+  {{/each}}
 </div>

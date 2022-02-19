@@ -29,14 +29,14 @@ export default {
       {
         "author_name": "Raghav Dua",
         "author_description": "SRE, Coinbase",
-        "author_avatar": "/images/testimonials/raghav_dua.jpeg",
+        "author_avatar": "https://codecrafters.io/images/testimonials/raghav_dua.jpeg",
         "link": "https://github.com/duaraghav8",
         "text": "I spent a full day on your Docker building course and ended up building the whole thing myself. As a SRE (and\nmostly a user of docker), digging into the internals blew me away.\n"
       },
       {
-        "author": "Maya Farber Brodsky",
+        "author_name": "Maya Farber Brodsky",
         "author_description": "Student, Tel Aviv University",
-        "author_avatar": "/images/testimonials/maya_farber_brodsky.png",
+        "author_avatar": "https://codecrafters.io/images/testimonials/maya_farber_brodsky.png",
         "link": "https://github.com/mfarberbrodsky",
         "text": "I've started the Docker challenge, enjoying it a lot so far. Just the\nright level of guidance, helpful and still gives you a lot of freedom\nto explore and learn for yourself.\n"
       }
