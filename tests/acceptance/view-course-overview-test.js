@@ -1,4 +1,5 @@
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -28,6 +29,14 @@ module('Acceptance | view-course-overview', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
+    assert.equal(currentURL(), '/courses/redis/overview');
+  });
+
+  test('it renders when user accesses URL directly', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await courseOverviewPage.visit({ course_slug: 'redis' });
     assert.equal(currentURL(), '/courses/redis/overview');
   });
 });

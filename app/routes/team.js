@@ -6,7 +6,6 @@ export default class TeamRoute extends AuthenticatedRoute {
   @service store;
 
   async model(params) {
-    await this.currentUser.authenticate();
     await this.store.findAll('team', { include: 'memberships.user' });
 
     return { team: this.store.peekRecord('team', params.team_id) };

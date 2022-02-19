@@ -8,6 +8,8 @@ export default class AuthenticatedRoute extends Route {
   @service router;
 
   beforeModel(transition) {
+    this.currentUser.authenticate();
+
     if (this.currentUser.isAnonymous && !this.allowsAnonymousAccess) {
       window.location.href = `/login?next=${this.router.urlFor(transition.to.name, transition.to.params)}`;
       transition.abort();
