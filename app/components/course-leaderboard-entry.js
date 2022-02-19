@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
-export default class CoursePageLeaderboardEntryComponent extends Component {
+export default class CourseLeaderboardEntryComponent extends Component {
   @service currentUser;
 
   @action
@@ -12,7 +12,7 @@ export default class CoursePageLeaderboardEntryComponent extends Component {
   }
 
   get isForCurrentUser() {
-    return this.args.entry.user.id === this.currentUser.record.id;
+    return this.currentUser.isAuthenticated && this.args.entry.user.id === this.currentUser.currentUserId;
   }
 
   get progressNumerator() {

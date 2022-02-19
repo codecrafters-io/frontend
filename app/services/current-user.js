@@ -5,13 +5,13 @@ export default class CurrentUserService extends Service {
   @service serverVariables;
   @service store;
 
-  async authenticate() {
+  authenticate() {
     if (!this.isAuthenticated) {
       return;
     }
 
     let dupedPayload = JSON.parse(JSON.stringify(this.currentUserPayload));
-    await this.store.pushPayload(dupedPayload);
+    this.store.pushPayload(dupedPayload);
   }
 
   get currentUserPayload() {

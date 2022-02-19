@@ -1,0 +1,43 @@
+<div class="w-full" ...attributes>
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center">
+      <div class="flex items-center mr-2 transition-all">
+        <div class="text-teal-500 text-lg font-bold">
+          {{@stage.name}}
+        </div>
+      </div>
+
+      <div class="flex -space-x-2 hover:space-x-1 items-center">
+        {{#each this.recentlyAttemptedUsers as |user|}}
+          <CourseOverviewPage::StageListItemAvatar @user={{user}} />
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="flex items-center text-gray-400 text-xs flex-shrink-0 pl-4">
+      {{#if @stage.isFirst}}
+        &lt; 5 minutes
+      {{else if @stage.difficultyIsVeryEasy}}
+        &lt; 5 minutes
+      {{else if @stage.difficultyIsEasy}}
+        5-10 minutes
+      {{else if @stage.difficultyIsMedium}}
+        30m - 1h
+      {{else if @stage.difficultyIsHard}}
+        1h +
+      {{/if}}
+
+      {{svg-jar "clock" class="fill-current text-gray-300 ml-1 w-4 h-4"}}
+    </div>
+  </div>
+
+  <div>
+    <div class="leading-relaxed prose mb-4 mr-8">
+      {{this.marketingHTML}}
+    </div>
+
+    {{#if (and @stage.isFirst (not this.userHasStartedCourse))}}
+      <CourseOverviewPage::StartStageButton @course={{@stage.course}} class="mb-4" />
+    {{/if}}
+  </div>
+</div>

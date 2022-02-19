@@ -8,6 +8,7 @@ export default function createCourseFromData(server, courseData) {
     shortDescriptionMarkdown: courseData.short_description_md,
     slug: courseData.slug,
     supportedLanguages: courseData.supported_languages.map((languageSlug) => server.schema.languages.findBy({ slug: languageSlug })),
+    testimonials: courseData.marketing.testimonials,
   });
 
   let courseStagePosition = 1;
@@ -16,8 +17,10 @@ export default function createCourseFromData(server, courseData) {
     server.create('course-stage', {
       course: course,
       name: courseStageData.name,
+      marketingMarkdown: courseStageData.marketing_md,
       position: courseStagePosition,
       descriptionMarkdownTemplate: courseStageData.description_md,
+      difficulty: courseStageData.difficulty,
       isFree: courseStagePosition <= 2,
     });
 

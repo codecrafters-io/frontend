@@ -1,14 +1,15 @@
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
+import percySnapshot from '@percy/ember';
+import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import { signIn, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupApplicationTest(hooks);
@@ -22,6 +23,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     let currentUser = this.server.schema.users.first();
 
@@ -76,7 +78,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.equal(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must still be 0 if first stage is not completed');
   });
 
-  test('can view leaderboard when other recent players are present', async function (assert) {
+  test('can view leaderboard on overview page when other recent players are present', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
@@ -102,6 +104,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.equal(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
     assert.equal(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');

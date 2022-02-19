@@ -7,7 +7,7 @@ import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 
-export default class CoursePageLeaderboardComponent extends Component {
+export default class CourseLeaderboardComponent extends Component {
   transition = fade;
   @tracked isLoadingEntries = true;
   @tracked isReloadingEntries = false;
@@ -24,11 +24,15 @@ export default class CoursePageLeaderboardComponent extends Component {
   }
 
   get currentUserIsTeamMember() {
-    return !!this.currentUserTeams;
+    return this.currentUser.isAuthenticated && !!this.currentUserTeams.firstObject;
   }
 
   get currentUserTeams() {
-    return this.currentUser.record.teams;
+    if (this.currentUser.isAuthenticated) {
+      return this.currentUser.record.teams;
+    } else {
+      return [];
+    }
   }
 
   get entries() {
@@ -48,7 +52,7 @@ export default class CoursePageLeaderboardComponent extends Component {
   }
 
   get entriesFromCurrentUser() {
-    if (this.args.repositories.length === 0 && this.args.activeRepository.isNew) {
+    if (this.args.repositories.length === 0 || this.args.activeRepository.isNew) {
       return [];
     }
 

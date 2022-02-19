@@ -8,7 +8,11 @@ export default class CourseCardComponent extends Component {
 
   @action
   async navigateToCourse() {
-    await this.router.transitionTo('course', this.args.course.slug, { queryParams: { fresh: null } });
+    if (this.lastPushedRepository) {
+      await this.router.transitionTo('course', this.args.course.slug, { queryParams: { fresh: null } });
+    } else {
+      await this.router.transitionTo('course-overview', this.args.course.slug);
+    }
   }
 
   get lastPushedRepository() {

@@ -1,15 +1,16 @@
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
+import percySnapshot from '@percy/ember';
+import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | course-page | start-course-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -23,10 +24,11 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
 
-    assert.equal(this.server.pretender.handledRequests.length, 5, 'first 3 requests were executed');
+    assert.equal(this.server.pretender.handledRequests.length, 6, 'first 3 requests were executed');
 
     await percySnapshot('Start Course - Select Language');
 
@@ -36,7 +38,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
 
-    assert.equal(this.server.pretender.handledRequests.length, 6, 'create repository request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, 7, 'create repository request was executed');
 
     await percySnapshot('Start Course - Clone Repository');
 
@@ -52,7 +54,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 7, 'poll request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, 8, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     let repository = this.server.schema.repositories.find(1);
@@ -61,7 +63,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 8, 'poll request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, 9, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
@@ -84,12 +86,14 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
     assert.contains(currentURL(), '/courses/redis?repo=', 'current URL includes repo ID');
 
     await coursePage.header.clickOnChallengesLink();
     await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.equal(currentURL(), '/courses/redis', 'current URL is changed to not include invalid repo');
 

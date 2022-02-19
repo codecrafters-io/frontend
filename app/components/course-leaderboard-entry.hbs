@@ -7,7 +7,11 @@
   <div class="flex items-center">
     <img alt="avatar" src="{{@entry.user.avatarUrl}}" class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md">
     <span class="text-xs text-gray-600 group-hover:underline mr-2" data-test-username>{{@entry.user.username}}</span>
-    <img alt="{{@entry.language.name}}" src={{@entry.language.tealLogoUrl}} class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
+    {{#if @shouldShowLanguageIconsWithoutHover}}
+      <img alt="{{@entry.language.name}}" src={{@entry.language.tealLogoUrl}} class="w-4 h-4 mr-2 opacity-90 group-hover:opacity-100 transition-all" />
+    {{else}}
+      <img alt="{{@entry.language.name}}" src={{@entry.language.tealLogoUrl}} class="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-all" />
+    {{/if}}
   </div>
   <div class="flex items-center">
     <span class="

@@ -13,6 +13,7 @@ module.exports = {
       current: 'currentColor',
       gray: colors.blueGray,
       green: colors.green,
+      indigo: colors.indigo,
       red: colors.red,
       teal: colors.teal,
       transparent: 'transparent',
@@ -27,12 +28,17 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            a: {
+              color: colors.indigo[400],
+              fontWeight: 'bold',
+            },
             code: {
               color: colors.blueGray[700],
               fontWeight: 'normal',
               padding: '0.2em 0.4em',
               backgroundColor: colors.blueGray[100],
               borderRadius: '5px',
+              whiteSpace: 'nowrap',
             },
             'code::before': { content: 'none' },
             'code::after': { content: 'none' },
@@ -55,12 +61,16 @@ module.exports = {
   },
   variants: {
     extend: {
+      backdropDropShadow: ['hover', 'group-hover'],
       backgroundColor: ['active'],
-      fontStyle: ['group-hover'],
-      width: ['group-hover'],
-      scale: ['group-hover'],
-      translate: ['group-hover'],
+      border: ['group-hover'],
       display: ['group-hover'],
+      filter: ['group-hover', 'hover'],
+      fontStyle: ['group-hover'],
+      scale: ['group-hover'],
+      space: ['group-hover', 'hover'], // Used for blowing up spacing on hover
+      translate: ['group-hover'],
+      width: ['group-hover'],
     },
   },
   plugins: [require('@tailwindcss/typography')],

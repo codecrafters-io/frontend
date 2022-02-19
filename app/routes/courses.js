@@ -6,8 +6,6 @@ export default class CoursesRoute extends AuthenticatedRoute {
   @service currentUser;
 
   async model() {
-    await this.currentUser.authenticate();
-
     if (this.currentUser.isAuthenticated) {
       await this.store.query('repository', {
         include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
@@ -15,7 +13,7 @@ export default class CoursesRoute extends AuthenticatedRoute {
     }
 
     return {
-      courses: await this.store.findAll('course'),
+      courses: await this.store.query('course', { include: 'stages,supported-languages' }),
     };
   }
 }
