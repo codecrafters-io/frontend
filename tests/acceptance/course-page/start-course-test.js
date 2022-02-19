@@ -46,7 +46,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.equal(
       coursePage.setupItem.copyableCloneRepositoryInstructions,
-      'git clone https://git.codecraters.io/a-long-test-string.git cc-redis-python && cd cc-redis-python'
+      'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-python && cd codecrafters-redis-python'
     );
 
     await this.clock.tick(2001);
