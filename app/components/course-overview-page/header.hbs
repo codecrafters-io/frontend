@@ -10,7 +10,7 @@
       <CourseOverviewPage::StartCourseButton @course={{@course}} />
 
       {{#each @course.supportedLanguages as |supportedLanguage|}}
-        <img src={{supportedLanguage.tealLogoUrl}} class="h-6 ml-2">
+        <img alt="{{@course.slug}}" src={{supportedLanguage.tealLogoUrl}} class="h-6 ml-2">
       {{/each}}
     </div>
   </div>
