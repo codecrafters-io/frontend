@@ -4,13 +4,13 @@
   {{on "click" this.navigateToCourse}}
   data-test-course-card>
   {{!-- Logo --}}
-  <div class="w-12 sm:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
+  <div class="w-12 lg:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
     <CourseLogo @course={{@course}} />
   </div>
 
   {{!-- Text --}}
   <div class="mb-8">
-    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16 sm:pr-32">
+    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16 lg:pr-32">
       <div class="text-lg font-bold text-gray-600 mr-2" data-test-course-name>
         {{@course.name}}
       </div>
@@ -22,7 +22,7 @@
       {{/if}}
     </div>
 
-    <div class="text-sm leading-relaxed text-gray-500 pr-16 sm:pr-32" data-test-course-description>
+    <div class="text-sm leading-relaxed text-gray-500 pr-16 lg:pr-32" data-test-course-description>
       {{@course.shortDescriptionMarkdown}}
     </div>
   </div>
