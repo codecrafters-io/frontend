@@ -23,7 +23,23 @@ export default {
   "marketing": {
     "description": "Learn about git objects, plumbing commands, git transfer protocols and more",
     "difficulty": "hard",
-    "introduction_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along\nthe way, you'll learn about the [`.git`\ndirectory](http://gitready.com/advanced/2009/03/23/whats-inside-your-git-directory.html),\na few of Git's [\"plumbing\"\ncommands](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain),\n[Git objects](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)\n(blobs, commits, trees etc.), Git's [transfer\nprotocols](https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols) and\nmore.\n"
+    "introduction_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along\nthe way, you'll learn about the [`.git`\ndirectory](http://gitready.com/advanced/2009/03/23/whats-inside-your-git-directory.html),\na few of Git's [\"plumbing\"\ncommands](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain),\n[Git objects](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)\n(blobs, commits, trees etc.), Git's [transfer\nprotocols](https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols) and\nmore.\n",
+    "testimonials": [
+      {
+        "author_name": "Beyang Liu",
+        "author_description": "CTO, Sourcegraph",
+        "author_avatar": "/images/testimonials/beyang_liu.jpeg",
+        "link": "https://twitter.com/beyang/status/1271225214886506496",
+        "text": "Found out about CodeCrafters from a colleague. It's a tutorial site that has you build your own version of things\nlike Git and Docker from scratch. A cool way to build a stronger mental model of how those tools work.\n"
+      },
+      {
+        "author": "Lacronicus",
+        "author_description": "Reddit user",
+        "author_avatar": "/images/testimonials/lacronicus.png",
+        "link": "https://www.reddit.com/r/programming/comments/fefrka/advanced_programming_challenges/fjoxu7n/",
+        "text": "Never in my life have I needed something so much and not known until I received it.\n"
+      }
+    ]
   },
   "stages": [
     {

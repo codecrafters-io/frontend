@@ -39,7 +39,23 @@ export default {
   "marketing": {
     "description": "Learn about TCP servers, event loops, the Redis protocol and more",
     "difficulty": "medium",
-    "introduction_md": "In this challenge, you’ll build an application that can speak the Redis\nprotocol, and is capable of serving basic commands like PING, ECHO, SET and\nGET. Along the way, you’ll learn about TCP servers, event loops and more.\n"
+    "introduction_md": "In this challenge, you’ll build an application that can speak the Redis\nprotocol, and is capable of serving basic commands like PING, ECHO, SET and\nGET. Along the way, you’ll learn about TCP servers, event loops and more.\n",
+    "testimonials": [
+      {
+        "author_name": "Charles Guo",
+        "author_description": "Software Engineer, Stripe",
+        "author_avatar": "/images/testimonials/charles_guo.jpeg",
+        "link": "https://github.com/shaldengeki",
+        "text": "The Redis challenge was extremely fun. I ended up having to read the\nRedis Protocol specification doc pretty carefully in its entirety! The result\nfelt like lightly-guided independent study, if that makes sense. (Which, again, was lots of fun)\n"
+      },
+      {
+        "author": "Patrick Burris",
+        "author_description": "Senior Software Developer, CenturyLink",
+        "author_avatar": "/images/testimonials/patrick_burris.jpeg",
+        "link": "https://github.com/Jumballaya",
+        "text": "I think the instant feedback right there in the git push is really cool.\nDidn't even know that was possible!\n"
+      }
+    ]
   },
   "stages": [
     {

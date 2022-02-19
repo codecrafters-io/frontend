@@ -24,7 +24,23 @@ export default {
   "marketing": {
     "description": "Learn about chroot, kernel namespaces, the docker registry API and more",
     "difficulty": "medium",
-    "introduction_md": "In this challenge, you'll build a toy Docker implementation that can pull an\nimage from [Docker Hub](https://hub.docker.com/) and execute commands in it.\nAlong the way, you'll learn about\n[chroot](https://en.wikipedia.org/wiki/Chroot), [kernel\nnamespaces](https://en.wikipedia.org/wiki/Linux_namespaces), the [docker\nregistry API](https://docs.docker.com/registry/spec/api/) and much more.\n"
+    "introduction_md": "In this challenge, you'll build a toy Docker implementation that can pull an\nimage from [Docker Hub](https://hub.docker.com/) and execute commands in it.\nAlong the way, you'll learn about\n[chroot](https://en.wikipedia.org/wiki/Chroot), [kernel\nnamespaces](https://en.wikipedia.org/wiki/Linux_namespaces), the [docker\nregistry API](https://docs.docker.com/registry/spec/api/) and much more.\n",
+    "testimonials": [
+      {
+        "author_name": "Raghav Dua",
+        "author_description": "SRE, Coinbase",
+        "author_avatar": "/images/testimonials/raghav_dua.jpeg",
+        "link": "https://github.com/duaraghav8",
+        "text": "I spent a full day on your Docker building course and ended up building the whole thing myself. As a SRE (and\nmostly a user of docker), digging into the internals blew me away.\n"
+      },
+      {
+        "author": "Maya Farber Brodsky",
+        "author_description": "Student, Tel Aviv University",
+        "author_avatar": "/images/testimonials/maya_farber_brodsky.png",
+        "link": "https://github.com/mfarberbrodsky",
+        "text": "I've started the Docker challenge, enjoying it a lot so far. Just the\nright level of guidance, helpful and still gives you a lot of freedom\nto explore and learn for yourself.\n"
+      }
+    ]
   },
   "stages": [
     {
