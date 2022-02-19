@@ -15,7 +15,7 @@ export default class RepositoryModel extends Model {
   @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
   get cloneDirectory() {
-    return `cc-${dasherize(this.name.replaceAll(/[^a-zA-Z0-9 ]/g, ''))}`;
+    return `cc-${this.course.slug}-${dasherize(this.name.replaceAll(/[^a-zA-Z0-9 ]/g, ''))}`;
   }
 
   get defaultStarterRepositoryUrl() {
