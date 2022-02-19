@@ -38,6 +38,7 @@ module.exports = {
               padding: '0.2em 0.4em',
               backgroundColor: colors.blueGray[100],
               borderRadius: '5px',
+              whiteSpace: 'nowrap',
             },
             'code::before': { content: 'none' },
             'code::after': { content: 'none' },

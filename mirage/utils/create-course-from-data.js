@@ -19,6 +19,7 @@ export default function createCourseFromData(server, courseData) {
       marketingMarkdown: courseStageData.marketing_md,
       position: courseStagePosition,
       descriptionMarkdownTemplate: courseStageData.description_md,
+      difficulty: courseStageData.difficulty,
       isFree: courseStagePosition <= 2,
     });
 
