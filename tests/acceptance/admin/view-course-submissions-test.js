@@ -45,7 +45,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     await adminCoursesPage.visit();
     await adminCoursesPage.clickOnLink('Build your own Redis');
 
-    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 2);
+    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 3);
     await percySnapshot('Admin - Course Submissions - With Submissions');
   });
 });

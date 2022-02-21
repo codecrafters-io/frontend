@@ -8,10 +8,16 @@ export default Factory.extend({
 
   withFirstStageInProgress: trait({
     afterCreate(repository, server) {
-      server.create('submission', {
+      server.create('submission', 'withFailureStatus', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
         createdAt: repository.createdAt,
+        status: 'failure',
+      });
+      server.create('submission', {
+        repository,
+        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        createdAt: new Date(repository.createdAt.getTime() + 1000), // 1s
         status: 'evaluating',
       });
     },
@@ -19,10 +25,27 @@ export default Factory.extend({
 
   withFirstStageCompleted: trait({
     afterCreate(repository, server) {
-      server.create('submission', 'withSuccessStatus', {
+      server.create('submission', 'withFailureStatus', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position').firstObject,
         createdAt: repository.createdAt,
+        status: 'failure',
+      });
+      server.create('submission', 'withSuccessStatus', {
+        repository,
+        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        createdAt: new Date(repository.createdAt.getTime() + 1000), // 1s
+      });
+    },
+  }),
+
+  withSetupStageCompleted: trait({
+    afterCreate(repository, server) {
+      server.create('submission', 'withFailureStatus', {
+        repository,
+        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        createdAt: repository.createdAt,
+        status: 'failure',
       });
     },
   }),

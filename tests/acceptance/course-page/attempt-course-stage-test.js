@@ -35,7 +35,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
     assert.equal(this.server.pretender.handledRequests.length, 5); // Fetch course (courses page + course page) + fetch repositories + leaderboard
 
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'first stage is active');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
     assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withFailureStatus', {
@@ -51,7 +51,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await animationsSettled();
 
     assert.equal(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer text is tests failed');
-
     await this.clock.tick(1000 * 601); // Wait for poll + 10 minutes to pass
 
     // force re-computation
@@ -63,4 +62,43 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     await coursesPage.visit(); // This interacts with start-course-stage, not sure why
   });
+
+  test('first-stage footer message before 30min', async function (assert) {
+    setupFirstStageScenario(this.owner, this.server);
+
+    await this.clock.tick(1000 * 1741); // Wait for poll + 29 minutes to pass
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await animationsSettled();
+
+    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
+    assert.equal(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
+  });
+
+  test('first-stage footer message after 30min', async function (assert) {
+    setupFirstStageScenario(this.owner, this.server);
+
+    await this.clock.tick(1000 * 1801); // Wait for poll + 30 minutes to pass
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await animationsSettled();
+
+    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
+    assert.equal(coursePage.activeCourseStageItem.footerText, 'Last attempt 30 minutes ago. Try again?', 'footer text includes timestamp');
+  });
 });
+
+function setupFirstStageScenario(owner, server) {
+  signIn(owner);
+  testScenario(server);
+  let currentUser = server.schema.users.first();
+  let python = server.schema.languages.findBy({ name: 'Python' });
+  let redis = server.schema.courses.findBy({ slug: 'redis' });
+  server.create('repository', 'withSetupStageCompleted', {
+    course: redis,
+    language: python,
+    user: currentUser,
+  });
+}

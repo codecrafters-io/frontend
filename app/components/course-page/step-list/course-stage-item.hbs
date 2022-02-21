@@ -56,17 +56,22 @@
           <BlinkingDot @class="flex-shrink-0 mr-3" @color="yellow" />
           <span class="text-gray-600" data-test-footer-text>Running tests...</span>
         {{else if (eq this.status "failed")}}
-          <StaticDot @class="flex-shrink-0 mr-3" @color="red" />
+          {{#if (eq this.isFirstStageAndRecentRepo true)}}
+            <BlinkingDot @class="flex-shrink-0 mr-3" @color="gray" />
+            <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
+          {{else}}
+            <StaticDot @class="flex-shrink-0 mr-3" @color="red" />
 
-          <span class="text-gray-600" data-test-footer-text>
-            {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
-              Tests failed. Check your git push output for logs.
-            {{else if this.lastFailedSubmissionCreatedAt}}
-              Last attempt {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
-            {{else}}
-              Last attempt failed. Try again?
-            {{/if}}
-          </span>
+            <span class="text-gray-600" data-test-footer-text>
+              {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
+                Tests failed. Check your git push output for logs.
+              {{else if this.lastFailedSubmissionCreatedAt}}
+                Last attempt {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
+              {{else}}
+                Last attempt failed. Try again?
+              {{/if}}
+            </span>
+          {{/if}}
         {{else if (eq this.status "complete")}}
           <StaticDot @class="flex-shrink-0 mr-3" @color="green" />
           <span class="text-gray-600" data-test-footer-text>
