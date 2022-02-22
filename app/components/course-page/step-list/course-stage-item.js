@@ -103,10 +103,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.repository.activeStage === this.args.courseStage;
   }
 
-  get isFirstStageAndRecentRepo() {
-    return this.args.repository.isFirstStageAndRecentRepo;
-  }
-
   get shouldShowFirstStageHints() {
     return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
   }

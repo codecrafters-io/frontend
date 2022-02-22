@@ -56,7 +56,7 @@
           <BlinkingDot @class="flex-shrink-0 mr-3" @color="yellow" />
           <span class="text-gray-600" data-test-footer-text>Running tests...</span>
         {{else if (eq this.status "failed")}}
-          {{#if (eq this.isFirstStageAndRecentRepo true)}}
+          {{#if (and @repository.activeStage.isFirst @repository.isRecentlyCreated)}}
             <BlinkingDot @class="flex-shrink-0 mr-3" @color="gray" />
             <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
           {{else}}
