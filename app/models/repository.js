@@ -26,6 +26,10 @@ export default class RepositoryModel extends Model {
     return !!this.lastSubmission;
   }
 
+  get isRecentlyCreated() {
+    return new Date() - this.createdAt <= 1800 * 1000; // 30min
+  }
+
   get activeStage() {
     if (!this.highestCompletedStage) {
       return this.course.get('stages').sortBy('position').firstObject;
