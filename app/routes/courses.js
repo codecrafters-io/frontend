@@ -1,19 +1,21 @@
 import { inject as service } from '@ember/service';
 import AuthenticatedRoute from 'codecrafters-frontend/lib/authenticated-route';
+import RSVP from 'rsvp';
 
 export default class CoursesRoute extends AuthenticatedRoute {
   allowsAnonymousAccess = true;
   @service currentUser;
 
   async model() {
+    let modelPromises = {};
     if (this.currentUser.isAuthenticated) {
-      await this.store.query('repository', {
+      modelPromises.repositories = this.store.findAll('repository', {
+        reload: false, // <TODO: reload is defaulted to false; not sure why to force here>
+        backgroundReload: true,
         include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
       });
     }
-
-    return {
-      courses: await this.store.query('course', { include: 'stages,supported-languages' }),
-    };
+    modelPromises.courses = this.store.findAll('course', { include: 'stages,supported-languages' });
+    return RSVP.hash(modelPromises);
   }
 }

@@ -4,6 +4,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { waitFor, find, settled } from '@ember/test-helpers';
 
 module('Acceptance | view-courses', function (hooks) {
   setupApplicationTest(hooks);
@@ -55,5 +56,33 @@ module('Acceptance | view-courses', function (hooks) {
     assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
     assert.ok(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
+  });
+
+  test('first time visit has loading page', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    coursesPage.visit();
+    await waitFor('[data-test-loading]');
+
+    assert.ok(find('[data-test-loading]'), 'loader should be present');
+    await settled();
+    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+  });
+
+  test('second time visit has no loading page', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    coursesPage.visit();
+    let noLoadingPageError;
+    await waitFor('[data-test-loading]').catch((error) => {
+      noLoadingPageError = error;
+    });
+
+    assert.equal(noLoadingPageError.message, 'waitFor timed out waiting for selector "[data-test-loading]"');
+    await settled();
+    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
   });
 });
