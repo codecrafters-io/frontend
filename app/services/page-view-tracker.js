@@ -4,17 +4,24 @@ import { action } from '@ember/object';
 
 export default class PageViewTracker extends Service {
   @service router;
+  @service store;
 
   @action
   handleRouteChange() {
     if (this.router.currentRouteName === 'course') {
-      console.log('Viewed course page', { course: this.router.currentRoute.params.course_slug });
+      this.store.createRecord('analytics-event', {
+        name: 'viewed_course_page',
+        properties: { course_slug: this.router.currentRoute.params.course_slug },
+      });
     } else if (this.router.currentRouteName === 'course-overview') {
-      console.log('Viewed course overview page', { course: this.router.currentRoute.params.course_slug });
+      this.store.createRecord('analytics-event', {
+        name: 'viewed_course_overview_page',
+        properties: { course_slug: this.router.currentRoute.params.course_slug },
+      });
     } else if (this.router.currentRouteName === 'courses') {
-      console.log('Viewed courses listing');
+      this.store.createRecord('analytics-event', { name: 'viewed_courses_listing_page' });
     } else {
-      console.log('Viewed unknown page', { url: this.router.currentURL });
+      this.store.createRecord('analytics-event', { name: 'viewed_unknown_page', properties: { url: this.router.currentURL } });
     }
   }
 
@@ -23,6 +30,6 @@ export default class PageViewTracker extends Service {
   }
 
   willDestroy() {
-    this.router.off('routeDidChange');
+    this.router.off('routeDidChange', this.handleRouteChange);
   }
 }
