@@ -13,7 +13,7 @@ export default class PageViewTracker extends Service {
       return;
     }
 
-    this.#buildAnalyticsEvent(transition).save();
+    this.#buildAnalyticsEvent().save();
   }
 
   setupListener() {
@@ -24,7 +24,7 @@ export default class PageViewTracker extends Service {
     this.router.off('routeDidChange', this.handleRouteChange);
   }
 
-  #buildAnalyticsEvent(transition) {
+  #buildAnalyticsEvent() {
     if (this.router.currentRouteName === 'course') {
       return this.store.createRecord('analytics-event', {
         name: 'viewed_course_page',
