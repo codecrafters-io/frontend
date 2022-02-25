@@ -36,7 +36,7 @@ export default class PageViewTracker extends Service {
         properties: { course_slug: this.router.currentRoute.params.course_slug },
       });
     } else if (this.router.currentRouteName === 'courses') {
-      return this.store.createRecord('analytics-event', { name: 'viewed_course_listing_page' });
+      return this.store.createRecord('analytics-event', { name: 'viewed_course_list_page' });
     } else {
       return this.store.createRecord('analytics-event', { name: 'viewed_unknown_page', properties: { url: this.router.currentURL } });
     }
