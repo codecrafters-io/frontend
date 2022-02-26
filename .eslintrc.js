@@ -15,7 +15,9 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    'padding-line-between-statements': ['error', { blankLine: 'always', prev: '*', next: 'return' }],
+  },
   overrides: [
     // node files
     {
