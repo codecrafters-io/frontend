@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import window from 'ember-window-mock';
 
-export default class AuthenticatedRoute extends Route {
+export default class ApplicationRoute extends Route {
   allowsAnonymousAccess = false;
   @service currentUser;
   @service router;

@@ -5,6 +5,8 @@ export default function () {
 
   window.server = this; // Hack! Is there a better way?
 
+  this.post('/analytics-events');
+
   this.post('/billing-sessions', function (schema) {
     return schema.billingSessions.create({ url: 'https://test.com/billing_session' });
   });

@@ -33,7 +33,19 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.equal(this.server.pretender.handledRequests.length, 5); // Fetch course (courses page + course page) + fetch repositories + leaderboard entries
+
+    assert.equal(
+      this.server.pretender.handledRequests.length,
+      [
+        'fetch courses (courses listing page)',
+        'fetch repositories (courses listing page)',
+        'notify page view (courses listing page)',
+        'fetch courses (course page)',
+        'fetch repositories (course page)',
+        'fetch leaderboard entries (course page)',
+        'notify page view (course page)',
+      ].length
+    );
 
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is not expanded');
     assert.notOk(coursePage.setupItemIsActive, 'setup item is not expanded');

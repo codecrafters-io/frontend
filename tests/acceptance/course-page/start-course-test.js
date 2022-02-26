@@ -28,7 +28,19 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
 
-    assert.equal(this.server.pretender.handledRequests.length, 6, 'first 3 requests were executed');
+    let baseRequestsCount = [
+      'fetch courses (courses listing page)',
+      'fetch repositories (courses listing page)',
+      'notify page view (courses listing page)',
+      'fetch leaderboard entries (course overview page)',
+      'notify page view (course overview page)',
+      'fetch courses (course page)',
+      'fetch repositories (course page)',
+      'fetch leaderboard entries (course page)',
+      'notify page view (course page)',
+    ].length;
+
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount);
 
     await percySnapshot('Start Course - Select Language');
 
@@ -38,7 +50,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
 
-    assert.equal(this.server.pretender.handledRequests.length, 7, 'create repository request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'create repository request was executed');
 
     await percySnapshot('Start Course - Clone Repository');
 
@@ -54,7 +66,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 8, 'poll request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 2, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     let repository = this.server.schema.repositories.find(1);
@@ -63,7 +75,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, 9, 'poll request was executed');
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 3, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.equal(coursePage.setupItem.footerText, 'Git push received.');
 
