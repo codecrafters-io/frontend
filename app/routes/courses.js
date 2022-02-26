@@ -1,5 +1,5 @@
 import { inject as service } from '@ember/service';
-import AuthenticatedRoute from 'codecrafters-frontend/lib/authenticated-route';
+import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 import RSVP from 'rsvp';
 
 export default class CoursesRoute extends ApplicationRoute {
