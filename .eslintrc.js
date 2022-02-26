@@ -16,7 +16,12 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'padding-line-between-statements': ['error', { blankLine: 'always', prev: '*', next: 'return' }],
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: '*', next: 'return' },
+      { blankLine: 'always', prev: '*', next: 'multiline-block-like' },
+      { blankLine: 'always', prev: 'multiline-block-like', next: '*' },
+    ],
   },
   overrides: [
     // node files
