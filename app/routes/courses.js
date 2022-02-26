@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import AuthenticatedRoute from 'codecrafters-frontend/lib/authenticated-route';
 import RSVP from 'rsvp';
 
-export default class CoursesRoute extends AuthenticatedRoute {
+export default class CoursesRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
   @service currentUser;
 

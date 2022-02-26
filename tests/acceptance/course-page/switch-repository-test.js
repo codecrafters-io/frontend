@@ -42,15 +42,25 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
+    const baseRequestsCount = [
+      'fetch courses (courses listing page)',
+      'fetch repositories (courses listing page)',
+      'notify page view (courses listing page)',
+      'fetch courses (course page)',
+      'fetch repositories (course page)',
+      'fetch leaderboard entries (course page)',
+      'notify page view (course page)',
+    ].length;
+
     assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.equal(this.server.pretender.handledRequests.length, 5); // Fetch course (courses page + course page) + fetch repositories + leaderboard
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount);
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await this.clock.tick(3000);
 
-    assert.equal(this.server.pretender.handledRequests.length, 6, 'polling should have run');
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'polling should have run');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
