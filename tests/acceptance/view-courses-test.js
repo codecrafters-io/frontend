@@ -70,11 +70,37 @@ module('Acceptance | view-courses', function (hooks) {
     assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
   });
 
-  test('second time visit has no loading page', async function (assert) {
+  test('second time visit with local repository data has no loading page', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    coursesPage.visit();
+    let noLoadingPageError;
+    await waitFor('[data-test-loading]').catch((error) => {
+      noLoadingPageError = error;
+    });
+
+    assert.equal(noLoadingPageError.message, 'waitFor timed out waiting for selector "[data-test-loading]"');
+    await settled();
+    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+  });
+
+  test('second time visit without local repository data has no loading page ', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
     await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
     coursesPage.visit();
     let noLoadingPageError;
     await waitFor('[data-test-loading]').catch((error) => {

@@ -10,8 +10,7 @@ export default class CoursesRoute extends AuthenticatedRoute {
     let modelPromises = {};
     if (this.currentUser.isAuthenticated) {
       modelPromises.repositories = this.store.findAll('repository', {
-        reload: false, // <TODO: reload is defaulted to false; not sure why to force here>
-        backgroundReload: true,
+        reload: false,
         include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
       });
     }
