@@ -9,7 +9,7 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
   get headers() {
     const headers = {};
 
-    if (window.FS && window.FS.getCurrentSessionURL()) {
+    if (window.FS && window.FS.getCurrentSessionURL && window.FS.getCurrentSessionURL()) {
       headers['x-fullstory-session-url'] = window.FS.getCurrentSessionURL();
     }
 
