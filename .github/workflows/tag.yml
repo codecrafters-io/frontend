@@ -26,4 +26,5 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: ${{ steps.compute_next_version_number.outputs.next_version_number }}
+          custom_tag: v${{ steps.compute_next_version_number.outputs.next_version_number }}
+          tag_prefix: ''
