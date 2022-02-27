@@ -17,7 +17,7 @@ jobs:
         run: |
           currentVersionNumber=$(git tag --list "v*" | sort -V | tail -n 1 | cut -c 2-)
           nextVersionNumber=$(echo $currentVersionNumber + 1 | bc)
-          echo "::set-output name=next_version_number::$(nextVersionNumber)"
+          echo "::set-output name=next_version_number::$nextVersionNumber"
         id: compute_next_version_number
 
       - name: Bump version and push tag
