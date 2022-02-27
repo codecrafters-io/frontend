@@ -9,7 +9,7 @@
     <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
       <CourseOverviewPage::StartCourseButton @course={{@course}} />
 
-      <div class="flex items-center flex-wrap gap-2">
+      <div class="flex items-center flex-wrap gap-2 flex-grow">
         {{#each @course.supportedLanguages as |supportedLanguage|}}
           <img alt="{{@course.slug}}" src={{supportedLanguage.tealLogoUrl}} class="h-6">
         {{/each}}

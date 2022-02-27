@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2 {{if @membership.isAdmin "cursor-not-allowed"}}" data-test-members-list-item-container>
   <div class="flex items-center">
-    <img alt="avatar" src="{{@membership.user.avatarUrl}}" class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md">
+    <AvatarImage @user={{@membership.user}} class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md" />
 
     <div>
       <div class="text-gray-700 text-sm">

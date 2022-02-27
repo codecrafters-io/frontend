@@ -7,6 +7,7 @@ export default function finishRender() {
   return waitUntil(
     () => {
       let { hasRunLoop, hasPendingRequests, hasPendingWaiters, hasPendingTransitions } = getSettledState();
+
       return !(hasRunLoop || hasPendingRequests || hasPendingWaiters || hasPendingTransitions);
     },
     { timeout: 1000 * 60 } // 1min

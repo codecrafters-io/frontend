@@ -8,19 +8,19 @@ export default class FooterComponent extends Component {
         links: [
           {
             text: 'Git',
-            url: 'https://codecrafters.io/challenges/git',
+            url: 'https://app.codecrafters.io/courses/git/overview',
           },
           {
             text: 'Redis',
-            url: 'https://codecrafters.io/challenges/redis',
+            url: 'https://app.codecrafters.io/courses/redis/overview',
           },
           {
             text: 'Docker',
-            url: 'https://codecrafters.io/challenges/docker',
+            url: 'https://app.codecrafters.io/courses/docker/overview',
           },
           {
             text: 'SQLite',
-            url: 'https://codecrafters.io/challenges/sqlite',
+            url: 'https://app.codecrafters.io/courses/sqlite/overview',
           },
         ],
       },

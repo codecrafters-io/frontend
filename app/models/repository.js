@@ -86,6 +86,7 @@ export default class RepositoryModel extends Model {
 
   stageCompletedAt(courseStage) {
     const firstCompletion = this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt').firstObject;
+
     return firstCompletion ? firstCompletion.completedAt : null;
   }
 

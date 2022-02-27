@@ -21,8 +21,8 @@ export default function () {
     if (request.queryParams.team_id) {
       const team = schema.teams.find(request.queryParams.team_id);
       const teamMemberships = schema.teamMemberships.where({ teamId: team.id }).models;
-
       const userIds = teamMemberships.map((teamMembership) => teamMembership.user.id);
+
       return schema.leaderboardEntries.all().filter((leaderboardEntry) => userIds.includes(leaderboardEntry.user.id));
     } else {
       return schema.leaderboardEntries.all();

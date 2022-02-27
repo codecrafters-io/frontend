@@ -18,6 +18,7 @@ export default class CheckoutSessionSuccessfulModalComponent extends Component {
 
         if (subscriptions.firstObject) {
           this.globalModalsService.closeModals();
+
           return;
         }
       } catch (e) {
