@@ -4,7 +4,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { waitFor, find, settled } from '@ember/test-helpers';
+import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | view-courses', function (hooks) {
   setupApplicationTest(hooks);
@@ -85,13 +85,18 @@ module('Acceptance | view-courses', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
     coursesPage.visit();
-    let noLoadingPageError;
-    await waitFor('[data-test-loading]').catch((error) => {
-      noLoadingPageError = error;
+
+    let loadingIndicatorWasRendered;
+
+    await waitUntil(() => {
+      if (isSettled()) {
+        return true;
+      } else if (find('[data-test-loading]')) {
+        loadingIndicatorWasRendered = true;
+      }
     });
 
-    assert.equal(noLoadingPageError.message, 'waitFor timed out waiting for selector "[data-test-loading]"');
-    await settled();
+    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
     assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
   });
 
@@ -102,13 +107,18 @@ module('Acceptance | view-courses', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
     coursesPage.visit();
-    let noLoadingPageError;
-    await waitFor('[data-test-loading]').catch((error) => {
-      noLoadingPageError = error;
+
+    let loadingIndicatorWasRendered;
+
+    await waitUntil(() => {
+      if (isSettled()) {
+        return true;
+      } else if (find('[data-test-loading]')) {
+        loadingIndicatorWasRendered = true;
+      }
     });
 
-    assert.equal(noLoadingPageError.message, 'waitFor timed out waiting for selector "[data-test-loading]"');
-    await settled();
+    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
     assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
   });
 });
