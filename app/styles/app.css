@@ -27,3 +27,7 @@
 .top-50-percent {
   top: 50%;
 }
+
+.prose pre code {
+  white-space: pre;
+}
