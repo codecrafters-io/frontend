@@ -119,3 +119,10 @@ jobs:
             dist-staging.zip
         env:
           GITHUB_TOKEN: ${{ secrets.CODECRAFTERS_BOT_GITHUB_TOKEN }}
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: codecrafters-io/server
+          token: ${{ secrets.CODECRAFTERS_BOT_GITHUB_TOKEN }}
+          event-type: update-frontend-version
