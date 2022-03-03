@@ -1,8 +1,9 @@
 import createCourseFromData from 'codecrafters-frontend/mirage/utils/create-course-from-data';
 import createLanguages from 'codecrafters-frontend/mirage/utils/create-languages';
-import redisCourseData from 'codecrafters-frontend/mirage/course-fixtures/redis';
 import dockerCourseData from 'codecrafters-frontend/mirage/course-fixtures/docker';
 import gitCourseData from 'codecrafters-frontend/mirage/course-fixtures/git';
+import reactCourseData from 'codecrafters-frontend/mirage/course-fixtures/react';
+import redisCourseData from 'codecrafters-frontend/mirage/course-fixtures/redis';
 import sqliteCourseData from 'codecrafters-frontend/mirage/course-fixtures/sqlite';
 
 export default function (server) {
@@ -20,4 +21,5 @@ export default function (server) {
   createCourseFromData(server, dockerCourseData);
   createCourseFromData(server, gitCourseData);
   createCourseFromData(server, sqliteCourseData);
+  createCourseFromData(server, reactCourseData);
 }

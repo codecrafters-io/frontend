@@ -6,6 +6,10 @@ export function signInAsAdmin(owner) {
   doSignIn(owner, { 'is-admin': true });
 }
 
+export function signInAsStaff(owner) {
+  doSignIn(owner, { 'is-staff': true });
+}
+
 export function signInAsSubscriber(owner) {
   doSignIn(owner, {}, [
     {

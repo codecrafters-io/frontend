@@ -15,7 +15,11 @@ export default class CourseController extends Controller {
       return this.model.courses.filterBy('slug', 'docker');
     }
 
-    return this.model.courses;
+    if (this.currentUser.isAuthenticated && this.currentUser.record.isStaff) {
+      return this.model.courses;
+    }
+
+    return this.model.courses.rejectBy('releaseStatusIsAlpha');
   }
 
   @action

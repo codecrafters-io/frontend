@@ -6,6 +6,7 @@ export default class UserModel extends Model {
   @attr('date') createdAt;
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
+  @attr('boolean') isStaff;
   @attr('string') username;
   @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('repository', { async: false }) repositories;
