@@ -24,6 +24,7 @@ export default class CourseModel extends Model {
   @equal('slug', 'redis') isRedis;
   @equal('slug', 'sqlite') isSQLite;
 
+  @equal('releaseStatus', 'alpha') releaseStatusIsAlpha;
   @equal('releaseStatus', 'beta') releaseStatusIsBeta;
   @equal('releaseStatus', 'live') releaseStatusIsLive;
 
