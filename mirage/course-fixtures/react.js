@@ -1,7 +1,7 @@
 export default {
   "slug": "react",
   "name": "Build your own React",
-  "release_status": "coming-soon",
+  "release_status": "alpha",
   "description_md": "In this challenge, you'll build a barebones React implementation that supports\nfunction components and hooks. Along the way, you'll learn about React's\n[API](https://reactjs.org/docs/react-api.html), [DOM-diffing\nalgorithm](https://reactjs.org/docs/reconciliation.html#the-diffing-algorithm),\n[hooks](https://reactjs.org/docs/hooks-intro.html) and more!\n",
   "short_description_md": "Learn about React's createElement API, function components, DOM-diffing algorithm, hooks and more\n",
   "completion_percentage": 10,
