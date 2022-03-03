@@ -26,6 +26,12 @@ refresh_course_definitions:
 		| yq -o json eval \
 		> mirage/course-fixtures/sqlite.js
 
+	hub api repos/codecrafters-io/server/contents/codecrafters/store/data/react.yml \
+		| jq -r .content \
+		| base64 -d \
+		| yq -o json eval \
+		> mirage/course-fixtures/react.js
+
 	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
 
 release:
