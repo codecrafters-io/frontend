@@ -23,7 +23,9 @@ export default class CourseRoute extends ApplicationRoute {
   setupController(controller, model) {
     super.setupController(controller, model);
 
-    if (!model.repositories.findBy('id', controller.selectedRepositoryId)) {
+    const repository = model.repositories.findBy('id', controller.selectedRepositoryId);
+
+    if (!repository || !repository.firstSubmissionCreated) {
       controller.selectedRepositoryId = null;
     }
 
