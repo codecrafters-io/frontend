@@ -1,6 +1,7 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -247,11 +248,15 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('first time visit has loading page', async function (assert) {
+    this.server.timing = 100; // Ensure requests take long enough for us to observe the loading state
+
     signIn(this.owner);
     testScenario(this.server);
+
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
     this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
@@ -263,7 +268,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await waitFor('[data-test-loading]');
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
-    await settled();
+    await finishRender();
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
   });
 
