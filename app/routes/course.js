@@ -7,18 +7,17 @@ export default class CourseRoute extends ApplicationRoute {
   @service currentUser;
   @service store;
 
-  async model(params) {
-    let courses = await this.store.findAll('course', { include: 'supported-languages,stages' });
-    let course = courses.findBy('slug', params.course_slug);
+  model(params) {
+    let courses = this.store.findAll('course', { include: 'supported-languages,stages' });
 
-    let repositories = await this.store.query('repository', {
-      course_id: course.id,
+    let repositories = this.store.findAll('repository', {
       include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
     });
 
     return RSVP.hash({
-      course: course,
-      repositories: A(repositories.toArray()),
+      courseSlug: params.course_slug,
+      courses: courses,
+      repositories: repositories,
     });
   }
 
@@ -29,6 +28,9 @@ export default class CourseRoute extends ApplicationRoute {
       controller.selectedRepositoryId = null;
     }
 
-    controller.set('newRepository', this.store.createRecord('repository', { course: model.course, user: this.currentUser.record }));
+    controller.set(
+      'newRepository',
+      this.store.createRecord('repository', { course: model.courses.findBy('slug', model.courseSlug), user: this.currentUser.record })
+    );
   }
 }
