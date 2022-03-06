@@ -1,4 +1,3 @@
-import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -20,7 +19,7 @@ export default class CourseController extends Controller {
 
   get activeRepository() {
     if (this.selectedRepositoryId) {
-      return this.model.repositories.findBy('id', this.selectedRepositoryId);
+      return this.repositories.findBy('id', this.selectedRepositoryId);
     } else if (this.isCreatingNewRepository) {
       return this.newRepository;
     } else {
@@ -36,9 +35,6 @@ export default class CourseController extends Controller {
   handleRepositoryCreate() {
     this.selectedRepositoryId = this.newRepository.id;
     this.isCreatingNewRepository = false;
-
-    this.model.repositories = A(this.model.repositories.toArray());
-    this.model.repositories.pushObject(this.newRepository);
     this.newRepository = this.store.createRecord('repository', { course: this.course, user: this.currentUser.record });
   }
 
@@ -47,6 +43,10 @@ export default class CourseController extends Controller {
   }
 
   get lastPushedRepository() {
-    return this.model.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+    return this.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+  }
+
+  get repositories() {
+    return this.currentUser.record.repositories.filterBy('course', this.course);
   }
 }
