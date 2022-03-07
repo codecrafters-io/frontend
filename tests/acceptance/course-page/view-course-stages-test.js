@@ -247,7 +247,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'beta course stage item should not have upgrade prompt');
   });
 
-  test('first time visit has loading page', async function (assert) {
+  test('first time visit has loading page, but not second visit', async function (assert) {
     this.server.timing = 100; // Ensure requests take long enough for us to observe the loading state
 
     signIn(this.owner);
@@ -270,24 +270,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await finishRender();
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
-  });
 
-  test('transition from courses page has no loading page', async function (assert) {
-    signIn(this.owner);
-    testScenario(this.server);
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      name: 'Python #1',
-      user: currentUser,
-    });
     let loadingIndicatorWasRendered = false;
 
-    await coursesPage.visit();
+    await coursePage.header.clickOnChallengesLink();
     coursesPage.clickOnCourse('Build your own Redis');
+
     await waitUntil(() => {
       if (isSettled()) {
         return true;
@@ -296,7 +284,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       }
     });
 
-    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
+    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered on second visit');
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
   });
 });
