@@ -25,10 +25,6 @@ export default class UserModel extends Model {
     return this.subscriptions.isAny('isActive');
   }
 
-  get isArrendaTeamMember() {
-    return !!this.teams.filterBy('isArrenda').firstObject;
-  }
-
   get isTeamAdmin() {
     return !!this.managedTeams.firstObject;
   }
