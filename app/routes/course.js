@@ -7,6 +7,9 @@ export default class CourseRoute extends ApplicationRoute {
   @service store;
 
   model(params) {
+    // Ideally we'd just do store.findRecord, but our backend currently doesn't support
+    // fetching a single course. Let's instead fetch all and pass down params.course_slug
+    // in the route's model.
     let courses = this.store.findAll('course', { include: 'supported-languages,stages' });
 
     let repositories = this.store.findAll('repository', {
