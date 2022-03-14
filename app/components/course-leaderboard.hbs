@@ -30,7 +30,7 @@
         <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
       {{/animated-each}}
 
-    {{#animated-if (eq this.mergedEntries.length 0)}}
+      {{#animated-if (eq this.mergedEntries.length 0)}}
         <div class="flex px-4 py-2 items-center">
           <div class="text-sm text-gray-500">
               <p class="mb-2">

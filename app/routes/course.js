@@ -20,16 +20,14 @@ export default class CourseRoute extends ApplicationRoute {
     });
   }
 
-  async setupController(controller, model) {
+  setupController(controller, model) {
     super.setupController(controller, model);
 
     model.repositories.filter((repo) => !repo.id || !repo.firstSubmissionCreated).forEach((repo) => this.store.unloadRecord(repo));
     model.repositories = this.store.peekAll('repository');
     controller.set('model', model);
 
-    const repository = model.repositories.findBy('id', controller.selectedRepositoryId);
-
-    if (!repository) {
+    if (!model.repositories.findBy('id', controller.selectedRepositoryId)) {
       controller.selectedRepositoryId = null;
     }
 
