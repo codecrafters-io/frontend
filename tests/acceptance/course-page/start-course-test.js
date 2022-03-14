@@ -90,6 +90,9 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.activeCourseStageItem.stageInstructionsText.startsWith('CodeCrafters runs tests'), 'Instructions prelude must be present');
 
     await percySnapshot('Start Course - Waiting For Second Push');
+
+    await coursePage.repositoryDropdown.click();
+    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {
@@ -103,6 +106,9 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await coursePage.setupItem.clickOnLanguageButton('Python');
     assert.contains(currentURL(), '/courses/redis?repo=', 'current URL includes repo ID');
 
+    await coursePage.repositoryDropdown.click();
+    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
+
     await coursePage.header.clickOnChallengesLink();
     await coursesPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
@@ -111,6 +117,10 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+
+    await coursePage.setupItem.clickOnLanguageButton('Go');
+    await coursePage.repositoryDropdown.click();
+    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await animationsSettled();
   });

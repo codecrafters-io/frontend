@@ -1,4 +1,4 @@
-import { clickable, clickOnText, text } from 'ember-cli-page-object';
+import { clickable, clickOnText, text, count } from 'ember-cli-page-object';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 export default {
@@ -24,6 +24,7 @@ export default {
     clickOnAction: clickOnText('[data-test-dropdown-action]'),
     scope: '[data-test-repository-dropdown-content]',
     resetScope: true,
+    nonActiveRepositoryCount: count('[data-test-repository-link]'),
   },
 
   get isClosed() {

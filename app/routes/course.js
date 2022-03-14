@@ -8,32 +8,35 @@ export default class CourseRoute extends ApplicationRoute {
   @service store;
 
   async model(params) {
-    let modelPromises = {};
-    let courses = await this.store.findAll('course', { include: 'supported-languages,stages' });
-    modelPromises.course = courses.findBy('slug', params.course_slug);
+    let courses = this.store.findAll('course', { include: 'supported-languages,stages' });
 
-    modelPromises.repositories = this.store
-      .findAll('repository', {
-        include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
-      })
-      .then((results) => {
-        results = results.filter((result) => {
-          return result.course.id === modelPromises.course.id;
-        });
+    let repositories = this.store.findAll('repository', {
+      include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
+    });
 
-        return A(results.toArray());
-      });
-
-    return RSVP.hash(modelPromises);
+    return RSVP.hash({
+      courseSlug: params.course_slug,
+      courses: courses,
+      repositories: repositories,
+    });
   }
 
-  setupController(controller, model) {
+  async setupController(controller, model) {
     super.setupController(controller, model);
 
-    if (!model.repositories.findBy('id', controller.selectedRepositoryId)) {
+    model.repositories.filter((repo) => !repo.id || !repo.firstSubmissionCreated).forEach((repo) => this.store.unloadRecord(repo));
+    model.repositories = this.store.peekAll('repository');
+    controller.set('model', model);
+
+    const repository = model.repositories.findBy('id', controller.selectedRepositoryId);
+
+    if (!repository) {
       controller.selectedRepositoryId = null;
     }
 
-    controller.set('newRepository', this.store.createRecord('repository', { course: model.course, user: this.currentUser.record }));
+    controller.set(
+      'newRepository',
+      this.store.createRecord('repository', { course: model.courses.findBy('slug', model.courseSlug), user: this.currentUser.record })
+    );
   }
 }

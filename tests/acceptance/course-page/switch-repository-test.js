@@ -63,6 +63,9 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'polling should have run');
 
     await coursePage.repositoryDropdown.click();
+
+    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 1, 'non active repositories should be 1');
+
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
 
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');

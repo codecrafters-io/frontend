@@ -247,6 +247,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('first time visit has loading page', async function (assert) {
+    this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
     signIn(this.owner);
     testScenario(this.server);
     let currentUser = this.server.schema.users.first();
@@ -268,6 +269,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('transition from courses page has no loading page', async function (assert) {
+    this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
     signIn(this.owner);
     testScenario(this.server);
     let currentUser = this.server.schema.users.first();
