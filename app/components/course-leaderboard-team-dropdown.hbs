@@ -10,15 +10,23 @@
   <dd.Content>
     <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-leaderboard-team-dropdown-content>
       {{#each @teams as |team|}}
-      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleTeamLinkClick team dd.actions)}}>
-        <span class="mr-4 {{if (eq team @team) 'text-teal-500 font-bold' 'text-gray-700'}}">
-          {{team.name}}
-        </span>
-        {{svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500"))}}
-      </div>
+        <div
+          class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+          role="button"
+          {{on "click" (fn this.handleTeamLinkClick team dd.actions)}}
+        >
+          <span class="mr-4 {{if (eq team @team) 'text-teal-500 font-bold' 'text-gray-700'}}">
+            {{team.name}}
+          </span>
+          {{svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500"))}}
+        </div>
       {{/each}}
 
-      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" (fn this.handleTeamLinkClick null dd.actions)}}>
+      <div
+        class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+        role="button"
+        {{on "click" (fn this.handleTeamLinkClick null dd.actions)}}
+      >
         <span class="mr-4 {{unless @team 'text-teal-500 font-bold' 'text-gray-700'}}">
           Everyone
         </span>

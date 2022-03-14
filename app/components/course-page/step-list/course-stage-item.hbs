@@ -1,7 +1,4 @@
-<CoursePage::StepList::ExpandedItem
-    @class="relative {{@class}}"
-    @willBeReplaced={{@willBeReplaced}}
-    data-test-course-stage-item>
+<CoursePage::StepList::ExpandedItem @class="relative {{@class}}" @willBeReplaced={{@willBeReplaced}} data-test-course-stage-item>
   <:content>
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center flex-wrap gap-y-3">
@@ -43,7 +40,7 @@
     {{/if}}
   </:content>
 
-  <:footer-content>
+  <:footerContent>
     <div class="flex items-center justify-between w-full">
       <div class="flex items-center text-xs" data-test-course-stage-item-footer>
         {{#if (and this.isActiveStage @shouldShowUpgradePromptIfStagePending)}}
@@ -66,7 +63,8 @@
               {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
                 Tests failed. Check your git push output for logs.
               {{else if this.lastFailedSubmissionCreatedAt}}
-                Last attempt {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
+                Last attempt
+                {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
               {{else}}
                 Last attempt failed. Try again?
               {{/if}}
@@ -80,7 +78,8 @@
             {{else if this.completedAtWasYesterday}}
               You completed this stage yesterday.
             {{else if this.completedAt}}
-              You completed this stage {{moment-from-now this.completedAt}}.
+              You completed this stage
+              {{moment-from-now this.completedAt}}.
             {{else}}
               You've completed this stage.
             {{/if}}
@@ -93,5 +92,5 @@
         Stage #{{@courseStage.position}}
       </div>
     </div>
-  </:footer-content>
+  </:footerContent>
 </CoursePage::StepList::ExpandedItem>
