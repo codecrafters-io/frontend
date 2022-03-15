@@ -19,7 +19,7 @@ export default class CourseController extends Controller {
 
   get activeRepository() {
     if (this.selectedRepositoryId) {
-      return this.model.repositories.findBy('id', this.selectedRepositoryId);
+      return this.repositories.findBy('id', this.selectedRepositoryId);
     } else if (this.isCreatingNewRepository) {
       return this.newRepository;
     } else {
@@ -27,13 +27,15 @@ export default class CourseController extends Controller {
     }
   }
 
+  get course() {
+    return this.model.courses.findBy('slug', this.model.courseSlug);
+  }
+
   @action
   handleRepositoryCreate() {
     this.selectedRepositoryId = this.newRepository.id;
     this.isCreatingNewRepository = false;
-
-    this.model.repositories.pushObject(this.newRepository);
-    this.newRepository = this.store.createRecord('repository', { course: this.model.course, user: this.currentUser.record });
+    this.newRepository = this.store.createRecord('repository', { course: this.course, user: this.currentUser.record });
   }
 
   get isDevelopmentOrTest() {
@@ -41,6 +43,10 @@ export default class CourseController extends Controller {
   }
 
   get lastPushedRepository() {
-    return this.model.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+    return this.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+  }
+
+  get repositories() {
+    return this.currentUser.record.repositories.filterBy('course', this.course).without(this.newRepository);
   }
 }

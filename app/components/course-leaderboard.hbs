@@ -28,7 +28,9 @@
     <div>
       {{#animated-each this.mergedEntries key='userId' use=this.listTransition as |entry|}}
         <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
-      {{else}}
+      {{/animated-each}}
+
+      {{#animated-if (eq this.mergedEntries.length 0)}}
         <div class="flex px-4 py-2 items-center">
           <div class="text-sm text-gray-500">
               <p class="mb-2">
@@ -40,7 +42,7 @@
               </p>
           </div>
         </div>
-      {{/animated-each}}
+      {{/animated-if}}
     </div>
   {{/animated-if}}
 </div>

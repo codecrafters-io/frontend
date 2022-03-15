@@ -9,6 +9,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsAdmin, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -243,5 +244,56 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await coursePage.collapsedItems[3].click();
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'beta course stage item should not have upgrade prompt');
+  });
+
+  test('first time visit has loading page', async function (assert) {
+    this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
+    signIn(this.owner);
+    testScenario(this.server);
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    coursePage.visit({ course_slug: 'redis' });
+    await waitFor('[data-test-loading]');
+
+    assert.ok(find('[data-test-loading]'), 'loader should be present');
+    await settled();
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
+  });
+
+  test('transition from courses page has no loading page', async function (assert) {
+    this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
+    signIn(this.owner);
+    testScenario(this.server);
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+    let loadingIndicatorWasRendered = false;
+
+    await coursesPage.visit();
+    coursesPage.clickOnCourse('Build your own Redis');
+    await waitUntil(() => {
+      if (isSettled()) {
+        return true;
+      } else if (find('[data-test-loading]')) {
+        loadingIndicatorWasRendered = true;
+      }
+    });
+
+    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
+    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
   });
 });
