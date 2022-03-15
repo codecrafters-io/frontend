@@ -2,13 +2,14 @@
   class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border relative"
   role="button"
   {{on "click" this.navigateToCourse}}
-  data-test-course-card>
-  {{!-- Logo --}}
+  data-test-course-card
+>
+  {{! Logo }}
   <div class="w-12 lg:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
     <CourseLogo @course={{@course}} />
   </div>
 
-  {{!-- Text --}}
+  {{! Text }}
   <div class="mb-8">
     <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16 lg:pr-32">
       <div class="text-lg font-bold text-gray-600 mr-2" data-test-course-name>
@@ -31,7 +32,7 @@
     </div>
   </div>
 
-  {{!-- Footer --}}
+  {{! Footer }}
   <div class="flex items-center justify-between">
     <CourseCard::DifficultyLabel @course={{@course}} />
 

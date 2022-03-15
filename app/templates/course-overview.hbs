@@ -5,13 +5,9 @@
 
   <div class="flex items-start">
     <div class="flex-grow">
-      <CourseOverviewPage::IntroductionAndStages
-        @course={{this.model.course}}
-        class="w-full mb-4" />
+      <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
 
-      <CourseOverviewPage::TestimonialList
-        @course={{this.model.course}}
-        class="w-full" />
+      <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full" />
     </div>
 
     <CourseLeaderboard
@@ -19,6 +15,7 @@
       @course={{this.model.course}}
       @activeRepository={{this.activeRepository}}
       @repositories={{this.userRepositories}}
-      @shouldShowLanguageIconsWithoutHover={{true}} />
+      @shouldShowLanguageIconsWithoutHover={{true}}
+    />
   </div>
 </div>

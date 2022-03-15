@@ -3,43 +3,46 @@
     <div class="flex items-center">
       <span class="uppercase text-teal-500 text-xs font-bold">RECENT ATTEMPTS</span>
 
-      <span class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2 {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}} transition-all">
+      <span
+        class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2
+          {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}}
+          transition-all"
+      >
         {{this.mergedEntries.length}}
       </span>
     </div>
     <div>
       {{#if this.currentUserTeams.firstObject}}
-        <CourseLeaderboardTeamDropdown
-          @team={{this.team}}
-          @teams={{this.currentUserTeams}}
-          @onChange={{this.handleTeamChange}} />
+        <CourseLeaderboardTeamDropdown @team={{this.team}} @teams={{this.currentUserTeams}} @onChange={{this.handleTeamChange}} />
       {{/if}}
     </div>
   </div>
 
   {{#animated-if this.isLoadingEntries use=this.transition}}
     <div class="flex p-4 items-center">
-      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2">
+      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2" />
       <span class="text-sm text-gray-600">
         Loading...
       </span>
     </div>
   {{else}}
     <div>
-      {{#animated-each this.mergedEntries key='userId' use=this.listTransition as |entry|}}
+      {{#animated-each this.mergedEntries key="userId" use=this.listTransition as |entry|}}
         <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
       {{/animated-each}}
 
       {{#animated-if (eq this.mergedEntries.length 0)}}
         <div class="flex px-4 py-2 items-center">
           <div class="text-sm text-gray-500">
-              <p class="mb-2">
-                {{#if this.team}}
-                  No one from {{this.team.name}} has attempted this challenge recently.
-                {{else}}
-                  No one has attempted this challenge recently.
-                {{/if}}
-              </p>
+            <p class="mb-2">
+              {{#if this.team}}
+                No one from
+                {{this.team.name}}
+                has attempted this challenge recently.
+              {{else}}
+                No one has attempted this challenge recently.
+              {{/if}}
+            </p>
           </div>
         </div>
       {{/animated-if}}

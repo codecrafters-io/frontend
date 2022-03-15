@@ -9,7 +9,8 @@
         <Admin::Course::SubmissionsPage::TimelineEntryContainer
           @onClick={{fn @onSubmissionSelect submission}}
           @submission={{submission}}
-          @isSelected={{eq submission @selectedSubmission}} />
+          @isSelected={{eq submission @selectedSubmission}}
+        />
       {{/each}}
     {{/each-in}}
   {{else}}

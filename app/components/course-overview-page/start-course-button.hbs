@@ -1,4 +1,9 @@
-<LinkTo @route="course" @model={{@course.slug}} class="bg-teal-500 hover:bg-teal-600 transition-colors px-4 py-3 text-white text-lg font-bold rounded inline-flex items-center mr-2" data-test-start-course-button>
+<LinkTo
+  @route="course"
+  @model={{@course.slug}}
+  class="bg-teal-500 hover:bg-teal-600 transition-colors px-4 py-3 text-white text-lg font-bold rounded inline-flex items-center mr-2"
+  data-test-start-course-button
+>
   {{#if this.currentUserIsAnonymous}}
     {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
   {{/if}}

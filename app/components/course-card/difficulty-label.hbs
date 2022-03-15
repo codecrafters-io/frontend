@@ -1,9 +1,12 @@
 <div class="text-gray-500 text-xs flex items-end">
   <div class="flex items-end mr-1">
-    {{!-- template-lint-disable no-inline-styles --}}
+    {{! template-lint-disable no-inline-styles }}
     <div class="bg-teal-500" style="width: 4px; height: 0.7em; margin-right: 2px; border-radius: 1px;"></div>
     <div class="bg-teal-500" style="width: 4px; height: 0.9em; margin-right: 2px; border-radius: 1px;"></div>
-    <div class={{if @course.difficultyIsHard "bg-teal-500" "bg-gray-300"}} style="width: 4px; height: 1.2em; margin-right: 2px; border-radius: 1px;"></div>
+    <div
+      class={{if @course.difficultyIsHard "bg-teal-500" "bg-gray-300"}}
+      style="width: 4px; height: 1.2em; margin-right: 2px; border-radius: 1px;"
+    ></div>
   </div>
   <span class="leading-none">{{capitalize @course.difficulty}}</span>
 </div>

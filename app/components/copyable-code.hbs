@@ -9,7 +9,8 @@
     <button
       type="button"
       class="bg-teal-600 px-3 py-1 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
-      {{on "click" this.handleCopyButtonClick}}>
+      {{on "click" this.handleCopyButtonClick}}
+    >
       {{if this.codeWasCopiedRecently "COPIED" "COPY"}}
     </button>
     <div class="absolute top-px bottom-px -left-6 w-6 bg-gray-300 border-text-mask">

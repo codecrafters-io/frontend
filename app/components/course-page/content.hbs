@@ -3,11 +3,13 @@
     @class="flex-grow min-w-0"
     @course={{@course}}
     @repository={{@activeRepository}}
-    @onRepositoryCreate={{@onRepositoryCreate}} />
+    @onRepositoryCreate={{@onRepositoryCreate}}
+  />
 
   <CourseLeaderboard
     @class="w-80 flex-shrink-0 border-l ml-4 hidden lg:block"
     @course={{@course}}
     @activeRepository={{@activeRepository}}
-    @repositories={{@repositories}} />
+    @repositories={{@repositories}}
+  />
 </div>
