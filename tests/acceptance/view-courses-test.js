@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
@@ -21,6 +21,16 @@ module('Acceptance | view-courses', function (hooks) {
     assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
     assert.ok(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
+  });
+
+  test('it renders alpha courses if user is staff', async function (assert) {
+    signInAsStaff(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    assert.equal(coursesPage.courseCards.length, 5, 'expected 5 course cards to be present');
+
+    assert.ok(coursesPage.courseCards[4].hasAlphaLabel, 'alpha challenges should have alpha label');
   });
 
   test('it renders with progress if user has started a course', async function (assert) {

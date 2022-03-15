@@ -11,11 +11,11 @@ export default class CourseController extends Controller {
   @service('globalModals') globalModalsService;
 
   get courses() {
-    if (this.currentUser.isAuthenticated && this.currentUser.record.isArrendaTeamMember) {
-      return this.model.courses.filterBy('slug', 'docker');
+    if (this.currentUser.isAuthenticated && this.currentUser.record.isStaff) {
+      return this.model.courses;
     }
 
-    return this.model.courses;
+    return this.model.courses.rejectBy('releaseStatusIsAlpha');
   }
 
   @action

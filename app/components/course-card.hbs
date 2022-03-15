@@ -20,6 +20,10 @@
         <div class="text-xs text-teal-500 font-bold border border-teal-500 rounded px-2 py-1 mr-3" data-test-course-beta-label>
           BETA
         </div>
+      {{else if @course.releaseStatusIsAlpha}}
+        <div class="text-xs text-blue-500 font-bold border border-blue-500 rounded px-2 py-1 mr-3" data-test-course-alpha-label>
+          ALPHA
+        </div>
       {{/if}}
     </div>
 
