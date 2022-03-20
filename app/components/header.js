@@ -19,6 +19,7 @@ export default class HeaderComponent extends Component {
       if (username && window.clarity) {
         window.clarity('set', 'username', username);
         window.clarity('set', 'user_id', this.currentUser.currentUserId);
+        window.clarity('identify', username);
       }
     }
   }
