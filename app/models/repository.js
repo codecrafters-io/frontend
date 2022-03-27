@@ -1,6 +1,5 @@
 import Model from '@ember-data/model';
 import { attr, belongsTo, hasMany } from '@ember-data/model';
-import { dasherize } from '@ember/string';
 
 export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
