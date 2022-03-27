@@ -48,7 +48,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
     assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed');
 
-    await coursePage.setupItem.clickOnLanguageButton('Python');
+    await coursePage.setupItem.clickOnLanguageButton('JavaScript');
 
     assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'create repository request was executed');
 
@@ -60,7 +60,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.equal(
       coursePage.setupItem.copyableCloneRepositoryInstructions,
-      'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-python && cd codecrafters-redis-python'
+      'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript'
     );
 
     await this.clock.tick(2001);
