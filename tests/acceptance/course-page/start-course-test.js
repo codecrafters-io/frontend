@@ -93,6 +93,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     await coursePage.repositoryDropdown.click();
     assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
+
+    await animationsSettled();
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {
