@@ -13,6 +13,10 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
       headers['x-fullstory-session-url'] = window.FS.getCurrentSessionURL();
     }
 
+    if (this.serverVariables.get('csrfToken')) {
+      headers['X-CSRF-Token'] = this.serverVariables.get('csrfToken');
+    }
+
     return headers;
   }
 

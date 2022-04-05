@@ -27,7 +27,7 @@ module.exports = function (environment) {
 
     serverVariables: {
       tagPrefix: 'codecrafters',
-      vars: ['server-url', 'current-user-payload'],
+      vars: ['csrf-token', 'server-url', 'current-user-payload'],
     },
   };
 
