@@ -1,15 +1,14 @@
 export default function createLanguages(server) {
-  server.create('language', { name: 'Python', slug: 'python' });
-  server.create('language', { name: 'Go', slug: 'go' });
   server.create('language', { name: 'C', slug: 'c' });
+  server.create('language', { name: 'Clojure', slug: 'clojure' });
   server.create('language', { name: 'Crystal', slug: 'crystal' });
   server.create('language', { name: 'Elixir', slug: 'elixir' });
   server.create('language', { name: 'Go', slug: 'go' });
   server.create('language', { name: 'Haskell', slug: 'haskell' });
-  server.create('language', { name: 'Nim', slug: 'nim' });
   server.create('language', { name: 'Java', slug: 'java' });
   server.create('language', { name: 'JavaScript', slug: 'javascript' });
   server.create('language', { name: 'Kotlin', slug: 'kotlin' });
+  server.create('language', { name: 'Nim', slug: 'nim' });
   server.create('language', { name: 'PHP', slug: 'php' });
   server.create('language', { name: 'Python', slug: 'python' });
   server.create('language', { name: 'Ruby', slug: 'ruby' });
