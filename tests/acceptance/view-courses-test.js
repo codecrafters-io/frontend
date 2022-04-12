@@ -58,6 +58,7 @@ module('Acceptance | view-courses', function (hooks) {
     assert.true(coursesPage.courseCards[0].hasProgressBar);
     assert.false(coursesPage.courseCards[0].hasDifficultylevel);
     assert.equal(coursesPage.courseCards[0].progressText, '1/7 stages');
+    assert.equal(coursesPage.courseCards[0].progressBarStyle, 'width:14%');
   });
 
   test('it renders if user is not signed in', async function (assert) {

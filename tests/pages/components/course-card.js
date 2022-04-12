@@ -1,4 +1,4 @@
-import { isPresent, text } from 'ember-cli-page-object';
+import { attribute, isPresent, text } from 'ember-cli-page-object';
 
 export default {
   actionText: text('[data-test-action-text]'),
@@ -9,4 +9,5 @@ export default {
   hasProgressBar: isPresent('[data-test-course-progress]'),
   hasDifficultylevel: isPresent('[data-test-course-difficulty]'),
   progressText: text('[data-test-course-progress-text]'),
+  progressBarStyle: attribute('style', '[data-test-course-progress-bar]'),
 };
