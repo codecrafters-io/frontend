@@ -52,8 +52,47 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.equal(coursesPage.courseCards[0].actionText, 'Resume');
     assert.equal(coursesPage.courseCards[1].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[1].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[1].actionText, 'Start');
+    assert.equal(coursesPage.courseCards[2].actionText, 'Start');
+    assert.equal(coursesPage.courseCards[3].actionText, 'Start');
+
+    assert.true(coursesPage.courseCards[0].hasProgressBar);
+    assert.false(coursesPage.courseCards[0].hasDifficultyLabel);
+    assert.equal(coursesPage.courseCards[0].progressText, '1/7 stages');
+    assert.equal(coursesPage.courseCards[0].progressBarStyle, 'width:14%');
+  });
+
+  test('it sorts course cards based on last push', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let git = this.server.schema.courses.findBy({ slug: 'git' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      createdAt: new Date('2022-01-01'),
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      createdAt: new Date('2022-02-02'),
+      course: git,
+      language: python,
+      user: currentUser,
+    });
+
+    await coursesPage.visit();
+    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+
+    assert.equal(coursesPage.courseCards[0].name, 'Build Your Own Git');
+    assert.equal(coursesPage.courseCards[0].actionText, 'Resume');
+    assert.equal(coursesPage.courseCards[1].name, 'Build Your Own Redis');
+    assert.equal(coursesPage.courseCards[1].actionText, 'Resume');
+    assert.equal(coursesPage.courseCards[2].actionText, 'Start');
+    assert.equal(coursesPage.courseCards[3].actionText, 'Start');
   });
 
   test('it renders if user is not signed in', async function (assert) {
