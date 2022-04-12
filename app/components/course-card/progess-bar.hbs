@@ -3,7 +3,8 @@
     {{#if (eq @lastPushedRepository.numberOfStagesCompleted 0)}}
       <div class="bg-yellow-500 h-3 rounded w-1/12"></div>
     {{else}}
-      <div data-test-course-progress-bar
+      <div
+        data-test-course-progress-bar
         class="bg-yellow-500 h-3 rounded"
         style={{html-safe (concat "width:" (round (mult 100 (div @lastPushedRepository.numberOfStagesCompleted @course.numberOfStages))) "%")}}
       ></div>
