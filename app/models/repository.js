@@ -13,6 +13,10 @@ export default class RepositoryModel extends Model {
   @attr('string') starterRepositoryUrl;
   @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
+  get numberOfStagesCompleted() {
+    return this.courseStageCompletions.length;
+  }
+
   get cloneDirectory() {
     return `codecrafters-${this.course.slug}-${this.language.slug}`;
   }

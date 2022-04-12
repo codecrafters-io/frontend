@@ -52,8 +52,12 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.equal(coursesPage.courseCards[0].actionText, 'Resume');
     assert.equal(coursesPage.courseCards[1].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[1].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[1].actionText, 'Start');
+    assert.equal(coursesPage.courseCards[2].actionText, 'Start');
+    assert.equal(coursesPage.courseCards[3].actionText, 'Start');
+
+    assert.true(coursesPage.courseCards[0].hasProgressBar);
+    assert.false(coursesPage.courseCards[0].hasDifficultylevel);
+    assert.equal(coursesPage.courseCards[0].progressText, '1/7 stages');
   });
 
   test('it renders if user is not signed in', async function (assert) {

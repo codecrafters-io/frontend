@@ -6,4 +6,7 @@ export default {
   description: text('[data-test-course-description]'),
   hasAlphaLabel: isPresent('[data-test-course-alpha-label]'),
   hasBetaLabel: isPresent('[data-test-course-beta-label]'),
+  hasProgressBar: isPresent('[data-test-course-progress]'),
+  hasDifficultylevel: isPresent('[data-test-course-difficulty]'),
+  progressText: text('[data-test-course-progress-text]'),
 };

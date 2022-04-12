@@ -34,7 +34,15 @@
 
   {{! Footer }}
   <div class="flex items-center justify-between">
-    <CourseCard::DifficultyLabel @course={{@course}} />
+
+    {{! Completion bar }}
+    <div class="flex items-center">
+      {{#if this.lastPushedRepository}}
+        <CourseCard::ProgessBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} />
+      {{else}}
+        <CourseCard::DifficultyLabel @course={{@course}} />
+      {{/if}}
+    </div>
 
     <div class="flex items-center">
       {{#if this.lastPushedRepository}}
