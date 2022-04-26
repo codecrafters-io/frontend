@@ -11,13 +11,10 @@
   {{else}}
     <div class="flex items-center flex-wrap">
       {{#each @repository.course.supportedLanguages as |supportedLanguage|}}
-        <button
-          type="button"
-          class="px-4 py-2 bg-gray-100 hover:bg-gray-200 hover:text-gray-700 focus:shadow-inner border border-gray-300 rounded mr-3 mb-3 text-gray-600 transition-all"
-          {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}
-        >
-          {{supportedLanguage.name}}
-        </button>
+        <CoursePage::StepList::SetupItem::LanguageButton
+          @language={{supportedLanguage}}
+          {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}>
+        </CoursePage::StepList::SetupItem::LanguageButton>
       {{/each}}
     </div>
   {{/if}}
