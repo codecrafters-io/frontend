@@ -48,6 +48,9 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
     assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed');
 
+    await coursePage.setupItem.clickOnRequestLanguageButton();
+    // await this.pauseTest();
+
     await coursePage.setupItem.clickOnLanguageButton('JavaScript');
 
     assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'create repository request was executed');
