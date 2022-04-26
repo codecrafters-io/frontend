@@ -47,7 +47,7 @@
     "ember-cli-deprecation-workflow": "^2.0.0",
     "ember-cli-htmlbars": "^5.7.2",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-mirage": "^2.2.0",
+    "ember-cli-mirage": "^2.4.0",
     "ember-cli-moment-shim": "^3.8.0",
     "ember-cli-page-object": "^1.17.7",
     "ember-cli-postcss": "^7.0.2",
