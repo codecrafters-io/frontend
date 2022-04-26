@@ -1,6 +1,13 @@
 <button
   type="button"
-  class="px-4 py-2 bg-gray-100 hover:bg-gray-200 hover:text-gray-700 focus:shadow-inner border border-gray-300 rounded mr-3 mb-3 text-gray-600 transition-all"
+  class="group flex justify-between items-center px-3 py-2 border border-gray-200 mr-3 mb-3 hover:border-teal-500"
   ...attributes>
-  {{@language.name}}
+  <div class="flex items-center mr-2">
+    <img src={{@language.grayLogoUrl}} alt={{@language.name}} class="h-4 block group-hover:hidden" />
+    <img src={{@language.tealLogoUrl}} alt={{@language.name}} class="h-4 hidden group-hover:block" />
+  </div>
+
+  <div class="text-base text-gray-700 group-hover:text-teal-500">
+    {{@language.name}}
+  </div>
 </button>
