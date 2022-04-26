@@ -6,6 +6,8 @@
 @import "tailwindcss/utilities";
 @import "utilities.css";
 
+/*@import "ember-power-select";*/
+
 @import "modals.scss";
 
 .ember-basic-dropdown-trigger {
@@ -30,4 +32,8 @@
 
 .prose pre code {
   white-space: pre;
+}
+
+.ember-power-select-dropdown {
+  background-color: #fff;
 }
