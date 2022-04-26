@@ -16,6 +16,8 @@
           {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}
         />
       {{/each}}
+
+      <CoursePage::StepList::SetupItem::RequestLanguageButton @course={{@repository.course}} />
     </div>
   {{/if}}
 </div>
