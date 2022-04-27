@@ -50,6 +50,10 @@ module.exports = function (defaults) {
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
       prepend: cdnBaseURL,
     };
+
+    appOptions.autoImport = {
+      publicAssetURL: `${cdnBaseURL}/assets`,
+    };
   }
 
   let app = new EmberApp(defaults, appOptions);
