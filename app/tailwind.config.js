@@ -50,10 +50,10 @@ module.exports = {
         },
         blue: {
           css: {
-            color: colors.sky[800],
-            a: { color: colors.sky[800] },
-            strong: { color: colors.sky[900] },
-            b: { color: colors.sky[800] },
+            color: colors.sky[700],
+            a: { color: colors.sky[700] },
+            strong: { color: colors.sky[700] },
+            b: { color: colors.sky[700] },
           },
         },
       },

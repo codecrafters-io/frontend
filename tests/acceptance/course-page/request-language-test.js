@@ -1,7 +1,6 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -32,8 +31,16 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     await coursePage.setupItem.clickOnRequestLanguageButton();
     await coursePage.setupItem.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
-    // await this.pauseTest();
 
     await animationsSettled();
+    assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+
+    await percySnapshot('Requested Languages Prompt');
+
+    await coursePage.setupItem.clickOnRequestLanguageButton();
+    await coursePage.setupItem.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
+
+    await animationsSettled();
+    assert.notOk(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
   });
 });
