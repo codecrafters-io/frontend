@@ -1,24 +1,9 @@
 <div class="w-60 border border-teal-500 shadow rounded bg-white overflow-hidden" data-test-request-language-dropdown>
   <div class="px-3 text-gray-700 placeholder:text-gray-400 text-xs">
-    {{#each this.selectedLanguages as |selectedLanguage|}}
-      <div class="inline-flex items-stretch my-1">
-        <div class="rounded-l-full bg-gray-50 border border-gray-100 border-r-0 pl-2 pr-0.5 py-0.5">
-          {{selectedLanguage.name}}
-        </div>
-        <div
-          role="button"
-          class="rounded-r-full bg-gray-50 border border-gray-100 border-l-0 flex items-center pr-1 pl-0.5 py-0.5 text-gray-300 hover:text-gray-400"
-          {{on "click" (fn this.handleSelectedLanguageRemoved selectedLanguage)}}
-        >
-          {{svg-jar "x" class="w-3 fill-current"}}
-        </div>
-      </div>
-    {{/each}}
-
     <Input
       @value={{this.searchQuery}}
-      placeholder={{if this.selectedLanguages.firstObject "" "Request languages..."}}
-      class="py-2 text-gray-700 placeholder:text-gray-400 text-xs outline-none"
+      placeholder={{if this.selectedLanguages.firstObject "Change requested languages..." "Request languages..."}}
+      class="py-2 text-gray-700 placeholder:text-gray-400 text-xs outline-none w-full"
       {{did-insert this.handleInputDidInsert}} />
   </div>
 

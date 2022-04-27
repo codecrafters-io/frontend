@@ -13,7 +13,7 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   @tracked suggestionListElement;
 
   get availableLanguages() {
-    return this.store.peekAll('language');
+    return this.store.peekAll('language').filter((language) => !this.args.course.supportedLanguages.includes(language));
   }
 
   @action
@@ -54,6 +54,10 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
     } else {
       this.selectedLanguages.pushObject(language);
       this.inputElement.focus();
+
+      if (this.selectedLanguages.length === 1) {
+        this.args.onClose();
+      }
     }
   }
 
