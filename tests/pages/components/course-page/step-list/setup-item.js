@@ -1,4 +1,5 @@
 import { clickable, clickOnText, isVisible, text } from 'ember-cli-page-object';
+import requestLanguageDropdown from './setup-item/request-language-dropdown';
 
 export default {
   instructions: '',
@@ -9,6 +10,7 @@ export default {
   footerText: text('[data-test-setup-item-footer] [data-test-footer-text]'),
   isOnCreateRepositoryStep: isVisible('[data-test-create-repository-step]'),
   isOnCloneRepositoryStep: isVisible('[data-test-clone-repository-step]'),
+  requestLanguageDropdown: requestLanguageDropdown,
   scope: '[data-test-setup-item]',
 
   get statusIsInProgress() {
