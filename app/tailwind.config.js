@@ -64,6 +64,7 @@ module.exports = {
       backdropDropShadow: ['hover', 'group-hover'],
       backgroundColor: ['active'],
       border: ['group-hover'],
+      borderWidth: ['hover'],
       display: ['group-hover'],
       filter: ['group-hover', 'hover'],
       fontStyle: ['group-hover'],

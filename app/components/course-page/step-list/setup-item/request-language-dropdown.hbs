@@ -1,0 +1,53 @@
+<div class="w-60 border border-teal-500 shadow rounded bg-white overflow-hidden" data-test-request-language-dropdown>
+  <div class="px-3 text-gray-700 placeholder:text-gray-400 text-xs">
+    {{#each this.selectedLanguages as |selectedLanguage|}}
+      <div class="inline-flex items-stretch my-1">
+        <div class="rounded-l-full bg-gray-50 border border-gray-100 border-r-0 pl-2 pr-0.5 py-0.5">
+          {{selectedLanguage.name}}
+        </div>
+        <div
+          role="button"
+          class="rounded-r-full bg-gray-50 border border-gray-100 border-l-0 flex items-center pr-1 pl-0.5 py-0.5 text-gray-300 hover:text-gray-400"
+          {{on "click" (fn this.handleSelectedLanguageRemoved selectedLanguage)}}
+        >
+          {{svg-jar "x" class="w-3 fill-current"}}
+        </div>
+      </div>
+    {{/each}}
+
+    <Input
+      @value={{this.searchQuery}}
+      placeholder={{if this.selectedLanguages.firstObject "" "Request languages..."}}
+      class="py-2 text-gray-700 placeholder:text-gray-400 text-xs outline-none"
+      {{did-insert this.handleInputDidInsert}} />
+  </div>
+
+  {{on-key 'ArrowDown' this.handleArrowDown}}
+  {{on-key 'ArrowUp' this.handleArrowUp}}
+  {{on-key 'Escape' @onClose}}
+  {{on-key 'Enter' this.handleEnter}}
+  {{on-key 'Backspace' this.handleBackspace}}
+
+  <div class="w-full h-px bg-gray-100"></div>
+
+  <div class="text-xs overflow-y-scroll h-28" {{did-insert this.handleSuggestionListDidInsert}}>
+    {{#each this.languageSuggestions as |languageSuggestion index|}}
+      <div
+        role="button"
+        class="flex items-center justify-between px-3 py-1.5 text-gray-700 hover:bg-gray-50 {{if (eq index this.selectedSuggestionIndex) "bg-gray-50"}}"
+        {{on "mouseenter" (fn (mut this.selectedSuggestionIndex) index)}}
+        {{on "click" (fn this.toggleLanguageSelection languageSuggestion.language)}}
+        data-test-language-suggestion
+      >
+        <div>
+          {{languageSuggestion.language.name}}
+        </div>
+        <div>
+          {{#if languageSuggestion.isSelected}}
+            {{svg-jar "check" class="w-3 fill-current text-teal-500"}}
+          {{/if}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

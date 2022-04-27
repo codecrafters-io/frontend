@@ -13,14 +13,12 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   @tracked suggestionListElement;
 
   get availableLanguages() {
-    return this.store.peekAll('language').reject((language) => {
-      return this.selectedLanguages.includes(language);
-    });
+    return this.store.peekAll('language');
   }
 
   @action
   handleArrowDown() {
-    if (this.selectedSuggestionIndex < this.suggestedLanguages.length - 1) {
+    if (this.selectedSuggestionIndex < this.languageSuggestions.length - 1) {
       this.selectedSuggestionIndex += 1;
       this.suggestionListElement.children[this.selectedSuggestionIndex].scrollIntoView({ block: 'nearest' });
     }
@@ -44,15 +42,19 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
 
   @action
   handleEnter() {
-    this.handleLanguageSelection(this.suggestedLanguages[this.selectedSuggestionIndex]);
+    this.toggleLanguageSelection(this.languageSuggestions[this.selectedSuggestionIndex].language);
+    this.searchQuery = '';
   }
 
   @action
-  handleLanguageSelection(language) {
-    this.selectedLanguages.pushObject(language);
-    this.inputElement.focus();
-    this.searchQuery = '';
-    this.selectedSuggestionIndex = 0;
+  toggleLanguageSelection(language) {
+    if (this.selectedLanguages.includes(language)) {
+      this.selectedLanguages.removeObject(language);
+      this.inputElement.focus();
+    } else {
+      this.selectedLanguages.pushObject(language);
+      this.inputElement.focus();
+    }
   }
 
   @action
@@ -67,15 +69,27 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   }
 
   @action
+  handleSelectedLanguageRemoved(language) {
+    this.selectedLanguages.removeObject(language);
+  }
+
+  @action
   handleSuggestionListDidInsert(element) {
     this.suggestionListElement = element;
   }
 
-  get suggestedLanguages() {
+  get languageSuggestions() {
+    let allSuggestions = this.availableLanguages.map((language) => {
+      return {
+        isSelected: this.selectedLanguages.includes(language),
+        language: language,
+      };
+    });
+
     if (this.searchQuery.length > 0) {
-      return new Fuse(this.availableLanguages.toArray(), { keys: ['name'] }).search(this.searchQuery).mapBy('item');
+      return new Fuse(allSuggestions, { keys: ['language.name'] }).search(this.searchQuery).mapBy('item');
     } else {
-      return this.availableLanguages;
+      return allSuggestions;
     }
   }
 }
