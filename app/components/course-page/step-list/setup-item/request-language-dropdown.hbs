@@ -1,17 +1,20 @@
 <div class="w-60 border border-teal-500 shadow rounded bg-white overflow-hidden" data-test-request-language-dropdown>
-  <div class="px-3 text-gray-700 placeholder:text-gray-400 text-xs">
+  <div class="flex items-center px-3 text-gray-700 placeholder:text-gray-400 text-xs">
     <Input
       @value={{this.searchQuery}}
       placeholder={{if this.selectedLanguages.firstObject "Change requested languages..." "Request languages..."}}
       class="py-2 text-gray-700 placeholder:text-gray-400 text-xs outline-none w-full"
       {{did-insert this.handleInputDidInsert}} />
+
+    <div>
+      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 {{if this.isSyncing "opacity-100" "opacity-0"}}" />
+    </div>
   </div>
 
   {{on-key 'ArrowDown' this.handleArrowDown}}
   {{on-key 'ArrowUp' this.handleArrowUp}}
   {{on-key 'Escape' @onClose}}
   {{on-key 'Enter' this.handleEnter}}
-  {{on-key 'Backspace' this.handleBackspace}}
 
   <div class="w-full h-px bg-gray-100"></div>
 

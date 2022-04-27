@@ -25,6 +25,9 @@ function routes() {
     return schema.billingSessions.create({ url: 'https://test.com/billing_session' });
   });
 
+  this.post('/course-language-requests');
+  this.delete('/course-language-requests/:id');
+
   this.post('/checkout-sessions', function (schema) {
     return schema.checkoutSessions.create({ url: 'https://test.com/checkout_session' });
   });

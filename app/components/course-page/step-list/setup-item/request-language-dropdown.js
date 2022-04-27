@@ -6,8 +6,8 @@ import { tracked } from '@glimmer/tracking';
 
 export default class CoursePageContentStepListSetupItemRequestLanguageDropdownContentComponent extends Component {
   @tracked inputElement;
+  @tracked isSyncing = false;
   @tracked searchQuery = '';
-  @tracked selectedLanguages = [];
   @tracked selectedSuggestionIndex = 0;
   @service store;
   @tracked suggestionListElement;
@@ -33,32 +33,36 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   }
 
   @action
-  handleBackspace() {
-    if (this.searchQuery.length === 0) {
-      this.selectedLanguages.popObject();
-      this.selectedSuggestionIndex = 0;
+  handleEnter() {
+    if (this.languageSuggestions[this.selectedSuggestionIndex]) {
+      this.toggleLanguageSelection(this.languageSuggestions[this.selectedSuggestionIndex].language);
+      this.searchQuery = '';
     }
   }
 
   @action
-  handleEnter() {
-    this.toggleLanguageSelection(this.languageSuggestions[this.selectedSuggestionIndex].language);
-    this.searchQuery = '';
-  }
+  async toggleLanguageSelection(language) {
+    if (this.requestedLanguages.includes(language)) {
+      this.isSyncing = true;
+      await this.args.user.courseLanguageRequests.filterBy('course', this.args.course).findBy('language', language).destroyRecord();
+      this.isSyncing = false;
 
-  @action
-  toggleLanguageSelection(language) {
-    if (this.selectedLanguages.includes(language)) {
-      this.selectedLanguages.removeObject(language);
       this.inputElement.focus();
     } else {
-      this.selectedLanguages.pushObject(language);
-      this.inputElement.focus();
+      this.isSyncing = true;
+      await this.store.createRecord('course-language-request', { user: this.args.user, course: this.args.course, language: language }).save();
+      this.isSyncing = false;
 
-      if (this.selectedLanguages.length === 1) {
+      if (this.requestedLanguages.length === 1) {
         this.args.onClose();
+      } else {
+        this.inputElement.focus();
       }
     }
+  }
+
+  get requestedLanguages() {
+    return this.args.user.courseLanguageRequests.filterBy('course', this.args.course).mapBy('language');
   }
 
   @action
@@ -73,11 +77,6 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   }
 
   @action
-  handleSelectedLanguageRemoved(language) {
-    this.selectedLanguages.removeObject(language);
-  }
-
-  @action
   handleSuggestionListDidInsert(element) {
     this.suggestionListElement = element;
   }
@@ -85,7 +84,7 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   get languageSuggestions() {
     let allSuggestions = this.availableLanguages.map((language) => {
       return {
-        isSelected: this.selectedLanguages.includes(language),
+        isSelected: this.requestedLanguages.includes(language),
         language: language,
       };
     });
