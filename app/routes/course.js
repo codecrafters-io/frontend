@@ -17,7 +17,8 @@ export default class CourseRoute extends ApplicationRoute {
       courseSlug: params.course_slug,
       courses: courses,
       repositories: repositories,
-      courseLanguageRequests: this.store.findAll('course-language-request', { include: 'course,user,language' }),
+      _courseLanguageRequests: this.store.findAll('course-language-request', { include: 'course,user,language' }),
+      _languages: this.store.findAll('language'),
     });
   }
 

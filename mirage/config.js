@@ -35,6 +35,8 @@ function routes() {
 
   this.get('/courses');
 
+  this.get('/languages');
+
   this.get('/leaderboard-entries', function (schema, request) {
     if (request.queryParams.team_id) {
       const team = schema.teams.find(request.queryParams.team_id);

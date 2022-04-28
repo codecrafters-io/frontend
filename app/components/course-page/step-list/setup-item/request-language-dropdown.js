@@ -13,7 +13,10 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   @tracked suggestionListElement;
 
   get availableLanguages() {
-    return this.store.peekAll('language').filter((language) => !this.args.course.supportedLanguages.includes(language));
+    return this.store
+      .peekAll('language')
+      .filter((language) => !this.args.course.supportedLanguages.includes(language))
+      .sortBy('name');
   }
 
   @action
