@@ -52,7 +52,7 @@ module.exports = function (defaults) {
     };
 
     appOptions.autoImport = {
-      publicAssetURL: `${cdnBaseURL}/assets`,
+      publicAssetURL: `${cdnBaseURL}assets`,
     };
   }
 
