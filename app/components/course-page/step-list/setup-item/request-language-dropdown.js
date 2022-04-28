@@ -49,15 +49,15 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
 
       this.inputElement.focus();
     } else {
-      this.isSyncing = true;
-      await this.store.createRecord('course-language-request', { user: this.args.user, course: this.args.course, language: language }).save();
-      this.isSyncing = false;
-
-      if (this.requestedLanguages.length === 1) {
-        this.args.onClose();
+      if (this.requestedLanguages.length === 0) {
+        this.args.onClose(); // First selection
       } else {
         this.inputElement.focus();
       }
+
+      this.isSyncing = true;
+      await this.store.createRecord('course-language-request', { user: this.args.user, course: this.args.course, language: language }).save();
+      this.isSyncing = false;
     }
   }
 
