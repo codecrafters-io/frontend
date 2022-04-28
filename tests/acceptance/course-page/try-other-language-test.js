@@ -36,7 +36,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       courseStage: redis.stages.models.sortBy('position').firstObject,
     });
 
-    const baseRequestsCount = [
+    let baseRequestsCount = [
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
       'notify page view (courses listing page)',
@@ -58,6 +58,8 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 2); // Fetch languages, course language requests
+
     assert.equal(currentURL(), '/courses/redis?fresh=true');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
@@ -65,7 +67,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     await coursePage.setupItem.clickOnLanguageButton('Go');
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1); // Create repository request
+    baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
+
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 3); // fetch languages, requests + Create repository request
     assert.equal(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.equal(currentURL(), '/courses/redis?repo=2');
 
@@ -75,11 +79,11 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await this.clock.tick(2001); // Run poller
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 2, 'polling should have run');
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 4, 'polling should have run');
 
     await this.clock.tick(2001); // Run active item index updater
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 3, 'polling should have run again');
+    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 5, 'polling should have run again');
     assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await animationsSettled();

@@ -60,6 +60,7 @@
     "ember-data": "~3.28.6",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.1.1",
+    "ember-keyboard": "^8.1.1",
     "ember-load-initializers": "^2.1.2",
     "ember-math-helpers": "^2.16.0",
     "ember-maybe-import-regenerator": "^0.1.6",
@@ -100,6 +101,7 @@
     "@sinonjs/fake-timers": "^7.1.2",
     "@tailwindcss/typography": "^0.4.1",
     "ansi_up": "^5.1.0",
+    "fuse.js": "^6.5.3",
     "mustache": "^4.2.0",
     "showdown": "^2.1.0"
   }

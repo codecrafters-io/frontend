@@ -37,6 +37,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
+      'fetch languages (request language button)',
+      'fetch course language requests (request language button)',
       'notify page view (course page)',
     ].length;
 
@@ -46,9 +48,11 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
-    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed');
+    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
 
     await coursePage.setupItem.clickOnLanguageButton('JavaScript');
+
+    baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
     assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'create repository request was executed');
 

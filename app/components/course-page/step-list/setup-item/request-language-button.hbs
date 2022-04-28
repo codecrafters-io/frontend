@@ -1,0 +1,23 @@
+<BasicDropdown @horizontalPosition="left" as |dd|>
+  <dd.Trigger>
+    <div
+      class="group flex justify-between items-center px-3 py-2 border {{if dd.isOpen 'border-teal-500' 'border-gray-200'}} mb-3 hover:border-teal-500"
+      {{did-insert this.handleDidInsert}}
+    >
+      <div class="flex items-center mr-2">
+        {{#if dd.isOpen}}
+          {{svg-jar "code" class="text-teal-500 h-4 fill-current"}}
+        {{else}}
+          {{svg-jar "code" class="text-gray-400 h-4 fill-current group-hover:text-teal-500"}}
+        {{/if}}
+      </div>
+
+      <div class="text-base {{if dd.isOpen 'text-teal-500' 'text-gray-700'}} group-hover:text-teal-500">
+        Request Other
+      </div>
+    </div>
+  </dd.Trigger>
+  <dd.Content>
+    <CoursePage::StepList::SetupItem::RequestLanguageDropdown @course={{@course}} @user={{@user}} @onClose={{dd.actions.close}} />
+  </dd.Content>
+</BasicDropdown>

@@ -16,6 +16,14 @@
           {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}
         />
       {{/each}}
+
+      <CoursePage::StepList::SetupItem::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />
     </div>
+
+    <AnimatedContainer>
+      {{#animated-if this.requestedLanguages.firstObject use=this.requestedLanguagesPromptTransition}}
+        <CoursePage::StepList::SetupItem::RequestedLanguagesPrompt @requestedLanguages={{this.requestedLanguages}} />
+      {{/animated-if}}
+    </AnimatedContainer>
   {{/if}}
 </div>

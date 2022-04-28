@@ -25,11 +25,17 @@ function routes() {
     return schema.billingSessions.create({ url: 'https://test.com/billing_session' });
   });
 
+  this.get('/course-language-requests');
+  this.post('/course-language-requests');
+  this.delete('/course-language-requests/:id');
+
   this.post('/checkout-sessions', function (schema) {
     return schema.checkoutSessions.create({ url: 'https://test.com/checkout_session' });
   });
 
   this.get('/courses');
+
+  this.get('/languages');
 
   this.get('/leaderboard-entries', function (schema, request) {
     if (request.queryParams.team_id) {
