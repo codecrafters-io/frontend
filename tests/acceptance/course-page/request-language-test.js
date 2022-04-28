@@ -81,7 +81,6 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     assert.equal(currentURL(), '/courses/docker', 'current URL is course page URL');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
-    assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     await coursePage.setupItem.clickOnRequestLanguageButton();
     await coursePage.setupItem.requestLanguageDropdown.fillInLanguage('Unknown');
