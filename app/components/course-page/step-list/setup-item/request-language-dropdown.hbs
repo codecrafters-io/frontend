@@ -39,6 +39,17 @@
           {{/if}}
         </div>
       </div>
+    {{else}}
+      <div class="px-3 py-3 text-gray-600">
+        <div class="mb-3 flex items-center">
+          {{svg-jar "exclamation" class="w-4 h-4 mr-2 fill-current text-yellow-500"}}
+          <div>No languages found.</div>
+        </div>
+
+        <div>
+          Can't find the language you're looking for? <a href="mailto:hello@codecrafters.io" class="font-bold underline text-teal-600">Let us know!</a>
+        </div>
+      </div>
     {{/each}}
   </div>
 </div>
