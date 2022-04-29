@@ -1,10 +1,10 @@
 <div class="w-60 border border-teal-500 shadow rounded bg-white overflow-hidden mb-2" data-test-request-language-dropdown>
-  <div class="flex items-center px-3 text-gray-700 placeholder:text-gray-400 text-xs">
+  <div class="flex items-center px-3 text-gray-700 text-xs">
     {{! template-lint-disable require-input-label }}
     <Input
       @value={{this.searchQuery}}
       placeholder={{if this.selectedLanguages.firstObject "Change requested languages..." "Request languages..."}}
-      class="py-2 text-gray-700 placeholder:text-gray-400 text-xs outline-none w-full"
+      class="py-2 text-gray-700 placeholder-gray-400 text-xs outline-none w-full"
       {{did-insert this.handleInputDidInsert}}
     />
 
