@@ -6,18 +6,16 @@
   <div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} class="{{@class}}">
     {{#each this.items key="identifier" as |item index|}}
       {{#if (eq item.type "SetupItem")}}
-        <AnimatedContainer>
+        <AnimatedContainer class="mb-4">
           {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
             <CoursePage::StepList::SetupItem
               @course={{@course}}
-              @class="mb-4"
               @willBeReplaced={{this.activeItemWillBeReplaced}}
               @repository={{@repository}}
               @onRepositoryCreate={{@onRepositoryCreate}}
             />
           {{else}}
             <CoursePage::StepList::CollapsedItem
-              @class="mb-4"
               @number={{index}}
               @text="Setup"
               @onClick={{this.handleCollapsedSetupItemClick}}
@@ -28,18 +26,16 @@
       {{/if}}
 
       {{#if (eq item.type "CourseStageItem")}}
-        <AnimatedContainer>
+        <AnimatedContainer class="mb-4">
           {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
             <CoursePage::StepList::CourseStageItem
               @courseStage={{item.courseStage}}
               @repository={{@repository}}
-              @class="mb-4"
               @shouldShowUpgradePromptIfStagePending={{and this.shouldShowUpgradePromptForPendingPaidStages (not item.courseStage.isFree)}}
               @willBeReplaced={{this.activeItemWillBeReplaced}}
             />
           {{else}}
             <CoursePage::StepList::CollapsedItem
-              @class="mb-4"
               @number={{index}}
               @text={{item.courseStage.name}}
               @status={{if (eq index this.activeItemIndex) "active" (if (gt index this.activeItemIndex) "future" "completed")}}
@@ -50,12 +46,11 @@
       {{/if}}
 
       {{#if (eq item.type "CourseCompletedItem")}}
-        <AnimatedContainer>
+        <AnimatedContainer class="mb-4">
           {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
-            <CoursePage::StepList::CourseCompletedItem @repository={{@repository}} @class="mb-4" />
+            <CoursePage::StepList::CourseCompletedItem @repository={{@repository}} />
           {{else}}
             <CoursePage::StepList::CollapsedItem
-              @class="mb-4"
               @text="Challenge Complete!"
               @status={{if (eq index this.activeItemIndex) "active" "completed"}}
               @onClick={{this.handleCollapsedCourseCompletedItemClick}}
