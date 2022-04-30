@@ -8,6 +8,8 @@
 
 @import "modals.scss";
 
+@import "ember-animated/dist/styles/ember-animated.css";
+
 .ember-basic-dropdown-trigger {
   outline: none !important;
 }
