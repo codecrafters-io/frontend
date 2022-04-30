@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
-import fade from 'ember-animated/transitions/fade';
+import opacity from 'ember-animated/motions/opacity';
 
 class SetupItem {
   type = 'SetupItem';
@@ -42,7 +42,6 @@ export default class CoursePageContentStepListComponent extends Component {
   @tracked polledRepository;
   @tracked selectedItemIndex = null;
   @service store;
-  transition = fade;
   @service visibility;
 
   constructor() {
@@ -185,5 +184,24 @@ export default class CoursePageContentStepListComponent extends Component {
     }
 
     this.polledRepository = null;
+  }
+
+  // eslint-disable-next-line require-yield
+  *transition({ removedSprites, insertedSprites, keptSprites, duration }) {
+    removedSprites.map((s) => {
+      if (s.revealed) {
+        opacity(s, {
+          to: 0,
+          duration: duration / 2,
+        });
+      }
+    });
+
+    insertedSprites.concat(keptSprites).map((s) =>
+      opacity(s, {
+        to: 1,
+        duration: duration,
+      })
+    );
   }
 }
