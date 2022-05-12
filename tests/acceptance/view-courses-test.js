@@ -1,9 +1,10 @@
+import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import percySnapshot from '@percy/ember';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | view-courses', function (hooks) {
@@ -16,6 +17,8 @@ module('Acceptance | view-courses', function (hooks) {
 
     await coursesPage.visit();
     assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+
+    await percySnapshot('Courses Page');
 
     assert.notOk(coursesPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
@@ -87,10 +90,39 @@ module('Acceptance | view-courses', function (hooks) {
     await coursesPage.visit();
     assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
 
-    assert.equal(coursesPage.courseCards[0].name, 'Build Your Own Git');
+    await percySnapshot('Courses Page - Courses in progress');
+
+    assert.equal(coursesPage.courseCards[0].name, 'Build your own Git');
     assert.equal(coursesPage.courseCards[0].actionText, 'Resume');
-    assert.equal(coursesPage.courseCards[1].name, 'Build Your Own Redis');
+    assert.equal(coursesPage.courseCards[1].name, 'Build your own Redis');
     assert.equal(coursesPage.courseCards[1].actionText, 'Resume');
+    assert.equal(coursesPage.courseCards[2].actionText, 'Start');
+    assert.equal(coursesPage.courseCards[3].actionText, 'Start');
+  });
+
+  test('it renders completed course cards', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      createdAt: new Date('2022-01-01'),
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await coursesPage.visit();
+    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+
+    await percySnapshot('Courses Page - Course completed');
+
+    assert.equal(coursesPage.courseCards[0].name, 'Build your own Redis');
+    assert.equal(coursesPage.courseCards[0].actionText, 'Start Again');
+    assert.equal(coursesPage.courseCards[1].actionText, 'Start');
     assert.equal(coursesPage.courseCards[2].actionText, 'Start');
     assert.equal(coursesPage.courseCards[3].actionText, 'Start');
   });
