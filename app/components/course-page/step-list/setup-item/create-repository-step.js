@@ -28,6 +28,10 @@ To get started, let us know what language you'd like to attempt this challenge i
     `;
   }
 
+  get orderedLanguages() {
+    return this.args.repository.course.supportedLanguages.sortBy('name');
+  }
+
   get requestedLanguages() {
     return this.args.repository.user.courseLanguageRequests.filterBy('course', this.args.repository.course).mapBy('language');
   }

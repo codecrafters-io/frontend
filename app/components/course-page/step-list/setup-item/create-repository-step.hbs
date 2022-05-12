@@ -10,7 +10,7 @@
     </div>
   {{else}}
     <div class="flex items-center flex-wrap">
-      {{#each @repository.course.supportedLanguages as |supportedLanguage|}}
+      {{#each this.orderedLanguages as |supportedLanguage|}}
         <CoursePage::StepList::SetupItem::LanguageButton
           @language={{supportedLanguage}}
           {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}
