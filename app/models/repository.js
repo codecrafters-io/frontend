@@ -17,6 +17,14 @@ export default class RepositoryModel extends Model {
     return `codecrafters-${this.course.slug}-${this.language.slug}`;
   }
 
+  get completedStages() {
+    if (this.highestCompletedStage) {
+      return this.course.stages.filter((stage) => stage.position <= this.highestCompletedStage.position);
+    } else {
+      return [];
+    }
+  }
+
   get defaultStarterRepositoryUrl() {
     return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.supportedLanguages.firstObject.slug}`;
   }

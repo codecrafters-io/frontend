@@ -35,4 +35,8 @@ export default class CourseModel extends Model {
   get sortedStages() {
     return this.stages.sortBy('position');
   }
+
+  get numberOfStages() {
+    return this.stages.length;
+  }
 }

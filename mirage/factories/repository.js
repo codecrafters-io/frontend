@@ -23,6 +23,18 @@ export default Factory.extend({
     },
   }),
 
+  withAllStagesCompleted: trait({
+    afterCreate(repository, server) {
+      repository.course.stages.models.forEach((stage) => {
+        server.create('submission', 'withSuccessStatus', {
+          repository,
+          courseStage: stage,
+          createdAt: repository.createdAt, // 1s
+        });
+      });
+    },
+  }),
+
   withFirstStageCompleted: trait({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {

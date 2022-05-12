@@ -34,16 +34,24 @@
 
   {{! Footer }}
   <div class="flex items-center justify-between">
-    <CourseCard::DifficultyLabel @course={{@course}} />
+    {{#if this.lastPushedRepository}}
+      <CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} />
+    {{else}}
+      <CourseCard::DifficultyLabel @course={{@course}} />
+    {{/if}}
 
     <div class="flex items-center">
-      {{#if this.lastPushedRepository}}
-        <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>Resume</span>
-        {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
-      {{else}}
-        <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>Start</span>
-        {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
-      {{/if}}
+      <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
+        {{#if this.lastPushedRepository.allStagesAreComplete}}
+          Start Again
+        {{else if this.lastPushedRepository}}
+          Resume
+        {{else}}
+          Start
+        {{/if}}
+      </span>
+
+      {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
     </div>
   </div>
 </div>
