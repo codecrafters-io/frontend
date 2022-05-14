@@ -11,6 +11,12 @@ export default {
   hasRequestedLanguagesPrompt: isVisible('[data-test-requested-languages-prompt]'),
   isOnCreateRepositoryStep: isVisible('[data-test-create-repository-step]'),
   isOnCloneRepositoryStep: isVisible('[data-test-clone-repository-step]'),
+
+  requestedLanguagesPrompt: {
+    scope: '[data-test-requested-languages-prompt]',
+    willLetYouKnowText: text('[data-test-will-let-you-know-text]'),
+  },
+
   requestLanguageDropdown: requestLanguageDropdown,
   scope: '[data-test-setup-item]',
 

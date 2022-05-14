@@ -88,4 +88,51 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await animationsSettled();
     await percySnapshot('Unknown Request Language');
   });
+
+  test('does not see language prompt if requested language is now supported', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    this.server.create('course-language-request', {
+      user: this.server.schema.users.first(),
+      language: this.server.schema.languages.findBy({ name: 'Python' }),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await animationsSettled();
+
+    assert.notOk(coursePage.setupItem.hasRequestedLanguagesPrompt, 'does not requested languages prompt');
+  });
+
+  test('sees language prompt if subset of requested languages are still unsupported', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    this.server.create('course-language-request', {
+      user: this.server.schema.users.first(),
+      language: this.server.schema.languages.findBy({ name: 'Python' }),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+    });
+
+    this.server.create('course-language-request', {
+      user: this.server.schema.users.first(),
+      language: this.server.schema.languages.findBy({ name: 'Kotlin' }),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await animationsSettled();
+
+    assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+
+    assert.equal(
+      coursePage.setupItem.requestedLanguagesPrompt.willLetYouKnowText,
+      "We'll let you know once Kotlin support is available on this challenge"
+    );
+  });
 });
