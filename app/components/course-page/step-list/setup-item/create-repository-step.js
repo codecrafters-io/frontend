@@ -35,4 +35,10 @@ To get started, let us know what language you'd like to attempt this challenge i
   get requestedLanguages() {
     return this.args.repository.user.courseLanguageRequests.filterBy('course', this.args.repository.course).mapBy('language');
   }
+
+  get requestedAndUnsupportedLanguages() {
+    return this.requestedLanguages.filter((language) => {
+      return !this.args.repository.course.supportedLanguages.includes(language);
+    });
+  }
 }

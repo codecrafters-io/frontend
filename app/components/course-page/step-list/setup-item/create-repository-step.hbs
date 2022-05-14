@@ -21,8 +21,8 @@
     </div>
 
     <AnimatedContainer>
-      {{#animated-if this.requestedLanguages.firstObject use=this.requestedLanguagesPromptTransition}}
-        <CoursePage::StepList::SetupItem::RequestedLanguagesPrompt @requestedLanguages={{this.requestedLanguages}} />
+      {{#animated-if this.requestedAndUnsupportedLanguages.firstObject use=this.requestedLanguagesPromptTransition}}
+        <CoursePage::StepList::SetupItem::RequestedLanguagesPrompt @requestedAndUnsupportedLanguages={{this.requestedAndUnsupportedLanguages}} />
       {{/animated-if}}
     </AnimatedContainer>
   {{/if}}
