@@ -63,8 +63,10 @@ module.exports = {
     extend: {
       backdropDropShadow: ['hover', 'group-hover'],
       backgroundColor: ['active'],
-      border: ['group-hover'],
+      border: ['group-hover', 'active'],
+      borderColor: ['active'],
       borderWidth: ['hover'],
+      boxShadow: ['hover', 'group-hover', 'active'],
       display: ['group-hover'],
       filter: ['group-hover', 'hover'],
       fontStyle: ['group-hover'],
