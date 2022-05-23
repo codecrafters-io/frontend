@@ -71,7 +71,12 @@ function routes() {
     return schema.repositories.create(attrs);
   });
 
-  this.get('/submissions');
+  this.get('/submissions', function (schema, request) {
+    return schema.submissions
+      .all()
+      .filter((submission) => submission.repository.course.id === request.queryParams.course_id)
+      .filter((submission) => !request.queryParams.usernames || request.queryParams.usernames.includes(submission.repository.user.username));
+  });
 
   this.get('/subscriptions', function (schema) {
     return schema.subscriptions.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });

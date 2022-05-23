@@ -1,6 +1,6 @@
 <div class="border-b">
   <div class="container mx-auto lg:max-w-screen-lg pt-10 px-6">
-    <LinkTo @route="admin/courses" class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-6">
+    <LinkTo @route="admin.courses" class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-6">
       {{svg-jar "arrow-left" class="w-6 mr-2 fill-current"}}
       <span class="font-bold uppercase tracking-wide">Challenges</span>
     </LinkTo>
@@ -10,7 +10,7 @@
         <CourseLogo @course={{@course}} class="w-8 h-8" />
       </div>
 
-      <LinkTo @route="admin/course" @model={{@course.slug}} class="font-bold text-2xl text-gray-700">{{@course.name}}</LinkTo>
+      <LinkTo @route="admin.course.submissions" @model={{@course.slug}} class="font-bold text-2xl text-gray-700">{{@course.name}}</LinkTo>
     </div>
 
     <div class="flex items-center">
