@@ -47,9 +47,17 @@
               </span>
 
               <button
-                class="bg-gray-100 border border-gray-300 rounded p-1 inline-block text-gray-400 hover:shadow-xs hover:text-gray-500 active:shadow-sm active:bg-gray-200 transition-all"
+                class="mr-2 bg-gray-100 border border-gray-300 rounded p-1 inline-block text-gray-400 hover:shadow-xs hover:text-gray-500 active:shadow-sm active:bg-gray-200 transition-all"
                 type="button"
                 {{on "click" this.handleCopyRepositoryURLButtonClick}}
+              >
+                {{svg-jar "download" class="w-4 fill-current"}}
+              </button>
+
+              <button
+                class="bg-gray-100 border border-gray-300 rounded p-1 inline-block text-gray-400 hover:shadow-xs hover:text-gray-500 active:shadow-sm active:bg-gray-200 transition-all"
+                type="button"
+                {{on "click" this.handleViewCodeButtonClick}}
               >
                 {{svg-jar "code" class="w-4 fill-current"}}
               </button>

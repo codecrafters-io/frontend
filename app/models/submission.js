@@ -7,6 +7,7 @@ export default class SubmissionModel extends Model {
   @belongsTo('repository', { async: false, inverse: 'submissions' }) repository;
 
   @attr('date') createdAt;
+  @attr('string') githubStorageHtmlUrl;
   @attr('string') status;
 
   get isRecent() {
