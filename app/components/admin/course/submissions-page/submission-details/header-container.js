@@ -18,4 +18,9 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
   async handleCopyRepositoryURLButtonClick() {
     await navigator.clipboard.writeText(this.args.submission.repository.cloneUrl);
   }
+
+  @action
+  async handleViewCodeButtonClick() {
+    window.open(this.args.submission.githubStorageHtmlUrl, '_blank').focus();
+  }
 }

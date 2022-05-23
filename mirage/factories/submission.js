@@ -2,6 +2,7 @@ import { Factory, trait } from 'miragejs';
 
 export default Factory.extend({
   createdAt: () => new Date(),
+  githubStorageHtmlUrl: 'https://github.com',
 
   withFailureStatus: trait({
     status: 'failure',
