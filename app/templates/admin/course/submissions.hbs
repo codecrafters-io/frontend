@@ -2,6 +2,10 @@
 
 <div class="bg-gray-50">
   <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-10 px-6">
-    <Admin::Course::SubmissionsPage @course={{this.model.course}} @submissions={{this.model.submissions}} />
+    <Admin::Course::SubmissionsPage
+      @course={{this.model.course}}
+      @submissions={{this.model.submissions}}
+      @filteredLanguages={{this.filteredLanguages}}
+    />
   </div>
 </div>
