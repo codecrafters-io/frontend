@@ -68,4 +68,25 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     await visit('/admin/courses/redis/submissions?usernames=user1,user2');
     assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
+
+  test('it filters by languages(s) if given', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let user1 = this.server.create('user', { username: 'user1' });
+    let user2 = this.server.create('user', { username: 'user2' });
+    let user3 = this.server.create('user', { username: 'user3' });
+
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+    let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
+    let javascript = this.server.schema.languages.findBy({ slug: 'javascript' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: javascript, user: user3 });
+
+    await visit('/admin/courses/redis/submissions?languages=python,ruby');
+    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
+  });
 });

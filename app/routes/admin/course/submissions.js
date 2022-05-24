@@ -15,6 +15,10 @@ export default class AdminCourseSubmissionsRoute extends ApplicationRoute {
       filters.usernames = params.usernames.split(',');
     }
 
+    if (params.languages.length > 0) {
+      filters.language_slugs = params.languages.split(',');
+    }
+
     let submissions = await this.store.query('submission', {
       ...filters,
       ...{ include: 'evaluations,repository.language,repository.user,course-stage' },
