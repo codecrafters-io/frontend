@@ -26,6 +26,8 @@ export default class AdminCourseSubmissionsRoute extends ApplicationRoute {
 
     return {
       course: course,
+      languages: await this.store.findAll('language'),
+      filteredLanguageSlugs: filters.language_slugs || [],
       submissions: submissions,
     };
   }
