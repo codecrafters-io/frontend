@@ -6,6 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      deployments: write
+
     steps:
       - uses: actions/checkout@v2
 
@@ -61,6 +64,14 @@ jobs:
           S3_BUCKET: codecrafters-ember-app-builds-staging
           S3_BUCKET_REGION: us-east-1
 
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: ${{ github.token }}
+          environment-url: https://app.staging.codecrafters.io/?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          environment: Preview - Staging
+
       - name: Deploy to Production
         run: ./node_modules/.bin/ember deploy production
         env:
@@ -72,3 +83,11 @@ jobs:
           REDIS_URL: ${{ steps.fetch-production-redis-url.outputs.url }}
           S3_BUCKET: codecrafters-ember-app-builds-production
           S3_BUCKET_REGION: us-east-1
+
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: ${{ github.token }}
+          environment-url: https://app.codecrafters.io/?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          environment: Preview - Production
