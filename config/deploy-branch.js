@@ -3,7 +3,7 @@ module.exports = function (deployTarget) {
   const commitSha = process.env.EMBER_DEPLOY_COMMIT_SHA;
 
   if (deployTarget !== 'production') {
-    throw new Error(`Invalid deployTarget: ${deployTarget}`);
+    throw new Error(`Invalid deployTarget for deploy-branch: ${deployTarget}`);
   }
 
   const ENV = {

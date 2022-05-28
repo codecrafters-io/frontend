@@ -2,7 +2,7 @@ const VALID_DEPLOY_TARGETS = ['development', 'development-postbuild'];
 
 module.exports = function (deployTarget) {
   if (VALID_DEPLOY_TARGETS.indexOf(deployTarget) === -1) {
-    throw new Error(`Invalid deployTarget: ${deployTarget}`);
+    throw new Error(`Invalid deployTarget for deploy-development: ${deployTarget}`);
   }
 
   const ENV = {
