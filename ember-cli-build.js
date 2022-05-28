@@ -14,7 +14,9 @@ const purgeCSS = {
       './app/templates/**/*.hbs',
       './app/components/**/*.hbs',
     ],
+
     defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/.]+/g) || [],
+
     safelist: {
       greedy: [/ember-basic-dropdown-/, /prose/],
       deep: [
@@ -32,6 +34,12 @@ const purgeCSS = {
 
 module.exports = function (defaults) {
   const appOptions = {
+    emberCLIDeploy: {
+      runOnPostBuild: EmberApp.env() === 'development' ? 'development-postbuild' : false,
+      configFile: 'config/deploy.js',
+      shouldActivate: true,
+    },
+
     postcssOptions: {
       compile: {
         plugins: [

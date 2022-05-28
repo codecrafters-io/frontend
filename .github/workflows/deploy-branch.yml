@@ -1,0 +1,118 @@
+name: Deploy Branch
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - run: npm ci --prefer-offline --ignore-scripts
+
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v5.2
+
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Get Staging Redis URL
+        id: fetch-staging-redis-url
+        run: echo "::set-output name=url::$(heroku config:get -a codecrafters-server-stg EMBER_STORE_REDIS_URL)"
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+      - name: Get Production Redis URL
+        id: fetch-production-redis-url
+        run: echo "::set-output name=url::$(heroku config:get -a codecrafters-server EMBER_STORE_REDIS_URL)"
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+      - name: Start staging deployment
+        uses: bobheadxi/deployments@v1
+        id: start-staging-deployment
+        with:
+          step: start
+          token: ${{ github.token }}
+          env: staging-preview
+
+      - name: Deploy to Staging
+        run: ./node_modules/.bin/ember deploy production
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          CDN_BASE_URL: "https://djmiqp4suql3j.cloudfront.net/codecrafters-frontend/"
+          EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
+          EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
+          REDIS_URL: ${{ steps.fetch-staging-redis-url.outputs.url }}
+          S3_BUCKET: codecrafters-ember-app-builds-staging
+          S3_BUCKET_REGION: us-east-1
+          environment: staging-preview
+
+      - name: Finish staging deployment
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          status: ${{ job.status }}
+          step: finish
+          deployment_id: ${{ steps.start-staging-deployment.outputs.deployment_id }}
+          token: ${{ github.token }}
+          env: ${{ steps.start-staging-deployment.outputs.env }}
+          env_url: https://app.staging.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          override: false
+
+      - name: Start production deployment
+        uses: bobheadxi/deployments@v1
+        id: start-production-deployment
+        with:
+          step: start
+          token: ${{ github.token }}
+          env: production-preview
+
+      - name: Deploy to Production
+        run: ./node_modules/.bin/ember deploy production
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          CDN_BASE_URL: "https://d240kcsjfzqrhl.cloudfront.net/codecrafters-frontend/"
+          EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
+          EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
+          REDIS_URL: ${{ steps.fetch-production-redis-url.outputs.url }}
+          S3_BUCKET: codecrafters-ember-app-builds-production
+          S3_BUCKET_REGION: us-east-1
+
+      - name: Finish staging deployment
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          status: ${{ job.status }}
+          step: finish
+          deployment_id: ${{ steps.start-production-deployment.outputs.deployment_id }}
+          token: ${{ github.token }}
+          env: ${{ steps.start-production-deployment.outputs.env }}
+          env_url: https://app.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          override: false
