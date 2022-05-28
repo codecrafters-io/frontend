@@ -66,11 +66,10 @@ jobs:
 
       - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
-        id: deployment
         with:
           token: ${{ github.token }}
           environment-url: https://app.staging.codecrafters.io/?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
-          environment: Preview - Staging
+          environment: staging-preview
 
       - name: Deploy to Production
         run: ./node_modules/.bin/ember deploy production
@@ -86,8 +85,7 @@ jobs:
 
       - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
-        id: deployment
         with:
           token: ${{ github.token }}
           environment-url: https://app.codecrafters.io/?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
-          environment: Preview - Production
+          environment: production-preview
