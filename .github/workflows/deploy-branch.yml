@@ -33,21 +33,41 @@ jobs:
         id: branch-name
         uses: tj-actions/branch-names@v5.2
 
-      - name: Get Redis URL
-        id: fetch-redis-url
+      - name: Get Staging Redis URL
+        id: fetch-staging-redis-url
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
           echo "::set-output name=url::$(heroku config:get -a codecrafters-server-stg EMBER_STORE_REDIS_URL)"
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
-      - run: ./node_modules/.bin/ember deploy production
+      - name: Get Production Redis URL
+        id: fetch-production-redis-url
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+          echo "::set-output name=url::$(heroku config:get -a codecrafters-server EMBER_STORE_REDIS_URL)"
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+      - name: Deploy to Staging
+        run: ./node_modules/.bin/ember deploy production
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           CDN_BASE_URL: "https://djmiqp4suql3j.cloudfront.net/codecrafters-frontend/"
           EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
           EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
-          REDIS_URL: ${{ steps.fetch-redis-url.outputs.url }}
+          REDIS_URL: ${{ steps.fetch-staging-redis-url.outputs.url }}
           S3_BUCKET: codecrafters-ember-app-builds-staging
+          S3_BUCKET_REGION: us-east-1
+
+      - run: Deploy to Production
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          CDN_BASE_URL: "https://d240kcsjfzqrhl.cloudfront.net/codecrafters-frontend/"
+          EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
+          EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
+          REDIS_URL: ${{ steps.fetch-production-redis-url.outputs.url }}
+          S3_BUCKET: codecrafters-ember-app-builds-production
           S3_BUCKET_REGION: us-east-1
