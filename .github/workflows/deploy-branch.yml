@@ -53,6 +53,14 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
+      - name: Start staging deployment
+        uses: bobheadxi/deployments@v1
+        id: start-deployment-staging
+        with:
+          step: start
+          token: ${{ github.token }}
+          env: staging-preview
+
       - name: Deploy to Staging
         run: ./node_modules/.bin/ember deploy production
         env:
@@ -64,13 +72,25 @@ jobs:
           REDIS_URL: ${{ steps.fetch-staging-redis-url.outputs.url }}
           S3_BUCKET: codecrafters-ember-app-builds-staging
           S3_BUCKET_REGION: us-east-1
-
-      - uses: chrnorm/deployment-action@v2
-        name: Create GitHub deployment
-        with:
-          token: ${{ github.token }}
-          environment-url: https://app.staging.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
           environment: staging-preview
+
+      - name: Finish staging deployment
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          deployment_id: ${{ steps.start-staging-deployment.outputs.deployment_id }}
+          token: ${{ github.token }}
+          env: ${{ steps.start-staging-deployment.outputs.env }}
+          env_url: https://app.staging.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+
+      - name: Start production deployment
+        uses: bobheadxi/deployments@v1
+        id: start-deployment-production
+        with:
+          step: start
+          token: ${{ github.token }}
+          env: production-preview
 
       - name: Deploy to Production
         run: ./node_modules/.bin/ember deploy production
@@ -84,9 +104,12 @@ jobs:
           S3_BUCKET: codecrafters-ember-app-builds-production
           S3_BUCKET_REGION: us-east-1
 
-      - uses: chrnorm/deployment-action@v2
-        name: Create GitHub deployment
+      - name: Finish staging deployment
+        uses: bobheadxi/deployments@v1
+        if: always()
         with:
+          step: finish
+          deployment_id: ${{ steps.start-production-deployment.outputs.deployment_id }}
           token: ${{ github.token }}
-          environment-url: https://app.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
-          environment: production-preview
+          env: ${{ steps.start-production-deployment.outputs.env }}
+          env_url: https://app.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
