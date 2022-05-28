@@ -83,6 +83,7 @@ jobs:
           token: ${{ github.token }}
           env: ${{ steps.start-staging-deployment.outputs.env }}
           env_url: https://app.staging.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          override: false
 
       - name: Start production deployment
         uses: bobheadxi/deployments@v1
@@ -114,3 +115,4 @@ jobs:
           token: ${{ github.token }}
           env: ${{ steps.start-production-deployment.outputs.env }}
           env_url: https://app.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          override: false
