@@ -61,7 +61,8 @@ jobs:
           S3_BUCKET: codecrafters-ember-app-builds-staging
           S3_BUCKET_REGION: us-east-1
 
-      - run: Deploy to Production
+      - name: Deploy to Production
+        run: ./node_modules/.bin/ember deploy production
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
