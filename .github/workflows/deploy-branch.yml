@@ -77,6 +77,7 @@ jobs:
         uses: bobheadxi/deployments@v1
         if: always()
         with:
+          status: ${{ job.status }}
           step: finish
           deployment_id: ${{ steps.start-staging-deployment.outputs.deployment_id }}
           token: ${{ github.token }}
@@ -107,6 +108,7 @@ jobs:
         uses: bobheadxi/deployments@v1
         if: always()
         with:
+          status: ${{ job.status }}
           step: finish
           deployment_id: ${{ steps.start-production-deployment.outputs.deployment_id }}
           token: ${{ github.token }}
