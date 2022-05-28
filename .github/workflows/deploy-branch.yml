@@ -69,7 +69,7 @@ jobs:
         name: Create GitHub deployment
         with:
           token: ${{ github.token }}
-          environment-url: https://app.staging.codecrafters.io/?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          environment-url: https://app.staging.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
           environment: staging-preview
 
       - name: Deploy to Production
@@ -88,5 +88,5 @@ jobs:
         name: Create GitHub deployment
         with:
           token: ${{ github.token }}
-          environment-url: https://app.codecrafters.io/?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
+          environment-url: https://app.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
           environment: production-preview
