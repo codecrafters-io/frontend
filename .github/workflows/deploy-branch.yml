@@ -55,7 +55,7 @@ jobs:
 
       - name: Start staging deployment
         uses: bobheadxi/deployments@v1
-        id: start-deployment-staging
+        id: start-staging-deployment
         with:
           step: start
           token: ${{ github.token }}
@@ -86,7 +86,7 @@ jobs:
 
       - name: Start production deployment
         uses: bobheadxi/deployments@v1
-        id: start-deployment-production
+        id: start-production-deployment
         with:
           step: start
           token: ${{ github.token }}
