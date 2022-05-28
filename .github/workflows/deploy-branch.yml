@@ -46,7 +46,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           CDN_BASE_URL: "https://djmiqp4suql3j.cloudfront.net/"
-          EMBER_APP_DEPLOY_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
+          EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
           REDIS_URL: ${{ steps.fetch-redis-url.outputs.url }}
           S3_BUCKET: codecrafters-ember-app-builds-staging
           S3_BUCKET_REGION: us-east-1
