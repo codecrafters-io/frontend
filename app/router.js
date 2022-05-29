@@ -18,6 +18,7 @@ Router.map(function () {
   this.route('courses');
   this.route('course', { path: '/courses/:course_slug' });
   this.route('course-overview', { path: '/courses/:course_slug/overview' });
+  this.route('course-stage-solution', { path: '/courses/:course_slug/solutions/:stage_slug' });
 
   this.route('team', { path: '/teams/:team_id' });
 });
