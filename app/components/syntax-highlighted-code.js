@@ -3,12 +3,10 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import go from 'highlight.js/lib/languages/go';
-import diff from 'highlight.js/lib/languages/diff';
-import hljs from 'highlight.js/lib/core';
-
-hljs.registerLanguage('diff', diff);
-hljs.registerLanguage('go', go);
+import Prism from 'prismjs';
+import 'prismjs/plugins/diff-highlight/prism-diff-highlight';
+import 'prismjs/components/prism-ruby';
+import 'prismjs/components/prism-diff';
 
 export default class SyntaxHighlightedCodeComponent extends Component {
   get code() {
@@ -33,6 +31,6 @@ export default class SyntaxHighlightedCodeComponent extends Component {
   }
 
   get highlightedHtml() {
-    return htmlSafe(hljs.highlight('diff', this.code).value);
+    return htmlSafe(Prism.highlight(this.code, Prism.languages.diff, 'diff-ruby'));
   }
 }
