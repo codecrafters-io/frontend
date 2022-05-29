@@ -8,12 +8,16 @@
 </div>
 
 <div class="flex items-center mb-6">
-  <div class="flex items-center px-3 py-2 mr-2 border-b-2 border-teal-500 text-sm">
-    {{svg-jar "code" class="text-gray-600 w-5 mr-2 fill-current text-gray-600"}}
-    <span class="font-medium text-gray-700">Diff</span>
-  </div>
-  <div class="flex items-center px-3 py-2 mr-2 border-b-2 border-gray-200 text-sm">
-    {{svg-jar "academic-cap" class="text-gray-400 w-5 mr-2 fill-current text-gray-400"}}
-    <span class="text-gray-600">Explanation</span>
-  </div>
+  <LinkTo @route="course-stage-solution.diff">
+    <div class="flex items-center px-3 py-2 mr-2 border-b-2 text-sm {{if this.diffLinkIsActive "border-teal-500" "border-gray-200"}}">
+      {{svg-jar "code" class="text-gray-600 w-5 mr-2 fill-current text-gray-600"}}
+      <span class={{if this.diffLinkIsActive "font-medium text-gray-700" "text-gray-600"}}>Diff</span>
+    </div>
+  </LinkTo>
+  <LinkTo @route="course-stage-solution.explanation">
+    <div class="flex items-center px-3 py-2 mr-2 border-b-2 border-gray-200 text-sm {{if this.explanationLinkIsActive "border-teal-500" "border-gray-200"}}">
+      {{svg-jar "academic-cap" class="text-gray-400 w-5 mr-2 fill-current text-gray-400"}}
+      <span class={{if this.explanationLinkIsActive "font-medium text-gray-700" "text-gray-600"}}>Explanation</span>
+    </div>
+  </LinkTo>
 </div>

@@ -15,8 +15,7 @@ module('Acceptance | view-course-stage-solution', function (hooks) {
     testScenario(this.server);
 
     await visit('/courses/redis/solutions/ping-pong-multiple');
-
-    assert.equal(currentURL(), '/courses/redis/solutions/ping-pong-multiple');
+    assert.equal(currentURL(), '/courses/redis/solutions/ping-pong-multiple/diff');
 
     await this.pauseTest();
   });
