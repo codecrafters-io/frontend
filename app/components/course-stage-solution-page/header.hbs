@@ -1,4 +1,8 @@
-<LinkTo @route="course" @model={{@solution.courseStage.course.slug}} class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-4">
+<LinkTo
+  @route="course"
+  @model={{@solution.courseStage.course.slug}}
+  class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-4"
+>
   {{svg-jar "arrow-left" class="w-6 mr-2 fill-current"}}
   <span class="font-bold uppercase tracking-wide">{{@solution.courseStage.course.name}}</span>
 </LinkTo>

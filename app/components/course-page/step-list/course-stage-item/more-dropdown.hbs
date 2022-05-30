@@ -11,12 +11,9 @@
         {{on "click" (fn this.handleViewSolutionLinkClicked null dd.actions)}}
       >
         <div class="mr-8">
-          <span class="{{if this.viewSolutionLinkIsEnabled "text-gray-700" "text-gray-500"}}">
+          <span class="{{if this.viewSolutionLinkIsEnabled 'text-gray-700' 'text-gray-500'}}">
             View Solution
           </span>
-
-          {{#unless this.viewSolutionLinkIsEnabled}}
-          {{/unless}}
         </div>
 
         {{#if this.viewSolutionLinkIsEnabled}}
