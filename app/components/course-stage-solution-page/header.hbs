@@ -1,0 +1,27 @@
+<LinkTo @route="course" class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-4">
+  {{svg-jar "arrow-left" class="w-6 mr-2 fill-current"}}
+  <span class="font-bold uppercase tracking-wide">Build your own Redis</span>
+</LinkTo>
+
+<div class="mb-6 text-2xl">
+  <span class="text-gray-600">Solution:</span>
+  <span class="font-bold text-gray-700"> Respond to multiple PINGs</span>
+</div>
+
+<div class="flex items-center mb-6">
+  <LinkTo @route="course-stage-solution.diff">
+    <div class="flex items-center px-3 py-2 mr-2 border-b-2 text-sm {{if this.diffLinkIsActive 'border-teal-500' 'border-gray-200'}}">
+      {{svg-jar "code" class="text-gray-600 w-5 mr-2 fill-current text-gray-600"}}
+      <span class={{if this.diffLinkIsActive "font-medium text-gray-700" "text-gray-600"}}>Diff</span>
+    </div>
+  </LinkTo>
+  <LinkTo @route="course-stage-solution.explanation">
+    <div
+      class="flex items-center px-3 py-2 mr-2 border-b-2 border-gray-200 text-sm
+        {{if this.explanationLinkIsActive 'border-teal-500' 'border-gray-200'}}"
+    >
+      {{svg-jar "academic-cap" class="text-gray-400 w-5 mr-2 fill-current text-gray-400"}}
+      <span class={{if this.explanationLinkIsActive "font-medium text-gray-700" "text-gray-600"}}>Explanation</span>
+    </div>
+  </LinkTo>
+</div>
