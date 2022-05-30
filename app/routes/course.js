@@ -7,7 +7,7 @@ export default class CourseRoute extends ApplicationRoute {
   @service store;
 
   async model(params) {
-    let courses = this.store.findAll('course', { include: 'supported-languages,stages' });
+    let courses = this.store.findAll('course', { include: 'stages.solutions,supported-languages' });
 
     let repositories = this.store.findAll('repository', {
       include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
