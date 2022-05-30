@@ -5,6 +5,10 @@ export default class LanguageModel extends Model {
   @attr('string') name;
   @attr('string') slug;
 
+  get isGo() {
+    return this.slug === 'go';
+  }
+
   get grayLogoUrl() {
     return {
       c: '/assets/images/language-logos/c-gray-500.svg',

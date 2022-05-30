@@ -103,6 +103,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.repository.activeStage === this.args.courseStage;
   }
 
+  get shouldShowMoreDropdown() {
+    return !this.args.courseStage.isFirst && this.args.repository.get('language.isGo') && this.args.repository.user.isStaff; // TODO: Also filter by staff?
+  }
+
   get shouldShowFirstStageHints() {
     return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
   }
