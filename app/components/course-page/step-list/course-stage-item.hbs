@@ -14,6 +14,12 @@
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
         {{/if}}
       </div>
+
+      <div>
+        {{#if this.shouldShowMoreDropdown}}
+          <CoursePage::StepList::CourseStageItem::MoreDropdown @courseStage={{@courseStage}} @repository={{@repository}} />
+        {{/if}}
+      </div>
     </div>
 
     {{#if (and @shouldShowUpgradePromptIfStagePending (not this.statusIsComplete))}}

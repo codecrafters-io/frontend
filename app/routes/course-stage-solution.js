@@ -5,7 +5,7 @@ export default class CourseStageSolutionRoute extends ApplicationRoute {
   @service store;
 
   async model() {
-    const courses = await this.store.findAll('course', { include: 'stages.solutions,supported-languages' });
+    const courses = await this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
     const course = courses.findBy('slug', this.paramsFor('course-stage-solution').course_slug);
     const stage = course.stages.findBy('slug', this.paramsFor('course-stage-solution').stage_slug);
 
