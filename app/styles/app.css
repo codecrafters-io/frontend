@@ -9,9 +9,11 @@
 @import "modals.scss";
 @import "course-stage-solution-page.scss";
 
+/* purgecss start ignore */
 @import "ember-animated/dist/styles/ember-animated.css";
 @import "prismjs/themes/prism.css";
 @import "prismjs/plugins/diff-highlight/prism-diff-highlight.min.css";
+/* purgecss end ignore */
 
 .ember-basic-dropdown-trigger {
   outline: none !important;
