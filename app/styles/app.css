@@ -6,7 +6,6 @@
 @import "tailwindcss/utilities";
 @import "utilities.css";
 
-@import "highlight-js-overrides.scss";
 @import "modals.scss";
 
 @import "ember-animated/dist/styles/ember-animated.css";
