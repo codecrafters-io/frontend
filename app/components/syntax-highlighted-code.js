@@ -1,7 +1,4 @@
-import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import Prism from 'prismjs';
 import 'prismjs/plugins/diff-highlight/prism-diff-highlight';

@@ -84,11 +84,11 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-qunit": "^6.2.0",
-    "highlight.js": "^11.5.1",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
     "postcss-import": "^14.0.2",
     "prettier": "^2.6.2",
+    "prismjs": "^1.28.0",
     "qunit": "^2.18.2",
     "qunit-assertions-extra": "^0.8.5",
     "qunit-dom": "^2.0.0",
@@ -107,7 +107,6 @@
     "ansi_up": "^5.1.0",
     "fuse.js": "^6.5.3",
     "mustache": "^4.2.0",
-    "prismjs": "^1.28.0",
     "showdown": "^2.1.0"
   }
 }

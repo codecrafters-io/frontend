@@ -1,5 +1,3 @@
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
