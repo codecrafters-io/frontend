@@ -5,7 +5,6 @@ import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | view-course-stage-solution', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,7 +15,5 @@ module('Acceptance | view-course-stage-solution', function (hooks) {
 
     await visit('/courses/redis/solutions/ping-pong-multiple');
     assert.equal(currentURL(), '/courses/redis/solutions/ping-pong-multiple/diff');
-
-    await this.pauseTest();
   });
 });
