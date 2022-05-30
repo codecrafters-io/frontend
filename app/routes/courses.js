@@ -16,7 +16,7 @@ export default class CoursesRoute extends ApplicationRoute {
       });
     }
 
-    modelPromises.courses = this.store.findAll('course', { include: 'stages,supported-languages' });
+    modelPromises.courses = this.store.findAll('course', { include: 'stages.solutions,supported-languages' });
 
     return RSVP.hash(modelPromises);
   }

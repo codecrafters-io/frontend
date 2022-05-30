@@ -5,6 +5,6 @@ export default class CourseStageSolutionIndexRoute extends ApplicationRoute {
   @service router;
 
   beforeModel() {
-    this.router.transitionTo('course-stage-solution.diff', this.paramsFor('course-stage-solution'));
+    this.router.transitionTo('course-stage-solution.diff');
   }
 }

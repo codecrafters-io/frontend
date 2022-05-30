@@ -1,2 +1,11 @@
-<CourseStageSolutionPage::FileDiffContainer />
-<CourseStageSolutionPage::FileDiffContainer />
+{{#each @model.changedFiles as |changedFile|}}
+  <div class="mb-4 bg-white shadow-sm rounded border border-gray-300">
+    <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+      <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+    </div>
+
+    <div class="p-4 text-sm">
+      <SyntaxHighlightedCode @code={{changedFile.diff}} @language="diff-ruby" />
+    </div>
+  </div>
+{{/each}}

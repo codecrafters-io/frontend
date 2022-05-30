@@ -11,7 +11,7 @@ export default class CourseOverviewRoute extends ApplicationRoute {
         course: this.store.peekAll('course').findBy('slug', params.course_slug),
       };
     } else {
-      let courses = await this.store.findAll('course', { include: 'supported-languages,stages' });
+      let courses = await this.store.findAll('course', { include: 'stages.solutions,supported-languages' });
       let course = courses.findBy('slug', params.course_slug);
 
       if (this.currentUser.isAuthenticated) {
