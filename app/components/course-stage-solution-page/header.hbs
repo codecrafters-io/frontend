@@ -1,11 +1,11 @@
 <LinkTo @route="course" class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-4">
   {{svg-jar "arrow-left" class="w-6 mr-2 fill-current"}}
-  <span class="font-bold uppercase tracking-wide">Build your own Redis</span>
+  <span class="font-bold uppercase tracking-wide">{{@solution.courseStage.course.name}}</span>
 </LinkTo>
 
 <div class="mb-6 text-2xl">
   <span class="text-gray-600">Solution:</span>
-  <span class="font-bold text-gray-700"> Respond to multiple PINGs</span>
+  <span class="font-bold text-gray-700">{{@solution.courseStage.name}}</span>
 </div>
 
 <div class="flex items-center mb-6">

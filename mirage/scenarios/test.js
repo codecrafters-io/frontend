@@ -17,9 +17,15 @@ export default function (server) {
 
   createLanguages(server);
 
-  createCourseFromData(server, redisCourseData);
+  let redis = createCourseFromData(server, redisCourseData);
   createCourseFromData(server, dockerCourseData);
   createCourseFromData(server, gitCourseData);
   createCourseFromData(server, sqliteCourseData);
   createCourseFromData(server, reactCourseData);
+
+  // TODO: Fetch this programmatically
+  server.create('course-stage-solution', {
+    courseStage: redis.stages.models.filter((stage) => stage.slug === 'ping-pong-multiple').firstObject,
+    language: server.schema.languages.findBy({ slug: 'go' }),
+  });
 }

@@ -19,6 +19,7 @@ export default function createCourseFromData(server, courseData) {
       name: courseStageData.name,
       marketingMarkdown: courseStageData.marketing_md,
       position: courseStagePosition,
+      slug: courseStageData.slug,
       descriptionMarkdownTemplate: courseStageData.description_md,
       difficulty: courseStageData.difficulty,
       isFree: courseStagePosition <= 2,
@@ -26,4 +27,6 @@ export default function createCourseFromData(server, courseData) {
 
     courseStagePosition++;
   }
+
+  return course;
 }
