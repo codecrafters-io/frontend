@@ -11,10 +11,11 @@
     </div>
     <div class="w-80 flex-shrink-0 hidden lg:block">
       {{! TODO: Use TrackLeaderboard }}
-      <CourseLeaderboard @class="ml-2 mb-6" @course={{@model.courses.firstObject}} @repositories={{array}} />
+      <CourseLeaderboard @class="ml-2 mb-6" @course={{this.sortedCourses.firstObject}} @repositories={{array}} />
 
+      {{! TODO: Show testimonials for track instead of courses? }}
       <div class="mx-6">
-        {{#each @model.courses.firstObject.testimonials as |testimonial|}}
+        {{#each this.sortedCourses.firstObject.testimonials as |testimonial|}}
           <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
         {{/each}}
       </div>
