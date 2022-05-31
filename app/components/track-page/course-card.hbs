@@ -1,5 +1,5 @@
 <TrackPage::Card
-  @title={{@course.name}}
+  @title="{{@course.name}}"
   @number={{@number}}
   @recentParticipants={{this.recentParticipants}}
   class={{if this.shouldMaskContents "h-96 overflow-hidden" "h-auto"}}
@@ -13,7 +13,7 @@
   {{/each}}
 
   {{#if this.shouldMaskContents}}
-    <div class="absolute inset-0 vertical-mask p-4 flex items-end justify-center">
+    <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
       <TrackPage::CourseCard::SignupToPreviewButton @language={{@language}} />
     </div>
   {{/if}}
