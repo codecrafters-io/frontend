@@ -77,7 +77,7 @@ export default class LanguageModel extends Model {
 
   get trackIntroductionMarkdown() {
     return `
-Experience Golang by building 4 different devtools from scratch. The projects are hands-on and require dedication,
+Experience Go by building 4 different devtools from scratch. The projects are hands-on and require dedication,
 but the benefits are worth it. In this section, we will cover the CodeCrafters philosophy and the journey you will
 go through.
     `;
