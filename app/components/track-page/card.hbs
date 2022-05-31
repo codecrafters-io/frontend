@@ -1,20 +1,20 @@
 <div class="bg-white rounded-md shadow-sm border border-gray-200 relative" ...attributes>
   <div class="p-4 md:p-6">
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex items-center">
-        <div class="text-xl font-bold text-gray-700">
+    <div class="flex items-start justify-between">
+      <div class="flex items-center flex-wrap">
+        <div class="text-lg md:text-xl font-bold text-gray-700 mr-3 mb-4">
           {{@title}}
         </div>
 
         {{#if @recentParticipants.firstObject}}
-          <div class="ml-3 flex -space-x-3 hover:space-x-1 items-center">
+          <div class="flex -space-x-3 hover:space-x-1 items-center mb-4">
             {{#each @recentParticipants as |user|}}
               <TrackPage::Header::RecentParticipantAvatar @user={{user}} />
             {{/each}}
           </div>
         {{/if}}
       </div>
-      <div class="font-bold text-gray-300 text-xl group-hover:text-gray-400 transition-colors">
+      <div class="font-bold pl-4 text-gray-300 text-lg md:text-xl group-hover:text-gray-400 transition-colors mb-4">
         #{{@number}}
       </div>
     </div>
