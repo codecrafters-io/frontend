@@ -1,24 +1,18 @@
-<div
-  class="bg-white rounded-md shadow-sm border border-gray-200 relative w-full {{if this.shouldMaskContents 'h-96 overflow-hidden' 'h-auto'}}"
-  ...attributes
->
-  <div class="p-4 md:p-6">
-    <div class="text-xl font-bold text-gray-700 mb-4">
-      {{@course.name}}
-    </div>
+<TrackPage::Card @title="{{@course.name}}" @number={{@number}} @recentParticipants={{this.recentParticipants}}>
+  <div class="leading-6 prose mb-6">
+    {{this.introductionHtml}}
+  </div>
 
-    <div class="leading-6 prose mb-6">
-      {{this.introductionHtml}}
-    </div>
-
+  <div class={{if this.shouldMaskContents "h-60 overflow-hidden" "h-auto"}}>
     {{#each @course.stages as |stage|}}
       <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} />
     {{/each}}
+
+    {{#if this.shouldMaskContents}}
+      <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
+        <TrackPage::CourseCard::SignupToPreviewButton @language={{@language}} />
+      </div>
+    {{/if}}
   </div>
 
-  {{#if this.shouldMaskContents}}
-    <div class="absolute inset-0 vertical-mask p-4 flex items-end justify-center">
-      <TrackPage::CourseCard::SignupToPreviewButton @language={{@language}} />
-    </div>
-  {{/if}}
-</div>
+</TrackPage::Card>

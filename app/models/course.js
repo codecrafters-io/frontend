@@ -56,4 +56,15 @@ export default class CourseModel extends Model {
   get numberOfStages() {
     return this.stages.length;
   }
+
+  get sortPositionForTrack() {
+    return (
+      {
+        redis: 1,
+        docker: 2,
+        git: 3,
+        sqlite: 4,
+      }[this.slug] || 5
+    );
+  }
 }

@@ -1,6 +1,8 @@
 import Model from '@ember-data/model';
+import showdown from 'showdown';
 import { attr } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
+import { htmlSafe } from '@ember/template';
 
 export default class LanguageModel extends Model {
   @attr('string') name;
@@ -67,19 +69,44 @@ export default class LanguageModel extends Model {
     }[this.slug];
   }
 
-  // TODO: Move this to the language model
+  get trackDescriptionHTML() {
+    return htmlSafe(new showdown.Converter().makeHtml(this.trackDescriptionMarkdown));
+  }
+
   get trackDescriptionMarkdown() {
-    return `
-      Go mastery exercises, featuring unique Go features and recommended patterns, including Goroutines, gRPC, and
-      Channel buffers. Become your team’s resident Go-expert.
+    if (this.isGo) {
+      return `
+Go mastery exercises, featuring unique Go features and recommended patterns, including Goroutines, gRPC, and
+Channel buffers. Become your team’s resident Go-expert.
      `;
+    } else {
+      return `
+${this.name} mastery exercises. Become your team's resident ${this.name} expert.
+      `;
+    }
   }
 
   get trackIntroductionMarkdown() {
-    return `
+    if (this.isGo) {
+      return `
 Experience Go by building 4 different devtools from scratch. The projects are hands-on and require dedication,
 but the benefits are worth it. In this section, we will cover the CodeCrafters philosophy and the journey you will
 go through.
     `;
+    } else {
+      return `
+Learn ${this.name} by building popular devtools from scratch. The projects are hands-on and require dedication,
+but the benefits are worth it. In this section, we will cover the CodeCrafters philosophy and the journey you will
+go through.
+    `;
+    }
+  }
+
+  get trackIntroductionVideoId() {
+    if (this.isGo) {
+      return '705760188';
+    } else {
+      return '705760188';
+    }
   }
 }
