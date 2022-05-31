@@ -7,7 +7,7 @@
     <div class="w-0.5 bg-gray-200 mt-2 flex-grow group-hover:bg-gray-300"></div>
   </div>
 
-  <TrackPage::IntroductionCard @language={{@language}} @courses={{@courses}} />
+  <TrackPage::IntroductionCard @language={{@language}} @courses={{@courses}} @number="1" />
 </div>
 
 {{#each @courses as |course index|}}
@@ -22,6 +22,6 @@
       {{/if}}
     </div>
 
-    <TrackPage::CourseCard @language={{@language}} @course={{course}} />
+    <TrackPage::CourseCard @language={{@language}} @course={{course}} @number={{add index 2}} />
   </div>
 {{/each}}

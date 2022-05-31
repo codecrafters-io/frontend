@@ -1,7 +1,12 @@
 <div class="bg-white rounded-md shadow-sm border border-gray-200 relative" ...attributes>
   <div class="p-4 md:p-6">
-    <div class="text-xl font-bold text-gray-700 mb-4">
-      {{@title}}
+    <div class="flex items-center justify-between mb-4">
+      <div class="text-xl font-bold text-gray-700">
+        {{@title}}
+      </div>
+      <div class="font-bold text-gray-300 text-xl">
+        #{{@number}}
+      </div>
     </div>
 
     {{yield}}
