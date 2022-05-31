@@ -1,5 +1,3 @@
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
