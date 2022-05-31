@@ -8,12 +8,8 @@
       <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{@model.courses}} class="w-full mb-4" />
     </div>
     <div class="w-80 flex-shrink-0 hidden lg:block">
-      {{!-- TODO: Use TrackLeaderboard --}}
-      <CourseLeaderboard
-        @class="ml-2 mb-6"
-        @course={{@model.courses.firstObject}}
-        @repositories={{array}}
-      />
+      {{! TODO: Use TrackLeaderboard }}
+      <CourseLeaderboard @class="ml-2 mb-6" @course={{@model.courses.firstObject}} @repositories={{array}} />
 
       <div class="mx-6">
         {{#each @model.courses.firstObject.testimonials as |testimonial|}}
