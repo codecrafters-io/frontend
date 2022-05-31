@@ -1,20 +1,18 @@
-<TrackPage::Card
-  @title="{{@course.name}}"
-  @number={{@number}}
-  @recentParticipants={{this.recentParticipants}}
-  class={{if this.shouldMaskContents "h-96 overflow-hidden" "h-auto"}}
->
+<TrackPage::Card @title="{{@course.name}}" @number={{@number}} @recentParticipants={{this.recentParticipants}}>
   <div class="leading-6 prose mb-6">
     {{this.introductionHtml}}
   </div>
 
-  {{#each @course.stages as |stage|}}
-    <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} />
-  {{/each}}
+  <div class={{if this.shouldMaskContents "h-60 overflow-hidden" "h-auto"}}>
+    {{#each @course.stages as |stage|}}
+      <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} />
+    {{/each}}
 
-  {{#if this.shouldMaskContents}}
-    <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
-      <TrackPage::CourseCard::SignupToPreviewButton @language={{@language}} />
-    </div>
-  {{/if}}
+    {{#if this.shouldMaskContents}}
+      <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
+        <TrackPage::CourseCard::SignupToPreviewButton @language={{@language}} />
+      </div>
+    {{/if}}
+  </div>
+
 </TrackPage::Card>
