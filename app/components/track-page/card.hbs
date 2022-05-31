@@ -1,8 +1,18 @@
 <div class="bg-white rounded-md shadow-sm border border-gray-200 relative" ...attributes>
   <div class="p-4 md:p-6">
     <div class="flex items-center justify-between mb-4">
-      <div class="text-xl font-bold text-gray-700">
-        {{@title}}
+      <div class="flex items-center">
+        <div class="text-xl font-bold text-gray-700">
+          {{@title}}
+        </div>
+
+        {{#if @recentParticipants.firstObject}}
+          <div class="ml-3 flex -space-x-3 hover:space-x-1 items-center">
+            {{#each @recentParticipants as |user|}}
+              <TrackPage::Header::RecentParticipantAvatar @user={{user}} />
+            {{/each}}
+          </div>
+        {{/if}}
       </div>
       <div class="font-bold text-gray-300 text-xl">
         #{{@number}}

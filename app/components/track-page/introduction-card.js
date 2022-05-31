@@ -9,4 +9,14 @@ export default class CourseOverviewPageIntroductionAndStagesComponent extends Co
   get introductionHtml() {
     return htmlSafe(new showdown.Converter().makeHtml(this.args.language.trackIntroductionMarkdown));
   }
+
+  get recentParticipants() {
+    return this.store
+      .peekAll('leaderboard-entry')
+      .filterBy('language', this.args.language)
+      .sortBy('currentCourseStage.position')
+      .uniqBy('user')
+      .slice(0, 3)
+      .mapBy('user');
+  }
 }
