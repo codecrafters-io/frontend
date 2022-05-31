@@ -6,15 +6,20 @@
   <div class="flex items-start">
     <div class="flex-grow">
       <CourseOverviewPage::IntroductionAndStages @course={{@model.courses.firstObject}} class="w-full mb-4" />
-
-      <CourseOverviewPage::TestimonialList @course={{@model.courses.firstObject}} class="w-full" />
     </div>
+    <div class="w-80 flex-shrink-0 hidden lg:block">
+      {{!-- TODO: Use TrackLeaderboard --}}
+      <CourseLeaderboard
+        @class="ml-2 mb-6"
+        @course={{@model.courses.firstObject}}
+        @repositories={{array}}
+      />
 
-    {{!-- TODO: Use TrackLeaderboard --}}
-    <CourseLeaderboard
-      @class="w-80 flex-shrink-0 ml-2 hidden lg:block"
-      @course={{@model.courses.firstObject}}
-      @repositories={{array}}
-    />
+      <div class="mx-6">
+        {{#each @model.courses.firstObject.testimonials as |testimonial|}}
+          <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
+        {{/each}}
+      </div>
+    </div>
   </div>
 </div>
