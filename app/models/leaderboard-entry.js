@@ -8,6 +8,10 @@ export default class LeaderboardEntry extends Model {
   @belongsTo('user', { async: false }) user;
   @attr('date') lastAttemptAt;
 
+  get course() {
+    return this.currentCourseStage.course;
+  }
+
   get userId() {
     return this.user.id;
   }
