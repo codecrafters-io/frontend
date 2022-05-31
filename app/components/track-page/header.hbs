@@ -8,6 +8,18 @@
 
     <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
       <TrackPage::StartTrackButton @language={{@language}} />
+
+      <div class="flex items-center">
+        <div class="flex -space-x-1 hover:space-x-1 items-center">
+          {{#each this.recentParticipants as |user|}}
+            <TrackPage::Header::RecentParticipantAvatar @user={{user}} />
+          {{/each}}
+        </div>
+
+        <span class="text-xs text-gray-500 ml-2">
+          Join the best
+        </span>
+      </div>
     </div>
   </div>
   <div class="ml-4 hidden md:block">
