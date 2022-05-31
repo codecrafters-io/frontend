@@ -17,7 +17,7 @@
         <img src={{course.logoUrl}} alt={{course.name}} class="w-12 transform scale-100 group-hover:scale-105 transition-all" />
       </div>
 
-      {{#if (neq (add index 1) @courses.length)}}
+      {{#if (not-eq (add index 1) @courses.length)}}
         <div class="w-0.5 bg-gray-200 mt-2 flex-grow group-hover:bg-gray-300"></div>
       {{/if}}
     </div>
