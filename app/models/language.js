@@ -66,4 +66,20 @@ export default class LanguageModel extends Model {
       swift: '/assets/images/language-logos/swift-teal-500.svg',
     }[this.slug];
   }
+
+  // TODO: Move this to the language model
+  get trackDescriptionMarkdown() {
+    return `
+      Go mastery exercises, featuring unique Go features and recommended patterns, including Goroutines, gRPC, and
+      Channel buffers. Become your team’s resident Go-expert.
+     `;
+  }
+
+  get trackIntroductionMarkdown() {
+    return `
+Experience Golang by building 4 different devtools from scratch. The projects are hands-on and require dedication,
+but the benefits are worth it. In this section, we will cover the CodeCrafters philosophy and the journey you will
+go through.
+    `;
+  }
 }

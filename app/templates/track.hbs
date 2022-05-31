@@ -5,7 +5,7 @@
 
   <div class="flex items-start">
     <div class="flex-grow">
-      <CourseOverviewPage::IntroductionAndStages @course={{@model.courses.firstObject}} class="w-full mb-4" />
+      <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{@model.courses}} class="w-full mb-4" />
     </div>
     <div class="w-80 flex-shrink-0 hidden lg:block">
       {{!-- TODO: Use TrackLeaderboard --}}

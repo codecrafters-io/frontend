@@ -4,9 +4,11 @@ import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 export default class TrackRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
   @service currentUser;
+  @service store;
 
   async model(params) {
     let courses = await this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
+    let language = this.store.peekAll('language').findBy('slug', params.track_slug);
 
     if (this.currentUser.isAuthenticated) {
       await this.store.findAll('repository', {
@@ -15,8 +17,8 @@ export default class TrackRoute extends ApplicationRoute {
     }
 
     return {
-      courses: courses,
-      language: this.store.peekAll('language').findBy('slug', params.track_slug),
+      courses: courses.filter((course) => course.supportedLanguages.includes(language)),
+      language: language,
     };
   }
 }
