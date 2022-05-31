@@ -1,0 +1,27 @@
+<div class="flex items-stretch pb-4 group">
+  <div class="w-20 flex flex-col items-center mr-3">
+    <div class="w-16 h-16 rounded-full flex items-center justify-center bg-gray-700">
+      <img src="/assets/images/logo/outline-color.svg" alt="CodeCrafters" class="w-12 transform scale-100 group-hover:scale-105 transition-all" />
+    </div>
+
+    <div class="w-0.5 bg-gray-200 mt-2 flex-grow group-hover:bg-gray-300"></div>
+  </div>
+
+  <TrackPage::IntroductionCard @language={{@language}} @courses={{@courses}} />
+</div>
+
+{{#each @courses as |course index|}}
+  <div class="flex items-stretch pb-4 group">
+    <div class="w-20 flex flex-col items-center mr-3">
+      <div class="w-16 h-16 rounded-full flex items-center justify-center">
+        <img src={{course.logoUrl}} alt={{course.name}} class="w-12 transform scale-100 group-hover:scale-105 transition-all" />
+      </div>
+
+      {{#if (not-eq (add index 1) @courses.length)}}
+        <div class="w-0.5 bg-gray-200 mt-2 flex-grow group-hover:bg-gray-300"></div>
+      {{/if}}
+    </div>
+
+    <TrackPage::CourseCard @language={{@language}} @course={{course}} />
+  </div>
+{{/each}}

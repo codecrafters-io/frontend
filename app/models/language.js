@@ -1,9 +1,25 @@
 import Model from '@ember-data/model';
 import { attr } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
 export default class LanguageModel extends Model {
   @attr('string') name;
   @attr('string') slug;
+
+  @equal('slug', 'c') isC;
+  @equal('slug', 'csharp') isCsharp;
+  @equal('slug', 'elixir') isElixir;
+  @equal('slug', 'go') isGo;
+  @equal('slug', 'haskell') isHaskell;
+  @equal('slug', 'java') isJava;
+  @equal('slug', 'javascript') isJavascript;
+  @equal('slug', 'kotlin') isKotlin;
+  @equal('slug', 'nim') isNim;
+  @equal('slug', 'php') isPhp;
+  @equal('slug', 'python') isPython;
+  @equal('slug', 'ruby') isRuby;
+  @equal('slug', 'rust') isRust;
+  @equal('slug', 'swift') isSwift;
 
   get isGo() {
     return this.slug === 'go';
@@ -49,5 +65,21 @@ export default class LanguageModel extends Model {
       rust: '/assets/images/language-logos/rust-teal-500.svg',
       swift: '/assets/images/language-logos/swift-teal-500.svg',
     }[this.slug];
+  }
+
+  // TODO: Move this to the language model
+  get trackDescriptionMarkdown() {
+    return `
+      Go mastery exercises, featuring unique Go features and recommended patterns, including Goroutines, gRPC, and
+      Channel buffers. Become your team’s resident Go-expert.
+     `;
+  }
+
+  get trackIntroductionMarkdown() {
+    return `
+Experience Go by building 4 different devtools from scratch. The projects are hands-on and require dedication,
+but the benefits are worth it. In this section, we will cover the CodeCrafters philosophy and the journey you will
+go through.
+    `;
   }
 }

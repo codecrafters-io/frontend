@@ -28,12 +28,29 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'beta') releaseStatusIsBeta;
   @equal('releaseStatus', 'live') releaseStatusIsLive;
 
+  get logoUrl() {
+    return {
+      redis: '/assets/images/challenge-logos/challenge-logo-redis.svg',
+      docker: '/assets/images/challenge-logos/challenge-logo-docker.svg',
+      git: '/assets/images/challenge-logos/challenge-logo-git.svg',
+      sqlite: '/assets/images/challenge-logos/challenge-logo-sqlite.svg',
+    }[this.slug];
+  }
+
   get roundedCompletionPercentage() {
     return this.completionPercentage; // Same for now, we don't store exact completion percentages yet.
   }
 
   get sortedStages() {
     return this.stages.sortBy('position');
+  }
+
+  trackIntroductionMarkdownFor(language) {
+    if (language.isGo) {
+      return `Docker helps you set up & deploy any project quickly despite code environment differences. You’ll build your own version of Docker from scratch — it’s the ideal way to explore OS level concepts in Go.`;
+    } else {
+      return `Docker helps you set up & deploy any project quickly despite code environment differences. You’ll build your own version of Docker from scratch — it’s the ideal way to explore OS level concepts in ${language.name}.`;
+    }
   }
 
   get numberOfStages() {

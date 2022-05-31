@@ -58,7 +58,7 @@ module.exports = function (defaults) {
     sourcemaps: { enabled: true },
 
     svgJar: {
-      sourceDirs: ['public/assets/images/heroicons/solid', 'public/assets/images/svg-icons'],
+      sourceDirs: ['public/assets/images/heroicons/outline', 'public/assets/images/heroicons/solid', 'public/assets/images/svg-icons'],
     },
   };
 

@@ -24,5 +24,7 @@ Router.map(function () {
     this.route('explanation');
   });
 
+  this.route('track', { path: '/tracks/:track_slug' });
+
   this.route('team', { path: '/teams/:team_id' });
 });
