@@ -1,0 +1,20 @@
+{{page-title @model.language.name}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 px-3 md:px-6">
+  <TrackPage::Header @language={{@model.language}} class="mb-8" />
+
+  <div class="flex items-start">
+    <div class="flex-grow">
+      <CourseOverviewPage::IntroductionAndStages @course={{@model.courses.firstObject}} class="w-full mb-4" />
+
+      <CourseOverviewPage::TestimonialList @course={{@model.courses.firstObject}} class="w-full" />
+    </div>
+
+    {{!-- TODO: Use TrackLeaderboard --}}
+    <CourseLeaderboard
+      @class="w-80 flex-shrink-0 ml-2 hidden lg:block"
+      @course={{@model.courses.firstObject}}
+      @repositories={{array}}
+    />
+  </div>
+</div>

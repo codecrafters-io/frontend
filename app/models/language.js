@@ -1,9 +1,25 @@
 import Model from '@ember-data/model';
 import { attr } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
 export default class LanguageModel extends Model {
   @attr('string') name;
   @attr('string') slug;
+
+  @equal('slug', 'c') isC;
+  @equal('slug', 'csharp') isCsharp;
+  @equal('slug', 'elixir') isElixir;
+  @equal('slug', 'go') isGo;
+  @equal('slug', 'haskell') isHaskell;
+  @equal('slug', 'java') isJava;
+  @equal('slug', 'javascript') isJavascript;
+  @equal('slug', 'kotlin') isKotlin;
+  @equal('slug', 'nim') isNim;
+  @equal('slug', 'php') isPhp;
+  @equal('slug', 'python') isPython;
+  @equal('slug', 'ruby') isRuby;
+  @equal('slug', 'rust') isRust;
+  @equal('slug', 'swift') isSwift;
 
   get isGo() {
     return this.slug === 'go';
