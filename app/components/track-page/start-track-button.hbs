@@ -1,7 +1,7 @@
 <LinkTo
   @route="course"
   @model="redis"
-  class="bg-teal-500 hover:bg-teal-600 transition-colors px-4 py-3 text-white text-lg font-bold rounded inline-flex items-center mr-2"
+  class="bg-teal-500 hover:bg-teal-600 transition-colors {{if (eq @size "small") "px-3 py-3 text-sm" "px-4 py-3 text-lg"}} text-white font-bold rounded inline-flex items-center mr-2"
   data-test-start-track-button
 >
   {{#if this.currentUserIsAnonymous}}
