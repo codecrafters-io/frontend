@@ -46,10 +46,22 @@ export default class CourseModel extends Model {
   }
 
   trackIntroductionMarkdownFor(language) {
-    if (language.isGo) {
-      return `Docker helps you set up & deploy any project quickly despite code environment differences. You’ll build your own version of Docker from scratch — it’s the ideal way to explore OS level concepts in Go.`;
-    } else {
-      return `Docker helps you set up & deploy any project quickly despite code environment differences. You’ll build your own version of Docker from scratch — it’s the ideal way to explore OS level concepts in ${language.name}.`;
+    if (this.isRedis) {
+      return `
+Redis is a key-value store, it’s a popular choice for storing data that needs to be retrieved quickly and often. You'll
+build your own version of Redis from scratch -- it's the ideal way to explore networking concepts in ${language.name}`;
+    } else if (this.isDocker) {
+      return `
+Docker helps you set up & deploy any project quickly despite code environment differences. You'll build your own version
+of Docker from scratch -- it's the ideal way to explore OS level concepts in ${language.name}`;
+    } else if (this.isGit) {
+      return `
+Git is a version control system. You'll build your own version of Git from scratch -- it's the ideal way to explore
+concepts in ${language.name}`;
+    } else if (this.isSQLite) {
+      return `
+SQLite is a database. You'll build your own version of SQLite from scratch -- it's the ideal way to explore
+concepts in ${language.name}`;
     }
   }
 
