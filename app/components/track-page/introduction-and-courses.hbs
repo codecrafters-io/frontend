@@ -2,8 +2,14 @@
   @shouldShowLogoBackground={{true}}
   @logoImageUrl="/assets/images/logo/outline-color.svg"
   @logoImageAltText="CodeCrafters"
+  @isComplete={{this.userHasStartedTrack}}
 >
-  <TrackPage::IntroductionCard @language={{@language}} @courses={{@courses}} @number="1" />
+  <TrackPage::IntroductionCard
+    @language={{@language}}
+    @courses={{@courses}}
+    @number="1"
+    @shouldShowStartTrackButton={{not this.userHasStartedTrack}}
+  />
 </TrackPage::IntroductionAndCourses::TimelineItem>
 
 {{#each @courses as |course index|}}

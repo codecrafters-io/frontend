@@ -1,9 +1,9 @@
 <TrackPage::Card @title="Introduction & track overview" @recentParticipants={{this.recentParticipants}} @number={{@number}}>
-  <div class="leading-6 prose mb-6">
+  <div class="leading-6 prose">
     {{this.introductionHtml}}
   </div>
 
-  <div class="mb-4">
+  <div class="mt-6">
     {{! template-lint-disable no-inline-styles no-forbidden-elements require-iframe-title }}
     <div style="padding:56.25% 0 0 0;position:relative;"><iframe
         src="https://player.vimeo.com/video/{{@language.trackIntroductionVideoId}}?h=fb6c876ae4&title=0&byline=0&portrait=0"
@@ -15,5 +15,7 @@
       ></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
   </div>
 
-  <TrackPage::StartTrackButton @size="small" @language={{@language}} @courses={{@courses}} />
+  {{#if @shouldShowStartTrackButton}}
+    <TrackPage::StartTrackButton @class="mt-4" @size="small" @language={{@language}} @courses={{@courses}} />
+  {{/if}}
 </TrackPage::Card>

@@ -5,6 +5,7 @@
   data-test-start-track-button
   type="button"
   {{on "click" this.handleClicked}}
+  ...attributes
 >
   {{#if this.currentUserIsAnonymous}}
     {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
