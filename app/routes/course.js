@@ -6,6 +6,10 @@ export default class CourseRoute extends ApplicationRoute {
   @service currentUser;
   @service store;
 
+  activate() {
+    window.scrollTo({ top: 0 });
+  }
+
   async model(params) {
     let courses = this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
 
