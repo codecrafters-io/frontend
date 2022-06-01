@@ -12,13 +12,18 @@
   />
 </TrackPage::IntroductionAndCourses::TimelineItem>
 
-{{#each @courses as |course index|}}
+{{#each this.coursesWithProgress as |courseWithProgress index|}}
   <TrackPage::IntroductionAndCourses::TimelineItem
     @shouldShowLogoBackground={{false}}
-    @logoImageUrl={{course.logoUrl}}
-    @logoImageAltText={{course.name}}
+    @logoImageUrl={{courseWithProgress.course.logoUrl}}
+    @logoImageAltText={{courseWithProgress.course.name}}
     @isLastItem={{eq (add index 1) @courses.length}}
   >
-    <TrackPage::CourseCard @language={{@language}} @course={{course}} @number={{add index 2}} />
+    <TrackPage::CourseCard
+      @language={{@language}}
+      @course={{courseWithProgress.course}}
+      @number={{add index 2}}
+      @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
+    />
   </TrackPage::IntroductionAndCourses::TimelineItem>
 {{/each}}

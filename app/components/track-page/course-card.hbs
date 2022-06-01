@@ -1,9 +1,10 @@
-{{#if this.shouldMaskContents}}
+{{#if this.currentUserIsAnonymous}}
   <TrackPage::Card @title="{{@course.name}}" @number={{@number}} @recentParticipants={{this.recentParticipants}}>
     <div class="leading-6 prose mb-6">
       {{this.introductionHtml}}
     </div>
 
+    {{! Contents are masked, hence the fixed height }}
     <div class="h-60 overflow-hidden">
       {{#each @course.stages as |stage|}}
         <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} />

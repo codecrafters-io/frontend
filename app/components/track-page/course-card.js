@@ -9,6 +9,10 @@ export default class TrackPageCourseCardComponent extends Component {
   @service router;
   @service store;
 
+  get currentUserIsAnonymous() {
+    return this.currentUser.isAnonymous;
+  }
+
   @action
   handleClick() {
     this.router.transitionTo('course', this.args.course.slug);
@@ -28,9 +32,5 @@ export default class TrackPageCourseCardComponent extends Component {
       .uniqBy('user')
       .slice(0, 3)
       .mapBy('user');
-  }
-
-  get shouldMaskContents() {
-    return this.currentUser.isAnonymous;
   }
 }
