@@ -1,13 +1,13 @@
 {{page-title @model.language.name}}
 
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 px-3 md:px-6">
-  <TrackPage::Header @language={{@model.language}} />
+  <TrackPage::Header @language={{@model.language}} @courses={{this.sortedCourses}} />
 
   <div class="h-px bg-gray-200 w-full my-8"></div>
 
   <div class="flex items-start">
     <div class="flex-grow">
-      <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{@model.courses}} class="w-full mb-4" />
+      <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
     </div>
     <div class="w-80 flex-shrink-0 hidden lg:block">
       {{! TODO: Use TrackLeaderboard }}

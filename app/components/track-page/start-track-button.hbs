@@ -1,10 +1,10 @@
-<LinkTo
-  @route="course"
-  @model="redis"
+<button
   class="bg-teal-500 hover:bg-teal-600 transition-colors
     {{if (eq @size 'small') 'px-3 py-3 text-sm' 'px-4 py-3 text-lg'}}
     text-white font-bold rounded inline-flex items-center mr-2"
   data-test-start-track-button
+  type="button"
+  {{on "click" this.handleClicked}}
 >
   {{#if this.currentUserIsAnonymous}}
     {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
@@ -17,4 +17,4 @@
   {{/if}}
 
   {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
-</LinkTo>
+</button>

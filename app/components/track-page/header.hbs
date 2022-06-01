@@ -7,7 +7,7 @@
     </p>
 
     <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
-      <TrackPage::StartTrackButton @language={{@language}} />
+      <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
 
       {{#if this.recentParticipants.firstObject}}
         <div class="flex items-center">
