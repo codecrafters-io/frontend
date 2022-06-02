@@ -77,7 +77,6 @@
     "ember-template-lint": "^4.3.0",
     "ember-template-lint-plugin-prettier": "^4.0.0",
     "ember-truth-helpers": "^3.0.0",
-    "ember-welcome-page": "^4.1.0",
     "ember-window-mock": "^0.7.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
