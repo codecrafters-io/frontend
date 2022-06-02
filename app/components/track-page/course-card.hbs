@@ -7,7 +7,7 @@
     {{! Contents are masked, hence the fixed height }}
     <div class="h-60 overflow-hidden">
       {{#each @course.stages as |stage|}}
-        <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} />
+        <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} @isComplete={{false}} />
       {{/each}}
 
       <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
@@ -29,7 +29,11 @@
     </div>
 
     {{#each @course.stages as |stage|}}
-      <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} />
+      <TrackPage::CourseCard::StageListItem
+        @language={{@language}}
+        @stage={{stage}}
+        @isComplete={{includes stage @activeRepository.completedStages}}
+      />
     {{/each}}
   </TrackPage::Card>
 {{/if}}
