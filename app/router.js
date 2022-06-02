@@ -24,6 +24,7 @@ Router.map(function () {
     this.route('explanation');
   });
 
+  this.route('pay');
   this.route('track', { path: '/tracks/:track_slug' });
   this.route('tracks');
 
