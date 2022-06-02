@@ -1,0 +1,25 @@
+{{page-title "Pay"}}
+
+<div class="container mx-auto lg:max-w-screen-lg py-16 px-3 md:px-6">
+  <div class="flex flex-col items-center justify-center">
+    <h1 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-md text-center">
+      Secure an investment in your productivity
+    </h1>
+
+    <PayPage::PricingCard class="mt-8" />
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg">
+      {{#each this.testimonials as |testimonial|}}
+        <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
+      {{/each}}
+    </div>
+
+    <button
+      class="mt-8 bg-teal-500 hover:bg-teal-600 transition-colors px-4 py-5 text-lg text-white font-bold rounded inline-flex items-center mr-2 w-lg"
+      data-test-pay-button
+      type="button"
+    >
+      Complete signup
+    </button>
+  </div>
+</div>
