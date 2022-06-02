@@ -12,12 +12,18 @@ export default class TrackCardComponent extends Component {
     await this.router.transitionTo('track', this.args.language.slug);
   }
 
-  get lastPushedRepository() {
+  get completedStagesCount() {
+    return this.currentUser.record.repositories
+      .toArray()
+      .flatMap((repository) => repository.completedStages)
+      .uniq().length;
+  }
+
+  get currentUserHasStartedTrack() {
     if (this.currentUser.isAuthenticated) {
-      return this.currentUser.record.repositories.filterBy('course', this.args.course).filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt')
-        .lastObject;
+      return !!this.currentUser.record.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated').firstObject;
     } else {
-      return null;
+      return false;
     }
   }
 
