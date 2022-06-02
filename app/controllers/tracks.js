@@ -36,6 +36,8 @@ export default class TracksController extends Controller {
           return lastSubmissionForLanguage1 > lastSubmissionForLanguage2 ? 1 : -1;
         } else if (repositoriesForLanguage1.length > 0) {
           return -1;
+        } else if (repositoriesForLanguage2.length > 0) {
+          return 1;
         } else {
           return language1.sortPositionForTrack > language2.sortPositionForTrack ? 1 : -1;
         }
