@@ -18,34 +18,36 @@
     </div>
   </div>
 
-  {{#animated-if this.isLoadingEntries use=this.transition}}
-    <div class="flex p-4 items-center">
-      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2" />
-      <span class="text-sm text-gray-600">
-        Loading...
-      </span>
-    </div>
-  {{else}}
-    <div>
-      {{#animated-each this.mergedEntries key="userId" use=this.listTransition as |entry|}}
-        <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
-      {{/animated-each}}
+  <AnimatedContainer>
+    {{#animated-if this.isLoadingEntries use=this.transition}}
+      <div class="flex p-4 items-center mb-40">
+        <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2" />
+        <span class="text-sm text-gray-600">
+          Loading...
+        </span>
+      </div>
+    {{else}}
+      <div>
+        {{#animated-each this.mergedEntries key="userId" use=this.listTransition as |entry|}}
+          <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
+        {{/animated-each}}
 
-      {{#animated-if (eq this.mergedEntries.length 0)}}
-        <div class="flex px-4 py-2 items-center">
-          <div class="text-sm text-gray-500">
-            <p class="mb-2">
-              {{#if this.team}}
-                No one from
-                {{this.team.name}}
-                has attempted this challenge recently.
-              {{else}}
-                No one has attempted this challenge recently.
-              {{/if}}
-            </p>
+        {{#animated-if (eq this.mergedEntries.length 0)}}
+          <div class="flex px-4 py-2 items-center">
+            <div class="text-sm text-gray-500">
+              <p class="mb-2">
+                {{#if this.team}}
+                  No one from
+                  {{this.team.name}}
+                  has attempted this challenge recently.
+                {{else}}
+                  No one has attempted this challenge recently.
+                {{/if}}
+              </p>
+            </div>
           </div>
-        </div>
-      {{/animated-if}}
-    </div>
-  {{/animated-if}}
+        {{/animated-if}}
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
 </div>
