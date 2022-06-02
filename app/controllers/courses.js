@@ -18,6 +18,7 @@ export default class CourseController extends Controller {
     return this.model.courses.rejectBy('releaseStatusIsAlpha');
   }
 
+  // TODO: The sort implementation here is incorrect! It should compare values and return 1/-1, not return the value.
   get orderedCourses() {
     if (this.currentUser.isAnonymous) {
       return this.courses;
