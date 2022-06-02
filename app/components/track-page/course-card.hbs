@@ -1,17 +1,39 @@
-<TrackPage::Card @title="{{@course.name}}" @number={{@number}} @recentParticipants={{this.recentParticipants}}>
-  <div class="leading-6 prose mb-6">
-    {{this.introductionHtml}}
-  </div>
+{{#if this.currentUserIsAnonymous}}
+  <TrackPage::Card @title="{{@course.name}}" @number={{@number}} @recentParticipants={{this.recentParticipants}}>
+    <div class="leading-6 prose mb-6">
+      {{this.introductionHtml}}
+    </div>
 
-  <div class={{if this.shouldMaskContents "h-60 overflow-hidden" "h-auto"}}>
-    {{#each @course.stages as |stage|}}
-      <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} />
-    {{/each}}
+    {{! Contents are masked, hence the fixed height }}
+    <div class="h-60 overflow-hidden">
+      {{#each @course.stages as |stage|}}
+        <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} @isComplete={{false}} />
+      {{/each}}
 
-    {{#if this.shouldMaskContents}}
       <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
         <TrackPage::CourseCard::SignupToPreviewButton @language={{@language}} />
       </div>
-    {{/if}}
-  </div>
-</TrackPage::Card>
+    </div>
+  </TrackPage::Card>
+{{else}}
+  <TrackPage::Card
+    @title="{{@course.name}}"
+    @number={{@number}}
+    @isNavigatingToOtherPage={{true}}
+    @recentParticipants={{this.recentParticipants}}
+    role="button"
+    {{on "click" this.handleClick}}
+  >
+    <div class="leading-6 prose mb-6">
+      {{this.introductionHtml}}
+    </div>
+
+    {{#each @course.stages as |stage|}}
+      <TrackPage::CourseCard::StageListItem
+        @language={{@language}}
+        @stage={{stage}}
+        @isComplete={{includes stage @activeRepository.completedStages}}
+      />
+    {{/each}}
+  </TrackPage::Card>
+{{/if}}

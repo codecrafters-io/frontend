@@ -9,9 +9,10 @@
     <div class="flex-grow">
       <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
     </div>
+
     <div class="w-80 flex-shrink-0 hidden lg:block">
       {{! TODO: Use TrackLeaderboard }}
-      <CourseLeaderboard @class="ml-2 mb-6" @course={{this.sortedCourses.firstObject}} @repositories={{array}} />
+      <CourseLeaderboard @class="ml-2 mb-6" @course={{this.sortedCourses.firstObject}} @repositories={{(array)}} />
 
       {{! TODO: Show testimonials for track instead of courses? }}
       <div class="mx-6">

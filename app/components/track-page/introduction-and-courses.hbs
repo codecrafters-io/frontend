@@ -1,31 +1,29 @@
-<div class="flex items-stretch pb-4 group">
-  <div class="w-10 md:w-20 flex flex-col items-center mr-3">
-    <div class="w-8 h-8 my-4 md:my-0 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-gray-700">
-      <img
-        src="/assets/images/logo/outline-color.svg"
-        alt="CodeCrafters"
-        class="w-6 md:w-12 transform scale-100 group-hover:scale-105 transition-all"
-      />
-    </div>
+<TrackPage::IntroductionAndCourses::TimelineItem
+  @shouldShowLogoBackground={{true}}
+  @logoImageUrl="/assets/images/logo/outline-color.svg"
+  @logoImageAltText="CodeCrafters"
+  @isComplete={{this.userHasStartedTrack}}
+>
+  <TrackPage::IntroductionCard
+    @language={{@language}}
+    @courses={{@courses}}
+    @number="1"
+    @shouldShowStartTrackButton={{not this.userHasStartedTrack}}
+  />
+</TrackPage::IntroductionAndCourses::TimelineItem>
 
-    <div class="w-0.5 bg-gray-200 mt-2 flex-grow group-hover:bg-gray-300"></div>
-  </div>
-
-  <TrackPage::IntroductionCard @language={{@language}} @courses={{@courses}} @number="1" />
-</div>
-
-{{#each @courses as |course index|}}
-  <div class="flex items-stretch pb-4 group">
-    <div class="w-10 md:w-20 flex flex-col items-center mr-3">
-      <div class="w-8 h-8 my-4 md:my-0 md:w-16 md:h-16 rounded-full flex items-center justify-center">
-        <img src={{course.logoUrl}} alt={{course.name}} class="w-6 md:w-12 transform scale-100 group-hover:scale-105 transition-all" />
-      </div>
-
-      {{#if (not-eq (add index 1) @courses.length)}}
-        <div class="w-0.5 bg-gray-200 mt-2 flex-grow group-hover:bg-gray-300"></div>
-      {{/if}}
-    </div>
-
-    <TrackPage::CourseCard @language={{@language}} @course={{course}} @number={{add index 2}} />
-  </div>
+{{#each this.coursesWithProgress as |courseWithProgress index|}}
+  <TrackPage::IntroductionAndCourses::TimelineItem
+    @shouldShowLogoBackground={{false}}
+    @logoImageUrl={{courseWithProgress.course.logoUrl}}
+    @logoImageAltText={{courseWithProgress.course.name}}
+    @isLastItem={{eq (add index 1) @courses.length}}
+  >
+    <TrackPage::CourseCard
+      @language={{@language}}
+      @course={{courseWithProgress.course}}
+      @number={{add index 2}}
+      @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
+    />
+  </TrackPage::IntroductionAndCourses::TimelineItem>
 {{/each}}

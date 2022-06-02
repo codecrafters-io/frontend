@@ -6,6 +6,10 @@ export default class TrackRoute extends ApplicationRoute {
   @service currentUser;
   @service store;
 
+  activate() {
+    window.scrollTo({ top: 0 });
+  }
+
   async model(params) {
     let courses = await this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
     let language = this.store.peekAll('language').findBy('slug', params.track_slug);

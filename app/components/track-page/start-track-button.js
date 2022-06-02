@@ -5,6 +5,7 @@ import window from 'ember-window-mock';
 
 export default class CourseOverviewStartTrackButtonComponent extends Component {
   @service currentUser;
+  @service router;
 
   @action
   handleClicked() {
