@@ -5,19 +5,19 @@
   data-test-track-card
 >
   {{! Logo }}
-  <div class="flex h-12 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
+  <div class="flex h-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
     <LanguageLogo @language={{@language}} />
   </div>
 
   {{! Text }}
   <div class="mb-8">
     <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16">
-      <div class="text-lg font-bold text-gray-600 mr-2" data-test-track-name>
+      <div class="font-bold text-gray-600 mr-2" data-test-track-name>
         {{@language.name}}
       </div>
 
       {{#if (not-eq @language.slug "go")}}
-        <div class="text-xs text-gray-400 font-bold border border-gray-300 rounded px-2 py-1 mr-3" data-test-track-beta-label>
+        <div class="text-xs text-gray-400 font-bold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-track-beta-label>
           BETA
         </div>
       {{/if}}
