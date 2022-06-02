@@ -48,6 +48,15 @@ export default class LanguageModel extends Model {
     }[this.slug];
   }
 
+  get sortPositionForTrack() {
+    return (
+      {
+        go: 1,
+        rust: 2,
+      }[this.slug] || 5
+    );
+  }
+
   get tealLogoUrl() {
     return {
       c: '/assets/images/language-logos/c-teal-500.svg',
