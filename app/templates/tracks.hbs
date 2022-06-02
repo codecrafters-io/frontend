@@ -5,7 +5,7 @@
     Tracks
   </h1>
 
-  <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-3">
+  <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
     {{#each this.orderedLanguages as |language|}}
       <TracksPage::TrackCard @language={{language}} />
     {{/each}}

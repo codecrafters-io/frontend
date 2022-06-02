@@ -1,19 +1,15 @@
-<div class="flex items-center" data-test-course-progress>
+<div class="flex items-center" data-test-track-progress>
   <div class="rounded overflow-hidden mr-2">
-    <div class="{{if (eq @stagesCount @completedStagesCount) 'bg-teal-100' 'bg-blue-100'}} h-3 w-20 flex items-stretch">
-      {{#if (eq @completedStagesCount 0)}}
-        <div class="bg-blue-500 w-1/12"></div>
-      {{else}}
-        <div
-          data-test-course-progress-bar
-          class={{if (eq @stagesCount @completedStagesCount) "bg-teal-500" "bg-blue-500"}}
-          style={{html-safe (concat "width:" (round (mult 100 (div (or @completedStagesCount 1) @stagesCount))) "%")}}
-        ></div>
-      {{/if}}
+    <div class="{{if (eq @stagesCount @completedStagesCount) 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
+      <div
+        data-test-track-progress-bar
+        class={{if (eq @stagesCount @completedStagesCount) "bg-teal-500" "bg-blue-500"}}
+        style={{html-safe (concat "width:" (round (mult 100 (div (or @completedStagesCount 1) @stagesCount))) "%")}}
+      ></div>
     </div>
   </div>
 
-  <div class="text-xs {{if (eq @stagesCount @completedStagesCount) 'text-teal-500' 'text-blue-500'}} mr-3" data-test-course-progress-text>
+  <div class="text-xs {{if (eq @stagesCount @completedStagesCount) 'text-teal-500' 'text-blue-500'}} mr-3" data-test-track-progress-text>
     <b class="font-bold">{{@completedStagesCount}}/{{@stagesCount}}</b>
     stages
   </div>
