@@ -38,15 +38,25 @@ function routes() {
   this.get('/languages');
 
   this.get('/leaderboard-entries', function (schema, request) {
+    let result = schema.leaderboardEntries.all();
+
     if (request.queryParams.team_id) {
       const team = schema.teams.find(request.queryParams.team_id);
       const teamMemberships = schema.teamMemberships.where({ teamId: team.id }).models;
       const userIds = teamMemberships.map((teamMembership) => teamMembership.user.id);
 
-      return schema.leaderboardEntries.all().filter((leaderboardEntry) => userIds.includes(leaderboardEntry.user.id));
-    } else {
-      return schema.leaderboardEntries.all();
+      result = result.filter((leaderboardEntry) => userIds.includes(leaderboardEntry.user.id));
     }
+
+    if (request.queryParams.course_id) {
+      result = result.filter((leaderboardEntry) => leaderboardEntry.currentCourseStage.course.id === request.queryParams.course_id);
+    }
+
+    if (request.queryParams.language_id) {
+      result = result.filter((leaderboardEntry) => leaderboardEntry.language.id === request.queryParams.language_id);
+    }
+
+    return result;
   });
 
   this.get('/repositories', function (schema, request) {
