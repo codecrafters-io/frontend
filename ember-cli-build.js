@@ -64,7 +64,7 @@ module.exports = function (defaults) {
 
   if (shouldUseCDN) {
     appOptions.fingerprint = {
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'ico'],
       prepend: cdnBaseURL,
     };
 
