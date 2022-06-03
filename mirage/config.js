@@ -21,13 +21,13 @@ function routes() {
 
   this.post('/analytics-events');
 
-  this.post('/billing-sessions', function (schema) {
-    return schema.billingSessions.create({ url: 'https://test.com/billing_session' });
-  });
-
   this.get('/course-language-requests');
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');
+
+  this.post('/individual-billing-sessions', function (schema) {
+    return schema.individualBillingSessions.create({ url: 'https://test.com/billing_session' });
+  });
 
   this.post('/individual-checkout-sessions', function (schema) {
     return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
