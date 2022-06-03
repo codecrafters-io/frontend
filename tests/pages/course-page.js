@@ -31,6 +31,5 @@ export default create({
     return this.setupItem.isVisible;
   },
 
-  subscribeModal: SubscribeModal,
   visit: visitable('/courses/:course_slug'),
 });

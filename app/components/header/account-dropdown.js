@@ -52,6 +52,6 @@ export default class HeaderAccountDropdownComponent extends Component {
   @action
   handleSubscribeClick(dropdownActions) {
     dropdownActions.close();
-    this.globalModalsService.openSubscribeModal();
+    // TODO: Navigate to /upgrade page
   }
 }
