@@ -17,7 +17,7 @@ export default class SubscribeModalComponent extends Component {
   @action
   async handleSubscribeButtonClick() {
     this.isCreatingCheckoutSession = true;
-    let checkoutSession = this.store.createRecord('checkout-session');
+    let checkoutSession = this.store.createRecord('individual-checkout-session');
     await checkoutSession.save();
     window.location.href = checkoutSession.url;
   }

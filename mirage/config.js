@@ -29,8 +29,8 @@ function routes() {
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');
 
-  this.post('/checkout-sessions', function (schema) {
-    return schema.checkoutSessions.create({ url: 'https://test.com/checkout_session' });
+  this.post('/individual-checkout-sessions', function (schema) {
+    return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
   });
 
   this.get('/courses');
