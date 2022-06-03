@@ -6,7 +6,6 @@ import Header from 'codecrafters-frontend/tests/pages/components/header';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import SetupItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/setup-item';
-import SubscribeModal from 'codecrafters-frontend/tests/pages/components/subscribe-modal';
 
 export default create({
   activeCourseStageItem: CourseStageItem,
