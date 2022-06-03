@@ -7,6 +7,6 @@ export default class CoursePageStepListCourseStageItemUpgradePromptComponent ext
 
   @action
   handleSubscribeLinkClicked() {
-    this.globalModalsService.openSubscribeModal();
+    // TODO: Navigate to /upgrade page
   }
 }

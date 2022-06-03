@@ -1,15 +1,13 @@
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn, signInAsAdmin, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | subscribe-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -17,32 +15,32 @@ module('Acceptance | subscribe-test', function (hooks) {
   setupWindowMock(hooks);
   setupClock(hooks);
 
-  test('new user can start checkout session', async function (assert) {
-    signInAsAdmin(this.owner); // TODO: Change to regular user
-    testScenario(this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let c = this.server.schema.languages.findBy({ name: 'C' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: c,
-      name: 'C #1',
-      user: currentUser,
-    });
-
-    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 1000) });
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
-    await coursePage.collapsedItems[3].click();
-    await coursePage.activeCourseStageItem.upgradePrompt.clickOnSubscribeButton();
-
-    await percySnapshot('Subscribe Modal');
-
-    await coursePage.subscribeModal.clickOnSubscribeButton();
-    assert.equal(window.location.href, 'https://test.com/checkout_session', 'Clicking subscribe button should redirect to checkout session URL');
+  skip('new user can start checkout session', async function () {
+    // signInAsAdmin(this.owner); // TODO: Change to regular user
+    // testScenario(this.server);
+    //
+    // let currentUser = this.server.schema.users.first();
+    // let c = this.server.schema.languages.findBy({ name: 'C' });
+    // let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    //
+    // this.server.create('repository', 'withFirstStageCompleted', {
+    //   course: redis,
+    //   language: c,
+    //   name: 'C #1',
+    //   user: currentUser,
+    // });
+    //
+    // this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 1000) });
+    //
+    // await coursesPage.visit();
+    // await coursesPage.clickOnCourse('Build your own Redis');
+    // await coursePage.collapsedItems[3].click();
+    // await coursePage.activeCourseStageItem.upgradePrompt.clickOnSubscribeButton();
+    //
+    // await percySnapshot('Subscribe Modal');
+    //
+    // await coursePage.subscribeModal.clickOnSubscribeButton();
+    // assert.equal(window.location.href, 'https://test.com/checkout_session', 'Clicking subscribe button should redirect to checkout session URL');
   });
 
   test('new user can wait for subscriptions to sync after successful checkout session', async function (assert) {

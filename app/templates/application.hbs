@@ -1,15 +1,13 @@
 {{page-title "CodeCrafters"}}
 
-<div class="bg-gray-100 min-h-screen">
+<div class="bg-gray-100 min-h-screen" {{did-insert this.handleDidInsert}}>
   <Header />
 
   {{outlet}}
 
   {{#if this.isAnyModalOpen}}
     <ModalBackdrop>
-      {{#if this.isSubscribeModalOpen}}
-        <SubscribeModal />
-      {{else if this.isCheckoutSessionSuccessfulModalOpen}}
+      {{#if this.isCheckoutSessionSuccessfulModalOpen}}
         <CheckoutSessionSuccessfulModal />
       {{/if}}
     </ModalBackdrop>
