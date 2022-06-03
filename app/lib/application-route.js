@@ -11,7 +11,12 @@ export default class ApplicationRoute extends Route {
     this.currentUser.authenticate();
 
     if (this.currentUser.isAnonymous && !this.allowsAnonymousAccess) {
-      window.location.href = `/login?next=${this.router.urlFor(transition.to.name, transition.to.params)}`;
+      if (Object.keys(transition.to.params).length > 0) {
+        window.location.href = `/login?next=${this.router.urlFor(transition.to.name, transition.to.params)}`;
+      } else {
+        window.location.href = `/login?next=${this.router.urlFor(transition.to.name)}`;
+      }
+
       transition.abort();
     }
   }

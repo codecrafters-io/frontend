@@ -7,12 +7,27 @@ import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
+import window from 'ember-window-mock';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
   setupClock(hooks);
+
+  test('redirects to login page if user is not signed in', async function (assert) {
+    testScenario(this.server);
+
+    assert.expect(2);
+
+    try {
+      await payPage.visit();
+    } catch (e) {
+      assert.equal(1, 1);
+    }
+
+    assert.equal(window.location.href, `${window.location.origin}/login?next=/pay`, 'should redirect to login URL');
+  });
 
   test('new user can start checkout session', async function (assert) {
     signIn(this.owner);
