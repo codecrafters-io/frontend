@@ -11,16 +11,11 @@
   <dd.Content>
     <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-account-dropdown-content>
       {{#if this.currentUser.isTeamAdmin}}
-        <div
-          class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
-          role="button"
+        <Header::AccountDropdownLink
+          @text="Manage Team"
+          @icon="user-group"
           {{on "click" (fn this.handleManageTeamClick dd.actions this.currentUser.managedTeams.firstObject)}}
-        >
-          <span class="mr-4">
-            Manage Team
-          </span>
-          {{svg-jar "user-group" class="w-5 text-gray-300 group-hover:text-teal-500"}}
-        </div>
+        />
       {{/if}}
       {{#if this.currentUser.hasActiveSubscription}}
         <div
@@ -55,22 +50,8 @@
         --}}
       {{/if}}
 
-      <div
-        class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
-        role="button"
-        {{on "click" (fn this.handleGetHelpClick dd.actions)}}
-      >
-        <span class="mr-4">
-          Get Help
-        </span>
-        {{svg-jar "question-mark-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}
-      </div>
-      <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" this.handleLogoutClick}}>
-        <span class="mr-4">
-          Logout
-        </span>
-        {{svg-jar "logout" class="w-5 text-gray-300 group-hover:text-teal-500"}}
-      </div>
+      <Header::AccountDropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />
+      <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>
   </dd.Content>
 </BasicDropdown>
