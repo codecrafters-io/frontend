@@ -48,20 +48,26 @@ export default class CourseModel extends Model {
   trackIntroductionMarkdownFor(language) {
     if (this.isRedis) {
       return `
-Redis is a key-value store, it’s a popular choice for storing data that needs to be retrieved quickly and often. You'll
-build your own version of Redis from scratch -- it's the ideal way to explore networking concepts in ${language.name}`;
+Discover concurrent programming in ${language.name} with goroutines, while also learning about TCP servers,
+network programming, and the Redis Protocol.`;
     } else if (this.isDocker) {
-      return `
-Docker helps you set up & deploy any project quickly despite code environment differences. You'll build your own version
-of Docker from scratch -- it's the ideal way to explore OS level concepts in ${language.name}`;
+      if (language.isGo) {
+        return `
+Learn what a Docker image really is, and how it's stored in the Docker registry. Get your feel wet with systems
+programming in ${language.name}. Learn to execute other programs with \`exec\` and to use \`syscall\` for Linux-specific calls.`;
+      } else {
+        return `
+Learn what a Docker image really is, and how it's stored in the Docker registry. Get your feel wet with systems
+programming in ${language.name}. Learn about chroot, kernel namespaces & more.`;
+      }
     } else if (this.isGit) {
       return `
-Git is a version control system. You'll build your own version of Git from scratch -- it's the ideal way to explore
-concepts in ${language.name}`;
+Dive into the internals of Git. Discover how Git stores and moves around data, its transfer protocols, and more. A
+unique exercise in making network requests with ${language.name}.`;
     } else if (this.isSQLite) {
       return `
-SQLite is a database. You'll build your own version of SQLite from scratch -- it's the ideal way to explore
-concepts in ${language.name}`;
+Learn about B-Trees, the foundation of every relational database. Explore ${language.name}'s API for reading/writing
+files, and handling custom file formats.`;
     }
   }
 
