@@ -29,6 +29,7 @@ export default class PayController extends Controller {
 
   @action
   async handleTryNowPayLaterButtonClicked() {
+    this.store.createRecord('analytics-event', { name: 'dismissed_payment_prompt' }).save();
     this.router.transitionTo('track', 'go');
   }
 }
