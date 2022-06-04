@@ -30,7 +30,11 @@
             </a>
           </div>
         </div>
-        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 xl:mt-0 xl:col-span-2">
+        <div
+          class="mt-12 grid grid-cols-2
+            {{if (eq this.footerLinkGroups.length 4) 'md:grid-cols-4' 'md:grid-cols-3'}}
+            gap-x-8 gap-y-12 xl:mt-0 xl:col-span-2"
+        >
           {{#each this.footerLinkGroups as |footerLinkGroup|}}
             <div>
               <h3 class="text-sm font-semibold text-gray-500 tracking-wider uppercase border-b-2 border-gray-700 inline-flex pb-1">
@@ -39,7 +43,7 @@
               <ul class="mt-4 space-y-4">
                 {{#each footerLinkGroup.links as |link|}}
                   <li>
-                    <a href="{{link.url}}" class="text-base text-gray-400 hover:text-gray-300">
+                    <a href="{{link.url}}" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
                       {{link.text}}
                     </a>
                   </li>
@@ -51,7 +55,7 @@
       </div>
       <div class="mt-12 border-t border-gray-700 pt-8">
         <p class="text-base text-gray-600 xl:text-center">
-          &copy; 2022 Educode Limited. All rights reserved.
+          &copy; 2022 CodeCrafters, Inc. All rights reserved.
         </p>
       </div>
     </div>

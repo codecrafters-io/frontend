@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class PayController extends Controller {
   @service currentUser;
+  @service router;
   @tracked isCreatingCheckoutSession = false;
 
   get testimonials() {
@@ -23,5 +24,10 @@ export default class PayController extends Controller {
 
     await checkoutSession.save();
     window.location.href = checkoutSession.url;
+  }
+
+  @action
+  async handleTryNowPayLaterButtonClicked() {
+    this.router.transitionTo('track', 'go');
   }
 }
