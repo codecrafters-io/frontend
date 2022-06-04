@@ -39,6 +39,10 @@ export default class PageViewTracker extends Service {
       return this.store.createRecord('analytics-event', { name: 'viewed_course_list_page' });
     } else if (this.router.currentRouteName === 'pay') {
       return this.store.createRecord('analytics-event', { name: 'viewed_payment_prompt' });
+    } else if (this.router.currentRouteName === 'course_stage_solution.diff') {
+      return this.store.createRecord('analytics-event', { name: 'viewed_course_stage_solution_diff' });
+    } else if (this.router.currentRouteName === 'course_stage_solution.explanation') {
+      return this.store.createRecord('analytics-event', { name: 'viewed_course_stage_solution_explanation' });
     } else {
       return this.store.createRecord('analytics-event', { name: 'viewed_unknown_page', properties: { url: this.router.currentURL } });
     }
