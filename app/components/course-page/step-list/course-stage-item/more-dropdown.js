@@ -3,17 +3,26 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class CoursePageStepListCourseStageItemMoreDropdownComponent extends Component {
-  @service('router') router;
+  @service currentUser;
+  @service router;
 
   @action
   handleViewSolutionLinkClicked() {
     if (this.viewSolutionLinkIsEnabled) {
-      this.router.transitionTo('course-stage-solution.index', this.args.courseStage.course.slug, this.args.courseStage.slug);
+      if (this.solutionIsOnlyAccessibleToSubscribers && !this.currentUser.isSubscriber) {
+        this.router.transitionTo('pay');
+      } else {
+        this.router.transitionTo('course-stage-solution.index', this.args.courseStage.course.slug, this.args.courseStage.slug);
+      }
     }
   }
 
   get viewSolutionLinkIsEnabled() {
     return this.solutionIsAvailable;
+  }
+
+  get solutionIsOnlyAccessibleToSubscribers() {
+    return this.args.courseStage.position >= 4;
   }
 
   get solutionIsAvailable() {
