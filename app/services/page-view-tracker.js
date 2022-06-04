@@ -37,6 +37,8 @@ export default class PageViewTracker extends Service {
       });
     } else if (this.router.currentRouteName === 'courses') {
       return this.store.createRecord('analytics-event', { name: 'viewed_course_list_page' });
+    } else if (this.router.currentRouteName === 'pay') {
+      return this.store.createRecord('analytics-event', { name: 'viewed_payment_prompt' });
     } else {
       return this.store.createRecord('analytics-event', { name: 'viewed_unknown_page', properties: { url: this.router.currentURL } });
     }
