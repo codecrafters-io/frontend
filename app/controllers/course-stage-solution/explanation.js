@@ -3,6 +3,8 @@ import Prism from 'prismjs';
 import showdown from 'showdown';
 import { htmlSafe } from '@ember/template';
 import { action } from '@ember/object';
+import 'prismjs/components/prism-go';
+import 'prismjs/components/prism-diff';
 
 export default class CourseStageSolutionExplanationController extends Controller {
   get explanationHtml() {
