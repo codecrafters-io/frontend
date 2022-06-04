@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit
+      - run: mkdir node_modules && npm ci --prefer-offline --ignore-scripts --no-audit
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
