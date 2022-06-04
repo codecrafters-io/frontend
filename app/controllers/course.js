@@ -37,6 +37,7 @@ export default class CourseController extends Controller {
 
   @action
   handleRepositoryCreate() {
+    this.track = null;
     this.selectedRepositoryId = this.newRepository.id;
     this.isCreatingNewRepository = false;
     this.newRepository = this.store.createRecord('repository', { course: this.course, user: this.currentUser.record });
