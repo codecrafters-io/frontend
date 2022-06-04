@@ -14,6 +14,7 @@ export default class TrackCardComponent extends Component {
 
   get completedStagesCount() {
     return this.currentUser.record.repositories
+      .filterBy('language', this.args.language)
       .toArray()
       .flatMap((repository) => repository.completedStages)
       .uniq().length;
