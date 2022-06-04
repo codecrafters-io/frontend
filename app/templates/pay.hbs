@@ -20,7 +20,7 @@
       type="button"
       {{on "click" this.handleStartPaymentButtonClicked}}
     >
-      Complete signup
+      Complete signup ($39/mo)
 
       {{#if this.isCreatingCheckoutSession}}
         <svg class="animate-spin ml-3 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@
     </button>
 
     <div class="mt-4 text-sm text-gray-500 text-center">
-      Payments are made with Stripe and invoices are available
+      Payments via Stripe. Cancel anytime.
     </div>
 
     <div role="button" class="mt-8 text-sm text-gray-400 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>
