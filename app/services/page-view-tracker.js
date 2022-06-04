@@ -57,6 +57,13 @@ export default class PageViewTracker extends Service {
           language_slug: 'go', // hard-coded for now
         },
       });
+    } else if (this.router.currentRouteName === 'track') {
+      return this.store.createRecord('analytics-event', {
+        name: 'viewed_track_page',
+        properties: { track_slug: this.router.currentRoute.params.track_slug },
+      });
+    } else if (this.router.currentRouteName === 'tracks') {
+      return this.store.createRecord('analytics-event', { name: 'viewed_tracks_page' });
     } else {
       return this.store.createRecord('analytics-event', { name: 'viewed_unknown_page', properties: { url: this.router.currentURL } });
     }
