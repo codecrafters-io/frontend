@@ -17,7 +17,7 @@
     </ModalBackdrop>
   {{/if}}
 
-  <Footer />
+  <Footer @shouldShowChallengeLinkGroup={{not this.currentRouteIsPay}} />
 </div>
 
 <LoadingIndicatorRemover />
