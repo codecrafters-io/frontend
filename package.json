@@ -31,6 +31,7 @@
     "@glimmer/tracking": "^1.0.4",
     "@percy/cli": "^1.0.0-beta.71",
     "@percy/ember": "^3.0.0",
+    "@sinonjs/fake-timers": "^7.1.2",
     "@sentry/ember": "^6.19.7",
     "@types/sinonjs__fake-timers": "^6.0.3",
     "autoprefixer": "^10.3.2",
@@ -102,7 +103,6 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@sinonjs/fake-timers": "^7.1.2",
     "@tailwindcss/typography": "^0.4.1",
     "ansi_up": "^5.1.0",
     "fuse.js": "^6.5.3",
