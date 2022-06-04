@@ -10,14 +10,23 @@
     </div>
   {{else}}
     <div class="flex items-center flex-wrap">
-      {{#each this.orderedLanguages as |supportedLanguage|}}
-        <CoursePage::StepList::SetupItem::LanguageButton
-          @language={{supportedLanguage}}
-          {{on "click" (fn this.handleLanguageButtonClick supportedLanguage)}}
-        />
-      {{/each}}
+      {{#if (and this.preferredLanguages.firstObject (not this.shouldShowNonPreferredLanguages))}}
+        {{#each this.preferredLanguages as |language|}}
+          <CoursePage::StepList::SetupItem::LanguageButton @language={{language}} {{on "click" (fn this.handleLanguageButtonClick language)}} />
+        {{/each}}
 
-      <CoursePage::StepList::SetupItem::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />
+        <CoursePage::StepList::SetupItem::ShowOtherLanguagesButton
+          @course={{@repository.course}}
+          @user={{@repository.user}}
+          {{on "click" this.handleShowOtherLanguagesButtonClick}}
+        />
+      {{else}}
+        {{#each this.orderedLanguages as |language|}}
+          <CoursePage::StepList::SetupItem::LanguageButton @language={{language}} {{on "click" (fn this.handleLanguageButtonClick language)}} />
+        {{/each}}
+
+        <CoursePage::StepList::SetupItem::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />
+      {{/if}}
     </div>
 
     <AnimatedContainer>

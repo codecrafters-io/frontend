@@ -12,7 +12,11 @@
 
     <AnimatedContainer>
       {{#animated-if @repository.isNew use=this.transition}}
-        <CoursePage::StepList::SetupItem::CreateRepositoryStep @repository={{@repository}} @onLanguageSelection={{this.handleLanguageSelection}} />
+        <CoursePage::StepList::SetupItem::CreateRepositoryStep
+          @preferredLanguageSlug={{@preferredLanguageSlug}}
+          @repository={{@repository}}
+          @onLanguageSelection={{this.handleLanguageSelection}}
+        />
       {{else}}
         <CoursePage::StepList::SetupItem::CloneRepositoryStep @repository={{@repository}} />
       {{/animated-if}}

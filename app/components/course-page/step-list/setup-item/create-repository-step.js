@@ -2,16 +2,23 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import showdown from 'showdown';
 
 export default class CoursePageContentStepListSetupItemCreateRepositoryStepComponent extends Component {
   @service store;
   requestedLanguagesPromptTransition = fade;
+  @tracked shouldShowNonPreferredLanguages = false;
 
   @action
   handleLanguageButtonClick(language) {
     this.args.onLanguageSelection(language);
+  }
+
+  @action
+  handleShowOtherLanguagesButtonClick() {
+    this.shouldShowNonPreferredLanguages = true;
   }
 
   get instructionsHTML() {
@@ -30,6 +37,10 @@ To get started, let us know what language you'd like to attempt this challenge i
 
   get orderedLanguages() {
     return this.args.repository.course.supportedLanguages.sortBy('name');
+  }
+
+  get preferredLanguages() {
+    return this.args.repository.course.supportedLanguages.filterBy('slug', this.args.preferredLanguageSlug);
   }
 
   get requestedLanguages() {
