@@ -9,12 +9,14 @@ export default class CourseController extends Controller {
     {
       selectedRepositoryId: 'repo',
       isCreatingNewRepository: 'fresh',
+      track: 'track',
     },
   ];
 
   @tracked isCreatingNewRepository = false;
   @tracked selectedRepositoryId;
   @tracked newRepository;
+  @tracked track;
   @service currentUser;
 
   get activeRepository() {
@@ -22,6 +24,8 @@ export default class CourseController extends Controller {
       return this.repositories.findBy('id', this.selectedRepositoryId);
     } else if (this.isCreatingNewRepository) {
       return this.newRepository;
+    } else if (this.track) {
+      return this.lastPushedRepositoryForTrack || this.newRepository;
     } else {
       return this.lastPushedRepository || this.newRepository;
     }
@@ -44,6 +48,10 @@ export default class CourseController extends Controller {
 
   get lastPushedRepository() {
     return this.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+  }
+
+  get lastPushedRepositoryForTrack() {
+    return this.repositories.filterBy('language.slug', 'track').filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
   }
 
   get repositories() {

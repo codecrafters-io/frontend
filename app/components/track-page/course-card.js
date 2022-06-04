@@ -15,7 +15,7 @@ export default class TrackPageCourseCardComponent extends Component {
 
   @action
   handleClick() {
-    this.router.transitionTo('course', this.args.course.slug);
+    this.router.transitionTo('course', this.args.course.slug, { queryParams: { track: this.args.language.slug } });
   }
 
   get introductionHtml() {
