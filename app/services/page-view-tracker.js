@@ -39,7 +39,7 @@ export default class PageViewTracker extends Service {
       return this.store.createRecord('analytics-event', { name: 'viewed_course_list_page' });
     } else if (this.router.currentRouteName === 'pay') {
       return this.store.createRecord('analytics-event', { name: 'viewed_payment_prompt' });
-    } else if (this.router.currentRouteName === 'course_stage_solution.diff') {
+    } else if (this.router.currentRouteName === 'course-stage-solution.diff') {
       return this.store.createRecord('analytics-event', {
         name: 'viewed_course_stage_solution_diff',
         properties: {
@@ -48,7 +48,7 @@ export default class PageViewTracker extends Service {
           language_slug: 'go', // hard-coded for now
         },
       });
-    } else if (this.router.currentRouteName === 'course_stage_solution.explanation') {
+    } else if (this.router.currentRouteName === 'course-stage-solution.explanation') {
       return this.store.createRecord('analytics-event', {
         name: 'viewed_course_stage_solution_explanation',
         properties: {
