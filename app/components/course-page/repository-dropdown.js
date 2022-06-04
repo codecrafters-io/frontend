@@ -30,13 +30,13 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
 
   @action
   async handleRepositoryLinkClick(repository, dropdownActions) {
-    await this.router.transitionTo('course', repository.course.get('slug'), { queryParams: { repo: repository.id } });
+    await this.router.transitionTo('course', repository.course.get('slug'), { queryParams: { repo: repository.id, track: null } });
     dropdownActions.close();
   }
 
   @action
   async handleTryDifferentLanguageActionClick(dropdownActions) {
-    await this.router.transitionTo({ queryParams: { fresh: true, repo: null } });
+    await this.router.transitionTo({ queryParams: { fresh: true, repo: null, track: null } });
     dropdownActions.close();
   }
 
