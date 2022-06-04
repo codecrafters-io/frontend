@@ -21,8 +21,10 @@ export default class ApplicationRoute extends Route {
     }
 
     if (this.currentUser.isAuthenticated) {
-      window.H.init('4g8lq8d5'); // highlight.run
-      window.H.identify(this.currentUser.currentUserUsername, { id: this.currentUser.currentUserId, avatar: this.currentUser.record.avatarUrl });
+      if (window.H) {
+        window.H.init('4g8lq8d5'); // highlight.run
+        window.H.identify(this.currentUser.currentUserUsername, { id: this.currentUser.currentUserId, avatar: this.currentUser.record.avatarUrl });
+      }
     }
   }
 }
