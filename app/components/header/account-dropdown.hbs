@@ -13,7 +13,7 @@
       {{#if this.currentUser.isTeamAdmin}}
         <Header::AccountDropdownLink
           @text="Manage Team"
-          @icon="user-group"
+          @icon="users"
           {{on "click" (fn this.handleManageTeamClick dd.actions this.currentUser.managedTeams.firstObject)}}
         />
       {{/if}}
@@ -50,6 +50,7 @@
         --}}
       {{/if}}
 
+      <Header::AccountDropdownLink @text="Discord" @icon="user-group" {{on "click" (fn this.handleDiscordClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>
