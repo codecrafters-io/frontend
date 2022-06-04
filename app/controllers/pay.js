@@ -18,6 +18,7 @@ export default class PayController extends Controller {
     this.isCreatingCheckoutSession = true;
 
     let checkoutSession = this.store.createRecord('individual-checkout-session', {
+      promotionCode: 'EARLYBIRD',
       successUrl: `${window.location.origin}/tracks/go?action=checkout_session_successful`,
       cancelUrl: `${window.location.origin}/pay`,
     });
