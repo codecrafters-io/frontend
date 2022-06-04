@@ -53,8 +53,16 @@ export default class LanguageModel extends Model {
       {
         go: 1,
         rust: 2,
-      }[this.slug] || 5
+      }[this.slug] || 100 - this.stagesCount
     );
+  }
+
+  get stagesCount() {
+    return this.store
+      .peekAll('course')
+      .filter((course) => course.supportedLanguages.includes(this))
+      .map((course) => course.stages.length)
+      .reduce((a, b) => a + b, 0);
   }
 
   get tealLogoUrl() {

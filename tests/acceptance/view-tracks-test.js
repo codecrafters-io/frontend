@@ -16,7 +16,7 @@ module('Acceptance | view-tracks', function (hooks) {
     testScenario(this.server);
 
     await tracksPage.visit();
-    assert.equal(tracksPage.trackCards.length, 7, 'expected 7 course cards to be present');
+    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 course cards to be present');
 
     await percySnapshot('Tracks Page');
 
@@ -95,8 +95,6 @@ module('Acceptance | view-tracks', function (hooks) {
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    console.log(this.server.schema.courses.all().models.length);
-
     this.server.schema.courses.all().models.forEach((course) => {
       if (course.supportedLanguages.models.map((language) => language.slug).includes(go.slug)) {
         this.server.create('repository', 'withAllStagesCompleted', {
@@ -126,7 +124,7 @@ module('Acceptance | view-tracks', function (hooks) {
     testScenario(this.server);
 
     await tracksPage.visit();
-    assert.equal(tracksPage.trackCards.length, 7, 'expected 7 track cards to be present');
+    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
   });
 
   test('first time visit has loading page', async function (assert) {
@@ -138,7 +136,7 @@ module('Acceptance | view-tracks', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.equal(tracksPage.trackCards.length, 7, 'expected 4 track cards to be present');
+    assert.equal(tracksPage.trackCards.length, 14, 'expected 4 track cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -170,7 +168,7 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.equal(tracksPage.trackCards.length, 7, 'expected 7 track cards to be present');
+    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -192,6 +190,6 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.equal(tracksPage.trackCards.length, 7, 'expected 7 track cards to be present');
+    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
   });
 });
