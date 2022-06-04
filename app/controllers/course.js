@@ -52,7 +52,7 @@ export default class CourseController extends Controller {
   }
 
   get lastPushedRepositoryForTrack() {
-    return this.repositories.filterBy('language.slug', 'track').filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+    return this.repositories.filterBy('language.slug', this.track).filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
   }
 
   get repositories() {
