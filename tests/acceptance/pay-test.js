@@ -53,6 +53,7 @@ module('Acceptance | pay-test', function (hooks) {
       'fetch leaderboard entries (track page)',
       'fetch repositories (track page)',
       'notify page view (track page)',
+      'notify finished checkout flow (modal)',
       'fetch subscriptions (modal)',
     ].length;
 
