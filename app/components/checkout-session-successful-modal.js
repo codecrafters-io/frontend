@@ -12,6 +12,8 @@ export default class CheckoutSessionSuccessfulModalComponent extends Component {
   async handleDidInsert() {
     let attempts = 0;
 
+    this.store.createRecord('analytics-event', { name: 'finished_checkout_flow' }).save();
+
     while (attempts < 60) {
       try {
         let subscriptions = await this.store.findAll('subscription');
