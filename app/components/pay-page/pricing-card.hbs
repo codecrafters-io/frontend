@@ -4,10 +4,21 @@
       Go mastery track
     </div>
 
-    <div class="font-bold mt-6">
-      <span class="text-6xl text-gray-700 font-bold">${{@actualMonthlyPrice}}</span>
-      <span class="text-lg text-gray-400 font-bold">/mo</span>
-    </div>
+    {{#if @discountedMonthlyPrice}}
+      <div class="font-bold mt-6">
+        <span class="text-2xl text-gray-600 font-bold line-through">${{@actualMonthlyPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/mo</span>
+      </div>
+      <div class="font-bold mt-2">
+        <span class="text-6xl text-teal-500 font-bold">${{@discountedMonthlyPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/mo</span>
+      </div>
+    {{else}}
+      <div class="font-bold mt-6">
+        <span class="text-6xl text-gray-700 font-bold">${{@actualMonthlyPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/mo</span>
+      </div>
+    {{/if}}
 
     <div class="mt-8 text-sm text-gray-600">
       Ideal for your learning budget.
