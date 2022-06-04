@@ -13,12 +13,10 @@ export default class TracksController extends Controller {
   }
 
   get languages() {
-    let allLanguages = this.model.courses
+    return this.model.courses
       .toArray()
       .flatMap((course) => course.supportedLanguages.toArray())
       .uniq();
-
-    return allLanguages.filter((language) => this.model.courses.filter((course) => course.supportedLanguages.includes(language)).length > 1);
   }
 
   get orderedLanguages() {
