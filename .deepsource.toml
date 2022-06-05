@@ -6,3 +6,7 @@ enabled = true
 
   [analyzers.meta]
   plugins = ["ember"]
+
+[[analyzers]]
+name = "test-coverage"
+enabled = true
