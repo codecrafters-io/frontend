@@ -63,7 +63,7 @@ jobs:
         run: |
           curl https://deepsource.io/cli | sh
           ./bin/deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/lcov.info
-        with:
+        env:
           DEEPSOURCE_DSN: ${{secrets.DEEPSOURCE_TOKEN}}
 
       - name: "Upload coverage to Codecov"
