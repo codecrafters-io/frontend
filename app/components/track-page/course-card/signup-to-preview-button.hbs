@@ -1,14 +1,11 @@
 <button
-  class="bg-gray-200 hover:bg-gray-300 transition-colors px-4 py-3 text-gray-700 text-sm rounded mr-2 flex flex-col items-center w-full group"
+  class="bg-gray-200 hover:bg-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded mr-2 flex flex-col items-center w-full group"
   data-test-start-track-button
   type="button"
   {{on "click" this.handleClicked}}
 >
-  <div class="font-bold flex items-center mb-2 sm:mb-0">
+  <div class="font-bold flex items-center sm:mb-0">
     Signup to preview full module
     {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
-  </div>
-  <div class="text-xs md:text-sm">
-    Featuring Goroutines, gRPC, adapter patterns
   </div>
 </button>
