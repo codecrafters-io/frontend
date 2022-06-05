@@ -104,7 +104,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowMoreDropdown() {
-    return !this.args.courseStage.isFirst && this.args.repository.get('language.isGo') && this.args.repository.user.isStaff; // TODO: Also filter by staff?
+    return !this.args.courseStage.isFirst && this.args.repository.get('language.isGo');
   }
 
   get shouldShowFirstStageHints() {
