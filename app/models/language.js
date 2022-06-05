@@ -117,9 +117,9 @@ A quick welcome to CodeCrafters.
 
   get trackIntroductionVideoId() {
     if (this.isGo) {
-      return '705760188';
+      return '717251339';
     } else {
-      return '705760188';
+      return '717251339'; // TODO: Change this when a generic video is available
     }
   }
 
