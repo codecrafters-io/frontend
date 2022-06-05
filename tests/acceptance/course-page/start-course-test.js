@@ -1,6 +1,8 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import tracksPage from 'codecrafters-frontend/tests/pages/tracks-page';
+import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
@@ -115,16 +117,16 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await coursePage.repositoryDropdown.click();
     assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
-    await coursePage.header.clickOnChallengesLink();
-    await coursesPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.header.clickOnTracksLink();
+    await tracksPage.clickOnTrack('Python');
+    await trackPage.clickOnCourseCard('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/redis', 'current URL is changed to not include invalid repo');
+    assert.equal(currentURL(), '/courses/redis?fresh=false&track=python', 'current URL is changed to not include invalid repo');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
 
-    await coursePage.setupItem.clickOnLanguageButton('Go');
+    await coursePage.setupItem.clickOnLanguageButton('Python');
     await coursePage.repositoryDropdown.click();
     assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
