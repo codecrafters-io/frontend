@@ -119,7 +119,7 @@ A quick welcome to CodeCrafters.
     if (this.isGo) {
       return '717251339';
     } else {
-      return '717251339'; // TODO: Change this when a generic video is available
+      return '717263263';
     }
   }
 
