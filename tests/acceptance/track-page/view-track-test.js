@@ -1,6 +1,7 @@
 import createLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-leaderboard-entries';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -56,5 +57,13 @@ module('Acceptance | view-track', function (hooks) {
     assert.equal(1, 1);
 
     await percySnapshot('Track - Started');
+  });
+
+  test('it excludes alpha courses', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await trackPage.visit({ track_slug: 'javascript' });
+    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own React'));
   });
 });
