@@ -46,7 +46,7 @@
         @repository={{@repository}}
         class="mt-6"
       />
-    {{else if (and this.wasCompletedRecently this.solutionIsAvailable)}}
+    {{else if (and this.wasCompletedRecently this.solutionIsAvailable (not @courseStage.isLast))}}
       <CoursePage::StepList::CourseStageItem::ViewSolutionPrompt
         @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
         @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
