@@ -35,6 +35,11 @@
   top: 50%;
 }
 
+/* Override prism's 1em font-size */
+.prose pre[class*="language-"] {
+  font-size: 0.875em;
+}
+
 .prose pre code {
   white-space: pre;
 }
