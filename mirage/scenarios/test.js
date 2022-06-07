@@ -1,6 +1,6 @@
 import createCourseFromData from 'codecrafters-frontend/mirage/utils/create-course-from-data';
 import createLanguages from 'codecrafters-frontend/mirage/utils/create-languages';
-import createRedisStage3Solution from 'codecrafters-frontend/mirage/utils/create-redis-stage-3-solution';
+import createRedisStageSolution from 'codecrafters-frontend/mirage/utils/create-redis-stage-solution';
 import dockerCourseData from 'codecrafters-frontend/mirage/course-fixtures/docker';
 import gitCourseData from 'codecrafters-frontend/mirage/course-fixtures/git';
 import reactCourseData from 'codecrafters-frontend/mirage/course-fixtures/react';
@@ -25,5 +25,8 @@ export default function (server) {
   createCourseFromData(server, reactCourseData);
 
   // TODO: Fetch this programmatically
-  createRedisStage3Solution(server);
+  createRedisStageSolution(server, 2);
+  createRedisStageSolution(server, 3);
+  createRedisStageSolution(server, 4);
+  createRedisStageSolution(server, 5);
 }

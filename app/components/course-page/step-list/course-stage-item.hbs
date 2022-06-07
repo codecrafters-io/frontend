@@ -26,6 +26,7 @@
       </div>
     </div>
 
+    {{! TODO: Remove these upgrade prompts }}
     {{#if (and @shouldShowUpgradePromptIfStagePending (not this.statusIsComplete))}}
       <CoursePage::StepList::CourseStageItem::UpgradePrompt @class="mb-4" @color={{if this.statusIsWaiting "yellow" "gray"}} />
     {{/if}}
@@ -43,8 +44,16 @@
         @courseStage={{@courseStage}}
         @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
         @repository={{@repository}}
+        class="mt-6"
+      />
+    {{else if (and this.wasCompletedRecently this.solutionIsAvailable (not @courseStage.isLast))}}
+      <CoursePage::StepList::CourseStageItem::ViewSolutionPrompt
+        @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
+        @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
+        class="mt-6"
       />
     {{/if}}
+
   </:content>
 
   <:footerContent>

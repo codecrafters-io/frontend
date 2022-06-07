@@ -12,19 +12,33 @@ class SetupItem {
   get identifier() {
     return 'setup';
   }
+
+  get shouldAdvanceToNextItemAutomatically() {
+    return true;
+  }
 }
 
 class CourseStageItem {
   @tracked courseStage;
+  @tracked repository;
 
   type = 'CourseStageItem';
 
-  constructor(courseStage) {
+  constructor(repository, courseStage) {
+    this.repository = repository;
     this.courseStage = courseStage;
   }
 
   get identifier() {
     return this.courseStage.id;
+  }
+
+  get shouldAdvanceToNextItemAutomatically() {
+    return this.courseStage.isFirst || !this.solutionIsAvailable;
+  }
+
+  get solutionIsAvailable() {
+    return !!this.courseStage.solutions.findBy('language', this.repository.language);
   }
 }
 
@@ -33,6 +47,10 @@ class CourseCompletedItem {
 
   get identifier() {
     return 'completed';
+  }
+
+  get shouldAdvanceToNextItemAutomatically() {
+    return false;
   }
 }
 
@@ -57,7 +75,7 @@ export default class CoursePageContentStepListComponent extends Component {
     items.push(new SetupItem());
 
     this.args.course.sortedStages.forEach((courseStage) => {
-      items.push(new CourseStageItem(courseStage));
+      items.push(new CourseStageItem(this.args.repository, courseStage));
     });
 
     if (this.args.repository.allStagesAreComplete) {
@@ -75,6 +93,10 @@ export default class CoursePageContentStepListComponent extends Component {
     } else {
       return 1;
     }
+  }
+
+  get activeItem() {
+    return this.items[this.activeItemIndex];
   }
 
   get expandedItemIndex() {
@@ -131,6 +153,10 @@ export default class CoursePageContentStepListComponent extends Component {
       return;
     }
 
+    if (!this.activeItem.shouldAdvanceToNextItemAutomatically) {
+      return;
+    }
+
     this.activeItemWillBeReplaced = true;
 
     later(
@@ -141,6 +167,12 @@ export default class CoursePageContentStepListComponent extends Component {
       },
       2000
     );
+  }
+
+  @action
+  async handleViewNextStageButtonClick() {
+    this.selectedItemIndex = null;
+    this.activeItemIndex = this.computeActiveIndex();
   }
 
   @action

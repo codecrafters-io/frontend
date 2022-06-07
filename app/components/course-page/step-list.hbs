@@ -35,6 +35,7 @@
               @courseStage={{item.courseStage}}
               @repository={{@repository}}
               @class="mb-4"
+              @onViewNextStageButtonClick={{this.handleViewNextStageButtonClick}}
               @shouldShowUpgradePromptIfStagePending={{and this.shouldShowUpgradePromptForPendingPaidStages (not item.courseStage.isFree)}}
               @willBeReplaced={{this.activeItemWillBeReplaced}}
             />
