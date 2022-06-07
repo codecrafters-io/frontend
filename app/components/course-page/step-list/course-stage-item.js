@@ -1,3 +1,4 @@
+import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
@@ -7,6 +8,7 @@ import showdown from 'showdown';
 import Mustache from 'mustache';
 
 export default class CoursePageStepListStageItemComponent extends Component {
+  moreDropdownActions; // Set when the component is inserted.
   @service store;
   @service visibility;
   transition = fade;
@@ -60,6 +62,16 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return `Since this is your first stage, you can consult [**the README**]({{readme_url}}) in your repository for instructions on how to pass.`;
   }
 
+  @action
+  handleMoreDropdownInsert(moreDropdownPublicAPI) {
+    this.moreDropdownActions = moreDropdownPublicAPI.actions;
+  }
+
+  @action
+  handleViewSolutionButtonClick() {
+    this.moreDropdownActions.open();
+  }
+
   get instructionsHTML() {
     showdown.extension('linkInNewTab', function () {
       return [
@@ -104,11 +116,15 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowMoreDropdown() {
-    return !this.args.courseStage.isFirst && this.args.repository.get('language.isGo');
+    return this.solutionIsAvailable || (!this.args.courseStage.isFirst && this.args.repository.get('language.isGo'));
   }
 
   get shouldShowFirstStageHints() {
     return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
+  }
+
+  get solutionIsAvailable() {
+    return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
   }
 
   get status() {

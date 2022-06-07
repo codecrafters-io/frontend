@@ -17,7 +17,11 @@
 
       <div>
         {{#if this.shouldShowMoreDropdown}}
-          <CoursePage::StepList::CourseStageItem::MoreDropdown @courseStage={{@courseStage}} @repository={{@repository}} />
+          <CoursePage::StepList::CourseStageItem::MoreDropdown
+            @courseStage={{@courseStage}}
+            @onDropdownInsert={{this.handleMoreDropdownInsert}}
+            @repository={{@repository}}
+          />
         {{/if}}
       </div>
     </div>
@@ -35,14 +39,11 @@
     </div>
 
     {{#if this.shouldShowFirstStageHints}}
-      <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mt-6">
-        <div class="mr-3 mt-0.5">
-          {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
-        </div>
-        <div class="text-blue-900 prose prose-blue leading-7 text-sm">
-          {{this.firstStageReadmeHintHTML}}
-        </div>
-      </div>
+      <CoursePage::StepList::CourseStageItem::FirstStageHint
+        @courseStage={{@courseStage}}
+        @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
+        @repository={{@repository}}
+      />
     {{/if}}
   </:content>
 
