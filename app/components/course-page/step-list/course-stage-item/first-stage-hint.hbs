@@ -3,6 +3,14 @@
     {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
   </div>
   <div class="text-blue-900 prose prose-blue leading-7 text-sm">
-    {{this.firstStageReadmeHintHTML}}
+    {{#if this.solutionIsAvailable}}
+      Since this is your first stage, we recommend
+      <b class="underline" role="button" {{on "click" @onViewSolutionButtonClick}}>viewing the solution</b>
+      for instructions on how to pass.
+    {{else}}
+      Since this is your first stage, you can consult
+      <a href={{this.readmeURL}} target="_blank" rel="noopener noreferrer">the README</a>
+      in your repository for instructions on how to pass.
+    {{/if}}
   </div>
 </div>

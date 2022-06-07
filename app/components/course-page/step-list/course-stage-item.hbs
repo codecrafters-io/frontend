@@ -17,7 +17,11 @@
 
       <div>
         {{#if this.shouldShowMoreDropdown}}
-          <CoursePage::StepList::CourseStageItem::MoreDropdown @courseStage={{@courseStage}} @repository={{@repository}} />
+          <CoursePage::StepList::CourseStageItem::MoreDropdown
+            @courseStage={{@courseStage}}
+            @onDropdownInsert={{this.handleMoreDropdownInsert}}
+            @repository={{@repository}}
+          />
         {{/if}}
       </div>
     </div>
@@ -35,7 +39,11 @@
     </div>
 
     {{#if this.shouldShowFirstStageHints}}
-      <CoursePage::StepList::CourseStageItem::FirstStageHint @courseStage={{@courseStage}} @repository={{@repository}} />
+      <CoursePage::StepList::CourseStageItem::FirstStageHint
+        @courseStage={{@courseStage}}
+        @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
+        @repository={{@repository}}
+      />
     {{/if}}
   </:content>
 
