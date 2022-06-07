@@ -26,6 +26,7 @@
       </div>
     </div>
 
+    {{! TODO: Remove these upgrade prompts }}
     {{#if (and @shouldShowUpgradePromptIfStagePending (not this.statusIsComplete))}}
       <CoursePage::StepList::CourseStageItem::UpgradePrompt @class="mb-4" @color={{if this.statusIsWaiting "yellow" "gray"}} />
     {{/if}}
