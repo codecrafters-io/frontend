@@ -9,11 +9,19 @@ module('Acceptance | view-course-stage-solution', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('it renders solution diff', async function (assert) {
+  test('it renders solution explanation by default', async function (assert) {
     testScenario(this.server);
     signIn(this.owner);
 
     await visit('/courses/redis/solutions/ping-pong-multiple');
+    assert.equal(currentURL(), '/courses/redis/solutions/ping-pong-multiple/explanation');
+  });
+
+  test('it renders solution diff', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner);
+
+    await visit('/courses/redis/solutions/ping-pong-multiple/diff');
     assert.equal(currentURL(), '/courses/redis/solutions/ping-pong-multiple/diff');
   });
 
