@@ -1,0 +1,11 @@
+<div class="flex p-3 bg-teal-100 border border-teal-300 rounded shadow-sm" ...attributes>
+  <div class="mr-3 mt-0.5">
+    {{svg-jar "check-circle" class="w-6 fill-current text-teal-400"}}
+  </div>
+  <div class="text-teal-900 prose prose-teal leading-7 text-sm">
+    Congratulations on completing this stage! You can either
+    <b class="underline text-teal-700" role="button" {{on "click" @onViewSolutionButtonClick}}>view the solution</b>
+    or
+    <b class="underline text-teal-700" role="button" {{on "click" @onViewNextStageButtonClick}}>continue to the next stage</b>.
+  </div>
+</div>

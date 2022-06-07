@@ -44,8 +44,16 @@
         @courseStage={{@courseStage}}
         @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
         @repository={{@repository}}
+        class="mt-6"
+      />
+    {{else if (and this.wasCompletedRecently this.solutionIsAvailable)}}
+      <CoursePage::StepList::CourseStageItem::ViewSolutionPrompt
+        @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
+        @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
+        class="mt-6"
       />
     {{/if}}
+
   </:content>
 
   <:footerContent>

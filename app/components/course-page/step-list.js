@@ -170,6 +170,12 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   @action
+  async handleViewNextStageButtonClick() {
+    this.selectedItemIndex = null;
+    this.activeItemIndex = this.computeActiveIndex();
+  }
+
+  @action
   async handleWillDestroy() {
     this.stopRepositoryPoller();
   }
