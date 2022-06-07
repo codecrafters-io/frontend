@@ -104,11 +104,15 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowMoreDropdown() {
-    return !this.args.courseStage.isFirst && this.args.repository.get('language.isGo');
+    return this.solutionIsAvailable || (!this.args.courseStage.isFirst && this.args.repository.get('language.isGo'));
   }
 
   get shouldShowFirstStageHints() {
     return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
+  }
+
+  get solutionIsAvailable() {
+    return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
   }
 
   get status() {
