@@ -1,5 +1,6 @@
-export default function createRedisStage3Solution(server) {
+export default function createRedisStageSolution(server, stagePosition) {
   let redis = server.schema.courses.findBy({ slug: 'redis' });
+  let stage = redis.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
 
   server.create('course-stage-solution', {
     changedFiles: [
@@ -33,7 +34,7 @@ export default function createRedisStage3Solution(server) {
   end`,
       },
     ],
-    courseStage: redis.stages.models.filter((stage) => stage.slug === 'ping-pong-multiple').firstObject,
+    courseStage: stage,
     explanationMarkdown: `
   To respond to multiple PINGs from the same client, we'll need to run a loop that looks like this:
 

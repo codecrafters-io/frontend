@@ -64,7 +64,11 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   @action
   handleMoreDropdownInsert(moreDropdownPublicAPI) {
-    this.moreDropdownActions = moreDropdownPublicAPI.actions;
+    if (moreDropdownPublicAPI) {
+      this.moreDropdownActions = moreDropdownPublicAPI.actions;
+    } else {
+      this.moreDropdownActions = null;
+    }
   }
 
   @action
