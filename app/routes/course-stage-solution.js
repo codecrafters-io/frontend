@@ -4,12 +4,12 @@ import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 export default class CourseStageSolutionRoute extends ApplicationRoute {
   @service store;
 
-  async model() {
+  async model(params) {
     const courses = await this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
-    const course = courses.findBy('slug', this.paramsFor('course-stage-solution').course_slug);
-    const stage = course.stages.findBy('slug', this.paramsFor('course-stage-solution').stage_slug);
+    const course = courses.findBy('slug', params.course_slug);
+    const stage = course.stages.findBy('slug', params.stage_slug);
+    const solutionForRequestedLanguage = stage.solutions.findBy('language.slug', params.requestedLanguageSlug);
 
-    // TODO: When we support multiple languages, filter by language
-    return stage.solutions.firstObject;
+    return solutionForRequestedLanguage ? solutionForRequestedLanguage : stage.solutions.firstObject;
   }
 }

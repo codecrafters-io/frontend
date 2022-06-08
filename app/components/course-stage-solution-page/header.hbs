@@ -12,20 +12,38 @@
   <span class="font-bold text-gray-700">{{@solution.courseStage.name}}</span>
 </div>
 
-<div class="flex items-center mb-6">
-  <LinkTo @route="course-stage-solution.diff">
-    <div class="flex items-center px-3 py-2 mr-2 border-b-2 text-sm {{if this.diffLinkIsActive 'border-teal-500' 'border-gray-200'}}">
-      {{svg-jar "code" class="text-gray-600 w-5 mr-2 fill-current text-gray-600"}}
-      <span class={{if this.diffLinkIsActive "font-medium text-gray-700" "text-gray-600"}}>Diff</span>
-    </div>
-  </LinkTo>
-  <LinkTo @route="course-stage-solution.explanation">
-    <div
-      class="flex items-center px-3 py-2 mr-2 border-b-2 border-gray-200 text-sm
-        {{if this.explanationLinkIsActive 'border-teal-500' 'border-gray-200'}}"
-    >
-      {{svg-jar "academic-cap" class="text-gray-400 w-5 mr-2 fill-current text-gray-400"}}
-      <span class={{if this.explanationLinkIsActive "font-medium text-gray-700" "text-gray-600"}}>Explanation</span>
-    </div>
-  </LinkTo>
+<div class="flex items-center justify-between mb-6">
+  <div class="flex items-center">
+    <CourseStageSolutionPage::HeaderTabLink @route="course-stage-solution.diff" @icon="code" @text="Diff" @isActive={{this.diffLinkIsActive}} />
+
+    <CourseStageSolutionPage::HeaderTabLink
+      @route="course-stage-solution.explanation"
+      @icon="academic-cap"
+      @text="Explanation"
+      @isActive={{this.explanationLinkIsActive}}
+    />
+  </div>
+
+  <div>
+    <CourseStageSolutionPage::LanguageDropdown
+      @currentLanguage={{@currentLanguage}}
+      @requestedLanguage={{@requestedLanguage}}
+      @courseStage={{@solution.courseStage}}
+    />
+  </div>
 </div>
+
+{{#if (not-eq @requestedLanguage @currentLanguage)}}
+  <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-6 flex items-center">
+    <div class="mr-3">
+      {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
+    </div>
+    <div class="text-blue-900 text-sm">
+      This stage doesn't have solutions available for
+      {{@requestedLanguage.name}}
+      yet, so we're showing solutions for
+      <b class="text-blue-800">{{@currentLanguage.name}}</b>
+      instead.
+    </div>
+  </div>
+{{/if}}
