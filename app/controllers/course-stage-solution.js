@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class CourseStageSolutionController extends Controller {
   @service store;
-  @tracked requestedLanguageSlug = 'go';
+  @tracked requestedLanguageSlug;
 
   queryParams = [
     {
