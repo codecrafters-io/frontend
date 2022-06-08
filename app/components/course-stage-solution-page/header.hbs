@@ -12,8 +12,8 @@
   <span class="font-bold text-gray-700">{{@solution.courseStage.name}}</span>
 </div>
 
-<div class="flex items-center justify-between">
-  <div class="flex items-center mb-6">
+<div class="flex items-center justify-between mb-6">
+  <div class="flex items-center">
     <CourseStageSolutionPage::HeaderTabLink @route="course-stage-solution.diff" @icon="code" @text="Diff" @isActive={{this.diffLinkIsActive}} />
 
     <CourseStageSolutionPage::HeaderTabLink
@@ -21,6 +21,14 @@
       @icon="academic-cap"
       @text="Explanation"
       @isActive={{this.explanationLinkIsActive}}
+    />
+  </div>
+
+  <div>
+    <CourseStageSolutionPage::LanguageDropdown
+      @currentLanguage={{@currentLanguage}}
+      @requestedLanguage={{@requestedLanguage}}
+      @courseStage={{@solution.courseStage}}
     />
   </div>
 </div>

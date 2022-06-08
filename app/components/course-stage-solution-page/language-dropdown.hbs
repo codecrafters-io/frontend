@@ -1,0 +1,61 @@
+<div data-test-language-dropdown>
+  <BasicDropdown @horizontalPosition="auto-right" as |dd|>
+    <dd.Trigger>
+      <button
+        type="button"
+        class="inline-flex justify-center w-full rounded-md border border-gray-300
+          {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
+          shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
+      >
+        <span class="mr-1" data-test-current-language-name>
+          Go
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-language-dropdown-content>
+        {{#each this.languagesWithSolutions as |language|}}
+          <CourseStageSolutionPage::LanguageDropdownLink
+            @language={{language}}
+            @isEnabled={{true}}
+            @isSelected={{eq language @currentLanguage}}
+            @onClick={{fn this.handleLanguageDropdownLinkClick language}}
+          />
+        {{/each}}
+
+        {{#if this.languagesWithoutSolutions.firstObject}}
+          <div class="px-4 font-bold uppercase text-xs text-gray-400 mb-2 mt-3">
+            Coming soon:
+          </div>
+
+          {{#each this.languagesWithoutSolutions as |language|}}
+            <CourseStageSolutionPage::LanguageDropdownLink
+              @language={{language}}
+              @isEnabled={{true}}
+              @isSelected={{eq language @currentLanguage}}
+              @onClick={{fn this.handleLanguageDropdownLinkClick language}}
+            />
+          {{/each}}
+        {{/if}}
+
+        {{#if this.otherLanguages.firstObject}}
+          <div class="pl-3 text-sm">
+            <div class="font-bold text-gray-600 mb-2 mt-3">
+              Switch to a different language:
+            </div>
+            <div class="">
+              {{#each this.otherLanguages as |language|}}
+                <CoursePage::RepositoryDropdown::NonActiveRepositoryLink
+                  @onClick={{fn this.handleRepositoryLinkClick repository dd.actions}}
+                  @repository={{repository}}
+                />
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>
