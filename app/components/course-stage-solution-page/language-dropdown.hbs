@@ -8,7 +8,7 @@
           shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
       >
         <span class="mr-1" data-test-current-language-name>
-          Go
+          {{@requestedLanguage.name}}
         </span>
 
         {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
@@ -20,8 +20,8 @@
           <CourseStageSolutionPage::LanguageDropdownLink
             @language={{language}}
             @isEnabled={{true}}
-            @isSelected={{eq language @currentLanguage}}
-            @onClick={{fn this.handleLanguageDropdownLinkClick language}}
+            @isSelected={{eq language @requestedLanguage}}
+            @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
           />
         {{/each}}
 
@@ -34,26 +34,10 @@
             <CourseStageSolutionPage::LanguageDropdownLink
               @language={{language}}
               @isEnabled={{true}}
-              @isSelected={{eq language @currentLanguage}}
-              @onClick={{fn this.handleLanguageDropdownLinkClick language}}
+              @isSelected={{eq language @requestedLanguage}}
+              @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
             />
           {{/each}}
-        {{/if}}
-
-        {{#if this.otherLanguages.firstObject}}
-          <div class="pl-3 text-sm">
-            <div class="font-bold text-gray-600 mb-2 mt-3">
-              Switch to a different language:
-            </div>
-            <div class="">
-              {{#each this.otherLanguages as |language|}}
-                <CoursePage::RepositoryDropdown::NonActiveRepositoryLink
-                  @onClick={{fn this.handleRepositoryLinkClick repository dd.actions}}
-                  @repository={{repository}}
-                />
-              {{/each}}
-            </div>
-          </div>
         {{/if}}
       </div>
     </dd.Content>

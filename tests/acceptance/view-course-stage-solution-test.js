@@ -32,4 +32,12 @@ module('Acceptance | view-course-stage-solution', function (hooks) {
     await visit('/courses/redis/solutions/ping-pong-multiple/explanation');
     assert.equal(currentURL(), '/courses/redis/solutions/ping-pong-multiple/explanation');
   });
+
+  test('renders go solution when no solution is available for requested language', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner);
+
+    await visit('/courses/redis/solutions/ping-pong-multiple?language=java');
+    assert.equal(currentURL(), '/courses/redis/solutions/ping-pong-multiple/explanation?language=java');
+  });
 });

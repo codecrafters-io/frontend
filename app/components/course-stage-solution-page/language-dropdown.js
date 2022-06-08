@@ -6,8 +6,9 @@ export default class CourseStageSolutionPageLanguageDropdownComponent extends Co
   @service router;
 
   @action
-  handleLanguageDropdownLinkClick(language) {
-    console.log(`selected ${language.name}`);
+  handleLanguageDropdownLinkClick(language, closeDropdownFn) {
+    this.router.transitionTo(this.router.currentRouteName, { queryParams: { language: language.slug } });
+    closeDropdownFn();
   }
 
   get languagesWithSolutions() {

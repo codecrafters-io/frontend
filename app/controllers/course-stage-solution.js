@@ -13,7 +13,6 @@ export default class CourseStageSolutionController extends Controller {
   ];
 
   get currentLanguage() {
-    // TODO: Change this when we actually check for whether solutions are present
     return this.solution.language;
   }
 

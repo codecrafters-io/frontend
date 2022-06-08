@@ -8,7 +8,8 @@ export default class CourseStageSolutionRoute extends ApplicationRoute {
     const courses = await this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
     const course = courses.findBy('slug', params.course_slug);
     const stage = course.stages.findBy('slug', params.stage_slug);
+    const solutionForRequestedLanguage = stage.solutions.findBy('language.slug', params.requestedLanguageSlug);
 
-    return stage.solutions.findBy('language.slug', params.requestedLanguageSlug);
+    return solutionForRequestedLanguage ? solutionForRequestedLanguage : stage.solutions.firstObject;
   }
 }
