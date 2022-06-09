@@ -12,7 +12,9 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
       if (this.solutionIsOnlyAccessibleToSubscribers && !this.currentUser.isSubscriber) {
         this.router.transitionTo('pay');
       } else {
-        this.router.transitionTo('course-stage-solution.index', this.args.courseStage.course.slug, this.args.courseStage.slug);
+        this.router.transitionTo('course-stage-solution.index', this.args.courseStage.course.slug, this.args.courseStage.slug, {
+          queryParams: { language: this.args.repository.language.slug },
+        });
       }
     }
   }
@@ -26,6 +28,6 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   }
 
   get solutionIsAvailable() {
-    return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
+    return !!this.args.courseStage.solutions.firstObject; // Any language is fine
   }
 }

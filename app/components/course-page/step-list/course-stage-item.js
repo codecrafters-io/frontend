@@ -107,6 +107,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.repository.activeStage === this.args.courseStage;
   }
 
+  get isLastCompletedStage() {
+    return this.args.repository.highestCompletedStage === this.args.courseStage;
+  }
+
   get lastFailedSubmissionWasWithinLast10Minutes() {
     return this.lastFailedSubmissionCreatedAt && new Date() - this.lastFailedSubmissionCreatedAt <= 600 * 1000; // in last 10 minutes
   }
@@ -120,14 +124,18 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowMoreDropdown() {
-    return this.solutionIsAvailable || (!this.args.courseStage.isFirst && this.args.repository.get('language.isGo'));
+    return this.solutionIsAvailableInAnyLanguage || (!this.args.courseStage.isFirst && this.args.repository.get('language.isGo'));
   }
 
   get shouldShowFirstStageHints() {
     return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
   }
 
-  get solutionIsAvailable() {
+  get solutionIsAvailableInAnyLanguage() {
+    return !!this.args.courseStage.solutions.firstObject;
+  }
+
+  get solutionIsAvailableInUserLanguage() {
     return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
   }
 
@@ -161,9 +169,5 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get statusIsWaiting() {
     return this.status === 'waiting';
-  }
-
-  get wasCompletedRecently() {
-    return this.completedAt && new Date() - this.completedAt <= 600 * 1000; // in last 10 minutes
   }
 }

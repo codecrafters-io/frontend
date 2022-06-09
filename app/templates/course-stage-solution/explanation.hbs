@@ -2,8 +2,12 @@
   <div class="flex-grow">
     <div class="bg-white rounded border border-gray-300">
       <div class="p-5 pb-4 md:p-8 md:pb-6">
-        <div class="leading-7 prose solution-explanation" {{did-insert this.handleDidInsertExplanationHTML}}>
-          {{this.explanationHtml}}
+        <div
+          class="leading-7 prose solution-explanation"
+          {{did-insert this.handleDidInsertExplanationHTML}}
+          {{did-update this.handleDidUpdateExplanationHTML this.explanationHTML}}
+        >
+          {{this.explanationHTML}}
         </div>
       </div>
     </div>
