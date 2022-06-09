@@ -28,6 +28,6 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   }
 
   get solutionIsAvailable() {
-    return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
+    return !!this.args.courseStage.solutions.firstObject; // Any language is fine
   }
 }
