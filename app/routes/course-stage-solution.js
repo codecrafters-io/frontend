@@ -2,6 +2,10 @@ import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 
 export default class CourseStageSolutionRoute extends ApplicationRoute {
+  queryParams = {
+    requestedLanguageSlug: { refreshModel: true },
+  };
+
   @service store;
 
   async model(params) {
