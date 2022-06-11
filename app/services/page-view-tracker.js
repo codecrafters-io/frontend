@@ -39,24 +39,6 @@ export default class PageViewTracker extends Service {
       return this.store.createRecord('analytics-event', { name: 'viewed_course_list_page' });
     } else if (this.router.currentRouteName === 'pay') {
       return this.store.createRecord('analytics-event', { name: 'viewed_payment_prompt' });
-    } else if (this.router.currentRouteName === 'course-stage-solution.diff') {
-      return this.store.createRecord('analytics-event', {
-        name: 'viewed_course_stage_solution_diff',
-        properties: {
-          course_slug: this.router.currentRoute.parent.params.course_slug,
-          course_stage_slug: this.router.currentRoute.parent.params.stage_slug,
-          language_slug: 'go', // hard-coded for now
-        },
-      });
-    } else if (this.router.currentRouteName === 'course-stage-solution.explanation') {
-      return this.store.createRecord('analytics-event', {
-        name: 'viewed_course_stage_solution_explanation',
-        properties: {
-          course_slug: this.router.currentRoute.parent.params.course_slug,
-          course_stage_slug: this.router.currentRoute.parent.params.stage_slug,
-          language_slug: 'go', // hard-coded for now
-        },
-      });
     } else if (this.router.currentRouteName === 'track') {
       return this.store.createRecord('analytics-event', {
         name: 'viewed_track_page',
@@ -70,6 +52,10 @@ export default class PageViewTracker extends Service {
   }
 
   #shouldIgnoreEventForTransition(transition) {
+    if (transition.to && (transition.to.name === 'course-stage-solution.diff' || transition.to.name === 'course-stage-solution.explanation')) {
+      return true; // These are covered by afterModel hooks
+    }
+
     if (!transition.from || !transition.to) {
       return false; // First page load, not reason to ignore
     }
