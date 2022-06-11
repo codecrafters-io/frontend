@@ -5,9 +5,6 @@ export default class CourseStageSolutionDiffRoute extends ApplicationRoute {
   @service store;
 
   afterModel(model, transition) {
-    console.log('diff - after model!', transition.to.name);
-    console.log('diff - creating record...');
-
     this.store
       .createRecord('analytics-event', {
         name: 'viewed_course_stage_solution_diff',

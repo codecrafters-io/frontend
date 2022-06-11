@@ -5,9 +5,6 @@ export default class CourseStageSolutionExplanationRoute extends ApplicationRout
   @service store;
 
   afterModel(model, transition) {
-    console.log('explanation - after model!', transition.to.name);
-    console.log('explanation - creating record...');
-
     this.store
       .createRecord('analytics-event', {
         name: 'viewed_course_stage_solution_explanation',
