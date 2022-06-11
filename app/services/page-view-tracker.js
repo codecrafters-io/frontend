@@ -52,7 +52,7 @@ export default class PageViewTracker extends Service {
   }
 
   #shouldIgnoreEventForTransition(transition) {
-    if (transition.to.name === 'course-stage-solution.diff' || transition.to.name === 'course-stage-solution.explanation') {
+    if (transition.to && (transition.to.name === 'course-stage-solution.diff' || transition.to.name === 'course-stage-solution.explanation')) {
       return true; // These are covered by afterModel hooks
     }
 
