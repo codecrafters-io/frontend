@@ -4,7 +4,7 @@ import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 export default class CourseStageSolutionDiffRoute extends ApplicationRoute {
   @service store;
 
-  afterModel(model, transition) {
+  afterModel(model) {
     this.store
       .createRecord('analytics-event', {
         name: 'viewed_course_stage_solution_diff',
