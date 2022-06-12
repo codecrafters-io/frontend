@@ -17,7 +17,7 @@
         {{#if @recentParticipants.firstObject}}
           <div class="flex -space-x-3 hover:space-x-1 items-center mb-4">
             {{#each @recentParticipants as |user|}}
-              <TrackPage::Header::RecentParticipantAvatar @user={{user}} />
+              <TrackPage::Header::TopParticipantAvatar @user={{user}} />
             {{/each}}
           </div>
         {{/if}}

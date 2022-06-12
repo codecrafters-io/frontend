@@ -23,14 +23,14 @@ export default class TrackPageCourseCardComponent extends Component {
   }
 
   get recentParticipants() {
-    return this.store
-      .peekAll('leaderboard-entry')
-      .filterBy('language', this.args.language)
-      .filterBy('course', this.args.course)
-      .sortBy('lastAttemptAt')
-      .reverse()
-      .uniqBy('user')
-      .slice(0, 3)
-      .mapBy('user');
+    return [];
+    // return this.store
+    //   .peekAll('track-leaderboard-entry')
+    //   .filterBy('language', this.args.language)
+    //   .sortBy('completedStagesCount')
+    //   .reverse()
+    //   .uniqBy('user')
+    //   .slice(0, 3)
+    //   .mapBy('user');
   }
 }

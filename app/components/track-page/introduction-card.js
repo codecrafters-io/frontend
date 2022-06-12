@@ -12,9 +12,9 @@ export default class CourseOverviewPageIntroductionAndStagesComponent extends Co
 
   get recentParticipants() {
     return this.store
-      .peekAll('leaderboard-entry')
+      .peekAll('track-leaderboard-entry')
       .filterBy('language', this.args.language)
-      .sortBy('currentCourseStage.position')
+      .sortBy('completedStagesCount')
       .uniqBy('user')
       .slice(0, 3)
       .mapBy('user');
