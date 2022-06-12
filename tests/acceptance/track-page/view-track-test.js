@@ -1,4 +1,4 @@
-import createLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-leaderboard-entries';
+import createTrackLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-track-leaderboard-entries';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
@@ -14,7 +14,7 @@ module('Acceptance | view-track', function (hooks) {
 
   test('it renders for anonymous user', async function (assert) {
     testScenario(this.server);
-    createLeaderboardEntries(this.server, 'go', 'redis');
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     await visit('/tracks/go');
     assert.equal(1, 1); // dummy assertion
@@ -30,7 +30,7 @@ module('Acceptance | view-track', function (hooks) {
   test('it renders for logged-in user', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
-    createLeaderboardEntries(this.server, 'go', 'redis');
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     await visit('/tracks/go');
     assert.equal(1, 1); // dummy assertion
@@ -41,7 +41,7 @@ module('Acceptance | view-track', function (hooks) {
   test('it renders for logged-in user who has started course', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
-    createLeaderboardEntries(this.server, 'go', 'redis');
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
