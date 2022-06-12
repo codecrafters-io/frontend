@@ -10,7 +10,7 @@ export default function createTrackLeaderboardEntries(server, languageSlug) {
   });
 
   let user2 = server.create('user', {
-    id: 'user2',
+    id: '63c51e91-e448-4ea9-821b-a80415f266d3',
     avatarUrl: 'https://github.com/rohitpaulk.png',
     createdAt: new Date(),
     githubUsername: 'rohitpaulk',
@@ -29,7 +29,7 @@ export default function createTrackLeaderboardEntries(server, languageSlug) {
     server.create('track-leaderboard-entry', {
       language: language,
       user: user,
-      completedStagesCount: user === user1 ? 48 : 2,
+      completedStagesCount: user === user1 ? 4 : 2,
     });
   });
 }
