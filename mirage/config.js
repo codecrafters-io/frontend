@@ -52,10 +52,6 @@ function routes() {
       result = result.filter((leaderboardEntry) => leaderboardEntry.currentCourseStage.course.id === request.queryParams.course_id);
     }
 
-    if (request.queryParams.language_id) {
-      result = result.filter((leaderboardEntry) => leaderboardEntry.language.id === request.queryParams.language_id);
-    }
-
     return result;
   });
 
@@ -100,6 +96,16 @@ function routes() {
 
   this.post('/team-billing-sessions', function (schema) {
     return schema.teamBillingSessions.create({ url: 'https://test.com/team_billing_session' });
+  });
+
+  this.get('/track-leaderboard-entries', function (schema, request) {
+    let result = schema.trackLeaderboardEntries.all();
+
+    if (request.queryParams.language_id) {
+      result = result.filter((trackLeaderboardEntry) => trackLeaderboardEntry.language.id === request.queryParams.language_id);
+    }
+
+    return result;
   });
 
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon

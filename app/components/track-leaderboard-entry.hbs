@@ -1,0 +1,32 @@
+<div
+  class="flex items-center justify-between py-1.5 group cursor-pointer pl-4 border-l-2
+    {{if this.isForCurrentUser 'border-teal-500' 'border-transparent'}}"
+  role="button"
+  {{on "click" this.handleClick}}
+  data-test-track-leaderboard-entry
+>
+  <div class="flex items-center">
+    <AvatarImage
+      @user={{@entry.user}}
+      class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
+    />
+    <span class="text-xs text-gray-600 group-hover:underline mr-2" data-test-username>{{@entry.user.username}}</span>
+  </div>
+  <div class="flex items-center">
+    <span
+      class="mr-2 text-xs font-bold text-teal-500 {{if this.isForCurrentUser 'opacity-100' 'opacity-0'}} group-hover:opacity-100 transition-opacity"
+      data-test-progress-text
+    >
+      {{this.progressNumerator}}
+      /
+      {{this.progressDenominator}}
+    </span>
+    <div
+      class="w-12 h-3.5 rounded flex overflow-hidden border group-hover:bg-white transition-all bg-teal-50 border-teal-500 group-hover:shadow-sm"
+      data-test-progress-bar-container
+    >
+      <div class="bg-gradient-to-r from-teal-500 to-teal-400 transition-all" style={{this.progressBarWidthStyle}}>
+      </div>
+    </div>
+  </div>
+</div>

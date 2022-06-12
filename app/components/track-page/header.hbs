@@ -9,11 +9,11 @@
     <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
       <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
 
-      {{#if this.recentParticipants.firstObject}}
+      {{#if this.topParticipants.firstObject}}
         <div class="flex items-center">
           <div class="flex -space-x-1 hover:space-x-1 items-center">
-            {{#each this.recentParticipants as |user|}}
-              <TrackPage::Header::RecentParticipantAvatar @user={{user}} />
+            {{#each this.topParticipants as |user|}}
+              <TrackPage::Header::TopParticipantAvatar @user={{user}} />
             {{/each}}
           </div>
 

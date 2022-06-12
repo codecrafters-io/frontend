@@ -11,8 +11,7 @@
     </div>
 
     <div class="w-80 flex-shrink-0 hidden lg:block">
-      {{! TODO: Use TrackLeaderboard }}
-      <CourseLeaderboard @class="ml-2 mb-6" @course={{this.sortedCourses.firstObject}} @repositories={{(array)}} />
+      <TrackLeaderboard class="ml-2 mb-6" @language={{@model.language}} />
 
       {{! TODO: Show testimonials for track instead of courses? }}
       <div class="mx-6">

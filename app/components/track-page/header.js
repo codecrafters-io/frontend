@@ -4,11 +4,11 @@ import { inject as service } from '@ember/service';
 export default class TrackPageHeaderComponent extends Component {
   @service store;
 
-  get recentParticipants() {
+  get topParticipants() {
     return this.store
-      .peekAll('leaderboard-entry')
+      .peekAll('track-leaderboard-entry')
       .filterBy('language', this.args.language)
-      .sortBy('currentCourseStage.position')
+      .sortBy('completedStagesCount')
       .reverse()
       .uniqBy('user')
       .slice(0, 3)

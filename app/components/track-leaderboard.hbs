@@ -1,0 +1,45 @@
+<div data-test-track-leaderboard {{did-insert this.handleDidInsert}}>
+  <div class="flex items-center justify-between mb-2 pl-4">
+    <div class="flex items-center">
+      <span class="uppercase text-teal-500 text-xs font-bold">RECENT ACTIVITY</span>
+
+      <span
+        class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2
+          {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}}
+          transition-all"
+      >
+        {{this.sortedEntries.length}}
+      </span>
+    </div>
+    <div>
+      {{! Add team dropdown if needed }}
+    </div>
+  </div>
+
+  <AnimatedContainer>
+    {{#animated-if this.isLoadingEntries use=this.transition}}
+      <div class="flex p-4 items-center mb-40">
+        <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2" />
+        <span class="text-sm text-gray-600">
+          Loading...
+        </span>
+      </div>
+    {{else}}
+      <div>
+        {{#animated-each this.sortedEntries key="userId" use=this.listTransition as |entry|}}
+          <TrackLeaderboardEntry @entry={{entry}} />
+        {{/animated-each}}
+
+        {{#animated-if (eq this.sortedEntries.length 0)}}
+          <div class="flex px-4 py-2 items-center">
+            <div class="text-sm text-gray-500">
+              <p class="mb-2">
+                No one has tried this Track recently.
+              </p>
+            </div>
+          </div>
+        {{/animated-if}}
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
+</div>
