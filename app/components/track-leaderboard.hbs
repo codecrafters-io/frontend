@@ -27,7 +27,7 @@
     {{else}}
       <div>
         {{#animated-each this.sortedEntries key="userId" use=this.listTransition as |entry|}}
-          <TrackLeaderboardEntry @entry={{entry}} @language={{@language}} />
+          <TrackLeaderboardEntry @entry={{entry}} />
         {{/animated-each}}
 
         {{#animated-if (eq this.sortedEntries.length 0)}}

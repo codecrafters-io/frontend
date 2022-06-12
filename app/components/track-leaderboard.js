@@ -51,6 +51,7 @@ export default class TrackLeaderboardComponent extends Component {
     return [
       this.store.createRecord('track-leaderboard-entry', {
         completedStagesCount: completedStagesCount,
+        language: this.args.language,
         user: this.currentUser,
       }),
     ];
@@ -60,7 +61,7 @@ export default class TrackLeaderboardComponent extends Component {
   async handleDidInsert() {
     this.entriesFromAPI = await this.store.query('track-leaderboard-entry', {
       language_id: this.args.language.id,
-      include: 'user',
+      include: 'language,user',
     });
 
     this.isLoadingEntries = false;

@@ -23,7 +23,7 @@ export default class TrackLeaderboardEntryComponent extends Component {
   get progressDenominator() {
     return this.store
       .peekAll('course')
-      .filter((course) => course.supportedLanguages.includes(this.args.language))
+      .filter((course) => course.supportedLanguages.includes(this.args.entry.language))
       .mapBy('stages.length')
       .reduce((a, b) => a + b, 0);
   }
