@@ -45,7 +45,7 @@ export default class TrackLeaderboardComponent extends Component {
     }
 
     let completedStagesCount = currentUserRepositories.reduce((result, repository) => {
-      return result.concat(repository.courseStageCompletions).uniqBy('courseStage');
+      return result.concat(repository.courseStageCompletions.toArray()).uniqBy('courseStage');
     }, []).length;
 
     return [
