@@ -62,6 +62,6 @@ export default class HeaderAccountDropdownComponent extends Component {
   @action
   handleSubscribeClick(dropdownActions) {
     dropdownActions.close();
-    // TODO: Navigate to /upgrade page
+    this.router.transitionTo('pay');
   }
 }
