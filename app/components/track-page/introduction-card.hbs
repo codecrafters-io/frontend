@@ -1,4 +1,9 @@
-<TrackPage::Card @title="Introduction & track overview" @recentParticipants={{this.recentParticipants}} @number={{@number}}>
+<TrackPage::Card
+  @title="Introduction & track overview"
+  @recentParticipants={{this.recentParticipants}}
+  @number={{@number}}
+  @isComplete={{@isComplete}}
+>
   <div class="leading-6 prose">
     {{this.introductionHtml}}
   </div>
