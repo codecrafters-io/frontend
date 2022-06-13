@@ -19,11 +19,18 @@
   <TrackPage::Card
     @title="{{@course.name}}"
     @number={{@number}}
+    @isComplete={{@activeRepository.allStagesAreComplete}}
     @isNavigatingToOtherPage={{true}}
     @recentParticipants={{this.recentParticipants}}
     role="button"
     {{on "click" this.handleClick}}
   >
+    {{#if @activeRepository}}
+      <div class="mb-4">
+        <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
+      </div>
+    {{/if}}
+
     <div class="leading-6 prose mb-6">
       {{this.introductionHtml}}
     </div>

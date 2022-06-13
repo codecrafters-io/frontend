@@ -7,8 +7,11 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component 
   get coursesWithProgress() {
     return this.args.courses.map((course) => {
       let repositoryWithMostProgress = this.currentUser.isAuthenticated
-        ? this.currentUser.record.repositories.filterBy('language', this.args.language).sortBy('completedStages.length', 'lastSubmissionAt')
-            .lastObject
+        ? this.currentUser.record.repositories
+            .filterBy('language', this.args.language)
+            .filterBy('course', course)
+            .filterBy('firstSubmissionCreated')
+            .sortBy('completedStages.length', 'lastSubmissionAt').lastObject
         : null;
 
       return {

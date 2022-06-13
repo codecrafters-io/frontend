@@ -59,6 +59,27 @@ module('Acceptance | view-track', function (hooks) {
     await percySnapshot('Track - Started');
   });
 
+  test('it renders for logged-in user who has finished one course', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    await visit('/tracks/go');
+    assert.equal(1, 1);
+
+    await percySnapshot('Track - 1 Course Finished');
+  });
+
   test('it excludes alpha courses', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
