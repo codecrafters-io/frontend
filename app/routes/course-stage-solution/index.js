@@ -4,7 +4,11 @@ import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 export default class CourseStageSolutionIndexRoute extends ApplicationRoute {
   @service router;
 
-  beforeModel() {
-    this.router.transitionTo('course-stage-solution.explanation');
+  afterModel(model) {
+    if (model.hasExplanation) {
+      this.router.transitionTo('course-stage-solution.explanation');
+    } else {
+      this.router.transitionTo('course-stage-solution.diff');
+    }
   }
 }
