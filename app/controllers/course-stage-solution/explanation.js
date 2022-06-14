@@ -23,7 +23,11 @@ import 'prismjs/components/prism-diff';
 
 export default class CourseStageSolutionExplanationController extends Controller {
   get explanationHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.model.explanationMarkdown));
+    if (this.model.explanationMarkdown) {
+      return htmlSafe(new showdown.Converter().makeHtml(this.model.explanationMarkdown));
+    } else {
+      return htmlSafe(new showdown.Converter().makeHtml(`This solution does not have an explanation yet.`));
+    }
   }
 
   @action
