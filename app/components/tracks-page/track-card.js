@@ -31,6 +31,7 @@ export default class TrackCardComponent extends Component {
   get stagesCount() {
     return this.store
       .peekAll('course')
+      .rejectBy('releaseStatusIsAlpha')
       .filter((course) => course.supportedLanguages.includes(this.args.language))
       .mapBy('stages.length')
       .reduce((a, b) => a + b, 0);
