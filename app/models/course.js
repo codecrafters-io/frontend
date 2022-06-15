@@ -47,9 +47,15 @@ export default class CourseModel extends Model {
 
   trackIntroductionMarkdownFor(language) {
     if (this.isRedis) {
-      return `
+      if (language.isGo) {
+        return `
 Discover concurrent programming in ${language.name} with goroutines, while also learning about TCP servers,
 network programming, and the Redis Protocol.`;
+      } else {
+        return `
+Discover concurrent programming in ${language.name} while also learning about TCP servers,
+network programming, and the Redis Protocol.`;
+      }
     } else if (this.isDocker) {
       if (language.isGo) {
         return `
