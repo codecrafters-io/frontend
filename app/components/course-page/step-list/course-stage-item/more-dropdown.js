@@ -13,7 +13,7 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
         this.router.transitionTo('pay');
       } else {
         this.router.transitionTo('course-stage-solution.index', this.args.courseStage.course.slug, this.args.courseStage.slug, {
-          queryParams: { language: this.args.repository.language.slug },
+          queryParams: { language: this.args.repository.get('language.slug') },
         });
       }
     }
