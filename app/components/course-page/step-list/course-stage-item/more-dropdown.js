@@ -24,7 +24,7 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   }
 
   get solutionIsOnlyAccessibleToSubscribers() {
-    return this.args.courseStage.position >= 2;
+    return this.args.courseStage.position >= 4;
   }
 
   get solutionIsAvailable() {
