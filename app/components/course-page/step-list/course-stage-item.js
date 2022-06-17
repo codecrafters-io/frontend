@@ -9,6 +9,7 @@ import Mustache from 'mustache';
 
 export default class CoursePageStepListStageItemComponent extends Component {
   moreDropdownActions; // Set when the component is inserted.
+  moreDropdownContainerElement;
   @service store;
   @service visibility;
   transition = fade;
@@ -53,6 +54,11 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   @action
+  handleDidInsertMoreDropdownContainerElement(element) {
+    this.moreDropdownContainerElement = element;
+  }
+
+  @action
   handleMoreDropdownInsert(moreDropdownPublicAPI) {
     if (moreDropdownPublicAPI) {
       this.moreDropdownActions = moreDropdownPublicAPI.actions;
@@ -64,6 +70,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   @action
   handleViewSolutionButtonClick() {
     this.moreDropdownActions.open();
+    this.moreDropdownContainerElement.scrollIntoView({ behavior: 'smooth' });
   }
 
   get instructionsHTML() {

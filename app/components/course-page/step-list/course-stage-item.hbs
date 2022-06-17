@@ -15,7 +15,7 @@
         {{/if}}
       </div>
 
-      <div>
+      <div {{did-insert this.handleDidInsertMoreDropdownContainerElement}}>
         {{#if this.shouldShowMoreDropdown}}
           <CoursePage::StepList::CourseStageItem::MoreDropdown
             @courseStage={{@courseStage}}
