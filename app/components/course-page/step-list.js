@@ -193,12 +193,11 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   get shouldSuppressUpgradePrompts() {
-    return this.repository.user.hasActiveSubscription || this.repository.course.releaseStatusIsBeta;
+    return this.repository.user.hasActiveSubscription || !this.repository.get('language.isGo') || !this.repository.user.signedUpOnOrAfterJun16;
   }
 
-  get shouldShowUpgradePromptForPendingPaidStages() {
-    // TODO: Remove the isAdmin restriction
-    return this.repository.user.freeUsageRestrictionIsActive && !this.shouldSuppressUpgradePrompts && this.repository.user.isAdmin;
+  get shouldShowUpgradePromptForActiveStage() {
+    return !this.shouldSuppressUpgradePrompts && this.repository.activeStage.position >= 4;
   }
 
   startRepositoryPoller() {

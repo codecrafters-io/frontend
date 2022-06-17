@@ -127,11 +127,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
     });
 
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[3],
-    });
-
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
 
@@ -178,11 +173,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
     });
 
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[3],
-    });
-
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
 
@@ -214,11 +204,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('course-stage-completion', {
       repository: repository,
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[3],
     });
 
     await coursesPage.visit();
@@ -253,11 +238,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('course-stage-completion', {
       repository: repository,
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[3],
     });
 
     await coursesPage.visit();

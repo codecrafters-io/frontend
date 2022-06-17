@@ -13,10 +13,6 @@ export default class UserModel extends Model {
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
 
-  get freeUsageRestrictionIsActive() {
-    return this.freeUsageRestrictions.sortBy('expiresAt').lastObject && this.freeUsageRestrictions.sortBy('expiresAt').lastObject.isActive;
-  }
-
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;
   }
@@ -31,6 +27,10 @@ export default class UserModel extends Model {
 
   get managedTeams() {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
+  }
+
+  get signedUpOnOrAfterJun16() {
+    return this.createdAt >= new Date('2022-06-16');
   }
 
   get teams() {
