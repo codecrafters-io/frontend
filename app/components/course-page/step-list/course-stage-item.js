@@ -111,6 +111,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
   }
 
+  get shouldShowUpgradePrompt() {
+    return this.args.shouldShowUpgradePromptIfStageIsActive && this.isActiveStage;
+  }
+
   get solutionIsAvailableInAnyLanguage() {
     return !!this.args.courseStage.solutions.firstObject;
   }

@@ -14,7 +14,7 @@ export default class CourseRoute extends ApplicationRoute {
     let courses = this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
 
     let repositories = this.store.findAll('repository', {
-      include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
+      include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
     });
 
     return RSVP.hash({
