@@ -16,7 +16,7 @@ export default class CourseOverviewRoute extends ApplicationRoute {
 
       if (this.currentUser.isAuthenticated) {
         await this.store.query('repository', {
-          include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
+          include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
           course_id: course.id,
         });
       }

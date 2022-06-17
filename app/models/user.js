@@ -9,7 +9,6 @@ export default class UserModel extends Model {
   @attr('boolean') isStaff;
   @attr('string') username;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
-  @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;

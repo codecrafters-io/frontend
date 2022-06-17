@@ -8,7 +8,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsAdmin, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
@@ -102,17 +102,17 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
-  test('stages should have an upgrade prompt if free usage restriction is active', async function (assert) {
-    signInAsAdmin(this.owner); // TODO: Change to usual subscriber
+  test('stages should have an upgrade prompt if language is go and user signed up on/after 17 Jun', async function (assert) {
+    signIn(this.owner);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
-    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: docker,
-      language: c,
+      language: go,
       name: 'C #1',
       user: currentUser,
     });
@@ -127,7 +127,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
     });
 
-    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 60 * 1000) });
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[3],
+    });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
@@ -146,19 +149,16 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.collapsedItems[4].click(); // The next pending stage
     await animationsSettled();
 
-    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should have upgrade prompt');
-    assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsGray, 'course stage prompt should be gray if stage is not current');
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
     assert.equal(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
-
-    await percySnapshot('Course Stages - Upgrade Prompt on Pending Stage');
   });
 
-  test('stages should not have an upgrade prompt if free usage restriction is expired', async function (assert) {
-    signInAsAdmin(this.owner); // TODO: Change to usual subscriber
+  test('stages should not have an upgrade prompt if language is not go', async function (assert) {
+    signIn(this.owner);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
-    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let c = this.server.schema.languages.findBy({ slug: 'c' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
@@ -178,81 +178,104 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
     });
 
-    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 60 * 1000) });
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[3],
+    });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
 
-    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-
-    this.clock.tick(61 * 1000);
-
-    // Refresh date computation
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
-
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should not have upgrade prompt');
-
-    await coursesPage.visit(); // Messes with timing?
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item should not have upgrade prompt if language is not Go');
   });
 
-  test('stages should not have an upgrade prompt if the user has a subscription', async function (assert) {
+  test('stages should not have an upgrade prompt if user signed up before Jun 17', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    currentUser.update('createdAt', new Date(2022, 5, 15));
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[3],
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Docker');
+
+    assert.notOk(
+      coursePage.activeCourseStageItem.hasUpgradePrompt,
+      'course stage item should not have upgrade prompt if user signed up before Jun 16'
+    );
+  });
+
+  test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
     signInAsSubscriber(this.owner);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
-    let c = this.server.schema.languages.findBy({ name: 'C' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
-    this.server.create('repository', 'withFirstStageCompleted', {
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: docker,
-      language: c,
+      language: go,
       name: 'C #1',
       user: currentUser,
     });
 
-    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date(new Date().getTime() + 1000) });
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[3],
+    });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
 
-    await coursePage.collapsedItems[3].click();
-    await animationsSettled();
-
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item should not have upgrade prompt if user is subscriber');
-  });
-
-  test('stages should not have an upgrade prompt if challenge is beta', async function (assert) {
-    signIn(this.owner);
-    testScenario(this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let c = this.server.schema.languages.findBy({ name: 'C' });
-    let sqlite = this.server.schema.courses.findBy({ slug: 'sqlite' });
-
-    this.server.create('repository', 'withFirstStageCompleted', {
-      course: sqlite,
-      language: c,
-      name: 'C #1',
-      user: currentUser,
-    });
-
-    this.server.create('free-usage-restriction', { user: currentUser, expiresAt: new Date() });
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own SQLite');
-
-    await coursePage.collapsedItems[3].click();
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'beta course stage item should not have upgrade prompt');
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
   });
 
   test('first time visit has loading page', async function (assert) {
     this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
+
     signIn(this.owner);
     testScenario(this.server);
+
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
     this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
@@ -270,21 +293,26 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
   test('transition from courses page has no loading page', async function (assert) {
     this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
+
     signIn(this.owner);
     testScenario(this.server);
+
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
     this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       name: 'Python #1',
       user: currentUser,
     });
+
     let loadingIndicatorWasRendered = false;
 
     await coursesPage.visit();
     coursesPage.clickOnCourse('Build your own Redis');
+
     await waitUntil(() => {
       if (isSettled()) {
         return true;

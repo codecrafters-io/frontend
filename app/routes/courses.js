@@ -12,7 +12,7 @@ export default class CoursesRoute extends ApplicationRoute {
     if (this.currentUser.isAuthenticated) {
       modelPromises.repositories = this.store.findAll('repository', {
         reload: false,
-        include: 'language,course,user.free-usage-restrictions,course-stage-completions.course-stage,last-submission.course-stage',
+        include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
       });
     }
 
