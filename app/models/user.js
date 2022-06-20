@@ -25,6 +25,10 @@ export default class UserModel extends Model {
     return !!this.managedTeams.firstObject;
   }
 
+  get isTeamMember() {
+    return !!this.teams.firstObject;
+  }
+
   get managedTeams() {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
   }
