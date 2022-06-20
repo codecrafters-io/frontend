@@ -193,7 +193,12 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   get shouldSuppressUpgradePrompts() {
-    return this.repository.user.hasActiveSubscription || !this.repository.get('language.isGo') || !this.repository.user.signedUpOnOrAfterJun16;
+    return (
+      this.repository.user.hasActiveSubscription ||
+      this.repository.user.isTeamMember ||
+      !this.repository.get('language.isGo') ||
+      !this.repository.user.signedUpOnOrAfterJun16
+    );
   }
 
   get shouldShowUpgradePromptForActiveStage() {

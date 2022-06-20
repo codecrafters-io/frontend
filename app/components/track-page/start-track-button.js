@@ -12,7 +12,7 @@ export default class CourseOverviewStartTrackButtonComponent extends Component {
     if (this.currentUserIsAnonymous) {
       window.location.href = '/login?next=' + this.router.currentURL;
     } else {
-      this.router.transitionTo('course', this.args.courses.firstObject.slug);
+      this.router.transitionTo('course', this.args.courses.firstObject.slug, { queryParams: { track: this.args.language.slug } });
     }
   }
 
