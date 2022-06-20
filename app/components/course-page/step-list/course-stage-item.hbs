@@ -45,7 +45,7 @@
         @repository={{@repository}}
         class="mt-6"
       />
-    {{else if (and this.isLastCompletedStage this.solutionIsAvailableIsUserLanguage (not @courseStage.isLast))}}
+    {{else if (and this.isLastCompletedStage this.solutionIsAvailableInUserLanguage (not @courseStage.isLast))}}
       <CoursePage::StepList::CourseStageItem::ViewSolutionPrompt
         @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
         @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
