@@ -148,12 +148,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.equal(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
   });
 
-  test('stages should not have an upgrade prompt if language is not go', async function (assert) {
+  test('stages should not have an upgrade prompt if language is Rust', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
-    let c = this.server.schema.languages.findBy({ slug: 'c' });
+    let c = this.server.schema.languages.findBy({ slug: 'rust' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {

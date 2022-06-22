@@ -196,7 +196,7 @@ export default class CoursePageContentStepListComponent extends Component {
     return (
       this.repository.user.hasActiveSubscription ||
       this.repository.user.isTeamMember ||
-      !this.repository.get('language.isGo') ||
+      this.repository.get('language.isRust') ||
       !this.repository.user.signedUpOnOrAfterJun16
     );
   }
