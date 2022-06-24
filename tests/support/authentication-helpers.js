@@ -138,7 +138,9 @@ export function signInAsSubscribedTeamMember(owner, server) {
     {
       id: teamSubscription.id,
       type: 'team-subscriptions',
-      attributes: {},
+      attributes: {
+        'is-legacy': false,
+      },
       relationships: {
         team: { data: { type: 'teams', id: teamSubscription.team.id } },
       },
