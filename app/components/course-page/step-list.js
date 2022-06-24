@@ -195,7 +195,7 @@ export default class CoursePageContentStepListComponent extends Component {
   get shouldSuppressUpgradePrompts() {
     return (
       this.repository.user.hasActiveSubscription ||
-      this.repository.user.isTeamMember ||
+      this.repository.user.teamHasActiveSubscription ||
       this.repository.get('language.isRust') ||
       !this.repository.user.signedUpOnOrAfterJun16
     );
