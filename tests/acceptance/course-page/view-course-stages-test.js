@@ -8,7 +8,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber, signInAsSubscribedTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
@@ -222,6 +222,42 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Docker');
+
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+  });
+
+  test('stages should not have an upgrade prompt if user team has a subscription', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscribedTeamMember(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let team = this.server.schema.teams.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    this.server.schema.teamSubscriptions.create({
+      team: team,
+    });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: docker,

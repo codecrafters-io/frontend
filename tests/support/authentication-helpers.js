@@ -102,6 +102,50 @@ export function signInAsTeamMember(owner, server) {
   ]);
 }
 
+export function signInAsSubscribedTeamMember(owner, server) {
+  const user = server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+  const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });
+  const teamSubscription = server.schema.teamSubscriptions.create({ team: team });
+
+  const teamMembership = server.create('team-membership', {
+    createdAt: new Date(),
+    id: 'dummy-team-membership-id',
+    user: user,
+    team: team,
+    isAdmin: false,
+  });
+
+  doSignIn(owner, {}, [
+    {
+      id: teamMembership.id,
+      type: 'team-memberships',
+      attributes: {
+        'is-admin': teamMembership.isAdmin,
+        'created-at': '2021-08-29T16:50:12.551986+00:00',
+      },
+      relationships: {
+        user: { data: { type: 'users', id: teamMembership.user.id } },
+        team: { data: { type: 'teams', id: teamMembership.team.id } },
+      },
+    },
+    {
+      id: team.id,
+      type: 'teams',
+      attributes: {
+        name: team.name,
+      },
+    },
+    {
+      id: teamSubscription.id,
+      type: 'team-subscriptions',
+      attributes: {},
+      relationships: {
+        team: { data: { type: 'teams', id: teamSubscription.team.id } },
+      },
+    },
+  ]);
+}
+
 function doSignIn(owner, userAttributes, includedResources) {
   let serverVariables = owner.lookup('service:serverVariables');
 
