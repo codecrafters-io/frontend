@@ -70,6 +70,12 @@ module('Acceptance | view-team-test', function (hooks) {
     assert.equal(teamPage.members.length, 4, 'expected 4 members to be present');
     assert.notOk(teamPage.subscriptionSettingsContainer.hasManageSubscriptionButton, 'manage subscription button must not be enabled for user');
 
+    assert.equal(
+      teamPage.inviteURLDescription,
+      'To invite new members, ask one of the team admins for an invite URL.',
+      'invite url description should say contact admin'
+    );
+
     await percySnapshot('View Team - Multiple Members Present');
   });
 });
