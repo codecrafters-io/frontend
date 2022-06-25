@@ -120,4 +120,48 @@ module('Acceptance | view-team-test', function (hooks) {
 
     assert.equal(currentURL(), '/tracks', 'should redirect to tracks page');
   });
+
+  test('team member can switch between teams when multiple exist', async function (assert) {
+    testScenario(this.server);
+    signInAsTeamMember(this.owner, this.server);
+
+    const team = this.server.schema.teams.first();
+    const currentUser = this.server.schema.users.first();
+    const team2 = this.server.schema.teams.create({ name: 'Other Team' });
+
+    const member1 = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const member2 = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    const admin = this.server.create('user', {
+      avatarUrl: 'https://github.com/codecrafters-bot.png',
+      createdAt: new Date(),
+      githubUsername: 'codecrafters-bot',
+      username: 'codecrafters-bot',
+    });
+
+    this.server.create('team-membership', { user: currentUser, team: team2, createdAt: new Date(), isAdmin: false });
+    this.server.create('team-membership', { user: member1, team: team, createdAt: new Date(), isAdmin: false });
+    this.server.create('team-membership', { user: member2, team: team, createdAt: new Date(), isAdmin: false });
+    this.server.create('team-membership', { user: admin, team: team, createdAt: new Date(), isAdmin: true });
+
+    await teamPage.visit({ team_id: team.id });
+    assert.equal(teamPage.teamSelectionDropdown.activeTeamName, 'Dummy Team', 'expected team name to be Dummy Team');
+    assert.equal(teamPage.members.length, 4, 'expected 4 members to be present');
+
+    await teamPage.teamSelectionDropdown.toggle();
+    await teamPage.teamSelectionDropdown.clickOnLink('Other Team');
+    assert.equal(teamPage.members.length, 1, 'expected 1 member to be present');
+    assert.equal(teamPage.teamSelectionDropdown.activeTeamName, 'Other Team', 'expected team name to be Other Team');
+  });
 });
