@@ -1,0 +1,44 @@
+<div data-test-team-selection-dropdown>
+  <BasicDropdown @horizontalPosition="auto-right" as |dd|>
+    <dd.Trigger>
+      <button
+        type="button"
+        class="inline-flex justify-center w-full rounded-md border border-gray-300
+          {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
+          shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
+        data-test-team-selection-dropdown-trigger
+        ...attributes
+      >
+        <span class="mr-1" data-test-active-team-name>
+          {{@team.name}}
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-team-selection-dropdown-content>
+        {{#each @allTeams as |team|}}
+          <div
+            class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+            role="button"
+            {{on "click" (fn this.handleTeamLinkClick team dd.actions)}}
+          >
+            <span class="mr-8 {{if (eq team @team) 'text-teal-500 font-bold' 'text-gray-700'}}">
+              {{team.name}}
+            </span>
+
+            {{svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500"))}}
+          </div>
+        {{/each}}
+        <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" role="button" {{on "click" this.handleTeamLinkClick}}>
+          <span class="mr-4 text-gray-700">
+            Create New
+          </span>
+
+          {{svg-jar "plus-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+        </div>
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>

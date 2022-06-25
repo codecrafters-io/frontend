@@ -6,8 +6,11 @@ export default class TeamRoute extends ApplicationRoute {
   @service store;
 
   async model(params) {
-    await this.store.findAll('team', { include: 'memberships.user' });
+    const teams = await this.store.findAll('team', { include: 'memberships.user,subscriptions' });
 
-    return { team: this.store.peekRecord('team', params.team_id) };
+    return {
+      allTeams: teams,
+      team: this.store.peekRecord('team', params.team_id),
+    };
   }
 }
