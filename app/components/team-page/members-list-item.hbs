@@ -16,7 +16,7 @@
           <span class="text-gray-400"> (admin)</span>
         {{/if}}
       </div>
-      <div class="text-gray-700 text-sm md:hidden">
+      <div class="text-gray-700 text-sm hidden sm:block md:hidden">
         <span class="text-gray-400 text-xs">joined {{moment-from-now @membership.createdAt}}</span>
       </div>
     </div>
@@ -54,6 +54,7 @@
         {{/if}}
       {{/if}}
     {{/unless}}
+
     <span class="text-gray-400 text-xs hidden md:block">joined {{moment-from-now @membership.createdAt}}</span>
   </div>
 </div>
