@@ -17,9 +17,15 @@
     Invite URL
   </div>
 
-  <div class="mb-3 text-gray-600 text-sm">
-    To invite new members, send them this invite URL.
-  </div>
+  {{#if this.currentUserIsTeamAdmin}}
+    <div class="mb-3 text-gray-600 text-sm" data-test-invite-url-description>
+      To invite new members, send them this invite URL.
+    </div>
 
-  <CopyableCode @code="{{@team.inviteUrl}}" />
+    <CopyableCode @code="{{@team.inviteUrl}}" />
+  {{else}}
+    <div class="text-gray-600 text-sm" data-test-invite-url-description>
+      To invite new members, ask one of the team admins for an invite URL.
+    </div>
+  {{/if}}
 </div>
