@@ -1,3 +1,4 @@
+import { currentURL } from '@ember/test-helpers';
 import { module, test, skip } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -8,6 +9,7 @@ import teamPage from 'codecrafters-frontend/tests/pages/team-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
+import window from 'ember-window-mock';
 
 module('Acceptance | view-team-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -62,8 +64,8 @@ module('Acceptance | view-team-test', function (hooks) {
       username: 'codecrafters-bot',
     });
 
-    this.server.create('team-membership', { user: member1, team: team, createdAt: new Date(), isAdmin: true });
-    this.server.create('team-membership', { user: member2, team: team, createdAt: new Date(), isAdmin: true });
+    this.server.create('team-membership', { user: member1, team: team, createdAt: new Date(), isAdmin: false });
+    this.server.create('team-membership', { user: member2, team: team, createdAt: new Date(), isAdmin: false });
     this.server.create('team-membership', { user: admin, team: team, createdAt: new Date(), isAdmin: true });
 
     await teamPage.visit({ team_id: team.id });
@@ -77,5 +79,45 @@ module('Acceptance | view-team-test', function (hooks) {
     );
 
     await percySnapshot('View Team - Multiple Members Present');
+  });
+
+  test('team member can leave team', async function (assert) {
+    testScenario(this.server);
+    signInAsTeamMember(this.owner, this.server);
+
+    const team = this.server.schema.teams.first();
+
+    const member1 = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const member2 = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    const admin = this.server.create('user', {
+      avatarUrl: 'https://github.com/codecrafters-bot.png',
+      createdAt: new Date(),
+      githubUsername: 'codecrafters-bot',
+      username: 'codecrafters-bot',
+    });
+
+    this.server.create('team-membership', { user: member1, team: team, createdAt: new Date(), isAdmin: false });
+    this.server.create('team-membership', { user: member2, team: team, createdAt: new Date(), isAdmin: false });
+    this.server.create('team-membership', { user: admin, team: team, createdAt: new Date(), isAdmin: true });
+
+    await teamPage.visit({ team_id: team.id });
+    assert.equal(teamPage.members.length, 4, 'expected 4 members to be present');
+
+    window.confirm = () => true;
+    await teamPage.memberByUsername('rohitpaulk').clickLeaveTeamButton();
+
+    assert.equal(currentURL(), '/tracks', 'should redirect to tracks page');
   });
 });

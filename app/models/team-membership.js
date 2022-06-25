@@ -6,4 +6,8 @@ export default class TeamMembershipModel extends Model {
   @attr('boolean') isAdmin;
   @belongsTo('user', { async: false }) user;
   @belongsTo('team', { async: false }) team;
+
+  get isSoleAdmin() {
+    return this.team.admins.length === 1 && this.isAdmin;
+  }
 }
