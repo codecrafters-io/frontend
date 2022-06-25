@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import window from 'ember-window-mock';
-import * as Sentry from '@sentry/ember';
 
 export default class SubscribtionSettingsContainerComponent extends Component {
   @tracked isCreatingTeamBillingSession = false;
