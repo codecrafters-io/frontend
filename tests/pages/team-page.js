@@ -9,8 +9,14 @@ export default create({
   inviteURLDescription: text('[data-test-invite-url-description]'),
 
   members: collection('[data-test-members-list-item-container]', {
+    clickLeaveTeamButton: clickable('[data-test-leave-team-button]'),
     clickRemoveButton: clickable('[data-test-remove-button]'),
+    username: text('[data-test-username]'),
   }),
+
+  memberByUsername(username) {
+    return this.members.toArray().findBy('username', username);
+  },
 
   subscriptionSettingsContainer: {
     hasManageSubscriptionButton: isVisible('[data-test-manage-subscription-button]'),

@@ -10,7 +10,7 @@
 
     <div>
       <div class="text-gray-700 text-sm">
-        <span class="font-semibold">{{@membership.user.username}}</span>
+        <span class="font-semibold" data-test-username>{{@membership.user.username}}</span>
 
         {{#if @membership.isAdmin}}
           <span class="text-gray-400"> (admin)</span>
@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="flex items-center">
-    {{#unless @membership.isAdmin}}
+    {{#unless @membership.isSoleAdmin}}
       {{#if this.isRemoving}}
         <svg class="animate-spin mr-4 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -33,14 +33,25 @@
           ></path>
         </svg>
       {{else}}
-        <button
-          type="button"
-          class="pr-4 pl-2 py-2 text-gray-800 hover:text-red-600 underline font-bold flex items-center text-xs"
-          {{on "click" (fn this.handleRemoveButtonClick @membership)}}
-          data-test-remove-button
-        >
-          remove
-        </button>
+        {{#if (eq @membership.user this.currentUser)}}
+          <button
+            type="button"
+            class="pr-4 pl-2 py-2 text-gray-800 hover:text-red-600 underline font-bold flex items-center text-xs"
+            {{on "click" (fn this.handleLeaveTeamButtonClick @membership)}}
+            data-test-leave-team-button
+          >
+            leave team
+          </button>
+        {{else if this.currentUserIsTeamAdmin}}
+          <button
+            type="button"
+            class="pr-4 pl-2 py-2 text-gray-800 hover:text-red-600 underline font-bold flex items-center text-xs"
+            {{on "click" (fn this.handleRemoveButtonClick @membership)}}
+            data-test-remove-button
+          >
+            remove
+          </button>
+        {{/if}}
       {{/if}}
     {{/unless}}
     <span class="text-gray-400 text-xs hidden md:block">joined {{moment-from-now @membership.createdAt}}</span>
