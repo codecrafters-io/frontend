@@ -1,4 +1,4 @@
-import { clickable, collection, create, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, isVisible, visitable } from 'ember-cli-page-object';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import CheckoutSessionSuccessfulModal from 'codecrafters-frontend/tests/pages/components/checkout-session-successful-modal';
 
@@ -11,5 +11,10 @@ export default create({
     clickRemoveButton: clickable('[data-test-remove-button]'),
   }),
 
-  visit: visitable('/teams/:id'),
+  subscriptionSettingsContainer: {
+    hasManageSubscriptionButton: isVisible('[data-test-manage-subscription-button]'),
+    scope: '[data-test-subscription-settings-container]',
+  },
+
+  visit: visitable('/teams/:team_id'),
 });
