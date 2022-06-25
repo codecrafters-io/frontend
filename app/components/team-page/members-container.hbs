@@ -3,10 +3,6 @@
     Team Members
   </div>
 
-  <div class="mb-6 text-gray-600 text-sm">
-    Members of your team are granted access to all CodeCrafters challenges.
-  </div>
-
   <div class="mb-6">
     {{#each @team.memberships as |membership|}}
       <TeamPage::MembersListItem @membership={{membership}} />
