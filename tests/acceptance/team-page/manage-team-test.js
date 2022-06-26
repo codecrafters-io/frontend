@@ -35,7 +35,7 @@ module('Acceptance | manage-team-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
 
     assert.notOk(coursesPage.accountDropdown.hasLink('Manage Team'), 'Manage team link is not present');
-    assert.notOk(coursesPage.accountDropdown.hasLink('View Team'), 'View team link is present');
+    assert.ok(coursesPage.accountDropdown.hasLink('View Team'), 'View team link is present');
   });
 
   test('team admin can view team members & invite link when they are the only member', async function (assert) {
