@@ -17,6 +17,12 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
+  handleCreateTeamClick(dropdownActions) {
+    dropdownActions.close();
+    this.router.transitionTo('teams.create');
+  }
+
+  @action
   handleDiscordClick(dropdownActions) {
     window.open('https://discord.gg/DeqUD2P', '_blank');
     dropdownActions.close();
@@ -63,5 +69,11 @@ export default class HeaderAccountDropdownComponent extends Component {
   handleSubscribeClick(dropdownActions) {
     dropdownActions.close();
     this.router.transitionTo('pay');
+  }
+
+  @action
+  handleViewTeamClick(dropdownActions, team) {
+    dropdownActions.close();
+    this.router.transitionTo('team', team.id);
   }
 }
