@@ -1,16 +1,13 @@
 import { currentURL } from '@ember/test-helpers';
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signInAsTeamAdmin, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import teamPage from 'codecrafters-frontend/tests/pages/team-page';
+import { signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createTeamPage from 'codecrafters-frontend/tests/pages/create-team-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
-import window from 'ember-window-mock';
 
 module('Acceptance | create-team-test', function (hooks) {
   setupApplicationTest(hooks);
