@@ -122,6 +122,9 @@ module('Acceptance | manage-team-test', function (hooks) {
     testScenario(this.server);
     signInAsTeamAdmin(this.owner, this.server);
 
+    const team = this.server.schema.teams.first();
+    this.server.schema.teamSubscriptions.create({ team: team });
+
     await coursesPage.visit();
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');

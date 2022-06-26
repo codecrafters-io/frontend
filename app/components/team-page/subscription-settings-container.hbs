@@ -3,39 +3,37 @@
     Subscription
   </div>
 
-  {{!
-  <div class="text-gray-600 mb-4">
-    Your subscription allows upto <span class="font-bold">5 members</span>.
-  </div>
-}}
+  {{#if @team.activeSubscription}}
+    {{#if this.currentUserIsTeamAdmin}}
+      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
+        To view invoices or amend your subscription, click on the button below.
+      </div>
 
-  {{#if this.currentUserIsTeamAdmin}}
-    <div class="text-gray-600 text-sm" data-test-instructions-text>
-      To view invoices or amend your subscription, click on the button below.
-    </div>
-
-    <button
-      type="button"
-      class="bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-md mt-4"
-      {{on "click" this.handleManageSubscriptionButtonClick}}
-      data-test-manage-subscription-button
-    >
-      Manage Subscription
-
-      {{#if this.isCreatingTeamBillingSession}}
-        <svg class="animate-spin ml-3 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          ></path>
-        </svg>
-      {{/if}}
-    </button>
+      <TeamPage::ManageSubscriptionButton
+        @onClick={{this.handleManageSubscriptionButtonClick}}
+        @isCreatingTeamBillingSession={{this.isCreatingTeamBillingSession}}
+      />
+    {{else}}
+      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
+        To manage this team's subscription, ask one of the team admins for help.
+      </div>
+    {{/if}}
   {{else}}
-    <div class="text-gray-600 text-sm prose" data-test-instructions-text>
-      To manage this team's subscription, ask one of the team admins for help.
-    </div>
+    {{#if this.currentUserIsTeamAdmin}}
+      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
+        Each team member can subscribe using their own account. If you'd like to create a team-level subscription, click on the button below.
+      </div>
+
+      <a
+        class="inline-block bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold text-md mt-4"
+        href="mailto:sarup@codecrafters.io"
+      >
+        Subscribe
+      </a>
+    {{else}}
+      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
+        Each team member can subscribe using their own account. Contact one of the team admins to set up a team-level subscription.
+      </div>
+    {{/if}}
   {{/if}}
 </div>
