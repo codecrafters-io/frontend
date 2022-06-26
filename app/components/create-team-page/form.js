@@ -10,7 +10,7 @@ export default class FeaturesListComponent extends Component {
   @service store;
 
   get currentTeamsHTML() {
-    const buildTeamLink = (team) => `<a href="${this.router.urlFor('team', team.id)}" target="_blank">${team.name}</a>`;
+    const buildTeamLink = (team) => `<a href="/teams/${team.id}" target="_blank">${team.name}</a>`;
 
     if (this.args.currentTeams.length === 1) {
       return `You're currently in the ${buildTeamLink(this.args.currentTeams.firstObject)} team.`;
