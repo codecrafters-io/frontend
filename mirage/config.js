@@ -92,6 +92,15 @@ function routes() {
   });
 
   this.get('/teams');
+
+  this.post('/teams', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    const team = schema.teams.create({ name: attrs.name });
+    schema.teamMemberships.create({ isAdmin: true, team: team, userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
+
+    return team;
+  });
+
   this.delete('/team-memberships/:id');
 
   this.post('/team-billing-sessions', function (schema) {

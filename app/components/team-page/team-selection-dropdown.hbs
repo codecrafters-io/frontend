@@ -31,13 +31,13 @@
             {{svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500"))}}
           </div>
         {{/each}}
-        <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group">
-          <a href="mailto:sarup@codecrafters.io" class="mr-4 text-gray-700">
+        <LinkTo @route="teams.create" class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group">
+          <span class="mr-4 text-gray-700">
             Create New
-          </a>
+          </span>
 
           {{svg-jar "plus-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}
-        </div>
+        </LinkTo>
       </div>
     </dd.Content>
   </BasicDropdown>

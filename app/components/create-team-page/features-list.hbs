@@ -1,0 +1,5 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  {{#each this.features as |feature|}}
+    <CreateTeamPage::FeaturesListItem @title={{feature.title}} @description={{feature.description}} @imageURL={{feature.imageURL}} />
+  {{/each}}
+</div>

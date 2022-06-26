@@ -27,6 +27,6 @@ Router.map(function () {
   this.route('pay');
   this.route('track', { path: '/tracks/:track_slug' });
   this.route('tracks');
-
   this.route('team', { path: '/teams/:team_id' });
+  this.route('teams.create', { path: '/teams/create' });
 });
