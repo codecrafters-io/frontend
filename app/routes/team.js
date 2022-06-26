@@ -6,7 +6,8 @@ export default class TeamRoute extends ApplicationRoute {
   @service store;
 
   async model(params) {
-    const teams = await this.store.findAll('team', { include: 'memberships.user,subscriptions' });
+    // reload true ensures that team memberships are loaded when a new team is created.
+    const teams = await this.store.findAll('team', { include: 'memberships.user,subscriptions', reload: true });
 
     return {
       allTeams: teams,
