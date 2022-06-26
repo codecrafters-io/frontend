@@ -1,9 +1,9 @@
 import { currentURL } from '@ember/test-helpers';
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signInAsTeamAdmin, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import teamPage from 'codecrafters-frontend/tests/pages/team-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
@@ -17,24 +17,25 @@ module('Acceptance | view-team-test', function (hooks) {
   setupWindowMock(hooks);
   setupClock(hooks);
 
-  skip('team member sees view team option in account dropdown', async function (assert) {
+  test('team member sees view team option in account dropdown', async function (assert) {
     testScenario(this.server);
     signInAsTeamMember(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.accountDropdown.toggle();
 
-    assert.ok(coursesPage.accountDropdown.hasLink('View Team'), 'Manage team link is present');
+    assert.ok(coursesPage.accountDropdown.hasLink('View Team'), 'View team link is present');
   });
 
-  skip('non-admin team member does not see view team option in account dropdown', async function (assert) {
+  test('non-team member does not see view team option in account dropdown', async function (assert) {
     testScenario(this.server);
-    signInAsTeamAdmin(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.accountDropdown.toggle();
 
     assert.notOk(coursesPage.accountDropdown.hasLink('View Team'), 'Manage team link is not present');
+    assert.ok(coursesPage.accountDropdown.hasLink('Invite Your Team'), 'Invite team link is present');
   });
 
   test('team member can view team members when multiple members exist', async function (assert) {
