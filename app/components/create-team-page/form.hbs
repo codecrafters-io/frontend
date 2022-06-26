@@ -1,19 +1,18 @@
 <div ...attributes>
-  <label class="block mb-4 text-gray-700" for="team_name_input">
-    Enter your team name to get started:
+  <label class="block mb-5 text-gray-700 text-lg" for="team_name_input">
+    Enter a team name to get started:
   </label>
 
-  <div class="flex items-center">
+  <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
     <input
-      class="rounded p-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow mr-3"
+      class="rounded p-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400 shadow text-lg"
       id="team_name_input"
       placeholder="(example: Microsoft)"
-      autofocus
     />
 
     <button
       type="button"
-      class="bg-teal-500 hover:bg-teal-600 self-stretch px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-md transition-colors duration-75"
+      class="flex justify-center bg-teal-500 hover:bg-teal-600 self-stretch px-5 py-2 text-white rounded shadow-sm font-bold flex items-center text-lg transition-colors duration-75"
       data-test-create-team-button
     >
       Create Team

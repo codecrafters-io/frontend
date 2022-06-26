@@ -25,6 +25,9 @@ module.exports = {
       mono: 'Roboto Mono, monospace',
     },
     extend: {
+      brightness: {
+        102: '1.02',
+      },
       typography: {
         DEFAULT: {
           css: {
@@ -67,6 +70,7 @@ module.exports = {
       borderColor: ['active'],
       borderWidth: ['hover'],
       boxShadow: ['hover', 'group-hover', 'active'],
+      brightness: ['group-hover'],
       display: ['group-hover'],
       filter: ['group-hover', 'hover'],
       fontStyle: ['group-hover'],
