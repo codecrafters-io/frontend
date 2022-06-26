@@ -9,6 +9,16 @@ export default class FeaturesListComponent extends Component {
   @service router;
   @service store;
 
+  get currentTeamsHTML() {
+    const buildTeamLink = (team) => `<a href="${this.router.urlFor('team', team.id)}" target="_blank">${team.name}</a>`;
+
+    if (this.args.currentTeams.length === 1) {
+      return `You're currently in the ${buildTeamLink(this.args.currentTeams.firstObject)} team.`;
+    } else {
+      return `You're currently in the following teams: ${this.args.currentTeams.map(buildTeamLink).join(', ')}.`;
+    }
+  }
+
   @action
   async handleCreateTeamButtonClick() {
     if (this.createTeamButtonIsDisabled) {

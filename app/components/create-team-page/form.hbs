@@ -35,12 +35,8 @@
   </div>
 
   {{#if @currentTeams.firstObject}}
-    <div class="mt-4 text-gray-700 text-xs">
-      You're currently in the
-      <a href="google.com" class="font-bold text-teal-500 underline">Google</a>
-      &
-      <a href="microsoft.com" class="font-bold text-teal-500 underline">Microsoft</a>
-      teams.
+    <div class="mt-4 text-gray-700 text-xs prose">
+      {{html-safe this.currentTeamsHTML}}
     </div>
   {{/if}}
 </div>
