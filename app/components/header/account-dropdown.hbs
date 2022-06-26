@@ -16,7 +16,16 @@
           @icon="users"
           {{on "click" (fn this.handleManageTeamClick dd.actions this.currentUser.managedTeams.firstObject)}}
         />
+      {{else if this.currentUser.isTeamMember}}
+        <Header::AccountDropdownLink
+          @text="View Team"
+          @icon="users"
+          {{on "click" (fn this.handleViewTeamClick dd.actions this.currentUser.teams.firstObject)}}
+        />
+      {{else}}
+        <Header::AccountDropdownLink @text="Invite Your Team" @icon="users" {{on "click" (fn this.handleCreateTeamClick dd.actions)}} />
       {{/if}}
+
       {{#if this.currentUser.hasActiveSubscription}}
         <div
           class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
@@ -39,7 +48,7 @@
             {{svg-jar "credit-card" class="w-5 text-gray-300 group-hover:text-teal-500"}}
           {{/if}}
         </div>
-      {{else}}
+      {{else if (not this.currentUser.teamHasActiveSubscription)}}
         <div
           class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
           role="button"
