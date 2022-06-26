@@ -7,12 +7,16 @@ export default class TeamModel extends Model {
   @attr('string') name;
   @hasMany('team-subscription', { async: false }) subscriptions;
 
+  get activeSubscription() {
+    return this.subscriptions.findBy('isActive');
+  }
+
   get admins() {
     return this.memberships.filterBy('isAdmin', true).mapBy('user');
   }
 
   get hasActiveSubscription() {
-    return this.subscriptions.isAny('isActive');
+    return !!this.activeSubscription;
   }
 
   get inviteUrl() {
