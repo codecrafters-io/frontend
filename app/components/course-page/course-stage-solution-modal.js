@@ -33,21 +33,40 @@ export default class CourseStageSolutionModalComponent extends Component {
     if (this.solution.hasExplanation) {
       this.isViewingExplanation = true;
     }
+
+    this.emitAnalyticsEvent();
+  }
+
+  emitAnalyticsEvent() {
+    this.store
+      .createRecord('analytics-event', {
+        name: this.isViewingExplanation ? 'viewed_course_stage_solution_explanation' : 'viewed_course_stage_solution_diff',
+        properties: {
+          course_slug: this.args.courseStage.course.slug,
+          course_stage_slug: this.args.courseStage.slug,
+          language_slug: this.solution.language.slug,
+          requested_language_slug: this.requestedLanguage.slug,
+        },
+      })
+      .save();
   }
 
   @action
   handleViewDiffLinkClick() {
     this.isViewingExplanation = false;
+    this.emitAnalyticsEvent();
   }
 
   @action
   handleViewExplanationLinkClick() {
     this.isViewingExplanation = true;
+    this.emitAnalyticsEvent();
   }
 
   @action
   handleRequestedLanguageChange(requestedLanguage) {
     this.requestedLanguage = requestedLanguage;
+    this.emitAnalyticsEvent();
   }
 
   get isViewingDiff() {
