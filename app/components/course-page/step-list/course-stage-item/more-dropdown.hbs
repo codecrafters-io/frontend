@@ -1,14 +1,16 @@
 <BasicDropdown @horizontalPosition="right" @registerAPI={{@onDropdownInsert}} as |dd|>
   <dd.Trigger>
-    {{svg-jar "dots-horizontal" class=(concat "w-5 fill-current " (if dd.isOpen "text-teal-500" "text-gray-300 hover:text-gray-400"))}}
+    <div data-test-course-stage-item-more-dropdown-trigger>
+      {{svg-jar "dots-horizontal" class=(concat "w-5 fill-current " (if dd.isOpen "text-teal-500" "text-gray-300 hover:text-gray-400"))}}
+    </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-leaderboard-team-dropdown-content>
+    <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-course-stage-item-more-dropdown-content>
       <div
         class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
         aria-disabled="true"
         role="button"
-        {{on "click" (fn this.handleViewSolutionLinkClicked null dd.actions)}}
+        {{on "click" (fn this.handleViewSolutionLinkClicked dd.actions)}}
       >
         <div class="mr-8">
           <span class="{{if this.viewSolutionLinkIsEnabled 'text-gray-700' 'text-gray-500'}}">

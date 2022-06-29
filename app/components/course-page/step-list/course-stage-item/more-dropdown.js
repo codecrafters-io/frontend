@@ -15,12 +15,12 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   }
 
   @action
-  handleViewSolutionLinkClicked() {
+  handleViewSolutionLinkClicked(dropdownActions) {
+    dropdownActions.close();
+
     if (this.viewSolutionLinkIsEnabled) {
       if (this.currentUserCanAccessSolution) {
-        this.router.transitionTo('course-stage-solution.index', this.args.courseStage.course.slug, this.args.courseStage.slug, {
-          queryParams: { language: this.args.repository.get('language.slug') },
-        });
+        this.args.onViewSolutionButtonClick(this.args.courseStage);
       } else {
         this.router.transitionTo('pay');
       }

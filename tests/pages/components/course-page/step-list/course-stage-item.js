@@ -1,8 +1,16 @@
-import { clickable, hasClass, isPresent, text } from 'ember-cli-page-object';
+import { clickable, clickOnText, hasClass, isPresent, text } from 'ember-cli-page-object';
 
 export default {
   footerText: text('[data-test-course-stage-item-footer] [data-test-footer-text]'),
   hasUpgradePrompt: isPresent('[data-test-upgrade-prompt]'),
+
+  moreDropdown: {
+    clickOnLink: clickOnText('div[role="button"]'),
+    toggle: clickable('[data-test-course-stage-item-more-dropdown-trigger]', { resetScope: true }),
+    resetScope: true,
+    scope: '[data-test-course-stage-item-more-dropdown-content]',
+  },
+
   scope: '[data-test-course-stage-item]',
 
   get statusIsInProgress() {

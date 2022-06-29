@@ -3,6 +3,7 @@
     @class="flex-grow min-w-0"
     @course={{@course}}
     @repository={{@activeRepository}}
+    @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
     @onRepositoryCreate={{@onRepositoryCreate}}
     @preferredLanguageSlug={{@preferredLanguageSlug}}
   />
@@ -14,3 +15,13 @@
     @repositories={{@repositories}}
   />
 </div>
+
+{{#if this.isViewingCourseStageSolution}}
+  <ModalBackdrop>
+    <CoursePage::CourseStageSolutionModal
+      @courseStage={{this.currentCourseStageForSolution}}
+      @repositoryLanguage={{@activeRepository.language}}
+      @onClose={{this.handleCourseStageSolutionModalClose}}
+    />
+  </ModalBackdrop>
+{{/if}}

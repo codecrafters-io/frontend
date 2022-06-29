@@ -111,7 +111,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowMoreDropdown() {
-    return this.solutionIsAvailableInAnyLanguage || (!this.args.courseStage.isFirst && this.args.repository.get('language.isGo'));
+    return this.solutionIsAvailableInAnyLanguage || this.args.repository.get('language.isGo'); // For Go, we show the "SOON" text
   }
 
   get shouldShowFirstStageHints() {
