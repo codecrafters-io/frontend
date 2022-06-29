@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 import 'prismjs';
 import 'prismjs/components/prism-c';
@@ -24,6 +25,7 @@ import 'prismjs/components/prism-diff';
 export default class CourseStageSolutionModalComponent extends Component {
   @tracked isViewingExplanation; // explanation/diff
   @tracked requestedLanguage;
+  @service store;
 
   constructor() {
     super(...arguments);
