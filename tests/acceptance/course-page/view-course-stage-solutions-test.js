@@ -17,6 +17,44 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   setupMirage(hooks);
   setupClock(hooks);
 
+  test('can switch between solution diffs & explanations + switch languages', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.moreDropdown.toggle();
+    await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to PING', 'title should be respond to ping');
+    assert.equal(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Explanation', 'active header tab link should be explanation');
+
+    await percySnapshot('Stage Solution Modal - Explanation');
+
+    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Diff');
+    assert.equal(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Diff', 'active tab should be Diff');
+
+    await percySnapshot('Stage Solution Modal - Diff');
+
+    assert.equal(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Go', 'Go is selected by default');
+    assert.notOk(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should not be visible');
+
+    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
+    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+
+    assert.equal(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Python', 'Python is selected');
+    assert.ok(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should be visible');
+
+    assert.equal(
+      coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.text,
+      "This stage doesn't have solutions available for Python yet, so we're showing solutions for Go instead."
+    );
+  });
+
   test('can view solutions before starting course', async function (assert) {
     signIn(this.owner);
     testScenario(this.server);

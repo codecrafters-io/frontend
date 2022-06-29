@@ -3,12 +3,10 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 export default class CourseStageSolutionPageLanguageDropdownComponent extends Component {
-  @service router;
-
   @action
   handleLanguageDropdownLinkClick(language, closeDropdownFn) {
-    this.router.transitionTo(this.router.currentRouteName, { queryParams: { language: language.slug } });
     closeDropdownFn();
+    this.args.onRequestedLanguageChange(language);
   }
 
   get languagesWithSolutions() {

@@ -24,9 +24,12 @@ import 'prismjs/components/prism-diff';
 
 export default class CourseStageSolutionModalComponent extends Component {
   @tracked isViewingExplanation; // explanation/diff
+  @tracked requestedLanguage;
 
   constructor() {
     super(...arguments);
+
+    this.requestedLanguage = this.args.repositoryLanguage || this.args.courseStage.solutions.firstObject.language;
 
     if (this.solution.hasExplanation) {
       this.isViewingExplanation = true;
@@ -43,17 +46,18 @@ export default class CourseStageSolutionModalComponent extends Component {
     this.isViewingExplanation = true;
   }
 
+  @action
+  handleRequestedLanguageChange(requestedLanguage) {
+    this.requestedLanguage = requestedLanguage;
+  }
+
   get isViewingDiff() {
     return !this.isViewingExplanation;
   }
 
   get solution() {
-    const solutionForRequestedLanguage = this.args.courseStage.solutions.findBy('language', this.args.requestedLanguage);
+    const solutionForRequestedLanguage = this.args.courseStage.solutions.findBy('language', this.requestedLanguage);
 
     return solutionForRequestedLanguage ? solutionForRequestedLanguage : this.args.courseStage.solutions.firstObject;
-  }
-
-  get currentLanguage() {
-    return this.solution.language;
   }
 }
