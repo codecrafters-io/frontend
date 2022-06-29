@@ -9,7 +9,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsSubscriber, signInAsSubscribedTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { currentURL, waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stage-solutions', function (hooks) {
   setupApplicationTest(hooks);

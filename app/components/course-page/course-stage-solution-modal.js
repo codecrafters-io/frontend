@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
-import Prism from 'prismjs';
-import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
 
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+
+import 'prismjs';
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-go';
 import 'prismjs/components/prism-nim';
