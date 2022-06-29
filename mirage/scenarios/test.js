@@ -25,6 +25,7 @@ export default function (server) {
   createCourseFromData(server, reactCourseData);
 
   // TODO: Fetch this programmatically
+  createRedisStageSolution(server, 1);
   createRedisStageSolution(server, 2);
   createRedisStageSolution(server, 3);
   createRedisStageSolution(server, 4);

@@ -1,8 +1,19 @@
 <div class={{concat (if @isWide "w-screen p-4 md:p-16 max-w-screen-lg h-screen" "max-w-lg") " " "flex justify-center"}}>
-  <div class="p-6 sm:p-8 bg-white rounded-md shadow-sm border-gray-300 relative overflow-y-scroll {{@class}}" ...attributes>
-    <button class="absolute right-6 top-6 sm:right-8 sm:top-8 opacity-60 hover:opacity-100" type="button" {{on "click" this.handleCloseButtonClick}}>
-      {{svg-jar "x" class="w-5 h-5 text-gray-400"}}
-    </button>
+  <div
+    class="p-6 sm:p-8 bg-white rounded-md shadow-sm border-gray-300 relative overflow-y-scroll {{@class}}"
+    {{on-click-outside this.handleClickOutside}}
+    ...attributes
+  >
+    {{#if @allowManualClose}}
+      <button
+        class="absolute right-6 top-6 sm:right-8 sm:top-8 opacity-60 hover:opacity-100"
+        type="button"
+        {{on "click" this.handleCloseButtonClick}}
+        data-test-close-modal-button
+      >
+        {{svg-jar "x" class="w-5 h-5 text-gray-400"}}
+      </button>
+    {{/if}}
 
     {{yield}}
   </div>

@@ -1,4 +1,4 @@
-<ModalBody @onClose={{@onClose}} @isWide={{true}} @class="w-full" data-test-course-stage-solution-modal>
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} @isWide={{true}} @class="w-full" data-test-course-stage-solution-modal>
   <CoursePage::CourseStageSolutionModal::Header
     @currentLanguage={{this.currentLanguage}}
     @isViewingDiff={{this.isViewingDiff}}

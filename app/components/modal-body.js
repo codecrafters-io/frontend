@@ -6,6 +6,13 @@ export default class ModalBodyComponent extends Component {
   @service('globalModals') globalModalsService;
 
   @action
+  handleClickOutside() {
+    if (this.args.allowManualClose) {
+      this.handleCloseButtonClick();
+    }
+  }
+
+  @action
   handleCloseButtonClick() {
     this.globalModalsService.closeModals();
 

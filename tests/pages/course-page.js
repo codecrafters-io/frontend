@@ -1,4 +1,4 @@
-import { clickOnText, collection, create, visitable } from 'ember-cli-page-object';
+import { clickable, clickOnText, collection, create, text, visitable } from 'ember-cli-page-object';
 import CollapsedItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/collapsed-item';
 import CourseCompletedItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/course-completed-item';
 import CourseStageItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/course-stage-item';
@@ -19,6 +19,16 @@ export default create({
 
   get courseStageItemIsActive() {
     return this.activeCourseStageItem.isVisible;
+  },
+
+  courseStageSolutionModal: {
+    get isOpen() {
+      return this.isVisible;
+    },
+
+    clickOnCloseButton: clickable('[data-test-close-modal-button]'),
+    title: text('[data-test-course-stage-solution-modal-title]'),
+    scope: '[data-test-course-stage-solution-modal]',
   },
 
   header: Header,
