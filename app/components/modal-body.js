@@ -8,5 +8,9 @@ export default class ModalBodyComponent extends Component {
   @action
   handleCloseButtonClick() {
     this.globalModalsService.closeModals();
+
+    if (this.args.onClose) {
+      this.args.onClose();
+    }
   }
 }

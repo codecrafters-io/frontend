@@ -53,12 +53,12 @@ export default function createRedisStageSolution(server, stagePosition) {
       end</code>
   </pre>
 
-  ## Handling Disconnects
+## Handling Disconnects
 
-  At some point the client will disconnect, and our program needs to gracefully handle
-  that. Since we can't know _when_ the client will disconnect, we'll just assume the client
-  is always connected, and then ignore any client disconnection errors like \`ReadTimeout\`
-  or \`WriteFailed\`.
+At some point the client will disconnect, and our program needs to gracefully handle
+that. Since we can't know _when_ the client will disconnect, we'll just assume the client
+is always connected, and then ignore any client disconnection errors like \`ReadTimeout\`
+or \`WriteFailed\`.
 
   <pre>
     <code class="language-diff-ruby diff-highlight">  def handle_client(client)

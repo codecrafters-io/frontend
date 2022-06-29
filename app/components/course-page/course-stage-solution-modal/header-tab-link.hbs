@@ -1,0 +1,4 @@
+<div role="button" class="flex items-center px-3 py-2 mr-2 border-b-2 text-sm {{if @isActive 'border-teal-500' 'border-gray-200'}}" ...attributes>
+  {{svg-jar @icon class="text-gray-600 w-5 mr-2 fill-current text-gray-600"}}
+  <span class={{if @isActive "font-medium text-gray-700" "text-gray-600"}}>{{@text}}</span>
+</div>

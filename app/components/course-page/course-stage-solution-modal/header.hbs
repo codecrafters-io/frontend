@@ -1,34 +1,26 @@
-<LinkTo
-  @route="course"
-  @model={{@solution.courseStage.course.slug}}
-  class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-4"
->
-  {{svg-jar "arrow-left" class="w-6 mr-2 fill-current"}}
-  <span class="font-bold uppercase tracking-wide">{{@solution.courseStage.course.name}}</span>
-</LinkTo>
-
 <div class="mb-6 text-2xl">
   <span class="text-gray-600">Solution:</span>
-  <span class="font-bold text-gray-700">{{@solution.courseStage.name}}</span>
+  <span class="font-bold text-gray-700">{{@solution.courseStage.name}} </span>
 </div>
 
 <div class="flex items-center justify-between mb-6">
   <div class="flex items-center">
-    <CourseStageSolutionPage::HeaderTabLink @route="course-stage-solution.diff" @icon="code" @text="Diff" @isActive={{this.diffLinkIsActive}} />
+    <CoursePage::CourseStageSolutionModal::HeaderTabLink @icon="code" @text="Diff" @isActive={{@isViewingDiff}} {{on "click" @onViewDiffLinkClick}} />
 
-    <CourseStageSolutionPage::HeaderTabLink
-      @route="course-stage-solution.explanation"
+    <CoursePage::CourseStageSolutionModal::HeaderTabLink
       @icon="academic-cap"
       @text="Explanation"
-      @isActive={{this.explanationLinkIsActive}}
+      @isActive={{@isViewingExplanation}}
+      {{on "click" @onViewExplanationLinkClick}}
     />
   </div>
 
   <div>
-    <CourseStageSolutionPage::LanguageDropdown
+    <CoursePage::CourseStageSolutionModal::LanguageDropdown
       @currentLanguage={{@currentLanguage}}
       @requestedLanguage={{@requestedLanguage}}
       @courseStage={{@solution.courseStage}}
+      @onRequestedLanguageChange={{@onRequestedLanguageChange}}
     />
   </div>
 </div>
