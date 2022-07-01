@@ -125,7 +125,7 @@ A quick welcome to CodeCrafters.
 
   get trackTitle() {
     if (this.isGo) {
-      return 'Golang Pro track.';
+      return 'Golang track.';
     } else {
       return `${this.name} track.`;
     }
