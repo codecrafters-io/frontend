@@ -33,10 +33,6 @@ export default class UserModel extends Model {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
   }
 
-  get signedUpOnOrAfterJun16() {
-    return this.createdAt >= new Date('2022-06-16');
-  }
-
   get teamHasActiveSubscription() {
     return this.teams.isAny('hasActiveSubscription');
   }

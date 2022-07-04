@@ -179,42 +179,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item should not have upgrade prompt if language is not Go');
   });
 
-  test('stages should not have an upgrade prompt if user signed up before Jun 17', async function (assert) {
-    signIn(this.owner);
-    testScenario(this.server);
-
-    let currentUser = this.server.schema.users.first();
-    currentUser.update('createdAt', new Date(2022, 5, 15));
-
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: docker,
-      language: go,
-      name: 'C #1',
-      user: currentUser,
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[1],
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
-    });
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
-
-    assert.notOk(
-      coursePage.activeCourseStageItem.hasUpgradePrompt,
-      'course stage item should not have upgrade prompt if user signed up before Jun 16'
-    );
-  });
-
   test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
     signInAsSubscriber(this.owner);
     testScenario(this.server);
