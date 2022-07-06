@@ -91,6 +91,20 @@ export function signInAsSubscribedTeamMember(owner, server) {
 function buildIncludedResources(user) {
   let includedResources = [];
 
+  user.featureSuggestions.models.forEach((featureSuggestion) => {
+    includedResources.push({
+      id: featureSuggestion.id,
+      type: 'feature-suggestions',
+      attributes: {
+        'feature-slug': featureSuggestion.featureSlug,
+        'dismissed-at': featureSuggestion.dismissedAt ? featureSuggestion.dismissedAt.toISOString() : null,
+      },
+      relationships: {
+        user: { data: { type: 'users', id: user.id } },
+      },
+    });
+  });
+
   user.subscriptions.models.forEach((subscription) => {
     includedResources.push({
       id: subscription.id,
@@ -101,12 +115,7 @@ function buildIncludedResources(user) {
         'stripe-subscription-id': 'testing',
       },
       relationships: {
-        user: {
-          data: {
-            type: 'users',
-            id: user.id,
-          },
-        },
+        user: { data: { type: 'users', id: user.id } },
       },
     });
   });

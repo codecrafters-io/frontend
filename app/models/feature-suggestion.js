@@ -8,7 +8,8 @@ export default class FeatureSuggestionModel extends Model {
   @belongsTo('user', { async: false }) user;
 
   get featureIsPrivateLeaderboard() {
-    return this.slug === 'private-leaderboard';
+    console.log(this.featureSlug);
+    return this.featureSlug === 'private-leaderboard';
   }
 
   get isDismissed() {

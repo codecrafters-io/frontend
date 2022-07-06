@@ -244,8 +244,12 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   });
 
   test('private leaderboard feature suggestion is shown to non-team members with a prompt', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    this.server.create('feature-suggestion', { user: user, featureSlug: 'private-leaderboard' });
+
+    signIn(this.owner, this.server, user);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -258,10 +262,32 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   });
 
   test('private leaderboard feature suggestion is not shown to team members', async function (assert) {
-    assert.equal(1, 1);
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    this.server.create('feature-suggestion', { user: user, featureSlug: 'private-leaderboard' });
+
+    signInAsTeamMember(this.owner, this.server, user);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
   });
 
   test('private leaderboard feature suggestion is not shown to users who do not have a prompt', async function (assert) {
-    assert.equal(1, 1);
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    assert.equal(user.featureSuggestions.length, 0);
+
+    signIn(this.owner, this.server, user);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
   });
 });
