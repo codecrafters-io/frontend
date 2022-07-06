@@ -5,7 +5,7 @@
 
   <div class="text-blue-900 prose prose-blue leading-7 text-sm">
     Want a private leaderboard?
-    <LinkTo @route="teams.create">Create a team</LinkTo>
+    <span role="button" class="font-bold underline text-blue-700" {{on "click" this.handleCreateTeamButtonClick}}>Create a team</span>
     for free.
   </div>
 
