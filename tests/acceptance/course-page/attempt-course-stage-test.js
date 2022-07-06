@@ -134,8 +134,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 });
 
 function setupFirstStageScenario(owner, server) {
-  signIn(owner);
   testScenario(server);
+  signIn(owner, server);
 
   let currentUser = server.schema.users.first();
   let python = server.schema.languages.findBy({ name: 'Python' });
