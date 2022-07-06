@@ -9,6 +9,7 @@ export default class UserModel extends Model {
   @attr('boolean') isStaff;
   @attr('string') username;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
+  @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
@@ -31,6 +32,10 @@ export default class UserModel extends Model {
 
   get managedTeams() {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
+  }
+
+  get privateLeaderboardFeatureSuggestion() {
+    return this.featureSuggestions.findBy('featureSlug', 'private-leaderboard');
   }
 
   get teamHasActiveSubscription() {
