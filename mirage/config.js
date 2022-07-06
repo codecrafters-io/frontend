@@ -21,9 +21,13 @@ function routes() {
 
   this.post('/analytics-events');
 
+  this.get('/courses');
+
   this.get('/course-language-requests');
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');
+
+  this.patch('/feature-suggestions/:id');
 
   this.post('/individual-billing-sessions', function (schema) {
     return schema.individualBillingSessions.create({ url: 'https://test.com/billing_session' });
@@ -32,8 +36,6 @@ function routes() {
   this.post('/individual-checkout-sessions', function (schema) {
     return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
   });
-
-  this.get('/courses');
 
   this.get('/languages');
 
