@@ -27,8 +27,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it renders alpha courses if user is staff', async function (assert) {
-    signInAsStaff(this.owner);
     testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
 
     await coursesPage.visit();
     assert.equal(coursesPage.courseCards.length, 5, 'expected 5 course cards to be present');
