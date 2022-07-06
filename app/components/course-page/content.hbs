@@ -8,12 +8,13 @@
     @preferredLanguageSlug={{@preferredLanguageSlug}}
   />
 
-  <CourseLeaderboard
-    @class="w-80 flex-shrink-0 border-l ml-4 hidden lg:block"
-    @course={{@course}}
-    @activeRepository={{@activeRepository}}
-    @repositories={{@repositories}}
-  />
+  <div class="w-80 flex-shrink-0 border-l ml-4 hidden lg:block">
+    <CourseLeaderboard @course={{@course}} @activeRepository={{@activeRepository}} @repositories={{@repositories}} />
+
+    {{#if this.visiblePrivateLeaderboardFeatureSuggestion}}
+      <PrivateLeaderboardFeatureSuggestion class="ml-4" />
+    {{/if}}
+  </div>
 </div>
 
 {{#if this.isViewingCourseStageSolution}}

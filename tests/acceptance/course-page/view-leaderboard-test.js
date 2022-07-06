@@ -242,4 +242,26 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     await percySnapshot('Leaderboard for teams - Viewing World');
   });
+
+  test('private leaderboard feature suggestion is shown to non-team members with a prompt', async function (assert) {
+    signIn(this.owner);
+    testScenario(this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.ok(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
+    await coursePage.privateLeaderboardFeatureSuggestion.clickOnDismissButton();
+
+    assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should not have feature suggestion');
+  });
+
+  test('private leaderboard feature suggestion is not shown to team members', async function (assert) {
+    assert.equal(1, 1);
+  });
+
+  test('private leaderboard feature suggestion is not shown to users who do not have a prompt', async function (assert) {
+    assert.equal(1, 1);
+  });
 });

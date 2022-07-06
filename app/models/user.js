@@ -34,10 +34,6 @@ export default class UserModel extends Model {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
   }
 
-  get privateLeaderboardFeatureSuggestion() {
-    return this.featureSuggestions.findBy('featureSlug', 'private-leaderboard');
-  }
-
   get teamHasActiveSubscription() {
     return this.teams.isAny('hasActiveSubscription');
   }

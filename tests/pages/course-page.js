@@ -4,6 +4,7 @@ import CourseCompletedItem from 'codecrafters-frontend/tests/pages/components/co
 import CourseStageItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/course-stage-item';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
+import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import SetupItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/setup-item';
 
@@ -58,6 +59,7 @@ export default create({
   header: Header,
   leaderboard: Leaderboard,
   repositoryDropdown: RepositoryDropdown,
+  privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
   setupItem: SetupItem,
 
   get setupItemIsActive() {

@@ -10,4 +10,8 @@ export default class FeatureSuggestionModel extends Model {
   get featureIsPrivateLeaderboard() {
     return this.slug === 'private-leaderboard';
   }
+
+  get isDismissed() {
+    return !!this.dismissedAt;
+  }
 }
