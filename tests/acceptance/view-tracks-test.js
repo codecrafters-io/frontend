@@ -12,8 +12,8 @@ module('Acceptance | view-tracks', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await tracksPage.visit();
     assert.equal(tracksPage.trackCards.length, 14, 'expected 14 course cards to be present');
@@ -27,8 +27,8 @@ module('Acceptance | view-tracks', function (hooks) {
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -54,8 +54,8 @@ module('Acceptance | view-tracks', function (hooks) {
   });
 
   test('it sorts course cards based on last push', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -89,8 +89,8 @@ module('Acceptance | view-tracks', function (hooks) {
   });
 
   test('it renders completed track cards', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -128,8 +128,8 @@ module('Acceptance | view-tracks', function (hooks) {
   });
 
   test('first time visit has loading page', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     tracksPage.visit();
     await waitFor('[data-test-loading]');
@@ -140,8 +140,8 @@ module('Acceptance | view-tracks', function (hooks) {
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -172,8 +172,8 @@ module('Acceptance | view-tracks', function (hooks) {
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await tracksPage.visit();
     await tracksPage.clickOnTrack('Go');

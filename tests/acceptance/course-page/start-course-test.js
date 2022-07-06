@@ -21,8 +21,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
   setupClock(hooks);
 
   test('can start course', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -104,8 +104,8 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');

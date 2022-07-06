@@ -91,7 +91,7 @@ export function signInAsSubscribedTeamMember(owner, server) {
 function buildIncludedResources(user) {
   let includedResources = [];
 
-  user.subscriptions.forEach((subscription) => {
+  user.subscriptions.models.forEach((subscription) => {
     includedResources.push({
       id: subscription.id,
       type: 'subscriptions',
@@ -111,7 +111,7 @@ function buildIncludedResources(user) {
     });
   });
 
-  user.teamMemberships.forEach((teamMembership) => {
+  user.teamMemberships.models.forEach((teamMembership) => {
     includedResources.push({
       id: teamMembership.id,
       type: 'team-memberships',
@@ -133,7 +133,7 @@ function buildIncludedResources(user) {
       },
     });
 
-    teamMembership.team.subscriptions.forEach((teamSubscription) => {
+    teamMembership.team.subscriptions.models.forEach((teamSubscription) => {
       includedResources.push({
         id: teamSubscription.id,
         type: 'team-subscriptions',

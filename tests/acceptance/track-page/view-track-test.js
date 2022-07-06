@@ -28,8 +28,8 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     await visit('/tracks/go');
@@ -39,8 +39,8 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has started course', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     let currentUser = this.server.schema.users.first();
@@ -60,8 +60,8 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has finished one course', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     let currentUser = this.server.schema.users.first();
@@ -81,8 +81,8 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it excludes alpha courses', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await trackPage.visit({ track_slug: 'javascript' });
     assert.notOk(trackPage.cards.mapBy('title').includes('Build your own React'));

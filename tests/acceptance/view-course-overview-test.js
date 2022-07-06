@@ -21,8 +21,8 @@ module('Acceptance | view-course-overview', function (hooks) {
   });
 
   test('it renders when user is logged in', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -31,8 +31,8 @@ module('Acceptance | view-course-overview', function (hooks) {
   });
 
   test('it renders when user accesses URL directly', async function (assert) {
-    signIn(this.owner, this.server);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await courseOverviewPage.visit({ course_slug: 'redis' });
     assert.equal(currentURL(), '/courses/redis/overview');
