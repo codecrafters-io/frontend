@@ -18,7 +18,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupClock(hooks);
 
   test('can view leaderboard when no recent players are present', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await coursesPage.visit();
@@ -79,7 +79,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   });
 
   test('can view leaderboard on overview page when other recent players are present', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -149,7 +149,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   });
 
   test('can view leaderboard when current user has leaderboard entry', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();

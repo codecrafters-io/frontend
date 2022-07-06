@@ -18,7 +18,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   setupClock(hooks);
 
   test('can switch between solution diffs & explanations + switch languages', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await coursesPage.visit();
@@ -56,7 +56,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   });
 
   test('can view solutions before starting course', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await coursesPage.visit();
@@ -81,7 +81,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   });
 
   test('can view solutions for previous stages after completing them', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -144,7 +144,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   });
 
   test('attempting to view solutions for stage 4+ should redirect to /pay if user signed up on/after 17 Jun', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();

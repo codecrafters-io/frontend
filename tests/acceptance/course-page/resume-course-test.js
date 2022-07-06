@@ -16,7 +16,7 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
   setupClock(hooks);
 
   test('can resume course', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();

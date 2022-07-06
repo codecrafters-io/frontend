@@ -21,7 +21,7 @@ module('Acceptance | view-course-overview', function (hooks) {
   });
 
   test('it renders when user is logged in', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await coursesPage.visit();
@@ -31,7 +31,7 @@ module('Acceptance | view-course-overview', function (hooks) {
   });
 
   test('it renders when user accesses URL directly', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await courseOverviewPage.visit({ course_slug: 'redis' });

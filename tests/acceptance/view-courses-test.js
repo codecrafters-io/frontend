@@ -12,7 +12,7 @@ module('Acceptance | view-courses', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await coursesPage.visit();
@@ -37,7 +37,7 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -65,7 +65,7 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it sorts course cards based on last push', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -101,7 +101,7 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it renders completed course cards', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -140,7 +140,7 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('first time visit has loading page', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     coursesPage.visit();
@@ -152,7 +152,7 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -182,7 +182,7 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await coursesPage.visit();

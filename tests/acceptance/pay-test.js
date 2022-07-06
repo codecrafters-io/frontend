@@ -32,7 +32,7 @@ module('Acceptance | pay-test', function (hooks) {
   });
 
   test('new user can start checkout session', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await payPage.visit();
@@ -43,7 +43,7 @@ module('Acceptance | pay-test', function (hooks) {
   });
 
   test('new user can wait for subscriptions to sync after successful checkout session', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await trackPage.visit({ track_slug: 'go', action: 'checkout_session_successful' });

@@ -13,7 +13,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   setupMirage(hooks);
 
   test('it renders when no submissions are present', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await adminCoursesPage.visit();
@@ -25,7 +25,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   });
 
   test('it renders when submissions are present', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -51,7 +51,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   });
 
   test('it filters by username(s) if given', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let user1 = this.server.create('user', { username: 'user1' });
@@ -70,7 +70,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   });
 
   test('it filters by languages(s) if given', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let user1 = this.server.create('user', { username: 'user1' });

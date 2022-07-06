@@ -10,7 +10,7 @@ module('Acceptance | view-index', function (hooks) {
   setupMirage(hooks);
 
   test('it redirects to /tracks page', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await visit('/');

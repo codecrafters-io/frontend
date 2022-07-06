@@ -17,7 +17,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
   setupClock(hooks);
 
   test('can try other language', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();

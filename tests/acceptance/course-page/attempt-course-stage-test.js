@@ -16,7 +16,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupClock(hooks);
 
   test('can fail course stage', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -76,7 +76,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   });
 
   test('can pass course stage', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();

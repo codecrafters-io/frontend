@@ -28,7 +28,7 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
@@ -39,7 +39,7 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has started course', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
@@ -60,7 +60,7 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has finished one course', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
@@ -81,7 +81,7 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it excludes alpha courses', async function (assert) {
-    signIn(this.owner);
+    signIn(this.owner, this.server);
     testScenario(this.server);
 
     await trackPage.visit({ track_slug: 'javascript' });
