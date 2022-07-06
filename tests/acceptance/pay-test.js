@@ -32,8 +32,8 @@ module('Acceptance | pay-test', function (hooks) {
   });
 
   test('new user can start checkout session', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await payPage.visit();
     await percySnapshot('Pay page');
@@ -43,8 +43,8 @@ module('Acceptance | pay-test', function (hooks) {
   });
 
   test('new user can wait for subscriptions to sync after successful checkout session', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await trackPage.visit({ track_slug: 'go', action: 'checkout_session_successful' });
 

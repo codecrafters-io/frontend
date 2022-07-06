@@ -18,8 +18,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
   setupClock(hooks);
 
   test('can request language', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -45,8 +45,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
   });
 
   test('can view requested languages', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -71,8 +71,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
   });
 
   test('can view no language found text', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Docker');
@@ -90,8 +90,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
   });
 
   test('does not see language prompt if requested language is now supported', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     this.server.create('course-language-request', {
       user: this.server.schema.users.first(),
@@ -108,8 +108,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
   });
 
   test('sees language prompt if subset of requested languages are still unsupported', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     this.server.create('course-language-request', {
       user: this.server.schema.users.first(),

@@ -15,8 +15,8 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
   setupClock(hooks);
 
   test('can complete course', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });

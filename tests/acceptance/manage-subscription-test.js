@@ -15,8 +15,8 @@ module('Acceptance | manage-subscription-test', function (hooks) {
   setupClock(hooks);
 
   test('subscriber can manage subscription', async function (assert) {
-    signInAsSubscriber(this.owner);
     testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.accountDropdown.toggle();

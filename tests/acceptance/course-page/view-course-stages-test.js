@@ -18,8 +18,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   setupClock(hooks);
 
   test('can view stages before starting course', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -44,8 +44,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('can view previous stages after completing them', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -103,8 +103,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('stages should have an upgrade prompt if language is go and user signed up on/after 17 Jun', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -149,8 +149,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('stages should not have an upgrade prompt if language is Rust', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let c = this.server.schema.languages.findBy({ slug: 'rust' });
@@ -180,8 +180,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   });
 
   test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
-    signInAsSubscriber(this.owner);
     testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -249,8 +249,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   test('first time visit has loading page', async function (assert) {
     this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
 
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -274,8 +274,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   test('transition from courses page has no loading page', async function (assert) {
     this.server.timing = 25; // Ensure requests take long enough for us to observe the loading state
 
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });

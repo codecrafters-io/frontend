@@ -12,8 +12,8 @@ module('Acceptance | view-courses', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
@@ -27,8 +27,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it renders alpha courses if user is staff', async function (assert) {
-    signInAsStaff(this.owner);
     testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
 
     await coursesPage.visit();
     assert.equal(coursesPage.courseCards.length, 5, 'expected 5 course cards to be present');
@@ -37,8 +37,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -65,8 +65,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it sorts course cards based on last push', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -101,8 +101,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it renders completed course cards', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -140,8 +140,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('first time visit has loading page', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     coursesPage.visit();
     await waitFor('[data-test-loading]');
@@ -152,8 +152,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -182,8 +182,8 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');

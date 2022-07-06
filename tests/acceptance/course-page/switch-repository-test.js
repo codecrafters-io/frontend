@@ -16,8 +16,8 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
   setupClock(hooks);
 
   test('can switch repository', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
 

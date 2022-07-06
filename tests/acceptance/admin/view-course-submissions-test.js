@@ -13,8 +13,8 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   setupMirage(hooks);
 
   test('it renders when no submissions are present', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await adminCoursesPage.visit();
     await adminCoursesPage.clickOnLink('Build your own Redis');
@@ -25,8 +25,8 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   });
 
   test('it renders when submissions are present', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -51,8 +51,8 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   });
 
   test('it filters by username(s) if given', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let user1 = this.server.create('user', { username: 'user1' });
     let user2 = this.server.create('user', { username: 'user2' });
@@ -70,8 +70,8 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
   });
 
   test('it filters by languages(s) if given', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let user1 = this.server.create('user', { username: 'user1' });
     let user2 = this.server.create('user', { username: 'user2' });

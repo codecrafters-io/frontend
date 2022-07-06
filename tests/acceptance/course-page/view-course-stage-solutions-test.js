@@ -18,8 +18,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   setupClock(hooks);
 
   test('can switch between solution diffs & explanations + switch languages', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -56,8 +56,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   });
 
   test('can view solutions before starting course', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -81,8 +81,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   });
 
   test('can view solutions for previous stages after completing them', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -144,8 +144,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   });
 
   test('attempting to view solutions for stage 4+ should redirect to /pay if user signed up on/after 17 Jun', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -192,8 +192,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
   });
 
   test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
-    signInAsSubscriber(this.owner);
     testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });

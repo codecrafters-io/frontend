@@ -16,8 +16,8 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
   setupClock(hooks);
 
   test('can resume course', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });

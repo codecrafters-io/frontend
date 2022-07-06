@@ -16,8 +16,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupClock(hooks);
 
   test('can fail course stage', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -76,8 +76,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   });
 
   test('can pass course stage', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -134,8 +134,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 });
 
 function setupFirstStageScenario(owner, server) {
-  signIn(owner);
   testScenario(server);
+  signIn(owner, server);
 
   let currentUser = server.schema.users.first();
   let python = server.schema.languages.findBy({ name: 'Python' });

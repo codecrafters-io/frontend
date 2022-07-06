@@ -18,8 +18,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupClock(hooks);
 
   test('can view leaderboard when no recent players are present', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -79,8 +79,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   });
 
   test('can view leaderboard on overview page when other recent players are present', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -119,7 +119,13 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.equal(coursePage.leaderboard.entries[1].progressText, '0 / 7', 'progress text must be shown');
 
     let repository = this.server.schema.repositories.find(1);
-    repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating', createdAt: new Date() }) });
+    repository.update({
+      lastSubmission: this.server.create('submission', {
+        repository,
+        status: 'evaluating',
+        createdAt: new Date(),
+      }),
+    });
 
     await this.clock.tick(2001); // Wait for poll
     await finishRender();
@@ -149,8 +155,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   });
 
   test('can view leaderboard when current user has leaderboard entry', async function (assert) {
-    signIn(this.owner);
     testScenario(this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
