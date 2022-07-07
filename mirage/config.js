@@ -79,6 +79,8 @@ function routes() {
     return schema.repositories.create(attrs);
   });
 
+  this.delete('/slack-integrations/:id');
+
   this.get('/submissions', function (schema, request) {
     const queryParams = request.queryParams;
 
