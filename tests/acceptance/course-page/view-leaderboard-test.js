@@ -256,8 +256,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
-    await coursePage.privateLeaderboardFeatureSuggestion.clickOnDismissButton();
+    await percySnapshot('Feature Suggestion - Private Leaderboard');
 
+    await coursePage.privateLeaderboardFeatureSuggestion.clickOnDismissButton();
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should not have feature suggestion');
   });
 
