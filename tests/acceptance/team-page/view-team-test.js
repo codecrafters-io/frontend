@@ -165,4 +165,19 @@ module('Acceptance | view-team-test', function (hooks) {
     assert.equal(teamPage.members.length, 1, 'expected 1 member to be present');
     assert.equal(teamPage.teamSelectionDropdown.activeTeamName, 'Other Team', 'expected team name to be Other Team');
   });
+
+  test('team member can view configured slack integration', async function (assert) {
+    testScenario(this.server);
+    signInAsTeamMember(this.owner, this.server);
+
+    const team = this.server.schema.teams.first();
+    this.server.schema.slackIntegrations.create({ team: team, slackChannelName: '#stream-codecrafters' });
+
+    window.confirm = () => true;
+
+    await teamPage.visit({ team_id: team.id });
+    await percySnapshot('View Team - Slack Integration Configured');
+
+    assert.ok(teamPage.slackIntegrationSettingsContainer.hasUninstallButton, 'expected slack integration to be configured');
+  });
 });

@@ -18,6 +18,11 @@ export default create({
     return this.members.toArray().findBy('username', username);
   },
 
+  slackIntegrationSettingsContainer: {
+    hasUninstallButton: isVisible('[data-test-uninstall-button]'),
+    scope: '[data-test-slack-integration-settings-container]',
+  },
+
   subscriptionSettingsContainer: {
     hasManageSubscriptionButton: isVisible('[data-test-manage-subscription-button]'),
     scope: '[data-test-subscription-settings-container]',

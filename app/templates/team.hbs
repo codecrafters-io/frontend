@@ -7,7 +7,11 @@
   </div>
 
   <div class="flex gap-4 items-start flex-col md:flex-row">
-    <TeamPage::SubscriptionSettingsContainer @team={{this.model.team}} class="w-full md:w-1/3" />
+    <div class="w-full md:w-1/3">
+      <TeamPage::SubscriptionSettingsContainer @team={{this.model.team}} />
+      <TeamPage::SlackIntegrationSettingsContainer @team={{this.model.team}} class="mt-4" />
+    </div>
+
     <TeamPage::MembersContainer @team={{this.model.team}} class="w-full md:w-2/3" />
   </div>
 </div>

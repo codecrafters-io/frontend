@@ -5,6 +5,8 @@ export default class TeamModel extends Model {
   @attr('string') inviteCode;
   @hasMany('team-membership', { async: false }) memberships;
   @attr('string') name;
+  @attr('string') slackAppInstallationUrl;
+  @hasMany('slack-integration', { async: false }) slackIntegrations;
   @hasMany('team-subscription', { async: false }) subscriptions;
 
   get activeSubscription() {
@@ -19,11 +21,19 @@ export default class TeamModel extends Model {
     return !!this.activeSubscription;
   }
 
+  get hasSlackIntegration() {
+    return !!this.slackIntegration;
+  }
+
   get inviteUrl() {
     return `${window.location.origin}/join_team?invite_code=${this.inviteCode}`;
   }
 
   get members() {
     return this.memberships.mapBy('user');
+  }
+
+  get slackIntegration() {
+    return this.slackIntegrations.firstObject;
   }
 }
