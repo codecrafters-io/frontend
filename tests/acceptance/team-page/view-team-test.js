@@ -171,8 +171,7 @@ module('Acceptance | view-team-test', function (hooks) {
     signInAsTeamMember(this.owner, this.server);
 
     const team = this.server.schema.teams.first();
-    const currentUser = this.server.schema.users.first();
-    this.server.schema.slackIntegrations.create({ team: team, slackChannelName: '#stream-codecrafters', creator: currentUser });
+    this.server.schema.slackIntegrations.create({ team: team, slackChannelName: '#stream-codecrafters' });
 
     window.confirm = () => true;
 
