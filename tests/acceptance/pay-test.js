@@ -33,10 +33,25 @@ module('Acceptance | pay-test', function (hooks) {
 
   test('new user can start checkout session', async function (assert) {
     testScenario(this.server);
+
+    let user = this.server.schema.users.first();
+    user.update('createdAt', new Date(user.createdAt.getTime() - 5 * 24 * 60 * 60 * 1000));
+
     signIn(this.owner, this.server);
 
     await payPage.visit();
     await percySnapshot('Pay page');
+
+    await payPage.clickOnStartPaymentButton();
+    assert.equal(1, 1); // Dummy test
+  });
+
+  test('new user sees discounted price start checkout session', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+    await percySnapshot('Pay page - with discount');
 
     await payPage.clickOnStartPaymentButton();
     assert.equal(1, 1); // Dummy test

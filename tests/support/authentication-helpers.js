@@ -9,7 +9,7 @@ export function signIn(owner, server, user) {
       id: user.id,
       attributes: {
         'avatar-url': user.avatarUrl,
-        'created-at': '2021-08-29T16:50:12.551986+00:00',
+        'created-at': user.createdAt.toISOString(),
         'github-username': user.githubUsername,
         'is-admin': user.isAdmin,
         'is-staff': user.isStaff,
@@ -110,7 +110,7 @@ function buildIncludedResources(user) {
       id: subscription.id,
       type: 'subscriptions',
       attributes: {
-        'start-date': '2021-12-27T00:49:11.608608',
+        'start-date': subscription.startDate.toISOString(),
         'ended-at': null,
         'stripe-subscription-id': 'testing',
       },
@@ -126,7 +126,7 @@ function buildIncludedResources(user) {
       type: 'team-memberships',
       attributes: {
         'is-admin': teamMembership.isAdmin,
-        'created-at': '2021-08-29T16:50:12.551986+00:00',
+        'created-at': teamMembership.createdAt.toISOString(),
       },
       relationships: {
         user: { data: { type: 'users', id: teamMembership.user.id } },
