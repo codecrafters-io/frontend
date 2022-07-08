@@ -34,6 +34,10 @@ export default class UserModel extends Model {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
   }
 
+  get signedUpInTheLast3Days() {
+    return new Date() - this.createdAt <= 3 * 24 * 60 * 60 * 1000; // 3 * 24hours * 60minutes * 60seconds * 1000ms
+  }
+
   get teamHasActiveSubscription() {
     return this.teams.isAny('hasActiveSubscription');
   }
