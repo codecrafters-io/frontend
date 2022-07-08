@@ -9,6 +9,14 @@ export default class PayController extends Controller {
   @service router;
   @tracked isCreatingCheckoutSession = false;
 
+  get earlyBirdDiscountEligibilityExpiresAt() {
+    return this.currentUserService.record.earlyBirdDiscountEligibilityExpiresAt;
+  }
+
+  get userIsEligibleForEarlyBirdDiscount() {
+    return this.currentUserService.record.isEligibleForEarlyBirdDiscount;
+  }
+
   get testimonials() {
     return this.model.courses.findBy('slug', 'docker').testimonials;
   }
@@ -18,7 +26,7 @@ export default class PayController extends Controller {
     this.isCreatingCheckoutSession = true;
 
     let checkoutSession = this.store.createRecord('individual-checkout-session', {
-      earlyBirdDiscountEnabled: this.currentUserService.record.signedUpInTheLast3Days,
+      earlyBirdDiscountEnabled: this.userIsEligibleForEarlyBirdDiscount,
       successUrl: `${window.location.origin}/tracks/go?action=checkout_session_successful`,
       cancelUrl: `${window.location.origin}/pay`,
     });

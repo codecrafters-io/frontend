@@ -4,24 +4,30 @@
       CodeCrafters PRO
     </div>
 
-    {{#if @discountedMonthlyPrice}}
+    {{#if @discountedYearlyPrice}}
       <div class="font-bold mt-6">
-        <span class="text-2xl text-gray-600 font-bold line-through">${{@actualMonthlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/mo</span>
+        <span class="text-2xl text-gray-600 font-bold line-through">${{@actualYearlyPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/yr</span>
       </div>
       <div class="font-bold mt-2">
-        <span class="text-6xl text-teal-500 font-bold">${{@discountedMonthlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/mo</span>
+        <span class="text-6xl text-teal-500 font-bold">${{@discountedYearlyPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/yr</span>
+      </div>
+
+      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
+        <div class="text-teal-600 text-sm">
+          or $79/mo if billed monthly
+        </div>
       </div>
     {{else}}
       <div class="font-bold mt-6">
-        <span class="text-6xl text-gray-700 font-bold">${{@actualMonthlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/mo</span>
+        <span class="text-6xl text-gray-700 font-bold">${{@actualYearlyPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/yr</span>
       </div>
 
-      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5">
-        <div class="text-teal-600 leading-7 text-sm">
-          2 months free if billed annually
+      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
+        <div class="text-teal-600 text-sm">
+          or $79/mo if billed monthly
         </div>
       </div>
     {{/if}}

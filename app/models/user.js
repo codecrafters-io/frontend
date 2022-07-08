@@ -14,12 +14,20 @@ export default class UserModel extends Model {
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
 
+  get earlyBirdDiscountEligibilityExpiresAt() {
+    return new Date(this.createdAt.getTime() + 3 * 24 * 60 * 60 * 1000);
+  }
+
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;
   }
 
   get hasActiveSubscription() {
     return this.subscriptions.isAny('isActive');
+  }
+
+  get isEligibleForEarlyBirdDiscount() {
+    return this.earlyBirdDiscountEligibilityExpiresAt > new Date();
   }
 
   get isTeamAdmin() {
@@ -32,10 +40,6 @@ export default class UserModel extends Model {
 
   get managedTeams() {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
-  }
-
-  get signedUpInTheLast3Days() {
-    return new Date() - this.createdAt <= 3 * 24 * 60 * 60 * 1000; // 3 * 24hours * 60minutes * 60seconds * 1000ms
   }
 
   get teamHasActiveSubscription() {
