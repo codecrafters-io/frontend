@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class PayController extends Controller {
-  @service currentUser;
+  @service('currentUser') currentUserService;
   @service router;
   @tracked isCreatingCheckoutSession = false;
 
@@ -18,6 +18,7 @@ export default class PayController extends Controller {
     this.isCreatingCheckoutSession = true;
 
     let checkoutSession = this.store.createRecord('individual-checkout-session', {
+      earlyBirdDiscountEnabled: this.currentUserService.record.signedUpInTheLast3Days,
       successUrl: `${window.location.origin}/tracks/go?action=checkout_session_successful`,
       cancelUrl: `${window.location.origin}/pay`,
     });
