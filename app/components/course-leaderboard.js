@@ -80,7 +80,7 @@ export default class CourseLeaderboardComponent extends Component {
     let result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      let entryWithHighestCourseStage = entriesForUser.sortBy('currentCourseStage.position', 'lastSubmissionAt').lastObject;
+      let entryWithHighestCourseStage = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
 
       result.push(
         this.store.createRecord('leaderboard-entry', {
@@ -93,7 +93,7 @@ export default class CourseLeaderboardComponent extends Component {
       );
     }
 
-    return result.sortBy('currentCourseStage.position', 'lastAttemptAt').reverse();
+    return result.sortBy('completedStagesCount', 'lastAttemptAt').reverse();
   }
 
   @action

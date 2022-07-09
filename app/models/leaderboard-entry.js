@@ -8,6 +8,14 @@ export default class LeaderboardEntry extends Model {
   @belongsTo('user', { async: false }) user;
   @attr('date') lastAttemptAt;
 
+  get completedStagesCount() {
+    if (this.statusIsCompleted) {
+      return this.currentCourseStage.position;
+    } else {
+      return this.currentCourseStage.position - 1;
+    }
+  }
+
   get course() {
     return this.currentCourseStage.course;
   }
