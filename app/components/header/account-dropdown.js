@@ -23,7 +23,7 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
-  handleDiscordClick(dropdownActions) {
+  handleCommunityClick(dropdownActions) {
     window.open('https://discord.gg/DeqUD2P', '_blank');
     dropdownActions.close();
   }
