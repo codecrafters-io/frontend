@@ -15,10 +15,18 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   }
 
   @action
-  handleViewSolutionLinkClicked(dropdownActions) {
-    dropdownActions.close();
+  handleViewSourceWalkthroughButtonClicked(dropdownActions) {
+    if (this.viewSourceWalkthroughButtonIsEnabled) {
+      dropdownActions.close();
+      this.args.onViewSourceWalkthroughButtonClick(this.args.courseStage);
+    }
+  }
 
-    if (this.viewSolutionLinkIsEnabled) {
+  @action
+  handleViewSolutionButtonClicked(dropdownActions) {
+    if (this.viewSolutionButtonIsEnabled) {
+      dropdownActions.close();
+
       if (this.currentUserCanAccessSolution) {
         this.args.onViewSolutionButtonClick(this.args.courseStage);
       } else {
@@ -27,7 +35,11 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
     }
   }
 
-  get viewSolutionLinkIsEnabled() {
+  get viewSourceWalkthroughButtonIsEnabled() {
+    return this.args.courseStage.hasSourceWalkthrough;
+  }
+
+  get viewSolutionButtonIsEnabled() {
     return this.solutionIsAvailable;
   }
 

@@ -11,7 +11,9 @@ export default class TrackRoute extends ApplicationRoute {
   }
 
   async model(params) {
-    let courses = await this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
+    let courses = await this.store.findAll('course', {
+      include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
+    });
     let language = this.store.peekAll('language').findBy('slug', params.track_slug);
 
     if (this.currentUser.isAuthenticated) {

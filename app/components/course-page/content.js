@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default class CoursePageContentComponent extends Component {
   @tracked currentCourseStageForSolution;
+  @tracked currentCourseStageForSourceWalkthrough;
   @service('current-user') currentUserService;
 
   get currentUser() {
@@ -12,7 +13,14 @@ export default class CoursePageContentComponent extends Component {
   }
 
   @action
+  async handleViewSourceWalkthroughButtonClick(courseStage) {
+    this.currentCourseStageForSolution = null;
+    this.currentCourseStageForSourceWalkthrough = courseStage;
+  }
+
+  @action
   async handleViewSolutionButtonClick(courseStage) {
+    this.currentCourseStageForSourceWalkthrough = null;
     this.currentCourseStageForSolution = courseStage;
   }
 
@@ -21,8 +29,17 @@ export default class CoursePageContentComponent extends Component {
     this.currentCourseStageForSolution = null;
   }
 
+  @action
+  async handleCourseStageSourceWalkthroughModalClose() {
+    this.currentCourseStageForSourceWalkthrough = null;
+  }
+
   get isViewingCourseStageSolution() {
     return !!this.currentCourseStageForSolution;
+  }
+
+  get isViewingCourseStageSourceWalkthrough() {
+    return !!this.currentCourseStageForSourceWalkthrough;
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion() {
