@@ -3,7 +3,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
@@ -17,7 +17,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
   test('can fail course stage', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -77,7 +77,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
   test('can pass course stage', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -135,7 +135,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
 function setupFirstStageScenario(owner, server) {
   testScenario(server);
-  signIn(owner, server);
+  signInAsSubscriber(owner, server);
 
   let currentUser = server.schema.users.first();
   let python = server.schema.languages.findBy({ name: 'Python' });
