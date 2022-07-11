@@ -30,9 +30,13 @@ export class CourseStageItem {
   get shouldAdvanceToNextItemAutomatically() {
     if (this.courseStage.isLast) {
       return true; // Let's take the user to their congratulations card as quickly as possible, they can come back to look at solutions if needed.
+    } else {
+      return !this.shouldShowPostCompletionPrompt;
     }
+  }
 
-    return !(this.solutionIsAvailableInUserLanguage || this.sourceWalkthroughIsAvailable);
+  get shouldShowPostCompletionPrompt() {
+    return this.solutionIsAvailableInUserLanguage || this.sourceWalkthroughIsAvailable;
   }
 
   get solutionIsAvailableInUserLanguage() {

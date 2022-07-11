@@ -3,7 +3,7 @@ import { clickable, clickOnText, hasClass, isPresent, text } from 'ember-cli-pag
 export default {
   footerText: text('[data-test-course-stage-item-footer] [data-test-footer-text]'),
   hasUpgradePrompt: isPresent('[data-test-upgrade-prompt]'),
-  hasViewSolutionPrompt: isPresent('[data-test-view-solution-prompt]'),
+  hasPostCompletionPrompt: isPresent('[data-test-post-completion-prompt]'),
 
   moreDropdown: {
     clickOnLink: clickOnText('div[role="button"]'),
@@ -33,9 +33,9 @@ export default {
     scope: '[data-test-upgrade-prompt]',
   },
 
-  viewSolutionPrompt: {
+  postCompletionPrompt: {
     clickOnViewSolutionLink: clickable('[data-test-view-solution-link]'),
     clickOnViewNextStageLink: clickable('[data-test-view-next-stage-link]'),
-    scope: '[data-test-view-solution-prompt]',
+    scope: '[data-test-post-completion-prompt]',
   },
 };

@@ -44,9 +44,10 @@
         @repository={{@repository}}
         class="mt-6"
       />
-    {{else if this.shouldShowViewSolutionPrompt}}
-      <CoursePage::StepList::CourseStageItem::ViewSolutionPrompt
+    {{else if this.shouldShowPostCompletionPrompt}}
+      <CoursePage::StepList::CourseStageItem::PostCompletionPrompt
         @courseStage={{@courseStage}}
+        @onViewSourceWalkthroughButtonClick={{@onViewSourceWalkthroughButtonClick}}
         @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
         @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
         class="mt-6"

@@ -139,7 +139,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await animationsSettled();
 
     assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is still active');
-    assert.ok(coursePage.activeCourseStageItem.hasViewSolutionPrompt, 'view solution prompt is present');
+    assert.ok(coursePage.activeCourseStageItem.hasPostCompletionPrompt, 'view solution prompt is present');
 
     await percySnapshot('View Solution Prompt - Stage 2 (walkthrough + solution)');
   });
