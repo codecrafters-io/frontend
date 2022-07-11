@@ -3,56 +3,9 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import { SetupItem, CourseStageItem, CourseCompletedItem } from 'codecrafters-frontend/lib/step-list';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import fade from 'ember-animated/transitions/fade';
-
-class SetupItem {
-  type = 'SetupItem';
-
-  get identifier() {
-    return 'setup';
-  }
-
-  get shouldAdvanceToNextItemAutomatically() {
-    return true;
-  }
-}
-
-class CourseStageItem {
-  @tracked courseStage;
-  @tracked repository;
-
-  type = 'CourseStageItem';
-
-  constructor(repository, courseStage) {
-    this.repository = repository;
-    this.courseStage = courseStage;
-  }
-
-  get identifier() {
-    return this.courseStage.id;
-  }
-
-  get shouldAdvanceToNextItemAutomatically() {
-    return this.courseStage.isFirst || !this.solutionIsAvailable;
-  }
-
-  get solutionIsAvailable() {
-    return !!this.courseStage.solutions.findBy('language', this.repository.language);
-  }
-}
-
-class CourseCompletedItem {
-  type = 'CourseCompletedItem';
-
-  get identifier() {
-    return 'completed';
-  }
-
-  get shouldAdvanceToNextItemAutomatically() {
-    return false;
-  }
-}
 
 export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItemIndex;

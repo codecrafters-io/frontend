@@ -5,12 +5,13 @@
   <div class="text-teal-900 prose prose-teal leading-7 text-sm">
     {{#if @courseStage.isLast}}
       Congratulations on completing this stage! Click here to
-      <b class="underline text-teal-700" role="button" {{on "click" @onViewSolutionButtonClick}}>view the solution</b>.
+      <b class="underline text-teal-700" role="button" {{on "click" @onViewSolutionButtonClick}} data-test-view-solution-link>view the solution</b>.
     {{else}}
       Congratulations on completing this stage! You can either
-      <b class="underline text-teal-700" role="button" {{on "click" @onViewSolutionButtonClick}}>view the solution</b>
+      <b class="underline text-teal-700" role="button" {{on "click" @onViewSolutionButtonClick}} data-test-view-solution-link>view the solution</b>
       or
-      <b class="underline text-teal-700" role="button" {{on "click" @onViewNextStageButtonClick}}>continue to the next stage</b>.
+      <b class="underline text-teal-700" role="button" {{on "click" @onViewNextStageButtonClick}} data-test-view-next-stage-link>continue to the next
+        stage</b>.
     {{/if}}
   </div>
 </div>

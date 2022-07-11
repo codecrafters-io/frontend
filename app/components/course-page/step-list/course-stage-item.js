@@ -1,5 +1,6 @@
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
+import { CourseStageItem } from 'codecrafters-frontend/lib/step-list';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import moment from 'moment';
@@ -96,7 +97,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowViewSolutionPrompt() {
-    return this.isLastCompletedStage && this.solutionIsAvailableInUserLanguage && !this.args.courseStage.isLast;
+    return this.isLastCompletedStage && !new CourseStageItem(this.args.repository, this.args.courseStage).shouldAdvanceToNextItemAutomatically;
   }
 
   get solutionIsAvailableInAnyLanguage() {
@@ -105,6 +106,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get solutionIsAvailableInUserLanguage() {
     return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
+  }
+
+  get sourceWalkthroughIsAvailable() {
+    return this.args.courseStage.hasSourceWalkthrough;
   }
 
   get status() {
