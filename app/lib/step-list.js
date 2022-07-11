@@ -40,7 +40,7 @@ export class CourseStageItem {
   }
 
   get solutionIsAvailableInUserLanguage() {
-    return !!this.courseStage.solutions.findBy('language', this.repository.language);
+    return this.courseStage.hasSolutionForLanguage(this.repository.language);
   }
 
   get sourceWalkthroughIsAvailable() {

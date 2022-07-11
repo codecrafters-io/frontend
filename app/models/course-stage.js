@@ -19,6 +19,10 @@ export default class CourseStageModel extends Model {
   @equal('difficulty', 'hard') difficultyIsHard;
   @equal('difficulty', 'medium') difficultyIsMedium;
 
+  hasSolutionForLanguage(language) {
+    return !!this.courseStage.solutions.findBy('language', language);
+  }
+
   get hasSourceWalkthrough() {
     return !!this.sourceWalkthrough;
   }
