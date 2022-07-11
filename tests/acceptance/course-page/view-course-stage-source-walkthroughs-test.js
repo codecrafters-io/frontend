@@ -31,5 +31,6 @@ module('Acceptance | course-page | view-course-stage-source-walkthroughs', funct
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('Official Implementation');
 
     await percySnapshot('Source Walkthrough');
+    assert.equal(1, 1);
   });
 });

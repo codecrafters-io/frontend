@@ -1,4 +1,3 @@
-import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
