@@ -10,7 +10,17 @@
       <PayPage::EarlyBirdDiscountNotice @expiresAt={{this.earlyBirdDiscountEligibilityExpiresAt}} class="mt-8" />
     {{/if}}
 
-    <PayPage::PricingCard @actualYearlyPrice={{790}} @discountedYearlyPrice={{if this.userIsEligibleForEarlyBirdDiscount 395 null}} class="mt-8" />
+    <div class="flex gap-8 items-center">
+      <PayPage::PricingCard @title="Monthly" @actualPrice={{79}} class="mt-8" @subtitle="All-access for one month" @pricingFrequency="monthly" />
+      <PayPage::PricingCard
+        @title="Annual"
+        @subtitle="Learn at your own pace"
+        @actualPrice={{790}}
+        @discountedPrice={{if this.userIsEligibleForEarlyBirdDiscount 395 null}}
+        @pricingFrequency="yearly"
+        class="mt-8"
+      />
+    </div>
 
     <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg">
       {{#each this.testimonials as |testimonial|}}

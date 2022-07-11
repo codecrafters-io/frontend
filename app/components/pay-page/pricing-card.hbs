@@ -1,50 +1,36 @@
-<div class="rounded-lg border filter drop-shadow-lg w-80 max-w-full" ...attributes>
+<div class="rounded-lg bg-gray-100 border filter drop-shadow-lg w-80 max-w-full" ...attributes>
   <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6">
     <div class="text-xl font-bold text-gray-700 mt-12">
-      CodeCrafters PRO
+      {{@title}}
     </div>
 
-    {{#if @discountedYearlyPrice}}
+    {{#if @discountedPrice}}
       <div class="font-bold mt-6">
-        <span class="text-2xl text-gray-600 font-bold line-through">${{@actualYearlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/yr</span>
+        <span class="text-2xl text-gray-600 font-bold line-through">${{@actualPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
       <div class="font-bold mt-2">
-        <span class="text-6xl text-teal-500 font-bold">${{@discountedYearlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/yr</span>
-      </div>
-
-      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
-        <div class="text-teal-600 text-sm">
-          or $79/mo if billed monthly
-        </div>
+        <span class="text-6xl text-teal-500 font-bold">${{@discountedPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
     {{else}}
       <div class="font-bold mt-6">
-        <span class="text-6xl text-gray-700 font-bold">${{@actualYearlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/yr</span>
-      </div>
-
-      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
-        <div class="text-teal-600 text-sm">
-          or $79/mo if billed monthly
-        </div>
+        <span class="text-6xl text-gray-700 font-bold">${{@actualPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
     {{/if}}
+
+    <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
+      <div class="text-teal-600 text-sm">
+        {{@subtitle}}
+      </div>
+    </div>
 
     <div class="mt-8 text-sm text-gray-600 mb-8">
       Ideal for your learning budget.
     </div>
-
-    {{#if @discountedMonthlyPrice}}
-      <div class="p-3 text-md bg-teal-100 border border-teal-300 rounded shadow-sm mt-6 text-teal-700 mb-6">
-        🤫 Lock in a price of
-        <span class="font-bold">${{@discountedMonthlyPrice}}</span><span>/mo</span>
-        <span> if you signup before July 1st.</span>
-      </div>
-    {{/if}}
   </div>
-  <div class="bg-gray-100 p-6 rounded-b-lg">
+  <div class="p-6 rounded-b-lg">
     {{#each this.featureDescriptions as |featureDescription|}}
       <div class="flex items-center py-1">
         {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
