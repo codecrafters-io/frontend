@@ -48,15 +48,6 @@ module.exports = function (environment) {
     ENV['ember-cli-mirage'] = { enabled: false };
   }
 
-  ENV['@sentry/ember'] = {
-    sentry: {
-      autoSessionTracking: true,
-      dsn: '',
-      release: environment,
-      tracesSampleRate: 1.0,
-    },
-  };
-
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
@@ -71,10 +62,6 @@ module.exports = function (environment) {
     ENV['ember-cli-mirage'] = {
       trackRequests: true,
     };
-  }
-
-  if (environment === 'production' || environment === 'development') {
-    ENV['@sentry/ember'].sentry.dsn = 'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
   }
 
   return ENV;
