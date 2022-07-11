@@ -1,6 +1,5 @@
-export default function createRedisStageSolution(server, stagePosition) {
-  let redis = server.schema.courses.findBy({ slug: 'redis' });
-  let stage = redis.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
+export default function createCourseStageSolution(server, course, stagePosition) {
+  let stage = course.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
 
   server.create('course-stage-solution', {
     changedFiles: [

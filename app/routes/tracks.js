@@ -16,7 +16,9 @@ export default class TracksRoute extends ApplicationRoute {
       });
     }
 
-    modelPromises.courses = this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
+    modelPromises.courses = this.store.findAll('course', {
+      include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
+    });
 
     return RSVP.hash(modelPromises);
   }

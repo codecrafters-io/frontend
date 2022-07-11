@@ -1,0 +1,15 @@
+<div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group" aria-disabled="true" role="button" ...attributes>
+  <div class="mr-8">
+    <span class="{{if @isEnabled 'text-gray-700' 'text-gray-500'}}">
+      {{@text}}
+    </span>
+  </div>
+
+  {{#if @isEnabled}}
+    {{svg-jar @icon class=(concat "w-5 fill-current text-gray-300 group-hover:text-teal-500")}}
+  {{else}}
+    <span class="bg-gray-400 text-white px-2 py-1 rounded font-bold uppercase text-xs">
+      Soon
+    </span>
+  {{/if}}
+</div>

@@ -12,7 +12,9 @@ export default class PayRoute extends ApplicationRoute {
       include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
     });
 
-    modelPromises.courses = this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
+    modelPromises.courses = this.store.findAll('course', {
+      include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
+    });
 
     return RSVP.hash(modelPromises);
   }

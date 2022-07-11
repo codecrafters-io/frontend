@@ -1,6 +1,7 @@
 import createCourseFromData from 'codecrafters-frontend/mirage/utils/create-course-from-data';
+import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
 import createLanguages from 'codecrafters-frontend/mirage/utils/create-languages';
-import createRedisStageSolution from 'codecrafters-frontend/mirage/utils/create-redis-stage-solution';
+import createCourseStageSourceWalkthrough from 'codecrafters-frontend/mirage/utils/create-course-stage-source-walkthrough';
 import dockerCourseData from 'codecrafters-frontend/mirage/course-fixtures/docker';
 import gitCourseData from 'codecrafters-frontend/mirage/course-fixtures/git';
 import reactCourseData from 'codecrafters-frontend/mirage/course-fixtures/react';
@@ -24,10 +25,17 @@ export default function (server) {
   createCourseFromData(server, sqliteCourseData);
   createCourseFromData(server, reactCourseData);
 
+  const redis = server.schema.courses.findBy({ slug: 'redis' });
+
   // TODO: Fetch this programmatically
-  createRedisStageSolution(server, 1);
-  createRedisStageSolution(server, 2);
-  createRedisStageSolution(server, 3);
-  createRedisStageSolution(server, 4);
-  createRedisStageSolution(server, 5);
+  createCourseStageSolution(server, redis, 1);
+  createCourseStageSolution(server, redis, 2);
+  createCourseStageSolution(server, redis, 3);
+  createCourseStageSolution(server, redis, 4);
+  createCourseStageSolution(server, redis, 5);
+
+  // TODO: Fetch this programmatically
+  createCourseStageSourceWalkthrough(server, redis, 1);
+  createCourseStageSourceWalkthrough(server, redis, 2);
+  createCourseStageSourceWalkthrough(server, redis, 3);
 }

@@ -4,6 +4,7 @@
     @course={{@course}}
     @repository={{@activeRepository}}
     @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
+    @onViewSourceWalkthroughButtonClick={{this.handleViewSourceWalkthroughButtonClick}}
     @onRepositoryCreate={{@onRepositoryCreate}}
     @preferredLanguageSlug={{@preferredLanguageSlug}}
   />
@@ -23,6 +24,15 @@
       @courseStage={{this.currentCourseStageForSolution}}
       @repositoryLanguage={{@activeRepository.language}}
       @onClose={{this.handleCourseStageSolutionModalClose}}
+    />
+  </ModalBackdrop>
+{{/if}}
+
+{{#if this.isViewingCourseStageSourceWalkthrough}}
+  <ModalBackdrop>
+    <CoursePage::CourseStageSourceWalkthroughModal
+      @courseStage={{this.currentCourseStageForSourceWalkthrough}}
+      @onClose={{this.handleCourseStageSourceWalkthroughModalClose}}
     />
   </ModalBackdrop>
 {{/if}}

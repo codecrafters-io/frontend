@@ -6,7 +6,9 @@ export default class AdminCourseSubmissionsRoute extends ApplicationRoute {
   @service store;
 
   async model(params) {
-    let courses = await this.store.findAll('course', { include: 'stages.solutions.language,supported-languages' });
+    let courses = await this.store.findAll('course', {
+      include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
+    });
     let course = courses.findBy('slug', this.paramsFor('admin.course').course_slug);
 
     let filters = { course_id: course.id };

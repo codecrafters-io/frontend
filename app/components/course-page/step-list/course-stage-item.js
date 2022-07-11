@@ -1,4 +1,3 @@
-import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
@@ -8,8 +7,6 @@ import showdown from 'showdown';
 import Mustache from 'mustache';
 
 export default class CoursePageStepListStageItemComponent extends Component {
-  moreDropdownActions; // Set when the component is inserted.
-  moreDropdownContainerElement;
   @service store;
   @service visibility;
   transition = fade;
@@ -53,26 +50,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return `Since this is your first stage, you can consult [**the README**]({{readme_url}}) in your repository for instructions on how to pass.`;
   }
 
-  @action
-  handleDidInsertMoreDropdownContainerElement(element) {
-    this.moreDropdownContainerElement = element;
-  }
-
-  @action
-  handleMoreDropdownInsert(moreDropdownPublicAPI) {
-    if (moreDropdownPublicAPI) {
-      this.moreDropdownActions = moreDropdownPublicAPI.actions;
-    } else {
-      this.moreDropdownActions = null;
-    }
-  }
-
-  @action
-  handleViewSolutionButtonClick() {
-    this.moreDropdownActions.open();
-    this.moreDropdownContainerElement.scrollIntoView({ behavior: 'smooth' });
-  }
-
   get instructionsHTML() {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.instructionsMarkdown));
   }
@@ -108,10 +85,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     } else {
       return null;
     }
-  }
-
-  get shouldShowMoreDropdown() {
-    return this.solutionIsAvailableInAnyLanguage || this.args.repository.get('language.isGo'); // For Go, we show the "SOON" text
   }
 
   get shouldShowFirstStageHints() {

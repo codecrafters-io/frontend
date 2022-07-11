@@ -1,6 +1,6 @@
 <CoursePage::StepList::ExpandedItem @class="relative {{@class}}" @willBeReplaced={{@willBeReplaced}} data-test-course-stage-item>
   <:content>
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center justify-between mb-6 gap-x-3">
       <div class="flex items-center flex-wrap gap-y-3">
         <span class="text-xl md:text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
 
@@ -15,15 +15,13 @@
         {{/if}}
       </div>
 
-      <div {{did-insert this.handleDidInsertMoreDropdownContainerElement}}>
-        {{#if this.shouldShowMoreDropdown}}
-          <CoursePage::StepList::CourseStageItem::MoreDropdown
-            @courseStage={{@courseStage}}
-            @onDropdownInsert={{this.handleMoreDropdownInsert}}
-            @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
-            @repository={{@repository}}
-          />
-        {{/if}}
+      <div>
+        <CoursePage::StepList::CourseStageItem::MoreDropdown
+          @courseStage={{@courseStage}}
+          @onViewSourceWalkthroughButtonClick={{@onViewSourceWalkthroughButtonClick}}
+          @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
+          @repository={{@repository}}
+        />
       </div>
     </div>
 
@@ -42,13 +40,13 @@
     {{#if this.shouldShowFirstStageHints}}
       <CoursePage::StepList::CourseStageItem::FirstStageHint
         @courseStage={{@courseStage}}
-        @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
+        @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
         @repository={{@repository}}
         class="mt-6"
       />
     {{else if (and this.isLastCompletedStage this.solutionIsAvailableInUserLanguage (not @courseStage.isLast))}}
       <CoursePage::StepList::CourseStageItem::ViewSolutionPrompt
-        @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
+        @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
         @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
         class="mt-6"
       />

@@ -11,12 +11,17 @@ export default class CourseStageModel extends Model {
   @attr('string') marketingMarkdown;
   @attr('number') position;
   @attr('string') slug;
+  @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
   @hasMany('course-stage-solution', { async: false }) solutions;
 
   @equal('difficulty', 'very_easy') difficultyIsVeryEasy;
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
   @equal('difficulty', 'medium') difficultyIsMedium;
+
+  get hasSourceWalkthrough() {
+    return !!this.sourceWalkthrough;
+  }
 
   get isFirst() {
     return this.position === 1;
