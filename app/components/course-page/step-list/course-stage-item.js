@@ -1,5 +1,6 @@
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
+import { CourseStageItem } from 'codecrafters-frontend/lib/step-list';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import moment from 'moment';
@@ -71,10 +72,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.repository.activeStage === this.args.courseStage;
   }
 
-  get isLastCompletedStage() {
-    return this.args.repository.highestCompletedStage === this.args.courseStage;
-  }
-
   get lastFailedSubmissionWasWithinLast10Minutes() {
     return this.lastFailedSubmissionCreatedAt && new Date() - this.lastFailedSubmissionCreatedAt <= 600 * 1000; // in last 10 minutes
   }
@@ -93,6 +90,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get shouldShowUpgradePrompt() {
     return this.args.shouldShowUpgradePromptIfStageIsActive && this.isActiveStage;
+  }
+
+  get shouldShowPostCompletionPrompt() {
+    return this.statusIsComplete && new CourseStageItem(this.args.repository, this.args.courseStage).shouldShowPostCompletionPrompt;
   }
 
   get solutionIsAvailableInAnyLanguage() {

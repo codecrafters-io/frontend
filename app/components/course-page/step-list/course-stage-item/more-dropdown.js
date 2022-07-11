@@ -18,7 +18,7 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   handleViewSourceWalkthroughButtonClicked(dropdownActions) {
     if (this.viewSourceWalkthroughButtonIsEnabled) {
       dropdownActions.close();
-      this.args.onViewSourceWalkthroughButtonClick(this.args.courseStage);
+      this.args.onViewSourceWalkthroughButtonClick();
     }
   }
 
@@ -28,7 +28,7 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
       dropdownActions.close();
 
       if (this.currentUserCanAccessSolution) {
-        this.args.onViewSolutionButtonClick(this.args.courseStage);
+        this.args.onViewSolutionButtonClick();
       } else {
         this.router.transitionTo('pay');
       }

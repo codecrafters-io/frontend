@@ -1,0 +1,19 @@
+<div class="flex p-3 bg-teal-100 border border-teal-300 rounded shadow-sm" data-test-post-completion-prompt ...attributes>
+  <div class="mr-3 mt-0.5">
+    {{svg-jar "check-circle" class="w-6 fill-current text-teal-400"}}
+  </div>
+  <div class="text-teal-900 prose prose-teal leading-7 text-sm">
+    Congratulations on completing this stage!
+
+    {{#if (gt this.actions.length 1)}}
+      You can either
+      {{#each this.actionsWithJoiners as |action|}}
+        <b class="underline text-teal-700" role="button" {{on "click" action.callbackFn}}>
+          {{action.linkText}}</b>{{action.joiner}}{{/each}}
+    {{else if (eq this.actions.length 1)}}
+      Click here to
+      <b class="underline text-teal-700" role="button" {{on "click" this.actions.firstObject.callbackFn}}>
+        {{this.actions.firstObject.linkText}}</b>.
+    {{/if}}
+  </div>
+</div>

@@ -5,6 +5,7 @@ export default function createCourseFromData(server, courseData) {
     difficulty: courseData.marketing.difficulty,
     name: courseData.name,
     releaseStatus: courseData.release_status,
+    shortName: courseData.name.replace(/Build your own /i, ''),
     shortDescriptionMarkdown: courseData.short_description_md,
     slug: courseData.slug,
     supportedLanguages: [...courseData.supported_languages, ...courseData.early_access_languages].map((languageSlug) =>

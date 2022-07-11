@@ -10,6 +10,7 @@ export default class CourseStageModel extends Model {
   @attr('boolean') isFree;
   @attr('string') marketingMarkdown;
   @attr('number') position;
+  @attr('string') shortName;
   @attr('string') slug;
   @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
   @hasMany('course-stage-solution', { async: false }) solutions;
@@ -18,6 +19,10 @@ export default class CourseStageModel extends Model {
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
   @equal('difficulty', 'medium') difficultyIsMedium;
+
+  hasSolutionForLanguage(language) {
+    return !!this.solutions.findBy('language', language);
+  }
 
   get hasSourceWalkthrough() {
     return !!this.sourceWalkthrough;
