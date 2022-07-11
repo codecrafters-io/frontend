@@ -28,7 +28,7 @@ module('Acceptance | course-page | view-course-stage-source-walkthroughs', funct
     await animationsSettled();
 
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
-    await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('Official Implementation');
+    await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('Source Walkthrough');
 
     await percySnapshot('Source Walkthrough');
     assert.equal(1, 1);
