@@ -22,7 +22,7 @@ module.exports = {
     },
     fontFamily: {
       sans: 'Montserrat, sans-serif',
-      mono: 'Roboto Mono, monospace',
+      mono: 'Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace',
     },
     extend: {
       brightness: {
