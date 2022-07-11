@@ -12,7 +12,7 @@ class ProseSection {
   }
 
   get HTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.markdown));
+    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.markdown));
   }
 }
 
