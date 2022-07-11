@@ -18,8 +18,8 @@
       <div>
         <CoursePage::StepList::CourseStageItem::MoreDropdown
           @courseStage={{@courseStage}}
-          @onViewSourceWalkthroughButtonClick={{@onViewSourceWalkthroughButtonClick}}
-          @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
+          @onViewSourceWalkthroughButtonClick={{fn @onViewSourceWalkthroughButtonClick @courseStage}}
+          @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
           @repository={{@repository}}
         />
       </div>
@@ -37,23 +37,25 @@
       {{this.instructionsHTML}}
     </div>
 
-    {{#if this.shouldShowFirstStageHints}}
-      <CoursePage::StepList::CourseStageItem::FirstStageHint
-        @courseStage={{@courseStage}}
-        @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
-        @repository={{@repository}}
-        class="mt-6"
-      />
-    {{else if this.shouldShowPostCompletionPrompt}}
-      <CoursePage::StepList::CourseStageItem::PostCompletionPrompt
-        @courseStage={{@courseStage}}
-        @repository={{@repository}}
-        @onViewSourceWalkthroughButtonClick={{@onViewSourceWalkthroughButtonClick}}
-        @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
-        @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
-        class="mt-6"
-      />
-    {{/if}}
+    <AnimatedContainer>
+      {{#animated-if this.shouldShowFirstStageHints use=this.transition}}
+        <CoursePage::StepList::CourseStageItem::FirstStageHint
+          @courseStage={{@courseStage}}
+          @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
+          @repository={{@repository}}
+          class="mt-6"
+        />
+      {{else if this.shouldShowPostCompletionPrompt}}
+        <CoursePage::StepList::CourseStageItem::PostCompletionPrompt
+          @courseStage={{@courseStage}}
+          @repository={{@repository}}
+          @onViewSourceWalkthroughButtonClick={{fn @onViewSourceWalkthroughButtonClick @courseStage}}
+          @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
+          @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
+          class="mt-6"
+        />
+      {{/animated-if}}
+    </AnimatedContainer>
 
   </:content>
 

@@ -27,7 +27,7 @@ export default class PostCompletionPromptComponent extends Component {
 
     if (this.args.courseStage.hasSourceWalkthrough) {
       actions.push(
-        new Action(`see the official ${this.args.courseStage.course.shortName} source walkthrough`, () => {
+        new Action(`view the official ${this.args.courseStage.course.shortName} source walkthrough`, () => {
           return this.args.onViewSourceWalkthroughButtonClick(this.args.courseStage);
         })
       );
