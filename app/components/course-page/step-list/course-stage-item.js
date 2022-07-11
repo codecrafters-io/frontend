@@ -95,6 +95,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.shouldShowUpgradePromptIfStageIsActive && this.isActiveStage;
   }
 
+  get shouldShowViewSolutionPrompt() {
+    return this.isLastCompletedStage && this.solutionIsAvailableInUserLanguage && !this.args.courseStage.isLast;
+  }
+
   get solutionIsAvailableInAnyLanguage() {
     return !!this.args.courseStage.solutions.firstObject;
   }

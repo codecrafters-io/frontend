@@ -191,7 +191,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assert.equal(currentURL(), '/pay', 'route should be pay');
   });
 
-  test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
+  test('viewing solution should not lead to /pay if user is a subscriber', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -238,7 +238,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Implement the ECHO command');
   });
 
-  test('stages should not have an upgrade prompt if user team has a subscription', async function (assert) {
+  test('viewing solution should not lead to /pay if user team has a subscription', async function (assert) {
     testScenario(this.server);
     signInAsSubscribedTeamMember(this.owner, this.server);
 
