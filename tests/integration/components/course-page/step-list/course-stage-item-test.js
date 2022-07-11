@@ -30,7 +30,9 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
       <CoursePage::StepList::CourseStageItem
         @courseStage={{this.courseStage}}
         @repository={{this.repository}}
-        @onViewNextStageButtonClick={{this.noop}} />
+        @onViewNextStageButtonClick={{this.noop}}
+        @onViewSolutionButtonClick={{this.noop}}
+        @onViewSourceWalkthroughButtonClick={{this.noop}} />
     `);
 
     assert.equal(this.element.querySelectorAll('a').length, 2);
