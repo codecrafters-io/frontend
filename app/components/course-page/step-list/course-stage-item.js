@@ -72,10 +72,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.repository.activeStage === this.args.courseStage;
   }
 
-  get isLastCompletedStage() {
-    return this.args.repository.highestCompletedStage === this.args.courseStage;
-  }
-
   get lastFailedSubmissionWasWithinLast10Minutes() {
     return this.lastFailedSubmissionCreatedAt && new Date() - this.lastFailedSubmissionCreatedAt <= 600 * 1000; // in last 10 minutes
   }
@@ -97,7 +93,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowPostCompletionPrompt() {
-    return new CourseStageItem(this.args.repository, this.args.courseStage).shouldShowPostCompletionPrompt;
+    return this.statusIsComplete && new CourseStageItem(this.args.repository, this.args.courseStage).shouldShowPostCompletionPrompt;
   }
 
   get solutionIsAvailableInAnyLanguage() {
@@ -106,10 +102,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get solutionIsAvailableInUserLanguage() {
     return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
-  }
-
-  get sourceWalkthroughIsAvailable() {
-    return this.args.courseStage.hasSourceWalkthrough;
   }
 
   get status() {

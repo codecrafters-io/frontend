@@ -9,6 +9,7 @@ export default class CourseModel extends Model {
   @attr('string') name;
   @attr('string') releaseStatus;
   @attr('string') shortDescriptionMarkdown;
+  @attr('string') shortName;
   @attr('string') slug;
   @hasMany('course-stage', { async: false }) stages;
   @hasMany('language', { async: false }) supportedLanguages;
