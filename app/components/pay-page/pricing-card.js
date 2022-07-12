@@ -15,7 +15,6 @@ export default class PricingCardComponent extends Component {
       `Members community for Q&A`,
       `Download invoice for expensing`,
       `Private leaderboard for your team`,
-      `Cancel anytime`,
     ];
   }
 

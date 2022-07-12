@@ -22,7 +22,7 @@
         <span class="text-md text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
       <div class="mt-2">
-        <span class="text-5xl text-teal-500 font-bold">${{@discountedPrice}}</span>
+        <span class="text-4xl text-teal-500 font-bold">${{@discountedPrice}}</span>
         <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
     {{else}}
@@ -58,7 +58,7 @@
       {{/if}}
     </button>
     <div class="mt-4 text-xs text-gray-500 text-center">
-      Payments via Stripe. Cancel anytime.
+      {{@footerText}}
     </div>
   </div>
   <div class="p-6 rounded-b-lg">
