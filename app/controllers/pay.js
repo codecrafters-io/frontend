@@ -22,20 +22,6 @@ export default class PayController extends Controller {
   }
 
   @action
-  async handleStartPaymentButtonClicked() {
-    this.isCreatingCheckoutSession = true;
-
-    let checkoutSession = this.store.createRecord('individual-checkout-session', {
-      earlyBirdDiscountEnabled: this.userIsEligibleForEarlyBirdDiscount,
-      successUrl: `${window.location.origin}/tracks/go?action=checkout_session_successful`,
-      cancelUrl: `${window.location.origin}/pay`,
-    });
-
-    await checkoutSession.save();
-    window.location.href = checkoutSession.url;
-  }
-
-  @action
   async handleTryNowPayLaterButtonClicked() {
     this.store.createRecord('analytics-event', { name: 'dismissed_payment_prompt' }).save();
     this.router.transitionTo('track', 'go');

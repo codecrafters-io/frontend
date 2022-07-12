@@ -1,33 +1,64 @@
 <div class="rounded-lg bg-gray-100 border filter drop-shadow-lg w-80 max-w-full" ...attributes>
-  <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6">
-    <div class="text-xl font-bold text-gray-700 mt-12">
+  <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6 pt-8 pb-8">
+    <div class="text-xl font-bold text-gray-700">
       {{@title}}
     </div>
 
-    {{#if @discountedPrice}}
-      <div class="font-bold mt-6">
-        <span class="text-2xl text-gray-600 font-bold line-through">${{@actualPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
+    <div class="text-sm text-gray-500 mt-1">
+      {{@subtitle}}
+    </div>
+
+    {{#if @highlightedText}}
+      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm text-center py-1 mt-4">
+        <div class="text-teal-600 text-xs">
+          {{@highlightedText}}
+        </div>
       </div>
-      <div class="font-bold mt-2">
-        <span class="text-6xl text-teal-500 font-bold">${{@discountedPrice}}</span>
+    {{/if}}
+
+    {{#if @discountedPrice}}
+      <div class="mt-4">
+        <span class="text-md text-gray-600 font-bold line-through">${{@actualPrice}}</span>
+        <span class="text-md text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
+      </div>
+      <div class="mt-2">
+        <span class="text-5xl text-teal-500 font-bold">${{@discountedPrice}}</span>
         <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
     {{else}}
-      <div class="font-bold mt-6">
-        <span class="text-6xl text-gray-700 font-bold">${{@actualPrice}}</span>
+      <div class="mt-6">
+        <span class="text-4xl text-gray-700 font-bold">${{@actualPrice}}</span>
         <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
     {{/if}}
 
-    <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
-      <div class="text-teal-600 text-sm">
-        {{@subtitle}}
-      </div>
-    </div>
+    <button
+      class="flex items-center justify-center mt-8 bg-teal-500
+        {{if this.isCreatingCheckoutSession 'bg-teal-600 cursor-wait' 'hover:bg-teal-600'}}
+        transition-colors px-5 py-3 text-white font-bold rounded-full max-w-lg shadow"
+      data-test-start-payment-button
+      type="button"
+      {{on "click" this.handleStartPaymentButtonClicked}}
+    >
+      Start 3-day trial
 
-    <div class="mt-8 text-sm text-gray-600 mb-8">
-      Ideal for your learning budget.
+      {{#if this.isCreatingCheckoutSession}}
+        <svg class="animate-spin ml-2 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      {{else}}
+        <div class="ml-2 w-4 text-center">
+          →
+        </div>
+      {{/if}}
+    </button>
+    <div class="mt-4 text-xs text-gray-500 text-center">
+      Payments via Stripe. Cancel anytime.
     </div>
   </div>
   <div class="p-6 rounded-b-lg">
