@@ -10,7 +10,7 @@ if (config.environment === 'development' || config.environment === 'production')
   Sentry.init({
     autoSessionTracking: true,
     dsn: config.environment === 'development' || config.environment === 'production' ? sentryDSN : '',
-    release: config.environment,
+    environment: config.environment,
     tracesSampleRate: 1.0,
   });
 }

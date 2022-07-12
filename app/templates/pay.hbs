@@ -10,36 +10,24 @@
       <PayPage::EarlyBirdDiscountNotice @expiresAt={{this.earlyBirdDiscountEligibilityExpiresAt}} class="mt-8" />
     {{/if}}
 
-    <PayPage::PricingCard @actualYearlyPrice={{790}} @discountedYearlyPrice={{if this.userIsEligibleForEarlyBirdDiscount 395 null}} class="mt-8" />
+    <div class="flex flex-col-reverse md:flex-row gap-x-12 gap-y-8 items-center mt-8">
+      <PayPage::PricingCard @title="Monthly" @actualPrice={{79}} @subtitle="All-access for one month" @pricingFrequency="monthly" />
 
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg">
+      <PayPage::PricingCard
+        @title="Annual"
+        @subtitle="Learn at your own pace"
+        @highlightedText="Ideal for expensing"
+        @actualPrice={{790}}
+        @discountedPrice={{if this.userIsEligibleForEarlyBirdDiscount 395 null}}
+        @pricingFrequency="yearly"
+        @earlyBirdDiscountEnabled={{this.userIsEligibleForEarlyBirdDiscount}}
+      />
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
       {{#each this.testimonials as |testimonial|}}
         <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
       {{/each}}
-    </div>
-
-    <button
-      class="flex items-center justify-center mt-8 bg-teal-500 hover:bg-teal-600 transition-colors px-4 py-5 text-xl text-white font-bold rounded w-full max-w-lg shadow"
-      data-test-start-payment-button
-      type="button"
-      {{on "click" this.handleStartPaymentButtonClicked}}
-    >
-      Start your 3-day free trial
-
-      {{#if this.isCreatingCheckoutSession}}
-        <svg class="animate-spin ml-3 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          ></path>
-        </svg>
-      {{/if}}
-    </button>
-
-    <div class="mt-4 text-sm text-gray-500 text-center">
-      Payments via Stripe. Cancel anytime.
     </div>
 
     <div role="button" class="mt-8 text-sm text-gray-400 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>

@@ -7,4 +7,5 @@ export default class IndividualCheckoutSessionModel extends Model {
   @attr('string') successUrl;
   @attr('string') cancelUrl;
   @attr('string') url;
+  @attr('string') pricingFrequency;
 }

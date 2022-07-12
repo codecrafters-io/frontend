@@ -1,50 +1,67 @@
-<div class="rounded-lg border filter drop-shadow-lg w-80 max-w-full" ...attributes>
-  <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6">
-    <div class="text-xl font-bold text-gray-700 mt-12">
-      CodeCrafters PRO
+<div class="rounded-lg bg-gray-100 border filter drop-shadow-lg w-full max-w-xs" ...attributes>
+  <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6 pt-8 pb-8">
+    <div class="text-xl font-bold text-gray-700">
+      {{@title}}
     </div>
 
-    {{#if @discountedYearlyPrice}}
-      <div class="font-bold mt-6">
-        <span class="text-2xl text-gray-600 font-bold line-through">${{@actualYearlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/yr</span>
-      </div>
-      <div class="font-bold mt-2">
-        <span class="text-6xl text-teal-500 font-bold">${{@discountedYearlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/yr</span>
-      </div>
+    <div class="text-sm text-gray-500 mt-1 text-center">
+      {{@subtitle}}
+    </div>
 
-      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
-        <div class="text-teal-600 text-sm">
-          or $79/mo if billed monthly
+    {{#if @highlightedText}}
+      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm text-center py-1 mt-4">
+        <div class="text-teal-600 text-xs">
+          {{@highlightedText}}
         </div>
+      </div>
+    {{/if}}
+
+    {{#if @discountedPrice}}
+      <div class="mt-4">
+        <span class="text-md text-gray-600 font-bold line-through">${{@actualPrice}}</span>
+        <span class="text-md text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
+      </div>
+      <div class="mt-2">
+        <span class="text-5xl text-teal-500 font-bold">${{@discountedPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
     {{else}}
-      <div class="font-bold mt-6">
-        <span class="text-6xl text-gray-700 font-bold">${{@actualYearlyPrice}}</span>
-        <span class="text-lg text-gray-400 font-bold">/yr</span>
+      <div class="mt-6">
+        <span class="text-4xl text-gray-700 font-bold">${{@actualPrice}}</span>
+        <span class="text-lg text-gray-400 font-bold">/{{if (eq @pricingFrequency "yearly") "yr" "mo"}}</span>
       </div>
+    {{/if}}
 
-      <div class="flex px-3 bg-teal-100 rounded-full shadow-sm mt-5 text-center py-2">
-        <div class="text-teal-600 text-sm">
-          or $79/mo if billed monthly
+    <button
+      class="flex items-center justify-center mt-8 bg-teal-500
+        {{if this.isCreatingCheckoutSession 'bg-teal-600 cursor-wait' 'hover:bg-teal-600'}}
+        transition-colors px-5 py-3 text-white font-bold rounded-full max-w-lg shadow"
+      data-test-start-payment-button
+      type="button"
+      {{on "click" this.handleStartPaymentButtonClicked}}
+    >
+      Start 3-day trial
+
+      {{#if this.isCreatingCheckoutSession}}
+        <svg class="animate-spin ml-2 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      {{else}}
+        <div class="ml-2 w-4 text-center">
+          →
         </div>
-      </div>
-    {{/if}}
-
-    <div class="mt-8 text-sm text-gray-600 mb-8">
-      Ideal for your learning budget.
+      {{/if}}
+    </button>
+    <div class="mt-4 text-xs text-gray-500 text-center">
+      Payments via Stripe. Cancel anytime.
     </div>
-
-    {{#if @discountedMonthlyPrice}}
-      <div class="p-3 text-md bg-teal-100 border border-teal-300 rounded shadow-sm mt-6 text-teal-700 mb-6">
-        🤫 Lock in a price of
-        <span class="font-bold">${{@discountedMonthlyPrice}}</span><span>/mo</span>
-        <span> if you signup before July 1st.</span>
-      </div>
-    {{/if}}
   </div>
-  <div class="bg-gray-100 p-6 rounded-b-lg">
+  <div class="p-6 rounded-b-lg">
     {{#each this.featureDescriptions as |featureDescription|}}
       <div class="flex items-center py-1">
         {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
