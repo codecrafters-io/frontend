@@ -1,6 +1,5 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
