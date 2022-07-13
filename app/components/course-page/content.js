@@ -27,10 +27,6 @@ export default class CoursePageContentComponent extends Component {
   @action
   async handleCourseStageSolutionModalClose() {
     this.currentCourseStageForSolution = null;
-  }
-
-  @action
-  async handleCourseStageSourceWalkthroughModalClose() {
     this.currentCourseStageForSourceWalkthrough = null;
   }
 
@@ -40,6 +36,10 @@ export default class CoursePageContentComponent extends Component {
 
   get isViewingCourseStageSourceWalkthrough() {
     return !!this.currentCourseStageForSourceWalkthrough;
+  }
+
+  get shouldShowCourseStageSolutionModal() {
+    return this.isViewingCourseStageSolution || this.isViewingCourseStageSourceWalkthrough;
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion() {

@@ -21,62 +21,73 @@ import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-csharp';
 
 import 'prismjs/components/prism-diff';
+import * as Sentry from '@sentry/ember';
 
 export default class CourseStageSolutionModalComponent extends Component {
-  @tracked isViewingExplanation; // explanation/diff
-  @tracked requestedLanguage;
+  @tracked activeTab; // diff/explanation/source_walkthrough
+  @tracked requestedSolutionLanguage;
   @service store;
 
   constructor() {
     super(...arguments);
 
-    this.requestedLanguage = this.args.repositoryLanguage || this.args.courseStage.solutions.firstObject.language;
+    this.requestedSolutionLanguage = this.args.repositoryLanguage || this.args.courseStage.solutions.firstObject.language;
 
-    if (this.solution.hasExplanation) {
-      this.isViewingExplanation = true;
+    // intent is either view_solution or view_source_walkthrough
+    if (this.args.intent === 'view_solution' && this.solution) {
+      if (this.solution) {
+        this.activeTab = this.solution.hasExplanation ? 'explanation' : 'diff';
+      } else {
+        Sentry.captureMessage('Received view_solution intent when solution is not available');
+        this.activeTab = 'source_walkthrough';
+      }
+    } else {
+      this.activeTab = 'source_walkthrough';
     }
 
     this.emitAnalyticsEvent();
   }
 
   emitAnalyticsEvent() {
-    this.store
-      .createRecord('analytics-event', {
-        name: this.isViewingExplanation ? 'viewed_course_stage_solution_explanation' : 'viewed_course_stage_solution_diff',
-        properties: {
-          course_slug: this.args.courseStage.course.slug,
-          course_stage_slug: this.args.courseStage.slug,
-          language_slug: this.solution.language.slug,
-          requested_language_slug: this.requestedLanguage.slug,
-        },
-      })
-      .save();
+    if (this.activeTab === 'diff' || this.activeTab === 'explanation') {
+      this.store
+        .createRecord('analytics-event', {
+          name: this.activeTab === 'explanation' ? 'viewed_course_stage_solution_explanation' : 'viewed_course_stage_solution_diff',
+          properties: {
+            course_slug: this.args.courseStage.course.slug,
+            course_stage_slug: this.args.courseStage.slug,
+            language_slug: this.solution.language.slug,
+            requested_language_slug: this.requestedSolutionLanguage.slug,
+          },
+        })
+        .save();
+    } else {
+      this.store
+        .createRecord('analytics-event', {
+          name: 'viewed_course_stage_source_walkthrough',
+          properties: {
+            course_slug: this.args.courseStage.course.slug,
+            course_stage_slug: this.args.courseStage.slug,
+          },
+        })
+        .save();
+    }
   }
 
   @action
-  handleViewDiffLinkClick() {
-    this.isViewingExplanation = false;
+  handleTabLinkClick(tab) {
+    this.activeTab = tab;
     this.emitAnalyticsEvent();
   }
 
   @action
-  handleViewExplanationLinkClick() {
-    this.isViewingExplanation = true;
+  handleRequestedSolutionLanguageChange(requestedSolutionLanguage) {
+    this.requestedSolutionLanguage = requestedSolutionLanguage;
     this.emitAnalyticsEvent();
-  }
-
-  @action
-  handleRequestedLanguageChange(requestedLanguage) {
-    this.requestedLanguage = requestedLanguage;
-    this.emitAnalyticsEvent();
-  }
-
-  get isViewingDiff() {
-    return !this.isViewingExplanation;
   }
 
   get solution() {
-    const solutionForRequestedLanguage = this.args.courseStage.solutions.findBy('language', this.requestedLanguage);
+    const solutionForRequestedLanguage = this.args.courseStage.solutions.findBy('language', this.requestedSolutionLanguage);
 
     return solutionForRequestedLanguage ? solutionForRequestedLanguage : this.args.courseStage.solutions.firstObject;
   }

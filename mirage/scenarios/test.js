@@ -37,5 +37,4 @@ export default function (server) {
   // TODO: Fetch this programmatically
   createCourseStageSourceWalkthrough(server, redis, 1);
   createCourseStageSourceWalkthrough(server, redis, 2);
-  createCourseStageSourceWalkthrough(server, redis, 3);
 }

@@ -18,21 +18,13 @@
   </div>
 </div>
 
-{{#if this.isViewingCourseStageSolution}}
+{{#if (or this.isViewingCourseStageSourceWalkthrough this.isViewingCourseStageSolution)}}
   <ModalBackdrop>
     <CoursePage::CourseStageSolutionModal
-      @courseStage={{this.currentCourseStageForSolution}}
+      @courseStage={{or this.currentCourseStageForSolution this.currentCourseStageForSourceWalkthrough}}
       @repositoryLanguage={{@activeRepository.language}}
       @onClose={{this.handleCourseStageSolutionModalClose}}
-    />
-  </ModalBackdrop>
-{{/if}}
-
-{{#if this.isViewingCourseStageSourceWalkthrough}}
-  <ModalBackdrop>
-    <CoursePage::CourseStageSourceWalkthroughModal
-      @courseStage={{this.currentCourseStageForSourceWalkthrough}}
-      @onClose={{this.handleCourseStageSourceWalkthroughModalClose}}
+      @intent={{if this.isViewingCourseStageSolution "view_solution" "view_source_walkthrough"}}
     />
   </ModalBackdrop>
 {{/if}}
