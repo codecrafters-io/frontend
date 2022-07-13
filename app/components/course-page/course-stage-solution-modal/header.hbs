@@ -40,16 +40,16 @@
   </div>
 </div>
 
-{{#if (and (not-eq @activeTab "source_walkthrough") (not-eq @requestedLanguage @currentLanguage))}}
+{{#if (and (not-eq @activeTab "source_walkthrough") (not-eq @requestedSolutionLanguage @currentSolutionLanguage))}}
   <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-6 flex items-center" data-test-requested-language-not-available-notice>
     <div class="mr-3">
       {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
     </div>
     <div class="text-blue-900 text-sm">
       This stage doesn't have solutions available for
-      {{@requestedLanguage.name}}
+      {{@requestedSolutionLanguage.name}}
       yet, so we're showing solutions for
-      <b class="text-blue-800">{{@currentLanguage.name}}</b>
+      <b class="text-blue-800">{{@currentSolutionLanguage.name}}</b>
       instead.
     </div>
   </div>
