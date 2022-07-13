@@ -27,10 +27,6 @@ export default class CoursePageContentComponent extends Component {
   @action
   async handleCourseStageSolutionModalClose() {
     this.currentCourseStageForSolution = null;
-  }
-
-  @action
-  async handleCourseStageSourceWalkthroughModalClose() {
     this.currentCourseStageForSourceWalkthrough = null;
   }
 

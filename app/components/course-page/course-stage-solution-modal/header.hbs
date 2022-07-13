@@ -1,40 +1,55 @@
 <div class="mb-6 text-lg md:text-2xl" data-test-course-stage-solution-modal-title>
-  <span class="text-gray-600">Solution:</span>
-  <span class="font-bold text-gray-700">{{@solution.courseStage.name}} </span>
+  <span class="text-gray-600">Stage #{{@courseStage.position}}:</span>
+  <span class="font-bold text-gray-700">{{@courseStage.name}} </span>
 </div>
 
 <div class="flex items-center justify-between mb-6">
   <div class="flex items-center">
-    <CoursePage::CourseStageSolutionModal::HeaderTabLink @icon="code" @text="Diff" @isActive={{@isViewingDiff}} {{on "click" @onViewDiffLinkClick}} />
+    <CoursePage::CourseStageSolutionModal::HeaderTabLink
+      @icon="code"
+      @text="Diff"
+      @isActive={{eq @activeTab "diff"}}
+      {{on "click" (fn @onTabLinkClick "diff")}}
+    />
 
     <CoursePage::CourseStageSolutionModal::HeaderTabLink
       @icon="academic-cap"
       @text="Explanation"
-      @isActive={{@isViewingExplanation}}
-      {{on "click" @onViewExplanationLinkClick}}
+      @isActive={{eq @activeTab "explanation"}}
+      {{on "click" (fn @onTabLinkClick "explanation")}}
     />
+
+    {{#if @courseStage.sourceWalkthrough}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="book-open"
+        @text="Source Walkthrough"
+        @isActive={{eq @activeTab "source_walkthrough"}}
+        {{on "click" (fn @onTabLinkClick "source_walkthrough")}}
+      />
+    {{/if}}
   </div>
 
   <div>
     <CoursePage::CourseStageSolutionModal::LanguageDropdown
-      @currentLanguage={{@currentLanguage}}
-      @requestedLanguage={{@requestedLanguage}}
-      @courseStage={{@solution.courseStage}}
-      @onRequestedLanguageChange={{@onRequestedLanguageChange}}
+      @currentLanguage={{@currentSolutionLanguage}}
+      @requestedLanguage={{@requestedSolutionLanguage}}
+      @courseStage={{@courseStage}}
+      @onRequestedLanguageChange={{@onRequestedSolutionLanguageChange}}
+      class="transition-opacity {{if (eq @activeTab 'source_walkthrough') 'opacity-0' 'opacity-100'}}"
     />
   </div>
 </div>
 
-{{#if (not-eq @requestedLanguage @currentLanguage)}}
+{{#if (and (not-eq @activeTab "source_walkthrough") (not-eq @requestedSolutionLanguage @currentSolutionLanguage))}}
   <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-6 flex items-center" data-test-requested-language-not-available-notice>
     <div class="mr-3">
       {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
     </div>
     <div class="text-blue-900 text-sm">
       This stage doesn't have solutions available for
-      {{@requestedLanguage.name}}
+      {{@requestedSolutionLanguage.name}}
       yet, so we're showing solutions for
-      <b class="text-blue-800">{{@currentLanguage.name}}</b>
+      <b class="text-blue-800">{{@currentSolutionLanguage.name}}</b>
       instead.
     </div>
   </div>

@@ -30,7 +30,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to PING', 'title should be respond to ping');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.equal(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Explanation', 'active header tab link should be explanation');
 
     await percySnapshot('Stage Solution Modal - Explanation');
@@ -68,7 +68,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to PING', 'title should be respond to ping');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
 
     await coursePage.clickOnCollapsedItem('Bind to a port');
@@ -76,7 +76,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Bind to a port');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #1: Bind to a port');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
   });
 
@@ -125,7 +125,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
 
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to PING');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING');
 
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
     assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should be closed');
@@ -137,7 +137,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
 
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to multiple PINGs');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
     assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should be closed');
@@ -177,7 +177,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to multiple PINGs');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
     assert.equal(currentURL(), '/courses/redis', 'route should be course route');
 
@@ -225,7 +225,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to multiple PINGs');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
     assert.equal(currentURL(), '/courses/redis', 'route should be course route');
 
@@ -235,7 +235,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Implement the ECHO command');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
   });
 
   test('viewing solution should not lead to /pay if user team has a subscription', async function (assert) {
@@ -272,7 +272,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Respond to multiple PINGs');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
     assert.equal(currentURL(), '/courses/redis', 'route should be course route');
 
@@ -282,6 +282,6 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Solution: Implement the ECHO command');
+    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
   });
 });

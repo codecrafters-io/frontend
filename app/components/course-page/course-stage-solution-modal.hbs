@@ -1,18 +1,18 @@
 <ModalBody @allowManualClose={{true}} @onClose={{@onClose}} @isWide={{true}} @class="w-full" data-test-course-stage-solution-modal>
   <CoursePage::CourseStageSolutionModal::Header
-    @currentLanguage={{this.solution.language}}
-    @isViewingDiff={{this.isViewingDiff}}
-    @isViewingExplanation={{this.isViewingExplanation}}
-    @onViewDiffLinkClick={{this.handleViewDiffLinkClick}}
-    @onViewExplanationLinkClick={{this.handleViewExplanationLinkClick}}
-    @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
-    @requestedLanguage={{this.requestedLanguage}}
-    @solution={{this.solution}}
+    @currentSolutionLanguage={{this.solution.language}}
+    @activeTab={{this.activeTab}}
+    @onTabLinkClick={{this.handleTabLinkClick}}
+    @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
+    @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
+    @courseStage={{@courseStage}}
   />
 
-  {{#if this.isViewingExplanation}}
+  {{#if (eq this.activeTab "diff")}}
+    <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
+  {{else if (eq this.activeTab "explanation")}}
     <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} />
   {{else}}
-    <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
+    <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
   {{/if}}
 </ModalBody>

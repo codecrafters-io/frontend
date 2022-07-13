@@ -6,7 +6,7 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   @service currentUser;
   @service router;
 
-  get currentUserCanAccessSolution() {
+  get currentUserCanAccessSolutionAndWalkthrough() {
     if (this.solutionIsOnlyAccessibleToSubscribers) {
       return this.currentUser.record.hasActiveSubscription || this.currentUser.record.isTeamMember;
     } else {
@@ -18,7 +18,12 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
   handleViewSourceWalkthroughButtonClicked(dropdownActions) {
     if (this.viewSourceWalkthroughButtonIsEnabled) {
       dropdownActions.close();
-      this.args.onViewSourceWalkthroughButtonClick();
+
+      if (this.currentUserCanAccessSolutionAndWalkthrough) {
+        this.args.onViewSourceWalkthroughButtonClick();
+      } else {
+        this.router.transitionTo('pay');
+      }
     }
   }
 
@@ -27,7 +32,7 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
     if (this.viewSolutionButtonIsEnabled) {
       dropdownActions.close();
 
-      if (this.currentUserCanAccessSolution) {
+      if (this.currentUserCanAccessSolutionAndWalkthrough) {
         this.args.onViewSolutionButtonClick();
       } else {
         this.router.transitionTo('pay');
