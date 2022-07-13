@@ -17,7 +17,7 @@
     @shouldShowLogoBackground={{false}}
     @logoImageUrl={{courseWithProgress.course.logoUrl}}
     @logoImageAltText={{courseWithProgress.course.name}}
-    @isLastItem={{eq (add index 1) @courses.length}}
+    @isLastItem={{false}}
   >
     <TrackPage::CourseCard
       @language={{@language}}
@@ -27,3 +27,12 @@
     />
   </TrackPage::IntroductionAndCourses::TimelineItem>
 {{/each}}
+
+<TrackPage::IntroductionAndCourses::TimelineItem
+  @shouldShowLogoBackground={{false}}
+  @logoImageUrl="/assets/images/icons/coming-soon.png"
+  @logoImageAltText="coming soon"
+  @isLastItem={{true}}
+>
+  <TrackPage::UpcomingCoursesCard />
+</TrackPage::IntroductionAndCourses::TimelineItem>
