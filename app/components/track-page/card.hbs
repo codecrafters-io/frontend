@@ -25,7 +25,7 @@
       <div class="font-bold pl-4 text-gray-300 text-lg md:text-xl group-hover:text-gray-400 transition-colors mb-4">
         {{#if @isComplete}}
           {{svg-jar "check-circle" class="w-8 h-8 fill-current text-teal-500"}}
-        {{else}}
+        {{else if @number}}
           #{{@number}}
         {{/if}}
       </div>

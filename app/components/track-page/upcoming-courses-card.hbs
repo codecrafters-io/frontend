@@ -1,0 +1,22 @@
+<TrackPage::Card @title="Many more to come..." @recentParticipants={{array}} @isComplete={{false}}>
+  <div class="leading-6 prose pb-4">
+    We release new challenges based on user votes. Let us know what you'd like to see next!
+  </div>
+
+  <a href="https://vote.codecrafters.io" target="_blank" rel="noopener noreferrer">
+    <img src="/assets/images/feature-previews/challenge-voting.png" alt="challenge voting" class="w-full mb-4 border" />
+  </a>
+
+  <a
+    href="https://vote.codecrafters.io"
+    target="_blank"
+    class="bg-gray-200 hover:bg-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded mr-2 flex flex-col items-center w-full group"
+    data-test-vote-on-upcoming-challenges-button
+    rel="noopener noreferrer"
+  >
+    <div class="font-bold flex items-center sm:mb-0">
+      Vote on upcoming challenges
+      {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
+    </div>
+  </a>
+</TrackPage::Card>
