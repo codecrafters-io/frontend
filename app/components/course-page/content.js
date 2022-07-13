@@ -38,10 +38,6 @@ export default class CoursePageContentComponent extends Component {
     return !!this.currentCourseStageForSourceWalkthrough;
   }
 
-  get shouldShowCourseStageSolutionModal() {
-    return this.isViewingCourseStageSolution || this.isViewingCourseStageSourceWalkthrough;
-  }
-
   get visiblePrivateLeaderboardFeatureSuggestion() {
     if (this.currentUserService.isAnonymous || this.currentUser.isTeamMember) {
       return null;
