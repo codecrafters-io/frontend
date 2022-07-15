@@ -9,7 +9,7 @@ const sentryDSN = 'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentr
 if (config.environment === 'development' || config.environment === 'production') {
   Sentry.init({
     autoSessionTracking: true,
-    dsn: config.environment === 'development' || config.environment === 'production' ? sentryDSN : '',
+    dsn: config.environment === 'production' ? sentryDSN : '',
     environment: config.environment,
     tracesSampleRate: 0.1,
   });
