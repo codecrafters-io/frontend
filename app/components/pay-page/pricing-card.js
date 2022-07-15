@@ -32,4 +32,12 @@ export default class PricingCardComponent extends Component {
     await checkoutSession.save();
     window.location.href = checkoutSession.url;
   }
+
+  get pricingFrequencyAbbreviation() {
+    return {
+      monthly: 'mo',
+      yearly: 'yr',
+      quarterly: 'qtr',
+    }[this.args.pricingFrequency];
+  }
 }
