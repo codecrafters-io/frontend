@@ -21,6 +21,7 @@ function routes() {
 
   this.post('/analytics-events');
 
+  this.get('/code-walkthroughs');
   this.get('/courses');
 
   this.get('/course-language-requests');
