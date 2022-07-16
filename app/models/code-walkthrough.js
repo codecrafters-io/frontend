@@ -5,4 +5,5 @@ export default class CodeWalkthrough extends Model {
   @attr('string') introductionMarkdown;
   @attr('') sections; // free-form JSON
   @attr('string') slug;
+  @attr('string') title;
 }
