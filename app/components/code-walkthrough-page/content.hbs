@@ -1,11 +1,11 @@
 <div class="bg-white">
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6">
     <div class="flex">
-      <div class="pr-6 pt-10 pb-20 w-full min-w-0">
+      <div class="pr-8 pt-10 pb-20 w-full min-w-0">
         <CodeWalkthrough @model={{@codeWalkthrough}} />
       </div>
-      <div class="border-l flex-shrink-0 w-80 pt-10">
-        <div class="pl-6 mb-6">
+      <div class="border-l flex-shrink-0 w-64 pt-10">
+        <div class="pl-8 mb-6">
           <div class="flex items-center mb-3">
             {{svg-jar "clock" class="w-4 mr-2 fill-current text-gray-300"}}
             <span class="text-sm text-gray-500"><span class="font-semibold">12 min</span> reading time</span>
@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <div class="pl-6">
+        <div class="pl-8">
           <DiscussOnHnButton @link="https://google.com" />
         </div>
       </div>
