@@ -12,7 +12,8 @@
 
 /* purgecss start ignore */
 @import "ember-animated/dist/styles/ember-animated.css";
-@import "prismjs/themes/prism.css";
+@import "prism-light-theme.css";
+/*@import "prismjs/themes/prism.css";*/
 @import "prismjs/plugins/diff-highlight/prism-diff-highlight.min.css";
 /* purgecss end ignore */
 
