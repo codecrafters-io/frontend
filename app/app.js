@@ -11,7 +11,7 @@ if (config.environment === 'development' || config.environment === 'production')
     autoSessionTracking: true,
     dsn: config.environment === 'development' || config.environment === 'production' ? sentryDSN : '',
     environment: config.environment,
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.1,
   });
 }
 
