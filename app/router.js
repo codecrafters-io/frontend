@@ -23,4 +23,5 @@ Router.map(function () {
   this.route('tracks');
   this.route('team', { path: '/teams/:team_id' });
   this.route('teams.create', { path: '/teams/create' });
+  this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' });
 });

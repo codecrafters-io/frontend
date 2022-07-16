@@ -8,6 +8,7 @@
 
 @import "modals.scss";
 @import "course-stage-solution-page.scss";
+@import "code-walkthrough-page.scss";
 
 /* purgecss start ignore */
 @import "ember-animated/dist/styles/ember-animated.css";

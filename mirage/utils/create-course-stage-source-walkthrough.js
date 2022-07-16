@@ -1,4 +1,4 @@
-export default function createCourseStageSourceWalkthrough(server, course, stagePosition) {
+export default function createCourseStageSourceWalkthrough(server, course, stagePosition, slug) {
   let courseStage = course.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
 
   const codeWalkthrough = server.create('code-walkthrough', {
@@ -40,6 +40,8 @@ export default function createCourseStageSourceWalkthrough(server, course, stage
         markdown: "Here's how Redis does this.",
       },
     ],
+
+    slug: slug,
   });
 
   courseStage.update('sourceWalkthrough', codeWalkthrough);
