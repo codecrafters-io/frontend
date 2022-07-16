@@ -93,6 +93,7 @@
     "qunit": "^2.18.2",
     "qunit-assertions-extra": "^0.8.5",
     "qunit-dom": "^2.0.0",
+    "shiki": "^0.10.1",
     "tailwindcss": "^2.2.7",
     "webpack": "^5.72.0"
   },
@@ -107,7 +108,6 @@
     "ansi_up": "^5.1.0",
     "fuse.js": "^6.5.3",
     "mustache": "^4.2.0",
-    "shiki": "^0.10.1",
     "showdown": "^2.1.0"
   }
 }

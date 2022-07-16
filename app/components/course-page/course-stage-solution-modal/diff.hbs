@@ -5,7 +5,7 @@
     </div>
 
     <div class="p-4 text-sm">
-      <SyntaxHighlightedCode @code={{changedFile.diff}} @language={{concat "diff-" @solution.language.slug}} @theme="light" />
+      <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
     </div>
   </div>
 {{/each}}

@@ -1,15 +1,22 @@
 import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
-import Prism from 'prismjs';
-
-import 'prismjs/plugins/diff-highlight/prism-diff-highlight';
+import * as shiki from 'shiki';
+import { tracked } from '@glimmer/tracking';
 
 export default class SyntaxHighlightedCodeComponent extends Component {
+  @tracked asyncHighlightedHTML;
+
+  constructor() {
+    super(...arguments);
+
+    shiki.setCDN('https://unpkg.com/shiki/');
+
+    shiki.getHighlighter({ theme: 'github-light', langs: ['c'] }).then((highlighter) => {
+      this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: 'c' }));
+    });
+  }
+
   get highlightedHtml() {
-    if (this.args.language.startsWith('diff-')) {
-      return htmlSafe(Prism.highlight(this.args.code, Prism.languages.diff, this.args.language));
-    } else {
-      return htmlSafe(Prism.highlight(this.args.code, Prism.languages[this.args.language], Prism.languages[this.args.language]));
-    }
+    return this.asyncHighlightedHTML || this.args.code;
   }
 }
