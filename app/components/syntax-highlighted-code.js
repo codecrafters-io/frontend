@@ -2,6 +2,7 @@ import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 import * as shiki from 'shiki';
 import { tracked } from '@glimmer/tracking';
+import config from 'codecrafters-frontend/config/environment';
 
 /**
  * getHighlighter() is the most expensive step of Shiki. Instead of calling it on every page,
@@ -31,9 +32,17 @@ export default class SyntaxHighlightedCodeComponent extends Component {
       .split(',')
       .flatMap((lineOrBlock) => [{ line: parseInt(lineOrBlock), classes: ['highlighted'] }]);
 
-    highlighterAsync.then((highlighter) => {
-      this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: 'c', lineOptions: lineOptions }));
-    });
+    highlighterAsync
+      .then((highlighter) => {
+        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: 'c', lineOptions: lineOptions }));
+      })
+      .catch((error) => {
+        if (config.environment === 'test' && error.message.match(/WebAssembly.instantiate/)) {
+          console.log('ignoring WebAssembly error only present in tests');
+        } else {
+          throw error;
+        }
+      });
   }
 
   get temporaryHTML() {
