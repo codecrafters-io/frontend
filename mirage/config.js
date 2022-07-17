@@ -123,4 +123,5 @@ function routes() {
   });
 
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
+  this.passthrough('https://unpkg.com/**'); // Shiki
 }
