@@ -6,4 +6,9 @@ export default class CodeWalkthrough extends Model {
   @attr('') sections; // free-form JSON
   @attr('string') slug;
   @attr('string') title;
+
+  // TODO: fetch this from server
+  get hackerNewsUrl() {
+    return null;
+  }
 }
