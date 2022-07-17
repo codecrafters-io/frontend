@@ -6,9 +6,6 @@ export default class CodeWalkthrough extends Model {
   @attr('') sections; // free-form JSON
   @attr('string') slug;
   @attr('string') title;
-
-  // TODO: fetch this from server
-  get hackerNewsUrl() {
-    return 'https://news.ycombinator.com/item?id=32124156';
-  }
+  @attr('date') updatedAt;
+  @attr('string') hackerNewsUrl;
 }

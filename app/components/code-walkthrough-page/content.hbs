@@ -17,7 +17,13 @@
         </CodeWalkthroughPage::MetadataItem>
         <CodeWalkthroughPage::MetadataItem @icon="calendar">
           updated
-          <span class="font-semibold">1 hour ago</span>
+          <span class="font-semibold">
+            {{#if @codeWalkthrough.updatedAt}}
+              {{moment-from-now @codeWalkthrough.updatedAt}}
+            {{else}}
+              1 day ago
+            {{/if}}
+          </span>
         </CodeWalkthroughPage::MetadataItem>
 
         {{#if @codeWalkthrough.hackerNewsUrl}}
