@@ -6,14 +6,14 @@
       </div>
       <div class="border-l flex-shrink-0 w-64 pt-10">
         <div class="pl-8 mb-6">
-          <div class="flex items-center mb-3">
-            {{svg-jar "clock" class="w-4 mr-2 fill-current text-gray-300"}}
-            <span class="text-sm text-gray-500"><span class="font-semibold">12 min</span> reading time</span>
-          </div>
-          <div class="flex items-center">
-            {{svg-jar "calendar" class="w-4 mr-2 fill-current text-gray-300"}}
-            <span class="text-sm text-gray-500">updated <span class="font-semibold">1 hour ago</span></span>
-          </div>
+          <CodeWalkthroughPage::MetadataItem @icon="clock">
+            <span class="font-semibold">12 min</span>
+            reading time
+          </CodeWalkthroughPage::MetadataItem>
+          <CodeWalkthroughPage::MetadataItem @icon="calendar">
+            updated
+            <span class="font-semibold">1 hour ago</span>
+          </CodeWalkthroughPage::MetadataItem>
         </div>
 
         <div class="pl-8">
