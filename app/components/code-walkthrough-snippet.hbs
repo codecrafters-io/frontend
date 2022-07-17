@@ -1,3 +1,4 @@
+{{!--
 <div class="mb-4 bg-white shadow-sm rounded border border-gray-300">
   <a
     href={{@link}}
@@ -8,8 +9,9 @@
     <span class="font-mono text-xs text-gray-700 group-hover:text-blue-600">{{@filePath}}</span>
     <span>{{svg-jar "external-link" class="w-4 fill-current text-gray-400 group-hover:text-blue-500"}}</span>
   </a>
+</div>
+--}}
 
-  <div class="p-3 text-sm">
-    <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="dark" />
-  </div>
+<div class="text-sm rounded-lg overflow-hidden" ...attributes>
+  <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @highlightedLines={{@highlightedLines}} @theme="dark" />
 </div>

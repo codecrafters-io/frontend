@@ -1,13 +1,20 @@
 {{#each this.sections as |section|}}
   {{#if (eq section.type "ProseSection")}}
     <div
-      class="leading-7 prose max-w-none mb-4"
+      class="leading-7 prose max-w-none mb-6 code-walkthrough-prose"
       {{did-insert this.handleDidInsertProseSectionHTML}}
       {{did-update this.handleDidUpdateProseSectionHTML section.HTML}}
     >
       {{section.HTML}}
     </div>
   {{else if (eq section.type "ReferencedCodeSection")}}
-    <CodeWalkthroughSnippet @code={{section.code}} @language={{section.languageSlug}} @link={{section.link}} @filePath={{section.filePath}} />
+    <CodeWalkthroughSnippet
+      @code={{section.code}}
+      @language={{section.languageSlug}}
+      @link={{section.link}}
+      @filePath={{section.filePath}}
+      @highlightedLines={{section.highlightedLines}}
+      class="mb-6"
+    />
   {{/if}}
 {{/each}}
