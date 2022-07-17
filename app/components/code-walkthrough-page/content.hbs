@@ -6,13 +6,13 @@
 
         {{#if @codeWalkthrough.hackerNewsUrl}}
           <div class="h-px border-t mb-6"></div>
-          <DiscussOnHnButton @link="https://google.com" />
+          <DiscussOnHnButton @link={{@codeWalkthrough.hackerNewsUrl}} />
         {{/if}}
       </div>
 
       <div class="border-b md:border-b-0 md:border-l md:pl-8 flex-shrink-0 w-full md:w-64 py-6 md:py-10">
         <CodeWalkthroughPage::MetadataItem @icon="clock" class="mb-3">
-          <span class="font-semibold">12 min</span>
+          <span class="font-semibold">3 min</span>
           reading time
         </CodeWalkthroughPage::MetadataItem>
         <CodeWalkthroughPage::MetadataItem @icon="calendar">
@@ -22,7 +22,7 @@
 
         {{#if @codeWalkthrough.hackerNewsUrl}}
           <div class="mt-6 hidden md:block">
-            <DiscussOnHnButton @link="https://google.com" />
+            <DiscussOnHnButton @link={{@codeWalkthrough.hackerNewsUrl}} />
           </div>
         {{/if}}
       </div>
