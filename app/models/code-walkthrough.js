@@ -9,6 +9,6 @@ export default class CodeWalkthrough extends Model {
 
   // TODO: fetch this from server
   get hackerNewsUrl() {
-    return null;
+    return 'https://news.ycombinator.com/item?id=32124156';
   }
 }
