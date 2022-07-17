@@ -2,7 +2,19 @@
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6">
     <div class="flex flex-col-reverse md:flex-row">
       <div class="md:pr-8 pt-10 pb-20 w-full min-w-0">
+        {{#if @codeWalkthrough.introductionHTML}}
+          <div class="leading-7 prose mb-4">
+            {{@codeWalkthrough.introductionHTML}}
+          </div>
+        {{/if}}
+
         <CodeWalkthrough @model={{@codeWalkthrough}} />
+
+        {{#if @codeWalkthrough.conclusionHTML}}
+          <div class="leading-7 prose my-8">
+            {{@codeWalkthrough.conclusionHTML}}
+          </div>
+        {{/if}}
 
         {{#if @codeWalkthrough.hackerNewsUrl}}
           <div class="h-px border-t mb-6"></div>
