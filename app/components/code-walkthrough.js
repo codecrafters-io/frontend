@@ -35,9 +35,10 @@ class ProseSection {
 class ReferencedCodeSection {
   type = 'ReferencedCodeSection';
 
-  constructor(code, languageSlug, link, filePath) {
+  constructor(code, languageSlug, link, filePath, highlightedLines) {
     this.code = code;
     this.languageSlug = languageSlug;
+    this.highlightedLines = highlightedLines;
     this.link = link;
     this.filePath = filePath;
   }
@@ -59,7 +60,7 @@ export default class CodeWalkthroughComponent extends Component {
       if (section.type === 'prose') {
         return new ProseSection(section.markdown);
       } else if (section.type === 'referenced_code') {
-        return new ReferencedCodeSection(section.code, section.language_slug, section.link, section.file_path);
+        return new ReferencedCodeSection(section.code, section.language_slug, section.link, section.file_path, section.highlighted_lines);
       }
     });
   }

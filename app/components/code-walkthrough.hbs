@@ -1,27 +1,22 @@
-{{#each this.sections as |section|}}
-  {{#if (eq section.type "ProseSection")}}
-    <div
-      class="leading-7 prose max-w-none mb-4"
-      {{did-insert this.handleDidInsertProseSectionHTML}}
-      {{did-update this.handleDidUpdateProseSectionHTML section.HTML}}
-    >
-      {{section.HTML}}
-    </div>
-  {{else if (eq section.type "ReferencedCodeSection")}}
-    <div class="mb-4 bg-white shadow-sm rounded border border-gray-300">
-      <a
-        href={{section.link}}
-        target="_blank"
-        class="flex group justify-between items-center group bg-gray-100 rounded-t py-2 px-3 border-b border-gray-200 shadow-sm"
-        rel="noopener noreferrer"
+<div>
+  {{#each this.sections as |section|}}
+    {{#if (eq section.type "ProseSection")}}
+      <div
+        class="leading-7 prose max-w-none mb-6 code-walkthrough-prose"
+        {{did-insert this.handleDidInsertProseSectionHTML}}
+        {{did-update this.handleDidUpdateProseSectionHTML section.HTML}}
       >
-        <span class="font-mono text-xs text-gray-700 group-hover:text-blue-600">{{section.filePath}}</span>
-        <span>{{svg-jar "external-link" class="w-4 fill-current text-gray-400 group-hover:text-blue-500"}}</span>
-      </a>
-
-      <div class="p-3 text-sm">
-        <SyntaxHighlightedCode @code={{section.code}} @language={{section.languageSlug}} />
+        {{section.HTML}}
       </div>
-    </div>
-  {{/if}}
-{{/each}}
+    {{else if (eq section.type "ReferencedCodeSection")}}
+      <CodeWalkthroughSnippet
+        @code={{section.code}}
+        @language={{section.languageSlug}}
+        @link={{section.link}}
+        @filePath={{section.filePath}}
+        @highlightedLines={{section.highlightedLines}}
+        class="mb-6"
+      />
+    {{/if}}
+  {{/each}}
+</div>
