@@ -7,3 +7,28 @@
     {{this.explanationHTML}}
   </div>
 </div>
+
+<div class="flex gap-6 pb-6 flex-wrap">
+  <div class="flex-shrink-0">
+    <div class="flex items-center gap-x-1 mb-2">
+      <div class="text-gray-400 uppercase text-xs font-bold tracking-wider">
+        Author
+      </div>
+
+      {{svg-jar "pencil-alt" class="w-5 fill-current text-gray-300"}}
+    </div>
+
+    <ExternalContributorCard @contributorDetails={{this.authorDetails}} />
+  </div>
+  <div class="flex-shrink-0">
+    <div class="flex items-center gap-x-1 mb-2">
+      <div class="text-gray-400 uppercase text-xs font-bold tracking-wider">
+        Reviewer
+      </div>
+
+      {{svg-jar "badge-check" class="w-5 fill-current text-green-600"}}
+    </div>
+
+    <ExternalContributorCard @contributorDetails={{this.reviewersDetails.firstObject}} />
+  </div>
+</div>
