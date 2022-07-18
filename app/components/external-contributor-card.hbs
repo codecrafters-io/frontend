@@ -1,0 +1,21 @@
+<a
+  href={{@contributorDetails.profileUrl}}
+  class="inline-flex gap-x-2 items-center px-4 py-3 border rounded hover:bg-gray-50"
+  target="_blank"
+  rel="noopener noreferrer"
+  ...attributes
+>
+  <img
+    alt="avatar"
+    src={{@contributorDetails.avatarUrl}}
+    class="w-12 h-12 filter drop-shadow-sm ring-1 ring-white rounded-full shadow brightness-110"
+  />
+  <div>
+    <div class="text-gray-700 text-xs font-bold mb-0.5">
+      {{@contributorDetails.name}}
+    </div>
+    <div class="text-gray-500 text-xs">
+      {{@contributorDetails.headline}}
+    </div>
+  </div>
+</a>

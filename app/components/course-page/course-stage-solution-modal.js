@@ -25,6 +25,7 @@ import * as Sentry from '@sentry/ember';
 
 export default class CourseStageSolutionModalComponent extends Component {
   @tracked activeTab; // diff/explanation/source_walkthrough
+  @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
   @service store;
 
@@ -75,8 +76,14 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   @action
+  handleDidInsertModalBody(modalBodyElement) {
+    this.modalBodyElement = modalBodyElement;
+  }
+
+  @action
   handleTabLinkClick(tab) {
     this.activeTab = tab;
+    this.modalBodyElement.scrollTo({ top: 0, behavior: 'smooth' });
     this.emitAnalyticsEvent();
   }
 

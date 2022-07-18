@@ -2,6 +2,20 @@ export default function createCourseStageSolution(server, course, stagePosition)
   let stage = course.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
 
   server.create('course-stage-solution', {
+    authorDetails: {
+      name: 'Paul Kuruvilla',
+      profileUrl: 'https://github.com/rohitpaulk',
+      avatarUrl: 'https://github.com/rohitpaulk.png',
+      headline: 'CTO, CodeCrafters',
+    },
+    reviewersDetails: [
+      {
+        name: 'Marcos Lilljedahl',
+        profileUrl: 'https://www.docker.com/captains/marcos-lilljedahl/',
+        avatarUrl: 'https://github.com/marcosnils.png',
+        headline: 'Docker Contributor',
+      },
+    ],
     changedFiles: [
       {
         filename: 'README.md',

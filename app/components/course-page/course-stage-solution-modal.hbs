@@ -1,4 +1,11 @@
-<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} @isWide={{true}} @class="w-full" data-test-course-stage-solution-modal>
+<ModalBody
+  @allowManualClose={{true}}
+  @onClose={{@onClose}}
+  @isWide={{true}}
+  @class="w-full"
+  {{did-insert this.handleDidInsertModalBody}}
+  data-test-course-stage-solution-modal
+>
   <CoursePage::CourseStageSolutionModal::Header
     @currentSolutionLanguage={{this.solution.language}}
     @activeTab={{this.activeTab}}
@@ -11,7 +18,7 @@
   {{#if (eq this.activeTab "diff")}}
     <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
   {{else if (eq this.activeTab "explanation")}}
-    <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} />
+    <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
   {{else}}
     <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
   {{/if}}
