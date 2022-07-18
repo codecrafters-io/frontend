@@ -9,3 +9,7 @@
     </div>
   </div>
 {{/each}}
+
+{{#if @solution.hasContributorDetails}}
+  <CoursePage::CourseStageSolutionModal::ContributorsSection @solution={{@solution}} class="mt-8" />
+{{/if}}

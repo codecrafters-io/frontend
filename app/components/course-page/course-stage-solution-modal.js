@@ -83,7 +83,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   @action
   handleTabLinkClick(tab) {
     this.activeTab = tab;
-    this.modalBodyElement.scrollTo({ top: 0 });
+    this.modalBodyElement.scrollTo({ top: 0, behavior: 'smooth' });
     this.emitAnalyticsEvent();
   }
 
