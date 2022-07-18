@@ -8,27 +8,12 @@
   </div>
 </div>
 
-<div class="flex gap-6 pb-6 flex-wrap">
-  <div class="flex-shrink-0">
-    <div class="flex items-center gap-x-1 mb-2">
-      <div class="text-gray-400 uppercase text-xs font-bold tracking-wider">
-        Author
-      </div>
-
-      {{svg-jar "pencil-alt" class="w-5 fill-current text-gray-300"}}
+{{#if @solution.hasContributorDetails}}
+  <hr class="mb-6" />
+  <div class="p-4 rounded border mb-6 inline-block">
+    <div class="mb-4">
+      <a href="#" class="text-teal-500 text-sm font-bold">View the code diff</a>
     </div>
-
-    <ExternalContributorCard @contributorDetails={{this.authorDetails}} />
+    <CoursePage::CourseStageSolutionModal::ContributorsSection @solution={{@solution}} />
   </div>
-  <div class="flex-shrink-0">
-    <div class="flex items-center gap-x-1 mb-2">
-      <div class="text-gray-400 uppercase text-xs font-bold tracking-wider">
-        Reviewer
-      </div>
-
-      {{svg-jar "badge-check" class="w-5 fill-current text-green-600"}}
-    </div>
-
-    <ExternalContributorCard @contributorDetails={{this.reviewersDetails.firstObject}} />
-  </div>
-</div>
+{{/if}}
