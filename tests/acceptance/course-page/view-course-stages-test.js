@@ -37,7 +37,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is active if clicked on');
 
-    await coursePage.clickOnCollapsedItem('Setup');
+    await coursePage.clickOnCollapsedItem('Repository Setup');
     await animationsSettled();
 
     assert.ok(coursePage.setupItemIsActive, 'setup item is active if clicked on');

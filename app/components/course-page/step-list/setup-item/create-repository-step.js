@@ -31,7 +31,7 @@ Welcome to the ${this.args.repository.course.name} challenge!
 
 ${this.args.repository.course.descriptionMarkdown}
 
-To get started, let us know what language you'd like to attempt this challenge in...
+To get started, let's create a Git repository with starter code for you to work on. Which language would you like to use?
     `;
   }
 
