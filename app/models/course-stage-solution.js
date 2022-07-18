@@ -1,4 +1,5 @@
 import { attr, belongsTo } from '@ember-data/model';
+import { inject as service } from '@ember/service';
 import Model from '@ember-data/model';
 
 export default class CourseStageSolutionModel extends Model {
@@ -8,9 +9,15 @@ export default class CourseStageSolutionModel extends Model {
   @attr('') changedFiles; // free-form JSON
   @attr('') authorDetails; // free-form JSON
   @attr('') reviewersDetails; // free-form JSON
+  @service('current-user') currentUser;
 
   get hasContributorDetails() {
-    return this.authorDetails || this.reviewerDetails;
+    // TODO: Remove this when we're ready to expose these to the world
+    if (this.currentUser.isAuthenticated && this.currentUser.record.isStaff) {
+      return this.authorDetails || this.reviewerDetails;
+    } else {
+      return false;
+    }
   }
 
   get hasExplanation() {
