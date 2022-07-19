@@ -9,7 +9,7 @@ import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupApplicationTest(hooks);
@@ -19,7 +19,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
   test('can view leaderboard when no recent players are present', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -80,7 +80,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
   test('can view leaderboard on overview page when other recent players are present', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -156,7 +156,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
   test('can view leaderboard when current user has leaderboard entry', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });

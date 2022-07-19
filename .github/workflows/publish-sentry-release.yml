@@ -8,6 +8,7 @@ on:
 jobs:
   sentry-release:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v1

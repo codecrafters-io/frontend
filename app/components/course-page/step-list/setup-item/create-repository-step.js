@@ -11,6 +11,10 @@ export default class CoursePageContentStepListSetupItemCreateRepositoryStepCompo
   requestedLanguagesPromptTransition = fade;
   @tracked shouldShowNonPreferredLanguages = false;
 
+  get courseDescriptionHTML() {
+    return htmlSafe(new showdown.Converter().makeHtml(this.args.repository.course.descriptionMarkdown));
+  }
+
   @action
   handleLanguageButtonClick(language) {
     this.args.onLanguageSelection(language);
@@ -19,20 +23,6 @@ export default class CoursePageContentStepListSetupItemCreateRepositoryStepCompo
   @action
   handleShowOtherLanguagesButtonClick() {
     this.shouldShowNonPreferredLanguages = true;
-  }
-
-  get instructionsHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.instructionsMarkdown));
-  }
-
-  get instructionsMarkdown() {
-    return `
-Welcome to the ${this.args.repository.course.name} challenge!
-
-${this.args.repository.course.descriptionMarkdown}
-
-To get started, let's create a Git repository with starter code for you to work on. Which language would you like to use?
-    `;
   }
 
   get orderedLanguages() {

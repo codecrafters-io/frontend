@@ -14,6 +14,14 @@ export default class UserModel extends Model {
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
 
+  canCreateRepository(course, language) {
+    if (language.isRust) {
+      return true;
+    } else {
+      return this.hasActiveSubscription;
+    }
+  }
+
   get earlyBirdDiscountEligibilityExpiresAt() {
     return new Date(this.createdAt.getTime() + 3 * 24 * 60 * 60 * 1000);
   }

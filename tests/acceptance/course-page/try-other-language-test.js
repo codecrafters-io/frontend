@@ -7,7 +7,7 @@ import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | try-other-language', function (hooks) {
@@ -18,7 +18,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
   test('can try other language', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });

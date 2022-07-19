@@ -85,7 +85,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowFirstStageHints() {
-    return this.args.courseStage.isFirst && !this.statusIsComplete && !this.statusIsLocked;
+    return this.args.courseStage.isFirst && !this.statusIsComplete;
   }
 
   get shouldShowUpgradePrompt() {

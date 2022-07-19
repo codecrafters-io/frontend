@@ -39,7 +39,11 @@ export default class RepositoryModel extends Model {
 
   get activeStage() {
     if (!this.highestCompletedStage) {
-      return this.course.get('stages').sortBy('position').firstObject;
+      if (this.firstSubmissionCreated) {
+        return this.course.get('stages').sortBy('position').firstObject;
+      } else {
+        return null;
+      }
     }
 
     let lastStagePosition = this.course.get('stages').mapBy('position').sort().lastObject;

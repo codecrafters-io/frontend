@@ -12,9 +12,9 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | course-page | start-course-test', function (hooks) {
+module('Acceptance | course-page | start-course', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -22,7 +22,7 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
 
   test('can start course', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -103,9 +103,51 @@ module('Acceptance | course-page | start-course-test', function (hooks) {
     await animationsSettled();
   });
 
-  test('can start repo and abandon halfway (regression)', async function (assert) {
+  test('non-subscriber cannot start course if paid', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+
+    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
+
+    await coursePage.setupItem.clickOnLanguageButton('JavaScript');
+    assert.equal(coursePage.setupItem.footerText, 'Subscription required.');
+
+    await percySnapshot('Start Course - No Subscription');
+
+    await animationsSettled();
+  });
+
+  test('non-subscriber can start course using Rust', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+
+    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
+
+    await coursePage.setupItem.clickOnLanguageButton('Rust');
+    assert.equal(coursePage.setupItem.footerText, 'Listening for a git push...');
+
+    await animationsSettled();
+  });
+
+  test('can start repo and abandon halfway (regression)', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');

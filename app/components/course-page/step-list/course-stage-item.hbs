@@ -104,7 +104,11 @@
             {{/if}}
           </span>
         {{else if (eq this.status "locked")}}
-          <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
+          {{#if @courseStage.isFirst}}
+            <span class="text-gray-600" data-test-footer-text>Complete repository setup to gain access to this stage.</span>
+          {{else}}
+            <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
+          {{/if}}
         {{/if}}
       </div>
       <div class="text-gray-500 text-xs pl-3 -mr-1 md:-mr-3 flex-shrink-0 hidden sm:block">

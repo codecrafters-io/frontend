@@ -20,6 +20,10 @@
       {{else}}
         <CoursePage::StepList::SetupItem::CloneRepositoryStep @repository={{@repository}} />
       {{/animated-if}}
+
+      {{#animated-if this.shouldShowUpgradePrompt use=this.transition}}
+        <CoursePage::StepList::SetupItem::UpgradePrompt class="mt-3" />
+      {{/animated-if}}
     </AnimatedContainer>
   </:content>
 
@@ -28,6 +32,9 @@
       {{#if this.isComplete}}
         <StaticDot @class="mr-3" @color="green" />
         <span class="text-gray-600" data-test-footer-text>Git push received.</span>
+      {{else if this.shouldShowUpgradePrompt}}
+        <StaticDot @class="flex-shrink-0 mr-3" @color="gray" />
+        <span class="text-gray-600" data-test-footer-text>Subscription required.</span>
       {{else if @repository.isNew}}
         <StaticDot @class="mr-3" @color="gray" />
         <span class="text-gray-600" data-test-footer-text>Select a language to proceed</span>
