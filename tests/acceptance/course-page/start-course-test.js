@@ -121,6 +121,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.equal(coursePage.setupItem.footerText, 'Subscription required.');
 
     await percySnapshot('Start Course - No Subscription');
+
+    await animationsSettled();
   });
 
   test('non-subscriber can start course using Rust', async function (assert) {
@@ -139,6 +141,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await coursePage.setupItem.clickOnLanguageButton('Rust');
     assert.equal(coursePage.setupItem.footerText, 'Listening for a git push...');
+
+    await animationsSettled();
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {
