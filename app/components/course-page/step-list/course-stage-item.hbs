@@ -9,7 +9,7 @@
         {{else if this.statusIsLocked}}
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>PENDING</span>
         {{else if this.shouldShowUpgradePrompt}}
-          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>SUBSCRIPTION REQUIRED</span>
+          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>MEMBERSHIP REQUIRED</span>
         {{else}}
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
         {{/if}}
@@ -64,7 +64,7 @@
       <div class="flex items-center text-xs" data-test-course-stage-item-footer>
         {{#if this.shouldShowUpgradePrompt}}
           <StaticDot @class="flex-shrink-0 mr-3" @color="gray" />
-          <span class="text-gray-600" data-test-footer-text>Subscription required.</span>
+          <span class="text-gray-600" data-test-footer-text>Membership required.</span>
         {{else if (eq this.status "waiting")}}
           <BlinkingDot @class="flex-shrink-0 mr-3" @color="gray" />
           <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
