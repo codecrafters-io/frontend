@@ -61,7 +61,7 @@ export default class CourseLeaderboardComponent extends Component {
     return allRepositories.map((repository) => {
       return this.store.createRecord('leaderboard-entry', {
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
-        currentCourseStage: repository.activeStage,
+        currentCourseStage: repository.activeStage || repository.course.sortedStages.firstObject,
         language: repository.language,
         user: repository.user,
         lastAttemptAt: repository.lastSubmissionAt || repository.createdAt,
