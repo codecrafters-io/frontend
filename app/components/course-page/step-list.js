@@ -150,7 +150,7 @@ export default class CoursePageContentStepListComponent extends Component {
   }
 
   get shouldShowUpgradePromptForActiveStage() {
-    return !this.shouldSuppressUpgradePrompts && this.repository.activeStage.position >= 2;
+    return !this.shouldSuppressUpgradePrompts;
   }
 
   startRepositoryPoller() {
