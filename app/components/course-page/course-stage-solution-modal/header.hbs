@@ -9,8 +9,8 @@
       @icon="code"
       @text="Diff"
       @isActive={{eq @activeTab "diff"}}
-      @authorDetails={{@currentSolution.authorDetails}}
-      @reviewersDetails={{@currentSolution.reviewersDetails}}
+      @authorDetails={{if this.currentUserIsStaff @currentSolution.authorDetails null}}
+      @reviewersDetails={{if this.currentUserIsStaff @currentSolution.reviewersDetails null}}
       {{on "click" (fn @onTabLinkClick "diff")}}
     />
 

@@ -15,5 +15,9 @@
         <ContributorAvatar @contributorDetails={{reviewerDetails}} @contributorType="reviewer" />
       {{/each}}
     </div>
+  {{else}}
+    {{! alignment fix }}
+    <div class="h-6">
+    </div>
   {{/if}}
 </div>
