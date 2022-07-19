@@ -9,6 +9,8 @@
       @icon="code"
       @text="Diff"
       @isActive={{eq @activeTab "diff"}}
+      @authorDetails={{if this.currentUserIsStaff @currentSolution.authorDetails null}}
+      @reviewersDetails={{if this.currentUserIsStaff @currentSolution.reviewersDetails null}}
       {{on "click" (fn @onTabLinkClick "diff")}}
     />
 
@@ -21,7 +23,7 @@
 
     {{#if @courseStage.sourceWalkthrough}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="book-open"
+        @iconUrl={{@courseStage.course.logoUrl}}
         @text="Source Walkthrough"
         @isActive={{eq @activeTab "source_walkthrough"}}
         {{on "click" (fn @onTabLinkClick "source_walkthrough")}}
@@ -31,7 +33,7 @@
 
   <div>
     <CoursePage::CourseStageSolutionModal::LanguageDropdown
-      @currentLanguage={{@currentSolutionLanguage}}
+      @currentLanguage={{@currentSolution.language}}
       @requestedLanguage={{@requestedSolutionLanguage}}
       @courseStage={{@courseStage}}
       @onRequestedLanguageChange={{@onRequestedSolutionLanguageChange}}
@@ -40,7 +42,7 @@
   </div>
 </div>
 
-{{#if (and (not-eq @activeTab "source_walkthrough") (not-eq @requestedSolutionLanguage @currentSolutionLanguage))}}
+{{#if (and (not-eq @activeTab "source_walkthrough") (not-eq @requestedSolutionLanguage @currentSolution.language))}}
   <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-6 flex items-center" data-test-requested-language-not-available-notice>
     <div class="mr-3">
       {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
@@ -49,7 +51,7 @@
       This stage doesn't have solutions available for
       {{@requestedSolutionLanguage.name}}
       yet, so we're showing solutions for
-      <b class="text-blue-800">{{@currentSolutionLanguage.name}}</b>
+      <b class="text-blue-800">{{@currentSolution.language.name}}</b>
       instead.
     </div>
   </div>
