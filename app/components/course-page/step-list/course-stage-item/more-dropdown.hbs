@@ -18,6 +18,7 @@
           @text="Source Walkthrough"
           @isEnabled={{true}}
           @icon="book-open"
+          @iconUrl={{@courseStage.course.logoUrl}}
           {{on "click" (fn this.handleViewSourceWalkthroughButtonClicked dd.actions)}}
         />
       {{/if}}
