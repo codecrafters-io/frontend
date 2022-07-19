@@ -132,7 +132,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
     assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsYellow, 'course stage prompt should be yellow if stage is current');
-    assert.equal(coursePage.activeCourseStageItem.statusText, 'SUBSCRIPTION REQUIRED', 'status text should be subscription required');
+    assert.equal(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be subscription required');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
