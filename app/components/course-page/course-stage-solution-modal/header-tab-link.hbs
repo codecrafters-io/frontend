@@ -6,4 +6,14 @@
 >
   {{svg-jar @icon class="text-gray-600 w-5 mr-2 fill-current text-gray-600"}}
   <span class={{if @isActive "font-medium text-gray-700" "text-gray-600"}}>{{@text}}</span>
+
+  {{#if @authorDetails}}
+    <div class="ml-2 flex -space-x-3 hover:space-x-1 items-center">
+      <ContributorAvatar @contributorDetails={{@authorDetails}} @contributorType="author" />
+
+      {{#each @reviewersDetails as |reviewerDetails|}}
+        <ContributorAvatar @contributorDetails={{reviewerDetails}} @contributorType="reviewer" />
+      {{/each}}
+    </div>
+  {{/if}}
 </div>

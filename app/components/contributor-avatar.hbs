@@ -1,0 +1,17 @@
+<a
+  href="{{@contributorDetails.profileUrl}}"
+  title={{if (eq @contributorType "author") "Author of this solution" "Reviewer of this solution"}}
+  class="inline-flex transition-all relative"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <img alt="avatar" src={{@contributorDetails.avatarUrl}} class="w-6 h-6 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+  <div class="w-4 h-4 absolute -right-1 -bottom-1">
+    <div class="w-4 h-4 relative">
+      {{#if (eq @contributorType "reviewer")}}
+        <div class="w-2 h-2 absolute top-1 left-1 bg-white"></div>
+        {{svg-jar "badge-check" class="absolute w-4 fill-current text-teal-500"}}
+      {{/if}}
+    </div>
+  </div>
+</a>
