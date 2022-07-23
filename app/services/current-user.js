@@ -34,10 +34,6 @@ export default class CurrentUserService extends Service {
     return !!this.currentUserPayload;
   }
 
-  get isSubscriber() {
-    return this.isAuthenticated && !!this.record.hasActiveSubscription;
-  }
-
   get record() {
     return this.store.peekRecord('user', this.currentUserId);
   }

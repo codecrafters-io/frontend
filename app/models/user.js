@@ -7,6 +7,7 @@ export default class UserModel extends Model {
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
   @attr('boolean') isStaff;
+  @attr('boolean') isCodecraftersPartner;
   @attr('string') username;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
@@ -14,11 +15,15 @@ export default class UserModel extends Model {
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
 
+  get canAccessSubscriberOnlyContent() {
+    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription;
+  }
+
   canCreateRepository(course, language) {
     if (language.isRust) {
       return true;
     } else {
-      return this.hasActiveSubscription;
+      return this.canAccessSubscriberOnlyContent;
     }
   }
 
