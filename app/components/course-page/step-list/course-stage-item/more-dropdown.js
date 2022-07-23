@@ -8,7 +8,7 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
 
   get currentUserCanAccessSolutionAndWalkthrough() {
     if (this.solutionIsOnlyAccessibleToSubscribers) {
-      return this.currentUser.canAccessSubscriberOnlyContent;
+      return this.currentUser.record.canAccessSubscriberOnlyContent;
     } else {
       return true;
     }
