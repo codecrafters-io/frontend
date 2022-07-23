@@ -23,7 +23,7 @@ export default class UserModel extends Model {
     if (language.isRust) {
       return true;
     } else {
-      return this.canAccessSubscriberOnlyContent();
+      return this.canAccessSubscriberOnlyContent;
     }
   }
 
