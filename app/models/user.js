@@ -15,7 +15,7 @@ export default class UserModel extends Model {
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
 
-  canAccessSubscriberOnlyContent() {
+  get canAccessSubscriberOnlyContent() {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription;
   }
 
