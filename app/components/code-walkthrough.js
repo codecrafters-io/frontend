@@ -28,7 +28,14 @@ class ProseSection {
   }
 
   get HTML() {
-    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.markdown));
+    showdown.extension('formatted-github-links', {
+      type: 'output',
+      filter: (text, converter, options) => {
+        return text + 'a';
+      },
+    });
+
+    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true, extensions: ['formatted-github-links'] }).makeHtml(this.markdown));
   }
 }
 
