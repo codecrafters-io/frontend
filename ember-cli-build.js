@@ -18,6 +18,12 @@ const purgeCSS = {
     defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/.]+/g) || [],
 
     safelist: {
+      standard: [
+        'inline', // Used by SVG stuff
+        'mx-1', // Used by SVG stuff
+        'w-4', // Used by SVG stuff
+        'whitespace-nowrap', // Used by SVG stuff
+      ],
       greedy: [/ember-basic-dropdown-/, /prose/],
       deep: [
         // Ember's built-in components: <Input /> and <TextArea />
