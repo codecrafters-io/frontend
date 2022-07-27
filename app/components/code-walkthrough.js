@@ -31,7 +31,7 @@ class ProseSection {
   get HTML() {
     showdown.extension('formatted-github-links', {
       type: 'output',
-      filter: (text, _converter, _options) => {
+      filter: (text /* , converter, options*/) => {
         const parsed = parse(text);
         const linkElements = parsed.querySelectorAll('a');
 
