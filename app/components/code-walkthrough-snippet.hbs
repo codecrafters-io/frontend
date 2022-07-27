@@ -12,6 +12,21 @@
 </div>
 --}}
 
-<div class="text-sm rounded-lg overflow-hidden" ...attributes>
+{{! template-lint-disable no-inline-styles }}
+<div class="text-sm rounded-lg overflow-hidden" style="background-color: #282c34;" ...attributes>
+  <a
+    href={{@link}}
+    target="_blank"
+    class="py-3 px-3 text-gray-400 hover:text-white border-b border-gray-700 flex items-center group"
+    rel="noopener noreferrer"
+  >
+    <div class="mr-2">
+      {{svg-jar "github" class="w-4 fill-current transition-colors"}}
+    </div>
+    <div class="font-mono transition-colors mr-2">
+      {{@filePath}}
+    </div>
+    <div>{{svg-jar "external-link" class="w-4 fill-current text-gray-400 opacity-0 group-hover:opacity-100"}}</div>
+  </a>
   <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @highlightedLines={{@highlightedLines}} @theme="dark" />
 </div>
