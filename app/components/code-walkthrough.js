@@ -41,6 +41,7 @@ class ProseSection {
 
         linkElements.forEach((linkElement) => {
           if (linkElement.getAttribute('href').startsWith('https://github.com')) {
+            linkElement.classList.add('whitespace-nowrap');
             linkElement.insertAdjacentHTML('afterbegin', githubSvgHTML);
           }
         });
