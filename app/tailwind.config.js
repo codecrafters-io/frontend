@@ -35,7 +35,7 @@ module.exports = {
               color: colors.indigo[400],
               fontWeight: 'bold',
             },
-            'a::hover': {
+            'a:hover': {
               color: colors.indigo[500],
               fontWeight: 'bold',
             },
