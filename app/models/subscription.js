@@ -6,8 +6,13 @@ export default class SubscriptionModel extends Model {
   @attr('date') endedAt;
   @attr('date') startDate;
   @attr('string') pricingPlanName;
+  @attr('date') trialEnd;
 
   get isActive() {
     return !this.endedAt;
+  }
+
+  get isTrialing() {
+    return this.trialEnd && new Date() < this.trialEnd;
   }
 }
