@@ -36,7 +36,7 @@ export function signInAsStaff(owner, server, user) {
 
 export function signInAsSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-  server.create('subscription', { user: user });
+  server.create('subscription', { user: user, pricingPlanName: 'Monthly' });
 
   signIn(owner, server, user);
 }
@@ -112,6 +112,7 @@ function buildIncludedResources(user) {
       attributes: {
         'start-date': subscription.startDate.toISOString(),
         'ended-at': null,
+        'pricing-plan-name': subscription.pricingPlanName,
         'stripe-subscription-id': 'testing',
       },
       relationships: {

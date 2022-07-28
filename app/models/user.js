@@ -15,6 +15,18 @@ export default class UserModel extends Model {
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
 
+  get activeSubscription() {
+    return this.subscriptions.findBy('isActive');
+  }
+
+  get expiredSubscription() {
+    if (this.hasActiveSubscription) {
+      return null;
+    } else {
+      return this.subscriptions.sortBy('startDate').reverse().findBy('isActive', false);
+    }
+  }
+
   get canAccessSubscriberOnlyContent() {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription;
   }
@@ -36,7 +48,7 @@ export default class UserModel extends Model {
   }
 
   get hasActiveSubscription() {
-    return this.subscriptions.isAny('isActive');
+    return !!this.activeSubscription;
   }
 
   get isEligibleForEarlyBirdDiscount() {
