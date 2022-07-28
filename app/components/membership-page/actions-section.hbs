@@ -1,7 +1,13 @@
 <MembershipPage::Section @title="Actions" ...attributes>
-  <button type="button" class="bg-red-600 hover:bg-red-700 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-sm mt-4">
-    Cancel Subscription
-  </button>
+  {{#if @subscription.isTrialing}}
+    <button type="button" class="bg-red-600 hover:bg-red-700 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-sm mt-4">
+      Cancel Trial
+    </button>
+  {{else}}
+    <button type="button" class="bg-red-600 hover:bg-red-700 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-sm mt-4">
+      Cancel Subscription
+    </button>
+  {{/if}}
 
   <button type="button" class="bg-teal-500 hover:bg-teal-600 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-sm mt-4">
     Update Payment Method
