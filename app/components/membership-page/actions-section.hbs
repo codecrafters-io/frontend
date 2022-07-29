@@ -8,7 +8,7 @@
     >
       Cancel Trial
     </ButtonWithSpinner>
-  {{else if @subscription.isActive}}
+  {{else if (and @subscription.isActive (not @subscription.cancelAtPeriodEnd))}}
     <ButtonWithSpinner
       class="bg-red-600 hover:bg-red-700 text-sm mt-4"
       @shouldShowSpinner={{this.isCancellingSubscription}}
