@@ -1,3 +1,4 @@
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -6,7 +7,6 @@ import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authenti
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import window from 'ember-window-mock';
 
 module('Acceptance | manage-subscription-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -22,10 +22,6 @@ module('Acceptance | manage-subscription-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Subscription');
 
-    assert.equal(
-      window.location.href,
-      'https://test.com/billing_session',
-      'Clicking manage subscription button should redirect to billing session URL'
-    );
+    assert.equal(currentURL(), '/membership');
   });
 });
