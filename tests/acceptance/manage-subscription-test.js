@@ -14,13 +14,13 @@ module('Acceptance | manage-subscription-test', function (hooks) {
   setupWindowMock(hooks);
   setupClock(hooks);
 
-  test('subscriber can manage subscription', async function (assert) {
+  test('subscriber can manage membership', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Subscription');
+    await coursesPage.accountDropdown.clickOnLink('Manage Membership');
 
     assert.equal(currentURL(), '/membership');
   });
