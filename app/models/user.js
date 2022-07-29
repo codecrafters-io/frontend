@@ -16,15 +16,9 @@ export default class UserModel extends Model {
   @hasMany('team-membership', { async: false }) teamMemberships;
 
   get activeSubscription() {
-    return this.subscriptions.findBy('isActive');
-  }
-
-  get expiredSubscription() {
-    if (this.hasActiveSubscription) {
-      return null;
-    } else {
-      return this.subscriptions.sortBy('startDate').reverse().findBy('isActive', false);
-    }
+    // TODO: Look at active once we're handling cancellations
+    return this.subscriptions.sortBy('startDate').lastObject;
+    // return this.subscriptions.findBy('isActive');
   }
 
   get canAccessSubscriberOnlyContent() {
