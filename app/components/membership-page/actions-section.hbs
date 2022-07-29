@@ -8,9 +8,17 @@
     >
       Cancel Trial
     </ButtonWithSpinner>
-  {{else}}
+  {{else if @subscription.isActive}}
     <ButtonWithSpinner class="bg-red-600 hover:bg-red-700 text-sm mt-4" data-test-cancel-subscription-button>
       Cancel Subscription
+    </ButtonWithSpinner>
+  {{else if @subscription.isInactive}}
+    <ButtonWithSpinner
+      class="bg-teal-500 hover:bg-teal-600 text-sm mt-4"
+      {{on "click" this.handleStartMembershipButtonClick}}
+      data-test-start-membership-button
+    >
+      Start Membership
     </ButtonWithSpinner>
   {{/if}}
 

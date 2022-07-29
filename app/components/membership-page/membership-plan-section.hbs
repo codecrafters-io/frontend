@@ -1,13 +1,16 @@
-<MembershipPage::Section @title="Membership Plan">
-  <div class="text-gray-700">
+<MembershipPage::Section @title="Membership Plan" data-test-membership-plan-section>
+  <div class="text-gray-700" data-test-membership-plan-description>
     {{#if @subscription.isTrialing}}
-      You trial for the
+      Your trial for the
       <b>{{@subscription.pricingPlanName}}</b>
       plan is currently active.
-    {{else}}
+    {{else if @subscription.isActive}}
       You are currently subscribed to the
       <b>{{@subscription.pricingPlanName}}</b>
       plan.
+    {{else if @subscription.isInactive}}
+      Your CodeCrafters membership is
+      <b class="text-red-600">currently inactive</b>.
     {{/if}}
   </div>
 </MembershipPage::Section>
