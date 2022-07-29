@@ -23,6 +23,7 @@ export default class PricingCardComponent extends Component {
     this.isCreatingCheckoutSession = true;
 
     let checkoutSession = this.store.createRecord('individual-checkout-session', {
+      autoRenewSubscription: this.args.autoRenewSubscription,
       earlyBirdDiscountEnabled: this.args.earlyBirdDiscountEnabled,
       successUrl: `${window.location.origin}/tracks`,
       cancelUrl: `${window.location.origin}/pay`,
