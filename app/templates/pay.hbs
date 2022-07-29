@@ -3,7 +3,7 @@
 <div class="container mx-auto lg:max-w-screen-lg py-16 px-3 md:px-6">
   <div class="flex flex-col items-center justify-center">
     <h1 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-2xl text-center">
-      Unlock the full CodeCrafters experience
+      Choose your CodeCrafters membership.
     </h1>
 
     {{#if this.userIsEligibleForEarlyBirdDiscount}}
@@ -13,23 +13,26 @@
     <div class="flex flex-col-reverse md:flex-row gap-x-8 gap-y-8 items-start mt-12">
       <PayPage::PricingCard
         @title="Monthly"
+        @autoRenewSubscription={{true}}
         @actualPrice={{79}}
-        @subtitle="All-access for one month"
+        @subtitle="Recurring subscription"
         @pricingFrequency="monthly"
-        @footerText="Cancel anytime."
+        @footerText="No charge today. Cancel anytime."
       />
 
       <PayPage::PricingCard
-        @title="Quarterly"
+        @title="3 months"
+        @autoRenewSubscription={{false}}
         @actualPrice={{200}}
-        @subtitle="All-access for 3 months"
+        @subtitle="Full access for 3 months"
         @pricingFrequency="quarterly"
-        @footerText="Cancel anytime."
+        @footerText="One-time payment."
       />
 
       <PayPage::PricingCard
         @footerText="Ideal for expensing."
-        @title="Annual"
+        @autoRenewSubscription={{false}}
+        @title="1 year"
         @subtitle="Learn at your own pace"
         @actualPrice={{790}}
         @discountedPrice={{if this.userIsEligibleForEarlyBirdDiscount 395 null}}
