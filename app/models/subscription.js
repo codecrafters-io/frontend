@@ -1,5 +1,6 @@
 import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 
 export default class SubscriptionModel extends Model {
   @belongsTo('user', { async: false }) user;
@@ -12,7 +13,20 @@ export default class SubscriptionModel extends Model {
     return !this.endedAt;
   }
 
+  get isInactive() {
+    return this.endedAt;
+  }
+
   get isTrialing() {
-    return this.trialEnd && new Date() < this.trialEnd;
+    return this.isActive && this.trialEnd && new Date() < this.trialEnd;
   }
 }
+
+SubscriptionModel.prototype.cancelTrial = memberAction({
+  path: 'cancel-trial',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});
