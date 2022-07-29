@@ -3,12 +3,10 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import window from 'ember-window-mock';
 
 module('Acceptance | pay-test', function (hooks) {
