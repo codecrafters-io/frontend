@@ -103,6 +103,13 @@ function routes() {
     return subscription;
   });
 
+  this.post('/subscriptions/:id/cancel', function (schema, request) {
+    const subscription = schema.subscriptions.find(request.params.id);
+    subscription.update({ cancelAtPeriodEnd: true });
+
+    return subscription;
+  });
+
   this.get('/teams');
 
   this.post('/teams', function (schema) {

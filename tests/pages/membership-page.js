@@ -4,11 +4,14 @@ import Header from 'codecrafters-frontend/tests/pages/components/header';
 
 export default create({
   accountDropdown: AccountDropdown,
+  clickOnCancelSubscriptionButton: clickable('[data-test-cancel-subscription-button]'),
   clickOnCancelTrialButton: clickable('[data-test-cancel-trial-button]'),
+
   membershipPlanSection: {
     descriptionText: text('[data-test-membership-plan-description]'),
     scope: '[data-test-membership-plan-section]',
   },
+
   header: Header,
   visit: visitable('/membership'),
 });
