@@ -1,17 +1,22 @@
 <MembershipPage::Section @title="Actions" ...attributes>
   {{#if @subscription.isTrialing}}
-    <button type="button" class="bg-red-600 hover:bg-red-700 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-sm mt-4">
+    <ButtonWithSpinner
+      @shouldShowSpinner={{this.isCancellingTrial}}
+      class="bg-red-600 hover:bg-red-700 text-sm mt-4"
+      {{on "click" this.handleCancelTrialButtonClick}}
+      data-test-cancel-trial-button
+    >
       Cancel Trial
-    </button>
+    </ButtonWithSpinner>
   {{else}}
-    <button type="button" class="bg-red-600 hover:bg-red-700 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-sm mt-4">
+    <ButtonWithSpinner class="bg-red-600 hover:bg-red-700 text-sm mt-4" data-test-cancel-subscription-button>
       Cancel Subscription
-    </button>
+    </ButtonWithSpinner>
   {{/if}}
 
-  <button type="button" class="bg-teal-500 hover:bg-teal-600 px-3 py-2 text-white rounded shadow-sm font-bold flex items-center text-sm mt-4">
+  <ButtonWithSpinner class="bg-teal-500 hover:bg-teal-600 text-sm mt-4" data-test-update-payment-method-button>
     Update Payment Method
-  </button>
+  </ButtonWithSpinner>
 
   <div class="text-gray-700 mt-4 prose text-sm">
     Questions? Write to us at
