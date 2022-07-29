@@ -24,7 +24,7 @@ export default class PricingCardComponent extends Component {
 
     let checkoutSession = this.store.createRecord('individual-checkout-session', {
       earlyBirdDiscountEnabled: this.args.earlyBirdDiscountEnabled,
-      successUrl: `${window.location.origin}/tracks/go?action=checkout_session_successful`,
+      successUrl: `${window.location.origin}/tracks`,
       cancelUrl: `${window.location.origin}/pay`,
       pricingFrequency: this.args.pricingFrequency,
     });

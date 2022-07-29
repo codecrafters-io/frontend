@@ -1,11 +1,9 @@
 import { clickable, clickOnText, collection, create, isVisible, text, visitable } from 'ember-cli-page-object';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
-import CheckoutSessionSuccessfulModal from 'codecrafters-frontend/tests/pages/components/checkout-session-successful-modal';
 
 export default create({
   accountDropdown: AccountDropdown,
   clickOnManageSubscriptionButton: clickable('[data-test-manage-subscription-button]'),
-  confirmMemberDeletionModal: CheckoutSessionSuccessfulModal,
   inviteURLDescription: text('[data-test-invite-url-description]'),
 
   members: collection('[data-test-members-list-item-container]', {

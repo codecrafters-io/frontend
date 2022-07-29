@@ -56,46 +56,4 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.clickOnStartPaymentButton();
     assert.equal(1, 1); // Dummy test
   });
-
-  test('new user can wait for subscriptions to sync after successful checkout session', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    await trackPage.visit({ track_slug: 'go', action: 'checkout_session_successful' });
-
-    const baseRequestsCount = [
-      'fetch courses (track page)',
-      'fetch leaderboard entries (track page)',
-      'fetch repositories (track page)',
-      'notify page view (track page)',
-      'notify finished checkout flow (modal)',
-      'fetch subscriptions (modal)',
-    ].length;
-
-    assert.ok(trackPage.checkoutSessionSuccessfulModal.isVisible, 'Checkout session successful modal should be visible');
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount);
-
-    await this.clock.tick(1001);
-    await finishRender();
-
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1);
-
-    this.server.create('subscription', {
-      user: this.server.schema.users.first(),
-      endedAt: null,
-      startDate: new Date(2021, 1, 1),
-    });
-
-    await this.clock.tick(1001);
-    await finishRender();
-
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 2); // One more subscriptions request
-    assert.notOk(trackPage.checkoutSessionSuccessfulModal.isVisible, 'Checkout session successful modal should not be visible');
-
-    await this.clock.tick(1001);
-    await finishRender();
-
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 2); // No more requests after polling is complete
-    assert.notOk(trackPage.checkoutSessionSuccessfulModal.isVisible, 'Checkout session successful modal should not be visible');
-  });
 });

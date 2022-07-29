@@ -16,15 +16,4 @@ export default class ApplicationController extends Controller {
   get isAnyModalOpen() {
     return this.globalModalsService.isAnyModalOpen;
   }
-
-  get isCheckoutSessionSuccessfulModalOpen() {
-    return this.globalModalsService.isCheckoutSessionSuccessfulModalOpen;
-  }
-
-  @action
-  handleDidInsert() {
-    if (this.action === 'checkout_session_successful') {
-      this.globalModalsService.openCheckoutSessionSuccessfulModal();
-    }
-  }
 }
