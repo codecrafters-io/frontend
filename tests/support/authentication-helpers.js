@@ -36,7 +36,12 @@ export function signInAsStaff(owner, server, user) {
 
 export function signInAsSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-  server.create('subscription', { user: user, pricingPlanName: 'Monthly' });
+
+  server.create('subscription', {
+    user: user,
+    pricingPlanName: 'Monthly',
+    currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+  });
 
   signIn(owner, server, user);
 }
@@ -92,6 +97,7 @@ export function signInAsTrialingSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
   server.create('subscription', {
+    currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
     user: user,
     pricingPlanName: 'Monthly',
     trialEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
@@ -127,6 +133,7 @@ function buildIncludedResources(user) {
         'pricing-plan-name': subscription.pricingPlanName,
         'stripe-subscription-id': 'testing',
         'trial-end': subscription.trialEnd ? subscription.trialEnd.toISOString() : null,
+        'current-period-end': subscription.currentPeriodEnd.toISOString(),
       },
       relationships: {
         user: { data: { type: 'users', id: user.id } },

@@ -9,7 +9,12 @@
       Cancel Trial
     </ButtonWithSpinner>
   {{else if @subscription.isActive}}
-    <ButtonWithSpinner class="bg-red-600 hover:bg-red-700 text-sm mt-4" data-test-cancel-subscription-button>
+    <ButtonWithSpinner
+      class="bg-red-600 hover:bg-red-700 text-sm mt-4"
+      @shouldShowSpinner={{this.isCancellingSubscription}}
+      {{on "click" this.handleCancelSubscriptionButtonClick}}
+      data-test-cancel-subscription-button
+    >
       Cancel Subscription
     </ButtonWithSpinner>
   {{else if @subscription.isInactive}}

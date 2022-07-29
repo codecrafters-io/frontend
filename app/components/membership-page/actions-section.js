@@ -1,12 +1,29 @@
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import moment from 'moment';
 import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 
 export default class ActionsSectionComponent extends Component {
+  @tracked isCancellingSubscription = false;
   @tracked isCancellingTrial = false;
   @service router;
+
+  @action
+  async handleCancelSubscriptionButtonClick() {
+    if (
+      window.confirm(
+        `Your access will remain intact until ${moment(this.args.subscription.currentPeriodEnd).format(
+          'LLL'
+        )}, after which your membership will be cancelled. Are you sure?`
+      )
+    ) {
+      this.isCancellingSubscription = true;
+      await this.args.subscription.cancel();
+      this.isCancellingSubscription = false;
+    }
+  }
 
   @action
   async handleCancelTrialButtonClick() {

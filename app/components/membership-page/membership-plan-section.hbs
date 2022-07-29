@@ -5,9 +5,14 @@
       <b>{{@subscription.pricingPlanName}}</b>
       plan is currently active.
     {{else if @subscription.isActive}}
-      You are currently subscribed to the
-      <b>{{@subscription.pricingPlanName}}</b>
-      plan.
+      {{#if @subscription.cancelAtPeriodEnd}}
+        Your CodeCrafters membership is valid until
+        <b>{{moment-format @subscription.currentPeriodEnd "LLL"}}</b>.
+      {{else}}
+        You are currently subscribed to the
+        <b>{{@subscription.pricingPlanName}}</b>
+        plan.
+      {{/if}}
     {{else if @subscription.isInactive}}
       Your CodeCrafters membership is
       <b class="text-red-600">currently inactive</b>.
