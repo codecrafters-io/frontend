@@ -96,6 +96,13 @@ function routes() {
     return schema.subscriptions.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
   });
 
+  this.post('/subscriptions/:id/cancel-trial', function (schema) {
+    const subscription = schema.subscriptions.find(this.params.id);
+    subscription.update({ endedAt: new Date() });
+
+    return subscription;
+  });
+
   this.get('/teams');
 
   this.post('/teams', function (schema) {
