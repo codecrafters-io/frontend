@@ -20,4 +20,5 @@ module.exports = {
       ].filter(Boolean),
     },
   },
+  parallel: process.env.EMBER_EXAM_SPLIT_COUNT,
 };

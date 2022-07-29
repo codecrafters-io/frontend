@@ -51,7 +51,7 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
-      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember test --silent --reporter xunit | tee test-results.xml
+      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam --split=3 --parallel=1 --silent --reporter xunit | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
@@ -103,5 +103,15 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - run: npm ci --ignore-scripts
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+
       - run: npm run lint
