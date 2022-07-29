@@ -54,15 +54,8 @@ export default class HeaderAccountDropdownComponent extends Component {
 
   @action
   async handleManageSubscriptionClick(dropdownActions) {
-    this.isCreatingBillingSession = true;
-
-    let billingSession = this.store.createRecord('individual-billing-session', {
-      returnUrl: window.location.href,
-    });
-
-    await billingSession.save();
-    window.location.href = billingSession.url;
     dropdownActions.close();
+    this.router.transitionTo('membership');
   }
 
   @action

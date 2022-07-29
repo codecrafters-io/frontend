@@ -30,10 +30,6 @@ function routes() {
 
   this.patch('/feature-suggestions/:id');
 
-  this.post('/individual-billing-sessions', function (schema) {
-    return schema.individualBillingSessions.create({ url: 'https://test.com/billing_session' });
-  });
-
   this.post('/individual-checkout-sessions', function (schema) {
     return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
   });
