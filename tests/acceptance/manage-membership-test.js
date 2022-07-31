@@ -3,11 +3,13 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsSubscriber, signInAsTrialingSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import tracksPage from 'codecrafters-frontend/tests/pages/tracks-page';
 import moment from 'moment';
 import membershipPage from 'codecrafters-frontend/tests/pages/membership-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | manage-membership-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -19,8 +21,11 @@ module('Acceptance | manage-membership-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await membershipPage.visit();
-    assert.equal(1, 1);
+    await tracksPage.visit();
+    await tracksPage.accountDropdown.toggle();
+    await tracksPage.accountDropdown.clickOnLink('Manage Membership');
+
+    assert.equal(currentURL(), '/membership');
   });
 
   test('subscriber can cancel trial', async function (assert) {
