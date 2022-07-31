@@ -73,6 +73,9 @@ jobs:
 #          fail_ci_if_error: true
 #          token: ${{ secrets.CODECOV_TOKEN }}
 
+      - name: Remove ember exam from test results
+        run: gsed -i 's/Exam Partition [0-9]\+ - //g' test-results.xml
+
       - name: Publish Buildkite analytics
         run: |
           curl -XPOST --fail \
