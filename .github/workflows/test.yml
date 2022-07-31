@@ -64,6 +64,7 @@ jobs:
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
           PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
           BROCCOLI_PERSISTENT_FILTER_CACHE_ROOT: /tmp/broccoli-persistent-filter-cache
+          FORCE_PERSISTENCE_IN_CI: true
 
       - run: cat test-results.xml
         if: always()
