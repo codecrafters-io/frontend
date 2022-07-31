@@ -75,7 +75,7 @@ jobs:
 
       - name: Publish Buildkite analytics
         run: |
-          curl -XPOST --fail-with-body \
+          curl -XPOST --fail \
             -H "Authorization: Token token=\"$BUILDKITE_ANALYTICS_TOKEN\"" \
             -F "data=@test-results.xml" \
             -F "format=junit" \
@@ -86,6 +86,7 @@ jobs:
             -F "run_env[commit_sha]=$GITHUB_SHA" \
             -F "run_env[url]=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
             https://analytics-api.buildkite.com/v1/uploads
+        if: always()
         env:
           BUILDKITE_ANALYTICS_TOKEN: ${{ secrets.BUILDKITE_ANALYTICS_TOKEN }}
 
