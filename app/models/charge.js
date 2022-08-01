@@ -7,4 +7,8 @@ export default class Charge extends Model {
   @attr('string') currency;
   @attr('string') invoiceId;
   @belongsTo('user') user;
+
+  get amountInDollars() {
+    return this.amount / 100;
+  }
 }
