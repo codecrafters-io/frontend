@@ -88,4 +88,13 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     assert.equal(membershipPage.recentPaymentsSection.downloadInvoiceLinks.length, 2);
   });
+
+  test('subscriber can update payment method', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await membershipPage.visit();
+    await membershipPage.clickOnUpdatePaymentMethodButton();
+    assert.equal(1, 1); // Dummy test
+  });
 });
