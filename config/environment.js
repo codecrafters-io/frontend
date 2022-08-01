@@ -26,6 +26,7 @@ module.exports = function (environment) {
     },
 
     segment: {
+      enabled: environment === 'production',
       WRITE_KEY: 'HnKMbAj1U5apx9o6R0Xkp14vofTp2LEf',
     },
 
