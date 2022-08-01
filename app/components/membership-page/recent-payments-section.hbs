@@ -18,9 +18,15 @@
             <div class="font-bold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
             <div class="flex items-center justify-end">
               {{#if charge.invoiceId}}
-                <div role="button" class="text-teal-500 font-bold text-sm" data-test-download-invoice-link>
+                <a
+                  href="/invoices/{{charge.invoiceId}}/download"
+                  target="_blank"
+                  class="text-teal-500 font-bold text-sm"
+                  data-test-download-invoice-link
+                  rel="noopener noreferrer"
+                >
                   Download Invoice
-                </div>
+                </a>
               {{/if}}
             </div>
           {{/each}}
