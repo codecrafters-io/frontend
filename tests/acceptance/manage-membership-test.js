@@ -28,6 +28,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     await tracksPage.accountDropdown.clickOnLink('Manage Membership');
 
     assert.equal(currentURL(), '/membership');
+    await animationsSettled();
   });
 
   test('subscriber can cancel trial', async function (assert) {
@@ -41,6 +42,8 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     await membershipPage.clickOnCancelTrialButton();
     assert.equal(membershipPage.membershipPlanSection.descriptionText, 'Your CodeCrafters membership is currently inactive.');
+
+    await animationsSettled();
   });
 
   test('subscriber can cancel subscription', async function (assert) {
@@ -60,6 +63,8 @@ module('Acceptance | manage-membership-test', function (hooks) {
       membershipPage.membershipPlanSection.descriptionText,
       `Your CodeCrafters membership is valid until ${moment(subscription.currentPeriodEnd).format('LLL')}.`
     );
+
+    await animationsSettled();
   });
 
   test('subscriber can view recent payments', async function (assert) {
