@@ -59,4 +59,33 @@ module('Acceptance | manage-membership-test', function (hooks) {
       `Your CodeCrafters membership is valid until ${moment(subscription.currentPeriodEnd).format('LLL')}.`
     );
   });
+
+  test('subscriber can view recent payments', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let subscription = this.server.schema.subscriptions.first();
+
+    this.server.schema.charges.create({
+      user: subscription.user,
+      amount: 7900,
+      currency: 'usd',
+      createdAt: new Date(),
+      invoiceId: 'invoice-id',
+    });
+
+    this.server.schema.charges.create({
+      user: subscription.user,
+      amount: 3500,
+      currency: 'usd',
+      createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7),
+      invoiceId: 'invoice-id',
+    });
+
+    window.confirm = () => true;
+
+    await membershipPage.visit();
+
+    assert.equal(membershipPage.recentPaymentsSection.downloadInvoiceLinks.length, 2);
+  });
 });
