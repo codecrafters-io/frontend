@@ -6,6 +6,7 @@ export default create({
   accountDropdown: AccountDropdown,
   clickOnCancelSubscriptionButton: clickable('[data-test-cancel-subscription-button]'),
   clickOnCancelTrialButton: clickable('[data-test-cancel-trial-button]'),
+  clickOnUpdatePaymentMethodButton: clickable('[data-test-update-payment-method-button]'),
 
   membershipPlanSection: {
     descriptionText: text('[data-test-membership-plan-description]'),
