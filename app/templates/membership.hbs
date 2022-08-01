@@ -6,10 +6,10 @@
   <div class="flex gap-4 items-start flex-col lg:flex-row">
     <div class="w-full lg:w-2/3 space-y-4">
       <MembershipPage::MembershipPlanSection @subscription={{this.activeSubscription}} />
+      <MembershipPage::RecentPaymentsSection @subscription={{this.activeSubscription}} />
 
       {{!--
             <MembershipPage::PaymentMethodSection @subscription={{this.activeSubscription}} />
-            <MembershipPage::RecentPaymentsSection @subscription={{this.activeSubscription}} />
             <MembershipPage::UpcomingPaymentSection @subscription={{this.activeSubscription}} />
       --}}
 

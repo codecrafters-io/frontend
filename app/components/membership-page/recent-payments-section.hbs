@@ -1,5 +1,14 @@
-<MembershipPage::Section @title="Recent Payments">
-  <div class="text-gray-700">
-    No recent payments found.
-  </div>
+<MembershipPage::Section @title="Recent Payments" {{did-insert this.handleDidInsert}}>
+  <AnimatedContainer>
+    {{#animated-if this.isLoading use=this.transition}}
+      <div class="flex items-center mt-3">
+        <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
+        <span class="ml-3 text-gray-700">Loading recent payments...</span>
+      </div>
+    {{else}}
+      <div class="text-gray-700">
+        No recent payments found.
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
 </MembershipPage::Section>

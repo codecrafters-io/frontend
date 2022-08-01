@@ -21,6 +21,8 @@ function routes() {
 
   this.post('/analytics-events');
 
+  this.get('/charges');
+
   this.get('/code-walkthroughs');
   this.get('/courses');
 
