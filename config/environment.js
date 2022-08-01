@@ -25,6 +25,11 @@ module.exports = function (environment) {
       // when it is created
     },
 
+    segment: {
+      enabled: environment === 'production',
+      WRITE_KEY: 'HnKMbAj1U5apx9o6R0Xkp14vofTp2LEf',
+    },
+
     serverVariables: {
       tagPrefix: 'codecrafters',
       vars: ['csrf-token', 'server-url', 'current-user-payload'],
