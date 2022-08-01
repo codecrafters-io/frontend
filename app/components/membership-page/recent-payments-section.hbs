@@ -1,4 +1,4 @@
-<MembershipPage::Section @title="Recent Payments" {{did-insert this.handleDidInsert}}>
+<MembershipPage::Section @title="Recent Payments" {{did-insert this.handleDidInsert}} data-test-recent-payments-section>
   <AnimatedContainer>
     {{#animated-if this.isLoading use=this.transition}}
       <div class="flex items-center mt-3">
@@ -17,9 +17,11 @@
             <div class="text-gray-600 text-sm">{{moment-format charge.createdAt "LL"}}</div>
             <div class="font-bold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
             <div class="flex items-center justify-end">
-              <div role="button" class="text-teal-500 font-bold text-sm">
-                Download Invoice
-              </div>
+              {{#if charge.invoiceId}}
+                <div role="button" class="text-teal-500 font-bold text-sm" data-test-download-invoice-link>
+                  Download Invoice
+                </div>
+              {{/if}}
             </div>
           {{/each}}
         </div>

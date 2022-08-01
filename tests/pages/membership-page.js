@@ -1,4 +1,4 @@
-import { clickable, create, text, visitable } from 'ember-cli-page-object';
+import { collection, clickable, create, text, visitable } from 'ember-cli-page-object';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
 
@@ -10,6 +10,11 @@ export default create({
   membershipPlanSection: {
     descriptionText: text('[data-test-membership-plan-description]'),
     scope: '[data-test-membership-plan-section]',
+  },
+
+  recentPaymentsSection: {
+    downloadInvoiceLinks: collection('[data-test-download-invoice-link]'),
+    scope: '[data-test-recent-payments-section]',
   },
 
   header: Header,
