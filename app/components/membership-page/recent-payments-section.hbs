@@ -1,41 +1,37 @@
 <MembershipPage::Section @title="Recent Payments" {{did-insert this.handleDidInsert}} data-test-recent-payments-section>
-  <AnimatedContainer>
-    {{#animated-if this.isLoading use=this.transition}}
-      <div class="flex items-center mt-3">
-        <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
-        <span class="ml-3 text-gray-700">Loading recent payments...</span>
-      </div>
-    {{else}}
-      {{#if this.charges.firstObject}}
-        <div class="grid grid-cols-3 gap-y-3">
-          {{! Header }}
-          <div class="border-b pb-2 text-gray-500 text-sm">Date</div>
-          <div class="border-b pb-2 text-gray-500 text-sm text-right">Amount</div>
-          <div class="border-b pb-2"></div>
+  {{#if this.isLoading}}
+    <div class="flex items-center mt-3">
+      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
+      <span class="ml-3 text-gray-700">Loading recent payments...</span>
+    </div>
+  {{else if this.charges.firstObject}}
+    <div class="grid grid-cols-3 gap-y-3">
+      {{! Header }}
+      <div class="border-b pb-2 text-gray-500 text-sm">Date</div>
+      <div class="border-b pb-2 text-gray-500 text-sm text-right">Amount</div>
+      <div class="border-b pb-2"></div>
 
-          {{#each this.charges as |charge|}}
-            <div class="text-gray-600 text-sm">{{moment-format charge.createdAt "LL"}}</div>
-            <div class="font-bold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
-            <div class="flex items-center justify-end">
-              {{#if charge.invoiceId}}
-                <a
-                  href="/invoices/{{charge.invoiceId}}/download"
-                  target="_blank"
-                  class="text-teal-500 font-bold text-sm"
-                  data-test-download-invoice-link
-                  rel="noopener noreferrer"
-                >
-                  Download Invoice
-                </a>
-              {{/if}}
-            </div>
-          {{/each}}
+      {{#each this.charges as |charge|}}
+        <div class="text-gray-600 text-sm">{{moment-format charge.createdAt "LL"}}</div>
+        <div class="font-bold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
+        <div class="flex items-center justify-end">
+          {{#if charge.invoiceId}}
+            <a
+              href="/invoices/{{charge.invoiceId}}/download"
+              target="_blank"
+              class="text-teal-500 font-bold text-sm"
+              data-test-download-invoice-link
+              rel="noopener noreferrer"
+            >
+              Download Invoice
+            </a>
+          {{/if}}
         </div>
-      {{else}}
-        <div class="text-gray-700">
-          No recent payments found.
-        </div>
-      {{/if}}
-    {{/animated-if}}
-  </AnimatedContainer>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="text-gray-700">
+      No recent payments found.
+    </div>
+  {{/if}}
 </MembershipPage::Section>
