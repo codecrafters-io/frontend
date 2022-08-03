@@ -10,12 +10,34 @@
       <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full" />
     </div>
 
-    <CourseLeaderboard
-      @class="w-80 flex-shrink-0 ml-2 hidden lg:block"
-      @course={{this.model.course}}
-      @activeRepository={{this.activeRepository}}
-      @repositories={{this.userRepositories}}
-      @shouldShowLanguageIconsWithoutHover={{true}}
-    />
+    {{#if this.model.course.releaseStatusIsAlpha}}
+      <div class="w-80 flex-shrink-0 ml-2 hidden lg:block">
+        <div class="flex px-4 py-2 items-center">
+          <div class="text-sm text-gray-500 leading-relaxed">
+            <p class="mb-3">
+              This is a preview of a CodeCrafters course that is launching soon.
+            </p>
+            <p class="mb-3">
+              Follow us on
+              <a
+                target="_blank"
+                href="https://twitter.com/@CodeCraftersIo"
+                class="font-bold text-teal-600 underline"
+                rel="noopener noreferrer"
+              >Twitter</a>
+              to be notified when this course is available.
+            </p>
+          </div>
+        </div>
+      </div>
+    {{else}}
+      <CourseLeaderboard
+        @class="w-80 flex-shrink-0 ml-2 hidden lg:block"
+        @course={{this.model.course}}
+        @activeRepository={{this.activeRepository}}
+        @repositories={{this.userRepositories}}
+        @shouldShowLanguageIconsWithoutHover={{true}}
+      />
+    {{/if}}
   </div>
 </div>
