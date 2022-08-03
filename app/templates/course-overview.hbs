@@ -3,19 +3,41 @@
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 px-3 md:px-6">
   <CourseOverviewPage::Header @course={{this.model.course}} class="mb-6 md:mb-10" />
 
-  <div class="flex items-start">
+  <div class="flex items-start flex-col lg:flex-row">
     <div class="flex-grow">
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
 
       <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full" />
     </div>
 
-    <CourseLeaderboard
-      @class="w-80 flex-shrink-0 ml-2 hidden lg:block"
-      @course={{this.model.course}}
-      @activeRepository={{this.activeRepository}}
-      @repositories={{this.userRepositories}}
-      @shouldShowLanguageIconsWithoutHover={{true}}
-    />
+    {{#if this.model.course.releaseStatusIsAlpha}}
+      <div class="lg:w-80 lg:flex-shrink-0 ml-2">
+        <div class="flex lg:px-4 py-2 items-center">
+          <div class="lg:text-sm lg:leading-relaxed text-gray-500 leading-relaxed">
+            <p class="mb-3">
+              This is a preview of a CodeCrafters challenge that is launching soon.
+            </p>
+            <p class="mb-3">
+              Follow us on
+              <a
+                target="_blank"
+                href="https://twitter.com/@CodeCraftersIo"
+                class="font-bold text-teal-500 underline"
+                rel="noopener noreferrer"
+              >Twitter</a>
+              to be notified when this challenge is available.
+            </p>
+          </div>
+        </div>
+      </div>
+    {{else}}
+      <CourseLeaderboard
+        @class="w-80 flex-shrink-0 ml-2 hidden lg:block"
+        @course={{this.model.course}}
+        @activeRepository={{this.activeRepository}}
+        @repositories={{this.userRepositories}}
+        @shouldShowLanguageIconsWithoutHover={{true}}
+      />
+    {{/if}}
   </div>
 </div>

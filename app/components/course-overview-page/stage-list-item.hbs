@@ -36,7 +36,7 @@
       {{this.marketingHTML}}
     </div>
 
-    {{#if (and @stage.isFirst (not this.userHasStartedCourse))}}
+    {{#if (and (not @stage.course.releaseStatusIsAlpha) @stage.isFirst (not this.userHasStartedCourse))}}
       <CourseOverviewPage::StartStageButton @course={{@stage.course}} class="mb-4" />
     {{/if}}
   </div>

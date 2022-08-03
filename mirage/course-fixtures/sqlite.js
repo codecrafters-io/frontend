@@ -1,6 +1,7 @@
 export default {
   "slug": "sqlite",
   "name": "Build your own SQLite",
+  "short_name": "SQLite",
   "release_status": "beta",
   "description_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
   "short_description_md": "Learn about parsing SQL syntax, SQLite's file format, how indexed data is stored in B-trees and more\n",
@@ -11,9 +12,11 @@ export default {
     "javascript"
   ],
   "early_access_languages": [
+    "csharp",
     "rust"
   ],
   "starter_repos": {
+    "csharp": "https://github.com/codecrafters-io/sqlite-starter-csharp",
     "go": "https://github.com/codecrafters-io/sqlite-starter-go",
     "javascript": "https://github.com/codecrafters-io/sqlite-starter-javascript",
     "python": "https://github.com/codecrafters-io/sqlite-starter-python",
@@ -95,7 +98,7 @@ export default {
       "name": "Retrieve data using an index",
       "difficulty": "hard",
       "description_md": "In this stage, we'll implement an index scan. Rather than reading _all_ rows in a table and then filtering\nin-memory, we'll use an index to perform a more intelligent search.\n\nTo test whether your implementation actually uses an index, the tester will use a database is ~1GB in size and\nexpect your program to return query results in less than 3 seconds.\n\nThe test database contains a `companies` table with an index named `idx_companies_country` on the\n`country` column.\n\nYou can download a small version of this database to test locally, read the **Sample Databases** section in\n[the README]({{readme_url}}) for details.\n\nHere's how the tester will execute your program:\n\n```\n$ ./your_sqlite3.sh companies.db \"SELECT id, name FROM companies WHERE country = 'eritrea'\"\n```\n\nand here's the output it expects:\n\n```\n121311|unilink s.c.\n2102438|orange asmara it solutions\n5729848|zara mining share company\n6634629|asmara rental\n```\n\nYou can assume that all queries run by the tester will include `country` in the `WHERE` clause,\nso they can be served by the index. The tester will run multiple randomized queries and expect all of them\nto return results in under 3 seconds.\n",
-      "marketing_md": "This stage is similar to the previous one, but focuses on enhancing query performance using an index. In this\nstage, your program will need to read through millions of rows in under 5 seconds."
+      "marketing_md": "This stage is similar to the previous one, but focuses on enhancing query performance using an index. In this\nstage, your program will need to read through millions of rows in under 5 seconds.\n"
     }
   ]
 }

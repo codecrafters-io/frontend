@@ -1,6 +1,7 @@
 export default {
   "slug": "git",
   "name": "Build your own Git",
+  "short_name": "Git",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along the\nway, you'll learn about the `.git` directory, Git objects (blobs, commits,\ntrees etc.), packfiles, Git's transfer protocols and much more.\n",
   "short_description_md": "Learn about git objects, plumbing commands, git transfer protocols and more\n",
@@ -10,15 +11,13 @@ export default {
     "python",
     "ruby",
     "go",
-    "rust",
-    "kotlin"
+    "rust"
   ],
   "starter_repos": {
     "python": "https://github.com/codecrafters-io/git-starter-python",
     "ruby": "https://github.com/codecrafters-io/git-starter-ruby",
     "go": "https://github.com/codecrafters-io/git-starter-go",
-    "rust": "https://github.com/codecrafters-io/git-starter-rust",
-    "kotlin": "https://github.com/codecrafters-io/git-starter-kotlin"
+    "rust": "https://github.com/codecrafters-io/git-starter-rust"
   },
   "marketing": {
     "description": "Learn about git objects, plumbing commands, git transfer protocols and more",
@@ -89,7 +88,7 @@ export default {
       "name": "Clone a repository",
       "difficulty": "hard",
       "description_md": "This is the last stage of the challenge, and probably the hardest.\n\nIn this stage, you'll clone a public repository from GitHub. To do this,\nyou'll use Git's [Smart HTTP transfer\nprotocol](https://www.git-scm.com/docs/http-protocol).\n\n{{#lang_is_rust}}\nYou can use the [reqwest](https://crates.io/crates/reqwest) crate to make\nHTTP requests, we've included it in the `Cargo.toml` file.\n{{/lang_is_rust}}\n\nYour program will be invoked like this:\n\n```\n./your_git.sh clone https://github.com/blah/blah <some_dir>\n```\n\nYour program must create `<some_dir>` and clone the given repository into\nit.\n\nTo verify your changes, the tester will do the following:\n\n- Check the contents of a file\n- Read commit object attributes from the `.git` directory\n\nTo know more about the protocol format, checkout\n[pack-protocol.txt](https://github.com/git/git/blob/master/Documentation/technical/pack-protocol.txt),\n[pack-format.txt](https://github.com/git/git/blob/master/Documentation/technical/pack-format.txt),\nand\n[these](https://codewords.recurse.com/issues/three/unpacking-git-packfiles)\n[articles](https://medium.com/@concertdaw/sneaky-git-number-encoding-ddcc5db5329f).\n",
-      "marketing_md": "This is the last stage of the challenge, and probably the hardest! In this\nstage, you'll clone a public repository from GitHub. To do this, you'll\nuse one of Git's [Transfer\nprotocols](https://git-scm.com/book/en/v2/Git-Internals-Transfer-Protocols)."
+      "marketing_md": "This is the last stage of the challenge, and probably the hardest! In this\nstage, you'll clone a public repository from GitHub. To do this, you'll\nuse one of Git's [Transfer\nprotocols](https://git-scm.com/book/en/v2/Git-Internals-Transfer-Protocols).\n"
     }
   ]
 }

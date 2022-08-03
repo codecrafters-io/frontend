@@ -37,4 +37,11 @@ module('Acceptance | view-course-overview', function (hooks) {
     await courseOverviewPage.visit({ course_slug: 'redis' });
     assert.equal(currentURL(), '/courses/redis/overview');
   });
+
+  test('it renders when anonymous user views alpha course', async function (assert) {
+    testScenario(this.server);
+
+    await courseOverviewPage.visit({ course_slug: 'grep' });
+    assert.equal(currentURL(), '/courses/grep/overview');
+  });
 });
