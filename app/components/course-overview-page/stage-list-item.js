@@ -8,7 +8,7 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
   @service store;
 
   get marketingHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.args.stage.marketingMarkdown));
+    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.args.stage.marketingMarkdown));
   }
 
   get userHasStartedCourse() {
