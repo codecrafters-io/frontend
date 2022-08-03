@@ -7,6 +7,6 @@ export default class CourseOverviewPageIntroductionAndStagesComponent extends Co
   @service store;
 
   get instructionsHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.args.course.descriptionMarkdown));
+    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.args.course.descriptionMarkdown));
   }
 }
