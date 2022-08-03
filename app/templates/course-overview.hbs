@@ -3,7 +3,7 @@
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 px-3 md:px-6">
   <CourseOverviewPage::Header @course={{this.model.course}} class="mb-6 md:mb-10" />
 
-  <div class="flex items-start">
+  <div class="flex items-start flex-col lg:flex-row">
     <div class="flex-grow">
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
 
@@ -11,7 +11,7 @@
     </div>
 
     {{#if this.model.course.releaseStatusIsAlpha}}
-      <div class="w-80 flex-shrink-0 ml-2 hidden lg:block">
+      <div class="lg:w-80 lg:flex-shrink-0 ml-2">
         <div class="flex px-4 py-2 items-center">
           <div class="text-sm text-gray-500 leading-relaxed">
             <p class="mb-3">
