@@ -31,7 +31,7 @@ module('Acceptance | view-courses', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 5, 'expected 5 course cards to be present');
+    assert.equal(coursesPage.courseCards.length, 6, 'expected 6 course cards to be present');
 
     assert.ok(coursesPage.courseCards[4].hasAlphaLabel, 'alpha challenges should have alpha label');
   });
