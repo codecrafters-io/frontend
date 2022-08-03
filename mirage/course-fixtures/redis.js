@@ -1,13 +1,15 @@
 export default {
   "slug": "redis",
   "name": "Build your own Redis",
+  "short_name": "Redis",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a toy Redis clone\nthat's capable of handling basic commands like PING, GET\nand SET. Along the way, we'll learn about event loops, the Redis\nProtocol and more.\n",
   "short_description_md": "Learn about TCP servers, events loops, the Redis protocol and more\n",
   "completion_percentage": 30,
   "early_access_languages": [
     "crystal",
-    "clojure"
+    "clojure",
+    "csharp"
   ],
   "supported_languages": [
     "python",
@@ -32,9 +34,9 @@ export default {
     "javascript": "https://github.com/codecrafters-io/redis-starter-javascript",
     "php": "https://github.com/codecrafters-io/redis-starter-php",
     "python": "https://github.com/codecrafters-io/redis-starter-python",
+    "csharp": "https://github.com/codecrafters-io/redis-starter-csharp",
     "ruby": "https://github.com/codecrafters-io/redis-starter-ruby",
-    "rust": "https://github.com/codecrafters-io/redis-starter-rust",
-    "swift": "https://github.com/codecrafters-io/redis-starter-swift"
+    "rust": "https://github.com/codecrafters-io/redis-starter-rust"
   },
   "marketing": {
     "description": "Learn about TCP servers, event loops, the Redis protocol and more",
@@ -61,16 +63,18 @@ export default {
     {
       "slug": "init",
       "name": "Bind to a port",
-      "description_md": "In this stage, your task is to start a TCP server on port 6379, the default port that Redis uses.\n",
+      "description_md": "In this stage, your task is to start a TCP server on port 6379, the default port that redis uses.\n",
       "difficulty": "very_easy",
-      "marketing_md": "In this stage, you'll start a TCP server on port 6379, which is the\ndefault port that Redis uses.\n"
+      "marketing_md": "In this stage, you'll start a TCP server on port 6379, which is the\ndefault port that Redis uses.\n",
+      "source_walkthrough_slug": "redis-bind-port"
     },
     {
       "slug": "ping-pong",
       "name": "Respond to PING",
       "difficulty": "easy",
       "description_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command.\n\nSince the tester client _only_ sends `PING` at the moment, it's okay to\nignore what the client sends and hardcode a response. We'll get to parsing\nclient input in later stages.\n\nKeep in mind that Redis clients & servers speak the Redis protocol, so\njust sending \"PONG\" back won't suffice. You'll need to encode it as a\n[RESP simple\nstring](https://redis.io/topics/protocol#resp-simple-strings).\n",
-      "marketing_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command. You'll use [the Redis\nprotocol](https://redis.io/topics/protocol) to encode the reply.\n"
+      "marketing_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command. You'll use [the Redis\nprotocol](https://redis.io/topics/protocol) to encode the reply.\n",
+      "source_walkthrough_slug": "redis-ping-command"
     },
     {
       "slug": "ping-pong-multiple",
@@ -105,7 +109,7 @@ export default {
       "name": "Expiry",
       "difficulty": "medium",
       "description_md": "In this stage, you'll need to support setting a key with an expiry. The\nexpiry is provided using the \"PX\" argument to the\n[SET](https://redis.io/commands/set) command.\n\n{{#lang_is_haskell}}\nThe [time](https://hackage.haskell.org/package/time) package is available\nto use as a dependency.\n{{/lang_is_haskell}}\n",
-      "marketing_md": "In this stage, you'll add support for setting a key with an expiry. The\nexpiry is provided using the \"PX\" argument to the\n[SET](https://redis.io/commands/set) command."
+      "marketing_md": "In this stage, you'll add support for setting a key with an expiry. The\nexpiry is provided using the \"PX\" argument to the\n[SET](https://redis.io/commands/set) command.\n"
     }
   ]
 }
