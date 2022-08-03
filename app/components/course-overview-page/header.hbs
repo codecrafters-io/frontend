@@ -6,15 +6,21 @@
       {{@course.shortDescriptionMarkdown}}
     </p>
 
-    <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
-      <CourseOverviewPage::StartCourseButton @course={{@course}} />
-
-      <div class="flex items-center flex-wrap gap-2 flex-grow">
-        {{#each @course.supportedLanguages as |supportedLanguage|}}
-          <img alt="{{@course.slug}}" src={{supportedLanguage.tealLogoUrl}} class="h-6" />
-        {{/each}}
+    {{#if @course.releaseStatusIsAlpha}}
+      <div class="inline-flex text-md text-teal-500 font-bold border border-teal-500 rounded-lg px-3 py-2 mr-3">
+        COMING SOON
       </div>
-    </div>
+    {{else}}
+      <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
+        <CourseOverviewPage::StartCourseButton @course={{@course}} />
+
+        <div class="flex items-center flex-wrap gap-2 flex-grow">
+          {{#each @course.supportedLanguages as |supportedLanguage|}}
+            <img alt="{{@course.slug}}" src={{supportedLanguage.tealLogoUrl}} class="h-6" />
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
   </div>
   <div class="w-40 ml-4 hidden md:block">
     <CourseLogo @course={{@course}} />
