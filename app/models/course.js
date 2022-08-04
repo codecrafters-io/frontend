@@ -35,6 +35,8 @@ export default class CourseModel extends Model {
       docker: '/assets/images/challenge-logos/challenge-logo-docker.svg',
       git: '/assets/images/challenge-logos/challenge-logo-git.svg',
       sqlite: '/assets/images/challenge-logos/challenge-logo-sqlite.svg',
+      react: '/assets/images/challenge-logos/challenge-logo-react.svg',
+      grep: '/assets/images/challenge-logos/challenge-logo-grep.svg',
     }[this.slug];
   }
 
