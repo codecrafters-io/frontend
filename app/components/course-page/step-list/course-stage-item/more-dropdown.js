@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import window from 'ember-window-mock';
 
 export default class CoursePageStepListCourseStageItemMoreDropdownComponent extends Component {
   @service currentUser;
@@ -25,6 +26,12 @@ export default class CoursePageStepListCourseStageItemMoreDropdownComponent exte
         this.router.transitionTo('pay');
       }
     }
+  }
+
+  @action
+  handleViewTestCasesButtonClicked(dropdownActions) {
+    dropdownActions.close();
+    window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
   }
 
   @action
