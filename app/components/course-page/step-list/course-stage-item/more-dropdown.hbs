@@ -22,6 +22,15 @@
           {{on "click" (fn this.handleViewSourceWalkthroughButtonClicked dd.actions)}}
         />
       {{/if}}
+
+      {{#if @courseStage.testerSourceCodeUrl}}
+        <CoursePage::StepList::CourseStageItem::MoreDropdownItem
+          @text="View Test Cases"
+          @isEnabled={{true}}
+          @icon="check-circle"
+          {{on "click" (fn this.handleViewTestCasesButtonClicked dd.actions)}}
+        />
+      {{/if}}
     </div>
   </dd.Content>
 </BasicDropdown>
