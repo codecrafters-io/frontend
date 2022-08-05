@@ -33,15 +33,12 @@ module.exports = {
           css: {
             a: {
               color: colors.indigo[400],
-              fontWeight: 'bold',
             },
             'a:hover': {
               color: colors.indigo[500],
-              fontWeight: 'bold',
             },
             'a code': {
               color: colors.indigo[400],
-              fontWeight: 'bold',
             },
             'a code:hover': {
               color: colors.indigo[500],
