@@ -15,7 +15,22 @@ export default {
   },
   "marketing": {
     "difficulty": "medium",
-    "testimonials": []
+    "testimonials": [
+      {
+        "author_name": "Ananthalakshmi Sankar",
+        "author_description": "Automation Engineer at Apple",
+        "author_avatar": "https://codecrafters.io/images/testimonials/ananthalakshmi_sankar.jpeg",
+        "link": "https://github.com/anu294",
+        "text": "There are few sites I like as much that have a step by step guide. The real-time feedback is so good, it's creepy!"
+      },
+      {
+        "author_name": "Patrick Burris",
+        "author_description": "Senior Software Developer, CenturyLink",
+        "author_avatar": "https://codecrafters.io/images/testimonials/patrick_burris.jpeg",
+        "link": "https://github.com/Jumballaya",
+        "text": "I think the instant feedback right there in the git push is really cool.\nDidn't even know that was possible!\n"
+      }
+    ]
   },
   "stages": [
     {
