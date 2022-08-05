@@ -14,6 +14,7 @@ export default class CourseStageModel extends Model {
   @attr('string') slug;
   @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
   @hasMany('course-stage-solution', { async: false }) solutions;
+  @attr('string') testerSourceCodeUrl;
 
   @equal('difficulty', 'very_easy') difficultyIsVeryEasy;
   @equal('difficulty', 'easy') difficultyIsEasy;
