@@ -47,6 +47,12 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
+  handleStatusPageClick(dropdownActions) {
+    window.open('https://status.codecrafters.io/', '_blank');
+    dropdownActions.close();
+  }
+
+  @action
   handleManageTeamClick(dropdownActions, team) {
     dropdownActions.close();
     this.router.transitionTo('team', team.id);
