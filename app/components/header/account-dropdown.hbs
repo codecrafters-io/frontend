@@ -64,6 +64,7 @@
 
       <Header::AccountDropdownLink @text="Community" @icon="user-group" {{on "click" (fn this.handleCommunityClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />
+      <Header::AccountDropdownLink @text="Status Page" @icon="cloud" {{on "click" (fn this.handleStatusPageClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>
   </dd.Content>
