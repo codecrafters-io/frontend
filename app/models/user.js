@@ -19,7 +19,7 @@ export default class UserModel extends Model {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
   }
 
-  get canAccessSubscriberOnlyContent() {
+  get canAccessPaidContent() {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription;
   }
 
@@ -35,7 +35,7 @@ export default class UserModel extends Model {
     if (language.isRust) {
       return true;
     } else {
-      return this.canAccessSubscriberOnlyContent;
+      return this.canAccessPaidContent;
     }
   }
 
