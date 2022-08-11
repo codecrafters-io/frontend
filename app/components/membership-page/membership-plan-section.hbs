@@ -2,20 +2,20 @@
   <div class="text-gray-700" data-test-membership-plan-description>
     {{#if @subscription.isTrialing}}
       Your trial for the
-      <b>{{@subscription.pricingPlanName}}</b>
+      <b class="font-semibold">{{@subscription.pricingPlanName}}</b>
       plan is currently active.
     {{else if @subscription.isActive}}
       {{#if @subscription.cancelAt}}
         Your CodeCrafters membership is valid until
-        <b>{{moment-format @subscription.cancelAt "LLL"}}</b>.
+        <b class="font-semibold">{{moment-format @subscription.cancelAt "LLL"}}</b>.
       {{else}}
         You are currently subscribed to the
-        <b>{{@subscription.pricingPlanName}}</b>
+        <b class="font-semibold">{{@subscription.pricingPlanName}}</b>
         plan.
       {{/if}}
     {{else if @subscription.isInactive}}
       Your CodeCrafters membership is
-      <b class="text-red-600">currently inactive</b>.
+      <b class="text-red-600 font-semibold">currently inactive</b>.
     {{/if}}
   </div>
 </MembershipPage::Section>

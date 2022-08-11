@@ -13,13 +13,13 @@
 
       {{#each this.charges as |charge|}}
         <div class="text-gray-600 text-sm">{{moment-format charge.createdAt "LL"}}</div>
-        <div class="font-bold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
+        <div class="font-semibold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
         <div class="flex items-center justify-end">
           {{#if charge.invoiceId}}
             <a
               href="/invoices/{{charge.invoiceId}}/download"
               target="_blank"
-              class="text-teal-500 font-bold text-sm"
+              class="text-teal-500 hover:text-teal-600 font-semibold text-sm"
               data-test-download-invoice-link
               rel="noopener noreferrer"
             >
