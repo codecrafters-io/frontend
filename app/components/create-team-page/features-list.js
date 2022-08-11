@@ -10,7 +10,7 @@ export default class FeaturesListComponent extends Component {
       },
       {
         title: 'Team Subscriptions',
-        description: 'Pay for your whole team at once with both monthly & annual billing options. (Optional)',
+        description: 'Pay for your whole team at once with annual seat-based billing. (Optional)',
         image: 'team-billing',
       },
       {
