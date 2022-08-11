@@ -8,8 +8,11 @@ export default class MembershipController extends Controller {
     return this.currentUserService.record.activeSubscription;
   }
 
-  // To use when we handle expired subscriptions
-  // get expiredSubscription() {
-  //   return this.currentUserService.record.expiredSubscription;
-  // }
+  get activeOrExpiredSubscription() {
+    return this.activeSubscription || this.expiredSubscription;
+  }
+
+  get expiredSubscription() {
+    return this.currentUserService.record.expiredSubscription;
+  }
 }
