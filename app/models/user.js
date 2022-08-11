@@ -16,13 +16,19 @@ export default class UserModel extends Model {
   @hasMany('team-membership', { async: false }) teamMemberships;
 
   get activeSubscription() {
-    // TODO: Look at active once we're handling cancellations
-    return this.subscriptions.sortBy('startDate').lastObject;
-    // return this.subscriptions.findBy('isActive');
+    return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
   }
 
   get canAccessSubscriberOnlyContent() {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription;
+  }
+
+  get expiredSubscription() {
+    if (this.hasActiveSubscription) {
+      return null;
+    } else {
+      return this.subscriptions.sortBy('startDate').reverse().findBy('isInactive');
+    }
   }
 
   canCreateRepository(course, language) {
