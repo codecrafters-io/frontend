@@ -5,9 +5,14 @@ export default class TeamModel extends Model {
   @attr('string') inviteCode;
   @hasMany('team-membership', { async: false }) memberships;
   @attr('string') name;
+  @hasMany('team-membership', { async: false }) pilots;
   @attr('string') slackAppInstallationUrl;
   @hasMany('slack-integration', { async: false }) slackIntegrations;
   @hasMany('team-subscription', { async: false }) subscriptions;
+
+  get activePilot() {
+    return this.pilots.findBy('isActive');
+  }
 
   get activeSubscription() {
     return this.subscriptions.findBy('isActive');
@@ -15,6 +20,10 @@ export default class TeamModel extends Model {
 
   get admins() {
     return this.memberships.filterBy('isAdmin', true).mapBy('user');
+  }
+
+  get hasActivePilot() {
+    return !!this.activePilot;
   }
 
   get hasActiveSubscription() {

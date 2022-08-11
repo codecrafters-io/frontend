@@ -5,4 +5,8 @@ export default class TeamPilotModel extends Model {
   @attr('date') endDate;
   @attr('boolean') requiresPaymentMethod;
   @belongsTo('team', { async: false }) team;
+
+  get isActive() {
+    return new Date() < this.endDate;
+  }
 }
