@@ -5,7 +5,7 @@ export default class TeamModel extends Model {
   @attr('string') inviteCode;
   @hasMany('team-membership', { async: false }) memberships;
   @attr('string') name;
-  @hasMany('team-membership', { async: false }) pilots;
+  @hasMany('team-pilot', { async: false }) pilots;
   @attr('string') slackAppInstallationUrl;
   @hasMany('slack-integration', { async: false }) slackIntegrations;
   @hasMany('team-subscription', { async: false }) subscriptions;
