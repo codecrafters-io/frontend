@@ -13,7 +13,7 @@
 
       {{#each this.charges as |charge|}}
         <div class="text-gray-600 text-sm">{{moment-format charge.createdAt "LL"}}</div>
-        <div class="font-bold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
+        <div class="font-semibold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
         <div class="flex items-center justify-end">
           {{#if charge.invoiceId}}
             <a
