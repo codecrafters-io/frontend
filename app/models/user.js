@@ -20,7 +20,7 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription;
+    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
   get expiredSubscription() {
@@ -65,6 +65,10 @@ export default class UserModel extends Model {
 
   get managedTeams() {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
+  }
+
+  get teamHasActivePilot() {
+    return this.teams.isAny('hasActivePilot');
   }
 
   get teamHasActiveSubscription() {
