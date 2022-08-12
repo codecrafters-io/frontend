@@ -1,11 +1,7 @@
 {{page-title "CodeCrafters"}}
 
 <div class="bg-gray-100 min-h-screen">
-  {{#if this.currentRouteIsPay}}
-    <MinimalHeader />
-  {{else}}
-    <Header />
-  {{/if}}
+  <Header />
 
   {{outlet}}
 
@@ -15,7 +11,7 @@
     </ModalBackdrop>
   {{/if}}
 
-  <Footer @shouldShowChallengeLinkGroup={{not this.currentRouteIsPay}} />
+  <Footer />
 </div>
 
 <LoadingIndicatorRemover />

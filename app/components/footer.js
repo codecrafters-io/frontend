@@ -2,11 +2,7 @@ import Component from '@glimmer/component';
 
 export default class FooterComponent extends Component {
   get footerLinkGroups() {
-    if (this.args.shouldShowChallengeLinkGroup) {
-      return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
-    } else {
-      return [this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
-    }
+    return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
   }
 
   get challengeLinkGroup() {
