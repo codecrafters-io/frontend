@@ -8,7 +8,11 @@
 
   <div class="flex gap-4 items-start flex-col md:flex-row">
     <div class="w-full md:w-1/3">
-      <TeamPage::SubscriptionSettingsContainer @team={{this.model.team}} />
+      {{#if this.model.team.hasActivePilot}}
+        <TeamPage::PilotDetailsContainer @team={{this.model.team}} />
+      {{else}}
+        <TeamPage::SubscriptionSettingsContainer @team={{this.model.team}} />
+      {{/if}}
       <TeamPage::SlackIntegrationSettingsContainer @team={{this.model.team}} class="mt-4" />
     </div>
 
