@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 
-export default class AdminCourseSubmissionsController extends Controller {
+export default class CourseAdminSubmissionsController extends Controller {
   queryParams = ['languages', 'usernames'];
   languages = '';
   usernames = '';

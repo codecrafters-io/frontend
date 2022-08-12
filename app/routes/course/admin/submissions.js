@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 
-export default class AdminCourseSubmissionsRoute extends ApplicationRoute {
+export default class CourseAdminSubmissionsRoute extends ApplicationRoute {
   @service currentUser;
   @service store;
 
@@ -9,7 +9,7 @@ export default class AdminCourseSubmissionsRoute extends ApplicationRoute {
     let courses = await this.store.findAll('course', {
       include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
     });
-    let course = courses.findBy('slug', this.paramsFor('admin.course').course_slug);
+    let course = courses.findBy('slug', this.paramsFor('course.admin').course_slug);
 
     let filters = { course_id: course.id };
 

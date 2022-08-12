@@ -2,8 +2,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { visit } from '@ember/test-helpers';
-import adminCoursesPage from 'codecrafters-frontend/tests/pages/admin/courses-page';
 import adminCourseSubmissionsPage from 'codecrafters-frontend/tests/pages/admin/course-submissions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
@@ -16,9 +14,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await adminCoursesPage.visit();
-    await adminCoursesPage.clickOnLink('Build your own Redis');
-
+    await adminCourseSubmissionsPage.visit({ course_slug: 'redis' });
     assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 0);
 
     await percySnapshot('Admin - Course Submissions - No Submissions');
@@ -43,10 +39,9 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[2],
     });
 
-    await adminCoursesPage.visit();
-    await adminCoursesPage.clickOnLink('Build your own Redis');
-
+    await adminCourseSubmissionsPage.visit({ course_slug: 'redis' });
     assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 3);
+
     await percySnapshot('Admin - Course Submissions - With Submissions');
   });
 
@@ -65,7 +60,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user2 });
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user3 });
 
-    await visit('/admin/courses/redis/submissions?usernames=user1,user2');
+    await adminCourseSubmissionsPage.visit({ course_slug: 'redis', usernames: 'user1,user2' });
     assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
@@ -86,7 +81,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: javascript, user: user3 });
 
-    await visit('/admin/courses/redis/submissions?languages=python,ruby');
+    await adminCourseSubmissionsPage.visit({ course_slug: 'redis', languages: 'python,ruby' });
     assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 });

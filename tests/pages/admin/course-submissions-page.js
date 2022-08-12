@@ -8,5 +8,5 @@ export default create({
     scope: '[data-test-timeline-container]',
   },
 
-  visit: visitable('/admin/courses/:course_slug'),
+  visit: visitable('/courses/:course_slug/admin/submissions'),
 });
