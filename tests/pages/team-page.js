@@ -16,6 +16,11 @@ export default create({
     return this.members.toArray().findBy('username', username);
   },
 
+  pilotDetailsContainer: {
+    detailsText: text('[data-test-details-text]'),
+    scope: '[data-test-pilot-details-container]',
+  },
+
   slackIntegrationSettingsContainer: {
     hasUninstallButton: isVisible('[data-test-uninstall-button]'),
     scope: '[data-test-slack-integration-settings-container]',
