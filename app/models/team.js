@@ -11,15 +11,19 @@ export default class TeamModel extends Model {
   @hasMany('team-subscription', { async: false }) subscriptions;
 
   get activePilot() {
-    return this.pilots.findBy('isActive');
+    return this.pilots.sortBy('endDate').reverse().findBy('isActive');
   }
 
   get activeSubscription() {
-    return this.subscriptions.findBy('isActive');
+    return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
   }
 
   get admins() {
     return this.memberships.filterBy('isAdmin', true).mapBy('user');
+  }
+
+  get expiredPilot() {
+    return this.pilots.sortBy('endDate').reverse().findBy('isExpired');
   }
 
   get hasActivePilot() {
@@ -28,6 +32,10 @@ export default class TeamModel extends Model {
 
   get hasActiveSubscription() {
     return !!this.activeSubscription;
+  }
+
+  get hasExpiredPilot() {
+    return !!this.expiredPilot;
   }
 
   get hasSlackIntegration() {

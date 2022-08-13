@@ -175,6 +175,20 @@ function buildIncludedResources(user) {
         },
       });
     });
+
+    teamMembership.team.pilots.models.forEach((teamPilot) => {
+      includedResources.push({
+        id: teamPilot.id,
+        type: 'team-pilots',
+        attributes: {
+          'end-date': teamPilot.endDate.toISOString(),
+          'requires-payment-method': teamPilot.requiresPaymentMethod,
+        },
+        relationships: {
+          team: { data: { type: 'teams', id: teamPilot.team.id } },
+        },
+      });
+    });
   });
 
   return includedResources;

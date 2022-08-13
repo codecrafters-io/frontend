@@ -1,7 +1,12 @@
 <TeamPage::Section @title="Pilot" data-test-pilot-details-container ...attributes>
-  <div class="text-gray-600 text-sm leading-6 mb-4" data-test-instructions-text>
-    Your team's pilot is valid until
-    <b class="font-semibold">{{moment-format @team.activePilot.endDate "LLL"}}</b>.
+  <div class="text-gray-600 text-sm leading-6 mb-4" data-test-details-text>
+    {{#if @team.activePilot}}
+      Your team's pilot is valid until
+      <b class="font-semibold">{{moment-format @team.activePilot.endDate "LLL"}}</b>.
+    {{else if @team.expiredPilot}}
+      Your team's pilot ended on
+      <b class="font-semibold">{{moment-format @team.expiredPilot.endDate "LL"}}</b>.
+    {{/if}}
   </div>
 
   <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
