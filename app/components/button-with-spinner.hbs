@@ -1,12 +1,8 @@
-<button
-  type="button"
-  class="px-3 py-2 text-white rounded shadow-sm font-bold flex items-center {{if @shouldShowSpinner 'cursor-not-allowed'}}"
-  ...attributes
->
+<button type="button" class="px-3 py-2 rounded shadow-sm font-bold flex items-center {{if @shouldShowSpinner 'cursor-not-allowed'}}" ...attributes>
   {{yield}}
 
   {{#if @shouldShowSpinner}}
-    <svg class="animate-spin ml-3 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <svg class="animate-spin ml-3 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
       <path
         class="opacity-75"

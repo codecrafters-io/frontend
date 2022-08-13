@@ -2,7 +2,7 @@
   {{#if @subscription.isTrialing}}
     <ButtonWithSpinner
       @shouldShowSpinner={{this.isCancellingTrial}}
-      class="bg-red-600 hover:bg-red-700 text-sm mt-4"
+      class="bg-red-600 hover:bg-red-700 text-sm mt-4 text-white"
       {{on "click" this.handleCancelTrialButtonClick}}
       data-test-cancel-trial-button
     >
@@ -10,7 +10,7 @@
     </ButtonWithSpinner>
   {{else if (and @subscription.isActive (not @subscription.cancelAt))}}
     <ButtonWithSpinner
-      class="bg-red-600 hover:bg-red-700 text-sm mt-4"
+      class="bg-red-600 hover:bg-red-700 text-sm mt-4 text-white"
       @shouldShowSpinner={{this.isCancellingSubscription}}
       {{on "click" this.handleCancelSubscriptionButtonClick}}
       data-test-cancel-subscription-button
@@ -19,7 +19,7 @@
     </ButtonWithSpinner>
   {{else if @subscription.isInactive}}
     <ButtonWithSpinner
-      class="bg-teal-500 hover:bg-teal-600 text-sm mt-4"
+      class="bg-teal-500 hover:bg-teal-600 text-sm mt-4 text-white"
       {{on "click" this.handleStartMembershipButtonClick}}
       data-test-start-membership-button
     >
@@ -28,7 +28,7 @@
   {{/if}}
 
   <ButtonWithSpinner
-    class="bg-teal-500 hover:bg-teal-600 text-sm mt-4"
+    class="border border-teal-500 hover:border-teal-600 text-sm mt-4 text-teal-500 hover:text-teal-600"
     @shouldShowSpinner={{this.isCreatingPaymentMethodUpdateRequest}}
     {{on "click" this.handleUpdatePaymentMethodButtonClick}}
     data-test-update-payment-method-button
