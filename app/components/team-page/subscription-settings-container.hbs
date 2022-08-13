@@ -1,35 +1,16 @@
 <TeamPage::Section @title="Subscription" data-test-subscription-settings-container ...attributes>
-  {{#if @team.activeSubscription}}
-    {{#if this.currentUserIsTeamAdmin}}
-      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
-        To view invoices or amend your subscription, click on the button below.
-      </div>
+  {{#if this.currentUserIsTeamAdmin}}
+    <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
+      To view invoices or amend your subscription, click on the button below.
+    </div>
 
-      <TeamPage::ManageSubscriptionButton
-        @onClick={{this.handleManageSubscriptionButtonClick}}
-        @isCreatingTeamBillingSession={{this.isCreatingTeamBillingSession}}
-      />
-    {{else}}
-      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
-        To manage this team's subscription, ask one of the team admins for help.
-      </div>
-    {{/if}}
+    <TeamPage::ManageSubscriptionButton
+      @onClick={{this.handleManageSubscriptionButtonClick}}
+      @isCreatingTeamBillingSession={{this.isCreatingTeamBillingSession}}
+    />
   {{else}}
-    {{#if this.currentUserIsTeamAdmin}}
-      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
-        Each team member can subscribe using their own account. If you'd like to create a team-level subscription with a single invoice, contact us.
-      </div>
-
-      <a
-        class="inline-block bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold text-md mt-4"
-        href="mailto:sarup@codecrafters.io"
-      >
-        Contact Us
-      </a>
-    {{else}}
-      <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
-        Each team member can subscribe using their own account. Contact one of the team admins to set up a team-level subscription.
-      </div>
-    {{/if}}
+    <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
+      To manage this team's subscription, ask one of the team admins for help.
+    </div>
   {{/if}}
 </TeamPage::Section>
