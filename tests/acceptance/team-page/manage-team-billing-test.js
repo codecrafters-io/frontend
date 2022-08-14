@@ -77,5 +77,9 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
 
     assert.ok(teamPage.pilotDetailsContainer.isPresent, 'pilot details are visible');
     assert.equal(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
+    assert.equal(teamPage.pilotDetailsContainer.instructionsText, 'Ready to upgrade? Start by adding a payment method:');
+
+    await teamPage.pilotDetailsContainer.clickOnAddPaymentMethodButton();
+    assert.equal(window.location.href, 'https://test.com/team_payment_method_update_request', 'should redirect to team billing session URL');
   });
 });

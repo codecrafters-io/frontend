@@ -10,13 +10,15 @@
   </div>
 
   <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
-    If you're ready to upgrade or need any help, please contact us:
+    Ready to upgrade? Start by adding a payment method:
   </div>
 
-  <a
-    class="inline-block bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold text-md mt-4"
-    href="mailto:sarup@codecrafters.io"
+  <PrimaryButtonWithSpinner
+    @size="small"
+    @shouldShowSpinner={{this.isCreatingPaymentMethodUpdateRequest}}
+    {{on "click" this.handleAddPaymentMethodButtonClick}}
+    data-test-add-payment-method-button
   >
-    Contact Us
-  </a>
+    Add Payment Method
+  </PrimaryButtonWithSpinner>
 </TeamPage::Section>
