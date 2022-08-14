@@ -17,7 +17,9 @@ export default create({
   },
 
   pilotDetailsContainer: {
+    clickOnAddPaymentMethodButton: clickable('[data-test-add-payment-method-button]'),
     detailsText: text('[data-test-details-text]'),
+    instructionsText: text('[data-test-instructions-text]'),
     scope: '[data-test-pilot-details-container]',
   },
 

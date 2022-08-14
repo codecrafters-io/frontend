@@ -9,14 +9,43 @@
     {{/if}}
   </div>
 
-  <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
-    If you're ready to upgrade or need any help, please contact us:
-  </div>
+  {{#if @team.hasPaymentMethod}}
+    <div class="text-gray-600 text-sm leading-6 mb-4" data-test-instructions-text>
+      Click below to start your subscription:
+    </div>
 
-  <a
-    class="inline-block bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold text-md mt-4"
-    href="mailto:sarup@codecrafters.io"
-  >
-    Contact Us
-  </a>
+    <PrimaryButtonWithSpinner
+      @size="small"
+      @shouldShowSpinner={{this.isCreatingPaymentMethodUpdateRequest}}
+      {{on "click" this.handleAddPaymentMethodButtonClick}}
+      data-test-start-subscription-button
+    >
+      Start Subscription
+    </PrimaryButtonWithSpinner>
+
+    <div class="text-gray-600 text-xs leading-relaxed mt-4">
+      Your team's payment method will be charged
+      <b class="font-semibold">$790</b>/seat/yr for
+      <b class="font-semibold">6 seats</b>.
+      <a href="mailto:sarup@codecrafters.io" class="text-teal-600 underline">Contact us</a>
+      for questions.
+    </div>
+  {{else}}
+    <div class="text-gray-600 text-sm leading-6 mb-4" data-test-instructions-text>
+      Ready to upgrade? Start by adding a payment method:
+    </div>
+
+    <PrimaryButtonWithSpinner
+      @size="small"
+      @shouldShowSpinner={{this.isCreatingPaymentMethodUpdateRequest}}
+      {{on "click" this.handleAddPaymentMethodButtonClick}}
+      data-test-add-payment-method-button
+    >
+      Add Payment Method
+    </PrimaryButtonWithSpinner>
+
+    <div class="text-gray-600 text-xs leading-relaxed mt-4">
+      Adding a payment method won't charge you right away. We'll confirm the charge amount in the next step.
+    </div>
+  {{/if}}
 </TeamPage::Section>
