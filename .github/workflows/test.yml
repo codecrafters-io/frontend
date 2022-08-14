@@ -76,6 +76,11 @@ jobs:
       - name: Remove ember exam from test results
         run: sed -i 's/Exam Partition [0-9]\+ - //g' test-results.xml
 
+      - name: Remove percy logs
+        run: sed -i '/^\[percy\]/d' test-results.xml
+
+      - run: cat test-results.xml
+
       - name: Publish Buildkite analytics
         run: |
           curl -XPOST --fail \
