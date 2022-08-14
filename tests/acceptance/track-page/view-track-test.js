@@ -17,12 +17,12 @@ module('Acceptance | view-track', function (hooks) {
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     await visit('/tracks/go');
-    assert.equal(1, 1); // dummy assertion
+    assert.strictEqual(1, 1); // dummy assertion
 
     await percySnapshot('Track - Anonymous User');
 
     await visit('/tracks/haskell');
-    assert.equal(1, 1); // dummy assertion
+    assert.strictEqual(1, 1); // dummy assertion
 
     await percySnapshot('Track (Generic) - Anonymous User');
   });
@@ -33,7 +33,7 @@ module('Acceptance | view-track', function (hooks) {
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     await visit('/tracks/go');
-    assert.equal(1, 1); // dummy assertion
+    assert.strictEqual(1, 1); // dummy assertion
 
     await percySnapshot('Track - Not Started');
   });
@@ -54,7 +54,7 @@ module('Acceptance | view-track', function (hooks) {
     });
 
     await visit('/tracks/go');
-    assert.equal(1, 1);
+    assert.strictEqual(1, 1);
 
     await percySnapshot('Track - Started');
   });
@@ -75,7 +75,7 @@ module('Acceptance | view-track', function (hooks) {
     });
 
     await visit('/tracks/go');
-    assert.equal(1, 1);
+    assert.strictEqual(1, 1);
 
     await percySnapshot('Track - 1 Course Finished');
   });

@@ -23,10 +23,10 @@ module('Acceptance | pay-test', function (hooks) {
     try {
       await payPage.visit();
     } catch (e) {
-      assert.equal(1, 1);
+      assert.strictEqual(1, 1);
     }
 
-    assert.equal(window.location.href, `${window.location.origin}/login?next=/pay`, 'should redirect to login URL');
+    assert.strictEqual(window.location.href, `${window.location.origin}/login?next=/pay`, 'should redirect to login URL');
   });
 
   test('new user can start checkout session', async function (assert) {
@@ -41,7 +41,7 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page');
 
     await payPage.clickOnStartPaymentButton();
-    assert.equal(1, 1); // Dummy test
+    assert.strictEqual(1, 1); // Dummy test
   });
 
   test('new user sees discounted price start checkout session', async function (assert) {
@@ -52,6 +52,6 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page - with discount');
 
     await payPage.clickOnStartPaymentButton();
-    assert.equal(1, 1); // Dummy test
+    assert.strictEqual(1, 1); // Dummy test
   });
 });

@@ -28,7 +28,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
     let baseRequestsCount = [
       'fetch courses (courses listing page)',
@@ -44,27 +44,27 @@ module('Acceptance | course-page | start-course', function (hooks) {
       'notify page view (course page)',
     ].length;
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount);
+    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount);
 
     await percySnapshot('Start Course - Select Language');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
-    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
 
     await coursePage.setupItem.clickOnLanguageButton('JavaScript');
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'create repository request was executed');
+    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'create repository request was executed');
 
     await percySnapshot('Start Course - Clone Repository');
 
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep, 'current step is clone repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
-    assert.equal(coursePage.setupItem.footerText, 'Listening for a git push...');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Listening for a git push...');
 
-    assert.equal(
+    assert.strictEqual(
       coursePage.setupItem.copyableCloneRepositoryInstructions,
       'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript'
     );
@@ -72,7 +72,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 2, 'poll request was executed');
+    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 2, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     let repository = this.server.schema.repositories.find(1);
@@ -81,9 +81,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 3, 'poll request was executed');
+    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 3, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
-    assert.equal(coursePage.setupItem.footerText, 'Git push received.');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Git push received.');
 
     await percySnapshot('Start Course - Git Push Received');
 
@@ -98,7 +98,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Waiting For Second Push');
 
     await coursePage.repositoryDropdown.click();
-    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await animationsSettled();
   });
@@ -111,14 +111,14 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
-    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
 
     await coursePage.setupItem.clickOnLanguageButton('JavaScript');
-    assert.equal(coursePage.setupItem.footerText, 'Membership required.');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Membership required.');
 
     await percySnapshot('Start Course - No Subscription');
 
@@ -133,14 +133,14 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
-    assert.equal(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
 
     await coursePage.setupItem.clickOnLanguageButton('Rust');
-    assert.equal(coursePage.setupItem.footerText, 'Listening for a git push...');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Listening for a git push...');
 
     await animationsSettled();
   });
@@ -157,20 +157,20 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.contains(currentURL(), '/courses/redis?repo=', 'current URL includes repo ID');
 
     await coursePage.repositoryDropdown.click();
-    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await coursePage.header.clickOnTracksLink();
     await tracksPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/redis?fresh=false&track=python', 'current URL is changed to not include invalid repo');
+    assert.strictEqual(currentURL(), '/courses/redis?fresh=false&track=python', 'current URL is changed to not include invalid repo');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
     await coursePage.repositoryDropdown.click();
-    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await animationsSettled();
   });

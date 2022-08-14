@@ -15,7 +15,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     signIn(this.owner, this.server);
 
     await adminCourseSubmissionsPage.visit({ course_slug: 'redis' });
-    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 0);
+    assert.strictEqual(adminCourseSubmissionsPage.timelineContainer.entries.length, 0);
 
     await percySnapshot('Admin - Course Submissions - No Submissions');
   });
@@ -40,7 +40,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     });
 
     await adminCourseSubmissionsPage.visit({ course_slug: 'redis' });
-    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 3);
+    assert.strictEqual(adminCourseSubmissionsPage.timelineContainer.entries.length, 3);
 
     await percySnapshot('Admin - Course Submissions - With Submissions');
   });
@@ -61,7 +61,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user3 });
 
     await adminCourseSubmissionsPage.visit({ course_slug: 'redis', usernames: 'user1,user2' });
-    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
+    assert.strictEqual(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
   test('it filters by languages(s) if given', async function (assert) {
@@ -82,6 +82,6 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: javascript, user: user3 });
 
     await adminCourseSubmissionsPage.visit({ course_slug: 'redis', languages: 'python,ruby' });
-    assert.equal(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
+    assert.strictEqual(adminCourseSubmissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 });

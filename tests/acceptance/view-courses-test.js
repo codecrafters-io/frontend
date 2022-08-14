@@ -16,7 +16,7 @@ module('Acceptance | view-courses', function (hooks) {
     signIn(this.owner, this.server);
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
 
     await percySnapshot('Courses Page');
 
@@ -31,7 +31,7 @@ module('Acceptance | view-courses', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 6, 'expected 6 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 6, 'expected 6 course cards to be present');
 
     assert.ok(coursesPage.courseCards[4].hasAlphaLabel, 'alpha challenges should have alpha label');
   });
@@ -51,17 +51,17 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
 
-    assert.equal(coursesPage.courseCards[0].actionText, 'Resume');
-    assert.equal(coursesPage.courseCards[1].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[2].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[3].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[0].actionText, 'Resume');
+    assert.strictEqual(coursesPage.courseCards[1].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[2].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[3].actionText, 'Start');
 
     assert.true(coursesPage.courseCards[0].hasProgressBar);
     assert.false(coursesPage.courseCards[0].hasDifficultyLabel);
-    assert.equal(coursesPage.courseCards[0].progressText, '1/7 stages');
-    assert.equal(coursesPage.courseCards[0].progressBarStyle, 'width:14%');
+    assert.strictEqual(coursesPage.courseCards[0].progressText, '1/7 stages');
+    assert.strictEqual(coursesPage.courseCards[0].progressBarStyle, 'width:14%');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -88,16 +88,16 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
 
     await percySnapshot('Courses Page - Courses in progress');
 
-    assert.equal(coursesPage.courseCards[0].name, 'Build your own Git');
-    assert.equal(coursesPage.courseCards[0].actionText, 'Resume');
-    assert.equal(coursesPage.courseCards[1].name, 'Build your own Redis');
-    assert.equal(coursesPage.courseCards[1].actionText, 'Resume');
-    assert.equal(coursesPage.courseCards[2].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[3].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[0].name, 'Build your own Git');
+    assert.strictEqual(coursesPage.courseCards[0].actionText, 'Resume');
+    assert.strictEqual(coursesPage.courseCards[1].name, 'Build your own Redis');
+    assert.strictEqual(coursesPage.courseCards[1].actionText, 'Resume');
+    assert.strictEqual(coursesPage.courseCards[2].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[3].actionText, 'Start');
   });
 
   test('it renders completed course cards', async function (assert) {
@@ -116,22 +116,22 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
 
     await percySnapshot('Courses Page - Course completed');
 
-    assert.equal(coursesPage.courseCards[0].name, 'Build your own Redis');
-    assert.equal(coursesPage.courseCards[0].actionText, 'Start Again');
-    assert.equal(coursesPage.courseCards[1].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[2].actionText, 'Start');
-    assert.equal(coursesPage.courseCards[3].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[0].name, 'Build your own Redis');
+    assert.strictEqual(coursesPage.courseCards[0].actionText, 'Start Again');
+    assert.strictEqual(coursesPage.courseCards[1].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[2].actionText, 'Start');
+    assert.strictEqual(coursesPage.courseCards[3].actionText, 'Start');
   });
 
   test('it renders if user is not signed in', async function (assert) {
     testScenario(this.server);
 
     await coursesPage.visit();
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
 
     assert.notOk(coursesPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
@@ -148,7 +148,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -178,7 +178,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -200,6 +200,6 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.equal(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
   });
 });

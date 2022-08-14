@@ -2,7 +2,7 @@
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -22,6 +22,7 @@ module.exports = {
       { blankLine: 'always', prev: '*', next: 'multiline-block-like' },
       { blankLine: 'always', prev: 'multiline-block-like', next: '*' },
     ],
+    'ember/no-array-prototype-extensions': 'off', // Get to this later
   },
   overrides: [
     // node files
