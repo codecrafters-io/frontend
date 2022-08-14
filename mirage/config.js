@@ -123,7 +123,7 @@ function routes() {
   });
 
   this.get('/teams/:id/first-invoice-preview', function (schema) {
-    return schema.invoices.create({ total: 790000, lineItems: [{ amount: 79000, quantity: 10 }] });
+    return schema.invoices.create({ total: 790000, lineItems: [{ amount: 790000, quantity: 10 }] });
   });
 
   this.post('/team-subscriptions');

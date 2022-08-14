@@ -41,6 +41,6 @@ export default class PilotDetailsContainerComponent extends Component {
   }
 
   get perSeatAmountInDollarsInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].amount / 100;
+    return this.firstInvoicePreview.lineItems[0].amount / this.numberOfSeatsInFirstInvoicePreview / 100;
   }
 }
