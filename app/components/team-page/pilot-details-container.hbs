@@ -16,17 +16,17 @@
 
     <PrimaryButtonWithSpinner
       @size="small"
-      @shouldShowSpinner={{this.isCreatingPaymentMethodUpdateRequest}}
-      {{on "click" this.handleAddPaymentMethodButtonClick}}
+      @shouldShowSpinner={{this.isCreatingSubscription}}
+      {{on "click" this.handleStartSubscriptionButtonClick}}
       data-test-start-subscription-button
     >
       Start Subscription
     </PrimaryButtonWithSpinner>
 
-    <div class="text-gray-600 text-xs leading-relaxed mt-4">
+    <div class="text-gray-600 text-xs leading-relaxed mt-4" data-test-first-invoice-details>
       Your team's payment method will be charged
-      <b class="font-semibold">{{if this.isLoadingFirstInvoicePreview "$⋯" "$790"}}</b>/seat/yr for
-      <b class="font-semibold">6 seats</b>.
+      <b class="font-semibold">${{if this.isLoadingFirstInvoicePreview "⋯" this.perSeatAmountInDollarsInFirstInvoicePreview}}</b>/seat/yr for
+      <b class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.numberOfSeatsInFirstInvoicePreview}} seats</b>.
       <a href="mailto:sarup@codecrafters.io" class="text-teal-600 underline">Contact us</a>
       for questions.
     </div>

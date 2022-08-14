@@ -18,7 +18,9 @@ export default create({
 
   pilotDetailsContainer: {
     clickOnAddPaymentMethodButton: clickable('[data-test-add-payment-method-button]'),
+    clickOnStartSubscriptionButton: clickable('[data-test-start-subscription-button]'),
     detailsText: text('[data-test-details-text]'),
+    firstInvoiceDetailsText: text('[data-test-first-invoice-details]'),
     instructionsText: text('[data-test-instructions-text]'),
     scope: '[data-test-pilot-details-container]',
   },
@@ -29,6 +31,7 @@ export default create({
   },
 
   subscriptionSettingsContainer: {
+    instructionsText: text('[data-test-instructions-text]'),
     hasManageSubscriptionButton: isVisible('[data-test-manage-subscription-button]'),
     scope: '[data-test-subscription-settings-container]',
   },

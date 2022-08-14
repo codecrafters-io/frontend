@@ -18,11 +18,16 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     signInAsTeamAdmin(this.owner, this.server);
 
     const team = this.server.schema.teams.first();
-    this.server.schema.teamSubscriptions.create({ team: team });
+    this.server.schema.teamSubscriptions.create({ team: team, isLegacy: true });
 
     await coursesPage.visit();
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
+
+    assert.strictEqual(
+      teamPage.subscriptionSettingsContainer.instructionsText,
+      'To view invoices or amend your subscription, click on the button below.'
+    );
 
     await teamPage.clickOnManageSubscriptionButton();
 
@@ -83,7 +88,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     assert.strictEqual(window.location.href, 'https://test.com/team_payment_method_update_request', 'should redirect to team billing session URL');
   });
 
-  test('team with expired pilot and valid payment method sees start subscription prompt', async function (assert) {
+  test('team with expired pilot and valid payment method can start subscription', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
@@ -110,6 +115,12 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     assert.strictEqual(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
     assert.strictEqual(teamPage.pilotDetailsContainer.instructionsText, 'Click below to start your subscription:');
 
-    // TODO: We haven't implemented the create subscription flow yet
+    assert.strictEqual(
+      teamPage.pilotDetailsContainer.firstInvoiceDetailsText,
+      "Your team's payment method will be charged $790/seat/yr for 10 seats. Contact us for questions."
+    );
+
+    await teamPage.pilotDetailsContainer.clickOnStartSubscriptionButton();
+    assert.strictEqual(teamPage.subscriptionSettingsContainer.instructionsText, 'Contact us for invoices or to make changes to your subscription:');
   });
 });
