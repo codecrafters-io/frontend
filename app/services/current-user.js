@@ -35,6 +35,10 @@ export default class CurrentUserService extends Service {
   }
 
   get record() {
-    return this.store.peekRecord('user', this.currentUserId);
+    if (this.isAuthenticated) {
+      return this.store.peekRecord('user', this.currentUserId);
+    } else {
+      return null;
+    }
   }
 }
