@@ -52,6 +52,10 @@
         <div class="py-3">
           <LinkTo @route="tracks" class="block text-sm py-3 text-gray-600">Tracks</LinkTo>
 
+          {{#if this.currentUser.isAdmin}}
+            <a href="/admin" class="block text-sm py-3 text-gray-600">Admin</a>
+          {{/if}}
+
           {{#if this.currentUser.isAuthenticated}}
             <Header::AccountDropdown />
           {{else}}
