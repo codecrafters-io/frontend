@@ -1,4 +1,6 @@
 {
   "presets": [],
-  "plugins": []
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }]
+  ]
 }
