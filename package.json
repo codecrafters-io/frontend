@@ -38,7 +38,7 @@
     "@types/sinonjs__fake-timers": "^8.0.0",
     "autoprefixer": "^10.3.2",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-animated": "^1.0.2",
+    "ember-animated": "^1.0.4",
     "ember-api-actions": "^0.2.9",
     "ember-auto-import": "^2.4.1",
     "ember-basic-dropdown": "^4.0.5",
