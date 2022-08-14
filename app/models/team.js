@@ -1,7 +1,6 @@
 import { attr, hasMany } from '@ember-data/model';
 import Model from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
-import SubscriptionModel from './subscription';
 
 export default class TeamModel extends Model {
   @attr('string') inviteCode;
