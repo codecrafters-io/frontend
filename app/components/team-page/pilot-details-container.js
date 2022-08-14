@@ -7,6 +7,7 @@ import Component from '@glimmer/component';
 export default class PilotDetailsContainerComponent extends Component {
   @service store;
   @tracked isCreatingPaymentMethodUpdateRequest = false;
+  @tracked isLoadingFirstInvoicePreview = true;
 
   @action
   async handleAddPaymentMethodButtonClick() {
