@@ -23,10 +23,6 @@ export default class LanguageModel extends Model {
   @equal('slug', 'rust') isRust;
   @equal('slug', 'swift') isSwift;
 
-  get isGo() {
-    return this.slug === 'go';
-  }
-
   get grayLogoUrl() {
     return {
       c: '/assets/images/language-logos/c-gray-500.svg',

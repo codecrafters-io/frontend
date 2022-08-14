@@ -79,27 +79,35 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING', 'course stage item is active if clicked on');
-    assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage 5 days ago.', 'footer text for stage completed > 1 day');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'course stage item is active if clicked on');
+    assert.strictEqual(
+      coursePage.activeCourseStageItem.footerText,
+      'You completed this stage 5 days ago.',
+      'footer text for stage completed > 1 day'
+    );
 
     await percySnapshot('Course Stages - Completed stage');
 
     await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
-    assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage yesterday.', 'footer text for stage completed yesterday');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
+    assert.strictEqual(
+      coursePage.activeCourseStageItem.footerText,
+      'You completed this stage yesterday.',
+      'footer text for stage completed yesterday'
+    );
 
     await coursePage.clickOnCollapsedItem('Handle concurrent clients');
     await animationsSettled();
 
-    assert.equal(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', 'course stage item is active if clicked on');
-    assert.equal(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
   test('stages should have an upgrade prompt if language is go and user signed up on/after 17 Jun', async function (assert) {
@@ -132,7 +140,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
     assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsYellow, 'course stage prompt should be yellow if stage is current');
-    assert.equal(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be subscription required');
+    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be subscription required');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
@@ -145,7 +153,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
-    assert.equal(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
+    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
   });
 
   test('stages should not have an upgrade prompt if language is Rust', async function (assert) {
@@ -268,7 +276,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
   });
 
   test('transition from courses page has no loading page', async function (assert) {
@@ -302,6 +310,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
   });
 });

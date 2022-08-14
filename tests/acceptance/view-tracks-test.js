@@ -16,7 +16,7 @@ module('Acceptance | view-tracks', function (hooks) {
     signIn(this.owner, this.server);
 
     await tracksPage.visit();
-    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 course cards to be present');
+    assert.strictEqual(tracksPage.trackCards.length, 14, 'expected 14 course cards to be present');
 
     await percySnapshot('Tracks Page');
 
@@ -42,15 +42,15 @@ module('Acceptance | view-tracks', function (hooks) {
 
     await tracksPage.visit();
 
-    assert.equal(tracksPage.trackCards[0].actionText, 'Resume');
-    assert.equal(tracksPage.trackCards[1].actionText, 'Start');
-    assert.equal(tracksPage.trackCards[2].actionText, 'Start');
-    assert.equal(tracksPage.trackCards[3].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[0].actionText, 'Resume');
+    assert.strictEqual(tracksPage.trackCards[1].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[2].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[3].actionText, 'Start');
 
     assert.true(tracksPage.trackCards[0].hasProgressBar);
     assert.false(tracksPage.trackCards[0].hasDifficultyLabel);
-    assert.equal(tracksPage.trackCards[0].progressText, '1/28 stages');
-    assert.equal(tracksPage.trackCards[0].progressBarStyle, 'width:4%');
+    assert.strictEqual(tracksPage.trackCards[0].progressText, '1/28 stages');
+    assert.strictEqual(tracksPage.trackCards[0].progressBarStyle, 'width:4%');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -80,12 +80,12 @@ module('Acceptance | view-tracks', function (hooks) {
 
     await percySnapshot('Tracks Page - Tracks in progress');
 
-    assert.equal(tracksPage.trackCards[0].name, 'Go');
-    assert.equal(tracksPage.trackCards[0].actionText, 'Resume');
-    assert.equal(tracksPage.trackCards[1].name, 'Python');
-    assert.equal(tracksPage.trackCards[1].actionText, 'Resume');
-    assert.equal(tracksPage.trackCards[2].actionText, 'Start');
-    assert.equal(tracksPage.trackCards[3].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[0].name, 'Go');
+    assert.strictEqual(tracksPage.trackCards[0].actionText, 'Resume');
+    assert.strictEqual(tracksPage.trackCards[1].name, 'Python');
+    assert.strictEqual(tracksPage.trackCards[1].actionText, 'Resume');
+    assert.strictEqual(tracksPage.trackCards[2].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[3].actionText, 'Start');
   });
 
   test('it renders completed track cards', async function (assert) {
@@ -110,21 +110,21 @@ module('Acceptance | view-tracks', function (hooks) {
 
     await percySnapshot('Tracks Page - Track completed');
 
-    assert.equal(tracksPage.trackCards[0].name, 'Go');
-    assert.equal(tracksPage.trackCards[0].actionText, 'Resume');
-    assert.equal(tracksPage.trackCards[1].actionText, 'Start');
-    assert.equal(tracksPage.trackCards[2].actionText, 'Start');
-    assert.equal(tracksPage.trackCards[3].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[0].name, 'Go');
+    assert.strictEqual(tracksPage.trackCards[0].actionText, 'Resume');
+    assert.strictEqual(tracksPage.trackCards[1].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[2].actionText, 'Start');
+    assert.strictEqual(tracksPage.trackCards[3].actionText, 'Start');
 
-    assert.equal(tracksPage.trackCards[0].progressText, '28/28 stages');
-    assert.equal(tracksPage.trackCards[0].progressBarStyle, 'width:100%');
+    assert.strictEqual(tracksPage.trackCards[0].progressText, '28/28 stages');
+    assert.strictEqual(tracksPage.trackCards[0].progressBarStyle, 'width:100%');
   });
 
   test('it renders if user is not signed in', async function (assert) {
     testScenario(this.server);
 
     await tracksPage.visit();
-    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
+    assert.strictEqual(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
   });
 
   test('first time visit has loading page', async function (assert) {
@@ -136,7 +136,7 @@ module('Acceptance | view-tracks', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.equal(tracksPage.trackCards.length, 14, 'expected 4 track cards to be present');
+    assert.strictEqual(tracksPage.trackCards.length, 14, 'expected 4 track cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -168,7 +168,7 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
+    assert.strictEqual(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -190,6 +190,6 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.equal(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
+    assert.strictEqual(tracksPage.trackCards.length, 14, 'expected 14 track cards to be present');
   });
 });

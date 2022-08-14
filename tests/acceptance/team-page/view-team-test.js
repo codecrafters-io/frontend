@@ -70,10 +70,10 @@ module('Acceptance | view-team-test', function (hooks) {
     this.server.create('team-membership', { user: admin, team: team, createdAt: new Date(), isAdmin: true });
 
     await teamPage.visit({ team_id: team.id });
-    assert.equal(teamPage.members.length, 4, 'expected 4 members to be present');
+    assert.strictEqual(teamPage.members.length, 4, 'expected 4 members to be present');
     assert.notOk(teamPage.subscriptionSettingsContainer.hasManageSubscriptionButton, 'manage subscription button must not be enabled for user');
 
-    assert.equal(
+    assert.strictEqual(
       teamPage.inviteURLDescription,
       'To invite new members, ask one of the team admins for an invite URL.',
       'invite url description should say contact admin'
@@ -114,12 +114,12 @@ module('Acceptance | view-team-test', function (hooks) {
     this.server.create('team-membership', { user: admin, team: team, createdAt: new Date(), isAdmin: true });
 
     await teamPage.visit({ team_id: team.id });
-    assert.equal(teamPage.members.length, 4, 'expected 4 members to be present');
+    assert.strictEqual(teamPage.members.length, 4, 'expected 4 members to be present');
 
     window.confirm = () => true;
     await teamPage.memberByUsername('rohitpaulk').clickLeaveTeamButton();
 
-    assert.equal(currentURL(), '/tracks', 'should redirect to tracks page');
+    assert.strictEqual(currentURL(), '/tracks', 'should redirect to tracks page');
   });
 
   test('team member can switch between teams when multiple exist', async function (assert) {
@@ -157,13 +157,13 @@ module('Acceptance | view-team-test', function (hooks) {
     this.server.create('team-membership', { user: admin, team: team, createdAt: new Date(), isAdmin: true });
 
     await teamPage.visit({ team_id: team.id });
-    assert.equal(teamPage.teamSelectionDropdown.activeTeamName, 'Dummy Team', 'expected team name to be Dummy Team');
-    assert.equal(teamPage.members.length, 4, 'expected 4 members to be present');
+    assert.strictEqual(teamPage.teamSelectionDropdown.activeTeamName, 'Dummy Team', 'expected team name to be Dummy Team');
+    assert.strictEqual(teamPage.members.length, 4, 'expected 4 members to be present');
 
     await teamPage.teamSelectionDropdown.toggle();
     await teamPage.teamSelectionDropdown.clickOnLink('Other Team');
-    assert.equal(teamPage.members.length, 1, 'expected 1 member to be present');
-    assert.equal(teamPage.teamSelectionDropdown.activeTeamName, 'Other Team', 'expected team name to be Other Team');
+    assert.strictEqual(teamPage.members.length, 1, 'expected 1 member to be present');
+    assert.strictEqual(teamPage.teamSelectionDropdown.activeTeamName, 'Other Team', 'expected team name to be Other Team');
   });
 
   test('team member can view configured slack integration', async function (assert) {

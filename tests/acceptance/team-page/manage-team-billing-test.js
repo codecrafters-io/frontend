@@ -26,7 +26,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
 
     await teamPage.clickOnManageSubscriptionButton();
 
-    assert.equal(window.location.href, 'https://test.com/team_billing_session', 'should redirect to team billing session URL');
+    assert.strictEqual(window.location.href, 'https://test.com/team_billing_session', 'should redirect to team billing session URL');
   });
 
   test('team with active pilot sees pilot details', async function (assert) {
@@ -51,7 +51,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.pilotDetailsContainer.isPresent, 'pilot details are visible');
-    assert.equal(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot is valid until January 1, 2099 12:00 AM.");
+    assert.strictEqual(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot is valid until January 1, 2099 12:00 AM.");
   });
 
   test('team with expired pilot sees payment method prompt', async function (assert) {
@@ -76,11 +76,11 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.pilotDetailsContainer.isPresent, 'pilot details are visible');
-    assert.equal(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
-    assert.equal(teamPage.pilotDetailsContainer.instructionsText, 'Ready to upgrade? Start by adding a payment method:');
+    assert.strictEqual(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
+    assert.strictEqual(teamPage.pilotDetailsContainer.instructionsText, 'Ready to upgrade? Start by adding a payment method:');
 
     await teamPage.pilotDetailsContainer.clickOnAddPaymentMethodButton();
-    assert.equal(window.location.href, 'https://test.com/team_payment_method_update_request', 'should redirect to team billing session URL');
+    assert.strictEqual(window.location.href, 'https://test.com/team_payment_method_update_request', 'should redirect to team billing session URL');
   });
 
   test('team with expired pilot and valid payment method sees start subscription prompt', async function (assert) {
@@ -107,8 +107,8 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.pilotDetailsContainer.isPresent, 'pilot details are visible');
-    assert.equal(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
-    assert.equal(teamPage.pilotDetailsContainer.instructionsText, 'Click below to start your subscription:');
+    assert.strictEqual(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
+    assert.strictEqual(teamPage.pilotDetailsContainer.instructionsText, 'Click below to start your subscription:');
 
     // TODO: We haven't implemented the create subscription flow yet
   });

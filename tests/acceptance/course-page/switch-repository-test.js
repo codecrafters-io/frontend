@@ -52,25 +52,25 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       'notify page view (course page)',
     ].length;
 
-    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount);
+    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount);
 
-    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
-    assert.equal(coursePage.activeCourseStageItem.title, 'Bind to a port');
+    assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await this.clock.tick(3000);
 
-    assert.equal(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'polling should have run');
+    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'polling should have run');
 
     await coursePage.repositoryDropdown.click();
 
-    assert.equal(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 1, 'non active repositories should be 1');
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 1, 'non active repositories should be 1');
 
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
 
-    assert.equal(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');
+    assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');
     assert.ok(coursePage.repositoryDropdown.isClosed, 'repository dropdown should be closed');
-    assert.equal(coursePage.activeCourseStageItem.title, 'Respond to PING');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
 
     await coursesPage.visit(); // Poller is active
   });

@@ -24,7 +24,7 @@ module('Acceptance | team-page | manage-team-members-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
-    assert.equal(teamPage.members.length, 1, 'expected only one members to be present');
+    assert.strictEqual(teamPage.members.length, 1, 'expected only one members to be present');
 
     await percySnapshot('Manage Team - Only Admin Present');
   });
@@ -56,7 +56,7 @@ module('Acceptance | team-page | manage-team-members-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
-    assert.equal(teamPage.members.length, 3, 'expected 3 members to be present');
+    assert.strictEqual(teamPage.members.length, 3, 'expected 3 members to be present');
 
     await percySnapshot('Manage Team - Multiple Members Present');
   });
@@ -88,7 +88,7 @@ module('Acceptance | team-page | manage-team-members-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
-    assert.equal(teamPage.members.length, 3, 'expected 3 members to be present');
+    assert.strictEqual(teamPage.members.length, 3, 'expected 3 members to be present');
 
     await teamPage.members[1].clickRemoveButton();
     await waitUntil(() => teamPage.members.length === 2);

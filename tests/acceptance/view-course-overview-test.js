@@ -17,7 +17,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/redis/overview');
+    assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
 
   test('it renders when user is logged in', async function (assert) {
@@ -27,7 +27,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/redis/overview');
+    assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
 
   test('it renders when user accesses URL directly', async function (assert) {
@@ -35,13 +35,13 @@ module('Acceptance | view-course-overview', function (hooks) {
     signIn(this.owner, this.server);
 
     await courseOverviewPage.visit({ course_slug: 'redis' });
-    assert.equal(currentURL(), '/courses/redis/overview');
+    assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
 
   test('it renders when anonymous user views alpha course', async function (assert) {
     testScenario(this.server);
 
     await courseOverviewPage.visit({ course_slug: 'grep' });
-    assert.equal(currentURL(), '/courses/grep/overview');
+    assert.strictEqual(currentURL(), '/courses/grep/overview');
   });
 });

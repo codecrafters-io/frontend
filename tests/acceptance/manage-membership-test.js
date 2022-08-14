@@ -25,7 +25,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     await tracksPage.accountDropdown.toggle();
     await tracksPage.accountDropdown.clickOnLink('Manage Membership');
 
-    assert.equal(currentURL(), '/membership');
+    assert.strictEqual(currentURL(), '/membership');
   });
 
   test('subscriber can cancel trial', async function (assert) {
@@ -35,10 +35,10 @@ module('Acceptance | manage-membership-test', function (hooks) {
     window.confirm = () => true;
 
     await membershipPage.visit();
-    assert.equal(membershipPage.membershipPlanSection.descriptionText, 'Your trial for the Monthly plan is currently active.');
+    assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your trial for the Monthly plan is currently active.');
 
     await membershipPage.clickOnCancelTrialButton();
-    assert.equal(membershipPage.membershipPlanSection.descriptionText, 'Your CodeCrafters membership is currently inactive.');
+    assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your CodeCrafters membership is currently inactive.');
   });
 
   test('subscriber can cancel subscription', async function (assert) {
@@ -50,11 +50,11 @@ module('Acceptance | manage-membership-test', function (hooks) {
     window.confirm = () => true;
 
     await membershipPage.visit();
-    assert.equal(membershipPage.membershipPlanSection.descriptionText, 'You are currently subscribed to the Monthly plan.');
+    assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'You are currently subscribed to the Monthly plan.');
 
     await membershipPage.clickOnCancelSubscriptionButton();
 
-    assert.equal(
+    assert.strictEqual(
       membershipPage.membershipPlanSection.descriptionText,
       `Your CodeCrafters membership is valid until ${moment(subscription.currentPeriodEnd).format('LLL')}.`
     );
@@ -86,7 +86,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     await membershipPage.visit();
 
-    assert.equal(membershipPage.recentPaymentsSection.downloadInvoiceLinks.length, 2);
+    assert.strictEqual(membershipPage.recentPaymentsSection.downloadInvoiceLinks.length, 2);
   });
 
   test('subscriber can update payment method', async function (assert) {
@@ -95,6 +95,6 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     await membershipPage.visit();
     await membershipPage.clickOnUpdatePaymentMethodButton();
-    assert.equal(1, 1); // Dummy test
+    assert.strictEqual(1, 1); // Dummy test
   });
 });

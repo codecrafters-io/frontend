@@ -25,7 +25,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
 
@@ -58,7 +58,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.equal(currentURL(), '/courses/docker', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
@@ -78,7 +78,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.equal(currentURL(), '/courses/docker', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
 
@@ -130,7 +130,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
-    assert.equal(
+    assert.strictEqual(
       coursePage.setupItem.requestedLanguagesPrompt.willLetYouKnowText,
       "We'll let you know once Kotlin support is available on this challenge."
     );

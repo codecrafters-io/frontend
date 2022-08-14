@@ -56,6 +56,6 @@ module('Acceptance | create-team-test', function (hooks) {
     await percySnapshot('Create Team - After Input');
 
     await createTeamPage.clickOnCreateTeamButton();
-    assert.equal(currentURL(), `/teams/2`);
+    assert.strictEqual(currentURL(), `/teams/2`);
   });
 });

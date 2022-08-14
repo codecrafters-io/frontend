@@ -30,26 +30,26 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
-    assert.equal(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Explanation', 'active header tab link should be explanation');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Explanation', 'active header tab link should be explanation');
 
     await percySnapshot('Stage Solution Modal - Explanation');
 
     await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Diff');
-    assert.equal(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Diff', 'active tab should be Diff');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Diff', 'active tab should be Diff');
 
     await percySnapshot('Stage Solution Modal - Diff');
 
-    assert.equal(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Go', 'Go is selected by default');
+    assert.strictEqual(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Go', 'Go is selected by default');
     assert.notOk(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should not be visible');
 
     await coursePage.courseStageSolutionModal.languageDropdown.toggle();
     await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
 
-    assert.equal(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Python', 'Python is selected');
+    assert.strictEqual(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Python', 'Python is selected');
     assert.ok(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should be visible');
 
-    assert.equal(
+    assert.strictEqual(
       coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.text,
       "This stage doesn't have solutions available for Python yet, so we're showing solutions for Go instead."
     );
@@ -68,7 +68,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
 
     await coursePage.clickOnCollapsedItem('Bind to a port');
@@ -76,7 +76,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #1: Bind to a port');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #1: Bind to a port');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
   });
 
@@ -116,7 +116,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
@@ -125,7 +125,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
 
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING');
 
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
     assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should be closed');
@@ -137,7 +137,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
 
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
     assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should be closed');
@@ -177,9 +177,9 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
-    assert.equal(currentURL(), '/courses/redis', 'route should be course route');
+    assert.strictEqual(currentURL(), '/courses/redis', 'route should be course route');
 
     await coursePage.collapsedItems[4].click(); // The next pending stage
     await animationsSettled();
@@ -188,7 +188,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
 
-    assert.equal(currentURL(), '/pay', 'route should be pay');
+    assert.strictEqual(currentURL(), '/pay', 'route should be pay');
   });
 
   test('viewing solution should not lead to /pay if user is a subscriber', async function (assert) {
@@ -225,9 +225,9 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
-    assert.equal(currentURL(), '/courses/redis', 'route should be course route');
+    assert.strictEqual(currentURL(), '/courses/redis', 'route should be course route');
 
     await coursePage.collapsedItems[4].click(); // The next pending stage
     await animationsSettled();
@@ -235,7 +235,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
   });
 
   test('viewing solution should not lead to /pay if user team has a subscription', async function (assert) {
@@ -272,9 +272,9 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
-    assert.equal(currentURL(), '/courses/redis', 'route should be course route');
+    assert.strictEqual(currentURL(), '/courses/redis', 'route should be course route');
 
     await coursePage.collapsedItems[4].click(); // The next pending stage
     await animationsSettled();
@@ -282,6 +282,6 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.moreDropdown.toggle();
     await coursePage.activeCourseStageItem.moreDropdown.clickOnLink('View Solution');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
-    assert.equal(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
   });
 });

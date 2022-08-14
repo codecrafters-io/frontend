@@ -32,9 +32,9 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.equal(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
-    assert.equal(
+    assert.strictEqual(
       this.server.pretender.handledRequests.length,
       [
         'fetch courses (courses listing page)',
