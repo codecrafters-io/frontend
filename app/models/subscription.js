@@ -13,7 +13,7 @@ export default class SubscriptionModel extends Model {
   @attr('date') trialEnd;
 
   get isActive() {
-    return !this.endedAt;
+    return !this.endedAt && !this.isNew;
   }
 
   get isInactive() {

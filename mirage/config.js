@@ -122,6 +122,12 @@ function routes() {
     return team;
   });
 
+  this.get('/teams/:id/first-invoice-preview', function (schema) {
+    return schema.invoices.create({ total: 790000, lineItems: [{ amount: 790000, quantity: 10 }] });
+  });
+
+  this.post('/team-subscriptions');
+
   this.delete('/team-memberships/:id');
 
   this.post('/team-billing-sessions', function (schema) {

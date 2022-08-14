@@ -1,5 +1,6 @@
 import { attr, hasMany } from '@ember-data/model';
 import Model from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 
 export default class TeamModel extends Model {
   @attr('string') inviteCode;
@@ -59,3 +60,14 @@ export default class TeamModel extends Model {
     return this.slackIntegrations.firstObject;
   }
 }
+
+TeamModel.prototype.fetchFirstInvoicePreview = memberAction({
+  path: 'first-invoice-preview',
+  type: 'get',
+
+  after(response) {
+    this.store.pushPayload(response);
+
+    return this.store.peekRecord('invoice', response.data.id);
+  },
+});
