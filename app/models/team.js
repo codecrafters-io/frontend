@@ -39,6 +39,10 @@ export default class TeamModel extends Model {
     return !!this.expiredPilot;
   }
 
+  get hasPaymentMethod() {
+    return !!this.paymentMethods.firstObject;
+  }
+
   get hasSlackIntegration() {
     return !!this.slackIntegration;
   }

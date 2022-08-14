@@ -189,6 +189,17 @@ function buildIncludedResources(user) {
         },
       });
     });
+
+    teamMembership.team.paymentMethods.models.forEach((teamPaymentMethod) => {
+      includedResources.push({
+        id: teamPaymentMethod.id,
+        type: 'team-payment-methods',
+        relationships: {
+          team: { data: { type: 'teams', id: teamPaymentMethod.team.id } },
+          creator: { data: { type: 'users', id: teamPaymentMethod.creator.id } },
+        },
+      });
+    });
   });
 
   return includedResources;

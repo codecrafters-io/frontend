@@ -1,7 +1,6 @@
 <button
   type="button"
-  class="inline-block bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold mt-4
-    {{if (eq @size 'small') 'text-sm' 'text-base'}}"
+  class="inline-block bg-teal-600 active:bg-teal-700 px-3 py-2 text-white rounded shadow-sm font-bold {{if (eq @size 'small') 'text-sm' 'text-base'}}"
   ...attributes
 >
   {{yield}}
