@@ -1,9 +1,8 @@
 <MembershipPage::Section @title="Actions" ...attributes>
   {{#if @subscription.isTrialing}}
     <ButtonWithSpinner
-      @shouldShowSpinner={{this.isCancellingTrial}}
       class="bg-red-600 hover:bg-red-700 text-sm mt-4 text-white"
-      {{on "click" this.handleCancelTrialButtonClick}}
+      {{on "click" @onCancelSubscriptionButtonClick}}
       data-test-cancel-trial-button
     >
       Cancel Trial
@@ -11,8 +10,7 @@
   {{else if (and @subscription.isActive (not @subscription.cancelAt))}}
     <ButtonWithSpinner
       class="bg-red-600 hover:bg-red-700 text-sm mt-4 text-white"
-      @shouldShowSpinner={{this.isCancellingSubscription}}
-      {{on "click" this.handleCancelSubscriptionButtonClick}}
+      {{on "click" @onCancelSubscriptionButtonClick}}
       data-test-cancel-subscription-button
     >
       Cancel Subscription

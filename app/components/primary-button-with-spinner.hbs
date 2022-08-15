@@ -1,4 +1,4 @@
-<PrimaryButton @size={{@size}} class="{{if @shouldShowSpinner 'cursor-not-allowed'}}" ...attributes>
+<PrimaryButton @isDisabled={{@isDisabled}} @size={{@size}} class="{{if @shouldShowSpinner 'cursor-not-allowed'}}" ...attributes>
   <div class="flex items-center">
     {{yield}}
 

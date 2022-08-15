@@ -1,4 +1,4 @@
-<div class={{concat (if @isWide "w-screen p-4 md:p-16 max-w-screen-lg h-screen" "max-w-lg") " " "flex justify-center"}}>
+<div class="{{if @isWide 'w-screen p-4 md:p-16 max-w-screen-lg h-screen' 'max-w-lg'}} flex justify-center">
   <div
     class="p-6 sm:p-12 bg-white rounded-md shadow-sm border-gray-300 relative overflow-y-scroll {{@class}}"
     {{on-click-outside this.handleClickOutside}}

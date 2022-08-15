@@ -38,6 +38,23 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your trial for the Monthly plan is currently active.');
 
     await membershipPage.clickOnCancelTrialButton();
+    assert.ok(membershipPage.cancelSubscriptionModal.isVisible);
+    assert.ok(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is disabled without selecting a reason');
+
+    await membershipPage.cancelSubscriptionModal.selectReason('I need more content');
+    assert.notOk(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is enabled after selecting a reason');
+
+    await membershipPage.cancelSubscriptionModal.selectReason('Other reason');
+    assert.ok(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is disabled if other reason is selected');
+
+    await membershipPage.cancelSubscriptionModal.fillInReasonDescription('Feeling Blue');
+    assert.notOk(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is enabled if other reason is provided');
+
+    assert.strictEqual(membershipPage.cancelSubscriptionModal.cancelButtonText, 'Cancel Trial');
+
+    await membershipPage.cancelSubscriptionModal.clickOnCancelSubscriptionButton();
+    assert.notOk(membershipPage.cancelSubscriptionModal.isVisible);
+
     assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your CodeCrafters membership is currently inactive.');
   });
 
@@ -53,6 +70,22 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'You are currently subscribed to the Monthly plan.');
 
     await membershipPage.clickOnCancelSubscriptionButton();
+    assert.ok(membershipPage.cancelSubscriptionModal.isVisible);
+    assert.ok(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is disabled without selecting a reason');
+
+    await membershipPage.cancelSubscriptionModal.selectReason('I need more content');
+    assert.notOk(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is enabled after selecting a reason');
+
+    await membershipPage.cancelSubscriptionModal.selectReason('Other reason');
+    assert.ok(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is disabled if other reason is selected');
+
+    await membershipPage.cancelSubscriptionModal.fillInReasonDescription('Feeling Blue');
+    assert.notOk(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is enabled if other reason is provided');
+
+    assert.strictEqual(membershipPage.cancelSubscriptionModal.cancelButtonText, 'Cancel Subscription');
+
+    await membershipPage.cancelSubscriptionModal.clickOnCancelSubscriptionButton();
+    assert.notOk(membershipPage.cancelSubscriptionModal.isVisible);
 
     assert.strictEqual(
       membershipPage.membershipPlanSection.descriptionText,
