@@ -32,8 +32,6 @@ module('Acceptance | manage-membership-test', function (hooks) {
     testScenario(this.server);
     signInAsTrialingSubscriber(this.owner, this.server);
 
-    window.confirm = () => true;
-
     await membershipPage.visit();
     assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your trial for the Monthly plan is currently active.');
 
@@ -63,8 +61,6 @@ module('Acceptance | manage-membership-test', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
 
     let subscription = this.server.schema.subscriptions.first();
-
-    window.confirm = () => true;
 
     await membershipPage.visit();
     assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'You are currently subscribed to the Monthly plan.');
@@ -114,8 +110,6 @@ module('Acceptance | manage-membership-test', function (hooks) {
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7),
       invoiceId: 'invoice-id',
     });
-
-    window.confirm = () => true;
 
     await membershipPage.visit();
 
