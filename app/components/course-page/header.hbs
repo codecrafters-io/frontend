@@ -1,7 +1,15 @@
 <div class="flex justify-between items-center mb-6 md:mb-10 flex-wrap gap-4">
-  <h1 class="text-xl md:text-2xl text-gray-600">
-    {{@course.name}}
-  </h1>
+  <div class="flex flex-col items-start sm:flex-row sm:items-center">
+    <h1 class="text-xl md:text-2xl text-gray-600 mr-3">
+      {{@course.name}}
+    </h1>
+
+    {{#if @course.releaseStatusIsBeta}}
+      <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3 mt-3 sm:mt-0.5" data-test-track-beta-label>
+        BETA
+      </div>
+    {{/if}}
+  </div>
 
   {{#if @repositories.firstObject}}
     <div>
