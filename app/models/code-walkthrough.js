@@ -28,4 +28,21 @@ export default class CodeWalkthrough extends Model {
       return null;
     }
   }
+
+  get logoURL() {
+    if (this.slug.startsWith('redis')) {
+      return '/assets/images/challenge-logos/challenge-logo-redis.svg';
+    } else if (this.slug.startsWith('git')) {
+      return '/assets/images/challenge-logos/challenge-logo-git.svg';
+    } else if (this.slug.startsWith('docker')) {
+      return '/assets/images/challenge-logos/challenge-logo-docker.svg';
+    } else if (this.slug.startsWith('sqlite')) {
+      return '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
+    } else if (this.slug.startsWith('grep')) {
+      return '/assets/images/challenge-logos/challenge-logo-grep.svg';
+    } else {
+      // Fallback
+      return '/assets/images/challenge-logos/challenge-logo-redis.svg';
+    }
+  }
 }
