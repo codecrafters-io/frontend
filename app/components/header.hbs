@@ -56,7 +56,7 @@
             <a href="/admin" class="block text-sm py-3 text-gray-600">Admin</a>
           {{/if}}
 
-          {{#if this.currentUser.isAuthenticated}}
+          {{#if this.currentUserService.isAuthenticated}}
             <Header::AccountDropdown />
           {{else}}
             <Header::SignInWithGithubButton />
