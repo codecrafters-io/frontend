@@ -20,9 +20,10 @@ export default class ApplicationRoute extends Route {
       transition.abort();
     }
 
-    if (this.currentUser.isAuthenticated) {
-      if (window.H && window.origin.includes('codecrafters.io')) {
-        window.H.init('4g8lq8d5'); // highlight.run
+    if (window.H && window.origin.includes('codecrafters.io')) {
+      window.H.init('4g8lq8d5'); // highlight.run
+
+      if (this.currentUser.isAuthenticated) {
         window.H.identify(this.currentUser.currentUserUsername, { id: this.currentUser.currentUserId, avatar: this.currentUser.record.avatarUrl });
       }
     }
