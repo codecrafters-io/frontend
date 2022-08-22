@@ -34,7 +34,10 @@ export default class CancelSubscriptionModalComponent extends Component {
           'reason-description': this.reasonDescription,
         });
       } else {
-        await this.args.subscription.cancel();
+        await this.args.subscription.cancel({
+          'selected-reason': this.otherReasonIsSelected ? 'Other Reason' : this.selectedReason,
+          'reason-description': this.reasonDescription,
+        });
       }
 
       this.args.onClose();
