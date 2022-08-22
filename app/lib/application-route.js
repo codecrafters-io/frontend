@@ -27,5 +27,9 @@ export default class ApplicationRoute extends Route {
         window.H.identify(this.currentUser.currentUserUsername, { id: this.currentUser.currentUserId, avatar: this.currentUser.record.avatarUrl });
       }
     }
+
+    if (window.posthog && this.currentUser.isAuthenticated) {
+      window.posthog.identify(this.currentUser.currentUserId, { username: this.currentUser.currentUserUsername });
+    }
   }
 }
