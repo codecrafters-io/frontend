@@ -37,6 +37,24 @@
       {{this.instructionsHTML}}
     </div>
 
+    <div class="mt-6 flex flex-wrap space-x-3">
+      {{#if this.solutionIsAvailableInAnyLanguage}}
+        <CoursePage::StepList::CourseStageItem::ActionButton
+          @text="View Solution"
+          @icon="code"
+          {{on "click" (fn @onViewSolutionButtonClick @courseStage)}}
+        />
+      {{/if}}
+
+      {{#if @courseStage.testerSourceCodeUrl}}
+        <CoursePage::StepList::CourseStageItem::ActionButton
+          @text="View Test Cases"
+          @icon="check-circle"
+          {{on "click" this.handleViewTestCasesButtonClicked}}
+        />
+      {{/if}}
+    </div>
+
     <AnimatedContainer>
       {{#animated-if this.shouldShowFirstStageHints use=this.transition}}
         <CoursePage::StepList::CourseStageItem::FirstStageHint

@@ -1,6 +1,7 @@
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { CourseStageItem } from 'codecrafters-frontend/lib/step-list';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import moment from 'moment';
@@ -49,6 +50,11 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get firstStageReadmeHintMarkdownTemplate() {
     return `Since this is your first stage, you can consult [**the README**]({{readme_url}}) in your repository for instructions on how to pass.`;
+  }
+
+  @action
+  handleViewTestCasesButtonClicked() {
+    window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
   }
 
   get instructionsHTML() {
