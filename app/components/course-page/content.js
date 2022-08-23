@@ -7,6 +7,7 @@ export default class CoursePageContentComponent extends Component {
   @tracked currentCourseStageForSolution;
   @tracked currentCourseStageForSourceWalkthrough;
   @service('current-user') currentUserService;
+  @service router;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -14,14 +15,22 @@ export default class CoursePageContentComponent extends Component {
 
   @action
   async handleViewSourceWalkthroughButtonClick(courseStage) {
-    this.currentCourseStageForSolution = null;
-    this.currentCourseStageForSourceWalkthrough = courseStage;
+    if (courseStage.solutionIsAccessibleToMembersOnly && !this.currentUser.canAccessPaidContent) {
+      this.router.transitionTo('pay');
+    } else {
+      this.currentCourseStageForSolution = null;
+      this.currentCourseStageForSourceWalkthrough = courseStage;
+    }
   }
 
   @action
   async handleViewSolutionButtonClick(courseStage) {
-    this.currentCourseStageForSourceWalkthrough = null;
-    this.currentCourseStageForSolution = courseStage;
+    if (courseStage.solutionIsAccessibleToMembersOnly && !this.currentUser.canAccessPaidContent) {
+      this.router.transitionTo('pay');
+    } else {
+      this.currentCourseStageForSourceWalkthrough = null;
+      this.currentCourseStageForSolution = courseStage;
+    }
   }
 
   @action
