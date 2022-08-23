@@ -1,8 +1,8 @@
-<button type="button" class="flex items-center px-2 py-2 rounded border border-gray-200 hover:border-teal-500 space-x-1.5 group" ...attributes>
+<button type="button" class="flex items-center px-2.5 py-2 rounded border border-gray-200 hover:border-teal-500 group" ...attributes>
   {{#if @iconUrl}}
-    <img alt="icon" src={{@iconUrl}} class="h-4" />
+    <img alt="icon" src={{@iconUrl}} class="h-4 mr-2" />
   {{else}}
-    {{svg-jar @icon class=(concat "w-5 fill-current opacity-80 group-hover:opacity-100 text-teal-500 group-hover:text-teal-500")}}
+    {{svg-jar @icon class=(concat "w-5 mr-1.5 fill-current opacity-80 group-hover:opacity-100 text-teal-500 group-hover:text-teal-500")}}
   {{/if}}
 
   <span class="text-gray-700 group-hover:text-teal-500 text-sm">

@@ -1,0 +1,27 @@
+{{#if this.anyButtonIsVisible}}
+  <div class="mt-6 flex flex-wrap space-x-3">
+    {{#if this.shouldShowViewSolutionButton}}
+      <CoursePage::StepList::CourseStageItem::ActionButton
+        @text="Solution"
+        @icon="code"
+        {{on "click" (fn @onViewSolutionButtonClick @courseStage)}}
+      />
+    {{/if}}
+
+    {{#if this.shouldShowViewSourceWalkthroughButton}}
+      <CoursePage::StepList::CourseStageItem::ActionButton
+        @text="Source Walkthrough"
+        @iconUrl={{@courseStage.course.logoUrl}}
+        {{on "click" (fn @onViewSourceWalkthroughButtonClick @courseStage)}}
+      />
+    {{/if}}
+
+    {{#if this.shouldShowViewTestCasesButton}}
+      <CoursePage::StepList::CourseStageItem::ActionButton
+        @text="Test Cases"
+        @icon="check-circle"
+        {{on "click" this.handleViewTestCasesButtonClicked}}
+      />
+    {{/if}}
+  </div>
+{{/if}}

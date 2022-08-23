@@ -14,15 +14,6 @@
           <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
         {{/if}}
       </div>
-
-      <div>
-        <CoursePage::StepList::CourseStageItem::MoreDropdown
-          @courseStage={{@courseStage}}
-          @onViewSourceWalkthroughButtonClick={{fn @onViewSourceWalkthroughButtonClick @courseStage}}
-          @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
-          @repository={{@repository}}
-        />
-      </div>
     </div>
 
     {{#if this.shouldShowUpgradePrompt}}
@@ -37,23 +28,11 @@
       {{this.instructionsHTML}}
     </div>
 
-    <div class="mt-6 flex flex-wrap space-x-3">
-      {{#if this.solutionIsAvailableInAnyLanguage}}
-        <CoursePage::StepList::CourseStageItem::ActionButton
-          @text="View Solution"
-          @icon="code"
-          {{on "click" (fn @onViewSolutionButtonClick @courseStage)}}
-        />
-      {{/if}}
-
-      {{#if @courseStage.testerSourceCodeUrl}}
-        <CoursePage::StepList::CourseStageItem::ActionButton
-          @text="View Test Cases"
-          @icon="check-circle"
-          {{on "click" this.handleViewTestCasesButtonClicked}}
-        />
-      {{/if}}
-    </div>
+    <CoursePage::StepList::CourseStageItem::ActionButtonList
+      @courseStage={{@courseStage}}
+      @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
+      @onViewSourceWalkthroughButtonClick={{@onViewSourceWalkthroughButtonClick}}
+    />
 
     <AnimatedContainer>
       {{#animated-if this.shouldShowFirstStageHints use=this.transition}}

@@ -57,6 +57,15 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
   }
 
+  @action
+  handleViewSourceWalkthroughButtonClicked() {
+    if (this.solutionIsOnlyAccessibleToSubscribers) {
+      this.args.onViewSourceWalkthroughButtonClick();
+    } else {
+      this.router.transitionTo('pay');
+    }
+  }
+
   get instructionsHTML() {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.instructionsMarkdown));
   }
@@ -108,6 +117,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get solutionIsAvailableInUserLanguage() {
     return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
+  }
+
+  get solutionIsOnlyAccessibleToSubscribers() {
+    return this.args.courseStage.position >= 4;
   }
 
   get status() {
