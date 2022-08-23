@@ -1,4 +1,9 @@
-<button type="button" class="flex items-center px-2.5 py-2 rounded border border-gray-200 hover:border-gray-400 group" ...attributes>
+<button
+  type="button"
+  class="flex items-center px-2.5 py-2 rounded border border-gray-200 hover:border-gray-400 group"
+  data-test-action-button
+  ...attributes
+>
   {{#if @iconUrl}}
     <img alt="icon" src={{@iconUrl}} class="h-4 mr-2" />
   {{else}}
