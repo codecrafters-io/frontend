@@ -7,6 +7,7 @@ import { htmlSafe } from '@ember/template';
 export default class LanguageModel extends Model {
   @attr('string') name;
   @attr('string') slug;
+  @attr('string') trackStatus;
 
   @equal('slug', 'c') isC;
   @equal('slug', 'csharp') isCsharp;
@@ -22,6 +23,9 @@ export default class LanguageModel extends Model {
   @equal('slug', 'ruby') isRuby;
   @equal('slug', 'rust') isRust;
   @equal('slug', 'swift') isSwift;
+
+  @equal('trackStatus', 'beta') trackStatusIsBeta;
+  @equal('trackStatus', 'live') trackStatusIsLive;
 
   get grayLogoUrl() {
     return {
