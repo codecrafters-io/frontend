@@ -20,16 +20,18 @@ export default class ApplicationRoute extends Route {
       transition.abort();
     }
 
-    if (window.H && window.origin.includes('codecrafters.io')) {
-      window.H.init('4g8lq8d5'); // highlight.run
+    if (window.origin.includes('codecrafters.io')) {
+      if (window.H) {
+        window.H.init('4g8lq8d5'); // highlight.run
 
-      if (this.currentUser.isAuthenticated) {
-        window.H.identify(this.currentUser.currentUserUsername, { id: this.currentUser.currentUserId, avatar: this.currentUser.record.avatarUrl });
+        if (this.currentUser.isAuthenticated) {
+          window.H.identify(this.currentUser.currentUserUsername, { id: this.currentUser.currentUserId, avatar: this.currentUser.record.avatarUrl });
+        }
       }
-    }
 
-    if (window.posthog && this.currentUser.isAuthenticated) {
-      window.posthog.identify(this.currentUser.currentUserId, { username: this.currentUser.currentUserUsername });
+      if (window.posthog && this.currentUser.isAuthenticated) {
+        window.posthog.identify(this.currentUser.currentUserId, { username: this.currentUser.currentUserUsername });
+      }
     }
   }
 }
