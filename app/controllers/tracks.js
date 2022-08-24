@@ -12,12 +12,12 @@ export default class TracksController extends Controller {
     return this.model.courses.rejectBy('releaseStatusIsAlpha');
   }
 
-  get orderedProLanguages() {
-    return this.orderedLanguages.filterBy('isGo');
+  get orderedLiveLanguages() {
+    return this.orderedLanguages.filterBy('trackStatusIsLive');
   }
 
   get orderedBetaLanguages() {
-    return this.orderedLanguages.rejectBy('isGo');
+    return this.orderedLanguages.filterBy('trackStatusIsBeta');
   }
 
   get languages() {
