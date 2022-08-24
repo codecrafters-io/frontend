@@ -1,18 +1,18 @@
 export default function createLanguages(server) {
-  server.create('language', { name: 'C', slug: 'c' });
-  server.create('language', { name: 'C#', slug: 'csharp' });
-  server.create('language', { name: 'Clojure', slug: 'clojure' });
-  server.create('language', { name: 'Crystal', slug: 'crystal' });
-  server.create('language', { name: 'Elixir', slug: 'elixir' });
-  server.create('language', { name: 'Go', slug: 'go' });
-  server.create('language', { name: 'Haskell', slug: 'haskell' });
-  server.create('language', { name: 'Java', slug: 'java' });
-  server.create('language', { name: 'JavaScript', slug: 'javascript' });
-  server.create('language', { name: 'Kotlin', slug: 'kotlin' });
-  server.create('language', { name: 'Nim', slug: 'nim' });
-  server.create('language', { name: 'PHP', slug: 'php' });
-  server.create('language', { name: 'Python', slug: 'python' });
-  server.create('language', { name: 'Ruby', slug: 'ruby' });
-  server.create('language', { name: 'Rust', slug: 'rust' });
-  server.create('language', { name: 'Swift', slug: 'swift' });
+  server.create('language', { name: 'C', slug: 'c', trackStatus: 'beta' });
+  server.create('language', { name: 'C#', slug: 'csharp', trackStatus: 'beta' });
+  server.create('language', { name: 'Clojure', slug: 'clojure', trackStatus: 'beta' });
+  server.create('language', { name: 'Crystal', slug: 'crystal', trackStatus: 'beta' });
+  server.create('language', { name: 'Elixir', slug: 'elixir', trackStatus: 'beta' });
+  server.create('language', { name: 'Go', slug: 'go', trackStatus: 'live' });
+  server.create('language', { name: 'Haskell', slug: 'haskell', trackStatus: 'beta' });
+  server.create('language', { name: 'Java', slug: 'java', trackStatus: 'beta' });
+  server.create('language', { name: 'JavaScript', slug: 'javascript', trackStatus: 'beta' });
+  server.create('language', { name: 'Kotlin', slug: 'kotlin', trackStatus: 'beta' });
+  server.create('language', { name: 'Nim', slug: 'nim', trackStatus: 'beta' });
+  server.create('language', { name: 'PHP', slug: 'php', trackStatus: 'beta' });
+  server.create('language', { name: 'Python', slug: 'python', trackStatus: 'live' });
+  server.create('language', { name: 'Ruby', slug: 'ruby', trackStatus: 'beta' });
+  server.create('language', { name: 'Rust', slug: 'rust', trackStatus: 'beta' });
+  server.create('language', { name: 'Swift', slug: 'swift', trackStatus: 'beta' });
 }

@@ -21,7 +21,7 @@ module('Acceptance | view-tracks', function (hooks) {
     await percySnapshot('Tracks Page');
 
     assert.notOk(tracksPage.trackCards[0].hasBetaLabel, 'go should not have beta label');
-    assert.ok(tracksPage.trackCards[1].hasBetaLabel, 'other tracks should have beta label');
+    assert.notOk(tracksPage.trackCards[1].hasBetaLabel, 'Python should not have beta label');
     assert.ok(tracksPage.trackCards[2].hasBetaLabel, 'other tracks should have beta label');
     assert.ok(tracksPage.trackCards[3].hasBetaLabel, 'other tracks should have beta label');
   });
