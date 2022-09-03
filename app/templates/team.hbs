@@ -13,7 +13,7 @@
       {{else if this.model.team.pilots.firstObject}}
         <TeamPage::PilotDetailsContainer @team={{this.model.team}} />
       {{else}}
-        <TeamPage::StartSubscriptionContainer @team={{this.model.team}} />
+        <TeamPage::ContactForTeamBillingContainer @team={{this.model.team}} />
       {{/if}}
 
       <TeamPage::SlackIntegrationSettingsContainer @team={{this.model.team}} class="mt-4" />
