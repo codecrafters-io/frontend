@@ -13,7 +13,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  test('team admin can create team billing session (legacy)', async function (assert) {
+  test('team admin can create team billing session (legacy subscription)', async function (assert) {
     testScenario(this.server);
     signInAsTeamAdmin(this.owner, this.server);
 
@@ -55,8 +55,8 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
-    assert.ok(teamPage.pilotDetailsContainer.isPresent, 'pilot details are visible');
-    assert.strictEqual(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot is valid until January 1, 2099 12:00 AM.");
+    assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
+    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot is valid until January 1, 2099 12:00 AM.");
   });
 
   test('team with expired pilot sees payment method prompt', async function (assert) {
@@ -80,11 +80,11 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
-    assert.ok(teamPage.pilotDetailsContainer.isPresent, 'pilot details are visible');
-    assert.strictEqual(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
-    assert.strictEqual(teamPage.pilotDetailsContainer.instructionsText, 'Ready to upgrade? Start by adding a payment method:');
+    assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
+    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1, 1999.");
+    assert.strictEqual(teamPage.setupSubscriptionContainer.instructionsText, 'To setup your team subscription, start by adding a payment method:');
 
-    await teamPage.pilotDetailsContainer.clickOnAddPaymentMethodButton();
+    await teamPage.setupSubscriptionContainer.clickOnAddPaymentMethodButton();
     assert.strictEqual(window.location.href, 'https://test.com/team_payment_method_update_request', 'should redirect to team billing session URL');
   });
 
@@ -111,16 +111,42 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await coursesPage.accountDropdown.toggle();
     await coursesPage.accountDropdown.clickOnLink('Manage Team');
 
-    assert.ok(teamPage.pilotDetailsContainer.isPresent, 'pilot details are visible');
-    assert.strictEqual(teamPage.pilotDetailsContainer.detailsText, "Your team's pilot ended on January 1, 1999.");
-    assert.strictEqual(teamPage.pilotDetailsContainer.instructionsText, 'Click below to start your subscription:');
+    assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
+    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1, 1999.");
+    assert.strictEqual(teamPage.setupSubscriptionContainer.instructionsText, 'Click below to start your subscription:');
 
     assert.strictEqual(
-      teamPage.pilotDetailsContainer.firstInvoiceDetailsText,
+      teamPage.setupSubscriptionContainer.firstInvoiceDetailsText,
       "Your team's payment method will be charged $790/seat/yr for 10 seats. Contact us for questions."
     );
 
-    await teamPage.pilotDetailsContainer.clickOnStartSubscriptionButton();
+    await teamPage.setupSubscriptionContainer.clickOnStartSubscriptionButton();
     assert.strictEqual(teamPage.subscriptionSettingsContainer.instructionsText, 'Contact us for invoices or to make changes to your subscription:');
+  });
+
+  test('team with committed seats sees payment prompt', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+    const team = this.server.create('team', { id: 'dummy-team-id', name: 'Dummy Team', committedSeats: 5 });
+
+    this.server.create('team-membership', {
+      createdAt: new Date(),
+      id: 'dummy-team-membership-id',
+      user: user,
+      team: team,
+      isAdmin: true,
+    });
+
+    signIn(this.owner, this.server, user);
+
+    await coursesPage.visit();
+    await coursesPage.accountDropdown.toggle();
+    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+
+    assert.strictEqual(teamPage.setupSubscriptionContainer.instructionsText, 'To setup your team subscription, start by adding a payment method:');
+
+    await teamPage.setupSubscriptionContainer.clickOnAddPaymentMethodButton();
+    assert.strictEqual(window.location.href, 'https://test.com/team_payment_method_update_request', 'should redirect to team billing session URL');
   });
 });

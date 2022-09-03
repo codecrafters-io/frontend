@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import window from 'ember-window-mock';
 import Component from '@glimmer/component';
 
-export default class PilotDetailsContainerComponent extends Component {
+export default class SetupSubscriptionContainerComponent extends Component {
   @service store;
   @tracked isCreatingSubscription = false;
   @tracked isCreatingPaymentMethodUpdateRequest = false;

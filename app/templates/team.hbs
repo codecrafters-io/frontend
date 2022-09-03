@@ -10,8 +10,8 @@
     <div class="w-full md:w-1/3">
       {{#if this.model.team.hasActiveSubscription}}
         <TeamPage::SubscriptionSettingsContainer @team={{this.model.team}} />
-      {{else if this.model.team.pilots.firstObject}}
-        <TeamPage::PilotDetailsContainer @team={{this.model.team}} />
+      {{else if this.model.team.canStartSelfServeBillingFlow}}
+        <TeamPage::SetupSubscriptionContainer @team={{this.model.team}} />
       {{else}}
         <TeamPage::ContactForTeamBillingContainer @team={{this.model.team}} />
       {{/if}}

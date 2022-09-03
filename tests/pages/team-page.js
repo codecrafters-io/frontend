@@ -16,13 +16,13 @@ export default create({
     return this.members.toArray().findBy('username', username);
   },
 
-  pilotDetailsContainer: {
+  setupSubscriptionContainer: {
     clickOnAddPaymentMethodButton: clickable('[data-test-add-payment-method-button]'),
     clickOnStartSubscriptionButton: clickable('[data-test-start-subscription-button]'),
-    detailsText: text('[data-test-details-text]'),
     firstInvoiceDetailsText: text('[data-test-first-invoice-details]'),
     instructionsText: text('[data-test-instructions-text]'),
-    scope: '[data-test-pilot-details-container]',
+    pilotDetailsText: text('[data-test-pilot-details-text]'),
+    scope: '[data-test-setup-subscription-container]',
   },
 
   slackIntegrationSettingsContainer: {
