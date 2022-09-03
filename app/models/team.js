@@ -3,6 +3,7 @@ import Model from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 
 export default class TeamModel extends Model {
+  @attr('number') committedSeats;
   @attr('string') inviteCode;
   @hasMany('team-membership', { async: false }) memberships;
   @attr('string') name;
@@ -22,6 +23,10 @@ export default class TeamModel extends Model {
 
   get admins() {
     return this.memberships.filterBy('isAdmin', true).mapBy('user');
+  }
+
+  get canStartSelfServeBillingFlow() {
+    return this.pilots.firstObject || this.committedSeats;
   }
 
   get expiredPilot() {
