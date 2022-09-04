@@ -10,10 +10,9 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
     const store = this.owner.lookup('service:store');
 
     const language = store.createRecord('language');
+    const course = store.createRecord('course');
 
-    const course = store.createRecord('course', {
-      supportedLanguages: [language],
-    });
+    store.createRecord('course-language-configuration', { course: course, language: language });
 
     const courseStage = store.createRecord('course-stage', {
       course: course,
