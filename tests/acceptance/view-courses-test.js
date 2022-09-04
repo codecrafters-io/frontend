@@ -16,14 +16,15 @@ module('Acceptance | view-courses', function (hooks) {
     signIn(this.owner, this.server);
 
     await coursesPage.visit();
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     await percySnapshot('Courses Page');
 
     assert.notOk(coursesPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
-    assert.ok(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
+    assert.ok(coursesPage.courseCards[4].hasBetaLabel, 'live challenges should have beta label');
   });
 
   test('it renders alpha courses if user is staff', async function (assert) {
@@ -51,7 +52,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await coursesPage.visit();
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 4 course cards to be present');
 
     assert.strictEqual(coursesPage.courseCards[0].actionText, 'Resume');
     assert.strictEqual(coursesPage.courseCards[1].actionText, 'Start');
@@ -88,7 +89,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await coursesPage.visit();
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 4 course cards to be present');
 
     await percySnapshot('Courses Page - Courses in progress');
 
@@ -116,7 +117,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await coursesPage.visit();
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 4 course cards to be present');
 
     await percySnapshot('Courses Page - Course completed');
 
@@ -131,12 +132,13 @@ module('Acceptance | view-courses', function (hooks) {
     testScenario(this.server);
 
     await coursesPage.visit();
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 4 course cards to be present');
 
     assert.notOk(coursesPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(coursesPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
-    assert.ok(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(coursesPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
+    assert.ok(coursesPage.courseCards[4].hasBetaLabel, 'live challenges should not have beta label');
   });
 
   test('first time visit has loading page', async function (assert) {
@@ -148,7 +150,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 4 course cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -178,7 +180,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 4 course cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -200,6 +202,6 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(coursesPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(coursesPage.courseCards.length, 5, 'expected 4 course cards to be present');
   });
 });
