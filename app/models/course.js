@@ -15,7 +15,6 @@ export default class CourseModel extends Model {
 
   @hasMany('course-language-configuration', { async: false }) languageConfigurations;
   @hasMany('course-stage', { async: false }) stages;
-  @hasMany('language', { async: false }) supportedLanguages;
 
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
@@ -30,6 +29,14 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'alpha') releaseStatusIsAlpha;
   @equal('releaseStatus', 'beta') releaseStatusIsBeta;
   @equal('releaseStatus', 'live') releaseStatusIsLive;
+
+  get alphaLanguages() {
+    return this.languageConfigurations.filterBy('releaseStatusIsAlpha').mapBy('language');
+  }
+
+  get betaOrLiveLanguages() {
+    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+  }
 
   get logoUrl() {
     return {

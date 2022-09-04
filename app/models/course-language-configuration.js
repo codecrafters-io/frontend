@@ -1,5 +1,6 @@
 import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
 export default class CourseLanguageConfigurationModel extends Model {
   @attr('string') starterRepositoryUrl;
@@ -8,4 +9,8 @@ export default class CourseLanguageConfigurationModel extends Model {
 
   @belongsTo('course', { async: false }) course;
   @belongsTo('language', { async: false }) language;
+
+  @equal('releaseStatus', 'alpha') releaseStatusIsAlpha;
+  @equal('releaseStatus', 'beta') releaseStatusIsBeta;
+  @equal('releaseStatus', 'live') releaseStatusIsLive;
 }
