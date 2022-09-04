@@ -6,22 +6,28 @@ export default {
   "description_md": "In this challenge, you'll build a toy Docker implementation that can pull an\nimage from [Docker Hub](https://hub.docker.com/) and execute commands in it.\nAlong the way, you'll learn about\n[chroot](https://en.wikipedia.org/wiki/Chroot), [kernel\nnamespaces](https://en.wikipedia.org/wiki/Linux_namespaces), the [docker\nregistry API](https://docs.docker.com/registry/spec/api/) and much more.\n",
   "short_description_md": "Learn about chroot, kernel namespaces, the docker registry API and more\n",
   "completion_percentage": 30,
-  "early_access_languages": [
-    "rust"
+  "languages": [
+    {
+      "slug": "c",
+      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-c"
+    },
+    {
+      "slug": "go",
+      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-go"
+    },
+    {
+      "slug": "nim",
+      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-nim"
+    },
+    {
+      "slug": "php",
+      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-php"
+    },
+    {
+      "slug": "rust",
+      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-rust"
+    }
   ],
-  "supported_languages": [
-    "c",
-    "go",
-    "nim",
-    "php"
-  ],
-  "starter_repos": {
-    "c": "https://github.com/codecrafters-io/docker-starter-c",
-    "go": "https://github.com/codecrafters-io/docker-starter-go",
-    "nim": "https://github.com/codecrafters-io/docker-starter-nim",
-    "php": "https://github.com/codecrafters-io/docker-starter-php",
-    "rust": "https://github.com/codecrafters-io/docker-starter-rust"
-  },
   "marketing": {
     "description": "Learn about chroot, kernel namespaces, the docker registry API and more",
     "difficulty": "medium",

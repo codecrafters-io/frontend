@@ -12,7 +12,7 @@ export default class CourseRoute extends ApplicationRoute {
 
   async model(params) {
     let courses = this.store.findAll('course', {
-      include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
+      include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
     });
 
     let repositories = this.store.findAll('repository', {

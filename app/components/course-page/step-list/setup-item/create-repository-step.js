@@ -25,12 +25,16 @@ export default class CoursePageContentStepListSetupItemCreateRepositoryStepCompo
     this.shouldShowNonPreferredLanguages = true;
   }
 
-  get orderedLanguages() {
-    return this.args.repository.course.supportedLanguages.sortBy('name');
+  get availableLanguages() {
+    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).mapBy('language');
+  }
+
+  get orderedLanguageConfigurations() {
+    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).sortBy('language.name');
   }
 
   get preferredLanguages() {
-    return this.args.repository.course.supportedLanguages.filterBy('slug', this.args.preferredLanguageSlug);
+    return this.availableLanguages.filterBy('slug', this.args.preferredLanguageSlug);
   }
 
   get requestedLanguages() {
@@ -39,7 +43,7 @@ export default class CoursePageContentStepListSetupItemCreateRepositoryStepCompo
 
   get requestedAndUnsupportedLanguages() {
     return this.requestedLanguages.filter((language) => {
-      return !this.args.repository.course.supportedLanguages.includes(language);
+      return !this.availableLanguages.includes(language);
     });
   }
 }

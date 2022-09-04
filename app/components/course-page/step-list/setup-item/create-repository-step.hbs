@@ -31,8 +31,12 @@
           {{on "click" this.handleShowOtherLanguagesButtonClick}}
         />
       {{else}}
-        {{#each this.orderedLanguages as |language|}}
-          <CoursePage::StepList::SetupItem::LanguageButton @language={{language}} {{on "click" (fn this.handleLanguageButtonClick language)}} />
+        {{#each this.orderedLanguageConfigurations as |languageConfiguration|}}
+          <CoursePage::StepList::SetupItem::LanguageButton
+            @language={{languageConfiguration.language}}
+            @releaseStatusIsAlpha={{languageConfiguration.releaseStatusIsAlpha}}
+            {{on "click" (fn this.handleLanguageButtonClick languageConfiguration.language)}}
+          />
         {{/each}}
 
         <CoursePage::StepList::SetupItem::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />

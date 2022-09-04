@@ -15,7 +15,7 @@ export default class CoursePageContentStepListSetupItemRequestLanguageDropdownCo
   get availableLanguages() {
     return this.store
       .peekAll('language')
-      .filter((language) => !this.args.course.supportedLanguages.includes(language))
+      .filter((language) => !this.args.course.betaOrLiveLanguages.includes(language))
       .sortBy('name');
   }
 

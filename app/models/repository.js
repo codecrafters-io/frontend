@@ -26,7 +26,7 @@ export default class RepositoryModel extends Model {
   }
 
   get defaultStarterRepositoryUrl() {
-    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.supportedLanguages.firstObject.slug}`;
+    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.betaOrLiveLanguages.firstObject.slug}`;
   }
 
   get firstSubmissionCreated() {
@@ -84,7 +84,7 @@ export default class RepositoryModel extends Model {
   }
 
   get defaultReadmeUrl() {
-    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.supportedLanguages.firstObject.slug}`;
+    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.betaOrLiveLanguages.firstObject.slug}`;
   }
 
   get readmeUrl() {

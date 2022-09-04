@@ -7,4 +7,10 @@
   <div class="text-base text-gray-700 group-hover:text-teal-500">
     {{@language.name}}
   </div>
+
+  {{#if @releaseStatusIsAlpha}}
+    <div class="text-xs text-gray-500 ml-2">
+      (Alpha)
+    </div>
+  {{/if}}
 </button>

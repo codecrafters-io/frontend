@@ -8,9 +8,6 @@ export default function createCourseFromData(server, courseData) {
     shortName: courseData.name.replace(/Build your own /i, ''),
     shortDescriptionMarkdown: courseData.short_description_md,
     slug: courseData.slug,
-    supportedLanguages: [...courseData.supported_languages, ...courseData.early_access_languages].map((languageSlug) =>
-      server.schema.languages.findBy({ slug: languageSlug })
-    ),
     testimonials: courseData.marketing.testimonials,
   });
 
@@ -30,6 +27,16 @@ export default function createCourseFromData(server, courseData) {
     });
 
     courseStagePosition++;
+  }
+
+  for (const languageConfigurationData of courseData.languages) {
+    server.create('course-language-configuration', {
+      course: course,
+      language: server.schema.languages.findBy({ slug: languageConfigurationData.slug }),
+      releaseStatus: languageConfigurationData.release_status || 'live',
+      starterRepositoryUrl: languageConfigurationData.starter_repository_url,
+      alphaTesterUsernames: languageConfigurationData.alphaTesterUsernames || [],
+    });
   }
 
   return course;

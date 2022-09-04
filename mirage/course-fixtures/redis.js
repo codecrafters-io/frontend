@@ -6,38 +6,60 @@ export default {
   "description_md": "In this challenge, you'll build a toy Redis clone\nthat's capable of handling basic commands like PING, GET\nand SET. Along the way, we'll learn about event loops, the Redis\nProtocol and more.\n",
   "short_description_md": "Learn about TCP servers, events loops, the Redis protocol and more\n",
   "completion_percentage": 30,
-  "early_access_languages": [
-    "crystal",
-    "clojure",
-    "csharp"
+  "languages": [
+    {
+      "slug": "c",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-c"
+    },
+    {
+      "slug": "clojure",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-clojure"
+    },
+    {
+      "slug": "crystal",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-crystal"
+    },
+    {
+      "slug": "csharp",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-csharp"
+    },
+    {
+      "slug": "elixir",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-elixir"
+    },
+    {
+      "slug": "go",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-go"
+    },
+    {
+      "slug": "haskell",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-haskell"
+    },
+    {
+      "slug": "java",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-java"
+    },
+    {
+      "slug": "javascript",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-javascript"
+    },
+    {
+      "slug": "php",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-php"
+    },
+    {
+      "slug": "python",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-python"
+    },
+    {
+      "slug": "ruby",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-ruby"
+    },
+    {
+      "slug": "rust",
+      "starter_repository_url": "https://github.com/codecrafters-io/redis-starter-rust"
+    }
   ],
-  "supported_languages": [
-    "python",
-    "ruby",
-    "go",
-    "rust",
-    "c",
-    "haskell",
-    "elixir",
-    "php",
-    "javascript",
-    "java"
-  ],
-  "starter_repos": {
-    "c": "https://github.com/codecrafters-io/redis-starter-c",
-    "clojure": "https://github.com/codecrafters-io/redis-starter-clojure",
-    "crystal": "https://github.com/codecrafters-io/redis-starter-crystal",
-    "elixir": "https://github.com/codecrafters-io/redis-starter-elixir",
-    "go": "https://github.com/codecrafters-io/redis-starter-go",
-    "haskell": "https://github.com/codecrafters-io/redis-starter-haskell",
-    "java": "https://github.com/codecrafters-io/redis-starter-java",
-    "javascript": "https://github.com/codecrafters-io/redis-starter-javascript",
-    "php": "https://github.com/codecrafters-io/redis-starter-php",
-    "python": "https://github.com/codecrafters-io/redis-starter-python",
-    "csharp": "https://github.com/codecrafters-io/redis-starter-csharp",
-    "ruby": "https://github.com/codecrafters-io/redis-starter-ruby",
-    "rust": "https://github.com/codecrafters-io/redis-starter-rust"
-  },
   "marketing": {
     "description": "Learn about TCP servers, event loops, the Redis protocol and more",
     "difficulty": "medium",
@@ -98,7 +120,7 @@ export default {
       "slug": "echo",
       "name": "Implement the ECHO command",
       "difficulty": "medium",
-      "description_md": "In this stage, you'll respond to the\n[ECHO](https://redis.io/commands/echo) command.\n\nThe client will send you the command as a RESP array, which looks\nsomething like this:\n\n```\n*2\\r\\n$4\\r\\nECHO\\r\\n$3\\r\\nhey\\r\\n\n```\n\nSeems confusing? Read up about [sending commands to a Redis\nserver](https://redis.io/topics/protocol#sending-commands-to-a-redis-server).\n",
+      "description_md": "In this stage, you'll respond to the\n[ECHO](https://redis.io/commands/echo) command.\n\nThe client will send you the command as a RESP array, which looks\nsomething like this:\n\n```\n*2\\r\\n$4\\r\\nECHO\\r\\n$3\\r\\nhey\\r\\n\n```\n\nSeems confusing? Read up about [sending commands to a Redis\nserver](https://redis.io/docs/reference/protocol-spec/#send-commands-to-a-redis-server).\n",
       "marketing_md": "In this stage, you'll respond to the\n[ECHO](https://redis.io/commands/echo) command. You'll parse user input\naccording to the [the Redis protocol\nspecification](https://redis.io/topics/protocol).\n",
       "tester_source_code_url": "https://github.com/codecrafters-io/redis-tester/blob/a58b9d58b33870fe26a164c0e323f809275a7250/internal/test_echo.go#L11"
     },

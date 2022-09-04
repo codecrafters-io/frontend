@@ -6,13 +6,12 @@ export default {
   "description_md": "In this challenge, you'll build a barebones React implementation that supports\nfunction components and hooks. Along the way, you'll learn about React's\n[API](https://reactjs.org/docs/react-api.html), [DOM-diffing\nalgorithm](https://reactjs.org/docs/reconciliation.html#the-diffing-algorithm),\n[hooks](https://reactjs.org/docs/hooks-intro.html) and more!\n",
   "short_description_md": "Learn about React's createElement API, function components, DOM-diffing algorithm, hooks and more\n",
   "completion_percentage": 10,
-  "early_access_languages": [],
-  "supported_languages": [
-    "javascript"
+  "languages": [
+    {
+      "slug": "javascript",
+      "starter_repository_url": "https://github.com/codecrafters-io/react-starter-javascript"
+    }
   ],
-  "starter_repos": {
-    "javascript": "https://github.com/codecrafters-io/react-starter-javascript"
-  },
   "marketing": {
     "description": "Learn about React's createElement API, function components, DOM-diffing algorithm, hooks and more",
     "difficulty": "medium",

@@ -62,7 +62,7 @@ export default class LanguageModel extends Model {
   get stagesCount() {
     return this.store
       .peekAll('course')
-      .filter((course) => course.supportedLanguages.includes(this))
+      .filter((course) => course.betaOrLiveLanguages.includes(this))
       .map((course) => course.stages.length)
       .reduce((a, b) => a + b, 0);
   }

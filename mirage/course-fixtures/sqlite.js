@@ -2,26 +2,32 @@ export default {
   "slug": "sqlite",
   "name": "Build your own SQLite",
   "short_name": "SQLite",
-  "release_status": "beta",
+  "release_status": "live",
   "description_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
   "short_description_md": "Learn about parsing SQL syntax, SQLite's file format, how indexed data is stored in B-trees and more\n",
   "completion_percentage": 5,
-  "supported_languages": [
-    "python",
-    "go",
-    "javascript"
+  "languages": [
+    {
+      "slug": "csharp",
+      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-csharp"
+    },
+    {
+      "slug": "go",
+      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-go"
+    },
+    {
+      "slug": "javascript",
+      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-javascript"
+    },
+    {
+      "slug": "python",
+      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-python"
+    },
+    {
+      "slug": "rust",
+      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-rust"
+    }
   ],
-  "early_access_languages": [
-    "csharp",
-    "rust"
-  ],
-  "starter_repos": {
-    "csharp": "https://github.com/codecrafters-io/sqlite-starter-csharp",
-    "go": "https://github.com/codecrafters-io/sqlite-starter-go",
-    "javascript": "https://github.com/codecrafters-io/sqlite-starter-javascript",
-    "python": "https://github.com/codecrafters-io/sqlite-starter-python",
-    "rust": "https://github.com/codecrafters-io/sqlite-starter-rust"
-  },
   "marketing": {
     "description": "Learn about SQLite's file format, how indexed data is stored in B-trees and more.",
     "difficulty": "hard",
