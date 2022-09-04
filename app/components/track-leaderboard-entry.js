@@ -24,7 +24,7 @@ export default class TrackLeaderboardEntryComponent extends Component {
     return this.store
       .peekAll('course')
       .rejectBy('releaseStatusIsAlpha')
-      .filter((course) => course.supportedLanguages.includes(this.args.entry.language))
+      .filter((course) => course.betaOrLiveLanguages.includes(this.args.entry.language))
       .mapBy('stages.length')
       .reduce((a, b) => a + b, 0);
   }

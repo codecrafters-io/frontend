@@ -13,7 +13,7 @@ export default class CourseStageSolutionPageLanguageDropdownComponent extends Co
   }
 
   get languagesWithoutSolutions() {
-    return this.args.courseStage.course.supportedLanguages
+    return this.args.courseStage.course.betaOrLiveLanguages
       .filter((language) => {
         return !this.languagesWithSolutions.includes(language);
       })

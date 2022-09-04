@@ -13,7 +13,7 @@ export default class PayRoute extends ApplicationRoute {
     });
 
     modelPromises.courses = this.store.findAll('course', {
-      include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
+      include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
     });
 
     return RSVP.hash(modelPromises);

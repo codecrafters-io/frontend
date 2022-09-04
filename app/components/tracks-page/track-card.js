@@ -32,7 +32,7 @@ export default class TrackCardComponent extends Component {
     return this.store
       .peekAll('course')
       .rejectBy('releaseStatusIsAlpha')
-      .filter((course) => course.supportedLanguages.includes(this.args.language))
+      .filter((course) => course.betaOrLiveLanguages.includes(this.args.language))
       .mapBy('stages.length')
       .reduce((a, b) => a + b, 0);
   }

@@ -12,7 +12,7 @@ export default class TrackRoute extends ApplicationRoute {
 
   async model(params) {
     let courses = await this.store.findAll('course', {
-      include: 'stages.solutions.language,stages.source-walkthrough,supported-languages',
+      include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
     });
     let language = this.store.peekAll('language').findBy('slug', params.track_slug);
 
@@ -23,7 +23,7 @@ export default class TrackRoute extends ApplicationRoute {
     }
 
     return {
-      courses: courses.filter((course) => course.supportedLanguages.includes(language)),
+      courses: courses.filter((course) => course.betaOrLiveLanguages.includes(language)),
       language: language,
     };
   }

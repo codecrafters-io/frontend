@@ -23,7 +23,7 @@ export default class TracksController extends Controller {
   get languages() {
     return this.model.courses
       .toArray()
-      .flatMap((course) => course.supportedLanguages.toArray())
+      .flatMap((course) => course.betaOrLiveLanguages.toArray())
       .uniq();
   }
 
