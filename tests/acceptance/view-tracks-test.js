@@ -96,7 +96,7 @@ module('Acceptance | view-tracks', function (hooks) {
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
     this.server.schema.courses.all().models.forEach((course) => {
-      if (course.betaOrLiveLanguages.models.map((language) => language.slug).includes(go.slug)) {
+      if (course.languageConfigurations.models.map((languageConfiguration) => languageConfiguration.language.slug).includes(go.slug)) {
         this.server.create('repository', 'withAllStagesCompleted', {
           createdAt: new Date('2022-01-01'),
           course: course,
