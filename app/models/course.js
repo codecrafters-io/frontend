@@ -11,9 +11,11 @@ export default class CourseModel extends Model {
   @attr('string') shortDescriptionMarkdown;
   @attr('string') shortName;
   @attr('string') slug;
+  @attr() testimonials; // free-form JSON
+
+  @hasMany('course-language-configuration', { async: false }) languageConfigurations;
   @hasMany('course-stage', { async: false }) stages;
   @hasMany('language', { async: false }) supportedLanguages;
-  @attr() testimonials; // free-form JSON
 
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
