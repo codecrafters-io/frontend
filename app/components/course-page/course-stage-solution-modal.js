@@ -19,6 +19,7 @@ import 'prismjs/components/prism-elixir';
 import 'prismjs/components/prism-haskell';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-swift';
 
 import 'prismjs/components/prism-diff';
 import * as Sentry from '@sentry/ember';
