@@ -30,8 +30,8 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'beta') releaseStatusIsBeta;
   @equal('releaseStatus', 'live') releaseStatusIsLive;
 
-  get alphaLanguages() {
-    return this.languageConfigurations.filterBy('releaseStatusIsAlpha').mapBy('language');
+  get availableLanguageConfigurationsForUser(user) {
+    return this.languageConfigurations.filter((languageConfiguration) => languageConfiguration.isAvailableForUser(user));
   }
 
   get betaOrLiveLanguages() {

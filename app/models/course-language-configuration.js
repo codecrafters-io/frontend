@@ -13,4 +13,12 @@ export default class CourseLanguageConfigurationModel extends Model {
   @equal('releaseStatus', 'alpha') releaseStatusIsAlpha;
   @equal('releaseStatus', 'beta') releaseStatusIsBeta;
   @equal('releaseStatus', 'live') releaseStatusIsLive;
+
+  isAvailableForUser(user) {
+    if (this.releaseStatusIsAlpha) {
+      return user.isStaff || this.alphaTesterUsernames.includes(user.username);
+    } else {
+      return true;
+    }
+  }
 }
