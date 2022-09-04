@@ -1,6 +1,6 @@
 import Model from '@ember-data/model';
 import showdown from 'showdown';
-import { attr } from '@ember-data/model';
+import { attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { htmlSafe } from '@ember/template';
 
@@ -8,6 +8,8 @@ export default class LanguageModel extends Model {
   @attr('string') name;
   @attr('string') slug;
   @attr('string') trackStatus;
+
+  @hasMany('course-language-configuration', { async: false }) courseConfigurations;
 
   @equal('slug', 'c') isC;
   @equal('slug', 'csharp') isCsharp;
