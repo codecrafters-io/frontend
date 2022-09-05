@@ -14,7 +14,7 @@
       <PayPage::PricingCard
         @title="Monthly"
         @autoRenewSubscription={{true}}
-        @actualPrice={{79}}
+        @actualPrice={{99}}
         @subtitle="Recurring subscription"
         @pricingFrequency="monthly"
         @footerText="No charge today. Cancel anytime."
@@ -23,7 +23,7 @@
       <PayPage::PricingCard
         @title="3 months"
         @autoRenewSubscription={{false}}
-        @actualPrice={{200}}
+        @actualPrice={{249}}
         @subtitle="Full access for 3 months"
         @pricingFrequency="quarterly"
         @footerText="One-time payment."
@@ -34,8 +34,8 @@
         @autoRenewSubscription={{false}}
         @title="1 year"
         @subtitle="Learn at your own pace"
-        @actualPrice={{790}}
-        @discountedPrice={{if this.userIsEligibleForEarlyBirdDiscount 632 null}}
+        @actualPrice={{990}}
+        @discountedPrice={{if this.userIsEligibleForEarlyBirdDiscount 594 null}}
         @pricingFrequency="yearly"
         @earlyBirdDiscountEnabled={{this.userIsEligibleForEarlyBirdDiscount}}
       />
