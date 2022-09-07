@@ -1,12 +1,12 @@
-<div class="bg-gray-50 rounded-md shadow-sm {{@class}}" ...attributes>
-  <div class="bg-white rounded-t border border-b-0 border-gray-200 relative">
+<div class="bg-gray-50 rounded-md {{@class}}" ...attributes>
+  <div class="bg-white rounded-t border border-b-0 border-gray-300 relative">
     <div class="p-5 pb-4 md:p-8 md:pb-6">
       {{yield to="content"}}
     </div>
   </div>
 
-  <div class="border border-gray-200 border-t rounded-b relative">
-    <div class="h-px w-full bg-gray-100 bg-opacity-50 absolute -top-px"></div>
+  <div class="border border-gray-300 border-t rounded-b relative">
+    <div class="h-px w-full bg-gray-200 bg-opacity-50 absolute -top-px"></div>
 
     <div class="flex items-center justify-between py-3 px-5 md:px-8">
       {{yield to="footerContent"}}
