@@ -3,8 +3,8 @@
   <span class="font-bold text-gray-700">{{@courseStage.name}} </span>
 </div>
 
-<div class="flex items-center justify-between mb-6">
-  <div class="flex items-center">
+<div class="flex flex-wrap items-center justify-between">
+  <div class="flex items-center overflow-x-scroll pb-4 mb-2">
     <CoursePage::CourseStageSolutionModal::HeaderTabLink
       @icon="code"
       @text="Diff"
@@ -37,7 +37,7 @@
       @requestedLanguage={{@requestedSolutionLanguage}}
       @courseStage={{@courseStage}}
       @onRequestedLanguageChange={{@onRequestedSolutionLanguageChange}}
-      class="transition-opacity {{if (eq @activeTab 'source_walkthrough') 'opacity-0' 'opacity-100'}}"
+      class="transition-all {{if (eq @activeTab 'source_walkthrough') 'opacity-0 mb-0 h-0' 'opacity-100 mb-6 h-auto'}}"
     />
   </div>
 </div>
