@@ -6,42 +6,20 @@
   {{did-insert this.handleDidInsertModalBody}}
   data-test-course-stage-solution-modal
 >
-  <:header>
-    <CoursePage::CourseStageSolutionModal::Header
-      @currentSolution={{this.solution}}
-      @activeTab={{this.activeTab}}
-      @onTabLinkClick={{this.handleTabLinkClick}}
-      @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
-      @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
-      @courseStage={{@courseStage}}
-    />
-  </:header>
+  <CoursePage::CourseStageSolutionModal::Header
+    @currentSolution={{this.solution}}
+    @activeTab={{this.activeTab}}
+    @onTabLinkClick={{this.handleTabLinkClick}}
+    @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
+    @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
+    @courseStage={{@courseStage}}
+  />
 
-  <:content>
-    {{#if (and (not-eq this.activeTab "source_walkthrough") (not-eq this.requestedSolutionLanguage this.solution.language))}}
-      <div
-        class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-6 flex items-center"
-        data-test-requested-language-not-available-notice
-      >
-        <div class="mr-3">
-          {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
-        </div>
-        <div class="text-blue-900 text-sm">
-          This stage doesn't have solutions available for
-          {{this.requestedSolutionLanguage.name}}
-          yet, so we're showing solutions for
-          <b class="text-blue-800">{{this.solution.language.name}}</b>
-          instead.
-        </div>
-      </div>
-    {{/if}}
-
-    {{#if (eq this.activeTab "diff")}}
-      <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
-    {{else if (eq this.activeTab "explanation")}}
-      <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
-    {{else}}
-      <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
-    {{/if}}
-  </:content>
+  {{#if (eq this.activeTab "diff")}}
+    <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
+  {{else if (eq this.activeTab "explanation")}}
+    <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
+  {{else}}
+    <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
+  {{/if}}
 </ModalBody>

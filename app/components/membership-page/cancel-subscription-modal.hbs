@@ -1,61 +1,57 @@
 <ModalBody @allowManualClose={{true}} @onClose={{@onClose}} @class="w-full" data-test-cancel-subscription-modal>
-  <:header>
-    <div class="font-semibold text-2xl text-gray-600 mr-6">
-      We're sorry to see you go!
-    </div>
-  </:header>
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-6">
+    We're sorry to see you go!
+  </div>
 
-  <:content>
-    <div class="mb-6 text-md text-gray-600 mr-6 leading-relaxed">
-      {{#if this.cancellationIsWithinTrialPeriod}}
-        Your trial will be cancelled immediately. If you'd like to proceed, please pick a reason below and click on "Cancel Trial".
-      {{else}}
-        Your membership will remain active until
-        <span class="font-semibold">{{moment-format this.subscription.currentPeriodEnd "LLL"}}</span>. If you'd like to proceed with cancellation,
-        please pick a reason below and click on "Cancel Subscription".
-      {{/if}}
-    </div>
+  <div class="mb-6 text-md text-gray-600 mr-6 leading-relaxed">
+    {{#if this.cancellationIsWithinTrialPeriod}}
+      Your trial will be cancelled immediately. If you'd like to proceed, please pick a reason below and click on "Cancel Trial".
+    {{else}}
+      Your membership will remain active until
+      <span class="font-semibold">{{moment-format this.subscription.currentPeriodEnd "LLL"}}</span>. If you'd like to proceed with cancellation,
+      please pick a reason below and click on "Cancel Subscription".
+    {{/if}}
+  </div>
 
-    <div class="space-y-2 mb-6">
-      {{#each this.suggestedReasons as |reason|}}
-        <label class="flex items-center">
-          <input type="radio" checked={{eq reason this.selectedReason}} {{on "change" (fn this.handleSuggestedReasonSelect reason)}} />
-          <span class="ml-2 text-gray-600">
-            {{reason}}
-          </span>
-        </label>
-      {{/each}}
-
+  <div class="space-y-2 mb-6">
+    {{#each this.suggestedReasons as |reason|}}
       <label class="flex items-center">
-        <input type="radio" checked={{this.otherReasonIsSelected}} {{on "change" this.handleOtherReasonSelect}} />
+        <input type="radio" checked={{eq reason this.selectedReason}} {{on "change" (fn this.handleSuggestedReasonSelect reason)}} />
         <span class="ml-2 text-gray-600">
-          Other reason
+          {{reason}}
         </span>
       </label>
-    </div>
+    {{/each}}
 
-    {{! template-lint-disable require-input-label }}
-    <Textarea
-      @value={{this.reasonDescription}}
-      class="border border-gray-300 rounded w-full p-3 mb-6 text-sm resize-none"
-      rows="5"
-      placeholder={{this.placeholderTextForReasonDescriptionInput}}
-      {{did-insert this.handleDidInsertReasonDescriptionInputElement}}
-      data-test-reason-description-input
-    />
+    <label class="flex items-center">
+      <input type="radio" checked={{this.otherReasonIsSelected}} {{on "change" this.handleOtherReasonSelect}} />
+      <span class="ml-2 text-gray-600">
+        Other reason
+      </span>
+    </label>
+  </div>
 
-    <div class="flex space-x-2">
-      <PrimaryButtonWithSpinner
-        @isDisabled={{not this.cancelButtonIsEnabled}}
-        @shouldShowSpinner={{this.isCancelling}}
-        {{on "click" this.handleCancelSubscriptionButtonClick}}
-        data-test-cancel-subscription-button
-      >
-        {{if this.cancellationIsWithinTrialPeriod "Cancel Trial" "Cancel Subscription"}}
-      </PrimaryButtonWithSpinner>
-      <SecondaryButton {{on "click" @onClose}}>
-        Undo
-      </SecondaryButton>
-    </div>
-  </:content>
+  {{! template-lint-disable require-input-label }}
+  <Textarea
+    @value={{this.reasonDescription}}
+    class="border border-gray-300 rounded w-full p-3 mb-6 text-sm resize-none"
+    rows="5"
+    placeholder={{this.placeholderTextForReasonDescriptionInput}}
+    {{did-insert this.handleDidInsertReasonDescriptionInputElement}}
+    data-test-reason-description-input
+  />
+
+  <div class="flex space-x-2">
+    <PrimaryButtonWithSpinner
+      @isDisabled={{not this.cancelButtonIsEnabled}}
+      @shouldShowSpinner={{this.isCancelling}}
+      {{on "click" this.handleCancelSubscriptionButtonClick}}
+      data-test-cancel-subscription-button
+    >
+      {{if this.cancellationIsWithinTrialPeriod "Cancel Trial" "Cancel Subscription"}}
+    </PrimaryButtonWithSpinner>
+    <SecondaryButton {{on "click" @onClose}}>
+      Undo
+    </SecondaryButton>
+  </div>
 </ModalBody>
