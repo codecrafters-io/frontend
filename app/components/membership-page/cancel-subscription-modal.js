@@ -11,12 +11,18 @@ export default class CancelSubscriptionModalComponent extends Component {
   @tracked isCancelling;
   @service store;
 
+  constructor() {
+    super(...arguments);
+
+    this.subscription = this.args.subscription; // Save, so that when it is cancelled, values don't shift around
+  }
+
   get cancelButtonIsEnabled() {
     return this.selectedReason || (this.otherReasonIsSelected && this.reasonDescription.length > 0);
   }
 
   get cancellationIsWithinTrialPeriod() {
-    return this.args.subscription.isTrialing;
+    return this.subscription.isTrialing;
   }
 
   get suggestedReasons() {
@@ -29,12 +35,12 @@ export default class CancelSubscriptionModalComponent extends Component {
       this.isCancelling = true;
 
       if (this.cancellationIsWithinTrialPeriod) {
-        await this.args.subscription.cancelTrial({
+        await this.subscription.cancelTrial({
           'selected-reason': this.otherReasonIsSelected ? 'Other Reason' : this.selectedReason,
           'reason-description': this.reasonDescription,
         });
       } else {
-        await this.args.subscription.cancel({
+        await this.subscription.cancel({
           'selected-reason': this.otherReasonIsSelected ? 'Other Reason' : this.selectedReason,
           'reason-description': this.reasonDescription,
         });
