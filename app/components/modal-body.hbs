@@ -1,5 +1,7 @@
 <div
-  class="bg-white rounded-md shadow-sm overflow-hidden border-gray-300 relative flex flex-col pt-6 sm:pt-12 sm:pb-6 min-h-0 max-w-lg {{@class}}"
+  class="bg-white rounded-md shadow-sm overflow-hidden border-gray-300 relative flex flex-col pt-6 sm:pt-12 sm:pb-6 min-h-0
+    {{if @isWide 'max-w-screen-lg' 'max-w-lg'}}
+    {{@class}}"
   {{on-click-outside this.handleClickOutside}}
   ...attributes
 >
@@ -14,7 +16,7 @@
     </button>
   {{/if}}
 
-  <div class="flex-shrink-0 px-6 sm:px-12">
+  <div class="flex-shrink-0 px-6 pb-1 sm:px-12">
     {{yield to="header"}}
   </div>
 
