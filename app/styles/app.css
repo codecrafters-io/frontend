@@ -29,6 +29,16 @@
   height: 40rem;
 }
 
+.top-to-bottom-scroll-mask {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: lighten;
+}
+
+.bottom-to-top-scroll-mask {
+  background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: lighten;
+}
+
 .copyable-code .border-text-mask {
   background: linear-gradient(to left, rgba(241, 245, 249, 1) 0%, rgba(241, 245, 249, 1) 20%, rgba(241, 245, 249, 0) 100%);
 }
