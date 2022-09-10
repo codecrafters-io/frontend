@@ -3,7 +3,11 @@ import config from 'codecrafters-frontend/config/environment';
 import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
-import start from 'ember-exam/test-support/start';
+
+// TODO: Enable ember exam
+// import start from 'ember-exam/test-support/start';
+
+import { start } from 'ember-qunit';
 
 import 'qunit-assertions-extra';
 
