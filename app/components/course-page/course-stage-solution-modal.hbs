@@ -6,20 +6,24 @@
   {{did-insert this.handleDidInsertModalBody}}
   data-test-course-stage-solution-modal
 >
-  <CoursePage::CourseStageSolutionModal::Header
-    @currentSolution={{this.solution}}
-    @activeTab={{this.activeTab}}
-    @onTabLinkClick={{this.handleTabLinkClick}}
-    @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
-    @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
-    @courseStage={{@courseStage}}
-  />
+  <:header>
+    <CoursePage::CourseStageSolutionModal::Header
+      @currentSolution={{this.solution}}
+      @activeTab={{this.activeTab}}
+      @onTabLinkClick={{this.handleTabLinkClick}}
+      @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
+      @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
+      @courseStage={{@courseStage}}
+    />
+  </:header>
 
-  {{#if (eq this.activeTab "diff")}}
-    <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
-  {{else if (eq this.activeTab "explanation")}}
-    <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
-  {{else}}
-    <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
-  {{/if}}
+  <:content>
+    {{#if (eq this.activeTab "diff")}}
+      <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
+    {{else if (eq this.activeTab "explanation")}}
+      <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
+    {{else}}
+      <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
+    {{/if}}
+  </:content>
 </ModalBody>
