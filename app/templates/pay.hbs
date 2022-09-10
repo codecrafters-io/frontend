@@ -18,6 +18,7 @@
         @subtitle="Recurring subscription"
         @pricingFrequency="monthly"
         @footerText="No charge today. Cancel anytime."
+        data-test-monthly-pricing-card
       />
 
       <PayPage::PricingCard
@@ -27,6 +28,7 @@
         @subtitle="Full access for 3 months"
         @pricingFrequency="quarterly"
         @footerText="One-time payment."
+        data-test-quarterly-pricing-card
       />
 
       <PayPage::PricingCard
@@ -38,6 +40,7 @@
         @discountedPrice={{if this.userIsEligibleForEarlyBirdDiscount 594 null}}
         @pricingFrequency="yearly"
         @earlyBirdDiscountEnabled={{this.userIsEligibleForEarlyBirdDiscount}}
+        data-test-yearly-pricing-card
       />
     </div>
 
