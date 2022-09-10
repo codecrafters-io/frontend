@@ -5,6 +5,7 @@ import RSVP from 'rsvp';
 export default class TracksRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
   @service currentUser;
+  @service store;
 
   async model() {
     let modelPromises = {};
