@@ -4,6 +4,7 @@ import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 export default class CourseOverviewRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
   @service currentUser;
+  @service store;
 
   async model(params) {
     if (this.store.peekAll('course').findBy('slug', params.course_slug)) {

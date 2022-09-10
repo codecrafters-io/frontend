@@ -1,7 +1,7 @@
 <div class="fixed top-0 right-0 left-0 bottom-0 bg-gray-800 bg-opacity-80">
   <div class="flex w-screen h-screen items-start px-2 sm:px-4 pt-10 sm:pt-0 sm:items-center justify-center">
-    <ClickOutside @onClickOutside={{this.handleClickOutside}}>
+    <div {{on-click-outside this.handleClickOutside}}>
       {{yield}}
-    </ClickOutside>
+    </div>
   </div>
 </div>

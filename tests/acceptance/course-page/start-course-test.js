@@ -163,7 +163,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await tracksPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Redis');
 
-    assert.strictEqual(currentURL(), '/courses/redis?fresh=false&track=python', 'current URL is changed to not include invalid repo');
+    assert.strictEqual(currentURL(), '/courses/redis?track=python', 'current URL is changed to not include invalid repo');
 
     assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');

@@ -18,6 +18,7 @@ export default class CourseController extends Controller {
   @tracked newRepository;
   @tracked track;
   @service currentUser;
+  @service store;
 
   get activeRepository() {
     if (this.selectedRepositoryId) {

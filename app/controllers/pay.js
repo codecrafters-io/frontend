@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 export default class PayController extends Controller {
   @service('currentUser') currentUserService;
   @service router;
+  @service store;
   @tracked isCreatingCheckoutSession = false;
 
   get earlyBirdDiscountEligibilityExpiresAt() {

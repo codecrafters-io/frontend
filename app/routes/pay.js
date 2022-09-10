@@ -4,6 +4,7 @@ import RSVP from 'rsvp';
 
 export default class PayRoute extends ApplicationRoute {
   @service currentUser;
+  @service store;
 
   async model() {
     let modelPromises = {};

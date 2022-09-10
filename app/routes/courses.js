@@ -5,6 +5,7 @@ import RSVP from 'rsvp';
 export default class CoursesRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
   @service currentUser;
+  @service store;
 
   async model() {
     let modelPromises = {};

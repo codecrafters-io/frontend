@@ -7,5 +7,6 @@
     "host": "codecrafters-paul-ember-dev-proxy.ngrok.io"
   },
 
-  "liveReloadJsUrl": "https://codecrafters-paul-ember-dev-proxy.ngrok.io/_lr/livereload.js"
+  "liveReloadJsUrl": "https://codecrafters-paul-ember-dev-proxy.ngrok.io/_lr/livereload.js",
+  "isTypeScriptProject": false
 }

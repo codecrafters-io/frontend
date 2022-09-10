@@ -40,7 +40,7 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     await percySnapshot('Pay page');
 
-    await payPage.clickOnStartPaymentButton();
+    await payPage.clickOnStartPaymentButtonForMonthlyPlan();
     assert.strictEqual(1, 1); // Dummy test
   });
 
@@ -51,7 +51,7 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     await percySnapshot('Pay page - with discount');
 
-    await payPage.clickOnStartPaymentButton();
+    await payPage.clickOnStartPaymentButtonForMonthlyPlan();
     assert.strictEqual(1, 1); // Dummy test
   });
 });
