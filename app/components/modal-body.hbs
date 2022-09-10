@@ -1,5 +1,5 @@
 <div
-  class="bg-white rounded-md shadow-sm border-gray-300 relative flex flex-col py-6 sm:py-12 min-h-0 {{@class}}"
+  class="bg-white rounded-md shadow-sm overflow-hidden border-gray-300 relative flex flex-col pt-6 sm:pt-12 sm:pb-6 min-h-0 max-w-lg {{@class}}"
   {{on-click-outside this.handleClickOutside}}
   ...attributes
 >
@@ -14,11 +14,15 @@
     </button>
   {{/if}}
 
-  <div class="flex-shrink-0 px-6 sm:py-12">
+  <div class="flex-shrink-0 px-6 sm:px-12">
     {{yield to="header"}}
   </div>
 
-  <div class="overflow-y-scroll flex-shrink px-6 sm:py-12">
-    {{yield to="content"}}
+  <div class="relative flex-shrink flex flex-col min-h-0">
+    <div class="top-to-bottom-scroll-mask absolute left-0 right-0 top-0 h-6"></div>
+    <div class="overflow-y-scroll py-6 px-6 sm:px-12">
+      {{yield to="content"}}
+    </div>
+    <div class="bottom-to-top-scroll-mask absolute left-0 right-0 bottom-0 h-6"></div>
   </div>
 </div>
