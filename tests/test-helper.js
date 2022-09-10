@@ -4,11 +4,7 @@ import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 
-// TODO: Enable ember exam
-// import start from 'ember-exam/test-support/start';
-
-import { start } from 'ember-qunit';
-
+import start from 'ember-exam/test-support/start';
 import 'qunit-assertions-extra';
 
 setApplication(Application.create(config.APP));
