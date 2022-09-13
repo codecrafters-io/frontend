@@ -8,8 +8,10 @@ export default class UserModel extends Model {
   @attr('boolean') isAdmin;
   @attr('boolean') isStaff;
   @attr('boolean') isCodecraftersPartner;
+  @attr('string') name;
   @attr('string') username;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
+  @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;

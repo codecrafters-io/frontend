@@ -1,0 +1,11 @@
+<div class="bg-gradient-to-b from-gray-600 to-gray-800 h-64 w-full">
+</div>
+
+<div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 min-h-screen">
+  <UserPage::SidebarContainer class="-my-32" @user={{this.model}} />
+
+  <div>
+    <UserPage::CourseProgressList />
+    <UserPage::ActivityContainer />
+  </div>
+</div>

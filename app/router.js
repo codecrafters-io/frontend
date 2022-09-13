@@ -23,4 +23,7 @@ Router.map(function () {
   this.route('team', { path: '/teams/:team_id' });
   this.route('teams.create', { path: '/teams/create' });
   this.route('user', { path: '/users/:username' });
+
+  // Catch-all
+  this.route('not-found', { path: '/*path' });
 });

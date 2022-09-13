@@ -2,21 +2,23 @@ import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 
 export default class UserRoute extends ApplicationRoute {
+  allowsAnonymousAccess = true;
   @service currentUser;
+  @service router;
   @service store;
 
   async model(params) {
-    const user = await this.store.query('user', {
+    const users = await this.store.query('user', {
       username: params.username,
       include: 'course-participations.language,course-participations.course.stages,course-participations.current-stage',
     });
 
-    return { user: user };
+    return users.firstObject;
   }
 
   afterModel(model) {
-    if (model.user.courseParticipations.length === 0) {
-      this.transitionTo('not-found');
+    if (!model || model.courseParticipations.length === 0) {
+      this.router.transitionTo('not-found');
     }
   }
 }
