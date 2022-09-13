@@ -1,0 +1,41 @@
+<div
+  class="group bg-white p-5 pb-4 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border relative"
+  role="button"
+  {{on "click" this.navigateToCourse}}
+  data-test-course-progress-list-item
+>
+  <div class="flex justify-between items-start mb-3">
+    <div>
+      <div class="text-lg font-bold text-gray-600 mr-2 mb-1" data-test-course-name>
+        {{this.course.name}}
+      </div>
+
+      <div class="text-xs text-gray-500">
+        using Python and Go
+      </div>
+    </div>
+
+    {{! Logo }}
+    <div class="w-12 lg:w-16 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
+      <CourseLogo @course={{this.course}} class="opacity-90 group-hover:opacity-100 transition-opacity" />
+    </div>
+  </div>
+
+  {{! Text }}
+  <div class="mb-4">
+    <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
+      {{this.course.shortDescriptionMarkdown}}
+    </div>
+  </div>
+
+  {{! Footer }}
+  <div class="flex items-center justify-between">
+    <UserPage::CourseProgressListItem::ProgressBar @completedStagesCount={{3}} @totalStagesCount={{7}} />
+
+    <div class="flex items-center space-x-1.5">
+      {{#each @courseParticipationGroup as |courseParticipation|}}
+        <LanguageLogo @language={{courseParticipation.language}} @variant="gray" class="h-5" />
+      {{/each}}
+    </div>
+  </div>
+</div>
