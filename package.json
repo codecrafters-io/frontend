@@ -108,6 +108,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.4.1",
     "ansi_up": "^5.1.0",
+    "array-to-sentence": "^2.0.0",
     "fuse.js": "^6.5.3",
     "mustache": "^4.2.0",
     "node-html-parser": "^6.0.0",

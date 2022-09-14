@@ -12,12 +12,12 @@
         </div>
 
         <div class="text-xs text-gray-500">
-          using Python and Go
+          {{this.languagesText}}
         </div>
       </div>
 
       {{! Logo }}
-      <div class="w-12 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
+      <div class="ml-4 w-12 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
         <CourseLogo @course={{this.course}} class="opacity-90 group-hover:opacity-100 transition-opacity" />
       </div>
     </div>
@@ -32,11 +32,18 @@
 
   {{! Footer }}
   <div class="flex items-center justify-between">
-    <UserPage::CourseProgressListItem::ProgressBar @completedStagesCount={{3}} @totalStagesCount={{7}} />
+    {{#if this.hasCompletedCourseUsingAnyLanguage}}
+      <div class="flex items-center">
+        {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
+        <span class="text-xs text-teal-500">completed</span>
+      </div>
+    {{else}}
+      <UserPage::CourseProgressListItem::ProgressBar @completedStagesCount={{3}} @totalStagesCount={{7}} />
+    {{/if}}
 
     <div class="flex items-center space-x-1.5">
-      {{#each @courseParticipationGroup as |courseParticipation|}}
-        <LanguageLogo @language={{courseParticipation.language}} @variant="gray" class="h-4" />
+      {{#each @courseParticipations as |courseParticipation|}}
+        <LanguageLogo @language={{courseParticipation.language}} @variant={{if courseParticipation.isCompleted "teal" "gray"}} class="h-4" />
       {{/each}}
     </div>
   </div>

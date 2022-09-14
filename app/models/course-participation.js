@@ -10,4 +10,8 @@ export default class CourseParticipationModel extends Model {
   @attr('date') completedAt;
   @attr('date') lastActivityAt;
   @attr('date') startedAt;
+
+  get isCompleted() {
+    return !!this.completedAt;
+  }
 }
