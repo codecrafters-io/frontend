@@ -43,7 +43,11 @@
 
     <div class="flex items-center space-x-1.5">
       {{#each @courseParticipations as |courseParticipation|}}
-        <LanguageLogo @language={{courseParticipation.language}} @variant={{if courseParticipation.isCompleted "teal" "gray"}} class="h-4" />
+        {{#if courseParticipation.isCompleted}}
+          <LanguageLogo @language={{courseParticipation.language}} @variant="teal" class="h-4" />
+        {{else}}
+          <LanguageLogo @language={{courseParticipation.language}} @variant="gray" class="h-4 opacity-50" />
+        {{/if}}
       {{/each}}
     </div>
   </div>
