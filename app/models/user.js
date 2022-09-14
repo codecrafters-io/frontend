@@ -10,12 +10,14 @@ export default class UserModel extends Model {
   @attr('boolean') isCodecraftersPartner;
   @attr('string') name;
   @attr('string') username;
+
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
+  @hasMany('user-profile-event', { async: false }) profileEvents;
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
