@@ -49,14 +49,14 @@ module('Acceptance | view-user-profile', function (hooks) {
     this.server.create('user-profile-event', {
       descriptionMarkdown: 'Started the [Build your own Redis](https://google.com) challenge using C#',
       user: currentUser,
-      type: 'StartedChallengeEvent',
+      type: 'StartedCourseEvent',
       occurredAt: new Date('2020-01-02'),
     });
 
     this.server.create('user-profile-event', {
       descriptionMarkdown: 'Completed the [Build your own Redis](https://google.com) challenge using C#',
       user: currentUser,
-      type: 'CompletedChallengeEvent',
+      type: 'CompletedCourseEvent',
       occurredAt: new Date('2020-02-01'),
     });
 

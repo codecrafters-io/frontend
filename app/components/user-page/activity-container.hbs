@@ -1,19 +1,21 @@
-{{#each-in this.profileEventGroups as |date profileEventsInGroup|}}
-  <div class="flex items-center">
-    <div class="uppercase text-gray-400 font-semibold">
-      {{date}}
+<div ...attributes>
+  {{#each-in this.profileEventGroups as |date profileEventsInGroup|}}
+    <div class="flex items-center">
+      <div class="uppercase text-gray-400 font-semibold">
+        {{date}}
+      </div>
+      <div class="ml-2 h-px bg-gray-200 flex-grow"></div>
     </div>
-    <div class="ml-2 h-px bg-gray-200 flex-grow"></div>
-  </div>
 
-  <ul class="pt-4 pb-6">
-    {{#each profileEventsInGroup as |profileEvent|}}
-      <li class="ml-3 py-1.5">
-        <div class="flex items-center">
-          <div class="mr-3 h-2 w-2 bg-gray-400 rounded shadow-sm"></div>
-          <span class="prose text-gray-700">{{profileEvent.descriptionHTML}}</span>
-        </div>
-      </li>
-    {{/each}}
-  </ul>
-{{/each-in}}
+    <ul class="pt-4 pb-6">
+      {{#each profileEventsInGroup as |profileEvent|}}
+        <li class="ml-3 py-1.5">
+          <div class="flex items-center">
+            <div class="mr-3 h-2 w-2 {{if profileEvent.isCompletedCourseEvent 'bg-teal-500' 'bg-gray-300'}} rounded shadow-sm"></div>
+            <span class="prose text-gray-700">{{profileEvent.descriptionHTML}}</span>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{/each-in}}
+</div>

@@ -32,16 +32,17 @@ module.exports = {
         DEFAULT: {
           css: {
             a: {
-              color: colors.blue[500],
+              color: colors.sky[500],
+              fontWeight: '600',
             },
             'a:hover': {
-              color: colors.blue[600],
+              color: colors.sky[600],
             },
             'a code': {
-              color: colors.blue[500],
+              color: colors.sky[500],
             },
             'a code:hover': {
-              color: colors.blue[600],
+              color: colors.sky[600],
             },
             code: {
               color: colors.blueGray[700],

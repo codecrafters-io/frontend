@@ -12,8 +12,8 @@ export default class UserProfileEvent extends Model {
   @belongsTo('user', { async: false }) user;
 
   @equal('type', 'CreatedAccountEvent') isCreatedAccountEvent;
-  @equal('type', 'StartedChallengeEvent') isStartedChallengeEvent;
-  @equal('type', 'CompletedChallengeEvent') isCompletedChallengeEvent;
+  @equal('type', 'StartedCourseEvent') isStartedCourseEvent;
+  @equal('type', 'CompletedCourseEvent') isCompletedCourseEvent;
 
   get descriptionHTML() {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));

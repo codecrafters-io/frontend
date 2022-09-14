@@ -7,8 +7,8 @@
 
     <div class="flex-grow ml-8 my-8">
       {{#if this.model.courseParticipations.firstObject}}
-        <UserPage::CourseProgressList @user={{this.model}} class="mb-8" />
-        <UserPage::ActivityContainer @user={{this.model}} />
+        <UserPage::CourseProgressList @user={{this.model}} class="mb-16" />
+        <UserPage::ActivityContainer @user={{this.model}} class="mb-16" />
       {{else}}
         <div class="text-gray-400 text-center py-16">
           This user has no activity on CodeCrafters yet.
