@@ -4,27 +4,29 @@
   {{on "click" this.navigateToCourse}}
   data-test-course-progress-list-item
 >
-  <div class="flex justify-between items-start mb-3">
-    <div>
-      <div class="text-lg font-bold text-gray-600 mr-2 mb-1" data-test-course-name>
-        {{this.course.name}}
+  <div>
+    <div class="flex justify-between items-start mb-3">
+      <div>
+        <div class="text-lg font-semibold text-gray-600 mr-2 mb-1" data-test-course-name>
+          {{this.course.name}}
+        </div>
+
+        <div class="text-xs text-gray-500">
+          using Python and Go
+        </div>
       </div>
 
-      <div class="text-xs text-gray-500">
-        using Python and Go
+      {{! Logo }}
+      <div class="w-12 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
+        <CourseLogo @course={{this.course}} class="opacity-90 group-hover:opacity-100 transition-opacity" />
       </div>
     </div>
 
-    {{! Logo }}
-    <div class="w-12 lg:w-16 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
-      <CourseLogo @course={{this.course}} class="opacity-90 group-hover:opacity-100 transition-opacity" />
-    </div>
-  </div>
-
-  {{! Text }}
-  <div class="mb-4">
-    <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
-      {{this.course.shortDescriptionMarkdown}}
+    {{! Text }}
+    <div class="mb-4">
+      <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
+        {{this.course.shortDescriptionMarkdown}}
+      </div>
     </div>
   </div>
 
