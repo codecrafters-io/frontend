@@ -9,8 +9,6 @@ export default class ActivityContainerComponent extends Component {
   }
 
   get profileEventGroups() {
-    console.log(groupBy(this.args.user.profileEvents, (profileEvent) => this.formatDate(profileEvent.occurredAt)));
-
     return groupBy(this.args.user.profileEvents, (profileEvent) => this.formatDate(profileEvent.occurredAt));
   }
 }

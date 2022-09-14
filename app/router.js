@@ -24,6 +24,6 @@ Router.map(function () {
   this.route('teams.create', { path: '/teams/create' });
   this.route('user', { path: '/users/:username' });
 
-  // Catch-all
-  this.route('not-found', { path: '/*path' });
+  this.route('not-found', { path: '/*path' }); // Catch-all
+  this.route('not-found', { path: '/404' }); // Allow redirecting to this route
 });

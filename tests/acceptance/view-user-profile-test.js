@@ -4,8 +4,6 @@ import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | view-user-profile', function (hooks) {
   setupApplicationTest(hooks);
@@ -65,7 +63,7 @@ module('Acceptance | view-user-profile', function (hooks) {
     await userPage.visit({ username: 'rohitpaulk' });
     await percySnapshot('User profile');
 
-    assert.equal(1, 1);
+    assert.strictEqual(1, 1);
   });
 
   // TODO: Add test for not found
