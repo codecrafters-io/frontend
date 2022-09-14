@@ -41,6 +41,6 @@ export default class SetupSubscriptionContainerComponent extends Component {
   }
 
   get perSeatAmountInDollarsInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].amount / this.numberOfSeatsInFirstInvoicePreview / 100;
+    return this.firstInvoicePreview.lineItems[0].discounted_amount / this.numberOfSeatsInFirstInvoicePreview / 100;
   }
 }
