@@ -7,7 +7,7 @@
   <div>
     <div class="flex justify-between items-start mb-3">
       <div>
-        <div class="text-lg font-semibold text-gray-600 mr-2 mb-1" data-test-course-name>
+        <div class="text-lg font-semibold text-gray-600 mr-2 mb-0.5" data-test-course-name>
           {{this.course.name}}
         </div>
 
@@ -36,7 +36,7 @@
 
     <div class="flex items-center space-x-1.5">
       {{#each @courseParticipationGroup as |courseParticipation|}}
-        <LanguageLogo @language={{courseParticipation.language}} @variant="gray" class="h-5" />
+        <LanguageLogo @language={{courseParticipation.language}} @variant="gray" class="h-4" />
       {{/each}}
     </div>
   </div>
