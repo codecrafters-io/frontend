@@ -6,8 +6,14 @@
     <UserPage::SidebarContainer class="-my-28 w-56 flex-shrink-0" @user={{this.model}} />
 
     <div class="flex-grow ml-8 my-8">
-      <UserPage::CourseProgressList @user={{this.model}} class="mb-8" />
-      <UserPage::ActivityContainer @user={{this.model}} />
+      {{#if @user.courseParticipations.firstObject}}
+        <UserPage::CourseProgressList @user={{this.model}} class="mb-8" />
+        <UserPage::ActivityContainer @user={{this.model}} />
+      {{else}}
+        <div class="text-gray-400 text-center py-16">
+          This user has no activity on CodeCrafters yet.
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>

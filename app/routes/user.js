@@ -15,10 +15,4 @@ export default class UserRoute extends ApplicationRoute {
 
     return users.firstObject;
   }
-
-  afterModel(model) {
-    if (!model || model.courseParticipations.length === 0) {
-      this.router.transitionTo('not-found');
-    }
-  }
 }
