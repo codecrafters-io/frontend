@@ -10,7 +10,7 @@ export default class UserRoute extends ApplicationRoute {
   async model(params) {
     const users = await this.store.query('user', {
       username: params.username,
-      include: 'course-participations.language,course-participations.course.stages,course-participations.current-stage',
+      include: 'course-participations.language,course-participations.course.stages,course-participations.current-stage,profile-events',
     });
 
     return users.firstObject;
