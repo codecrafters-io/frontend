@@ -6,11 +6,6 @@ import { action } from '@ember/object';
 export default class CourseLeaderboardEntryComponent extends Component {
   @service currentUser;
 
-  @action
-  handleClick() {
-    window.open(this.args.entry.user.codecraftersProfileUrl, '_blank');
-  }
-
   get isForCurrentUser() {
     return this.currentUser.isAuthenticated && this.args.entry.user.id === this.currentUser.currentUserId;
   }
