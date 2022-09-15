@@ -8,7 +8,7 @@ export default class CourseLeaderboardEntryComponent extends Component {
 
   @action
   handleClick() {
-    window.open(this.args.entry.user.githubProfileUrl, '_blank');
+    window.open(this.args.entry.user.codecraftersProfileUrl, '_blank');
   }
 
   get isForCurrentUser() {

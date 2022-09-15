@@ -47,6 +47,10 @@ export default class UserModel extends Model {
     }
   }
 
+  get codecraftersProfileUrl() {
+    return `/users/${this.username}`;
+  }
+
   get earlyBirdDiscountEligibilityExpiresAt() {
     return new Date(this.createdAt.getTime() + 3 * 24 * 60 * 60 * 1000);
   }
