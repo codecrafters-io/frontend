@@ -17,13 +17,6 @@ export default class CoursePageStepListStageItemComponent extends Component {
     return `
 Congratulations are in order. Only ~${this.args.repository.course.roundedCompletionPercentage}% of users that attempt this challenge end up completing all stages, and you're one of them!
 
-If this is your first time completing a CodeCrafters challenge, you'll receive access to the following:
-
-- **Your own profile page.** Like [this one](https://codecrafters.io/users/danwilhelm). This might take 24 hours to
-activate, it'll be accessible at [codecrafters.io/users/${this.username}](https://codecrafters.io/users/${this.username}).
-- **Supervotes**. You can use these to [vote on upcoming CodeCrafters challenges](https://vote.codecrafters.io/). Just
-like your profile page, this might take 24 hours to activate.
-
 Here's what you can do next:
 
 - **Try a different language.** Use the dropdown at the top-right of the page to do this. You won't lose any progress,

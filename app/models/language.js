@@ -126,10 +126,6 @@ A quick welcome to CodeCrafters.
   }
 
   get trackTitle() {
-    if (this.isGo) {
-      return 'Golang track.';
-    } else {
-      return `${this.name} track.`;
-    }
+    return `Master ${this.name}.`;
   }
 }

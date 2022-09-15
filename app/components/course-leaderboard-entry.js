@@ -1,15 +1,9 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 
 export default class CourseLeaderboardEntryComponent extends Component {
   @service currentUser;
-
-  @action
-  handleClick() {
-    window.open(this.args.entry.user.githubProfileUrl, '_blank');
-  }
 
   get isForCurrentUser() {
     return this.currentUser.isAuthenticated && this.args.entry.user.id === this.currentUser.currentUserId;

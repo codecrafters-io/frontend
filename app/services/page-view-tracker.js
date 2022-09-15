@@ -46,6 +46,11 @@ export default class PageViewTracker extends Service {
       });
     } else if (this.router.currentRouteName === 'tracks') {
       return this.store.createRecord('analytics-event', { name: 'viewed_track_list_page' });
+    } else if (this.router.currentRouteName === 'user') {
+      return this.store.createRecord('analytics-event', {
+        name: 'viewed_user_profile_page',
+        properties: { username: this.router.currentRoute.params.username },
+      });
     } else {
       return this.store.createRecord('analytics-event', { name: 'viewed_unknown_page', properties: { url: this.router.currentURL } });
     }

@@ -41,6 +41,5 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     await animationsSettled();
     assert.ok(coursePage.courseCompletedItemIsActive, 'course completed item should be active');
     assert.contains(coursePage.courseCompletedItem.instructionsText, '~30%');
-    assert.contains(coursePage.courseCompletedItem.instructionsText, 'codecrafters.io/users/rohitpaulk');
   });
 });
