@@ -1,8 +1,11 @@
 import Component from '@glimmer/component';
 import arrayToSentence from 'array-to-sentence';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default class CourseProgressListItemComponent extends Component {
+  @service router;
+
   get course() {
     return this.args.courseParticipations.firstObject.course;
   }
