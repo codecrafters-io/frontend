@@ -35,7 +35,7 @@ export default class CourseProgressListItemComponent extends Component {
   }
 
   @action
-  navigateToCourse(course) {
-    this.router.transitionTo('course-overview', course.slug);
+  navigateToCourse() {
+    this.router.transitionTo('course-overview', this.course.slug);
   }
 }
