@@ -9,6 +9,6 @@ export default class ActivityContainerComponent extends Component {
   }
 
   get profileEventGroups() {
-    return groupBy(this.args.user.profileEvents.sortBy('occurredAt'), (profileEvent) => this.formatDate(profileEvent.occurredAt));
+    return groupBy(this.args.user.profileEvents.sortBy('occurredAt').reverse(), (profileEvent) => this.formatDate(profileEvent.occurredAt));
   }
 }
