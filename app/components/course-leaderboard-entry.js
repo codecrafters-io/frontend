@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 
 export default class CourseLeaderboardEntryComponent extends Component {
   @service currentUser;
