@@ -7,11 +7,11 @@
   <div>
     <div class="flex justify-between items-start mb-3">
       <div>
-        <div class="text-lg font-semibold text-gray-600 mr-2 mb-0.5" data-test-course-name>
+        <div class="text-lg font-bold text-gray-600 mr-2 mb-0.5" data-test-course-name>
           {{this.course.name}}
         </div>
 
-        <div class="text-xs text-gray-500">
+        <div class="text-xs text-gray-400">
           {{this.languagesText}}
         </div>
       </div>
@@ -38,7 +38,10 @@
         <span class="text-xs text-teal-500">completed</span>
       </div>
     {{else}}
-      <UserPage::CourseProgressListItem::ProgressBar @completedStagesCount={{3}} @totalStagesCount={{7}} />
+      <UserPage::CourseProgressListItem::ProgressBar
+        @completedStagesCount={{this.completedStagesCount}}
+        @totalStagesCount={{this.course.stages.length}}
+      />
     {{/if}}
 
     <div class="flex items-center space-x-1.5">

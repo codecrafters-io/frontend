@@ -11,6 +11,10 @@ export default class CourseProgressListItemComponent extends Component {
     return this.hasCompletedCourseUsingAnyLanguage ? this.completedCourseParticipations.firstObject.completedAt : null;
   }
 
+  get completedStagesCount() {
+    return Math.max(...this.args.courseParticipations.mapBy('currentStage.position')) - 1;
+  }
+
   get languagesText() {
     if (this.hasCompletedCourseUsingAnyLanguage) {
       return `using ${arrayToSentence(this.completedCourseParticipations.mapBy('language.name').uniq())}`;

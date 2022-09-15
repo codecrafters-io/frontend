@@ -27,6 +27,10 @@ export default class UserModel extends Model {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
+  get completedCourseParticipations() {
+    return this.courseParticipations.filterBy('isCompleted');
+  }
+
   get expiredSubscription() {
     if (this.hasActiveSubscription) {
       return null;
@@ -65,6 +69,10 @@ export default class UserModel extends Model {
 
   get isTeamMember() {
     return !!this.teams.firstObject;
+  }
+
+  get languagesFromCompletedCourseParticipations() {
+    return this.completedCourseParticipations.mapBy('language').uniq();
   }
 
   get managedTeams() {
