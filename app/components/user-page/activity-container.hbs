@@ -9,9 +9,12 @@
 
     <ul class="pt-4 pb-6">
       {{#each profileEventsInGroup as |profileEvent|}}
-        <li class="ml-3 py-1.5">
-          <div class="flex items-center">
-            <div class="mr-3 h-2 w-2 {{if profileEvent.isCompletedCourseEvent 'bg-teal-500' 'bg-gray-300'}} rounded shadow-sm"></div>
+        <li class="ml-1.5 md:ml-3 py-1.5">
+          <div class="flex items-start">
+            <div class="h-7 flex items-center flex-shrink-0">
+              <div class="flex-shrink-0 mr-3 h-2 w-2 {{if profileEvent.isCompletedCourseEvent 'bg-teal-500' 'bg-gray-300'}} rounded shadow-sm"></div>
+            </div>
+
             <span class="prose text-gray-700">{{profileEvent.descriptionHTML}}</span>
           </div>
         </li>
