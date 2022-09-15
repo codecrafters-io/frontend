@@ -8,12 +8,16 @@ export default class UserModel extends Model {
   @attr('boolean') isAdmin;
   @attr('boolean') isStaff;
   @attr('boolean') isCodecraftersPartner;
+  @attr('string') name;
   @attr('string') username;
+
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
+  @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
+  @hasMany('user-profile-event', { async: false }) profileEvents;
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
@@ -21,6 +25,10 @@ export default class UserModel extends Model {
 
   get canAccessPaidContent() {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+  }
+
+  get completedCourseParticipations() {
+    return this.courseParticipations.filterBy('isCompleted');
   }
 
   get expiredSubscription() {
@@ -61,6 +69,10 @@ export default class UserModel extends Model {
 
   get isTeamMember() {
     return !!this.teams.firstObject;
+  }
+
+  get languagesFromCompletedCourseParticipations() {
+    return this.completedCourseParticipations.mapBy('language').uniq();
   }
 
   get managedTeams() {

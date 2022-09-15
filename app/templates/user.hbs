@@ -1,0 +1,19 @@
+<div class="bg-gradient-to-b from-gray-600 to-gray-800 h-56 w-full">
+</div>
+
+<div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 min-h-screen">
+  <div class="flex">
+    <UserPage::SidebarContainer class="-my-24 w-48 flex-shrink-0" @user={{this.model}} />
+
+    <div class="flex-grow ml-8 my-8">
+      {{#if this.model.courseParticipations.firstObject}}
+        <UserPage::CourseProgressList @user={{this.model}} class="mb-16" />
+        <UserPage::ActivityContainer @user={{this.model}} class="mb-16" />
+      {{else}}
+        <div class="text-gray-400 text-center py-16">
+          This user has no activity on CodeCrafters yet.
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

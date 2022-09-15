@@ -1,0 +1,57 @@
+<div
+  class="group bg-white p-5 pb-4 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border relative"
+  role="button"
+  {{on "click" this.navigateToCourse}}
+  data-test-course-progress-list-item
+>
+  <div>
+    <div class="flex justify-between items-start mb-3">
+      <div>
+        <div class="text-lg font-bold text-gray-600 mr-2 mb-0.5" data-test-course-name>
+          {{this.course.name}}
+        </div>
+
+        <div class="text-xs text-gray-400">
+          {{this.languagesText}}
+        </div>
+      </div>
+
+      {{! Logo }}
+      <div class="ml-4 w-10 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all">
+        <CourseLogo @course={{this.course}} class="opacity-90 group-hover:opacity-100 transition-opacity" />
+      </div>
+    </div>
+
+    {{! Text }}
+    <div class="mb-4">
+      <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
+        {{this.course.shortDescriptionMarkdown}}
+      </div>
+    </div>
+  </div>
+
+  {{! Footer }}
+  <div class="flex items-center justify-between">
+    {{#if this.hasCompletedCourseUsingAnyLanguage}}
+      <div class="flex items-center">
+        {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
+        <span class="text-xs text-teal-500">completed</span>
+      </div>
+    {{else}}
+      <UserPage::CourseProgressListItem::ProgressBar
+        @completedStagesCount={{this.completedStagesCount}}
+        @totalStagesCount={{this.course.stages.length}}
+      />
+    {{/if}}
+
+    <div class="flex items-center space-x-1.5">
+      {{#each @courseParticipations as |courseParticipation|}}
+        {{#if courseParticipation.isCompleted}}
+          <LanguageLogo @language={{courseParticipation.language}} @variant="teal" class="h-4" />
+        {{else}}
+          <LanguageLogo @language={{courseParticipation.language}} @variant="gray" class="h-4 opacity-50" />
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>

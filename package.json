@@ -81,7 +81,7 @@
     "ember-template-lint-plugin-prettier": "^4.0.0",
     "ember-truth-helpers": "^3.0.0",
     "ember-window-mock": "^0.8.1",
-    "eslint": "^8.0.0",
+    "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ember": "^11.0.0",
     "eslint-plugin-node": "^11.1.0",
@@ -108,6 +108,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.4.1",
     "ansi_up": "^5.1.0",
+    "array-to-sentence": "^2.0.0",
     "fuse.js": "^6.5.3",
     "mustache": "^4.2.0",
     "node-html-parser": "^6.0.0",
