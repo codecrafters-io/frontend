@@ -1,1 +1,29 @@
-{{@courseIdea.name}} 2
+<div class="group bg-white p-5 rounded-md shadow-sm cursor-pointer flex flex-col justify-between border relative" data-test-course-idea-card>
+  {{! Text }}
+  <div class="mb-4">
+    <div class="text-gray-600 mr-2 mb-3 font-bold text-lg" data-test-track-name>
+      {{@courseIdea.name}}
+    </div>
+    <div class="prose prose-sm">
+      {{@courseIdea.descriptionHtml}}
+    </div>
+  </div>
+
+  {{! Footer Controls }}
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <SecondaryButton @size="small" class="mr-2">
+        <div class="flex items-center">
+          {{svg-jar "chevron-up" class="h-6 mr-1 fill-current"}}
+          84 votes
+        </div>
+      </SecondaryButton>
+      <SecondaryButton @size="small">
+        <div class="flex items-center">
+          {{svg-jar "chevron-up" class="h-6 mr-1 fill-current"}}
+          20 supervotes
+        </div>
+      </SecondaryButton>
+    </div>
+  </div>
+</div>
