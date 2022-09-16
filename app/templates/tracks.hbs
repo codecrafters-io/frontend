@@ -1,9 +1,7 @@
 {{page-title "Tracks"}}
 
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
-  <h1 class="text-xl text-gray-600 mb-4 md:text-2xl">
-    Tracks
-  </h1>
+  <h1 class="text-2xl text-gray-700 font-bold tracking-tighter mb-4">Tracks</h1>
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 mb-8">
     {{#each this.orderedLiveLanguages as |language|}}
@@ -11,9 +9,7 @@
     {{/each}}
   </div>
 
-  <h1 class="text-xl text-gray-600 mb-4 md:text-2xl">
-    Beta Tracks
-  </h1>
+  <h1 class="text-2xl text-gray-700 font-bold tracking-tighter mb-4">Beta Tracks</h1>
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 mb-8">
     {{#each this.orderedBetaLanguages as |language|}}
