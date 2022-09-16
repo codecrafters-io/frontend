@@ -30,6 +30,8 @@ function routes() {
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');
 
+  this.get('/course-ideas');
+
   this.patch('/feature-suggestions/:id');
 
   this.post('/individual-checkout-sessions', function (schema) {
