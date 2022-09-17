@@ -12,6 +12,8 @@ export default class UserModel extends Model {
   @attr('string') username;
 
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
+  @hasMany('course-idea-vote', { async: false }) courseIdeaVotes;
+  @hasMany('course-idea-supervote', { async: false }) courseIdeaSupervotes;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('repository', { async: false }) repositories;

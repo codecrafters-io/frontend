@@ -32,6 +32,12 @@ function routes() {
 
   this.get('/course-ideas');
 
+  this.post('/course-ideas/:id/unvote', () => {
+    return {};
+  });
+
+  this.post('/course-idea-votes');
+
   this.patch('/feature-suggestions/:id');
 
   this.post('/individual-checkout-sessions', function (schema) {
