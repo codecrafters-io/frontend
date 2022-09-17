@@ -1,4 +1,4 @@
-<div class="group bg-white p-5 rounded-md shadow-sm cursor-pointer flex flex-col justify-between border relative" data-test-course-idea-card>
+<div class="group bg-white p-5 rounded-md shadow-sm flex flex-col justify-between border relative" data-test-course-idea-card>
   {{! Text }}
   <div class="mb-4">
     <div class="text-gray-600 mr-2 mb-3 font-bold text-xl tracking-tight" data-test-track-name>
@@ -12,18 +12,8 @@
   {{! Footer Controls }}
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <SecondaryButton @size="small" class="mr-2">
-        <div class="flex items-center">
-          {{svg-jar "chevron-up" class="h-6 mr-1 fill-current"}}
-          84 votes
-        </div>
-      </SecondaryButton>
-      <SecondaryButton @size="small">
-        <div class="flex items-center">
-          {{svg-jar "chevron-up" class="h-6 mr-1 fill-current"}}
-          20 supervotes
-        </div>
-      </SecondaryButton>
+      <CourseIdeasPage::CourseIdeaCard::VoteButton @courseIdea={{@courseIdea}} class="mr-2" />
+      <CourseIdeasPage::CourseIdeaCard::SupervoteButton @courseIdea={{@courseIdea}} />
     </div>
   </div>
 </div>
