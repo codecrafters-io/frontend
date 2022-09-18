@@ -10,7 +10,7 @@ export default class CourseIdeasRoute extends ApplicationRoute {
   model() {
     const modelPromises = {};
 
-    modelPromises.courseIdeas = this.store.findAll('course-idea');
+    modelPromises.courseIdeas = this.store.findAll('course-idea', { include: 'votes,votes.user,supervotes,supervotes.user' });
 
     if (this.currentUserService.isAuthenticated) {
       // No need to wait on this, can load in the background

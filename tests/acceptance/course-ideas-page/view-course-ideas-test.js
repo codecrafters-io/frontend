@@ -16,10 +16,15 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
 
     createCourseIdeas(this.server);
 
+    let user = this.server.schema.users.first();
+    let courseIdea = this.server.schema.courseIdeas.first();
+
+    this.server.create('course-idea-vote', { user: user, courseIdea: courseIdea });
+
     await courseIdeasPage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
-    assert.strictEqual(1, 1);
+    assert.strictEqual(courseIdeasPage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
 
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login
