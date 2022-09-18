@@ -7,6 +7,7 @@ export default createPage({
     clickOnVoteButton: clickable('[data-test-vote-button]'),
     name: text('[data-test-course-idea-name]'),
     supervoteButtonText: text('[data-test-supervote-button]'),
+    supervoteButtonTooltipText: text('.ember-tooltip'),
     voteButtonText: text('[data-test-vote-button]'),
   }),
 

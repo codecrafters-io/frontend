@@ -161,6 +161,8 @@ function routes() {
     return schema.users.where({ username: request.queryParams.username });
   });
 
+  this.get('/users/:id');
+
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
   this.passthrough('https://unpkg.com/**'); // Shiki
 }

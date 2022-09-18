@@ -40,11 +40,14 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
     // TODO: Test that clicking on vote will redirect to login
   });
 
-  test('can vote supervote and unvote', async function (assert) {
+  test('can vote and supervote', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     createCourseIdeas(this.server);
+
+    let user = this.server.schema.users.first();
+    this.server.create('course-idea-supervote-grant', { user: user, numberOfSupervotes: 2, description: 'completed the Redis challenge' });
 
     await courseIdeasPage.visit();
 
@@ -60,6 +63,15 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
     await courseIdeaCard.clickOnSupervoteButton();
     assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
     assert.strictEqual(courseIdeaCard.supervoteButtonText, '1 supervote +1', 'expected supervote button to say +1 vote');
+
+    await courseIdeaCard.clickOnSupervoteButton();
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote');
+
+    await courseIdeaCard.clickOnSupervoteButton();
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote');
+    assert.strictEqual(courseIdeaCard.supervoteButtonTooltipText, "You're out of supervotes. Earn more by completing CodeCrafters challenges!");
 
     await courseIdeaCard.clickOnVoteButton();
     assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
