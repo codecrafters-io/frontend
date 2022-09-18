@@ -37,6 +37,7 @@ function routes() {
   });
 
   this.post('/course-idea-votes');
+  this.post('/course-idea-supervotes');
 
   this.patch('/feature-suggestions/:id');
 

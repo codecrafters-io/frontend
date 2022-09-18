@@ -17,7 +17,7 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
     createCourseIdeas(this.server);
 
     await courseIdeasPage.visit();
-    await percySnapshot('Challenge Ideas');
+    await percySnapshot('Challenge Ideas (anonymous)');
 
     assert.strictEqual(1, 1);
 
@@ -32,12 +32,37 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
     createCourseIdeas(this.server);
 
     await courseIdeasPage.visit();
-    // await this.pauseTest();
-    await percySnapshot('Challenge Ideas');
+    await percySnapshot('Challenge Ideas (logged in)');
 
     assert.strictEqual(1, 1);
 
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login
+  });
+
+  test('can vote supervote and unvote', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    createCourseIdeas(this.server);
+
+    await courseIdeasPage.visit();
+
+    let courseIdeaCard = courseIdeasPage.findCourseIdeaCard('Build your own Regex Parser');
+    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
+
+    await courseIdeaCard.clickOnVoteButton();
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+
+    await courseIdeaCard.clickOnVoteButton();
+    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
+
+    await courseIdeaCard.clickOnSupervoteButton();
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseIdeaCard.supervoteButtonText, '1 supervote +1', 'expected supervote button to say +1 vote');
+
+    await courseIdeaCard.clickOnVoteButton();
+    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
+    assert.strictEqual(courseIdeaCard.supervoteButtonText, '0 supervotes', 'expected supervote button to say 0 supervotes');
   });
 });
