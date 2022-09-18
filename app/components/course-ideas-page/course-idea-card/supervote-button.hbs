@@ -1,15 +1,23 @@
 <button
   type="button"
-  class="pr-2.5 pl-2 py-1.5 rounded shadow-sm flex items-center border border-gray-300 hover:border-gray-400 transition-colors duration-75"
+  class="pr-2.5 pl-2 py-1.5 rounded shadow-sm flex items-center border transition-colors duration-75
+    {{if (gt @userSupervotesCount 0) 'border-teal-500 hover:border-teal-600' 'border-gray-300 hover:border-gray-400'}}
+    "
   ...attributes
-  {{on "click" this.handleClick}}
 >
   {{svg-jar "chevron-double-up" class="w-4 py-0.5 mr-1.5 text-teal-500"}}
 
-  <span class="text-sm text-gray-700">
+  <span class="text-sm {{if (gt @userSupervotesCount 0) 'text-teal-500' 'text-gray-700'}} transition-all duration-75">
     <span class="font-semibold">{{@courseIdea.supervotes.length}}</span>
+
     supervotes
   </span>
+
+  {{#if (gt @userSupervotesCount 0)}}
+    <span class="text-xs font-bold text-white bg-teal-500 rounded px-1 ml-1.5">
+      +{{@userSupervotesCount}}
+    </span>
+  {{/if}}
 
   {{#if this.currentUserService.isAnonymous}}
     <EmberTooltip @text="Click to login via GitHub" />

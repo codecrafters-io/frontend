@@ -40,8 +40,19 @@
   {{! Footer Controls }}
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <CourseIdeasPage::CourseIdeaCard::VoteButton @courseIdea={{@courseIdea}} class="mr-2" />
-      <CourseIdeasPage::CourseIdeaCard::SupervoteButton @courseIdea={{@courseIdea}} />
+      <CourseIdeasPage::CourseIdeaCard::VoteButton
+        @courseIdea={{@courseIdea}}
+        @userHasVoted={{this.userHasVoted}}
+        {{on "click" this.handleVoteButtonClick}}
+        class="mr-2"
+      />
+
+      <CourseIdeasPage::CourseIdeaCard::SupervoteButton
+        @courseIdea={{@courseIdea}}
+        @userSupervotesCount={{this.userSupervotesCount}}
+        {{on "click" this.handleSupervoteButtonClick}}
+        class="mr-2"
+      />
     </div>
   </div>
 </div>

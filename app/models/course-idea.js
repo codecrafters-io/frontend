@@ -21,6 +21,14 @@ export default class CourseIdeaModel extends Model {
   get descriptionHtml() {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
   }
+
+  supervote() {
+    return this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.currentUserService.record }).save();
+  }
+
+  vote() {
+    return this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.currentUserService.record }).save();
+  }
 }
 
 CourseIdeaModel.prototype.unvote = memberAction({
