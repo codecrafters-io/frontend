@@ -36,6 +36,6 @@ export default class VoteButtonComponent extends Component {
       return false;
     }
 
-    return this.currentUserService.record.courseIdeaVotes.mapBy('courseIdea.id').includes(this.args.courseIdea.id);
+    return this.currentUserService.record.courseIdeaVotes.mapBy('courseIdea').includes(this.args.courseIdea);
   }
 }

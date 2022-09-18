@@ -4,7 +4,7 @@ import { attr, hasMany } from '@ember-data/model';
 import { htmlSafe } from '@ember/template';
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
-import deleteFromEmberStore from '../lib/delete-from-ember-store';
+import { run } from '@ember/runloop';
 
 export default class CourseIdeaModel extends Model {
   @attr('date') createdAt;
@@ -13,8 +13,8 @@ export default class CourseIdeaModel extends Model {
   @attr('string') name;
   @attr('string') slug;
 
-  @hasMany('course-idea-vote') votes;
-  @hasMany('course-idea-supervote') supervotes;
+  @hasMany('course-idea-vote', { async: false }) votes;
+  @hasMany('course-idea-supervote', { async: false }) supervotes;
 
   @service('current-user') currentUserService;
 
@@ -28,11 +28,20 @@ CourseIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   after() {
-    // Note: courseIdea.id is required here since courseIdea is a Proxy object
-    this.currentUserService.record.courseIdeaVotes.filterBy('courseIdea.id', this.id).forEach((record) => deleteFromEmberStore(this.store, record));
+    run(() => {
+      let currentUser = this.currentUserService.record;
 
-    this.currentUserService.record.courseIdeaSupervotes
-      .filterBy('courseIdea.id', this.id)
-      .forEach((record) => deleteFromEmberStore(this.store, record));
+      currentUser.courseIdeaVotes.filterBy('courseIdea', this).forEach((record) => {
+        record.courseIdea.votes.removeObject(record);
+        record.user.courseIdeaVotes.removeObject(record);
+        record.unloadRecord();
+      });
+
+      currentUser.courseIdeaSupervotes.filterBy('courseIdea', this).forEach((record) => {
+        record.courseIdea.supervotes.removeObject(record);
+        record.user.courseIdeaSupervotes.removeObject(record);
+        record.unloadRecord();
+      });
+    });
   },
 });
