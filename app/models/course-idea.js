@@ -1,20 +1,25 @@
 import Model from '@ember-data/model';
 import showdown from 'showdown';
 import { attr, hasMany } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { htmlSafe } from '@ember/template';
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
-import { run } from '@ember/runloop';
 
 export default class CourseIdeaModel extends Model {
+  @hasMany('course-idea-vote', { async: false }) votes;
+  @hasMany('course-idea-supervote', { async: false }) supervotes;
+
   @attr('date') createdAt;
   @attr('string') descriptionMarkdown;
+  @attr('string') developmentStatus;
   @attr('boolean') isArchived;
   @attr('string') name;
   @attr('string') slug;
 
-  @hasMany('course-idea-vote', { async: false }) votes;
-  @hasMany('course-idea-supervote', { async: false }) supervotes;
+  @equal('developmentStatus', 'not_started') developmentStatusIsNotStarted;
+  @equal('developmentStatus', 'in_progress') developmentStatusIsInProgress;
+  @equal('developmentStatus', 'in_progress') developmentStatusIsCompleted;
 
   @service('current-user') currentUserService;
 
