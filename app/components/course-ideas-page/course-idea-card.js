@@ -27,6 +27,10 @@ export default class CourseIdeaCardComponent extends Component {
       window.location.href = '/login?next=' + this.router.currentURL;
     }
 
+    if (!this.userHasSupervotesAvailable) {
+      return;
+    }
+
     if (this.userHasVoted) {
       await this.args.courseIdea.supervote();
     } else {
@@ -67,6 +71,10 @@ export default class CourseIdeaCardComponent extends Component {
 
   get userHasSupervoted() {
     return this.userSupervotesCount > 0;
+  }
+
+  get userHasSupervotesAvailable() {
+    return this.currentUserService.record.availableCourseIdeaSupervotes > 0;
   }
 
   get userSupervotesCount() {

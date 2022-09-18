@@ -11,7 +11,7 @@
   <span class="text-sm {{if (gt @userSupervotesCount 0) 'text-teal-500' 'text-gray-700'}} transition-all duration-75">
     <span class="font-semibold">{{@courseIdea.supervotes.length}}</span>
 
-    {{#if (eq @courseIdea.votes.length 1)}}
+    {{#if (eq @courseIdea.supervotes.length 1)}}
       supervote
     {{else}}
       supervotes
@@ -26,5 +26,9 @@
 
   {{#if this.currentUserService.isAnonymous}}
     <EmberTooltip @text="Click to login via GitHub" />
+  {{else if (not @userHasSupervotesAvailable)}}
+    <EmberTooltip @event="click" @hideOn="mouseleave" @text="You're out of supervotes. Earn more by completing CodeCrafters challenges!">
+      You're out of supervotes. Earn more by completing CodeCrafters challenges!
+    </EmberTooltip>
   {{/if}}
 </button>

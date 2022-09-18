@@ -12,9 +12,13 @@ export default class CourseIdeasRoute extends ApplicationRoute {
 
     modelPromises.courseIdeas = this.store.findAll('course-idea');
 
-    // if (this.currentUserService.isAuthenticated) {
-    //   // modelPromises.supervoteGrants = this.store.findAll('course-idea-supervote-grant');
-    // }
+    if (this.currentUserService.isAuthenticated) {
+      // No need to wait on this, can load in the background
+      this.store.findRecord('user', this.currentUserService.record.id, {
+        include: 'course-idea-supervote-grants',
+        reload: true,
+      });
+    }
 
     return RSVP.hash(modelPromises);
   }

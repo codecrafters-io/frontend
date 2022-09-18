@@ -50,6 +50,7 @@
       <CourseIdeasPage::CourseIdeaCard::SupervoteButton
         @courseIdea={{@courseIdea}}
         @userSupervotesCount={{this.userSupervotesCount}}
+        @userHasSupervotesAvailable={{this.userHasSupervotesAvailable}}
         {{on "click" this.handleSupervoteButtonClick}}
         class="mr-2"
       />
