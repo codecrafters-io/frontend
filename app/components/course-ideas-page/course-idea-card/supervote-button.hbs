@@ -3,6 +3,7 @@
   class="pr-2.5 pl-2 py-1.5 rounded shadow-sm flex items-center border transition-colors duration-75
     {{if (gt @userSupervotesCount 0) 'border-teal-500 hover:border-teal-600' 'border-gray-300 hover:border-gray-400'}}
     "
+  data-test-supervote-button
   ...attributes
 >
   {{svg-jar "chevron-double-up" class="w-4 py-0.5 mr-1.5 text-teal-500"}}
@@ -10,7 +11,11 @@
   <span class="text-sm {{if (gt @userSupervotesCount 0) 'text-teal-500' 'text-gray-700'}} transition-all duration-75">
     <span class="font-semibold">{{@courseIdea.supervotes.length}}</span>
 
-    supervotes
+    {{#if (eq @courseIdea.votes.length 1)}}
+      supervote
+    {{else}}
+      supervotes
+    {{/if}}
   </span>
 
   {{#if (gt @userSupervotesCount 0)}}

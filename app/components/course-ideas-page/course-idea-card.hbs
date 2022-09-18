@@ -53,6 +53,10 @@
         {{on "click" this.handleSupervoteButtonClick}}
         class="mr-2"
       />
+
+      {{#if this.userHasVotedOrSupervoted}}
+        <CourseIdeasPage::CourseIdeaCard::UnvoteButton @courseIdea={{@courseIdea}} {{on "click" this.handleUnvoteButtonClick}} />
+      {{/if}}
     </div>
   </div>
 </div>

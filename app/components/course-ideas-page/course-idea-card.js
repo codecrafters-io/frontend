@@ -11,6 +11,17 @@ export default class CourseIdeaCardComponent extends Component {
   @tracked isVotingOrUnvoting = false;
 
   @action
+  async handleUnvoteButtonClick() {
+    if (this.isVotingOrUnvoting) {
+      return;
+    }
+
+    this.isVotingOrUnvoting = true;
+    await this.args.courseIdea.unvote();
+    this.isVotingOrUnvoting = false;
+  }
+
+  @action
   async handleSupervoteButtonClick() {
     if (this.currentUserService.isAnonymous) {
       window.location.href = '/login?next=' + this.router.currentURL;
