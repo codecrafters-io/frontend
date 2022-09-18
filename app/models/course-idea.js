@@ -35,21 +35,19 @@ CourseIdeaModel.prototype.unvote = memberAction({
   path: 'unvote',
   type: 'post',
 
-  after() {
-    run(() => {
-      let currentUser = this.currentUserService.record;
+  before() {
+    let currentUser = this.currentUserService.record;
 
-      currentUser.courseIdeaVotes.filterBy('courseIdea', this).forEach((record) => {
-        record.courseIdea.votes.removeObject(record);
-        record.user.courseIdeaVotes.removeObject(record);
-        record.unloadRecord();
-      });
+    currentUser.courseIdeaVotes.filterBy('courseIdea', this).forEach((record) => {
+      record.courseIdea.votes.removeObject(record);
+      record.user.courseIdeaVotes.removeObject(record);
+      record.unloadRecord();
+    });
 
-      currentUser.courseIdeaSupervotes.filterBy('courseIdea', this).forEach((record) => {
-        record.courseIdea.supervotes.removeObject(record);
-        record.user.courseIdeaSupervotes.removeObject(record);
-        record.unloadRecord();
-      });
+    currentUser.courseIdeaSupervotes.filterBy('courseIdea', this).forEach((record) => {
+      record.courseIdea.supervotes.removeObject(record);
+      record.user.courseIdeaSupervotes.removeObject(record);
+      record.unloadRecord();
     });
   },
 });

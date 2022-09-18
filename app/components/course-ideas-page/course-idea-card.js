@@ -27,19 +27,13 @@ export default class CourseIdeaCardComponent extends Component {
       window.location.href = '/login?next=' + this.router.currentURL;
     }
 
-    if (this.isVotingOrUnvoting) {
-      return;
+    if (this.userHasVoted) {
+      await this.args.courseIdea.supervote();
+    } else {
+      this.isVotingOrUnvoting = true;
+      await Promise.all([this.args.courseIdea.vote(), this.args.courseIdea.supervote()]);
+      this.isVotingOrUnvoting = false;
     }
-
-    this.isVotingOrUnvoting = true;
-
-    await this.args.courseIdea.supervote();
-
-    if (!this.userHasVoted) {
-      await this.args.courseIdea.vote();
-    }
-
-    this.isVotingOrUnvoting = false;
   }
 
   @action
