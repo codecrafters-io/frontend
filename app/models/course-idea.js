@@ -31,14 +31,14 @@ export default class CourseIdeaModel extends Model {
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votes.length < 20;
   }
 
-  get sortPositionForCourseIdeasPage() {
-    let sortPositionFromDevelopmentStatus = {
-      not_started: 1,
+  get reverseSortPositionForCourseIdeasPage() {
+    let reverseSortPositionFromDevelopmentStatus = {
+      not_started: 3,
       in_progress: 2,
-      released: 3,
+      released: 1,
     }[this.developmentStatus];
 
-    return `${sortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
+    return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
   }
 
   supervote() {
