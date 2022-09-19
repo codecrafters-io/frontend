@@ -3,13 +3,12 @@
     We release new challenges based on user votes. Let us know what you'd like to see next!
   </div>
 
-  <a href="https://vote.codecrafters.io" target="_blank" rel="noopener noreferrer">
+  <LinkTo @route="course-ideas">
     <img src="/assets/images/feature-previews/challenge-voting.png" alt="challenge voting" class="w-full mb-4 border" />
-  </a>
+  </LinkTo>
 
-  <a
-    href="https://vote.codecrafters.io"
-    target="_blank"
+  <LinkTo
+    @route="course-ideas"
     class="bg-gray-200 hover:bg-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded mr-2 flex flex-col items-center w-full group"
     data-test-vote-on-upcoming-challenges-button
     rel="noopener noreferrer"
@@ -18,5 +17,5 @@
       Vote on upcoming challenges
       {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
     </div>
-  </a>
+  </LinkTo>
 </TrackPage::Card>
