@@ -19,7 +19,7 @@ export default class CourseIdeaModel extends Model {
 
   @equal('developmentStatus', 'not_started') developmentStatusIsNotStarted;
   @equal('developmentStatus', 'in_progress') developmentStatusIsInProgress;
-  @equal('developmentStatus', 'in_progress') developmentStatusIsCompleted;
+  @equal('developmentStatus', 'released') developmentStatusIsReleased;
 
   @service('current-user') currentUserService;
 
@@ -29,6 +29,16 @@ export default class CourseIdeaModel extends Model {
 
   get isNewlyCreated() {
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votes.length < 20;
+  }
+
+  get sortPositionForCourseIdeasPage() {
+    let sortPositionFromDevelopmentStatus = {
+      not_started: 1,
+      in_progress: 2,
+      released: 3,
+    }[this.developmentStatus];
+
+    return `${sortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
   }
 
   supervote() {
