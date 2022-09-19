@@ -27,6 +27,10 @@ export default class CourseIdeaModel extends Model {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
   }
 
+  get isNewlyCreated() {
+    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votes.length < 20;
+  }
+
   supervote() {
     return this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.currentUserService.record }).save();
   }
