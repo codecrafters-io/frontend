@@ -7,6 +7,10 @@ export default class CourseIdeasRoute extends ApplicationRoute {
   @service('current-user') currentUserService;
   @service store;
 
+  activate() {
+    window.scrollTo({ top: 0 });
+  }
+
   model() {
     const modelPromises = {};
 
