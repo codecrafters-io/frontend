@@ -1,0 +1,22 @@
+{{page-title "Challenge Ideas"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+  <div class="border-b pb-8 mb-8">
+    <h1 class="text-3xl text-gray-700 font-bold tracking-tighter mb-3">Challenge Ideas</h1>
+
+    <p class="text-gray-500">
+      Vote on what challenges we'll build next.
+
+      {{!
+      Submit new ideas
+      <a href="https://google.com" class="text-blue-500 font-semibold">here</a>.
+      }}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
+    {{#each this.orderedCourseIdeas as |courseIdea|}}
+      <CourseIdeasPage::CourseIdeaCard @courseIdea={{courseIdea}} />
+    {{/each}}
+  </div>
+</div>

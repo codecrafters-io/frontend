@@ -30,6 +30,15 @@ function routes() {
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');
 
+  this.get('/course-ideas');
+
+  this.post('/course-ideas/:id/unvote', () => {
+    return {};
+  });
+
+  this.post('/course-idea-votes');
+  this.post('/course-idea-supervotes');
+
   this.patch('/feature-suggestions/:id');
 
   this.post('/individual-checkout-sessions', function (schema) {
@@ -151,6 +160,8 @@ function routes() {
   this.get('/users', function (schema, request) {
     return schema.users.where({ username: request.queryParams.username });
   });
+
+  this.get('/users/:id');
 
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
   this.passthrough('https://unpkg.com/**'); // Shiki

@@ -2,7 +2,7 @@
 
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
-  disable_watching: true,
+  disable_watching: false,
   launch_in_ci: ['Chrome'],
   launch_in_dev: ['Chrome'],
   browser_start_timeout: 120,
@@ -21,4 +21,5 @@ module.exports = {
     },
   },
   parallel: process.env.EMBER_EXAM_SPLIT_COUNT,
+  src_files: ['tests/**/*.js', 'app/**/*.js', 'app/**/*.hbs', 'mirage/**/*.js'],
 };

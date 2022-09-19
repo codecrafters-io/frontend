@@ -12,6 +12,9 @@ export default class UserModel extends Model {
   @attr('string') username;
 
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
+  @hasMany('course-idea-vote', { async: false }) courseIdeaVotes;
+  @hasMany('course-idea-supervote', { async: false }) courseIdeaSupervotes;
+  @hasMany('course-idea-supervote-grants', { async: false }) courseIdeaSupervoteGrants;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('repository', { async: false }) repositories;
@@ -21,6 +24,10 @@ export default class UserModel extends Model {
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
+  }
+
+  get availableCourseIdeaSupervotes() {
+    return this.courseIdeaSupervoteGrants.mapBy('numberOfSupervotes').reduce((a, b) => a + b, 0) - this.courseIdeaSupervotes.length;
   }
 
   get canAccessPaidContent() {

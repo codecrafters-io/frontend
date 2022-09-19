@@ -5,11 +5,11 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import { htmlSafe } from '@ember/template';
 
 export default class LanguageModel extends Model {
+  @hasMany('course-language-configuration', { async: false }) courseConfigurations;
+
   @attr('string') name;
   @attr('string') slug;
   @attr('string') trackStatus;
-
-  @hasMany('course-language-configuration', { async: false }) courseConfigurations;
 
   @equal('slug', 'c') isC;
   @equal('slug', 'csharp') isCsharp;
