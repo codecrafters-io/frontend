@@ -23,6 +23,7 @@ Router.map(function () {
   this.route('tracks');
   this.route('team', { path: '/teams/:team_id' });
   this.route('teams.create', { path: '/teams/create' });
+  this.route('teams.pay', { path: '/teams/pay' });
   this.route('user', { path: '/users/:username' });
 
   this.route('not-found', { path: '/*path' }); // Catch-all
