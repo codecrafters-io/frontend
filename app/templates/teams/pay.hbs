@@ -3,7 +3,18 @@
 <div class="container mx-auto lg:max-w-screen-lg pt-16 pb-48 px-6">
   <div class="flex flex-col items-center">
     <h1 class="text-center text-3xl text-gray-700 font-bold tracking-tighter mb-12">Setup your team</h1>
-    <TeamPaymentPage::NavigationContainer class="mb-24" />
-    <TeamPaymentPage::TeamDetailsForm />
+
+    <TeamPaymentPage::NavigationContainer
+      @completedSteps={{this.completedSteps}}
+      @currentStep={{this.currentStep}}
+      @onNavigationItemClick={{this.handleNavigationItemClick}}
+      class="mb-24"
+    />
+
+    {{#if (eq this.currentStep 1)}}
+      <TeamPaymentPage::TeamDetailsForm @isComplete={{this.isStep1Complete}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+    {{else if (eq this.currentStep 2)}}
+      <TeamPaymentPage::BillingDetailsForm @onContinueButtonClick={{this.handleContinueButtonClick}} />
+    {{/if}}
   </div>
 </div>

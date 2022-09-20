@@ -21,12 +21,13 @@
 
   <TeamPaymentPage::TeamDetailsForm::Section @title="Pricing Plan" @description="Seat-based pricing allows you to re-assign seats anytime.">
     <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
-      @name="Seat-based"
+      @name="Per Seat"
       @description="$990/seat/yr, minimum 5 seats"
       class="mb-4"
       @selected={{true}}
     />
-    <TeamPaymentPage::TeamDetailsForm::PricingPlanOption @name="Bulk License" @description="$790/seat/yr, minimum 5 users" class="mb-4" />
+
+    <TeamPaymentPage::TeamDetailsForm::PricingPlanOption @name="Per Developer" @description="$790/dev/yr, minimum 5 developers" />
   </TeamPaymentPage::TeamDetailsForm::Section>
 
   <div class="h-px bg-gray-100 my-6"></div>
@@ -34,4 +35,14 @@
   <TeamPaymentPage::TeamDetailsForm::Section @title="Number of Seats" @description="You can add more users anytime.">
     Options here
   </TeamPaymentPage::TeamDetailsForm::Section>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <div class="flex justify-end">
+    <PrimaryButton @isDisabled={{not @isComplete}} {{on "click" @onContinueButtonClick}}>
+      Continue
+
+      <EmberTooltip @text="Enter details above to continue" />
+    </PrimaryButton>
+  </div>
 </div>

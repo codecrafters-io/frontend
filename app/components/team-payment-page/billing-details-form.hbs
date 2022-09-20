@@ -1,0 +1,30 @@
+<div class="w-full max-w-xl bg-white border rounded p-6" {{did-insert this.handleDidInsert}}>
+  <div class="text-gray-700 font-bold mb-1 uppercase">Billing Details</div>
+  <div class="h-px bg-gray-100 mt-2 mb-6"></div>
+
+  <form id="payment-form">
+    <div id="payment-element">
+      {{! Elements will create form elements here }}
+    </div>
+  </form>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <div class="flex justify-between items-center">
+    {{#if this.errorMessage}}
+      <div id="error-message" class="text-red-600 font-semibold">
+        Error message
+      </div>
+    {{else}}
+      <div class="text-xs text-gray-500">
+        Payments are processed securely using Stripe.
+      </div>
+    {{/if}}
+
+    <PrimaryButton @isDisabled={{true}}>
+      Continue
+
+      <EmberTooltip @text="Enter details above to continue" />
+    </PrimaryButton>
+  </div>
+</div>

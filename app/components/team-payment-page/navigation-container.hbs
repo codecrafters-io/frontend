@@ -1,22 +1,26 @@
 <div class="flex items-center" ...attributes>
-  <div class="relative">
-    <div class="h-3 w-3 bg-teal-500 rounded-full"></div>
-    <div class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold text-teal-500">
-      TEAM DETAILS
-    </div>
-  </div>
-  <div class="h-0.5 w-40 bg-gray-200 mx-4"></div>
-  <div class="relative">
-    <div class="h-3 w-3 bg-gray-300 rounded-full"></div>
-    <div class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold text-gray-300">
-      BILLING
-    </div>
-  </div>
-  <div class="h-0.5 w-40 bg-gray-200 mx-4"></div>
-  <div class="relative">
-    <div class="h-3 w-3 bg-gray-300 rounded-full"></div>
-    <div class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold text-gray-300">
-      REVIEW
-    </div>
-  </div>
+  <TeamPaymentPage::NavigationContainerItem
+    @isComplete={{includes 1 @completedSteps}}
+    @isActive={{eq @currentStep 1}}
+    @name="Team Details"
+    {{on "click" (fn @onNavigationItemClick 1)}}
+  />
+
+  <div class="h-0.5 w-40 {{if (includes 1 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
+
+  <TeamPaymentPage::NavigationContainerItem
+    @isComplete={{includes 2 @completedSteps}}
+    @isActive={{eq @currentStep 2}}
+    @name="Billing"
+    {{on "click" (fn @onNavigationItemClick 2)}}
+  />
+
+  <div class="h-0.5 w-40 {{if (includes 2 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
+
+  <TeamPaymentPage::NavigationContainerItem
+    @isComplete={{includes 3 @completedSteps}}
+    @isActive={{eq @currentStep 3}}
+    @name="Review"
+    {{on "click" (fn @onNavigationItemClick 3)}}
+  />
 </div>

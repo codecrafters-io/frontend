@@ -1,0 +1,23 @@
+<div
+  class="relative
+    {{if (and @isComplete (not @isActive)) 'opacity-50'}}
+    hover:opacity-100
+    {{if (and (not @isComplete) (not @isActive)) 'cursor-not-allowed'}}"
+  role="button"
+  ...attributes
+>
+  <div
+    class="h-4 w-4
+      {{if (or @isActive @isComplete) 'bg-teal-500' 'bg-gray-300'}}
+      border-2
+      {{if (or @isActive @isComplete) 'border-teal-500' 'border-gray-300'}}
+      rounded-full"
+  >
+  </div>
+
+  <div
+    class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold {{if (or @isActive @isComplete) 'text-teal-500' 'text-gray-300'}}"
+  >
+    {{@name}}
+  </div>
+</div>
