@@ -1,0 +1,37 @@
+<div class="w-full max-w-xl bg-white border rounded p-6">
+  <TeamPaymentPage::TeamDetailsForm::Section @title="Team Name" @description="This is the name your team members will see.">
+    <Input
+      class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
+      id="team_name_input"
+      placeholder="Microsoft"
+    />
+  </TeamPaymentPage::TeamDetailsForm::Section>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <TeamPaymentPage::TeamDetailsForm::Section @title="Contact Email" @description="We'll use this to send you a team setup link.">
+    <Input
+      class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
+      id="team_contact_email_input"
+      placeholder="bill@microsoft.com"
+    />
+  </TeamPaymentPage::TeamDetailsForm::Section>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <TeamPaymentPage::TeamDetailsForm::Section @title="Pricing Plan" @description="Seat-based pricing allows you to re-assign seats anytime.">
+    <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
+      @name="Seat-based"
+      @description="$990/seat/yr, minimum 5 seats"
+      class="mb-4"
+      @selected={{true}}
+    />
+    <TeamPaymentPage::TeamDetailsForm::PricingPlanOption @name="Bulk License" @description="$790/seat/yr, minimum 5 users" class="mb-4" />
+  </TeamPaymentPage::TeamDetailsForm::Section>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <TeamPaymentPage::TeamDetailsForm::Section @title="Number of Seats" @description="You can add more users anytime.">
+    Options here
+  </TeamPaymentPage::TeamDetailsForm::Section>
+</div>
