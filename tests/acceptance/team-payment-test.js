@@ -16,9 +16,13 @@ module('Acceptance | team-payment-test', function (hooks) {
 
   test('user can setup team', async function (assert) {
     testScenario(this.server);
-    this.server.timing = 1000;
 
     await teamPaymentPage.visit();
-    await this.pauseTest();
+    await teamPaymentPage.teamDetailsForm.fillInTeamName('Test Team');
+    await teamPaymentPage.teamDetailsForm.fillInContactEmail('paul@codecrafters.io');
+    await teamPaymentPage.teamDetailsForm.clickOnContinueButton(); // Blurs previous input, shouldn't do anything
+    await teamPaymentPage.teamDetailsForm.clickOnContinueButton();
+
+    assert.equal(1, 1);
   });
 });

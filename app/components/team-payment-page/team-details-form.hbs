@@ -1,4 +1,4 @@
-<div class="w-full max-w-xl bg-white border rounded p-6">
+<div class="w-full max-w-xl bg-white border rounded p-6" data-test-team-details-form>
   <TeamPaymentPage::TeamDetailsForm::Section @title="Team Name" @description="This is the name your team members will see.">
     <Input
       @value={{@teamPaymentFlow.teamName}}
@@ -14,9 +14,10 @@
   <TeamPaymentPage::TeamDetailsForm::Section @title="Contact Email" @description="We'll use this to send you a team setup link.">
     <Input
       @value={{@teamPaymentFlow.contactEmailAddress}}
+      @type="email"
       {{on "blur" this.handleValueUpdated}}
       class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
-      id="team_contact_email_input"
+      id="contact_email_input"
       placeholder="bill@microsoft.com"
     />
   </TeamPaymentPage::TeamDetailsForm::Section>
@@ -37,13 +38,18 @@
   <div class="h-px bg-gray-100 my-6"></div>
 
   <TeamPaymentPage::TeamDetailsForm::Section @title="Number of Seats" @description="You can add more users anytime.">
-    Options here
+    10
   </TeamPaymentPage::TeamDetailsForm::Section>
 
   <div class="h-px bg-gray-100 my-6"></div>
 
   <div class="flex justify-end">
-    <PrimaryButtonWithSpinner @isDisabled={{not @isComplete}} @shouldShowSpinner={{@teamPaymentFlow.isSaving}} {{on "click" @onContinueButtonClick}}>
+    <PrimaryButtonWithSpinner
+      @isDisabled={{not @isComplete}}
+      @shouldShowSpinner={{@teamPaymentFlow.isSaving}}
+      {{on "click" @onContinueButtonClick}}
+      data-test-continue-button
+    >
       Continue
 
       <EmberTooltip @text="Enter details above to continue" />

@@ -13,6 +13,7 @@
   <div class="flex justify-between items-center">
     {{#if this.errorMessage}}
       <div id="error-message" class="text-red-600 font-semibold">
+        {{this.errorMessage}}
         Error message
       </div>
     {{else}}
@@ -21,10 +22,8 @@
       </div>
     {{/if}}
 
-    <PrimaryButton @isDisabled={{true}}>
+    <PrimaryButton {{on "click" this.handleContinueButtonClick}}>
       Continue
-
-      <EmberTooltip @text="Enter details above to continue" />
     </PrimaryButton>
   </div>
 </div>
