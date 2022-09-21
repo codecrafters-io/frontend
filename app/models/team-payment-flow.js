@@ -5,7 +5,7 @@ import Model from '@ember-data/model';
 export default class TeamPaymentFlowModel extends Model {
   @attr('string') teamName;
   @attr('string') contactEmailAddress;
-  @attr('string') pricingPlan; // per_seat, per_user
+  @attr('string') pricingPlanType; // per_seat, per_user
   @attr('number') numberOfSeats;
   @attr('string') stripePublishableKey;
   @attr('string') stripeSetupIntentClientSecret;
@@ -28,8 +28,8 @@ export default class TeamPaymentFlowModel extends Model {
     return this.stripeSetupIntentStatus === 'succeeded';
   }
 
-  get pricingPlanIsComplete() {
-    return ['per_seat', 'per_user'].includes(this.pricingPlan);
+  get pricingPlanTypeIsComplete() {
+    return ['per_seat', 'per_user'].includes(this.pricingPlanType);
   }
 }
 

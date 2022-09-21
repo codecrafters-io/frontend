@@ -40,7 +40,7 @@ export default class TeamsPayController extends Controller {
     return (
       this.model.teamNameIsComplete &&
       this.model.contactEmailAddressIsComplete &&
-      this.model.pricingPlanIsComplete &&
+      this.model.pricingPlanTypeIsComplete &&
       this.model.numberOfSeatsIsComplete &&
       !this.model.isSaving &&
       !this.model.hasDirtyAttributes
