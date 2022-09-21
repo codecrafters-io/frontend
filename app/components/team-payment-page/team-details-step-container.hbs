@@ -1,4 +1,4 @@
-<div class="w-full max-w-xl bg-white border rounded p-6" data-test-team-details-form>
+<TeamPaymentPage::StepContainer @title="Team Details" data-test-team-details-step-container>
   <TeamPaymentPage::TeamDetailsForm::Section @title="Team Name" @description="This is the name your team members will see.">
     <Input
       @value={{@teamPaymentFlow.teamName}}
@@ -44,15 +44,19 @@
   <div class="h-px bg-gray-100 my-6"></div>
 
   <div class="flex justify-end">
-    <PrimaryButtonWithSpinner
-      @isDisabled={{not @isComplete}}
-      @shouldShowSpinner={{@teamPaymentFlow.isSaving}}
-      {{on "click" @onContinueButtonClick}}
-      data-test-continue-button
-    >
-      Continue
+    <div>
+      <PrimaryButtonWithSpinner
+        @isDisabled={{not @isComplete}}
+        @shouldShowSpinner={{@teamPaymentFlow.isSaving}}
+        {{on "click" @onContinueButtonClick}}
+        data-test-continue-button
+      >
+        Continue
+      </PrimaryButtonWithSpinner>
 
-      <EmberTooltip @text="Enter details above to continue" />
-    </PrimaryButtonWithSpinner>
+      {{#unless @isComplete}}
+        <EmberTooltip @text="Enter details above to continue" />
+      {{/unless}}
+    </div>
   </div>
-</div>
+</TeamPaymentPage::StepContainer>

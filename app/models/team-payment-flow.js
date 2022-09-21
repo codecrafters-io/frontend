@@ -1,4 +1,5 @@
 import { attr } from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 import Model from '@ember-data/model';
 
 export default class TeamPaymentFlowModel extends Model {
@@ -31,3 +32,12 @@ export default class TeamPaymentFlowModel extends Model {
     return ['per_seat', 'per_user'].includes(this.pricingPlan);
   }
 }
+
+TeamPaymentFlowModel.prototype.attemptPayment = memberAction({
+  path: 'attempt-payment',
+  type: 'post',
+
+  after(response) {
+    return response;
+  },
+});

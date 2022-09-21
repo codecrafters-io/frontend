@@ -1,6 +1,6 @@
 <div
   class="relative
-    {{if (and @previousStepsAreComplete (not @isActive)) 'opacity-50'}}
+    {{if (and @previousStepsAreComplete (not @isCurrent)) 'opacity-50'}}
     hover:opacity-100
     {{unless @previousStepsAreComplete 'cursor-not-allowed'}}"
   role="button"
@@ -13,6 +13,9 @@
       {{if @previousStepsAreComplete 'border-teal-500' 'border-gray-300'}}
       rounded-full"
   >
+    {{#if @isComplete}}
+      {{svg-jar "check" class="h-3 w-3 text-white" role="presentation"}}
+    {{/if}}
   </div>
 
   <div class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold {{if @previousStepsAreComplete 'text-teal-500' 'text-gray-300'}}">

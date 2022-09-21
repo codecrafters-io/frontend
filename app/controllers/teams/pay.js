@@ -8,16 +8,29 @@ import { tracked } from '@glimmer/tracking';
 export default class TeamsPayController extends Controller {
   @service store;
 
-  @tracked currentStep = 1;
-  @tracked teamPaymentFlow;
+  queryParams = [{ teamPaymentFlowId: 'f' }];
+
+  @tracked selectedStep;
 
   constructor() {
     super(...arguments);
 
     // Trigger stripe loading as soon as page loads
     loadStripe('pk_test_51L1aPXJtewx3LJ9VgIiwpt4RL9FX2Yr7RgJCMMpviFmFc4Zrwt2s6lvH8QFMT88exOUvQWh13Thc7oBMVrMlQKwX00qbz9xH2A');
+  }
 
-    this.teamPaymentFlow = this.store.createRecord('team-payment-flow', { pricingPlan: 'per_seat', numberOfSeats: 10 });
+  get currentStep() {
+    return this.selectedStep || this.initialStep;
+  }
+
+  get initialStep() {
+    if (this.isStep1Complete && this.isStep2Complete) {
+      return 3;
+    } else if (this.isStep1Complete) {
+      return 2;
+    } else {
+      return 1;
+    }
   }
 
   get completedSteps() {
@@ -26,34 +39,34 @@ export default class TeamsPayController extends Controller {
 
   get isStep1Complete() {
     return (
-      this.teamPaymentFlow.teamNameIsComplete &&
-      this.teamPaymentFlow.contactEmailAddressIsComplete &&
-      this.teamPaymentFlow.pricingPlanIsComplete &&
-      this.teamPaymentFlow.numberOfSeatsIsComplete &&
-      !this.teamPaymentFlow.isSaving &&
-      !this.teamPaymentFlow.hasDirtyAttributes
+      this.model.teamNameIsComplete &&
+      this.model.contactEmailAddressIsComplete &&
+      this.model.pricingPlanIsComplete &&
+      this.model.numberOfSeatsIsComplete &&
+      !this.model.isSaving &&
+      !this.model.hasDirtyAttributes
     );
   }
 
   get isStep2Complete() {
-    return false;
+    return this.isStep1Complete && this.model.paymentDetailsAreComplete;
   }
 
   get isStep3Complete() {
-    return false;
+    return this.isStep1Complete && this.isStep2Complete && false;
   }
 
   @action
   handleContinueButtonClick() {
     if (this.completedSteps.includes(this.currentStep)) {
-      this.currentStep += 1;
+      this.selectedStep = this.currentStep + 1;
     }
   }
 
   @action
   handleNavigationItemClick(step) {
     if (step === 1 || this.completedSteps.includes(step - 1)) {
-      this.currentStep = step;
+      this.selectedStep = step;
     }
   }
 }

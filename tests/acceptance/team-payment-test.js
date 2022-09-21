@@ -1,3 +1,4 @@
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -7,6 +8,7 @@ import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
+import { clearRender } from '@ember/test-helpers';
 
 module('Acceptance | team-payment-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -18,11 +20,24 @@ module('Acceptance | team-payment-test', function (hooks) {
     testScenario(this.server);
 
     await teamPaymentPage.visit();
-    await teamPaymentPage.teamDetailsForm.fillInTeamName('Test Team');
-    await teamPaymentPage.teamDetailsForm.fillInContactEmail('paul@codecrafters.io');
-    await teamPaymentPage.teamDetailsForm.clickOnContinueButton(); // Blurs previous input, shouldn't do anything
-    await teamPaymentPage.teamDetailsForm.clickOnContinueButton();
+    await teamPaymentPage.teamDetailsStepContainer.fillInTeamName('Test Team');
+    await teamPaymentPage.teamDetailsStepContainer.fillInContactEmail('paul@codecrafters.io');
+    await teamPaymentPage.teamDetailsStepContainer.clickOnContinueButton(); // Blurs previous input, shouldn't do anything
+    await teamPaymentPage.teamDetailsStepContainer.clickOnContinueButton(); // This should redirect the user
+  });
 
-    assert.equal(1, 1);
+  test('user can setup team (after billing method setup)', async function (assert) {
+    testScenario(this.server);
+
+    const teamPaymentFlow = this.server.create('team-payment-flow', {
+      stripeSetupIntentStatus: 'succeeded',
+      teamName: 'Microsoft',
+      contactEmailAddress: 'paul@codecrafters.io',
+      pricingPlan: 'per_user',
+      numberOfSeats: 10,
+    });
+
+    await teamPaymentPage.visit({ f: teamPaymentFlow.id });
+    assert.ok(teamPaymentPage.reviewPaymentStepContainer.isVisible);
   });
 });

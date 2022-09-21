@@ -2,7 +2,7 @@
   <TeamPaymentPage::NavigationContainerItem
     @previousStepsAreComplete={{true}}
     @isComplete={{includes 1 @completedSteps}}
-    @isActive={{eq @currentStep 1}}
+    @isCurrent={{eq @currentStep 1}}
     @name="Team Details"
     {{on "click" (fn @onNavigationItemClick 1)}}
   />
@@ -12,8 +12,8 @@
   <TeamPaymentPage::NavigationContainerItem
     @previousStepsAreComplete={{includes 1 @completedSteps}}
     @isComplete={{includes 2 @completedSteps}}
-    @isActive={{eq @currentStep 2}}
-    @name="Billing"
+    @isCurrent={{eq @currentStep 2}}
+    @name="Payment"
     {{on "click" (fn @onNavigationItemClick 2)}}
   />
 
@@ -21,7 +21,7 @@
 
   <TeamPaymentPage::NavigationContainerItem
     @previousStepsAreComplete={{and (includes 1 @completedSteps) (includes 2 @completedSteps)}}
-    @isActive={{eq @currentStep 3}}
+    @isCurrent={{eq @currentStep 3}}
     @name="Review"
     {{on "click" (fn @onNavigationItemClick 3)}}
   />

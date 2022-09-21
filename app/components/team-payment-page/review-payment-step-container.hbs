@@ -1,0 +1,35 @@
+<TeamPaymentPage::StepContainer @title="Review Payment" data-test-review-payment-step-container>
+  <div class="text-gray-600 leading-7">
+    <p class="mb-4">
+      Your payment method will be charged
+      <span class="font-semibold">$790</span>/seat/yr for
+      <span class="font-semibold">10</span>
+      seats. Once payment is complete, we'll send you a team setup link.
+    </p>
+    <p>
+      Click "Continue" below to proceed.
+    </p>
+  </div>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <div class="flex justify-between items-center">
+    {{#if this.errorMessage}}
+      <div id="error-message" class="text-red-600 text-sm font-semibold">
+        {{this.errorMessage}}
+      </div>
+    {{else}}
+      <div class="text-xs text-gray-500">
+        Payments are processed securely using Stripe.
+      </div>
+    {{/if}}
+
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.isAttemptingPayment}}
+      @shouldShowSpinner={{this.isAttemptingPayment}}
+      {{on "click" this.handleContinueButtonClick}}
+    >
+      Continue
+    </PrimaryButtonWithSpinner>
+  </div>
+</TeamPaymentPage::StepContainer>

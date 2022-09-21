@@ -7,12 +7,13 @@ export default class BillingDetailsFormComponent extends Component {
   @tracked errorMessage;
   @tracked stripeElementsObject;
 
-  constructor() {
-    super(...arguments);
-  }
-
   @action
   async handleContinueButtonClick() {
+    if (this.args.teamPaymentFlow.paymentDetailsAreComplete) {
+      this.args.onContinueButtonClick();
+    }
+
+    // TODO: Handle changing card details?
     this.errorMessage = null;
 
     const stripe = await loadStripe('pk_test_51L1aPXJtewx3LJ9VgIiwpt4RL9FX2Yr7RgJCMMpviFmFc4Zrwt2s6lvH8QFMT88exOUvQWh13Thc7oBMVrMlQKwX00qbz9xH2A');
