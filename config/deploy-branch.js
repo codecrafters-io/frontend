@@ -14,7 +14,7 @@ module.exports = function (deployTarget) {
       keyPrefix: `codecrafters-frontend:branch:${branchName}`,
       maxRecentUploads: 100, // Let's keep this high enough to retain recent builds on a branch
       revisionKey: commitSha.substring(0, 8),
-      url: process.env.REDIS_URL,
+      url: `${process.env.REDIS_URL}?allowUsernameInURI=true`,
     },
 
     s3: {

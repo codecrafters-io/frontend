@@ -13,7 +13,7 @@ module.exports = function (deployTarget) {
       allowOverwrite: true,
       keyPrefix: `codecrafters-frontend:version`,
       revisionKey: `${appVersion}+${commitSha.substring(0, 8)}`,
-      url: process.env.REDIS_URL,
+      url: `${process.env.REDIS_URL}?allowUsernameInURI=true`,
     },
 
     s3: {
