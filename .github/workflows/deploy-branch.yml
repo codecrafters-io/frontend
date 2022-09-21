@@ -47,15 +47,6 @@ jobs:
         id: branch-name
         uses: tj-actions/branch-names@v5.2
 
-      - name: Install Heroku CLI
-        run: curl https://cli-assets.heroku.com/install.sh | sh
-
-      - name: Get Redis URL
-        id: fetch-redis-url
-        run: echo "::set-output name=url::$(heroku config:get -a codecrafters-server-stg EMBER_STORE_REDIS_URL)"
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
       - name: Start staging deployment
         uses: bobheadxi/deployments@v1
         id: start-staging-deployment
@@ -72,7 +63,7 @@ jobs:
           CDN_BASE_URL: "https://djmiqp4suql3j.cloudfront.net/codecrafters-frontend/"
           EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
           EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
-          REDIS_URL: ${{ steps.fetch-redis-url.outputs.url }}
+          REDIS_URL: ${{ secrets.STAGING_EMBER_STORE_REDIS_URL }}
           S3_BUCKET: codecrafters-ember-app-builds-staging
           S3_BUCKET_REGION: us-east-1
           environment: staging-preview
