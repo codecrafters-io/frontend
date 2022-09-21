@@ -2,8 +2,23 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class TeamDetailsFormComponent extends Component {
+  formElement;
+
+  @action
+  async handleDidInsertFormElement(formElement) {
+    this.formElement = formElement;
+  }
+
+  @action
+  async handleFormSubmit(e) {
+    e.preventDefault();
+    this.formElement.reportValidity();
+  }
+
   @action
   async handleValueUpdated() {
-    this.args.teamPaymentFlow.save();
+    if (this.formElement.checkValidity()) {
+      this.args.teamPaymentFlow.save();
+    }
   }
 }
