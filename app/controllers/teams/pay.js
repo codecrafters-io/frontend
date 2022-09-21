@@ -9,17 +9,14 @@ export default class TeamsPayController extends Controller {
 
   queryParams = [{ teamPaymentFlowId: 'f' }];
 
-  @tracked selectedStep;
+  @tracked currentStep;
+  @tracked teamPaymentFlowId;
 
   constructor() {
     super(...arguments);
 
     // Trigger stripe loading as soon as page loads
     loadStripe('pk_test_51L1aPXJtewx3LJ9VgIiwpt4RL9FX2Yr7RgJCMMpviFmFc4Zrwt2s6lvH8QFMT88exOUvQWh13Thc7oBMVrMlQKwX00qbz9xH2A');
-  }
-
-  get currentStep() {
-    return this.selectedStep || this.initialStep;
   }
 
   get initialStep() {
@@ -58,14 +55,18 @@ export default class TeamsPayController extends Controller {
   @action
   handleContinueButtonClick() {
     if (this.completedSteps.includes(this.currentStep)) {
-      this.selectedStep = this.currentStep + 1;
+      if (this.model.id) {
+        this.teamPaymentFlowId = this.model.id;
+      }
+
+      this.currentStep = this.currentStep + 1;
     }
   }
 
   @action
   handleNavigationItemClick(step) {
     if (step === 1 || this.completedSteps.includes(step - 1)) {
-      this.selectedStep = step;
+      this.currentStep = step;
     }
   }
 }

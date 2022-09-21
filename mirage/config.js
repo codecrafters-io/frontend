@@ -149,6 +149,7 @@ function routes() {
   this.post('/team-payment-flows');
   this.get('/team-payment-flows/:id');
   this.patch('/team-payment-flows/:id');
+
   this.post('/team-payment-flows/:id/attempt-payment', function () {
     return {
       error: 'Your card was declined.',

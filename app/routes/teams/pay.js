@@ -13,4 +13,10 @@ export default class TeamsPayRoute extends ApplicationRoute {
       return this.store.createRecord('team-payment-flow', { pricingPlanType: 'per_seat', numberOfSeats: 10 });
     }
   }
+
+  setupController(controller, model) {
+    super.setupController(controller, model);
+
+    controller.currentStep = controller.initialStep;
+  }
 }
