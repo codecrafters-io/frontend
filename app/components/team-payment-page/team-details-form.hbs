@@ -1,6 +1,8 @@
 <div class="w-full max-w-xl bg-white border rounded p-6">
   <TeamPaymentPage::TeamDetailsForm::Section @title="Team Name" @description="This is the name your team members will see.">
     <Input
+      @value={{@teamPaymentFlow.teamName}}
+      {{on "blur" this.handleValueUpdated}}
       class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
       id="team_name_input"
       placeholder="Microsoft"
@@ -11,6 +13,8 @@
 
   <TeamPaymentPage::TeamDetailsForm::Section @title="Contact Email" @description="We'll use this to send you a team setup link.">
     <Input
+      @value={{@teamPaymentFlow.contactEmailAddress}}
+      {{on "blur" this.handleValueUpdated}}
       class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
       id="team_contact_email_input"
       placeholder="bill@microsoft.com"
@@ -39,10 +43,10 @@
   <div class="h-px bg-gray-100 my-6"></div>
 
   <div class="flex justify-end">
-    <PrimaryButton @isDisabled={{not @isComplete}} {{on "click" @onContinueButtonClick}}>
+    <PrimaryButtonWithSpinner @isDisabled={{not @isComplete}} @shouldShowSpinner={{@teamPaymentFlow.isSaving}} {{on "click" @onContinueButtonClick}}>
       Continue
 
       <EmberTooltip @text="Enter details above to continue" />
-    </PrimaryButton>
+    </PrimaryButtonWithSpinner>
   </div>
 </div>

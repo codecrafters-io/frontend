@@ -12,9 +12,13 @@
     />
 
     {{#if (eq this.currentStep 1)}}
-      <TeamPaymentPage::TeamDetailsForm @isComplete={{this.isStep1Complete}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+      <TeamPaymentPage::TeamDetailsForm
+        @teamPaymentFlow={{this.teamPaymentFlow}}
+        @isComplete={{this.isStep1Complete}}
+        @onContinueButtonClick={{this.handleContinueButtonClick}}
+      />
     {{else if (eq this.currentStep 2)}}
-      <TeamPaymentPage::BillingDetailsForm @onContinueButtonClick={{this.handleContinueButtonClick}} />
+      <TeamPaymentPage::BillingDetailsForm @teamPaymentFlow={{this.teamPaymentFlow}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
     {{/if}}
   </div>
 </div>

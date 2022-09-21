@@ -146,6 +146,9 @@ function routes() {
     return schema.teamPaymentMethodUpdateRequests.create({ url: 'https://test.com/team_payment_method_update_request' });
   });
 
+  this.post('/team-payment-flows');
+  this.patch('/team-payment-flows/:id');
+
   this.get('/track-leaderboard-entries', function (schema, request) {
     let result = schema.trackLeaderboardEntries.all();
 

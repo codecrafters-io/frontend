@@ -1,5 +1,6 @@
 <div class="flex items-center" ...attributes>
   <TeamPaymentPage::NavigationContainerItem
+    @previousStepsAreComplete={{true}}
     @isComplete={{includes 1 @completedSteps}}
     @isActive={{eq @currentStep 1}}
     @name="Team Details"
@@ -9,6 +10,7 @@
   <div class="h-0.5 w-40 {{if (includes 1 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
 
   <TeamPaymentPage::NavigationContainerItem
+    @previousStepsAreComplete={{includes 1 @completedSteps}}
     @isComplete={{includes 2 @completedSteps}}
     @isActive={{eq @currentStep 2}}
     @name="Billing"
@@ -18,7 +20,7 @@
   <div class="h-0.5 w-40 {{if (includes 2 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
 
   <TeamPaymentPage::NavigationContainerItem
-    @isComplete={{includes 3 @completedSteps}}
+    @previousStepsAreComplete={{and (includes 1 @completedSteps) (includes 2 @completedSteps)}}
     @isActive={{eq @currentStep 3}}
     @name="Review"
     {{on "click" (fn @onNavigationItemClick 3)}}

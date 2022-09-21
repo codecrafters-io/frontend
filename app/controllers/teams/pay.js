@@ -5,14 +5,29 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import { tracked } from '@glimmer/tracking';
 
 export default class TeamsPayController extends Controller {
+  @service store;
+
   @tracked currentStep = 1;
+  @tracked teamPaymentFlow;
+
+  constructor() {
+    super(...arguments);
+    this.teamPaymentFlow = this.store.createRecord('team-payment-flow', { pricingPlan: 'per_seat', numberOfSeats: 10 });
+  }
 
   get completedSteps() {
     return [this.isStep1Complete ? 1 : null, this.isStep2Complete ? 2 : null, this.isStep3Complete ? 3 : null].compact();
   }
 
   get isStep1Complete() {
-    return false;
+    return (
+      this.teamPaymentFlow.teamNameIsComplete &&
+      this.teamPaymentFlow.contactEmailAddressIsComplete &&
+      this.teamPaymentFlow.pricingPlanIsComplete &&
+      this.teamPaymentFlow.numberOfSeatsIsComplete &&
+      !this.teamPaymentFlow.isSaving &&
+      !this.teamPaymentFlow.hasDirtyAttributes
+    );
   }
 
   get isStep2Complete() {

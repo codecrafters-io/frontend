@@ -8,7 +8,7 @@ import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
 
-module('Acceptance | pay-test', function (hooks) {
+module('Acceptance | team-payment-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
@@ -16,6 +16,7 @@ module('Acceptance | pay-test', function (hooks) {
 
   test('user can setup team', async function (assert) {
     testScenario(this.server);
+    this.server.timing = 1000;
 
     await teamPaymentPage.visit();
     await this.pauseTest();
