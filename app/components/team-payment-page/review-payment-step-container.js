@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { loadStripe } from '@stripe/stripe-js';
 import { inject as service } from '@ember/service';
 
 export default class ReviewPaymentStepContainer extends Component {

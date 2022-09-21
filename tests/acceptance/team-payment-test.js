@@ -1,14 +1,10 @@
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import teamPaymentPage from 'codecrafters-frontend/tests/pages/team-payment-page';
-import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import window from 'ember-window-mock';
-import { clearRender } from '@ember/test-helpers';
 
 module('Acceptance | team-payment-test', function (hooks) {
   setupApplicationTest(hooks);

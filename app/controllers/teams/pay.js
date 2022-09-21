@@ -1,7 +1,6 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { loadStripe } from '@stripe/stripe-js';
 import { tracked } from '@glimmer/tracking';
 
