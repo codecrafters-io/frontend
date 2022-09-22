@@ -1,7 +1,10 @@
 <div
   role="button"
-  class="border border-gray-200 hover:border-gray-300 hover:bg-gray-200 rounded-full text-4xl w-12 h-12 flex items-center justify-center"
+  class="group border border-gray-200 hover:border-gray-300 hover:bg-gray-200 rounded-full text-4xl w-12 h-12 flex items-center justify-center
+    {{if @isSelected 'bg-gray-300 border-gray-400'}}"
   ...attributes
 >
-  {{@emoji}}
+  <span class="transform {{if @isSelected 'scale-105' 'scale-100'}} group-hover:scale-105 transition-all duration-75">
+    {{@emoji}}
+  </span>
 </div>
