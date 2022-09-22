@@ -47,6 +47,14 @@ export default class FeedbackPromptComponent extends Component {
     );
   }
 
+  get explanationTextareaPlaceholder() {
+    if (['😍', '😃'].includes(this.feedbackSubmission.selectedAnswer)) {
+      return `Tell us more!`;
+    } else {
+      return `What could be better?`;
+    }
+  }
+
   @action
   handleAnswerOptionSelected(answerOption) {
     this.feedbackSubmission.selectedAnswer = answerOption;
