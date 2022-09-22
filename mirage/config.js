@@ -39,6 +39,9 @@ function routes() {
   this.post('/course-idea-votes');
   this.post('/course-idea-supervotes');
 
+  this.post('/course-stage-feedback-submissions');
+  this.patch('/course-stage-feedback-submissions/:id');
+
   this.patch('/feature-suggestions/:id');
 
   this.post('/individual-checkout-sessions', function (schema) {

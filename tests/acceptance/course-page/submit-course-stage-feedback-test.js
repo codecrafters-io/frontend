@@ -42,9 +42,6 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
 
     await animationsSettled();
-
-    // TODO: Feedback form should be present
-    // await this.pauseTest();
   });
 
   test('is not prompted for course stage feedback again if closed', async function (assert) {
