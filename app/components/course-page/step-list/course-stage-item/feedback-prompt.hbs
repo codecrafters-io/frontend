@@ -20,6 +20,7 @@
 
     <AnimatedContainer>
       {{#if this.feedbackSubmission.hasSelectedAnswer}}
+        {{! template-lint-disable require-input-label }}
         <Textarea
           @value={{this.feedbackSubmission.explanation}}
           class="mt-4 border border-gray-200 rounded w-full p-4 placeholder-gray-300"
