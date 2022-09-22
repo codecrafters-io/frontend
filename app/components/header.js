@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default class HeaderComponent extends Component {
   @service('current-user') currentUserService;
+  @service('router') router;
   @tracked mobileMenuIsExpanded = false;
 
   get currentUser() {
@@ -26,6 +27,18 @@ export default class HeaderComponent extends Component {
         window.clarity('identify', username);
       }
     }
+
+    this.router.on('routeWillChange', this.handleRouteChange);
+  }
+
+  @action
+  handleWillDestroy() {
+    this.router.off('routeWillChange', this.handleRouteChange);
+  }
+
+  @action
+  handleRouteChange() {
+    this.mobileMenuIsExpanded = false;
   }
 
   @action
