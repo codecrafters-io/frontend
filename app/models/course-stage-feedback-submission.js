@@ -1,4 +1,5 @@
 import { attr, belongsTo } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 
 export default class CourseStageFeedbackSubmissionModel extends Model {
@@ -9,4 +10,9 @@ export default class CourseStageFeedbackSubmissionModel extends Model {
 
   @attr('string') selectedAnswer;
   @attr('string') explanation;
+  @attr('string') status; // open, closed, reopened
+
+  @equal('status', 'closed') statusIsClosed;
+  @equal('status', 'open') statusIsOpen;
+  @equal('status', 'reopened') statusIsReopened;
 }

@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import RSVP from 'rsvp';
 
 export default class CoursesRoute extends ApplicationRoute {
@@ -13,7 +14,7 @@ export default class CoursesRoute extends ApplicationRoute {
     if (this.currentUser.isAuthenticated) {
       modelPromises.repositories = this.store.findAll('repository', {
         reload: false,
-        include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
+        include: RepositoryPoller.defaultIncludedResources,
       });
     }
 

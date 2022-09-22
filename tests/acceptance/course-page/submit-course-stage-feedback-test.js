@@ -41,6 +41,8 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
 
+    await animationsSettled();
+
     // TODO: Feedback form should be present
     // await this.pauseTest();
   });
@@ -64,24 +66,21 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
     });
 
-    // this.server.create('course-stage-feedback-submission', {
-    //   repository: repository,
-    //   courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
-    //   language: go,
-    //   user: currentUser,
-    //   status: 'closed',
-    // });
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      language: go,
+      user: currentUser,
+      status: 'closed',
+    });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    await this.pauseTest();
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd stage is active');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is git push listener');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
-
-    // TODO: Feedback form should be present
-    // await this.pauseTest();
+    await animationsSettled();
   });
 
   // Is shown next stage after feedback is submitted

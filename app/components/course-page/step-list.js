@@ -41,8 +41,18 @@ export default class CoursePageContentStepListComponent extends Component {
   computeActiveIndex() {
     if (!this.repository.firstSubmissionCreated) {
       return 0;
-    } else if (this.repository.highestCompletedStage && this.repository.highestCompletedStage.get('id')) {
-      return this.repository.highestCompletedStage.get('position') + 1;
+    }
+
+    let highestCompletedStage = this.repository.highestCompletedStage;
+
+    if (highestCompletedStage) {
+      let courseStageFeedbackSubmission = this.repository.courseStageFeedbackSubmissionFor(highestCompletedStage);
+
+      if (highestCompletedStage.isFirst || (courseStageFeedbackSubmission && courseStageFeedbackSubmission.statusIsClosed)) {
+        return this.repository.highestCompletedStage.position + 1;
+      } else {
+        return this.repository.highestCompletedStage.position;
+      }
     } else {
       return 1;
     }

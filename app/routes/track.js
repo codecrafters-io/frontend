@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 
 export default class TrackRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
@@ -18,7 +19,7 @@ export default class TrackRoute extends ApplicationRoute {
 
     if (this.currentUser.isAuthenticated) {
       await this.store.findAll('repository', {
-        include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
+        include: RepositoryPoller.defaultIncludedResources,
       });
     }
 
