@@ -21,14 +21,36 @@ export default class FeedbackPromptComponent extends Component {
     }
   }
 
+  get answerOptions() {
+    return ['😍', '😃', '😐', '😕', '😭'];
+  }
+
+  get congratulatoryMessage() {
+    if (this.args.courseStage.isLast) {
+      return 'You did it!';
+    } else if (this.args.courseStage.isPenultimate) {
+      return 'Just one more to go!';
+    }
+
+    return (
+      {
+        1: 'Congrats!',
+        2: 'Nice work!',
+        3: 'Great streak!',
+        4: 'Keep it up!',
+        5: 'Incredible!',
+        6: 'Yay!',
+        7: 'Good pace!',
+        8: 'Nicely done!',
+        9: 'Woot!',
+      }[this.args.courseStage.position] || 'Nice work!'
+    );
+  }
+
   @action
   handleAnswerOptionSelected(answerOption) {
     this.feedbackSubmission.selectedAnswer = answerOption;
     this.feedbackSubmission.save();
-  }
-
-  get answerOptions() {
-    return ['😍', '😃', '😐', '😕', '😭'];
   }
 
   get feedbackSubmission() {
