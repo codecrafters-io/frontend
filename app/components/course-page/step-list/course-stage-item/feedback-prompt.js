@@ -1,4 +1,5 @@
 import { inject as service } from '@ember/service';
+import { later } from '@ember/runloop';
 import { next } from '@ember/runloop';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
@@ -73,7 +74,15 @@ export default class FeedbackPromptComponent extends Component {
   @action
   handleSubmitButtonClick() {
     this.feedbackSubmission.status = 'closed';
-    this.feedbackSubmission.save();
     this.args.onViewNextStageButtonClick();
+
+    // Wait for animation to complete
+    later(
+      this,
+      () => {
+        this.feedbackSubmission.save();
+      },
+      500
+    );
   }
 }
