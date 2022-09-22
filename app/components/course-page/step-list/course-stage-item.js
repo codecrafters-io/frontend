@@ -107,10 +107,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.shouldShowUpgradePromptIfStageIsActive && this.isActiveStage;
   }
 
-  get shouldShowPostCompletionPrompt() {
-    return this.statusIsComplete && new CourseStageItem(this.args.repository, this.args.courseStage).shouldShowPostCompletionPrompt;
-  }
-
   get solutionIsAvailableInAnyLanguage() {
     return !!this.args.courseStage.solutions.firstObject;
   }
