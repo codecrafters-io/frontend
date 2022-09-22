@@ -15,4 +15,8 @@ export default class CourseStageFeedbackSubmissionModel extends Model {
   @equal('status', 'closed') statusIsClosed;
   @equal('status', 'open') statusIsOpen;
   @equal('status', 'reopened') statusIsReopened;
+
+  get hasSelectedAnswer() {
+    return !!this.selectedAnswer;
+  }
 }
