@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
 import { SetupItem, CourseStageItem, CourseCompletedItem } from 'codecrafters-frontend/lib/step-list';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import fade from 'ember-animated/transitions/fade';
@@ -68,8 +69,9 @@ export default class CoursePageContentStepListComponent extends Component {
   async handleCollapsedSetupItemClick() {
     if (this.activeItemIndex === 0) {
       this.selectedItemIndex = null;
+      this.scrollToExpandedItem();
     } else {
-      this.selectedItemIndex = 0;
+      this.updateSelectedItemIndex(0);
     }
   }
 
@@ -77,8 +79,9 @@ export default class CoursePageContentStepListComponent extends Component {
   async handleCollapsedStageItemClick(itemIndex) {
     if (itemIndex === this.activeItemIndex) {
       this.selectedItemIndex = null;
+      this.scrollToExpandedItem();
     } else {
-      this.selectedItemIndex = itemIndex;
+      this.updateSelectedItemIndex(itemIndex);
     }
   }
 
@@ -86,19 +89,21 @@ export default class CoursePageContentStepListComponent extends Component {
   async handleCollapsedCourseCompletedItemClick() {
     if (this.activeItemIndex === this.items.length - 1) {
       this.selectedItemIndex = null;
+      this.scrollToExpandedItem();
     } else {
-      this.selectedItemIndex = this.items.length - 1;
+      this.updateSelectedItemIndex(this.items.length - 1);
     }
   }
 
   @action
-  async handleDidInsert() {
+  async handleDidInsert(element) {
+    this.stepListElement = element;
     this.startRepositoryPoller();
   }
 
   @action
   async handleDidInsertPolledRepositoryMismatchLoader() {
-    this.activeItemIndex = this.computeActiveIndex();
+    this.updateActiveItemIndex(this.computeActiveIndex());
     this.startRepositoryPoller();
   }
 
@@ -124,7 +129,7 @@ export default class CoursePageContentStepListComponent extends Component {
       this,
       () => {
         this.activeItemWillBeReplaced = false;
-        this.activeItemIndex = newActiveItemIndex;
+        this.updateActiveItemIndex(newActiveItemIndex);
       },
       2000
     );
@@ -133,7 +138,7 @@ export default class CoursePageContentStepListComponent extends Component {
   @action
   async handleViewNextStageButtonClick() {
     this.selectedItemIndex = null;
-    this.activeItemIndex = this.computeActiveIndex();
+    this.updateActiveItemIndex(this.computeActiveIndex());
   }
 
   @action
@@ -151,6 +156,13 @@ export default class CoursePageContentStepListComponent extends Component {
 
   get repository() {
     return this.args.repository;
+  }
+
+  scrollToExpandedItem() {
+    next(() => {
+      const expandedItem = this.stepListElement.querySelector('[data-test-expanded-item]');
+      expandedItem.scrollIntoView({ behavior: 'smooth' });
+    });
   }
 
   get shouldSuppressUpgradePrompts() {
@@ -177,5 +189,29 @@ export default class CoursePageContentStepListComponent extends Component {
     }
 
     this.polledRepository = null;
+  }
+
+  updateActiveItemIndex(newActiveItemIndex) {
+    if (newActiveItemIndex === this.activeItemIndex) {
+      return;
+    }
+
+    this.activeItemIndex = newActiveItemIndex;
+
+    if (this.activeItemIndex === this.expandedItemIndex) {
+      this.scrollToExpandedItem();
+    }
+  }
+
+  updateSelectedItemIndex(newSelectedItemIndex) {
+    if (newSelectedItemIndex === this.selectedItemIndex) {
+      return;
+    }
+
+    this.selectedItemIndex = newSelectedItemIndex;
+
+    if (this.selectedItemIndex === this.expandedItemIndex) {
+      this.scrollToExpandedItem();
+    }
   }
 }
