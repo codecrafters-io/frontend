@@ -42,12 +42,10 @@
           @repository={{@repository}}
           class="mt-6"
         />
-      {{else if this.shouldShowPostCompletionPrompt}}
-        <CoursePage::StepList::CourseStageItem::PostCompletionPrompt
+      {{else if this.shouldShowFeedbackPrompt}}
+        <CoursePage::StepList::CourseStageItem::FeedbackPrompt
           @courseStage={{@courseStage}}
           @repository={{@repository}}
-          @onViewSourceWalkthroughButtonClick={{fn @onViewSourceWalkthroughButtonClick @courseStage}}
-          @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
           @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
           class="mt-6"
         />

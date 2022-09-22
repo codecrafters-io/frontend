@@ -1,6 +1,5 @@
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
-import { CourseStageItem } from 'codecrafters-frontend/lib/step-list';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
@@ -103,12 +102,16 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.args.courseStage.isFirst && !this.statusIsComplete;
   }
 
-  get shouldShowUpgradePrompt() {
-    return this.args.shouldShowUpgradePromptIfStageIsActive && this.isActiveStage;
+  get shouldShowFeedbackPrompt() {
+    return (
+      this.args.shouldShowFeedbackPromptIfStageIsComplete &&
+      this.args.repository.highestCompletedStage === this.args.courseStage &&
+      !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
+    );
   }
 
-  get shouldShowPostCompletionPrompt() {
-    return this.statusIsComplete && new CourseStageItem(this.args.repository, this.args.courseStage).shouldShowPostCompletionPrompt;
+  get shouldShowUpgradePrompt() {
+    return this.args.shouldShowUpgradePromptIfStageIsActive && this.isActiveStage;
   }
 
   get solutionIsAvailableInAnyLanguage() {

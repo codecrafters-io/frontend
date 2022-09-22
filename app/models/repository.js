@@ -2,16 +2,18 @@ import Model from '@ember-data/model';
 import { attr, belongsTo, hasMany } from '@ember-data/model';
 
 export default class RepositoryModel extends Model {
-  @attr('string') cloneUrl;
   @belongsTo('course', { async: false }) course;
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
-  @attr('date') createdAt;
+  @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;
   @belongsTo('user', { async: false }) user;
   @belongsTo('language', { async: false }) language;
   @belongsTo('submission', { async: false, inverse: null }) lastSubmission;
+  @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
+
+  @attr('string') cloneUrl;
+  @attr('date') createdAt;
   @attr('string') name;
   @attr('string') starterRepositoryUrl;
-  @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
   get cloneDirectory() {
     return `codecrafters-${this.course.slug}-${this.language.slug}`;
@@ -25,12 +27,20 @@ export default class RepositoryModel extends Model {
     }
   }
 
+  courseStageFeedbackSubmissionFor(courseStage) {
+    return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
+  }
+
   get defaultStarterRepositoryUrl() {
     return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.betaOrLiveLanguages.firstObject.slug}`;
   }
 
   get firstSubmissionCreated() {
     return !!this.lastSubmission;
+  }
+
+  hasClosedCourseStageFeedbackSubmissionFor(courseStage) {
+    return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
   get isRecentlyCreated() {

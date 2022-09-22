@@ -76,6 +76,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       completedAt: new Date(new Date().getTime() - 10000), // today
     });
 
+    this.server.create('course-stage-feedback-submission', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      status: 'closed',
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
@@ -133,6 +139,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     this.server.create('course-stage-completion', {
       repository: repository,
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
     });
 
     await coursesPage.visit();

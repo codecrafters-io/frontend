@@ -37,6 +37,10 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedStages.lastObject;
   }
 
+  get isPenultimate() {
+    return this === this.course.sortedStages[this.course.sortedStages.length - 2];
+  }
+
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
   }
