@@ -3,8 +3,9 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -56,8 +57,10 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await animationsSettled();
 
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
+    await percySnapshot('Course Stage Feedback Prompt - No Selection');
 
     await coursePage.activeCourseStageItem.feedbackPrompt.clickOnOption('😍');
+    await percySnapshot('Course Stage Feedback Prompt - With Selection');
 
     assert.strictEqual(
       coursePage.activeCourseStageItem.feedbackPrompt.explanationTextareaPlaceholder,
