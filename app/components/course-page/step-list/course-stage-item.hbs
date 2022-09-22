@@ -43,7 +43,12 @@
           class="mt-6"
         />
       {{else if this.shouldShowFeedbackPrompt}}
-        <CoursePage::StepList::CourseStageItem::FeedbackPrompt @courseStage={{@courseStage}} @repository={{@repository}} class="mt-6" />
+        <CoursePage::StepList::CourseStageItem::FeedbackPrompt
+          @courseStage={{@courseStage}}
+          @repository={{@repository}}
+          @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
+          class="mt-6"
+        />
       {{/animated-if}}
     </AnimatedContainer>
 

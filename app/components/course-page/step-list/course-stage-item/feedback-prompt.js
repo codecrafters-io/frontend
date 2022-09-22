@@ -34,4 +34,16 @@ export default class FeedbackPromptComponent extends Component {
   get feedbackSubmission() {
     return this.args.repository.courseStageFeedbackSubmissionFor(this.args.courseStage);
   }
+
+  @action
+  handleExplanationTextareaBlur() {
+    this.feedbackSubmission.save();
+  }
+
+  @action
+  handleSubmitButtonClick() {
+    this.feedbackSubmission.status = 'closed';
+    this.feedbackSubmission.save();
+    this.args.onViewNextStageButtonClick();
+  }
 }
