@@ -35,6 +35,12 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
       });
     }
 
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[redis.stages.models.length - 1],
+      status: 'closed',
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 

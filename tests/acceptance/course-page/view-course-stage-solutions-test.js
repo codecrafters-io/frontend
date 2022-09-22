@@ -110,6 +110,12 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       completedAt: new Date(new Date().getTime() - 10000), // today
     });
 
+    this.server.create('course-stage-feedback-submission', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      status: 'closed',
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
@@ -136,7 +142,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should be closed');
   });
 
-  test('attempting to view solutions for stage 4+ should redirect to /pay if user signed up on/after 17 Jun', async function (assert) {
+  test('attempting to view solutions for stage 4+ should redirect to /pay if user is not a subscriber', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -159,6 +165,12 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     this.server.create('course-stage-completion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position').toArray()[2],
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
     });
 
     await coursesPage.visit();
@@ -207,6 +219,12 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       courseStage: redis.stages.models.sortBy('position').toArray()[2],
     });
 
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
@@ -250,6 +268,12 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     this.server.create('course-stage-completion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position').toArray()[2],
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
     });
 
     await coursesPage.visit();

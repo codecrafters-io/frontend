@@ -43,6 +43,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd is expanded');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
+    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
@@ -51,7 +52,31 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
     assert.notOk(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
 
+    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
     await animationsSettled();
+
+    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
+
+    await coursePage.activeCourseStageItem.feedbackPrompt.clickOnOption('😍');
+
+    assert.strictEqual(
+      coursePage.activeCourseStageItem.feedbackPrompt.explanationTextareaPlaceholder,
+      'Tell us more!',
+      'explanation textarea placeholder is correct'
+    );
+
+    await coursePage.activeCourseStageItem.feedbackPrompt.clickOnOption('😭');
+
+    assert.strictEqual(
+      coursePage.activeCourseStageItem.feedbackPrompt.explanationTextareaPlaceholder,
+      'What could be better?',
+      'explanation textarea placeholder is correct'
+    );
+
+    await coursePage.activeCourseStageItem.feedbackPrompt.clickOnSubmitButton();
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', 'Next stage is expanded');
   });
 
   test('is shown different prompts based on stage number', async function (assert) {
@@ -149,6 +174,4 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     await animationsSettled();
   });
-
-  // Is shown next stage after feedback is submitted
 });
