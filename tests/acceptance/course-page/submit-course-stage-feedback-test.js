@@ -33,11 +33,24 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
     });
 
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2], // Stage #3
+    });
+
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd is expanded');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
+    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
+    assert.notOk(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
 
     await animationsSettled();
   });

@@ -39,6 +39,10 @@ export default class RepositoryModel extends Model {
     return !!this.lastSubmission;
   }
 
+  hasClosedCourseStageFeedbackSubmissionFor(courseStage) {
+    return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
+  }
+
   get isRecentlyCreated() {
     return new Date() - this.createdAt <= 1800 * 1000; // 30min
   }

@@ -3,6 +3,7 @@ import { clickable, clickOnText, hasClass, isPresent, text } from 'ember-cli-pag
 export default {
   clickOnActionButton: clickOnText('[data-test-action-button]'),
   footerText: text('[data-test-course-stage-item-footer] [data-test-footer-text]'),
+  hasFeedbackPrompt: isPresent('[data-test-feedback-prompt]'),
   hasUpgradePrompt: isPresent('[data-test-upgrade-prompt]'),
   scope: '[data-test-course-stage-item]',
 

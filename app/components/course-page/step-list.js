@@ -46,9 +46,7 @@ export default class CoursePageContentStepListComponent extends Component {
     let highestCompletedStage = this.repository.highestCompletedStage;
 
     if (highestCompletedStage) {
-      let courseStageFeedbackSubmission = this.repository.courseStageFeedbackSubmissionFor(highestCompletedStage);
-
-      if (highestCompletedStage.isFirst || (courseStageFeedbackSubmission && courseStageFeedbackSubmission.statusIsClosed)) {
+      if (highestCompletedStage.isFirst || this.repository.hasClosedCourseStageFeedbackSubmissionFor(highestCompletedStage)) {
         return this.repository.highestCompletedStage.position + 1;
       } else {
         return this.repository.highestCompletedStage.position;

@@ -105,8 +105,8 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   get shouldShowFeedbackPrompt() {
     return (
       this.args.shouldShowFeedbackPromptIfStageIsComplete &&
-      this.statusIsComplete &&
-      !(this.args.repository.courseStageFeedbackSubmissionFor(this.args.courseStage) || {}).statusIsClosed
+      this.args.repository.highestCompletedStage === this.args.courseStage &&
+      !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
     );
   }
 
