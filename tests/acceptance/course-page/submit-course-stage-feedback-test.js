@@ -38,15 +38,50 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    // await this.pauseTest();
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
 
-    // assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
-    // assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
-    //
-    // await this.clock.tick(2001); // Wait for poll
-    // await animationsSettled();
-    //
-    // assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage passed');
+    // TODO: Feedback form should be present
+    // await this.pauseTest();
+  });
+
+  test('is not prompted for course stage feedback again if closed', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+    });
+
+    // this.server.create('course-stage-feedback-submission', {
+    //   repository: repository,
+    //   courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+    //   language: go,
+    //   user: currentUser,
+    //   status: 'closed',
+    // });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    await this.pauseTest();
+
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
+
+    // TODO: Feedback form should be present
+    // await this.pauseTest();
   });
 
   // Is shown next stage after feedback is submitted
