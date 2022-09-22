@@ -12,13 +12,14 @@ export default class ReviewPaymentStepContainer extends Component {
   async handleContinueButtonClick() {
     this.errorMessage = null;
     this.isAttemptingPayment = true;
+
     let response = await this.args.teamPaymentFlow.attemptPayment();
     this.isAttemptingPayment = false;
 
     if (response.error) {
       this.errorMessage = response.error;
     } else {
-      console.log('handle success');
+      this.store.pushPayload(response);
     }
   }
 }

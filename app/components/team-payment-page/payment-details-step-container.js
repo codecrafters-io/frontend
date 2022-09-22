@@ -2,34 +2,56 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { loadStripe } from '@stripe/stripe-js';
+import { inject as service } from '@ember/service';
 
 export default class BillingDetailsFormComponent extends Component {
+  @service serverVariables;
+
   @tracked errorMessage;
   @tracked stripeElementsObject;
+  @tracked isConfirmingPaymentDetails = false;
 
   @action
-  async handleContinueButtonClick() {
-    if (this.args.teamPaymentFlow.paymentDetailsAreComplete) {
-      this.args.onContinueButtonClick();
-    }
-
-    // TODO: Handle changing card details?
-    this.errorMessage = null;
-
-    const stripe = await loadStripe('pk_test_51L1aPXJtewx3LJ9VgIiwpt4RL9FX2Yr7RgJCMMpviFmFc4Zrwt2s6lvH8QFMT88exOUvQWh13Thc7oBMVrMlQKwX00qbz9xH2A');
-    const { error } = stripe.confirmSetup({ elements: this.stripeElementsObject, confirmParams: { return_url: window.location.href } });
-
-    if (error) {
-      this.errorMessage = error.message;
-    } else {
-      // Stripe redirect...
+  async handleChangePaymentMethodButtonClick() {
+    if (window.confirm(`You'll need to enter payment details again. Are you sure?`)) {
+      this.isConfirmingPaymentDetails = true; // Piggybacking on this flag to disable the button
+      await this.args.teamPaymentFlow.resetPaymentDetails();
+      this.isConfirmingPaymentDetails = false;
     }
   }
 
   @action
-  async handleDidInsert() {
-    const stripe = await loadStripe('pk_test_51L1aPXJtewx3LJ9VgIiwpt4RL9FX2Yr7RgJCMMpviFmFc4Zrwt2s6lvH8QFMT88exOUvQWh13Thc7oBMVrMlQKwX00qbz9xH2A');
-    const options = { clientSecret: 'seti_1LkDjsJtewx3LJ9V5vMLKYvy_secret_MTA4UY0SCrPjuUbREEC85GXWKrvEZTq' };
+  async handleContinueButtonClick() {
+    if (this.isConfirmingPaymentDetails) {
+      return;
+    }
+
+    if (this.args.teamPaymentFlow.paymentDetailsAreComplete) {
+      this.args.onContinueButtonClick();
+    }
+
+    this.isConfirmingPaymentDetails = true;
+    this.errorMessage = null;
+
+    const stripe = await this.stripeLib();
+
+    const confirmSetupResult = await stripe.confirmSetup({
+      elements: this.stripeElementsObject,
+      confirmParams: { return_url: window.location.href },
+    });
+
+    if (confirmSetupResult.error) {
+      this.errorMessage = confirmSetupResult.error.message;
+      this.isConfirmingPaymentDetails = false;
+    } else {
+      // Redirecting to Stripe
+    }
+  }
+
+  @action
+  async handleDidInsertPaymentForm() {
+    const stripe = await this.stripeLib();
+    const options = { clientSecret: this.args.teamPaymentFlow.stripeSetupIntentClientSecret };
 
     // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 2
     this.stripeElementsObject = stripe.elements(options);
@@ -37,5 +59,12 @@ export default class BillingDetailsFormComponent extends Component {
     // Create and mount the Payment Element
     const paymentElement = this.stripeElementsObject.create('payment');
     paymentElement.mount('#payment-element');
+  }
+
+  // We need the same shared instance for form errors to work properly
+  async stripeLib() {
+    this.stripeLibObject ||= await loadStripe(this.serverVariables.get('stripePublishableKey'));
+
+    return this.stripeLibObject;
   }
 }

@@ -1,7 +1,6 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { loadStripe } from '@stripe/stripe-js';
 import { tracked } from '@glimmer/tracking';
 
 export default class TeamsPayController extends Controller {
@@ -11,13 +10,6 @@ export default class TeamsPayController extends Controller {
 
   @tracked currentStep;
   @tracked teamPaymentFlowId;
-
-  constructor() {
-    super(...arguments);
-
-    // Trigger stripe loading as soon as page loads
-    loadStripe('pk_test_51L1aPXJtewx3LJ9VgIiwpt4RL9FX2Yr7RgJCMMpviFmFc4Zrwt2s6lvH8QFMT88exOUvQWh13Thc7oBMVrMlQKwX00qbz9xH2A');
-  }
 
   get initialStep() {
     if (this.isStep1Complete && this.isStep2Complete) {

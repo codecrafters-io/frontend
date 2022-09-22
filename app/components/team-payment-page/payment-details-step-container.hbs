@@ -1,9 +1,22 @@
-<TeamPaymentPage::StepContainer @title="Payment Details" data-test-payment-details-step-container {{did-insert this.handleDidInsert}}>
-  <form id="payment-form">
-    <div id="payment-element">
-      {{! Elements will create form elements here }}
+<TeamPaymentPage::StepContainer @title="Payment Details" data-test-payment-details-step-container>
+  {{#if @teamPaymentFlow.paymentDetailsAreComplete}}
+    <div class="p-8 flex flex-col items-center justify-center">
+      {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
+      <div class="text-gray-600 text-center mb-6">
+        Your payment details have been saved.
+      </div>
+
+      <SecondaryButton @size="small" {{on "click" this.handleChangePaymentMethodButtonClick}} data-test-change-payment-method-button>
+        Change Payment Method
+      </SecondaryButton>
     </div>
-  </form>
+  {{else}}
+    <form id="payment-form" {{did-insert this.handleDidInsertPaymentForm}}>
+      <div id="payment-element">
+        {{! Elements will create form elements here }}
+      </div>
+    </form>
+  {{/if}}
 
   <div class="h-px bg-gray-100 my-6"></div>
 
@@ -18,8 +31,12 @@
       </div>
     {{/if}}
 
-    <PrimaryButton {{on "click" this.handleContinueButtonClick}}>
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.isConfirmingPaymentDetails}}
+      @shouldShowSpinner={{this.isConfirmingPaymentDetails}}
+      {{on "click" this.handleContinueButtonClick}}
+    >
       Continue
-    </PrimaryButton>
+    </PrimaryButtonWithSpinner>
   </div>
 </TeamPaymentPage::StepContainer>

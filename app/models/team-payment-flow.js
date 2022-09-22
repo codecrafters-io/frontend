@@ -7,10 +7,10 @@ export default class TeamPaymentFlowModel extends Model {
   @attr('string') contactEmailAddress;
   @attr('string') pricingPlanType; // per_seat, per_user
   @attr('number') numberOfSeats;
-  @attr('string') stripePublishableKey;
   @attr('string') stripeSetupIntentClientSecret;
   @attr('string') stripeSetupIntentId;
   @attr('string') stripeSetupIntentStatus;
+  @attr('string') teamSetupUrl;
 
   get contactEmailAddressIsComplete() {
     return this.contactEmailAddress && this.contactEmailAddress.trim().length > 0;
@@ -39,5 +39,14 @@ TeamPaymentFlowModel.prototype.attemptPayment = memberAction({
 
   after(response) {
     return response;
+  },
+});
+
+TeamPaymentFlowModel.prototype.resetPaymentDetails = memberAction({
+  path: 'reset-payment-details',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
   },
 });

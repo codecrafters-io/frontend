@@ -1,8 +1,10 @@
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import { loadStripe } from '@stripe/stripe-js';
 import { inject as service } from '@ember/service';
 
 export default class TeamsPayRoute extends ApplicationRoute {
   @service store;
+  @service serverVariables;
 
   allowsAnonymousAccess = true;
 
@@ -18,5 +20,8 @@ export default class TeamsPayRoute extends ApplicationRoute {
     super.setupController(controller, model);
 
     controller.currentStep = controller.initialStep;
+
+    // Trigger stripe loading as soon as page loads
+    loadStripe(this.serverVariables.get('stripePublishableKey'));
   }
 }
