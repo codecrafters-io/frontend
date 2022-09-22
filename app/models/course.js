@@ -22,6 +22,7 @@ export default class CourseModel extends Model {
 
   @equal('slug', 'docker') isDocker;
   @equal('slug', 'git') isGit;
+  @equal('slug', 'grep') isGrep;
   @equal('slug', 'react') isReact;
   @equal('slug', 'redis') isRedis;
   @equal('slug', 'sqlite') isSQLite;
@@ -86,6 +87,9 @@ unique exercise in making network requests with ${language.name}.`;
       return `
 Learn about B-Trees, the foundation of every relational database. Explore ${language.name}'s API for reading/writing
 files, and handling custom file formats.`;
+    } else if (this.isGrep) {
+      return `
+      Learn about regular expressions and how they're evaluated. Implement your own version of \`grep\` in ${language.name}.`;
     }
   }
 
