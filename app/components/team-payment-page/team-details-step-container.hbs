@@ -47,7 +47,14 @@
     <div class="h-px bg-gray-100 my-6"></div>
 
     <TeamPaymentPage::TeamDetailsForm::Section @title="Number of Seats" @description="You can add more users anytime.">
-      10
+      <Input
+        @type="number"
+        min="5"
+        size="5"
+        @value={{@teamPaymentFlow.numberOfSeats}}
+        class="number-input-with-no-controls text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border text-center w-16"
+        {{on "change" this.handleValueUpdated}}
+      />
     </TeamPaymentPage::TeamDetailsForm::Section>
 
     <div class="h-px bg-gray-100 my-6"></div>

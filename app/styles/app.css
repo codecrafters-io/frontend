@@ -88,3 +88,13 @@
   margin-top: 1em !important;
 }
 /* purgecss end ignore */
+
+.number-input-with-no-controls::-webkit-outer-spin-button,
+.number-input-with-no-controls::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input-with-no-controls {
+  -moz-appearance: textfield;
+}
