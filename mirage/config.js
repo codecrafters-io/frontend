@@ -150,8 +150,8 @@ function routes() {
   this.get('/team-payment-flows/:id');
   this.patch('/team-payment-flows/:id');
 
-  this.get('/team-payment-flows/:id/first-invoice-preview', function (schema) {
-    const teamPaymentFlow = schema.teamPaymentFlows.find(this.params.id);
+  this.get('/team-payment-flows/:id/first-invoice-preview', function (schema, request) {
+    const teamPaymentFlow = schema.teamPaymentFlows.find(request.params.id);
     const amount = teamPaymentFlow.numberOfSeats * 79000;
 
     return schema.invoices.create({
