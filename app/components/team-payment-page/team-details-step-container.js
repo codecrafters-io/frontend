@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { debounce } from '@ember/runloop';
 
 export default class TeamDetailsFormComponent extends Component {
   formElement;
@@ -10,7 +11,9 @@ export default class TeamDetailsFormComponent extends Component {
   }
 
   @action
-  async handleDecrementSeatsButtonClick() {
+  async handleDecrementSeatsButtonClick(event) {
+    event.preventDefault();
+
     if (this.args.teamPaymentFlow.numberOfSeats > 5) {
       this.args.teamPaymentFlow.numberOfSeats--;
       await this.handleValueUpdated();
@@ -18,7 +21,14 @@ export default class TeamDetailsFormComponent extends Component {
   }
 
   @action
-  async handleIncrementSeatsButtonClick() {
+  async suppressEvent(event) {
+    event.preventDefault();
+  }
+
+  @action
+  async handleIncrementSeatsButtonClick(event) {
+    event.preventDefault();
+
     this.args.teamPaymentFlow.numberOfSeats++;
     await this.handleValueUpdated();
   }
@@ -38,7 +48,11 @@ export default class TeamDetailsFormComponent extends Component {
   @action
   async handleValueUpdated() {
     if (this.formElement.checkValidity()) {
-      this.args.teamPaymentFlow.save();
+      debounce(this, this.saveTeamPaymentFlow, 500);
     }
+  }
+
+  async saveTeamPaymentFlow() {
+    this.args.teamPaymentFlow.save();
   }
 }
