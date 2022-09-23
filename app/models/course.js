@@ -89,7 +89,7 @@ Learn about B-Trees, the foundation of every relational database. Explore ${lang
 files, and handling custom file formats.`;
     } else if (this.isGrep) {
       return `
-      Learn about regular expressions and how they're evaluated. Implement your own version of \`grep\` in ${language.name}.`;
+Learn about regular expressions and how they're evaluated. Implement your own version of \`grep\` in ${language.name}.`;
     }
   }
 
