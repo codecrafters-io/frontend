@@ -142,10 +142,6 @@ function routes() {
 
   this.delete('/team-memberships/:id');
 
-  this.post('/team-billing-sessions', function (schema) {
-    return schema.teamBillingSessions.create({ url: 'https://test.com/team_billing_session' });
-  });
-
   this.post('/team-payment-method-update-requests', function (schema) {
     return schema.teamPaymentMethodUpdateRequests.create({ url: 'https://test.com/team_payment_method_update_request' });
   });

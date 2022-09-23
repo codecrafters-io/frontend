@@ -4,31 +4,16 @@
   </div>
 
   {{#if this.currentUserIsTeamAdmin}}
-    {{#if @team.activeSubscription.isLegacy}}
-      <div class="text-gray-600 text-sm leading-6 mt-4" data-test-instructions-text>
-        To view invoices or amend your subscription, click on the button below.
-      </div>
+    <div class="text-gray-600 text-sm leading-6 mt-4" data-test-instructions-text>
+      Contact us for invoices or to make changes to your subscription:
+    </div>
 
-      <ButtonWithSpinner
-        class="bg-teal-500 hover:bg-teal-600 text-sm mt-4 text-white"
-        {{on "click" this.handleManageSubscriptionButtonClick}}
-        @shouldShowSpinner={{this.isCreatingTeamBillingSession}}
-        data-test-manage-subscription-button
-      >
-        Manage Subscription
-      </ButtonWithSpinner>
-    {{else}}
-      <div class="text-gray-600 text-sm leading-6 mt-4" data-test-instructions-text>
-        Contact us for invoices or to make changes to your subscription:
-      </div>
-
-      <a
-        class="inline-block border border-teal-500 hover:border-teal-600 px-3 py-2 text-teal-500 hover:text-teal-600 rounded shadow-sm font-bold text-sm mt-4"
-        href="mailto:sarup@codecrafters.io"
-      >
-        Contact Us
-      </a>
-    {{/if}}
+    <a
+      class="inline-block border border-teal-500 hover:border-teal-600 px-3 py-2 text-teal-500 hover:text-teal-600 rounded shadow-sm font-bold text-sm mt-4"
+      href="mailto:sarup@codecrafters.io"
+    >
+      Contact Us
+    </a>
   {{else}}
     <div class="text-gray-600 text-sm leading-6" data-test-instructions-text>
       To manage this team's subscription, ask one of the team admins for help.

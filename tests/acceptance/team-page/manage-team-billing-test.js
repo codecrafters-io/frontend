@@ -13,27 +13,6 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  test('team admin can create team billing session (legacy subscription)', async function (assert) {
-    testScenario(this.server);
-    signInAsTeamAdmin(this.owner, this.server);
-
-    const team = this.server.schema.teams.first();
-    this.server.schema.teamSubscriptions.create({ team: team, isLegacy: true });
-
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
-
-    assert.strictEqual(
-      teamPage.subscriptionSettingsContainer.instructionsText,
-      'To view invoices or amend your subscription, click on the button below.'
-    );
-
-    await teamPage.clickOnManageSubscriptionButton();
-
-    assert.strictEqual(window.location.href, 'https://test.com/team_billing_session', 'should redirect to team billing session URL');
-  });
-
   test('team with active pilot sees pilot details', async function (assert) {
     testScenario(this.server);
 
