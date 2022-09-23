@@ -1,10 +1,14 @@
 <TeamPaymentPage::StepContainer @title="Review Payment" data-test-review-payment-step-container>
   <div class="text-gray-600 leading-7">
     <p class="mb-4">
-      Your payment method will be charged
-      <span class="font-semibold">$790</span>/seat/yr for
-      <span class="font-semibold">10</span>
-      seats. Once payment is complete, we'll send you a team setup link.
+      Your team's payment method will be charged
+      <span class="font-semibold">${{if
+          this.isLoadingFirstInvoicePreview
+          "⋯"
+          this.perUnitAmountInDollarsInFirstInvoicePreview
+        }}</span>/{{@teamPaymentFlow.pricingUnitName}}/yr for
+      <span class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}}
+        {{@teamPaymentFlow.pricingUnitName}}s</span>. Once payment is complete, we'll send you a team setup link.
     </p>
     <p>
       Click "Continue" below to proceed.

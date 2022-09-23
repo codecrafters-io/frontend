@@ -52,6 +52,7 @@ export default class TeamsPayController extends Controller {
       }
 
       this.currentStep = this.currentStep + 1;
+      window.scrollTo({ top: 0 });
     }
   }
 

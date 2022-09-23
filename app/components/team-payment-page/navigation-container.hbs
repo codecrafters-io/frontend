@@ -7,7 +7,7 @@
     {{on "click" (fn @onNavigationItemClick 1)}}
   />
 
-  <div class="h-0.5 w-40 {{if (includes 1 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
+  <div class="h-0.5 w-16 sm:w-40 {{if (includes 1 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
 
   <TeamPaymentPage::NavigationContainerItem
     @previousStepsAreComplete={{includes 1 @completedSteps}}
@@ -17,7 +17,7 @@
     {{on "click" (fn @onNavigationItemClick 2)}}
   />
 
-  <div class="h-0.5 w-40 {{if (includes 2 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
+  <div class="h-0.5 w-16 sm:w-40 {{if (includes 2 @completedSteps) 'bg-teal-500' 'bg-gray-200'}} mx-4"></div>
 
   <TeamPaymentPage::NavigationContainerItem
     @previousStepsAreComplete={{and (includes 1 @completedSteps) (includes 2 @completedSteps)}}

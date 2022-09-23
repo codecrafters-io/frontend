@@ -31,7 +31,22 @@ export default class TeamPaymentFlowModel extends Model {
   get pricingPlanTypeIsComplete() {
     return ['per_seat', 'per_user'].includes(this.pricingPlanType);
   }
+
+  get pricingUnitName() {
+    return this.pricingPlanTypeIsPerSeat === 'per_seat' ? 'seat' : 'user';
+  }
 }
+
+TeamPaymentFlowModel.prototype.fetchFirstInvoicePreview = memberAction({
+  path: 'first-invoice-preview',
+  type: 'get',
+
+  after(response) {
+    this.store.pushPayload(response);
+
+    return this.store.peekRecord('invoice', response.data.id);
+  },
+});
 
 TeamPaymentFlowModel.prototype.attemptPayment = memberAction({
   path: 'attempt-payment',

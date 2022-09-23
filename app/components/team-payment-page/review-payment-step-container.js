@@ -5,8 +5,15 @@ import { inject as service } from '@ember/service';
 
 export default class ReviewPaymentStepContainer extends Component {
   @tracked errorMessage;
+  @tracked firstInvoicePreview;
   @tracked isAttemptingPayment = false;
+  @tracked isLoadingFirstInvoicePreview = true;
   @service store;
+
+  constructor() {
+    super(...arguments);
+    this.loadFirstInvoicePreview();
+  }
 
   @action
   async handleContinueButtonClick() {
@@ -21,5 +28,19 @@ export default class ReviewPaymentStepContainer extends Component {
     } else {
       this.store.pushPayload(response);
     }
+  }
+
+  @action
+  async loadFirstInvoicePreview() {
+    this.firstInvoicePreview = await this.args.teamPaymentFlow.fetchFirstInvoicePreview();
+    this.isLoadingFirstInvoicePreview = false;
+  }
+
+  get subscriptionQuantityInFirstInvoicePreview() {
+    return this.firstInvoicePreview.lineItems[0].quantity;
+  }
+
+  get perUnitAmountInDollarsInFirstInvoicePreview() {
+    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
   }
 }

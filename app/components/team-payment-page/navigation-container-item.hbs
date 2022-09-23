@@ -18,7 +18,10 @@
     {{/if}}
   </div>
 
-  <div class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold {{if @previousStepsAreComplete 'text-teal-500' 'text-gray-300'}}">
+  <div
+    class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold text-xs sm:text-base
+      {{if @previousStepsAreComplete 'text-teal-500' 'text-gray-300'}}"
+  >
     {{@name}}
   </div>
 </div>
