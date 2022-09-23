@@ -1,0 +1,43 @@
+<TeamPaymentPage::StepContainer @title="Payment Details" data-test-payment-details-step-container>
+  {{#if @teamPaymentFlow.paymentDetailsAreComplete}}
+    <div class="p-8 flex flex-col items-center justify-center">
+      {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
+      <div class="text-gray-600 text-center mb-6">
+        Your payment details have been saved.
+      </div>
+
+      <SecondaryButton @size="small" {{on "click" this.handleChangePaymentMethodButtonClick}} data-test-change-payment-method-button>
+        Change Payment Method
+      </SecondaryButton>
+    </div>
+  {{else}}
+    <form id="payment-form" {{did-insert this.handleDidInsertPaymentForm}}>
+      <div id="payment-element">
+        {{! Elements will create form elements here }}
+      </div>
+    </form>
+  {{/if}}
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <div class="flex justify-between items-center">
+    {{#if this.errorMessage}}
+      <div id="error-message" class="text-red-600 font-semibold">
+        {{this.errorMessage}}
+      </div>
+    {{else}}
+      <div class="text-xs text-gray-500">
+        Payments are processed securely using Stripe.
+      </div>
+    {{/if}}
+
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.isConfirmingPaymentDetails}}
+      @shouldShowSpinner={{this.isConfirmingPaymentDetails}}
+      {{on "click" this.handleContinueButtonClick}}
+      data-test-continue-button
+    >
+      Continue
+    </PrimaryButtonWithSpinner>
+  </div>
+</TeamPaymentPage::StepContainer>

@@ -1,0 +1,46 @@
+{{page-title "Setup Team"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-16 pb-48 px-3 md:px-6">
+  <div class="flex flex-col items-center">
+    <h1 class="text-center text-3xl text-gray-700 font-bold tracking-tighter mb-12">Setup your team</h1>
+
+    {{#if this.model.teamSetupUrl}}
+      <TeamPaymentPage::StepContainer @title="Setup Successful" data-test-team-setup-step-container>
+        <div class="text-gray-700 leading-loose">
+          Your payment was successful!
+
+          <br /><br />
+
+          We've sent an email to
+          <span class="text-teal-500 font-semibold">{{this.model.contactEmailAddress}}</span>
+          with a link to activate your team.
+
+          <br /><br />
+
+          Contact us at
+          <a href="mailto:hello@codecrafters.io" class="font-semibold">hello@codecrafters.io</a>
+          if you have any questions.
+        </div>
+      </TeamPaymentPage::StepContainer>
+    {{else}}
+      <TeamPaymentPage::NavigationContainer
+        @completedSteps={{this.completedSteps}}
+        @currentStep={{this.currentStep}}
+        @onNavigationItemClick={{this.handleNavigationItemClick}}
+        class="mb-20"
+      />
+
+      {{#if (eq this.currentStep 1)}}
+        <TeamPaymentPage::TeamDetailsStepContainer
+          @teamPaymentFlow={{this.model}}
+          @isComplete={{this.isStep1Complete}}
+          @onContinueButtonClick={{this.handleContinueButtonClick}}
+        />
+      {{else if (eq this.currentStep 2)}}
+        <TeamPaymentPage::PaymentDetailsStepContainer @teamPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+      {{else if (eq this.currentStep 3)}}
+        <TeamPaymentPage::ReviewPaymentStepContainer @teamPaymentFlow={{this.model}} />
+      {{/if}}
+    {{/if}}
+  </div>
+</div>

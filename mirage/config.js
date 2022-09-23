@@ -146,6 +146,26 @@ function routes() {
     return schema.teamPaymentMethodUpdateRequests.create({ url: 'https://test.com/team_payment_method_update_request' });
   });
 
+  this.post('/team-payment-flows');
+  this.get('/team-payment-flows/:id');
+  this.patch('/team-payment-flows/:id');
+
+  this.get('/team-payment-flows/:id/first-invoice-preview', function (schema, request) {
+    const teamPaymentFlow = schema.teamPaymentFlows.find(request.params.id);
+    const amount = teamPaymentFlow.numberOfSeats * 79000;
+
+    return schema.invoices.create({
+      total: amount,
+      lineItems: [{ amount: amount, amount_after_discounts: amount, quantity: teamPaymentFlow.numberOfSeats }],
+    });
+  });
+
+  this.post('/team-payment-flows/:id/attempt-payment', function () {
+    return {
+      error: 'Your card was declined.',
+    };
+  });
+
   this.get('/track-leaderboard-entries', function (schema, request) {
     let result = schema.trackLeaderboardEntries.all();
 
