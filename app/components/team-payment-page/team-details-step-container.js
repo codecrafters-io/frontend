@@ -16,6 +16,12 @@ export default class TeamDetailsFormComponent extends Component {
   }
 
   @action
+  async handlePricingPlanTypeOptionSelected(newPricingPlanType) {
+    this.args.teamPaymentFlow.pricingPlanType = newPricingPlanType;
+    await this.handleValueUpdated();
+  }
+
+  @action
   async handleValueUpdated() {
     if (this.formElement.checkValidity()) {
       this.args.teamPaymentFlow.save();

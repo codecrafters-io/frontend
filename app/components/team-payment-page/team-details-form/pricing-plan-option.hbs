@@ -1,9 +1,9 @@
 <div ...attributes>
   <div class="flex items-center">
     <div class="flex justify-start w-6">
-      <input type="radio" id="team_pricing_plan" checked={{@selected}} />
+      <input type="radio" id="team_pricing_plan" checked={{@selected}} {{on "change" @onSelect}} />
     </div>
-    <label class="text-gray-700">{{@name}}</label>
+    <label for="team_pricing_plan" class="text-gray-700">{{@name}}</label>
   </div>
 
   <div class="ml-6 text-gray-400 text-xs">

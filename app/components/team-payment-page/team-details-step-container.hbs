@@ -32,10 +32,16 @@
         @name="Per Seat"
         @description="$990/seat/yr, minimum 5 seats"
         class="mb-4"
-        @selected={{true}}
+        @selected={{eq @teamPaymentFlow.pricingPlanType "per_seat"}}
+        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "per_seat"}}
       />
 
-      <TeamPaymentPage::TeamDetailsForm::PricingPlanOption @name="Per Developer" @description="$790/dev/yr, minimum 5 developers" />
+      <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
+        @name="Per Developer"
+        @description="$790/dev/yr, minimum 5 developers"
+        @selected={{eq @teamPaymentFlow.pricingPlanType "per_user"}}
+        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "per_user"}}
+      />
     </TeamPaymentPage::TeamDetailsForm::Section>
 
     <div class="h-px bg-gray-100 my-6"></div>
