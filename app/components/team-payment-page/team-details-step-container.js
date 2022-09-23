@@ -10,6 +10,20 @@ export default class TeamDetailsFormComponent extends Component {
   }
 
   @action
+  async handleDecrementSeatsButtonClick() {
+    if (this.args.teamPaymentFlow.numberOfSeats > 5) {
+      this.args.teamPaymentFlow.numberOfSeats--;
+      await this.handleValueUpdated();
+    }
+  }
+
+  @action
+  async handleIncrementSeatsButtonClick() {
+    this.args.teamPaymentFlow.numberOfSeats++;
+    await this.handleValueUpdated();
+  }
+
+  @action
   async handleFormSubmit(e) {
     e.preventDefault();
     this.formElement.reportValidity();
