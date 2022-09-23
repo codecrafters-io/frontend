@@ -35,6 +35,7 @@
       @isDisabled={{this.isConfirmingPaymentDetails}}
       @shouldShowSpinner={{this.isConfirmingPaymentDetails}}
       {{on "click" this.handleContinueButtonClick}}
+      data-test-continue-button
     >
       Continue
     </PrimaryButtonWithSpinner>

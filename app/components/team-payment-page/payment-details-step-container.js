@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
+import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { loadStripe } from '@stripe/stripe-js';
 import { inject as service } from '@ember/service';
 
-export default class BillingDetailsFormComponent extends Component {
+export default class PaymentDetailsStepContainerComponent extends Component {
   @service serverVariables;
 
   @tracked errorMessage;
@@ -33,6 +34,13 @@ export default class BillingDetailsFormComponent extends Component {
     this.isConfirmingPaymentDetails = true;
     this.errorMessage = null;
 
+    if (config.environment === 'test') {
+      this.errorMessage = 'Test error';
+      this.isConfirmingPaymentDetails = false;
+
+      return;
+    }
+
     const stripe = await this.stripeLib();
 
     const confirmSetupResult = await stripe.confirmSetup({
@@ -52,6 +60,10 @@ export default class BillingDetailsFormComponent extends Component {
   async handleDidInsertPaymentForm() {
     const stripe = await this.stripeLib();
     const options = { clientSecret: this.args.teamPaymentFlow.stripeSetupIntentClientSecret };
+
+    if (config.environment === 'test') {
+      return;
+    }
 
     // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 2
     this.stripeElementsObject = stripe.elements(options);
