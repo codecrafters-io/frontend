@@ -1,5 +1,6 @@
-import { attr, hasMany } from '@ember-data/model';
 import Model from '@ember-data/model';
+import { attr, hasMany } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 
 export default class TeamModel extends Model {
@@ -9,9 +10,13 @@ export default class TeamModel extends Model {
   @attr('string') name;
   @hasMany('team-payment-method', { async: false }) paymentMethods;
   @hasMany('team-pilot', { async: false }) pilots;
+  @attr('string') pricingPlanType;
   @attr('string') slackAppInstallationUrl;
   @hasMany('slack-integration', { async: false }) slackIntegrations;
   @hasMany('team-subscription', { async: false }) subscriptions;
+
+  @equal('pricingPlanType', 'per_seat') pricingPlanTypeIsPerSeat;
+  @equal('pricingPlanType', 'per_user') pricingPlanTypeIsPerUser;
 
   get activePilot() {
     return this.pilots.sortBy('endDate').reverse().findBy('isActive');
@@ -59,6 +64,10 @@ export default class TeamModel extends Model {
 
   get members() {
     return this.memberships.mapBy('user');
+  }
+
+  get pricingUnitName() {
+    return this.pricingPlanTypeIsPerSeat ? 'seat' : 'user';
   }
 
   get slackIntegration() {

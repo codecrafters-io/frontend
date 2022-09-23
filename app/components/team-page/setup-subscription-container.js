@@ -36,11 +36,11 @@ export default class SetupSubscriptionContainerComponent extends Component {
     this.isLoadingFirstInvoicePreview = false;
   }
 
-  get numberOfSeatsInFirstInvoicePreview() {
+  get subscriptionQuantityInFirstInvoicePreview() {
     return this.firstInvoicePreview.lineItems[0].quantity;
   }
 
-  get perSeatAmountInDollarsInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.numberOfSeatsInFirstInvoicePreview / 100;
+  get perUnitAmountInDollarsInFirstInvoicePreview() {
+    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
   }
 }
