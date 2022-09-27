@@ -43,3 +43,12 @@ refresh_course_definitions:
 release:
 	git tag v$(next_version_number)
 	git push origin master v$(next_version_number)
+
+update_heroicons:
+	ls ~/Downloads/heroicons-master/optimized/24/outline \
+		| xargs -n 1 basename -s ".svg" \
+		| xargs -n 1 -I {} cp ~/Downloads/heroicons-master/optimized/24/outline/{}.svg public/assets/images/heroicons/{}-outline.svg
+
+	ls ~/Downloads/heroicons-master/optimized/24/solid \
+		| xargs -n 1 basename -s ".svg" \
+		| xargs -n 1 -I {} cp ~/Downloads/heroicons-master/optimized/24/solid/{}.svg public/assets/images/heroicons/{}-solid.svg
