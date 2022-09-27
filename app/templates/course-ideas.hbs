@@ -7,10 +7,20 @@
     <p class="text-gray-500">
       Vote on what challenges we'll build next.
 
-      {{!
-      Submit new ideas
-      <a href="https://google.com" class="text-blue-500 font-semibold">here</a>.
-      }}
+      {{#if this.currentUserService.isAuthenticated}}
+        Submit new ideas
+
+        <button
+          class="text-blue-500 font-semibold"
+          data-tf-popup="kJNvFVQM"
+          data-tf-iframe-props="title=Challenge Idea"
+          data-tf-medium="snippet"
+          data-tf-hidden="github_username={{this.currentUserService.record.username}}"
+          type="button"
+        >
+          here
+        </button>.
+      {{/if}}
     </p>
   </div>
 

@@ -9,6 +9,10 @@ export default class CourseIdeasRoute extends ApplicationRoute {
 
   activate() {
     window.scrollTo({ top: 0 });
+
+    var scriptElement = document.createElement('script');
+    scriptElement.src = '//embed.typeform.com/next/embed.js';
+    document.getElementsByTagName('head')[0].appendChild(scriptElement);
   }
 
   model() {
