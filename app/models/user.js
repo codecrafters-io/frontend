@@ -33,6 +33,10 @@ export default class UserModel extends Model {
     return this.courseIdeaSupervoteGrants.mapBy('numberOfSupervotes').reduce((a, b) => a + b, 0) - this.courseIdeaSupervotes.length;
   }
 
+  get availableCourseExtensionIdeaSupervotes() {
+    return this.courseExtensionIdeaSupervoteGrants.mapBy('numberOfSupervotes').reduce((a, b) => a + b, 0) - this.courseExtensionIdeaSupervotes.length;
+  }
+
   get canAccessPaidContent() {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }

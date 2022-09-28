@@ -43,7 +43,7 @@ CourseExtensionIdeaModel.prototype.unvote = memberAction({
 
     currentUser.courseExtensionIdeaVotes.filterBy('courseExtensionIdea', this).forEach((record) => {
       record.courseExtensionIdea.votes.removeObject(record);
-      record.user.courseExtensionIdea.removeObject(record);
+      record.user.courseExtensionIdeaVotes.removeObject(record);
       record.unloadRecord();
     });
 

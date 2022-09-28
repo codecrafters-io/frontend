@@ -1,4 +1,4 @@
-import courseIdeasPage from 'codecrafters-frontend/tests/pages/vote/course-ideas-page';
+import votePage from 'codecrafters-frontend/tests/pages/vote-page';
 import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -20,15 +20,16 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     let user = this.server.schema.users.first();
     let courseIdea = this.server.schema.courseIdeas.first();
 
-    this.server.create('course-idea-vote-page', { user: user, courseIdea: courseIdea });
+    this.server.create('course-idea-vote', { user: user, courseIdea: courseIdea });
 
-    await courseIdeasPage.visit();
+    await votePage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
-    assert.strictEqual(courseIdeasPage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote-page');
+    assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
 
-    // TODO: Test that hovering on vote-page shows tooltip
-    // TODO: Test that clicking on vote-page will redirect to login
+    // TODO: Test that hovering on vote shows tooltip
+    // TODO: Test that clicking on vote will redirect to login
+    // TODO: Can navigate directly to course extension ideas
   });
 
   test('it renders for logged in user', async function (assert) {
@@ -37,18 +38,16 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
 
     createCourseIdeas(this.server);
 
-    await courseIdeasPage.visit();
-    console.log(currentURL());
+    await votePage.visit();
     await percySnapshot('Challenge Ideas (logged in)');
-    await this.pauseTest();
 
     assert.strictEqual(1, 1);
 
-    // TODO: Test that hovering on vote-page shows tooltip
-    // TODO: Test that clicking on vote-page will redirect to login
+    // TODO: Test that hovering on vote shows tooltip
+    // TODO: Test that clicking on vote will redirect to login
   });
 
-  test('can vote-page and supervote', async function (assert) {
+  test('can vote and supervote', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -57,32 +56,32 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     let user = this.server.schema.users.first();
     this.server.create('course-idea-supervote-grant', { user: user, numberOfSupervotes: 2, description: 'completed the Redis challenge' });
 
-    await courseIdeasPage.visit();
+    await votePage.visit();
 
-    let courseIdeaCard = courseIdeasPage.findCourseIdeaCard('Build your own Regex Parser');
-    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote-page button to say 0 votes');
-
-    await courseIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote-page', 'expected vote-page button to say 1 vote-page');
+    let courseIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
+    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote-page button to say 0 votes');
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+
+    await courseIdeaCard.clickOnVoteButton();
+    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseIdeaCard.clickOnSupervoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote-page', 'expected vote-page button to say 1 vote-page');
-    assert.strictEqual(courseIdeaCard.supervoteButtonText, '1 supervote +1', 'expected supervote button to say +1 vote-page');
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseIdeaCard.supervoteButtonText, '1 supervote +1', 'expected supervote button to say +1 vote');
 
     await courseIdeaCard.clickOnSupervoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote-page', 'expected vote-page button to say 1 vote-page');
-    assert.strictEqual(courseIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote-page');
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote');
 
     await courseIdeaCard.clickOnSupervoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote-page', 'expected vote-page button to say 1 vote-page');
-    assert.strictEqual(courseIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote-page');
+    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote');
     assert.strictEqual(courseIdeaCard.supervoteButtonTooltipText, "You're out of supervotes. Earn more by completing CodeCrafters challenges!");
 
     await courseIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote-page button to say 0 votes');
+    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
     assert.strictEqual(courseIdeaCard.supervoteButtonText, '0 supervotes', 'expected supervote button to say 0 supervotes');
   });
 });

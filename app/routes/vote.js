@@ -28,7 +28,7 @@ export default class CourseIdeasRoute extends ApplicationRoute {
     if (this.currentUserService.isAuthenticated) {
       // No need to wait on this, can load in the background
       this.store.findRecord('user', this.currentUserService.record.id, {
-        include: 'course-idea-supervote-grants',
+        include: 'course-idea-supervote-grants,course-extension-idea-supervote-grants',
         reload: true,
       });
     }

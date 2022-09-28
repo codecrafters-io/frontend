@@ -1,11 +1,13 @@
-import courseIdeasData from '../data/course-ideas';
+import courseExtensionIdeasData from '../data/course-extension-ideas';
 
-export default function createCourseIdeas(server) {
-  for (const courseIdeaData of courseIdeasData) {
-    server.create('course-idea', {
+export default function createCourseExtensionIdeas(server) {
+  for (const courseExtensionIdeaData of courseExtensionIdeasData) {
+    server.create('course-extension-idea', {
       createdAt: new Date(),
-      name: courseIdeaData.name,
-      descriptionMarkdown: courseIdeaData.description_md,
+      course: server.schema.courses.findBy({ slug: courseExtensionIdeaData.course_slug }),
+      name: courseExtensionIdeaData.name,
+      slug: courseExtensionIdeaData.slug,
+      descriptionMarkdown: courseExtensionIdeaData.description_md,
     });
   }
 }
