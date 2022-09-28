@@ -3,8 +3,13 @@ import { inject as service } from '@ember/service';
 
 export default class VoteController extends Controller {
   @service('current-user') currentUserService;
+  @service router;
 
-  get orderedCourseIdeas() {
-    return this.model.courseIdeas.sortBy('reverseSortPositionForCourseIdeasPage').reverse();
+  get activeTab() {
+    if (this.router.currentRouteName === 'vote.course-ideas') {
+      return 'challenges';
+    } else {
+      return 'challenge-extensions';
+    }
   }
 }
