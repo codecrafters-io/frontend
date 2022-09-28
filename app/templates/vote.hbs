@@ -1,27 +1,32 @@
 {{page-title "Challenge Ideas"}}
 
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
-  <div class="border-b pb-8 mb-8">
-    <h1 class="text-3xl text-gray-700 font-bold tracking-tighter mb-3">Challenge Ideas</h1>
+  <h1 class="text-3xl text-gray-700 font-bold tracking-tighter mb-3">Vote</h1>
 
-    <p class="text-gray-500">
-      Vote on what challenges we'll build next.
+  <p class="text-gray-500 mb-6">
+    Help us decide what content to build next.
 
-      {{#if this.currentUserService.isAuthenticated}}
-        Submit new ideas
+    {{!--
+    {{#if this.currentUserService.isAuthenticated}}
+      Submit new ideas
 
-        <button
-          class="text-blue-500 font-semibold"
-          data-tf-popup="kJNvFVQM"
-          data-tf-iframe-props="title=Challenge Idea"
-          data-tf-medium="snippet"
-          data-tf-hidden="github_username={{this.currentUserService.record.username}}"
-          type="button"
-        >
-          here
-        </button>.
-      {{/if}}
-    </p>
+      <button
+        class="text-blue-500 font-semibold"
+        data-tf-popup="kJNvFVQM"
+        data-tf-iframe-props="title=Challenge Idea"
+        data-tf-medium="snippet"
+        data-tf-hidden="github_username={{this.currentUserService.record.username}}"
+        type="button"
+      >
+        here
+      </button>.
+    {{/if}}
+    --}}
+  </p>
+
+  <div class="flex mb-8 border-b">
+    <VotePage::TabLink @text="Challenges" @isActive={{true}} />
+    <VotePage::TabLink @text="Challenge Extensions" @isActive={{false}} />
   </div>
 
   <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">

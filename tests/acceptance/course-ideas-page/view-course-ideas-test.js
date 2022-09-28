@@ -38,6 +38,7 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
 
     await courseIdeasPage.visit();
     await percySnapshot('Challenge Ideas (logged in)');
+    // await this.pauseTest();
 
     assert.strictEqual(1, 1);
 
