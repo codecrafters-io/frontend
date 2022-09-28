@@ -5,6 +5,7 @@ import RSVP from 'rsvp';
 export default class CourseIdeasRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
   @service('current-user') currentUserService;
+  @service router;
   @service store;
 
   activate() {
@@ -29,5 +30,11 @@ export default class CourseIdeasRoute extends ApplicationRoute {
     }
 
     return RSVP.hash(modelPromises);
+  }
+
+  afterModel(model, transition) {
+    if (transition.to.name === 'vote.index') {
+      this.router.transitionTo('vote.course-ideas');
+    }
   }
 }

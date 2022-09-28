@@ -15,5 +15,5 @@ export default createPage({
     return this.courseIdeaCards.toArray().find((card) => card.name === name);
   },
 
-  visit: visitable('/vote'),
+  visit: visitable('/vote'), // Should redirect to /vote/course-ideas
 });
