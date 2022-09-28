@@ -39,6 +39,15 @@ function routes() {
   this.post('/course-idea-votes');
   this.post('/course-idea-supervotes');
 
+  this.get('/course-extension-ideas');
+
+  this.post('/course-extension-ideas/:id/unvote', () => {
+    return {};
+  });
+
+  this.post('/course-extension-idea-votes');
+  this.post('/course-idea-supervotes');
+
   this.post('/course-stage-feedback-submissions');
   this.patch('/course-stage-feedback-submissions/:id');
 

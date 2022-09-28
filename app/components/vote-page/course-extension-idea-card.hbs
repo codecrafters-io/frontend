@@ -41,14 +41,14 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center">
       <CourseIdeasPage::CourseIdeaCard::VoteButton
-        @courseIdea={{@courseIdea}}
+        @idea={{@courseIdea}}
         @userHasVoted={{this.userHasVoted}}
         {{on "click" this.handleVoteButtonClick}}
         class="mr-2"
       />
 
       <CourseIdeasPage::CourseIdeaCard::SupervoteButton
-        @courseIdea={{@courseIdea}}
+        @idea={{@courseIdea}}
         @userSupervotesCount={{this.userSupervotesCount}}
         @userHasSupervotesAvailable={{this.userHasSupervotesAvailable}}
         {{on "click" this.handleSupervoteButtonClick}}

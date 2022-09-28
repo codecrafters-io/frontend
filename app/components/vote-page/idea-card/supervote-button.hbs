@@ -9,9 +9,9 @@
   {{svg-jar "chevron-double-up" class="w-4 py-0.5 mr-1.5 text-teal-500"}}
 
   <span class="text-sm {{if (gt @userSupervotesCount 0) 'text-teal-500' 'text-gray-700'}} transition-all duration-75">
-    <span class="font-semibold">{{@courseIdea.supervotes.length}}</span>
+    <span class="font-semibold">{{@idea.supervotes.length}}</span>
 
-    {{#if (eq @courseIdea.supervotes.length 1)}}
+    {{#if (eq @idea.supervotes.length 1)}}
       supervote
     {{else}}
       supervotes
