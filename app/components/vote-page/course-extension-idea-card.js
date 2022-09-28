@@ -17,7 +17,7 @@ export default class CourseIdeaCardComponent extends Component {
     }
 
     this.isVotingOrUnvoting = true;
-    await this.args.courseIdea.unvote();
+    await this.args.courseExtensionIdea.unvote();
     this.isVotingOrUnvoting = false;
   }
 
@@ -32,10 +32,10 @@ export default class CourseIdeaCardComponent extends Component {
     }
 
     if (this.userHasVoted) {
-      await this.args.courseIdea.supervote();
+      await this.args.courseExtensionIdea.supervote();
     } else {
       this.isVotingOrUnvoting = true;
-      await Promise.all([this.args.courseIdea.vote(), this.args.courseIdea.supervote()]);
+      await Promise.all([this.args.courseExtensionIdea.vote(), this.args.courseExtensionIdea.supervote()]);
       this.isVotingOrUnvoting = false;
     }
   }
@@ -53,9 +53,9 @@ export default class CourseIdeaCardComponent extends Component {
     this.isVotingOrUnvoting = true;
 
     if (this.userHasVoted) {
-      await this.args.courseIdea.unvote();
+      await this.args.courseExtensionIdea.unvote();
     } else {
-      await this.args.courseIdea.vote();
+      await this.args.courseExtensionIdea.vote();
     }
 
     this.isVotingOrUnvoting = false;
@@ -66,7 +66,7 @@ export default class CourseIdeaCardComponent extends Component {
       return false;
     }
 
-    return this.currentUserService.record.courseIdeaVotes.mapBy('courseIdea').includes(this.args.courseIdea);
+    return this.currentUserService.record.courseExtensionIdeaVotes.mapBy('courseExtensionIdea').includes(this.args.courseExtensionIdea);
   }
 
   get userHasSupervoted() {
@@ -74,7 +74,7 @@ export default class CourseIdeaCardComponent extends Component {
   }
 
   get userHasSupervotesAvailable() {
-    return this.currentUserService.record.availableCourseIdeaSupervotes > 0;
+    return this.currentUserService.record.availableCourseExtensionIdeaSupervotes > 0;
   }
 
   get userSupervotesCount() {
@@ -82,7 +82,7 @@ export default class CourseIdeaCardComponent extends Component {
       return 0;
     }
 
-    return this.currentUserService.record.courseIdeaSupervotes.filterBy('courseIdea', this.args.courseIdea).length;
+    return this.currentUserService.record.courseExtensionIdeaSupervotes.filterBy('courseExtensionIdea', this.args.courseExtensionIdea).length;
   }
 
   get userHasVotedOrSupervoted() {
