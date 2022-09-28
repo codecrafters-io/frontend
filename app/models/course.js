@@ -13,6 +13,7 @@ export default class CourseModel extends Model {
   @attr('string') slug;
   @attr() testimonials; // free-form JSON
 
+  @hasMany('course-extension-idea', { async: false }) extensionIdeas;
   @hasMany('course-language-configuration', { async: false }) languageConfigurations;
   @hasMany('course-stage', { async: false }) stages;
 

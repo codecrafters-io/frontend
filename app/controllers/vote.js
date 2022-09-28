@@ -6,8 +6,6 @@ export default class VoteController extends Controller {
   @service router;
 
   get activeTab() {
-    console.log(this.router.currentRouteName);
-
     if (this.router.currentRouteName === 'vote.course-ideas') {
       return 'challenges';
     } else {

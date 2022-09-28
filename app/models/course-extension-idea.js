@@ -1,12 +1,12 @@
 import Model from '@ember-data/model';
 import showdown from 'showdown';
-import { attr, hasMany } from '@ember-data/model';
-import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
+import { attr, belongsTo, hasMany } from '@ember-data/model';
 import { htmlSafe } from '@ember/template';
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
 export default class CourseExtensionIdeaModel extends Model {
+  @belongsTo('course', { async: false }) course;
   @hasMany('course-extension-idea-vote', { async: false }) votes;
   @hasMany('course-extension-idea-supervote', { async: false }) supervotes;
 
