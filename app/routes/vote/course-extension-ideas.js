@@ -6,7 +6,7 @@ export default class CourseExtensionIdeasRoute extends ApplicationRoute {
   setupController(controller, model) {
     super.setupController(controller, model);
 
-    if (controller.orderedCourses.firstObject) {
+    if (controller.orderedCourses.firstObject && !controller.selectedCourseSlug) {
       controller.selectedCourseSlug = controller.orderedCourses.firstObject.slug;
     }
   }
