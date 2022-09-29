@@ -1,0 +1,27 @@
+<h1 class="text-3xl text-gray-700 font-bold tracking-tighter mb-3">Vote</h1>
+
+<p class="text-gray-500 mb-6">
+  Help us decide what content to build next.
+
+  {{!--
+  {{#if this.currentUserService.isAuthenticated}}
+    Submit new ideas
+
+    <button
+      class="text-blue-500 font-semibold"
+      data-tf-popup="kJNvFVQM"
+      data-tf-iframe-props="title=Challenge Idea"
+      data-tf-medium="snippet"
+      data-tf-hidden="github_username={{this.currentUserService.record.username}}"
+      type="button"
+    >
+      here
+    </button>.
+  {{/if}}
+  --}}
+</p>
+
+<div class="flex mb-8 border-b overflow-x-scroll">
+  <VotePage::TabLink @text="Challenge Ideas" @isActive={{eq this.activeTab "challenges"}} @route="vote.course-ideas" />
+  <VotePage::TabLink @text="Challenge Extension Ideas" @isActive={{eq this.activeTab "challenge-extensions"}} @route="vote.course-extension-ideas" />
+</div>

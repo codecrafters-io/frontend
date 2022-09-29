@@ -1,0 +1,10 @@
+<div
+  class="flex items-center px-3 py-3 rounded-full border
+    {{if @isSelected 'bg-white border-teal-500' 'border-gray-300 bg-gray-100 hover:border-gray-400 hover:bg-white'}}"
+  role="button"
+  data-test-course-pill
+  ...attributes
+>
+  <CourseLogo @course={{@course}} class="h-4 mr-2" />
+  <div class="text-sm text-gray-700">{{@course.name}}</div>
+</div>

@@ -9,9 +9,9 @@
   {{svg-jar "chevron-up" class="w-5 mr-1 text-teal-500"}}
 
   <span class="text-sm {{if @userHasVoted 'text-teal-500' 'text-gray-700'}} transition-all duration-75">
-    <span class="font-semibold">{{@courseIdea.votes.length}}</span>
+    <span class="font-semibold">{{@idea.votes.length}}</span>
 
-    {{#if (eq @courseIdea.votes.length 1)}}
+    {{#if (eq @idea.votes.length 1)}}
       vote
     {{else}}
       votes

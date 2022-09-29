@@ -15,7 +15,6 @@ Router.map(function () {
     this.route('submissions');
   });
 
-  this.route('course-ideas', { path: '/vote' });
   this.route('course-overview', { path: '/courses/:course_slug/overview' });
   this.route('membership');
   this.route('pay');
@@ -25,6 +24,11 @@ Router.map(function () {
   this.route('teams.create', { path: '/teams/create' });
   this.route('teams.pay', { path: '/teams/pay' });
   this.route('user', { path: '/users/:username' });
+
+  this.route('vote', function () {
+    this.route('course-ideas', { path: '/challenge-ideas' });
+    this.route('course-extension-ideas', { path: '/challenge-extension-ideas' });
+  });
 
   this.route('not-found', { path: '/*path' }); // Catch-all
   this.route('not-found', { path: '/404' }); // Allow redirecting to this route

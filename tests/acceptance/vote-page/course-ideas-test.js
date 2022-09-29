@@ -1,13 +1,13 @@
+import votePage from 'codecrafters-frontend/tests/pages/vote-page';
+import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import courseIdeasPage from 'codecrafters-frontend/tests/pages/course-ideas-page';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
 
-module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
+module('Acceptance | vote-page | course-ideas', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -21,13 +21,14 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
 
     this.server.create('course-idea-vote', { user: user, courseIdea: courseIdea });
 
-    await courseIdeasPage.visit();
+    await votePage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
-    assert.strictEqual(courseIdeasPage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
+    assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
 
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login
+    // TODO: Can navigate directly to course extension ideas
   });
 
   test('it renders for logged in user', async function (assert) {
@@ -36,7 +37,7 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
 
     createCourseIdeas(this.server);
 
-    await courseIdeasPage.visit();
+    await votePage.visit();
     await percySnapshot('Challenge Ideas (logged in)');
 
     assert.strictEqual(1, 1);
@@ -54,9 +55,9 @@ module('Acceptance | course-ideas-page | view-course-ideas', function (hooks) {
     let user = this.server.schema.users.first();
     this.server.create('course-idea-supervote-grant', { user: user, numberOfSupervotes: 2, description: 'completed the Redis challenge' });
 
-    await courseIdeasPage.visit();
+    await votePage.visit();
 
-    let courseIdeaCard = courseIdeasPage.findCourseIdeaCard('Build your own Regex Parser');
+    let courseIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
     assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseIdeaCard.clickOnVoteButton();

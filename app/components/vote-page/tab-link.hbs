@@ -1,0 +1,9 @@
+<LinkTo
+  @route={{@route}}
+  role="button"
+  class="flex flex-shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm {{if @isActive 'border-teal-500' 'border-gray-100'}}"
+  data-test-tab-link
+  ...attributes
+>
+  <span class={{if @isActive "font-medium text-teal-500" "text-gray-600"}}>{{@text}}</span>
+</LinkTo>

@@ -1,54 +1,55 @@
 <div
   class="group bg-white p-5 rounded-md shadow-sm flex flex-col justify-between border {{if this.userHasVotedOrSupervoted 'border-gray-300'}} relative"
-  data-test-course-idea-card
+  data-test-course-extension-idea-card
 >
   {{! Text }}
   <div class="mb-4">
     <div class="flex items-start justify-between mb-3">
-      <div
-        class="{{if this.userHasVotedOrSupervoted 'text-teal-500' 'text-gray-700'}} mr-2 mb-0.5 font-bold text-xl tracking-tight"
-        data-test-course-idea-name
-      >
-        {{@courseIdea.name}}
+      <div class="text-gray-700 mr-2 mb-0.5 font-bold text-xl tracking-tight" data-test-course-extension-idea-name>
+        {{@courseExtensionIdea.name}}
       </div>
 
-      {{#if @courseIdea.developmentStatusIsInProgress}}
+      {{#if @courseExtensionIdea.developmentStatusIsInProgress}}
         <div class="text-xs text-white font-semibold bg-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center" data-test-track-beta-label>
           in progress
           {{svg-jar "shield-check" class="w-4 ml-1 fill-current"}}
         </div>
-      {{else if @courseIdea.developmentStatusIsReleased}}
+      {{else if @courseExtensionIdea.developmentStatusIsReleased}}
         <div class="text-xs text-white font-semibold bg-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center" data-test-track-beta-label>
           released
           {{svg-jar "check" class="w-4 ml-1 fill-current"}}
         </div>
       {{else if this.userHasSupervoted}}
-        {{svg-jar "chevron-double-up" class="w-7 mt-0.5 fill-current text-teal-500"}}
+        <div class="h-7 w-7 bg-teal-500 rounded flex items-center justify-center">
+          {{svg-jar "chevron-double-up" class="w-7 fill-current text-white"}}
+        </div>
       {{else if this.userHasVoted}}
-        {{svg-jar "chevron-up" class="w-7 mt-0.5 fill-current text-teal-500"}}
-      {{else if @courseIdea.isNewlyCreated}}
+        <div class="h-7 w-7 bg-teal-500 rounded flex items-center justify-center">
+          {{svg-jar "chevron-up" class="w-7 fill-current text-white"}}
+        </div>
+      {{else if @courseExtensionIdea.isNewlyCreated}}
         <div class="text-xs text-teal-500 font-semibold border border-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5" data-test-track-beta-label>
           new
         </div>
       {{/if}}
     </div>
     <div class="prose prose-sm">
-      {{@courseIdea.descriptionHtml}}
+      {{@courseExtensionIdea.descriptionHtml}}
     </div>
   </div>
 
   {{! Footer Controls }}
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <CourseIdeasPage::CourseIdeaCard::VoteButton
-        @courseIdea={{@courseIdea}}
+      <VotePage::IdeaCard::VoteButton
+        @idea={{@courseExtensionIdea}}
         @userHasVoted={{this.userHasVoted}}
         {{on "click" this.handleVoteButtonClick}}
         class="mr-2"
       />
 
-      <CourseIdeasPage::CourseIdeaCard::SupervoteButton
-        @courseIdea={{@courseIdea}}
+      <VotePage::IdeaCard::SupervoteButton
+        @idea={{@courseExtensionIdea}}
         @userSupervotesCount={{this.userSupervotesCount}}
         @userHasSupervotesAvailable={{this.userHasSupervotesAvailable}}
         {{on "click" this.handleSupervoteButtonClick}}
@@ -65,7 +66,7 @@
           ></path>
         </svg>
       {{else if this.userHasVotedOrSupervoted}}
-        <CourseIdeasPage::CourseIdeaCard::UnvoteButton @courseIdea={{@courseIdea}} {{on "click" this.handleUnvoteButtonClick}} />
+        <VotePage::IdeaCard::UnvoteButton @idea={{@courseExtensionIdea}} {{on "click" this.handleUnvoteButtonClick}} />
       {{/if}}
     </div>
   </div>
