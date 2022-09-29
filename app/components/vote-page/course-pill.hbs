@@ -1,8 +1,6 @@
 <div
-  class="flex items-center
-    {{if @isSelected 'bg-white'}}
-    px-3 py-3 rounded-full border-2
-    {{if @isSelected 'border-teal-500' 'border-gray-300 bg-gray-100'}}"
+  class="flex items-center px-3 py-3 rounded-full border
+    {{if @isSelected 'bg-white border-teal-500' 'border-gray-300 bg-gray-100 hover:border-gray-400 hover:bg-white'}}"
   role="button"
   data-test-course-pill
   ...attributes
