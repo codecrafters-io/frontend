@@ -2,7 +2,6 @@ import votePage from 'codecrafters-frontend/tests/pages/vote-page';
 import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
