@@ -3,7 +3,6 @@
 <p class="text-gray-500 mb-6">
   Help us decide what content to build next.
 
-  {{!--
   {{#if this.currentUserService.isAuthenticated}}
     Submit new ideas
 
@@ -18,10 +17,11 @@
       here
     </button>.
   {{/if}}
-  --}}
 </p>
 
 <div class="flex mb-8 border-b overflow-x-scroll">
+  {{!--
   <VotePage::TabLink @text="Challenge Ideas" @isActive={{eq this.activeTab "challenges"}} @route="vote.course-ideas" />
   <VotePage::TabLink @text="Challenge Extension Ideas" @isActive={{eq this.activeTab "challenge-extensions"}} @route="vote.course-extension-ideas" />
+--}}
 </div>
