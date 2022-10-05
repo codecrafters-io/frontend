@@ -100,6 +100,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
       currency: 'usd',
       createdAt: new Date(),
       invoiceId: 'invoice-id',
+      status: 'succeeded',
     });
 
     this.server.schema.charges.create({
@@ -108,6 +109,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
       currency: 'usd',
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7),
       invoiceId: 'invoice-id',
+      status: 'succeeded',
     });
 
     await membershipPage.visit();
