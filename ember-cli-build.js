@@ -1,42 +1,9 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const isProduction = EmberApp.env() === 'production';
+// const _isProduction = EmberApp.env() === 'production';
 const cdnBaseURL = process.env.CDN_BASE_URL;
 const shouldUseCDN = !!cdnBaseURL;
-
-const purgeCSS = {
-  module: require('@fullhuman/postcss-purgecss'),
-  options: {
-    content: [
-      // add extra paths here for components/controllers which include tailwind classes
-      './app/index.html',
-      './app/templates/**/*.hbs',
-      './app/components/**/*.hbs',
-    ],
-
-    defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/.]+/g) || [],
-
-    safelist: {
-      standard: [
-        'inline', // Used by SVG stuff
-        'mx-1', // Used by SVG stuff
-        'w-4', // Used by SVG stuff
-        'whitespace-nowrap', // Used by SVG stuff
-      ],
-      greedy: [/ember-basic-dropdown-/, /prose/],
-      deep: [
-        // Ember's built-in components: <Input /> and <TextArea />
-        /^input$/,
-        /^textarea$/,
-        // There's something wrong with how we're picking styles from ember-animated
-        /ember-animated/,
-        /animated-container/,
-        /animated-orphans/,
-      ],
-    },
-  },
-};
 
 module.exports = function (defaults) {
   const appOptions = {
@@ -56,7 +23,6 @@ module.exports = function (defaults) {
             },
           },
           require('tailwindcss')('./app/tailwind.config.js'),
-          ...(isProduction ? [purgeCSS] : []),
         ],
       },
     },
