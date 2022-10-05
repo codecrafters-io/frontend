@@ -5,6 +5,7 @@ import Model from '@ember-data/model';
 export default class Charge extends Model {
   @attr('date') createdAt;
   @attr('number') amount;
+  @attr('number') amountRefunded;
   @attr('string') currency;
   @attr('string') invoiceId;
   @attr('string') status;
@@ -16,5 +17,9 @@ export default class Charge extends Model {
 
   get amountInDollars() {
     return this.amount / 100;
+  }
+
+  get amountRefundedInDollars() {
+    return this.amountRefunded / 100;
   }
 }

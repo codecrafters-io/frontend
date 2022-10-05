@@ -16,6 +16,14 @@
 
         <div class="font-semibold {{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right">
           ${{charge.amountInDollars}}
+          {{#if (gt charge.amountRefundedInDollars 0)}}
+            {{#if (eq charge.amountRefundedInDollars charge.amountInDollars)}}
+              (refunded)
+            {{else}}
+              (${{charge.amountRefundedInDollars}}
+              refunded)
+            {{/if}}
+          {{/if}}
         </div>
 
         <div class="flex items-center justify-end">
