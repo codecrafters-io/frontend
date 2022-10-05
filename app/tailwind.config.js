@@ -9,6 +9,7 @@ module.exports = {
     './app/index.html',
     './app/templates/**/*.hbs',
     './app/components/**/*.hbs',
+    './app/components/**/*.js',
   ],
   safelist: {
     standard: [

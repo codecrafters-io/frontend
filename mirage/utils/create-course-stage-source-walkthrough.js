@@ -5,7 +5,7 @@ export default function createCourseStageSourceWalkthrough(server, course, stage
     sections: [
       {
         type: 'prose',
-        markdown: "Here's how Redis does this.",
+        markdown: "Here's how Redis does this. [ping_command](https://github.com/redis/redis)",
       },
       {
         type: 'referenced_code',
