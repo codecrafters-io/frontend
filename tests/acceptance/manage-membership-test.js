@@ -97,6 +97,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     this.server.schema.charges.create({
       user: subscription.user,
       amount: 7900,
+      amountRefunded: 0,
       currency: 'usd',
       createdAt: new Date(),
       invoiceId: 'invoice-id',
@@ -106,6 +107,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     this.server.schema.charges.create({
       user: subscription.user,
       amount: 3500,
+      amountRefunded: 0,
       currency: 'usd',
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7),
       invoiceId: 'invoice-id',
