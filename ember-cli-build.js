@@ -1,7 +1,7 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const isProduction = EmberApp.env() === 'production';
+// const _isProduction = EmberApp.env() === 'production';
 const cdnBaseURL = process.env.CDN_BASE_URL;
 const shouldUseCDN = !!cdnBaseURL;
 
