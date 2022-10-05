@@ -4,8 +4,31 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    // add extra paths here for components/controllers which include tailwind classes
+    './app/index.html',
+    './app/templates/**/*.hbs',
+    './app/components/**/*.hbs',
+  ],
+  safelist: {
+    standard: [
+      'inline', // Used by SVG stuff
+      'mx-1', // Used by SVG stuff
+      'w-4', // Used by SVG stuff
+      'whitespace-nowrap', // Used by SVG stuff
+    ],
+    greedy: [/ember-basic-dropdown-/, /prose/],
+    deep: [
+      // Ember's built-in components: <Input /> and <TextArea />
+      /^input$/,
+      /^textarea$/,
+      // There's something wrong with how we're picking styles from ember-animated
+      /ember-animated/,
+      /animated-container/,
+      /animated-orphans/,
+    ],
+  },
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     colors: {
       // Build your palette here
