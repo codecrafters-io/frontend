@@ -108,7 +108,7 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^1.36.0",
-    "@tailwindcss/typography": "^0.4.1",
+    "@tailwindcss/typography": "^0.5.7",
     "ansi_up": "^5.1.0",
     "array-to-sentence": "^2.0.0",
     "fuse.js": "^6.5.3",
