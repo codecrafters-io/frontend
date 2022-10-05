@@ -13,9 +13,21 @@
 
       {{#each this.charges as |charge|}}
         <div class="text-gray-600 text-sm">{{moment-format charge.createdAt "LL"}}</div>
-        <div class="font-semibold text-gray-600 text-sm text-right">${{charge.amountInDollars}}</div>
+
+        <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right">
+          <span class="font-semibold">${{charge.amountInDollars}}</span>
+          {{#if (gt charge.amountRefundedInDollars 0)}}
+            {{#if (eq charge.amountRefundedInDollars charge.amountInDollars)}}
+              (refunded)
+            {{else}}
+              (<span class="font-semibold">${{charge.amountRefundedInDollars}}</span>
+              refunded)
+            {{/if}}
+          {{/if}}
+        </div>
+
         <div class="flex items-center justify-end">
-          {{#if charge.invoiceId}}
+          {{#if (and charge.invoiceId charge.statusIsSucceeded)}}
             <a
               href="/invoices/{{charge.invoiceId}}/download"
               target="_blank"
@@ -25,6 +37,8 @@
             >
               Download Invoice
             </a>
+          {{else if charge.statusIsFailed}}
+            <span class="text-gray-600 text-sm">Payment failed</span>
           {{/if}}
         </div>
       {{/each}}
