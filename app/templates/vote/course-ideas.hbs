@@ -3,5 +3,7 @@
     <VotePage::CourseIdeaCard @courseIdea={{courseIdea}} />
   {{/each}}
 
-  <VotePage::SubmitCourseIdeaCard />
+  {{#if this.currentUserService.isAuthenticated}}
+    <VotePage::SubmitCourseIdeaCard />
+  {{/if}}
 </div>
