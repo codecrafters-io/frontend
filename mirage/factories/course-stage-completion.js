@@ -10,6 +10,10 @@ export default Factory.extend({
     let completedStagePosition = courseStageCompletion.courseStage.position;
     let nextStage = courseStageCompletion.repository.course.stages.models.find((x) => x.position === completedStagePosition + 1);
 
-    leaderboardEntry.update({ lastAttemptAt: courseStageCompletion.completedAt, currentCourseStage: nextStage || courseStageCompletion.courseStage });
+    leaderboardEntry.update({
+      lastAttemptAt: courseStageCompletion.completedAt,
+      currentCourseStage: nextStage || courseStageCompletion.courseStage,
+      status: nextStage ? 'idle' : 'completed',
+    });
   },
 });
