@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 import RSVP from 'rsvp';
 
-export default class CourseIdeasRoute extends ApplicationRoute {
+export default class VoteRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
   @service('current-user') currentUserService;
   @service router;
@@ -10,10 +10,6 @@ export default class CourseIdeasRoute extends ApplicationRoute {
 
   activate() {
     window.scrollTo({ top: 0 });
-
-    var scriptElement = document.createElement('script');
-    scriptElement.src = '//embed.typeform.com/next/embed.js';
-    document.getElementsByTagName('head')[0].appendChild(scriptElement);
   }
 
   model() {
