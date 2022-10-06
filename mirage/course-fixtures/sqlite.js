@@ -32,6 +32,8 @@ export default {
     "description": "Learn about SQLite's file format, how indexed data is stored in B-trees and more.",
     "difficulty": "hard",
     "introduction_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
+    "sample_extension_idea_title": "Transactions",
+    "sample_extension_idea_description": "A SQLite implementation that can handle atomic transactions using a write-ahead log (WAL) file",
     "testimonials": [
       {
         "author_name": "Ananthalakshmi Sankar",

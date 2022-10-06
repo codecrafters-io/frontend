@@ -64,6 +64,8 @@ export default {
     "description": "Learn about TCP servers, event loops, the Redis protocol and more",
     "difficulty": "medium",
     "introduction_md": "In this challenge, you’ll build an application that can speak the Redis\nprotocol, and is capable of serving basic commands like PING, ECHO, SET and\nGET. Along the way, you’ll learn about TCP servers, event loops and more.\n",
+    "sample_extension_idea_title": "Persistence",
+    "sample_extension_idea_description": "A Redis server that can read and write .rdb files",
     "testimonials": [
       {
         "author_name": "Charles Guo",

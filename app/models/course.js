@@ -8,6 +8,8 @@ export default class CourseModel extends Model {
   @attr('string') difficulty;
   @attr('string') name;
   @attr('string') releaseStatus;
+  @attr('string') sampleExtensionIdeaTitle;
+  @attr('string') sampleExtensionIdeaDescription;
   @attr('string') shortDescriptionMarkdown;
   @attr('string') shortName;
   @attr('string') slug;

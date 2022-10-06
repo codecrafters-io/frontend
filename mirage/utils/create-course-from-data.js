@@ -5,6 +5,8 @@ export default function createCourseFromData(server, courseData) {
     difficulty: courseData.marketing.difficulty,
     name: courseData.name,
     releaseStatus: courseData.release_status,
+    sampleExtensionIdeaTitle: courseData.marketing.sample_extension_idea_title,
+    sampleExtensionIdeaDescription: courseData.marketing.sample_extension_idea_description,
     shortName: courseData.name.replace(/Build your own /i, ''),
     shortDescriptionMarkdown: courseData.short_description_md,
     slug: courseData.slug,

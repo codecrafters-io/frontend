@@ -2,4 +2,8 @@
   {{#each this.orderedCourseIdeas as |courseIdea|}}
     <VotePage::CourseIdeaCard @courseIdea={{courseIdea}} />
   {{/each}}
+
+  {{#if this.currentUserService.isAuthenticated}}
+    <VotePage::SubmitCourseIdeaCard />
+  {{/if}}
 </div>

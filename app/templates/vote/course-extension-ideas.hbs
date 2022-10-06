@@ -13,4 +13,8 @@
   {{#each this.orderedCourseExtensionIdeas as |courseExtensionIdea|}}
     <VotePage::CourseExtensionIdeaCard @courseExtensionIdea={{courseExtensionIdea}} />
   {{/each}}
+
+  {{#if this.currentUserService.isAuthenticated}}
+    <VotePage::SubmitCourseExtensionIdeaCard @course={{this.selectedCourse}} />
+  {{/if}}
 </div>
