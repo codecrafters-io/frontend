@@ -50,13 +50,13 @@ export default class RepositoryModel extends Model {
   get activeStage() {
     if (!this.highestCompletedStage) {
       if (this.firstSubmissionCreated) {
-        return this.course.get('stages').sortBy('position').firstObject;
+        return this.course.stages.sortBy('position').firstObject;
       } else {
         return null;
       }
     }
 
-    let lastStagePosition = this.course.get('stages').mapBy('position').sort().lastObject;
+    let lastStagePosition = this.course.stages.sortBy('position').lastObject.position;
 
     if (this.highestCompletedStage.get('position') === lastStagePosition) {
       return this.course.get('stages').findBy('position', lastStagePosition);
@@ -66,7 +66,7 @@ export default class RepositoryModel extends Model {
   }
 
   get allStagesAreComplete() {
-    return this.highestCompletedStage && this.highestCompletedStage.position === this.course.stages.mapBy('position').sort().lastObject;
+    return this.highestCompletedStage && this.highestCompletedStage.position === this.course.stages.sortBy('position').lastObject.position;
   }
 
   get highestCompletedStage() {

@@ -203,6 +203,55 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 7', 'progress text must be shown');
   });
 
+  test('can view leaderboard when current user has completed all stages', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+
+    let otherUser = this.server.create('user', {
+      id: 'other-user',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: grep,
+      language: python,
+      user: currentUser,
+      createdAt: new Date(2002),
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: grep,
+      language: python,
+      user: otherUser,
+      createdAt: new Date(2003),
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own grep');
+
+    assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '12 / 12', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 12', 'progress text must be shown');
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.clickOnAction('Try a different language');
+
+    assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '12 / 12', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 12', 'progress text must be shown');
+  });
+
   test('team member can view leaderboard when no recent players in organization are present', async function (assert) {
     testScenario(this.server);
     signInAsTeamMember(this.owner, this.server);
