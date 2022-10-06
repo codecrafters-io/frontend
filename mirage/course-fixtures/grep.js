@@ -18,6 +18,8 @@ export default {
   ],
   "marketing": {
     "difficulty": "medium",
+    "sample_extension_idea_title": "Lookahead assertions",
+    "sample_extension_idea_description": "A grep implementation that can handle lookahead assertions like x(?=y)",
     "testimonials": [
       {
         "author_name": "Ananthalakshmi Sankar",
