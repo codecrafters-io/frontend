@@ -6,10 +6,10 @@ export default class HeaderComponent extends Component {
   @service router;
 
   get activeTab() {
-    if (this.router.currentRouteName === 'vote.course-ideas') {
-      return 'challenges';
-    } else {
+    if (this.router.currentRouteName === 'vote.course-extension-ideas') {
       return 'challenge-extensions';
+    } else {
+      return 'challenges';
     }
   }
 }
