@@ -3,7 +3,7 @@
     <VotePage::CoursePill
       @course={{course}}
       @isSelected={{eq this.selectedCourse course}}
-      class="mr-2 mb-3"
+      class="mr-2 mb-3 flex-shrink-0"
       {{on "click" (fn (mut this.selectedCourseSlug) course.slug)}}
     />
   {{/each}}
