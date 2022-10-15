@@ -39,7 +39,11 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+    if (this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot) {
+      return true;
+    }
+
+    return !this.hasActiveFreeUsageRestriction;
   }
 
   get completedCourseParticipations() {
@@ -76,6 +80,10 @@ export default class UserModel extends Model {
 
   get hasActiveSubscription() {
     return !!this.activeSubscription;
+  }
+
+  get hasActiveFreeUsageRestriction() {
+    return this.freeUsageRestrictions.isAny('isActive');
   }
 
   get isEligibleForEarlyBirdDiscount() {
