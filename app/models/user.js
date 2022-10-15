@@ -39,15 +39,28 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    if (this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot) {
-      return true;
-    }
+    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+  }
 
-    return !this.hasActiveFreeUsageRestriction;
+  canAttemptCourseStage(courseStage) {
+    return courseStage.isFirst || this.canAccessPaidContent || this.hasNoFreeUsageRestriction;
+  }
+
+  canCreateRepository(/* _course, _language */) {
+    // course & language are unused, earlier we used to limit access based on payment status
+    return true;
+  }
+
+  canViewCourseStageSolution(courseStage) {
+    return courseStage.position <= 3 || this.canAccessPaidContent || this.hasNoFreeUsageRestriction;
   }
 
   get completedCourseParticipations() {
     return this.courseParticipations.filterBy('isCompleted');
+  }
+
+  get codecraftersProfileUrl() {
+    return `/users/${this.username}`;
   }
 
   get expiredSubscription() {
@@ -56,18 +69,6 @@ export default class UserModel extends Model {
     } else {
       return this.subscriptions.sortBy('startDate').reverse().findBy('isInactive');
     }
-  }
-
-  canCreateRepository(course, language) {
-    if (language.isRust) {
-      return true;
-    } else {
-      return this.canAccessPaidContent;
-    }
-  }
-
-  get codecraftersProfileUrl() {
-    return `/users/${this.username}`;
   }
 
   get earlyBirdDiscountEligibilityExpiresAt() {
@@ -82,8 +83,12 @@ export default class UserModel extends Model {
     return !!this.activeSubscription;
   }
 
-  get hasActiveFreeUsageRestriction() {
+  get hasFreeUsageRestriction() {
     return this.freeUsageRestrictions.isAny('isActive');
+  }
+
+  get hasNoFreeUsageRestriction() {
+    return !this.hasFreeUsageRestriction;
   }
 
   get isEligibleForEarlyBirdDiscount() {

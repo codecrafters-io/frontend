@@ -15,21 +15,17 @@ export default class CoursePageContentComponent extends Component {
 
   @action
   async handleViewSourceWalkthroughButtonClick(courseStage) {
-    if (courseStage.solutionIsAccessibleToMembersOnly && !this.currentUser.canAccessPaidContent) {
-      this.router.transitionTo('pay');
-    } else {
-      this.currentCourseStageForSolution = null;
-      this.currentCourseStageForSourceWalkthrough = courseStage;
-    }
+    this.currentCourseStageForSolution = null;
+    this.currentCourseStageForSourceWalkthrough = courseStage;
   }
 
   @action
   async handleViewSolutionButtonClick(courseStage) {
-    if (courseStage.solutionIsAccessibleToMembersOnly && !this.currentUser.canAccessPaidContent) {
-      this.router.transitionTo('pay');
-    } else {
+    if (this.currentUser.canViewCourseStageSolution(courseStage)) {
       this.currentCourseStageForSourceWalkthrough = null;
       this.currentCourseStageForSolution = courseStage;
+    } else {
+      this.router.transitionTo('pay');
     }
   }
 
