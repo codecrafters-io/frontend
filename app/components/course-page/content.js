@@ -21,12 +21,8 @@ export default class CoursePageContentComponent extends Component {
 
   @action
   async handleViewSolutionButtonClick(courseStage) {
-    if (this.currentUser.canViewCourseStageSolution(courseStage)) {
-      this.currentCourseStageForSourceWalkthrough = null;
-      this.currentCourseStageForSolution = courseStage;
-    } else {
-      this.router.transitionTo('pay');
-    }
+    this.currentCourseStageForSourceWalkthrough = null;
+    this.currentCourseStageForSolution = courseStage;
   }
 
   @action
