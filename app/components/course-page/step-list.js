@@ -165,18 +165,6 @@ export default class CoursePageContentStepListComponent extends Component {
     });
   }
 
-  get shouldSuppressUpgradePrompts() {
-    if (this.repository.activeStage) {
-      return this.repository.user.canAttemptCourseStage(this.repository.activeStage);
-    } else {
-      return true; // Hasn't pushed first submission yet
-    }
-  }
-
-  get shouldShowUpgradePromptForActiveStage() {
-    return !this.shouldSuppressUpgradePrompts;
-  }
-
   startRepositoryPoller() {
     this.stopRepositoryPoller();
 
