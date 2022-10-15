@@ -20,6 +20,7 @@ export default class UserModel extends Model {
   @hasMany('course-idea-supervote-grants', { async: false }) courseIdeaSupervoteGrants;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
+  @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
