@@ -43,7 +43,7 @@ export default class CourseModel extends Model {
   }
 
   get firstStage() {
-    return this.stages.sortBy('position').get('firstObject');
+    return this.stages.sortBy('position').firstObject;
   }
 
   get logoUrl() {
