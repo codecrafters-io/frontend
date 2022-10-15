@@ -51,8 +51,9 @@ export default class UserModel extends Model {
     return true;
   }
 
-  canViewCourseStageSolution(courseStage) {
-    return courseStage.position <= 3 || this.canAccessPaidContent || this.hasNoFreeUsageRestriction;
+  canViewCourseStageSolution(/* courseStage */) {
+    // courseStage is unused, earlier we used to limit access based on payment status
+    return true;
   }
 
   get completedCourseParticipations() {
