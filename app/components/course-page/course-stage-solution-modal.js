@@ -33,7 +33,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.requestedSolutionLanguage = this.args.repositoryLanguage || this.args.courseStage.solutions.firstObject.language;
+    this.requestedSolutionLanguage = this.args.repositoryLanguage || this.args.courseStage.solutions.sortBy('language.name').firstObject.language;
 
     // intent is either view_solution or view_source_walkthrough
     if (this.args.intent === 'view_solution' && this.solution) {
@@ -97,6 +97,6 @@ export default class CourseStageSolutionModalComponent extends Component {
   get solution() {
     const solutionForRequestedLanguage = this.args.courseStage.solutions.findBy('language', this.requestedSolutionLanguage);
 
-    return solutionForRequestedLanguage ? solutionForRequestedLanguage : this.args.courseStage.solutions.firstObject;
+    return solutionForRequestedLanguage ? solutionForRequestedLanguage : this.args.courseStage.solutions.sortBy('language.name').firstObject;
   }
 }
