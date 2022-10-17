@@ -21,7 +21,8 @@
           <CoursePage::CourseStageSolutionModal::LanguageDropdownLink
             @language={{language}}
             @isEnabled={{true}}
-            @isSelected={{eq language @currentLanguage}}
+            @isCurrent={{eq language @currentLanguage}}
+            @isRequested={{eq language @requestedLanguage}}
             @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
           />
         {{/each}}
@@ -35,7 +36,8 @@
             <CoursePage::CourseStageSolutionModal::LanguageDropdownLink
               @language={{language}}
               @isEnabled={{false}}
-              @isSelected={{eq language @currentLanguage}}
+              @isCurrent={{eq language @currentLanguage}}
+              @isRequested={{eq language @requestedLanguage}}
               @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
             />
           {{/each}}
