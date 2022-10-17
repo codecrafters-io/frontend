@@ -9,7 +9,7 @@
         data-test-language-dropdown-trigger
       >
         <span class="mr-1" data-test-current-language-name>
-          {{@requestedLanguage.name}}
+          {{@currentLanguage.name}}
         </span>
 
         {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
@@ -21,7 +21,8 @@
           <CoursePage::CourseStageSolutionModal::LanguageDropdownLink
             @language={{language}}
             @isEnabled={{true}}
-            @isSelected={{eq language @requestedLanguage}}
+            @isCurrent={{eq language @currentLanguage}}
+            @isRequested={{eq language @requestedLanguage}}
             @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
           />
         {{/each}}
@@ -34,8 +35,9 @@
           {{#each this.languagesWithoutSolutions as |language|}}
             <CoursePage::CourseStageSolutionModal::LanguageDropdownLink
               @language={{language}}
-              @isEnabled={{true}}
-              @isSelected={{eq language @requestedLanguage}}
+              @isEnabled={{false}}
+              @isCurrent={{eq language @currentLanguage}}
+              @isRequested={{eq language @requestedLanguage}}
               @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
             />
           {{/each}}

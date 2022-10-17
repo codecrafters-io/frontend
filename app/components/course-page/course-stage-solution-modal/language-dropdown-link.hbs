@@ -5,14 +5,22 @@
   {{on "click" @onClick}}
 >
   <div class="flex items-center mr-8">
-    <span class="{{if @isSelected 'font-bold'}}">{{@language.name}}</span>
+    <span class="{{if (or @isRequested @isCurrent) 'font-semibold'}} {{if (or @isRequested @isEnabled) 'text-gray-600' 'text-gray-300'}}">
+      {{@language.name}}
+    </span>
   </div>
   <div>
-    {{#if @isSelected}}
+    {{#if @isCurrent}}
       {{svg-jar "check-circle" class="w-4 fill-current text-teal-500"}}
+    {{else if (and @isRequested (not @isCurrent))}}
+      {{svg-jar "exclamation" class="w-4 fill-current text-yellow-500"}}
     {{else}}
-      <img src={{@language.grayLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 block group-hover:hidden" />
-      <img src={{@language.tealLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 hidden group-hover:block" />
+      {{#if @isEnabled}}
+        <img src={{@language.grayLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 block group-hover:hidden" />
+        <img src={{@language.tealLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 hidden group-hover:block" />
+      {{else}}
+        <img src={{@language.grayLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 opacity-75" />
+      {{/if}}
     {{/if}}
   </div>
 </div>

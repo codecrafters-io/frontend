@@ -45,7 +45,6 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.courseStageSolutionModal.languageDropdown.toggle();
     await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Python', 'Python is selected');
     assert.ok(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should be visible');
 
     assert.strictEqual(
