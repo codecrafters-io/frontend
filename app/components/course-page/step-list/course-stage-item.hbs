@@ -30,9 +30,23 @@
 
     <CoursePage::StepList::CourseStageItem::ActionButtonList
       @courseStage={{@courseStage}}
+      @repository={{@repository}}
       @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
       @onViewSourceWalkthroughButtonClick={{@onViewSourceWalkthroughButtonClick}}
+      @onFeedbackButtonClick={{this.handleFeedbackActionButtonClicked}}
+      @shouldHideFeedbackButtons={{this.automaticFeedbackFlowIsActive}}
     />
+
+    {{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
+      <CoursePage::StepList::CourseStageItem::FeedbackPrompt
+        @onClose={{this.handleFeedbackPromptClosed}}
+        @onSubmit={{this.handleFeedbackSubmitted}}
+        @courseStage={{@courseStage}}
+        @repository={{@repository}}
+        @wasTriggeredManually={{this.manualFeedbackFlowIsActive}}
+        class="mt-6"
+      />
+    {{/if}}
 
     <AnimatedContainer>
       {{#animated-if this.shouldShowFirstStageHints use=this.transition}}
@@ -40,13 +54,6 @@
           @courseStage={{@courseStage}}
           @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
           @repository={{@repository}}
-          class="mt-6"
-        />
-      {{else if this.shouldShowFeedbackPrompt}}
-        <CoursePage::StepList::CourseStageItem::FeedbackPrompt
-          @courseStage={{@courseStage}}
-          @repository={{@repository}}
-          @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
           class="mt-6"
         />
       {{/animated-if}}
