@@ -87,11 +87,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   @action
   handleViewSourceWalkthroughButtonClicked() {
-    if (this.solutionIsOnlyAccessibleToSubscribers) {
-      this.args.onViewSourceWalkthroughButtonClick();
-    } else {
-      this.router.transitionTo('pay');
-    }
+    this.args.onViewSourceWalkthroughButtonClick();
   }
 
   get instructionsHTML() {
@@ -141,10 +137,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get solutionIsAvailableInUserLanguage() {
     return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
-  }
-
-  get solutionIsOnlyAccessibleToSubscribers() {
-    return this.args.courseStage.position >= 4;
   }
 
   get status() {

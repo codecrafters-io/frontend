@@ -71,6 +71,10 @@ export default class UserModel extends Model {
     return new Date(this.createdAt.getTime() + 3 * 24 * 60 * 60 * 1000);
   }
 
+  get freeUsageRestriction() {
+    return this.freeUsageRestrictions.filterBy('isActive').sortBy('expiresAt').firstObject;
+  }
+
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;
   }
@@ -80,7 +84,7 @@ export default class UserModel extends Model {
   }
 
   get hasFreeUsageRestriction() {
-    return this.freeUsageRestrictions.isAny('isActive');
+    return !!this.freeUsageRestriction;
   }
 
   get hasNoFreeUsageRestriction() {
