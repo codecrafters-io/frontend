@@ -37,21 +37,23 @@
       @shouldHideFeedbackButtons={{this.automaticFeedbackFlowIsActive}}
     />
 
+    {{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
+      <CoursePage::StepList::CourseStageItem::FeedbackPrompt
+        @onClose={{this.handleFeedbackPromptClosed}}
+        @onSubmit={{this.handleFeedbackSubmitted}}
+        @courseStage={{@courseStage}}
+        @repository={{@repository}}
+        @wasTriggeredManually={{this.manualFeedbackFlowIsActive}}
+        class="mt-6"
+      />
+    {{/if}}
+
     <AnimatedContainer>
       {{#animated-if this.shouldShowFirstStageHints use=this.transition}}
         <CoursePage::StepList::CourseStageItem::FirstStageHint
           @courseStage={{@courseStage}}
           @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
           @repository={{@repository}}
-          class="mt-6"
-        />
-      {{else if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
-        <CoursePage::StepList::CourseStageItem::FeedbackPrompt
-          @onClose={{this.handleFeedbackPromptClosed}}
-          @onSubmit={{this.handleFeedbackSubmitted}}
-          @courseStage={{@courseStage}}
-          @repository={{@repository}}
-          @wasTriggeredManually={{this.manualFeedbackFlowIsActive}}
           class="mt-6"
         />
       {{/animated-if}}
