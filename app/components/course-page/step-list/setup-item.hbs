@@ -34,7 +34,7 @@
         <span class="text-gray-600" data-test-footer-text>Git push received.</span>
       {{else if this.shouldShowUpgradePrompt}}
         <StaticDot @class="flex-shrink-0 mr-3" @color="gray" />
-        <span class="text-gray-600" data-test-footer-text>Membership required.</span>
+        <span class="text-gray-600" data-test-footer-text>Daily limit reached.</span>
       {{else if @repository.isNew}}
         <StaticDot @class="mr-3" @color="gray" />
         <span class="text-gray-600" data-test-footer-text>Select a language to proceed</span>

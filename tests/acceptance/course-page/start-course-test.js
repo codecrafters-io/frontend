@@ -119,7 +119,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
 
     await coursePage.setupItem.clickOnLanguageButton('JavaScript');
-    assert.strictEqual(coursePage.setupItem.footerText, 'Membership required.');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Daily limit reached.');
 
     await percySnapshot('Start Course - No Subscription');
 
