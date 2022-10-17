@@ -74,7 +74,7 @@ export default class FeedbackPromptComponent extends Component {
   @action
   handleSubmitButtonClick() {
     this.feedbackSubmission.status = 'closed';
-    this.args.onViewNextStageButtonClick();
+    this.args.onSubmit();
 
     // Wait for animation to complete
     later(
@@ -84,5 +84,9 @@ export default class FeedbackPromptComponent extends Component {
       },
       500
     );
+  }
+
+  get stageIsComplete() {
+    return this.args.repository.stageIsComplete(this.args.courseStage);
   }
 }

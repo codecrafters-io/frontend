@@ -1,16 +1,26 @@
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import moment from 'moment';
 import showdown from 'showdown';
 import Mustache from 'mustache';
 
-export default class CoursePageStepListStageItemComponent extends Component {
+export default class CourseStageItemComponent extends Component {
   @service store;
   @service visibility;
+  @tracked manualFeedbackFlowIsActive = false;
   transition = fade;
+
+  get automaticFeedbackFlowIsActive() {
+    return (
+      this.args.shouldShowFeedbackPromptIfStageIsComplete &&
+      this.args.repository.highestCompletedStage === this.args.courseStage &&
+      !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
+    );
+  }
 
   get completedAt() {
     return this.args.repository.stageCompletedAt(this.args.courseStage);
@@ -49,6 +59,25 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get firstStageReadmeHintMarkdownTemplate() {
     return `Since this is your first stage, you can consult [**the README**]({{readme_url}}) in your repository for instructions on how to pass.`;
+  }
+
+  @action
+  handleFeedbackActionButtonClicked() {
+    this.manualFeedbackFlowIsActive = true;
+  }
+
+  @action
+  handleFeedbackPromptClosed() {
+    this.manualFeedbackFlowIsActive = false;
+  }
+
+  @action
+  handleFeedbackSubmitted() {
+    if (this.manualFeedbackFlowIsActive) {
+      this.manualFeedbackFlowIsActive = false;
+    } else {
+      this.args.onViewNextStageButtonClick();
+    }
   }
 
   @action
@@ -100,14 +129,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get shouldShowFirstStageHints() {
     return this.args.courseStage.isFirst && !this.statusIsComplete;
-  }
-
-  get shouldShowFeedbackPrompt() {
-    return (
-      this.args.shouldShowFeedbackPromptIfStageIsComplete &&
-      this.args.repository.highestCompletedStage === this.args.courseStage &&
-      !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
-    );
   }
 
   get shouldShowUpgradePrompt() {

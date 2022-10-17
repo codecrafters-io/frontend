@@ -9,12 +9,30 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   transition = fade;
 
   get anyButtonIsVisible() {
-    return this.shouldShowViewSolutionButton || this.shouldShowViewTestCasesButton || this.shouldShowViewSourceWalkthroughButton;
+    return (
+      this.shouldShowViewSolutionButton ||
+      this.shouldShowViewTestCasesButton ||
+      this.shouldShowViewSourceWalkthroughButton ||
+      this.shouldShowSubmitFeedbackButton ||
+      this.shouldShowEditFeedbackButton
+    );
   }
 
   @action
   handleViewTestCasesButtonClicked() {
     window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
+  }
+
+  get shouldShowEditFeedbackButton() {
+    return !this.args.shouldHideFeedbackButtons && !!this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage);
+  }
+
+  get shouldShowSubmitFeedbackButton() {
+    return (
+      !this.args.shouldHideFeedbackButtons &&
+      !this.shouldShowEditFeedbackButton &&
+      (this.args.repository.stageIsComplete(this.args.courseStage) || this.args.repository.activeStage === this.args.courseStage)
+    );
   }
 
   get shouldShowViewSolutionButton() {

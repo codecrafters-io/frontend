@@ -30,8 +30,11 @@
 
     <CoursePage::StepList::CourseStageItem::ActionButtonList
       @courseStage={{@courseStage}}
+      @repository={{@repository}}
       @onViewSolutionButtonClick={{@onViewSolutionButtonClick}}
       @onViewSourceWalkthroughButtonClick={{@onViewSourceWalkthroughButtonClick}}
+      @onFeedbackButtonClick={{this.handleFeedbackActionButtonClicked}}
+      @shouldHideFeedbackButtons={{this.automaticFeedbackFlowIsActive}}
     />
 
     <AnimatedContainer>
@@ -42,11 +45,13 @@
           @repository={{@repository}}
           class="mt-6"
         />
-      {{else if this.shouldShowFeedbackPrompt}}
+      {{else if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
         <CoursePage::StepList::CourseStageItem::FeedbackPrompt
+          @onClose={{this.handleFeedbackPromptClosed}}
+          @onSubmit={{this.handleFeedbackSubmitted}}
           @courseStage={{@courseStage}}
           @repository={{@repository}}
-          @onViewNextStageButtonClick={{@onViewNextStageButtonClick}}
+          @wasTriggeredManually={{this.manualFeedbackFlowIsActive}}
           class="mt-6"
         />
       {{/animated-if}}
