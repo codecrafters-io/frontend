@@ -165,14 +165,6 @@ export default class CoursePageContentStepListComponent extends Component {
     });
   }
 
-  get shouldSuppressUpgradePrompts() {
-    return this.repository.user.canAccessPaidContent || this.repository.get('language.isRust');
-  }
-
-  get shouldShowUpgradePromptForActiveStage() {
-    return !this.shouldSuppressUpgradePrompts;
-  }
-
   startRepositoryPoller() {
     this.stopRepositoryPoller();
 

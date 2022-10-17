@@ -20,6 +20,7 @@ export default class UserModel extends Model {
   @hasMany('course-idea-supervote-grants', { async: false }) courseIdeaSupervoteGrants;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
+  @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
@@ -41,8 +42,21 @@ export default class UserModel extends Model {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
+  canAttemptCourseStage(courseStage) {
+    return courseStage.isFirst || this.canAccessPaidContent || this.hasNoFreeUsageRestriction;
+  }
+
+  canCreateRepository(/* _course, _language */) {
+    // course & language are unused, earlier we used to limit access based on payment status
+    return true;
+  }
+
   get completedCourseParticipations() {
     return this.courseParticipations.filterBy('isCompleted');
+  }
+
+  get codecraftersProfileUrl() {
+    return `/users/${this.username}`;
   }
 
   get expiredSubscription() {
@@ -53,20 +67,12 @@ export default class UserModel extends Model {
     }
   }
 
-  canCreateRepository(course, language) {
-    if (language.isRust) {
-      return true;
-    } else {
-      return this.canAccessPaidContent;
-    }
-  }
-
-  get codecraftersProfileUrl() {
-    return `/users/${this.username}`;
-  }
-
   get earlyBirdDiscountEligibilityExpiresAt() {
     return new Date(this.createdAt.getTime() + 3 * 24 * 60 * 60 * 1000);
+  }
+
+  get freeUsageRestriction() {
+    return this.freeUsageRestrictions.filterBy('isActive').sortBy('expiresAt').firstObject;
   }
 
   get githubProfileUrl() {
@@ -75,6 +81,14 @@ export default class UserModel extends Model {
 
   get hasActiveSubscription() {
     return !!this.activeSubscription;
+  }
+
+  get hasFreeUsageRestriction() {
+    return !!this.freeUsageRestriction;
+  }
+
+  get hasNoFreeUsageRestriction() {
+    return !this.hasFreeUsageRestriction;
   }
 
   get isEligibleForEarlyBirdDiscount() {

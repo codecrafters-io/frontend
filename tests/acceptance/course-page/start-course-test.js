@@ -103,7 +103,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
   });
 
-  test('non-subscriber cannot start course if paid', async function (assert) {
+  // We don't restrict repository creation anymore
+  test.skip('non-subscriber cannot start course if paid', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -118,29 +119,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
 
     await coursePage.setupItem.clickOnLanguageButton('JavaScript');
-    assert.strictEqual(coursePage.setupItem.footerText, 'Membership required.');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Daily limit reached.');
 
     await percySnapshot('Start Course - No Subscription');
-
-    await animationsSettled();
-  });
-
-  test('non-subscriber can start course using Rust', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-
-    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
-    assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
-    assert.strictEqual(coursePage.setupItem.footerText, 'Select a language to proceed', 'footer text is select language to proceed');
-
-    await coursePage.setupItem.clickOnLanguageButton('Rust');
-    assert.strictEqual(coursePage.setupItem.footerText, 'Listening for a git push...');
 
     await animationsSettled();
   });

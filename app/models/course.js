@@ -42,6 +42,10 @@ export default class CourseModel extends Model {
     return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
   }
 
+  get firstStage() {
+    return this.stages.sortBy('position').firstObject;
+  }
+
   get logoUrl() {
     return {
       redis: '/assets/images/challenge-logos/challenge-logo-redis.svg',

@@ -116,11 +116,18 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
-  test('stages should have an upgrade prompt if language is go and user signed up on/after 17 Jun', async function (assert) {
+  test('stages should have an upgrade prompt if user has a free usage restriction', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
+
+    this.server.create('free-usage-restriction', {
+      user: currentUser,
+      expiresAt: new Date(2025, 1, 1),
+    });
+
+    signIn(this.owner, this.server);
+
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
@@ -152,7 +159,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
     assert.ok(coursePage.activeCourseStageItem.upgradePrompt.colorIsYellow, 'course stage prompt should be yellow if stage is current');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be subscription required');
+    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'DAILY LIMIT REACHED', 'status text should be daily limit reached');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 

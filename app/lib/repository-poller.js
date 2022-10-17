@@ -5,6 +5,7 @@ export default class RepositoryPoller extends Poller {
     'language',
     'course',
     'user',
+    'user.free-usage-restrictions',
     'course-stage-completions',
     'course-stage-completions.course-stage',
     'course-stage-feedback-submissions',

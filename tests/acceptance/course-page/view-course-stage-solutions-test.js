@@ -141,58 +141,6 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should be closed');
   });
 
-  test('attempting to view solutions for stage 4+ should redirect to /pay if user is not a subscriber', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: go,
-      name: 'Go',
-      user: currentUser,
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
-    });
-
-    this.server.create('course-stage-feedback-submission', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
-      status: 'closed',
-    });
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
-
-    await coursePage.collapsedItems[3].click(); // The previous completed stage
-    await animationsSettled();
-
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
-    assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
-    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'route should be course route');
-
-    await coursePage.collapsedItems[4].click(); // The next pending stage
-    await animationsSettled();
-
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
-    assert.notOk(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
-
-    assert.strictEqual(currentURL(), '/pay', 'route should be pay');
-  });
-
   test('viewing solution should not lead to /pay if user is a subscriber', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
