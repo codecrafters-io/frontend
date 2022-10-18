@@ -25,6 +25,7 @@ export default class CourseIdeaCardComponent extends Component {
   async handleSupervoteButtonClick() {
     if (this.currentUserService.isAnonymous) {
       window.location.href = '/login?next=' + this.router.currentURL;
+      return;
     }
 
     if (!this.userHasSupervotesAvailable) {
@@ -44,6 +45,7 @@ export default class CourseIdeaCardComponent extends Component {
   async handleVoteButtonClick() {
     if (this.currentUserService.isAnonymous) {
       window.location.href = '/login?next=' + this.router.currentURL;
+      return;
     }
 
     if (this.isVotingOrUnvoting) {
