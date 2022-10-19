@@ -10,8 +10,8 @@
   <div class="{{if (eq @color 'gray') 'text-gray-500' 'text-yellow-700'}} text-sm leading-relaxed">
     {{#if this.freeUsageRestrictionExpiresAt}}
       <div>
-        You can attempt this stage at
-        <span class="font-semibold">{{moment-format this.freeUsageRestrictionExpiresAt "LLL"}}.</span>
+        You can unlock this stage
+        <span class="">{{this.humanFriendlyFreeUsageRestrictionExpiresAt}}.</span>
       </div>
       <div>
         Want unlimited access?
