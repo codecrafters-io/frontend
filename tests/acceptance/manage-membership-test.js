@@ -123,10 +123,8 @@ module('Acceptance | manage-membership-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    let subscription = this.server.schema.subscriptions.first();
-
     await membershipPage.visit();
-    assert.equal(1, 1);
+    assert.strictEqual(1, 1);
   });
 
   test('subscriber can update payment method', async function (assert) {
