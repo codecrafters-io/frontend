@@ -2,7 +2,7 @@
   class="flex items-center justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2 {{if @membership.isAdmin 'cursor-not-allowed'}}"
   data-test-members-list-item-container
 >
-  <div class="flex items-center">
+  <a href={{@membership.user.codecraftersProfileUrl}} class="flex items-center hover:underline" target="_blank" rel="noopener noreferrer">
     <AvatarImage
       @user={{@membership.user}}
       class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
@@ -20,7 +20,7 @@
         <span class="text-gray-400 text-xs">joined {{moment-from-now @membership.createdAt}}</span>
       </div>
     </div>
-  </div>
+  </a>
   <div class="flex items-center">
     {{#unless @membership.isSoleAdmin}}
       {{#if this.isRemoving}}
