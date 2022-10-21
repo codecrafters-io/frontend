@@ -130,8 +130,12 @@ UserModel.prototype.fetchNextInvoicePreview = memberAction({
   type: 'get',
 
   after(response) {
-    this.store.pushPayload(response);
+    if (response.data) {
+      this.store.pushPayload(response);
 
-    return this.store.peekRecord('invoice', response.data.id);
+      return this.store.peekRecord('invoice', response.data.id);
+    } else {
+      return null;
+    }
   },
 });

@@ -119,6 +119,16 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(membershipPage.recentPaymentsSection.downloadInvoiceLinks.length, 2);
   });
 
+  test('subscriber can view upcoming payments', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let subscription = this.server.schema.subscriptions.first();
+
+    await membershipPage.visit();
+    assert.equal(1, 1);
+  });
+
   test('subscriber can update payment method', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
