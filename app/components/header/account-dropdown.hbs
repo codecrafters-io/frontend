@@ -26,6 +26,8 @@
         <Header::AccountDropdownLink @text="Invite Your Team" @icon="users" {{on "click" (fn this.handleCreateTeamClick dd.actions)}} />
       {{/if}}
 
+      <Header::AccountDropdownLink @text="Your Profile" @icon="user" {{on "click" (fn this.handleViewProfileClick dd.actions)}} />
+
       {{#if this.currentUser.hasActiveSubscription}}
         <div
           class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"

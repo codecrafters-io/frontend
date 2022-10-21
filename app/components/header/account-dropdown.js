@@ -71,6 +71,12 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
+  handleViewProfileClick(dropdownActions) {
+    dropdownActions.close();
+    this.router.transitionTo('user', this.currentUser.username);
+  }
+
+  @action
   handleViewTeamClick(dropdownActions, team) {
     dropdownActions.close();
     this.router.transitionTo('team', team.id);

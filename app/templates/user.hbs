@@ -11,7 +11,13 @@
         <UserPage::ActivityContainer @user={{this.model}} class="mb-16" />
       {{else}}
         <div class="text-gray-400 text-center py-16">
-          This user has no activity on CodeCrafters yet.
+          {{#if (eq this.currentUser this.model)}}
+            When you complete stages your progress will appear here.
+            <br /><br />
+            <a href="https://app.codecrafters.io/users/jennkao" class="underline text-gray-600">See an example</a>.
+          {{else}}
+            This user has no activity on CodeCrafters yet.
+          {{/if}}
         </div>
       {{/if}}
     </div>
