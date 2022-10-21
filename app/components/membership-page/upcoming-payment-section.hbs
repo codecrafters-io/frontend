@@ -6,7 +6,7 @@
     </div>
   {{else if this.nextInvoicePreview}}
     Your payment method will be charged
-    <span class="font-semibold">${{if this.isLoading "⋯" this.nextInvoicePreview.totalAmountInDollars}}</span>
+    <span class="font-semibold">${{if this.isLoading "⋯" this.nextInvoicePreview.amountDueInDollars}}</span>
     on
     {{if this.isLoading "⋯" (moment-format this.nextInvoicePreview.createdAt "LL")}}.
   {{else}}

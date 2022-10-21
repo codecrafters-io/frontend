@@ -136,7 +136,7 @@ function routes() {
   });
 
   this.get('/teams/:id/first-invoice-preview', function (schema) {
-    return schema.invoices.create({ total: 790000, lineItems: [{ amount: 790000, amount_after_discounts: 790000, quantity: 10 }] });
+    return schema.invoices.create({ amountDue: 790000, lineItems: [{ amount: 790000, amount_after_discounts: 790000, quantity: 10 }] });
   });
 
   this.post('/team-subscriptions');
@@ -156,7 +156,7 @@ function routes() {
     const amount = teamPaymentFlow.numberOfSeats * 79000;
 
     return schema.invoices.create({
-      total: amount,
+      amountDue: amount,
       lineItems: [{ amount: amount, amount_after_discounts: amount, quantity: teamPaymentFlow.numberOfSeats }],
     });
   });
@@ -186,7 +186,7 @@ function routes() {
   this.get('/users/:id/next-invoice-preview', function (schema) {
     return schema.invoices.create({
       createdAt: new Date(2025, 1, 1),
-      total: 7900,
+      amountDue: 7900,
       lineItems: [{ amount: 7900, amount_after_discounts: 7900, quantity: 1 }],
     });
   });
