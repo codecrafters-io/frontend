@@ -1,5 +1,17 @@
-<MembershipPage::Section @title="Upcoming Payment">
-  <div class="text-gray-700">
-    No upcoming payment.
-  </div>
+<MembershipPage::Section @title="Upcoming Payment" {{did-insert this.handleDidInsert}}>
+  {{#if this.isLoading}}
+    <div class="flex items-center mt-3">
+      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
+      <span class="ml-3 text-gray-700">Loading upcoming payments...</span>
+    </div>
+  {{else if this.nextInvoicePreview}}
+    Your payment method will be charged
+    <span class="font-semibold">${{if this.isLoading "⋯" this.nextInvoicePreview.totalAmountInDollars}}</span>
+    on
+    {{if this.isLoading "⋯" (moment-format this.nextInvoicePreview.createdAt "LL")}}.
+  {{else}}
+    <div class="text-gray-700">
+      No upcoming payment.
+    </div>
+  {{/if}}
 </MembershipPage::Section>

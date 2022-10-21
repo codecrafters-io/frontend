@@ -1,4 +1,5 @@
 import { attr, hasMany } from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 import Model from '@ember-data/model';
 
 export default class UserModel extends Model {
@@ -123,3 +124,14 @@ export default class UserModel extends Model {
     return this.teamMemberships.mapBy('team');
   }
 }
+
+UserModel.prototype.fetchNextInvoicePreview = memberAction({
+  path: 'next-invoice-preview',
+  type: 'get',
+
+  after(response) {
+    this.store.pushPayload(response);
+
+    return this.store.peekRecord('invoice', response.data.id);
+  },
+});

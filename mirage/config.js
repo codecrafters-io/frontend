@@ -183,6 +183,14 @@ function routes() {
 
   this.get('/users/:id');
 
+  this.get('/users/:id/next-invoice-preview', function (schema) {
+    return schema.invoices.create({
+      createdAt: new Date(2025, 1, 1),
+      total: 7900,
+      lineItems: [{ amount: 7900, amount_after_discounts: 7900, quantity: 1 }],
+    });
+  });
+
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
   this.passthrough('https://unpkg.com/**'); // Shiki
 }
