@@ -45,6 +45,8 @@ function routes() {
 
   this.patch('/feature-suggestions/:id');
 
+  this.patch('/free-usage-restrictions/:id');
+
   this.post('/individual-checkout-sessions', function (schema) {
     return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
   });
