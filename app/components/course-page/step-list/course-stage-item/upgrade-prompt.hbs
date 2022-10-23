@@ -8,22 +8,33 @@
   {{svg-jar "exclamation" class=(concat "w-8 h-8 mr-4 flex-shrink-0 " (if (eq @color "gray") "text-gray-300" "text-yellow-300"))}}
 
   <div class="{{if (eq @color 'gray') 'text-gray-500' 'text-yellow-700'}} text-sm leading-relaxed">
-    {{#if this.freeUsageRestrictionExpiresAt}}
-      <div>
-        You can unlock this stage
-        <span class="">{{this.humanFriendlyFreeUsageRestrictionExpiresAt}}.</span>
-      </div>
-      <div>
-        Want unlimited access?
-        <span class="underline" role="button" {{on "click" this.handleSubscribeLinkClicked}} data-test-subscribe-button>
-          <b>Start your 3-day free trial now.</b>
-        </span>
-      </div>
-    {{else}}
-      <div>This stage requires a CodeCrafters Membership.</div>
-      <div class="underline" role="button" {{on "click" this.handleSubscribeLinkClicked}} data-test-subscribe-button>
-        <b>Start your 3-day free trial now.</b>
-      </div>
-    {{/if}}
+    <div class="mb-1">
+      You can unlock this stage
+      <span class="">{{this.humanFriendlyFreeUsageRestrictionExpiresAt}}.</span>
+    </div>
+    <div class="mb-1">
+      {{#if this.freeUsageRestriction.expiryReminderIsEnabled}}
+        {{#if this.isSaving}}
+          <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2 inline" />
+        {{else}}
+          We'll send you an email reminder.
+          <span role="button" class="font-semibold underline" {{on "click" this.handleDisableEmailReminderButtonClicked}}>Click here</span>
+          to disable.
+        {{/if}}
+      {{else}}
+        {{#if this.isSaving}}
+          <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2 inline" />
+        {{else}}
+          <span role="button" class="font-semibold underline" {{on "click" this.handleEnableEmailReminderButtonClicked}}>Click here</span>
+          to receive an email reminder.
+        {{/if}}
+      {{/if}}
+    </div>
+    <div>
+      Want unlimited access?
+      <span class="underline" role="button" {{on "click" this.handleSubscribeLinkClicked}} data-test-subscribe-button>
+        <b class="font-semibold">Start your 3-day free trial now.</b>
+      </span>
+    </div>
   </div>
 </div>

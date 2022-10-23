@@ -3,14 +3,34 @@ import * as Sentry from '@sentry/ember';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class UpgradePromptComponent extends Component {
   @service('router') router;
   @service('current-user') currentUserService;
+  @tracked isSaving = false;
 
   @action
   handleSubscribeLinkClicked() {
     this.router.transitionTo('pay');
+  }
+
+  @action
+  async handleDisableEmailReminderButtonClicked() {
+    this.freeUsageRestriction.expiryReminderIsEnabled = false;
+
+    this.isSaving = true;
+    await this.freeUsageRestriction.save();
+    this.isSaving = false;
+  }
+
+  @action
+  async handleEnableEmailReminderButtonClicked() {
+    this.freeUsageRestriction.expiryReminderIsEnabled = true;
+
+    this.isSaving = true;
+    await this.freeUsageRestriction.save();
+    this.isSaving = false;
   }
 
   get humanFriendlyFreeUsageRestrictionExpiresAt() {
@@ -48,13 +68,11 @@ export default class UpgradePromptComponent extends Component {
     }
   }
 
-  get freeUsageRestrictionExpiresAt() {
-    if (this.currentUserService.record.freeUsageRestriction) {
-      return this.currentUserService.record.freeUsageRestriction.expiresAt;
-    } else {
-      Sentry.captureMessage('Upgrade prompt rendered for user with no free usage restriction');
+  get freeUsageRestriction() {
+    return this.currentUserService.record.freeUsageRestriction;
+  }
 
-      return null;
-    }
+  get freeUsageRestrictionExpiresAt() {
+    return this.freeUsageRestriction.expiresAt;
   }
 }

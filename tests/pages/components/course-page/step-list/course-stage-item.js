@@ -30,8 +30,6 @@ export default {
 
   upgradePrompt: {
     clickOnSubscribeButton: clickable('[data-test-subscribe-button]'),
-    colorIsGray: hasClass('text-gray-500', '.text-sm'),
-    colorIsYellow: hasClass('text-yellow-700', '.text-sm'),
     scope: '[data-test-upgrade-prompt]',
   },
 };
