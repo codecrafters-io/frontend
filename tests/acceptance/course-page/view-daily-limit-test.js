@@ -1,4 +1,3 @@
-import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import percySnapshot from '@percy/ember';
@@ -8,8 +7,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsSubscriber, signInAsSubscribedTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
   setupApplicationTest(hooks);

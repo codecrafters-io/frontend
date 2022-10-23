@@ -1,4 +1,4 @@
-import { attribute, clickable, clickOnText, hasClass, isPresent, text } from 'ember-cli-page-object';
+import { attribute, clickable, clickOnText, isPresent, text } from 'ember-cli-page-object';
 
 export default {
   clickOnActionButton: clickOnText('[data-test-action-button]'),
