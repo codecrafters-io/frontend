@@ -1,4 +1,5 @@
 import { attr } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 import Model from '@ember-data/model';
 
@@ -11,6 +12,9 @@ export default class TeamPaymentFlowModel extends Model {
   @attr('string') stripeSetupIntentId;
   @attr('string') stripeSetupIntentStatus;
   @attr('string') teamSetupUrl;
+
+  @equal('pricingPlanType', 'monthly') pricingPlanTypeIsMonthly;
+  @equal('pricingPlanType', 'yearly') pricingPlanTypeIsYearly;
 
   get contactEmailAddressIsComplete() {
     return this.contactEmailAddress && this.contactEmailAddress.trim().length > 0;
