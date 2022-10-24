@@ -15,8 +15,8 @@ export default class TeamModel extends Model {
   @hasMany('slack-integration', { async: false }) slackIntegrations;
   @hasMany('team-subscription', { async: false }) subscriptions;
 
-  @equal('pricingPlanType', 'per_seat') pricingPlanTypeIsPerSeat;
-  @equal('pricingPlanType', 'per_user') pricingPlanTypeIsPerUser;
+  @equal('pricingPlanType', 'monthly') pricingPlanTypeIsMonthly;
+  @equal('pricingPlanType', 'yearly') pricingPlanTypeIsYearly;
 
   get activePilot() {
     return this.pilots.sortBy('endDate').reverse().findBy('isActive');
@@ -64,10 +64,6 @@ export default class TeamModel extends Model {
 
   get members() {
     return this.memberships.mapBy('user');
-  }
-
-  get pricingUnitName() {
-    return this.pricingPlanTypeIsPerSeat ? 'seat' : 'user';
   }
 
   get slackIntegration() {

@@ -2,13 +2,9 @@
   <div class="text-gray-600 leading-7">
     <p class="mb-4">
       Your team's payment method will be charged
-      <span class="font-semibold">${{if
-          this.isLoadingFirstInvoicePreview
-          "⋯"
-          this.perUnitAmountInDollarsInFirstInvoicePreview
-        }}</span>/{{@teamPaymentFlow.pricingUnitName}}/yr for
-      <span class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}}
-        {{@teamPaymentFlow.pricingUnitName}}s</span>. Once payment is complete, we'll send you a team setup link.
+      <span class="font-semibold">${{if this.isLoadingFirstInvoicePreview "⋯" this.perUnitAmountInDollarsInFirstInvoicePreview}}</span>/seat/yr for
+      <span class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}} seats</span>. Once
+      payment is complete, we'll send you a team setup link.
     </p>
     <p>
       Click "Continue" below to proceed.
