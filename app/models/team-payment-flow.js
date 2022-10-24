@@ -28,6 +28,10 @@ export default class TeamPaymentFlowModel extends Model {
     return this.stripeSetupIntentStatus === 'succeeded';
   }
 
+  get pricingFrequencyUnit() {
+    return this.pricingPlanTypeIsMonthly ? 'mo' : 'yr';
+  }
+
   get pricingPlanTypeIsComplete() {
     return ['monthly', 'yearly'].includes(this.pricingPlanType);
   }

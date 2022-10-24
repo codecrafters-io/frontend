@@ -66,6 +66,10 @@ export default class TeamModel extends Model {
     return this.memberships.mapBy('user');
   }
 
+  get pricingFrequencyUnit() {
+    return this.pricingPlanTypeIsMonthly ? 'mo' : 'yr';
+  }
+
   get slackIntegration() {
     return this.slackIntegrations.firstObject;
   }
