@@ -12,7 +12,7 @@ export default class TeamsPayRoute extends ApplicationRoute {
     if (params.teamPaymentFlowId) {
       return await this.store.findRecord('team-payment-flow', params.teamPaymentFlowId);
     } else {
-      return this.store.createRecord('team-payment-flow', { pricingPlanType: 'per_seat', numberOfSeats: 10 });
+      return this.store.createRecord('team-payment-flow', { pricingPlanType: 'monthly', numberOfSeats: 10 });
     }
   }
 

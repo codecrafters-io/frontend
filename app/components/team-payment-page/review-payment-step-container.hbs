@@ -6,9 +6,10 @@
           this.isLoadingFirstInvoicePreview
           "⋯"
           this.perUnitAmountInDollarsInFirstInvoicePreview
-        }}</span>/{{@teamPaymentFlow.pricingUnitName}}/yr for
-      <span class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}}
-        {{@teamPaymentFlow.pricingUnitName}}s</span>. Once payment is complete, we'll send you a team setup link.
+        }}</span>/seat/{{@teamPaymentFlow.pricingFrequencyUnit}}
+      for
+      <span class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}} seats</span>. Once
+      payment is complete, we'll send you a team setup link.
     </p>
     <p>
       Click "Continue" below to proceed.

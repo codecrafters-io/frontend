@@ -71,7 +71,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     testScenario(this.server);
 
     const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-    const team = this.server.create('team', { id: 'dummy-team-id', name: 'Dummy Team', pricingPlanType: 'per_seat' });
+    const team = this.server.create('team', { id: 'dummy-team-id', name: 'Dummy Team', pricingPlanType: 'yearly' });
     this.server.schema.teamPilots.create({ team: team, endDate: new Date(1999, 0, 1) });
 
     this.server.create('team-membership', {

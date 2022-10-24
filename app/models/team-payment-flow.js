@@ -1,16 +1,20 @@
 import { attr } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 import Model from '@ember-data/model';
 
 export default class TeamPaymentFlowModel extends Model {
   @attr('string') teamName;
   @attr('string') contactEmailAddress;
-  @attr('string') pricingPlanType; // per_seat, per_user
+  @attr('string') pricingPlanType; // monthly, yearly
   @attr('number') numberOfSeats;
   @attr('string') stripeSetupIntentClientSecret;
   @attr('string') stripeSetupIntentId;
   @attr('string') stripeSetupIntentStatus;
   @attr('string') teamSetupUrl;
+
+  @equal('pricingPlanType', 'monthly') pricingPlanTypeIsMonthly;
+  @equal('pricingPlanType', 'yearly') pricingPlanTypeIsYearly;
 
   get contactEmailAddressIsComplete() {
     return this.contactEmailAddress && this.contactEmailAddress.trim().length > 0;
@@ -28,12 +32,12 @@ export default class TeamPaymentFlowModel extends Model {
     return this.stripeSetupIntentStatus === 'succeeded';
   }
 
-  get pricingPlanTypeIsComplete() {
-    return ['per_seat', 'per_user'].includes(this.pricingPlanType);
+  get pricingFrequencyUnit() {
+    return this.pricingPlanTypeIsMonthly ? 'mo' : 'yr';
   }
 
-  get pricingUnitName() {
-    return this.pricingPlanTypeIsPerSeat === 'per_seat' ? 'seat' : 'user';
+  get pricingPlanTypeIsComplete() {
+    return ['monthly', 'yearly'].includes(this.pricingPlanType);
   }
 }
 

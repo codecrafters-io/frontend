@@ -45,7 +45,7 @@ module('Acceptance | team-payment-test', function (hooks) {
       stripeSetupIntentStatus: 'succeeded',
       teamName: 'Microsoft',
       contactEmailAddress: 'paul@codecrafters.io',
-      pricingPlanType: 'per_user',
+      pricingPlanType: 'yearly',
       numberOfSeats: 10,
     });
 

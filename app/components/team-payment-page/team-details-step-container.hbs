@@ -29,18 +29,18 @@
 
     <TeamPaymentPage::TeamDetailsForm::Section @title="Pricing Plan" @description="Seat-based pricing allows you to re-assign seats anytime.">
       <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
-        @name="Per Seat"
-        @description="$990/seat/yr, minimum 5 seats"
+        @name="Monthly"
+        @description="$79/seat/month, minimum 5 seats"
         class="mb-4"
-        @selected={{eq @teamPaymentFlow.pricingPlanType "per_seat"}}
-        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "per_seat"}}
+        @selected={{eq @teamPaymentFlow.pricingPlanType "monthly"}}
+        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "monthly"}}
       />
 
       <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
-        @name="Per Developer"
-        @description="$490/dev/yr, minimum 5 developers"
-        @selected={{eq @teamPaymentFlow.pricingPlanType "per_user"}}
-        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "per_user"}}
+        @name="Yearly"
+        @description="$39/seat/month, minimum 5 seats (billed annually)"
+        @selected={{eq @teamPaymentFlow.pricingPlanType "yearly"}}
+        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "yearly"}}
       />
     </TeamPaymentPage::TeamDetailsForm::Section>
 

@@ -31,9 +31,9 @@
           this.isLoadingFirstInvoicePreview
           "⋯"
           this.perUnitAmountInDollarsInFirstInvoicePreview
-        }}</b>/{{@team.pricingUnitName}}/yr for
-      <b class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}}
-        {{@team.pricingUnitName}}s</b>.
+        }}</b>/seat/{{@team.pricingFrequencyUnit}}
+      for
+      <b class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}} seats</b>.
       <a href="mailto:sarup@codecrafters.io" class="text-teal-600 underline">Contact us</a>
       for questions.
     </div>
