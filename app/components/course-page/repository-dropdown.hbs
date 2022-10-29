@@ -3,7 +3,7 @@
     <dd.Trigger>
       <button
         type="button"
-        class="inline-flex justify-center w-full rounded-md border border-gray-300
+        class="inline-flex items-center justify-center w-full rounded-md border border-gray-300
           {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
           shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
       >
@@ -11,6 +11,7 @@
           {{or @activeRepository.name "New Repository"}}
         </span>
 
+        {{svg-jar "cog" class=(concat "fill-current w-4 transform transition-all text-gray-300")}}
         {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
       </button>
     </dd.Trigger>
