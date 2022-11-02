@@ -34,7 +34,7 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
         @onViewSourceWalkthroughButtonClick={{this.noop}} />
     `);
 
-    assert.strictEqual(this.element.querySelectorAll('a').length, 2);
-    assert.strictEqual(this.element.querySelectorAll('a[target="_blank"]').length, 2);
+    assert.strictEqual(this.element.querySelectorAll('a').length, 3); // includes first stage link
+    assert.strictEqual(this.element.querySelectorAll('a[target="_blank"]').length, 3);
   });
 });
