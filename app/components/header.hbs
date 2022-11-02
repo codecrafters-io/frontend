@@ -35,8 +35,12 @@
       </div>
 
       {{! Account Dropdown on Desktop }}
-      <div class="invisible md:visible mx-6">
+      <div class="invisible md:visible flex items-center mx-6">
         {{#if this.currentUserService.isAuthenticated}}
+          {{#if this.currentUserService.record.isCodecraftersPartner}}
+            <Header::VipBadge class="mr-3" />
+          {{/if}}
+
           <Header::AccountDropdown />
         {{else}}
           <Header::SignInWithGithubButton />
