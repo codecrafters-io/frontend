@@ -123,6 +123,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     }
   }
 
+  get shouldShowCLIUsageInstructions() {
+    return this.args.courseStage.isSecond;
+  }
+
   get shouldShowFirstStageHints() {
     return this.args.courseStage.isFirst && !this.statusIsComplete;
   }
