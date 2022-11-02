@@ -30,11 +30,15 @@ export default class CourseStageModel extends Model {
   }
 
   get isFirst() {
-    return this.position === 1;
+    return this === this.course.sortedStages.firstObject;
   }
 
   get isLast() {
     return this === this.course.sortedStages.lastObject;
+  }
+
+  get isSecond() {
+    return this === this.course.sortedStages[1];
   }
 
   get isPenultimate() {

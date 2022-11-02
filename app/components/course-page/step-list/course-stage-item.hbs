@@ -56,6 +56,8 @@
           @repository={{@repository}}
           class="mt-6"
         />
+      {{else if this.shouldShowCLIUsageInstructions}}
+        <CoursePage::StepList::CourseStageItem::CliUsageInstructions class="mt-6" />
       {{/animated-if}}
     </AnimatedContainer>
 
