@@ -6,11 +6,19 @@ import { inject as service } from '@ember/service';
 export default class CoursePageContentComponent extends Component {
   @tracked currentCourseStageForSolution;
   @tracked currentCourseStageForSourceWalkthrough;
+  @tracked isConfiguringGithubIntegration = false;
   @service('current-user') currentUserService;
   @service router;
 
   get currentUser() {
     return this.currentUserService.record;
+  }
+
+  @action
+  async handleModalClose() {
+    this.currentCourseStageForSolution = null;
+    this.currentCourseStageForSourceWalkthrough = null;
+    this.isConfiguringGithubIntegration = false;
   }
 
   @action
@@ -26,9 +34,10 @@ export default class CoursePageContentComponent extends Component {
   }
 
   @action
-  async handleCourseStageSolutionModalClose() {
-    this.currentCourseStageForSolution = null;
-    this.currentCourseStageForSourceWalkthrough = null;
+  async handlePublishToGithubButtonClick() {
+    await this.handleModalClose(); // Ensure other modals are closed.
+
+    this.isConfiguringGithubIntegration = true;
   }
 
   get isViewingCourseStageSolution() {

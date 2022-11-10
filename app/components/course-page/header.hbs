@@ -13,7 +13,11 @@
 
   {{#if @repositories.firstObject}}
     <div>
-      <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} />
+      <CoursePage::RepositoryDropdown
+        @repositories={{@repositories}}
+        @activeRepository={{@activeRepository}}
+        @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
+      />
     </div>
   {{/if}}
 </div>

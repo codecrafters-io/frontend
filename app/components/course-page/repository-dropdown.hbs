@@ -38,6 +38,19 @@
               {{/animated-if}}
             </AnimatedContainer>
           </div>
+
+          {{#if this.currentUserService.record.isStaff}}
+            <div
+              class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+              role="button"
+              {{on "click" (fn this.handlePublishToGithubButtonClick dd.actions)}}
+              data-test-dropdown-action
+            >
+              Publish to GitHub
+              {{svg-jar "github" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+            </div>
+          {{/if}}
+
           <div
             class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
             role="button"

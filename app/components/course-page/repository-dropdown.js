@@ -7,6 +7,7 @@ import fade from 'ember-animated/transitions/fade';
 
 export default class CoursePageRepositoryDropdownComponent extends Component {
   transition = fade;
+  @service('current-user') currentUserService;
   @service router;
   @tracked gitRepositoryURLWasCopiedRecently;
 
@@ -26,6 +27,12 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
       },
       1000
     );
+  }
+
+  @action
+  async handlePublishToGithubButtonClick(dropdownActions) {
+    this.args.onPublishToGithubButtonClick();
+    dropdownActions.close();
   }
 
   @action
