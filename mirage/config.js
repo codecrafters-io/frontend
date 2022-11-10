@@ -47,6 +47,8 @@ function routes() {
 
   this.patch('/free-usage-restrictions/:id');
 
+  this.get('/github-app-installations');
+
   this.post('/individual-checkout-sessions', function (schema) {
     return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
   });

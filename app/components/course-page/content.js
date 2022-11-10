@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
 
 export default class CoursePageContentComponent extends Component {
   @tracked currentCourseStageForSolution;
@@ -9,6 +10,18 @@ export default class CoursePageContentComponent extends Component {
   @tracked isConfiguringGithubIntegration = false;
   @service('current-user') currentUserService;
   @service router;
+
+  constructor() {
+    super(...arguments);
+
+    if (this.args.hasRecentlyCompletedGitHubIntegrationSetup) {
+      this.isConfiguringGithubIntegration = true;
+
+      next(() => {
+        this.router.transitionTo({ queryParams: { action: null } }); // reset param
+      });
+    }
+  }
 
   get currentUser() {
     return this.currentUserService.record;

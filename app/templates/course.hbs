@@ -8,6 +8,7 @@
 
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
   <CoursePage::Content
+    @hasRecentlyCompletedGitHubIntegrationSetup={{this.hasRecentlyCompletedGitHubIntegrationSetup}}
     @course={{this.course}}
     @repositories={{this.repositories}}
     @activeRepository={{this.activeRepository}}
