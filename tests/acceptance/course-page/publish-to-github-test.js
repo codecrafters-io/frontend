@@ -1,4 +1,4 @@
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -38,5 +38,7 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
 
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
+
+    await animationsSettled();
   });
 });
