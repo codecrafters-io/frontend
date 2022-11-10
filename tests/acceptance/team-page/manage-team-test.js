@@ -4,14 +4,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsTeamAdmin, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | team-page | manage-team-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
-  setupClock(hooks);
 
   test('team admin sees manage team option in account dropdown', async function (assert) {
     testScenario(this.server);

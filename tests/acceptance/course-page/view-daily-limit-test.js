@@ -1,7 +1,6 @@
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import percySnapshot from '@percy/ember';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -13,7 +12,6 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
 
   test('can view daily limit if user has a free usage restriction', async function (assert) {
     testScenario(this.server);

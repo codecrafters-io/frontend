@@ -5,7 +5,6 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createTeamPage from 'codecrafters-frontend/tests/pages/create-team-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
 
@@ -13,7 +12,6 @@ module('Acceptance | create-team-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
-  setupClock(hooks);
 
   test('can create a new team', async function (assert) {
     testScenario(this.server);

@@ -6,7 +6,6 @@ import { signInAsTeamAdmin } from 'codecrafters-frontend/tests/support/authentic
 import { waitUntil } from '@ember/test-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import teamPage from 'codecrafters-frontend/tests/pages/team-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
 
@@ -14,7 +13,6 @@ module('Acceptance | team-page | manage-team-members-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
-  setupClock(hooks);
 
   test('team admin can view team members & invite link when they are the only member', async function (assert) {
     testScenario(this.server);
