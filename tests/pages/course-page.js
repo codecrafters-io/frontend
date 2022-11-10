@@ -22,6 +22,14 @@ export default create({
     return this.activeCourseStageItem.isVisible;
   },
 
+  configureGithubIntegrationModal: {
+    get isOpen() {
+      return this.isVisible;
+    },
+
+    scope: '[data-test-configure-github-integration-modal]',
+  },
+
   courseStageSolutionModal: {
     get isOpen() {
       return this.isVisible;
