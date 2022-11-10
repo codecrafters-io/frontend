@@ -6,7 +6,6 @@ import { signInAsSubscriber, signInAsTrialingSubscriber } from 'codecrafters-fro
 import tracksPage from 'codecrafters-frontend/tests/pages/tracks-page';
 import moment from 'moment';
 import membershipPage from 'codecrafters-frontend/tests/pages/membership-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 
@@ -14,7 +13,6 @@ module('Acceptance | manage-membership-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
-  setupClock(hooks);
 
   test('subscriber can manage membership', async function (assert) {
     testScenario(this.server);

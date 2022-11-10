@@ -3,7 +3,6 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import teamPaymentPage from 'codecrafters-frontend/tests/pages/team-payment-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
 
@@ -11,7 +10,6 @@ module('Acceptance | team-payment-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
-  setupClock(hooks);
 
   hooks.beforeEach(function () {
     this.owner.lookup('service:serverVariables').set('stripePublishableKey', 'pk_test_12345');
