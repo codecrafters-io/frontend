@@ -41,7 +41,7 @@
 
           {{#if this.currentUserService.record.isStaff}}
             <div
-              class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+              class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group {{if @activeRepository.isNew 'text-gray-300'}}"
               role="button"
               {{on "click" (fn this.handlePublishToGithubButtonClick dd.actions)}}
               data-test-dropdown-action
