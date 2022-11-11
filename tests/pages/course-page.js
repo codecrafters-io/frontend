@@ -27,6 +27,9 @@ export default create({
       return this.isVisible;
     },
 
+    clickOnPublishButton: clickable('[data-test-publish-button]'),
+    clickOnDisconnectRepositoryButton: clickable('[data-test-disconnect-repository-button]'),
+
     scope: '[data-test-configure-github-integration-modal]',
   },
 

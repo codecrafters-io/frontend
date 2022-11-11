@@ -1,19 +1,22 @@
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import window from 'ember-window-mock';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | publish-to-github-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
+  setupWindowMock(hooks);
 
-  test('can setup GitHub integration', async function (assert) {
+  test('can initiate GitHub integration setup', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -38,7 +41,7 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
   });
 
-  test('can visit after installing GitHub integration', async function (assert) {
+  test('can complete GitHub integration setup', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -52,9 +55,15 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
       user: currentUser,
     });
 
-    this.server.create('github-app-installation', { user: currentUser });
+    this.server.create('github-app-installation', { user: currentUser, githubConfigureUrl: 'https://google.com' });
 
     await coursePage.visit({ course_slug: 'redis', action: 'github_app_installation_completed' });
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
+
+    window.confirm = () => true;
+
+    await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
+    await coursePage.configureGithubIntegrationModal.clickOnDisconnectRepositoryButton();
+    await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
   });
 });
