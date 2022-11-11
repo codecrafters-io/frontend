@@ -50,7 +50,10 @@ function routes() {
   this.get('/github-app-installations');
 
   this.get('/github-app-installations/:id/accessible-repositories', function (schema) {
-    return [{ id: 564057934, full_name: 'rohitpaulk/cc-publish-test', created_at: '2022-11-09T22:40:59Z' }];
+    return [
+      { id: 564057934, full_name: 'rohitpaulk/cc-publish-test', created_at: '2022-11-09T22:40:59Z' },
+      { id: 564057935, full_name: 'rohitpaulk/other-repo', created_at: '2022-10-08T22:40:59Z' },
+    ];
   });
 
   this.get('/github-repository-sync-configurations');

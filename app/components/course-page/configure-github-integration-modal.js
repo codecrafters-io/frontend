@@ -22,7 +22,7 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   get accessibleRepositoryGroups() {
     let [recentlyCreatedRepositories, allOtherRepositories] = partition(
       this.accessibleRepositories,
-      (repository) => repository.createdAt - new Date() < 1000 * 60 * 60 // 1 hour
+      (repository) => new Date() - repository.createdAt < 1000 * 60 * 60 // 1 hour
     );
 
     let groups = [];
@@ -36,7 +36,7 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
 
     if (allOtherRepositories.length > 0) {
       groups.push({
-        title: 'All other repositories',
+        title: 'All repositories',
         repositories: allOtherRepositories.sortBy('fullName'),
       });
     }
@@ -69,13 +69,20 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   }
 
   @action
+  async handleRepositoryOptionSelected(event) {
+    let repositoryId = event.target.value;
+    this.selectedRepository = this.accessibleRepositories.find((repository) => repository.id.toString() === repositoryId);
+    console.log(repositoryId, this.selectedRepository);
+  }
+
+  @action
   handleInstallGitHubAppButtonClick() {
     window.location.href = `/github_app_installations/start?repository_id=${this.args.repository.id}`;
   }
 
   @action
   async handlePublishButtonClick() {
-    let repositoryIsRecentlyCreated = this.selectedRepository.createdAt - new Date() < 1000 * 60 * 60;
+    let repositoryIsRecentlyCreated = new Date() - this.selectedRepository.createdAt < 1000 * 60 * 60;
 
     if (
       repositoryIsRecentlyCreated ||

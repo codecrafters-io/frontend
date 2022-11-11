@@ -53,11 +53,12 @@
         </p>
       </div>
 
-      <select class="p-2 border rounded mb-3 block">
+      {{! template-lint-disable require-input-label }}
+      <select class="p-2 border rounded mb-3 block" {{on "change" this.handleRepositoryOptionSelected}}>
         {{#each this.accessibleRepositoryGroups as |repositoryGroup|}}
           <optgroup label={{repositoryGroup.title}}>
             {{#each repositoryGroup.repositories as |repository|}}
-              <option value={{repository.id}}>{{repository.fullName}}</option>
+              <option value={{repository.id}} selected={{eq this.selectedRepository.id repository.id}}>{{repository.fullName}}</option>
             {{/each}}
           </optgroup>
         {{/each}}
