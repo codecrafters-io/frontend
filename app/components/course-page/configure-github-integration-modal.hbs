@@ -9,7 +9,7 @@
       <span class="ml-3 text-gray-700">Loading...</span>
     </div>
   {{else}}
-    <div class="text-teal-600 border-b border-teal-500 font-bold text-lg inline-block mb-3">Step 1: Create a GitHub repository</div>
+    <div class="text-teal-600 border-b font-bold text-lg inline-block mb-3">Step 1: Create a GitHub repository</div>
 
     <div class="prose mb-6">
       <p>
@@ -19,14 +19,47 @@
       </p>
     </div>
 
-    <div class="text-teal-600 border-b border-teal-500 font-bold text-lg inline-block mb-3">Step 2: Install the CodeCrafters GitHub app</div>
+    <div class="text-teal-600 border-b font-bold text-lg inline-block mb-3">
+      {{#if this.githubAppInstallation}}
+        Step 2: Connect your GitHub repository
+      {{else}}
+        Step 2: Install the CodeCrafters GitHub app
+      {{/if}}
+    </div>
 
     {{#if this.githubAppInstallation}}
-      <div class="prose mb-4">
+      <div class="prose mb-3">
         <p>
           Once you've created the repository on GitHub, select the repository below.
         </p>
       </div>
+
+      <select class="p-2 border rounded mb-3">
+        {{#each this.accessibleRepositoryGroups as |repositoryGroup|}}
+          <optgroup label={{repositoryGroup.title}}>
+            {{#each repositoryGroup.repositories as |repository|}}
+              <option value={{repository.id}}>{{repository.fullName}}</option>
+            {{/each}}
+          </optgroup>
+        {{/each}}
+      </select>
+
+      <div class="prose mb-4">
+        <p class="text-xs">
+          Can't find your repository? Grant CodeCrafters access to your repository
+          <a href={{this.githubAppInstallation.githubConfigureUrl}} target="_blank" rel="noopener noreferrer">here</a>.
+        </p>
+      </div>
+
+      <PrimaryButtonWithSpinner {{on "click" this.handleInstallGitHubAppButtonClick}}>
+        <div class="flex items-center flex-wrap">
+          <span class="mr-2">Publish to</span>
+          <div class="flex items-center flex-shrink-0">
+            {{svg-jar "github" class="w-5 h-5 mr-1"}}
+            rohitpaulk/cc-publish-test
+          </div>
+        </div>
+      </PrimaryButtonWithSpinner>
     {{else}}
       <div class="prose mb-4">
         <p>
