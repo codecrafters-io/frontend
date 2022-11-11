@@ -72,7 +72,6 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   async handleRepositoryOptionSelected(event) {
     let repositoryId = event.target.value;
     this.selectedRepository = this.accessibleRepositories.find((repository) => repository.id.toString() === repositoryId);
-    console.log(repositoryId, this.selectedRepository);
   }
 
   @action
@@ -101,8 +100,6 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   }
 
   get githubAppInstallation() {
-    console.log(this.currentUserService.record.githubAppInstallations.length);
-
     return this.currentUserService.record.githubAppInstallation;
   }
 
