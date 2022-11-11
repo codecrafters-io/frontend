@@ -7,12 +7,14 @@ import config from 'codecrafters-frontend/config/environment';
 export default class CourseController extends Controller {
   queryParams = [
     {
+      action: 'action',
       selectedRepositoryId: 'repo',
       isCreatingNewRepository: 'fresh',
       track: 'track',
     },
   ];
 
+  @tracked action = null;
   @tracked isCreatingNewRepository = false;
   @tracked selectedRepositoryId;
   @tracked newRepository;
@@ -58,5 +60,9 @@ export default class CourseController extends Controller {
 
   get repositories() {
     return this.currentUser.record.repositories.filterBy('course', this.course).without(this.newRepository);
+  }
+
+  get hasRecentlyCompletedGitHubIntegrationSetup() {
+    return this.action === 'github_app_installation_completed';
   }
 }

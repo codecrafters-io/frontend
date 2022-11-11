@@ -22,6 +22,7 @@ export default class UserModel extends Model {
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
+  @hasMany('github-app-installation', { async: false }) githubAppInstallations;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
@@ -74,6 +75,10 @@ export default class UserModel extends Model {
 
   get freeUsageRestriction() {
     return this.freeUsageRestrictions.filterBy('isActive').sortBy('expiresAt').firstObject;
+  }
+
+  get githubAppInstallation() {
+    return this.githubAppInstallations.firstObject;
   }
 
   get githubProfileUrl() {
