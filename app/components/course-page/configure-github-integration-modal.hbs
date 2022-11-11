@@ -13,10 +13,15 @@
       {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
       <div class="text-gray-600 text-center mb-6">
         This repository is configured to publish to
-        <div class="inline-flex items-center font-semibold underline">
+        <a
+          href="https://github.com/{{this.githubRepositorySyncConfiguration.githubRepositoryName}}"
+          class="inline-flex items-center font-semibold underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {{svg-jar "github" class="fill-current w-4 mr-1"}}
           {{this.githubRepositorySyncConfiguration.githubRepositoryName}}
-        </div>
+        </a>
       </div>
 
       <SecondaryButton @size="small" {{on "click" this.handleDisconnectRepositoryButtonClick}} data-test-disconnect-repository-button>
