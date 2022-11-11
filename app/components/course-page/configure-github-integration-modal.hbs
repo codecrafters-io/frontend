@@ -8,8 +8,32 @@
       <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
       <span class="ml-3 text-gray-700">Loading...</span>
     </div>
+  {{else if (and this.githubRepositorySyncConfiguration (not this.githubRepositorySyncConfiguration.isNew))}}
+    <div class="py-16 flex flex-col items-center justify-center">
+      {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
+      <div class="text-gray-600 text-center mb-6">
+        This repository is configured to publish to
+        <a
+          href="https://github.com/{{this.githubRepositorySyncConfiguration.githubRepositoryName}}"
+          class="inline-flex items-center font-semibold underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{svg-jar "github" class="fill-current w-4 mr-1"}}
+          {{this.githubRepositorySyncConfiguration.githubRepositoryName}}
+        </a>
+      </div>
+
+      <SecondaryButton @size="small" {{on "click" this.handleDisconnectRepositoryButtonClick}} data-test-disconnect-repository-button>
+        Disconnect Repository
+      </SecondaryButton>
+    </div>
   {{else}}
-    <div class="text-teal-600 border-b border-teal-500 font-bold text-lg inline-block mb-3">Step 1: Create a GitHub repository</div>
+    <div class="prose mb-4">
+      Automatically sync changes to GitHub and share your progress.
+    </div>
+
+    <div class="text-teal-600 border-b font-bold text-lg inline-block mb-3">Step 1: Create a GitHub repository</div>
 
     <div class="prose mb-6">
       <p>
@@ -19,12 +43,45 @@
       </p>
     </div>
 
-    <div class="text-teal-600 border-b border-teal-500 font-bold text-lg inline-block mb-3">Step 2: Install the CodeCrafters GitHub app</div>
+    <div class="text-teal-600 border-b font-bold text-lg inline-block mb-3">
+      {{#if this.githubAppInstallation}}
+        Step 2: Connect your GitHub repository
+      {{else}}
+        Step 2: Install the CodeCrafters GitHub app
+      {{/if}}
+    </div>
 
     {{#if this.githubAppInstallation}}
-      <div class="prose mb-4">
+      <div class="prose mb-3">
         <p>
-          Once you've created the repository on GitHub, select the repository below.
+          Select your repository below and click on "Publish".
+        </p>
+      </div>
+
+      {{! template-lint-disable require-input-label }}
+      <select class="p-2 border rounded mb-3 block" {{on "change" this.handleRepositoryOptionSelected}}>
+        {{#each this.accessibleRepositoryGroups as |repositoryGroup|}}
+          <optgroup label={{repositoryGroup.title}}>
+            {{#each repositoryGroup.repositories as |repository|}}
+              <option value={{repository.id}} selected={{eq this.selectedRepository.id repository.id}}>{{repository.fullName}}</option>
+            {{/each}}
+          </optgroup>
+        {{/each}}
+      </select>
+
+      <PrimaryButtonWithSpinner
+        @shouldShowSpinner={{this.isCreatingGithubRepositorySyncConfiguration}}
+        class="mb-4"
+        {{on "click" this.handlePublishButtonClick}}
+        data-test-publish-button
+      >
+        Publish
+      </PrimaryButtonWithSpinner>
+
+      <div class="prose mb-4">
+        <p class="text-xs">
+          Can't find your repository? Grant CodeCrafters access to your repository
+          <a href={{this.githubAppInstallation.githubConfigureUrl}} target="_blank" rel="noopener noreferrer">here</a>.
         </p>
       </div>
     {{else}}

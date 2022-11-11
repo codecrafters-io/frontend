@@ -12,3 +12,18 @@ export function groupBy(collection, keyOrFn) {
     return acc;
   }, {});
 }
+
+export function partition(collection, predicate) {
+  return collection.reduce(
+    (acc, item) => {
+      if (predicate(item)) {
+        acc[0].push(item);
+      } else {
+        acc[1].push(item);
+      }
+
+      return acc;
+    },
+    [[], []]
+  );
+}

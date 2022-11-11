@@ -5,6 +5,7 @@ export default class RepositoryModel extends Model {
   @belongsTo('course', { async: false }) course;
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
   @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;
+  @hasMany('github-repository-sync-configuration', { async: false }) githubRepositorySyncConfigurations;
   @belongsTo('user', { async: false }) user;
   @belongsTo('language', { async: false }) language;
   @belongsTo('submission', { async: false, inverse: null }) lastSubmission;
@@ -37,6 +38,10 @@ export default class RepositoryModel extends Model {
 
   get firstSubmissionCreated() {
     return !!this.lastSubmission;
+  }
+
+  get githubRepositorySyncConfiguration() {
+    return this.githubRepositorySyncConfigurations.firstObject;
   }
 
   hasClosedCourseStageFeedbackSubmissionFor(courseStage) {

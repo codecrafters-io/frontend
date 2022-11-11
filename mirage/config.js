@@ -49,6 +49,17 @@ function routes() {
 
   this.get('/github-app-installations');
 
+  this.get('/github-app-installations/:id/accessible-repositories', function () {
+    return [
+      { id: 564057934, full_name: 'rohitpaulk/cc-publish-test', created_at: '2022-11-09T22:40:59Z' },
+      { id: 564057935, full_name: 'rohitpaulk/other-repo', created_at: '2022-10-08T22:40:59Z' },
+    ];
+  });
+
+  this.get('/github-repository-sync-configurations');
+  this.post('/github-repository-sync-configurations');
+  this.delete('/github-repository-sync-configurations/:id');
+
   this.post('/individual-checkout-sessions', function (schema) {
     return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
   });

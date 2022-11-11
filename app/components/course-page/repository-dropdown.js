@@ -31,6 +31,10 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
 
   @action
   async handlePublishToGithubButtonClick(dropdownActions) {
+    if (this.args.activeRepository.isNew) {
+      return;
+    }
+
     this.args.onPublishToGithubButtonClick();
     dropdownActions.close();
   }
