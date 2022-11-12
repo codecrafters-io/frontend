@@ -50,6 +50,13 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
 
   @action
   async loadResources() {
+    // Already exists, we can reload when the user disconnects
+    if (this.githubRepositorySyncConfiguration) {
+      this.isLoading = false;
+
+      return;
+    }
+
     await Promise.all([
       this.store.findAll('github-repository-sync-configuration', { include: 'repository' }),
       this.store.findAll('github-app-installation', { include: 'user' }),
@@ -66,6 +73,8 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   @action
   async handleDisconnectRepositoryButtonClick() {
     await this.githubRepositorySyncConfiguration.destroyRecord();
+    this.isLoading = true;
+    await this.loadResources();
   }
 
   @action
@@ -96,6 +105,9 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
       this.isCreatingGithubRepositorySyncConfiguration = true;
       await githubRepositorySyncConfiguration.save();
       this.isCreatingGithubRepositorySyncConfiguration = false;
+
+      // The server deletes free usage restrictions after users publish their first repository
+      this.currentUserService.record.freeUsageRestrictions.map((restriction) => restriction.unloadRecord());
     }
   }
 

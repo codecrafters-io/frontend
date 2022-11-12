@@ -10,6 +10,7 @@ export default class RepositoryPoller extends Poller {
     'course-stage-completions.course-stage',
     'course-stage-feedback-submissions',
     'course-stage-feedback-submissions.course-stage',
+    'github-repository-sync-configurations',
     'last-submission',
     'last-submission.course-stage',
   ].join(',');

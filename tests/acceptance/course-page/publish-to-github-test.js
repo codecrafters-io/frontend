@@ -66,4 +66,50 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     await coursePage.configureGithubIntegrationModal.clickOnDisconnectRepositoryButton();
     await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
   });
+
+  test('publishing to GitHub removes daily limit', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+    });
+
+    this.server.create('github-app-installation', { user: currentUser, githubConfigureUrl: 'https://google.com' });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      status: 'closed',
+    });
+
+    let freeUsageRestriction = this.server.create('free-usage-restriction', {
+      user: currentUser,
+      expiresAt: new Date(new Date().getTime() + 86400000),
+    });
+
+    window.confirm = () => true;
+
+    await coursePage.visit({ course_slug: 'redis' });
+
+    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
+
+    await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
+    freeUsageRestriction.update({ expiresAt: new Date(new Date().getTime() - 86400000) });
+    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item should not have upgrade prompt');
+  });
 });
