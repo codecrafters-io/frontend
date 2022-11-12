@@ -18,6 +18,10 @@
 
     {{#if this.shouldShowUpgradePrompt}}
       <CoursePage::StepList::CourseStageItem::UpgradePrompt @class="mb-4" @color="yellow" />
+
+      {{#unless this.repository.githubRepositorySyncConfiguration}}
+        <CoursePage::StepList::CourseStageItem::PublishToGithubPrompt @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}} class="mb-4" />
+      {{/unless}}
     {{/if}}
 
     <div class="text-gray-700 leading-7 prose" data-test-stage-instructions>
