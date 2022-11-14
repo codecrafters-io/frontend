@@ -41,13 +41,22 @@
   </div>
 
   <div>
-    <CoursePage::CourseStageSolutionModal::LanguageDropdown
-      @currentLanguage={{@currentSolution.language}}
-      @requestedLanguage={{@requestedSolutionLanguage}}
-      @courseStage={{@courseStage}}
-      @onRequestedLanguageChange={{@onRequestedSolutionLanguageChange}}
-      class="transition-all {{if (eq @activeTab 'source_walkthrough') 'opacity-0 mb-0 h-0' 'opacity-100 mb-6 h-auto'}}"
-    />
+    {{#if (or (eq @activeTab "diff") (eq @activeTab "explanation"))}}
+      <CoursePage::CourseStageSolutionModal::LanguageDropdown
+        @currentLanguage={{@currentSolution.language}}
+        @requestedLanguage={{@requestedSolutionLanguage}}
+        @courseStage={{@courseStage}}
+        @onRequestedLanguageChange={{@onRequestedSolutionLanguageChange}}
+        class="mb-6"
+      />
+    {{else if (eq @activeTab "community_solutions")}}
+      <CoursePage::CourseStageSolutionModal::CommunitySolutionsLanguageDropdown
+        @courseStage={{@courseStage}}
+        @requestedLanguage={{@requestedSolutionLanguage}}
+        @onRequestedLanguageChange={{@onRequestedSolutionLanguageChange}}
+        class="mb-6"
+      />
+    {{/if}}
   </div>
 </div>
 

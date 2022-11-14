@@ -25,7 +25,24 @@ function routes() {
 
   this.get('/code-walkthroughs');
 
-  this.get('/community-course-stage-solutions'); // TODO: Add pagination & filtering
+  // TODO: Add pagination
+  this.get('/community-course-stage-solutions', function (schema, request) {
+    let result = schema.communityCourseStageSolutions.all();
+
+    console.log('request.queryParams', request.queryParams);
+
+    if (request.queryParams.language_id) {
+      result = result.filter((solution) => solution.language.id.toString() === request.queryParams.language_id);
+    }
+
+    if (request.queryParams.course_stage_id) {
+      result = result.filter((solution) => solution.courseStage.id.toString() === request.queryParams.course_stage_id);
+    }
+
+    console.log(result.length);
+
+    return result;
+  });
 
   this.get('/courses');
 

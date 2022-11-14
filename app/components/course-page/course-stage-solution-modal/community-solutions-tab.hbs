@@ -1,10 +1,19 @@
-{{#each this.solutions as |solution|}}
-  <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
-{{else}}
-  <div class="flex py-16 justify-center items-center w-full">
-    <div class="text-sm text-gray-500 text-center max-w-lg">
-      No community solutions available for
-      {{@requestedSolutionLanguage.name}}. Complete this stage to be the first!
+<div data-test-community-solutions-tab {{did-update this.loadSolutions @requestedSolutionLanguage}}>
+  {{#if this.isLoading}}
+    <div class="flex justify-center items-center py-32 w-full">
+      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
+      <span class="ml-3 text-gray-700">Loading...</span>
     </div>
-  </div>
-{{/each}}
+  {{else}}
+    {{#each this.solutions as |solution|}}
+      <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
+    {{else}}
+      <div class="flex py-16 justify-center items-center w-full">
+        <div class="text-sm text-gray-500 text-center max-w-lg">
+          No community solutions available for
+          {{@requestedSolutionLanguage.name}}. Complete this stage to be the first!
+        </div>
+      </div>
+    {{/each}}
+  {{/if}}
+</div>

@@ -36,9 +36,11 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    createCommunityCourseStageSolution(this.server, redis, 1, go);
-    createCommunityCourseStageSolution(this.server, redis, 1, go);
-    createCommunityCourseStageSolution(this.server, redis, 1, go);
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    createCommunityCourseStageSolution(this.server, redis, 2, python);
+    createCommunityCourseStageSolution(this.server, redis, 2, go);
+    createCommunityCourseStageSolution(this.server, redis, 2, go);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -49,5 +51,17 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
     await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Community Solutions');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
+
+    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
+    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1);
+
+    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
+    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('C');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 0);
   });
 });
