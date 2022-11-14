@@ -1,6 +1,3 @@
 {{#each this.solutions as |solution|}}
-  <div>
-    Solution
-    {{solution.id}}
-  </div>
+  <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
 {{/each}}

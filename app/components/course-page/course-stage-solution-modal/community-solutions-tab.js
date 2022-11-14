@@ -19,6 +19,7 @@ export default class CommunitySolutionsTabComponent extends Component {
     this.solutions = await this.store.query('community-course-stage-solution', {
       course_stage_id: this.args.courseStage.id,
       language_id: this.args.requestedSolutionLanguage.id,
+      include: 'users,language',
     });
 
     this.isLoading = false;
