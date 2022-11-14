@@ -1,3 +1,10 @@
 {{#each this.solutions as |solution|}}
   <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
+{{else}}
+  <div class="flex py-16 justify-center items-center w-full">
+    <div class="text-sm text-gray-500 text-center max-w-lg">
+      No community solutions available for
+      {{@requestedSolutionLanguage.name}}. Complete this stage to be the first!
+    </div>
+  </div>
 {{/each}}
