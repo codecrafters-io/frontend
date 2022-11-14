@@ -29,6 +29,15 @@
         {{on "click" (fn @onTabLinkClick "source_walkthrough")}}
       />
     {{/if}}
+
+    {{#if this.currentUserIsStaff}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="user-group"
+        @text="Community Solutions"
+        @isActive={{eq @activeTab "community_solutions"}}
+        {{on "click" (fn @onTabLinkClick "community_solutions")}}
+      />
+    {{/if}}
   </div>
 
   <div>
@@ -42,7 +51,7 @@
   </div>
 </div>
 
-{{#if (and (not-eq @activeTab "source_walkthrough") (not-eq @requestedSolutionLanguage @currentSolution.language))}}
+{{#if (and (or (eq @activeTab "diff") (eq @activeTab "explanation")) (not-eq @requestedSolutionLanguage @currentSolution.language))}}
   <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-6 flex items-center" data-test-requested-language-not-available-notice>
     <div class="mr-3">
       {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}

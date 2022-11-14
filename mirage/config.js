@@ -24,6 +24,9 @@ function routes() {
   this.get('/charges');
 
   this.get('/code-walkthroughs');
+
+  this.get('/community-course-stage-solutions'); // TODO: Add pagination & filtering
+
   this.get('/courses');
 
   this.get('/course-language-requests');
