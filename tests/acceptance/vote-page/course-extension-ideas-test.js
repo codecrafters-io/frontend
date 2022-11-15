@@ -19,7 +19,7 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
     let user = this.server.schema.users.first();
     let courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ slug: 'redis-persistence' });
 
-    this.server.create('course-extension-idea-vote', { user: user, courseExtensionIdea: courseExtensionIdea });
+    courseExtensionIdea.update('votesCount', 1);
 
     await votePage.visitCourseExtensionIdeasTab();
     await percySnapshot('Challenge Extension Ideas (anonymous)');

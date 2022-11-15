@@ -31,13 +31,19 @@ export default class CourseExtensionIdeaModel extends Model {
   supervote() {
     this.supervotesCount += 1;
 
-    return this.store.createRecord('course-extension-idea-supervote', { courseExtensionIdea: this, user: this.currentUserService.record }).save();
+    let supervote = this.store.createRecord('course-extension-idea-supervote', { courseExtensionIdea: this, user: this.currentUserService.record });
+    this.currentUserSupervotes.pushObject(supervote);
+
+    return supervote.save();
   }
 
   vote() {
     this.votesCount += 1;
 
-    return this.store.createRecord('course-extension-idea-vote', { courseExtensionIdea: this, user: this.currentUserService.record }).save();
+    let vote = this.store.createRecord('course-extension-idea-vote', { courseExtensionIdea: this, user: this.currentUserService.record });
+    this.currentUserVotes.pushObject(vote);
+
+    return vote.save();
   }
 }
 
@@ -46,12 +52,12 @@ CourseExtensionIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    this.currentUserVotes.forEach((record) => {
+    this.currentUserVotes.toArray().forEach((record) => {
       this.votesCount -= 1;
       record.unloadRecord();
     });
 
-    this.currentUserSupervotes.forEach((record) => {
+    this.currentUserSupervotes.toArray().forEach((record) => {
       this.supervotesCount -= 1;
       record.unloadRecord();
     });
