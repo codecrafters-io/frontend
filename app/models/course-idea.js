@@ -7,8 +7,8 @@ import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
 export default class CourseIdeaModel extends Model {
-  @hasMany('course-idea-vote', { async: false }) votes;
-  @hasMany('course-idea-supervote', { async: false }) supervotes;
+  @hasMany('course-idea-vote', { async: false }) currentUserVotes;
+  @hasMany('course-idea-supervote', { async: false }) currentUserSupervotes;
 
   @attr('date') createdAt;
   @attr('string') descriptionMarkdown;
@@ -16,6 +16,8 @@ export default class CourseIdeaModel extends Model {
   @attr('boolean') isArchived;
   @attr('string') name;
   @attr('string') slug;
+  @attr('number') votesCount;
+  @attr('number') supervotesCount;
 
   @equal('developmentStatus', 'not_started') developmentStatusIsNotStarted;
   @equal('developmentStatus', 'in_progress') developmentStatusIsInProgress;
@@ -28,7 +30,7 @@ export default class CourseIdeaModel extends Model {
   }
 
   get isNewlyCreated() {
-    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votes.length < 20;
+    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votesCount < 20;
   }
 
   get reverseSortPositionForCourseIdeasPage() {
@@ -42,11 +44,21 @@ export default class CourseIdeaModel extends Model {
   }
 
   supervote() {
-    return this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.currentUserService.record }).save();
+    this.supervotesCount += 1;
+
+    let supervote = this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.currentUserService.record }).save();
+    this.currentUserSupervotes.pushObject(supervote);
+
+    return supervote.save();
   }
 
   vote() {
-    return this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.currentUserService.record }).save();
+    this.votesCount += 1;
+
+    let vote = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.currentUserService.record });
+    this.currentUserVotes.pushObject(vote);
+
+    return vote.save();
   }
 }
 
@@ -55,17 +67,13 @@ CourseIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    let currentUser = this.currentUserService.record;
-
-    currentUser.courseIdeaVotes.filterBy('courseIdea', this).forEach((record) => {
-      record.courseIdea.votes.removeObject(record);
-      record.user.courseIdeaVotes.removeObject(record);
+    this.currentUserVotes.forEach((record) => {
+      this.votesCount -= 1;
       record.unloadRecord();
     });
 
-    currentUser.courseIdeaSupervotes.filterBy('courseIdea', this).forEach((record) => {
-      record.courseIdea.supervotes.removeObject(record);
-      record.user.courseIdeaSupervotes.removeObject(record);
+    this.currentUserSupervotes.forEach((record) => {
+      this.supervotesCount -= 1;
       record.unloadRecord();
     });
   },
