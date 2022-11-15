@@ -19,6 +19,11 @@
     <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
   {{else if (eq this.activeTab "explanation")}}
     <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
+  {{else if (eq this.activeTab "community_solutions")}}
+    <CoursePage::CourseStageSolutionModal::CommunitySolutionsTab
+      @courseStage={{@courseStage}}
+      @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
+    />
   {{else}}
     <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
   {{/if}}

@@ -41,6 +41,10 @@ export default create({
     activeHeaderTabLinkText: text('[data-test-header-tab-link].border-teal-500'),
     clickOnCloseButton: clickable('[data-test-close-modal-button]'),
     clickOnHeaderTabLink: clickOnText('[data-test-header-tab-link]'),
+    communitySolutionsTab: {
+      solutionCards: collection('[data-test-community-solution-card]'),
+      scope: '[data-test-community-solutions-tab]',
+    },
 
     languageDropdown: {
       currentLanguageName: text('[data-test-language-dropdown-trigger] [data-test-current-language-name]', { resetScope: true }),

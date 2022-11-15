@@ -1,0 +1,66 @@
+<div class="p-4 shadow-sm rounded border border-gray-300 mb-4 relative" data-test-community-solution-card {{did-insert this.handleDidInsert}}>
+  <div class="flex justify-between items-center mb-3">
+    <div class="flex items-center">
+      <div class="flex items-center">
+        {{svg-jar "plus" class="w-4 text-green-600"}}
+        <div class="text-xs text-gray-500">
+          <span class="text-green-600">20 lines</span>
+        </div>
+      </div>
+      <div class="ml-2 flex items-center">
+        {{svg-jar "minus" class="w-4 text-red-600"}}
+        <div class="text-xs text-gray-500">
+          <span class="text-red-600">2 lines</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex -space-x-1 hover:space-x-1 items-center">
+      {{#each @solution.users as |user|}}
+        <TrackPage::Header::TopParticipantAvatar @user={{user}} />
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="{{if this.isCollapsed 'h-72 overflow-hidden'}}">
+    {{#each @solution.changedFiles as |changedFile index|}}
+      <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
+        <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+          <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+        </div>
+
+        <div class="p-4 text-sm">
+          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
+        </div>
+      </div>
+    {{/each}}
+
+    {{#if this.isCollapsed}}
+      <div class="absolute rounded top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
+        <button
+          class="border hover:bg-gray-100 hover:border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded mr-2 flex flex-col items-center w-full group"
+          data-test-expand-button
+          type="button"
+          {{on "click" this.handleExpandButtonClick}}
+        >
+          <div class="font-bold flex items-center sm:mb-0">
+            Expand solution
+            {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
+          </div>
+        </button>
+      </div>
+    {{else}}
+      <button
+        class="mt-4 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded mr-2 flex flex-col items-center w-full group"
+        data-test-collapse-button
+        type="button"
+        {{on "click" this.handleCollapseButtonClick}}
+      >
+        <div class="font-bold flex items-center sm:mb-0">
+          Collapse solution
+          {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
+        </div>
+      </button>
+    {{/if}}
+  </div>
+</div>
