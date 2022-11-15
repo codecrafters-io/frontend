@@ -15,10 +15,12 @@ export default class VoteRoute extends ApplicationRoute {
   model() {
     const modelPromises = {};
 
-    modelPromises.courseIdeas = this.store.findAll('course-idea', { include: 'votes,votes.user,supervotes,supervotes.user' });
+    modelPromises.courseIdeas = this.store.findAll('course-idea', {
+      include: 'current-user-votes,current-user-votes.user,current-user-supervotes,current-user-supervotes.user',
+    });
 
     modelPromises.courseExtensionIdeas = this.store.findAll('course-extension-idea', {
-      include: 'course,votes,votes.user,supervotes,supervotes.user',
+      include: 'course,current-user-votes,current-user-votes.user,current-user-supervotes,current-user-supervotes.user',
     });
 
     if (this.currentUserService.isAuthenticated) {

@@ -7,13 +7,16 @@ import { inject as service } from '@ember/service';
 
 export default class CourseExtensionIdeaModel extends Model {
   @belongsTo('course', { async: false }) course;
-  @hasMany('course-extension-idea-vote', { async: false }) votes;
-  @hasMany('course-extension-idea-supervote', { async: false }) supervotes;
+
+  @hasMany('course-extension-idea-vote', { async: false }) currentUserVotes;
+  @hasMany('course-extension-idea-supervote', { async: false }) currentUserSupervotes;
 
   @attr('date') createdAt;
   @attr('string') descriptionMarkdown;
   @attr('string') name;
   @attr('string') slug;
+  @attr('number') votesCount;
+  @attr('number') supervotesCount;
 
   @service('current-user') currentUserService;
 
@@ -22,15 +25,25 @@ export default class CourseExtensionIdeaModel extends Model {
   }
 
   get isNewlyCreated() {
-    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votes.length < 20;
+    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votesCount < 20;
   }
 
   supervote() {
-    return this.store.createRecord('course-extension-idea-supervote', { courseExtensionIdea: this, user: this.currentUserService.record }).save();
+    this.supervotesCount += 1;
+
+    let supervote = this.store.createRecord('course-extension-idea-supervote', { courseExtensionIdea: this, user: this.currentUserService.record });
+    this.currentUserSupervotes.pushObject(supervote);
+
+    return supervote.save();
   }
 
   vote() {
-    return this.store.createRecord('course-extension-idea-vote', { courseExtensionIdea: this, user: this.currentUserService.record }).save();
+    this.votesCount += 1;
+
+    let vote = this.store.createRecord('course-extension-idea-vote', { courseExtensionIdea: this, user: this.currentUserService.record });
+    this.currentUserVotes.pushObject(vote);
+
+    return vote.save();
   }
 }
 
@@ -39,17 +52,13 @@ CourseExtensionIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    let currentUser = this.currentUserService.record;
-
-    currentUser.courseExtensionIdeaVotes.filterBy('courseExtensionIdea', this).forEach((record) => {
-      record.courseExtensionIdea.votes.removeObject(record);
-      record.user.courseExtensionIdeaVotes.removeObject(record);
+    this.currentUserVotes.toArray().forEach((record) => {
+      this.votesCount -= 1;
       record.unloadRecord();
     });
 
-    currentUser.courseExtensionIdeaSupervotes.filterBy('courseExtensionIdea', this).forEach((record) => {
-      record.courseExtensionIdea.supervotes.removeObject(record);
-      record.user.courseExtensionIdeaSupervotes.removeObject(record);
+    this.currentUserSupervotes.toArray().forEach((record) => {
+      this.supervotesCount -= 1;
       record.unloadRecord();
     });
   },

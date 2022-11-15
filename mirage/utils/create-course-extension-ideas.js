@@ -8,6 +8,8 @@ export default function createCourseExtensionIdeas(server) {
       name: courseExtensionIdeaData.name,
       slug: courseExtensionIdeaData.slug,
       descriptionMarkdown: courseExtensionIdeaData.description_md,
+      votesCount: 0,
+      supervotesCount: 0,
     });
   }
 }
