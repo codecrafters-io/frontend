@@ -16,7 +16,6 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
 
     createCourseExtensionIdeas(this.server);
 
-    let user = this.server.schema.users.first();
     let courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ slug: 'redis-persistence' });
 
     courseExtensionIdea.update('votesCount', 1);
