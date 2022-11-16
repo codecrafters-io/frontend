@@ -1,24 +1,29 @@
 <div class="p-4 shadow-sm rounded border border-gray-300 mb-4 relative" data-test-community-solution-card {{did-insert this.handleDidInsert}}>
   <div class="flex justify-between items-center mb-3">
+    <a href={{@solution.user.codecraftersProfileUrl}} class="flex items-center" target="_blank" rel="noopener noreferrer">
+      <AvatarImage @user={{@solution.user}} class="w-6 h-6 mr-1.5 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+      <span class="text-gray-700 text-xs">{{@solution.user.username}}</span>
+    </a>
+
     <div class="flex items-center">
       <div class="flex items-center">
-        {{svg-jar "plus" class="w-4 text-green-600"}}
+        {{svg-jar "clock" class="w-4 text-gray-500 mr-1"}}
         <div class="text-xs text-gray-500">
-          <span class="text-green-600">20 lines</span>
+          {{moment-from-now @solution.submittedAt}}
         </div>
       </div>
-      <div class="ml-2 flex items-center">
-        {{svg-jar "minus" class="w-4 text-red-600"}}
-        <div class="text-xs text-gray-500">
-          <span class="text-red-600">2 lines</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex -space-x-1 hover:space-x-1 items-center">
-      {{#each @solution.users as |user|}}
-        <TrackPage::Header::TopParticipantAvatar @user={{user}} />
-      {{/each}}
+      {{!      <div class="flex items-center">}}
+      {{!--        {{svg-jar "plus" class="w-4 text-green-600"}}--}}
+      {{!        <div class="text-xs text-gray-500">}}
+      {{!          <span class="text-green-600">20 lines</span>}}
+      {{!        </div>}}
+      {{!      </div>}}
+      {{!      <div class="ml-2 flex items-center">}}
+      {{!--        {{svg-jar "minus" class="w-4 text-red-600"}}--}}
+      {{!        <div class="text-xs text-gray-500">}}
+      {{!          <span class="text-red-600">2 lines</span>}}
+      {{!        </div>}}
+      {{!      </div>}}
     </div>
   </div>
 

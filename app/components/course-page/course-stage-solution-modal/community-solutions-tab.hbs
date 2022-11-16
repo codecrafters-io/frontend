@@ -1,11 +1,21 @@
 <div data-test-community-solutions-tab {{did-update this.loadSolutions @requestedSolutionLanguage}}>
+  <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-4" ...attributes>
+    <div class="mr-3 mt-0.5">
+      {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
+    </div>
+    <div class="text-blue-900 prose prose-blue leading-7 text-sm">
+      Community solutions are experimental, please send us
+      <a href="mailto:hello@codecrafters.io">feedback</a>.
+    </div>
+  </div>
+
   {{#if this.isLoading}}
     <div class="flex justify-center items-center py-32 w-full">
       <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
       <span class="ml-3 text-gray-700">Loading...</span>
     </div>
   {{else}}
-    {{#each this.solutions as |solution|}}
+    {{#each this.sortedSolutions as |solution|}}
       <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
     {{else}}
       <div class="flex py-16 justify-center items-center w-full">
