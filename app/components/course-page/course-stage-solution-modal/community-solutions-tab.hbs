@@ -5,7 +5,7 @@
       <span class="ml-3 text-gray-700">Loading...</span>
     </div>
   {{else}}
-    {{#each this.solutions as |solution|}}
+    {{#each this.sortedSolutions as |solution|}}
       <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
     {{else}}
       <div class="flex py-16 justify-center items-center w-full">
