@@ -21,14 +21,12 @@
       {{on "click" (fn @onTabLinkClick "explanation")}}
     />
 
-    {{#if this.currentUserIsStaff}}
-      <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="user-group"
-        @text="Community Solutions"
-        @isActive={{eq @activeTab "community_solutions"}}
-        {{on "click" (fn @onTabLinkClick "community_solutions")}}
-      />
-    {{/if}}
+    <CoursePage::CourseStageSolutionModal::HeaderTabLink
+      @icon="user-group"
+      @text="Community Solutions"
+      @isActive={{eq @activeTab "community_solutions"}}
+      {{on "click" (fn @onTabLinkClick "community_solutions")}}
+    />
 
     {{#if @courseStage.sourceWalkthrough}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
