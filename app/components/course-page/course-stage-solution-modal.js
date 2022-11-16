@@ -63,7 +63,7 @@ export default class CourseStageSolutionModalComponent extends Component {
           },
         })
         .save();
-    } else {
+    } else if (this.activeTab === 'source_walkthrough') {
       this.store
         .createRecord('analytics-event', {
           name: 'viewed_course_stage_source_walkthrough',
