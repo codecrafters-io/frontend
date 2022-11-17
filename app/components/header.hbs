@@ -37,6 +37,8 @@
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center mx-6">
         {{#if this.currentUserService.isAuthenticated}}
+          <Header::FeedbackButton class="mr-4" />
+
           {{#if this.currentUserService.record.isCodecraftersPartner}}
             <Header::VipBadge class="mr-3" />
           {{/if}}
