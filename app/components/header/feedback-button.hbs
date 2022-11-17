@@ -1,0 +1,68 @@
+<BasicDropdown @horizontalPosition="right" @onClose={{this.handleDropdownClosed}} as |dd|>
+  <dd.Trigger>
+    <div
+      role="button"
+      class="rounded border
+        {{if dd.isOpen 'border-gray-600' 'border-gray-200'}}
+        hover:border-gray-600 transition-colors px-2 py-1 text-xs text-gray-600"
+      data-test-feedback-button
+      ...attributes
+    >
+      Feedback
+    </div>
+  </dd.Trigger>
+  <dd.Content>
+    <div class="pt-2">
+      <div class="p-2 border rounded shadow text-sm text-gray-600 max-w-xl w-full bg-white" data-test-feedback-dropdown-content>
+        {{#if this.wasSaved}}
+          <div class="p-4 flex flex-col items-center justify-center">
+            {{svg-jar "check-circle" class="w-12 h-12 text-teal-500 mb-2"}}
+
+            <div class="text-gray-600 text-center mb-1">
+              Your feedback has been received!
+            </div>
+            <div class="text-gray-600 text-center">
+              Thank you for your help.
+            </div>
+          </div>
+        {{else}}
+          <form {{on "submit" this.handleFormSubmit}} {{did-insert this.handleDidInsertFormElement}}>
+            {{! template-lint-disable require-input-label }}
+            <Textarea
+              @value={{this.feedbackSubmission.explanation}}
+              class="border border-gray-200 rounded w-full p-3 placeholder-gray-300 outline-teal-500 mb-1"
+              cols="40"
+              rows="5"
+              placeholder="Your feedback..."
+              required
+            />
+
+            <div class="flex justify-between items-center">
+              <div class="flex items-center">
+                {{#each this.sentimentOptions as |sentimentOption|}}
+                  <Header::FeedbackButton::SentimentOption
+                    @emoji={{sentimentOption}}
+                    @isSelected={{eq this.feedbackSubmission.selectedSentiment sentimentOption}}
+                    {{on "click" (fn this.handleSentimentOptionSelected sentimentOption)}}
+                    class="mr-2"
+                  />
+                {{/each}}
+              </div>
+
+              {{! Add click handler }}
+              <PrimaryButtonWithSpinner
+                @isDisabled={{this.sendButtonIsDisabled}}
+                @size="small"
+                @shouldShowSpinner={{this.isSaving}}
+                {{on "click" (fn this.handleSendButtonClick dd)}}
+                data-test-send-button
+              >
+                Send
+              </PrimaryButtonWithSpinner>
+            </div>
+          </form>
+        {{/if}}
+      </div>
+    </div>
+  </dd.Content>
+</BasicDropdown>
