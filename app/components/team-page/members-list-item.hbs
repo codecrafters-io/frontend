@@ -20,6 +20,8 @@
         <span class="text-gray-400 text-xs">joined {{moment-from-now @membership.createdAt}}</span>
       </div>
     </div>
+  </a>
+  <div class="flex items-center">
     <div class="flex items-center mx-2">
       {{#each this.sortedCompletedCourses as |course|}}
         <CourseLogo @course={{course}} class="w-5 mr-2" alt="This user completed the {{course.name}} challenge." />
@@ -28,8 +30,6 @@
         <CourseLogo @course={{course}} class="w-5 mr-2 opacity-25 grayscale" alt="This user started the {{course.name}} challenge." />
       {{/each}}
     </div>
-  </a>
-  <div class="flex items-center">
     {{#unless @membership.isSoleAdmin}}
       {{#if this.isRemoving}}
         <svg class="animate-spin mr-4 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
