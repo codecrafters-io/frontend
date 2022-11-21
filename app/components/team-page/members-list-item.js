@@ -33,4 +33,8 @@ export default class TeamPageMembersListItemComponent extends Component {
       this.router.transitionTo('index');
     }
   }
+
+  get sortedCourses() {
+    return this.args.membership.user.courseParticipations.mapBy('course').uniq().sortBy('sortPositionForTrack');
+  }
 }

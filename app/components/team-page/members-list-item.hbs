@@ -16,12 +16,17 @@
           <span class="text-gray-400"> (admin)</span>
         {{/if}}
       </div>
-      <div class="text-gray-700 text-sm hidden sm:block md:hidden">
+      <div class="text-gray-700 text-sm hidden sm:block lg:hidden">
         <span class="text-gray-400 text-xs">joined {{moment-from-now @membership.createdAt}}</span>
       </div>
     </div>
   </a>
   <div class="flex items-center">
+    <div class="flex items-center mx-2">
+      {{#each this.sortedCourses as |course|}}
+        <CourseLogo @course={{course}} class="w-5 mr-2" alt="This user started the {{course.name}} challenge." />
+      {{/each}}
+    </div>
     {{#unless @membership.isSoleAdmin}}
       {{#if this.isRemoving}}
         <svg class="animate-spin mr-4 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -55,6 +60,6 @@
       {{/if}}
     {{/unless}}
 
-    <span class="text-gray-400 text-xs hidden md:block">joined {{moment-from-now @membership.createdAt}}</span>
+    <span class="text-gray-400 text-xs hidden lg:block">joined {{moment-from-now @membership.createdAt}}</span>
   </div>
 </div>
