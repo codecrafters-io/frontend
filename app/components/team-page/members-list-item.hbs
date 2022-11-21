@@ -23,11 +23,8 @@
   </a>
   <div class="flex items-center">
     <div class="flex items-center mx-2">
-      {{#each this.sortedCompletedCourses as |course|}}
-        <CourseLogo @course={{course}} class="w-5 mr-2" alt="This user completed the {{course.name}} challenge." />
-      {{/each}}
-      {{#each this.sortedIncompleteCourses as |course|}}
-        <CourseLogo @course={{course}} class="w-5 mr-2 opacity-25 grayscale" alt="This user started the {{course.name}} challenge." />
+      {{#each this.sortedCourses as |course|}}
+        <CourseLogo @course={{course}} class="w-5 mr-2" alt="This user started the {{course.name}} challenge." />
       {{/each}}
     </div>
     {{#unless @membership.isSoleAdmin}}
