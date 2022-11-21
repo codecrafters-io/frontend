@@ -33,4 +33,12 @@ export default class TeamPageMembersListItemComponent extends Component {
       this.router.transitionTo('index');
     }
   }
+
+  get sortedCompletedCourses() {
+    return this.args.membership.user.courseParticipations.filterBy('isCompleted').mapBy('course').uniq().sortBy('sortPositionForTrack');
+  }
+
+  get sortedIncompleteCourses() {
+    return this.args.membership.user.courseParticipations.rejectBy('isCompleted').mapBy('course').uniq().sortBy('sortPositionForTrack');
+  }
 }
