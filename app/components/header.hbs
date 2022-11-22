@@ -37,7 +37,7 @@
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center mx-6">
         {{#if this.currentUserService.isAuthenticated}}
-          <Header::FeedbackButton class="mr-4" as |dd|>
+          <FeedbackButton class="mr-4" as |dd|>
             <div
               role="button"
               class="rounded border
@@ -47,7 +47,7 @@
             >
               Feedback
             </div>
-          </Header::FeedbackButton>
+          </FeedbackButton>
 
           {{#if this.currentUserService.record.isCodecraftersPartner}}
             <Header::VipBadge class="mr-3" />

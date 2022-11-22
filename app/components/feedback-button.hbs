@@ -33,7 +33,7 @@
             <div class="flex justify-between items-center">
               <div class="flex items-center">
                 {{#each this.sentimentOptions as |sentimentOption|}}
-                  <Header::FeedbackButton::SentimentOption
+                  <FeedbackButton::SentimentOption
                     @emoji={{sentimentOption}}
                     @isSelected={{eq this.feedbackSubmission.selectedSentiment sentimentOption}}
                     {{on "click" (fn this.handleSentimentOptionSelected sentimentOption)}}
