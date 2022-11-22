@@ -37,7 +37,17 @@
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center mx-6">
         {{#if this.currentUserService.isAuthenticated}}
-          <Header::FeedbackButton class="mr-4" />
+          <Header::FeedbackButton class="mr-4" as |dd|>
+            <div
+              role="button"
+              class="rounded border
+                {{if dd.isOpen 'border-gray-600' 'border-gray-200'}}
+                hover:border-gray-600 transition-colors px-2 py-1 text-xs text-gray-600"
+              data-test-feedback-button
+            >
+              Feedback
+            </div>
+          </Header::FeedbackButton>
 
           {{#if this.currentUserService.record.isCodecraftersPartner}}
             <Header::VipBadge class="mr-3" />

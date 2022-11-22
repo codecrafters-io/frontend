@@ -1,14 +1,7 @@
 <BasicDropdown @horizontalPosition="right" @onClose={{this.handleDropdownClosed}} as |dd|>
   <dd.Trigger>
-    <div
-      role="button"
-      class="rounded border
-        {{if dd.isOpen 'border-gray-600' 'border-gray-200'}}
-        hover:border-gray-600 transition-colors px-2 py-1 text-xs text-gray-600"
-      data-test-feedback-button
-      ...attributes
-    >
-      Feedback
+    <div ...attributes>
+      {{yield dd}}
     </div>
   </dd.Trigger>
   <dd.Content>
