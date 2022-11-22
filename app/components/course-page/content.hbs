@@ -10,6 +10,7 @@
     @class="flex-grow min-w-0"
     @course={{@course}}
     @repository={{@activeRepository}}
+    @onViewCommentsButtonClick={{this.handleViewCommentsButtonClick}}
     @onViewSolutionButtonClick={{this.handleViewSolutionButtonClick}}
     @onViewSourceWalkthroughButtonClick={{this.handleViewSourceWalkthroughButtonClick}}
     @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
@@ -26,13 +27,13 @@
   </div>
 </div>
 
-{{#if (or this.isViewingCourseStageSourceWalkthrough this.isViewingCourseStageSolution)}}
+{{#if (and this.currentCourseStageForSolutionModal this.courseStageSolutionModalIntent)}}
   <ModalBackdrop>
     <CoursePage::CourseStageSolutionModal
-      @courseStage={{or this.currentCourseStageForSolution this.currentCourseStageForSourceWalkthrough}}
+      @courseStage={{this.currentCourseStageForSolutionModal}}
       @repositoryLanguage={{@activeRepository.language}}
       @onClose={{this.handleModalClose}}
-      @intent={{if this.isViewingCourseStageSolution "view_solution" "view_source_walkthrough"}}
+      @intent={{this.courseStageSolutionModalIntent}}
     />
   </ModalBackdrop>
 {{/if}}

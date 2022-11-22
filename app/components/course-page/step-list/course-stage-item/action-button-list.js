@@ -14,7 +14,8 @@ export default class CourseStageItemActionButtonListComponent extends Component 
       this.shouldShowViewTestCasesButton ||
       this.shouldShowViewSourceWalkthroughButton ||
       this.shouldShowSubmitFeedbackButton ||
-      this.shouldShowEditFeedbackButton
+      this.shouldShowEditFeedbackButton ||
+      this.shouldShowViewCommentsButton
     );
   }
 
@@ -33,6 +34,10 @@ export default class CourseStageItemActionButtonListComponent extends Component 
       !this.shouldShowEditFeedbackButton &&
       (this.args.repository.stageIsComplete(this.args.courseStage) || this.args.repository.activeStage === this.args.courseStage)
     );
+  }
+
+  get shouldShowViewCommentsButton() {
+    return true; // Comments are always available
   }
 
   get shouldShowViewSolutionButton() {

@@ -5,8 +5,8 @@ import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 
 export default class CoursePageContentComponent extends Component {
-  @tracked currentCourseStageForSolution;
-  @tracked currentCourseStageForSourceWalkthrough;
+  @tracked currentCourseStageForSolutionModal;
+  @tracked courseStageSolutionModalIntent;
   @tracked isConfiguringGithubIntegration = false;
   @service('current-user') currentUserService;
   @service router;
@@ -29,21 +29,33 @@ export default class CoursePageContentComponent extends Component {
 
   @action
   async handleModalClose() {
-    this.currentCourseStageForSolution = null;
-    this.currentCourseStageForSourceWalkthrough = null;
+    this.currentCourseStageForSolutionModal = null;
+    this.courseStageSolutionModalIntent = null;
     this.isConfiguringGithubIntegration = false;
   }
 
   @action
   async handleViewSourceWalkthroughButtonClick(courseStage) {
-    this.currentCourseStageForSolution = null;
-    this.currentCourseStageForSourceWalkthrough = courseStage;
+    await this.handleModalClose();
+
+    this.courseStageSolutionModalIntent = 'view_source_walkthrough';
+    this.currentCourseStageForSolutionModal = courseStage;
+  }
+
+  @action
+  async handleViewCommentsButtonClick(courseStage) {
+    await this.handleModalClose();
+
+    this.courseStageSolutionModalIntent = 'view_comments';
+    this.currentCourseStageForSolutionModal = courseStage;
   }
 
   @action
   async handleViewSolutionButtonClick(courseStage) {
-    this.currentCourseStageForSourceWalkthrough = null;
-    this.currentCourseStageForSolution = courseStage;
+    await this.handleModalClose();
+
+    this.courseStageSolutionModalIntent = 'view_solution';
+    this.currentCourseStageForSolutionModal = courseStage;
   }
 
   @action
@@ -51,14 +63,6 @@ export default class CoursePageContentComponent extends Component {
     await this.handleModalClose(); // Ensure other modals are closed.
 
     this.isConfiguringGithubIntegration = true;
-  }
-
-  get isViewingCourseStageSolution() {
-    return !!this.currentCourseStageForSolution;
-  }
-
-  get isViewingCourseStageSourceWalkthrough() {
-    return !!this.currentCourseStageForSourceWalkthrough;
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion() {

@@ -41,8 +41,10 @@ export default class CourseStageSolutionModalComponent extends Component {
       } else {
         this.activeTab = 'community_solutions';
       }
-    } else {
+    } else if (this.args.intent === 'view_source_walkthrough') {
       this.activeTab = 'source_walkthrough';
+    } else if (this.args.intent === 'view_comments') {
+      this.activeTab = 'comments';
     }
 
     this.emitAnalyticsEvent();

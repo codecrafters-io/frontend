@@ -40,6 +40,15 @@
         {{on "click" (fn @onTabLinkClick "source_walkthrough")}}
       />
     {{/if}}
+
+    {{#if this.currentUserIsStaff}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="chat"
+        @text="Comments"
+        @isActive={{eq @activeTab "comments"}}
+        {{on "click" (fn @onTabLinkClick "comments")}}
+      />
+    {{/if}}
   </div>
 
   <div>
