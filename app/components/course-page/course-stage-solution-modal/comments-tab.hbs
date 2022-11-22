@@ -16,7 +16,7 @@
     </div>
   {{else}}
     {{#each this.sortedComments as |comment|}}
-      <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
+      <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} class="mb-4" />
     {{/each}}
   {{/if}}
 </div>

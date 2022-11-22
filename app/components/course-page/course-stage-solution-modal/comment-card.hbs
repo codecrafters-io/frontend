@@ -1,25 +1,21 @@
-<div class="mb-4" data-test-community-solution-card {{did-insert this.handleDidInsert}}>
-  <div class="flex items-center mb-1.5">
-    <a href={{@comment.user.codecraftersProfileUrl}} class="flex items-center" target="_blank" rel="noopener noreferrer">
-      <AvatarImage @user={{@comment.user}} class="w-8 h-8 mr-2 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
-      <span class="text-gray-700 text-sm font-semibold">{{@comment.user.username}}</span>
+<div data-test-comment-card ...attributes>
+  <div class="flex items-start">
+    <a href={{@comment.user.codecraftersProfileUrl}} class="mt-0.5 flex items-center flex-shrink-0" target="_blank" rel="noopener noreferrer">
+      <AvatarImage @user={{@comment.user}} class="w-8 h-8 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
     </a>
+    <div class="bg-white shadow-sm rounded border border-gray-300 w-full">
+      <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center">
+        <span class="text-sm text-gray-600 font-bold">{{@comment.user.username}}</span>
+        <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
+        <div class="text-xs text-gray-400">
+          {{moment-from-now @comment.createdAt}}
+        </div>
+      </div>
 
-    <div class="bg-gray-200 w-1 h-1 mx-1.5 rounded-full">
-    </div>
-
-    <div class="text-xs text-gray-400">
-      {{moment-from-now @comment.createdAt}}
-    </div>
-  </div>
-
-  <div class="ml-10">
-    <div class="leading-7 prose max-w-none" {{did-insert this.handleDidInsertBodyHTML}}>
-      {{this.bodyHTML}}
-    </div>
-    <div class="mt-2">
-      <div class="flex items-center">
-        {{svg-jar "chevron-down" class="w-5 h-5 text-gray-600 cursor-pointer"}}
+      <div class="p-4">
+        <div class="leading-7 prose max-w-none" {{did-insert this.handleDidInsertBodyHTML}}>
+          {{this.bodyHTML}}
+        </div>
       </div>
     </div>
   </div>
