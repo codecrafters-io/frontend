@@ -60,6 +60,10 @@ function routes() {
   this.post('/course-idea-votes');
   this.post('/course-idea-supervotes');
 
+  this.get('/course-stage-comments');
+  this.post('/course-stage-comments');
+  this.patch('/course-stage-comments/:id');
+
   this.post('/course-stage-feedback-submissions');
   this.patch('/course-stage-feedback-submissions/:id');
 

@@ -1,0 +1,19 @@
+<div class="mb-4" data-test-community-solution-card {{did-insert this.handleDidInsert}}>
+  <div class="flex items-center mb-1.5">
+    <a href={{@comment.user.codecraftersProfileUrl}} class="flex items-center" target="_blank" rel="noopener noreferrer">
+      <AvatarImage @user={{@comment.user}} class="w-8 h-8 mr-2 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+      <span class="text-gray-700 text-sm font-semibold">{{@comment.user.username}}</span>
+    </a>
+
+    <div class="bg-gray-200 w-1 h-1 mx-1.5 rounded-full">
+    </div>
+
+    <div class="text-xs text-gray-400">
+      {{moment-from-now @comment.createdAt}}
+    </div>
+  </div>
+
+  <div class="ml-10 leading-7 prose max-w-none" {{did-insert this.handleDidInsertBodyHTML}}>
+    {{this.bodyHTML}}
+  </div>
+</div>
