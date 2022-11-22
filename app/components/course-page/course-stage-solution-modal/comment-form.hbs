@@ -1,0 +1,43 @@
+<div data-test-comment-card ...attributes>
+  <div class="flex items-start">
+    <a href={{this.currentUser.codecraftersProfileUrl}} class="mt-0.5 flex items-center flex-shrink-0" target="_blank" rel="noopener noreferrer">
+      <AvatarImage @user={{this.currentUser}} class="w-8 h-8 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+    </a>
+    <div class="bg-white shadow-sm rounded border border-gray-300 w-full">
+      <div class="bg-gray-100 rounded-t pt-2 px-2 border-b border-gray-200 flex items-center">
+        <div class="transform translate-y-px flex">
+          <div class="bg-white py-2 px-4 border border-b-0 rounded-t text-sm text-gray-800">
+            Write
+          </div>
+          <div class="ml-1 py-2 px-4 rounded-t text-sm text-gray-800">
+            Preview
+          </div>
+        </div>
+      </div>
+
+      <div class="px-2 py-2">
+        <div class="">
+          {{! template-lint-disable require-input-label }}
+          <Textarea
+            @value={{this.newComment.bodyMarkdown}}
+            class="border border-gray-300 rounded w-full p-2 text-sm bg-gray-100 focus:bg-white"
+            placeholder="Leave a comment..."
+            rows="5"
+          />
+        </div>
+
+        <div class="flex justify-between items-center mt-1">
+          <div class="flex items-center">
+            {{svg-jar "markdown" class="fill-current w-5 mr-1 text-gray-400"}}
+
+            <div class="text-xs text-gray-500">
+              Markdown supported.
+            </div>
+          </div>
+
+          <PrimaryButton @isDisabled={{true}} @size="small">Comment</PrimaryButton>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
