@@ -12,7 +12,7 @@
       {{on "click" (fn @onTabLinkClick "community_solutions")}}
     />
 
-    {{#if this.solution}}
+    {{#if @currentSolution}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @icon="code"
         @text="Verified Solution"
@@ -23,7 +23,7 @@
       />
     {{/if}}
 
-    {{#if this.solution.hasExplanation}}
+    {{#if @currentSolution.hasExplanation}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @icon="academic-cap"
         @text="Explanation"

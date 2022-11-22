@@ -47,9 +47,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
-    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Community Solutions');
-
+    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
 
     await coursePage.courseStageSolutionModal.languageDropdown.toggle();

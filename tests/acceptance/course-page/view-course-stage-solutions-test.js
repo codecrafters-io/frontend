@@ -28,14 +28,15 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Explanation', 'active header tab link should be explanation');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Solutions', 'active header tab link should be solutions');
 
+    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Explanation');
     await percySnapshot('Stage Solution Modal - Explanation');
 
-    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Diff');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Diff', 'active tab should be Diff');
+    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Verified Solution');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Verified Solution', 'active tab should be Verified Solution');
 
-    await percySnapshot('Stage Solution Modal - Diff');
+    await percySnapshot('Stage Solution Modal - Verified Solution');
 
     assert.strictEqual(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Go', 'Go is selected by default');
     assert.notOk(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should not be visible');
@@ -47,7 +48,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     assert.strictEqual(
       coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.text,
-      "This stage doesn't have solutions available for Python yet, so we're showing solutions for Go instead."
+      "This stage doesn't have verified solutions available for Python yet, so we're showing solutions for Go instead."
     );
   });
 
