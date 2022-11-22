@@ -15,16 +15,16 @@
     @courseStage={{@courseStage}}
   />
 
-  {{#if (eq this.activeTab "diff")}}
-    <CoursePage::CourseStageSolutionModal::Diff @solution={{this.solution}} />
+  {{#if (eq this.activeTab "verified_solution")}}
+    <CoursePage::CourseStageSolutionModal::VerifiedSolutionTab @solution={{this.solution}} />
   {{else if (eq this.activeTab "explanation")}}
-    <CoursePage::CourseStageSolutionModal::Explanation @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
+    <CoursePage::CourseStageSolutionModal::ExplanationTab @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
   {{else if (eq this.activeTab "community_solutions")}}
     <CoursePage::CourseStageSolutionModal::CommunitySolutionsTab
       @courseStage={{@courseStage}}
       @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
     />
-  {{else}}
+  {{else if (eq this.activeTab "source_walkthrough")}}
     <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
   {{/if}}
 </ModalBody>
