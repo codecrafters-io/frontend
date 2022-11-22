@@ -36,7 +36,7 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   }
 
   get shouldShowViewSolutionButton() {
-    return !!this.args.courseStage.solutions.firstObject;
+    return true; // Community solutions are always available!
   }
 
   get shouldShowViewTestCasesButton() {

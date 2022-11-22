@@ -22,10 +22,9 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-swift';
 
 import 'prismjs/components/prism-diff';
-import * as Sentry from '@sentry/ember';
 
 export default class CourseStageSolutionModalComponent extends Component {
-  @tracked activeTab; // diff/explanation/source_walkthrough
+  @tracked activeTab; // community_solutions/verified_solution/explanation/source_walkthrough
   @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
   @service store;
@@ -36,13 +35,8 @@ export default class CourseStageSolutionModalComponent extends Component {
     this.requestedSolutionLanguage = this.args.repositoryLanguage || this.args.courseStage.solutions.sortBy('language.name').firstObject.language;
 
     // intent is either view_solution or view_source_walkthrough
-    if (this.args.intent === 'view_solution' && this.solution) {
-      if (this.solution) {
-        this.activeTab = this.solution.hasExplanation ? 'explanation' : 'diff';
-      } else {
-        Sentry.captureMessage('Received view_solution intent when solution is not available');
-        this.activeTab = 'source_walkthrough';
-      }
+    if (this.args.intent === 'view_solution') {
+      this.activeTab = 'community_solutions';
     } else {
       this.activeTab = 'source_walkthrough';
     }
@@ -51,7 +45,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   emitAnalyticsEvent() {
-    if (this.activeTab === 'diff' || this.activeTab === 'explanation') {
+    if (this.activeTab === 'verified_solution' || this.activeTab === 'explanation') {
       this.store
         .createRecord('analytics-event', {
           name: this.activeTab === 'explanation' ? 'viewed_course_stage_solution_explanation' : 'viewed_course_stage_solution_diff',

@@ -6,27 +6,31 @@
 <div class="flex flex-wrap items-center justify-between">
   <div class="flex items-center overflow-x-scroll pb-4 mb-2">
     <CoursePage::CourseStageSolutionModal::HeaderTabLink
-      @icon="code"
-      @text="Diff"
-      @isActive={{eq @activeTab "diff"}}
-      @authorDetails={{@currentSolution.authorDetails}}
-      @reviewersDetails={{@currentSolution.reviewersDetails}}
-      {{on "click" (fn @onTabLinkClick "diff")}}
-    />
-
-    <CoursePage::CourseStageSolutionModal::HeaderTabLink
-      @icon="academic-cap"
-      @text="Explanation"
-      @isActive={{eq @activeTab "explanation"}}
-      {{on "click" (fn @onTabLinkClick "explanation")}}
-    />
-
-    <CoursePage::CourseStageSolutionModal::HeaderTabLink
       @icon="user-group"
-      @text="Community Solutions"
+      @text="Solutions"
       @isActive={{eq @activeTab "community_solutions"}}
       {{on "click" (fn @onTabLinkClick "community_solutions")}}
     />
+
+    {{#if @currentSolution}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="code"
+        @text="Verified Solution"
+        @isActive={{eq @activeTab "verified_solution"}}
+        @authorDetails={{@currentSolution.authorDetails}}
+        @reviewersDetails={{@currentSolution.reviewersDetails}}
+        {{on "click" (fn @onTabLinkClick "verified_solution")}}
+      />
+    {{/if}}
+
+    {{#if @currentSolution.hasExplanation}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="academic-cap"
+        @text="Explanation"
+        @isActive={{eq @activeTab "explanation"}}
+        {{on "click" (fn @onTabLinkClick "explanation")}}
+      />
+    {{/if}}
 
     {{#if @courseStage.sourceWalkthrough}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
@@ -39,7 +43,7 @@
   </div>
 
   <div>
-    {{#if (or (eq @activeTab "diff") (eq @activeTab "explanation"))}}
+    {{#if (or (eq @activeTab "verified_solution") (eq @activeTab "explanation"))}}
       <CoursePage::CourseStageSolutionModal::LanguageDropdown
         @currentLanguage={{@currentSolution.language}}
         @requestedLanguage={{@requestedSolutionLanguage}}
@@ -58,13 +62,13 @@
   </div>
 </div>
 
-{{#if (and (or (eq @activeTab "diff") (eq @activeTab "explanation")) (not-eq @requestedSolutionLanguage @currentSolution.language))}}
+{{#if (and (or (eq @activeTab "verified_solution") (eq @activeTab "explanation")) (not-eq @requestedSolutionLanguage @currentSolution.language))}}
   <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-6 flex items-center" data-test-requested-language-not-available-notice>
     <div class="mr-3">
       {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
     </div>
     <div class="text-blue-900 text-sm">
-      This stage doesn't have solutions available for
+      This stage doesn't have verified solutions available for
       {{@requestedSolutionLanguage.name}}
       yet, so we're showing solutions for
       <b class="text-blue-800">{{@currentSolution.language.name}}</b>
