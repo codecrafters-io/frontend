@@ -13,7 +13,14 @@
     </div>
   </div>
 
-  <div class="ml-10 leading-7 prose max-w-none" {{did-insert this.handleDidInsertBodyHTML}}>
-    {{this.bodyHTML}}
+  <div class="ml-10">
+    <div class="leading-7 prose max-w-none" {{did-insert this.handleDidInsertBodyHTML}}>
+      {{this.bodyHTML}}
+    </div>
+    <div class="mt-2">
+      <div class="flex items-center">
+        {{svg-jar "chevron-down" class="w-5 h-5 text-gray-600 cursor-pointer"}}
+      </div>
+    </div>
   </div>
 </div>
