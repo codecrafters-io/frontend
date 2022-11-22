@@ -36,7 +36,11 @@ export default class CourseStageSolutionModalComponent extends Component {
 
     // intent is either view_solution or view_source_walkthrough
     if (this.args.intent === 'view_solution') {
-      this.activeTab = 'community_solutions';
+      if (this.args.courseStage.isFirst && this.solution) {
+        this.activeTab = 'explanation';
+      } else {
+        this.activeTab = 'community_solutions';
+      }
     } else {
       this.activeTab = 'source_walkthrough';
     }
