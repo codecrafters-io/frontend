@@ -6,11 +6,16 @@ import { action } from '@ember/object';
 export default class CommentsTabComponent extends Component {
   @tracked isLoading = true;
   @service store;
+  @service('current-user') currentUserService;
 
   constructor() {
     super(...arguments);
 
     this.loadComments();
+  }
+
+  get currentUserIsStaff() {
+    return this.currentUserService.record.isStaff;
   }
 
   @action
@@ -26,6 +31,16 @@ export default class CommentsTabComponent extends Component {
   }
 
   get sortedComments() {
-    return this.args.courseStage.comments.rejectBy('isNew').sortBy('createdAt').reverse();
+    return this.visibleComments.sortBy('createdAt').reverse();
+  }
+
+  get visibleComments() {
+    if (this.currentUserIsStaff) {
+      return this.args.courseStage.comments.rejectBy('isNew');
+    } else {
+      return this.args.courseStage.comments
+        .rejectBy('isNew')
+        .filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+    }
   }
 }

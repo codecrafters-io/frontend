@@ -44,6 +44,7 @@ export default create({
 
     commentsTab: {
       clickOnTabHeader: clickOnText('[data-test-tab-header]'),
+      clickOnSubmitButton: clickable('[data-test-submit-button]'),
       submitButtonIsDisabled: hasClass('opacity-50', '[data-test-submit-button]'),
       commentCards: collection('[data-test-comment-card]'),
       fillInCommentInput: fillable('[data-test-comment-input]'),

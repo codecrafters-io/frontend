@@ -6,7 +6,8 @@ export default class CourseStageCommentModel extends Model {
   @belongsTo('language', { async: false }) language;
   @belongsTo('user', { async: false }) user;
 
-  @attr('string') bodyMarkdown;
+  @attr('boolean') isApprovedByModerator;
   @attr('date') createdAt;
   @attr('date') updatedAt;
+  @attr('string') bodyMarkdown;
 }
