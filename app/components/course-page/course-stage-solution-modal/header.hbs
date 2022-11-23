@@ -5,12 +5,14 @@
 
 <div class="flex flex-wrap items-center justify-between">
   <div class="flex items-center overflow-x-scroll pb-4 mb-2">
-    <CoursePage::CourseStageSolutionModal::HeaderTabLink
-      @icon="user-group"
-      @text="Solutions"
-      @isActive={{eq @activeTab "community_solutions"}}
-      {{on "click" (fn @onTabLinkClick "community_solutions")}}
-    />
+    {{#unless @courseStage.isFirst}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="user-group"
+        @text="Solutions"
+        @isActive={{eq @activeTab "community_solutions"}}
+        {{on "click" (fn @onTabLinkClick "community_solutions")}}
+      />
+    {{/unless}}
 
     {{#if @currentSolution}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
