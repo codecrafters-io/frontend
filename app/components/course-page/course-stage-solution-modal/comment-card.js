@@ -6,7 +6,12 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 
 export default class CommentCardComponent extends Component {
+  @service('current-user') currentUserService;
   @service store;
+
+  get currentUserIsStaff() {
+    return this.currentUserService.record.isStaff;
+  }
 
   get bodyHTML() {
     return htmlSafe(new showdown.Converter().makeHtml(this.args.comment.bodyMarkdown));
