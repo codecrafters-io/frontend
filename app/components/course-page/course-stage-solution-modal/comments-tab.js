@@ -38,7 +38,9 @@ export default class CommentsTabComponent extends Component {
     if (this.currentUserIsStaff) {
       return this.args.courseStage.comments.rejectBy('isNew');
     } else {
-      return this.args.courseStage.comments.rejectBy('isNew').filterBy('isApprovedByModerator');
+      return this.args.courseStage.comments
+        .rejectBy('isNew')
+        .filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
     }
   }
 }

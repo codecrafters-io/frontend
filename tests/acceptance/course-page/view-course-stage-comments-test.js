@@ -7,7 +7,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-course-stage-comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,7 +16,7 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
 
   test('can view comments', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
     const user = this.server.schema.users.first();
@@ -53,7 +53,7 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
 
   test('can create comment', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -72,7 +72,11 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
     assert.notOk(coursePage.courseStageSolutionModal.commentsTab.submitButtonIsDisabled, 'submit button should not be disabled if input is provided');
 
     await coursePage.courseStageSolutionModal.commentsTab.clickOnTabHeader('Preview');
-
     await percySnapshot('Course Stage Comments - Preview');
+
+    await coursePage.courseStageSolutionModal.commentsTab.clickOnTabHeader('Write');
+    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
   });
 });

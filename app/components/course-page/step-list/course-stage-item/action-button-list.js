@@ -38,7 +38,7 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   }
 
   get shouldShowViewCommentsButton() {
-    return this.currentUserService.record.isStaff; // Comments are always available
+    return true; // Comments are always available
   }
 
   get shouldShowViewSolutionButton() {

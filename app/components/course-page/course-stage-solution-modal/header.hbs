@@ -41,14 +41,12 @@
       />
     {{/if}}
 
-    {{#if this.currentUserIsStaff}}
-      <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="chat"
-        @text="Comments"
-        @isActive={{eq @activeTab "comments"}}
-        {{on "click" (fn @onTabLinkClick "comments")}}
-      />
-    {{/if}}
+    <CoursePage::CourseStageSolutionModal::HeaderTabLink
+      @icon="chat"
+      @text="Comments"
+      @isActive={{eq @activeTab "comments"}}
+      {{on "click" (fn @onTabLinkClick "comments")}}
+    />
   </div>
 
   <div>
