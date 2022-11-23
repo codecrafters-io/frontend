@@ -37,6 +37,7 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
         @courseStage={{this.courseStage}}
         @repository={{this.repository}}
         @onViewNextStageButtonClick={{this.noop}}
+        @onViewCommentsButtonClick={{this.noop}}
         @onViewSolutionButtonClick={{this.noop}}
         @onViewSourceWalkthroughButtonClick={{this.noop}} />
     `);
