@@ -4,7 +4,6 @@ import { render } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Integration | Component | course-page/step-list/course-stage-item', function (hooks) {
   setupRenderingTest(hooks);
