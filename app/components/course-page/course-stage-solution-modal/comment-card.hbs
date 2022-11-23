@@ -14,7 +14,12 @@
         </div>
 
         {{#unless @comment.isApprovedByModerator}}
-          <a href="/admin/course_stage_comments/{{@comment.id}}/edit" class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-xs">
+          <a
+            target="_blank"
+            href="/admin/course_stage_comments/{{@comment.id}}/edit"
+            class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-xs"
+            rel="noopener noreferrer"
+          >
             unapproved
           </a>
         {{/unless}}
