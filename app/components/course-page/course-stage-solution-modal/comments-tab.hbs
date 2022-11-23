@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <CoursePage::CourseStageSolutionModal::CommentForm @courseStage={{@courseStage}} class="mb-4" />
+  <CoursePage::CourseStageSolutionModal::CommentForm @courseStage={{@courseStage}} @language={{@language}} class="mb-4" />
 
   {{#if this.isLoading}}
     <div class="flex justify-center items-center py-32 w-full">
