@@ -8,7 +8,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stage-comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -48,6 +47,8 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be solutions');
     assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 2);
+
+    await percySnapshot('Course Stage Comments');
   });
 
   test('can create comment', async function (assert) {
@@ -71,5 +72,7 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
     assert.notOk(coursePage.courseStageSolutionModal.commentsTab.submitButtonIsDisabled, 'submit button should not be disabled if input is provided');
 
     await coursePage.courseStageSolutionModal.commentsTab.clickOnTabHeader('Preview');
+
+    await percySnapshot('Course Stage Comments - Preview');
   });
 });
