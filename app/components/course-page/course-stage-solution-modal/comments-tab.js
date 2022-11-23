@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 
 export default class CommentsTabComponent extends Component {
   @tracked isLoading = true;
-  @tracked comments = [];
   @service store;
 
   constructor() {
@@ -18,15 +17,15 @@ export default class CommentsTabComponent extends Component {
   async loadComments() {
     this.isLoading = true;
 
-    this.comments = await this.store.query('course-stage-comment', {
+    await this.store.query('course-stage-comment', {
       course_stage_id: this.args.courseStage.id,
-      include: 'user,language',
+      include: 'user,language,course-stage',
     });
 
     this.isLoading = false;
   }
 
   get sortedComments() {
-    return this.comments.sortBy('createdAt').reverse();
+    return this.args.courseStage.comments.rejectBy('isNew').sortBy('createdAt').reverse();
   }
 }

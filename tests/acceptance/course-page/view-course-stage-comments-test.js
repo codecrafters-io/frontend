@@ -44,9 +44,32 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
     await animationsSettled();
 
     await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
-    await this.pauseTest();
 
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be solutions');
+    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 2);
+  });
+
+  test('can create comment', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be solutions');
+    assert.ok(coursePage.courseStageSolutionModal.commentsTab.submitButtonIsDisabled, 'submit button should be disabled if no input is provided');
+
+    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
+    assert.notOk(coursePage.courseStageSolutionModal.commentsTab.submitButtonIsDisabled, 'submit button should not be disabled if input is provided');
+
+    await coursePage.courseStageSolutionModal.commentsTab.clickOnTabHeader('Preview');
   });
 });
