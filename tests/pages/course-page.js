@@ -1,4 +1,4 @@
-import { clickable, clickOnText, collection, create, text, visitable } from 'ember-cli-page-object';
+import { clickable, clickOnText, collection, create, fillable, hasClass, text, visitable } from 'ember-cli-page-object';
 import CollapsedItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/collapsed-item';
 import CourseCompletedItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/course-completed-item';
 import CourseStageItem from 'codecrafters-frontend/tests/pages/components/course-page/step-list/course-stage-item';
@@ -41,6 +41,15 @@ export default create({
     activeHeaderTabLinkText: text('[data-test-header-tab-link].border-teal-500'),
     clickOnCloseButton: clickable('[data-test-close-modal-button]'),
     clickOnHeaderTabLink: clickOnText('[data-test-header-tab-link]'),
+
+    commentsTab: {
+      clickOnTabHeader: clickOnText('[data-test-tab-header]'),
+      submitButtonIsDisabled: hasClass('opacity-50', '[data-test-submit-button]'),
+      commentCards: collection('[data-test-comment-card]'),
+      fillInCommentInput: fillable('[data-test-comment-input]'),
+      scope: '[data-test-comments-tab]',
+    },
+
     communitySolutionsTab: {
       solutionCards: collection('[data-test-community-solution-card]'),
       scope: '[data-test-community-solutions-tab]',

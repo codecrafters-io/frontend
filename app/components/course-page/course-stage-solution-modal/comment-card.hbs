@@ -1,0 +1,22 @@
+<div data-test-comment-card ...attributes>
+  <div class="flex items-start">
+    <a href={{@comment.user.codecraftersProfileUrl}} class="mt-0.5 flex items-center flex-shrink-0" target="_blank" rel="noopener noreferrer">
+      <AvatarImage @user={{@comment.user}} class="w-8 h-8 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+    </a>
+    <div class="bg-white shadow-sm rounded border border-gray-300 w-full">
+      <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center">
+        <span class="text-sm text-gray-600 font-bold">{{@comment.user.username}}</span>
+        <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
+        <div class="text-xs text-gray-400">
+          {{moment-from-now @comment.createdAt}}
+        </div>
+      </div>
+
+      <div class="px-4 py-3">
+        <div class="leading-relaxed prose-sm prose max-w-none comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
+          {{this.bodyHTML}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -37,5 +37,14 @@
         class="mt-3 mr-3"
       />
     {{/if}}
+
+    {{#if this.shouldShowViewCommentsButton}}
+      <CoursePage::StepList::CourseStageItem::ActionButton
+        @text="Comments"
+        @icon="chat"
+        {{on "click" (fn @onViewCommentsButtonClick @courseStage)}}
+        class="mt-3 mr-3"
+      />
+    {{/if}}
   </div>
 {{/if}}

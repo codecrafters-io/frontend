@@ -4,6 +4,11 @@ import Model from '@ember-data/model';
 
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false }) course;
+  @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
+
+  @hasMany('course-stage-comments', { async: false }) comments;
+  @hasMany('course-stage-solution', { async: false }) solutions;
+
   @attr('string') difficulty;
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
@@ -12,8 +17,6 @@ export default class CourseStageModel extends Model {
   @attr('number') position;
   @attr('string') shortName;
   @attr('string') slug;
-  @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
-  @hasMany('course-stage-solution', { async: false }) solutions;
   @attr('string') testerSourceCodeUrl;
 
   @equal('difficulty', 'very_easy') difficultyIsVeryEasy;

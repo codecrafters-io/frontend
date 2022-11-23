@@ -1,13 +1,20 @@
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupRenderingTest } from 'ember-qunit';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Integration | Component | course-page/step-list/course-stage-item', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('opens all links in new tab', async function (assert) {
     const store = this.owner.lookup('service:store');
+    const mirageUser = this.server.create('user', { createdAt: new Date(), id: 'dummy', username: 'test' });
+    store.createRecord('user', { createdAt: new Date(), id: 'dummy', username: 'test' });
+
+    signIn(this.owner, this.server, mirageUser);
 
     const language = store.createRecord('language');
     const course = store.createRecord('course');

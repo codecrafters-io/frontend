@@ -4,6 +4,7 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 
 export default class CourseStageItemActionButtonListComponent extends Component {
+  @service('current-user') currentUserService;
   @service store;
   @service visibility;
   transition = fade;
@@ -14,7 +15,8 @@ export default class CourseStageItemActionButtonListComponent extends Component 
       this.shouldShowViewTestCasesButton ||
       this.shouldShowViewSourceWalkthroughButton ||
       this.shouldShowSubmitFeedbackButton ||
-      this.shouldShowEditFeedbackButton
+      this.shouldShowEditFeedbackButton ||
+      this.shouldShowViewCommentsButton
     );
   }
 
@@ -33,6 +35,10 @@ export default class CourseStageItemActionButtonListComponent extends Component 
       !this.shouldShowEditFeedbackButton &&
       (this.args.repository.stageIsComplete(this.args.courseStage) || this.args.repository.activeStage === this.args.courseStage)
     );
+  }
+
+  get shouldShowViewCommentsButton() {
+    return this.currentUserService.record.isStaff; // Comments are always available
   }
 
   get shouldShowViewSolutionButton() {

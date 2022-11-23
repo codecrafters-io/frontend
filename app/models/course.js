@@ -43,7 +43,7 @@ export default class CourseModel extends Model {
   }
 
   get firstStage() {
-    return this.stages.sortBy('position').firstObject;
+    return this.sortedStages[0];
   }
 
   get logoUrl() {
@@ -59,6 +59,10 @@ export default class CourseModel extends Model {
 
   get roundedCompletionPercentage() {
     return this.completionPercentage; // Same for now, we don't store exact completion percentages yet.
+  }
+
+  get secondStage() {
+    return this.sortedStages[1];
   }
 
   get sortedStages() {
