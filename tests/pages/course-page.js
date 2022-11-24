@@ -46,7 +46,10 @@ export default create({
       clickOnTabHeader: clickOnText('[data-test-tab-header]'),
       clickOnSubmitButton: clickable('[data-test-submit-button]'),
       submitButtonIsDisabled: hasClass('opacity-50', '[data-test-submit-button]'),
-      commentCards: collection('[data-test-comment-card]'),
+      commentCards: collection('[data-test-comment-card]', {
+        downvoteButton: { scope: '[data-test-downvote-button]' },
+        upvoteButton: { scope: '[data-test-upvote-button]' },
+      }),
       fillInCommentInput: fillable('[data-test-comment-input]'),
       scope: '[data-test-comments-tab]',
     },
