@@ -1,0 +1,11 @@
+<button
+  type="button"
+  class="px-1 py-0.5 rounded flex items-center border
+    {{if this.currentUserHasDownvoted 'border-red-500 hover:border-red-600' 'border-gray-200 hover:border-gray-300'}}
+    transition-all duration-75 active:border-red-600"
+  ...attributes
+  data-test-downvote-button
+  {{on "click" this.handleClick}}
+>
+  {{svg-jar "chevron-down" class=(concat "w-4 transition-all duration-75 " (if this.currentUserHasDownvoted "text-red-500" "text-gray-300"))}}
+</button>

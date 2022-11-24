@@ -29,6 +29,11 @@
         <div class="leading-relaxed prose-sm prose max-w-none comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
           {{this.bodyHTML}}
         </div>
+
+        <div class="mt-2 flex items-center">
+          <CoursePage::CourseStageSolutionModal::CommentCard::UpvoteButton @comment={{@comment}} />
+          <CoursePage::CourseStageSolutionModal::CommentCard::DownvoteButton @comment={{@comment}} class="ml-1" />
+        </div>
       </div>
     </div>
   </div>

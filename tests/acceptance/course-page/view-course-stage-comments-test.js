@@ -79,4 +79,52 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
 
     assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
   });
+
+  test('can upvote / downvote comments', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const user = this.server.schema.users.first();
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-01-02'),
+      bodyMarkdown: 'This is the **first** comment',
+      courseStage: redis.stages.models.sortBy('position')[1],
+      isApprovedByModerator: true,
+      user: user,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2020-01-01'),
+      bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
+      courseStage: redis.stages.models.sortBy('position')[1],
+      isApprovedByModerator: true,
+      user: user,
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+
+    const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+
+    await firstCommentCard.upvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '2', 'upvote count should be 2');
+
+    await firstCommentCard.upvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+
+    await firstCommentCard.downvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '0', 'upvote count should be 0');
+
+    await firstCommentCard.downvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+  });
 });
