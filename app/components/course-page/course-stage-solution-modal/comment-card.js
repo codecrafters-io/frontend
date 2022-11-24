@@ -14,7 +14,7 @@ export default class CommentCardComponent extends Component {
   }
 
   get bodyHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.args.comment.bodyMarkdown));
+    return htmlSafe(new showdown.Converter({ simplifiedAutoLink: true, openLinksInNewWindow: true }).makeHtml(this.args.comment.bodyMarkdown));
   }
 
   @action
