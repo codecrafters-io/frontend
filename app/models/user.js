@@ -1,6 +1,5 @@
-import { attr, hasMany } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
-import Model from '@ember-data/model';
 
 export default class UserModel extends Model {
   @attr('string') avatarUrl;
@@ -23,6 +22,7 @@ export default class UserModel extends Model {
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
+  @hasMany('referral-link', { async: false }) referralLinks;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
@@ -91,6 +91,10 @@ export default class UserModel extends Model {
 
   get hasFreeUsageRestriction() {
     return !!this.freeUsageRestriction;
+  }
+
+  get hasJoinedReferralProgram() {
+    return this.referralLinks.rejectBy('isNew').length > 0;
   }
 
   get hasNoFreeUsageRestriction() {

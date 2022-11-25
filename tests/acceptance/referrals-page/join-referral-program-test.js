@@ -21,4 +21,16 @@ module('Acceptance | referrals-page | join-referral-program', function (hooks) {
 
     await percySnapshot('Referrals Page | Join Referral Program');
   });
+
+  test('can join referral program', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await referralsPage.visit();
+    await referralsPage.getStartedButton.click();
+
+    assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
+
+    await percySnapshot('Referrals Page | Empty Referrals List');
+  });
 });

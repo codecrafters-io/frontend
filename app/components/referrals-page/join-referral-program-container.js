@@ -1,6 +1,13 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class JoinReferralProgramContainerComponent extends Component {
+  @service store;
+  @service('current-user') currentUserService;
+  @tracked isCreatingReferralLink = false;
+
   get features() {
     return [
       {
@@ -19,5 +26,17 @@ export default class JoinReferralProgramContainerComponent extends Component {
         image: 'slack-integration',
       },
     ];
+  }
+
+  @action
+  async handleGetStartedButtonClick() {
+    const referralLink = this.store.createRecord('referral-link', {
+      user: this.currentUserService.record,
+      slug: this.currentUserService.record.username,
+    });
+
+    this.isCreatingReferralLink = true;
+    await referralLink.save();
+    this.isCreatingReferralLink = false;
   }
 }

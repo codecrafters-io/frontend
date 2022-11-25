@@ -1,4 +1,4 @@
-import { discoverEmberDataModels, applyEmberDataSerializers } from 'ember-cli-mirage';
+import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer } from 'miragejs';
 
 export default function (config) {
@@ -115,6 +115,8 @@ function routes() {
 
     return result;
   });
+
+  this.post('/referral-links');
 
   this.get('/repositories', function (schema, request) {
     let repositories;
