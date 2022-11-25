@@ -127,6 +127,7 @@ function routes() {
   this.post('/referral-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.url = `https://app.codecraters.io/refer?via=${attrs.slug}`;
+    attrs.uniqueViewerCount = 0;
 
     return schema.referralLinks.create(attrs);
   });

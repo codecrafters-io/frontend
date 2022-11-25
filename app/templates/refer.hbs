@@ -5,8 +5,8 @@
     <h1 class="font-semibold text-2xl text-gray-700 mb-5 flex-shrink-0">Referrals</h1>
 
     <ReferralsPage::ReferralLinksContainer />
-    <ReferralsPage::ReferralLinkStatsContainer class="mt-4" />
-    <ReferralsPage::ReferredUsersContainer class="mt-4" />
+    <ReferralsPage::ReferralLinkStatsContainer @referralLink={{this.referralLink}} class="mt-4" />
+    <ReferralsPage::ReferredUsersContainer @referralLink={{this.referralLink}} class="mt-4" />
     <ReferralsPage::EarningsContainer class="mt-4" />
   {{else}}
     <ReferralsPage::JoinReferralProgramContainer />

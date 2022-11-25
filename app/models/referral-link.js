@@ -5,4 +5,5 @@ export default class ReferralLinkModel extends Model {
 
   @attr('string') slug;
   @attr('string') url;
+  @attr('number') uniqueViewerCount;
 }
