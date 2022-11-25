@@ -17,6 +17,7 @@ module('Acceptance | referrals-page | join-referral-program', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralsPage.visit();
+    await this.pauseTest();
     assert.ok(referralsPage.getStartedButton.isVisible);
 
     await percySnapshot('Referrals Page | Join Referral Program');

@@ -1,0 +1,27 @@
+<h1 class="font-semibold text-2xl text-gray-700 mb-8 flex-shrink-0">Tell your friends</h1>
+
+<div class="prose">
+  <p>CodeCrafters has always grown through word of mouth.</p>
+  <p>As a thank you, we're now sharing the wins.</p>
+  <ul>
+    <li>You get 25% of what we make, for life.</li>
+    <li>Your friends get $400 off on the annual plan.</li>
+  </ul>
+</div>
+
+<div class="flex items-center mt-8">
+  <PrimaryButtonWithSpinner class="px-5 py-3" data-test-get-started-button>
+    <span class="text-lg">Get Started</span>
+    {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
+  </PrimaryButtonWithSpinner>
+
+  <div class="text-gray-600 ml-5 hover:underline" role="button">
+    View details
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+  {{#each this.features as |feature|}}
+    <FeatureCard @title={{feature.title}} @description={{feature.description}} @image={{feature.image}} />
+  {{/each}}
+</div>

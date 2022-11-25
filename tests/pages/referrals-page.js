@@ -5,5 +5,6 @@ export default createPage({
   getStartedButton: {
     scope: '[data-test-get-started-button]',
   },
+
   visit: visitable('/refer'),
 });
