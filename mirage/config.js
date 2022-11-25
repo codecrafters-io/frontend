@@ -116,7 +116,12 @@ function routes() {
     return result;
   });
 
-  this.post('/referral-links');
+  this.post('/referral-links', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.url = `https://app.codecraters.io/refer?via=${attrs.slug}`;
+
+    return schema.referralLinks.create(attrs);
+  });
 
   this.get('/repositories', function (schema, request) {
     let repositories;

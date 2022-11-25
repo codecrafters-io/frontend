@@ -32,5 +32,6 @@ module('Acceptance | referrals-page | join-referral-program', function (hooks) {
     assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
     await percySnapshot('Referrals Page | Empty Referrals List');
+    await this.pauseTest();
   });
 });

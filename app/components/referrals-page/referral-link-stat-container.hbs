@@ -1,0 +1,21 @@
+<div class="border rounded-lg p-4 flex items-center">
+  <div class="w-14 h-14 rounded-full bg-teal-50 border border-teal-500 flex items-center justify-center mr-4">
+    {{svg-jar @icon class="w-6 h-6 fill-current text-teal-500"}}
+  </div>
+
+  <div>
+    <div class="flex items-center">
+      <div class="text-gray-500 mr-1">
+        {{@title}}
+      </div>
+
+      <div>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-300"}}
+        <EmberTooltip @text={{@helpText}} />
+      </div>
+    </div>
+    <div>
+      {{yield}}
+    </div>
+  </div>
+</div>

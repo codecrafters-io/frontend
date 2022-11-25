@@ -1,0 +1,13 @@
+<PageSection @title="Link" data-test-subscription-settings-container ...attributes>
+  <div class="prose">
+    Your referral link is:
+  </div>
+
+  <div class="max-w-sm mt-3">
+    <CopyableCode @code={{this.currentUser.referralLinks.firstObject.url}} />
+  </div>
+
+  <div class="text-teal-500 underline font-semibold text-sm mt-3">
+    Create another?
+  </div>
+</PageSection>

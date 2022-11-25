@@ -1,0 +1,33 @@
+<PageSection @title="Last 30 days stats" data-test-subscription-settings-container ...attributes>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <ReferralsPage::ReferralLinkStatContainer @title="Link Views" @icon="link" @helpText="The number of unique users that have viewed your link.">
+      <span class="text-gray-700 text-2xl font-bold">321</span>
+    </ReferralsPage::ReferralLinkStatContainer>
+
+    <ReferralsPage::ReferralLinkStatContainer
+      @title="Referrals"
+      @icon="cursor-click"
+      @helpText="The number of users who've accepted your referral offer."
+    >
+      <span class="text-gray-700 text-2xl font-bold">150</span>
+    </ReferralsPage::ReferralLinkStatContainer>
+
+    <ReferralsPage::ReferralLinkStatContainer @title="Trials" @icon="credit-card" @helpText="The number of referred users who've started a trial.">
+      <div class="flex items-center">
+        <span class="text-gray-700 text-2xl font-bold">31</span>
+        <span class="text-yellow-500 text-lg font-bold ml-1">($990)</span>
+      </div>
+    </ReferralsPage::ReferralLinkStatContainer>
+
+    <ReferralsPage::ReferralLinkStatContainer
+      @title="Paid Users"
+      @icon="gift"
+      @helpText="The number of referred users who've converted to paying users."
+    >
+      <div class="flex items-center">
+        <span class="text-gray-700 text-2xl font-bold">11</span>
+        <span class="text-teal-500 text-lg font-bold ml-1">($440)</span>
+      </div>
+    </ReferralsPage::ReferralLinkStatContainer>
+  </div>
+</PageSection>
