@@ -1,7 +1,9 @@
 {{page-title "Refer"}}
 
 <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
-  {{#if this.currentUserHasReferralLinks}}{{else}}
+  {{#if this.currentUserHasReferralLinks}}
+    <h1 class="font-semibold text-2xl text-gray-700 mb-8 flex-shrink-0">Referrals</h1>
+  {{else}}
     <ReferralsPage::JoinReferralProgramContainer />
   {{/if}}
 </div>
