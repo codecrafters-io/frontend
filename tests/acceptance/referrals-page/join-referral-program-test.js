@@ -5,6 +5,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | referrals-page | join-referral-program', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,6 +17,8 @@ module('Acceptance | referrals-page | join-referral-program', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralsPage.visit();
-    await this.pauseTest();
+    assert.ok(referralsPage.getStartedButton.isVisible);
+
+    await percySnapshot('Referrals Page | Join Referral Program');
   });
 });
