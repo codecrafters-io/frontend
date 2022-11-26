@@ -72,7 +72,7 @@ export default class HeaderAccountDropdownComponent extends Component {
 
   @action
   handleTestSentryClick() {
-    throw 'Boom!';
+    this.testingSentry.boom();
   }
 
   @action
