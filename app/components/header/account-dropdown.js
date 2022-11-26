@@ -71,6 +71,11 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
+  handleTestSentryClick() {
+    throw 'Boom!';
+  }
+
+  @action
   handleViewProfileClick(dropdownActions) {
     dropdownActions.close();
     this.router.transitionTo('user', this.currentUser.username);

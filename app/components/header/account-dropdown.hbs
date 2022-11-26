@@ -68,6 +68,10 @@
       <Header::AccountDropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Status Page" @icon="cloud" {{on "click" (fn this.handleStatusPageClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
+
+      {{#if this.currentUser.isStaff}}
+        <Header::AccountDropdownLink @text="Test Sentry" @icon="fire" {{on "click" this.handleTestSentryClick}} />
+      {{/if}}
     </div>
   </dd.Content>
 </BasicDropdown>
