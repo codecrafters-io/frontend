@@ -26,8 +26,13 @@
 
     <ReferralsPage::ReferralLinkStatContainer @title="Trials" @icon="credit-card" @helpText="The number of referred users who've started a trial.">
       <div class="flex items-center">
-        <span class="text-gray-700 text-2xl font-bold">31</span>
-        <span class="text-yellow-500 text-lg font-bold ml-1">($990)</span>
+        <span class="text-gray-700 text-2xl font-bold">{{this.trialCount}}</span>
+
+        {{#if (eq this.trialCount 0)}}
+          <span class="text-gray-300 text-xs ml-1">(no trials yet)</span>
+        {{else}}
+          <span class="text-yellow-500 text-lg font-bold ml-1">($990)</span>
+        {{/if}}
       </div>
     </ReferralsPage::ReferralLinkStatContainer>
 
