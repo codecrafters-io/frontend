@@ -17,17 +17,19 @@
     {{/if}}
 
     {{#if @discountedPrice}}
-      <div class="mt-4">
-        <span class="text-md text-gray-600 font-bold line-through">${{@actualPrice}}</span>
-        {{#if @autoRenewSubscription}}
-          <span class="text-md text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
-        {{/if}}
-      </div>
-      <div class="mt-2">
-        <span class="text-4xl text-teal-500 font-bold">${{@discountedPrice}}</span>
-        {{#if @autoRenewSubscription}}
-          <span class="text-lg text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
-        {{/if}}
+      <div class="mt-6 flex items-center">
+        <div>
+          <span class="text-4xl text-gray-700 font-bold line-through">${{@actualPrice}}</span>
+          {{#if @autoRenewSubscription}}
+            <span class="text-lg text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
+          {{/if}}
+        </div>
+        <div class="ml-2">
+          <span class="text-xl text-teal-500 font-bold">${{@discountedPrice}}</span>
+          {{#if @autoRenewSubscription}}
+            <span class="text-xl text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
+          {{/if}}
+        </div>
       </div>
     {{else}}
       <div class="mt-6">

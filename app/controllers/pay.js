@@ -9,21 +9,17 @@ export default class PayController extends Controller {
   @service store;
   @tracked isCreatingCheckoutSession = false;
 
-  get earlyBirdDiscountEligibilityExpiresAt() {
-    return this.currentUserService.record.earlyBirdDiscountEligibilityExpiresAt;
-  }
-
-  get userIsEligibleForEarlyBirdDiscount() {
-    return this.currentUserService.record.isEligibleForEarlyBirdDiscount;
+  @action
+  async handleTryNowPayLaterButtonClicked() {
+    this.store.createRecord('analytics-event', { name: 'dismissed_payment_prompt' }).save();
+    this.router.transitionTo('tracks');
   }
 
   get testimonials() {
     return this.model.courses.findBy('slug', 'docker').testimonials;
   }
 
-  @action
-  async handleTryNowPayLaterButtonClicked() {
-    this.store.createRecord('analytics-event', { name: 'dismissed_payment_prompt' }).save();
-    this.router.transitionTo('tracks');
+  get user() {
+    return this.currentUserService.record;
   }
 }

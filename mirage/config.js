@@ -116,7 +116,13 @@ function routes() {
     return result;
   });
 
-  this.post('/referral-activations');
+  this.post('/referral-activations', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.activatedAt = new Date();
+
+    return schema.referralActivations.create(attrs);
+  });
+
   this.get('/referral-links');
 
   this.post('/referral-links', function (schema) {

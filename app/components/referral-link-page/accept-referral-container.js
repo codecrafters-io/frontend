@@ -25,7 +25,8 @@ export default class AcceptReferralContainerComponent extends Component {
       await this.store
         .createRecord('referral-activation', {
           referralLink: this.args.referralLink,
-          customer: this.currentUserService.Record,
+          customer: this.currentUserService.record,
+          referrer: this.args.referralLink.user,
         })
         .save();
 

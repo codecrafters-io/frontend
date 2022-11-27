@@ -7,6 +7,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import percySnapshot from '@percy/ember';
 import window from 'ember-window-mock';
 
 module('Acceptance | referral-link-page | accept-referral-offer', function (hooks) {
@@ -35,8 +36,7 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
     await referralLinkPage.visit({ via: 'referral1' });
     await referralLinkPage.acceptReferralButton.click();
 
-    // await this.pauseTest();
-
     assert.strictEqual(currentURL(), '/pay', 'should redirect to pay URL');
+    await percySnapshot('Pay Page | With Referral Offer');
   });
 });

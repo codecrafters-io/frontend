@@ -6,8 +6,10 @@
       Choose your CodeCrafters membership
     </h1>
 
-    {{#if this.userIsEligibleForEarlyBirdDiscount}}
-      <PayPage::EarlyBirdDiscountNotice @expiresAt={{this.earlyBirdDiscountEligibilityExpiresAt}} class="mt-8" />
+    {{#if this.user.isEligibleForEarlyBirdDiscount}}
+      <PayPage::EarlyBirdDiscountNotice @expiresAt={{this.user.earlyBirdDiscountEligibilityExpiresAt}} class="mt-8" />
+    {{else if this.user.isEligibleForReferralDiscount}}
+      <PayPage::ReferralDiscountNotice @referralActivation={{this.user.currentReferralActivation}} class="mt-8" />
     {{/if}}
 
     <div class="flex flex-col-reverse md:flex-row gap-x-8 gap-y-8 items-start mt-12">
@@ -37,9 +39,8 @@
         @title="1 year"
         @subtitle="Learn at your own pace"
         @actualPrice={{990}}
-        @discountedPrice={{if this.userIsEligibleForEarlyBirdDiscount 594 null}}
+        @discountedPrice={{if (or this.user.isEligibleForEarlyBirdDiscount this.user.isEligibleForReferralDiscount) 594 null}}
         @pricingFrequency="yearly"
-        @earlyBirdDiscountEnabled={{this.userIsEligibleForEarlyBirdDiscount}}
         data-test-yearly-pricing-card
       />
     </div>
