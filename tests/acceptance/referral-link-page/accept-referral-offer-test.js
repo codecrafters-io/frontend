@@ -1,37 +1,42 @@
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import referralLinkPage from 'codecrafters-frontend/tests/pages/referral-link-page';
+import { currentURL } from '@ember/test-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import percySnapshot from '@percy/ember';
+import window from 'ember-window-mock';
 
-module('Acceptance | referral-link-page | view-referral-link', function (hooks) {
+module('Acceptance | referral-link-page | accept-referral-offer', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
+  setupWindowMock(hooks);
 
-  test('can view referral link when not logged in', async function (assert) {
+  test('accepting referral offer when not logged in redirects to login', async function (assert) {
     testScenario(this.server);
 
     this.server.create('referral-link', { user: this.server.schema.users.first() });
 
     await referralLinkPage.visit({ via: 'referral1' });
-    assert.ok(referralLinkPage.acceptReferralButton.isVisible);
+    await referralLinkPage.acceptReferralButton.click();
 
-    await percySnapshot('Referral Link Page | View Referral Link | Anonymous');
+    assert.strictEqual(window.location.href, `${window.location.origin}/login?next=%2Fjoin%3Fvia%3Dreferral1`, 'should redirect to login URL');
   });
 
-  test('can view referral link when logged in', async function (assert) {
+  test('can accept referral offer', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     this.server.create('referral-link', { user: this.server.schema.users.first() });
 
     await referralLinkPage.visit({ via: 'referral1' });
-    assert.ok(referralLinkPage.acceptReferralButton.isVisible);
+    await referralLinkPage.acceptReferralButton.click();
 
-    await percySnapshot('Referral Link Page | View Referral Link (anonymous)');
+    // await this.pauseTest();
+
+    assert.strictEqual(currentURL(), '/pay', 'should redirect to pay URL');
   });
 });

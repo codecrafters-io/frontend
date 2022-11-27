@@ -116,6 +116,7 @@ function routes() {
     return result;
   });
 
+  this.post('/referral-activations');
   this.get('/referral-links');
 
   this.post('/referral-links', function (schema) {
