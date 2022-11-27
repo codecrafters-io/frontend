@@ -27,3 +27,23 @@ export function partition(collection, predicate) {
     [[], []]
   );
 }
+
+// Break down collection in multiple chunks of size `chunkSize` and return them.
+export function chunk(collection, chunkSize) {
+  return collection.reduce((acc, item, index) => {
+    if (index % chunkSize === 0) {
+      acc.push([]);
+    }
+
+    acc[acc.length - 1].push(item);
+
+    return acc;
+  }, []);
+}
+
+// Break down collection into N (numberOfChunks) chunks of equal size and return them.
+export function split(collection, numberOfChunks) {
+  let chunkSize = Math.ceil(collection.length / numberOfChunks);
+
+  return chunk(collection, chunkSize);
+}

@@ -1,0 +1,30 @@
+{{page-title "Join"}}
+
+<div class="container mx-auto lg:max-w-screen-lg py-16 pb-48 px-3 md:px-6">
+  <h1 class="text-2xl font-bold text-gray-700 md:text-3xl text-center">
+    Join the best.
+  </h1>
+
+  <ReferralLinkPage::AcceptReferralContainer @referralLink={{this.model.referralLink}} class="mt-8" />
+
+  <h2 class="text-2xl font-bold text-gray-700 md:text-3xl text-center mt-16">
+    Hear it from our members
+  </h2>
+
+  <div class="text-gray-500 text-sm text-center mt-2">
+    Engineers at top teams love The CodeCrafters Way<sup>TM</sup>.
+  </div>
+
+  <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-2">
+    {{#each this.testimonialGroups as |testimonialGroup index|}}
+      <div class="flex flex-col space-y-2 {{if (not-eq index 1) 'md:mt-6'}}">
+        {{#each testimonialGroup as |testimonial|}}
+          <ReferralLinkPage::TestimonialListItem @testimonial={{testimonial}} />
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+
+  {{!  <ReferralLinkPage::LogoCloudContainer />}}
+  {{!  <ReferralLinkPage::TestimonialsContainer />}}
+</div>

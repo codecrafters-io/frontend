@@ -24,7 +24,7 @@ module('Acceptance | pay-test', function (hooks) {
       assert.strictEqual(1, 1);
     }
 
-    assert.strictEqual(window.location.href, `${window.location.origin}/login?next=/pay`, 'should redirect to login URL');
+    assert.strictEqual(window.location.href, `${window.location.origin}/login?next=%2Fpay`, 'should redirect to login URL');
   });
 
   test('new user can start checkout session', async function (assert) {

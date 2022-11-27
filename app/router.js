@@ -16,6 +16,7 @@ Router.map(function () {
   });
 
   this.route('course-overview', { path: '/courses/:course_slug/overview' });
+  this.route('join');
   this.route('membership');
   this.route('pay');
   this.route('refer');
