@@ -8,6 +8,6 @@ export default class SignupToPreviewButton extends Component {
 
   @action
   handleClicked() {
-    window.location.href = '/login?next=' + this.router.currentURL;
+    window.location.href = '/login?next=' + encodeURIComponent(this.router.currentURL);
   }
 }

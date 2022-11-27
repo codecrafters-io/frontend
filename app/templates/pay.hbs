@@ -44,14 +44,14 @@
       />
     </div>
 
+    <div role="button" class="mt-8 text-sm text-gray-400 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>
+      I'm still exploring →
+    </div>
+
     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
       {{#each this.testimonials as |testimonial|}}
         <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
       {{/each}}
-    </div>
-
-    <div role="button" class="mt-8 text-sm text-gray-400 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>
-      I'm still exploring →
     </div>
   </div>
 </div>
