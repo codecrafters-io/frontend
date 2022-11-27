@@ -55,7 +55,7 @@ export default class FooterComponent extends Component {
         },
         {
           text: 'Changelog',
-          url: 'https://codecrafters.canny.io/changelog',
+          url: 'https://twitter.com/codecraftersio',
         },
       ],
     };

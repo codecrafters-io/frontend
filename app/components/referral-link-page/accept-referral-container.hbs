@@ -6,7 +6,7 @@
         class="w-16 h-16 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
       />
 
-      {{svg-jar "plus" class="w-10 h-10 text-gray-400 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
+      {{svg-jar "plus" class="w-10 h-10 text-gray-600 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
 
       <img class="h-14" src="/assets/images/logo/outline-color.svg" alt="CodeCrafters" />
     </div>
@@ -19,7 +19,15 @@
     </div>
 
     <PrimaryButtonWithSpinner class="mt-8 px-5 py-3" data-test-accept-referral-button>
+      {{#if this.currentUserIsAnonymous}}
+        {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
+      {{/if}}
+
       Start 3-day trial →
+
+      {{#if this.currentUserIsAnonymous}}
+        <EmberTooltip @text="Click to login via GitHub" />
+      {{/if}}
     </PrimaryButtonWithSpinner>
 
     <div class="text-gray-500 text-xs mt-3">
