@@ -44,15 +44,15 @@ module('Acceptance | pay-test', function (hooks) {
 
   test('new user sees discounted price start checkout session', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
 
     let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(user.createdAt.getTime() - 2 * 24 * 60 * 60 * 1000));
+    user.update('createdAt', new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000));
+
+    signIn(this.owner, this.server);
 
     await payPage.visit();
-    await percySnapshot('Pay page - with discount');
+    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$594', 'should show discounted price');
 
-    await payPage.clickOnStartPaymentButtonForMonthlyPlan();
-    assert.strictEqual(1, 1); // Dummy test
+    await percySnapshot('Pay page - with discount');
   });
 });

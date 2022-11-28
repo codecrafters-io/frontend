@@ -1,4 +1,4 @@
-<div class="rounded-lg bg-gray-50 border filter drop-shadow-lg w-full max-w-xs" ...attributes>
+<div class="rounded-lg bg-gray-50 border filter drop-shadow-lg w-full max-w-xs" data-test-pricing-card ...attributes>
   <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6 pt-8 pb-8">
     <div class="text-xl font-bold text-gray-700">
       {{@title}}
@@ -25,7 +25,7 @@
           {{/if}}
         </div>
         <div class="ml-2">
-          <span class="text-xl text-teal-500 font-bold">${{@discountedPrice}}</span>
+          <span class="text-xl text-teal-500 font-bold" data-test-discounted-price>${{@discountedPrice}}</span>
           {{#if @autoRenewSubscription}}
             <span class="text-xl text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
           {{/if}}
