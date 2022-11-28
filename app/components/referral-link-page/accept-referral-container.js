@@ -11,6 +11,14 @@ export default class AcceptReferralContainerComponent extends Component {
 
   @tracked isCreatingReferralActivation;
 
+  get acceptOfferButtonIsEnabled() {
+    return !this.isCreatingReferralActivation && !this.currentUserIsReferrer && !this.currentUserIsAlreadyEligibleForReferralDiscount;
+  }
+
+  get currentUser() {
+    return this.currentUserService.record;
+  }
+
   get currentUserIsAnonymous() {
     return this.currentUserService.isAnonymous;
   }
@@ -19,7 +27,7 @@ export default class AcceptReferralContainerComponent extends Component {
   async handleAcceptOfferButtonClick() {
     if (this.currentUserIsAnonymous) {
       window.location.href = '/login?next=' + encodeURIComponent(this.router.currentURL);
-    } else {
+    } else if (this.acceptOfferButtonIsEnabled) {
       this.isCreatingReferralActivation = true;
 
       await this.store
@@ -31,6 +39,21 @@ export default class AcceptReferralContainerComponent extends Component {
         .save();
 
       this.router.transitionTo('pay');
+    }
+  }
+  get currentUserIsReferrer() {
+    if (this.currentUserService.isAnonymous) {
+      return false;
+    } else {
+      return this.args.referralLink.user === this.currentUserService.record;
+    }
+  }
+
+  get currentUserIsAlreadyEligibleForReferralDiscount() {
+    if (this.currentUserService.isAnonymous) {
+      return false;
+    } else {
+      return this.currentUserService.record.isEligibleForReferralDiscount;
     }
   }
 }
