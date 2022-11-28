@@ -34,7 +34,7 @@ export default class UserModel extends Model {
   }
 
   get currentReferralActivation() {
-    return this.referralActivationsAsCustomer.sortBy('createdAt').reverse().firstObject;
+    return this.referralActivationsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
   }
 
   get availableCourseIdeaSupervotes() {
