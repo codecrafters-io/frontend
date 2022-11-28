@@ -46,6 +46,9 @@ module('Acceptance | pay-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    let user = this.server.schema.users.first();
+    user.update('createdAt', new Date(user.createdAt.getTime() - 2 * 24 * 60 * 60 * 1000));
+
     await payPage.visit();
     await percySnapshot('Pay page - with discount');
 
