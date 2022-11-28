@@ -136,6 +136,20 @@ function buildIncludedResources(user) {
     });
   });
 
+  user.referralActivationsAsCustomer.models.forEach((referralActivation) => {
+    includedResources.push({
+      id: referralActivation.id,
+      type: 'referral-activations',
+      attributes: {
+        'activated-at': referralActivation.activatedAt.toISOString(),
+      },
+      relationships: {
+        customer: { data: { type: 'users', id: referralActivation.customer.id } },
+        referrer: { data: { type: 'users', id: referralActivation.referrer.id } },
+      },
+    });
+  });
+
   user.referralLinks.models.forEach((referralLink) => {
     includedResources.push({
       id: referralLink.id,

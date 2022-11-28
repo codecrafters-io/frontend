@@ -9,6 +9,16 @@ export default class PayController extends Controller {
   @service store;
   @tracked isCreatingCheckoutSession = false;
 
+  get discountedYearlyPrice() {
+    if (this.user.isEligibleForEarlyBirdDiscount) {
+      return 594;
+    } else if (this.user.isEligibleForReferralDiscount) {
+      return 590;
+    } else {
+      return null;
+    }
+  }
+
   @action
   async handleTryNowPayLaterButtonClicked() {
     this.store.createRecord('analytics-event', { name: 'dismissed_payment_prompt' }).save();

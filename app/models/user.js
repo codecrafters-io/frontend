@@ -23,6 +23,7 @@ export default class UserModel extends Model {
   @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
+  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
   @hasMany('referral-link', { async: false }) referralLinks;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
@@ -107,6 +108,10 @@ export default class UserModel extends Model {
   }
 
   get isEligibleForEarlyBirdDiscount() {
+    if (this.isEligibleForReferralDiscount) {
+      return false; // Prioritize referral discount
+    }
+
     return this.earlyBirdDiscountEligibilityExpiresAt > new Date();
   }
 
