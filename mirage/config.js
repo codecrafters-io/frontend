@@ -85,7 +85,10 @@ function routes() {
   this.delete('/github-repository-sync-configurations/:id');
 
   this.post('/individual-checkout-sessions', function (schema) {
-    return schema.individualCheckoutSessions.create({ url: 'https://test.com/checkout_session' });
+    const attrs = this.normalizedRequestAttrs();
+    attrs.url = 'https://test.com/checkout_session';
+
+    return schema.individualCheckoutSessions.create(attrs);
   });
 
   this.post('/individual-payment-method-update-requests', function (schema) {

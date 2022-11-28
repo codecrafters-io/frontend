@@ -5,6 +5,7 @@ import Header from 'codecrafters-frontend/tests/pages/components/header';
 export default create({
   accountDropdown: AccountDropdown,
   clickOnStartPaymentButtonForMonthlyPlan: clickable('[data-test-monthly-pricing-card] [data-test-start-payment-button]'),
+  clickOnStartPaymentButtonForYearlyPlan: clickable('[data-test-yearly-pricing-card] [data-test-start-payment-button]'),
   header: Header,
 
   pricingCards: collection('[data-test-pricing-card]', {

@@ -38,8 +38,8 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     await percySnapshot('Pay page');
 
-    await payPage.clickOnStartPaymentButtonForMonthlyPlan();
-    assert.strictEqual(1, 1); // Dummy test
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
   test('new user sees discounted price start checkout session', async function (assert) {
@@ -54,5 +54,8 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$594', 'should show discounted price');
 
     await percySnapshot('Pay page - with discount');
+
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    assert.true(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 });

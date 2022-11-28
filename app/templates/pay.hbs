@@ -41,6 +41,7 @@
         @actualPrice={{990}}
         @discountedPrice={{if (or this.user.isEligibleForEarlyBirdDiscount this.user.isEligibleForReferralDiscount) 594 null}}
         @pricingFrequency="yearly"
+        @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
         data-test-yearly-pricing-card
       />
     </div>
