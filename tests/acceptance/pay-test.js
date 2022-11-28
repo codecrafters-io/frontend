@@ -53,9 +53,32 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$594', 'should show discounted price');
 
-    await percySnapshot('Pay page - with discount');
+    await percySnapshot('Pay page - with early bird discount');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     assert.true(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
+  });
+
+  test('new user sees discounted price if they have a referral', async function (assert) {
+    testScenario(this.server);
+
+    let user = this.server.schema.users.first();
+    user.update('createdAt', new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000));
+
+    this.server.create('referral-activation', {
+      activatedAt: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
+      referrer: user,
+      customer: user,
+    });
+
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$590', 'should show discounted price');
+
+    await percySnapshot('Pay page - with referral discount');
+
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    assert.true(this.server.schema.individualCheckoutSessions.first().referralDiscountEnabled);
   });
 });

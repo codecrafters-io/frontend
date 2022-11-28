@@ -39,9 +39,10 @@
         @title="1 year"
         @subtitle="Learn at your own pace"
         @actualPrice={{990}}
-        @discountedPrice={{if (or this.user.isEligibleForEarlyBirdDiscount this.user.isEligibleForReferralDiscount) 594 null}}
+        @discountedPrice={{this.discountedYearlyPrice}}
         @pricingFrequency="yearly"
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
+        @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
         data-test-yearly-pricing-card
       />
     </div>

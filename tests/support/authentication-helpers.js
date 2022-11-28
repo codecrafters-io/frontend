@@ -136,6 +136,35 @@ function buildIncludedResources(user) {
     });
   });
 
+  user.referralActivationsAsCustomer.models.forEach((referralActivation) => {
+    includedResources.push({
+      id: referralActivation.id,
+      type: 'referral-activations',
+      attributes: {
+        'activated-at': referralActivation.activatedAt.toISOString(),
+      },
+      relationships: {
+        customer: { data: { type: 'users', id: referralActivation.customer.id } },
+        referrer: { data: { type: 'users', id: referralActivation.referrer.id } },
+      },
+    });
+  });
+
+  user.referralLinks.models.forEach((referralLink) => {
+    includedResources.push({
+      id: referralLink.id,
+      type: 'referral-links',
+      attributes: {
+        slug: referralLink.slug,
+        url: referralLink.url,
+        'unique-viewer-count': referralLink.uniqueViewerCount,
+      },
+      relationships: {
+        user: { data: { type: 'users', id: user.id } },
+      },
+    });
+  });
+
   user.subscriptions.models.forEach((subscription) => {
     includedResources.push({
       id: subscription.id,

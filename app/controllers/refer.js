@@ -7,4 +7,8 @@ export default class ReferController extends Controller {
   get currentUser() {
     return this.currentUserService.record;
   }
+
+  get referralLink() {
+    return this.currentUser.referralLinks.firstObject;
+  }
 }

@@ -2,6 +2,8 @@ import Controller from '@ember/controller';
 import testimonialsData from 'codecrafters-frontend/lib/testimonials-data';
 
 export default class JoinController extends Controller {
+  queryParams = [{ referralLinkSlug: 'via' }];
+
   get testimonialGroups() {
     let testimonialGroup1 = [
       testimonialsData['djordje-lukic'],

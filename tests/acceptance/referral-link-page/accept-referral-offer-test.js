@@ -31,7 +31,14 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    this.server.create('referral-link', { user: this.server.schema.users.first() });
+    const referrer = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    this.server.create('referral-link', { user: referrer });
 
     await referralLinkPage.visit({ via: 'referral1' });
     await referralLinkPage.acceptReferralButton.click();

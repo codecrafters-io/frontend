@@ -14,26 +14,33 @@
     <div class="prose text-center max-w-sm mt-10 text-gry-600">
       <b>@{{@referralLink.user.username}}</b>
       wants you to try CodeCrafters with
-      <b>$396</b>
+      <b>$400</b>
       waived.
     </div>
 
-    <PrimaryButtonWithSpinner
-      @shouldShowSpinner={{this.isCreatingReferralActivation}}
-      class="mt-8 px-5 py-3"
-      data-test-accept-referral-button
-      {{on "click" this.handleAcceptOfferButtonClick}}
-    >
-      {{#if this.currentUserIsAnonymous}}
-        {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
-      {{/if}}
+    <div class="inline-flex mt-8">
+      <PrimaryButtonWithSpinner
+        @shouldShowSpinner={{this.isCreatingReferralActivation}}
+        @isDisabled={{not this.acceptOfferButtonIsEnabled}}
+        class="px-5 py-3"
+        data-test-accept-referral-button
+        {{on "click" this.handleAcceptOfferButtonClick}}
+      >
+        {{#if this.currentUserIsAnonymous}}
+          {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
+        {{/if}}
 
-      Accept offer →
+        Accept offer →
+      </PrimaryButtonWithSpinner>
 
       {{#if this.currentUserIsAnonymous}}
         <EmberTooltip @text="Click to login via GitHub" />
+      {{else if this.currentUserIsReferrer}}
+        <EmberTooltip @text="You can't accept your own referral offer." />
+      {{else if this.currentUserIsAlreadyEligibleForReferralDiscount}}
+        <EmberTooltip @text="You've already accepted {{this.currentUser.currentReferralActivation.user.username}}'s referral offer." />
       {{/if}}
-    </PrimaryButtonWithSpinner>
+    </div>
 
     <div class="text-gray-500 text-xs mt-3">
       No credit card required.
