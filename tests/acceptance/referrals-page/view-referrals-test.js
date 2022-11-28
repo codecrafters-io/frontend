@@ -70,8 +70,6 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     await referralsPage.visit();
     assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
-    await this.pauseTest();
-
     await percySnapshot('Referrals Page | Referral Stats');
   });
 });
