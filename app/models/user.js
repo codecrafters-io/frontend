@@ -22,6 +22,7 @@ export default class UserModel extends Model {
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
+  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
   @hasMany('referral-link', { async: false }) referralLinks;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
@@ -30,6 +31,10 @@ export default class UserModel extends Model {
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
+  }
+
+  get currentReferralActivation() {
+    return this.referralActivationsAsCustomer.sortBy('createdAt').reverse().firstObject;
   }
 
   get availableCourseIdeaSupervotes() {
@@ -103,6 +108,14 @@ export default class UserModel extends Model {
 
   get isEligibleForEarlyBirdDiscount() {
     return this.earlyBirdDiscountEligibilityExpiresAt > new Date();
+  }
+
+  get isEligibleForReferralDiscount() {
+    if (this.currentReferralActivation) {
+      return this.currentReferralActivation.isWithinDiscountPeriod;
+    } else {
+      return false;
+    }
   }
 
   get isTeamAdmin() {

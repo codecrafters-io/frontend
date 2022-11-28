@@ -29,8 +29,6 @@ function routes() {
   this.get('/community-course-stage-solutions', function (schema, request) {
     let result = schema.communityCourseStageSolutions.all();
 
-    console.log('request.queryParams', request.queryParams);
-
     if (request.queryParams.language_id) {
       result = result.filter((solution) => solution.language.id.toString() === request.queryParams.language_id);
     }
@@ -38,8 +36,6 @@ function routes() {
     if (request.queryParams.course_stage_id) {
       result = result.filter((solution) => solution.courseStage.id.toString() === request.queryParams.course_stage_id);
     }
-
-    console.log(result.length);
 
     return result;
   });
@@ -116,7 +112,13 @@ function routes() {
     return result;
   });
 
-  this.post('/referral-activations');
+  this.post('/referral-activations', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.activatedAt = new Date();
+
+    return schema.referralActivations.create(attrs);
+  });
+
   this.get('/referral-links');
 
   this.post('/referral-links', function (schema) {
