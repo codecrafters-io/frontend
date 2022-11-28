@@ -1,5 +1,4 @@
-import Service from '@ember/service';
-import { inject as service } from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { isEqual } from '@ember/utils';
 import { action } from '@ember/object';
 
@@ -37,6 +36,11 @@ export default class PageViewTracker extends Service {
       });
     } else if (this.router.currentRouteName === 'courses') {
       return this.store.createRecord('analytics-event', { name: 'viewed_course_list_page' });
+    } else if (this.router.currentRouteName === 'join') {
+      return this.store.createRecord('analytics-event', {
+        name: 'viewed_referral_link_page',
+        properties: { slug: this.router.currentRoute.queryParams.via },
+      });
     } else if (this.router.currentRouteName === 'pay') {
       return this.store.createRecord('analytics-event', { name: 'viewed_payment_prompt' });
     } else if (this.router.currentRouteName === 'track') {
