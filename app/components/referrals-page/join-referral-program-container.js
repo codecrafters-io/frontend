@@ -21,7 +21,7 @@ export default class JoinReferralProgramContainerComponent extends Component {
         image: 'team-billing',
       },
       {
-        title: '25% for life',
+        title: '60% for life',
         description: `Subscribe to a real-time stream of your team's activity in your team's Slack workspace.`,
         image: 'slack-integration',
       },
