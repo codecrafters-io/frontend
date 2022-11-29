@@ -15,6 +15,9 @@
     </div>
   </a>
   <div class="flex items-center">
-    <span class="text-gray-400 text-xs hidden lg:block">{{moment-from-now @referralActivation.createdAt}}</span>
+    <span
+      class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
+    >Trialing</span>
+    <span class="text-gray-400 text-xs hidden lg:block">{{moment-from-now @referralActivation.activatedAt}}</span>
   </div>
 </div>

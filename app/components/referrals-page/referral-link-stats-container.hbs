@@ -31,7 +31,8 @@
         {{#if (eq this.trialCount 0)}}
           <span class="text-gray-300 text-xs ml-1">(no trials yet)</span>
         {{else}}
-          <span class="text-yellow-500 text-lg font-bold ml-1">($990)</span>
+          {{! TODO: Wireup payments }}
+          {{!          <span class="text-yellow-500 text-lg font-bold ml-1">($990)</span>}}
         {{/if}}
       </div>
     </ReferralsPage::ReferralLinkStatContainer>
@@ -42,8 +43,9 @@
       @helpText="The number of referred users who've converted to paying users."
     >
       <div class="flex items-center">
-        <span class="text-gray-700 text-2xl font-bold">11</span>
-        <span class="text-teal-500 text-lg font-bold ml-1">($440)</span>
+        <span class="text-gray-700 text-2xl font-bold">0</span>
+        {{!        <span class="text-teal-500 text-lg font-bold ml-1">($440)</span>}}
+        <span class="text-gray-300 text-xs ml-1">(no payments yet)</span>
       </div>
     </ReferralsPage::ReferralLinkStatContainer>
   </div>
