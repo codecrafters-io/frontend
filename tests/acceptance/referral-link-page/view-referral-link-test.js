@@ -1,11 +1,12 @@
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import percySnapshot from '@percy/ember';
 import referralLinkPage from 'codecrafters-frontend/tests/pages/referral-link-page';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | referral-link-page | view-referral-link', function (hooks) {
   setupApplicationTest(hooks);
@@ -33,5 +34,12 @@ module('Acceptance | referral-link-page | view-referral-link', function (hooks) 
     assert.ok(referralLinkPage.acceptReferralButton.isVisible);
 
     await percySnapshot('Referral Link Page | View Referral Link (anonymous)');
+  });
+
+  test('redirects to not found if referral link is invalid', async function (assert) {
+    testScenario(this.server);
+
+    await referralLinkPage.visit({ via: 'invalid' });
+    assert.strictEqual(currentURL(), '/404');
   });
 });

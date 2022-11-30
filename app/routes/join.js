@@ -19,4 +19,10 @@ export default class JoinRoute extends ApplicationRoute {
 
     return { referralLink: referralLinks.firstObject };
   }
+
+  afterModel(model) {
+    if (!model.referralLink) {
+      this.transitionTo('not-found');
+    }
+  }
 }
