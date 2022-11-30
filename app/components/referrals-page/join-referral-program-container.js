@@ -12,18 +12,18 @@ export default class JoinReferralProgramContainerComponent extends Component {
     return [
       {
         title: 'Easy to share',
-        description: 'Add in a dose of healthy competition with a private leaderboard for your team.',
-        image: 'private-leaderboard',
+        description: 'All you’ve got to do is share a referral link, we take care of the rest!',
+        imageUrl: '/assets/images/referral-program-features/easy-to-share.png',
       },
       {
         title: 'Easy to claim',
-        description: 'Pay for your whole team at once with annual seat-based billing. (Optional)',
-        image: 'team-billing',
+        description: 'Get paid via PayPal, or via 30+ different types of gift cards.',
+        imageUrl: '/assets/images/referral-program-features/easy-to-claim.png',
       },
       {
         title: '60% for life',
-        description: `Subscribe to a real-time stream of your team's activity in your team's Slack workspace.`,
-        image: 'slack-integration',
+        description: `Earn 60% of earnings from every customer you refer, forever. Sky is the limit.`,
+        imageUrl: '/assets/images/referral-program-features/lifetime-earnings.png',
       },
     ];
   }
