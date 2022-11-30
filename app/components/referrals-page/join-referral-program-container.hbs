@@ -20,13 +20,19 @@
     {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
   </PrimaryButtonWithSpinner>
 
-  <div class="text-gray-600 ml-5 hover:underline" role="button">
+  <a
+    href="https://docs.codecrafters.io/community/partner-program"
+    target="_blank"
+    class="text-gray-600 hover:text-gray-700 ml-5 underline text-sm"
+    role="button"
+    rel="noopener noreferrer"
+  >
     View details
-  </div>
+  </a>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
   {{#each this.features as |feature|}}
-    <FeatureCard @title={{feature.title}} @description={{feature.description}} @image={{feature.image}} />
+    <FeatureCard @title={{feature.title}} @description={{feature.description}} @imageUrl={{feature.imageUrl}} />
   {{/each}}
 </div>
