@@ -6,14 +6,14 @@ export default class ReferralActivationModel extends Model {
   @belongsTo('referral-link', { async: false }) referralLink;
 
   @attr('date') activatedAt;
-  @attr('string') status; // 'pending_subscription', 'trialing', 'retrying_first_payment', 'first_payment_completed', 'cancelled' ?
+  @attr('string') status; // 'pending_trial', 'trialing', 'retrying_first_payment', 'first_payment_successful', 'cancelled' ?
 
   get discountPeriodEndsAt() {
     return new Date(this.activatedAt.getTime() + 3 * 24 * 60 * 60 * 1000);
   }
 
   get hasStartedTrial() {
-    return this.statusIsTrialing || this.statusIsRetryingFirstPayment || this.statusIsFirstPaymentCompleted || this.statusIsCancelled;
+    return this.statusIsTrialing || this.statusIsRetryingFirstPayment || this.statusIsFirstPaymentSuccessful || this.statusIsCancelled;
   }
 
   get isWithinDiscountPeriod() {
@@ -24,8 +24,8 @@ export default class ReferralActivationModel extends Model {
     return this.status === 'cancelled';
   }
 
-  get statusIsPendingSubscription() {
-    return this.status === 'pending_subscription';
+  get statusIsPendingTrial() {
+    return this.status === 'pending_trial';
   }
 
   get statusIsTrialing() {
@@ -36,7 +36,7 @@ export default class ReferralActivationModel extends Model {
     return this.status === 'retrying_first_payment';
   }
 
-  get statusIsFirstPaymentCompleted() {
-    return this.status === 'first_payment_completed';
+  get statusIsFirstPaymentSuccessful() {
+    return this.status === 'first_payment_successful';
   }
 }
