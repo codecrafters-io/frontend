@@ -20,24 +20,27 @@
             </div>
           </div>
 
-          {{#if (and this.currentUserIsStaff (not @comment.isApprovedByModerator))}}
-            <a
-              target="_blank"
-              href="/admin/course_stage_comments/{{@comment.id}}/edit"
-              class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-xs"
-              rel="noopener noreferrer"
-            >
-              unapproved
-            </a>
-          {{/if}}
-          {{#if (eq this.currentUser @comment.user)}}
-            <div>
-              <CoursePage::CourseStageSolutionModal::CommentCard::MoreDropdown
-                @comment={{@comment}}
-                @onEditButtonClick={{this.handleEditButtonClick}}
-              />
-            </div>
-          {{/if}}
+          <div class="flex items-center">
+            {{#if (and this.currentUserIsStaff (not @comment.isApprovedByModerator))}}
+              <a
+                target="_blank"
+                href="/admin/course_stage_comments/{{@comment.id}}/edit"
+                class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-xs"
+                rel="noopener noreferrer"
+              >
+                unapproved
+              </a>
+            {{/if}}
+
+            {{#if (eq this.currentUser @comment.user)}}
+              <div class="ml-2">
+                <CoursePage::CourseStageSolutionModal::CommentCard::MoreDropdown
+                  @comment={{@comment}}
+                  @onEditButtonClick={{this.handleEditButtonClick}}
+                />
+              </div>
+            {{/if}}
+          </div>
         </div>
 
         <div class="px-4 py-3">
