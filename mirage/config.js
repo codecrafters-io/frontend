@@ -57,7 +57,14 @@ function routes() {
   this.post('/course-idea-supervotes');
 
   this.get('/course-stage-comments');
-  this.post('/course-stage-comments');
+
+  this.post('/course-stage-comments', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.createdAt = new Date();
+
+    return schema.courseStageComments.create(attrs);
+  });
+
   this.patch('/course-stage-comments/:id');
   this.post('/course-stage-comments/:id/unvote', () => {});
 

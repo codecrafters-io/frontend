@@ -13,7 +13,7 @@
           </div>
         </div>
 
-        {{#unless @comment.isApprovedByModerator}}
+        {{#if (and this.currentUserIsStaff (not @comment.isApprovedByModerator))}}
           <a
             target="_blank"
             href="/admin/course_stage_comments/{{@comment.id}}/edit"
@@ -22,7 +22,7 @@
           >
             unapproved
           </a>
-        {{/unless}}
+        {{/if}}
       </div>
 
       <div class="px-4 py-3">
