@@ -10,13 +10,20 @@ export default class CommentFormComponent extends Component {
   @service('current-user') currentUserService;
   @service store;
 
-  @tracked newComment;
+  @tracked comment;
   @tracked isSaving = false;
   @tracked activeTab = 'write';
+  @tracked isEditingComment = false;
 
   constructor() {
     super(...arguments);
-    this.setNewComment();
+
+    if (this.args.comment) {
+      this.comment = this.args.comment;
+      this.isEditingComment = true;
+    } else {
+      this.setNewComment();
+    }
   }
 
   @action
@@ -25,7 +32,11 @@ export default class CommentFormComponent extends Component {
   }
 
   get bodyHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.newComment.bodyMarkdown || 'Nothing to preview'));
+    return htmlSafe(new showdown.Converter().makeHtml(this.comment.bodyMarkdown || 'Nothing to preview'));
+  }
+
+  get currentUser() {
+    return this.currentUserService.record;
   }
 
   @action
@@ -33,8 +44,10 @@ export default class CommentFormComponent extends Component {
     Prism.highlightAllUnder(element);
   }
 
-  get currentUser() {
-    return this.currentUserService.record;
+  @action
+  handleEditCancelButtonClick() {
+    this.comment.rollbackAttributes();
+    this.args.onCancel();
   }
 
   @action
@@ -44,15 +57,19 @@ export default class CommentFormComponent extends Component {
 
     if (e.target.checkValidity()) {
       this.isSaving = true;
-      await this.newComment.save();
+      await this.comment.save();
       this.isSaving = false;
 
       this.setNewComment();
     }
+
+    if (this.args.onSubmit) {
+      this.args.onSubmit();
+    }
   }
 
   setNewComment() {
-    this.newComment = this.store.createRecord('course-stage-comment', {
+    this.comment = this.store.createRecord('course-stage-comment', {
       courseStage: this.args.courseStage,
       user: this.currentUser,
       language: this.args.language,
@@ -60,6 +77,6 @@ export default class CommentFormComponent extends Component {
   }
 
   get submitButtonIsDisabled() {
-    return !this.newComment.bodyMarkdown || this.newComment.bodyMarkdown.trim().length < 1 || this.isSaving;
+    return !this.comment.bodyMarkdown || this.comment.bodyMarkdown.trim().length < 1 || this.isSaving;
   }
 }

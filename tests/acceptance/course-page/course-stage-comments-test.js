@@ -127,4 +127,38 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
     await firstCommentCard.downvoteButton.click();
     assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
   });
+
+  test('can edit comment', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
+    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
+
+    const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+
+    await commentCard.toggleDropdown();
+    await commentCard.clickOnDropdownLink('Edit');
+    await commentCard.commentInput.fillIn('This is an edited comment');
+    await commentCard.clickOnCancelButton();
+
+    assert.strictEqual(commentCard.commentBodyText, 'This is a comment', 'comment input should be reset to original value');
+
+    await commentCard.toggleDropdown();
+    await commentCard.clickOnDropdownLink('Edit');
+    await commentCard.commentInput.fillIn('This is an edited comment');
+    await commentCard.clickOnUpdateCommentButton();
+
+    assert.strictEqual(commentCard.commentBodyText, 'This is an edited comment', 'comment input should be updated');
+  });
 });
