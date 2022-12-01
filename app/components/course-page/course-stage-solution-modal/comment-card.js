@@ -9,6 +9,10 @@ export default class CommentCardComponent extends Component {
   @service('current-user') currentUserService;
   @service store;
 
+  get currentUser() {
+    return this.currentUserService.record;
+  }
+
   get currentUserIsStaff() {
     return this.currentUserService.record.isStaff;
   }

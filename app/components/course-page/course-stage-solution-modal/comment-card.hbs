@@ -23,6 +23,11 @@
             unapproved
           </a>
         {{/if}}
+        {{#if (eq this.currentUser @comment.user)}}
+          <div>
+            <CoursePage::CourseStageSolutionModal::CommentCard::MoreDropdown @comment={{@comment}} />
+          </div>
+        {{/if}}
       </div>
 
       <div class="px-4 py-3">
