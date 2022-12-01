@@ -63,7 +63,9 @@ export default class CommentFormComponent extends Component {
       this.setNewComment();
     }
 
-    this.args.onSubmit();
+    if (this.args.onSubmit) {
+      this.args.onSubmit();
+    }
   }
 
   setNewComment() {
