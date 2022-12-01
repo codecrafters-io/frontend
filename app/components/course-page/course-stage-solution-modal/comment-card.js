@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import Prism from 'prismjs';
 import showdown from 'showdown';
+import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
@@ -26,6 +27,13 @@ export default class CommentCardComponent extends Component {
   @action
   handleDidInsertBodyHTML(element) {
     Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleDeleteButtonClick() {
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      this.args.comment.destroyRecord();
+    }
   }
 
   @action

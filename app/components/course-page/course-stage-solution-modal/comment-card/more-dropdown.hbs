@@ -12,7 +12,17 @@
         {{on "click" (fn this.handleEditButtonClick dd.actions)}}
       >
         <span class="mr-4">
-          Edit&nbsp;Comment
+          Edit
+        </span>
+      </div>
+
+      <div
+        class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group text-red-600"
+        role="button"
+        {{on "click" (fn this.handleDeleteButtonClick dd.actions)}}
+      >
+        <span class="mr-4">
+          Delete
         </span>
       </div>
     </div>

@@ -65,6 +65,7 @@ function routes() {
     return schema.courseStageComments.create(attrs);
   });
 
+  this.delete('/course-stage-comments/:id');
   this.patch('/course-stage-comments/:id');
   this.post('/course-stage-comments/:id/unvote', () => {});
 

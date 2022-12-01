@@ -3,13 +3,14 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import window from 'ember-window-mock';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | course-page | view-course-stage-comments', function (hooks) {
+module('Acceptance | course-page | course-stage-comments', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -160,5 +161,32 @@ module('Acceptance | course-page | view-course-stage-comments', function (hooks)
     await commentCard.clickOnUpdateCommentButton();
 
     assert.strictEqual(commentCard.commentBodyText, 'This is an edited comment', 'comment input should be updated');
+  });
+
+  test('can delete comment', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
+    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
+
+    const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+
+    window.confirm = () => true;
+
+    await commentCard.toggleDropdown();
+    await commentCard.clickOnDropdownLink('Delete');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0);
   });
 });
