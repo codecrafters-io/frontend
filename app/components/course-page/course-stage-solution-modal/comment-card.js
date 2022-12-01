@@ -4,10 +4,12 @@ import showdown from 'showdown';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class CommentCardComponent extends Component {
   @service('current-user') currentUserService;
   @service store;
+  @tracked isEditing = false;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -24,5 +26,10 @@ export default class CommentCardComponent extends Component {
   @action
   handleDidInsertBodyHTML(element) {
     Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleEditButtonClick() {
+    this.isEditing = true;
   }
 }

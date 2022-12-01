@@ -1,45 +1,56 @@
 <div data-test-comment-card ...attributes>
-  <div class="flex items-start">
-    <a href={{@comment.user.codecraftersProfileUrl}} class="mt-0.5 flex items-center flex-shrink-0" target="_blank" rel="noopener noreferrer">
-      <AvatarImage @user={{@comment.user}} class="w-8 h-8 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
-    </a>
-    <div class="shadow-sm rounded border border-gray-300 w-full">
-      <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center justify-between">
-        <div class="flex items-center">
-          <span class="text-sm text-gray-600 font-bold">{{@comment.user.username}}</span>
-          <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
-          <div class="text-xs text-gray-400">
-            {{moment-from-now @comment.createdAt}}
+  {{#if this.isEditing}}
+    <CoursePage::CourseStageSolutionModal::CommentForm
+      @comment={{@comment}}
+      @onCancel={{fn (mut this.isEditing) false}}
+      @onSubmit={{fn (mut this.isEditing) false}}
+    />
+  {{else}}
+    <div class="flex items-start">
+      <a href={{@comment.user.codecraftersProfileUrl}} class="mt-0.5 flex items-center flex-shrink-0" target="_blank" rel="noopener noreferrer">
+        <AvatarImage @user={{@comment.user}} class="w-8 h-8 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+      </a>
+      <div class="shadow-sm rounded border border-gray-300 w-full">
+        <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center justify-between">
+          <div class="flex items-center">
+            <span class="text-sm text-gray-600 font-bold">{{@comment.user.username}}</span>
+            <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
+            <div class="text-xs text-gray-400">
+              {{moment-from-now @comment.createdAt}}
+            </div>
           </div>
+
+          {{#if (and this.currentUserIsStaff (not @comment.isApprovedByModerator))}}
+            <a
+              target="_blank"
+              href="/admin/course_stage_comments/{{@comment.id}}/edit"
+              class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-xs"
+              rel="noopener noreferrer"
+            >
+              unapproved
+            </a>
+          {{/if}}
+          {{#if (eq this.currentUser @comment.user)}}
+            <div>
+              <CoursePage::CourseStageSolutionModal::CommentCard::MoreDropdown
+                @comment={{@comment}}
+                @onEditButtonClick={{this.handleEditButtonClick}}
+              />
+            </div>
+          {{/if}}
         </div>
 
-        {{#if (and this.currentUserIsStaff (not @comment.isApprovedByModerator))}}
-          <a
-            target="_blank"
-            href="/admin/course_stage_comments/{{@comment.id}}/edit"
-            class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-xs"
-            rel="noopener noreferrer"
-          >
-            unapproved
-          </a>
-        {{/if}}
-        {{#if (eq this.currentUser @comment.user)}}
-          <div>
-            <CoursePage::CourseStageSolutionModal::CommentCard::MoreDropdown @comment={{@comment}} />
+        <div class="px-4 py-3">
+          <div class="leading-relaxed prose-sm prose max-w-none comment-body" {{did-insert this.handleDidInsertBodyHTML}} data-test-comment-body>
+            {{this.bodyHTML}}
           </div>
-        {{/if}}
-      </div>
 
-      <div class="px-4 py-3">
-        <div class="leading-relaxed prose-sm prose max-w-none comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
-          {{this.bodyHTML}}
-        </div>
-
-        <div class="mt-2 flex items-center">
-          <CoursePage::CourseStageSolutionModal::CommentCard::UpvoteButton @comment={{@comment}} />
-          <CoursePage::CourseStageSolutionModal::CommentCard::DownvoteButton @comment={{@comment}} class="ml-1" />
+          <div class="mt-2 flex items-center">
+            <CoursePage::CourseStageSolutionModal::CommentCard::UpvoteButton @comment={{@comment}} />
+            <CoursePage::CourseStageSolutionModal::CommentCard::DownvoteButton @comment={{@comment}} class="ml-1" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  {{/if}}
 </div>

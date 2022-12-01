@@ -13,10 +13,18 @@ export default {
     clickOnTabHeader: clickOnText('[data-test-tab-header]'),
     clickOnSubmitButton: clickable('[data-test-submit-button]'),
     submitButtonIsDisabled: hasClass('opacity-50', '[data-test-submit-button]'),
+
     commentCards: collection('[data-test-comment-card]', {
+      clickOnCancelButton: clickable('[data-test-cancel-button]'),
+      clickOnDropdownLink: clickOnText('[data-test-more-dropdown-content] div[role="button"]'),
+      clickOnUpdateCommentButton: clickable('[data-test-update-comment-button]'),
+      commentBodyText: text('[data-test-comment-body]'),
       downvoteButton: { scope: '[data-test-downvote-button]' },
+      commentInput: { scope: '[data-test-comment-input]' },
+      toggleDropdown: clickable('[data-test-more-dropdown-toggle]'),
       upvoteButton: { scope: '[data-test-upvote-button]' },
     }),
+
     fillInCommentInput: fillable('[data-test-comment-input]'),
     scope: '[data-test-comments-tab]',
   },
