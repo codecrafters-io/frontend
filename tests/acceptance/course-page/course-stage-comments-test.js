@@ -46,7 +46,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
 
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be solutions');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
     assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 2);
 
     await percySnapshot('Course Stage Comments');

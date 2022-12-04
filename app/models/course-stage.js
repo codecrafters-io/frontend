@@ -6,6 +6,7 @@ export default class CourseStageModel extends Model {
   @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
 
   @hasMany('course-stage-comments', { async: false }) comments;
+  @hasMany('community-course-stage-solution', { async: false }) communitySolutions;
   @hasMany('course-stage-solution', { async: false }) solutions;
 
   @attr('string') difficulty;
@@ -13,6 +14,8 @@ export default class CourseStageModel extends Model {
   @attr('string') descriptionMarkdownTemplate;
   @attr('string') marketingMarkdown;
   @attr('number') position;
+  @attr('number') approvedCommentsCount;
+  @attr('') communitySolutionCounts; // JSON: { <language_slug>: count }
   @attr('string') shortName;
   @attr('string') slug;
   @attr('string') testerSourceCodeUrl;
@@ -21,6 +24,24 @@ export default class CourseStageModel extends Model {
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
   @equal('difficulty', 'medium') difficultyIsMedium;
+
+  get hasApprovedComments() {
+    return this.approvedCommentsCount > 0;
+  }
+
+  hasCommunitySolutionsForLanguage(language) {
+    return ((this.communitySolutionCounts || {})[language.slug] || 0) > 0;
+  }
+
+  hasCommunitySolutionsForLanguagesOtherThan(language) {
+    for (let [languageSlug, solutionsCount] of Object.entries(this.communitySolutionCounts || {})) {
+      if (solutionsCount > 0 && languageSlug !== language.slug) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   hasSolutionForLanguage(language) {
     return !!this.solutions.findBy('language', language);
