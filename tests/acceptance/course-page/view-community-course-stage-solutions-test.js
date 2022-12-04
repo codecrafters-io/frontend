@@ -134,13 +134,14 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    await percySnapshot('Community Solutions');
+
     assert.notOk(communitySolutionsTab.blurredOverlay.isVisible, 'Blurred overlay is not visible');
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
 
-    await percySnapshot('Community Solutions');
-
     // Stage 3 (Incomplete, no solutions in other languages, no comments)
     await switchToSolutionsForStage(3);
+    await percySnapshot('Community Solutions Overlay | No other langs, no comments');
 
     assertInstructions("Looks like you haven't completed this stage yet. Sure you want to see the solution?");
     assertButtons(['Reveal solutions']);
@@ -149,10 +150,9 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assert.notOk(communitySolutionsTab.blurredOverlay.isVisible);
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
 
-    await percySnapshot('Community Solutions Overlay | No other langs, no comments');
-
     // Stage 4: Incomplete, has solutions in other language, no comments
     await switchToSolutionsForStage(4);
+    await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
 
     assertInstructions("Looks like you haven't completed this stage in Python yet. Maybe peek at solutions in other languages first?");
     assertButtons(['Good idea', 'Reveal Python solutions']);
@@ -161,26 +161,22 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await clickButton('Good idea');
     assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
 
-    await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
-
     // Stage 5: Create comments
     await switchToSolutionsForStage(5);
+    await percySnapshot('Community Solutions Overlay | No other langs, has comments');
 
     assertInstructions("Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?");
     assertButtons(['View comments', 'Reveal solutions']);
     await clickButton('View comments');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
 
-    await percySnapshot('Community Solutions Overlay | No other langs, has comments');
-
     // Stage 6: Incomplete, has solutions in other language & has comments
     await switchToSolutionsForStage(6);
+    await percySnapshot('Community Solutions Overlay | Has other langs & comments');
 
     assertInstructions(
       "Looks like you haven't completed this stage in Python yet. Maybe peek at the comments for hints, or check out other language solutions?"
     );
     assertButtons(['View comments', 'Another language', 'Reveal Python solutions']);
-
-    await percySnapshot('Community Solutions Overlay | Has other langs & comments');
   });
 });
