@@ -32,7 +32,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.requestedSolutionLanguage = this.args.repositoryLanguage || this.args.courseStage.solutions.sortBy('language.name').firstObject.language;
+    this.requestedSolutionLanguage = this.args.repository.language || this.args.courseStage.solutions.sortBy('language.name').firstObject.language;
 
     // intent is either view_solution or view_source_walkthrough
     if (this.args.intent === 'view_solution') {

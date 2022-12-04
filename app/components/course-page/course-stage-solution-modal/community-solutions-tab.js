@@ -14,6 +14,18 @@ export default class CommunitySolutionsTabComponent extends Component {
     this.loadSolutions();
   }
 
+  get communitySolutionsAreAvailableForCurrentLanguage() {
+    return this.args.courseStage.hasCommunitySolutionsForLanguage(this.args.requestedSolutionLanguage);
+  }
+
+  get communitySolutionsAreAvailableForOtherLanguages() {
+    return this.args.courseStage.hasCommunitySolutionsForLanguagesOtherThan(this.args.requestedSolutionLanguage);
+  }
+
+  get hasCompletedStage() {
+    return this.args.repository.stageIsComplete(this.args.courseStage);
+  }
+
   @action
   async loadSolutions() {
     this.isLoading = true;
@@ -25,6 +37,35 @@ export default class CommunitySolutionsTabComponent extends Component {
     });
 
     this.isLoading = false;
+  }
+
+  get shouldShowBlurredOverlay() {
+    // If we don't have solutions, don't make it look like we do
+    if (!this.communitySolutionsAreAvailableForCurrentLanguage) {
+      return false;
+    }
+
+    // Only show if viewing for the current repository's language
+    if (this.args.requestedSolutionLanguage !== this.args.repository.language) {
+      return false;
+    }
+
+    // If we have solutions and the user hasn't completed the stage, show the overlay
+    return !this.hasCompletedStage;
+  }
+
+  get suggestedActionsForBlurredOverlay() {
+    const actions = [];
+
+    if (this.communitySolutionsAreAvailableForOtherLanguages) {
+      actions.push(['view_community_solutions_in_other_languages']);
+    }
+
+    if (this.args.courseStage.hasApprovedComments) {
+      actions.push(['view_comments']);
+    }
+
+    return actions;
   }
 
   get sortedSolutions() {

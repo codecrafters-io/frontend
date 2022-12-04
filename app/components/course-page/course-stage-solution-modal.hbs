@@ -23,10 +23,11 @@
     <CoursePage::CourseStageSolutionModal::CommunitySolutionsTab
       @courseStage={{@courseStage}}
       @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
+      @repository={{@repository}}
     />
   {{else if (eq this.activeTab "source_walkthrough")}}
     <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
   {{else if (eq this.activeTab "comments")}}
-    <CoursePage::CourseStageSolutionModal::CommentsTab @courseStage={{@courseStage}} @language={{@repositoryLanguage}} />
+    <CoursePage::CourseStageSolutionModal::CommentsTab @courseStage={{@courseStage}} @language={{@repository.language}} />
   {{/if}}
 </ModalBody>

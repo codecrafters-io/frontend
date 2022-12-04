@@ -9,21 +9,47 @@
     </div>
   </div>
 
-  {{#if this.isLoading}}
-    <div class="flex justify-center items-center py-32 w-full">
-      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
-      <span class="ml-3 text-gray-700">Loading...</span>
+  <div class="relative">
+    <div class="{{if this.shouldShowBlurredOverlay 'blur-sm'}}">
+      {{#if this.isLoading}}
+        <div class="flex justify-center items-center py-32 w-full">
+          <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
+          <span class="ml-3 text-gray-700">Loading...</span>
+        </div>
+      {{else}}
+        {{#each this.sortedSolutions as |solution|}}
+          <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
+        {{else}}
+          <div class="flex py-16 justify-center items-center w-full">
+            <div class="text-sm text-gray-500 text-center max-w-lg">
+              No community solutions available for
+              {{@requestedSolutionLanguage.name}}. Complete this stage to be the first!
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
     </div>
-  {{else}}
-    {{#each this.sortedSolutions as |solution|}}
-      <CoursePage::CourseStageSolutionModal::CommunitySolutionCard @solution={{solution}} @isCollapsedByDefault={{true}} />
-    {{else}}
-      <div class="flex py-16 justify-center items-center w-full">
-        <div class="text-sm text-gray-500 text-center max-w-lg">
-          No community solutions available for
-          {{@requestedSolutionLanguage.name}}. Complete this stage to be the first!
+
+    {{#if this.shouldShowBlurredOverlay}}
+      <div class="absolute top-4 left-0 right-0 p-4 flex items-center justify-center" data-test-blurred-overlay>
+        <div class="px-8 py-6 bg-white rounded border text-gray-700 max-w-sm shadow">
+          Looks like you haven't completed this stage yet. Sure you want to see the solution?
+
+          <div class="flex items-center mt-4">
+            <DangerButton @size="small" data-test-action-button>Reveal Solution</DangerButton>
+
+            {{#each this.suggestedActionsForBlurredOverlay as |action|}}
+              {{#if (eq action "view_comments")}}
+                <SecondaryButton @size="small" class="mt-2" data-test-action-button>View Comments</SecondaryButton>
+              {{/if}}
+
+              {{#if (eq action "view_community_solutions_in_other_language")}}
+                <SecondaryButton @size="small" class="mt-2" data-test-action-button>Another language</SecondaryButton>
+              {{/if}}
+            {{/each}}
+          </div>
         </div>
       </div>
-    {{/each}}
-  {{/if}}
+    {{/if}}
+  </div>
 </div>
