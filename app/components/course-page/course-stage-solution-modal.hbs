@@ -18,8 +18,6 @@
 
   {{#if (eq this.activeTab "verified_solution")}}
     <CoursePage::CourseStageSolutionModal::VerifiedSolutionTab @solution={{this.solution}} />
-  {{else if (eq this.activeTab "explanation")}}
-    <CoursePage::CourseStageSolutionModal::ExplanationTab @solution={{this.solution}} @onViewDiffButtonClick={{fn this.handleTabLinkClick "diff"}} />
   {{else if (eq this.activeTab "community_solutions")}}
     <CoursePage::CourseStageSolutionModal::CommunitySolutionsTab
       @courseStage={{@courseStage}}

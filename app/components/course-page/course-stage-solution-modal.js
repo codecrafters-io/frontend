@@ -24,7 +24,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-diff';
 
 export default class CourseStageSolutionModalComponent extends Component {
-  @tracked activeTab; // community_solutions/verified_solution/explanation/source_walkthrough
+  @tracked activeTab; // community_solutions/verified_solution/source_walkthrough
   @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
   @service store;
@@ -37,7 +37,7 @@ export default class CourseStageSolutionModalComponent extends Component {
     // intent is either view_solution or view_source_walkthrough
     if (this.args.intent === 'view_solution') {
       if (this.args.courseStage.isFirst && this.solution) {
-        this.activeTab = 'explanation';
+        this.activeTab = 'verified_solution';
       } else {
         this.activeTab = 'community_solutions';
       }
@@ -51,10 +51,10 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   emitAnalyticsEvent() {
-    if (this.activeTab === 'verified_solution' || this.activeTab === 'explanation') {
+    if (this.activeTab === 'verified_solution') {
       this.store
         .createRecord('analytics-event', {
-          name: this.activeTab === 'explanation' ? 'viewed_course_stage_solution_explanation' : 'viewed_course_stage_solution_diff',
+          name: 'viewed_course_stage_solution',
           properties: {
             course_slug: this.args.courseStage.course.slug,
             course_stage_slug: this.args.courseStage.slug,
