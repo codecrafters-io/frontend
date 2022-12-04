@@ -99,3 +99,7 @@
 .number-input-with-no-controls {
   -moz-appearance: textfield;
 }
+
+.blurred-overlay {
+  filter: blur(4px);
+}
