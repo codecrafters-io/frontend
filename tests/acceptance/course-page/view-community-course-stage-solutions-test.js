@@ -179,7 +179,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assertInstructions(
       "Looks like you haven't completed this stage in Python yet. Maybe peek at the comments for hints, or check out other language solutions?"
     );
-    assertButtons(['View Comments', 'Another language', 'Reveal Python solutions']);
+    assertButtons(['View comments', 'Another language', 'Reveal Python solutions']);
 
     await percySnapshot('Community Solutions Overlay | Has other langs & comments');
   });
