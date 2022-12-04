@@ -52,12 +52,12 @@
                     {{on "click" @onViewCommunitySolutionsInOtherLanguagesButtonClick}}
                   >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</PrimaryButton>
                 {{else}}
-                  <div
-                    class="mx-2 text-teal-500 hover:underline text-sm"
-                    role="button"
+                  <SecondaryButton
+                    @size="small"
+                    class="mr-3 font-normal"
                     data-test-action-button
                     {{on "click" @onViewCommunitySolutionsInOtherLanguagesButtonClick}}
-                  >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</div>
+                  >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</SecondaryButton>
                 {{/if}}
               {{/if}}
             {{/each}}
