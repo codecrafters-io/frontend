@@ -25,15 +25,6 @@
       />
     {{/if}}
 
-    {{#if @currentSolution.hasExplanation}}
-      <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="academic-cap"
-        @text="Explanation"
-        @isActive={{eq @activeTab "explanation"}}
-        {{on "click" (fn @onTabLinkClick "explanation")}}
-      />
-    {{/if}}
-
     {{#if @courseStage.sourceWalkthrough}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @iconUrl={{@courseStage.course.logoUrl}}

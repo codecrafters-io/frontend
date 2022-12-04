@@ -4,27 +4,7 @@ import showdown from 'showdown';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 
-export default class CoursePageCourseStageSolutionExplanationComponent extends Component {
-  get authorDetails() {
-    return {
-      name: 'Paul Kuruvilla',
-      profileUrl: 'https://github.com/rohitpaulk',
-      avatarUrl: 'https://github.com/rohitpaulk.png',
-      headline: 'CTO, CodeCrafters',
-    };
-  }
-
-  get reviewersDetails() {
-    return [
-      {
-        name: 'Marcos Lilljedahl',
-        profileUrl: 'https://www.docker.com/captains/marcos-lilljedahl/',
-        avatarUrl: 'https://github.com/marcosnils.png',
-        headline: 'Docker Contributor',
-      },
-    ];
-  }
-
+export default class CoursePageCourseStageSolutionComponent extends Component {
   get explanationHTML() {
     if (this.args.solution.explanationMarkdown) {
       return htmlSafe(new showdown.Converter().makeHtml(this.args.solution.explanationMarkdown));

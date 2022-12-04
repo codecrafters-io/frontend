@@ -7,7 +7,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsSubscriber, signInAsSubscribedTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscribedTeamMember, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stage-solutions', function (hooks) {
@@ -29,9 +29,6 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Solutions', 'active header tab link should be solutions');
-
-    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Explanation');
-    await percySnapshot('Stage Solution Modal - Explanation');
 
     await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Verified Solution');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Verified Solution', 'active tab should be Verified Solution');
