@@ -82,6 +82,21 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   @action
+  handleDidInsertLanguageDropdown(dd) {
+    this.languageDropdown = dd;
+  }
+
+  @action
+  handleViewCommentsButtonClick() {
+    this.activeTab = 'comments';
+  }
+
+  @action
+  handleViewCommunitySolutionsInOtherLanguagesButtonClick() {
+    this.languageDropdown.actions.open();
+  }
+
+  @action
   handleTabLinkClick(tab) {
     this.activeTab = tab;
     this.modalBodyElement.scrollTo({ top: 0, behavior: 'smooth' });

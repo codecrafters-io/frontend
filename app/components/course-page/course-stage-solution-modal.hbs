@@ -12,6 +12,7 @@
     @onTabLinkClick={{this.handleTabLinkClick}}
     @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
     @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
+    @onDidInsertLanguageDropdown={{this.handleDidInsertLanguageDropdown}}
     @courseStage={{@courseStage}}
   />
 
@@ -24,6 +25,8 @@
       @courseStage={{@courseStage}}
       @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
       @repository={{@repository}}
+      @onViewCommunitySolutionsInOtherLanguagesButtonClick={{this.handleViewCommunitySolutionsInOtherLanguagesButtonClick}}
+      @onViewCommentsButtonClick={{this.handleViewCommentsButtonClick}}
     />
   {{else if (eq this.activeTab "source_walkthrough")}}
     <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />

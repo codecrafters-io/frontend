@@ -22,9 +22,9 @@ export default class CommunitySolutionsTabComponent extends Component {
       this.suggestedActionsForBlurredOverlay.includes('view_community_solutions_in_other_languages') &&
       this.suggestedActionsForBlurredOverlay.includes('view_comments')
     ) {
-      return `Looks like you haven't  completed this stage yet in ${this.args.repository.language.name} yet. Maybe peek at the comments for hints, or check out other language solutions?`;
+      return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. Maybe peek at the comments for hints, or check out other language solutions?`;
     } else if (this.suggestedActionsForBlurredOverlay.includes('view_community_solutions_in_other_languages')) {
-      return `Looks like you haven't completed this stage yet in ${this.args.repository.language.name} yet. Maybe peek at solutions in other languages first?`;
+      return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. Maybe peek at solutions in other languages first?`;
     } else if (this.suggestedActionsForBlurredOverlay.includes('view_comments')) {
       return `Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?`;
     } else {
@@ -104,12 +104,12 @@ export default class CommunitySolutionsTabComponent extends Component {
   get suggestedActionsForBlurredOverlay() {
     const actions = [];
 
-    if (this.communitySolutionsAreAvailableForOtherLanguages) {
-      actions.push('view_community_solutions_in_other_languages');
-    }
-
     if (this.args.courseStage.hasApprovedComments) {
       actions.push('view_comments');
+    }
+
+    if (this.communitySolutionsAreAvailableForOtherLanguages) {
+      actions.push('view_community_solutions_in_other_languages');
     }
 
     return actions;

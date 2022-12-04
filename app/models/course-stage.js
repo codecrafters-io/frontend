@@ -30,11 +30,11 @@ export default class CourseStageModel extends Model {
   }
 
   hasCommunitySolutionsForLanguage(language) {
-    return (this.communitySolutionCounts[language.slug] || 0) > 0;
+    return ((this.communitySolutionCounts || {})[language.slug] || 0) > 0;
   }
 
   hasCommunitySolutionsForLanguagesOtherThan(language) {
-    for (let [languageSlug, solutionsCount] of Object.entries(this.communitySolutionCounts)) {
+    for (let [languageSlug, solutionsCount] of Object.entries(this.communitySolutionCounts || {})) {
       if (solutionsCount > 0 && languageSlug !== language.slug) {
         return true;
       }

@@ -4,6 +4,8 @@ import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
+import percySnapshot from '@percy/ember';
+import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -61,6 +63,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 0);
   });
 
+  // eslint-disable-next-line qunit/require-expect
   test('can view solutions after starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -74,7 +77,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     // Stage 2: Completed, has solutions in other languages, and comments
     createCommunityCourseStageSolution(this.server, redis, 2, python);
     createCommunityCourseStageSolution(this.server, redis, 2, go);
-    // TODO: Add comments too?
+    createCourseStageComment(this.server, redis, 2);
 
     // Stage 3: Incomplete, no solutions in other languages, no comments
     createCommunityCourseStageSolution(this.server, redis, 3, python);
@@ -83,13 +86,14 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     createCommunityCourseStageSolution(this.server, redis, 4, python);
     createCommunityCourseStageSolution(this.server, redis, 4, go);
 
-    // Incomplete, has solutions in other language, no comments
-    // Stage 5: Create comments
+    // Stage 5: Incomplete, no solutions in other language, has comments
+    createCommunityCourseStageSolution(this.server, redis, 5, python);
+    createCourseStageComment(this.server, redis, 5);
 
     // Stage 6: Incomplete, has solutions in other language & has comments
     createCommunityCourseStageSolution(this.server, redis, 6, python);
     createCommunityCourseStageSolution(this.server, redis, 6, go);
-    // Add comments too
+    createCourseStageComment(this.server, redis, 6);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
@@ -133,6 +137,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assert.notOk(communitySolutionsTab.blurredOverlay.isVisible, 'Blurred overlay is not visible');
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
 
+    await percySnapshot('Community Solutions');
+
     // Stage 3 (Incomplete, no solutions in other languages, no comments)
     await switchToSolutionsForStage(3);
 
@@ -143,22 +149,38 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assert.notOk(communitySolutionsTab.blurredOverlay.isVisible);
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
 
+    await percySnapshot('Community Solutions Overlay | No other langs, no comments');
+
     // Stage 4: Incomplete, has solutions in other language, no comments
     await switchToSolutionsForStage(4);
 
     assertInstructions("Looks like you haven't completed this stage in Python yet. Maybe peek at solutions in other languages first?");
     assertButtons(['Good idea', 'Reveal Python solutions']);
-    await clickButton('Good idea');
 
-    await this.pauseTest();
+    assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
+    await clickButton('Good idea');
+    assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
+
+    await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
 
     // Stage 5: Create comments
-    // Stage 6: Incomplete, has solutions in other language & has comments
+    await switchToSolutionsForStage(5);
 
-    //
-    // await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    // await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('C');
-    //
-    // assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 0);
+    assertInstructions("Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?");
+    assertButtons(['View comments', 'Reveal solutions']);
+    await clickButton('View comments');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
+
+    await percySnapshot('Community Solutions Overlay | No other langs, has comments');
+
+    // Stage 6: Incomplete, has solutions in other language & has comments
+    await switchToSolutionsForStage(6);
+
+    assertInstructions(
+      "Looks like you haven't completed this stage in Python yet. Maybe peek at the comments for hints, or check out other language solutions?"
+    );
+    assertButtons(['View Comments', 'Another language', 'Reveal Python solutions']);
+
+    await percySnapshot('Community Solutions Overlay | Has other langs & comments');
   });
 });

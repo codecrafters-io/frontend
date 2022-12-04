@@ -32,7 +32,7 @@
 
     {{#if this.shouldShowBlurredOverlay}}
       <div class="absolute top-4 left-0 right-0 p-4 flex items-center justify-center" data-test-blurred-overlay>
-        <div class="px-8 py-6 bg-white rounded border text-gray-700 max-w-sm shadow">
+        <div class="px-8 py-6 bg-white rounded border text-gray-700 {{if (lt this.suggestedActionsForBlurredOverlay.length 2) 'max-w-lg'}} shadow">
           <div class="prose" data-test-instructions-text>
             {{this.blurredOverlayInstructionsText}}
           </div>
@@ -40,24 +40,25 @@
           <div class="flex items-center mt-4">
             {{#each this.suggestedActionsForBlurredOverlay as |action|}}
               {{#if (eq action "view_comments")}}
-                <SecondaryButton @size="small" class="mr-2" data-test-action-button>View Comments</SecondaryButton>
+                <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>View comments</PrimaryButton>
               {{/if}}
 
               {{#if (eq action "view_community_solutions_in_other_languages")}}
                 {{#if (eq 1 this.suggestedActionsForBlurredOverlay.length)}}
                   <PrimaryButton
                     @size="small"
-                    class="mr-2"
+                    class="mr-3"
                     data-test-action-button
+                    {{on "click" @onViewCommunitySolutionsInOtherLanguagesButtonClick}}
                   >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</PrimaryButton>
                 {{else}}
-                  <SecondaryButton
-                    @size="small"
-                    class="mr-2"
+                  <div
+                    class="mx-2 text-teal-500 hover:underline text-sm"
+                    role="button"
                     data-test-action-button
-                  >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</SecondaryButton>
+                    {{on "click" @onViewCommunitySolutionsInOtherLanguagesButtonClick}}
+                  >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</div>
                 {{/if}}
-
               {{/if}}
             {{/each}}
 
@@ -72,7 +73,7 @@
                 data-test-action-button
                 {{on "click" this.handleRevealSolutionsButtonClick}}
                 role="button"
-                class="mx-4 text-red-600 hover:underline text-sm"
+                class="mx-2 text-red-600 hover:underline text-sm"
               >{{this.textForRevealSolutionsButton}}</div>
             {{/if}}
           </div>
