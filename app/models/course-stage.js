@@ -1,6 +1,5 @@
-import { attr, belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
-import Model from '@ember-data/model';
 
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false }) course;
@@ -12,7 +11,6 @@ export default class CourseStageModel extends Model {
   @attr('string') difficulty;
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
-  @attr('boolean') isFree;
   @attr('string') marketingMarkdown;
   @attr('number') position;
   @attr('string') shortName;

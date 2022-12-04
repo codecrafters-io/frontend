@@ -24,7 +24,6 @@ export default function createCourseFromData(server, courseData) {
       slug: courseStageData.slug,
       descriptionMarkdownTemplate: courseStageData.description_md,
       difficulty: courseStageData.difficulty,
-      isFree: courseStagePosition <= 2,
       testerSourceCodeUrl: courseStageData.tester_source_code_url,
     });
 
