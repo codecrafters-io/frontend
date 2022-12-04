@@ -32,12 +32,13 @@ export default {
   communitySolutionsTab: {
     blurredOverlay: {
       actionButtons: collection('[data-test-action-button]'),
-      clickOnActionButton: clickOnText('[data-test-action-button]'),
 
       get availableActionButtons() {
         return this.actionButtons.map((button) => button.text);
       },
 
+      clickOnActionButton: clickOnText('[data-test-action-button]'),
+      instructionsText: text('[data-test-instructions-text]'),
       scope: '[data-test-blurred-overlay]',
     },
     solutionCards: collection('[data-test-community-solution-card]'),

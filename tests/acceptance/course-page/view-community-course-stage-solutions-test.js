@@ -71,20 +71,22 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    // Completed
+    // Stage 2: Completed, has solutions in other languages, and comments
     createCommunityCourseStageSolution(this.server, redis, 2, python);
+    createCommunityCourseStageSolution(this.server, redis, 2, go);
+    // TODO: Add comments too?
 
-    // Incomplete, no solutions, no comments
+    // Stage 3: Incomplete, no solutions in other languages, no comments
     createCommunityCourseStageSolution(this.server, redis, 3, python);
 
-    // Incomplete, has solutions in other language, no comments
+    // Stage 4: Incomplete, has solutions in other language, no comments
     createCommunityCourseStageSolution(this.server, redis, 4, python);
     createCommunityCourseStageSolution(this.server, redis, 4, go);
 
     // Incomplete, has solutions in other language, no comments
     // Stage 5: Create comments
 
-    // Incomplete, has solutions in other language & has comments
+    // Stage 6: Incomplete, has solutions in other language & has comments
     createCommunityCourseStageSolution(this.server, redis, 6, python);
     createCommunityCourseStageSolution(this.server, redis, 6, go);
     // Add comments too
@@ -105,26 +107,58 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
-    await animationsSettled();
-
     const communitySolutionsTab = coursePage.courseStageSolutionModal.communitySolutionsTab;
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
-    assert.strictEqual(communitySolutionsTab.blurredOverlay.availableActionButtons, ['Reveal Solution']);
+    const switchToSolutionsForStage = async function (stageNumber) {
+      await coursePage.courseStageSolutionModal.clickOnCloseButton();
+      await coursePage.collapsedItems[stageNumber - 1].click();
+      await animationsSettled();
+      await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    };
 
-    await communitySolutionsTab.blurredOverlay.clickOnActionButton('Reveal Solution');
+    const assertInstructions = function (expectedInstructions) {
+      assert.strictEqual(communitySolutionsTab.blurredOverlay.instructionsText, expectedInstructions, 'instructions are present');
+    };
+
+    const assertButtons = function (expectedButtons) {
+      assert.deepEqual(communitySolutionsTab.blurredOverlay.availableActionButtons, expectedButtons, 'buttons are present');
+    };
+
+    const clickButton = async function (buttonText) {
+      await communitySolutionsTab.blurredOverlay.clickOnActionButton(buttonText);
+    };
+
+    // Stage 2: (Completed, has solutions & comments)
+    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    assert.notOk(communitySolutionsTab.blurredOverlay.isVisible, 'Blurred overlay is not visible');
+    assert.strictEqual(communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
+
+    // Stage 3 (Incomplete, no solutions in other languages, no comments)
+    await switchToSolutionsForStage(3);
+
+    assertInstructions("Looks like you haven't completed this stage yet. Sure you want to see the solution?");
+    assertButtons(['Reveal solutions']);
+    await clickButton('Reveal solutions');
+
+    assert.notOk(communitySolutionsTab.blurredOverlay.isVisible);
+    assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
+
+    // Stage 4: Incomplete, has solutions in other language, no comments
+    await switchToSolutionsForStage(4);
+
+    assertInstructions("Looks like you haven't completed this stage in Python yet. Maybe peek at solutions in other languages first?");
+    assertButtons(['Good idea', 'Reveal Python solutions']);
+    await clickButton('Good idea');
 
     await this.pauseTest();
 
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+    // Stage 5: Create comments
+    // Stage 6: Incomplete, has solutions in other language & has comments
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1);
-
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('C');
-
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 0);
+    //
+    // await coursePage.courseStageSolutionModal.languageDropdown.toggle();
+    // await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('C');
+    //
+    // assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 0);
   });
 });
