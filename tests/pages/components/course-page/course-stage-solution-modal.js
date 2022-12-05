@@ -62,10 +62,6 @@ export default {
     scope: '[data-test-language-dropdown-content]',
   },
 
-  requestedLanguageNotAvailableNotice: {
-    scope: '[data-test-requested-language-not-available-notice]',
-  },
-
   title: text('[data-test-course-stage-solution-modal-title]'),
   scope: '[data-test-course-stage-solution-modal]',
 };
