@@ -19,7 +19,7 @@
     {{#if this.shouldShowUpgradePrompt}}
       <CoursePage::StepList::CourseStageItem::UpgradePrompt @class="mb-4" @color="yellow" />
 
-      {{#unless this.repository.githubRepositorySyncConfiguration}}
+      {{#unless @repository.githubRepositorySyncConfiguration}}
         <CoursePage::StepList::CourseStageItem::PublishToGithubPrompt @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}} class="mb-4" />
       {{/unless}}
     {{/if}}
