@@ -12,6 +12,14 @@ export default class CoursePageStepListStageItemFirstStageHintComponent extends 
   }
 
   get solutionIsAvailable() {
-    return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
+    return !!this.solution;
+  }
+
+  get solution() {
+    if (this.args.repository.language) {
+      return this.args.courseStage.solutions.findBy('language', this.args.repository.language);
+    } else {
+      return this.args.courseStage.solutions.firstObject;
+    }
   }
 }

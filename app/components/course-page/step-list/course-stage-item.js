@@ -45,22 +45,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     `;
   }
 
-  get firstStageReadmeHintHTML() {
-    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.firstStageReadmeHintMarkdown));
-  }
-
-  get firstStageReadmeHintMarkdown() {
-    const variables = {};
-
-    variables['readme_url'] = this.args.repository.readmeUrl || this.args.repository.defaultReadmeUrl;
-
-    return Mustache.render(this.firstStageReadmeHintMarkdownTemplate, variables);
-  }
-
-  get firstStageReadmeHintMarkdownTemplate() {
-    return `Since this is your first stage, you can consult [**the README**]({{readme_url}}) in your repository for instructions on how to pass.`;
-  }
-
   @action
   handleFeedbackActionButtonClicked() {
     this.manualFeedbackFlowIsActive = true;
