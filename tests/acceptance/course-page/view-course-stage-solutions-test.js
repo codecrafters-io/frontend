@@ -34,19 +34,6 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Verified Solution', 'active tab should be Verified Solution');
 
     await percySnapshot('Stage Solution Modal - Verified Solution');
-
-    assert.strictEqual(coursePage.courseStageSolutionModal.languageDropdown.currentLanguageName, 'Go', 'Go is selected by default');
-    assert.notOk(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should not be visible');
-
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
-
-    assert.ok(coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.isVisible, 'language notice should be visible');
-
-    assert.strictEqual(
-      coursePage.courseStageSolutionModal.requestedLanguageNotAvailableNotice.text,
-      "This stage doesn't have verified solutions available for Python yet, so we're showing solutions for Go instead."
-    );
   });
 
   test('can view solutions before starting course', async function (assert) {

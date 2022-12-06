@@ -26,22 +26,6 @@
             @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
           />
         {{/each}}
-
-        {{#if this.languagesWithoutSolutions.firstObject}}
-          <div class="px-4 font-bold uppercase text-xs text-gray-400 mb-2 mt-3">
-            Coming soon:
-          </div>
-
-          {{#each this.languagesWithoutSolutions as |language|}}
-            <CoursePage::CourseStageSolutionModal::LanguageDropdownLink
-              @language={{language}}
-              @isEnabled={{false}}
-              @isCurrent={{eq language @currentLanguage}}
-              @isRequested={{eq language @requestedLanguage}}
-              @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
-            />
-          {{/each}}
-        {{/if}}
       </div>
     </dd.Content>
   </BasicDropdown>

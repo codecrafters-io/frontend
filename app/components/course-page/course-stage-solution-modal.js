@@ -106,12 +106,15 @@ export default class CourseStageSolutionModalComponent extends Component {
   @action
   handleRequestedSolutionLanguageChange(requestedSolutionLanguage) {
     this.requestedSolutionLanguage = requestedSolutionLanguage;
+
+    if (this.activeTab === 'verified_solution' && !this.solution) {
+      this.activeTab = 'community_solutions';
+    }
+
     this.emitAnalyticsEvent();
   }
 
   get solution() {
-    const solutionForRequestedLanguage = this.args.courseStage.solutions.findBy('language', this.requestedSolutionLanguage);
-
-    return solutionForRequestedLanguage ? solutionForRequestedLanguage : this.args.courseStage.solutions.sortBy('language.name').firstObject;
+    return this.args.courseStage.solutions.findBy('language', this.requestedSolutionLanguage);
   }
 }

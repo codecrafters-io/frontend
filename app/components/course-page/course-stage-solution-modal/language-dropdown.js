@@ -11,12 +11,4 @@ export default class CourseStageSolutionPageLanguageDropdownComponent extends Co
   get languagesWithSolutions() {
     return this.args.courseStage.solutions.mapBy('language').uniq().sortBy('name');
   }
-
-  get languagesWithoutSolutions() {
-    return this.args.courseStage.course.betaOrLiveLanguages
-      .filter((language) => {
-        return !this.languagesWithSolutions.includes(language);
-      })
-      .sortBy('name');
-  }
 }
