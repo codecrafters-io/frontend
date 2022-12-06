@@ -132,7 +132,7 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
   }
 
   get shouldShowUpgradePrompt() {
-    return this.isActiveStage && !this.args.repository.user.canAttemptCourseStage(this.args.courseStage);
+    return this.isActiveStage && !this.statusIsComplete && !this.args.repository.user.canAttemptCourseStage(this.args.courseStage);
   }
 
   get solutionIsAvailableInAnyLanguage() {
