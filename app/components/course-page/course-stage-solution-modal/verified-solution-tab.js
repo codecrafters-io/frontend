@@ -53,6 +53,7 @@ export default class CoursePageCourseStageSolutionComponent extends Component {
   @action
   async handleRevealSolutionsButtonClick() {
     this.revealSolutionOverlayWasDisabledByUser = true;
+    this.emitAnalyticsEvent();
   }
 
   get hasCompletedStage() {
