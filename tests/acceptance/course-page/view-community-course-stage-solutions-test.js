@@ -120,6 +120,10 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
       await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     };
 
+    const assertHeading = function (expectedText) {
+      assert.strictEqual(communitySolutionsTab.revealSolutionOverlay.headingText, expectedText, 'heading is present');
+    };
+
     const assertInstructions = function (expectedInstructions) {
       assert.strictEqual(communitySolutionsTab.revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
     };
@@ -143,9 +147,10 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await switchToSolutionsForStage(3);
     await percySnapshot('Community Solutions Overlay | No other langs, no comments');
 
-    assertInstructions("Looks like you haven't completed this stage yet. Sure you want to see the solution?");
-    assertButtons(['Reveal solutions']);
-    await clickButton('Reveal solutions');
+    assertHeading('Taking a peek?');
+    assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
+    assertButtons(['Just taking a peek']);
+    await clickButton('Just taking a peek');
 
     assert.notOk(communitySolutionsTab.revealSolutionOverlay.isVisible);
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);

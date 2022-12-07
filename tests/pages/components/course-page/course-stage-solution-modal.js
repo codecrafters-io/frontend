@@ -38,6 +38,7 @@ export default {
       },
 
       clickOnActionButton: clickOnText('[data-test-action-button]'),
+      headingText: text('[data-test-heading-text]'),
       instructionsText: text('[data-test-instructions-text]'),
       scope: '[data-test-reveal-solution-overlay]',
     },

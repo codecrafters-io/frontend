@@ -14,7 +14,7 @@ export default class RevealSolutionOverlayComponent extends Component {
 
   get instructionsText() {
     if (this.suggestedActions.length === 0) {
-      return `Looks like you haven’t completed this stage yet. Just a heads up, this tab will expose solutions.`;
+      return `Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.`;
     } else if (this.suggestedActions.includes('switch_language') && this.suggestedActions.includes('view_comments')) {
       return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. Maybe peek at the comments for hints, or check out other language solutions?`;
     } else if (this.suggestedActions.includes('switch_language')) {
