@@ -121,22 +121,22 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     };
 
     const assertInstructions = function (expectedInstructions) {
-      assert.strictEqual(communitySolutionsTab.blurredOverlay.instructionsText, expectedInstructions, 'instructions are present');
+      assert.strictEqual(communitySolutionsTab.revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
     };
 
     const assertButtons = function (expectedButtons) {
-      assert.deepEqual(communitySolutionsTab.blurredOverlay.availableActionButtons, expectedButtons, 'buttons are present');
+      assert.deepEqual(communitySolutionsTab.revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
     };
 
     const clickButton = async function (buttonText) {
-      await communitySolutionsTab.blurredOverlay.clickOnActionButton(buttonText);
+      await communitySolutionsTab.revealSolutionOverlay.clickOnActionButton(buttonText);
     };
 
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     await percySnapshot('Community Solutions');
 
-    assert.notOk(communitySolutionsTab.blurredOverlay.isVisible, 'Blurred overlay is not visible');
+    assert.notOk(communitySolutionsTab.revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
 
     // Stage 3 (Incomplete, no solutions in other languages, no comments)
@@ -147,7 +147,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assertButtons(['Reveal solutions']);
     await clickButton('Reveal solutions');
 
-    assert.notOk(communitySolutionsTab.blurredOverlay.isVisible);
+    assert.notOk(communitySolutionsTab.revealSolutionOverlay.isVisible);
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
 
     // Stage 4: Incomplete, has solutions in other language, no comments

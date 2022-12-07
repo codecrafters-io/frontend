@@ -10,7 +10,7 @@
   </div>
 
   <div class="relative">
-    <div class="{{if this.shouldShowBlurredOverlay 'blurred-overlay'}}">
+    <div class="{{if this.shouldShowRevealSolutionOverlay 'blurred-overlay'}}">
       {{#if this.isLoading}}
         <div class="flex justify-center items-center pt-32 pb-96 w-full">
           <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
@@ -30,55 +30,16 @@
       {{/if}}
     </div>
 
-    {{#if this.shouldShowBlurredOverlay}}
-      <div class="absolute top-4 left-0 right-0 p-4 flex items-center justify-center" data-test-blurred-overlay>
-        <div class="px-8 py-6 bg-white rounded border text-gray-700 {{if (lt this.suggestedActionsForBlurredOverlay.length 2) 'max-w-lg'}} shadow">
-          <div class="prose" data-test-instructions-text>
-            {{this.blurredOverlayInstructionsText}}
-          </div>
-
-          <div class="flex items-center mt-4">
-            {{#each this.suggestedActionsForBlurredOverlay as |action|}}
-              {{#if (eq action "view_comments")}}
-                <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>View comments</PrimaryButton>
-              {{/if}}
-
-              {{#if (eq action "view_community_solutions_in_other_languages")}}
-                {{#if (eq 1 this.suggestedActionsForBlurredOverlay.length)}}
-                  <PrimaryButton
-                    @size="small"
-                    class="mr-3"
-                    data-test-action-button
-                    {{on "click" @onViewCommunitySolutionsInOtherLanguagesButtonClick}}
-                  >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</PrimaryButton>
-                {{else}}
-                  <SecondaryButton
-                    @size="small"
-                    class="mr-3 font-normal"
-                    data-test-action-button
-                    {{on "click" @onViewCommunitySolutionsInOtherLanguagesButtonClick}}
-                  >{{this.textForViewCommunitySolutionsInOtherLanguagesButton}}</SecondaryButton>
-                {{/if}}
-              {{/if}}
-            {{/each}}
-
-            {{#if (eq 0 this.suggestedActionsForBlurredOverlay.length)}}
-              <DangerButton
-                @size="small"
-                data-test-action-button
-                {{on "click" this.handleRevealSolutionsButtonClick}}
-              >{{this.textForRevealSolutionsButton}}</DangerButton>
-            {{else}}
-              <div
-                data-test-action-button
-                {{on "click" this.handleRevealSolutionsButtonClick}}
-                role="button"
-                class="mx-2 text-red-600 hover:underline text-sm"
-              >{{this.textForRevealSolutionsButton}}</div>
-            {{/if}}
-          </div>
-        </div>
-      </div>
+    {{#if this.shouldShowRevealSolutionOverlay}}
+      <CoursePage::CourseStageSolutionModal::RevealSolutionOverlay
+        @intent="view_community_solutions"
+        @courseStage={{@courseStage}}
+        @onViewCommentsButtonClick={{@onViewCommentsButtonClick}}
+        @onSwitchLanguageButtonClick={{@onViewCommunitySolutionsInOtherLanguagesButtonClick}}
+        @onRevealSolutionsButtonClick={{this.handleRevealSolutionsButtonClick}}
+        @requestedSolutionLanguage={{@requestedSolutionLanguage}}
+        @repository={{@repository}}
+      />
     {{/if}}
   </div>
 </div>
