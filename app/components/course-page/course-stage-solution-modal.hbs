@@ -17,7 +17,14 @@
   />
 
   {{#if (eq this.activeTab "verified_solution")}}
-    <CoursePage::CourseStageSolutionModal::VerifiedSolutionTab @solution={{this.solution}} />
+    <CoursePage::CourseStageSolutionModal::VerifiedSolutionTab
+      @courseStage={{@courseStage}}
+      @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
+      @repository={{@repository}}
+      @solution={{this.solution}}
+      @onViewVerifiedSolutionInOtherLanguagesButtonClick={{this.handleViewVerifiedSolutionInOtherLanguagesButtonClick}}
+      @onViewCommentsButtonClick={{this.handleViewCommentsButtonClick}}
+    />
   {{else if (eq this.activeTab "community_solutions")}}
     <CoursePage::CourseStageSolutionModal::CommunitySolutionsTab
       @courseStage={{@courseStage}}

@@ -111,7 +111,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
-    const communitySolutionsTab = coursePage.courseStageSolutionModal.communitySolutionsTab;
+    const revealSolutionOverlay = coursePage.courseStageSolutionModal.revealSolutionOverlay;
 
     const switchToSolutionsForStage = async function (stageNumber) {
       await coursePage.courseStageSolutionModal.clickOnCloseButton();
@@ -121,27 +121,27 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     };
 
     const assertHeading = function (expectedText) {
-      assert.strictEqual(communitySolutionsTab.revealSolutionOverlay.headingText, expectedText, 'heading is present');
+      assert.strictEqual(revealSolutionOverlay.headingText, expectedText, 'heading is present');
     };
 
     const assertInstructions = function (expectedInstructions) {
-      assert.strictEqual(communitySolutionsTab.revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
+      assert.strictEqual(revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
     };
 
     const assertButtons = function (expectedButtons) {
-      assert.deepEqual(communitySolutionsTab.revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
+      assert.deepEqual(revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
     };
 
     const clickButton = async function (buttonText) {
-      await communitySolutionsTab.revealSolutionOverlay.clickOnActionButton(buttonText);
+      await revealSolutionOverlay.clickOnActionButton(buttonText);
     };
 
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     await percySnapshot('Community Solutions');
 
-    assert.notOk(communitySolutionsTab.revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
-    assert.strictEqual(communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
+    assert.notOk(revealSolutionOverlay.revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
+    assert.strictEqual(revealSolutionOverlay.solutionCards.length, 1, 'Solutions are visible');
 
     // Stage 3 (Incomplete, no solutions in other languages, no comments)
     await switchToSolutionsForStage(3);
@@ -152,8 +152,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assertButtons(['Just taking a peek']);
     await clickButton('Just taking a peek');
 
-    assert.notOk(communitySolutionsTab.revealSolutionOverlay.isVisible);
-    assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
+    assert.notOk(revealSolutionOverlay.revealSolutionOverlay.isVisible);
+    assert.strictEqual(revealSolutionOverlay.solutionCards.length, 1);
 
     // Stage 4: Incomplete, has solutions in other language, no comments
     await switchToSolutionsForStage(4);

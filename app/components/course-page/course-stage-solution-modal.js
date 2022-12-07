@@ -83,7 +83,9 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   handleDidInsertLanguageDropdown(dd) {
-    this.languageDropdown = dd;
+    if (dd) {
+      this.languageDropdown = dd; // This is called with null when the dropdown is destroyed, and we use it for two different dropdowns
+    }
   }
 
   @action
@@ -93,6 +95,11 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   handleViewCommunitySolutionsInOtherLanguagesButtonClick() {
+    this.languageDropdown.actions.open();
+  }
+
+  @action
+  handleViewVerifiedSolutionInOtherLanguagesButtonClick() {
     this.languageDropdown.actions.open();
   }
 

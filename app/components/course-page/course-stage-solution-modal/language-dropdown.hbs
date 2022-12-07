@@ -1,5 +1,5 @@
 <div data-test-language-dropdown ...attributes>
-  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" as |dd|>
+  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" @registerAPI={{@onDidInsertDropdown}} as |dd|>
     <dd.Trigger>
       <button
         type="button"

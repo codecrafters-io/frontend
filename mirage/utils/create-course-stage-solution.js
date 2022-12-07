@@ -1,5 +1,6 @@
-export default function createCourseStageSolution(server, course, stagePosition) {
+export default function createCourseStageSolution(server, course, stagePosition, language) {
   let stage = course.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
+  language = language || server.schema.languages.findBy({ slug: 'go' });
 
   server.create('course-stage-solution', {
     authorDetails: {
@@ -84,6 +85,6 @@ or \`WriteFailed\`.
       end</code>
   </pre>
       `,
-    language: server.schema.languages.findBy({ slug: 'go' }),
+    language: language,
   });
 }

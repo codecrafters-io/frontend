@@ -1,27 +1,43 @@
-{{#if @solution.hasExplanation}}
-  <div class="pb-8">
-    <div
-      class="leading-7 prose solution-explanation max-w-none"
-      {{did-insert this.handleDidInsertExplanationHTML}}
-      {{did-update this.handleDidUpdateExplanationHTML this.explanationHTML}}
-    >
-      {{this.explanationHTML}}
-    </div>
+<div class="relative">
+  <div class="{{if this.shouldShowRevealSolutionOverlay 'blurred-overlay'}}">
+    {{#if @solution.hasExplanation}}
+      <div class="pb-8">
+        <div
+          class="leading-7 prose solution-explanation max-w-none"
+          {{did-insert this.handleDidInsertExplanationHTML}}
+          {{did-update this.handleDidUpdateExplanationHTML this.explanationHTML}}
+        >
+          {{this.explanationHTML}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#each @solution.changedFiles as |changedFile|}}
+      <div class="mb-4 bg-white shadow-sm rounded border border-gray-300">
+        <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+          <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+        </div>
+
+        <div class="p-4 text-sm">
+          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
+        </div>
+      </div>
+    {{/each}}
+
+    {{#if @solution.hasContributorDetails}}
+      <CoursePage::CourseStageSolutionModal::ContributorsSection @solution={{@solution}} class="mt-8" />
+    {{/if}}
   </div>
-{{/if}}
 
-{{#each @solution.changedFiles as |changedFile|}}
-  <div class="mb-4 bg-white shadow-sm rounded border border-gray-300">
-    <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
-      <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
-    </div>
-
-    <div class="p-4 text-sm">
-      <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
-    </div>
-  </div>
-{{/each}}
-
-{{#if @solution.hasContributorDetails}}
-  <CoursePage::CourseStageSolutionModal::ContributorsSection @solution={{@solution}} class="mt-8" />
-{{/if}}
+  {{#if this.shouldShowRevealSolutionOverlay}}
+    <CoursePage::CourseStageSolutionModal::RevealSolutionOverlay
+      @intent="view_verified_solution"
+      @courseStage={{@courseStage}}
+      @onViewCommentsButtonClick={{@onViewCommentsButtonClick}}
+      @onSwitchLanguageButtonClick={{@onViewVerifiedSolutionInOtherLanguagesButtonClick}}
+      @onRevealSolutionsButtonClick={{this.handleRevealSolutionsButtonClick}}
+      @requestedSolutionLanguage={{@requestedSolutionLanguage}}
+      @repository={{@repository}}
+    />
+  {{/if}}
+</div>

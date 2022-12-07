@@ -1,5 +1,7 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -57,6 +59,130 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #1: Bind to a port');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
+  });
+
+  // eslint-disable-next-line qunit/require-expect
+  test('can view solutions after starting course', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    this.server.schema.courseStageSolutions.all().models.map((courseStageSolution) => courseStageSolution.destroy());
+
+    // Stage 2: Completed, has solutions in other languages, and comments
+    createCourseStageSolution(this.server, redis, 2, python);
+    createCourseStageSolution(this.server, redis, 2, go);
+    createCourseStageComment(this.server, redis, 2);
+
+    // Stage 3: Incomplete, no solutions in other languages, no comments
+    createCourseStageSolution(this.server, redis, 3, python);
+
+    // Stage 4: Incomplete, has solutions in other language, no comments
+    createCourseStageSolution(this.server, redis, 4, python);
+    createCourseStageSolution(this.server, redis, 4, go);
+
+    // Stage 5: Incomplete, no solutions in other language, has comments
+    createCourseStageSolution(this.server, redis, 5, python);
+    createCourseStageComment(this.server, redis, 5);
+
+    // Stage 6: Incomplete, has solutions in other language & has comments
+    createCourseStageSolution(this.server, redis, 6, python);
+    createCourseStageSolution(this.server, redis, 6, go);
+    createCourseStageComment(this.server, redis, 6);
+
+    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    const revealSolutionOverlay = coursePage.courseStageSolutionModal.revealSolutionOverlay;
+
+    const switchToSolutionsForStage = async (stageNumber) => {
+      await coursePage.courseStageSolutionModal.clickOnCloseButton();
+      await coursePage.collapsedItems[stageNumber - 1].click();
+      await animationsSettled();
+      await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+      await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Verified Solution');
+    };
+
+    const assertHeading = function (expectedText) {
+      assert.strictEqual(revealSolutionOverlay.headingText, expectedText, 'heading is present');
+    };
+
+    const assertInstructions = function (expectedInstructions) {
+      assert.strictEqual(revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
+    };
+
+    const assertButtons = function (expectedButtons) {
+      assert.deepEqual(revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
+    };
+
+    const clickButton = async function (buttonText) {
+      await revealSolutionOverlay.clickOnActionButton(buttonText);
+    };
+
+    // Stage 2: (Completed, has solutions & comments)
+    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+
+    assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
+
+    // Stage 3 (Incomplete, no solutions in other languages, no comments)
+    await switchToSolutionsForStage(3);
+    await percySnapshot('Verified Solutions Overlay | No other langs, no comments');
+
+    assertHeading('Taking a peek?');
+    assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
+    assertButtons(['Just taking a peek']);
+    await clickButton('Just taking a peek');
+
+    assert.notOk(revealSolutionOverlay.isVisible);
+
+    // Stage 4: Incomplete, has solutions in other language, no comments
+    await switchToSolutionsForStage(4);
+    await percySnapshot('Verified Solutions Overlay | Has other langs, no comments');
+
+    assertInstructions(
+      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
+    );
+    assertButtons(['Good idea', 'Reveal Python solution']);
+
+    assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
+    await clickButton('Good idea');
+    assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
+
+    // Stage 5: Create comments
+    await switchToSolutionsForStage(5);
+    await percySnapshot('Verified Solutions Overlay | No other langs, has comments');
+
+    assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
+    assertButtons(['View comments', 'Reveal solution']);
+    await clickButton('View comments');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
+
+    // Stage 6: Incomplete, has solutions in other language & has comments
+    await switchToSolutionsForStage(6);
+    await percySnapshot('Verified Solutions Overlay | Has other langs & comments');
+
+    assertInstructions(
+      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
+    );
+    assertButtons(['View comments', 'Another language', 'Reveal Python solution']);
   });
 
   test('can view solutions for previous stages after completing them', async function (assert) {

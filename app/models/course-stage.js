@@ -47,6 +47,10 @@ export default class CourseStageModel extends Model {
     return !!this.solutions.findBy('language', language);
   }
 
+  hasSolutionForLanguagesOtherThan(language) {
+    return this.solutions.any((solution) => solution.language !== language);
+  }
+
   get hasSourceWalkthrough() {
     return !!this.sourceWalkthrough;
   }

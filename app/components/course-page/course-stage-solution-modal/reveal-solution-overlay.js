@@ -33,8 +33,11 @@ export default class RevealSolutionOverlayComponent extends Component {
       actions.push('view_comments');
     }
 
-    // TODO: Use verified solutions for view_verified_solution intent
     if (this.args.intent === 'view_community_solutions' && this.communitySolutionsAreAvailableForOtherLanguages) {
+      actions.push('switch_language');
+    }
+
+    if (this.args.intent === 'view_verified_solution' && this.verifiedSolutionIsAvailableForOtherLanguages) {
       actions.push('switch_language');
     }
 
@@ -42,13 +45,20 @@ export default class RevealSolutionOverlayComponent extends Component {
   }
 
   get textForRevealSolutionsButton() {
-    // TODO: Change to singular version for verified solutions
     if (this.suggestedActions.includes('switch_language')) {
-      return `Reveal ${this.args.repository.language.name} solutions`;
+      if (this.args.intent === 'view_community_solutions') {
+        return `Reveal ${this.args.repository.language.name} solutions`;
+      } else {
+        return `Reveal ${this.args.repository.language.name} solution`;
+      }
     } else if (this.suggestedActions.length === 0) {
       return `Just taking a peek`;
     } else {
-      return 'Reveal solutions';
+      if (this.args.intent === 'view_community_solutions') {
+        return `Reveal solutions`;
+      } else {
+        return `Reveal solution`;
+      }
     }
   }
 
@@ -58,5 +68,9 @@ export default class RevealSolutionOverlayComponent extends Component {
     } else {
       return 'Another language';
     }
+  }
+
+  get verifiedSolutionIsAvailableForOtherLanguages() {
+    return this.args.courseStage.hasSolutionForLanguagesOtherThan(this.args.requestedSolutionLanguage);
   }
 }
