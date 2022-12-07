@@ -30,18 +30,6 @@ export default {
   },
 
   communitySolutionsTab: {
-    revealSolutionOverlay: {
-      actionButtons: collection('[data-test-action-button]'),
-
-      get availableActionButtons() {
-        return this.actionButtons.map((button) => button.text);
-      },
-
-      clickOnActionButton: clickOnText('[data-test-action-button]'),
-      headingText: text('[data-test-heading-text]'),
-      instructionsText: text('[data-test-instructions-text]'),
-      scope: '[data-test-reveal-solution-overlay]',
-    },
     solutionCards: collection('[data-test-community-solution-card]'),
     scope: '[data-test-community-solutions-tab]',
   },
@@ -61,6 +49,19 @@ export default {
 
     resetScope: true,
     scope: '[data-test-language-dropdown-content]',
+  },
+
+  revealSolutionOverlay: {
+    actionButtons: collection('[data-test-action-button]'),
+
+    get availableActionButtons() {
+      return this.actionButtons.map((button) => button.text);
+    },
+
+    clickOnActionButton: clickOnText('[data-test-action-button]'),
+    headingText: text('[data-test-heading-text]'),
+    instructionsText: text('[data-test-instructions-text]'),
+    scope: '[data-test-reveal-solution-overlay]',
   },
 
   title: text('[data-test-course-stage-solution-modal-title]'),

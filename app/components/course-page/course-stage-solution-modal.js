@@ -51,19 +51,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   emitAnalyticsEvent() {
-    if (this.activeTab === 'verified_solution') {
-      this.store
-        .createRecord('analytics-event', {
-          name: 'viewed_course_stage_solution',
-          properties: {
-            course_slug: this.args.courseStage.course.slug,
-            course_stage_slug: this.args.courseStage.slug,
-            language_slug: this.solution.language.slug,
-            requested_language_slug: this.requestedSolutionLanguage.slug,
-          },
-        })
-        .save();
-    } else if (this.activeTab === 'source_walkthrough') {
+    if (this.activeTab === 'source_walkthrough') {
       this.store
         .createRecord('analytics-event', {
           name: 'viewed_course_stage_source_walkthrough',
@@ -83,7 +71,9 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   handleDidInsertLanguageDropdown(dd) {
-    this.languageDropdown = dd;
+    if (dd) {
+      this.languageDropdown = dd; // This is called with null when the dropdown is destroyed, and we use it for two different dropdowns
+    }
   }
 
   @action
@@ -93,6 +83,11 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   handleViewCommunitySolutionsInOtherLanguagesButtonClick() {
+    this.languageDropdown.actions.open();
+  }
+
+  @action
+  handleViewVerifiedSolutionInOtherLanguagesButtonClick() {
     this.languageDropdown.actions.open();
   }
 
