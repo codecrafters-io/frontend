@@ -3,10 +3,34 @@ import Prism from 'prismjs';
 import showdown from 'showdown';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class CoursePageCourseStageSolutionComponent extends Component {
+  @service store;
   @tracked revealSolutionOverlayWasDisabledByUser = false;
+
+  constructor() {
+    super(...arguments);
+    this.emitAnalyticsEvent();
+  }
+
+  @action
+  emitAnalyticsEvent() {
+    if (!this.shouldShowRevealSolutionOverlay) {
+      this.store
+        .createRecord('analytics-event', {
+          name: 'viewed_course_stage_solution',
+          properties: {
+            course_slug: this.args.courseStage.course.slug,
+            course_stage_slug: this.args.courseStage.slug,
+            language_slug: this.args.solution.language.slug,
+            requested_language_slug: this.args.requestedSolutionLanguage.slug,
+          },
+        })
+        .save();
+    }
+  }
 
   get explanationHTML() {
     if (this.args.solution.explanationMarkdown) {

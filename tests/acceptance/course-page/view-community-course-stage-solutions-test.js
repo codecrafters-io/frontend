@@ -140,8 +140,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     await percySnapshot('Community Solutions');
 
-    assert.notOk(revealSolutionOverlay.revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
-    assert.strictEqual(revealSolutionOverlay.solutionCards.length, 1, 'Solutions are visible');
+    assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
 
     // Stage 3 (Incomplete, no solutions in other languages, no comments)
     await switchToSolutionsForStage(3);
@@ -152,8 +152,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assertButtons(['Just taking a peek']);
     await clickButton('Just taking a peek');
 
-    assert.notOk(revealSolutionOverlay.revealSolutionOverlay.isVisible);
-    assert.strictEqual(revealSolutionOverlay.solutionCards.length, 1);
+    assert.notOk(revealSolutionOverlay.isVisible);
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
 
     // Stage 4: Incomplete, has solutions in other language, no comments
     await switchToSolutionsForStage(4);

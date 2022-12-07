@@ -51,19 +51,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   emitAnalyticsEvent() {
-    if (this.activeTab === 'verified_solution') {
-      this.store
-        .createRecord('analytics-event', {
-          name: 'viewed_course_stage_solution',
-          properties: {
-            course_slug: this.args.courseStage.course.slug,
-            course_stage_slug: this.args.courseStage.slug,
-            language_slug: this.solution.language.slug,
-            requested_language_slug: this.requestedSolutionLanguage.slug,
-          },
-        })
-        .save();
-    } else if (this.activeTab === 'source_walkthrough') {
+    if (this.activeTab === 'source_walkthrough') {
       this.store
         .createRecord('analytics-event', {
           name: 'viewed_course_stage_source_walkthrough',

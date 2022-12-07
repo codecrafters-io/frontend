@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="relative" {{did-update this.emitAnalyticsEvent @requestedSolutionLanguage}}>
   <div class="{{if this.shouldShowRevealSolutionOverlay 'blurred-overlay'}}">
     {{#if @solution.hasExplanation}}
       <div class="pb-8">
