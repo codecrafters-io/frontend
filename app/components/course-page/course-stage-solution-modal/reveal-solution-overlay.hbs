@@ -12,30 +12,32 @@
       {{this.instructionsText}}
     </div>
 
-    <div class="flex items-center mt-4">
-      {{#each this.suggestedActions as |action|}}
-        {{#if (eq action "view_comments")}}
-          <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>View comments</PrimaryButton>
-        {{/if}}
-
-        {{#if (eq action "switch_language")}}
-          {{#if (eq 1 this.suggestedActions.length)}}
-            <PrimaryButton
-              @size="small"
-              class="mr-3"
-              data-test-action-button
-              {{on "click" @onSwitchLanguageButtonClick}}
-            >{{this.textForSwitchLanguageButton}}</PrimaryButton>
-          {{else}}
-            <SecondaryButton
-              @size="small"
-              class="mr-3 font-normal"
-              data-test-action-button
-              {{on "click" @onSwitchLanguageButtonClick}}
-            >{{this.textForSwitchLanguageButton}}</SecondaryButton>
+    <div class="flex items-center mt-4 {{if (gt this.suggestedActions.length 1) 'justify-between'}}">
+      <div class="flex items-center">
+        {{#each this.suggestedActions as |action|}}
+          {{#if (eq action "view_comments")}}
+            <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>View comments</PrimaryButton>
           {{/if}}
-        {{/if}}
-      {{/each}}
+
+          {{#if (eq action "switch_language")}}
+            {{#if (eq 1 this.suggestedActions.length)}}
+              <PrimaryButton
+                @size="small"
+                class="mr-3"
+                data-test-action-button
+                {{on "click" @onSwitchLanguageButtonClick}}
+              >{{this.textForSwitchLanguageButton}}</PrimaryButton>
+            {{else}}
+              <div
+                role="button"
+                class="mx-2 text-teal-500 hover:underline text-sm"
+                data-test-action-button
+                {{on "click" @onSwitchLanguageButtonClick}}
+              >{{this.textForSwitchLanguageButton}}</div>
+            {{/if}}
+          {{/if}}
+        {{/each}}
+      </div>
 
       {{#if (eq 0 this.suggestedActions.length)}}
         <SecondaryButton

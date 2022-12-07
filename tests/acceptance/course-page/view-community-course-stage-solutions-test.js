@@ -172,7 +172,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await switchToSolutionsForStage(5);
     await percySnapshot('Community Solutions Overlay | No other langs, has comments');
 
-    assertInstructions("Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?");
+    assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
     assertButtons(['View comments', 'Reveal solutions']);
     await clickButton('View comments');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
@@ -182,7 +182,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await percySnapshot('Community Solutions Overlay | Has other langs & comments');
 
     assertInstructions(
-      "Looks like you haven't completed this stage in Python yet. Maybe peek at the comments for hints, or check out other language solutions?"
+      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
     );
     assertButtons(['View comments', 'Another language', 'Reveal Python solutions']);
   });

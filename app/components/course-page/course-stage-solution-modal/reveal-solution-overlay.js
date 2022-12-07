@@ -16,11 +16,11 @@ export default class RevealSolutionOverlayComponent extends Component {
     if (this.suggestedActions.length === 0) {
       return `Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.`;
     } else if (this.suggestedActions.includes('switch_language') && this.suggestedActions.includes('view_comments')) {
-      return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. Maybe peek at the comments for hints, or check out other language solutions?`;
+      return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages.`;
     } else if (this.suggestedActions.includes('switch_language')) {
       return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you.`;
     } else if (this.suggestedActions.includes('view_comments')) {
-      return `Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?`;
+      return `Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.`;
     } else {
       throw `Unexpected suggested actions for blurred overlay`;
     }
