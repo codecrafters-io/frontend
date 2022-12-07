@@ -14,7 +14,7 @@ export default class RevealSolutionOverlayComponent extends Component {
 
   get instructionsText() {
     if (this.suggestedActions.length === 0) {
-      return `Looks like you haven't completed this stage yet. Sure you want to see the solution?`;
+      return `Looks like you haven’t completed this stage yet. Just a heads up, this tab will expose solutions.`;
     } else if (this.suggestedActions.includes('switch_language') && this.suggestedActions.includes('view_comments')) {
       return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. Maybe peek at the comments for hints, or check out other language solutions?`;
     } else if (this.suggestedActions.includes('switch_language')) {
@@ -45,6 +45,8 @@ export default class RevealSolutionOverlayComponent extends Component {
     // TODO: Change to singular version for verified solutions
     if (this.suggestedActions.includes('switch_language')) {
       return `Reveal ${this.args.repository.language.name} solutions`;
+    } else if (this.suggestedActions.length === 0) {
+      return `Just taking a peek`;
     } else {
       return 'Reveal solutions';
     }
