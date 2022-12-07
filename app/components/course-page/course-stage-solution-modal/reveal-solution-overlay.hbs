@@ -1,5 +1,13 @@
 <div class="absolute top-4 left-0 right-0 p-4 flex items-center justify-center" data-test-reveal-solution-overlay>
-  <div class="px-8 py-6 bg-white rounded border text-gray-700 {{if (lt this.suggestedActions.length 2) 'max-w-lg'}} shadow">
+  <div class="p-6 bg-white rounded border text-gray-700 {{if (lt this.suggestedActions.length 2) 'max-w-lg'}} shadow">
+    <div class="font-semibold text-gray-700 mb-2">
+      {{#if (eq this.suggestedActions.length 0)}}
+        Taking a peek?
+      {{else}}
+        Need a hint?
+      {{/if}}
+    </div>
+
     <div class="prose" data-test-instructions-text>
       {{this.instructionsText}}
     </div>
