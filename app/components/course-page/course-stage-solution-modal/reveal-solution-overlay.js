@@ -14,13 +14,13 @@ export default class RevealSolutionOverlayComponent extends Component {
 
   get instructionsText() {
     if (this.suggestedActions.length === 0) {
-      return `Looks like you haven't completed this stage yet. Sure you want to see the solution?`;
+      return `Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.`;
     } else if (this.suggestedActions.includes('switch_language') && this.suggestedActions.includes('view_comments')) {
-      return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. Maybe peek at the comments for hints, or check out other language solutions?`;
+      return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages.`;
     } else if (this.suggestedActions.includes('switch_language')) {
-      return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. Maybe peek at solutions in other languages first?`;
+      return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you.`;
     } else if (this.suggestedActions.includes('view_comments')) {
-      return `Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?`;
+      return `Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.`;
     } else {
       throw `Unexpected suggested actions for blurred overlay`;
     }
@@ -45,6 +45,8 @@ export default class RevealSolutionOverlayComponent extends Component {
     // TODO: Change to singular version for verified solutions
     if (this.suggestedActions.includes('switch_language')) {
       return `Reveal ${this.args.repository.language.name} solutions`;
+    } else if (this.suggestedActions.length === 0) {
+      return `Just taking a peek`;
     } else {
       return 'Reveal solutions';
     }

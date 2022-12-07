@@ -120,6 +120,10 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
       await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     };
 
+    const assertHeading = function (expectedText) {
+      assert.strictEqual(communitySolutionsTab.revealSolutionOverlay.headingText, expectedText, 'heading is present');
+    };
+
     const assertInstructions = function (expectedInstructions) {
       assert.strictEqual(communitySolutionsTab.revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
     };
@@ -143,9 +147,10 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await switchToSolutionsForStage(3);
     await percySnapshot('Community Solutions Overlay | No other langs, no comments');
 
-    assertInstructions("Looks like you haven't completed this stage yet. Sure you want to see the solution?");
-    assertButtons(['Reveal solutions']);
-    await clickButton('Reveal solutions');
+    assertHeading('Taking a peek?');
+    assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
+    assertButtons(['Just taking a peek']);
+    await clickButton('Just taking a peek');
 
     assert.notOk(communitySolutionsTab.revealSolutionOverlay.isVisible);
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
@@ -154,7 +159,9 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await switchToSolutionsForStage(4);
     await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
 
-    assertInstructions("Looks like you haven't completed this stage in Python yet. Maybe peek at solutions in other languages first?");
+    assertInstructions(
+      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
+    );
     assertButtons(['Good idea', 'Reveal Python solutions']);
 
     assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
@@ -165,7 +172,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await switchToSolutionsForStage(5);
     await percySnapshot('Community Solutions Overlay | No other langs, has comments');
 
-    assertInstructions("Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?");
+    assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
     assertButtons(['View comments', 'Reveal solutions']);
     await clickButton('View comments');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
@@ -175,7 +182,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await percySnapshot('Community Solutions Overlay | Has other langs & comments');
 
     assertInstructions(
-      "Looks like you haven't completed this stage in Python yet. Maybe peek at the comments for hints, or check out other language solutions?"
+      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
     );
     assertButtons(['View comments', 'Another language', 'Reveal Python solutions']);
   });

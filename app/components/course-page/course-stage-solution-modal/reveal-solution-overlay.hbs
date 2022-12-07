@@ -1,46 +1,56 @@
 <div class="absolute top-4 left-0 right-0 p-4 flex items-center justify-center" data-test-reveal-solution-overlay>
-  <div class="px-8 py-6 bg-white rounded border text-gray-700 {{if (lt this.suggestedActions.length 2) 'max-w-lg'}} shadow">
+  <div class="p-6 bg-white rounded border text-gray-700 {{if (lt this.suggestedActions.length 2) 'max-w-lg'}} shadow">
+    <div class="font-semibold text-gray-700 mb-3" data-test-heading-text>
+      {{#if (eq this.suggestedActions.length 0)}}
+        Taking a peek?
+      {{else}}
+        Need a hint?
+      {{/if}}
+    </div>
+
     <div class="prose" data-test-instructions-text>
       {{this.instructionsText}}
     </div>
 
-    <div class="flex items-center mt-4">
-      {{#each this.suggestedActions as |action|}}
-        {{#if (eq action "view_comments")}}
-          <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>View comments</PrimaryButton>
-        {{/if}}
-
-        {{#if (eq action "switch_language")}}
-          {{#if (eq 1 this.suggestedActions.length)}}
-            <PrimaryButton
-              @size="small"
-              class="mr-3"
-              data-test-action-button
-              {{on "click" @onSwitchLanguageButtonClick}}
-            >{{this.textForSwitchLanguageButton}}</PrimaryButton>
-          {{else}}
-            <SecondaryButton
-              @size="small"
-              class="mr-3 font-normal"
-              data-test-action-button
-              {{on "click" @onSwitchLanguageButtonClick}}
-            >{{this.textForSwitchLanguageButton}}</SecondaryButton>
+    <div class="flex items-center mt-4 {{if (gt this.suggestedActions.length 1) 'justify-between'}}">
+      <div class="flex items-center">
+        {{#each this.suggestedActions as |action|}}
+          {{#if (eq action "view_comments")}}
+            <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>View comments</PrimaryButton>
           {{/if}}
-        {{/if}}
-      {{/each}}
+
+          {{#if (eq action "switch_language")}}
+            {{#if (eq 1 this.suggestedActions.length)}}
+              <PrimaryButton
+                @size="small"
+                class="mr-3"
+                data-test-action-button
+                {{on "click" @onSwitchLanguageButtonClick}}
+              >{{this.textForSwitchLanguageButton}}</PrimaryButton>
+            {{else}}
+              <div
+                role="button"
+                class="mx-2 text-teal-500 hover:underline text-sm"
+                data-test-action-button
+                {{on "click" @onSwitchLanguageButtonClick}}
+              >{{this.textForSwitchLanguageButton}}</div>
+            {{/if}}
+          {{/if}}
+        {{/each}}
+      </div>
 
       {{#if (eq 0 this.suggestedActions.length)}}
-        <DangerButton
+        <SecondaryButton
           @size="small"
           data-test-action-button
           {{on "click" @onRevealSolutionsButtonClick}}
-        >{{this.textForRevealSolutionsButton}}</DangerButton>
+        >{{this.textForRevealSolutionsButton}}</SecondaryButton>
       {{else}}
         <div
           data-test-action-button
           {{on "click" @onRevealSolutionsButtonClick}}
           role="button"
-          class="mx-2 text-red-600 hover:underline text-sm"
+          class="mx-2 text-gray-500 hover:underline text-sm"
         >{{this.textForRevealSolutionsButton}}</div>
       {{/if}}
     </div>
