@@ -30,7 +30,7 @@ export default {
   },
 
   communitySolutionsTab: {
-    blurredOverlay: {
+    revealSolutionOverlay: {
       actionButtons: collection('[data-test-action-button]'),
 
       get availableActionButtons() {
@@ -39,7 +39,7 @@ export default {
 
       clickOnActionButton: clickOnText('[data-test-action-button]'),
       instructionsText: text('[data-test-instructions-text]'),
-      scope: '[data-test-blurred-overlay]',
+      scope: '[data-test-reveal-solution-overlay]',
     },
     solutionCards: collection('[data-test-community-solution-card]'),
     scope: '[data-test-community-solutions-tab]',
