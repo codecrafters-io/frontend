@@ -18,7 +18,7 @@ export default class RevealSolutionOverlayComponent extends Component {
     } else if (this.suggestedActions.includes('switch_language') && this.suggestedActions.includes('view_comments')) {
       return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. Maybe peek at the comments for hints, or check out other language solutions?`;
     } else if (this.suggestedActions.includes('switch_language')) {
-      return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. Maybe peek at solutions in other languages first?`;
+      return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you.`;
     } else if (this.suggestedActions.includes('view_comments')) {
       return `Looks like you haven't completed this stage yet. Maybe peek at the comments first, in case there are hints?`;
     } else {

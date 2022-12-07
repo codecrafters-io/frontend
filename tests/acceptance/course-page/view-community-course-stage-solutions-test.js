@@ -159,7 +159,9 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await switchToSolutionsForStage(4);
     await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
 
-    assertInstructions("Looks like you haven't completed this stage in Python yet. Maybe peek at solutions in other languages first?");
+    assertInstructions(
+      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
+    );
     assertButtons(['Good idea', 'Reveal Python solutions']);
 
     assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
