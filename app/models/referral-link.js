@@ -10,6 +10,6 @@ export default class ReferralLinkModel extends Model {
   @attr('number') uniqueViewerCount;
 
   get visibleActivations() {
-    return this.activations.filterBy('hasStartedTrial');
+    return this.activations; // All for now
   }
 }
