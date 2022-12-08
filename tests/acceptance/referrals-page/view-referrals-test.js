@@ -46,7 +46,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       referrer: this.server.schema.users.first(),
       referralLink: referralLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
-      status: 'pending_subscription',
+      status: 'pending_trial',
     });
 
     this.server.create('referral-activation', {
