@@ -15,15 +15,41 @@
     </div>
   </a>
   <div class="flex items-center">
-    <div>
+    {{#if (gt @referralActivation.totalEarningsAmountInDollars 0)}}
+      <div class="flex">
+        <span
+          class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
+        >${{@referralActivation.totalEarningsAmountInDollars}} earned</span>
+        <EmberTooltip @text="This is the amount you've earned by referring {{@referralActivation.customer.username}}." />
+      </div>
+    {{/if}}
+    {{#if (gt @referralActivation.upcomingPaymentAmountInDollars 0)}}
+      <div class="flex">
+        <span
+          class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
+        >${{@referralActivation.upcomingPaymentAmountInDollars}} pending</span>
+        <EmberTooltip @text="This is the value of {{@referralActivation.customer.username}}'s upcoming payment." />
+      </div>
+    {{/if}}
+    <div class="flex">
       {{#if @referralActivation.statusIsTrialing}}
         <span
           class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
         >Trialing</span>
-        <EmberTooltip @text="This user has started a trial. They'll be charged within 3 days." />
+        <EmberTooltip @text="This user has started a trial. We haven't received their first payment yet." />
       {{else if @referralActivation.statusIsPendingTrial}}
         <span class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2">Signed up</span>
         <EmberTooltip @text="This user has accepted your referral offer but hasn't started a trial yet." />
+      {{else if @referralActivation.statusIsFirstChargeSuccessful}}
+        <span
+          class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
+        >Paid</span>
+        <EmberTooltip @text="This user has made at least one payment that is attributable to you." />
+      {{else}}
+        <span
+          class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
+        >Inactive</span>
+        <EmberTooltip @text="This user either cancelled their trial, joined a paid team account or availed a separate discount." />
       {{/if}}
     </div>
 

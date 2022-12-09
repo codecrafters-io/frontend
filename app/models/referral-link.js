@@ -10,6 +10,6 @@ export default class ReferralLinkModel extends Model {
   @attr('number') uniqueViewerCount;
 
   get visibleActivations() {
-    return this.activations; // All for now
+    return this.activations.sortBy('activatedAt').reverse(); // All for now
   }
 }

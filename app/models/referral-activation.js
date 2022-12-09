@@ -6,22 +6,25 @@ export default class ReferralActivationModel extends Model {
   @belongsTo('referral-link', { async: false }) referralLink;
 
   @attr('date') activatedAt;
-  @attr('string') status; // 'pending_trial', 'trialing', 'retrying_first_payment', 'first_payment_successful', 'cancelled' ?
+  @attr('string') status; // 'pending_trial', 'trialing', 'first_charge_successful', 'trial_cancelled', 'inactive'
+  @attr('number') withdrawableEarningsAmountInCents;
+  @attr('number') withheldEarningsAmountInCents;
+  @attr('number') upcomingPaymentAmountInCents;
 
   get discountPeriodEndsAt() {
     return new Date(this.activatedAt.getTime() + 3 * 24 * 60 * 60 * 1000);
   }
 
   get hasStartedTrial() {
-    return this.statusIsTrialing || this.statusIsRetryingFirstPayment || this.statusIsFirstPaymentSuccessful || this.statusIsCancelled;
+    return this.statusIsTrialing || this.statusIsFirstChargeSuccessful || this.statusIsTrialCancelled;
   }
 
   get isWithinDiscountPeriod() {
     return this.discountPeriodEndsAt > new Date();
   }
 
-  get statusIsCancelled() {
-    return this.status === 'cancelled';
+  get statusIsTrialCancelled() {
+    return this.status === 'trial_cancelled';
   }
 
   get statusIsPendingTrial() {
@@ -32,11 +35,23 @@ export default class ReferralActivationModel extends Model {
     return this.status === 'trialing';
   }
 
-  get statusIsRetryingFirstPayment() {
-    return this.status === 'retrying_first_payment';
+  get statusIsFirstChargeSuccessful() {
+    return this.status === 'first_charge_successful';
   }
 
-  get statusIsFirstPaymentSuccessful() {
-    return this.status === 'first_payment_successful';
+  get statusIsInactive() {
+    return this.status === 'inactive';
+  }
+
+  get totalEarningsAmountInCents() {
+    return this.withdrawableEarningsAmountInCents + this.withheldEarningsAmountInCents;
+  }
+
+  get totalEarningsAmountInDollars() {
+    return this.totalEarningsAmountInCents / 100;
+  }
+
+  get upcomingPaymentAmountInDollars() {
+    return this.upcomingPaymentAmountInCents / 100;
   }
 }

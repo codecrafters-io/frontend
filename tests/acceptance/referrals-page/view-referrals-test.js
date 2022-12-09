@@ -55,6 +55,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       referralLink: referralLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
       status: 'trialing',
+      upcomingPaymentAmountInCents: 59000,
     });
 
     this.server.create('referral-activation', {
@@ -62,7 +63,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       referrer: this.server.schema.users.first(),
       referralLink: referralLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 1 days ago
-      status: 'first_payment_completed',
+      status: 'first_charge_successful',
+      withheldEarningsAmountInCents: 35400,
     });
 
     signIn(this.owner, this.server);
