@@ -61,7 +61,9 @@ export default class CommentFormComponent extends Component {
     e.target.reportValidity();
 
     if (e.target.checkValidity()) {
-      this.comment.courseStage = this.args.courseStage || this.args.parentComment.courseStage;
+      if (!this.args.comment) {
+        this.comment.courseStage = this.args.courseStage || this.args.parentComment.courseStage;
+      }
 
       this.isSaving = true;
       await this.comment.save();

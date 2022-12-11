@@ -153,15 +153,15 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await percySnapshot('Course Stage Comments / Edit Form');
 
-    await commentCard.commentInput.fillIn('This is an edited comment');
-    await commentCard.clickOnCancelButton();
+    await commentCard.commentForm.commentInput.fillIn('This is an edited comment');
+    await commentCard.commentForm.clickOnCancelButton();
 
     assert.strictEqual(commentCard.commentBodyText, 'This is a comment', 'comment input should be reset to original value');
 
     await commentCard.toggleDropdown();
     await commentCard.clickOnDropdownLink('Edit');
-    await commentCard.commentInput.fillIn('This is an edited comment');
-    await commentCard.clickOnUpdateCommentButton();
+    await commentCard.commentForm.commentInput.fillIn('This is an edited comment');
+    await commentCard.commentForm.clickOnUpdateCommentButton();
 
     assert.strictEqual(commentCard.commentBodyText, 'This is an edited comment', 'comment input should be updated');
   });
@@ -191,6 +191,38 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await commentCard.clickOnDropdownLink('Delete');
 
     assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0);
+  });
+
+  test('can delete comment with replies', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
+    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+
+    const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    await firstCommentCard.clickOnReplyButton();
+    await firstCommentCard.commentForm.commentInput.fillIn('This is a reply');
+    await firstCommentCard.commentForm.clickOnPostReplyButton();
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 2, '2 comments cards should be present');
+
+    const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+
+    window.confirm = () => true;
+
+    await commentCard.toggleDropdown();
+    await commentCard.clickOnDropdownLink('Delete');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0, 'no comment cards should be present');
   });
 
   test('can reply to comments', async function (assert) {
@@ -243,4 +275,6 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     assert.strictEqual(firstCommentCard.replyCards.length, 2, 'reply card should be visible');
   });
+
+  // TODO: Can delete comment with replies
 });

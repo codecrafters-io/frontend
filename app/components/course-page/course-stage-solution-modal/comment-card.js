@@ -34,6 +34,7 @@ export default class CommentCardComponent extends Component {
   handleDeleteButtonClick() {
     if (window.confirm('Are you sure you want to delete this comment?')) {
       this.args.comment.destroyRecord();
+      this.args.comment.childComments.forEach((childComment) => childComment.unloadRecord());
     }
   }
 
