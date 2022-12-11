@@ -17,6 +17,7 @@ export default {
     commentCards: collection('[data-test-comment-card]', {
       clickOnCancelButton: clickable('[data-test-cancel-button]'),
       clickOnDropdownLink: clickOnText('[data-test-more-dropdown-content] div[role="button"]'),
+      clickOnReplyButton: clickable('[data-test-reply-button]'),
       clickOnUpdateCommentButton: clickable('[data-test-update-comment-button]'),
       commentBodyText: text('[data-test-comment-body]'),
       downvoteButton: { scope: '[data-test-downvote-button]' },

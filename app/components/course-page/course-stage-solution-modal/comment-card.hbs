@@ -55,6 +55,9 @@
             <CoursePage::CourseStageSolutionModal::CommentCard::ReplyButton class="ml-1" {{on "click" this.handleReplyButtonClick}} />
           </div>
         </div>
+        {{#if this.shouldShowReplyForm}}
+          <CoursePage::CourseStageSolutionModal::CommentForm @comment={{@comment}} />
+        {{/if}}
       </div>
     </div>
   {{/if}}
