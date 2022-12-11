@@ -69,11 +69,20 @@ export default class CommentFormComponent extends Component {
   }
 
   setNewComment() {
-    this.comment = this.store.createRecord('course-stage-comment', {
-      courseStage: this.args.courseStage,
-      user: this.currentUser,
-      language: this.args.language,
-    });
+    if (this.args.parentComment) {
+      this.comment = this.store.createRecord('course-stage-comment', {
+        courseStage: this.args.parentComment.courseStage,
+        user: this.currentUser,
+        language: this.args.parentComment.language,
+        // TODO: Set parent
+      });
+    } else {
+      this.comment = this.store.createRecord('course-stage-comment', {
+        courseStage: this.args.courseStage,
+        user: this.currentUser,
+        language: this.args.language,
+      });
+    }
   }
 
   get submitButtonIsDisabled() {

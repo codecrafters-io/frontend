@@ -14,8 +14,8 @@ export default class CommentsTabComponent extends Component {
     this.loadComments();
   }
 
-  get currentUserIsStaff() {
-    return this.currentUserService.record.isStaff;
+  get currentUser() {
+    return this.currentUserService.record;
   }
 
   @action
@@ -35,7 +35,7 @@ export default class CommentsTabComponent extends Component {
   }
 
   get visibleComments() {
-    if (this.currentUserIsStaff) {
+    if (this.currentUser.isStaff) {
       return this.args.courseStage.comments.rejectBy('isNew');
     } else {
       return this.args.courseStage.comments
