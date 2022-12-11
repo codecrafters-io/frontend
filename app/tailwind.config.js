@@ -68,6 +68,15 @@ module.exports = {
             'a code:hover': {
               color: colors.sky[600],
             },
+            blockquote: {
+              fontWeight: '400',
+            },
+            'blockquote p:first-of-type::before': {
+              content: 'none',
+            },
+            'blockquote p:last-of-type::after': {
+              content: 'none',
+            },
             code: {
               color: colors.slate[700],
               fontWeight: 'normal',
