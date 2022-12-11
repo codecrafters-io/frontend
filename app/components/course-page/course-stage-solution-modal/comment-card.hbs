@@ -11,7 +11,12 @@
         {{if @comment.parentComment 'py-1' 'bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm'}}"
     >
       <div class="flex items-center">
-        <span class="text-sm text-gray-600 font-bold">{{@comment.user.username}}</span>
+        <a
+          href={{@comment.user.codecraftersProfileUrl}}
+          class="text-sm text-gray-600 font-bold hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >{{@comment.user.username}}</a>
         <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
         <div class="text-xs text-gray-400">
           {{moment-from-now @comment.createdAt}}
