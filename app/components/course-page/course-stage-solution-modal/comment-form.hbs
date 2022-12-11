@@ -38,7 +38,7 @@
       {{/if}}
     </div>
 
-    <div class="flex justify-between items-center mt-1">
+    <div class="flex justify-between items-center mt-1 {{if this.isReplying 'flex-row-reverse'}}">
       <div class="flex items-center">
         {{svg-jar "markdown" class="fill-current w-5 mr-1 text-gray-400"}}
 
@@ -59,6 +59,19 @@
             class="ml-2"
             data-test-update-comment-button
           >Update Comment</PrimaryButtonWithSpinner>
+        </div>
+      {{else if this.isReplying}}
+        <div class="flex items-center">
+          <TertiaryButton @size="small" data-test-cancel-button>Cancel</TertiaryButton>
+
+          <PrimaryButtonWithSpinner
+            @isDisabled={{this.submitButtonIsDisabled}}
+            @shouldShowSpinner={{this.isSaving}}
+            @size="small"
+            type="submit"
+            class="ml-2"
+            data-test-post-reply-button
+          >Reply</PrimaryButtonWithSpinner>
         </div>
       {{else}}
         <PrimaryButtonWithSpinner
