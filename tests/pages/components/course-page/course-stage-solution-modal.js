@@ -21,6 +21,7 @@ export default {
       commentBodyText: text('[data-test-comment-body]'),
       commentForm: CommentForm,
       downvoteButton: { scope: '[data-test-downvote-button]' },
+      replyCards: collection('[data-test-comment-card]', {}),
       toggleDropdown: clickable('[data-test-more-dropdown-toggle]'),
       upvoteButton: { scope: '[data-test-upvote-button]' },
     }),

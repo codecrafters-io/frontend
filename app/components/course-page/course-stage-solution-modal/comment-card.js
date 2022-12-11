@@ -48,7 +48,26 @@ export default class CommentCardComponent extends Component {
   }
 
   @action
+  handleReplySubmitted() {
+    this.shouldShowReplyForm = false;
+  }
+
+  @action
   handleEditButtonClick() {
     this.isEditing = true;
+  }
+
+  get sortedChildComments() {
+    return this.visibleChildComments.sortBy('createdAt');
+  }
+
+  get visibleChildComments() {
+    let persistedComments = this.args.comment.childComments.rejectBy('isNew');
+
+    if (this.currentUser.isStaff) {
+      return persistedComments;
+    } else {
+      return persistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+    }
   }
 }

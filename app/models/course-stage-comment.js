@@ -8,7 +8,7 @@ export default class CourseStageCommentModel extends Model {
   @belongsTo('course-stage', { async: false }) courseStage;
   @belongsTo('language', { async: false }) language;
   @belongsTo('user', { async: false }) user;
-  @belongsTo('course-stage-comment', { async: false }) parentComment;
+  @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
 
   @hasMany('course-stage-comment-upvote', { async: false }) currentUserUpvotes;
   @hasMany('course-stage-comment-downvote', { async: false }) currentUserDownvotes;
@@ -21,7 +21,7 @@ export default class CourseStageCommentModel extends Model {
   @attr('string') bodyMarkdown;
 
   get childComments() {
-    return this.courseStage.comments.filter((comment) => comment.parentComment === this);
+    return this.courseStage.comments.filter((comment) => comment.parentComment && comment.parentComment.id === this.id);
   }
 
   get isTopLevelComment() {

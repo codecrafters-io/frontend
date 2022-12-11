@@ -5,6 +5,7 @@ import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import { next } from '@ember/runloop';
 
 export default class CommentFormComponent extends Component {
   @service('current-user') currentUserService;
@@ -61,27 +62,28 @@ export default class CommentFormComponent extends Component {
 
     if (e.target.checkValidity()) {
       this.comment.courseStage = this.args.courseStage || this.args.parentComment.courseStage;
-      this.comment.parentComment = this.args.parentComment;
 
       this.isSaving = true;
       await this.comment.save();
       this.isSaving = false;
 
-      this.setNewComment();
-    }
-
-    if (this.args.onSubmit) {
-      this.args.onSubmit();
+      if (this.args.onSubmit) {
+        this.args.onSubmit();
+      } else {
+        this.setNewComment();
+      }
     }
   }
 
   @action
   handleWillDestroy() {
-    if (this.comment.isNew && !this.comment.isSaving) {
-      this.comment.unloadRecord();
-    } else {
-      this.comment.rollbackAttributes();
-    }
+    next(() => {
+      if (this.isEditingComment) {
+        this.comment.rollbackAttributes();
+      } else if (this.comment.isNew && !this.comment.isSaving) {
+        this.comment.unloadRecord();
+      }
+    });
   }
 
   get isReplying() {
@@ -97,13 +99,13 @@ export default class CommentFormComponent extends Component {
   }
 
   setNewComment() {
-    // TODO: We're setting courseStage & parentComment later since this interferes with the comment listing somehow
+    // TODO: We're setting courseStage later since this interferes with the comment listing somehow
     if (this.args.parentComment) {
       this.comment = this.store.createRecord('course-stage-comment', {
         // courseStage: this.args.parentComment.courseStage,
         user: this.currentUser,
         language: this.args.parentComment.language,
-        // parentComment: this.args.parentComment,
+        parentComment: this.args.parentComment,
       });
     } else {
       this.comment = this.store.createRecord('course-stage-comment', {

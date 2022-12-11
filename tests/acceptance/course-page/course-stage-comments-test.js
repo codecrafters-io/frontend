@@ -150,6 +150,9 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await commentCard.toggleDropdown();
     await commentCard.clickOnDropdownLink('Edit');
+
+    await percySnapshot('Course Stage Comments / Edit Form');
+
     await commentCard.commentInput.fillIn('This is an edited comment');
     await commentCard.clickOnCancelButton();
 
@@ -188,5 +191,56 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await commentCard.clickOnDropdownLink('Delete');
 
     assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0);
+  });
+
+  test('can reply to comments', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const user = this.server.schema.users.first();
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-01-02'),
+      bodyMarkdown: 'This is the **first** comment',
+      courseStage: redis.stages.models.sortBy('position')[1],
+      isApprovedByModerator: true,
+      user: user,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2020-01-01'),
+      bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
+      courseStage: redis.stages.models.sortBy('position')[1],
+      isApprovedByModerator: true,
+      user: user,
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+
+    const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    await firstCommentCard.clickOnReplyButton();
+
+    assert.ok(firstCommentCard.commentForm.isVisible, 'reply form should be visible');
+
+    await percySnapshot('Course Stage Comments / Reply Form');
+
+    await firstCommentCard.commentForm.commentInput.fillIn('This is a reply');
+    await firstCommentCard.commentForm.clickOnPostReplyButton();
+
+    assert.strictEqual(firstCommentCard.replyCards.length, 1, 'reply card should be visible');
+
+    await firstCommentCard.clickOnReplyButton();
+    await firstCommentCard.commentForm.commentInput.fillIn('This is a second reply');
+    await firstCommentCard.commentForm.clickOnPostReplyButton();
+
+    assert.strictEqual(firstCommentCard.replyCards.length, 2, 'reply card should be visible');
   });
 });
