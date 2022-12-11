@@ -6,12 +6,15 @@ import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fade from 'ember-animated/transitions/fade';
 
 export default class CommentCardComponent extends Component {
   @service('current-user') currentUserService;
   @service store;
   @tracked isEditing = false;
   @tracked shouldShowReplyForm = false;
+
+  transition = fade;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -35,6 +38,11 @@ export default class CommentCardComponent extends Component {
     if (window.confirm('Are you sure you want to delete this comment?')) {
       this.args.comment.destroyRecord();
     }
+  }
+
+  @action
+  handleCancelReplyButtonClick() {
+    this.shouldShowReplyForm = false;
   }
 
   @action

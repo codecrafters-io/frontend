@@ -46,7 +46,11 @@ export default class CommentFormComponent extends Component {
 
   @action
   handleEditCancelButtonClick() {
-    this.comment.rollbackAttributes();
+    this.args.onCancel();
+  }
+
+  @action
+  handleCancelReplyButtonClick() {
     this.args.onCancel();
   }
 
@@ -56,6 +60,8 @@ export default class CommentFormComponent extends Component {
     e.target.reportValidity();
 
     if (e.target.checkValidity()) {
+      this.comment.courseStage = this.args.courseStage || this.args.parentComment.courseStage;
+
       this.isSaving = true;
       await this.comment.save();
       this.isSaving = false;
@@ -65,6 +71,15 @@ export default class CommentFormComponent extends Component {
 
     if (this.args.onSubmit) {
       this.args.onSubmit();
+    }
+  }
+
+  @action
+  handleWillDestroy() {
+    if (this.comment.isNew) {
+      this.comment.unloadRecord();
+    } else {
+      this.comment.rollbackAttributes();
     }
   }
 
@@ -81,16 +96,17 @@ export default class CommentFormComponent extends Component {
   }
 
   setNewComment() {
+    // TODO: We're setting courseStage later since this interferes with the comment listing somehow
     if (this.args.parentComment) {
       this.comment = this.store.createRecord('course-stage-comment', {
-        courseStage: this.args.parentComment.courseStage,
+        // courseStage: this.args.parentComment.courseStage,
         user: this.currentUser,
         language: this.args.parentComment.language,
         // TODO: Set parent
       });
     } else {
       this.comment = this.store.createRecord('course-stage-comment', {
-        courseStage: this.args.courseStage,
+        // courseStage: this.args.courseStage,
         user: this.currentUser,
         language: this.args.language,
       });

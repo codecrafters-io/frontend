@@ -1,5 +1,5 @@
-<div class="w-full" data-test-comment-form ...attributes>
-  <div class="bg-gray-100 pt-2 px-2 border-b border-gray-300 flex items-center {{if this.isReplying '' 'rounded-t'}}">
+<div class="w-full" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
+  <div class="bg-gray-100 pt-1.5 px-2 border-b border-gray-300 flex items-center {{if this.isReplying '' 'rounded-t'}}">
     <div class="transform translate-y-px flex">
       <CoursePage::CourseStageSolutionModal::CommentFormTabHeader
         @text="Write"
@@ -62,7 +62,7 @@
         </div>
       {{else if this.isReplying}}
         <div class="flex items-center">
-          <TertiaryButton @size="small" data-test-cancel-button>Cancel</TertiaryButton>
+          <TertiaryButton @size="small" data-test-cancel-button {{on "click" this.handleCancelReplyButtonClick}}>Cancel</TertiaryButton>
 
           <PrimaryButtonWithSpinner
             @isDisabled={{this.submitButtonIsDisabled}}
