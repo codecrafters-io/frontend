@@ -10,7 +10,7 @@
   </div>
 
   <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{this.currentUser}}>
-    <div class="shadow-sm rounded border border-gray-300 w-full mb-4 overflow-hidden">
+    <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
       <CoursePage::CourseStageSolutionModal::CommentForm @courseStage={{@courseStage}} @language={{@language}} />
     </div>
   </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
@@ -23,7 +23,7 @@
   {{else}}
     {{#each this.sortedComments as |comment|}}
       <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{this.currentUser}}>
-        <div class="shadow-sm rounded border border-gray-300 w-full mb-4 overflow-hidden">
+        <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
           <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
         </div>
       </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
