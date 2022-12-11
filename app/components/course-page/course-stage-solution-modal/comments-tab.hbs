@@ -22,7 +22,7 @@
     </div>
   {{else}}
     {{#each this.sortedComments key="id" as |comment|}}
-      <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{this.currentUser}}>
+      <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
         <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
           <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
         </div>
