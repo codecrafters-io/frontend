@@ -1,5 +1,4 @@
-import Model from '@ember-data/model';
-import { attr, belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 
@@ -9,6 +8,7 @@ export default class CourseStageCommentModel extends Model {
   @belongsTo('course-stage', { async: false }) courseStage;
   @belongsTo('language', { async: false }) language;
   @belongsTo('user', { async: false }) user;
+  @belongsTo('course-stage-comment', { async: false }) parentComment;
 
   @hasMany('course-stage-comment-upvote', { async: false }) currentUserUpvotes;
   @hasMany('course-stage-comment-downvote', { async: false }) currentUserDownvotes;
@@ -19,6 +19,10 @@ export default class CourseStageCommentModel extends Model {
   @attr('date') createdAt;
   @attr('date') updatedAt;
   @attr('string') bodyMarkdown;
+
+  get isTopLevelComment() {
+    return !this.parentComment;
+  }
 
   async upvote() {
     if (this.currentUserDownvotes.length > 0) {

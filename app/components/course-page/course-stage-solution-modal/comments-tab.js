@@ -35,12 +35,12 @@ export default class CommentsTabComponent extends Component {
   }
 
   get visibleComments() {
+    let topLevelPersistedComments = this.args.courseStage.comments.filterBy('isTopLevelComment').rejectBy('isNew');
+
     if (this.currentUser.isStaff) {
-      return this.args.courseStage.comments.rejectBy('isNew');
+      return topLevelPersistedComments;
     } else {
-      return this.args.courseStage.comments
-        .rejectBy('isNew')
-        .filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+      return topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
     }
   }
 }

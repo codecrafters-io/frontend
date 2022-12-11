@@ -102,7 +102,7 @@ export default class CommentFormComponent extends Component {
         // courseStage: this.args.parentComment.courseStage,
         user: this.currentUser,
         language: this.args.parentComment.language,
-        // TODO: Set parent
+        parentComment: this.args.parentComment,
       });
     } else {
       this.comment = this.store.createRecord('course-stage-comment', {
