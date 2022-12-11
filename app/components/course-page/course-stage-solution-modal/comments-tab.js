@@ -14,8 +14,8 @@ export default class CommentsTabComponent extends Component {
     this.loadComments();
   }
 
-  get currentUserIsStaff() {
-    return this.currentUserService.record.isStaff;
+  get currentUser() {
+    return this.currentUserService.record;
   }
 
   @action
@@ -24,7 +24,9 @@ export default class CommentsTabComponent extends Component {
 
     await this.store.query('course-stage-comment', {
       course_stage_id: this.args.courseStage.id,
-      include: 'user,language,course-stage,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user',
+      include:
+        'user,language,course-stage,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
+      reload: true,
     });
 
     this.isLoading = false;
@@ -35,12 +37,12 @@ export default class CommentsTabComponent extends Component {
   }
 
   get visibleComments() {
-    if (this.currentUserIsStaff) {
-      return this.args.courseStage.comments.rejectBy('isNew');
+    let topLevelPersistedComments = this.args.courseStage.comments.filter((comment) => !comment.isNew && comment.isTopLevelComment);
+
+    if (this.currentUser.isStaff) {
+      return topLevelPersistedComments;
     } else {
-      return this.args.courseStage.comments
-        .rejectBy('isNew')
-        .filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+      return topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
     }
   }
 }

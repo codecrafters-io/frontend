@@ -1,4 +1,5 @@
 import { clickable, clickOnText, collection, fillable, hasClass, text } from 'ember-cli-page-object';
+import CommentForm from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-solution-modal/comment-form';
 
 export default {
   get isOpen() {
@@ -15,13 +16,13 @@ export default {
     submitButtonIsDisabled: hasClass('opacity-50', '[data-test-submit-button]'),
 
     commentCards: collection('[data-test-comment-card]', {
-      clickOnCancelButton: clickable('[data-test-cancel-button]'),
       clickOnDropdownLink: clickOnText('[data-test-more-dropdown-content] div[role="button"]'),
-      clickOnUpdateCommentButton: clickable('[data-test-update-comment-button]'),
+      clickOnReplyButton: clickable('[data-test-reply-button]'),
       commentBodyText: text('[data-test-comment-body]'),
+      commentForm: CommentForm,
       downvoteButton: { scope: '[data-test-downvote-button]' },
-      commentInput: { scope: '[data-test-comment-input]' },
-      toggleDropdown: clickable('[data-test-more-dropdown-toggle]'),
+      replyCards: collection('[data-test-comment-card]', {}),
+      toggleDropdown: clickable('[data-test-more-dropdown-toggle]:eq(0)'),
       upvoteButton: { scope: '[data-test-upvote-button]' },
     }),
 

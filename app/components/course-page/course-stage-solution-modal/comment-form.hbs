@@ -1,91 +1,87 @@
-<div data-test-comment-form ...attributes>
-  <div class="flex items-start">
-    <a href={{this.currentUser.codecraftersProfileUrl}} class="mt-0.5 flex items-center flex-shrink-0" target="_blank" rel="noopener noreferrer">
-      <AvatarImage @user={{this.currentUser}} class="w-8 h-8 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
-    </a>
-    <div class="bg-white shadow-sm rounded border border-gray-300 w-full">
-      <div class="bg-gray-100 rounded-t pt-2 px-2 border-b border-gray-300 flex items-center">
-        <div class="transform translate-y-px flex">
-          <CoursePage::CourseStageSolutionModal::CommentFormTabHeader
-            @text="Write"
-            @isActive={{eq this.activeTab "write"}}
-            {{on "click" (fn this.setActiveTab "write")}}
-          />
+<div class="w-full" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
+  <div class="bg-gray-100 pt-1.5 px-2 border-b border-gray-300 flex items-center {{if this.isReplying '' 'rounded-t'}}">
+    <div class="transform translate-y-px flex">
+      <CoursePage::CourseStageSolutionModal::CommentFormTabHeader
+        @text="Write"
+        @isActive={{eq this.activeTab "write"}}
+        {{on "click" (fn this.setActiveTab "write")}}
+      />
 
-          <CoursePage::CourseStageSolutionModal::CommentFormTabHeader
-            @text="Preview"
-            @isActive={{eq this.activeTab "preview"}}
-            {{on "click" (fn this.setActiveTab "preview")}}
-            class="ml-1"
-          />
+      <CoursePage::CourseStageSolutionModal::CommentFormTabHeader
+        @text="Preview"
+        @isActive={{eq this.activeTab "preview"}}
+        {{on "click" (fn this.setActiveTab "preview")}}
+        class="ml-1"
+      />
+    </div>
+  </div>
 
+  <form class="px-2 py-2" {{on "submit" this.handleFormSubmit}}>
+    <div>
+      {{#if (eq this.activeTab "write")}}
+        {{! template-lint-disable require-input-label }}
+        <Textarea
+          @value={{this.comment.bodyMarkdown}}
+          class="leading-relaxed border border-gray-300 rounded w-full p-2 text-sm bg-gray-100 focus:bg-white"
+          placeholder={{this.placeholderText}}
+          rows="5"
+          required="true"
+          data-test-comment-input
+        />
+      {{else if (eq this.activeTab "preview")}}
+        {{! template-lint-disable no-inline-styles }}
+        <div class="px-2 py-2 border-b-2 mb-2" style="min-height: 135px;">
+          <div class="leading-relaxed prose-sm prose max-w-none comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
+            {{this.bodyHTML}}
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    <div class="flex justify-between items-center mt-1 {{if this.isReplying 'flex-row-reverse'}}">
+      <div class="flex items-center">
+        {{svg-jar "markdown" class="fill-current w-5 mr-1 text-gray-400"}}
+
+        <div class="text-xs text-gray-500">
+          Markdown supported.
         </div>
       </div>
 
-      <form class="px-2 py-2" {{on "submit" this.handleFormSubmit}}>
-        <div>
-          {{#if (eq this.activeTab "write")}}
-            {{! template-lint-disable require-input-label }}
-            <Textarea
-              @value={{this.comment.bodyMarkdown}}
-              class="leading-relaxed border border-gray-300 rounded w-full p-2 text-sm bg-gray-100 focus:bg-white"
-              placeholder="Found an interesting resource? Share it with the community."
-              rows="5"
-              required="true"
-              data-test-comment-input
-            />
-          {{else if (eq this.activeTab "preview")}}
-            {{! template-lint-disable no-inline-styles }}
-            <div class="px-2 py-2 border-b-2 mb-2" style="min-height: 135px;">
-              <div class="leading-relaxed prose-sm prose max-w-none comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
-                {{this.bodyHTML}}
-              </div>
-            </div>
-          {{/if}}
+      {{#if this.isEditingComment}}
+        <div class="flex items-center">
+          <TertiaryButton @size="small" data-test-cancel-button {{on "click" this.handleEditCancelButtonClick}}>Cancel</TertiaryButton>
+
+          <PrimaryButtonWithSpinner
+            @isDisabled={{this.submitButtonIsDisabled}}
+            @shouldShowSpinner={{this.isSaving}}
+            @size="small"
+            type="submit"
+            class="ml-2"
+            data-test-update-comment-button
+          >Update Comment</PrimaryButtonWithSpinner>
         </div>
+      {{else if this.isReplying}}
+        <div class="flex items-center">
+          <TertiaryButton @size="small" data-test-cancel-button {{on "click" this.handleCancelReplyButtonClick}}>Cancel</TertiaryButton>
 
-        <div class="flex justify-between items-center mt-1">
-          <div class="flex items-center">
-            {{svg-jar "markdown" class="fill-current w-5 mr-1 text-gray-400"}}
-
-            <div class="text-xs text-gray-500">
-              Markdown supported.
-            </div>
-          </div>
-
-          {{#if this.isEditingComment}}
-            <div class="flex items-center">
-              <button
-                type="button"
-                class="flex items-center text-gray-400 hover:text-gray-500 px-1 hover:underline"
-                data-test-cancel-button
-                {{on "click" this.handleEditCancelButtonClick}}
-              >
-                <span class="text-sm">
-                  Cancel
-                </span>
-              </button>
-
-              <PrimaryButtonWithSpinner
-                @isDisabled={{this.submitButtonIsDisabled}}
-                @shouldShowSpinner={{this.isSaving}}
-                @size="small"
-                type="submit"
-                class="ml-4"
-                data-test-update-comment-button
-              >Update Comment</PrimaryButtonWithSpinner>
-            </div>
-          {{else}}
-            <PrimaryButtonWithSpinner
-              @isDisabled={{this.submitButtonIsDisabled}}
-              @shouldShowSpinner={{this.isSaving}}
-              @size="small"
-              type="submit"
-              data-test-submit-button
-            >Comment</PrimaryButtonWithSpinner>
-          {{/if}}
+          <PrimaryButtonWithSpinner
+            @isDisabled={{this.submitButtonIsDisabled}}
+            @shouldShowSpinner={{this.isSaving}}
+            @size="small"
+            type="submit"
+            class="ml-2"
+            data-test-post-reply-button
+          >Reply</PrimaryButtonWithSpinner>
         </div>
-      </form>
+      {{else}}
+        <PrimaryButtonWithSpinner
+          @isDisabled={{this.submitButtonIsDisabled}}
+          @shouldShowSpinner={{this.isSaving}}
+          @size="small"
+          type="submit"
+          data-test-submit-button
+        >Comment</PrimaryButtonWithSpinner>
+      {{/if}}
     </div>
-  </div>
+  </form>
 </div>

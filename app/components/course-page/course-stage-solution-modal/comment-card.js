@@ -11,6 +11,7 @@ export default class CommentCardComponent extends Component {
   @service('current-user') currentUserService;
   @service store;
   @tracked isEditing = false;
+  @tracked shouldShowReplyForm = false;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -33,11 +34,41 @@ export default class CommentCardComponent extends Component {
   handleDeleteButtonClick() {
     if (window.confirm('Are you sure you want to delete this comment?')) {
       this.args.comment.destroyRecord();
+      this.args.comment.childComments.forEach((childComment) => childComment.unloadRecord());
     }
+  }
+
+  @action
+  handleCancelReplyButtonClick() {
+    this.shouldShowReplyForm = false;
+  }
+
+  @action
+  handleReplyButtonClick() {
+    this.shouldShowReplyForm = true;
+  }
+
+  @action
+  handleReplySubmitted() {
+    this.shouldShowReplyForm = false;
   }
 
   @action
   handleEditButtonClick() {
     this.isEditing = true;
+  }
+
+  get sortedChildComments() {
+    return this.visibleChildComments.sortBy('createdAt');
+  }
+
+  get visibleChildComments() {
+    let persistedComments = this.args.comment.childComments.rejectBy('isNew');
+
+    if (this.currentUser.isStaff) {
+      return persistedComments;
+    } else {
+      return persistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+    }
   }
 }

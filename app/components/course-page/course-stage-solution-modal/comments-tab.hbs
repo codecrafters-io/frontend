@@ -9,7 +9,11 @@
     </div>
   </div>
 
-  <CoursePage::CourseStageSolutionModal::CommentForm @courseStage={{@courseStage}} @language={{@language}} class="mb-4" />
+  <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{this.currentUser}}>
+    <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
+      <CoursePage::CourseStageSolutionModal::CommentForm @courseStage={{@courseStage}} @language={{@language}} />
+    </div>
+  </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
 
   {{#if this.isLoading}}
     <div class="flex justify-center items-center py-32 w-full">
@@ -17,8 +21,12 @@
       <span class="ml-3 text-gray-700">Loading...</span>
     </div>
   {{else}}
-    {{#each this.sortedComments as |comment|}}
-      <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} class="mb-4" />
+    {{#each this.sortedComments key="id" as |comment|}}
+      <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{this.currentUser}}>
+        <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
+          <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
+        </div>
+      </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
     {{/each}}
   {{/if}}
 </div>

@@ -5,6 +5,7 @@ import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import { next } from '@ember/runloop';
 
 export default class CommentFormComponent extends Component {
   @service('current-user') currentUserService;
@@ -46,7 +47,11 @@ export default class CommentFormComponent extends Component {
 
   @action
   handleEditCancelButtonClick() {
-    this.comment.rollbackAttributes();
+    this.args.onCancel();
+  }
+
+  @action
+  handleCancelReplyButtonClick() {
     this.args.onCancel();
   }
 
@@ -56,24 +61,61 @@ export default class CommentFormComponent extends Component {
     e.target.reportValidity();
 
     if (e.target.checkValidity()) {
+      if (!this.args.comment) {
+        this.comment.courseStage = this.args.courseStage || this.args.parentComment.courseStage;
+      }
+
       this.isSaving = true;
       await this.comment.save();
       this.isSaving = false;
 
-      this.setNewComment();
+      if (this.args.onSubmit) {
+        this.args.onSubmit();
+      } else {
+        this.setNewComment();
+      }
     }
+  }
 
-    if (this.args.onSubmit) {
-      this.args.onSubmit();
+  @action
+  handleWillDestroy() {
+    next(() => {
+      if (this.isEditingComment) {
+        this.comment.rollbackAttributes();
+      } else if (this.comment.isNew && !this.comment.isSaving) {
+        this.comment.unloadRecord();
+      }
+    });
+  }
+
+  get isReplying() {
+    return !!this.args.parentComment;
+  }
+
+  get placeholderText() {
+    if (this.isReplying) {
+      return 'Write a reply';
+    } else {
+      return 'Found an interesting resource? Share it with the community.';
     }
   }
 
   setNewComment() {
-    this.comment = this.store.createRecord('course-stage-comment', {
-      courseStage: this.args.courseStage,
-      user: this.currentUser,
-      language: this.args.language,
-    });
+    // TODO: We're setting courseStage later since this interferes with the comment listing somehow
+    if (this.args.parentComment) {
+      this.comment = this.store.createRecord('course-stage-comment', {
+        // courseStage: this.args.parentComment.courseStage,
+        user: this.currentUser,
+        language: this.args.parentComment.language,
+        parentComment: this.args.parentComment,
+      });
+    } else {
+      this.comment = this.store.createRecord('course-stage-comment', {
+        // courseStage: this.args.courseStage,
+        user: this.currentUser,
+        language: this.args.language,
+      });
+    }
   }
 
   get submitButtonIsDisabled() {
