@@ -68,6 +68,18 @@ export default class CommentFormComponent extends Component {
     }
   }
 
+  get isReplying() {
+    return !!this.args.parentComment;
+  }
+
+  get placeholderText() {
+    if (this.isReplying) {
+      return 'Write a reply';
+    } else {
+      return 'Found an interesting resource? Share it with the community.';
+    }
+  }
+
   setNewComment() {
     if (this.args.parentComment) {
       this.comment = this.store.createRecord('course-stage-comment', {
