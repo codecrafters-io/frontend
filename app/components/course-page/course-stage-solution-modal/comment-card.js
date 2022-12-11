@@ -11,6 +11,7 @@ export default class CommentCardComponent extends Component {
   @service('current-user') currentUserService;
   @service store;
   @tracked isEditing = false;
+  @tracked shouldShowReplyForm = false;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -34,6 +35,11 @@ export default class CommentCardComponent extends Component {
     if (window.confirm('Are you sure you want to delete this comment?')) {
       this.args.comment.destroyRecord();
     }
+  }
+
+  @action
+  handleReplyButtonClick() {
+    this.shouldShowReplyForm = true;
   }
 
   @action

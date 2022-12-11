@@ -52,6 +52,7 @@
           <div class="mt-2 flex items-center">
             <CoursePage::CourseStageSolutionModal::CommentCard::UpvoteButton @comment={{@comment}} />
             <CoursePage::CourseStageSolutionModal::CommentCard::DownvoteButton @comment={{@comment}} class="ml-1" />
+            <CoursePage::CourseStageSolutionModal::CommentCard::ReplyButton class="ml-1" {{on "click" this.handleReplyButtonClick}} />
           </div>
         </div>
       </div>

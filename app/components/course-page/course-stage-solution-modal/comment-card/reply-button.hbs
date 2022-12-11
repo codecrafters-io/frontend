@@ -1,0 +1,15 @@
+<button
+  type="button"
+  class="pr-2 pl-1 py-0.5 rounded flex items-center border
+    {{if this.currentUserHasUpvoted 'border-teal-500 hover:border-teal-600' 'border-gray-200 hover:border-gray-300'}}
+    transition-all duration-75 active:border-teal-600"
+  ...attributes
+  data-test-upvote-button
+  {{on "click" this.handleClick}}
+>
+  {{svg-jar "reply" class=(concat "w-3 mr-1 transition-all duration-75 text-gray-300")}}
+
+  <span class="text-xs text-gray-500 transition-all duration-75">
+    reply
+  </span>
+</button>
