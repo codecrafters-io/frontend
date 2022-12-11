@@ -20,6 +20,10 @@ export default class CourseStageCommentModel extends Model {
   @attr('date') updatedAt;
   @attr('string') bodyMarkdown;
 
+  get childComments() {
+    return this.courseStage.comments.filter((comment) => comment.parentComment === this);
+  }
+
   get isTopLevelComment() {
     return !this.parentComment;
   }

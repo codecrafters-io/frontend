@@ -35,7 +35,7 @@ export default class CommentsTabComponent extends Component {
   }
 
   get visibleComments() {
-    let topLevelPersistedComments = this.args.courseStage.comments.filterBy('isTopLevelComment').rejectBy('isNew');
+    let topLevelPersistedComments = this.args.courseStage.comments.filter((comment) => !comment.isNew && comment.isTopLevelComment);
 
     if (this.currentUser.isStaff) {
       return topLevelPersistedComments;
