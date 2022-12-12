@@ -36,6 +36,12 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Verified Solution', 'active tab should be Verified Solution');
 
     await percySnapshot('Stage Solution Modal - Verified Solution');
+
+    await coursePage.courseStageSolutionModal.clickOnNextStageButton();
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs', 'title should be respond to multiple pings');
+
+    await coursePage.courseStageSolutionModal.clickOnPreviousStageButton();
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to multiple pings');
   });
 
   test('can view solutions before starting course', async function (assert) {
