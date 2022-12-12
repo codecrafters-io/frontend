@@ -9,6 +9,8 @@ export default {
   activeHeaderTabLinkText: text('[data-test-header-tab-link].border-teal-500'),
   clickOnCloseButton: clickable('[data-test-close-modal-button]'),
   clickOnHeaderTabLink: clickOnText('[data-test-header-tab-link]'),
+  clickOnNextStageButton: clickable('[data-test-next-stage-button]'),
+  clickOnPreviousStageButton: clickable('[data-test-previous-stage-button]'),
 
   commentsTab: {
     clickOnTabHeader: clickOnText('[data-test-tab-header]'),

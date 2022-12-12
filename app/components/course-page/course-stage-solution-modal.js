@@ -25,6 +25,7 @@ import 'prismjs/components/prism-diff';
 
 export default class CourseStageSolutionModalComponent extends Component {
   @tracked activeTab; // community_solutions/verified_solution/source_walkthrough
+  @tracked courseStage;
   @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
   @service store;
@@ -32,22 +33,40 @@ export default class CourseStageSolutionModalComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.requestedSolutionLanguage = this.args.repository.language || this.args.courseStage.solutions.sortBy('language.name').firstObject.language;
+    this.courseStage = this.args.courseStage;
+    this.requestedSolutionLanguage = this.args.repository.language || this.courseStage.solutions.sortBy('language.name').firstObject.language;
 
+    this.computeActiveTabFromIntent();
+    this.emitAnalyticsEvent();
+  }
+
+  tabIsAvailableForCourseStage(tab) {
+    if (tab === 'verified_solution') {
+      return !!this.solution;
+    } else if (tab === 'source_walkthrough') {
+      return this.courseStage.hasSourceWalkthrough;
+    } else {
+      return true;
+    }
+  }
+
+  computeActiveTabFromIntent() {
     // intent is either view_solution or view_source_walkthrough
     if (this.args.intent === 'view_solution') {
-      if (this.args.courseStage.isFirst && this.solution) {
+      if (this.courseStage.isFirst && this.solution) {
         this.activeTab = 'verified_solution';
       } else {
         this.activeTab = 'community_solutions';
       }
     } else if (this.args.intent === 'view_source_walkthrough') {
-      this.activeTab = 'source_walkthrough';
+      if (this.courseStage.hasSourceWalkthrough) {
+        this.activeTab = 'source_walkthrough';
+      } else {
+        this.activeTab = 'community_solutions';
+      }
     } else if (this.args.intent === 'view_comments') {
       this.activeTab = 'comments';
     }
-
-    this.emitAnalyticsEvent();
   }
 
   emitAnalyticsEvent() {
@@ -56,11 +75,18 @@ export default class CourseStageSolutionModalComponent extends Component {
         .createRecord('analytics-event', {
           name: 'viewed_course_stage_source_walkthrough',
           properties: {
-            course_slug: this.args.courseStage.course.slug,
-            course_stage_slug: this.args.courseStage.slug,
+            course_slug: this.courseStage.course.slug,
+            course_stage_slug: this.courseStage.slug,
           },
         })
         .save();
+    }
+  }
+
+  @action
+  handleCourseStageUpdated() {
+    if (!this.tabIsAvailableForCourseStage(this.activeTab)) {
+      this.activeTab = 'community_solutions';
     }
   }
 
@@ -73,6 +99,22 @@ export default class CourseStageSolutionModalComponent extends Component {
   handleDidInsertLanguageDropdown(dd) {
     if (dd) {
       this.languageDropdown = dd; // This is called with null when the dropdown is destroyed, and we use it for two different dropdowns
+    }
+  }
+
+  @action
+  async handleNextStageButtonClick() {
+    if (this.courseStage.nextStage) {
+      this.courseStage = this.courseStage.nextStage;
+      this.handleCourseStageUpdated();
+    }
+  }
+
+  @action
+  async handlePreviousStageButtonClick() {
+    if (this.courseStage.previousStage) {
+      this.courseStage = this.courseStage.previousStage;
+      this.handleCourseStageUpdated();
     }
   }
 
@@ -110,6 +152,6 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   get solution() {
-    return this.args.courseStage.solutions.findBy('language', this.requestedSolutionLanguage);
+    return this.courseStage.solutions.findBy('language', this.requestedSolutionLanguage);
   }
 }

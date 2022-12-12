@@ -13,12 +13,14 @@
     @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
     @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
     @onDidInsertLanguageDropdown={{this.handleDidInsertLanguageDropdown}}
-    @courseStage={{@courseStage}}
+    @courseStage={{this.courseStage}}
+    @onPreviousStageButtonClick={{this.handlePreviousStageButtonClick}}
+    @onNextStageButtonClick={{this.handleNextStageButtonClick}}
   />
 
   {{#if (eq this.activeTab "verified_solution")}}
     <CoursePage::CourseStageSolutionModal::VerifiedSolutionTab
-      @courseStage={{@courseStage}}
+      @courseStage={{this.courseStage}}
       @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
       @repository={{@repository}}
       @solution={{this.solution}}
@@ -27,15 +29,15 @@
     />
   {{else if (eq this.activeTab "community_solutions")}}
     <CoursePage::CourseStageSolutionModal::CommunitySolutionsTab
-      @courseStage={{@courseStage}}
+      @courseStage={{this.courseStage}}
       @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
       @repository={{@repository}}
       @onViewCommunitySolutionsInOtherLanguagesButtonClick={{this.handleViewCommunitySolutionsInOtherLanguagesButtonClick}}
       @onViewCommentsButtonClick={{this.handleViewCommentsButtonClick}}
     />
   {{else if (eq this.activeTab "source_walkthrough")}}
-    <CodeWalkthrough @model={{@courseStage.sourceWalkthrough}} />
+    <CodeWalkthrough @model={{this.courseStage.sourceWalkthrough}} />
   {{else if (eq this.activeTab "comments")}}
-    <CoursePage::CourseStageSolutionModal::CommentsTab @courseStage={{@courseStage}} @language={{@repository.language}} />
+    <CoursePage::CourseStageSolutionModal::CommentsTab @courseStage={{this.courseStage}} @language={{@repository.language}} />
   {{/if}}
 </ModalBody>
