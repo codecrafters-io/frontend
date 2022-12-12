@@ -17,6 +17,13 @@
           target="_blank"
           rel="noopener noreferrer"
         >{{@comment.user.username}}</a>
+
+        {{#if @comment.user.isStaff}}
+          <span class="bg-gray-400 text-white ml-1 px-1 py-0.5 rounded font-semibold text-xs">
+            staff
+          </span>
+        {{/if}}
+
         <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
         <div class="text-xs text-gray-400">
           {{moment-from-now @comment.createdAt}}
