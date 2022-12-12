@@ -3,20 +3,7 @@
     <span class="text-gray-600">Stage #{{@courseStage.position}}:</span>
     <span class="font-bold text-gray-700">{{@courseStage.name}} </span>
   </div>
-  <div class="flex items-stretch mb-3 sm:mb-6">
-    <button
-      type="button"
-      class="rounded-l border-r-0 flex items-center border bg-gray-50 hover:bg-gray-100 transition-colors duration-75 pl-1 pr-0.5 py-1 text-gray-400 hover:text-gray-600"
-    >
-      {{svg-jar "chevron-left" class="w-4 fill-current"}}
-    </button>
-    <button
-      type="button"
-      class="rounded-r border-l-0 flex items-center border bg-gray-50 hover:bg-gray-100 transition-colors duration-75 pr-1 pl-0.5 py-1 text-gray-400 hover:text-gray-600"
-    >
-      {{svg-jar "chevron-right" class="w-4 fill-current"}}
-    </button>
-  </div>
+  <CoursePage::CourseStageSolutionModal::StageSwitcherContainer class="mb-3 sm:mb-6" @currentStage={{@courseStage}} />
 </div>
 
 <div class="flex flex-wrap items-center justify-between">
