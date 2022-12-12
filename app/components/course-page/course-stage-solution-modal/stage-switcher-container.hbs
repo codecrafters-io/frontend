@@ -2,12 +2,14 @@
   <button
     type="button"
     class="rounded-l border-r-0 flex items-center border hover:bg-gray-50 transition-colors duration-75 px-1 py-1.5 text-gray-400 hover:text-gray-600"
+    {{on "click" @onPreviousStageButtonClick}}
   >
     {{svg-jar "chevron-left" class="w-4 fill-current"}}
   </button>
   <button
     type="button"
     class="rounded-r flex items-center border hover:bg-gray-50 transition-colors duration-75 px-1 py-1.5 text-gray-400 hover:text-gray-600"
+    {{on "click" @onNextStageButtonClick}}
   >
     {{svg-jar "chevron-right" class="w-4 fill-current"}}
   </button>

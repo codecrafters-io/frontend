@@ -71,6 +71,17 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedStages[this.course.sortedStages.length - 2];
   }
 
+  get nextStage() {
+    const index = this.course.sortedStages.indexOf(this);
+    console.log(index);
+
+    return this.course.sortedStages[this.course.sortedStages.indexOf(this) + 1];
+  }
+
+  get previousStage() {
+    return this.course.sortedStages[this.course.sortedStages.indexOf(this) - 1];
+  }
+
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
   }
