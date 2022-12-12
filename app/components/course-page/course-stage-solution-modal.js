@@ -104,14 +104,18 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   async handleNextStageButtonClick() {
-    this.courseStage = this.courseStage.nextStage;
-    this.handleCourseStageUpdated();
+    if (this.courseStage.nextStage) {
+      this.courseStage = this.courseStage.nextStage;
+      this.handleCourseStageUpdated();
+    }
   }
 
   @action
   async handlePreviousStageButtonClick() {
-    this.courseStage = this.courseStage.previousStage;
-    this.handleCourseStageUpdated();
+    if (this.courseStage.previousStage) {
+      this.courseStage = this.courseStage.previousStage;
+      this.handleCourseStageUpdated();
+    }
   }
 
   @action
