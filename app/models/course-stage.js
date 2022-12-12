@@ -72,9 +72,6 @@ export default class CourseStageModel extends Model {
   }
 
   get nextStage() {
-    const index = this.course.sortedStages.indexOf(this);
-    console.log(index);
-
     return this.course.sortedStages[this.course.sortedStages.indexOf(this) + 1];
   }
 

@@ -35,16 +35,6 @@ export default class CoursePageContentComponent extends Component {
   }
 
   @action
-  async handleNextStageButtonClick() {
-    this.currentCourseStageForSolutionModal = this.currentCourseStageForSolutionModal.nextStage;
-  }
-
-  @action
-  async handlePreviousStageButtonClick() {
-    this.currentCourseStageForSolutionModal = this.currentCourseStageForSolutionModal.previousStage;
-  }
-
-  @action
   async handleViewSourceWalkthroughButtonClick(courseStage) {
     await this.handleModalClose();
 
