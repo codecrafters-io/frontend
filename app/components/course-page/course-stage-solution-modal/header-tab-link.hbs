@@ -10,7 +10,7 @@
     {{svg-jar @icon class="text-gray-600 w-5 mr-2 fill-current"}}
   {{/if}}
 
-  <span class={{if @isActive "font-medium text-gray-700" "text-gray-600"}}>{{@text}}</span>
+  <span class="whitespace-nowrap {{if @isActive 'font-medium text-gray-700' 'text-gray-600'}}">{{@text}}</span>
 
   {{#if @authorDetails}}
     <div class="ml-2 flex -space-x-3 hover:space-x-1 items-center">
