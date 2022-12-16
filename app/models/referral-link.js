@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import { groupBy } from 'codecrafters-frontend/lib/lodash-utils';
 
 export default class ReferralLinkModel extends Model {
   @belongsTo('user', { async: false }) user;
@@ -10,6 +11,11 @@ export default class ReferralLinkModel extends Model {
   @attr('number') uniqueViewerCount;
 
   get visibleActivations() {
-    return this.activations.sortBy('activatedAt').reverse(); // All for now
+    return Object.values(groupBy(this.activations, (activation) => activation.customer.id))
+      .map((activations) => {
+        return activations.find((activation) => !activation.statusIsInactive) || activations[0];
+      })
+      .sortBy('activatedAt')
+      .reverse();
   }
 }
