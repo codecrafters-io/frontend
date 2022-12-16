@@ -18,7 +18,7 @@ export default class EarningsContainerComponent extends Component {
       {
         title: 'Ready to payout',
         helpText: 'Earnings that can be withdrawn.',
-        amountInDollars: this.currentUser.referralLinks.mapBy('withdrawableEarningsAmountInCents').reduce((a, b) => a + b, 0) / 100,
+        amountInDollars: this.withdrawableEarningsAmountInDollars,
       },
       {
         title: 'Paid out',
@@ -26,6 +26,14 @@ export default class EarningsContainerComponent extends Component {
         amountInDollars: 0,
       },
     ];
+  }
+
+  get withdrawableEarningsAmountInCents() {
+    return this.currentUser.referralLinks.mapBy('withdrawableEarningsAmountInCents').reduce((a, b) => a + b, 0);
+  }
+
+  get withdrawableEarningsAmountInDollars() {
+    return this.withdrawableEarningsAmountInCents / 100;
   }
 
   get totalEarningsAmountInCents() {
