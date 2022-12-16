@@ -41,6 +41,13 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       username: 'torvalds',
     });
 
+    const customer4 = this.server.create('user', {
+      avatarUrl: 'https://github.com/mrdoob.png',
+      createdAt: new Date(),
+      githubUsername: 'mrdoob',
+      username: 'mrdoob',
+    });
+
     this.server.create('referral-activation', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
@@ -62,9 +69,20 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       customer: customer3,
       referrer: this.server.schema.users.first(),
       referralLink: referralLink,
-      activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 1 days ago
+      activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 35400,
+      spentAmountInCents: 59000,
+    });
+
+    this.server.create('referral-activation', {
+      customer: customer4,
+      referrer: this.server.schema.users.first(),
+      referralLink: referralLink,
+      activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24), // 1 days ago
+      status: 'first_charge_successful',
+      withheldEarningsAmountInCents: 35400,
+      spentAmountInCents: 59000,
     });
 
     signIn(this.owner, this.server);
