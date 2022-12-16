@@ -10,6 +10,10 @@ export default class ReferralLinkModel extends Model {
   @attr('string') url;
   @attr('number') uniqueViewerCount;
 
+  get totalEarningsAmountInCents() {
+    return this.activations.reduce((sum, activation) => sum + activation.totalEarningsAmountInCents, 0);
+  }
+
   get visibleActivations() {
     return Object.values(groupBy(this.activations, (activation) => activation.customer.id))
       .map((activations) => {
@@ -17,5 +21,13 @@ export default class ReferralLinkModel extends Model {
       })
       .sortBy('activatedAt')
       .reverse();
+  }
+
+  get withdrawableEarningsAmountInCents() {
+    return this.activations.reduce((sum, activation) => sum + activation.withdrawableEarningsAmountInCents, 0);
+  }
+
+  get withheldEarningsAmountInCents() {
+    return this.activations.reduce((sum, activation) => sum + activation.withheldEarningsAmountInCents, 0);
   }
 }
