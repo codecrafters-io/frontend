@@ -7,9 +7,10 @@ export default class ReferralActivationModel extends Model {
 
   @attr('date') activatedAt;
   @attr('string') status; // 'pending_trial', 'trialing', 'first_charge_successful', 'trial_cancelled', 'inactive'
+  @attr('number') spentAmountInCents;
+  @attr('number') upcomingPaymentAmountInCents;
   @attr('number') withdrawableEarningsAmountInCents;
   @attr('number') withheldEarningsAmountInCents;
-  @attr('number') upcomingPaymentAmountInCents;
 
   get discountPeriodEndsAt() {
     return new Date(this.activatedAt.getTime() + 3 * 24 * 60 * 60 * 1000);
@@ -41,6 +42,10 @@ export default class ReferralActivationModel extends Model {
 
   get statusIsInactive() {
     return this.status === 'inactive';
+  }
+
+  get spentAmountInDollars() {
+    return this.spentAmountInCents / 100;
   }
 
   get totalEarningsAmountInCents() {
