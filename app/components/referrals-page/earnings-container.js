@@ -1,11 +1,19 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default class EarningsContainerComponent extends Component {
   @service('current-user') currentUserService;
+  @tracked isCreatingPayout = false;
 
   get currentUser() {
     return this.currentUserService.record;
+  }
+
+  @action
+  handleCreatePayoutModalClose() {
+    this.isCreatingPayout = false;
   }
 
   get lineItems() {

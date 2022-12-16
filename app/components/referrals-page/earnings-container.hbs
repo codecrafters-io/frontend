@@ -28,7 +28,13 @@
 
     <div class="mt-6">
       {{#if (gt this.withdrawableEarningsAmountInDollars 100)}}
-        <PrimaryButton @type="primary" @size="small" @onClick={{this.withdraw}} data-test-withdraw-button>
+        <PrimaryButton
+          @type="primary"
+          @size="small"
+          @onClick={{this.withdraw}}
+          {{on "click" (fn (mut this.isCreatingPayout) true)}}
+          data-test-withdraw-button
+        >
           Initiate Payout
         </PrimaryButton>
       {{else}}
@@ -36,7 +42,7 @@
           <PrimaryButton @type="primary" @size="small" @isDisabled={{true}} @onClick={{this.withdraw}} data-test-withdraw-button>
             Initiate Payout
           </PrimaryButton>
-          <EmberTooltip @text="This button will be enabled when you > $100 ready to payout." />
+          <EmberTooltip @text="This button will be enabled when you have $100+ ready to payout." />
         </div>
       {{/if}}
     </div>
@@ -44,5 +50,14 @@
     <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
       When your earnings are ready to withdraw, you'll be able to view details here.
     </div>
+  {{/if}}
+
+  {{#if this.isCreatingPayout}}
+    <ModalBackdrop>
+      <ReferralsPage::CreatePayoutModal
+        @onClose={{this.handleCreatePayoutModalClose}}
+        @withdrawableEarningsAmountInCents={{this.withdrawableEarningsAmountInCents}}
+      />
+    </ModalBackdrop>
   {{/if}}
 </PageSection>
