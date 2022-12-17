@@ -160,6 +160,8 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
     assert.strictEqual(referralsPage.lineItemAmountText('Ready to payout'), '$254', 'ready to payout amount is correct');
     assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$100', 'paid out amount is correct');
 
+    assert.strictEqual(this.server.schema.referralEarningsPayouts.all().models.length, 1, 'payout is created');
+
     await percySnapshot('Referrals Page | Payout initiated');
   });
 });

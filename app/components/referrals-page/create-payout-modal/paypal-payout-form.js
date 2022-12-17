@@ -30,15 +30,19 @@ export default class PaypalPayoutFormComponent extends Component {
     e.preventDefault();
     this.formElement.reportValidity();
 
+    console.log('hey');
+
     if (this.formElement.checkValidity()) {
       this.isCreatingPayout = true;
 
-      await this.store.createRecord('referral-earnings-payout', {
-        user: this.currentUser,
-        amountInCents: this.amountInDollars * 100,
-        payoutMethodType: 'paypal',
-        payoutMethodArgs: { email_address: this.emailAddress },
-      });
+      await this.store
+        .createRecord('referral-earnings-payout', {
+          user: this.currentUser,
+          amountInCents: this.amountInDollars * 100,
+          payoutMethodType: 'paypal',
+          payoutMethodArgs: { email_address: this.emailAddress },
+        })
+        .save();
 
       this.isCreatingPayout = false;
       this.args.onSubmit();

@@ -131,6 +131,7 @@ function routes() {
   });
 
   this.get('/referral-earnings-payouts');
+  this.post('/referral-earnings-payouts');
 
   this.get('/referral-links');
 
