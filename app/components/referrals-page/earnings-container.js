@@ -5,7 +5,14 @@ import { tracked } from '@glimmer/tracking';
 
 export default class EarningsContainerComponent extends Component {
   @service('current-user') currentUserService;
+  @service store;
   @tracked isCreatingPayout = false;
+  @tracked isLoadingPayouts = true;
+
+  constructor() {
+    super(...arguments);
+    this.loadPayouts();
+  }
 
   get currentUser() {
     return this.currentUserService.record;
@@ -14,6 +21,11 @@ export default class EarningsContainerComponent extends Component {
   @action
   handleCreatePayoutModalClose() {
     this.isCreatingPayout = false;
+  }
+
+  async loadPayouts() {
+    await this.store.findAll('referral-earnings-payout');
+    this.isLoadingPayouts = false;
   }
 
   get lineItems() {
@@ -26,12 +38,12 @@ export default class EarningsContainerComponent extends Component {
       {
         title: 'Ready to payout',
         helpText: 'Earnings that can be withdrawn.',
-        amountInDollars: this.withdrawableEarningsAmountInDollars,
+        amountInDollars: Math.max(this.withdrawableEarningsAmountInCents - this.paidOutEarningsAmountInCents, 0) / 100,
       },
       {
         title: 'Paid out',
         helpText: 'Earnings that have been paid out (some payouts might be in progress).',
-        amountInDollars: 0,
+        amountInDollars: this.paidOutEarningsAmountInCents / 100,
       },
     ];
   }
@@ -42,6 +54,13 @@ export default class EarningsContainerComponent extends Component {
 
   get withdrawableEarningsAmountInDollars() {
     return this.withdrawableEarningsAmountInCents / 100;
+  }
+
+  get paidOutEarningsAmountInCents() {
+    return this.currentUser.referralEarningsPayouts
+      .rejectBy('statusIsFailed')
+      .mapBy('amountInCents')
+      .reduce((a, b) => a + b, 0);
   }
 
   get totalEarningsAmountInCents() {

@@ -4,13 +4,13 @@
       <tbody>
         <tr class="border-b">
           <td class="text-gray-700 font-semibold whitespace-nowrap py-2 text-sm">Total Earnings</td>
-          <td class="font-semibold text-gray-700 py-2 text-right w-full">${{this.totalEarningsAmountInDollars}}</td>
+          <td class="font-semibold text-gray-700 py-2 text-right w-full" data-test-total-earnings-amount>${{this.totalEarningsAmountInDollars}}</td>
         </tr>
         {{#each this.lineItems as |item|}}
-          <tr class="border-b border-gray-100">
+          <tr class="border-b border-gray-100" data-test-line-item>
             <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
               <div class="flex items-center">
-                <span class="mr-1">
+                <span class="mr-1" data-test-line-item-title>
                   {{item.title}}
                 </span>
 
@@ -20,7 +20,7 @@
                 </div>
               </div>
             </td>
-            <td class="text-gray-600 py-2 text-right w-full">${{item.amountInDollars}}</td>
+            <td class="text-gray-600 py-2 text-right w-full" data-test-line-item-amount>${{item.amountInDollars}}</td>
           </tr>
         {{/each}}
       </tbody>

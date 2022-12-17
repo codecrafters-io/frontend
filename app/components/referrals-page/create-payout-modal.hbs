@@ -11,11 +11,10 @@
         <br /><br />We'll email you if anything goes wrong.
       </div>
 
-      <SecondaryButton @size="small" {{on "click" @onClose}}>
+      <SecondaryButton @size="small" {{on "click" @onClose}} data-test-back-to-referrals-page-button>
         Back to referrals page
       </SecondaryButton>
     </div>
-
   {{else}}
     <div class="grid grid-cols-2 gap-2">
       <ReferralsPage::CreatePayoutModal::PayoutMethodCard
@@ -33,7 +32,11 @@
     </div>
 
     {{#if (eq this.selectedPayoutMethod "paypal")}}
-      <ReferralsPage::CreatePayoutModal::PaypalPayoutForm class="mt-8" @onSubmit={{this.handlePayoutCreated}} />
+      <ReferralsPage::CreatePayoutModal::PaypalPayoutForm
+        class="mt-8"
+        @onSubmit={{this.handlePayoutCreated}}
+        @withdrawableEarningsAmountInCents={{@withdrawableEarningsAmountInCents}}
+      />
     {{/if}}
   {{/if}}
 </ModalBody>

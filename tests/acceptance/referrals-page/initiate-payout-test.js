@@ -7,12 +7,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | referrals-page | view-referrals', function (hooks) {
+module('Acceptance | referrals-page | initiate-payout', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can view referral stats', async function (assert) {
+  test('can initiate payout', async function (assert) {
     testScenario(this.server);
 
     const referralLink = this.server.create('referral-link', {
@@ -34,49 +34,18 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       username: 'gufran',
     });
 
-    const customer3 = this.server.create('user', {
-      avatarUrl: 'https://github.com/torvalds.png',
-      createdAt: new Date(),
-      githubUsername: 'torvalds',
-      username: 'torvalds',
-    });
-
-    const customer4 = this.server.create('user', {
-      avatarUrl: 'https://github.com/mrdoob.png',
-      createdAt: new Date(),
-      githubUsername: 'mrdoob',
-      username: 'mrdoob',
-    });
-
     this.server.create('referral-activation', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
       referralLink: referralLink,
-      activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
-      status: 'pending_trial',
+      activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
+      status: 'first_charge_successful',
+      withheldEarningsAmountInCents: 23700,
+      spentAmountInCents: 39500,
     });
 
     this.server.create('referral-activation', {
       customer: customer2,
-      referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
-      activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
-      status: 'trialing',
-      upcomingPaymentAmountInCents: 59000,
-    });
-
-    this.server.create('referral-activation', {
-      customer: customer3,
-      referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
-      activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
-      status: 'first_charge_successful',
-      withheldEarningsAmountInCents: 35400,
-      spentAmountInCents: 59000,
-    });
-
-    this.server.create('referral-activation', {
-      customer: customer4,
       referrer: this.server.schema.users.first(),
       referralLink: referralLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24), // 1 days ago
@@ -89,8 +58,32 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralsPage.visit();
-    assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
-    await percySnapshot('Referrals Page | Referral Stats');
+    assert.strictEqual(referralsPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(referralsPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(referralsPage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
+    assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
+
+    await referralsPage.initiatePayoutButton.click();
+
+    await percySnapshot('Referrals Page | Create Payout Modal');
+
+    await referralsPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
+
+    await percySnapshot('Referrals Page | Create Payout Modal | Paypal Form');
+
+    await referralsPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
+    await referralsPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
+
+    await percySnapshot('Referrals Page | Create Payout Modal | Paid out');
+
+    await referralsPage.createPayoutModal.backToReferralsPageButton.click();
+
+    assert.strictEqual(referralsPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(referralsPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(referralsPage.lineItemAmountText('Ready to payout'), '$0', 'ready to payout amount is correct');
+    assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$354', 'paid out amount is correct');
+
+    await percySnapshot('Referrals Page | Payout initiated');
   });
 });

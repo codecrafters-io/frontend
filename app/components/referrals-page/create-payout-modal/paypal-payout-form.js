@@ -11,6 +11,12 @@ export default class PaypalPayoutFormComponent extends Component {
   @tracked amountInDollars = 100;
   @tracked isCreatingPayout = false;
 
+  constructor() {
+    super(...arguments);
+
+    this.amountInDollars = this.args.withdrawableEarningsAmountInCents / 100;
+  }
+
   get currentUser() {
     return this.currentUserService.record;
   }
@@ -28,6 +34,7 @@ export default class PaypalPayoutFormComponent extends Component {
       this.isCreatingPayout = true;
 
       await this.store.createRecord('referral-earnings-payout', {
+        user: this.currentUser,
         amountInCents: this.amountInDollars * 100,
         payoutMethodType: 'paypal',
         payoutMethodArgs: { email_address: this.emailAddress },
@@ -41,5 +48,9 @@ export default class PaypalPayoutFormComponent extends Component {
   @action
   async handleDidInsertFormElement(formElement) {
     this.formElement = formElement;
+  }
+
+  get withdrawableEarningsAmountInDollars() {
+    return this.args.withdrawableEarningsAmountInCents / 100;
   }
 }
