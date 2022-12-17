@@ -33,13 +33,13 @@
           @size="small"
           @onClick={{this.withdraw}}
           {{on "click" (fn (mut this.isCreatingPayout) true)}}
-          data-test-withdraw-button
+          data-test-initiate-payout-button
         >
           Initiate Payout
         </PrimaryButton>
       {{else}}
         <div class="inline-flex">
-          <PrimaryButton @type="primary" @size="small" @isDisabled={{true}} @onClick={{this.withdraw}} data-test-withdraw-button>
+          <PrimaryButton @type="primary" @size="small" @isDisabled={{true}} @onClick={{this.withdraw}} data-test-initiate-payout-button>
             Initiate Payout
           </PrimaryButton>
           <EmberTooltip @text="This button will be enabled when you have $100+ ready to payout." />

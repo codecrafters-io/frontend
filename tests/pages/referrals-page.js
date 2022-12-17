@@ -6,5 +6,9 @@ export default createPage({
     scope: '[data-test-get-started-button]',
   },
 
+  initiatePayoutButton: {
+    scope: '[data-test-initiate-payout-button]',
+  },
+
   visit: visitable('/refer'),
 });

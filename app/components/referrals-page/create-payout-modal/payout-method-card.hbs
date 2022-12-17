@@ -1,0 +1,27 @@
+<div
+  class="border rounded-lg flex flex-col hover:border-gray-300
+    {{if @isSelected 'border-gray-300'}}
+    group
+    {{if @isDisabled 'cursor-not-allowed opacity-50'}}"
+  role="button"
+  ...attributes
+>
+  <div class="px-6 py-4 sm:px-12 sm:py-8 flex-grow flex items-center justify-center relative">
+    <img src={{@imageUrl}} alt="paypal" class="w-full" />
+    {{#if @isSelected}}
+      <div class="absolute top-0 right-0 p-3">
+        {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
+      </div>
+    {{/if}}
+  </div>
+  <div
+    class="text-center text-gray-700 text-xs sm:text-sm bg-gray-50 border-t py-3 rounded-b-lg group-hover:bg-gray-100
+      {{if @isSelected 'bg-gray-100'}}"
+  >
+    {{@name}}
+  </div>
+
+  {{#if @isDisabled}}
+    <EmberTooltip @text="Contact us at hello@codecrafters.io to enable this option." />
+  {{/if}}
+</div>
