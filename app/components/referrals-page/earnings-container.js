@@ -24,7 +24,7 @@ export default class EarningsContainerComponent extends Component {
   }
 
   async loadPayouts() {
-    await this.store.findAll('referral-earnings-payout');
+    await this.store.findAll('referral-earnings-payout', { include: 'user' });
     this.isLoadingPayouts = false;
   }
 
@@ -38,7 +38,7 @@ export default class EarningsContainerComponent extends Component {
       {
         title: 'Ready to payout',
         helpText: 'Earnings that can be withdrawn.',
-        amountInDollars: Math.max(this.withdrawableEarningsAmountInCents - this.paidOutEarningsAmountInCents, 0) / 100,
+        amountInDollars: this.readyToPayoutEarningsAmountInCents / 100,
       },
       {
         title: 'Paid out',
@@ -61,6 +61,10 @@ export default class EarningsContainerComponent extends Component {
       .rejectBy('statusIsFailed')
       .mapBy('amountInCents')
       .reduce((a, b) => a + b, 0);
+  }
+
+  get readyToPayoutEarningsAmountInCents() {
+    return Math.max(this.withdrawableEarningsAmountInCents - this.paidOutEarningsAmountInCents, 0);
   }
 
   get totalEarningsAmountInCents() {
