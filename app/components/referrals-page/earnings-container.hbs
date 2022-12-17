@@ -20,7 +20,13 @@
                 </div>
               </div>
             </td>
-            <td class="text-gray-600 py-2 text-right w-full" data-test-line-item-amount>${{item.amountInDollars}}</td>
+            <td class="text-gray-600 py-2 text-right w-full" data-test-line-item-amount>
+              {{#if this.isLoadingPayouts}}
+                <span class="animate-pulse text-gray-300 text-xs">Loading...</span>
+              {{else}}
+                ${{item.amountInDollars}}
+              {{/if}}
+            </td>
           </tr>
         {{/each}}
       </tbody>
