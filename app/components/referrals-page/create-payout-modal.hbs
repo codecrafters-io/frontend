@@ -1,0 +1,42 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} @class="w-full" data-test-create-payout-modal>
+  <div class="mb-8 font-semibold text-2xl text-gray-600 mr-6">
+    Initiate payout
+  </div>
+
+  {{#if this.payoutWasCreated}}
+    <div class="p-8 flex flex-col items-center justify-center">
+      {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-4"}}
+      <div class="text-gray-600 text-center mb-6">
+        Payout initiated.
+        <br /><br />We'll email you if anything goes wrong.
+      </div>
+
+      <SecondaryButton @size="small" {{on "click" @onClose}} data-test-back-to-referrals-page-button>
+        Back to referrals page
+      </SecondaryButton>
+    </div>
+  {{else}}
+    <div class="grid grid-cols-2 gap-2">
+      <ReferralsPage::CreatePayoutModal::PayoutMethodCard
+        @name="PayPal"
+        @imageUrl="/assets/images/payout-method-logos/paypal.svg"
+        {{on "click" (fn this.handlePayoutMethodClick "paypal")}}
+        @isSelected={{eq this.selectedPayoutMethod "paypal"}}
+      />
+
+      <ReferralsPage::CreatePayoutModal::PayoutMethodCard
+        @name="Amazon Gift Card"
+        @isDisabled={{true}}
+        @imageUrl="/assets/images/payout-method-logos/amazon-com.png"
+      />
+    </div>
+
+    {{#if (eq this.selectedPayoutMethod "paypal")}}
+      <ReferralsPage::CreatePayoutModal::PaypalPayoutForm
+        class="mt-8"
+        @onSubmit={{this.handlePayoutCreated}}
+        @withdrawableEarningsAmountInCents={{@withdrawableEarningsAmountInCents}}
+      />
+    {{/if}}
+  {{/if}}
+</ModalBody>

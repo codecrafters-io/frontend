@@ -130,6 +130,9 @@ function routes() {
     return schema.referralActivations.create(attrs);
   });
 
+  this.get('/referral-earnings-payouts');
+  this.post('/referral-earnings-payouts');
+
   this.get('/referral-links');
 
   this.post('/referral-links', function (schema) {

@@ -4,13 +4,13 @@
       <tbody>
         <tr class="border-b">
           <td class="text-gray-700 font-semibold whitespace-nowrap py-2 text-sm">Total Earnings</td>
-          <td class="font-semibold text-gray-700 py-2 text-right w-full">${{this.totalEarningsAmountInDollars}}</td>
+          <td class="font-semibold text-gray-700 py-2 text-right w-full" data-test-total-earnings-amount>${{this.totalEarningsAmountInDollars}}</td>
         </tr>
         {{#each this.lineItems as |item|}}
-          <tr class="border-b border-gray-100">
+          <tr class="border-b border-gray-100" data-test-line-item>
             <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
               <div class="flex items-center">
-                <span class="mr-1">
+                <span class="mr-1" data-test-line-item-title>
                   {{item.title}}
                 </span>
 
@@ -20,14 +20,50 @@
                 </div>
               </div>
             </td>
-            <td class="text-gray-600 py-2 text-right w-full">${{item.amountInDollars}}</td>
+            <td class="text-gray-600 py-2 text-right w-full" data-test-line-item-amount>
+              {{#if this.isLoadingPayouts}}
+                <span class="animate-pulse text-gray-300 text-xs">Loading...</span>
+              {{else}}
+                ${{item.amountInDollars}}
+              {{/if}}
+            </td>
           </tr>
         {{/each}}
       </tbody>
     </table>
+
+    <div class="mt-6">
+      {{#if (gt this.withdrawableEarningsAmountInDollars 100)}}
+        <PrimaryButton
+          @type="primary"
+          @size="small"
+          @onClick={{this.withdraw}}
+          {{on "click" (fn (mut this.isCreatingPayout) true)}}
+          data-test-initiate-payout-button
+        >
+          Initiate Payout
+        </PrimaryButton>
+      {{else}}
+        <div class="inline-flex">
+          <PrimaryButton @type="primary" @size="small" @isDisabled={{true}} @onClick={{this.withdraw}} data-test-initiate-payout-button>
+            Initiate Payout
+          </PrimaryButton>
+          <EmberTooltip @text="This button will be enabled when you have $100+ ready to payout." />
+        </div>
+      {{/if}}
+    </div>
   {{else}}
     <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
       When your earnings are ready to withdraw, you'll be able to view details here.
     </div>
+  {{/if}}
+
+  {{#if this.isCreatingPayout}}
+    <ModalBackdrop>
+      <ReferralsPage::CreatePayoutModal
+        @onClose={{this.handleCreatePayoutModalClose}}
+        @withdrawableEarningsAmountInCents={{this.withdrawableEarningsAmountInCents}}
+      />
+    </ModalBackdrop>
   {{/if}}
 </PageSection>

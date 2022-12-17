@@ -81,7 +81,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       referralLink: referralLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24), // 1 days ago
       status: 'first_charge_successful',
-      withheldEarningsAmountInCents: 35400,
+      withheldEarningsAmountInCents: 0,
+      withdrawableEarningsAmountInCents: 35400,
       spentAmountInCents: 59000,
     });
 

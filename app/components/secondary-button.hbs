@@ -3,6 +3,7 @@
   class="rounded shadow-sm font-semibold flex items-center border border-teal-500 hover:border-teal-600
     {{if (eq @size 'small') 'px-3 py-1.5' 'px-3 py-2'}}
     {{if (eq @size 'small') 'text-sm' 'text-base'}}
+    {{if @isDisabled 'cursor-not-allowed opacity-50'}}
     text-teal-500 hover:text-teal-600"
   ...attributes
 >
