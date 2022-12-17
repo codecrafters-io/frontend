@@ -33,7 +33,7 @@
     </table>
 
     <div class="mt-6">
-      {{#if (gt this.withdrawableEarningsAmountInDollars 100)}}
+      {{#if (gt this.readyToPayoutEarningsAmountInCents 10000)}}
         <PrimaryButton
           @type="primary"
           @size="small"
@@ -62,7 +62,7 @@
     <ModalBackdrop>
       <ReferralsPage::CreatePayoutModal
         @onClose={{this.handleCreatePayoutModalClose}}
-        @withdrawableEarningsAmountInCents={{this.withdrawableEarningsAmountInCents}}
+        @withdrawableEarningsAmountInCents={{this.readyToPayoutEarningsAmountInCents}}
       />
     </ModalBackdrop>
   {{/if}}
