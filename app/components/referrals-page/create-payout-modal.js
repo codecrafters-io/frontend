@@ -6,9 +6,15 @@ import { action } from '@ember/object';
 export default class CreatePayoutModalComponent extends Component {
   @service('current-user') currentUserService;
   @tracked selectedPayoutMethod = null;
+  @tracked payoutWasCreated = false;
 
   get currentUser() {
     return this.currentUserService.record;
+  }
+
+  @action
+  handlePayoutCreated() {
+    this.payoutWasCreated = true;
   }
 
   @action

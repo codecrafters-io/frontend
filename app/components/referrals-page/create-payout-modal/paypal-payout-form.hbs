@@ -1,0 +1,41 @@
+<form {{on "submit" this.handleFormSubmit}} {{did-insert this.handleDidInsertFormElement}} data-test-paypal-payout-form ...attributes>
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <ReferralsPage::CreatePayoutModal::FormSection @title="PayPal email" @description="Your PayPal email address.">
+    <Input
+      @value={{this.emailAddress}}
+      class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
+      id="paypal_email_input"
+      placeholder="{{this.currentUser.username}}@gmail.com"
+      required
+    />
+  </ReferralsPage::CreatePayoutModal::FormSection>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <ReferralsPage::CreatePayoutModal::FormSection @title="Amount" @description="The amount to withdraw in USD.">
+    <Input
+      @value={{this.amountInDollars}}
+      @type="number"
+      class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full number-input-with-no-controls"
+      id="amount_input"
+      placeholder="$100"
+      required
+      min="100"
+      max="400"
+    />
+  </ReferralsPage::CreatePayoutModal::FormSection>
+
+  <div class="h-px bg-gray-100 my-6"></div>
+
+  <div class="flex justify-end">
+    <PrimaryButtonWithSpinner
+      @isDisabled={{not this.formIsComplete}}
+      @shouldShowSpinner={{this.isCreatingPayout}}
+      type="submit"
+      data-test-withdraw-button
+    >
+      Withdraw
+    </PrimaryButtonWithSpinner>
+  </div>
+</form>

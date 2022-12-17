@@ -3,63 +3,37 @@
     Initiate payout
   </div>
 
-  <div class="grid grid-cols-2 gap-2">
-    <ReferralsPage::CreatePayoutModal::PayoutMethodCard
-      @name="Paypal"
-      @imageUrl="/assets/images/payout-method-logos/paypal.svg"
-      {{on "click" (fn this.handlePayoutMethodClick "paypal")}}
-      @isSelected={{eq this.selectedPayoutMethod "paypal"}}
-    />
-
-    <ReferralsPage::CreatePayoutModal::PayoutMethodCard
-      @name="Amazon Gift Card"
-      @isDisabled={{true}}
-      @imageUrl="/assets/images/payout-method-logos/amazon-com.png"
-    />
-  </div>
-
-  {{#if (eq this.selectedPayoutMethod "paypal")}}
-    <div class="mt-8">
-      <div class="h-px bg-gray-100 my-6"></div>
-
-      <ReferralsPage::CreatePayoutModal::FormSection @title="Paypal email" @description="Your Paypal email address.">
-        <Input
-          @value={{@teamPaymentFlow.teamName}}
-          {{on "blur" this.handleValueUpdated}}
-          class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
-          id="paypal_email_input"
-          placeholder="{{this.currentUser.username}}@gmail.com"
-          required
-        />
-      </ReferralsPage::CreatePayoutModal::FormSection>
-
-      <div class="h-px bg-gray-100 my-6"></div>
-
-      <ReferralsPage::CreatePayoutModal::FormSection @title="Amount" @description="The amount to withdraw in USD.">
-        <Input
-          @value={{140}}
-          @type="number"
-          {{on "blur" this.handleValueUpdated}}
-          class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full number-input-with-no-controls"
-          id="amount_input"
-          placeholder="$100"
-          required
-        />
-      </ReferralsPage::CreatePayoutModal::FormSection>
-
-      <div class="h-px bg-gray-100 my-6"></div>
-
-      <div class="flex justify-end">
-        <PrimaryButtonWithSpinner
-          @isDisabled={{not this.formIsComplete}}
-          @shouldShowSpinner={{@payout.isSaving}}
-          {{on "click" this.handleCreatePayoutButtonClick}}
-          type="submit"
-          data-test-continue-button
-        >
-          Withdraw $100
-        </PrimaryButtonWithSpinner>
+  {{#if this.payoutWasCreated}}
+    <div class="p-8 flex flex-col items-center justify-center">
+      {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-4"}}
+      <div class="text-gray-600 text-center mb-6">
+        Payout initiated.
+        <br /><br />We'll email you if anything goes wrong.
       </div>
+
+      <SecondaryButton @size="small" {{on "click" @onClose}}>
+        Back to referrals page
+      </SecondaryButton>
     </div>
+
+  {{else}}
+    <div class="grid grid-cols-2 gap-2">
+      <ReferralsPage::CreatePayoutModal::PayoutMethodCard
+        @name="PayPal"
+        @imageUrl="/assets/images/payout-method-logos/paypal.svg"
+        {{on "click" (fn this.handlePayoutMethodClick "paypal")}}
+        @isSelected={{eq this.selectedPayoutMethod "paypal"}}
+      />
+
+      <ReferralsPage::CreatePayoutModal::PayoutMethodCard
+        @name="Amazon Gift Card"
+        @isDisabled={{true}}
+        @imageUrl="/assets/images/payout-method-logos/amazon-com.png"
+      />
+    </div>
+
+    {{#if (eq this.selectedPayoutMethod "paypal")}}
+      <ReferralsPage::CreatePayoutModal::PaypalPayoutForm class="mt-8" @onSubmit={{this.handlePayoutCreated}} />
+    {{/if}}
   {{/if}}
 </ModalBody>
