@@ -1,7 +1,9 @@
-import Model from '@ember-data/model';
-import { attr, belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import { inject as service } from '@ember/service';
 
 export default class RepositoryModel extends Model {
+  @service serverVariables;
+
   @belongsTo('course', { async: false }) course;
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
   @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;
@@ -100,6 +102,14 @@ export default class RepositoryModel extends Model {
 
   get defaultReadmeUrl() {
     return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.betaOrLiveLanguages.firstObject.slug}`;
+  }
+
+  get progressBannerUrl() {
+    if (this.id) {
+      return `${this.serverVariables.get('serverUrl')}/progress/${this.course.slug}/${this.id}`;
+    } else {
+      return null;
+    }
   }
 
   get readmeUrl() {

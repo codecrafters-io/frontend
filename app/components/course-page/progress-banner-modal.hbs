@@ -1,0 +1,13 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} @class="w-full" data-test-progress-banner-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-6">
+    Progress Banner
+  </div>
+
+  <img src={{@repository.progressBannerUrl}} alt="Progress Banner" class="w-full mb-4" height="97" width="480" />
+
+  <div class="prose mb-4">
+    Want to share your progress live? Copy this image URL:
+  </div>
+
+  <CopyableCode @code={{@repository.progressBannerUrl}} />
+</ModalBody>
