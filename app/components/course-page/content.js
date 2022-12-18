@@ -8,6 +8,7 @@ export default class CoursePageContentComponent extends Component {
   @tracked currentCourseStageForSolutionModal;
   @tracked courseStageSolutionModalIntent;
   @tracked isConfiguringGithubIntegration = false;
+  @tracked isViewingProgressBanner = false;
   @service('current-user') currentUserService;
   @service router;
 
@@ -32,6 +33,12 @@ export default class CoursePageContentComponent extends Component {
     this.currentCourseStageForSolutionModal = null;
     this.courseStageSolutionModalIntent = null;
     this.isConfiguringGithubIntegration = false;
+    this.isViewingProgressBanner = false;
+  }
+
+  @action
+  async handleViewProgressBannerButtonClick() {
+    this.isViewingProgressBanner = true;
   }
 
   @action

@@ -3,6 +3,7 @@
   @repositories={{@repositories}}
   @activeRepository={{@activeRepository}}
   @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
+  @onViewProgressBannerButtonClick={{this.handleViewProgressBannerButtonClick}}
 />
 
 <div class="flex">
@@ -41,5 +42,11 @@
 {{#if this.isConfiguringGithubIntegration}}
   <ModalBackdrop>
     <CoursePage::ConfigureGithubIntegrationModal @repository={{@activeRepository}} @onClose={{this.handleModalClose}} />
+  </ModalBackdrop>
+{{/if}}
+
+{{#if this.isViewingProgressBanner}}
+  <ModalBackdrop>
+    <CoursePage::ProgressBannerModal @repository={{@activeRepository}} @onClose={{this.handleModalClose}} />
   </ModalBackdrop>
 {{/if}}

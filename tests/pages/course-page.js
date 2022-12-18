@@ -39,6 +39,11 @@ export default create({
   leaderboard: Leaderboard,
   repositoryDropdown: RepositoryDropdown,
   privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
+
+  progressBannerModal: {
+    scope: '[data-test-progress-banner-modal]',
+  },
+
   setupItem: SetupItem,
 
   get setupItemIsActive() {

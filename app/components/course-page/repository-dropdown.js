@@ -11,6 +11,20 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
   @service router;
   @tracked gitRepositoryURLWasCopiedRecently;
 
+  get currentUser() {
+    return this.currentUserService.record;
+  }
+
+  @action
+  async handleCopyGifBannerButtonClick(dropdownActions) {
+    if (this.args.activeRepository.isNew) {
+      return;
+    }
+
+    dropdownActions.close();
+    this.args.onViewProgressBannerButtonClick();
+  }
+
   @action
   async handleCopyGitRepositoryURLClick() {
     if (this.args.activeRepository.isNew) {
