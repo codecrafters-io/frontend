@@ -33,5 +33,7 @@ export default createPage({
     scope: '[data-test-initiate-payout-button]',
   },
 
+  payoutHistoryItems: collection('[data-test-payout-history-item]'),
+
   visit: visitable('/refer'),
 });
