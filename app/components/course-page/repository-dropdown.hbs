@@ -41,7 +41,7 @@
 
           {{#if (and @activeRepository.progressBannerUrl this.currentUser.isStaff)}}
             <CoursePage::RepositoryDropdownAction @icon="photograph" {{on "click" (fn this.handleCopyGifBannerButtonClick dd.actions)}}>
-              Copy GIF Banner
+              GIF Banner
             </CoursePage::RepositoryDropdownAction>
           {{/if}}
 

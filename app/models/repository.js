@@ -16,6 +16,7 @@ export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
   @attr('date') createdAt;
   @attr('string') name;
+  @attr('string') progressBannerUrl;
   @attr('string') starterRepositoryUrl;
 
   get cloneDirectory() {
@@ -102,14 +103,6 @@ export default class RepositoryModel extends Model {
 
   get defaultReadmeUrl() {
     return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.betaOrLiveLanguages.firstObject.slug}`;
-  }
-
-  get progressBannerUrl() {
-    if (this.id) {
-      return `${this.serverVariables.get('serverUrl')}/progress/${this.course.slug}/${this.id}`;
-    } else {
-      return null;
-    }
   }
 
   get readmeUrl() {
