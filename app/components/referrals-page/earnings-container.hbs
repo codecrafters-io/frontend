@@ -7,27 +7,12 @@
           <td class="font-semibold text-gray-700 py-2 text-right w-full" data-test-total-earnings-amount>${{this.totalEarningsAmountInDollars}}</td>
         </tr>
         {{#each this.lineItems as |item|}}
-          <tr class="border-b border-gray-100" data-test-line-item>
-            <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
-              <div class="flex items-center">
-                <span class="mr-1" data-test-line-item-title>
-                  {{item.title}}
-                </span>
-
-                <div>
-                  {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
-                  <EmberTooltip @text={{item.helpText}} />
-                </div>
-              </div>
-            </td>
-            <td class="text-gray-600 py-2 text-right w-full" data-test-line-item-amount>
-              {{#if this.isLoadingPayouts}}
-                <span class="animate-pulse text-gray-300 text-xs">Loading...</span>
-              {{else}}
-                ${{item.amountInDollars}}
-              {{/if}}
-            </td>
-          </tr>
+          <ReferralsPage::EarningsContainer::LineItem
+            @title={{item.title}}
+            @helpText={{item.helpText}}
+            @isLoading={{this.isLoadingPayouts}}
+            @amountInDollars={{item.amountInDollars}}
+          />
         {{/each}}
       </tbody>
     </table>
@@ -55,6 +40,51 @@
   {{else}}
     <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
       When your earnings are ready to withdraw, you'll be able to view details here.
+    </div>
+  {{/if}}
+
+  {{#if (gt this.currentUser.referralEarningsPayouts.length 0)}}
+    <div class="mt-6">
+      <div class="mb-3">
+        <div class="inline-flex border-b border-teal-500 uppercase text-teal-500 font-bold text-sm">
+          Payout History
+        </div>
+      </div>
+      <table class="max-w-xs">
+        <tbody>
+          {{#each this.currentUser.referralEarningsPayouts as |payout|}}
+            <tr class="border-b" data-test-payout-history-item>
+              <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
+                {{moment-format payout.createdAt "LL"}}
+
+                {{#if payout.statusIsProcessing}}
+                  <div class="inline-flex flex-shrink-0 ml-1">
+                    <span
+                      class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
+                    >Processing</span>
+                    <EmberTooltip @text="Payouts can take upto 10 days to process." />
+                  </div>
+                {{else if payout.statusIsCompleted}}
+                  <div class="inline-flex flex-shrink-0 ml-1">
+                    <span
+                      class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
+                    >Completed</span>
+                    <EmberTooltip @text="This payout has been processed." />
+                  </div>
+                {{else if payout.statusIsFailed}}
+                  <div class="inline-flex flex-shrink-0 ml-1">
+                    <span
+                      class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
+                    >Failed</span>
+                    <EmberTooltip @text={{concat "This payout failed. Reason: " payout.lastFailureReason}} />
+                  </div>
+                {{/if}}
+              </td>
+              <td class="text-gray-700 py-2 text-right w-full">${{payout.amountInDollars}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
     </div>
   {{/if}}
 
