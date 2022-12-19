@@ -9,6 +9,6 @@ export default class ReferralLinksContainerComponent extends Component {
   }
 
   get referralLink() {
-    return this.currentUser.referralLinks[0];
+    return this.currentUser.referralLinks.firstObject;
   }
 }
