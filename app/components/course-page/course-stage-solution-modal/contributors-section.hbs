@@ -13,7 +13,7 @@
     </div>
   {{/if}}
 
-  {{#if @solution.reviewersDetails.firstObject}}
+  {{#if (gt @solution.reviewersDetails.length 0)}}
     <div class="flex-shrink-0">
       <div class="flex items-center gap-x-1 mb-2">
         <div class="text-gray-400 uppercase text-xs font-bold tracking-wider">
