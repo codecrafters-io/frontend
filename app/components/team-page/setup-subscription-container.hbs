@@ -1,5 +1,5 @@
 <TeamPage::Section @title="Subscription" data-test-setup-subscription-container ...attributes>
-  {{#if (get @team.pilots "0")}}
+  {{#if (gt @team.pilots.length 0)}}
     <div class="text-gray-600 text-sm leading-6 mb-4" data-test-pilot-details-text>
       {{#if @team.activePilot}}
         Your team's pilot is valid until

@@ -34,7 +34,7 @@
     </button>
   </div>
 
-  {{#if (get @currentTeams "0")}}
+  {{#if (gt @currentTeams.length 0)}}
     <div class="mt-4 text-gray-700 text-xs prose">
       {{html-safe this.currentTeamsHTML}}
     </div>

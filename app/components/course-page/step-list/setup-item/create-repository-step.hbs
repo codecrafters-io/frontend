@@ -44,7 +44,7 @@
     </div>
 
     <AnimatedContainer>
-      {{#animated-if (get this.requestedAndUnsupportedLanguages "0") use=this.requestedLanguagesPromptTransition}}
+      {{#animated-if (gt this.requestedAndUnsupportedLanguages.length 0) use=this.requestedLanguagesPromptTransition}}
         <CoursePage::StepList::SetupItem::RequestedLanguagesPrompt @requestedAndUnsupportedLanguages={{this.requestedAndUnsupportedLanguages}} />
       {{/animated-if}}
     </AnimatedContainer>

@@ -78,7 +78,7 @@
             </div>
           {{/unless}}
         </div>
-        {{#if (get this.nonActiveRepositories "0")}}
+        {{#if (gt this.nonActiveRepositories.length 0)}}
           <div class="pl-3 text-sm">
             <div class="font-bold text-gray-600 mb-2 mt-3">
               Switch to a different repo:

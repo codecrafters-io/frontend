@@ -12,7 +12,7 @@
       </span>
     </div>
     <div>
-      {{#if (get this.currentUserTeams "0")}}
+      {{#if (gt this.currentUserTeams.length 0)}}
         <CourseLeaderboardTeamDropdown @team={{this.team}} @teams={{this.currentUserTeams}} @onChange={{this.handleTeamChange}} />
       {{/if}}
     </div>
