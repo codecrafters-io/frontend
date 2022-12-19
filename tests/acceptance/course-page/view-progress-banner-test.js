@@ -2,7 +2,7 @@ import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -34,5 +34,7 @@ module('Acceptance | course-page | view-progress-banner', function (hooks) {
     await coursePage.repositoryDropdown.clickOnAction('Copy GIF Banner');
 
     assert.ok(coursePage.progressBannerModal.isVisible);
+
+    await animationsSettled();
   });
 });
