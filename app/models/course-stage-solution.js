@@ -1,5 +1,4 @@
-import { attr, belongsTo } from '@ember-data/model';
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseStageSolutionModel extends Model {
   @belongsTo('course-stage', { async: false }) courseStage;
@@ -10,15 +9,10 @@ export default class CourseStageSolutionModel extends Model {
   @attr('') reviewersDetails; // free-form JSON
 
   get hasContributorDetails() {
-    return this.authorDetails || this.reviewerDetails;
+    return this.authorDetails || (this.reviewersDetails && this.reviewersDetails.firstObject);
   }
 
   get hasExplanation() {
     return !!this.explanationMarkdown;
-  }
-
-  // For now we only support one reviewer, might have more in the future
-  get reviewerDetails() {
-    return this.reviewersDetails ? this.reviewersDetails.firstObject : null;
   }
 }
