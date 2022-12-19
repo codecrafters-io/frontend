@@ -16,7 +16,7 @@ export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
   @attr('date') createdAt;
   @attr('string') name;
-  @attr('progressBannerUrl') progressBannerUrl;
+  @attr('string') progressBannerUrl;
   @attr('string') starterRepositoryUrl;
 
   get cloneDirectory() {
