@@ -4,6 +4,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { animationsSettled } from 'ember-animated/test-support';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
