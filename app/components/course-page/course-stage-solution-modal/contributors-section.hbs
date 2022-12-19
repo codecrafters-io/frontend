@@ -27,9 +27,11 @@
         {{svg-jar "badge-check" class="w-5 fill-current text-teal-500"}}
       </div>
 
-      {{#each @solution.reviewersDetails as |reviewerDetails|}}
-        <ExternalContributorCard @contributorDetails={{reviewerDetails}} />
-      {{/each}}
+      <div class="flex items-center gap-2 flex-wrap">
+        {{#each @solution.reviewersDetails as |reviewerDetails|}}
+          <ExternalContributorCard @contributorDetails={{reviewerDetails}} />
+        {{/each}}
+      </div>
     </div>
   {{/if}}
 </div>
