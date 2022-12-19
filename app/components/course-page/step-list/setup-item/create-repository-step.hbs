@@ -20,7 +20,7 @@
     </div>
   {{else}}
     <div class="flex items-center flex-wrap">
-      {{#if (and this.preferredLanguages.firstObject (not this.shouldShowNonPreferredLanguages))}}
+      {{#if (and (gt this.preferredLanguages.length 0) (not this.shouldShowNonPreferredLanguages))}}
         {{#each this.preferredLanguages as |language|}}
           <CoursePage::StepList::SetupItem::LanguageButton @language={{language}} {{on "click" (fn this.handleLanguageButtonClick language)}} />
         {{/each}}
@@ -44,7 +44,7 @@
     </div>
 
     <AnimatedContainer>
-      {{#animated-if this.requestedAndUnsupportedLanguages.firstObject use=this.requestedLanguagesPromptTransition}}
+      {{#animated-if (get this.requestedAndUnsupportedLanguages "0") use=this.requestedLanguagesPromptTransition}}
         <CoursePage::StepList::SetupItem::RequestedLanguagesPrompt @requestedAndUnsupportedLanguages={{this.requestedAndUnsupportedLanguages}} />
       {{/animated-if}}
     </AnimatedContainer>

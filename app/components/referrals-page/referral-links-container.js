@@ -7,4 +7,8 @@ export default class ReferralLinksContainerComponent extends Component {
   get currentUser() {
     return this.currentUserService.record;
   }
+
+  get referralLink() {
+    return this.currentUser.referralLinks[0];
+  }
 }

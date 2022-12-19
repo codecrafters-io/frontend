@@ -3,7 +3,7 @@
     {{! template-lint-disable require-input-label }}
     <Input
       @value={{this.searchQuery}}
-      placeholder={{if this.selectedLanguages.firstObject "Change requested languages..." "Request languages..."}}
+      placeholder={{if (gt this.selectedLanguages.length 0) "Change requested languages..." "Request languages..."}}
       class="py-2 text-gray-700 placeholder-gray-400 text-xs outline-none w-full"
       {{did-insert this.handleInputDidInsert}}
     />

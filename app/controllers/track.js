@@ -15,4 +15,8 @@ export default class TrackController extends Controller {
   get sortedCourses() {
     return this.courses.sortBy('sortPositionForTrack');
   }
+
+  get testimonials() {
+    return this.sortedCourses[0].testimonials;
+  }
 }

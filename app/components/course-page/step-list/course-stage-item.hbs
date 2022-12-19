@@ -53,19 +53,16 @@
       />
     {{/if}}
 
-    <AnimatedContainer>
-      {{#animated-if this.shouldShowFirstStageHints use=this.transition}}
-        <CoursePage::StepList::CourseStageItem::FirstStageHint
-          @courseStage={{@courseStage}}
-          @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
-          @repository={{@repository}}
-          class="mt-6"
-        />
-      {{else if this.shouldShowCLIUsageInstructions}}
-        <CoursePage::StepList::CourseStageItem::CliUsageInstructions class="mt-6" />
-      {{/animated-if}}
-    </AnimatedContainer>
-
+    {{#if this.shouldShowFirstStageHints}}
+      <CoursePage::StepList::CourseStageItem::FirstStageHint
+        @courseStage={{@courseStage}}
+        @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
+        @repository={{@repository}}
+        class="mt-6"
+      />
+    {{else if this.shouldShowCLIUsageInstructions}}
+      <CoursePage::StepList::CourseStageItem::CliUsageInstructions class="mt-6" />
+    {{/if}}
   </:content>
 
   <:footerContent>
