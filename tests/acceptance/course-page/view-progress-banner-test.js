@@ -25,13 +25,14 @@ module('Acceptance | course-page | view-progress-banner', function (hooks) {
       language: python,
       user: currentUser,
       createdAt: new Date(2002),
+      progressBannerUrl: 'https://example.com/progress-banner.png',
     });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.clickOnAction('Copy GIF Banner');
+    await coursePage.repositoryDropdown.clickOnAction('GIF Banner');
 
     assert.ok(coursePage.progressBannerModal.isVisible);
 
