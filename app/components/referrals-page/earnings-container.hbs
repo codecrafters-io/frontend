@@ -7,27 +7,12 @@
           <td class="font-semibold text-gray-700 py-2 text-right w-full" data-test-total-earnings-amount>${{this.totalEarningsAmountInDollars}}</td>
         </tr>
         {{#each this.lineItems as |item|}}
-          <tr class="border-b border-gray-100" data-test-line-item>
-            <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
-              <div class="flex items-center">
-                <span class="mr-1" data-test-line-item-title>
-                  {{item.title}}
-                </span>
-
-                <div>
-                  {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
-                  <EmberTooltip @text={{item.helpText}} />
-                </div>
-              </div>
-            </td>
-            <td class="text-gray-600 py-2 text-right w-full" data-test-line-item-amount>
-              {{#if this.isLoadingPayouts}}
-                <span class="animate-pulse text-gray-300 text-xs">Loading...</span>
-              {{else}}
-                ${{item.amountInDollars}}
-              {{/if}}
-            </td>
-          </tr>
+          <ReferralsPage::EarningsContainer::LineItem
+            @title={{item.title}}
+            @helpText={{item.helpText}}
+            @isLoading={{this.isLoadingPayouts}}
+            @amountInDollars={{item.amountInDollars}}
+          />
         {{/each}}
       </tbody>
     </table>

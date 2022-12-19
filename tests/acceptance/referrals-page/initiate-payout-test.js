@@ -140,18 +140,11 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
     assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
 
     await referralsPage.initiatePayoutButton.click();
-
-    await percySnapshot('Referrals Page | Create Payout Modal');
-
     await referralsPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
-
-    await percySnapshot('Referrals Page | Create Payout Modal | Paypal Form');
 
     await referralsPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
     await referralsPage.createPayoutModal.paypalPayoutForm.amountInput.fillIn('100');
     await referralsPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
-
-    await percySnapshot('Referrals Page | Create Payout Modal | Paid out');
 
     await referralsPage.createPayoutModal.backToReferralsPageButton.click();
 
@@ -161,7 +154,5 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
     assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$100', 'paid out amount is correct');
 
     assert.strictEqual(this.server.schema.referralEarningsPayouts.all().models.length, 1, 'payout is created');
-
-    await percySnapshot('Referrals Page | Payout initiated');
   });
 });
