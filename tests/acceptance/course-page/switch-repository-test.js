@@ -1,4 +1,5 @@
-import { setupAnimationTest } from 'ember-animated/test-support';
+// eslint-disable-next-line ember/no-test-import-export
+import { setupAnimationTest } from 'codecrafters-frontend/tests/support/animation-helpers';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';

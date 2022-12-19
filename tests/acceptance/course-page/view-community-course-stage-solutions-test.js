@@ -2,7 +2,8 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'codecrafters-frontend/tests/support/animation-helpers';
+import { animationsSettled } from 'ember-animated/test-support';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import percySnapshot from '@percy/ember';
 import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';

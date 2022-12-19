@@ -3,7 +3,7 @@ import referralLinkPage from 'codecrafters-frontend/tests/pages/referral-link-pa
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'codecrafters-frontend/tests/support/animation-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';

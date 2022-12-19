@@ -1,7 +1,7 @@
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import referralLinkPage from 'codecrafters-frontend/tests/pages/referral-link-page';
 import { currentURL } from '@ember/test-helpers';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'codecrafters-frontend/tests/support/animation-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
