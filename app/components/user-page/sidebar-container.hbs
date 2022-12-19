@@ -13,7 +13,7 @@
     {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
   </a>
 
-  {{#if (get @user.completedCourseParticipations "0")}}
+  {{#if (gt @user.completedCourseParticipations.length 0)}}
     <div class="mb-4 flex items-center space-x-1.5">
       {{#each @user.languagesFromCompletedCourseParticipations as |language|}}
         <LanguageLogo @language={{language}} @variant="teal" class="h-6" />
