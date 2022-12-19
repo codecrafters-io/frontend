@@ -17,13 +17,19 @@
     <div class="flex-shrink-0">
       <div class="flex items-center gap-x-1 mb-2">
         <div class="text-gray-400 uppercase text-xs font-bold tracking-wider">
-          Reviewer
+          {{#if (gt @solution.reviewersDetails.length 1)}}
+            Reviewers
+          {{else}}
+            Reviewer
+          {{/if}}
         </div>
 
         {{svg-jar "badge-check" class="w-5 fill-current text-teal-500"}}
       </div>
 
-      <ExternalContributorCard @contributorDetails={{@solution.reviewerDetails}} />
+      {{#each @solution.reviewersDetails as |reviewerDetails|}}
+        <ExternalContributorCard @contributorDetails={{reviewerDetails}} />
+      {{/each}}
     </div>
   {{/if}}
 </div>
