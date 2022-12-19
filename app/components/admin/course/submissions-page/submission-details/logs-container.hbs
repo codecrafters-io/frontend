@@ -3,7 +3,7 @@
 </div>
 
 <div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded mb-4">
-  {{#if @submission.evaluations.firstObject}}
+  {{#if (get @submission.evaluations "0")}}
     {{#each this.logLines as |logLine index|}}
       <div class="flex items-center">
         <div class="text-gray-500 w-4 text-right mr-3">{{add index 1}}</div>
