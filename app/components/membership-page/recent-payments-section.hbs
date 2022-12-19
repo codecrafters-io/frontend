@@ -4,7 +4,7 @@
       <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
       <span class="ml-3 text-gray-700">Loading recent payments...</span>
     </div>
-  {{else if this.charges.firstObject}}
+  {{else if (gt this.charges.length 0)}}
     <div class="grid grid-cols-3 gap-y-3">
       {{! Header }}
       <div class="border-b pb-2 text-gray-500 text-sm">Date</div>

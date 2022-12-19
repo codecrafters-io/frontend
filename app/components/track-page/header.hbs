@@ -13,7 +13,7 @@
         <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
       {{/if}}
 
-      {{#if this.topParticipants.firstObject}}
+      {{#if (gt this.topParticipants.length 0)}}
         <div class="flex items-center">
           <div class="flex -space-x-1 hover:space-x-1 items-center">
             {{#each this.topParticipants as |user|}}

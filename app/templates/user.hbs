@@ -6,7 +6,7 @@
     <UserPage::SidebarContainer class="md:-my-24 w-48 flex-shrink-0" @user={{this.model}} />
 
     <div class="flex-grow md:ml-8 mt-8">
-      {{#if this.model.courseParticipations.firstObject}}
+      {{#if (gt this.model.courseParticipations.length 0)}}
         <UserPage::CourseProgressList @user={{this.model}} class="mb-16" />
         <UserPage::ActivityContainer @user={{this.model}} class="mb-16" />
       {{else}}

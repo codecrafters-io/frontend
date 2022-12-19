@@ -15,7 +15,7 @@
 
       {{! TODO: Show testimonials for track instead of courses? }}
       <div class="mx-6">
-        {{#each this.sortedCourses.firstObject.testimonials as |testimonial|}}
+        {{#each this.testimonials as |testimonial|}}
           <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
         {{/each}}
       </div>

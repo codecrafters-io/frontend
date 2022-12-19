@@ -11,7 +11,7 @@
     {{/if}}
   </div>
 
-  {{#if @repositories.firstObject}}
+  {{#if (gt @repositories.length 0)}}
     <div>
       <CoursePage::RepositoryDropdown
         @repositories={{@repositories}}

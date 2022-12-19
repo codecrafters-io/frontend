@@ -70,7 +70,7 @@
     </div>
   {{/if}}
 
-  {{#if this.sortedChildComments.firstObject}}
+  {{#if (gt this.sortedChildComments.length 0)}}
     <div class="bg-gray-50 py-2 px-4 border-t border-gray-200 {{if this.shouldShowReplyForm '' 'rounded-b'}}">
       {{#each this.sortedChildComments as |childComment|}}
         <div class="flex items-start">
