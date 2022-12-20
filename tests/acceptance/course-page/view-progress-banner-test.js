@@ -32,7 +32,7 @@ module('Acceptance | course-page | view-progress-banner', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.clickOnAction('GIF Banner');
+    await coursePage.repositoryDropdown.clickOnAction('Progress Banner');
 
     assert.ok(coursePage.progressBannerModal.isVisible);
 
