@@ -186,4 +186,49 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     );
     assertButtons(['View comments', 'Another language', 'Reveal Python solutions']);
   });
+
+  test('can view team-restricted solutions', async function (assert) {
+    testScenario(this.server);
+
+    const currentUser = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const teamMember = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    const otherUser = this.server.create('user', {
+      avatarUrl: 'https://github.com/rohitpaulk.png',
+      createdAt: new Date(),
+      githubUsername: 'rohitpaulk',
+      username: 'rohitpaulk',
+    });
+
+    signIn(this.owner, this.server, currentUser);
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let teamMemberSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    teamMemberSolution.update({ user: teamMember, isRestrictedToTeam: true });
+    let otherUserSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    otherUserSolution.update({ user: otherUser });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
+  });
 });
