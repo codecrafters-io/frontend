@@ -1,5 +1,4 @@
-import { attr, belongsTo } from '@ember-data/model';
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class CommunityCourseStageSolutionModel extends Model {
   @belongsTo('course-stage', { async: false }) courseStage;
@@ -8,4 +7,5 @@ export default class CommunityCourseStageSolutionModel extends Model {
 
   @attr('') changedFiles; // free-form JSON
   @attr('date') submittedAt;
+  @attr('boolean') isRestrictedToTeam; // if true, only fellow team members can see this solution
 }
