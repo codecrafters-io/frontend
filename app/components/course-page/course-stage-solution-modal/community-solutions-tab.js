@@ -62,6 +62,6 @@ export default class CommunitySolutionsTabComponent extends Component {
   }
 
   get sortedSolutions() {
-    return this.solutions.sortBy('submittedAt').reverse();
+    return this.solutions; // For now, the API handles sorting
   }
 }
