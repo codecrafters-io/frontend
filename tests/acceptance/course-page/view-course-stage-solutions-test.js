@@ -144,6 +144,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     };
 
     // Stage 2: (Completed, has solutions & comments)
+    await coursePage.collapsedItems[1].click();
+    await animationsSettled();
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
 
     assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
