@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { later } from '@ember/runloop';
+import { later, next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import { next } from '@ember/runloop';
-import { SetupItem, CourseStageItem, CourseCompletedItem } from 'codecrafters-frontend/lib/step-list';
+import { CourseCompletedItem, CourseStageItem, SetupItem } from 'codecrafters-frontend/lib/step-list';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import fade from 'ember-animated/transitions/fade';
 
@@ -47,11 +46,7 @@ export default class CoursePageContentStepListComponent extends Component {
     let highestCompletedStage = this.repository.highestCompletedStage;
 
     if (highestCompletedStage) {
-      if (highestCompletedStage.isFirst || this.repository.hasClosedCourseStageFeedbackSubmissionFor(highestCompletedStage)) {
-        return this.repository.highestCompletedStage.position + 1;
-      } else {
-        return this.repository.highestCompletedStage.position;
-      }
+      return this.repository.highestCompletedStage.position + 1;
     } else {
       return 1;
     }
@@ -120,6 +115,9 @@ export default class CoursePageContentStepListComponent extends Component {
     }
 
     if (!this.activeItem.shouldAdvanceToNextItemAutomatically) {
+      this.selectedItemIndex = this.activeItemIndex;
+      this.updateActiveItemIndex(newActiveItemIndex);
+
       return;
     }
 
