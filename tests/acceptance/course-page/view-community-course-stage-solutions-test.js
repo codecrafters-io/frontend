@@ -137,6 +137,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     };
 
     // Stage 2: (Completed, has solutions & comments)
+    await coursePage.collapsedItems[2].click();
+    await animationsSettled();
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     await percySnapshot('Community Solutions');
 

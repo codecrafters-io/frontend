@@ -42,6 +42,11 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', '4th is expanded');
+
+    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await animationsSettled();
+
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd is expanded');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
@@ -103,6 +108,11 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
+
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '4th is expanded');
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', '2nd stage is expanded');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
