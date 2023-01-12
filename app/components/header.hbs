@@ -13,7 +13,7 @@
       </div>
 
       {{! Nav Toggle on Mobile }}
-      <button class="md:hidden text-gray-600 pl-10 pr-3 py-3 focus:outline-none" type="button" {{on "click" this.toggleMobileMenu}}>
+      <button class="md:hidden text-gray-600 pl-10 py-3 focus:outline-none" type="button" {{on "click" this.toggleMobileMenu}}>
         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
           <path
             class="heroicon-ui"
@@ -66,7 +66,7 @@
 
     {{! Mobile }}
     {{#if this.mobileMenuIsExpanded}}
-      <div class="md:hidden flex-col items-center flex-grow px-3">
+      <div class="md:hidden flex-col items-center flex-grow">
         <div class="bg-gray-300 h-px w-full">
         </div>
 
