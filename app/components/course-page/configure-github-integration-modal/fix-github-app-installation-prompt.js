@@ -10,7 +10,7 @@ export default class FixGithubAppInstallationPromptComponent extends Component {
   @action
   async handleRefreshStatusButtonClick() {
     this.isRefreshing = true;
-    await this.store.findRecord('github-app-installation', this.args.githubAppInstallation.id);
+    await this.store.findRecord('github-app-installation', this.args.githubAppInstallation.id, { reload: true });
     this.isRefreshing = false;
 
     this.args.onStatusRefresh();

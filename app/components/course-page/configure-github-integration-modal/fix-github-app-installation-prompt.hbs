@@ -3,12 +3,21 @@
 
   <div class="text-red-700 text-sm leading-relaxed">
     <div class="mb-3 leading-relaxed">
-      We've detected problems with your GitHub app installation. Visit
-      <a href="{{@githubAppInstallation.githubConfigureUrl}}" target="_blank" rel="noopener noreferrer" class="font-semibold underline">this link</a>
-      to fix your installation settings. Once done, click on the "Refresh status" button below.
+      {{#if this.isRefreshing}}
+        Refreshing status...
+      {{else}}
+        We've detected problems with your GitHub app installation. Visit
+        <a href="{{@githubAppInstallation.githubConfigureUrl}}" target="_blank" rel="noopener noreferrer" class="font-semibold underline">this link</a>
+        to fix your installation settings. Once done, click on the "Refresh status" button below.
+      {{/if}}
     </div>
     <div>
-      <TertiaryButton @size="small" {{on "click" this.handleRefreshStatusButtonClick}} data-test-refresh-status-button>
+      <TertiaryButton
+        @shouldShowSpinner={{this.isRefreshing}}
+        @size="small"
+        {{on "click" this.handleRefreshStatusButtonClick}}
+        data-test-refresh-status-button
+      >
         Refresh Status
       </TertiaryButton>
     </div>
