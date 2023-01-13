@@ -5,6 +5,11 @@ export default class GithubAppInstallation extends Model {
   @belongsTo('user', { async: false }) user;
 
   @attr('string') githubConfigureUrl;
+  @attr('string') status;
+
+  get isUninstalled() {
+    return this.status === 'uninstalled';
+  }
 }
 
 GithubAppInstallation.prototype.fetchAccessibleRepositories = memberAction({

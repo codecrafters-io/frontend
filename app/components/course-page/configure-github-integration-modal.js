@@ -85,11 +85,6 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   }
 
   @action
-  handleInstallGitHubAppButtonClick() {
-    window.location.href = `/github_app_installations/start?repository_id=${this.args.repository.id}`;
-  }
-
-  @action
   async handlePublishButtonClick() {
     let repositoryIsRecentlyCreated = new Date() - this.selectedRepository.createdAt < 1000 * 60 * 60;
 

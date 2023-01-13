@@ -76,6 +76,7 @@
         {{else}}
           <CoursePage::ConfigureGithubIntegrationModal::FixGithubAppInstallationPrompt
             @githubAppInstallation={{this.githubAppInstallation}}
+            @repository={{@repository}}
             @onStatusRefresh={{this.loadResources}}
           />
         {{/if}}
