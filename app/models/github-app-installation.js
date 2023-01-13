@@ -1,11 +1,19 @@
-import { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
-import Model from '@ember-data/model';
 
 export default class GithubAppInstallation extends Model {
   @belongsTo('user', { async: false }) user;
 
   @attr('string') githubConfigureUrl;
+  @attr('string') status;
+
+  get isUninstalled() {
+    return this.status === 'uninstalled';
+  }
+
+  get isBroken() {
+    return this.status && this.status !== 'active';
+  }
 }
 
 GithubAppInstallation.prototype.fetchAccessibleRepositories = memberAction({

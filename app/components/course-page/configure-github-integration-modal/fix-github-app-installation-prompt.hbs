@@ -1,0 +1,43 @@
+<div class="border rounded flex items-start p-4 border-red-300 bg-red-50" data-test-fix-github-app-installation-prompt ...attributes>
+  {{svg-jar "exclamation" class="w-8 h-8 mr-2 mt-2 flex-shrink-0 text-red-400"}}
+
+  <div class="text-red-700 text-sm leading-relaxed">
+    {{#if @githubAppInstallation.isUninstalled}}
+      <div class="mb-3 leading-relaxed">
+        Looks like the CodeCrafters GitHub app was uninstalled from your account. Click below to reinstall it.
+      </div>
+
+      <div>
+        <TertiaryButton
+          @shouldShowSpinner={{this.isRefreshing}}
+          @size="small"
+          {{on "click" this.handleInstallGitHubAppButtonClick}}
+          data-test-reinstall-github-app-button
+        >
+          Reinstall GitHub app
+        </TertiaryButton>
+      </div>
+    {{else}}
+      <div class="mb-3 leading-relaxed">
+        {{#if this.isRefreshing}}
+          Refreshing status...
+        {{else}}
+          We've detected problems with your GitHub app installation. Visit
+          <a href="{{@githubAppInstallation.githubConfigureUrl}}" target="_blank" rel="noopener noreferrer" class="font-semibold underline">this link</a>
+          to fix your installation settings. Once done, click on the "Refresh status" button below.
+        {{/if}}
+      </div>
+
+      <div>
+        <TertiaryButton
+          @shouldShowSpinner={{this.isRefreshing}}
+          @size="small"
+          {{on "click" this.handleRefreshStatusButtonClick}}
+          data-test-refresh-status-button
+        >
+          Refresh Status
+        </TertiaryButton>
+      </div>
+    {{/if}}
+  </div>
+</div>

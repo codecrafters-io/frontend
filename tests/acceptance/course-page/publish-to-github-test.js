@@ -41,6 +41,53 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
   });
 
+  test('can view broken GitHub installation if sync was not setup', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    // This happens when you access repositories for the first time.
+    this.server.create('github-app-installation', { user: currentUser, status: 'active', githubConfigureUrl: 'https://google.com/' });
+
+    this.server.get('/github-app-installations/:id/accessible-repositories', function () {
+      return [];
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
+
+    assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
+    assert.ok(coursePage.configureGithubIntegrationModal.fixGitHubAppInstallationPrompt.isVisible, 'fix github app installation prompt is visible');
+
+    this.server.get('/github-app-installations/:id/accessible-repositories', function () {
+      return [
+        { id: 564057934, full_name: 'rohitpaulk/cc-publish-test', created_at: '2022-11-09T22:40:59Z' },
+        { id: 564057935, full_name: 'rohitpaulk/other-repo', created_at: '2022-10-08T22:40:59Z' },
+      ];
+    });
+
+    await coursePage.configureGithubIntegrationModal.fixGitHubAppInstallationPrompt.refreshStatusButton.click();
+
+    assert.notOk(
+      coursePage.configureGithubIntegrationModal.fixGitHubAppInstallationPrompt.isVisible,
+      'fix github app installation prompt is not visible'
+    );
+  });
+
   test('can complete GitHub integration setup', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
