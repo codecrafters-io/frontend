@@ -41,7 +41,7 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
   });
 
-  test('can view broken GitHub installation', async function (assert) {
+  test('can view broken GitHub installation if sync was not setup', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 

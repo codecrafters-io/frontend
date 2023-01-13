@@ -10,6 +10,10 @@ export default class GithubAppInstallation extends Model {
   get isUninstalled() {
     return this.status === 'uninstalled';
   }
+
+  get isBroken() {
+    return this.status && this.status !== 'active';
+  }
 }
 
 GithubAppInstallation.prototype.fetchAccessibleRepositories = memberAction({

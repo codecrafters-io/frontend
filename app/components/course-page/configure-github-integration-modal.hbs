@@ -9,8 +9,17 @@
       <span class="ml-3 text-gray-700">Loading...</span>
     </div>
   {{else if (and this.githubRepositorySyncConfiguration (not this.githubRepositorySyncConfiguration.isNew))}}
+    {{#if this.githubAppInstallation.isBroken}}
+      <CoursePage::ConfigureGithubIntegrationModal::FixGithubAppInstallationPrompt
+        @githubAppInstallation={{this.githubAppInstallation}}
+        @repository={{@repository}}
+        @onStatusRefresh={{this.loadResources}}
+      />
+    {{/if}}
+
     <div class="py-16 flex flex-col items-center justify-center">
       {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
+
       <div class="text-gray-600 text-center mb-6">
         This repository is configured to publish to
         <a
@@ -22,6 +31,10 @@
           {{svg-jar "github" class="fill-current w-4 mr-1"}}
           {{this.githubRepositorySyncConfiguration.githubRepositoryName}}
         </a>
+      </div>
+
+      <div class="text-gray-600 text-center mb-6">
+        Code pushed to your CodeCrafters Git repository will automatically be synced to GitHub.
       </div>
 
       <SecondaryButton @size="small" {{on "click" this.handleDisconnectRepositoryButtonClick}} data-test-disconnect-repository-button>
