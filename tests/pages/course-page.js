@@ -31,6 +31,11 @@ export default create({
     clickOnPublishButton: clickable('[data-test-publish-button]'),
     clickOnDisconnectRepositoryButton: clickable('[data-test-disconnect-repository-button]'),
 
+    fixGitHubAppInstallationPrompt: {
+      refreshStatusButton: { scope: '[data-test-refresh-status-button]' },
+      scope: '[data-test-fix-github-app-installation-prompt]',
+    },
+
     scope: '[data-test-configure-github-integration-modal]',
   },
 

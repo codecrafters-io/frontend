@@ -33,70 +33,55 @@
       Automatically sync changes to GitHub and share your progress.
     </div>
 
-    <div class="text-teal-600 border-b font-bold text-lg inline-block mb-3">Step 1: Create a GitHub repository</div>
-
-    <div class="prose mb-6">
-      <p>
-        <a href="https://github.com/new" target="_blank" rel="noopener noreferrer">Visit this link</a>
-        and create a new GitHub repository. We suggest naming it
-        <code>{{this.recommendedRepositoryName}}</code>.
-      </p>
-    </div>
-
-    <div class="text-teal-600 border-b font-bold text-lg inline-block mb-3">
-      {{#if this.githubAppInstallation}}
-        Step 2: Connect your GitHub repository
-      {{else}}
-        Step 2: Install the CodeCrafters GitHub app
-      {{/if}}
-    </div>
+    <CoursePage::ConfigureGithubIntegrationModal::CreateGithubRepositoryStep
+      @repository={{@repository}}
+      @recommendedRepositoryName={{this.recommendedRepositoryName}}
+    />
 
     {{#if this.githubAppInstallation}}
-      <div class="prose mb-3">
-        <p>
-          Select your repository below and click on "Publish".
-        </p>
-      </div>
+      <CoursePage::ConfigureGithubIntegrationModal::Step @title="Step 2: Connect your GitHub repository">
+        {{#if this.selectedRepository}}
+          <div class="prose mb-3">
+            <p>
+              Select your repository below and click on "Publish".
+            </p>
+          </div>
 
-      {{! template-lint-disable require-input-label }}
-      <select class="p-2 border rounded mb-3 block" {{on "change" this.handleRepositoryOptionSelected}}>
-        {{#each this.accessibleRepositoryGroups as |repositoryGroup|}}
-          <optgroup label={{repositoryGroup.title}}>
-            {{#each repositoryGroup.repositories as |repository|}}
-              <option value={{repository.id}} selected={{eq this.selectedRepository.id repository.id}}>{{repository.fullName}}</option>
+          {{! template-lint-disable require-input-label }}
+          <select class="p-2 border rounded mb-3 block" {{on "change" this.handleRepositoryOptionSelected}}>
+            {{#each this.accessibleRepositoryGroups as |repositoryGroup|}}
+              <optgroup label={{repositoryGroup.title}}>
+                {{#each repositoryGroup.repositories as |repository|}}
+                  <option value={{repository.id}} selected={{eq this.selectedRepository.id repository.id}}>{{repository.fullName}}</option>
+                {{/each}}
+              </optgroup>
             {{/each}}
-          </optgroup>
-        {{/each}}
-      </select>
+          </select>
 
-      <PrimaryButtonWithSpinner
-        @shouldShowSpinner={{this.isCreatingGithubRepositorySyncConfiguration}}
-        class="mb-4"
-        {{on "click" this.handlePublishButtonClick}}
-        data-test-publish-button
-      >
-        Publish
-      </PrimaryButtonWithSpinner>
+          <PrimaryButtonWithSpinner
+            @shouldShowSpinner={{this.isCreatingGithubRepositorySyncConfiguration}}
+            class="mb-4"
+            {{on "click" this.handlePublishButtonClick}}
+            data-test-publish-button
+          >
+            Publish
+          </PrimaryButtonWithSpinner>
 
-      <div class="prose mb-4">
-        <p class="text-xs">
-          Can't find your repository? Grant CodeCrafters access to your repository
-          <a href={{this.githubAppInstallation.githubConfigureUrl}} target="_blank" rel="noopener noreferrer">here</a>.
-        </p>
-      </div>
+          <div class="prose mb-4">
+            <p class="text-xs">
+              Can't find your repository? Grant CodeCrafters access to your repository
+              <a href={{this.githubAppInstallation.githubConfigureUrl}} target="_blank" rel="noopener noreferrer">here</a>.
+            </p>
+          </div>
+        {{else}}
+          <CoursePage::ConfigureGithubIntegrationModal::FixGithubAppInstallationPrompt
+            @githubAppInstallation={{this.githubAppInstallation}}
+            @onStatusRefresh={{this.loadResources}}
+          />
+        {{/if}}
+      </CoursePage::ConfigureGithubIntegrationModal::Step>
     {{else}}
-      <div class="prose mb-4">
-        <p>
-          Once you've created the repository on GitHub, install our GitHub app so that CodeCrafters can publish your code to GitHub.
-        </p>
-      </div>
-
-      <PrimaryButton {{on "click" this.handleInstallGitHubAppButtonClick}}>
-        <div class="flex items-center">
-          {{svg-jar "github" class="w-5 h-5 mr-2"}}
-          Install GitHub app
-        </div>
-      </PrimaryButton>
+      <CoursePage::ConfigureGithubIntegrationModal::InstallGithubAppStep @repository={{@repository}} />
     {{/if}}
   {{/if}}
 </ModalBody>

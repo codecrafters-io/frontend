@@ -30,8 +30,6 @@ export default class PaypalPayoutFormComponent extends Component {
     e.preventDefault();
     this.formElement.reportValidity();
 
-    console.log('hey');
-
     if (this.formElement.checkValidity()) {
       this.isCreatingPayout = true;
 

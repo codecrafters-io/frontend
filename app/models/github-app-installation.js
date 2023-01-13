@@ -1,6 +1,5 @@
-import { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
-import Model from '@ember-data/model';
 
 export default class GithubAppInstallation extends Model {
   @belongsTo('user', { async: false }) user;

@@ -50,11 +50,9 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
 
   @action
   async loadResources() {
-    // Already exists, we can reload when the user disconnects
+    // Already exists, we can reload async
     if (this.githubRepositorySyncConfiguration) {
       this.isLoading = false;
-
-      return;
     }
 
     await Promise.all([
@@ -64,7 +62,10 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
 
     if (this.githubAppInstallation) {
       this.accessibleRepositories = await this.githubAppInstallation.fetchAccessibleRepositories();
-      this.selectedRepository = this.accessibleRepositoryGroups[0].repositories[0];
+
+      if (this.accessibleRepositoryGroups.length > 0) {
+        this.selectedRepository = this.accessibleRepositoryGroups[0].repositories[0];
+      }
     }
 
     this.isLoading = false;

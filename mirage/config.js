@@ -80,6 +80,7 @@ function routes() {
   this.patch('/free-usage-restrictions/:id');
 
   this.get('/github-app-installations');
+  this.get('/github-app-installations/:id');
 
   this.get('/github-app-installations/:id/accessible-repositories', function () {
     return [
