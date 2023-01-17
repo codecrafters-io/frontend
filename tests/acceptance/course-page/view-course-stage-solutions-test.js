@@ -65,6 +65,16 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #1: Bind to a port');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
+
+    // Test whether this works with a course that doesn't have solutions
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own SQLite');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Print table names');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Print table names', 'title should be respond to ping');
+    await coursePage.courseStageSolutionModal.clickOnCloseButton();
   });
 
   // eslint-disable-next-line qunit/require-expect

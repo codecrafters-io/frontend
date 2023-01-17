@@ -34,7 +34,13 @@ export default class CourseStageSolutionModalComponent extends Component {
     super(...arguments);
 
     this.courseStage = this.args.courseStage;
-    this.requestedSolutionLanguage = this.args.repository.language || this.courseStage.solutions.sortBy('language.name').firstObject.language;
+
+    this.requestedSolutionLanguage =
+      this.args.repository.language ||
+      (this.courseStage.solutions.sortBy('language.name').firstObject
+        ? this.courseStage.solutions.sortBy('language.name').firstObject.language
+        : null) ||
+      this.courseStage.course.languageConfigurations.sortBy('language.name').firstObject.language;
 
     this.computeActiveTabFromIntent();
     this.emitAnalyticsEvent();
