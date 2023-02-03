@@ -116,7 +116,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', '2nd stage is expanded');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Nice work! How was this stage for you?');
+    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Nice work! How did we do?');
 
     const completeStage = async (stageNumber) => {
       this.server.create('submission', 'withSuccessStatus', {
@@ -133,7 +133,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd stage is expanded');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Great streak! How was this stage for you?');
+    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Great streak! How did we do?');
 
     await completeStage(6);
     await coursePage.clickOnCollapsedItem('Implement the SET & GET commands');
@@ -141,7 +141,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the SET & GET commands', 'penultimate stage is expanded');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Just one more to go! How was this stage for you?');
+    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Just one more to go! How did we do?');
 
     await completeStage(7);
     await coursePage.clickOnCollapsedItem('Expiry');
@@ -149,7 +149,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Expiry', 'last stage is expanded');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'You did it! How was this stage for you?');
+    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'You did it! How did we do?');
   });
 
   test('is not prompted for course stage feedback again if closed', async function (assert) {
