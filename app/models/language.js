@@ -12,6 +12,7 @@ export default class LanguageModel extends Model {
   @attr('string') trackStatus;
 
   @equal('slug', 'c') isC;
+  @equal('slug', 'cpp') isCpp;
   @equal('slug', 'csharp') isCsharp;
   @equal('slug', 'elixir') isElixir;
   @equal('slug', 'go') isGo;
@@ -71,6 +72,7 @@ export default class LanguageModel extends Model {
   get tealLogoUrl() {
     return {
       c: '/assets/images/language-logos/c-teal-500.svg',
+      cpp: '/assets/images/language-logos/cpp-teal-500.svg',
       clojure: '/assets/images/language-logos/clojure-teal-500.svg',
       crystal: '/assets/images/language-logos/crystal-teal-500.svg',
       csharp: '/assets/images/language-logos/csharp-teal-500.svg',
