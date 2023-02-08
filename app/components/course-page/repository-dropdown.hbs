@@ -39,7 +39,7 @@
             </AnimatedContainer>
           </div>
 
-          {{#if (and @activeRepository.progressBannerUrl this.currentUser.isStaff)}}
+          {{#if @activeRepository.progressBannerUrl}}
             <CoursePage::RepositoryDropdownAction @icon="photograph" {{on "click" (fn this.handleCopyGifBannerButtonClick dd.actions)}}>
               Progress Banner
             </CoursePage::RepositoryDropdownAction>
