@@ -13,15 +13,10 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can view daily limit if user has a free usage restriction', async function (assert) {
+  test('can view upgrade prompt if stage is paid', async function (assert) {
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
-
-    this.server.create('free-usage-restriction', {
-      user: currentUser,
-      expiresAt: new Date(new Date().getTime() + 86400000),
-    });
 
     signIn(this.owner, this.server);
 
@@ -55,7 +50,7 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Docker');
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'DAILY LIMIT REACHED', 'status text should be daily limit reached');
+    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 

@@ -119,6 +119,10 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
     return this.isActiveStage && !this.statusIsComplete && !this.args.repository.user.canAttemptCourseStage(this.args.courseStage);
   }
 
+  get shouldShowPublishToGitHubPrompt() {
+    return !this.args.repository.githubRepositorySyncConfiguration && this.isActiveStage && !this.statusIsComplete && this.args.courseStage.isThird;
+  }
+
   get solutionIsAvailableInAnyLanguage() {
     return !!this.args.courseStage.solutions.firstObject;
   }

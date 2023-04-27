@@ -114,15 +114,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
-  test('stages should have an upgrade prompt if user has a free usage restriction', async function (assert) {
+  test('stages should have an upgrade prompt if they are paid', async function (assert) {
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
-
-    this.server.create('free-usage-restriction', {
-      user: currentUser,
-      expiresAt: new Date(new Date().getTime() + 86400000),
-    });
 
     signIn(this.owner, this.server);
 
@@ -156,7 +151,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Docker');
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'DAILY LIMIT REACHED', 'status text should be daily limit reached');
+    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
@@ -170,37 +165,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
     assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
-  });
-
-  test('stages should not have an upgrade prompt if language is Rust', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let c = this.server.schema.languages.findBy({ slug: 'rust' });
-    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: docker,
-      language: c,
-      name: 'C #1',
-      user: currentUser,
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[1],
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
-    });
-
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
-
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item should not have upgrade prompt if language is not Go');
   });
 
   test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {

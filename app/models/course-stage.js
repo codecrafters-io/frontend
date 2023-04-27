@@ -9,6 +9,7 @@ export default class CourseStageModel extends Model {
   @hasMany('community-course-stage-solution', { async: false }) communitySolutions;
   @hasMany('course-stage-solution', { async: false }) solutions;
 
+  @attr('boolean') isPaid;
   @attr('string') difficulty;
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
@@ -59,12 +60,20 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedStages.firstObject;
   }
 
+  get isFree() {
+    return !this.isPaid;
+  }
+
   get isLast() {
     return this === this.course.sortedStages.lastObject;
   }
 
   get isSecond() {
     return this === this.course.sortedStages[1];
+  }
+
+  get isThird() {
+    return this === this.course.sortedStages[2];
   }
 
   get isPenultimate() {

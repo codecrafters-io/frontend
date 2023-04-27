@@ -101,9 +101,6 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
       this.isCreatingGithubRepositorySyncConfiguration = true;
       await githubRepositorySyncConfiguration.save();
       this.isCreatingGithubRepositorySyncConfiguration = false;
-
-      // The server deletes free usage restrictions after users publish their first repository
-      this.currentUserService.record.freeUsageRestrictions.map((restriction) => restriction.unloadRecord());
     }
   }
 

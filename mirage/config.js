@@ -77,8 +77,6 @@ function routes() {
 
   this.patch('/feature-suggestions/:id');
 
-  this.patch('/free-usage-restrictions/:id');
-
   this.get('/github-app-installations');
   this.get('/github-app-installations/:id');
 

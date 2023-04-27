@@ -123,19 +123,6 @@ function buildIncludedResources(user) {
     });
   });
 
-  user.freeUsageRestrictions.models.forEach((freeUsageRestriction) => {
-    includedResources.push({
-      id: freeUsageRestriction.id,
-      type: 'free-usage-restrictions',
-      attributes: {
-        'expires-at': freeUsageRestriction.expiresAt.toISOString(),
-      },
-      relationships: {
-        user: { data: { type: 'users', id: user.id } },
-      },
-    });
-  });
-
   user.referralActivationsAsCustomer.models.forEach((referralActivation) => {
     includedResources.push({
       id: referralActivation.id,

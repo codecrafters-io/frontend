@@ -20,7 +20,6 @@ export default class UserModel extends Model {
   @hasMany('course-idea-supervote-grants', { async: false }) courseIdeaSupervoteGrants;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
-  @hasMany('free-usage-restriction', { async: false }) freeUsageRestrictions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
   @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
@@ -52,7 +51,7 @@ export default class UserModel extends Model {
   }
 
   canAttemptCourseStage(courseStage) {
-    return courseStage.isFirst || this.canAccessPaidContent || this.hasNoFreeUsageRestriction;
+    return courseStage.isFree || this.canAccessPaidContent;
   }
 
   canCreateRepository(/* _course, _language */) {
@@ -80,10 +79,6 @@ export default class UserModel extends Model {
     return new Date(this.createdAt.getTime() + 3 * 24 * 60 * 60 * 1000);
   }
 
-  get freeUsageRestriction() {
-    return this.freeUsageRestrictions.filterBy('isActive').sortBy('expiresAt').firstObject;
-  }
-
   get githubAppInstallation() {
     return this.githubAppInstallations.firstObject;
   }
@@ -96,16 +91,8 @@ export default class UserModel extends Model {
     return !!this.activeSubscription;
   }
 
-  get hasFreeUsageRestriction() {
-    return !!this.freeUsageRestriction;
-  }
-
   get hasJoinedReferralProgram() {
     return this.referralLinks.rejectBy('isNew').length > 0;
-  }
-
-  get hasNoFreeUsageRestriction() {
-    return !this.hasFreeUsageRestriction;
   }
 
   get isEligibleForEarlyBirdDiscount() {
@@ -122,6 +109,10 @@ export default class UserModel extends Model {
     } else {
       return false;
     }
+  }
+
+  get isFree() {
+    return !this.isPaid;
   }
 
   get isTeamAdmin() {
