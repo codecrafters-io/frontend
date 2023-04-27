@@ -113,5 +113,4 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     await coursePage.configureGithubIntegrationModal.clickOnDisconnectRepositoryButton();
     await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
   });
-
 });

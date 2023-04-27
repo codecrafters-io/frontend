@@ -50,7 +50,7 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Docker');
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required')');
+    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
