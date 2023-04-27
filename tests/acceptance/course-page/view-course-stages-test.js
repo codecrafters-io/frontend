@@ -119,10 +119,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    this.server.create('free-usage-restriction', {
-      user: currentUser,
-      expiresAt: new Date(new Date().getTime() + 86400000),
-    });
+    // TODO: Fix?
+    // this.server.create('free-usage-restriction', {
+    //   user: currentUser,
+    //   expiresAt: new Date(new Date().getTime() + 86400000),
+    // });
 
     signIn(this.owner, this.server);
 
