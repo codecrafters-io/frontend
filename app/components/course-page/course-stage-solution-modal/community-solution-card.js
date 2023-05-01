@@ -10,15 +10,8 @@ export default class CommunitySolutionCardComponent extends Component {
   @tracked isExpanded = false;
   @tracked explanationIsExpanded = false;
   @tracked containerElement;
-  @tracked currentTab;
   @service store;
   @service('current-user') currentUserService;
-
-  constructor() {
-    super(...arguments);
-
-    this.currentTab = 'diff';
-  }
 
   get explanationNeedsTruncation() {
     return this.args.solution.explanationMarkdown && this.args.solution.explanationMarkdown.length > 200;
@@ -82,12 +75,6 @@ export default class CommunitySolutionCardComponent extends Component {
   @action
   handleDidUpdateExplanationHTML(element) {
     Prism.highlightAllUnder(element);
-  }
-
-  @action
-  handleTabClick(tabId) {
-    this.currentTab = tabId;
-    this.isExpanded = true; // Expand when tabs are switched
   }
 
   get isCollapsedByDefault() {
