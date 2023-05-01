@@ -3,8 +3,10 @@ import { attr, belongsTo } from '@ember-data/model';
 
 export default class SubmissionModel extends Model {
   @belongsTo('courseStage', { async: false }) courseStage;
-  @hasMany('submission-evaluation', { async: false }) evaluations;
+  @belongsTo('communityCourseStageSolution', { async: false }) communityCourseStageSolution;
   @belongsTo('repository', { async: false, inverse: 'submissions' }) repository;
+
+  @hasMany('submission-evaluation', { async: false }) evaluations;
 
   @attr('date') createdAt;
   @attr('string') githubStorageHtmlUrl;

@@ -23,7 +23,7 @@ export default class CourseAdminSubmissionsRoute extends ApplicationRoute {
 
     let submissions = await this.store.query('submission', {
       ...filters,
-      ...{ include: 'evaluations,repository.language,repository.user,course-stage' },
+      ...{ include: 'evaluations,repository.language,repository.user,course-stage,community-course-stage-solution' },
     });
 
     return {
