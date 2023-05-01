@@ -8,6 +8,7 @@ import showdown from 'showdown';
 
 export default class CommunitySolutionCardComponent extends Component {
   @tracked isExpanded = false;
+  @tracked explanationIsExpanded = false;
   @tracked containerElement;
   @tracked currentTab;
   @service store;
@@ -19,11 +20,23 @@ export default class CommunitySolutionCardComponent extends Component {
     this.currentTab = 'diff';
   }
 
+  get explanationNeedsTruncation() {
+    return this.args.solution.explanationMarkdown && this.args.solution.explanationMarkdown.length > 200;
+  }
+
   get explanationHTML() {
     if (this.args.solution.explanationMarkdown) {
       return htmlSafe(new showdown.Converter().makeHtml(this.args.solution.explanationMarkdown));
     } else {
-      return htmlSafe(new showdown.Converter().makeHtml(`This solution does not have an explanation yet.`));
+      return null;
+    }
+  }
+
+  get explanationHTMLTruncated() {
+    if (this.args.solution.explanationMarkdown) {
+      return htmlSafe(new showdown.Converter().makeHtml(this.args.solution.explanationMarkdown.slice(0, 200) + '...'));
+    } else {
+      return null;
     }
   }
 
@@ -46,9 +59,18 @@ export default class CommunitySolutionCardComponent extends Component {
       .save();
   }
 
+  @action handleExpandExplanationButtonClick() {
+    this.explanationIsExpanded = true;
+  }
+
   @action
   handleCollapseButtonClick() {
     this.isExpanded = false;
+    this.containerElement.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  @action handleCollapseExplanationButtonClick() {
+    this.explanationIsExpanded = false;
     this.containerElement.scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -74,9 +96,5 @@ export default class CommunitySolutionCardComponent extends Component {
 
   get isCollapsed() {
     return !this.isExpanded;
-  }
-
-  get shouldShowTabSwitcher() {
-    return this.currentUserService.record.isStaff && this.args.solution.hasExplanation;
   }
 }

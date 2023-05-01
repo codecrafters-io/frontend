@@ -17,14 +17,6 @@
           <EmberTooltip @text="This solution is only visible to users within your team." />
         </div>
       {{/if}}
-
-      {{#if this.shouldShowTabSwitcher}}
-        <CoursePage::CourseStageSolutionModal::CommunitySolutionCard::TabSwitcher
-          @currentTab={{this.currentTab}}
-          @handleTabClick={{this.handleTabClick}}
-          class="ml-4"
-        />
-      {{/if}}
     </div>
 
     <div class="flex items-center">
@@ -50,29 +42,54 @@
   </div>
 
   <div class="{{if this.isCollapsed 'h-72 overflow-hidden'}}">
-    {{#if (eq this.currentTab "diff")}}
-      {{#each @solution.changedFiles as |changedFile index|}}
-        <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
-          <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
-            <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
-          </div>
-
-          <div class="p-4 text-sm">
-            <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
-          </div>
-        </div>
-      {{/each}}
-    {{else}}
-      <div class="pb-8">
+    {{#if (and this.isExpanded this.explanationHTML)}}
+      <div class="pb-8 pt-4">
         <div
           class="leading-7 prose solution-explanation max-w-none"
           {{did-insert this.handleDidInsertExplanationHTML}}
           {{did-update this.handleDidUpdateExplanationHTML this.explanationHTML}}
         >
-          {{this.explanationHTML}}
+          {{#if this.explanationIsExpanded}}
+            {{this.explanationHTML}}
+          {{else}}
+            {{this.explanationHTMLTruncated}}
+          {{/if}}
         </div>
+
+        {{#if this.explanationNeedsTruncation}}
+          <SecondaryButton
+            @size="small"
+            class="mt-6 flex items-center group"
+            data-test-toggle-explanation-button
+            {{on "click" (if this.explanationIsExpanded this.handleCollapseExplanationButtonClick this.handleExpandExplanationButtonClick)}}
+          >
+            <div class="font-bold flex items-center sm:mb-0">
+              {{#if this.explanationIsExpanded}}
+                Collapse explanation
+              {{else}}
+                Expand explanation
+              {{/if}}
+              {{#if this.explanationIsExpanded}}
+                {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
+              {{else}}
+                {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
+              {{/if}}
+            </div>
+          </SecondaryButton>
+        {{/if}}
       </div>
     {{/if}}
+    {{#each @solution.changedFiles as |changedFile index|}}
+      <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
+        <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+          <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+        </div>
+
+        <div class="p-4 text-sm">
+          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
+        </div>
+      </div>
+    {{/each}}
 
     {{#if this.isCollapsed}}
       <div class="absolute rounded top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">

@@ -1,34 +1,34 @@
 <div
   role="button"
-  class="flex items-center justify-between pl-1 pr-4 border-b hover:bg-gray-100 {{if @isSelected 'bg-gray-100'}}"
+  class="flex items-start justify-between pl-1 pr-2 border-b hover:bg-gray-100 {{if @isSelected 'bg-gray-100'}}"
   {{on "click" @onClick}}
   data-test-timeline-entry
 >
-  <div class="flex items-center py-2">
+  <div class="flex items-start py-2 flex-grow">
     {{#if @submission.statusIsSuccess}}
-      <div class="w-4 h-4 rounded-full bg-green-600 mr-3 flex items-center justify-center">
+      <div class="w-4 h-4 rounded-full bg-green-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
         {{svg-jar "check" class="w-3 fill-current text-white"}}
       </div>
     {{else if @submission.statusIsFailure}}
-      <div class="w-4 h-4 rounded-full bg-red-600 mr-3 flex items-center justify-center">
+      <div class="w-4 h-4 rounded-full bg-red-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
         {{svg-jar "x" class="w-3 fill-current text-white"}}
       </div>
     {{else if @submission.statusIsEvaluating}}
-      <div class="w-4 h-4 rounded-full bg-yellow-600 mr-3 flex items-center justify-center">
+      <div class="w-4 h-4 rounded-full bg-yellow-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
         {{svg-jar "dots-horizontal" class="w-3 fill-current text-white"}}
       </div>
     {{/if}}
     <div>
-      <span class="text-gray-700 text-sm {{if @isSelected 'font-bold'}}">
-        Stage #{{@submission.courseStage.position}}
+      <div class="text-gray-700 text-sm {{if @isSelected 'font-bold'}}">
+        #{{@submission.courseStage.position}}
         using
         {{@submission.repository.language.name}}
-      </span>
-      <span class="text-gray-400 text-xs">by {{@submission.repository.user.username}}</span>
+      </div>
+      <div class="text-gray-400 text-xs">by {{@submission.repository.user.username}}</div>
     </div>
   </div>
 
-  <div class="text-xs text-gray-400">
+  <div class="text-xs text-gray-400 ml-2 py-2">
     {{this.formattedTimestamp}}
   </div>
 </div>
