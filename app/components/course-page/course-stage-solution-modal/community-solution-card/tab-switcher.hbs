@@ -1,0 +1,12 @@
+<nav class="flex space-x-2" aria-label="Tabs" ...attributes>
+  {{#each this.tabs as |tab|}}
+    <a
+      href="#"
+      class={{concat
+        (if tab.isCurrent "border-teal-600 text-teal-600" "border-gray-200 text-gray-600 hover:border-gray-300 hover:text-gray-800")
+        " whitespace-nowrap border-b-2 px-1 text-sm"
+      }}
+      {{on "click" (fn @handleTabClick tab.id)}}
+    >{{tab.title}}</a>
+  {{/each}}
+</nav>

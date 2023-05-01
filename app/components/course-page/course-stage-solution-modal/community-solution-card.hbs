@@ -17,6 +17,14 @@
           <EmberTooltip @text="This solution is only visible to users within your team." />
         </div>
       {{/if}}
+
+      {{#if this.shouldShowTabSwitcher}}
+        <CoursePage::CourseStageSolutionModal::CommunitySolutionCard::TabSwitcher
+          @currentTab={{this.currentTab}}
+          @handleTabClick={{this.handleTabClick}}
+          class="ml-4"
+        />
+      {{/if}}
     </div>
 
     <div class="flex items-center">
@@ -42,17 +50,29 @@
   </div>
 
   <div class="{{if this.isCollapsed 'h-72 overflow-hidden'}}">
-    {{#each @solution.changedFiles as |changedFile index|}}
-      <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
-        <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
-          <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
-        </div>
+    {{#if (eq this.currentTab "diff")}}
+      {{#each @solution.changedFiles as |changedFile index|}}
+        <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
+          <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+            <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+          </div>
 
-        <div class="p-4 text-sm">
-          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
+          <div class="p-4 text-sm">
+            <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
+          </div>
+        </div>
+      {{/each}}
+    {{else}}
+      <div class="pb-8">
+        <div
+          class="leading-7 prose solution-explanation max-w-none"
+          {{did-insert this.handleDidInsertExplanationHTML}}
+          {{did-update this.handleDidUpdateExplanationHTML this.explanationHTML}}
+        >
+          {{this.explanationHTML}}
         </div>
       </div>
-    {{/each}}
+    {{/if}}
 
     {{#if this.isCollapsed}}
       <div class="absolute rounded top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
