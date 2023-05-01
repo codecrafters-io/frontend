@@ -42,6 +42,43 @@
   </div>
 
   <div class="{{if this.isCollapsed 'h-72 overflow-hidden'}}">
+    {{#if (and this.isExpanded this.explanationHTML)}}
+      <div class="pb-8 pt-4">
+        <div
+          class="leading-7 prose solution-explanation max-w-none"
+          {{did-insert this.handleDidInsertExplanationHTML}}
+          {{did-update this.handleDidUpdateExplanationHTML this.explanationHTML}}
+        >
+          {{#if this.explanationIsExpanded}}
+            {{this.explanationHTML}}
+          {{else}}
+            {{this.explanationHTMLTruncated}}
+          {{/if}}
+        </div>
+
+        {{#if this.explanationNeedsTruncation}}
+          <SecondaryButton
+            @size="small"
+            class="mt-6 flex items-center group"
+            data-test-toggle-explanation-button
+            {{on "click" (if this.explanationIsExpanded this.handleCollapseExplanationButtonClick this.handleExpandExplanationButtonClick)}}
+          >
+            <div class="font-bold flex items-center sm:mb-0">
+              {{#if this.explanationIsExpanded}}
+                Collapse explanation
+              {{else}}
+                Expand explanation
+              {{/if}}
+              {{#if this.explanationIsExpanded}}
+                {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
+              {{else}}
+                {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
+              {{/if}}
+            </div>
+          </SecondaryButton>
+        {{/if}}
+      </div>
+    {{/if}}
     {{#each @solution.changedFiles as |changedFile index|}}
       <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
         <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
