@@ -84,4 +84,8 @@ export default class CommunitySolutionCardComponent extends Component {
   get isCollapsed() {
     return !this.isExpanded;
   }
+
+  get shouldShowExplanation() {
+    return this.isExpanded && this.explanationHTML && this.currentUserService.record.isStaff;
+  }
 }
