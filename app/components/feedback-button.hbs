@@ -1,4 +1,4 @@
-<BasicDropdown @horizontalPosition="right" @onClose={{this.handleDropdownClosed}} as |dd|>
+<BasicDropdown @renderInPlace={{true}} @horizontalPosition="right" @onClose={{this.handleDropdownClosed}} as |dd|>
   <dd.Trigger>
     <div ...attributes>
       {{yield dd}}
@@ -8,7 +8,7 @@
     <div class="pt-2">
       <div class="p-2 border rounded shadow text-sm text-gray-600 max-w-xl w-full bg-white" data-test-feedback-dropdown-content>
         {{#if this.wasSaved}}
-          <div class="p-4 flex flex-col items-center justify-center">
+          <div class="p-4 flex flex-col items-center justify-center w-60">
             {{svg-jar "check-circle" class="w-12 h-12 text-teal-500 mb-2"}}
 
             <div class="text-gray-600 text-center mb-1">
