@@ -1,7 +1,13 @@
 /* eslint-disable ember/no-new-mixins */
 import Mixin from '@ember/object/mixin';
-import { hasMany } from '@ember-data/model';
 
 export default Mixin.create({
-  upvotes: hasMany('upvote', { inverse: 'upvotable' }),
+  get currentUserUpvotes() {
+    return this.store.peekAll('upvote').filterBy('targetId', this.id).filterBy('user.id', this.currentUserService.record.id);
+  },
+
+  get upvotes() {
+    // TODO: Filter by targetType too
+    return this.store.peekAll('upvote').filterBy('targetId', this.id);
+  },
 });

@@ -14,9 +14,6 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   @belongsTo('user', { async: false }) user;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
 
-  @hasMany('upvote', { async: false, inverse: 'upvotable' }) currentUserUpvotes;
-  @hasMany('downvote', { async: false, inverse: 'downvotable' }) currentUserDownvotes;
-
   @attr('number') upvotesCount;
   @attr('number') downvotesCount;
   @attr('boolean') isApprovedByModerator;
@@ -51,7 +48,7 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
 
     this.upvotesCount += 1;
 
-    let upvote = this.store.createRecord('upvote', { target: this, user: this.currentUserService.record });
+    let upvote = this.store.createRecord('upvote', { targetId: this.id, targetType: 'course-stage-comment', user: this.currentUserService.record });
     this.currentUserUpvotes.addObject(upvote);
 
     await upvote.save();
@@ -68,7 +65,12 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
 
     this.downvotesCount += 1;
 
-    let downvote = this.store.createRecord('downvote', { target: this, user: this.currentUserService.record });
+    let downvote = this.store.createRecord('downvote', {
+      targetId: this.id,
+      targetType: 'course-stage-comment',
+      user: this.currentUserService.record,
+    });
+
     this.currentUserDownvotes.addObject(downvote);
 
     await downvote.save();
