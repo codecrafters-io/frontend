@@ -69,8 +69,8 @@ function routes() {
   this.patch('/course-stage-comments/:id');
   this.post('/course-stage-comments/:id/unvote', () => {});
 
-  this.post('/course-stage-comment-downvotes');
-  this.post('/course-stage-comment-upvotes');
+  this.post('/downvotes');
+  this.post('/upvotes');
 
   this.post('/course-stage-feedback-submissions');
   this.patch('/course-stage-feedback-submissions/:id');

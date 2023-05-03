@@ -5,13 +5,13 @@ import { memberAction } from 'ember-api-actions';
 export default class CourseStageCommentModel extends Model {
   @service('current-user') currentUserService;
 
-  @belongsTo('course-stage', { async: false }) courseStage;
+  @belongsTo('course-stage-comment', { async: false }) target;
   @belongsTo('language', { async: false }) language;
   @belongsTo('user', { async: false }) user;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
 
-  @hasMany('course-stage-comment-upvote', { async: false }) currentUserUpvotes;
-  @hasMany('course-stage-comment-downvote', { async: false }) currentUserDownvotes;
+  @hasMany('upvote', { async: false }) currentUserUpvotes;
+  @hasMany('downvote', { async: false }) currentUserDownvotes;
 
   @attr('number') upvotesCount;
   @attr('number') downvotesCount;
@@ -39,7 +39,7 @@ export default class CourseStageCommentModel extends Model {
 
     this.upvotesCount += 1;
 
-    let upvote = this.store.createRecord('course-stage-comment-upvote', { courseStageComment: this, user: this.currentUserService.record });
+    let upvote = this.store.createRecord('upvote', { target: this, user: this.currentUserService.record });
     this.currentUserUpvotes.addObject(upvote);
 
     await upvote.save();
@@ -56,7 +56,7 @@ export default class CourseStageCommentModel extends Model {
 
     this.downvotesCount += 1;
 
-    let downvote = this.store.createRecord('course-stage-comment-downvote', { courseStageComment: this, user: this.currentUserService.record });
+    let downvote = this.store.createRecord('downvote', { target: this, user: this.currentUserService.record });
     this.currentUserDownvotes.addObject(downvote);
 
     await downvote.save();
