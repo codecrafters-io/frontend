@@ -1,10 +1,23 @@
 import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
-import { createServer } from 'miragejs';
+import { createServer, belongsTo, hasMany, Model } from 'miragejs';
 
 export default function (config) {
   let finalConfig = {
     ...config,
-    models: { ...discoverEmberDataModels(), ...config.models },
+    models: {
+      ...discoverEmberDataModels(),
+      ...config.models,
+      ...{
+        courseStageComment: Model.extend({
+          user: belongsTo('user'),
+          target: belongsTo('course-stage'),
+          language: belongsTo('language'),
+          currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
+          currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+          parentComment: belongsTo('course-stage-comment', { inverse: null }),
+        }),
+      },
+    },
     serializers: applyEmberDataSerializers(config.serializers),
     routes,
   };

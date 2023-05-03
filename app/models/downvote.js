@@ -2,6 +2,6 @@ import Model from '@ember-data/model';
 import { belongsTo } from '@ember-data/model';
 
 export default class DownvoteModel extends Model {
-  @belongsTo('target', { async: false, polymorphic: true }) target;
+  @belongsTo('downvotable', { async: false, polymorphic: true }) downvotable;
   @belongsTo('user', { async: false }) user;
 }
