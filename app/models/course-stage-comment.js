@@ -1,5 +1,5 @@
 /* eslint-disable ember/no-mixins */
-import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 
