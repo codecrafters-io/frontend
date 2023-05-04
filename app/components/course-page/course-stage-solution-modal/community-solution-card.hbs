@@ -49,35 +49,16 @@
           {{did-insert this.handleDidInsertExplanationHTML}}
           {{did-update this.handleDidUpdateExplanationHTML this.explanationHTML}}
         >
-          {{#if this.explanationIsExpanded}}
-            {{this.explanationHTML}}
-          {{else}}
-            {{this.explanationHTMLTruncated}}
-          {{/if}}
+          {{this.explanationHTML}}
         </div>
-
-        {{#if this.explanationNeedsTruncation}}
-          <SecondaryButton
-            @size="small"
-            class="mt-6 flex items-center group"
-            data-test-toggle-explanation-button
-            {{on "click" (if this.explanationIsExpanded this.handleCollapseExplanationButtonClick this.handleExpandExplanationButtonClick)}}
-          >
-            <div class="font-bold flex items-center sm:mb-0">
-              {{#if this.explanationIsExpanded}}
-                Collapse explanation
-              {{else}}
-                Expand explanation
-              {{/if}}
-              {{#if this.explanationIsExpanded}}
-                {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
-              {{else}}
-                {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
-              {{/if}}
-            </div>
-          </SecondaryButton>
-        {{/if}}
       </div>
+    {{/if}}
+    {{#if this.shouldShowComments}}
+      {{#each @solution.comments key="id" as |comment|}}
+        <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
+          <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
+        </div>
+      {{/each}}
     {{/if}}
     {{#each @solution.changedFiles as |changedFile index|}}
       <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">

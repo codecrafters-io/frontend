@@ -6,13 +6,13 @@ import { memberAction } from 'ember-api-actions';
 import UpvotableMixin from '../mixins/upvotable';
 import DownvotableMixin from '../mixins/downvotable';
 
-export default class CourseStageCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin) {
+export default class CommunityCourseStageSolutionCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin) {
   @service('current-user') currentUserService;
 
-  @belongsTo('course-stage', { async: false }) target;
+  @belongsTo('community-course-stage-solution', { async: false }) target;
   @belongsTo('language', { async: false }) language;
   @belongsTo('user', { async: false }) user;
-  @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
+  @belongsTo('community-course-stage-solution-comment', { async: false, inverse: null }) parentComment;
 
   @attr('number') upvotesCount;
   @attr('number') downvotesCount;
@@ -21,11 +21,11 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   @attr('date') updatedAt;
   @attr('string') bodyMarkdown;
 
-  get courseStage() {
+  get solution() {
     return this.target;
   }
 
-  set courseStage(value) {
+  set solution(value) {
     this.target = value;
   }
 
@@ -38,7 +38,7 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   }
 }
 
-CourseStageCommentModel.prototype.unvote = memberAction({
+CommunityCourseStageSolutionCommentModel.prototype.unvote = memberAction({
   path: 'unvote',
   type: 'post',
 
