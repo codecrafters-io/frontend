@@ -36,45 +36,6 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   get isTopLevelComment() {
     return !this.parentComment;
   }
-
-  async upvote() {
-    if (this.currentUserDownvotes.length > 0) {
-      await this.unvote();
-    }
-
-    if (this.currentUserUpvotes.length > 0) {
-      return;
-    }
-
-    this.upvotesCount += 1;
-
-    let upvote = this.store.createRecord('upvote', { targetId: this.id, targetType: 'course-stage-comment', user: this.currentUserService.record });
-    this.currentUserUpvotes.addObject(upvote);
-
-    await upvote.save();
-  }
-
-  async downvote() {
-    if (this.currentUserUpvotes.length > 0) {
-      await this.unvote();
-    }
-
-    if (this.currentUserDownvotes.length > 0) {
-      return;
-    }
-
-    this.downvotesCount += 1;
-
-    let downvote = this.store.createRecord('downvote', {
-      targetId: this.id,
-      targetType: 'course-stage-comment',
-      user: this.currentUserService.record,
-    });
-
-    this.currentUserDownvotes.addObject(downvote);
-
-    await downvote.save();
-  }
 }
 
 CourseStageCommentModel.prototype.unvote = memberAction({
