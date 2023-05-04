@@ -69,7 +69,11 @@ function routes() {
   this.post('/course-idea-votes');
   this.post('/course-idea-supervotes');
 
-  this.get('/course-stage-comments');
+  this.get('/course-stage-comments', function (schema, request) {
+    let result = schema.courseStageComments.all().filter((comment) => comment.targetId.toString() === request.queryParams.target_id);
+
+    return result;
+  });
 
   this.post('/course-stage-comments', function (schema) {
     const attrs = this.normalizedRequestAttrs();
