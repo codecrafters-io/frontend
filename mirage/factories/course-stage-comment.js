@@ -5,9 +5,6 @@ export default Factory.extend({
   downvotesCount: () => 0,
 
   afterCreate(courseStageComment) {
-    courseStageComment.courseStage.update(
-      'approvedCommentsCount',
-      courseStageComment.courseStage.comments.models.filterBy('isApprovedByModerator').length
-    );
+    courseStageComment.target.update('approvedCommentsCount', courseStageComment.target.comments.models.filterBy('isApprovedByModerator').length);
   },
 });

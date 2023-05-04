@@ -1,17 +1,18 @@
-import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+/* eslint-disable ember/no-mixins */
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 
-export default class CourseStageCommentModel extends Model {
+import UpvotableMixin from '../mixins/upvotable';
+import DownvotableMixin from '../mixins/downvotable';
+
+export default class CourseStageCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin) {
   @service('current-user') currentUserService;
 
-  @belongsTo('course-stage', { async: false }) courseStage;
+  @belongsTo('course-stage', { async: false }) target;
   @belongsTo('language', { async: false }) language;
   @belongsTo('user', { async: false }) user;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
-
-  @hasMany('course-stage-comment-upvote', { async: false }) currentUserUpvotes;
-  @hasMany('course-stage-comment-downvote', { async: false }) currentUserDownvotes;
 
   @attr('number') upvotesCount;
   @attr('number') downvotesCount;
@@ -19,6 +20,14 @@ export default class CourseStageCommentModel extends Model {
   @attr('date') createdAt;
   @attr('date') updatedAt;
   @attr('string') bodyMarkdown;
+
+  get courseStage() {
+    return this.target;
+  }
+
+  set courseStage(value) {
+    this.target = value;
+  }
 
   get childComments() {
     return this.courseStage.comments.filter((comment) => comment.parentComment && comment.parentComment.id === this.id);
@@ -39,7 +48,7 @@ export default class CourseStageCommentModel extends Model {
 
     this.upvotesCount += 1;
 
-    let upvote = this.store.createRecord('course-stage-comment-upvote', { courseStageComment: this, user: this.currentUserService.record });
+    let upvote = this.store.createRecord('upvote', { targetId: this.id, targetType: 'course-stage-comment', user: this.currentUserService.record });
     this.currentUserUpvotes.addObject(upvote);
 
     await upvote.save();
@@ -56,7 +65,12 @@ export default class CourseStageCommentModel extends Model {
 
     this.downvotesCount += 1;
 
-    let downvote = this.store.createRecord('course-stage-comment-downvote', { courseStageComment: this, user: this.currentUserService.record });
+    let downvote = this.store.createRecord('downvote', {
+      targetId: this.id,
+      targetType: 'course-stage-comment',
+      user: this.currentUserService.record,
+    });
+
     this.currentUserDownvotes.addObject(downvote);
 
     await downvote.save();

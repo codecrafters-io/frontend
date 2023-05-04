@@ -25,14 +25,14 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
-      courseStage: redis.stages.models.sortBy('position')[1],
+      target: redis.stages.models.sortBy('position')[1],
       user: user,
     });
 
     this.server.create('course-stage-comment', {
       createdAt: new Date('2020-01-01'),
       bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
-      courseStage: redis.stages.models.sortBy('position')[1],
+      target: redis.stages.models.sortBy('position')[1],
       user: user,
     });
 
@@ -91,7 +91,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
-      courseStage: redis.stages.models.sortBy('position')[1],
+      targetId: redis.stages.models.sortBy('position')[1].id,
+      targetType: 'course-stages',
       isApprovedByModerator: true,
       user: user,
     });
@@ -99,7 +100,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     this.server.create('course-stage-comment', {
       createdAt: new Date('2020-01-01'),
       bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
-      courseStage: redis.stages.models.sortBy('position')[1],
+      targetId: redis.stages.models.sortBy('position')[1].id,
+      targetType: 'course-stages',
       isApprovedByModerator: true,
       user: user,
     });
@@ -235,7 +237,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
-      courseStage: redis.stages.models.sortBy('position')[1],
+      target: redis.stages.models.sortBy('position')[1],
       isApprovedByModerator: true,
       user: user,
     });
@@ -243,7 +245,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     this.server.create('course-stage-comment', {
       createdAt: new Date('2020-01-01'),
       bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
-      courseStage: redis.stages.models.sortBy('position')[1],
+      target: redis.stages.models.sortBy('position')[1],
       isApprovedByModerator: true,
       user: user,
     });

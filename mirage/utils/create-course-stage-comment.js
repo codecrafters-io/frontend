@@ -4,7 +4,7 @@ export default function createCourseStageComment(server, course, stagePosition) 
   server.create('course-stage-comment', {
     user: server.schema.users.first(),
     bodyMarkdown: 'This is a comment',
-    courseStage: stage,
+    target: stage,
     isApprovedByModerator: true,
   });
 }
