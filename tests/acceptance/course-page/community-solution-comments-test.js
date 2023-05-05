@@ -4,7 +4,6 @@ import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import window from 'ember-window-mock';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -56,6 +55,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Solutions', 'active header tab link should be comments');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1);
+
+    await coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.objectAt(0).clickOnExpandButton();
 
     await percySnapshot('Community Solution Comments');
   });
