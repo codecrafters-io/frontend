@@ -15,8 +15,8 @@ export default class JoinController extends Controller {
     let testimonialGroup2 = [
       testimonialsData['charles-guo'],
       testimonialsData['akshata-mohan'],
-      testimonialsData['maya-farber-brodsky'],
       testimonialsData['pranjal-paliwal'],
+      testimonialsData['beyang-liu'],
     ];
 
     let testimonialGroup3 = [

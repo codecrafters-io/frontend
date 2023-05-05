@@ -18,13 +18,6 @@ const testimonials = {
     text: `These guys ruined my weekend`,
   },
 
-  'maya-farber-brodsky': {
-    authorName: 'Maya Farber Brodsky',
-    authorDesignation: 'Recurse Center Participant',
-    authorAvatarImage: '/assets/images/user-avatars/maya-farber-brodsky.png',
-    text: "I've started the Docker challenge, enjoying it a lot so far. Just the right level of guidance, helpful and still gives you a lot of freedom to explore and learn for yourself.",
-  },
-
   'rahul-tarak': {
     authorName: 'Rahul Tarak',
     authorDesignation: 'Pioneer.app & ODX1 Fellow',
