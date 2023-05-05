@@ -58,6 +58,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     await coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.objectAt(0).clickOnExpandButton();
 
+    await this.pauseTest();
+
     await percySnapshot('Community Solution Comments');
   });
 
