@@ -1,22 +1,19 @@
 /* purgecss start ignore */
-@import "tailwindcss/base";
+@import 'tailwindcss/base';
 /* purgecss end ignore */
 
-@import "tailwindcss/components";
+@import 'tailwindcss/components';
 
-@import "tailwindcss/utilities";
-@import "utilities.css";
+@import 'tailwindcss/utilities';
+@import 'utilities.css';
 
-@import "modals.scss";
-@import "course-stage-solution-page.scss";
-@import "code-walkthrough-page.scss";
+@import 'modals.scss';
+@import 'course-stage-solution-page.scss';
+@import 'code-walkthrough-page.scss';
 
 /* purgecss start ignore */
 @import '@typeform/embed/build/css/popup.css';
-@import "ember-animated/dist/styles/ember-animated.css";
-@import "prism-light-theme.css";
-/*@import "prismjs/themes/prism.css";*/
-@import "prismjs/plugins/diff-highlight/prism-diff-highlight.min.css";
+@import 'ember-animated/dist/styles/ember-animated.css';
 
 .ember-basic-dropdown-trigger {
   outline: none !important;
@@ -49,7 +46,7 @@
 }
 
 /* Override prism's 1em font-size */
-.prose pre[class*="language-"] {
+.prose pre[class*='language-'] {
   font-size: 0.875em;
 }
 
@@ -58,7 +55,13 @@
 }
 
 .vertical-mask {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 1) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 1) 80%,
+    rgba(255, 255, 255, 1) 100%
+  );
 }
 
 .syntax-highlighted-code pre {
@@ -102,4 +105,22 @@
 
 .blurred-overlay {
   filter: blur(4px);
+}
+
+.diff-highlight .removed-line::before {
+  content: '− ';
+  color: #f97583;
+}
+
+.diff-highlight .added-line::before {
+  content: '+ ';
+  color: #a6e22e;
+}
+
+.diff-highlight .removed-line-group {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.diff-highlight .added-line-group {
+  background-color: rgba(0, 255, 0, 0.1);
 }

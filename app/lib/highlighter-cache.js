@@ -9,6 +9,8 @@ import * as shiki from 'shiki';
 const highlighterCacheAsync = new Map();
 
 export default function getOrCreateCachedHighlighterPromise(cacheId, options) {
+  shiki.setCDN('https://unpkg.com/shiki/');
+
   if (!highlighterCacheAsync.has(cacheId)) {
     let highlighterPromise;
 
@@ -25,4 +27,14 @@ export default function getOrCreateCachedHighlighterPromise(cacheId, options) {
   }
 
   return highlighterCacheAsync.get(cacheId);
+}
+
+export async function preloadHighlighter(cacheId, options, languages) {
+  const highlighter = await getOrCreateCachedHighlighterPromise(cacheId, options);
+
+  await Promise.all(
+    (languages || []).map((language) => {
+      highlighter.loadLanguage(language);
+    })
+  );
 }

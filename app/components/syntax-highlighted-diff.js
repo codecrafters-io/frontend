@@ -1,30 +1,60 @@
 import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
-import Prism from 'prismjs';
-
-import 'prismjs';
-import 'prismjs/components/prism-c';
-import 'prismjs/components/prism-go';
-import 'prismjs/components/prism-nim';
-// import 'prismjs/components/prism-php'; Doesn't work for some reason?
-import 'prismjs/components/prism-rust';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-ruby';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-clojure';
-import 'prismjs/components/prism-crystal';
-import 'prismjs/components/prism-elixir';
-import 'prismjs/components/prism-haskell';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-csharp';
-import 'prismjs/components/prism-swift';
-
-import 'prismjs/components/prism-diff';
-
-import 'prismjs/plugins/diff-highlight/prism-diff-highlight';
+import { tracked } from '@glimmer/tracking';
+import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
+  @tracked asyncHighlightedHTML;
+
+  static highlighterId = 'syntax-highlighted-diff';
+  static highlighterOptions = { theme: 'github-light' };
+
+  static preloadHighlighter() {
+    preloadHighlighter(this.highlighterId, this.highlighterOptions);
+  }
+
+  constructor() {
+    super(...arguments);
+
+    let highlighterPromise = getOrCreateCachedHighlighterPromise(
+      SyntaxHighlightedDiffComponent.highlighterId,
+      SyntaxHighlightedDiffComponent.highlighterOptions
+    );
+
+    const lineOptions = this.codeLinesWithDiffClasses.map(([, classes], lineIndex) => ({ line: lineIndex + 1, classes: [classes] }));
+
+    highlighterPromise.then((highlighter) => {
+      highlighter.loadLanguage(this.args.language).then(() => {
+        this.asyncHighlightedHTML = htmlSafe(
+          highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language, lineOptions: lineOptions })
+        );
+      });
+    });
+  }
+
+  get codeLinesWithDiffClasses() {
+    return this.args.code.split('\n').map((line) => {
+      if (line.startsWith('+')) {
+        return [line.substring(1), 'added-line'];
+      } else if (line.startsWith('-')) {
+        return [line.substring(1), 'removed-line'];
+      } else {
+        return [line, 'unchanged-line'];
+      }
+    });
+  }
+
+  get codeWithoutDiffMarkers() {
+    return this.codeLinesWithDiffClasses.map((array) => array[0]).join('\n');
+  }
+
+  get temporaryHTML() {
+    const linesHTML = this.codeLinesWithDiffClasses.map(([line, classes]) => `<div class="line ${classes}">${line}</div>`).join('');
+
+    return htmlSafe(`${linesHTML}`);
+  }
+
   get highlightedHtml() {
-    return htmlSafe(Prism.highlight(this.args.code, Prism.languages.diff, `diff-${this.args.language}`));
+    return this.asyncHighlightedHTML || this.temporaryHTML;
   }
 }
