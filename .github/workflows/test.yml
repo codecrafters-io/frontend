@@ -60,18 +60,11 @@ jobs:
       - run: cat test-results.xml
         if: always()
 
-      - name: "Upload coverage to Deepsource"
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/lcov.info
-        env:
-          DEEPSOURCE_DSN: ${{secrets.DEEPSOURCE_DSN}}
-
-#      - name: "Upload coverage to Codecov"
-#        uses: codecov/codecov-action@v1
-#        with:
-#          fail_ci_if_error: true
-#          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: "Upload coverage to Codecov"
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Remove ember exam from test results
         run: sed -i 's/Exam Partition [0-9]\+ - //g' test-results.xml
