@@ -47,3 +47,25 @@ export function split(collection, numberOfChunks) {
 
   return chunk(collection, chunkSize);
 }
+
+// Same as Python's zip
+export function zip(...arrays) {
+  return unzip(arrays);
+}
+
+export function unzip(array) {
+  if (!(array != null && array.length)) {
+    return [];
+  }
+
+  const length = Math.max(...array.map((group) => group.length));
+
+  let index = -1;
+  const result = new Array(length);
+
+  while (++index < length) {
+    result[index] = array.map((group) => group[index]);
+  }
+
+  return result;
+}

@@ -1,3 +1,19 @@
 <div class="overflow-x-scroll" ...attributes>
-  <pre><code class="diff-highlight">{{this.highlightedHtml}}</code></pre>
+  <pre class="shiki github-light">{{!
+    }}<code class="diff-highlight">{{!
+      }}{{#each this.linesForRender as |line|}}{{!
+      }}<div
+        >{{!
+        }}{{#if (eq line.type "added")}}{{!
+            }}<span class="inserted-marker">+ </span>{{!
+          }}{{else if (eq line.type "removed")}}{{!
+            }}<span class="removed-marker">- </span>{{!
+          }}{{else}}{{!
+            }}<span class="unchanged-marker">  </span>{{!
+          }}{{/if}}{{!
+        }}{{line.html}}{{!
+      }}</div>{{!
+        }}{{/each}}{{!
+    }}</code>{{!
+}}</pre>
 </div>

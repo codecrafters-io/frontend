@@ -107,13 +107,11 @@
   filter: blur(4px);
 }
 
-.diff-highlight .removed-line::before {
-  content: '− ';
+.diff-highlight .removed-marker {
   color: #f97583;
 }
 
-.diff-highlight .added-line::before {
-  content: '+ ';
+.diff-highlight .inserted-marker {
   color: #a6e22e;
 }
 

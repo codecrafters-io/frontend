@@ -2,6 +2,7 @@ import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
+import { zip } from '../lib/lodash-utils';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
@@ -38,7 +39,10 @@ export default class SyntaxHighlightedDiffComponent extends Component {
         return [line.substring(1), 'added-line'];
       } else if (line.startsWith('-')) {
         return [line.substring(1), 'removed-line'];
+      } else if (line.startsWith(' ')) {
+        return [line.substring(1), 'unchanged-line'];
       } else {
+        // shouldn't happen?
         return [line, 'unchanged-line'];
       }
     });
@@ -51,10 +55,32 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   get temporaryHTML() {
     const linesHTML = this.codeLinesWithDiffClasses.map(([line, classes]) => `<div class="line ${classes}">${line}</div>`).join('');
 
-    return htmlSafe(`${linesHTML}`);
+    return htmlSafe(`<pre><code>${linesHTML}</code></pre>`);
   }
 
   get highlightedHtml() {
     return this.asyncHighlightedHTML || this.temporaryHTML;
+  }
+
+  get linesForRender() {
+    const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
+    console.log(this.codeLinesWithDiffClasses.length, highlightedLineNodes.length);
+
+    if (this.codeLinesWithDiffClasses.length !== highlightedLineNodes.length) {
+      console.log('mismatch found!');
+      console.log(this.codeLinesWithDiffClasses);
+      console.log(this.highlightedHtml.string);
+    }
+
+    return zip(this.codeLinesWithDiffClasses, highlightedLineNodes).map(([[, classes], node]) => {
+      return {
+        html: htmlSafe(`${node.outerHTML}`),
+        type: {
+          'added-line': 'added',
+          'removed-line': 'removed',
+          'unchanged-line': 'unchanged',
+        }[classes],
+      };
+    });
   }
 }
