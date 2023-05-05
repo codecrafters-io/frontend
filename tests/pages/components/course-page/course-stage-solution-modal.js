@@ -33,7 +33,10 @@ export default {
   },
 
   communitySolutionsTab: {
-    solutionCards: collection('[data-test-community-solution-card]'),
+    solutionCards: collection('[data-test-community-solution-card]', {
+      clickOnExpandButton: clickable('[data-test-expand-button]'),
+      clickOnCollapseButton: clickable('[data-test-collapse-button]'),
+    }),
     scope: '[data-test-community-solutions-tab]',
   },
 

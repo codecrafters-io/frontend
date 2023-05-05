@@ -16,6 +16,14 @@ export default function (config) {
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('course-stage-comment', { inverse: null }),
         }),
+        communityCourseStageSolutionComment: Model.extend({
+          user: belongsTo('user'),
+          target: belongsTo('community-course-stage-solution'),
+          language: belongsTo('language'),
+          currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
+          currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+          parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),
+        }),
       },
     },
     serializers: applyEmberDataSerializers(config.serializers),
@@ -49,6 +57,12 @@ function routes() {
     if (request.queryParams.course_stage_id) {
       result = result.filter((solution) => solution.courseStage.id.toString() === request.queryParams.course_stage_id);
     }
+
+    return result;
+  });
+
+  this.get('/community-course-stage-solution-comments', function (schema, request) {
+    let result = schema.communityCourseStageSolutionComments.all().filter((comment) => comment.targetId.toString() === request.queryParams.target_id);
 
     return result;
   });

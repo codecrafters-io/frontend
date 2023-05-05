@@ -10,4 +10,26 @@ export default Mixin.create({
     // TODO: Filter by targetType too
     return this.store.peekAll('downvote').filterBy('targetId', this.id);
   },
+
+  async downvote() {
+    if (this.currentUserUpvotes.length > 0) {
+      await this.unvote();
+    }
+
+    if (this.currentUserDownvotes.length > 0) {
+      return;
+    }
+
+    this.downvotesCount += 1;
+
+    let downvote = this.store.createRecord('downvote', {
+      targetId: this.id,
+      targetType: this.constructor.modelName,
+      user: this.currentUserService.record,
+    });
+
+    this.currentUserDownvotes.addObject(downvote);
+
+    await downvote.save();
+  },
 });

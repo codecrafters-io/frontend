@@ -10,4 +10,26 @@ export default Mixin.create({
     // TODO: Filter by targetType too
     return this.store.peekAll('upvote').filterBy('targetId', this.id);
   },
+
+  async upvote() {
+    if (this.currentUserDownvotes.length > 0) {
+      await this.unvote();
+    }
+
+    if (this.currentUserUpvotes.length > 0) {
+      return;
+    }
+
+    this.upvotesCount += 1;
+
+    let upvote = this.store.createRecord('upvote', {
+      targetId: this.id,
+      targetType: this.constructor.modelName,
+      user: this.currentUserService.record,
+    });
+
+    this.currentUserUpvotes.addObject(upvote);
+
+    await upvote.save();
+  },
 });
