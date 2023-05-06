@@ -83,13 +83,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get linesForRender() {
     const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
-    console.log(this.codeLinesWithDiffClasses.length, highlightedLineNodes.length);
-
-    if (this.codeLinesWithDiffClasses.length !== highlightedLineNodes.length) {
-      console.log('mismatch found!');
-      console.log(this.codeLinesWithDiffClasses);
-      console.log(this.highlightedHtml.string);
-    }
 
     return zip(this.codeLinesWithDiffClasses, highlightedLineNodes).map(([[, classes], node]) => {
       return {

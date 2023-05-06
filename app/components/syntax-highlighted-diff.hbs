@@ -6,11 +6,11 @@
           }}<div class="px-2 {{line.type}}-line-group min-w-fit"
             >{{!
             }}{{#if (eq line.type "added")}}{{!
-                }}<span class="inserted-marker">+ </span>{{!
+                }}<span class="inserted-marker select-none">+ </span>{{!
               }}{{else if (eq line.type "removed")}}{{!
-                }}<span class="removed-marker">- </span>{{!
+                }}<span class="removed-marker select-none">- </span>{{!
               }}{{else}}{{!
-                }}<span class="unchanged-marker">  </span>{{!
+                }}<span class="unchanged-marker select-none">  </span>{{!
               }}{{/if}}{{!
             }}{{line.html}}{{!
           }}</div>{{!
