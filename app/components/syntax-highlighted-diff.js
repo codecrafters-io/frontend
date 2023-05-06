@@ -8,7 +8,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
 
   static highlighterId = 'syntax-highlighted-diff';
-  static highlighterOptions = { theme: 'github-light' };
+  static highlighterOptions = { theme: 'github-light', langs: [] };
 
   static preloadHighlighter() {
     preloadHighlighter(this.highlighterId, this.highlighterOptions);
