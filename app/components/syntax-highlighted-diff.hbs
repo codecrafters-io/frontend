@@ -1,10 +1,9 @@
 <div class="py-4 overflow-x-scroll" ...attributes>
   {{! prettier-ignore }}
-  <pre class="shiki github-light">{{!
-    }}<code class="block diff-highlight min-w-fit">{{!
-      }}{{#each this.linesForRender as |line|}}{{!
-        }}<div class="px-2 {{line.type}}-line min-w-fit"
-          >{{!
+  {{#each this.linesForRender as |line|}}{{!
+    }}<pre class="shiki github-light">{{!
+      }}<code class="block diff-highlight min-w-fit">{{!
+        }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
           }}{{#if (eq line.type "added")}}{{!
               }}<span class="inserted-marker select-none">+ </span>{{!
             }}{{else if (eq line.type "removed")}}{{!
@@ -14,7 +13,7 @@
             }}{{/if}}{{!
           }}{{line.html}}{{!
         }}</div>{{!
-      }}{{/each}}{{!
-    }}</code>{{!
-}}</pre>
+      }}</code>{{!
+    }}</pre>
+  {{/each}}
 </div>

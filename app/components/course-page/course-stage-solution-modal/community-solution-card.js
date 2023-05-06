@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import showdown from 'showdown';
+import { groupBy } from '../../../lib/lodash-utils';
 
 export default class CommunitySolutionCardComponent extends Component {
   @tracked isExpanded = false;
@@ -12,6 +13,19 @@ export default class CommunitySolutionCardComponent extends Component {
   @tracked containerElement;
   @service store;
   @service('current-user') currentUserService;
+
+  get changedFilesForRender() {
+    return this.args.solution.changedFiles.map((changedFile) => {
+      return {
+        ...changedFile,
+        comments: this.shouldShowComments ? this.commentsGroupedByFilename[changedFile.filename] || [] : [],
+      };
+    });
+  }
+
+  get commentsGroupedByFilename() {
+    return groupBy(this.comments, 'filename');
+  }
 
   get comments() {
     return this.args.solution.comments.filter((comment) => !comment.parentComment);

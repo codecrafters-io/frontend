@@ -20,6 +20,7 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
   @attr('date') createdAt;
   @attr('date') updatedAt;
   @attr('string') bodyMarkdown;
+  @attr('string') subtargetLocator; // filename.js or filename.js:line1-line2
 
   get solution() {
     return this.target;
@@ -33,8 +34,30 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
     return this.target.comments.filter((comment) => comment.parentComment && comment.parentComment.id === this.id);
   }
 
+  get filename() {
+    return this.subtargetLocator.split(':')[0];
+  }
+
+  get subtargetLines() {
+    if (!this.subtargetLocator.includes(':')) {
+      return { startLine: null, endLine: null };
+    }
+
+    const [startLine, endLine] = this.subtargetLocator.split(':')[1].split('-');
+
+    return { startLine, endLine };
+  }
+
   get isTopLevelComment() {
     return !this.parentComment;
+  }
+
+  get subtargetStartLine() {
+    return this.subtargetLines.startLine;
+  }
+
+  get subtargetEndLine() {
+    return this.subtargetLines.endLine;
   }
 }
 
