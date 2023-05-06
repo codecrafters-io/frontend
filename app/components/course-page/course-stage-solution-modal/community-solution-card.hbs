@@ -66,7 +66,7 @@
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
         </div>
 
-        <div class="p-4 text-sm">
+        <div class="text-sm">
           <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
         </div>
       </div>

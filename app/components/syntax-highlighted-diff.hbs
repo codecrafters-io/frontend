@@ -1,3 +1,22 @@
-<div class="overflow-x-scroll" ...attributes>
-  <pre><code class="diff-highlight">{{this.highlightedHtml}}</code></pre>
+<div class="py-4 overflow-x-scroll" ...attributes>
+  {{! prettier-ignore }}
+  <pre class="shiki github-light">{{!
+    }}<code class="block diff-highlight min-w-fit">{{!
+      }}{{#each this.lineGroupsForRender as |lineGroup|}}{{!
+        }}{{#each lineGroup.lines as |line|}}{{!
+          }}<div class="px-2 {{line.type}}-line-group min-w-fit"
+            >{{!
+            }}{{#if (eq line.type "added")}}{{!
+                }}<span class="inserted-marker select-none">+ </span>{{!
+              }}{{else if (eq line.type "removed")}}{{!
+                }}<span class="removed-marker select-none">- </span>{{!
+              }}{{else}}{{!
+                }}<span class="unchanged-marker select-none">  </span>{{!
+              }}{{/if}}{{!
+            }}{{line.html}}{{!
+          }}</div>{{!
+        }}{{/each}}{{!
+      }}{{/each}}{{!
+    }}</code>{{!
+}}</pre>
 </div>

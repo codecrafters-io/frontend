@@ -1,30 +1,90 @@
 import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
-import Prism from 'prismjs';
-
-import 'prismjs';
-import 'prismjs/components/prism-c';
-import 'prismjs/components/prism-go';
-import 'prismjs/components/prism-nim';
-// import 'prismjs/components/prism-php'; Doesn't work for some reason?
-import 'prismjs/components/prism-rust';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-ruby';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-clojure';
-import 'prismjs/components/prism-crystal';
-import 'prismjs/components/prism-elixir';
-import 'prismjs/components/prism-haskell';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-csharp';
-import 'prismjs/components/prism-swift';
-
-import 'prismjs/components/prism-diff';
-
-import 'prismjs/plugins/diff-highlight/prism-diff-highlight';
+import { tracked } from '@glimmer/tracking';
+import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
+import { zip } from '../lib/lodash-utils';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
+  @tracked asyncHighlightedHTML;
+
+  static highlighterId = 'syntax-highlighted-diff';
+  static highlighterOptions = { theme: 'github-light', langs: [] };
+
+  static preloadHighlighter() {
+    preloadHighlighter(this.highlighterId, this.highlighterOptions);
+  }
+
+  constructor() {
+    super(...arguments);
+
+    let highlighterPromise = getOrCreateCachedHighlighterPromise(
+      SyntaxHighlightedDiffComponent.highlighterId,
+      SyntaxHighlightedDiffComponent.highlighterOptions
+    );
+
+    highlighterPromise.then((highlighter) => {
+      highlighter.loadLanguage(this.args.language).then(() => {
+        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language }));
+      });
+    });
+  }
+
+  get codeLinesWithTypes() {
+    return this.args.code
+      .trim()
+      .split('\n')
+      .map((line) => {
+        if (line.startsWith('+')) {
+          return [line.substring(1), 'added'];
+        } else if (line.startsWith('-')) {
+          return [line.substring(1), 'removed'];
+        } else if (line.startsWith(' ')) {
+          return [line.substring(1), 'unchanged'];
+        } else {
+          // shouldn't happen?
+          return [line, 'unchanged'];
+        }
+      });
+  }
+
+  get codeWithoutDiffMarkers() {
+    return this.codeLinesWithTypes.map((array) => array[0]).join('\n');
+  }
+
+  get temporaryHTML() {
+    const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${line}</span>`).join('');
+
+    return htmlSafe(`<pre><code>${linesHTML}</code></pre>`);
+  }
+
   get highlightedHtml() {
-    return htmlSafe(Prism.highlight(this.args.code, Prism.languages.diff, `diff-${this.args.language}`));
+    return this.asyncHighlightedHTML || this.temporaryHTML;
+  }
+
+  get lineGroupsForRender() {
+    let groups = [];
+    let currentGroup = null;
+
+    this.linesForRender.forEach((line) => {
+      if (currentGroup && currentGroup.type === line.type) {
+        currentGroup.lines.push(line);
+      } else {
+        currentGroup = { type: line.type, lines: [line] };
+        groups.push(currentGroup);
+      }
+    });
+
+    return groups;
+  }
+
+  get linesForRender() {
+    const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
+
+    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node]) => {
+      return {
+        html: htmlSafe(`${node.outerHTML}`),
+        type: lineType,
+      };
+    });
   }
 }
