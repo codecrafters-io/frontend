@@ -51,6 +51,10 @@
   font-size: 0.875em;
 }
 
+.prose.prose-sm pre[class*='language-'] {
+  font-size: 1em;
+}
+
 .prose pre code {
   white-space: pre;
 }

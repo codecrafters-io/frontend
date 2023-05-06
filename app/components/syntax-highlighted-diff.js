@@ -2,7 +2,7 @@ import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
-import { escapeHtml, zip } from '../lib/lodash-utils';
+import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
@@ -49,6 +49,12 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get codeWithoutDiffMarkers() {
     return this.codeLinesWithTypes.map((array) => array[0]).join('\n');
+  }
+
+  get commentsGroupedByEndLine() {
+    console.log(Object.keys(groupBy(this.args.comments, (comment) => comment.subtargetEndLine || 0)));
+
+    return groupBy(this.args.comments, (comment) => comment.subtargetEndLine || 0);
   }
 
   get temporaryHTML() {

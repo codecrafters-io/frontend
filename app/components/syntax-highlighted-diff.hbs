@@ -15,5 +15,16 @@
         }}</div>{{!
       }}</code>{{!
     }}</pre>
+    {{#if (get this.commentsGroupedByEndLine line.number)}}
+      <div class="py-2 my-2 border-t border-b space-y-4 px-4">
+        {{#each (get this.commentsGroupedByEndLine line.number) key="id" as |comment|}}
+          <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
+            <div class="shadow-sm rounded border border-gray-300 w-full">
+              <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
+            </div>
+          </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
+        {{/each}}
+      </div>
+    {{/if}}
   {{/each}}
 </div>
