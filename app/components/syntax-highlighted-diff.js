@@ -34,18 +34,21 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   get codeLinesWithDiffClasses() {
-    return this.args.code.split('\n').map((line) => {
-      if (line.startsWith('+')) {
-        return [line.substring(1), 'added-line'];
-      } else if (line.startsWith('-')) {
-        return [line.substring(1), 'removed-line'];
-      } else if (line.startsWith(' ')) {
-        return [line.substring(1), 'unchanged-line'];
-      } else {
-        // shouldn't happen?
-        return [line, 'unchanged-line'];
-      }
-    });
+    return this.args.code
+      .trim()
+      .split('\n')
+      .map((line) => {
+        if (line.startsWith('+')) {
+          return [line.substring(1), 'added-line'];
+        } else if (line.startsWith('-')) {
+          return [line.substring(1), 'removed-line'];
+        } else if (line.startsWith(' ')) {
+          return [line.substring(1), 'unchanged-line'];
+        } else {
+          // shouldn't happen?
+          return [line, 'unchanged-line'];
+        }
+      });
   }
 
   get codeWithoutDiffMarkers() {
@@ -60,6 +63,22 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get highlightedHtml() {
     return this.asyncHighlightedHTML || this.temporaryHTML;
+  }
+
+  get lineGroupsForRender() {
+    let groups = [];
+    let currentGroup = null;
+
+    this.linesForRender.forEach((line) => {
+      if (currentGroup && currentGroup.type === line.type) {
+        currentGroup.lines.push(line);
+      } else {
+        currentGroup = { type: line.type, lines: [line] };
+        groups.push(currentGroup);
+      }
+    });
+
+    return groups;
   }
 
   get linesForRender() {
