@@ -22,41 +22,37 @@ export default class SyntaxHighlightedDiffComponent extends Component {
       SyntaxHighlightedDiffComponent.highlighterOptions
     );
 
-    const lineOptions = this.codeLinesWithDiffClasses.map(([, classes], lineIndex) => ({ line: lineIndex + 1, classes: [classes] }));
-
     highlighterPromise.then((highlighter) => {
       highlighter.loadLanguage(this.args.language).then(() => {
-        this.asyncHighlightedHTML = htmlSafe(
-          highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language, lineOptions: lineOptions })
-        );
+        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language }));
       });
     });
   }
 
-  get codeLinesWithDiffClasses() {
+  get codeLinesWithTypes() {
     return this.args.code
       .trim()
       .split('\n')
       .map((line) => {
         if (line.startsWith('+')) {
-          return [line.substring(1), 'added-line'];
+          return [line.substring(1), 'added'];
         } else if (line.startsWith('-')) {
-          return [line.substring(1), 'removed-line'];
+          return [line.substring(1), 'removed'];
         } else if (line.startsWith(' ')) {
-          return [line.substring(1), 'unchanged-line'];
+          return [line.substring(1), 'unchanged'];
         } else {
           // shouldn't happen?
-          return [line, 'unchanged-line'];
+          return [line, 'unchanged'];
         }
       });
   }
 
   get codeWithoutDiffMarkers() {
-    return this.codeLinesWithDiffClasses.map((array) => array[0]).join('\n');
+    return this.codeLinesWithTypes.map((array) => array[0]).join('\n');
   }
 
   get temporaryHTML() {
-    const linesHTML = this.codeLinesWithDiffClasses.map(([line, classes]) => `<div class="line ${classes}">${line}</div>`).join('');
+    const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${line}</span>`).join('');
 
     return htmlSafe(`<pre><code>${linesHTML}</code></pre>`);
   }
@@ -84,14 +80,10 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   get linesForRender() {
     const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
 
-    return zip(this.codeLinesWithDiffClasses, highlightedLineNodes).map(([[, classes], node]) => {
+    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node]) => {
       return {
         html: htmlSafe(`${node.outerHTML}`),
-        type: {
-          'added-line': 'added',
-          'removed-line': 'removed',
-          'unchanged-line': 'unchanged',
-        }[classes],
+        type: lineType,
       };
     });
   }
