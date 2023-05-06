@@ -15,15 +15,27 @@
         }}</div>{{!
       }}</code>{{!
     }}</pre>
-    {{#if (get this.commentsGroupedByEndLine line.number)}}
+    {{#if line.comments.firstObject}}
       <div class="py-2 my-2 border-t border-b space-y-4 px-4">
-        {{#each (get this.commentsGroupedByEndLine line.number) key="id" as |comment|}}
-          <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
-            <div class="shadow-sm rounded border border-gray-300 w-full">
-              <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
-            </div>
-          </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
-        {{/each}}
+        {{#if line.commentsAreExpanded}}
+          <PrimaryButton
+            class="mt-2"
+            {{on "click" (fn this.handleCollapseCommentsClick line.number)}}>Collapse Comments</PrimaryButton>
+        {{else}}
+          <PrimaryButton
+            class="mt-2"
+            {{on "click" (fn this.handleExpandCommentsClick line.number)}}>Expand Comments</PrimaryButton>
+        {{/if}}
+
+        {{#if line.commentsAreExpanded}}
+          {{#each (get this.commentsGroupedByEndLine line.number) key="id" as |comment|}}
+            <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
+              <div class="shadow-sm rounded border border-gray-300 w-full">
+                <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
+              </div>
+            </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
+          {{/each}}
+        {{/if}}
       </div>
     {{/if}}
   {{/each}}

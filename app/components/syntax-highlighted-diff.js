@@ -1,11 +1,15 @@
 import { htmlSafe } from '@ember/template';
+import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
 import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
+import { action } from '@ember/object';
+import { TrackedSet } from 'tracked-built-ins';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
+  linesWithExpandedComments = new TrackedSet([]);
 
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
@@ -52,8 +56,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   get commentsGroupedByEndLine() {
-    console.log(Object.keys(groupBy(this.args.comments, (comment) => comment.subtargetEndLine || 0)));
-
     return groupBy(this.args.comments, (comment) => comment.subtargetEndLine || 0);
   }
 
@@ -61,6 +63,17 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line)}</span>`).join('');
 
     return `<pre><code>${linesHTML}</code></pre>`;
+  }
+
+  @action
+  handleExpandCommentsClick(lineNumber) {
+    this.linesWithExpandedComments.add(lineNumber);
+    console.log('updated', this.linesWithExpandedComments);
+  }
+
+  @action
+  handleCollapseCommentsClick(lineNumber) {
+    this.linesWithExpandedComments.delete(lineNumber);
   }
 
   get highlightedHtml() {
@@ -75,6 +88,8 @@ export default class SyntaxHighlightedDiffComponent extends Component {
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
         number: index + 1,
+        comments: this.commentsGroupedByEndLine[index + 1] || [],
+        commentsAreExpanded: this.linesWithExpandedComments.has(index + 1),
       };
     });
   }
