@@ -101,11 +101,11 @@
   color: #690;
 }
 
-.diff-highlight .removed-line-group {
+.diff-highlight .removed-line {
   background-color: rgb(255, 235, 233);
 }
 
-.diff-highlight .added-line-group {
+.diff-highlight .added-line {
   background-color: rgb(230, 255, 236);
 }
 /* purgecss end ignore */

@@ -61,29 +61,14 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return this.asyncHighlightedHTML || this.temporaryHTML;
   }
 
-  get lineGroupsForRender() {
-    let groups = [];
-    let currentGroup = null;
-
-    this.linesForRender.forEach((line) => {
-      if (currentGroup && currentGroup.type === line.type) {
-        currentGroup.lines.push(line);
-      } else {
-        currentGroup = { type: line.type, lines: [line] };
-        groups.push(currentGroup);
-      }
-    });
-
-    return groups;
-  }
-
   get linesForRender() {
     const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
 
-    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node]) => {
+    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
       return {
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
+        number: index + 1,
       };
     });
   }
