@@ -17,7 +17,21 @@ export default function getOrCreateCachedHighlighterPromise(cacheId, options) {
     if (config.environment === 'test') {
       // Ignore error for now!
       highlighterPromise = new Promise((resolve) => {
-        resolve({ codeToHtml: () => {} });
+        resolve({
+          codeToHtml: (code) => {
+            const lineSpans = code
+              .split('\n')
+              .map((line) => `<span>${line}</span>`)
+              .join('\n');
+
+            return `<pre><code>${lineSpans}</code></pre>`;
+          },
+          loadLanguage: () => {
+            return new Promise((resolve) => {
+              resolve();
+            });
+          },
+        });
       });
     } else {
       highlighterPromise = shiki.getHighlighter(options);
