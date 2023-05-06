@@ -14,6 +14,7 @@
 /* purgecss start ignore */
 @import '@typeform/embed/build/css/popup.css';
 @import 'ember-animated/dist/styles/ember-animated.css';
+@import "prism-light-theme.css";
 
 .ember-basic-dropdown-trigger {
   outline: none !important;
