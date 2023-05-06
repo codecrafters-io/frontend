@@ -2,7 +2,7 @@ import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
-import { zip } from '../lib/lodash-utils';
+import { escapeHtml, zip } from '../lib/lodash-utils';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
@@ -24,7 +24,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
     highlighterPromise.then((highlighter) => {
       highlighter.loadLanguage(this.args.language).then(() => {
-        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language }));
+        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
       });
     });
   }
@@ -52,9 +52,9 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   get temporaryHTML() {
-    const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${line}</span>`).join('');
+    const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line)}</span>`).join('');
 
-    return htmlSafe(`<pre><code>${linesHTML}</code></pre>`);
+    return `<pre><code>${linesHTML}</code></pre>`;
   }
 
   get highlightedHtml() {

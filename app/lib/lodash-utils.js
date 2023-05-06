@@ -69,3 +69,15 @@ export function unzip(array) {
 
   return result;
 }
+
+const htmlEscapes = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+};
+
+export function escapeHtml(html) {
+  return html.replace(/[&<>"']/g, (chr) => htmlEscapes[chr]);
+}
