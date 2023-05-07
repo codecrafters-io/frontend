@@ -9,6 +9,10 @@ const shouldUseCDN = !!cdnBaseURL;
 
 module.exports = function (defaults) {
   const appOptions = {
+    babel: {
+      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin()],
+    },
+
     emberCLIDeploy: {
       runOnPostBuild: EmberApp.env() === 'development' ? 'development-postbuild' : false,
       configFile: 'config/deploy.js',
