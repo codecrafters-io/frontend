@@ -8,7 +8,7 @@ module.exports = {
       files: '*.hbs',
       options: {
         singleQuote: false,
-      },
-    },
+      }
+    }
   ],
 };
