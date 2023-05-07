@@ -6,3 +6,6 @@
 
 # addons
 /.node_modules.ember-try/
+
+/coverage
+/app/styles/prism-light-theme.css
