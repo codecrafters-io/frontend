@@ -2,7 +2,6 @@ import { clickable, clickOnText, isVisible, text } from 'ember-cli-page-object';
 import requestLanguageDropdown from './setup-item/request-language-dropdown';
 
 export default {
-  instructions: '',
   clickOnLanguageButton: clickOnText('button'),
   clickOnRequestLanguageButton: clickable('.ember-basic-dropdown-trigger'),
   copyableCloneRepositoryInstructions: text('[data-test-copyable-repository-clone-instructions] .font-mono'),
