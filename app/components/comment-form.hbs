@@ -1,11 +1,7 @@
 <div class="w-full" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
   <div class="bg-gray-100 pt-1.5 px-2 border-b border-gray-300 flex items-center {{if this.isReplying '' 'rounded-t'}}">
     <div class="transform translate-y-px flex">
-      <CommentForm::TabHeader
-        @text="Write"
-        @isActive={{eq this.activeTab "write"}}
-        {{on "click" (fn this.setActiveTab "write")}}
-      />
+      <CommentForm::TabHeader @text="Write" @isActive={{eq this.activeTab "write"}} {{on "click" (fn this.setActiveTab "write")}} />
 
       <CommentForm::TabHeader
         @text="Preview"
