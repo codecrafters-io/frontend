@@ -6,7 +6,7 @@ import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
 export default class CourseExtensionIdeaModel extends Model {
-  @belongsTo('course', { async: false }) course;
+  @belongsTo('course', { async: false, inverse: 'extensionIdeas' }) course;
 
   @hasMany('course-extension-idea-vote', { async: false }) currentUserVotes;
   @hasMany('course-extension-idea-supervote', { async: false }) currentUserSupervotes;

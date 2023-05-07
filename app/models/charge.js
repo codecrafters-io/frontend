@@ -10,7 +10,7 @@ export default class Charge extends Model {
   @attr('string') invoiceId;
   @attr('string') status;
 
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: null }) user;
 
   @equal('status', 'failed') statusIsFailed;
   @equal('status', 'pending') statusIsPending;
