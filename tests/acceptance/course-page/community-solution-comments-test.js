@@ -78,55 +78,65 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 0);
   });
 
-  // test('can upvote / downvote comments', async function (assert) {
-  //   testScenario(this.server);
-  //   signIn(this.owner, this.server);
+  test('can upvote / downvote comments', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server); // Move off of staff
 
-  //   const redis = this.server.schema.courses.findBy({ slug: 'redis' });
-  //   const user = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ slug: 'python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const user = this.server.schema.users.first();
 
-  //   this.server.create('course-stage-comment', {
-  //     createdAt: new Date('2022-01-02'),
-  //     bodyMarkdown: 'This is the **first** comment',
-  //     targetId: redis.stages.models.sortBy('position')[1].id,
-  //     targetType: 'course-stages',
-  //     isApprovedByModerator: true,
-  //     user: user,
-  //   });
+    const solution = createCommunityCourseStageSolution(this.server, redis, 2, python);
 
-  //   this.server.create('course-stage-comment', {
-  //     createdAt: new Date('2020-01-01'),
-  //     bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
-  //     targetId: redis.stages.models.sortBy('position')[1].id,
-  //     targetType: 'course-stages',
-  //     isApprovedByModerator: true,
-  //     user: user,
-  //   });
+    this.server.create('community-course-stage-solution-comment', {
+      createdAt: new Date('2022-01-02'),
+      bodyMarkdown: 'This is the **first** comment',
+      target: solution,
+      subtargetLocator: 'README.md:3-4',
+      user: user,
+    });
 
-  //   await coursesPage.visit();
-  //   await coursesPage.clickOnCourse('Build your own Redis');
-  //   await courseOverviewPage.clickOnStartCourse();
+    this.server.create('community-course-stage-solution-comment', {
+      createdAt: new Date('2020-01-01'),
+      bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
+      target: solution,
+      subtargetLocator: 'README.md:1-1',
+      user: user,
+    });
 
-  //   await coursePage.clickOnCollapsedItem('Respond to PING');
-  //   await animationsSettled();
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
-  //   await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
 
-  //   const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
-  //   assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
+    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
 
-  //   await firstCommentCard.upvoteButton.click();
-  //   assert.strictEqual(firstCommentCard.upvoteButton.text, '2', 'upvote count should be 2');
+    const communitySolutionsTab = coursePage.courseStageSolutionModal.communitySolutionsTab;
 
-  //   await firstCommentCard.upvoteButton.click();
-  //   assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+    await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
 
-  //   await firstCommentCard.downvoteButton.click();
-  //   assert.strictEqual(firstCommentCard.upvoteButton.text, '0', 'upvote count should be 0');
+    assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 1);
 
-  //   await firstCommentCard.downvoteButton.click();
-  //   assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
-  // });
+    const firstCommentCard = communitySolutionsTab.solutionCards[0].commentCards[0];
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+
+    await firstCommentCard.upvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '2', 'upvote count should be 2');
+
+    await firstCommentCard.upvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+
+    await firstCommentCard.downvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '0', 'upvote count should be 0');
+
+    await firstCommentCard.downvoteButton.click();
+    assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
+  });
 
   // test('can edit comment', async function (assert) {
   //   testScenario(this.server);

@@ -38,7 +38,7 @@
             {{#each line.comments key="id" as |comment|}}
               <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
                 <div class="shadow-sm rounded border border-gray-300 w-full">
-                  <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
+                  <CommentCard @comment={{comment}} />
                 </div>
               </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
             {{/each}}

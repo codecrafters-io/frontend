@@ -44,7 +44,7 @@
 
         {{#if (eq this.currentUser @comment.user)}}
           <div class="ml-2">
-            <CoursePage::CourseStageSolutionModal::CommentCard::MoreDropdown
+            <CommentCard::MoreDropdown
               @comment={{@comment}}
               @onEditButtonClick={{this.handleEditButtonClick}}
               @onDeleteButtonClick={{this.handleDeleteButtonClick}}
@@ -60,11 +60,11 @@
       </div>
 
       <div class="mt-2 flex items-center">
-        <CoursePage::CourseStageSolutionModal::CommentCard::UpvoteButton @comment={{@comment}} />
-        <CoursePage::CourseStageSolutionModal::CommentCard::DownvoteButton @comment={{@comment}} class="ml-1" />
+        <CommentCard::UpvoteButton @comment={{@comment}} />
+        <CommentCard::DownvoteButton @comment={{@comment}} class="ml-1" />
 
         {{#unless @comment.parentComment}}
-          <CoursePage::CourseStageSolutionModal::CommentCard::ReplyButton class="ml-1" {{on "click" this.handleReplyButtonClick}} />
+          <CommentCard::ReplyButton class="ml-1" {{on "click" this.handleReplyButtonClick}} />
         {{/unless}}
       </div>
     </div>
@@ -83,7 +83,7 @@
             <AvatarImage @user={{childComment.user}} class="w-6 h-6 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
           </a>
 
-          <CoursePage::CourseStageSolutionModal::CommentCard @comment={{childComment}} />
+          <CommentCard @comment={{childComment}} />
         </div>
       {{/each}}
     </div>

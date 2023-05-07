@@ -67,6 +67,8 @@ function routes() {
     return result;
   });
 
+  this.post('/community-course-stage-solution-comments/:id/unvote', () => {});
+
   this.get('/courses');
 
   this.get('/course-language-requests');
