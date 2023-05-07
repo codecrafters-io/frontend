@@ -1,6 +1,8 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
+
 // const _isProduction = EmberApp.env() === 'production';
 const cdnBaseURL = process.env.CDN_BASE_URL;
 const shouldUseCDN = !!cdnBaseURL;
@@ -45,7 +47,7 @@ module.exports = function (defaults) {
     };
   }
 
-  let app = new EmberApp(defaults, appOptions);
+  let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
