@@ -6,7 +6,7 @@ export default class CourseStageModel extends Model {
   @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
 
   @hasMany('course-stage-comments', { async: false }) comments;
-  @hasMany('community-course-stage-solution', { async: false }) communitySolutions;
+  @hasMany('community-course-stage-solution', { async: false, inverse: 'course-stage' }) communitySolutions;
   @hasMany('course-stage-solution', { async: false }) solutions;
 
   @attr('boolean') isPaid;

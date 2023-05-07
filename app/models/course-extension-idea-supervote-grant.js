@@ -6,5 +6,5 @@ export default class CourseExtensionIdeaSupervoteGrantModel extends Model {
   @attr('string') description;
   @attr('number') numberOfSupervotes;
 
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: 'courseExtensionIdeaSupervoteGrants' }) user;
 }
