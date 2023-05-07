@@ -32,17 +32,17 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+      courseStage: docker.stages.models.sort((a, b) => a.position - b.position).toArray()[1],
     });
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      courseStage: docker.stages.models.sort((a, b) => a.position - b.position).toArray()[2],
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      courseStage: docker.stages.models.sort((a, b) => a.position - b.position).toArray()[2],
       status: 'closed',
     });
 

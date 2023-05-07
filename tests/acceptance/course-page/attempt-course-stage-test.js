@@ -52,7 +52,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[1],
     });
 
     await this.clock.tick(2001); // Wait for poll
@@ -101,7 +101,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[1],
     });
 
     await this.clock.tick(2001); // Wait for poll
@@ -132,7 +132,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[0],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[0],
     });
 
     await this.clock.tick(2001); // Wait for poll

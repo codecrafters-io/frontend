@@ -22,21 +22,21 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: redis,
       language: python,
       user: currentUser,
-      currentStage: redis.stages.models.sortBy('position')[1],
+      currentStage: redis.stages.models.sort((a, b) => a.position - b.position)[1],
     });
 
     this.server.create('course-participation', {
       course: redis,
       language: go,
       user: currentUser,
-      currentStage: redis.stages.models.sortBy('position')[5],
+      currentStage: redis.stages.models.sort((a, b) => a.position - b.position)[5],
     });
 
     this.server.create('course-participation', {
       course: docker,
       language: go,
       user: currentUser,
-      currentStage: redis.stages.models.sortBy('position')[3],
+      currentStage: redis.stages.models.sort((a, b) => a.position - b.position)[3],
     });
 
     this.server.create('user-profile-event', {

@@ -18,7 +18,7 @@ function groupBy(collection, keyFn) {
 
 export default class AdminCourseSubmissionsPageTimelineContainerComponent extends Component {
   get groupedSubmissions() {
-    return groupBy(this.args.submissions.toArray().sortBy('createdAt').reverse(), (submission) => {
+    return groupBy(this.args.submissions.toArray().sort((a, b) => a.createdAt - b.createdAt).reverse(), (submission) => {
       return submission.createdAt.toISOString().slice(0, 10);
     });
   }

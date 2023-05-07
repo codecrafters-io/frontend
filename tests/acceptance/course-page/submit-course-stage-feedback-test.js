@@ -31,12 +31,12 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[1], // Stage #2
     });
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2], // Stage #3
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[2], // Stage #3
     });
 
     await coursesPage.visit();
@@ -103,7 +103,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[1], // Stage #2
     });
 
     await coursesPage.visit();
@@ -121,7 +121,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     const completeStage = async (stageNumber) => {
       this.server.create('submission', 'withSuccessStatus', {
         repository: repository,
-        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1], // Stage #3
+        courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[stageNumber - 1], // Stage #3
       });
 
       await this.clock.tick(2001); // Wait for poll
@@ -168,12 +168,12 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[1], // Stage #2
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[1], // Stage #2
       language: go,
       user: currentUser,
       status: 'closed',

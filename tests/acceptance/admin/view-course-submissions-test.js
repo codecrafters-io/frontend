@@ -36,7 +36,7 @@ module('Acceptance | admin | view-course-submissions', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position)[2],
     });
 
     await adminCourseSubmissionsPage.visit({ course_slug: 'redis' });

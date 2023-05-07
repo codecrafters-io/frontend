@@ -17,7 +17,7 @@ export default class CoursesController extends Controller {
     if (this.currentUser.isAnonymous) {
       return this.courses;
     } else {
-      return this.courses.toArray().sort((course) => {
+      return this.courses.sort((course) => {
         let repositoriesForCourse = this.currentUser.record.repositories.filterBy('course', course).filterBy('firstSubmissionCreated');
 
         if (repositoriesForCourse.length > 0) {

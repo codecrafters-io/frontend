@@ -35,7 +35,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[redis.stages.models.length - 1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[redis.stages.models.length - 1],
       status: 'closed',
     });
 

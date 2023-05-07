@@ -104,7 +104,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 

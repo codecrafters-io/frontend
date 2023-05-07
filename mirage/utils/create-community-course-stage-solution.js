@@ -1,5 +1,5 @@
 export default function createCourseStageSolution(server, course, stagePosition, language) {
-  let stage = course.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
+  let stage = course.stages.models.find((stage) => stage.position === stagePosition);
 
   return server.create('community-course-stage-solution', {
     user: server.schema.users.first(),

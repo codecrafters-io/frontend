@@ -120,7 +120,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -220,25 +220,25 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[2],
       completedAt: new Date(new Date().getTime() - (1 + 86400000)), // yesterday
     });
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[3],
       completedAt: new Date(new Date().getTime() - 10000), // today
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[3],
       status: 'closed',
     });
 
@@ -285,17 +285,17 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[1],
     });
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[2],
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[2],
       status: 'closed',
     });
 
@@ -336,17 +336,17 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[1],
     });
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[2],
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      courseStage: redis.stages.models.sort((a, b) => a.position - b.position).toArray()[2],
       status: 'closed',
     });
 
