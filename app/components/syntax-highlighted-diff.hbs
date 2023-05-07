@@ -4,18 +4,10 @@
       <div class="relative w-full">
         {{#if line.comments.firstObject}}
           <div class="absolute right-2 -top-2 z-10">
-            <button
-              class="rounded-full w-8 h-8 flex items-center justify-center border
-                {{if
-                  line.commentsAreExpanded
-                  'text-teal-500 border-teal-500 hover:border-teal-600 bg-white'
-                  'bg-white border-gray-300 text-gray-500 hover:border-gray-400 hover:text-gray-600'
-                }}
-                "
+            <SyntaxHighlightedDiff::ToggleCommentsButton
+              @commentsAreExpanded={{line.commentsAreExpanded}}
               {{on "click" (fn this.handleToggleCommentsButtonClick line.number)}}
-            >
-              {{svg-jar "chat-alt" class="w-5 fill-current"}}
-            </button>
+            />
           </div>
         {{/if}}
       </div>
