@@ -1,13 +1,17 @@
-import { attr, belongsTo } from '@ember-data/model';
-import Model from '@ember-data/model';
+export default class LeaderboardEntry {
+  status;
+  currentCourseStage;
+  language;
+  user;
+  lastAttemptAt;
 
-// Same as the ember model, to avoid creating fake models
-export default class LeaderboardEntry extends Model {
-  @attr('string') status;
-  @belongsTo('course-stage', { async: false }) currentCourseStage;
-  @belongsTo('language', { async: false }) language;
-  @belongsTo('user', { async: false }) user;
-  @attr('date') lastAttemptAt;
+  constructor({ status, currentCourseStage, language, user, lastAttemptAt }) {
+    this.status = status;
+    this.currentCourseStage = currentCourseStage;
+    this.language = language;
+    this.user = user;
+    this.lastAttemptAt = lastAttemptAt;
+  }
 
   get completedStagesCount() {
     if (this.statusIsCompleted) {
