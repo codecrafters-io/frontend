@@ -10,13 +10,13 @@ export default Factory.extend({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        courseStage: repository.course.stages.models.sortBy('position')[0],
         createdAt: repository.createdAt,
         status: 'failure',
       });
       server.create('submission', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        courseStage: repository.course.stages.models.sortBy('position')[0],
         createdAt: new Date(repository.createdAt.getTime() + 1000), // 1s
         status: 'evaluating',
       });
@@ -39,13 +39,13 @@ export default Factory.extend({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        courseStage: repository.course.stages.models.sortBy('position')[0],
         createdAt: repository.createdAt,
         status: 'failure',
       });
       server.create('submission', 'withSuccessStatus', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        courseStage: repository.course.stages.models.sortBy('position')[0],
         createdAt: new Date(repository.createdAt.getTime() + 1000), // 1s
       });
     },
@@ -55,7 +55,7 @@ export default Factory.extend({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position').firstObject,
+        courseStage: repository.course.stages.models.sortBy('position')[0],
         createdAt: repository.createdAt,
         status: 'failure',
       });
