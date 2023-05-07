@@ -22,11 +22,11 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: v2-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            v2-${{ runner.os }}-build-${{ env.cache-name }}-
+            v2-${{ runner.os }}-build-
+            v2-${{ runner.os }}-
 
       - name: Cache dependencies
         id: cache
@@ -51,7 +51,7 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
-      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam --split=3 --parallel=1 --silent --reporter xunit | tee test-results.xml
+      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam --split=3 --silent --reporter xunit --parallel | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
@@ -60,7 +60,7 @@ jobs:
       - run: cat test-results.xml
         if: always()
 
-      - name: "Upload coverage to Codecov"
+      - name: 'Upload coverage to Codecov'
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
