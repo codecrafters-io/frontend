@@ -8,7 +8,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | community-solution-comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -17,7 +17,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
   test('can view community solution comments', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server); // Move off of staff
+    signIn(this.owner, this.server); // Move off of staff
 
     const python = this.server.schema.languages.findBy({ slug: 'python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -80,7 +80,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
   test('can upvote / downvote comments', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server); // Move off of staff
+    signIn(this.owner, this.server); // Move off of staff
 
     const python = this.server.schema.languages.findBy({ slug: 'python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -140,7 +140,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
   test('can reply to comment', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server); // Move off of staff
+    signIn(this.owner, this.server); // Move off of staff
 
     const python = this.server.schema.languages.findBy({ slug: 'python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });

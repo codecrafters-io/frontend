@@ -106,7 +106,7 @@ export default class CommunitySolutionCardComponent extends Component {
   }
 
   get shouldShowComments() {
-    return this.isExpanded && this.comments.length > 0 && this.currentUserService.record.isStaff;
+    return this.isExpanded && this.comments.length > 0;
   }
 
   get shouldShowExplanation() {
