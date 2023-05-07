@@ -5,6 +5,7 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import TrackLeaderboardEntry from '../lib/track-leaderboard-entry';
 
 export default class TrackLeaderboardComponent extends Component {
   transition = fade;
@@ -49,7 +50,7 @@ export default class TrackLeaderboardComponent extends Component {
     }, []).length;
 
     return [
-      this.store.createRecord('track-leaderboard-entry', {
+      new TrackLeaderboardEntry({
         completedStagesCount: completedStagesCount,
         language: this.args.language,
         user: this.currentUser,
