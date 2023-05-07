@@ -1,4 +1,3 @@
-
 // Same as the ember model, used to avoid creating fake models
 export default class TrackLeaderboardEntry {
   completedStagesCount;
