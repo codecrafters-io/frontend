@@ -56,8 +56,7 @@
     "ember-cli-deprecation-workflow": "^2.0.0",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-mirage": "^3.0.0-alpha.3",
-    "ember-cli-moment-shim": "^3.8.0",
+    "ember-cli-mirage": "rohitpaulk/ember-cli-mirage#moment-replace",
     "ember-cli-page-object": "^2.0.0-beta.5",
     "ember-cli-postcss": "^8.2.0",
     "ember-cli-segment": "^5.0.0",
@@ -92,6 +91,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
     "loader.js": "^4.7.0",
+    "moment": "2.29.4",
     "postcss-import": "^15.1.0",
     "prettier": "^2.8.7",
     "prismjs": "^1.28.0",
@@ -104,7 +104,7 @@
     "stylelint-prettier": "^3.0.0",
     "tailwindcss": "^3.2.4",
     "tracked-built-ins": "^3.1.1",
-    "webpack": "^5.78.0"
+    "webpack": "^5.82.0"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"
@@ -113,12 +113,17 @@
     "edition": "octane"
   },
   "dependencies": {
+    "@embroider/compat": "^2.1.1",
+    "@embroider/core": "^2.1.1",
+    "@embroider/webpack": "^2.1.1",
     "@stripe/stripe-js": "^1.46.0",
     "@tailwindcss/typography": "^0.5.8",
     "@typeform/embed": "^2.5.0",
     "ansi_up": "^5.1.0",
     "array-to-sentence": "^2.0.0",
     "fuse.js": "^6.5.3",
+    "moment-locales-webpack-plugin": "^1.2.0",
+    "moment-timezone-data-webpack-plugin": "^1.5.1",
     "mustache": "^4.2.0",
     "node-html-parser": "^6.1.4",
     "showdown": "^2.1.0",
