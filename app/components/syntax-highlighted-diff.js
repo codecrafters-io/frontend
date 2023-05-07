@@ -2,10 +2,12 @@ import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
-import { escapeHtml, zip } from '../lib/lodash-utils';
+import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
+import { action } from '@ember/object';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
+  @tracked lineNumberWithExpandedComments = null;
 
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
@@ -51,39 +53,62 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return this.codeLinesWithTypes.map((array) => array[0]).join('\n');
   }
 
+  get topLevelCommentsGroupedByLine() {
+    return groupBy(this.args.comments || [], (comment) => comment.subtargetEndLine || 0);
+  }
+
+  get expandedComments() {
+    if (this.lineNumberWithExpandedComments === null) {
+      return [];
+    } else {
+      return this.topLevelCommentsGroupedByLine[this.lineNumberWithExpandedComments] || [];
+    }
+  }
+
   get temporaryHTML() {
     const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line)}</span>`).join('');
 
     return `<pre><code>${linesHTML}</code></pre>`;
   }
 
+  get topLevelComments() {
+    return (this.args.comments || []).filter((comment) => comment.isTopLevelComment && !comment.isNew);
+  }
+
+  @action
+  handleToggleCommentsButtonClick(lineNumber) {
+    if (this.lineNumberWithExpandedComments === lineNumber) {
+      this.lineNumberWithExpandedComments = null;
+    } else {
+      this.lineNumberWithExpandedComments = lineNumber;
+    }
+  }
+
   get highlightedHtml() {
     return this.asyncHighlightedHTML || this.temporaryHTML;
   }
 
-  get lineGroupsForRender() {
-    let groups = [];
-    let currentGroup = null;
+  targetingCommentsForLine(lineNumber) {
+    return (this.args.comments || []).filter((comment) => this.commentTargetsLine(comment, lineNumber));
+  }
 
-    this.linesForRender.forEach((line) => {
-      if (currentGroup && currentGroup.type === line.type) {
-        currentGroup.lines.push(line);
-      } else {
-        currentGroup = { type: line.type, lines: [line] };
-        groups.push(currentGroup);
-      }
-    });
-
-    return groups;
+  commentTargetsLine(comment, lineNumber) {
+    return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
   }
 
   get linesForRender() {
     const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
 
-    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node]) => {
+    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
       return {
+        isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
+        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
+        number: index + 1,
+        comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
+        hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
+        commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
       };
     });
   }

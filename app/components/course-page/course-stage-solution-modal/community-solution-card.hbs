@@ -53,21 +53,14 @@
         </div>
       </div>
     {{/if}}
-    {{#if this.shouldShowComments}}
-      {{#each @solution.comments key="id" as |comment|}}
-        <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
-          <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
-        </div>
-      {{/each}}
-    {{/if}}
-    {{#each @solution.changedFiles as |changedFile index|}}
+    {{#each this.changedFilesForRender key="filename" as |changedFile index|}}
       <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
         <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
         </div>
 
         <div class="text-sm">
-          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} />
+          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} @comments={{changedFile.comments}} />
         </div>
       </div>
     {{/each}}

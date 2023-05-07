@@ -11,7 +11,7 @@
 
   <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{this.currentUser}}>
     <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
-      <CoursePage::CourseStageSolutionModal::CommentForm @courseStage={{@courseStage}} @language={{@language}} />
+      <CommentForm @courseStage={{@courseStage}} @language={{@language}} @commentModelType="course-stage-comment" />
     </div>
   </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
 
@@ -24,7 +24,7 @@
     {{#each this.sortedComments key="id" as |comment|}}
       <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
         <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
-          <CoursePage::CourseStageSolutionModal::CommentCard @comment={{comment}} />
+          <CommentCard @comment={{comment}} />
         </div>
       </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
     {{/each}}

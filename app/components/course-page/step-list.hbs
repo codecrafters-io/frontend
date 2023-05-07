@@ -7,7 +7,7 @@
     {{#each this.items key="identifier" as |item index|}}
       {{#if (eq item.type "SetupItem")}}
         <AnimatedContainer>
-          {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
+          {{#animated-if (eq index this.expandedItemIndex) use=this.transition duration=this.transitionDuration}}
             <CoursePage::StepList::SetupItem
               @course={{@course}}
               @class="mb-4"
@@ -30,7 +30,7 @@
 
       {{#if (eq item.type "CourseStageItem")}}
         <AnimatedContainer>
-          {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
+          {{#animated-if (eq index this.expandedItemIndex) use=this.transition duration=this.transitionDuration}}
             <CoursePage::StepList::CourseStageItem
               @courseStage={{item.courseStage}}
               @repository={{@repository}}
@@ -57,7 +57,7 @@
 
       {{#if (eq item.type "CourseCompletedItem")}}
         <AnimatedContainer>
-          {{#animated-if (eq index this.expandedItemIndex) use=this.transition}}
+          {{#animated-if (eq index this.expandedItemIndex) use=this.transition duration=this.transitionDuration}}
             <CoursePage::StepList::CourseCompletedItem @repository={{@repository}} @class="mb-4" />
           {{else}}
             <CoursePage::StepList::CollapsedItem

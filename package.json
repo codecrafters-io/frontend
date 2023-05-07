@@ -114,6 +114,7 @@
     "fuse.js": "^6.5.3",
     "mustache": "^4.2.0",
     "node-html-parser": "^6.1.4",
-    "showdown": "^2.1.0"
+    "showdown": "^2.1.0",
+    "tracked-built-ins": "^3.1.1"
   }
 }

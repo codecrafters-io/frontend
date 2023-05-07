@@ -14,6 +14,7 @@ export default class CoursePageContentStepListComponent extends Component {
   @tracked selectedItemIndex = null;
   @service store;
   transition = fade;
+  transitionDuration = 200;
   @service visibility;
 
   constructor() {

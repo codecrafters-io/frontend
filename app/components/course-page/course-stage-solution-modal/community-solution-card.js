@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import showdown from 'showdown';
+import { groupBy } from '../../../lib/lodash-utils';
 
 export default class CommunitySolutionCardComponent extends Component {
   @tracked isExpanded = false;
@@ -13,9 +14,30 @@ export default class CommunitySolutionCardComponent extends Component {
   @service store;
   @service('current-user') currentUserService;
 
-  get comments() {
-    return this.args.solution.comments.filter((comment) => !comment.parentComment);
+  get changedFilesForRender() {
+    return this.args.solution.changedFiles.map((changedFile) => {
+      return {
+        ...changedFile,
+        comments: this.shouldShowComments ? this.commentsGroupedByFilename[changedFile.filename] || [] : [],
+      };
+    });
   }
+
+  get commentsGroupedByFilename() {
+    return groupBy(this.comments, 'filename');
+  }
+
+  get comments() {
+    return this.args.solution.comments.filter((comment) => comment.isTopLevelComment && !comment.isNew);
+  }
+
+  // get debug() {
+  //   return JSON.stringify({
+  //     all: this.store.peekAll('community-course-stage-solution-comment').length,
+  //     solutionComments: this.args.solution.comments.length,
+  //     shouldShowComments: this.shouldShowComments,
+  //   });
+  // }
 
   get explanationHTML() {
     if (this.args.solution.explanationMarkdown) {
@@ -84,7 +106,7 @@ export default class CommunitySolutionCardComponent extends Component {
   }
 
   get shouldShowComments() {
-    return this.isExpanded && this.comments.length > 0 && this.currentUserService.record.isStaff;
+    return this.isExpanded && this.comments.length > 0;
   }
 
   get shouldShowExplanation() {

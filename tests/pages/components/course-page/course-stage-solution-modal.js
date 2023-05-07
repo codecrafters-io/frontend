@@ -1,5 +1,6 @@
 import { clickable, clickOnText, collection, fillable, hasClass, text } from 'ember-cli-page-object';
-import CommentForm from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-solution-modal/comment-form';
+import CommunitySolutionsTab from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-solution-modal/community-solutions-tab';
+import CommentCard from '../comment-card';
 
 export default {
   get isOpen() {
@@ -16,29 +17,12 @@ export default {
     clickOnTabHeader: clickOnText('[data-test-tab-header]'),
     clickOnSubmitButton: clickable('[data-test-submit-button]'),
     submitButtonIsDisabled: hasClass('opacity-50', '[data-test-submit-button]'),
-
-    commentCards: collection('[data-test-comment-card]', {
-      clickOnDropdownLink: clickOnText('[data-test-more-dropdown-content] div[role="button"]'),
-      clickOnReplyButton: clickable('[data-test-reply-button]'),
-      commentBodyText: text('[data-test-comment-body]'),
-      commentForm: CommentForm,
-      downvoteButton: { scope: '[data-test-downvote-button]' },
-      replyCards: collection('[data-test-comment-card]', {}),
-      toggleDropdown: clickable('[data-test-more-dropdown-toggle]:eq(0)'),
-      upvoteButton: { scope: '[data-test-upvote-button]' },
-    }),
-
+    commentCards: collection('[data-test-comment-card]', CommentCard),
     fillInCommentInput: fillable('[data-test-comment-input]'),
     scope: '[data-test-comments-tab]',
   },
 
-  communitySolutionsTab: {
-    solutionCards: collection('[data-test-community-solution-card]', {
-      clickOnExpandButton: clickable('[data-test-expand-button]'),
-      clickOnCollapseButton: clickable('[data-test-collapse-button]'),
-    }),
-    scope: '[data-test-community-solutions-tab]',
-  },
+  communitySolutionsTab: CommunitySolutionsTab,
 
   languageDropdown: {
     currentLanguageName: text('[data-test-language-dropdown-trigger] [data-test-current-language-name]', { resetScope: true }),

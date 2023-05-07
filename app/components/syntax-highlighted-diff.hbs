@@ -1,11 +1,24 @@
 <div class="py-4 overflow-x-scroll" ...attributes>
-  {{! prettier-ignore }}
-  <pre class="shiki github-light">{{!
-    }}<code class="block diff-highlight min-w-fit">{{!
-      }}{{#each this.lineGroupsForRender as |lineGroup|}}{{!
-        }}{{#each lineGroup.lines as |line|}}{{!
-          }}<div class="px-2 {{line.type}}-line-group min-w-fit"
-            >{{!
+  <div class="min-w-fit">
+    {{#each this.linesForRender key="number" as |line|}}
+      <div class="relative min-w-fit">
+        {{#if line.hasComments}}
+          <div class="absolute right-2 -top-2 z-10">
+            <SyntaxHighlightedDiff::ToggleCommentsButton
+              @commentsAreExpanded={{line.commentsAreExpanded}}
+              {{on "click" (fn this.handleToggleCommentsButtonClick line.number)}}
+            />
+          </div>
+        {{/if}}
+        {{#if line.isTargetedByComments}}
+          <div class="absolute right-0 top-0 bottom-0 w-0.5 {{if line.isTargetedByExpandedComments 'bg-teal-500' 'bg-gray-300'}}">
+          </div>
+        {{/if}}
+
+        {{! prettier-ignore }}
+        <pre class="shiki github-light min-w-fit">{{!
+        }}<code class="block diff-highlight min-w-fit">{{!
+          }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
             }}{{#if (eq line.type "added")}}{{!
                 }}<span class="inserted-marker select-none">+ </span>{{!
               }}{{else if (eq line.type "removed")}}{{!
@@ -15,8 +28,23 @@
               }}{{/if}}{{!
             }}{{line.html}}{{!
           }}</div>{{!
-        }}{{/each}}{{!
-      }}{{/each}}{{!
-    }}</code>{{!
-}}</pre>
+        }}</code>{{!
+      }}</pre>
+      </div>
+
+      {{#if (and line.commentsAreExpanded line.hasComments)}}
+        <div class="py-2 my-4 border-t border-b space-y-4 px-4">
+          {{#if line.commentsAreExpanded}}
+            {{#each line.comments key="id" as |comment|}}
+              <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
+                <div class="shadow-sm rounded border border-gray-300 w-full">
+                  <CommentCard @comment={{comment}} />
+                </div>
+              </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
+            {{/each}}
+          {{/if}}
+        </div>
+      {{/if}}
+    {{/each}}
+  </div>
 </div>
