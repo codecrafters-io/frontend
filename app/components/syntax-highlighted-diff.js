@@ -78,11 +78,16 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return this.asyncHighlightedHTML || this.temporaryHTML;
   }
 
+  lineHasComments(lineNumber) {
+    return (this.args.comments || []).any((comment) => lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine);
+  }
+
   get linesForRender() {
     const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
 
     return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
       return {
+        hasComments: this.lineHasComments(index + 1),
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
         number: index + 1,
