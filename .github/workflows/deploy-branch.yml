@@ -16,7 +16,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'npm'
 
       - name: Cache node modules
@@ -60,7 +60,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          CDN_BASE_URL: "https://djmiqp4suql3j.cloudfront.net/codecrafters-frontend/"
+          CDN_BASE_URL: 'https://djmiqp4suql3j.cloudfront.net/codecrafters-frontend/'
           EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
           EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
           REDIS_URL: ${{ secrets.STAGING_EMBER_STORE_REDIS_URL }}
@@ -93,7 +93,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'npm'
 
       - name: Cache node modules
@@ -146,7 +146,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          CDN_BASE_URL: "https://d240kcsjfzqrhl.cloudfront.net/codecrafters-frontend/"
+          CDN_BASE_URL: 'https://d240kcsjfzqrhl.cloudfront.net/codecrafters-frontend/'
           EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
           EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
           REDIS_URL: ${{ steps.fetch-redis-url.outputs.url }}
