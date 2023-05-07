@@ -66,7 +66,7 @@ export default class CommentFormComponent extends Component {
 
     if (e.target.checkValidity()) {
       if (!this.args.comment) {
-        this.comment.courseStage = this.args.courseStage || this.args.parentComment.courseStage;
+        this.comment.target = this.args.target || this.args.parentComment.target;
       }
 
       this.isSaving = true;
@@ -105,17 +105,17 @@ export default class CommentFormComponent extends Component {
   }
 
   setNewComment() {
-    // TODO: We're setting courseStage later since this interferes with the comment listing somehow
+    // TODO: We're setting target later since this interferes with the comment listing somehow
     if (this.args.parentComment) {
       this.comment = this.store.createRecord(this.args.commentModelType, {
-        target: this.args.parentComment.target,
+        // target: this.args.parentComment.target,
         user: this.currentUser,
         language: this.args.parentComment.language,
         parentComment: this.args.parentComment,
       });
     } else {
       this.comment = this.store.createRecord(this.args.commentModelType, {
-        target: this.args.target,
+        // target: this.args.target,
         user: this.currentUser,
         language: this.args.language,
       });
