@@ -1,5 +1,4 @@
 import { htmlSafe } from '@ember/template';
-import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
