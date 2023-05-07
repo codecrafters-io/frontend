@@ -29,7 +29,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
       target: solution,
-      subtargetLocator: 'abcd.py',
+      subtargetLocator: 'README.md:3-4',
       user: user,
     });
 
@@ -37,7 +37,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       createdAt: new Date('2020-01-01'),
       bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
       target: solution,
-      subtargetLocator: 'abcd.py',
+      subtargetLocator: 'README.md:1-1',
       user: user,
     });
 
@@ -52,13 +52,30 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await coursePage.courseStageSolutionModal.languageDropdown.toggle();
     await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
 
+    const communitySolutionsTab = coursePage.courseStageSolutionModal.communitySolutionsTab;
+
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Solutions', 'active header tab link should be comments');
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1);
+    assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
 
-    await coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.objectAt(0).clickOnExpandButton();
+    await percySnapshot('Community Solution Comments - Collapsed');
 
-    await percySnapshot('Community Solution Comments');
+    await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
+    assert.strictEqual(communitySolutionsTab.solutionCards[0].toggleCommentsButtons.length, 2);
+    assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 0);
+
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
+    assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 1);
+
+    await percySnapshot('Community Solution Comments - Expanded');
+
+    // Clicking 2nd button should collapse first and open 2nd
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[1].click();
+    assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 1);
+
+    // Clicking 2nd button again should collapse 2nd
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[1].click();
+    assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 0);
   });
 
   // test('can upvote / downvote comments', async function (assert) {

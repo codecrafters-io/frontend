@@ -1,5 +1,6 @@
 import { clickable, clickOnText, collection, fillable, hasClass, text } from 'ember-cli-page-object';
 import CommentForm from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-solution-modal/comment-form';
+import CommunitySolutionsTab from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-solution-modal/community-solutions-tab';
 
 export default {
   get isOpen() {
@@ -32,13 +33,7 @@ export default {
     scope: '[data-test-comments-tab]',
   },
 
-  communitySolutionsTab: {
-    solutionCards: collection('[data-test-community-solution-card]', {
-      clickOnExpandButton: clickable('[data-test-expand-button]'),
-      clickOnCollapseButton: clickable('[data-test-collapse-button]'),
-    }),
-    scope: '[data-test-community-solutions-tab]',
-  },
+  communitySolutionsTab: CommunitySolutionsTab,
 
   languageDropdown: {
     currentLanguageName: text('[data-test-language-dropdown-trigger] [data-test-current-language-name]', { resetScope: true }),

@@ -31,6 +31,14 @@ export default class CommunitySolutionCardComponent extends Component {
     return this.args.solution.comments.filter((comment) => !comment.parentComment);
   }
 
+  // get debug() {
+  //   return JSON.stringify({
+  //     all: this.store.peekAll('community-course-stage-solution-comment').length,
+  //     solutionComments: this.args.solution.comments.length,
+  //     shouldShowComments: this.shouldShowComments,
+  //   });
+  // }
+
   get explanationHTML() {
     if (this.args.solution.explanationMarkdown) {
       return htmlSafe(new showdown.Converter().makeHtml(this.args.solution.explanationMarkdown));
