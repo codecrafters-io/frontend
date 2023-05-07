@@ -8,5 +8,6 @@ self.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'manager-capabilities.modifiers-3-13' },
     { handler: 'silence', matchId: 'ember-data:deprecate-non-strict-relationships' },
     { handler: 'silence', matchId: 'ember-data:deprecate-early-static' }, // ember-cli-mirage
+    { handler: 'silence', matchId: 'ember-data:deprecate-array-like' }, // needs to be fixed
   ],
 };
