@@ -16,6 +16,26 @@ setupQunitAssertionsExtra(QUnit.assert);
 start();
 
 QUnit.done(async function () {
-  forceModulesToBeLoaded();
+  forceModulesToBeLoaded((type, moduleName) => {
+    // These throw errors for some reason
+    if (
+      [
+        '@ember/template-compilation/index',
+        'prismjs/components/prism-crystal',
+        'ember-exam/test-support/-private/ember-exam-mocha-test-loader',
+        'ember-tooltips/test-support/jquery/assertions/index',
+        'codecrafters-frontend/tailwind.config',
+      ].includes(moduleName)
+    ) {
+      return false;
+    }
+
+    if (moduleName.startsWith('ember-tooltips/test-support/jquery')) {
+      return false;
+    }
+
+    return true;
+  });
+
   await sendCoverage();
 });

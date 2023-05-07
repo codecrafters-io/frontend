@@ -1,5 +1,5 @@
 export default function createCourseStageSourceWalkthrough(server, course, stagePosition, slug) {
-  let courseStage = course.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
+  let courseStage = course.stages.models.filter((stage) => stage.position === stagePosition)[0];
 
   const codeWalkthrough = server.create('code-walkthrough', {
     sections: [
