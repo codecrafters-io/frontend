@@ -12,14 +12,14 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
-    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint": "npm-run-all --print-name --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
+    "lint:fix": "npm-run-all --print-name --aggregate-output --continue-on-error --parallel \"lint:*:fix\"",
     "lint:hbs": "ember-template-lint .",
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test": "npm-run-all lint test:*",
+    "test": "npm-run-all --print-name \"lint\" \"test:*\"",
     "test:ember": "ember test"
   },
   "devDependencies": {
@@ -39,9 +39,9 @@
     "broccoli-asset-rev": "^3.0.0",
     "ember-animated": "^1.0.2",
     "ember-api-actions": "^0.2.9",
-    "ember-auto-import": "^2.4.1",
+    "ember-auto-import": "^2.4.3",
     "ember-basic-dropdown": "^7.0.1",
-    "ember-cli": "~4.4.0",
+    "ember-cli": "~4.8.0",
     "ember-cli-app-version": "^5.0.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-bundle-analyzer": "^1.0.0",
@@ -50,7 +50,7 @@
     "ember-cli-deploy": "^2.0.0",
     "ember-cli-deploy-lightning-pack": "^5.0.0",
     "ember-cli-deprecation-workflow": "^2.0.0",
-    "ember-cli-htmlbars": "^6.0.1",
+    "ember-cli-htmlbars": "^6.1.1",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-mirage": "^3.0.0-alpha.3",
     "ember-cli-moment-shim": "^3.8.0",
@@ -63,10 +63,9 @@
     "ember-cli-terser": "^4.0.2",
     "ember-click-outside": "^6.0.1",
     "ember-composable-helpers": "^5.0.0",
-    "ember-data": "~4.4.0",
+    "ember-data": "~4.7.3",
     "ember-exam": "^8.0.0",
-    "ember-export-application-global": "^2.0.1",
-    "ember-fetch": "^8.1.1",
+    "ember-fetch": "^8.1.2",
     "ember-keyboard": "^8.1.1",
     "ember-load-initializers": "^2.1.2",
     "ember-math-helpers": "^3.0.0",
@@ -74,7 +73,7 @@
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^6.1.0",
     "ember-resolver": "^8.0.0",
-    "ember-source": "~4.4.0",
+    "ember-source": "~4.8.0",
     "ember-svg-jar": "^2.4.2",
     "ember-template-lint": "^5.3.0",
     "ember-template-lint-plugin-prettier": "^4.1.0",
@@ -85,7 +84,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ember": "^11.2.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
@@ -100,7 +99,7 @@
     "webpack": "^5.75.0"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": "14.* || 16.* || >= 18"
   },
   "ember": {
     "edition": "octane"

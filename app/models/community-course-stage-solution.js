@@ -1,9 +1,9 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
 export default class CommunityCourseStageSolutionModel extends Model {
-  @belongsTo('course-stage', { async: false }) courseStage;
-  @belongsTo('language', { async: false }) language;
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('course-stage', { async: false, inverse: 'communitySolutions' }) courseStage;
+  @belongsTo('language', { async: false, inverse: null }) language;
+  @belongsTo('user', { async: false, inverse: null }) user;
 
   @hasMany('community-course-stage-solution-comment', { async: false }) comments;
 

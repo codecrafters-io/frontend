@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseStageSolutionModel extends Model {
-  @belongsTo('course-stage', { async: false }) courseStage;
+  @belongsTo('course-stage', { async: false, inverse: 'solutions' }) courseStage;
   @belongsTo('language', { async: false }) language;
   @attr('string') explanationMarkdown;
   @attr('') changedFiles; // free-form JSON

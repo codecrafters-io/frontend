@@ -6,6 +6,7 @@ import LeaderboardPoller from 'codecrafters-frontend/lib/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import LeaderboardEntry from '../lib/leaderboard-entry';
 
 export default class CourseLeaderboardComponent extends Component {
   transition = fade;
@@ -59,7 +60,7 @@ export default class CourseLeaderboardComponent extends Component {
     let allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
 
     return allRepositories.map((repository) => {
-      return this.store.createRecord('leaderboard-entry', {
+      return new LeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         currentCourseStage: repository.activeStage || repository.course.sortedStages.firstObject,
         language: repository.language,
@@ -83,7 +84,7 @@ export default class CourseLeaderboardComponent extends Component {
       let entryWithHighestCourseStage = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
 
       result.push(
-        this.store.createRecord('leaderboard-entry', {
+        new LeaderboardEntry({
           status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage.status,
           currentCourseStage: entryWithHighestCourseStage.currentCourseStage,
           language: entryWithHighestCourseStage.language,
