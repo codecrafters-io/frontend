@@ -1,7 +1,7 @@
 <div class="py-4 overflow-x-scroll" ...attributes>
   <div class="min-w-fit">
     {{#each this.linesForRender as |line|}}
-      <div class="relative w-full">
+      <div class="relative min-w-fit">
         {{#if line.comments.firstObject}}
           <div class="absolute right-2 -top-2 z-10">
             <SyntaxHighlightedDiff::ToggleCommentsButton
@@ -10,10 +10,13 @@
             />
           </div>
         {{/if}}
-      </div>
-      {{! prettier-ignore }}
-      <div class="relative min-w-fit">{{!
-      }}<pre class="shiki github-light min-w-fit">{{!
+        {{#if line.isTargetedByComments}}
+          <div class="absolute right-0 top-0 bottom-0 w-0.5 {{if line.isTargetedByExpandedComments "bg-teal-500" "bg-gray-300"}}">
+          </div>
+        {{/if}}
+
+        {{! prettier-ignore }}
+        <pre class="shiki github-light min-w-fit">{{!
         }}<code class="block diff-highlight min-w-fit">{{!
           }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
             }}{{#if (eq line.type "added")}}{{!

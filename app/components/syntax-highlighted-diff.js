@@ -5,11 +5,10 @@ import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
 import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 import { action } from '@ember/object';
-import { TrackedSet } from 'tracked-built-ins';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
-  linesWithExpandedComments = new TrackedSet([]);
+  @tracked lineNumberWithExpandedComments = null;
 
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
@@ -59,6 +58,14 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return groupBy(this.args.comments || [], (comment) => comment.subtargetEndLine || 0);
   }
 
+  get expandedComments() {
+    if (this.lineNumberWithExpandedComments === null) {
+      return [];
+    } else {
+      return this.commentsGroupedByEndLine[this.lineNumberWithExpandedComments] || [];
+    }
+  }
+
   get temporaryHTML() {
     const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line)}</span>`).join('');
 
@@ -67,10 +74,10 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   @action
   handleToggleCommentsButtonClick(lineNumber) {
-    if (this.linesWithExpandedComments.has(lineNumber)) {
-      this.linesWithExpandedComments.delete(lineNumber);
+    if (this.lineNumberWithExpandedComments === lineNumber) {
+      this.lineNumberWithExpandedComments = null;
     } else {
-      this.linesWithExpandedComments.add(lineNumber);
+      this.lineNumberWithExpandedComments = lineNumber;
     }
   }
 
@@ -78,8 +85,12 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return this.asyncHighlightedHTML || this.temporaryHTML;
   }
 
-  lineHasComments(lineNumber) {
-    return (this.args.comments || []).any((comment) => lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine);
+  targetingCommentsForLine(lineNumber) {
+    return (this.args.comments || []).filter((comment) => this.commentTargetsLine(comment, lineNumber));
+  }
+
+  commentTargetsLine(comment, lineNumber) {
+    return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
   }
 
   get linesForRender() {
@@ -87,12 +98,13 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
     return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
       return {
-        hasComments: this.lineHasComments(index + 1),
+        isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
+        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
         number: index + 1,
         comments: this.commentsGroupedByEndLine[index + 1] || [],
-        commentsAreExpanded: this.linesWithExpandedComments.has(index + 1),
+        commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
       };
     });
   }
