@@ -1,8 +1,8 @@
 <div class="py-4 overflow-x-scroll" ...attributes>
   <div class="min-w-fit">
-    {{#each this.linesForRender as |line|}}
+    {{#each this.linesForRender key="number" as |line|}}
       <div class="relative min-w-fit">
-        {{#if (get line.comments "0")}}
+        {{#if line.hasComments}}
           <div class="absolute right-2 -top-2 z-10">
             <SyntaxHighlightedDiff::ToggleCommentsButton
               @commentsAreExpanded={{line.commentsAreExpanded}}
@@ -32,7 +32,7 @@
       }}</pre>
       </div>
 
-      {{#if (and line.commentsAreExpanded (get line.comments "0"))}}
+      {{#if (and line.commentsAreExpanded line.hasComments)}}
         <div class="py-2 my-4 border-t border-b space-y-4 px-4">
           {{#if line.commentsAreExpanded}}
             {{#each line.comments key="id" as |comment|}}

@@ -1,7 +1,8 @@
 <div data-test-comment-card class="w-full" ...attributes>
   {{#if this.isEditing}}
-    <CoursePage::CourseStageSolutionModal::CommentForm
+    <CommentForm
       @comment={{@comment}}
+      @commentModelType={{@comment.constructor.modelName}}
       @onCancel={{fn (mut this.isEditing) false}}
       @onSubmit={{fn (mut this.isEditing) false}}
     />
@@ -90,8 +91,9 @@
   {{/if}}
 
   {{#if this.shouldShowReplyForm}}
-    <CoursePage::CourseStageSolutionModal::CommentForm
+    <CommentForm
       @parentComment={{@comment}}
+      @commentModelType={{@comment.constructor.modelName}}
       @onCancel={{this.handleCancelReplyButtonClick}}
       @onSubmit={{this.handleReplySubmitted}}
       class="border-t"

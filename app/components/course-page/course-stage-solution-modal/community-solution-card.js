@@ -28,7 +28,7 @@ export default class CommunitySolutionCardComponent extends Component {
   }
 
   get comments() {
-    return this.args.solution.comments.filter((comment) => !comment.parentComment);
+    return this.args.solution.comments.filter((comment) => comment.isTopLevelComment && !comment.isNew);
   }
 
   // get debug() {

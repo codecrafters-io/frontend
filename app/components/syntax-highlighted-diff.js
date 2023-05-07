@@ -53,7 +53,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return this.codeLinesWithTypes.map((array) => array[0]).join('\n');
   }
 
-  get commentsGroupedByEndLine() {
+  get topLevelCommentsGroupedByLine() {
     return groupBy(this.args.comments || [], (comment) => comment.subtargetEndLine || 0);
   }
 
@@ -61,7 +61,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     if (this.lineNumberWithExpandedComments === null) {
       return [];
     } else {
-      return this.commentsGroupedByEndLine[this.lineNumberWithExpandedComments] || [];
+      return this.topLevelCommentsGroupedByLine[this.lineNumberWithExpandedComments] || [];
     }
   }
 
@@ -69,6 +69,10 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line)}</span>`).join('');
 
     return `<pre><code>${linesHTML}</code></pre>`;
+  }
+
+  get topLevelComments() {
+    return (this.args.comments || []).filter((comment) => comment.isTopLevelComment && !comment.isNew);
   }
 
   @action
@@ -102,7 +106,8 @@ export default class SyntaxHighlightedDiffComponent extends Component {
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
         number: index + 1,
-        comments: this.commentsGroupedByEndLine[index + 1] || [],
+        comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
+        hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
         commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
       };
     });

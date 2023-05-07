@@ -107,15 +107,15 @@ export default class CommentFormComponent extends Component {
   setNewComment() {
     // TODO: We're setting courseStage later since this interferes with the comment listing somehow
     if (this.args.parentComment) {
-      this.comment = this.store.createRecord('course-stage-comment', {
-        // courseStage: this.args.parentComment.courseStage,
+      this.comment = this.store.createRecord(this.args.commentModelType, {
+        target: this.args.parentComment.target,
         user: this.currentUser,
         language: this.args.parentComment.language,
         parentComment: this.args.parentComment,
       });
     } else {
-      this.comment = this.store.createRecord('course-stage-comment', {
-        // courseStage: this.args.courseStage,
+      this.comment = this.store.createRecord(this.args.commentModelType, {
+        target: this.args.target,
         user: this.currentUser,
         language: this.args.language,
       });

@@ -67,6 +67,13 @@ function routes() {
     return result;
   });
 
+  this.post('/community-course-stage-solution-comments', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.createdAt = new Date();
+
+    return schema.communityCourseStageSolutionComments.create(attrs);
+  });
+
   this.post('/community-course-stage-solution-comments/:id/unvote', () => {});
 
   this.get('/courses');
