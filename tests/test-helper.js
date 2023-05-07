@@ -16,6 +16,19 @@ setupQunitAssertionsExtra(QUnit.assert);
 start();
 
 QUnit.done(async function () {
-  forceModulesToBeLoaded();
+  forceModulesToBeLoaded((type, moduleName) => {
+    if (moduleName === 'codecrafters-frontend/tailwind.config') {
+      return false;
+    }
+
+    if (moduleName.startsWith('codecrafters-frontend/tests')) {
+      return false;
+    } else if (moduleName.startsWith('codecrafters-frontend')) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
   await sendCoverage();
 });
