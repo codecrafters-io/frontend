@@ -56,7 +56,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   get commentsGroupedByEndLine() {
-    return groupBy(this.args.comments, (comment) => comment.subtargetEndLine || 0);
+    return groupBy(this.args.comments || [], (comment) => comment.subtargetEndLine || 0);
   }
 
   get temporaryHTML() {
@@ -66,14 +66,12 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   @action
-  handleExpandCommentsClick(lineNumber) {
-    this.linesWithExpandedComments.add(lineNumber);
-    console.log('updated', this.linesWithExpandedComments);
-  }
-
-  @action
-  handleCollapseCommentsClick(lineNumber) {
-    this.linesWithExpandedComments.delete(lineNumber);
+  handleToggleCommentsButtonClick(lineNumber) {
+    if (this.linesWithExpandedComments.has(lineNumber)) {
+      this.linesWithExpandedComments.delete(lineNumber);
+    } else {
+      this.linesWithExpandedComments.add(lineNumber);
+    }
   }
 
   get highlightedHtml() {
