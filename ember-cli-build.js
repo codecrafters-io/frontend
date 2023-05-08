@@ -14,6 +14,7 @@ module.exports = function (defaults) {
     },
 
     emberCLIDeploy: {
+      // Change development -> production & use "ember serve --prod" to test purgecss
       runOnPostBuild: EmberApp.env() === 'development' ? 'development-postbuild' : false,
       configFile: 'config/deploy.js',
       shouldActivate: true,

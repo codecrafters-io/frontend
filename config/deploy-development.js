@@ -6,7 +6,7 @@ module.exports = function (deployTarget) {
   }
 
   const ENV = {
-    build: { environment: 'development' },
+    build: {},
 
     redis: {
       allowOverwrite: true,
