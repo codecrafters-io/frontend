@@ -48,6 +48,18 @@ export default class CommunitySolutionCardComponent extends Component {
   }
 
   @action
+  handleCommentView(comment) {
+    this.store
+      .createRecord('analytics-event', {
+        name: 'viewed_comment',
+        properties: {
+          comment_id: comment.id,
+        },
+      })
+      .save();
+  }
+
+  @action
   handleDidInsert(element) {
     this.containerElement = element;
   }

@@ -81,6 +81,10 @@ export default class SyntaxHighlightedDiffComponent extends Component {
       this.lineNumberWithExpandedComments = null;
     } else {
       this.lineNumberWithExpandedComments = lineNumber;
+
+      (this.topLevelCommentsGroupedByLine[lineNumber] || []).forEach((comment) => {
+        this.args.onCommentView && this.args.onCommentView(comment);
+      });
     }
   }
 

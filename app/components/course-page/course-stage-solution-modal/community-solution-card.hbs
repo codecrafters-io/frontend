@@ -60,7 +60,7 @@
         </div>
 
         <div class="text-sm">
-          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} @comments={{changedFile.comments}} />
+          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@solution.language.slug}} @comments={{changedFile.comments}} @onCommentView={{this.handleCommentView}} />
         </div>
       </div>
     {{/each}}
