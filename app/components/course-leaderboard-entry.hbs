@@ -38,8 +38,9 @@
         {{if @entry.statusIsEvaluating 'bg-yellow-50 border-yellow-500 animate-pulse' 'bg-teal-50 border-teal-500 group-hover:shadow-sm'}}"
       data-test-progress-bar-container
     >
+      {{!-- Look like a tailwind 3.3.0 bug, from-0% and to-100% are required to make the gradient work --}}
       <div
-        class="bg-gradient-to-r {{if @entry.statusIsEvaluating 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}} transition-all"
+        class="bg-gradient-to-r from-0% to-100% {{if @entry.statusIsEvaluating 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}} transition-all"
         style={{this.progressBarWidthStyle}}
       >
       </div>
