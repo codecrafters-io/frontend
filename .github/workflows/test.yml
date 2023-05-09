@@ -8,15 +8,15 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'npm'
 
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
@@ -51,7 +51,7 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
-      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam --split=3 --parallel=1 --silent --reporter xunit | tee test-results.xml
+      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam --split=3 --parallel --silent --reporter xunit | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
@@ -60,7 +60,7 @@ jobs:
       - run: cat test-results.xml
         if: always()
 
-      - name: "Upload coverage to Codecov"
+      - name: 'Upload coverage to Codecov'
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
@@ -101,15 +101,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '18'
           cache: 'npm'
 
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -123,7 +123,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
