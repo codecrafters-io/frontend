@@ -1,0 +1,11 @@
+# unconventional files
+/blueprints/*/files/
+
+# compiled output
+/dist/
+
+# addons
+/.node_modules.ember-try/
+
+/app/styles/prism-*.css
+/coverage
