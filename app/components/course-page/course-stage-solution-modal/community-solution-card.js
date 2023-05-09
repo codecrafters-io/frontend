@@ -74,6 +74,7 @@ export default class CommunitySolutionCardComponent extends Component {
         name: 'viewed_community_course_stage_solution',
         properties: {
           community_course_stage_solution_id: this.args.solution.id,
+          position_in_list: this.args.positionInList,
         },
       })
       .save();
