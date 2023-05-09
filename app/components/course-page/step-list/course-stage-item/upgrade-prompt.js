@@ -12,4 +12,8 @@ export default class UpgradePromptComponent extends Component {
   handleSubscribeLinkClicked() {
     this.router.transitionTo('pay');
   }
+
+  get user() {
+    return this.currentUserService.record;
+  }
 }

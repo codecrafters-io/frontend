@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class PricingCardComponent extends Component {
+  @service('current-user') currentUserService;
   @service store;
   @tracked isCreatingCheckoutSession = false;
 
@@ -26,6 +27,7 @@ export default class PricingCardComponent extends Component {
       autoRenewSubscription: this.args.autoRenewSubscription,
       earlyBirdDiscountEnabled: this.args.earlyBirdDiscountEnabled,
       referralDiscountEnabled: this.args.referralDiscountEnabled,
+      trialDisabled: this.user.cannotUseTrial,
       successUrl: `${window.location.origin}/tracks`,
       cancelUrl: `${window.location.origin}/pay`,
       pricingFrequency: this.args.pricingFrequency,
@@ -41,5 +43,9 @@ export default class PricingCardComponent extends Component {
       yearly: 'yr',
       quarterly: 'qtr',
     }[this.args.pricingFrequency];
+  }
+
+  get user() {
+    return this.currentUserService.record;
   }
 }

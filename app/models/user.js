@@ -3,6 +3,7 @@ import { memberAction } from 'ember-api-actions';
 
 export default class UserModel extends Model {
   @attr('string') avatarUrl;
+  @attr('boolean') cannotUseTrial; // Feature flag
   @attr('date') createdAt;
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
@@ -10,6 +11,7 @@ export default class UserModel extends Model {
   @attr('boolean') isCodecraftersPartner;
   @attr('string') name;
   @attr('string') username;
+  @attr('') featureFlags;
 
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
   @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes;

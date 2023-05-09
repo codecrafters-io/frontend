@@ -7,7 +7,13 @@
     </div>
 
     <div class="underline mb-2 inline-block" role="button" {{on "click" this.handleSubscribeLinkClicked}} data-test-subscribe-button>
-      <b>Start your 3-day free trial now.</b>
+      <b>
+        {{#if this.user.cannotUseTrial}}
+          Start your membership now.
+        {{else}}
+          Start your 3-day free trial now.
+        {{/if}}
+      </b>
     </div>
 
     <div>
