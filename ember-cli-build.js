@@ -20,6 +20,14 @@ module.exports = function (defaults) {
       shouldActivate: true,
     },
 
+    '@embroider/macros': {
+      setConfig: {
+        '@ember-data/store': {
+          polyfillUUID: true,
+        },
+      },
+    },
+
     postcssOptions: {
       compile: {
         plugins: [
