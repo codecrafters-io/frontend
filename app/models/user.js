@@ -1,9 +1,11 @@
 import Model, { attr, hasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
+import { inject as service } from '@ember/service';
 
 export default class UserModel extends Model {
+  @service('feature-flags') featureFlagsService;
+
   @attr('string') avatarUrl;
-  @attr('boolean') cannotUseTrial; // Feature flag
   @attr('date') createdAt;
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
@@ -50,6 +52,10 @@ export default class UserModel extends Model {
 
   get canAccessPaidContent() {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+  }
+
+  get cannotUseTrial() {
+    return this.featureFlagsService.cannotUseTrial;
   }
 
   canAttemptCourseStage(courseStage) {
