@@ -10,6 +10,10 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
+  get solutionCommentsButtonVariant() {
+    return this.getFeatureFlagValue('solution-comments-button') || 'control';
+  }
+
   get cannotUseTrial() {
     return this.getFeatureFlagValue('no-trials') === 'test';
   }
