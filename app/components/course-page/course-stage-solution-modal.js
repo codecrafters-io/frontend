@@ -86,6 +86,16 @@ export default class CourseStageSolutionModalComponent extends Component {
           },
         })
         .save();
+    } else if (this.activeTab === 'comments') {
+      this.store
+        .createRecord('analytics-event', {
+          name: 'viewed_course_stage_comments',
+          properties: {
+            course_slug: this.courseStage.course.slug,
+            course_stage_slug: this.courseStage.slug,
+          },
+        })
+        .save();
     }
   }
 
