@@ -1,6 +1,24 @@
 {{#if this.anyButtonIsVisible}}
   <div class="flex flex-wrap mt-3">
-    {{#if this.shouldShowViewSolutionButton}}
+    {{#if (and this.shouldShowViewSolutionButton @courseStage.isFirst)}}
+      <CoursePage::StepList::CourseStageItem::ActionButton
+        @text="Solution"
+        @icon="code"
+        {{on "click" (fn @onViewSolutionButtonClick @courseStage)}}
+        class="mt-3 mr-3"
+      />
+    {{/if}}
+
+    {{#if this.shouldShowViewCommentsButton}}
+      <CoursePage::StepList::CourseStageItem::ActionButton
+        @text="Comments"
+        @icon="chat"
+        {{on "click" (fn @onViewCommentsButtonClick @courseStage)}}
+        class="mt-3 mr-3"
+      />
+    {{/if}}
+
+    {{#if (and this.shouldShowViewSolutionButton (not @courseStage.isFirst))}}
       <CoursePage::StepList::CourseStageItem::ActionButton
         @text="Solutions"
         @icon="code"
@@ -34,15 +52,6 @@
         @text="Edit Feedback"
         @icon="chat"
         {{on "click" @onFeedbackButtonClick}}
-        class="mt-3 mr-3"
-      />
-    {{/if}}
-
-    {{#if this.shouldShowViewCommentsButton}}
-      <CoursePage::StepList::CourseStageItem::ActionButton
-        @text="Comments"
-        @icon="chat"
-        {{on "click" (fn @onViewCommentsButtonClick @courseStage)}}
         class="mt-3 mr-3"
       />
     {{/if}}

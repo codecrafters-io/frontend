@@ -10,8 +10,14 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
+  // Either 'control', 'explain', or 'icon-with-counts'
   get solutionCommentsButtonVariant() {
     return this.getFeatureFlagValue('solution-comments-button') || 'control';
+  }
+
+  // Either 'control' or 'test'
+  get stageCommentsButtonVariant() {
+    return this.getFeatureFlagValue('stage-comments-button') || 'control';
   }
 
   get cannotUseTrial() {
