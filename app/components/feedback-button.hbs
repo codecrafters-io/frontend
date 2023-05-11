@@ -6,7 +6,7 @@
   </dd.Trigger>
   <dd.Content>
     <div class="pt-2">
-      <div class="p-2 border rounded shadow text-sm text-gray-600 max-w-xl w-full bg-white" data-test-feedback-dropdown-content>
+      <div class="p-2 border rounded shadow text-sm text-gray-600 max-w-3xl w-full bg-white" data-test-feedback-dropdown-content>
         {{#if this.wasSaved}}
           <div class="p-4 flex flex-col items-center justify-center w-60">
             {{svg-jar "check-circle" class="w-12 h-12 text-teal-500 mb-2"}}
@@ -31,7 +31,7 @@
             />
 
             <div class="flex justify-between items-center">
-              <div class="flex items-center">
+              <div class="flex items-center mr-8">
                 {{#each this.sentimentOptions as |sentimentOption|}}
                   <FeedbackButton::SentimentOption
                     @emoji={{sentimentOption}}

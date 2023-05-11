@@ -5,6 +5,7 @@ import fade from 'ember-animated/transitions/fade';
 
 export default class CourseStageItemActionButtonListComponent extends Component {
   @service('current-user') currentUserService;
+  @service featureFlags;
   @service store;
   @service visibility;
   transition = fade;

@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 
 export default class CommentsTabComponent extends Component {
   @tracked isLoading = true;
+  @service featureFlags;
   @service store;
   @service('current-user') currentUserService;
 

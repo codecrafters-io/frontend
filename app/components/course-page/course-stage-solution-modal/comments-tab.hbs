@@ -4,7 +4,8 @@
       {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
     </div>
     <div class="text-blue-900 prose prose-blue leading-7 text-sm">
-      Comments are experimental, please send us
+      {{if (eq this.featureFlags.stageCommentsButtonVariant "test") "Hints" "Comments"}}
+      are experimental, please send us
       <div class="inline-flex"><FeedbackButton class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton></div>.
     </div>
   </div>

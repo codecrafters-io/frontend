@@ -9,7 +9,6 @@
     <span class="text-gray-600 mr-1">Stage #{{@courseStage.position}}:</span>
     <span class="font-bold text-gray-700">{{@courseStage.name}}</span>
   </div>
-
 </div>
 
 <div class="flex flex-wrap items-center justify-between">
@@ -43,12 +42,21 @@
       />
     {{/if}}
 
-    <CoursePage::CourseStageSolutionModal::HeaderTabLink
-      @icon="chat"
-      @text="Comments"
-      @isActive={{eq @activeTab "comments"}}
-      {{on "click" (fn @onTabLinkClick "comments")}}
-    />
+    {{#if (eq this.featureFlags.stageCommentsButtonVariant "test")}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="light-bulb"
+        @text="Hints"
+        @isActive={{eq @activeTab "comments"}}
+        {{on "click" (fn @onTabLinkClick "comments")}}
+      />
+    {{else}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="chat"
+        @text="Comments"
+        @isActive={{eq @activeTab "comments"}}
+        {{on "click" (fn @onTabLinkClick "comments")}}
+      />
+    {{/if}}
   </div>
 
   <div>
