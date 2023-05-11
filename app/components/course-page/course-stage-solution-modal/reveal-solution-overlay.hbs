@@ -16,7 +16,10 @@
       <div class="flex items-center">
         {{#each this.suggestedActions as |action|}}
           {{#if (eq action "view_comments")}}
-            <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>View comments</PrimaryButton>
+            <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>
+              View
+              {{if (eq this.featureFlags.stageCommentsButtonVariant "test") "hints" "comments"}}
+            </PrimaryButton>
           {{/if}}
 
           {{#if (eq action "switch_language")}}

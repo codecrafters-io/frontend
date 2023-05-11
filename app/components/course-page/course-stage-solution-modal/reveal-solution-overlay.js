@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default class RevealSolutionOverlayComponent extends Component {
   @service currentUser;
+  @service featureFlags;
 
   get currentUserIsStaff() {
     return this.currentUser.record.isStaff;
@@ -16,7 +17,7 @@ export default class RevealSolutionOverlayComponent extends Component {
     if (this.suggestedActions.length === 0) {
       return `Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.`;
     } else if (this.suggestedActions.includes('switch_language') && this.suggestedActions.includes('view_comments')) {
-      return `Looks like you haven't  completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages.`;
+      return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages.`;
     } else if (this.suggestedActions.includes('switch_language')) {
       return `Looks like you haven't completed this stage in ${this.args.repository.language.name} yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you.`;
     } else if (this.suggestedActions.includes('view_comments')) {
