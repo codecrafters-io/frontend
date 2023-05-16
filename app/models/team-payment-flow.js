@@ -4,8 +4,11 @@ import { memberAction } from 'ember-api-actions';
 import Model from '@ember-data/model';
 
 export default class TeamPaymentFlowModel extends Model {
+  @attr('boolean') couponCodeIsValid;
+  @attr('boolean') couponCodeIsInvalid;
   @attr('string') teamName;
   @attr('string') contactEmailAddress;
+  @attr('string') couponCode;
   @attr('string') pricingPlanType; // monthly, yearly
   @attr('number') numberOfSeats;
   @attr('string') stripeSetupIntentClientSecret;
@@ -18,6 +21,10 @@ export default class TeamPaymentFlowModel extends Model {
 
   get contactEmailAddressIsComplete() {
     return this.contactEmailAddress && this.contactEmailAddress.trim().length > 0;
+  }
+
+  get hasCouponCode() {
+    return this.couponCode && this.couponCode.trim().length > 0;
   }
 
   get teamNameIsComplete() {

@@ -31,6 +31,7 @@ export default class TeamsPayController extends Controller {
       this.model.contactEmailAddressIsComplete &&
       this.model.pricingPlanTypeIsComplete &&
       this.model.numberOfSeatsIsComplete &&
+      !this.model.couponCodeIsInvalid &&
       !this.model.isSaving &&
       !this.model.hasDirtyAttributes
     );
