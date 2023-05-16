@@ -9,8 +9,21 @@ export default class PaymentDetailsStepContainerComponent extends Component {
   @service serverVariables;
 
   @tracked errorMessage;
+  @tracked firstInvoicePreview;
+  @tracked isLoadingFirstInvoicePreview = true;
   @tracked stripeElementsObject;
   @tracked isConfirmingPaymentDetails = false;
+
+  constructor() {
+    super(...arguments);
+    this.loadFirstInvoicePreview();
+  }
+
+  @action
+  async loadFirstInvoicePreview() {
+    this.firstInvoicePreview = await this.args.teamPaymentFlow.fetchFirstInvoicePreview();
+    this.isLoadingFirstInvoicePreview = false;
+  }
 
   @action
   async handleChangePaymentMethodButtonClick() {

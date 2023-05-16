@@ -47,6 +47,10 @@ export default class TeamDetailsFormComponent extends Component {
 
   @action
   async handleValueUpdated() {
+    if (this.args.teamPaymentFlow.hasCouponCode) {
+      this.args.teamPaymentFlow.couponCode = this.args.teamPaymentFlow.couponCode.trim();
+    }
+
     if (this.formElement.checkValidity()) {
       debounce(this, this.saveTeamPaymentFlow, 500);
     }

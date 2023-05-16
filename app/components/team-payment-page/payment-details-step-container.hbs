@@ -20,14 +20,16 @@
 
   <div class="h-px bg-gray-100 my-6"></div>
 
-  <div class="flex justify-between items-center">
+  <div class="flex justify-between items-center gap-4">
     {{#if this.errorMessage}}
       <div id="error-message" class="text-red-600 font-semibold">
         {{this.errorMessage}}
       </div>
     {{else}}
-      <div class="text-xs text-gray-500">
-        Payments are processed securely using Stripe.
+      <div class="text-xs text-gray-500 leading-relaxed">
+        <TeamPaymentPage::PaymentPreview @teamPaymentFlow={{@teamPaymentFlow}}>
+          Payments are processed securely using Stripe.
+        </TeamPaymentPage::PaymentPreview>
       </div>
     {{/if}}
 
