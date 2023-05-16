@@ -1,0 +1,10 @@
+You will be charged
+<span class="font-semibold">${{if
+    this.isLoadingFirstInvoicePreview
+    "⋯"
+    this.perUnitAmountInDollarsInFirstInvoicePreview
+  }}</span>/seat/{{@teamPaymentFlow.pricingFrequencyUnit}}
+for
+<span class="font-semibold">{{if this.isLoadingFirstInvoicePreview "⋯" this.subscriptionQuantityInFirstInvoicePreview}} seats</span>.
+
+{{yield}}

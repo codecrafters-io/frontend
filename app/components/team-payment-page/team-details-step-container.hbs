@@ -27,7 +27,31 @@
 
     <div class="h-px bg-gray-100 my-6"></div>
 
-    <TeamPaymentPage::TeamDetailsForm::Section @title="Pricing Plan" @description="Seat-based pricing allows you to re-assign seats anytime.">
+    <TeamPaymentPage::TeamDetailsForm::Section @title="Coupon Code" @description="Optional, if you have one">
+      <Input
+        @value={{@teamPaymentFlow.couponCode}}
+        {{on "blur" this.handleValueUpdated}}
+        class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border w-full"
+        id="coupon_code"
+        placeholder="SECRET_COUPON"
+      />
+      {{#if @teamPaymentFlow.isSaving}}
+        {{#if @teamPaymentFlow.hasCouponCode}}
+          <div class="text-gray-500 font-semibold text-sm mt-2">Validating...</div>
+        {{/if}}
+      {{else}}
+        {{#if @teamPaymentFlow.couponCodeIsValid}}
+          <div class="text-teal-500 font-semibold text-sm mt-2">Coupon code applied!</div>
+        {{else if @teamPaymentFlow.couponCodeIsInvalid}}
+          <div class="text-red-500 font-semibold text-sm mt-2">This coupon code is invalid. Please contact us at hello@codecrafters.io if you think
+            this is a mistake.</div>
+        {{/if}}
+      {{/if}}
+    </TeamPaymentPage::TeamDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 my-6"></div>
+
+    {{!-- <TeamPaymentPage::TeamDetailsForm::Section @title="Pricing Plan" @description="Seat-based pricing allows you to re-assign seats anytime.">
       <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
         @name="Monthly"
         @description="$79/seat/month, minimum 5 seats"
@@ -44,7 +68,7 @@
       />
     </TeamPaymentPage::TeamDetailsForm::Section>
 
-    <div class="h-px bg-gray-100 my-6"></div>
+    <div class="h-px bg-gray-100 my-6"></div> --}}
 
     <TeamPaymentPage::TeamDetailsForm::Section @title="Number of Seats" @description="You can add more users anytime.">
       <div class="flex items-center">
@@ -80,13 +104,17 @@
 
     <div class="h-px bg-gray-100 my-6"></div>
 
-    <div class="flex justify-end">
+    <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
+      <div class="text-xs text-gray-500">
+        Payment amount will be shown in the next step.
+      </div>
       <div>
         <PrimaryButtonWithSpinner
           @isDisabled={{not @isComplete}}
           @shouldShowSpinner={{@teamPaymentFlow.isSaving}}
           {{on "click" @onContinueButtonClick}}
           type="submit"
+          class="w-full justify-center sm:w-auto"
           data-test-continue-button
         >
           Continue
