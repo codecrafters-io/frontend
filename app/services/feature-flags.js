@@ -15,11 +15,6 @@ export default class FeatureFlagsService extends Service {
     return this.getFeatureFlagValue('solution-comments-button') || 'control';
   }
 
-  // Either 'control' or 'test'
-  get stageCommentsButtonVariant() {
-    return this.getFeatureFlagValue('stage-comments-button') || 'control';
-  }
-
   get cannotUseTrial() {
     return this.getFeatureFlagValue('no-trials') === 'test';
   }

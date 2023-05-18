@@ -45,7 +45,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
         'notify page view (courses listing page)',
         'fetch courses (course page)',
         'fetch repositories (course page)',
-        'notify feature flag (comments button)',
         'fetch leaderboard entries (course page)',
         'notify page view (course page)',
       ].length
