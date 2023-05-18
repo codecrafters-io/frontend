@@ -189,8 +189,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await percySnapshot('Verified Solutions Overlay | No other langs, has comments');
 
     assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
-    assertButtons(['View comments', 'Reveal solution']);
-    await clickButton('View comments');
+    assertButtons(['View hints', 'Reveal solution']);
+    await clickButton('View hints');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
 
     // Stage 6: Incomplete, has solutions in other language & has comments
@@ -200,7 +200,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assertInstructions(
       "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
     );
-    assertButtons(['View comments', 'Another language', 'Reveal Python solution']);
+    assertButtons(['View hints', 'Another language', 'Reveal Python solution']);
   });
 
   test('can view solutions for previous stages after completing them', async function (assert) {

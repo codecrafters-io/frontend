@@ -175,9 +175,9 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await percySnapshot('Community Solutions Overlay | No other langs, has comments');
 
     assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
-    assertButtons(['View comments', 'Reveal solutions']);
-    await clickButton('View comments');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
+    assertButtons(['View hints', 'Reveal solutions']);
+    await clickButton('View hints');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Hints', 'active header tab link should be comments');
 
     // Stage 6: Incomplete, has solutions in other language & has comments
     await switchToSolutionsForStage(6);
@@ -186,7 +186,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assertInstructions(
       "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
     );
-    assertButtons(['View comments', 'Another language', 'Reveal Python solutions']);
+    assertButtons(['View hints', 'Another language', 'Reveal Python solutions']);
   });
 
   test('can view team-restricted solutions', async function (assert) {
