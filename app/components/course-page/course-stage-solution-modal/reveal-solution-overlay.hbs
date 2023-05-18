@@ -17,8 +17,7 @@
         {{#each this.suggestedActions as |action|}}
           {{#if (eq action "view_comments")}}
             <PrimaryButton @size="small" class="mr-3" data-test-action-button {{on "click" @onViewCommentsButtonClick}}>
-              View
-              {{if (eq this.featureFlags.stageCommentsButtonVariant "test") "hints" "comments"}}
+              View hints
             </PrimaryButton>
           {{/if}}
 

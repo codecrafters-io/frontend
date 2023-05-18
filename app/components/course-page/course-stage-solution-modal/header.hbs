@@ -42,21 +42,12 @@
       />
     {{/if}}
 
-    {{#if (eq this.featureFlags.stageCommentsButtonVariant "test")}}
-      <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="light-bulb"
-        @text="Hints"
-        @isActive={{eq @activeTab "comments"}}
-        {{on "click" (fn @onTabLinkClick "comments")}}
-      />
-    {{else}}
-      <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="chat"
-        @text="Comments"
-        @isActive={{eq @activeTab "comments"}}
-        {{on "click" (fn @onTabLinkClick "comments")}}
-      />
-    {{/if}}
+    <CoursePage::CourseStageSolutionModal::HeaderTabLink
+      @icon="light-bulb"
+      @text="Hints"
+      @isActive={{eq @activeTab "comments"}}
+      {{on "click" (fn @onTabLinkClick "comments")}}
+    />
   </div>
 
   <div>
