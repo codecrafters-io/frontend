@@ -198,7 +198,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await coursePage.clickOnCollapsedItem('Respond to PING');
   //   await animationsSettled();
 
-  //   await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+  //   await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
   //   await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
   //   await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
 
@@ -225,7 +225,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await coursePage.clickOnCollapsedItem('Respond to PING');
   //   await animationsSettled();
 
-  //   await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+  //   await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
   //   await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
   //   await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
 
@@ -276,7 +276,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await coursePage.clickOnCollapsedItem('Respond to PING');
   //   await animationsSettled();
 
-  //   await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+  //   await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
 
   //   const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
   //   await firstCommentCard.clickOnReplyButton();

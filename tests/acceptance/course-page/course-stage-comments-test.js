@@ -43,7 +43,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
 
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
@@ -63,7 +63,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
 
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be solutions');
@@ -113,7 +113,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
 
     const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
     assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
@@ -142,7 +142,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
     await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
     await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
 
@@ -179,7 +179,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
     await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
     await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
 
@@ -206,7 +206,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
     await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
     await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
 
@@ -257,7 +257,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Comments');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
 
     const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
     await firstCommentCard.clickOnReplyButton();
