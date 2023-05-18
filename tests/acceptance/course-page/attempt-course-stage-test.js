@@ -34,6 +34,9 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
+    console.log(this.server.pretender.handledRequests.length);
+    console.log(this.server.pretender.handledRequests.map((r) => r.url));
+
     assert.strictEqual(
       this.server.pretender.handledRequests.length,
       [
@@ -42,6 +45,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
         'notify page view (courses listing page)',
         'fetch courses (course page)',
         'fetch repositories (course page)',
+        'notify feature flag (comments button)',
         'fetch leaderboard entries (course page)',
         'notify page view (course page)',
       ].length
