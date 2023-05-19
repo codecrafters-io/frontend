@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class HeaderComponent extends Component {
+  @service('feature-flags') featureFlags;
   @service('current-user') currentUserService;
   @service('router') router;
   @tracked mobileMenuIsExpanded = false;

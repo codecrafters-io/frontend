@@ -43,6 +43,7 @@ function routes() {
 
   this.post('/analytics-events');
 
+  this.get('/badges');
   this.get('/charges');
 
   this.get('/code-walkthroughs');
