@@ -15,7 +15,7 @@ export default class UserModel extends Model {
   @attr('string') username;
   @attr('') featureFlags;
 
-  @hasMany('badge-awards', { async: false }) badgeAwards;
+  @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
   @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes;
   @hasMany('course-extension-idea-supervote', { async: false }) courseExtensionIdeaSupervotes;

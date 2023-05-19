@@ -177,7 +177,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     this.server.create('badge-award', {
       user: currentUser,
       badge: badge,
-      source: submission,
+      submission: submission,
     });
 
     await this.clock.tick(2001); // Wait for poll
