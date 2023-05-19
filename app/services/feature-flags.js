@@ -10,6 +10,10 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
+  get canSeeBadges() {
+    return this.currentUser.isStaff;
+  }
+
   // Either 'control', 'explain', or 'icon-with-counts'
   get solutionCommentsButtonVariant() {
     return this.getFeatureFlagValue('solution-comments-button') || 'control';
