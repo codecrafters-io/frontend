@@ -11,7 +11,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeBadges() {
-    return this.currentUser.isStaff;
+    return this.currentUser && this.currentUser.isStaff;
   }
 
   // Either 'control', 'explain', or 'icon-with-counts'
