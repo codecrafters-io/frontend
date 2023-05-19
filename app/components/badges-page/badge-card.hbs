@@ -1,0 +1,13 @@
+<div class="border p-4 bg-white">
+  <div class="text-lg font-bold text-gray-600 mr-2 mb-4" data-test-badge-name>
+    {{@badge.name}}
+  </div>
+
+  <div>
+    {{#if this.userHasBadgeAward}}
+      <span class="text-teal-600 font-semibold">You have earned this badge.</span>
+    {{else}}
+      <span class="text-gray-500">You haven't earned this badge.</span>
+    {{/if}}
+  </div>
+</div>

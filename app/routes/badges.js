@@ -10,7 +10,7 @@ export default class BadgesRoute extends ApplicationRoute {
   async model() {
     return RSVP.hash({
       badges: this.store.findAll('badge', {
-        include: 'current-user-awards.user,current-user-awards.badge',
+        include: 'current-user-awards,current-user-awards.user,current-user-awards.badge',
       }),
     });
   }
