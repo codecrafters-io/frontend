@@ -6,6 +6,7 @@ export default class SubmissionModel extends Model {
   @belongsTo('communityCourseStageSolution', { async: false }) communityCourseStageSolution;
   @belongsTo('repository', { async: false, inverse: 'submissions' }) repository;
 
+  @hasMany('badge-award', { async: false }) badgeAwards;
   @hasMany('submission-evaluation', { async: false }) evaluations;
 
   @attr('date') createdAt;
