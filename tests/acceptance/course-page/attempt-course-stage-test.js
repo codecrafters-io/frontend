@@ -118,6 +118,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
+    currentUser.update({ featureFlags: { 'pulsing-solutions-button': 'test' } });
+
     let repository = this.server.create('repository', 'withSetupStageCompleted', {
       course: redis,
       language: go,

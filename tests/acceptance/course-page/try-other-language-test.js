@@ -83,7 +83,8 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     await this.clock.tick(2001); // Run active item index updater
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 5, 'polling should have run again');
+    // This is 6 to account for a feature flag
+    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 6, 'polling should have run again');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await animationsSettled();
