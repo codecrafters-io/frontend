@@ -88,6 +88,10 @@ export default class CourseStageModel extends Model {
     return this.course.sortedStages[this.course.sortedStages.indexOf(this) - 1];
   }
 
+  shouldShowPulsingViewSolutionButtonFor(repository) {
+    return this.isFirst && repository.firstSubmissionCreated && repository.activeStage === this;
+  }
+
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
   }

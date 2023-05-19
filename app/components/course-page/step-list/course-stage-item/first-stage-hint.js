@@ -11,6 +11,10 @@ export default class CoursePageStepListStageItemFirstStageHintComponent extends 
     return this.args.repository.readmeUrl || this.args.repository.defaultReadmeUrl;
   }
 
+  get shouldPulse() {
+    return this.args.courseStage.shouldShowPulsingViewSolutionButtonFor(this.args.repository);
+  }
+
   get solutionIsAvailable() {
     return !!this.solution;
   }

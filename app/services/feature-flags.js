@@ -10,6 +10,10 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
+  get canSeePulsingSolutionsButtonForFirstStage() {
+    return true;
+  }
+
   get canSeeBadges() {
     return this.currentUser && this.currentUser.isStaff;
   }

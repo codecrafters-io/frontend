@@ -4,6 +4,7 @@
       <CoursePage::StepList::CourseStageItem::ActionButton
         @text="Solution"
         @icon="code"
+        @shouldPulse={{this.shouldPulseViewSolutionButton}}
         {{on "click" (fn @onViewSolutionButtonClick @courseStage)}}
         class="mt-3 mr-3"
       />
