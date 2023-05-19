@@ -2,7 +2,10 @@
   {{svg-jar "badge-check" class="w-8 h-8 mr-2 flex-shrink-0 text-green-400 transform scale-90"}}
 
   <div class="text-green-700 text-sm leading-relaxed">
-    You earned the <LinkTo @route="badges" class="font-semibold underline">{{@badgeAwards.firstObject.badge.name}}</LinkTo>
+    You earned the
+    {{#each @badgeAwards as |badgeAward|}}
+      <LinkTo @route="badges" class="font-semibold underline">{{badgeAward.badge.name}}</LinkTo>
+    {{/each}}
     badge.
   </div>
 </div>

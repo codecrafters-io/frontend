@@ -53,7 +53,7 @@
       />
     {{/if}}
 
-    {{#if (and this.featureFlags.canSeeBadges this.badgeAwards.firstObject)}}
+    {{#if (and this.featureFlags.canSeeBadges (get this.badgeAwards "0"))}}
       <CoursePage::StepList::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
     {{/if}}
 
