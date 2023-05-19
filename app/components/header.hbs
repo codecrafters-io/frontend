@@ -31,6 +31,11 @@
 
         {{! Top-level links }}
         <LinkTo @route="tracks" class="text-sm px-2 text-gray-600" data-test-tracks-link>Tracks</LinkTo>
+
+        {{#if this.featureFlags.canSeeBadges}}
+          <LinkTo @route="badges" class="text-sm px-2 text-gray-600">Badges</LinkTo>
+        {{/if}}
+
         <LinkTo @route="vote" class="text-sm px-2 text-gray-600" data-test-course-ideas-link>Vote</LinkTo>
 
         {{#if this.currentUser.isAdmin}}

@@ -1,0 +1,15 @@
+{{page-title "Courses"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+  <h1 class="text-xl font-bold text-gray-600 mb-4 md:text-2xl md:mb-8">
+    Badges
+  </h1>
+
+  <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
+    {{#each this.model.badges as |badge|}}
+      <div class="border p-4 text-lg font-semibold bg-white">
+        {{badge.name}}
+      </div>
+    {{/each}}
+  </div>
+</div>
