@@ -3,7 +3,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsSubscriber, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
@@ -33,9 +33,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-
-    console.log(this.server.pretender.handledRequests.length);
-    console.log(this.server.pretender.handledRequests.map((r) => r.url));
 
     assert.strictEqual(
       this.server.pretender.handledRequests.length,
@@ -113,7 +110,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage passed');
   });
 
-  test('passing first stage automatically advances', async function (assert) {
+  test('passing first stage automatically advances for existing users', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -144,6 +141,52 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await this.clock.tick(2001); // Wait for auto-advance
     await animationsSettled();
 
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is still active');
+  });
+
+  test('passing first stage shows badges for staff users', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withSetupStageCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
+
+    const submission = this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[0],
+    });
+
+    const badge = this.server.create('badge', {
+      slug: 'passed-first-stage',
+      name: 'Passed first stage',
+    });
+
+    this.server.create('badge-award', {
+      user: currentUser,
+      badge: badge,
+      source: submission,
+    });
+
+    await this.clock.tick(2001); // Wait for poll
+    await animationsSettled();
+
+    await this.clock.tick(2001); // Wait for auto-advance
+    await animationsSettled();
+
+    // TODO: Add tests for badge display
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is still active');
   });
 

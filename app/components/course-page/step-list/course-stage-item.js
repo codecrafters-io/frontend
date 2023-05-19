@@ -9,6 +9,7 @@ import showdown from 'showdown';
 import Mustache from 'mustache';
 
 export default class CourseStageItemComponent extends Component {
+  @service featureFlags;
   @service store;
   @service visibility;
   @tracked manualFeedbackFlowIsActive = false;
@@ -20,6 +21,10 @@ export default class CourseStageItemComponent extends Component {
       this.args.repository.highestCompletedStage === this.args.courseStage &&
       !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
     );
+  }
+
+  get badgeAwards() {
+    return this.args.repository.user.badgeAwards.filter((badgeAward) => badgeAward.source.courseStage.id === this.args.courseStage.id);
   }
 
   get completedAt() {

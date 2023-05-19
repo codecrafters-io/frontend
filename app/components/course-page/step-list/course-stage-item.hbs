@@ -53,6 +53,10 @@
       />
     {{/if}}
 
+    {{#if (and this.featureFlags.canSeeBadges this.badgeAwards.firstObject)}}
+      <CoursePage::StepList::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
+    {{/if}}
+
     {{#if this.shouldShowFirstStageHints}}
       <CoursePage::StepList::CourseStageItem::FirstStageHint
         @courseStage={{@courseStage}}
