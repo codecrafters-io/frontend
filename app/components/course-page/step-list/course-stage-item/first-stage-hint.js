@@ -3,6 +3,7 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 
 export default class CoursePageStepListStageItemFirstStageHintComponent extends Component {
+  @service featureFlags;
   @service store;
   @service visibility;
   transition = fade;
@@ -12,6 +13,11 @@ export default class CoursePageStepListStageItemFirstStageHintComponent extends 
   }
 
   get shouldPulse() {
+    // TODO: Remove this if experiment is successful
+    if (!this.featureFlags.canSeePulsingSolutionsButtonForFirstStage) {
+      return false;
+    }
+
     return this.args.courseStage.shouldShowPulsingViewSolutionButtonFor(this.args.repository);
   }
 
