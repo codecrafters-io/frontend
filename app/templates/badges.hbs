@@ -7,9 +7,7 @@
 
   <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
     {{#each this.model.badges as |badge|}}
-      <div class="border p-4 text-lg font-semibold bg-white">
-        {{badge.name}}
-      </div>
+      <BadgesPage::BadgeCard @badge={{badge}} />
     {{/each}}
   </div>
 </div>
