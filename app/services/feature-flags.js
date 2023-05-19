@@ -11,7 +11,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeePulsingSolutionsButtonForFirstStage() {
-    return true;
+    return this.getFeatureFlagValue('pulsing-solutions-button') === 'test';
   }
 
   get canSeeBadges() {
