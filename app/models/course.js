@@ -83,11 +83,11 @@ network programming, and the Redis Protocol.`;
     } else if (this.isDocker) {
       if (language.isGo) {
         return `
-Learn what a Docker image really is, and how it's stored in the Docker registry. Get your feel wet with systems
+Learn what a Docker image really is, and how it's stored in the Docker registry. Get your feet wet with systems
 programming in ${language.name}. Learn to execute other programs with \`exec\` and to use \`syscall\` for Linux-specific calls.`;
       } else {
         return `
-Learn what a Docker image really is, and how it's stored in the Docker registry. Get your feel wet with systems
+Learn what a Docker image really is, and how it's stored in the Docker registry. Get your feet wet with systems
 programming in ${language.name}. Learn about chroot, kernel namespaces & more.`;
       }
     } else if (this.isGit) {
