@@ -111,6 +111,8 @@ function routes() {
   this.patch('/course-stage-comments/:id');
   this.post('/course-stage-comments/:id/unvote', () => {});
 
+  this.get('/custom-discounts');
+
   this.post('/downvotes');
   this.post('/upvotes');
 

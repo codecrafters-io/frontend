@@ -10,6 +10,9 @@ export default class PayRoute extends ApplicationRoute {
   }
 
   async model() {
-    return { courses: await this.store.findAll('course') }; // For testimonials
+    return {
+      courses: await this.store.findAll('course'), // For testimonials
+      customDiscounts: await this.store.findAll('custom-discount', { include: 'user' }),
+    };
   }
 }
