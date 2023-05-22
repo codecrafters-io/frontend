@@ -176,3 +176,4 @@ jobs:
         with:
           environment: production
           finalize: "${{ steps.branch-name.outputs.current_branch == 'master' }}"
+          sourcemaps: dist/assets
