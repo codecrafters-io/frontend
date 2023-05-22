@@ -15,12 +15,18 @@ export class SetupItem {
 export class CourseStageItem {
   @tracked courseStage;
   @tracked repository;
+  @tracked featureFlags;
 
   type = 'CourseStageItem';
 
-  constructor(repository, courseStage) {
+  constructor(repository, courseStage, featureFlags) {
     this.repository = repository;
     this.courseStage = courseStage;
+    this.featureFlags = featureFlags;
+  }
+
+  get badgeAwards() {
+    return this.repository.user.badgeAwards.filter((badgeAward) => badgeAward.submission.courseStage.id === this.courseStage.id);
   }
 
   get identifier() {
@@ -28,6 +34,14 @@ export class CourseStageItem {
   }
 
   get shouldAdvanceToNextItemAutomatically() {
+    if (this.featureFlags.canSeeBadges && this.courseStage.badgeAwards.length > 0) {
+      return false;
+    }
+
+    if (this.featureFlags.canSeeStageCompletionVideos && this.courseStage.hasCompletionVideo) {
+      return false;
+    }
+
     return !this.shouldShowFeedbackPromptIfStageIsComplete;
   }
 

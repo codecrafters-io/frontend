@@ -9,8 +9,9 @@ export default class CourseStageModel extends Model {
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions;
   @hasMany('course-stage-solution', { async: false }) solutions;
 
-  @attr('boolean') isPaid;
+  @attr('string') completionVideoId;
   @attr('string') difficulty;
+  @attr('boolean') isPaid;
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
   @attr('string') marketingMarkdown;
@@ -42,6 +43,10 @@ export default class CourseStageModel extends Model {
     }
 
     return false;
+  }
+
+  get hasCompletionVideo() {
+    return !!this.completionVideoId;
   }
 
   hasSolutionForLanguage(language) {
