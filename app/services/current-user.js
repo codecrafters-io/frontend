@@ -6,7 +6,7 @@ export default class CurrentUserService extends Service {
   @service store;
 
   authenticate() {
-    if (!this.isAuthenticated) {
+    if (!this.isAuthenticated || this.record) {
       return;
     }
 

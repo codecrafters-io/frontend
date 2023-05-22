@@ -166,6 +166,15 @@ export default class UserModel extends Model {
   }
 }
 
+UserModel.prototype.syncFeatureFlags = memberAction({
+  path: 'sync-feature-flags',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});
+
 UserModel.prototype.fetchNextInvoicePreview = memberAction({
   path: 'next-invoice-preview',
   type: 'get',
