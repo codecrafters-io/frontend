@@ -6,8 +6,8 @@
 
     <ReferralsPage::ReferralLinksContainer />
     <ReferralsPage::ReferralLinkStatsContainer @referralLink={{this.referralLink}} class="mt-4" />
-    <ReferralsPage::ReferredUsersContainer @referralLink={{this.referralLink}} class="mt-4" />
     <ReferralsPage::EarningsContainer class="mt-4" />
+    <ReferralsPage::ReferredUsersContainer @referralLink={{this.referralLink}} class="mt-4" />
   {{else}}
     <ReferralsPage::JoinReferralProgramContainer />
   {{/if}}
