@@ -24,6 +24,7 @@ export default class UserModel extends Model {
   @hasMany('course-idea-supervote', { async: false }) courseIdeaSupervotes;
   @hasMany('course-idea-supervote-grants', { async: false }) courseIdeaSupervoteGrants;
   @hasMany('course-participation', { async: false }) courseParticipations;
+  @hasMany('custom-discount', { async: false }) customDiscounts;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
@@ -49,6 +50,10 @@ export default class UserModel extends Model {
 
   get availableCourseExtensionIdeaSupervotes() {
     return this.courseExtensionIdeaSupervoteGrants.mapBy('numberOfSupervotes').reduce((a, b) => a + b, 0) - this.courseExtensionIdeaSupervotes.length;
+  }
+
+  get availableCustomDiscount() {
+    return this.customDiscounts.filter((customDiscount) => customDiscount.isAvailable)[0];
   }
 
   get canAccessPaidContent() {
@@ -105,19 +110,27 @@ export default class UserModel extends Model {
   }
 
   get isEligibleForEarlyBirdDiscount() {
-    if (this.isEligibleForReferralDiscount) {
-      return false; // Prioritize referral discount
+    if (this.isEligibleForReferralDiscount || this.isEligibleForCustomDiscount) {
+      return false; // Prioritize referral & custom discount
     }
 
     return this.earlyBirdDiscountEligibilityExpiresAt > new Date();
   }
 
   get isEligibleForReferralDiscount() {
+    if (this.isEligibleForCustomDiscount) {
+      return false; // Prioritize custom discount
+    }
+
     if (this.currentReferralActivation) {
       return this.currentReferralActivation.isWithinDiscountPeriod;
     } else {
       return false;
     }
+  }
+
+  get isEligibleForCustomDiscount() {
+    return !!this.availableCustomDiscount;
   }
 
   get isFree() {

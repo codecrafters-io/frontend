@@ -1,0 +1,12 @@
+<div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm relative" ...attributes>
+  <div class="mr-3 text-xl">
+    🎉
+  </div>
+
+  <div class="text-blue-700 prose prose-blue leading-7">
+    Subscribe by
+    <span class="font-semibold">{{moment-format @customDiscount.expiresAt "LLL"}}</span>
+    to get the 1 year plan for
+    <span class="font-semibold">${{@customDiscount.discountedYearlyPriceInDollars}}</span>.
+  </div>
+</div>

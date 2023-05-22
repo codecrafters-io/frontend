@@ -10,10 +10,12 @@ export default class PayController extends Controller {
   @tracked isCreatingCheckoutSession = false;
 
   get discountedYearlyPrice() {
-    if (this.user.isEligibleForEarlyBirdDiscount) {
-      return 594;
+    if (this.user.isEligibleForCustomDiscount) {
+      return this.user.availableCustomDiscount.discountedYearlyPriceInDollars;
     } else if (this.user.isEligibleForReferralDiscount) {
       return 590;
+    } else if (this.user.isEligibleForEarlyBirdDiscount) {
+      return 594;
     } else {
       return null;
     }
