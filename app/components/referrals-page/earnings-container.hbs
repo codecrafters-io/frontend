@@ -55,7 +55,7 @@
           {{#each this.currentUser.referralEarningsPayouts as |payout|}}
             <tr class="border-b" data-test-payout-history-item>
               <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
-                {{moment-format payout.createdAt "LL"}}
+                {{moment-format (or payout.completedAt payout.createdAt) "LL"}}
 
                 {{#if payout.statusIsProcessing}}
                   <div class="inline-flex flex-shrink-0 ml-1">
