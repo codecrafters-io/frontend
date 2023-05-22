@@ -82,6 +82,17 @@ jobs:
           env_url: https://app.staging.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
           override: false
 
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: 'codecrafters'
+          SENTRY_PROJECT: 'frontend'
+        with:
+          environment: staging
+          finalize: "${{ steps.branch-name.outputs.current_branch == 'master' }}"
+          sourcemaps: dist/assets
+
   deploy_production:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -167,6 +178,8 @@ jobs:
           env_url: https://app.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
           override: false
 
+      - run: ls .
+
       - name: Create Sentry release
         uses: getsentry/action-release@v1
         env:
@@ -176,4 +189,4 @@ jobs:
         with:
           environment: production
           finalize: "${{ steps.branch-name.outputs.current_branch == 'master' }}"
-          sourcemaps: dist/assets
+          sourcemaps: './dist/assets'
