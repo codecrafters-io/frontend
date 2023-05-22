@@ -9,8 +9,8 @@ export default class CourseStageModel extends Model {
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions;
   @hasMany('course-stage-solution', { async: false }) solutions;
 
-  @attr('boolean') isPaid;
   @attr('string') difficulty;
+  @attr('boolean') isPaid;
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
   @attr('string') marketingMarkdown;
@@ -25,6 +25,15 @@ export default class CourseStageModel extends Model {
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
   @equal('difficulty', 'medium') difficultyIsMedium;
+
+  // We're testing this on the first stage of Redis for now
+  get completionVideoId() {
+    if (this.course.isRedis && this.isFirst) {
+      return '717263263';
+    } else {
+      return null;
+    }
+  }
 
   get hasApprovedComments() {
     return this.approvedCommentsCount > 0;
@@ -42,6 +51,10 @@ export default class CourseStageModel extends Model {
     }
 
     return false;
+  }
+
+  get hasCompletionVideo() {
+    return !!this.completionVideoId;
   }
 
   hasSolutionForLanguage(language) {

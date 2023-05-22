@@ -57,6 +57,10 @@
       <CoursePage::StepList::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
     {{/if}}
 
+    {{#if (and this.featureFlags.canSeeStageCompletionVideos @courseStage.hasCompletionVideo)}}
+      <CoursePage::StepList::CourseStageItem::CompletionVideo @courseStage={{@courseStage}} class="mt-6" />
+    {{/if}}
+
     {{#if this.shouldShowFirstStageHints}}
       <CoursePage::StepList::CourseStageItem::FirstStageHint
         @courseStage={{@courseStage}}

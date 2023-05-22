@@ -10,12 +10,14 @@ import fade from 'ember-animated/transitions/fade';
 export default class CoursePageContentStepListComponent extends Component {
   @tracked activeItemIndex;
   @tracked activeItemWillBeReplaced;
+  @service featureFlags;
   @tracked polledRepository;
   @tracked selectedItemIndex = null;
   @service store;
+  @service visibility;
+
   transition = fade;
   transitionDuration = 200;
-  @service visibility;
 
   constructor() {
     super(...arguments);
@@ -29,7 +31,7 @@ export default class CoursePageContentStepListComponent extends Component {
     items.push(new SetupItem());
 
     this.args.course.sortedStages.forEach((courseStage) => {
-      items.push(new CourseStageItem(this.args.repository, courseStage));
+      items.push(new CourseStageItem(this.args.repository, courseStage, this.featureFlags));
     });
 
     if (this.args.repository.allStagesAreComplete) {
