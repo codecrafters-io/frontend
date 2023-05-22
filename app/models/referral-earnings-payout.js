@@ -4,6 +4,7 @@ export default class ReferralEarningsPayoutModel extends Model {
   @belongsTo('user', { async: false }) user;
 
   @attr('date') initiatedAt;
+  @attr('date') completedAt;
   @attr('string') status; // 'processing', 'completed', 'failed'
   @attr('string') lastFailureReason;
   @attr('number') amountInCents;
