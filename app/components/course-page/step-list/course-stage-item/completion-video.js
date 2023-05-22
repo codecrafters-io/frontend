@@ -36,7 +36,7 @@ export default class CompletionVideoComponent extends Component {
 
       this.store
         .createRecord('analytics-event', {
-          name: 'played_stage_completion_video',
+          name: 'viewed_stage_completion_video',
           properties: {
             course_stage_slug: this.args.courseStage.slug,
             course_slug: this.args.courseStage.course.slug,
