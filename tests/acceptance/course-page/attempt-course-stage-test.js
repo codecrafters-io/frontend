@@ -189,7 +189,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await animationsSettled();
 
     // TODO: Add tests for badge display
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is still active');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');
   });
 
   test('first-stage footer message before 30min', async function (assert) {
