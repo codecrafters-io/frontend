@@ -1,6 +1,8 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class IndividualCheckoutSessionModel extends Model {
+  @belongsTo('custom-discount', { async: false }) customDiscount;
+
   @attr('string') customDiscountId;
   @attr('boolean') autoRenewSubscription;
   @attr('boolean') earlyBirdDiscountEnabled;
