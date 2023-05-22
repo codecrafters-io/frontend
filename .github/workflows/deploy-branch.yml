@@ -12,7 +12,9 @@ jobs:
       deployments: write
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v2
         with:
@@ -60,7 +62,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          CDN_BASE_URL: "https://djmiqp4suql3j.cloudfront.net/codecrafters-frontend/"
+          CDN_BASE_URL: 'https://djmiqp4suql3j.cloudfront.net/codecrafters-frontend/'
           EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
           EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
           REDIS_URL: ${{ secrets.STAGING_EMBER_STORE_REDIS_URL }}
@@ -146,14 +148,14 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          CDN_BASE_URL: "https://d240kcsjfzqrhl.cloudfront.net/codecrafters-frontend/"
+          CDN_BASE_URL: 'https://d240kcsjfzqrhl.cloudfront.net/codecrafters-frontend/'
           EMBER_DEPLOY_APP_BRANCH: ${{ steps.branch-name.outputs.current_branch }}
           EMBER_DEPLOY_COMMIT_SHA: ${{ github.sha }}
           REDIS_URL: ${{ steps.fetch-redis-url.outputs.url }}
           S3_BUCKET: codecrafters-ember-app-builds-production
           S3_BUCKET_REGION: us-east-1
 
-      - name: Finish staging deployment
+      - name: Finish production deployment
         uses: bobheadxi/deployments@v1
         if: always()
         with:
@@ -164,3 +166,13 @@ jobs:
           env: ${{ steps.start-production-deployment.outputs.env }}
           env_url: https://app.codecrafters.io/courses?ember_app_branch=${{ steps.branch-name.outputs.current_branch }}
           override: false
+
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: 'codecrafters'
+          SENTRY_PROJECT: 'frontend'
+        with:
+          environment: production
+          finalize: "${{ steps.branch-name.outputs.current_branch == 'master' }}"
