@@ -70,8 +70,8 @@ module.exports = function (defaults) {
     // staticModifiers: true,
     // staticComponents: true,
     // splitAtRoutes: ['route.name'], // can also be a RegExp
-    // packagerOptions: {
-    //    webpackConfig: { }
-    // }
+    packagerOptions: {
+      publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
+    },
   });
 };
