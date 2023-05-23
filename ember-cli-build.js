@@ -79,8 +79,16 @@ module.exports = function (defaults) {
         devtool: shouldUseCDN ? 'source-map' : 'eval-source-map',
         module: {
           rules: [
+            // {
+            //   test: /\.(gltf)$/,
+            //   loader: require.resolve('./vendor/gltf-loader.js'),
+            //   options: {
+            //     filePath: `/assets/models`,
+            //     // ...
+            //   },
+            // },
             {
-              test: /\.(css|png|jpg|jpeg|gif|svg|ico)$/,
+              test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico)$/,
               type: 'asset/resource',
               generator: {
                 filename: 'assets/[hash][ext][query]',
