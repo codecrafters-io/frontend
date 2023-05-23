@@ -2,9 +2,9 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { isToday, isYesterday } from 'date-fns';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
-import moment from 'moment';
 import showdown from 'showdown';
 import Mustache from 'mustache';
 
@@ -32,11 +32,11 @@ export default class CourseStageItemComponent extends Component {
   }
 
   get completedAtWasToday() {
-    return this.completedAt && moment(this.completedAt).isSame(moment(), 'day');
+    return this.completedAt && isToday(this.completedAt, new Date());
   }
 
   get completedAtWasYesterday() {
-    return this.completedAt && moment(this.completedAt).isSame(moment().subtract(1, 'day'), 'day');
+    return this.completedAt && isYesterday(this.completedAt);
   }
 
   get firstStageInstructionsPreludeHTML() {

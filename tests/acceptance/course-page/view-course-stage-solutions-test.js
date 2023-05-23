@@ -154,7 +154,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     };
 
     // Stage 2: (Completed, has solutions & comments)
-    await coursePage.collapsedItems[1].click();
+    await coursePage.collapsedItems[2].click();
     await animationsSettled();
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
 
@@ -191,7 +191,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
     assertButtons(['View hints', 'Reveal solution']);
     await clickButton('View hints');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Comments', 'active header tab link should be comments');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Hints', 'active header tab link should be comments');
 
     // Stage 6: Incomplete, has solutions in other language & has comments
     await switchToSolutionsForStage(6);
