@@ -3,6 +3,7 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
 const { Webpack } = require('@embroider/webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // const _isProduction = EmberApp.env() === 'production';
 const cdnBaseURL = process.env.CDN_BASE_URL;
@@ -64,8 +65,8 @@ module.exports = function (defaults) {
   let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
-    // staticAddonTestSupportTrees: true,
-    // staticAddonTrees: true,
+    staticAddonTestSupportTrees: true,
+    staticAddonTrees: true,
     // staticHelpers: true,
     // staticModifiers: true,
     // staticComponents: true,
@@ -73,6 +74,7 @@ module.exports = function (defaults) {
     packagerOptions: {
       publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
       webpackConfig: {
+        plugins: EmberApp.env() === 'development' ? [new BundleAnalyzerPlugin()] : [],
         devtool: shouldUseCDN ? 'source-map' : 'eval-source-map',
         module: {
           rules: [
