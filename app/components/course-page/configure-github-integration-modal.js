@@ -7,7 +7,7 @@ import { tracked } from '@glimmer/tracking';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class ConfigureGithubIntegrationModalComponent extends Component {
-  image = rippleSpinnerImage
+  rippleSpinnerImage = rippleSpinnerImage;
   @service('current-user') currentUserService;
   @service store;
 

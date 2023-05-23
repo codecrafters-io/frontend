@@ -7,7 +7,6 @@ import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
-import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 
 export default class CodeWalkthrough extends Model {
