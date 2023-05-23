@@ -77,8 +77,8 @@ export default class BadgeCardComponent extends Component {
     controls.enablePan = false;
     controls.enableDamping = true;
 
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 20;
+    controls.autoRotate = false;
+    // controls.autoRotateSpeed = 20;
     controls.maxPolarAngle = Math.PI / 2;
     controls.minPolarAngle = Math.PI / 2;
     controls.update();
@@ -87,9 +87,45 @@ export default class BadgeCardComponent extends Component {
     renderer.setSize(width, height);
     element.appendChild(renderer.domElement);
 
+    controls.addEventListener('start', () => {
+      console.log('start', controls.getAzimuthalAngle());
+    });
+
+    controls.addEventListener('end', () => {
+      console.log('end', controls.getAzimuthalAngle());
+      // console.log('azimuthalAngle', controls.getAzimuthalAngle());
+      // const theta = controls.object.rotation.z;
+      // const targetTheta = Math.abs(theta) < Math.PI / 2 ? 0 : Math.PI;
+
+      // // Implement damping towards target rotation
+      // controls.object.rotation.z += (targetTheta - theta) * this.dampingFactor;
+    });
+
+    renderer.domElement.addEventListener('mouseout', function () {
+      var event = new PointerEvent('pointerup', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        button: 0, // Left button
+      });
+      console.log('triggering mouseup');
+      renderer.domElement.dispatchEvent(event);
+    });
+
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
+
+      // // Check the rotation and force it to nearest 0 or 180 degrees when the user stops interacting
+      // if (!controls.state === THREE.STATE.ROTATE) {
+      //   console.log('theta', controls.object.rotation);
+      //   const theta = controls.object.rotation.z;
+      //   const targetTheta = Math.abs(theta) < Math.PI / 2 ? 0 : Math.PI;
+
+      //   // Implement damping towards target rotation
+      //   controls.object.rotation.z += (targetTheta - theta) * this.dampingFactor;
+      // }
+
       camera.updateProjectionMatrix();
       renderer.render(scene, camera);
     }
