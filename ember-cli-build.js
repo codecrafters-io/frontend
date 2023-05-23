@@ -73,6 +73,7 @@ module.exports = function (defaults) {
     packagerOptions: {
       publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
       webpackConfig: {
+        devtool: shouldUseCDN ? 'source-map' : 'eval-source-map',
         module: {
           rules: [
             {
