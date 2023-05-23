@@ -23,6 +23,7 @@ module.exports = function (deployTarget) {
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       bucket: process.env.S3_BUCKET,
       region: process.env.S3_BUCKET_REGION,
+      filePattern: '**/*.{js,css,png,gif,ico,jpg,webp,map,xml,txt,svg,swf,eot,ttf,woff,woff2,otf,wasm,json,glb}', // Added glb files
     },
   };
 
