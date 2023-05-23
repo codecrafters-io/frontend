@@ -4,6 +4,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsSubscriber, signInAsTrialingSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import tracksPage from 'codecrafters-frontend/tests/pages/tracks-page';
+import moment from 'moment';
 import membershipPage from 'codecrafters-frontend/tests/pages/membership-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
@@ -56,7 +57,6 @@ module('Acceptance | manage-membership-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    // eslint-disable-next-line no-unused-vars
     let subscription = this.server.schema.subscriptions.first();
 
     await membershipPage.visit();
@@ -82,7 +82,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     assert.strictEqual(
       membershipPage.membershipPlanSection.descriptionText,
-      `Your CodeCrafters membership is valid until subscription.currentPeriodEnd.`
+      `Your CodeCrafters membership is valid until ${moment(subscription.currentPeriodEnd).format('LLL')}.`
     );
   });
 
