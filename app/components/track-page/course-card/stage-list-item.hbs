@@ -4,7 +4,7 @@
       <div class="w-2 h-2 {{if @isComplete 'bg-teal-500' 'bg-gray-200'}} rounded-full mr-2"></div>
 
       {{! TODO: Qualify all heroicons with solid/outline }}
-      {{svg-jar "terminal-outline" class="w-6 mr-2 text-gray-500"}}
+      {{(svg-jar "terminal-outline" class="w-6 mr-2 text-gray-500")}}
 
       <div class="text-gray-600 text-sm">
         {{@stage.name}}
@@ -12,7 +12,7 @@
     </div>
 
     {{#if @isComplete}}
-      {{svg-jar "check" class="ml-1 w-5 text-teal-500"}}
+      {{(svg-jar "check" class="ml-1 w-5 text-teal-500")}}
     {{else}}
       <div class="items-center text-gray-400 text-xs flex-shrink-0 pl-4 hidden sm:flex">
         {{#if @stage.isFirst}}
@@ -27,7 +27,7 @@
           1h +
         {{/if}}
 
-        {{svg-jar "clock" class="fill-current text-gray-300 ml-1 w-4 h-4"}}
+        {{(svg-jar "clock" class="fill-current text-gray-300 ml-1 w-4 h-4")}}
       </div>
     {{/if}}
   </div>

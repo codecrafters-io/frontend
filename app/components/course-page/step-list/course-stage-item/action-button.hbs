@@ -7,7 +7,7 @@
   {{#if @iconUrl}}
     <img alt="icon" src={{@iconUrl}} class="h-4 mr-2" />
   {{else}}
-    {{svg-jar @icon class=(concat "w-5 mr-1.5 fill-current opacity-80 group-hover:opacity-100 text-teal-500")}}
+    {{(svg-jar @icon class=(concat "w-5 mr-1.5 fill-current opacity-80 group-hover:opacity-100 text-teal-500"))}}
   {{/if}}
 
   <span class="text-gray-700">

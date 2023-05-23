@@ -14,12 +14,12 @@
               {{#if @submission.statusIsSuccess}}
                 Tests passed
                 <div class="w-4 h-4 rounded-full bg-green-600 ml-2 flex items-center justify-center">
-                  {{svg-jar "check" class="w-3 fill-current text-white"}}
+                  {{(svg-jar "check" class="w-3 fill-current text-white")}}
                 </div>
               {{else if @submission.statusIsFailure}}
                 Tests failed
                 <div class="w-4 h-4 rounded-full bg-red-600 ml-2 flex items-center justify-center">
-                  {{svg-jar "x" class="w-3 fill-current text-white"}}
+                  {{(svg-jar "x" class="w-3 fill-current text-white")}}
                 </div>
               {{else if @submission.statusIsEvaluatin}}
                 Evaluating
@@ -34,7 +34,7 @@
           <td class="text-gray-600">
             <div class="flex items-center">
               {{this.formattedDuration}}
-              {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
+              {{(svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300")}}
             </div>
           </td>
         </tr>
@@ -51,7 +51,7 @@
                 type="button"
                 {{on "click" this.handleCopyRepositoryURLButtonClick}}
               >
-                {{svg-jar "download" class="w-4 fill-current"}}
+                {{(svg-jar "download" class="w-4 fill-current")}}
               </button>
 
               <button
@@ -59,7 +59,7 @@
                 type="button"
                 {{on "click" this.handleViewCodeButtonClick}}
               >
-                {{svg-jar "code" class="w-4 fill-current"}}
+                {{(svg-jar "code" class="w-4 fill-current")}}
               </button>
             </div>
           </td>
@@ -69,6 +69,6 @@
   </div>
   <div class="text-right flex-shrink-0 pl-4">
     <div class="text-gray-700 text-xs">{{@submission.repository.user.username}}</div>
-    <div class="text-gray-400 text-xs">Started {{moment-from-now @submission.repository.createdAt}}</div>
+    <div class="text-gray-400 text-xs">Started {{(moment-from-now @submission.repository.createdAt)}}</div>
   </div>
 </div>

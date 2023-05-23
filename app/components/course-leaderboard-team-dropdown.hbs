@@ -2,8 +2,8 @@
   <dd.Trigger>
     <div class="bg-white border rounded shadow-sm p-1">
       <div class="text-gray-500 flex items-center outline-none" data-test-leaderboard-team-dropdown-trigger>
-        {{svg-jar (if @team "user-group" "globe") class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
-        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+        {{(svg-jar (if @team "user-group" "globe") class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" "")))}}
+        {{(svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" "")))}}
       </div>
     </div>
   </dd.Trigger>
@@ -18,7 +18,7 @@
           <span class="mr-4 {{if (eq team @team) 'text-teal-500 font-bold' 'text-gray-700'}}">
             {{team.name}}
           </span>
-          {{svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500"))}}
+          {{(svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500")))}}
         </div>
       {{/each}}
 
@@ -30,7 +30,7 @@
         <span class="mr-4 {{unless @team 'text-teal-500 font-bold' 'text-gray-700'}}">
           Everyone
         </span>
-        {{svg-jar "globe" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (unless @team " text-teal-500"))}}
+        {{(svg-jar "globe" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (unless @team " text-teal-500")))}}
       </div>
     </div>
   </dd.Content>

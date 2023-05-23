@@ -6,7 +6,7 @@
         class="w-16 h-16 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
       />
 
-      {{svg-jar "plus" class="w-10 h-10 text-gray-600 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
+      {{(svg-jar "plus" class="w-10 h-10 text-gray-600 mr-2 opacity-90 group-hover:opacity-100 transition-all")}}
 
       <img class="h-14" src={{this.logoImage}} alt="CodeCrafters" />
     </div>
@@ -27,7 +27,7 @@
         {{on "click" this.handleAcceptOfferButtonClick}}
       >
         {{#if this.currentUserIsAnonymous}}
-          {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
+          {{(svg-jar "github" class="fill-current w-5 transform transition-all mr-2")}}
         {{/if}}
 
         Accept offer →

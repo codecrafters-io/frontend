@@ -5,7 +5,7 @@
     {{@class}}"
   data-test-upgrade-prompt
 >
-  {{svg-jar "exclamation" class=(concat "w-8 h-8 mr-2 flex-shrink-0 " (if (eq @color "gray") "text-gray-300" "text-yellow-300"))}}
+  {{(svg-jar "exclamation" class=(concat "w-8 h-8 mr-2 flex-shrink-0 " (if (eq @color "gray") "text-gray-300" "text-yellow-300")))}}
 
   <div class="{{if (eq @color 'gray') 'text-gray-500' 'text-yellow-700'}} text-sm leading-relaxed">
     <div class="mb-1">

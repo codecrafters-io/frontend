@@ -6,7 +6,7 @@
     data-test-previous-stage-button
     {{on "click" @onPreviousStageButtonClick}}
   >
-    {{svg-jar "chevron-left" class="w-4 fill-current"}}
+    {{(svg-jar "chevron-left" class="w-4 fill-current")}}
   </button>
   <button
     type="button"
@@ -15,6 +15,6 @@
     {{on "click" @onNextStageButtonClick}}
     data-test-next-stage-button
   >
-    {{svg-jar "chevron-right" class="w-4 fill-current"}}
+    {{(svg-jar "chevron-right" class="w-4 fill-current")}}
   </button>
 </div>

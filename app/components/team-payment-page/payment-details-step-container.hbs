@@ -1,7 +1,7 @@
 <TeamPaymentPage::StepContainer @title="Payment Details" data-test-payment-details-step-container>
   {{#if @teamPaymentFlow.paymentDetailsAreComplete}}
     <div class="p-8 flex flex-col items-center justify-center">
-      {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
+      {{(svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2")}}
       <div class="text-gray-600 text-center mb-6">
         Your payment details have been saved.
       </div>

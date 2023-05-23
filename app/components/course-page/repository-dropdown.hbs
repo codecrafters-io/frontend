@@ -11,8 +11,8 @@
           {{or @activeRepository.name "New Repository"}}
         </span>
 
-        {{svg-jar "cog" class=(concat "fill-current w-4 transform transition-all text-gray-300")}}
-        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+        {{(svg-jar "cog" class=(concat "fill-current w-4 transform transition-all text-gray-300"))}}
+        {{(svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" "")))}}
       </button>
     </dd.Trigger>
     <dd.Content>
@@ -28,12 +28,12 @@
               {{#animated-if this.gitRepositoryURLWasCopiedRecently use=this.transition}}
                 <div class="flex items-center justify-between">
                   <span class="text-teal-500">Copied!</span>
-                  {{svg-jar "check" class="w-5 ml-4 text-teal-500"}}
+                  {{(svg-jar "check" class="w-5 ml-4 text-teal-500")}}
                 </div>
               {{else}}
                 <div class="flex items-center justify-between">
                   <span>Copy Git Repository URL</span>
-                  {{svg-jar "clipboard-copy" class="w-5 ml-4 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}"}}
+                  {{(svg-jar "clipboard-copy" class="w-5 ml-4 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}")}}
                 </div>
               {{/animated-if}}
             </AnimatedContainer>
@@ -52,7 +52,7 @@
             data-test-dropdown-action
           >
             Publish to GitHub
-            {{svg-jar "github" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+            {{(svg-jar "github" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500")}}
           </div>
 
           <div
@@ -62,7 +62,7 @@
             data-test-dropdown-action
           >
             Try a different language
-            {{svg-jar "beaker" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+            {{(svg-jar "beaker" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500")}}
           </div>
 
           {{#unless @activeRepository.isNew}}
@@ -74,7 +74,7 @@
             >
               Retry using
               {{@activeRepository.language.name}}
-              {{svg-jar "refresh" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+              {{(svg-jar "refresh" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500")}}
             </div>
           {{/unless}}
         </div>

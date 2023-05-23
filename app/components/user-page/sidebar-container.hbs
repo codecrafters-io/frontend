@@ -10,7 +10,7 @@
       {{@user.githubUsername}}
     </div>
 
-    {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
+    {{(svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500")}}
   </a>
 
   {{#if (gt @user.completedCourseParticipations.length 0)}}
@@ -23,6 +23,6 @@
 
   <div class="text-xs text-gray-400">
     joined
-    {{moment-from-now @user.createdAt}}
+    {{(moment-from-now @user.createdAt)}}
   </div>
 </div>

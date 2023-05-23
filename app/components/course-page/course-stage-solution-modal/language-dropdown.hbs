@@ -12,7 +12,7 @@
           {{@currentLanguage.name}}
         </span>
 
-        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+        {{(svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" "")))}}
       </button>
     </dd.Trigger>
     <dd.Content>

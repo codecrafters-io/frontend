@@ -33,7 +33,7 @@
   </div>
 {{else}}
   <div role="button" class="flex items-center text-teal-500 text-sm font-bold underline" {{on "click" (fn (mut this.shouldShowAllStages) false)}}>
-    {{svg-jar "arrow-up" class="w-4 h-4 mr-2"}}
+    {{(svg-jar "arrow-up" class="w-4 h-4 mr-2")}}
     hide stages
   </div>
 {{/animated-if}}

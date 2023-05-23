@@ -78,7 +78,7 @@
           {{on "mouseup" this.suppressEvent}}
           {{on "click" this.handleDecrementSeatsButtonClick}}
         >
-          {{svg-jar "minus" class="w-4 h-4 text-gray-700"}}
+          {{(svg-jar "minus" class="w-4 h-4 text-gray-700")}}
         </div>
 
         {{! template-lint-disable require-input-label }}
@@ -97,7 +97,7 @@
           {{on "mouseup" this.suppressEvent}}
           {{on "click" this.handleIncrementSeatsButtonClick}}
         >
-          {{svg-jar "plus" class="w-4 h-4 text-gray-700"}}
+          {{(svg-jar "plus" class="w-4 h-4 text-gray-700")}}
         </div>
       </div>
     </TeamPaymentPage::TeamDetailsForm::Section>

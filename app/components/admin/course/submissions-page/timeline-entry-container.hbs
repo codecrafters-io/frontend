@@ -7,15 +7,15 @@
   <div class="flex items-start py-2 flex-grow">
     {{#if @submission.statusIsSuccess}}
       <div class="w-4 h-4 rounded-full bg-green-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
-        {{svg-jar "check" class="w-3 fill-current text-white"}}
+        {{(svg-jar "check" class="w-3 fill-current text-white")}}
       </div>
     {{else if @submission.statusIsFailure}}
       <div class="w-4 h-4 rounded-full bg-red-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
-        {{svg-jar "x" class="w-3 fill-current text-white"}}
+        {{(svg-jar "x" class="w-3 fill-current text-white")}}
       </div>
     {{else if @submission.statusIsEvaluating}}
       <div class="w-4 h-4 rounded-full bg-yellow-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
-        {{svg-jar "dots-horizontal" class="w-3 fill-current text-white"}}
+        {{(svg-jar "dots-horizontal" class="w-3 fill-current text-white")}}
       </div>
     {{/if}}
     <div>

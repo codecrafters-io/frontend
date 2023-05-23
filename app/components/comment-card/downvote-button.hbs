@@ -7,5 +7,5 @@
   data-test-downvote-button
   {{on "click" this.handleClick}}
 >
-  {{svg-jar "chevron-down" class=(concat "w-4 transition-all duration-75 " (if this.currentUserHasDownvoted "text-red-500" "text-gray-300"))}}
+  {{(svg-jar "chevron-down" class=(concat "w-4 transition-all duration-75 " (if this.currentUserHasDownvoted "text-red-500" "text-gray-300")))}}
 </button>

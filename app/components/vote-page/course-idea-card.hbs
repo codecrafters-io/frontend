@@ -12,20 +12,20 @@
       {{#if @courseIdea.developmentStatusIsInProgress}}
         <div class="text-xs text-white font-semibold bg-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center" data-test-track-beta-label>
           in progress
-          {{svg-jar "shield-check" class="w-4 ml-1 fill-current"}}
+          {{(svg-jar "shield-check" class="w-4 ml-1 fill-current")}}
         </div>
       {{else if @courseIdea.developmentStatusIsReleased}}
         <div class="text-xs text-white font-semibold bg-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center" data-test-track-beta-label>
           released
-          {{svg-jar "check" class="w-4 ml-1 fill-current"}}
+          {{(svg-jar "check" class="w-4 ml-1 fill-current")}}
         </div>
       {{else if this.userHasSupervoted}}
         <div class="h-7 w-7 bg-teal-500 rounded flex items-center justify-center">
-          {{svg-jar "chevron-double-up" class="w-7 fill-current text-white"}}
+          {{(svg-jar "chevron-double-up" class="w-7 fill-current text-white")}}
         </div>
       {{else if this.userHasVoted}}
         <div class="h-7 w-7 bg-teal-500 rounded flex items-center justify-center">
-          {{svg-jar "chevron-up" class="w-7 fill-current text-white"}}
+          {{(svg-jar "chevron-up" class="w-7 fill-current text-white")}}
         </div>
       {{else if @courseIdea.isNewlyCreated}}
         <div class="text-xs text-teal-500 font-semibold border border-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5" data-test-track-beta-label>

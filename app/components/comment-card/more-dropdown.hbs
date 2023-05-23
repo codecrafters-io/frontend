@@ -1,7 +1,7 @@
 <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" @verticalPosition="below" as |dd|>
   <dd.Trigger>
     <div class="text-gray-400" data-test-more-dropdown-toggle>
-      {{svg-jar "dots-horizontal" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      {{(svg-jar "dots-horizontal" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" "")))}}
     </div>
   </dd.Trigger>
   <dd.Content>

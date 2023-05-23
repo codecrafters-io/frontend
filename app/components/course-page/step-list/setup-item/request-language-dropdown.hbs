@@ -35,14 +35,14 @@
         </div>
         <div>
           {{#if languageSuggestion.isSelected}}
-            {{svg-jar "check" class="w-3 fill-current text-teal-500"}}
+            {{(svg-jar "check" class="w-3 fill-current text-teal-500")}}
           {{/if}}
         </div>
       </div>
     {{else}}
       <div class="px-3 py-3 text-gray-600">
         <div class="mb-3 flex items-center">
-          {{svg-jar "exclamation" class="w-4 h-4 mr-2 fill-current text-yellow-500"}}
+          {{(svg-jar "exclamation" class="w-4 h-4 mr-2 fill-current text-yellow-500")}}
           <div>No languages found.</div>
         </div>
 

@@ -6,7 +6,7 @@
   data-test-supervote-button
   ...attributes
 >
-  {{svg-jar "chevron-double-up" class="w-4 py-0.5 mr-1.5 text-teal-500"}}
+  {{(svg-jar "chevron-double-up" class="w-4 py-0.5 mr-1.5 text-teal-500")}}
 
   <span class="text-sm {{if (gt @userSupervotesCount 0) 'text-teal-500' 'text-gray-700'}} transition-all duration-75">
     <span class="font-semibold">{{this.renderedSupervotesCount}}</span>

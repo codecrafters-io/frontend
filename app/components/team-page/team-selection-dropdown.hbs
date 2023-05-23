@@ -13,7 +13,7 @@
           {{@team.name}}
         </span>
 
-        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+        {{(svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" "")))}}
       </button>
     </dd.Trigger>
     <dd.Content>
@@ -28,7 +28,7 @@
               {{team.name}}
             </span>
 
-            {{svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500"))}}
+            {{(svg-jar "user-group" class=(concat "w-5 text-gray-300 group-hover:text-teal-500" (if (eq team @team) " text-teal-500")))}}
           </div>
         {{/each}}
         <LinkTo @route="teams.create" class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group">
@@ -36,7 +36,7 @@
             Create New
           </span>
 
-          {{svg-jar "plus-circle" class="w-5 text-gray-300 group-hover:text-teal-500"}}
+          {{(svg-jar "plus-circle" class="w-5 text-gray-300 group-hover:text-teal-500")}}
         </LinkTo>
       </div>
     </dd.Content>

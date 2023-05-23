@@ -9,7 +9,7 @@
     {{#if @iconUrl}}
       <img alt="icon" src={{@iconUrl}} class="h-5" />
     {{else}}
-      {{svg-jar @icon class=(concat "w-5 fill-current text-gray-300 group-hover:text-teal-500")}}
+      {{(svg-jar @icon class=(concat "w-5 fill-current text-gray-300 group-hover:text-teal-500"))}}
     {{/if}}
   {{else}}
     <span class="bg-gray-400 text-white px-2 py-1 rounded font-bold uppercase text-xs">

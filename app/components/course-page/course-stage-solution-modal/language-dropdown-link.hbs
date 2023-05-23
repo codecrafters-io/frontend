@@ -11,9 +11,9 @@
   </div>
   <div>
     {{#if @isCurrent}}
-      {{svg-jar "check-circle" class="w-4 fill-current text-teal-500"}}
+      {{(svg-jar "check-circle" class="w-4 fill-current text-teal-500")}}
     {{else if (and @isRequested (not @isCurrent))}}
-      {{svg-jar "exclamation" class="w-4 fill-current text-yellow-500"}}
+      {{(svg-jar "exclamation" class="w-4 fill-current text-yellow-500")}}
     {{else}}
       {{#if @isEnabled}}
         <img src={{@language.grayLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 block group-hover:hidden" />

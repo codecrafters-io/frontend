@@ -1,14 +1,14 @@
 <div class="flex p-4 bg-gray-100 border border-gray-300 rounded relative" data-test-feedback-prompt ...attributes>
   {{#if @wasTriggeredManually}}
     <button class="absolute right-4 top-4 opacity-60 hover:opacity-100" type="button" {{on "click" @onClose}} data-test-close-feedback-prompt-button>
-      {{svg-jar "x" class="w-5 h-5 text-gray-400"}}
+      {{(svg-jar "x" class="w-5 h-5 text-gray-400")}}
     </button>
   {{/if}}
   <div class="mr-3 mt-0.5 flex-shrink-0">
     {{#if this.stageIsComplete}}
-      {{svg-jar "check-circle" class="w-6 fill-current text-teal-500"}}
+      {{(svg-jar "check-circle" class="w-6 fill-current text-teal-500")}}
     {{else}}
-      {{svg-jar "chat" class="w-6 fill-current text-teal-500"}}
+      {{(svg-jar "chat" class="w-6 fill-current text-teal-500")}}
     {{/if}}
   </div>
   <div class="w-full">

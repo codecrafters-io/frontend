@@ -6,7 +6,7 @@
   data-test-vote-button
   ...attributes
 >
-  {{svg-jar "chevron-up" class="w-5 mr-1 text-teal-500"}}
+  {{(svg-jar "chevron-up" class="w-5 mr-1 text-teal-500")}}
 
   <span class="text-sm {{if @userHasVoted 'text-teal-500' 'text-gray-700'}} transition-all duration-75">
     <span class="font-semibold">{{this.renderedVotesCount}}</span>
