@@ -71,6 +71,7 @@
     "ember-click-outside": "^6.0.1",
     "ember-composable-helpers": "^5.0.0",
     "ember-data": "~4.11.3",
+    "ember-date-fns": "^0.5.0",
     "ember-exam": "^8.0.0",
     "ember-fetch": "^8.1.2",
     "ember-keyboard": "^8.1.1",
