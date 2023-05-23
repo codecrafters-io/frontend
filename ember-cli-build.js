@@ -74,7 +74,7 @@ module.exports = function (defaults) {
     packagerOptions: {
       publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
       webpackConfig: {
-        plugins: [new BundleAnalyzerPlugin()],
+        plugins: EmberApp.env() === 'development' ? [new BundleAnalyzerPlugin()] : [],
         devtool: shouldUseCDN ? 'source-map' : 'eval-source-map',
         module: {
           rules: [
