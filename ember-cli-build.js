@@ -72,6 +72,19 @@ module.exports = function (defaults) {
     // splitAtRoutes: ['route.name'], // can also be a RegExp
     packagerOptions: {
       publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
+      webpackConfig: {
+        module: {
+          rules: [
+            {
+              test: /\.(css|png|jpg|jpeg|gif|svg|ico)$/,
+              type: 'asset/resource',
+              generator: {
+                filename: 'assets/[hash][ext][query]',
+              },
+            },
+          ],
+        },
+      },
     },
   });
 };

@@ -2,8 +2,10 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import logoImage from '/assets/images/logo/logomark-color.svg';
 
 export default class HeaderComponent extends Component {
+  logoImage = logoImage;
   @service('feature-flags') featureFlags;
   @service('current-user') currentUserService;
   @service('router') router;
