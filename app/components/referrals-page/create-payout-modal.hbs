@@ -24,11 +24,7 @@
         @isSelected={{eq this.selectedPayoutMethod "paypal"}}
       />
 
-      <ReferralsPage::CreatePayoutModal::PayoutMethodCard
-        @name="Amazon Gift Card"
-        @isDisabled={{true}}
-        @imageUrl={{this.amazonImage}}
-      />
+      <ReferralsPage::CreatePayoutModal::PayoutMethodCard @name="Amazon Gift Card" @isDisabled={{true}} @imageUrl={{this.amazonImage}} />
     </div>
 
     {{#if (eq this.selectedPayoutMethod "paypal")}}
