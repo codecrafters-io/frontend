@@ -33,6 +33,7 @@
     "@ember/test-helpers": "^2.9.3",
     "@embroider/compat": "^3.0.0",
     "@embroider/core": "^3.0.0",
+    "@embroider/router": "^2.1.0",
     "@embroider/webpack": "^3.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",

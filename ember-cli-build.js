@@ -70,7 +70,7 @@ module.exports = function (defaults) {
     staticHelpers: true,
     staticModifiers: true,
     staticComponents: true,
-    // splitAtRoutes: ['route.name'], // can also be a RegExp
+    splitAtRoutes: [], // can also be a RegExp
     packagerOptions: {
       publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
       webpackConfig: {
