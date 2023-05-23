@@ -63,5 +63,15 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
 
-  return require('@embroider/compat').compatBuild(app, Webpack);
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    // staticAddonTestSupportTrees: true,
+    // staticAddonTrees: true,
+    // staticHelpers: true,
+    // staticModifiers: true,
+    // staticComponents: true,
+    // splitAtRoutes: ['route.name'], // can also be a RegExp
+    // packagerOptions: {
+    //    webpackConfig: { }
+    // }
+  });
 };

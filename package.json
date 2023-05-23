@@ -31,6 +31,9 @@
     "@ember/render-modifiers": "^2.0.4",
     "@ember/string": "^3.0.1",
     "@ember/test-helpers": "^2.9.3",
+    "@embroider/compat": "^3.0.0",
+    "@embroider/core": "^3.0.0",
+    "@embroider/webpack": "^3.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@percy/cli": "^1.16.0",
@@ -104,7 +107,7 @@
     "stylelint-prettier": "^3.0.0",
     "tailwindcss": "^3.3.2",
     "tracked-built-ins": "^3.1.1",
-    "webpack": "^5.78.0"
+    "webpack": "^5.83.1"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"
