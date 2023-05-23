@@ -1,7 +1,7 @@
 <MembershipPage::Section @title="Recent Payments" {{did-insert this.handleDidInsert}} data-test-recent-payments-section>
   {{#if this.isLoading}}
     <div class="flex items-center mt-3">
-      <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4" />
+      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
       <span class="ml-3 text-gray-700">Loading recent payments...</span>
     </div>
   {{else if (gt this.charges.length 0)}}

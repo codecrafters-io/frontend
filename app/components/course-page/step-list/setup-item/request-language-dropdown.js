@@ -3,8 +3,11 @@ import Fuse from 'fuse.js';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class CoursePageContentStepListSetupItemRequestLanguageDropdownContentComponent extends Component {
+  rippleSpinnerImage = rippleSpinnerImage;
+
   @tracked inputElement;
   @tracked isSyncing = false;
   @tracked searchQuery = '';

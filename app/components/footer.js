@@ -1,6 +1,9 @@
 import Component from '@glimmer/component';
+import image from '/assets/images/logo/logomark-color.svg';
 
 export default class FooterComponent extends Component {
+  image = image;
+
   get footerLinkGroups() {
     return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
   }

@@ -6,8 +6,11 @@ import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import TrackLeaderboardEntry from '../lib/track-leaderboard-entry';
+import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class TrackLeaderboardComponent extends Component {
+  rippleSpinnerImage = rippleSpinnerImage;
+
   transition = fade;
   @tracked isLoadingEntries = true;
   @tracked entriesFromAPI;

@@ -1,7 +1,12 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import logoImage from '/assets/images/logo/outline-color.svg';
+import comingSoonImage from '/assets/images/icons/coming-soon.png';
 
 export default class TrackPageIntroductionAndCoursesComponent extends Component {
+  logoImage = logoImage;
+  comingSoonImage = comingSoonImage;
+
   @service currentUser;
 
   get coursesWithProgress() {

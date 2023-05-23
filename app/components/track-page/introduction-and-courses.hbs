@@ -1,8 +1,4 @@
-<TrackPage::IntroductionAndCourses::TimelineItem
-  @shouldShowLogoBackground={{true}}
-  @logoImageUrl="/assets/images/logo/outline-color.svg"
-  @logoImageAltText="CodeCrafters"
->
+<TrackPage::IntroductionAndCourses::TimelineItem @shouldShowLogoBackground={{true}} @logoImageUrl={{this.logoImage}} @logoImageAltText="CodeCrafters">
   <TrackPage::IntroductionCard
     @isComplete={{this.userHasStartedTrack}}
     @language={{@language}}
@@ -30,7 +26,7 @@
 
 <TrackPage::IntroductionAndCourses::TimelineItem
   @shouldShowLogoBackground={{false}}
-  @logoImageUrl="/assets/images/icons/coming-soon.png"
+  @logoImageUrl={{this.comingSoonImage}}
   @logoImageAltText="coming soon"
   @isLastItem={{true}}
 >

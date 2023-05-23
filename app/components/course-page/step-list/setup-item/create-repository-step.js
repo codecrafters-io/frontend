@@ -5,8 +5,10 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import showdown from 'showdown';
+import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class CoursePageContentStepListSetupItemCreateRepositoryStepComponent extends Component {
+  rippleSpinnerImage = rippleSpinnerImage;
   @service store;
   requestedLanguagesPromptTransition = fade;
   @tracked shouldShowNonPreferredLanguages = false;

@@ -3,6 +3,10 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
+import easyToShareImage from '/assets/images/referral-program-features/easy-to-share.png';
+import easyToClaimImage from '/assets/images/referral-program-features/easy-to-claim.png';
+import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.png';
+
 export default class JoinReferralProgramContainerComponent extends Component {
   @service store;
   @service('current-user') currentUserService;
@@ -13,17 +17,17 @@ export default class JoinReferralProgramContainerComponent extends Component {
       {
         title: 'Easy to share',
         description: 'All you’ve got to do is share a referral link, we take care of the rest!',
-        imageUrl: '/assets/images/referral-program-features/easy-to-share.png',
+        imageUrl: easyToShareImage,
       },
       {
         title: 'Easy to claim',
         description: 'Get paid via PayPal, or via 30+ different types of gift cards.',
-        imageUrl: '/assets/images/referral-program-features/easy-to-claim.png',
+        imageUrl: easyToClaimImage,
       },
       {
         title: '60% for life',
         description: `Earn 60% of earnings from every customer you refer, forever. Sky is the limit.`,
-        imageUrl: '/assets/images/referral-program-features/lifetime-earnings.png',
+        imageUrl: lifetimeEarningsImage,
       },
     ];
   }

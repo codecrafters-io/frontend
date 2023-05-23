@@ -2,6 +2,7 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
+const { Webpack } = require('@embroider/webpack');
 
 // const _isProduction = EmberApp.env() === 'production';
 const cdnBaseURL = process.env.CDN_BASE_URL;
@@ -10,7 +11,7 @@ const shouldUseCDN = !!cdnBaseURL;
 module.exports = function (defaults) {
   const appOptions = {
     babel: {
-      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin()],
+      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
     },
 
     emberCLIDeploy: {
@@ -62,5 +63,28 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
 
-  return app.toTree();
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    // staticAddonTestSupportTrees: true,
+    // staticAddonTrees: true,
+    // staticHelpers: true,
+    // staticModifiers: true,
+    // staticComponents: true,
+    // splitAtRoutes: ['route.name'], // can also be a RegExp
+    packagerOptions: {
+      publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
+      webpackConfig: {
+        module: {
+          rules: [
+            {
+              test: /\.(css|png|jpg|jpeg|gif|svg|ico)$/,
+              type: 'asset/resource',
+              generator: {
+                filename: 'assets/[hash][ext][query]',
+              },
+            },
+          ],
+        },
+      },
+    },
+  });
 };

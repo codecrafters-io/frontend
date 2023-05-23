@@ -2,6 +2,13 @@ import { attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 
+import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
+import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
+import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
+import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
+import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
+import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
+
 export default class CourseModel extends Model {
   @attr('number') completionPercentage;
   @attr('string') descriptionMarkdown;
@@ -48,12 +55,12 @@ export default class CourseModel extends Model {
 
   get logoUrl() {
     return {
-      redis: '/assets/images/challenge-logos/challenge-logo-redis.svg',
-      docker: '/assets/images/challenge-logos/challenge-logo-docker.svg',
-      git: '/assets/images/challenge-logos/challenge-logo-git.svg',
-      sqlite: '/assets/images/challenge-logos/challenge-logo-sqlite.svg',
-      react: '/assets/images/challenge-logos/challenge-logo-react.svg',
-      grep: '/assets/images/challenge-logos/challenge-logo-grep.svg',
+      redis: redisLogo,
+      docker: dockerLogo,
+      git: gitLogo,
+      sqlite: sqliteLogo,
+      react: reactLogo,
+      grep: grepLogo,
     }[this.slug];
   }
 

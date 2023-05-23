@@ -19,16 +19,12 @@
     <div class="grid grid-cols-2 gap-2">
       <ReferralsPage::CreatePayoutModal::PayoutMethodCard
         @name="PayPal"
-        @imageUrl="/assets/images/payout-method-logos/paypal.svg"
+        @imageUrl={{this.paypalImage}}
         {{on "click" (fn this.handlePayoutMethodClick "paypal")}}
         @isSelected={{eq this.selectedPayoutMethod "paypal"}}
       />
 
-      <ReferralsPage::CreatePayoutModal::PayoutMethodCard
-        @name="Amazon Gift Card"
-        @isDisabled={{true}}
-        @imageUrl="/assets/images/payout-method-logos/amazon-com.png"
-      />
+      <ReferralsPage::CreatePayoutModal::PayoutMethodCard @name="Amazon Gift Card" @isDisabled={{true}} @imageUrl={{this.amazonImage}} />
     </div>
 
     {{#if (eq this.selectedPayoutMethod "paypal")}}

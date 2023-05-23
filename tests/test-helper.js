@@ -7,6 +7,7 @@ import { setup as setupQunitDom } from 'qunit-dom';
 import { setup as setupQunitAssertionsExtra } from 'qunit-assertions-extra';
 
 import start from 'ember-exam/test-support/start';
+// import { start } from 'ember-qunit';
 
 setApplication(Application.create(config.APP));
 
