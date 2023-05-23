@@ -10,6 +10,6 @@
   {{(svg-jar "chevron-up" class=(concat "w-4 mr-0.5 transition-all duration-75 " (if this.currentUserHasUpvoted "text-teal-500" "text-gray-300")))}}
 
   <span class="text-xs {{if this.currentUserHasUpvoted 'text-teal-500' 'text-gray-500'}} transition-all duration-75">
-    <span class="font-semibold">{{sub (add @comment.upvotesCount 1) @comment.downvotesCount}}</span>
+    <span class="font-semibold">{{(sub (add @comment.upvotesCount 1) @comment.downvotesCount)}}</span>
   </span>
 </button>
