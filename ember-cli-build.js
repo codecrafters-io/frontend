@@ -11,7 +11,7 @@ const shouldUseCDN = !!cdnBaseURL;
 module.exports = function (defaults) {
   const appOptions = {
     babel: {
-      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin()],
+      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
     },
 
     emberCLIDeploy: {
