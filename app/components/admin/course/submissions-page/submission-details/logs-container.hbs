@@ -6,7 +6,7 @@
   {{#if (gt @submission.evaluations.length 0)}}
     {{#each this.logLines as |logLine index|}}
       <div class="flex items-center">
-        <div class="text-gray-500 w-4 text-right mr-3">{{add index 1}}</div>
+        <div class="text-gray-500 w-4 text-right mr-3">{{(add index 1)}}</div>
         <div>{{logLine}}</div>
       </div>
     {{/each}}
