@@ -56,6 +56,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
+    // eslint-disable-next-line no-unused-vars
     let subscription = this.server.schema.subscriptions.first();
 
     await membershipPage.visit();
