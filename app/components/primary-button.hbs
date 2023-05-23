@@ -1,10 +1,9 @@
-{{! @glint-nocheck: not typesafe yet }}
 <button
   type="button"
   class="inline-block bg-teal-500 hover:bg-teal-600 border border-teal-500 hover:border-teal-600
-    {{if (eq @size 'small') 'px-3 py-1.5' 'px-3 py-2'}}
+    {{if this.sizeIsSmall 'px-3 py-1.5' 'px-3 py-2'}}
     text-white rounded shadow-sm font-semibold
-    {{if (eq @size 'small') 'text-sm' 'text-base'}}
+    {{if this.sizeIsSmall 'text-sm' 'text-base'}}
     {{if @isDisabled 'cursor-not-allowed opacity-50'}}"
   ...attributes
 >
