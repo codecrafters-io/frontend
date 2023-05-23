@@ -48,6 +48,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       'notify page view (courses listing page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
+      'feature flag (pulsing solutions)',
       'fetch leaderboard entries (course page)',
       'notify page view (course page)',
     ].length;
