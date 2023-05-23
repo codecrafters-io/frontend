@@ -11,6 +11,6 @@
   </div>
 
   {{#if @repository.lastSubmissionAt}}
-    <span class="text-gray-400 text-xs">(pushed {{moment-from-now @repository.lastSubmissionAt}})</span>
+    <span class="text-gray-400 text-xs">(pushed {{date-from-now @repository.lastSubmissionAt addSuffix=true}})</span>
   {{/if}}
 </div>

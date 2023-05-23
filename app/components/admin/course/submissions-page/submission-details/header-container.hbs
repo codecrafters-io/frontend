@@ -69,6 +69,6 @@
   </div>
   <div class="text-right flex-shrink-0 pl-4">
     <div class="text-gray-700 text-xs">{{@submission.repository.user.username}}</div>
-    <div class="text-gray-400 text-xs">Started {{moment-from-now @submission.repository.createdAt}}</div>
+    <div class="text-gray-400 text-xs">Started {{date-from-now @submission.repository.createdAt addSuffix=true}}</div>
   </div>
 </div>

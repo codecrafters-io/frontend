@@ -97,7 +97,7 @@
                 Tests failed. Check your git push output for logs.
               {{else if this.lastFailedSubmissionCreatedAt}}
                 Last attempt
-                {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
+                {{date-from-now this.lastFailedSubmissionCreatedAt addSuffix=true}}. Try again?
               {{else}}
                 Last attempt failed. Try again?
               {{/if}}
@@ -112,7 +112,7 @@
               You completed this stage yesterday.
             {{else if this.completedAt}}
               You completed this stage
-              {{moment-from-now this.completedAt}}.
+              {{date-from-now this.completedAt addSuffix=true}}.
             {{else}}
               You've completed this stage.
             {{/if}}
