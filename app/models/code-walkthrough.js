@@ -3,6 +3,13 @@ import { htmlSafe } from '@ember/template';
 import Model from '@ember-data/model';
 import showdown from 'showdown';
 
+import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
+import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
+import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
+import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
+import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
+import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
+
 export default class CodeWalkthrough extends Model {
   @attr('string') conclusionMarkdown;
   @attr('string') descriptionMarkdown;
@@ -31,18 +38,18 @@ export default class CodeWalkthrough extends Model {
 
   get logoURL() {
     if (this.slug.startsWith('redis')) {
-      return '/assets/images/challenge-logos/challenge-logo-redis.svg';
+      return redisLogo;
     } else if (this.slug.startsWith('git')) {
-      return '/assets/images/challenge-logos/challenge-logo-git.svg';
+      return gitLogo;
     } else if (this.slug.startsWith('docker')) {
-      return '/assets/images/challenge-logos/challenge-logo-docker.svg';
+      return dockerLogo;
     } else if (this.slug.startsWith('sqlite')) {
-      return '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
+      return sqliteLogo;
     } else if (this.slug.startsWith('grep')) {
-      return '/assets/images/challenge-logos/challenge-logo-grep.svg';
+      return grepLogo;
     } else {
       // Fallback
-      return '/assets/images/challenge-logos/challenge-logo-redis.svg';
+      return redisLogo;
     }
   }
 }

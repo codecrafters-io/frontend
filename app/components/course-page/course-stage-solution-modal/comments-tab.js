@@ -2,8 +2,10 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class CommentsTabComponent extends Component {
+  rippleSpinnerImage = rippleSpinnerImage;
   @tracked isLoading = true;
   @service featureFlags;
   @service store;

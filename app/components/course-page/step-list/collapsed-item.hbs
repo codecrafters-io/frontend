@@ -6,13 +6,13 @@
 >
   <div>
     {{#if (eq @status "active")}}
-      <img alt="tick icon" src="/assets/images/icons/live.svg" class="w-4 md:w-6 mr-2 md:mr-3" />
+      <img alt="tick icon" src={{this.activeStepImage}} class="w-4 md:w-6 mr-2 md:mr-3" />
       <EmberTooltip @text="You're currently working on this stage" />
     {{else if (eq @status "completed")}}
-      <img alt="lock icon" src="/assets/images/icons/tick3.png" class="w-4 md:w-6 mr-2 md:mr-3" />
+      <img alt="lock icon" src={{this.completedStepImage}} class="w-4 md:w-6 mr-2 md:mr-3" />
       <EmberTooltip @text="You've completed this stage" />
     {{else if (eq @status "future")}}
-      <img alt="lock icon" src="/assets/images/icons/lock4.svg" class="w-4 md:w-6 mr-2 md:mr-3" />
+      <img alt="lock icon" src={{this.futureStepImage}} class="w-4 md:w-6 mr-2 md:mr-3" />
       <EmberTooltip @text="Complete previous steps to gain access this stage" />
     {{/if}}
   </div>

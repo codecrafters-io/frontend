@@ -19,7 +19,7 @@
   <AnimatedContainer>
     {{#animated-if this.isLoadingEntries use=this.transition}}
       <div class="flex p-4 items-center mb-40">
-        <img alt="Loading icon" src="/assets/images/icons/ripple-spinner.svg" class="w-4 h-4 mr-2" />
+        <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4 mr-2" />
         <span class="text-sm text-gray-600">
           Loading...
         </span>
