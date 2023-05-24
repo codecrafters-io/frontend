@@ -3,9 +3,7 @@
     {{@badge.name}}
   </div>
 
-  <div class="flex items-center justify-center" {{did-insert this.didInsertPreviewContainer}}>
-
-  </div>
+  <BadgesPage::BadgePreview @badge={{@badge}} />
 
   <div>
     {{#if this.userHasBadgeAward}}
