@@ -18,6 +18,9 @@ export function signIn(owner, server, user) {
     },
     included: buildIncludedResources(user),
   });
+
+  let currentUserService = owner.lookup('service:current-user');
+  currentUserService.authenticate();
 }
 
 export function signInAsAdmin(owner, server, user) {
