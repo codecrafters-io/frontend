@@ -45,7 +45,7 @@
 
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center ml-6">
-        {{#if this.currentUserService.isAuthenticated}}
+        {{#if this.currentUser}}
           <FeedbackButton class="mr-4" as |dd|>
             <div
               role="button"
@@ -58,7 +58,7 @@
             </div>
           </FeedbackButton>
 
-          {{#if this.currentUserService.record.isCodecraftersPartner}}
+          {{#if this.currentUser.isCodecraftersPartner}}
             <Header::VipBadge class="mr-3" />
           {{/if}}
 
@@ -83,7 +83,7 @@
             <a href="/admin" class="block text-sm py-3 text-gray-600">Admin</a>
           {{/if}}
 
-          {{#if this.currentUserService.isAuthenticated}}
+          {{#if this.currentUser}}
             <Header::AccountDropdown />
           {{else}}
             <Header::SignInWithGithubButton />

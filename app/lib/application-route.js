@@ -8,8 +8,6 @@ export default class ApplicationRoute extends Route {
   @service router;
 
   beforeModel(transition) {
-    this.currentUser.authenticate();
-
     if (this.currentUser.isAnonymous && !this.allowsAnonymousAccess) {
       if (Object.keys(transition.to.params).length > 0) {
         window.location.href = `/login?next=${encodeURIComponent(this.router.urlFor(transition.to.name, transition.to.params))}`;

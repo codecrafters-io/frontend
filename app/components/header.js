@@ -18,7 +18,7 @@ export default class HeaderComponent extends Component {
   @action
   handleDidInsert() {
     if (this.currentUserService.isAuthenticated) {
-      let username = this.currentUserService.currentUserUsername;
+      let username = this.currentUser.username;
 
       if (username && window.FS) {
         window.FS.identify(username, { displayName: username });

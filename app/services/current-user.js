@@ -19,11 +19,12 @@ export default class CurrentUserService extends Service {
   }
 
   get currentUserId() {
-    return this.currentUserPayload.data.id;
+    return this.currentUserPayload && this.currentUserPayload.data.id;
   }
 
+  // Used in situations where authenticate hasn't been called yet.
   get currentUserUsername() {
-    return this.currentUserPayload.data.attributes.username;
+    return this.currentUserPayload && this.currentUserPayload.data.attributes.username;
   }
 
   get isAnonymous() {
@@ -31,7 +32,7 @@ export default class CurrentUserService extends Service {
   }
 
   get isAuthenticated() {
-    return !!this.currentUserPayload;
+    return !!this.currentUserId;
   }
 
   get record() {
