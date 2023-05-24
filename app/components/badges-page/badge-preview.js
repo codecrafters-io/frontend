@@ -48,7 +48,6 @@ export default class BadgePreviewComponent extends Component {
     loader.load(
       testBadgeModel,
       (gltf) => {
-        console.log('loaded');
         scene.add(gltf.scene);
 
         let box = new THREE.Box3().setFromObject(gltf.scene);
@@ -57,7 +56,7 @@ export default class BadgePreviewComponent extends Component {
         camera.position.x += box.getSize(new THREE.Vector3()).length(); // Move the camera back by the length of the box
         camera.lookAt(center); // Make the camera look at the center of the box
       },
-      (xhr) => console.log((xhr.loaded / xhr.total) * 100 + '% loaded'),
+      () => {},
       (error) => console.log('An error happened', error)
     );
 
