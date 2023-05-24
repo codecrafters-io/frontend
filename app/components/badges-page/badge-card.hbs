@@ -3,6 +3,8 @@
     {{@badge.name}}
   </div>
 
+  <BadgesPage::BadgePreview @badge={{@badge}} />
+
   <div>
     {{#if this.userHasBadgeAward}}
       <span class="text-teal-600 font-semibold">You have earned this badge.</span>
