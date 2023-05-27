@@ -21,7 +21,7 @@ module('Acceptance | pay-test', function (hooks) {
     try {
       await payPage.visit();
     } catch (e) {
-      assert.strictEqual(1, 1);
+      assert.strictEqual(1, 2);
     }
 
     assert.strictEqual(window.location.href, `${window.location.origin}/login?next=%2Fpay`, 'should redirect to login URL');
