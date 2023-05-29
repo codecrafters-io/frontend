@@ -24,40 +24,9 @@ export default class PageViewTracker extends Service {
   }
 
   #buildAnalyticsEvent() {
-    if (this.router.currentRouteName === 'course') {
-      return this.store.createRecord('analytics-event', {
-        name: 'viewed_course_page',
-        properties: { course_slug: this.router.currentRoute.params.course_slug },
-      });
-    } else if (this.router.currentRouteName === 'course-overview') {
-      return this.store.createRecord('analytics-event', {
-        name: 'viewed_course_overview_page',
-        properties: { course_slug: this.router.currentRoute.params.course_slug },
-      });
-    } else if (this.router.currentRouteName === 'courses') {
-      return this.store.createRecord('analytics-event', { name: 'viewed_course_list_page' });
-    } else if (this.router.currentRouteName === 'join') {
-      return this.store.createRecord('analytics-event', {
-        name: 'viewed_referral_link_page',
-        properties: { slug: this.router.currentRoute.queryParams.via },
-      });
-    } else if (this.router.currentRouteName === 'pay') {
-      return this.store.createRecord('analytics-event', { name: 'viewed_payment_prompt' });
-    } else if (this.router.currentRouteName === 'track') {
-      return this.store.createRecord('analytics-event', {
-        name: 'viewed_track_page',
-        properties: { track_slug: this.router.currentRoute.params.track_slug },
-      });
-    } else if (this.router.currentRouteName === 'tracks') {
-      return this.store.createRecord('analytics-event', { name: 'viewed_track_list_page' });
-    } else if (this.router.currentRouteName === 'user') {
-      return this.store.createRecord('analytics-event', {
-        name: 'viewed_user_profile_page',
-        properties: { username: this.router.currentRoute.params.username },
-      });
-    } else {
-      return this.store.createRecord('analytics-event', { name: 'viewed_unknown_page', properties: { url: this.router.currentURL } });
-    }
+    let baseURL = `${window.location.protocol}//${window.location.host}`; // 'http://localhost:4200
+
+    return this.store.createRecord('analytics-event', { name: 'viewed_page', properties: { url: `${baseURL}${this.router.currentURL}` } });
   }
 
   #shouldIgnoreEventForTransition(transition) {
