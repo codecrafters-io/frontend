@@ -6,7 +6,6 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { clearAllCookies } from 'ember-cookies/test-support';
-import { serializeCookie } from 'ember-cookies/utils/serialize-cookie';
 
 module('Acceptance | utm-campaign', function (hooks) {
   setupApplicationTest(hooks);
