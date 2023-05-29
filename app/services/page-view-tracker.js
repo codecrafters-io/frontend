@@ -24,7 +24,7 @@ export default class PageViewTracker extends Service {
   }
 
   #buildAnalyticsEvent() {
-    let baseURL = `${window.location}://${document.host}`;
+    let baseURL = `${window.location.protocol}//${window.location.host}`; // 'http://localhost:4200
 
     return this.store.createRecord('analytics-event', { name: 'viewed_page', properties: { url: `${baseURL}${this.router.currentURL}` } });
   }
