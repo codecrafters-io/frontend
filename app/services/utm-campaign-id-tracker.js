@@ -13,6 +13,7 @@ export default class UtmCampaignIdService extends Service {
       return;
     }
 
-    this.cookies.write('last_seen_utm_campaign_id', utmCampaignId, { maxAge: 14 * 24 * 60 * 60, path: '/' });
+    // 24 hours
+    this.cookies.write('last_seen_utm_campaign_id', utmCampaignId, { maxAge: 24 * 60 * 60, path: '/' });
   }
 }
