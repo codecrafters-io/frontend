@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 export default class PageViewTracker extends Service {
   @service router;
   @service store;
+  @service utmCampaignIdTracker;
 
   @action
   handleRouteChange(transition) {
@@ -26,7 +27,13 @@ export default class PageViewTracker extends Service {
   #buildAnalyticsEvent() {
     let baseURL = `${window.location.protocol}//${window.location.host}`; // 'http://localhost:4200
 
-    return this.store.createRecord('analytics-event', { name: 'viewed_page', properties: { url: `${baseURL}${this.router.currentURL}` } });
+    return this.store.createRecord('analytics-event', {
+      name: 'viewed_page',
+      properties: {
+        utm_campaign_id: this.utmCampaignIdTracker.firstSeenCampaignId,
+        url: `${baseURL}${this.router.currentURL}`,
+      },
+    });
   }
 
   #shouldIgnoreEventForTransition(transition) {
