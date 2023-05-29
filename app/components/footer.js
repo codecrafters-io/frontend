@@ -28,6 +28,10 @@ export default class FooterComponent extends Component {
           text: 'SQLite',
           url: 'https://app.codecrafters.io/courses/sqlite/overview',
         },
+        {
+          text: 'Grep',
+          url: 'https://app.codecrafters.io/courses/grep/overview',
+        },
       ],
     };
   }
