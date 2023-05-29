@@ -5,7 +5,7 @@ export default class UtmCampaignIdService extends Service {
   @service cookies;
 
   get firstSeenCampaignId() {
-    return this.cookies.read('last_seen_utm_campaign_id');
+    return this.cookies.read('first_seen_utm_campaign_id');
   }
 
   setCampaignId(utmCampaignId) {
@@ -14,6 +14,6 @@ export default class UtmCampaignIdService extends Service {
     }
 
     // 24 hours
-    this.cookies.write('last_seen_utm_campaign_id', utmCampaignId, { maxAge: 24 * 60 * 60, path: '/' });
+    this.cookies.write('first_seen_utm_campaign_id', utmCampaignId, { maxAge: 24 * 60 * 60, path: '/' });
   }
 }
