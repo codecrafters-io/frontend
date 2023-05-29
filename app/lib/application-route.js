@@ -6,6 +6,7 @@ export default class ApplicationRoute extends Route {
   allowsAnonymousAccess = false;
   @service currentUser;
   @service router;
+  @service utmCampaignIdTracker;
 
   beforeModel(transition) {
     if (this.currentUser.isAnonymous && !this.allowsAnonymousAccess) {
@@ -22,6 +23,14 @@ export default class ApplicationRoute extends Route {
       if (window.posthog && this.currentUser.isAuthenticated) {
         window.posthog.identify(this.currentUser.currentUserId, { username: this.currentUser.currentUserUsername });
       }
+    }
+
+    const queryParams = transition.to.queryParams;
+
+    if (queryParams.r && /^\d[a-zA-Z][a-zA-Z]$/.test(queryParams.r)) {
+      this.utmCampaignIdTracker.setLastSeenCampaignId(queryParams.r);
+      delete queryParams.r;
+      this.router.replaceWith(transition.to.name, { queryParams });
     }
   }
 }
