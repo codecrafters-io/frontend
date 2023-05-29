@@ -35,5 +35,4 @@ Router.map(function () {
 
   this.route('not-found', { path: '/*path' }); // Catch-all
   this.route('not-found', { path: '/404' }); // Allow redirecting to this route
-  this.route('join-referral-program-container');
 });
