@@ -28,7 +28,7 @@ export default class ApplicationRoute extends Route {
     const queryParams = transition.to.queryParams;
 
     if (queryParams.r && /^\d[a-zA-Z][a-zA-Z]$/.test(queryParams.r)) {
-      this.utmCampaignIdTracker.setLastSeenCampaignId(queryParams.r);
+      this.utmCampaignIdTracker.setCampaignId(queryParams.r);
       delete queryParams.r;
       this.router.replaceWith(transition.to.name, { queryParams });
     }
