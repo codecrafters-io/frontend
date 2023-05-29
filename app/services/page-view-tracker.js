@@ -30,7 +30,7 @@ export default class PageViewTracker extends Service {
     return this.store.createRecord('analytics-event', {
       name: 'viewed_page',
       properties: {
-        utm_campaign_id: this.utmCampaignIdTracker.firstSeenCampaignId,
+        utm_id: this.utmCampaignIdTracker.firstSeenCampaignId,
         url: `${baseURL}${this.router.currentURL}`,
       },
     });

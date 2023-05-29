@@ -31,13 +31,13 @@ module('Acceptance | utm-campaign', function (hooks) {
     assert.strictEqual(currentURL(), '/courses');
 
     assert.strictEqual(this.server.schema.analyticsEvents.first().name, 'viewed_page');
-    assert.strictEqual(this.server.schema.analyticsEvents.first().properties.utm_campaign_id, '3bc');
+    assert.strictEqual(this.server.schema.analyticsEvents.first().properties.utm_id, '3bc');
 
     await coursesPage.courseCards[0].click();
     assert.strictEqual(currentURL(), '/courses/redis/overview');
 
     assert.strictEqual(this.server.schema.analyticsEvents.first().name, 'viewed_page');
-    assert.strictEqual(this.server.schema.analyticsEvents.first().properties.utm_campaign_id, '3bc');
+    assert.strictEqual(this.server.schema.analyticsEvents.first().properties.utm_id, '3bc');
   });
 
   test('it does not remove query param unless matches pattern', async function (assert) {
@@ -48,6 +48,6 @@ module('Acceptance | utm-campaign', function (hooks) {
     assert.strictEqual(currentURL(), '/courses?r=dummy');
 
     assert.strictEqual(this.server.schema.analyticsEvents.first().name, 'viewed_page');
-    assert.notOk(this.server.schema.analyticsEvents.first().properties.utm_campaign_id);
+    assert.notOk(this.server.schema.analyticsEvents.first().properties.utm_id);
   });
 });
