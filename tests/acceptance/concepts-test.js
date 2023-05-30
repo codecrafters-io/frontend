@@ -29,7 +29,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     this.server.create('concept-question', {
       concept: networkingProtocolsConcept,
-      questionMarkdown: 'Which of the following is NOT a networking protocol?',
+      queryMarkdown: 'Which of the following is NOT a networking protocol?',
       options: [
         {
           markdown: 'SMTP (Simple Mail Transfer Protocol)',

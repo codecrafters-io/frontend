@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/template';
 import Model from '@ember-data/model';
 import showdown from 'showdown';
 
-export default class ConceptQuestion extends Model {
+export default class ConceptQuiz extends Model {
   @belongsTo('concept', { async: false }) concept;
   @attr('string') queryMarkdown;
   @attr('') options; // free-form JSON: { "markdown": String, "is_correct": true/false, "explanation_markdown": String }
