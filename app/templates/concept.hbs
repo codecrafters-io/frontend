@@ -10,9 +10,9 @@
   </div>
 
   <div class="flex flex-col gap-4 my-16 items-center">
-  {{#each this.model.concept.questions as |question|}}
-    <ConceptPage::QuestionCard @question={{question}} class="w-full max-w-xl" />
-  {{/each}}
+    {{#each this.model.concept.questions as |question|}}
+      <ConceptPage::QuestionCard @question={{question}} class="w-full max-w-xl" />
+    {{/each}}
   </div>
 
   <div class="leading-7 prose max-w-none mb-6">

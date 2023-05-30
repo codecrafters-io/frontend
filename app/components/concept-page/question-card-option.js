@@ -1,7 +1,4 @@
 import Component from '@glimmer/component';
-import showdown from 'showdown';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 
 export default class QuestionCardOptionComponent extends Component {
   get isUnselected() {

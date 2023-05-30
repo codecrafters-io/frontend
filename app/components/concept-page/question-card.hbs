@@ -18,10 +18,20 @@
   <AnimatedContainer>
     {{#animated-if this.explanationIsVisible use=this.transition duration=200}}
       <div class="shadow mt-4 p-4 border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-gray-50'}}">
+        <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
+          {{#if this.selectedOptionIsCorrect}}
+            <span class="mr-1">🎉</span>
+            Correct!
+          {{else}}
+            <span class="mr-1">👀</span>
+            Incorrect
+          {{/if}}
+        </div>
+
         <AnimatedContainer>
           {{#animated-value this.selectedOption.explanationHTML use=this.transition duration=200 as |v|}}
             <div class="leading-7 prose max-w-none {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
-              {{{v}}}
+              {{html-safe v}}
             </div>
           {{/animated-value}}
         </AnimatedContainer>
@@ -31,7 +41,13 @@
 
   <div class="flex gap-2">
     {{#if this.hasSubmitted}}
-      <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Continue</PrimaryButton>
+      <TertiaryButton class="mt-4" {{on "click" this.handleShowExplanationClick}}>I learned something!</TertiaryButton>
+      <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>
+        <div class="flex items-center">
+          {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
+          <span>Next Question</span>
+        </div>
+      </PrimaryButton>
     {{else}}
       <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Submit</PrimaryButton>
     {{/if}}
