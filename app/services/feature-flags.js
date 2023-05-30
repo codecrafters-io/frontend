@@ -18,6 +18,10 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && this.currentUser.isStaff;
   }
 
+  get canSeeConcepts() {
+    return this.currentUser && this.currentUser.isStaff;
+  }
+
   get canSeeStageCompletionVideos() {
     return this.currentUser && this.currentUser.isStaff;
   }
