@@ -1,0 +1,10 @@
+{{! @glint-nocheck: not typesafe yet }}
+<LinkTo class="border p-4 bg-white" @route="concept" @model={{@concept.slug}} data-test-concept-card>
+  <div class="text-lg font-bold text-gray-600 mr-2 mb-4" data-test-concept-title>
+    {{@concept.title}}
+  </div>
+
+  <div class="prose prose-sm">
+    {{@concept.descriptionHTML}}
+  </div>
+</LinkTo>

@@ -1,0 +1,43 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div class="border p-4 bg-white" ...attributes>
+  <div class="text-gray-800 mr-2 mb-2 border-b pt-1 pb-3">
+    {{@question.questionHTML}}
+  </div>
+
+  <div class="flex flex-col -mx-4 gap-px">
+    {{#each this.options as |option optionIndex|}}
+      <ConceptPage::QuestionCardOption
+        class="px-4"
+        @option={{option}}
+        @isSubmitted={{this.hasSubmitted}}
+        {{on "click" (fn (mut this.selectedOptionIndex) optionIndex)}}
+      />
+    {{/each}}
+  </div>
+
+  <AnimatedContainer>
+    {{#animated-if this.explanationIsVisible use=this.transition duration=200}}
+      <div class="shadow mt-4 p-4 border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-gray-50'}}">
+        <AnimatedContainer>
+          {{#animated-value this.selectedOption.explanationHTML use=this.transition duration=200 as |v|}}
+            <div class="leading-7 prose max-w-none {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
+              {{{v}}}
+            </div>
+          {{/animated-value}}
+        </AnimatedContainer>
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
+
+  <div class="flex gap-2">
+    {{#if this.hasSubmitted}}
+      <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Continue</PrimaryButton>
+    {{else}}
+      <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Submit</PrimaryButton>
+    {{/if}}
+
+    {{#unless this.explanationIsVisible}}
+      <TertiaryButton class="mt-4" {{on "click" this.handleShowExplanationClick}}>Show explanation</TertiaryButton>
+    {{/unless}}
+  </div>
+</div>
