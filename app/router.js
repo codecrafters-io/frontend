@@ -9,6 +9,8 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('badges');
   this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' });
+  this.route('concepts');
+  this.route('concept', { path: '/concepts/:concept_slug' });
   this.route('courses');
   this.route('course', { path: '/courses/:course_slug' });
 

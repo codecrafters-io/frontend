@@ -36,6 +36,10 @@
           <LinkTo @route="badges" class="text-sm px-2 text-gray-600">Badges</LinkTo>
         {{/if}}
 
+        {{#if this.featureFlags.canSeeConcepts}}
+          <LinkTo @route="concepts" class="text-sm px-2 text-gray-600">Concepts</LinkTo>
+        {{/if}}
+
         <LinkTo @route="vote" class="text-sm px-2 text-gray-600" data-test-course-ideas-link>Vote</LinkTo>
 
         {{#if this.currentUser.isAdmin}}

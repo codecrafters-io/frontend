@@ -1,0 +1,21 @@
+{{page-title "Concepts"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+  <div class="border-b pb-2 mb-6">
+    <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Concept: {{this.model.concept.title}}</h1>
+  </div>
+
+  <div class="leading-7 prose max-w-none mb-6">
+    {{this.model.concept.introductionHTML}}
+  </div>
+
+  <div class="flex flex-col gap-4 my-16 items-center">
+    {{#each this.model.concept.questions as |question|}}
+      <ConceptPage::QuestionCard @question={{question}} class="w-full max-w-xl" />
+    {{/each}}
+  </div>
+
+  <div class="leading-7 prose max-w-none mb-6">
+    {{this.model.concept.conclusionHTML}}
+  </div>
+</div>

@@ -16,7 +16,7 @@ export default {
   commentsTab: {
     clickOnTabHeader: clickOnText('[data-test-tab-header]'),
     clickOnSubmitButton: clickable('[data-test-submit-button]'),
-    submitButtonIsDisabled: hasClass('opacity-50', '[data-test-submit-button]'),
+    submitButtonIsDisabled: hasClass('cursor-not-allowed', '[data-test-submit-button]'),
     commentCards: collection('[data-test-comment-card]', CommentCard),
     fillInCommentInput: fillable('[data-test-comment-input]'),
     scope: '[data-test-comments-tab]',
