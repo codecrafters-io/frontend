@@ -8,11 +8,10 @@
   <AnimatedContainer>
     {{#animated-each this.visibleBlocks key="index" use=this.listTransition duration=200 as |block|}}
       {{#if (eq block.type "markdown")}}
-        <Blocks::MarkdownBlock @block={{block}} class="mb-6" />
+        <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
       {{else if (eq block.type "concept_question")}}
-        {{log "question_block" block.index this.currentBlockIndex}}
         <Blocks::ConceptQuestionBlock
-          @block={{block}}
+          @model={{block}}
           class="mb-6"
           @onContinueButtonClick={{this.handleContinueButtonClick}}
           @shouldShowContinueButton={{eq block.index this.currentBlockIndex}}
@@ -22,7 +21,10 @@
           {{block.buttonText}}
         </TertiaryButton>
       {{else}}
-        {{log "Unknown block type" block.type}}
+        <div>
+          Unknown block type:
+          {{block.type}}.
+        </div>
       {{/if}}
     {{/animated-each}}
   </AnimatedContainer>
