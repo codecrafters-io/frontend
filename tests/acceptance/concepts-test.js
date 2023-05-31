@@ -13,22 +13,59 @@ module('Acceptance | concepts-test', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    const networkingProtocolsConcept = this.server.create('concept', {
-      title: 'Networking Protocols',
-      slug: 'networking-protocols',
-      descriptionMarkdown: 'Learn about the various networking protocols and how they differ.',
-      introductionMarkdown: 'Test your understanding of networking protocols by going through the following questions.',
-    });
-
     this.server.create('concept', {
       title: 'TCP/IP',
       slug: 'tcp',
       descriptionMarkdown: 'Learn about TCP (Transmission Control Protocol)',
-      introductionMarkdown: 'In this course you will learn about TCP (Transmission Control Protocol)',
+    });
+
+    const networkingProtocolsConcept = this.server.create('concept', {
+      title: 'Networking Protocols',
+      slug: 'networking-protocols',
+      descriptionMarkdown: 'Learn about the various networking protocols and how they differ.',
+      blocks: [
+        {
+          block_type: 'markdown',
+          block_args: {
+            markdown: `Networking protocols are sets of rules used by devices to communicate with each other across a network. They determine things like how data is sent, received, and responded to.
+
+Some examples of networking protocols are:
+
+- HTTP, used for web browsing
+- FTP, used for transferring files
+- SMTP, used for sending emails`,
+          },
+        },
+        {
+          block_type: 'click_to_continue',
+          block_args: { button_text: 'Continue' },
+        },
+        {
+          block_type: 'concept_question',
+          block_args: { concept_question_slug: 'not-a-networking-protocol' },
+        },
+        {
+          block_type: 'markdown',
+          block_args: {
+            markdown: `Next Block`,
+          },
+        },
+        {
+          block_type: 'click_to_continue',
+          block_args: { button_text: 'What else?' },
+        },
+        {
+          block_type: 'markdown',
+          block_args: {
+            markdown: `Another Block`,
+          },
+        },
+      ],
     });
 
     this.server.create('concept-question', {
       concept: networkingProtocolsConcept,
+      slug: 'not-a-networking-protocol',
       queryMarkdown: 'Which of the following is NOT a networking protocol?',
       options: [
         {
@@ -70,5 +107,6 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
     assert.strictEqual(1, 1);
 
     await conceptsPage.clickOnConceptCard('Networking Protocols');
+    await this.pauseTest();
   });
 });

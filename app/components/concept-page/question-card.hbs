@@ -42,12 +42,15 @@
   <div class="flex gap-2">
     {{#if this.hasSubmitted}}
       <TertiaryButton class="mt-4" {{on "click" this.handleShowExplanationClick}}>I learned something!</TertiaryButton>
-      <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>
-        <div class="flex items-center">
-          {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
-          <span>Next Question</span>
-        </div>
-      </PrimaryButton>
+
+      {{#if @shouldShowContinueButton}}
+        <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" @onContinueButtonClick}}>
+          <div class="flex items-center">
+            {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
+            <span>Continue</span>
+          </div>
+        </PrimaryButton>
+      {{/if}}
     {{else}}
       <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Submit</PrimaryButton>
     {{/if}}
