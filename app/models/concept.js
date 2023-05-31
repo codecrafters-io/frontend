@@ -7,7 +7,7 @@ import { MarkdownBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codec
 export default class Concept extends Model {
   @hasMany('concept-question', { async: false }) questions;
   @attr('string') descriptionMarkdown;
-  @attr('') blocks; // free-form JSON. [{ block_type: 'paragraph', block_args: { markdown: '...' } }]
+  @attr('') blocks; // free-form JSON. [{ type: 'paragraph', args: { markdown: '...' } }]
   @attr('string') slug;
   @attr('string') title;
   @attr('date') updatedAt;
@@ -30,13 +30,13 @@ export default class Concept extends Model {
     }, {});
 
     return this.blocks.map((blockJSON) => {
-      const blockClass = blockTypeMapping[blockJSON.block_type];
+      const blockClass = blockTypeMapping[blockJSON.type];
 
       if (!blockClass) {
-        throw new Error(`Unknown block type: ${blockJSON.block_type}`);
+        throw new Error(`Unknown block type: ${blockJSON.type}`);
       }
 
-      return blockClass.fromJSON(blockJSON.block_args);
+      return blockClass.fromJSON(blockJSON.args);
     });
   }
 }

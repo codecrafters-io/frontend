@@ -25,8 +25,8 @@ module('Acceptance | concepts-test', function (hooks) {
       descriptionMarkdown: 'Learn about the various networking protocols and how they differ.',
       blocks: [
         {
-          block_type: 'markdown',
-          block_args: {
+          type: 'markdown',
+          args: {
             markdown: `Networking protocols are sets of rules used by devices to communicate with each other across a network. They determine things like how data is sent, received, and responded to.
 
 Some examples of networking protocols are:
@@ -37,26 +37,26 @@ Some examples of networking protocols are:
           },
         },
         {
-          block_type: 'click_to_continue',
-          block_args: { button_text: 'Continue' },
+          type: 'click_to_continue',
+          args: { button_text: 'Continue' },
         },
         {
-          block_type: 'concept_question',
-          block_args: { concept_question_slug: 'not-a-networking-protocol' },
+          type: 'concept_question',
+          args: { concept_question_slug: 'not-a-networking-protocol' },
         },
         {
-          block_type: 'markdown',
-          block_args: {
+          type: 'markdown',
+          args: {
             markdown: `Next Block`,
           },
         },
         {
-          block_type: 'click_to_continue',
-          block_args: { button_text: 'What else?' },
+          type: 'click_to_continue',
+          args: { button_text: 'What else?' },
         },
         {
-          block_type: 'markdown',
-          block_args: {
+          type: 'markdown',
+          args: {
             markdown: `Another Block`,
           },
         },
