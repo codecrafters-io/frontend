@@ -5,9 +5,15 @@ import { action } from '@ember/object';
 import fade from 'ember-animated/transitions/fade';
 
 export default class QuestionCardComponent extends Component {
+  @tracked didLearnSomething = false;
   @tracked selectedOptionIndex;
   @tracked hasSubmitted = false;
   transition = fade;
+
+  @action
+  handleILearnedSomethingButtonClick() {
+    this.didLearnSomething = !this.didLearnSomething;
+  }
 
   @action
   handleSubmitClick() {
