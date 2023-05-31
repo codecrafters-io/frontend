@@ -19,7 +19,7 @@ class Block {
 class ClickToContinueBlock extends Block {
   static type = 'click_to_continue';
 
-  buttonText;
+  buttonText = 'Continue';
 }
 
 class MarkdownBlock extends Block {

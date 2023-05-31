@@ -36,9 +36,6 @@ export default class ConceptController extends Controller {
 
   @action
   handleContinueButtonClick() {
-    console.log('nextUnrevealedClickToContinueBlockIndex', this.nextUnrevealedClickToContinueBlockIndex);
-    console.log('lastBlockIndex', this.lastBlockIndex);
-
     if (this.nextUnrevealedBlockThatNeedsInteraction) {
       this.lastRevealedBlockIndex = this.nextUnrevealedBlockThatNeedsInteraction.index;
     } else {
