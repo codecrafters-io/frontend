@@ -13,22 +13,59 @@ module('Acceptance | concepts-test', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    const networkingProtocolsConcept = this.server.create('concept', {
-      title: 'Networking Protocols',
-      slug: 'networking-protocols',
-      descriptionMarkdown: 'Learn about the various networking protocols and how they differ.',
-      introductionMarkdown: 'Test your understanding of networking protocols by going through the following questions.',
-    });
-
     this.server.create('concept', {
       title: 'TCP/IP',
       slug: 'tcp',
       descriptionMarkdown: 'Learn about TCP (Transmission Control Protocol)',
-      introductionMarkdown: 'In this course you will learn about TCP (Transmission Control Protocol)',
+    });
+
+    const networkingProtocolsConcept = this.server.create('concept', {
+      title: 'Networking Protocols',
+      slug: 'networking-protocols',
+      descriptionMarkdown: 'Learn about the various networking protocols and how they differ.',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `Networking protocols are sets of rules used by devices to communicate with each other across a network. They determine things like how data is sent, received, and responded to.
+
+Some examples of networking protocols are:
+
+- HTTP, used for web browsing
+- FTP, used for transferring files
+- SMTP, used for sending emails`,
+          },
+        },
+        {
+          type: 'click_to_continue',
+          args: { button_text: 'Continue' },
+        },
+        {
+          type: 'concept_question',
+          args: { concept_question_slug: 'not-a-networking-protocol' },
+        },
+        {
+          type: 'markdown',
+          args: {
+            markdown: `Next Block`,
+          },
+        },
+        {
+          type: 'click_to_continue',
+          args: { button_text: 'What else?' },
+        },
+        {
+          type: 'markdown',
+          args: {
+            markdown: `Another Block`,
+          },
+        },
+      ],
     });
 
     this.server.create('concept-question', {
       concept: networkingProtocolsConcept,
+      slug: 'not-a-networking-protocol',
       queryMarkdown: 'Which of the following is NOT a networking protocol?',
       options: [
         {

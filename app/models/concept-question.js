@@ -6,6 +6,7 @@ import showdown from 'showdown';
 export default class ConceptQuestion extends Model {
   @belongsTo('concept', { async: false }) concept;
   @attr('string') queryMarkdown;
+  @attr('string') slug;
   @attr('') options; // free-form JSON: { "markdown": String, "is_correct": true/false, "explanation_markdown": String }
 
   get correctOptionIndex() {
