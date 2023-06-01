@@ -16,21 +16,21 @@
           <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
           <span class="ml-3 text-gray-700">Loading...</span>
         </div>
-      {{else}}
+      {{else if (gt this.sortedSolutions.length 0)}}
         {{#each this.sortedSolutions as |solution solutionIndex|}}
           <CoursePage::CourseStageSolutionModal::CommunitySolutionCard
             @solution={{solution}}
             @isCollapsedByDefault={{true}}
             @positionInList={{add solutionIndex 1}}
           />
-        {{else}}
-          <div class="flex py-16 justify-center items-center w-full">
-            <div class="text-sm text-gray-500 text-center max-w-lg">
-              No community solutions available for
-              {{@requestedSolutionLanguage.name}}. Complete this stage to be the first!
-            </div>
-          </div>
         {{/each}}
+      {{else}}
+        <div class="flex py-16 justify-center items-center w-full">
+          <div class="text-sm text-gray-500 text-center max-w-lg">
+            No community solutions available for
+            {{@requestedSolutionLanguage.name}}. Complete this stage to be the first!
+          </div>
+        </div>
       {{/if}}
     </div>
 
