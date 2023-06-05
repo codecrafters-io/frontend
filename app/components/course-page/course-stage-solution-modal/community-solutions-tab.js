@@ -8,7 +8,7 @@ import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 export default class CommunitySolutionsTabComponent extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked isLoading = true;
-  @tracked isLoadingNextBatch = false; // We don't "actually paginate" yet.
+  @tracked isLoadingNextBatch = false; // We don't "actually paginate" yet, we only do this because rendering solutions is expensive.
   @tracked solutions = [];
   @tracked revealSolutionOverlayWasDisabledByUser = false;
   @service store;
