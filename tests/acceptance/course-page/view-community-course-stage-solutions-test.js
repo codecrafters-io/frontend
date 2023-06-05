@@ -1,12 +1,13 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
+import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
-import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
-import percySnapshot from '@percy/ember';
-import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
 import { module, test } from 'qunit';
+import { settled, scrollTo } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -15,6 +16,20 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
+
+  // Scroll tests don't work with the container docked to the side
+  // TODO: Extract this into a common setupApplicationTest function
+  hooks.beforeEach(() => {
+    const testContainer = document.getElementById('ember-testing-container');
+    testContainer.classList.add('ember-testing-container-full-screen');
+  });
+
+  // Scroll tests don't work with the container docked to the side
+  // TODO: Extract this into a common setupApplicationTest function
+  hooks.afterEach(() => {
+    const testContainer = document.getElementById('ember-testing-container');
+    testContainer.classList.remove('ember-testing-container-full-screen');
+  });
 
   test('can view solutions before starting course', async function (assert) {
     testScenario(this.server);
@@ -232,5 +247,67 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
+  });
+
+  test('paginates if more than three solutions', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    for (let i = 1; i <= 7; i++) {
+      createCommunityCourseStageSolution(this.server, redis, 2, go);
+    }
+
+    for (let i = 1; i <= 7; i++) {
+      createCommunityCourseStageSolution(this.server, redis, 2, python);
+    }
+
+    await coursesPage.visit();
+    await coursesPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 3);
+
+    await scrollTo('[data-test-course-stage-solution-modal]', 0, 99999);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    await settled();
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 5);
+
+    await scrollTo('[data-test-course-stage-solution-modal]', 0, 99999);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    await settled();
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 7);
+
+    await scrollTo('[data-test-course-stage-solution-modal]', 0, 99999);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    await settled();
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 7); // No more to load
+
+    // Switching to other language must restart pagination
+    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
+    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 3);
   });
 });

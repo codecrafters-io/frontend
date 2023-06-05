@@ -2,14 +2,17 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import { later } from '@ember/runloop';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class CommunitySolutionsTabComponent extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked isLoading = true;
+  @tracked isLoadingNextBatch = false; // We don't "actually paginate" yet, we only do this because rendering solutions is expensive.
   @tracked solutions = [];
   @tracked revealSolutionOverlayWasDisabledByUser = false;
   @service store;
+  @tracked lastVisibleSolutionIndex = 2;
 
   constructor() {
     super(...arguments);
@@ -21,8 +24,18 @@ export default class CommunitySolutionsTabComponent extends Component {
     return this.args.courseStage.hasCommunitySolutionsForLanguage(this.args.requestedSolutionLanguage);
   }
 
-  get hasCompletedStage() {
-    return this.args.repository.stageIsComplete(this.args.courseStage);
+  @action
+  async handleListEndReached() {
+    this.isLoadingNextBatch = true;
+
+    later(
+      this,
+      () => {
+        this.isLoadingNextBatch = false;
+        this.lastVisibleSolutionIndex += 2;
+      },
+      100
+    );
   }
 
   @action
@@ -30,9 +43,18 @@ export default class CommunitySolutionsTabComponent extends Component {
     this.revealSolutionOverlayWasDisabledByUser = true;
   }
 
+  get hasCompletedStage() {
+    return this.args.repository.stageIsComplete(this.args.courseStage);
+  }
+
+  get hasNextResults() {
+    return this.lastVisibleSolutionIndex < this.solutions.length - 1;
+  }
+
   @action
   async loadSolutions() {
     this.isLoading = true;
+    this.lastVisibleSolutionIndex = 2;
 
     this.solutions = await this.store.query('community-course-stage-solution', {
       course_stage_id: this.args.courseStage.id,
@@ -65,5 +87,9 @@ export default class CommunitySolutionsTabComponent extends Component {
 
   get sortedSolutions() {
     return this.solutions; // For now, the API handles sorting
+  }
+
+  get visibleSolutions() {
+    return this.sortedSolutions.slice(0, this.lastVisibleSolutionIndex + 1);
   }
 }
