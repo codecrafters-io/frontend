@@ -18,12 +18,14 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
   setupMirage(hooks);
 
   // Scroll tests don't work with the container docked to the side
+  // TODO: Extract this into a common setupApplicationTest function
   hooks.beforeEach(() => {
     const testContainer = document.getElementById('ember-testing-container');
     testContainer.classList.add('ember-testing-container-full-screen');
   });
 
   // Scroll tests don't work with the container docked to the side
+  // TODO: Extract this into a common setupApplicationTest function
   hooks.afterEach(() => {
     const testContainer = document.getElementById('ember-testing-container');
     testContainer.classList.remove('ember-testing-container-full-screen');
