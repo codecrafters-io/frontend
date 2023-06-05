@@ -89,6 +89,6 @@ export default class CommunitySolutionsTabComponent extends Component {
   }
 
   get visibleSolutions() {
-    return this.sortedSolutions.slice(0, this.lastVisibleSolutionIndex);
+    return this.sortedSolutions.slice(0, this.lastVisibleSolutionIndex + 1);
   }
 }
