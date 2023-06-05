@@ -17,6 +17,18 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
+  // Scroll tests don't work with the container docked to the side
+  hooks.beforeEach(() => {
+    const testContainer = document.getElementById('ember-testing-container');
+    testContainer.classList.add('ember-testing-container-full-screen');
+  });
+
+  // Scroll tests don't work with the container docked to the side
+  hooks.afterEach(() => {
+    const testContainer = document.getElementById('ember-testing-container');
+    testContainer.classList.remove('ember-testing-container-full-screen');
+  });
+
   test('can view solutions before starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
