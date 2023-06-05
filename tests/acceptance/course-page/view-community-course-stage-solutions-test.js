@@ -269,9 +269,14 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
 
     for (let i = 1; i <= 7; i++) {
       createCommunityCourseStageSolution(this.server, redis, 2, go);
+    }
+
+    for (let i = 1; i <= 7; i++) {
+      createCommunityCourseStageSolution(this.server, redis, 2, python);
     }
 
     await coursesPage.visit();
@@ -298,5 +303,11 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 7); // No more to load
+
+    // Switching to other language must restart pagination
+    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
+    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+
+    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 3);
   });
 });

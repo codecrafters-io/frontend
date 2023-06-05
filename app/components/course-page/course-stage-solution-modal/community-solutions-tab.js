@@ -54,6 +54,7 @@ export default class CommunitySolutionsTabComponent extends Component {
   @action
   async loadSolutions() {
     this.isLoading = true;
+    this.lastVisibleSolutionIndex = 2;
 
     this.solutions = await this.store.query('community-course-stage-solution', {
       course_stage_id: this.args.courseStage.id,
