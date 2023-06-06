@@ -3,16 +3,16 @@
   role="button"
   class="flex items-center gap-2 py-2
     {{if this.isUnselected 'hover:bg-gray-200'}}
-    {{if this.isUnselectedAndCorrect 'bg-teal-100'}}
+    {{if this.isUnselectedAndCorrect 'bg-green-100'}}
     {{if this.isSelectedAndUnsubmitted 'bg-gray-200'}}
-    {{if this.isSelectedAndCorrect 'bg-teal-100'}}
+    {{if this.isSelectedAndCorrect 'bg-green-100'}}
     "
   ...attributes
 >
   <div
-    class="flex items-center justify-center rounded-full border-[0.5px] w-6 h-6 border-gray-600
+    class="flex items-center justify-center rounded-full border-[0.5px] w-6 h-6 border-gray-600 grow-0 shrink-0
       {{if this.isUnselected 'active:bg-gray-200'}}
-      {{if (and this.isSubmitted this.isCorrect) 'border-teal-600 bg-teal-600'}}
+      {{if (and this.isSubmitted this.isCorrect) 'border-green-600 bg-green-600'}}
       "
   >
     {{#if this.isSelectedAndUnsubmitted}}
