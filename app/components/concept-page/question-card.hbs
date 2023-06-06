@@ -1,10 +1,10 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="border p-4 bg-gray-50 rounded shadow-sm" ...attributes>
+<div class="border p-3 sm:p-4 bg-gray-50 rounded shadow-sm" ...attributes>
   <div class="text-gray-800 mr-2 mb-2 border-b pt-1 pb-3">
     {{@question.queryHTML}}
   </div>
 
-  <div class="flex flex-col -mx-4 gap-px">
+  <div class="flex flex-col -mx-3 sm:-mx-4 gap-px">
     {{#each this.options as |option optionIndex|}}
       <ConceptPage::QuestionCardOption
         class="px-4"
@@ -39,29 +39,29 @@
     {{/animated-if}}
   </AnimatedContainer>
 
-  <div class="flex gap-2">
+  <div class="flex flex-col sm:flex-row gap-x-2 gap-y-4 mt-4">
     {{#if this.hasSubmitted}}
-      <TertiaryButton class="mt-4" {{on "click" this.handleILearnedSomethingButtonClick}}>
-        {{#if this.didLearnSomething}}
-          <span class="mr-2">🤩</span>
-        {{/if}}
-        I learned something!
-      </TertiaryButton>
-
       {{#if @shouldShowContinueButton}}
-        <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" @onContinueButtonClick}}>
-          <div class="flex items-center">
+        <PrimaryButton @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" @onContinueButtonClick}}>
+          <div class="flex items-center justify-center">
             {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
             <span>Continue</span>
           </div>
         </PrimaryButton>
+
+        <TertiaryButton {{on "click" this.handleILearnedSomethingButtonClick}}>
+          {{#if this.didLearnSomething}}
+            <span class="mr-2">🤩</span>
+          {{/if}}
+          I learned something!
+        </TertiaryButton>
       {{/if}}
     {{else}}
-      <PrimaryButton class="mt-4" @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Submit</PrimaryButton>
+      <PrimaryButton @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Submit</PrimaryButton>
     {{/if}}
 
     {{#unless this.explanationIsVisible}}
-      <TertiaryButton class="mt-4" {{on "click" this.handleShowExplanationClick}}>Show explanation</TertiaryButton>
+      <TertiaryButton {{on "click" this.handleShowExplanationClick}}>Show explanation</TertiaryButton>
     {{/unless}}
   </div>
 </div>
