@@ -17,7 +17,7 @@
 
   <AnimatedContainer>
     {{#animated-if this.explanationIsVisible use=this.transition duration=200}}
-      <div class="shadow mt-4 p-4 border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-gray-50'}}">
+      <div class="shadow-sm mt-4 p-4 border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-white'}}">
         <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
           {{#if this.selectedOptionIsCorrect}}
             <span class="mr-1">🎉</span>
