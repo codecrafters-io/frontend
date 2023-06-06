@@ -109,6 +109,5 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
 
     await conceptsPage.clickOnConceptCard('Networking Protocols');
     await conceptPage.clickOnContinueButton();
-    await this.pauseTest();
   });
 });
