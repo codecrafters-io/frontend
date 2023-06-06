@@ -1,0 +1,38 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div class="py-10 md:py-20 border-b code-walkthrough-header-background">
+  <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="text-gray-400 uppercase text-xs font-bold tracking-wider mb-2">
+          CONCEPT
+        </div>
+        <h1 class="text-gray-800 text-2xl md:text-5xl font-bold mb-4">
+          {{@concept.title}}
+        </h1>
+        <div class="text-gray-600 max-w-lg leading-relaxed mb-4">
+          {{@concept.descriptionHTML}}
+        </div>
+        <a href="https://github.com/rohitpaulk" class="inline-flex gap-x-2 items-center" target="_blank" rel="noopener noreferrer">
+          <img
+            alt="avatar"
+            src="https://github.com/rohitpaulk.png"
+            class="w-12 h-12 filter drop-shadow-sm ring-1 ring-white rounded-full shadow brightness-110"
+          />
+          <div>
+            <div class="text-gray-700 text-xs font-bold mb-0.5">
+              Paul Kuruvilla
+            </div>
+            <div class="text-gray-500 text-xs">
+              CTO, CodeCrafters
+            </div>
+          </div>
+        </a>
+      </div>
+      <div>
+        <div class="w-40 ml-4 hidden md:block">
+          {{!-- <img alt="Walkthrough" src={{@codeWalkthrough.logoURL}} /> --}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
