@@ -97,7 +97,7 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
 `,
         },
         {
-          markdown: 'GIF (Graphics Interchange Format)',
+          markdown: 'GIF (Graphics Interchange Format) A long option that spans two lines',
           is_correct: true,
           explanation_markdown: 'Correct! GIF is a file format, not a networking protocol.',
         },
