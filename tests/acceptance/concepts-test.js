@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import conceptsPage from 'codecrafters-frontend/tests/pages/concepts-page';
+import conceptPage from 'codecrafters-frontend/tests/pages/concept-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | concepts-test', function (hooks) {
@@ -96,7 +97,7 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
 `,
         },
         {
-          markdown: 'GIF (Graphics Interchange Format)',
+          markdown: 'GIF (Graphics Interchange Format) A long option that spans two lines',
           is_correct: true,
           explanation_markdown: 'Correct! GIF is a file format, not a networking protocol.',
         },
@@ -107,5 +108,6 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
     assert.strictEqual(1, 1);
 
     await conceptsPage.clickOnConceptCard('Networking Protocols');
+    await conceptPage.clickOnContinueButton();
   });
 });
