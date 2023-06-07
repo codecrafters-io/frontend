@@ -4,8 +4,11 @@ import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 export default class ConceptComponent extends Component {
+  @service store;
+
   @tracked lastRevealedBlockIndex = null;
   @tracked interactedBlockIndexes = new TrackedSet([]);
 
@@ -21,6 +24,16 @@ export default class ConceptComponent extends Component {
 
   get currentBlockIndex() {
     return this.lastRevealedBlockIndex || this.initialBlockIndex;
+  }
+
+  @action
+  handleDidInsertContainer() {
+    this.store
+      .createRecord('analytics-event', {
+        name: 'viewed_concept',
+        properties: { concept_id: this.args.concept.id },
+      })
+      .save();
   }
 
   get unrevealedBlocks() {
@@ -44,6 +57,13 @@ export default class ConceptComponent extends Component {
     } else {
       this.updateLastRevealedBlockIndex(this.lastBlockIndex);
     }
+
+    this.store
+      .createRecord('analytics-event', {
+        name: 'progressed_through_concept',
+        properties: { concept_id: this.args.concept.id, progress_percentage: this.progressPercentage },
+      })
+      .save();
   }
 
   get lastInteractedBlock() {
@@ -97,7 +117,6 @@ export default class ConceptComponent extends Component {
 
   updateLastRevealedBlockIndex(newBlockIndex) {
     this.lastRevealedBlockIndex = newBlockIndex;
-    console.log('progressPercentage', this.progressPercentage);
     this.args.onProgressPercentageChange(this.progressPercentage);
   }
 

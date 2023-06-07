@@ -1,24 +1,26 @@
 {{! @glint-nocheck: not typesafe yet }}
-<AnimatedContainer>
-  {{#animated-each this.visibleBlocks key="index" use=this.listTransition duration=200 as |block|}}
-    {{#if (eq block.type "markdown")}}
-      <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
-    {{else if (eq block.type "concept_question")}}
-      <Blocks::ConceptQuestionBlock
-        @model={{block}}
-        class="mb-6"
-        @onContinueButtonClick={{this.handleContinueButtonClick}}
-        @shouldShowContinueButton={{eq block.index this.currentBlockIndex}}
-      />
-    {{else if (eq block.type "click_to_continue")}}
-      <TertiaryButton class="mb-6" {{on "click" this.handleContinueButtonClick}} data-test-continue-button>
-        {{block.buttonText}}
-      </TertiaryButton>
-    {{else}}
-      <div>
-        Unknown block type:
-        {{block.type}}.
-      </div>
-    {{/if}}
-  {{/animated-each}}
-</AnimatedContainer>
+<div {{did-insert this.handleDidInsertContainer}}>
+  <AnimatedContainer>
+    {{#animated-each this.visibleBlocks key="index" use=this.listTransition duration=200 as |block|}}
+      {{#if (eq block.type "markdown")}}
+        <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
+      {{else if (eq block.type "concept_question")}}
+        <Blocks::ConceptQuestionBlock
+          @model={{block}}
+          class="mb-6"
+          @onContinueButtonClick={{this.handleContinueButtonClick}}
+          @shouldShowContinueButton={{eq block.index this.currentBlockIndex}}
+        />
+      {{else if (eq block.type "click_to_continue")}}
+        <TertiaryButton class="mb-6" {{on "click" this.handleContinueButtonClick}} data-test-continue-button>
+          {{block.buttonText}}
+        </TertiaryButton>
+      {{else}}
+        <div>
+          Unknown block type:
+          {{block.type}}.
+        </div>
+      {{/if}}
+    {{/animated-each}}
+  </AnimatedContainer>
+</div>
