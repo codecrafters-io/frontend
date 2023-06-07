@@ -117,6 +117,6 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
     await conceptPage.questionCards[0].clickOnSubmitButton();
     await conceptPage.questionCards[0].clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
-    await this.pauseTest();
+    await conceptPage.clickOnContinueButton();
   });
 });
