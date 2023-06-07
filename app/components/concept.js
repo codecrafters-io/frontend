@@ -1,12 +1,13 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-
 import move from 'ember-animated/motions/move';
+import { TrackedSet } from 'tracked-built-ins';
+import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import { tracked } from '@glimmer/tracking';
 
 export default class ConceptComponent extends Component {
   @tracked lastRevealedBlockIndex = null;
+  @tracked interactedBlockIndexes = new TrackedSet([]);
 
   get allBlocks() {
     return this.args.concept.parsedBlocks.map((block, index) => {
@@ -36,11 +37,21 @@ export default class ConceptComponent extends Component {
 
   @action
   handleContinueButtonClick() {
+    this.interactedBlockIndexes.add(this.currentBlockIndex);
+
     if (this.nextUnrevealedBlockThatNeedsInteraction) {
       this.updateLastRevealedBlockIndex(this.nextUnrevealedBlockThatNeedsInteraction.index);
     } else {
       this.updateLastRevealedBlockIndex(this.lastBlockIndex);
     }
+  }
+
+  get lastInteractedBlock() {
+    return this.allBlocks.findLast((block) => this.interactedBlockIndexes.has(block.index));
+  }
+
+  get lastInteractableBlock() {
+    return this.allBlocks.findLast((block) => block.type === 'concept_question' || block.type === 'click_to_continue');
   }
 
   get initialBlockIndex() {
@@ -65,7 +76,19 @@ export default class ConceptComponent extends Component {
   }
 
   get progressPercentage() {
-    return Math.round(100 * ((this.currentBlockIndex + 1) / this.allBlocks.length));
+    if (!this.lastInteractableBlock) {
+      return 100; // We can't calculate progress unless there's at least one interactable block
+    }
+
+    if (!this.lastInteractedBlock) {
+      return 0; // The user hasn't interacted with any blocks yet
+    }
+
+    if (this.lastInteractedBlock.index === this.lastInteractableBlock.index) {
+      return 100;
+    } else {
+      return Math.round(100 * ((this.lastInteractedBlock.index + 1) / this.allBlocks.length));
+    }
   }
 
   get revealedBlocks() {
@@ -74,10 +97,11 @@ export default class ConceptComponent extends Component {
 
   updateLastRevealedBlockIndex(newBlockIndex) {
     this.lastRevealedBlockIndex = newBlockIndex;
+    console.log('progressPercentage', this.progressPercentage);
     this.args.onProgressPercentageChange(this.progressPercentage);
   }
 
   get visibleBlocks() {
-    return this.revealedBlocks.reject((block) => block.type === 'click_to_continue' && block.index !== this.currentBlockIndex);
+    return this.revealedBlocks.reject((block) => block.type === 'click_to_continue' && this.interactedBlockIndexes.has(block.index));
   }
 }

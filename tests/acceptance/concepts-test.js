@@ -61,6 +61,10 @@ Some examples of networking protocols are:
             markdown: `Another Block`,
           },
         },
+        {
+          type: 'click_to_continue',
+          args: { button_text: 'What else?' },
+        },
       ],
     });
 
@@ -113,5 +117,6 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
     await conceptPage.questionCards[0].clickOnSubmitButton();
     await conceptPage.questionCards[0].clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+    await this.pauseTest();
   });
 });
