@@ -1,5 +1,5 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="border p-3 sm:p-4 bg-gray-50 rounded shadow-sm" ...attributes>
+<div class="border p-3 sm:p-4 bg-gray-50 rounded shadow-sm" data-test-question-card ...attributes>
   <div class="text-gray-800 mr-2 mb-2 border-b pt-1 pb-3">
     {{@question.queryHTML}}
   </div>
@@ -11,6 +11,7 @@
         @option={{option}}
         @isSubmitted={{this.hasSubmitted}}
         {{on "click" (fn (mut this.selectedOptionIndex) optionIndex)}}
+        data-test-question-card-option
       />
     {{/each}}
   </div>
@@ -42,7 +43,11 @@
   <div class="flex flex-col sm:flex-row gap-x-2 gap-y-2 mt-4">
     {{#if this.hasSubmitted}}
       {{#if @shouldShowContinueButton}}
-        <PrimaryButton @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" @onContinueButtonClick}}>
+        <PrimaryButton
+          @isDisabled={{is-empty this.selectedOptionIndex}}
+          {{on "click" @onContinueButtonClick}}
+          data-test-question-card-continue-button
+        >
           <div class="flex items-center justify-center">
             {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
             <span>Continue</span>
@@ -57,7 +62,11 @@
         </TertiaryButton>
       {{/if}}
     {{else}}
-      <PrimaryButton @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}}>Submit</PrimaryButton>
+      <PrimaryButton
+        @isDisabled={{is-empty this.selectedOptionIndex}}
+        {{on "click" this.handleSubmitClick}}
+        data-test-question-card-submit-button
+      >Submit</PrimaryButton>
     {{/if}}
 
     {{#unless this.explanationIsVisible}}
