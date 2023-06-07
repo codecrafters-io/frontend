@@ -43,7 +43,11 @@
   <div class="flex flex-col sm:flex-row gap-x-2 gap-y-2 mt-4">
     {{#if this.hasSubmitted}}
       {{#if @shouldShowContinueButton}}
-        <PrimaryButton @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" @onContinueButtonClick}} data-test-question-card-continue-button>
+        <PrimaryButton
+          @isDisabled={{is-empty this.selectedOptionIndex}}
+          {{on "click" @onContinueButtonClick}}
+          data-test-question-card-continue-button
+        >
           <div class="flex items-center justify-center">
             {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
             <span>Continue</span>
@@ -58,7 +62,11 @@
         </TertiaryButton>
       {{/if}}
     {{else}}
-      <PrimaryButton @isDisabled={{is-empty this.selectedOptionIndex}} {{on "click" this.handleSubmitClick}} data-test-question-card-submit-button>Submit</PrimaryButton>
+      <PrimaryButton
+        @isDisabled={{is-empty this.selectedOptionIndex}}
+        {{on "click" this.handleSubmitClick}}
+        data-test-question-card-submit-button
+      >Submit</PrimaryButton>
     {{/if}}
 
     {{#unless this.explanationIsVisible}}
