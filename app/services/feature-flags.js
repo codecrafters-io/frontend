@@ -18,7 +18,11 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && this.currentUser.isStaff;
   }
 
-  get canSeeConcepts() {
+  get canSeeStage1Concepts() {
+    return this.getFeatureFlagValue('stage-1-concepts') === 'test';
+  }
+
+  get canSeeConceptsIndex() {
     return this.currentUser && this.currentUser.isStaff;
   }
 

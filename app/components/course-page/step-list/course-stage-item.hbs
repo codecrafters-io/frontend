@@ -30,6 +30,21 @@
       {{/if}}
 
       {{this.instructionsHTML}}
+
+      {{#if (and this.featureFlags.canSeeStage1Concepts @courseStage.course.isRedis @courseStage.isFirst)}}
+        <p>
+          Want to learn more about network protocols &amp; TCP? Try our interactive guides:
+
+          <ul>
+            <li>
+              <a href="/concepts/network-protocols" rel="noopener noreferrer" target="_blank">Network Protocols</a>
+            </li>
+            <li>
+              <a href="/concepts/tcp-overview" rel="noopener noreferrer" target="_blank">TCP: An overview</a>
+            </li>
+          </ul>
+        </p>
+      {{/if}}
     </div>
 
     <CoursePage::StepList::CourseStageItem::ActionButtonList

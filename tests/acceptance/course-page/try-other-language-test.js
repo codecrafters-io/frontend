@@ -43,6 +43,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
+      'feature flag (concepts)',
       'notify page view (course page)',
     ].length;
 
