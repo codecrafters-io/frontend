@@ -37,9 +37,9 @@ export default class ConceptComponent extends Component {
   @action
   handleContinueButtonClick() {
     if (this.nextUnrevealedBlockThatNeedsInteraction) {
-      this.lastRevealedBlockIndex = this.nextUnrevealedBlockThatNeedsInteraction.index;
+      this.updateLastRevealedBlockIndex(this.nextUnrevealedBlockThatNeedsInteraction.index);
     } else {
-      this.lastRevealedBlockIndex = this.lastBlockIndex;
+      this.updateLastRevealedBlockIndex(this.lastBlockIndex);
     }
   }
 
@@ -64,8 +64,17 @@ export default class ConceptComponent extends Component {
     }
   }
 
+  get progressPercentage() {
+    return Math.round(100 * ((this.currentBlockIndex + 1) / this.allBlocks.length));
+  }
+
   get revealedBlocks() {
     return this.allBlocks.slice(0, (this.currentBlockIndex || this.initialBlockIndex) + 1);
+  }
+
+  updateLastRevealedBlockIndex(newBlockIndex) {
+    this.lastRevealedBlockIndex = newBlockIndex;
+    this.args.onProgressPercentageChange(this.progressPercentage);
   }
 
   get visibleBlocks() {

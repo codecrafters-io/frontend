@@ -109,5 +109,9 @@ GIF (Graphics Interchange Format) is the correct answer because it is not a netw
 
     await conceptsPage.clickOnConceptCard('Networking Protocols');
     await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].selectOption('DNS (Domain Name System)');
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    await conceptPage.questionCards[0].clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
   });
 });
