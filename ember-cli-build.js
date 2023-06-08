@@ -30,20 +30,6 @@ module.exports = function (defaults) {
       },
     },
 
-    postcssOptions: {
-      compile: {
-        plugins: [
-          {
-            module: require('postcss-import'),
-            options: {
-              path: ['node_modules'],
-            },
-          },
-          require('tailwindcss')('./app/tailwind.config.js'),
-        ],
-      },
-    },
-
     sourcemaps: { enabled: true },
 
     svgJar: {
@@ -79,20 +65,25 @@ module.exports = function (defaults) {
         devtool: shouldUseCDN ? 'source-map' : 'eval-source-map',
         module: {
           rules: [
-            // {
-            //   test: /\.(gltf)$/,
-            //   loader: require.resolve('./vendor/gltf-loader.js'),
-            //   options: {
-            //     filePath: `/assets/models`,
-            //     // ...
-            //   },
-            // },
             {
-              test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico)$/,
+              test: /\.(glb|png|jpg|jpeg|gif|svg|ico)$/,
               type: 'asset/resource',
               generator: {
                 filename: 'assets/[hash][ext][query]',
               },
+            },
+            {
+              test: /\.css$/i,
+              use: [
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    postcssOptions: {
+                      config: 'postcss.config.js',
+                    },
+                  },
+                },
+              ],
             },
           ],
         },

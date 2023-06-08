@@ -4,13 +4,7 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  content: [
-    // add extra paths here for components/controllers which include tailwind classes
-    './app/index.html',
-    './app/templates/**/*.hbs',
-    './app/components/**/*.hbs',
-    './app/components/**/*.js',
-  ],
+  content: ['./app/**/*.{gjs,gts,hbs,html,js,ts}'],
   safelist: {
     standard: [
       'inline', // Used by SVG stuff
