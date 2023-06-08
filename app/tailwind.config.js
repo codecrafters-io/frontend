@@ -33,6 +33,7 @@ module.exports = {
   theme: {
     colors: {
       // Build your palette here
+      black: 'black',
       blue: colors.sky,
       current: 'currentColor',
       gray: colors.slate,

@@ -6,9 +6,12 @@ import logoImage from '/assets/images/logo/logomark-color.svg';
 
 export default class HeaderComponent extends Component {
   logoImage = logoImage;
-  @service('feature-flags') featureFlags;
+
   @service('current-user') currentUserService;
-  @service('router') router;
+  @service featureFlags;
+  @service router;
+  @service colorScheme;
+
   @tracked mobileMenuIsExpanded = false;
 
   get currentUser() {

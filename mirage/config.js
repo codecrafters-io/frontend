@@ -35,6 +35,8 @@ export default function (config) {
 
 function routes() {
   this.passthrough('/write-coverage'); // used by ember-cli-code-coverage
+  this.passthrough('/assets/**'); // 3d models?
+
   this.urlPrefix = '';
   this.namespace = '/api/v1';
   this.timing = 1000;
