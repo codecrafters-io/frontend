@@ -66,14 +66,7 @@ module.exports = function (defaults) {
         module: {
           rules: [
             {
-              test: /\.(glb|png|jpg|jpeg|gif|svg|ico)$/,
-              type: 'asset/resource',
-              generator: {
-                filename: 'assets/[hash][ext][query]',
-              },
-            },
-            {
-              test: /\.css$/i,
+              test: /tailwind\.css$/i,
               use: [
                 {
                   loader: 'postcss-loader',
@@ -84,6 +77,13 @@ module.exports = function (defaults) {
                   },
                 },
               ],
+            },
+            {
+              test: /\.(css|glb|png|jpg|jpeg|gif|svg|ico)$/,
+              type: 'asset/resource',
+              generator: {
+                filename: 'assets/[hash][ext][query]',
+              },
             },
           ],
         },
