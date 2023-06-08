@@ -6,9 +6,12 @@
       <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">Badges</h1>
     </div>
 
-    <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
+    <div class="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-3">
       {{#each this.model.badges as |badge|}}
         <BadgesPage::BadgeCard @badge={{badge}} />
+      {{/each}}
+      {{#each (array 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16)}}
+        <BadgesPage::BadgeCard />
       {{/each}}
     </div>
   </div>

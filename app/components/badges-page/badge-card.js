@@ -9,6 +9,6 @@ export default class BadgeCardComponent extends Component {
   }
 
   get userHasBadgeAward() {
-    return this.args.badge.currentUserAwards.length > 0;
+    return this.args.badge && this.args.badge.currentUserAwards.length > 0;
   }
 }
