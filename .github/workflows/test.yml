@@ -51,6 +51,8 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
+      - run: npm run tailwind:build
+
       - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam  --silent --reporter xunit --split=3 --parallel | tee test-results.xml
         env:
           COVERAGE: true
@@ -133,4 +135,5 @@ jobs:
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - run: npx glint
+      - run: npm run tailwind:build
       - run: npm run lint
