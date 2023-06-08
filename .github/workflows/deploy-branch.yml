@@ -58,7 +58,9 @@ jobs:
           env: staging-preview
 
       - name: Deploy to Staging
-        run: ./node_modules/.bin/ember deploy production
+        run: |
+          npm run tailwind:build
+          ./node_modules/.bin/ember deploy production
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -155,7 +157,9 @@ jobs:
           env: production-preview
 
       - name: Deploy to Production
-        run: ./node_modules/.bin/ember deploy production
+        run: |
+          npm run tailwind:build
+          ./node_modules/.bin/ember deploy production
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
