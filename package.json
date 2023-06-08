@@ -130,6 +130,7 @@
     "eslint-plugin-qunit": "^7.3.4",
     "loader.js": "^4.7.0",
     "postcss": "^8.4.24",
+    "postcss-import": "^15.1.0",
     "postcss-loader": "^7.3.2",
     "prettier": "^2.8.7",
     "prismjs": "^1.28.0",
