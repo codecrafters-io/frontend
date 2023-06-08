@@ -1,11 +1,12 @@
 <div
-  class="bg-white rounded-md shadow-sm overflow-hidden border-gray-300 relative flex-shrink overflow-y-scroll p-6 sm:p-12 min-h-0
+  class="rounded-md shadow-sm overflow-hidden border-gray-300 relative flex-shrink overflow-y-scroll p-6 sm:p-12 min-h-0
+    {{if @isDark 'bg-black' 'bg-white'}}
     {{if @isWide 'max-w-screen-lg' 'max-w-xl'}}
     {{@class}}"
   {{on-click-outside this.handleClickOutside}}
   ...attributes
 >
-  {{#if @allowManualClose}}
+  {{#if (and @allowManualClose (not @shouldHideCloseButton))}}
     <button
       class="absolute right-6 top-6 sm:right-12 sm:top-12 opacity-60 hover:opacity-100"
       type="button"
