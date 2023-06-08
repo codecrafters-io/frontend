@@ -1,4 +1,4 @@
-<div class="shadow bg-white relative" {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} data-test-header>
+<div class="shadow relative {{if this.colorScheme.isDark "bg-gray-900 border-b border-gray-800" "bg-white"}}" {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} data-test-header>
   {{!  <div class="w-full absolute top-0 left-0 bg-teal-500 h-2px"></div>}}
 
   <div class="container lg:max-w-screen-lg mx-auto flex items-stretch flex-col md:flex-row px-3 md:px-6">
@@ -7,13 +7,13 @@
       <div class="flex items-center">
         <img class="h-8 my-3 pr-2" src={{this.logoImage}} alt="CodeCrafters" />
 
-        <div class="text-gray-600 pr-5 text-sm flex-grow">
+        <div class="{{if this.colorScheme.isDark "text-gray-100" "text-gray-600"}} pr-5 text-sm flex-grow">
           <LinkTo @route="tracks">CodeCrafters</LinkTo>
         </div>
       </div>
 
       {{! Nav Toggle on Mobile }}
-      <button class="md:hidden text-gray-600 pl-10 py-3 focus:outline-none" type="button" {{on "click" this.toggleMobileMenu}}>
+      <button class="md:hidden {{if this.colorScheme.isDark "text-gray-100" "text-gray-600"}} pl-10 py-3 focus:outline-none" type="button" {{on "click" this.toggleMobileMenu}}>
         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
           <path
             class="heroicon-ui"
@@ -27,23 +27,23 @@
     <div class="hidden md:flex items-center justify-between flex-grow">
       <div class="flex items-center">
         {{! Divider }}
-        <div class="bg-gray-200 w-px h-5 mr-3"></div>
+        <div class="{{if this.colorScheme.isDark "bg-gray-700" "bg-gray-200"}} w-px h-5 mr-3"></div>
 
         {{! Top-level links }}
-        <LinkTo @route="tracks" class="text-sm px-2 text-gray-600" data-test-tracks-link>Tracks</LinkTo>
+        <LinkTo @route="tracks" class="text-sm px-2 {{if this.colorScheme.isDark "text-gray-100" "text-gray-600"}}" data-test-tracks-link>Tracks</LinkTo>
 
         {{#if this.featureFlags.canSeeBadges}}
-          <LinkTo @route="badges" class="text-sm px-2 text-gray-600">Badges</LinkTo>
+          <LinkTo @route="badges" class="text-sm px-2 {{if this.colorScheme.isDark "text-gray-100" "text-gray-600"}}">Badges</LinkTo>
         {{/if}}
 
         {{#if this.featureFlags.canSeeConceptsIndex}}
-          <LinkTo @route="concepts" class="text-sm px-2 text-gray-600">Concepts</LinkTo>
+          <LinkTo @route="concepts" class="text-sm px-2 {{if this.colorScheme.isDark "text-gray-100" "text-gray-600"}}">Concepts</LinkTo>
         {{/if}}
 
-        <LinkTo @route="vote" class="text-sm px-2 text-gray-600" data-test-course-ideas-link>Vote</LinkTo>
+        <LinkTo @route="vote" class="text-sm px-2 {{if this.colorScheme.isDark "text-gray-100" "text-gray-600"}}" data-test-course-ideas-link>Vote</LinkTo>
 
         {{#if this.currentUser.isAdmin}}
-          <a href="/admin" class="text-sm px-2 text-gray-600">Admin</a>
+          <a href="/admin" class="text-sm px-2 {{if this.colorScheme.isDark "text-gray-100" "text-gray-600"}}">Admin</a>
         {{/if}}
       </div>
 
@@ -54,8 +54,10 @@
             <div
               role="button"
               class="rounded border
-                {{if dd.isOpen 'border-gray-600' 'border-gray-200'}}
-                hover:border-gray-600 transition-colors px-2 py-1 text-xs text-gray-600"
+                {{if dd.isOpen (if this.colorScheme.isDark "border-gray-300" "border-gray-600") (if this.colorScheme.isDark "border-gray-600" "border-gray-200")}}
+                {{if this.colorScheme.isDark "text-gray-300" "text-gray-600"}}
+                {{if this.colorScheme.isDark "hover:border-gray-300" "hover:border-gray-600"}}
+                transition-colors px-2 py-1 text-xs"
               data-test-feedback-button
             >
               Feedback
