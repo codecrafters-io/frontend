@@ -3,6 +3,7 @@
 # compiled output
 /dist/
 /tmp/
+/public/assets/tailwind.css
 
 # dependencies
 /bower_components/

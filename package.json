@@ -11,7 +11,9 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "tailwind:build": "npx tailwindcss -i ./app/tailwind-input.css -o ./public/assets/tailwind.css",
+    "tailwind:watch": "npx tailwindcss -i ./app/tailwind-input.css -o ./public/assets/tailwind.css --watch",
+    "build": "npm run tailwind:build && ember build --environment=production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
@@ -20,7 +22,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "start": "ember serve",
+    "start:ember": "ember serve",
+    "start": "concurrently \"npm:tailwind:watch\" \"npm:start:ember\" --names \"tailwind,ember:\"",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
@@ -130,6 +133,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
     "loader.js": "^4.7.0",
+    "postcss": "^8.4.24",
     "postcss-import": "^15.1.0",
     "prettier": "^2.8.7",
     "prismjs": "^1.28.0",
