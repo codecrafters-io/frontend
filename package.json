@@ -74,7 +74,7 @@
     "@types/qunit": "^2.19.5",
     "@types/rsvp": "^4.0.4",
     "@types/sinonjs__fake-timers": "^8.0.0",
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.14",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.0.1",
     "ember-animated": "^1.0.2",
