@@ -3,6 +3,16 @@ import { attribute, clickable, clickOnText, isPresent, text } from 'ember-cli-pa
 export default {
   clickOnActionButton: clickOnText('[data-test-action-button]'),
 
+  earnedBadgeNotice: {
+    badgeEarnedModal: {
+      badgeName: text('[data-test-badge-name]'),
+      scope: '[data-test-badge-earned-modal]',
+    },
+
+    clickOnViewButton: clickable('[data-test-view-button]'),
+    scope: '[data-test-earned-badge-notice]',
+  },
+
   feedbackPrompt: {
     clickOnOption: clickOnText('[data-test-feedback-prompt-option]'),
     clickOnSubmitButton: clickable('button'),

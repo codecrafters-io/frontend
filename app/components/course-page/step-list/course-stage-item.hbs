@@ -68,12 +68,12 @@
       />
     {{/if}}
 
-    {{#if (and this.featureFlags.canSeeBadges (get this.badgeAwards "0"))}}
-      <CoursePage::StepList::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
-    {{/if}}
-
     {{#if (and this.featureFlags.canSeeStageCompletionVideos @courseStage.hasCompletionVideo this.statusIsComplete)}}
       <CoursePage::StepList::CourseStageItem::CompletionVideo @courseStage={{@courseStage}} class="mt-6" />
+    {{/if}}
+
+    {{#if (and this.featureFlags.canSeeBadges (get this.badgeAwards "0"))}}
+      <CoursePage::StepList::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
     {{/if}}
 
     {{#if this.shouldShowFirstStageHints}}
@@ -85,6 +85,14 @@
       />
     {{else if this.shouldShowCLIUsageInstructions}}
       <CoursePage::StepList::CourseStageItem::CliUsageInstructions class="mt-6" />
+    {{/if}}
+
+    {{#if (and this.statusIsComplete (eq @courseStage.nextStage @repository.activeStage))}}
+      <div class="mt-6 flex">
+        <PrimaryButton {{on "click" @onViewNextStageButtonClick}}>
+          View Next Stage →
+        </PrimaryButton>
+      </div>
     {{/if}}
   </:content>
 

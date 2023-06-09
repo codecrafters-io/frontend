@@ -1,12 +1,35 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="border rounded flex items-center p-4 border-green-400 bg-green-50" data-test-publish-to-github-prompt ...attributes>
-  {{svg-jar "badge-check" class="w-8 h-8 mr-2 flex-shrink-0 text-green-400 transform scale-90"}}
+<div
+  class="border rounded flex items-center justify-between p-4 border-gray-800 hover:border-[#3F3F3F] bg-gradient-to-br from-[#383838] to-black from-0% to-100%"
+  data-test-earned-badge-notice
+  ...attributes
+>
+  <div class="flex items-center justify-start">
+    {{svg-jar "gold-badge-icon" class="w-7 h-7 mr-3 flex-shrink-0"}}
 
-  <div class="text-green-700 text-sm leading-relaxed">
-    You earned the
-    {{#each @badgeAwards as |badgeAward|}}
-      <LinkTo @route="badges" class="font-semibold underline">{{badgeAward.badge.name}}</LinkTo>
-    {{/each}}
-    badge.
+    <div class="text-gray-100 text-sm leading-relaxed">
+      You earned the
+      {{#each @badgeAwards as |badgeAward index|}}
+        <span
+          class="font-semibold underline"
+          role="button"
+          {{on "click" (fn this.handleBadgeClicked badgeAward.badge)}}
+        >{{badgeAward.badge.name}}</span>
+        {{#if (lt index (sub @badgeAwards.length 2))}}, {{/if}}
+        {{#if (eq index (sub @badgeAwards.length 2))}} and {{/if}}
+      {{/each}}
+      {{if (gt @badgeAwards.length 1) "badges" "badge"}}.
+    </div>
   </div>
+  <div>
+    <TertiaryButton @size="small" @isDark={{true}} {{on "click" this.handleViewButtonClicked}} data-test-view-button>
+      View
+    </TertiaryButton>
+  </div>
+
+  {{#if this.selectedBadge}}
+    <ModalBackdrop class="backdrop-blur z-20">
+      <BadgesPage::BadgeEarnedModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
+    </ModalBackdrop>
+  {{/if}}
 </div>

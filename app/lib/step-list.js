@@ -34,7 +34,7 @@ export class CourseStageItem {
   }
 
   get shouldAdvanceToNextItemAutomatically() {
-    if (this.featureFlags.canSeeBadges && this.badgeAwards.length > 0) {
+    if (this.featureFlags.canSeeBadges && this.courseStage.isFirst && this.badgeAwards.length > 0) {
       return false;
     }
 

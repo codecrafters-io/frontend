@@ -24,7 +24,9 @@ export default class CourseStageItemComponent extends Component {
   }
 
   get badgeAwards() {
-    return this.args.repository.user.badgeAwards.filter((badgeAward) => badgeAward.submission.courseStage.id === this.args.courseStage.id);
+    return this.args.repository.user.badgeAwards.filter((badgeAward) => {
+      return badgeAward.submission.repository.id === this.args.repository.id && badgeAward.submission.courseStage.id === this.args.courseStage.id;
+    });
   }
 
   get completedAt() {

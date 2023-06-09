@@ -2,6 +2,7 @@
   class="rounded-md shadow-sm overflow-hidden border border-gray-800 relative flex-shrink overflow-y-scroll px-6 sm:px-16 py-16 min-h-0 w-full max-w-screen-lg from-[#181818] to-[#0A0A0A] bg-gradient-to-br"
   {{on-click-outside @onClose}}
   ...attributes
+  data-test-badge-earned-modal
 >
   <button class="absolute left-6 top-6 opacity-90 hover:opacity-100" type="button" {{on "click" @onClose}} data-test-close-modal-button>
     {{svg-jar "dark-modal-back-button" class="w-8 h-8"}}
@@ -19,7 +20,9 @@
         {{#if @badge}}
           <div class="font-semibold text-sm sm:text-base text-gray-300 mb-1 text-center" data-test-badge-name>
             {{#if this.userHasBadgeAward}}
+              The
               {{@badge.name}}
+              badge
             {{else}}
               Locked Badge
             {{/if}}
@@ -44,7 +47,7 @@
           <div class="bg-gradient-to-r from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
           </div>
           <div class="inline-block px-4 flex-shrink-0">
-            <span class="text-gray-100 text-sm">Earned: {{moment-format @badgeAward.createdAt "LL"}}</span>
+            <span class="text-gray-100 text-sm">Earned: {{moment-format this.lastAwardedAt "LL"}}</span>
           </div>
           <div class="bg-gradient-to-l from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
           </div>
