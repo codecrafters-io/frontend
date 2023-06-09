@@ -1,13 +1,14 @@
-import { setupAnimationTest } from 'ember-animated/test-support';
+import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | switch-repository', function (hooks) {
   setupApplicationTest(hooks);
@@ -45,13 +46,9 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     const baseRequestsCount = [
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
-      'notify page view (courses listing page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
-      'feature flag (pulsing solutions)',
       'fetch leaderboard entries (course page)',
-      'feature flag (concepts)',
-      'notify page view (course page)',
     ].length;
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
