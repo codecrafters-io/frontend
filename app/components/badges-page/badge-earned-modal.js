@@ -1,8 +1,10 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
 export default class BadgeEarnedModalComponent extends Component {
   @service('current-user') currentUserService;
+  @service store;
 
   get currentUser() {
     return this.currentUserService.record;
@@ -10,6 +12,18 @@ export default class BadgeEarnedModalComponent extends Component {
 
   get currentUserBadgeAwards() {
     return this.currentUser.badgeAwards.filterBy('badge', this.args.badge);
+  }
+
+  @action
+  handleDidInsert() {
+    this.store
+      .createRecord('analytics-event', {
+        name: 'viewed_badge',
+        properties: {
+          badge_id: this.args.badge.id,
+        },
+      })
+      .save();
   }
 
   get lastAwardedAt() {

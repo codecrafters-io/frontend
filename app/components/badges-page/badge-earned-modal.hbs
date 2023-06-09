@@ -3,6 +3,7 @@
   {{on-click-outside @onClose}}
   ...attributes
   data-test-badge-earned-modal
+  {{did-insert this.handleDidInsert}}
 >
   <button class="absolute left-6 top-6 opacity-90 hover:opacity-100" type="button" {{on "click" @onClose}} data-test-close-modal-button>
     {{svg-jar "dark-modal-back-button" class="w-8 h-8"}}
