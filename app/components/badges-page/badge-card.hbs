@@ -1,6 +1,5 @@
 <div
-  class="border rounded border-black p-4 sm:p-8 flex flex-col items-center
-  hover:border-[#3F3F3F] bg-gradient-to-br from-black hover:from-[#181818] hover:to-black from-0% to-50%"
+  class="border rounded border-black p-4 sm:p-8 flex flex-col items-center hover:border-[#3F3F3F] bg-gradient-to-br from-black hover:from-[#181818] hover:to-black from-0% to-50%"
   role="{{if this.userHasBadgeAward 'button'}}"
   ...attributes
 >
@@ -13,7 +12,9 @@
   {{#if @badge}}
     <div class="font-semibold text-sm sm:text-base text-gray-300 mb-1 text-center" data-test-badge-name>
       {{#if this.userHasBadgeAward}}
-        The {{@badge.name}} badge
+        The
+        {{@badge.name}}
+        badge
       {{else}}
         Locked Badge
       {{/if}}
