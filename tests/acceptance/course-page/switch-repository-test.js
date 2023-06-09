@@ -50,6 +50,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       'fetch repositories (course page)',
       'feature flag (pulsing solutions)',
       'fetch leaderboard entries (course page)',
+      'feature flag (concepts)',
       'notify page view (course page)',
     ].length;
 
