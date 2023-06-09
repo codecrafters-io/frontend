@@ -15,7 +15,11 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeBadges() {
-    return this.currentUser && this.currentUser.isStaff;
+    if (this.currentUser && this.currentUser.isStaff) {
+      return true;
+    }
+
+    return this.getFeatureFlagValue('stage-1-badges') === 'test';
   }
 
   get canSeeStage1Concepts() {

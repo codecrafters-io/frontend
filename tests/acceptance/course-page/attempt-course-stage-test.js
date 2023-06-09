@@ -1,4 +1,5 @@
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -35,16 +36,13 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
     assert.strictEqual(
-      this.server.pretender.handledRequests.length,
+      apiRequestsCount(this.server),
       [
         'fetch courses (courses listing page)',
         'fetch repositories (courses listing page)',
-        'notify page view (courses listing page)',
         'fetch courses (course page)',
         'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',
-        'feature flag (concepts)',
-        'notify page view (course page)',
       ].length
     );
 

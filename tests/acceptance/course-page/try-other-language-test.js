@@ -1,14 +1,15 @@
+import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
+import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | try-other-language', function (hooks) {
   setupApplicationTest(hooks);
@@ -39,19 +40,16 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let baseRequestsCount = [
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
-      'notify page view (courses listing page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
-      'feature flag (concepts)',
-      'notify page view (course page)',
     ].length;
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount);
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
@@ -59,7 +57,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 2); // Fetch languages, course language requests
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2); // Fetch languages, course language requests
 
     assert.strictEqual(currentURL(), '/courses/redis?fresh=true');
 
@@ -70,7 +68,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 3); // fetch languages, requests + Create repository request
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/redis?repo=2');
 
@@ -80,12 +78,11 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await this.clock.tick(2001); // Run poller
     await finishRender();
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 4, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 4, 'polling should have run');
 
     await this.clock.tick(2001); // Run active item index updater
 
-    // This is 6 to account for a feature flag
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 6, 'polling should have run again');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run again');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await animationsSettled();
