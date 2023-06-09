@@ -59,6 +59,5 @@ module('Acceptance | view-badges', function (hooks) {
     assert.strictEqual(1, 1);
 
     await badgesPage.clickOnBadge('The Turing Badge');
-    await this.pauseTest();
   });
 });
