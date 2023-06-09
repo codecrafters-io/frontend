@@ -5,18 +5,42 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
+function createBadges(server) {
+  server.create('badge', { name: 'The Turing Badge', descriptionMarkdown: 'Complete 3 stages within a day', slug: 'three-in-a-day' });
+  server.create('badge', { name: 'The Hamilton Badge', descriptionMarkdown: 'Complete 5 stages in a week', slug: 'five-in-a-week' });
+  server.create('badge', { name: 'The Curie Badge', descriptionMarkdown: 'Complete a stage despite a failed attempt', slug: 'persistent' });
+  server.create('badge', { name: 'The Tesla Badge', descriptionMarkdown: 'Complete a stage on first attempt', slug: 'right-the-first-time' });
+  server.create('badge', { name: 'The Hopper Badge', descriptionMarkdown: 'Complete a stage in under a minute', slug: 'quick-to-start' });
+}
+
 module('Acceptance | view-badges', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  test('it renders when all badges are unearned', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    this.server.create('badge', { name: 'Test Badge 1' });
-    this.server.create('badge', { name: 'Test Badge 2' });
+    createBadges(this.server);
 
     await badgesPage.visit();
     assert.strictEqual(1, 1);
+  });
+
+  test('it renders when some badges are earned', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    createBadges(this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const badge = this.server.schema.badges.findBy({ slug: 'three-in-a-day' });
+    badge.currentUserAwards = [this.server.create('badge-award', { user: currentUser, badge: badge })];
+    badge.save();
+
+    await badgesPage.visit();
+    assert.strictEqual(1, 1);
+
+    await badgesPage.clickOnBadge('The Turing Badge');
   });
 });

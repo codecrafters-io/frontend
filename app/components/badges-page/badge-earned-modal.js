@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
-export default class BadgeCardComponent extends Component {
+export default class BadgeEarnedModalComponent extends Component {
   @service('current-user') currentUserService;
 
   get currentUser() {

@@ -5,8 +5,8 @@ import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 
 export default class HeaderAccountDropdownComponent extends Component {
+  @service colorScheme;
   @service('currentUser') currentUserService;
-  @service('globalModals') globalModalsService;
   @tracked isCreatingBillingSession = false;
   @service router;
   @service serverVariables;

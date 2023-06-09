@@ -122,3 +122,8 @@
 .blurred-overlay {
   filter: blur(4px);
 }
+
+.badge-earned-modal-prose b {
+  /* medium */
+  font-weight: 500;
+}

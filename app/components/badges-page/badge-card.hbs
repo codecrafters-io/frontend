@@ -1,15 +1,36 @@
-<div class="border rounded border-gray-900 hover:border-gray-800 p-4">
-  <div class="text-lg font-bold text-gray-600 mr-2 mb-4" data-test-badge-name>
-    {{@badge.name}}
-  </div>
+<div
+  class="border rounded border-black p-4 sm:p-8 flex flex-col items-center hover:border-gray-800 hover:bg-gradient-to-br hover:from-gray-900 hover:to-transparent hover:from-0% hover:to-50%"
+  ...attributes
+>
+  {{#if this.userHasBadgeAward}}
+    <BadgesPage::EarnedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
+  {{else}}
+    <BadgesPage::LockedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
+  {{/if}}
 
-  <BadgesPage::BadgePreview @badge={{@badge}} />
+  {{#if @badge}}
+    <div class="font-semibold text-sm sm:text-base text-gray-300 mb-1 text-center" data-test-badge-name>
+      {{#if this.userHasBadgeAward}}
+        {{@badge.name}}
+      {{else}}
+        Locked Badge
+      {{/if}}
+    </div>
 
-  <div>
+    <div class="text-xs sm:text-sm text-gray-400 text-center" data-test-badge-description>
+      {{@badge.descriptionMarkdown}}
+    </div>
+  {{else}}
+    <div class="text-sm sm:text-base font-semibold text-gray-300 mt-1 text-center" data-test-badge-name>
+      Locked Badge
+    </div>
+  {{/if}}
+
+  {{!-- <div>
     {{#if this.userHasBadgeAward}}
       <span class="text-teal-600 font-semibold">You have earned this badge.</span>
     {{else}}
       <span class="text-gray-500">You haven't earned this badge.</span>
     {{/if}}
-  </div>
+  </div> --}}
 </div>

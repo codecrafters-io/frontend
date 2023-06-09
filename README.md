@@ -19,8 +19,8 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `ember serve`
-* View your app via https://codecrafters
+* `npm run start`
+* View your app via https://codecrafters-<username>.ngrok.io
 
 ## Running tests
 
