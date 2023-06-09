@@ -52,6 +52,23 @@
           <div class="bg-gradient-to-l from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
           </div>
         </div>
+        {{#unless this.currentUser.hasEarnedThreeInADayBadge}}
+          <div class="flex items-center justify-center mt-8">
+            {{svg-jar "gold-badge-icon" class="w-10 h-10 mr-3 flex-shrink-0"}}
+
+            <div class="text-gray-100 text-sm">
+              You&apos;re 1 step closer to your next badge.
+              <br />
+              Complete 3 stages in one day.
+            </div>
+          </div>
+
+          <div class="flex justify-center mt-6">
+            <TertiaryButton @size="small" @isDark={{true}} {{on "click" @onClose}}>
+              Continue →
+            </TertiaryButton>
+          </div>
+        {{/unless}}
       </div>
     </div>
   </div>

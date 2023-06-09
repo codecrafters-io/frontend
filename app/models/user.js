@@ -40,10 +40,6 @@ export default class UserModel extends Model {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
   }
 
-  get currentReferralActivation() {
-    return this.referralActivationsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
-  }
-
   get availableCourseIdeaSupervotes() {
     return this.courseIdeaSupervoteGrants.mapBy('numberOfSupervotes').reduce((a, b) => a + b, 0) - this.courseIdeaSupervotes.length;
   }
@@ -81,6 +77,10 @@ export default class UserModel extends Model {
     return `/users/${this.username}`;
   }
 
+  get currentReferralActivation() {
+    return this.referralActivationsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
+  }
+
   get expiredSubscription() {
     if (this.hasActiveSubscription) {
       return null;
@@ -103,6 +103,10 @@ export default class UserModel extends Model {
 
   get hasActiveSubscription() {
     return !!this.activeSubscription;
+  }
+
+  get hasEarnedThreeInADayBadge() {
+    return this.badgeAwards.any((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
   }
 
   get hasJoinedReferralProgram() {
