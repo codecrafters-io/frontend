@@ -1,14 +1,15 @@
+import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
+import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | try-other-language', function (hooks) {
   setupApplicationTest(hooks);
@@ -39,12 +40,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let baseRequestsCount = [
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
-      'notify page view (courses listing page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
-      'feature flag (concepts)',
-      'notify page view (course page)',
     ].length;
 
     await coursesPage.visit();
@@ -84,8 +82,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     await this.clock.tick(2001); // Run active item index updater
 
-    // This is 6 to account for a feature flag
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 6, 'polling should have run again');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run again');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await animationsSettled();
