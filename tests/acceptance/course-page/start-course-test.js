@@ -1,3 +1,4 @@
+import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
@@ -33,18 +34,15 @@ module('Acceptance | course-page | start-course', function (hooks) {
     let baseRequestsCount = [
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
-      'notify page view (courses listing page)',
       'fetch leaderboard entries (course overview page)',
-      'notify page view (course overview page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
       'fetch languages (request language button)',
       'fetch course language requests (request language button)',
-      'notify page view (course page)',
     ].length;
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount);
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount);
 
     await percySnapshot('Start Course - Select Language');
 
@@ -56,7 +54,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'create repository request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'create repository request was executed');
 
     await percySnapshot('Start Course - Clone Repository');
 
@@ -72,7 +70,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 2, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     let repository = this.server.schema.repositories.find(1);
@@ -81,7 +79,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await this.clock.tick(2001);
     await finishRender();
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 3, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
     assert.strictEqual(coursePage.setupItem.footerText, 'Git push received.');
 

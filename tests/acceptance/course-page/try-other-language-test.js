@@ -51,7 +51,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursesPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount);
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
@@ -59,7 +59,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 2); // Fetch languages, course language requests
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2); // Fetch languages, course language requests
 
     assert.strictEqual(currentURL(), '/courses/redis?fresh=true');
 
@@ -70,7 +70,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 3); // fetch languages, requests + Create repository request
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/redis?repo=2');
 
@@ -80,12 +80,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await this.clock.tick(2001); // Run poller
     await finishRender();
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 4, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 4, 'polling should have run');
 
     await this.clock.tick(2001); // Run active item index updater
 
     // This is 6 to account for a feature flag
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 6, 'polling should have run again');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 6, 'polling should have run again');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await animationsSettled();

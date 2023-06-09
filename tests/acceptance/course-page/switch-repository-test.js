@@ -55,14 +55,14 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     ].length;
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount);
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await this.clock.tick(3000);
 
-    assert.strictEqual(this.server.pretender.handledRequests.length, baseRequestsCount + 1, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'polling should have run');
 
     await coursePage.repositoryDropdown.click();
 
