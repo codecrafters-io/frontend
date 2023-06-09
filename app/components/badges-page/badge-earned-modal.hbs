@@ -25,7 +25,7 @@
         </div>
 
         <div class="text-xs sm:text-sm text-gray-400 text-center" data-test-badge-description>
-          {{@badge.descriptionMarkdown}}
+          {{@badge.shortDescription}}
         </div>
       {{else}}
         <div class="text-sm sm:text-base font-semibold text-gray-300 mt-1 text-center" data-test-badge-name>
@@ -34,13 +34,7 @@
       {{/if}}
     </div>
     <div class="prose prose-sm w-full prose-invert text-center badge-earned-modal-prose">
-      <p>
-        <b>Margaret Hamilton is a famed computer scientist who led software development for the Apollo moon missions.</b>
-      </p>
-      <p>
-        Hamilton diligently scrutinized thousands of lines of code, often working late nights while caring for her young daughter. Despite facing
-        skepticism, Hamilton’s consistent delivery of rigorously tested software, week after week, ensured the successful landing of Apollo 11.
-      </p>
+      {{@badge.descriptionHTML}}
     </div>
   </div>
 </div>

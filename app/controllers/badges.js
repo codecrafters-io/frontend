@@ -15,4 +15,8 @@ export default class BadgesController extends Controller {
   get otherBadgesCount() {
     return 21 - this.model.badges.length;
   }
+
+  get sortedBadges() {
+    return this.model.badges.sortBy('priority');
+  }
 }
