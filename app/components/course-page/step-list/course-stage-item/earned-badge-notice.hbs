@@ -28,8 +28,8 @@
   </div>
 
   {{#if this.selectedBadge}}
-    <ModalBackdrop class="backdrop-blur">
-      <BadgesPage::BadgeAwardModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
+    <ModalBackdrop class="backdrop-blur z-20">
+      <BadgesPage::BadgeEarnedModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
     </ModalBackdrop>
   {{/if}}
 </div>

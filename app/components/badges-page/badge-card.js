@@ -8,7 +8,11 @@ export default class BadgeCardComponent extends Component {
     return this.currentUserService.record;
   }
 
+  get currentUserBadgeAwards() {
+    return this.currentUser.badgeAwards.filterBy('badge', this.args.badge);
+  }
+
   get userHasBadgeAward() {
-    return this.args.badge && this.args.badge.currentUserAwards.length > 0;
+    return this.args.badge && this.currentUserBadgeAwards.length > 0;
   }
 }

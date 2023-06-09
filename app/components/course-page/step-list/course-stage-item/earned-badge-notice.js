@@ -12,7 +12,7 @@ export default class EarnedBadgeNotice extends Component {
 
   @action
   handleViewButtonClicked() {
-    this.selectedBadge = this.args.badgeAwards[0];
+    this.selectedBadge = this.args.badgeAwards[0].badge;
   }
 
   handleBadgeModalClose() {

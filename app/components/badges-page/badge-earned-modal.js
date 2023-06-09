@@ -8,7 +8,19 @@ export default class BadgeEarnedModalComponent extends Component {
     return this.currentUserService.record;
   }
 
+  get currentUserBadgeAwards() {
+    return this.currentUser.badgeAwards.filterBy('badge', this.args.badge);
+  }
+
+  get lastAwardedAt() {
+    if (this.userHasBadgeAward) {
+      return this.currentUserBadgeAwards.sortBy('awardedAt').reverse()[0].awardedAt;
+    } else {
+      return null;
+    }
+  }
+
   get userHasBadgeAward() {
-    return this.args.badge && this.args.badge.currentUserAwards.length > 0;
+    return this.args.badge && this.currentUserBadgeAwards.length > 0;
   }
 }
