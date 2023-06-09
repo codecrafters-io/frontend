@@ -15,7 +15,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeBadges() {
-    return this.currentUser && this.currentUser.isStaff;
+    return (this.currentUser && this.currentUser.isStaff) || this.getFeatureFlagValue('stage-1-badges') === 'test';
   }
 
   get canSeeStage1Concepts() {
