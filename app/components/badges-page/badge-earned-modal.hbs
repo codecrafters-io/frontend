@@ -1,5 +1,5 @@
 <div
-  class="rounded-md shadow-sm overflow-hidden border border-gray-800 relative flex-shrink overflow-y-scroll px-32 py-12 min-h-0 max-w-screen-lg from-[#181818] to-[#0A0A0A] bg-gradient-to-br"
+  class="rounded-md shadow-sm overflow-hidden border border-gray-800 relative flex-shrink overflow-y-scroll px-6 sm:px-16 py-16 min-h-0 w-full max-w-screen-lg from-[#181818] to-[#0A0A0A] bg-gradient-to-br"
   {{on-click-outside @onClose}}
   ...attributes
 >
@@ -7,40 +7,49 @@
     {{svg-jar "dark-modal-back-button" class="w-8 h-8"}}
   </button>
 
-  <div class="flex items-center justify-between gap-10">
-    <div class="w-full max-w-[250px]">
-      {{#if this.userHasBadgeAward}}
-        <BadgesPage::EarnedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
-      {{else}}
-        <BadgesPage::LockedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
-      {{/if}}
+  <div class="flex flex-col md:flex-row gap-x-20 gap-y-8 items-center">
+    <div class="flex w-full md:w-5/12 justify-center items-center">
+      <div class="w-full max-w-[250px]">
+        {{#if this.userHasBadgeAward}}
+          <BadgesPage::EarnedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
+        {{else}}
+          <BadgesPage::LockedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
+        {{/if}}
 
-      {{#if @badge}}
-        <div class="font-semibold text-sm sm:text-base text-gray-300 mb-1 text-center" data-test-badge-name>
-          {{#if this.userHasBadgeAward}}
-            {{@badge.name}}
-          {{else}}
+        {{#if @badge}}
+          <div class="font-semibold text-sm sm:text-base text-gray-300 mb-1 text-center" data-test-badge-name>
+            {{#if this.userHasBadgeAward}}
+              {{@badge.name}}
+            {{else}}
+              Locked Badge
+            {{/if}}
+          </div>
+
+          <div class="text-xs sm:text-sm text-gray-400 text-center" data-test-badge-description>
+            {{@badge.shortDescription}}
+          </div>
+        {{else}}
+          <div class="text-sm sm:text-base font-semibold text-gray-300 mt-1 text-center" data-test-badge-name>
             Locked Badge
-          {{/if}}
-        </div>
-
-        <div class="text-xs sm:text-sm text-gray-400 text-center" data-test-badge-description>
-          {{@badge.descriptionMarkdown}}
-        </div>
-      {{else}}
-        <div class="text-sm sm:text-base font-semibold text-gray-300 mt-1 text-center" data-test-badge-name>
-          Locked Badge
-        </div>
-      {{/if}}
+          </div>
+        {{/if}}
+      </div>
     </div>
-    <div class="prose prose-sm w-full prose-invert text-center badge-earned-modal-prose">
-      <p>
-        <b>Margaret Hamilton is a famed computer scientist who led software development for the Apollo moon missions.</b>
-      </p>
-      <p>
-        Hamilton diligently scrutinized thousands of lines of code, often working late nights while caring for her young daughter. Despite facing
-        skepticism, Hamilton’s consistent delivery of rigorously tested software, week after week, ensured the successful landing of Apollo 11.
-      </p>
+    <div class="flex w-full md:w-7/12 justify-center items-center">
+      <div>
+        <div class="prose prose-sm w-full prose-invert text-center badge-earned-modal-prose">
+          {{@badge.descriptionHTML}}
+        </div>
+        <div class="flex items-center w-full mt-12">
+          <div class="bg-gradient-to-r from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
+          </div>
+          <div class="inline-block px-4 flex-shrink-0">
+            <span class="text-gray-100 text-sm">Earned: {{moment-format @badgeAward.createdAt "LL"}}</span>
+          </div>
+          <div class="bg-gradient-to-l from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

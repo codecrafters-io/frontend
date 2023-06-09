@@ -9,10 +9,16 @@ export default class BadgesController extends Controller {
 
   @action
   handleBadgeCardClicked(badge) {
-    this.selectedBadge = badge;
+    if (badge.currentUserAwards.length > 0) {
+      this.selectedBadge = badge;
+    }
   }
 
   get otherBadgesCount() {
     return 21 - this.model.badges.length;
+  }
+
+  get sortedBadges() {
+    return this.model.badges.sortBy('priority');
   }
 }
