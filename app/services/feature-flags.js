@@ -27,6 +27,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeStageCompletionVideos() {
+    return false;
     return this.currentUser && this.currentUser.isStaff;
   }
 

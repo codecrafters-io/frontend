@@ -86,6 +86,14 @@
     {{else if this.shouldShowCLIUsageInstructions}}
       <CoursePage::StepList::CourseStageItem::CliUsageInstructions class="mt-6" />
     {{/if}}
+
+    {{#if this.statusIsComplete}}
+      <div class="mt-6 flex">
+        <PrimaryButton>
+          ↓ Next Stage
+        </PrimaryButton>
+      </div>
+    {{/if}}
   </:content>
 
   <:footerContent>
