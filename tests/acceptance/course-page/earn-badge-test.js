@@ -54,8 +54,8 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     });
 
     const badge = this.server.create('badge', {
-      slug: 'passed-first-stage',
-      name: 'Turing',
+      slug: 'right-the-first-time',
+      name: 'Tesla',
     });
 
     this.server.create('badge-award', {
@@ -71,9 +71,9 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');
-    assert.contains(coursePage.activeCourseStageItem.earnedBadgeNotice.text, 'You earned the Turing badge.', 'text');
+    assert.contains(coursePage.activeCourseStageItem.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'text');
 
     await coursePage.activeCourseStageItem.earnedBadgeNotice.clickOnViewButton();
-    assert.strictEqual(coursePage.activeCourseStageItem.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Turing badge');
+    assert.strictEqual(coursePage.activeCourseStageItem.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla badge');
   });
 });
