@@ -13,8 +13,8 @@
     {{/animated-if}}
 
     <div class="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-3">
-      {{#each this.model.badges as |badge|}}
-        <BadgesPage::BadgeCard @badge={{badge}} role="button" {{on "click" (fn this.handleBadgeCardClicked badge)}} />
+      {{#each this.sortedBadges as |badge|}}
+        <BadgesPage::BadgeCard @badge={{badge}} {{on "click" (fn this.handleBadgeCardClicked badge)}} />
       {{/each}}
       {{#each (repeat this.otherBadgesCount)}}
         <BadgesPage::BadgeCard />

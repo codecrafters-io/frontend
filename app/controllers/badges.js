@@ -9,7 +9,9 @@ export default class BadgesController extends Controller {
 
   @action
   handleBadgeCardClicked(badge) {
-    this.selectedBadge = badge;
+    if (badge.currentUserAwards.length > 0) {
+      this.selectedBadge = badge;
+    }
   }
 
   get otherBadgesCount() {
