@@ -6,12 +6,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 function createBadges(server) {
-  server.create('badge', {
-    name: 'The Turing Badge',
-    shortDescription: 'Complete 3 stages within a day',
-    slug: 'three-in-a-day',
-    descriptionMarkdown: '',
-  });
+  server.create('badge', { name: 'The Turing Badge', shortDescription: 'Complete 3 stages within a day', slug: 'three-in-a-day' });
   server.create('badge', { name: 'The Hamilton Badge', shortDescription: 'Complete 5 stages in a week', slug: 'five-in-a-week' });
   server.create('badge', { name: 'The Curie Badge', shortDescription: 'Complete a stage despite a failed attempt', slug: 'persistent' });
   server.create('badge', { name: 'The Tesla Badge', shortDescription: 'Complete a stage on first attempt', slug: 'right-the-first-time' });
@@ -57,6 +52,8 @@ module('Acceptance | view-badges', function (hooks) {
 
     await badgesPage.visit();
     assert.strictEqual(1, 1);
+
+    await this.pauseTest();
 
     await badgesPage.clickOnBadge('The Turing Badge');
   });
