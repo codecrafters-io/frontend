@@ -30,24 +30,33 @@ module('Acceptance | utm-campaign', function (hooks) {
     await coursesPage.visit({ r: '3bc' });
     assert.strictEqual(currentURL(), '/courses');
 
-    assert.strictEqual(this.server.schema.analyticsEvents.first().name, 'viewed_page');
-    assert.strictEqual(this.server.schema.analyticsEvents.first().properties.utm_id, '3bc');
+    const lastViewedPageEvent = () => {
+      return this.server.schema.analyticsEvents.all().models.find((event) => {
+        return event.name === 'viewed_page';
+      });
+    };
+
+    assert.strictEqual(lastViewedPageEvent().properties.utm_id, '3bc');
 
     await coursesPage.courseCards[0].click();
     assert.strictEqual(currentURL(), '/courses/redis/overview');
 
-    assert.strictEqual(this.server.schema.analyticsEvents.first().name, 'viewed_page');
-    assert.strictEqual(this.server.schema.analyticsEvents.first().properties.utm_id, '3bc');
+    assert.strictEqual(lastViewedPageEvent().properties.utm_id, '3bc');
   });
 
   test('it does not remove query param unless matches pattern', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    const lastViewedPageEvent = () => {
+      return this.server.schema.analyticsEvents.all().models.find((event) => {
+        return event.name === 'viewed_page';
+      });
+    };
+
     await coursesPage.visit({ r: 'dummy' });
     assert.strictEqual(currentURL(), '/courses?r=dummy');
 
-    assert.strictEqual(this.server.schema.analyticsEvents.first().name, 'viewed_page');
-    assert.notOk(this.server.schema.analyticsEvents.first().properties.utm_id);
+    assert.strictEqual(lastViewedPageEvent().properties.utm_id, undefined);
   });
 });
