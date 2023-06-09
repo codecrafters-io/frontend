@@ -52,7 +52,7 @@ module('Acceptance | view-badges', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const badge = this.server.schema.badges.findBy({ slug: 'three-in-a-day' });
-    badge.currentUserAwards = [this.server.create('badge-award', { user: currentUser, badge: badge })];
+    badge.currentUserAwards = [this.server.create('badge-award', { user: currentUser, badge: badge, awardedAt: new Date() })];
     badge.save();
 
     await badgesPage.visit();
