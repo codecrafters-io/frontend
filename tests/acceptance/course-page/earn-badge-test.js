@@ -70,8 +70,6 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await this.clock.tick(2001); // Wait for auto-advance
     await animationsSettled();
 
-    await this.pauseTest();
-
     // TODO: Add tests for badge display
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');
   });
