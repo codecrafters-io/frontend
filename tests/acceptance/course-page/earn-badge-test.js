@@ -55,7 +55,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
 
     const badge = this.server.create('badge', {
       slug: 'passed-first-stage',
-      name: 'Passed first stage',
+      name: 'Turing',
     });
 
     this.server.create('badge-award', {
@@ -70,7 +70,10 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await this.clock.tick(2001); // Wait for auto-advance
     await animationsSettled();
 
-    // TODO: Add tests for badge display
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');
+    assert.contains(coursePage.activeCourseStageItem.earnedBadgeNotice.text, 'You earned the Turing badge.', 'text');
+
+    await coursePage.activeCourseStageItem.earnedBadgeNotice.clickOnViewButton();
+    assert.strictEqual(coursePage.activeCourseStageItem.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Turing badge');
   });
 });
