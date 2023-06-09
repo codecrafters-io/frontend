@@ -6,11 +6,11 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 function createBadges(server) {
-  server.create('badge', { name: 'The Turing Badge', shortDescription: 'Complete 3 stages within a day', slug: 'three-in-a-day' });
-  server.create('badge', { name: 'The Hamilton Badge', shortDescription: 'Complete 5 stages in a week', slug: 'five-in-a-week' });
-  server.create('badge', { name: 'The Curie Badge', shortDescription: 'Complete a stage despite a failed attempt', slug: 'persistent' });
-  server.create('badge', { name: 'The Tesla Badge', shortDescription: 'Complete a stage on first attempt', slug: 'right-the-first-time' });
-  server.create('badge', { name: 'The Hopper Badge', shortDescription: 'Complete a stage in under a minute', slug: 'quick-to-start' });
+  server.create('badge', { name: 'Turing', shortDescription: 'Complete 3 stages within a day', slug: 'three-in-a-day' });
+  server.create('badge', { name: 'Hamilton', shortDescription: 'Complete 5 stages in a week', slug: 'five-in-a-week' });
+  server.create('badge', { name: 'Curie', shortDescription: 'Complete a stage despite a failed attempt', slug: 'persistent' });
+  server.create('badge', { name: 'Tesla', shortDescription: 'Complete a stage on first attempt', slug: 'right-the-first-time' });
+  server.create('badge', { name: 'Hopper', shortDescription: 'Complete a stage in under a minute', slug: 'quick-to-start' });
 
   server.schema.badges.all().models.forEach((badge) => {
     badge.update({

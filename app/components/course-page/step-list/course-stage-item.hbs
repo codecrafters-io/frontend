@@ -87,10 +87,10 @@
       <CoursePage::StepList::CourseStageItem::CliUsageInstructions class="mt-6" />
     {{/if}}
 
-    {{#if this.statusIsComplete}}
+    {{#if (and this.statusIsComplete (eq @courseStage.nextStage @repository.activeStage))}}
       <div class="mt-6 flex">
-        <PrimaryButton>
-          ↓ Next Stage
+        <PrimaryButton {{on "click" @onViewNextStageButtonClick}}>
+          View Next Stage →
         </PrimaryButton>
       </div>
     {{/if}}
