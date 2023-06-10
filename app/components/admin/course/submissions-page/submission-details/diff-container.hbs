@@ -1,8 +1,4 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="text-gray-800 font-bold text-lg mb-4">
-  Diff
-</div>
-
 {{#if @submission.hasChangedFiles}}
   {{#each @submission.changedFiles key="filename" as |changedFile index|}}
     <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
