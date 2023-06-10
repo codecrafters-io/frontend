@@ -6,7 +6,7 @@ import adminCourseSubmissionsPage from 'codecrafters-frontend/tests/pages/admin/
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | admin | view-course-submissions', function (hooks) {
+module('Acceptance | course-admin | view-submissions', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

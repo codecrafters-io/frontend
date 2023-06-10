@@ -1,6 +1,40 @@
 import { Factory, trait } from 'miragejs';
 
 export default Factory.extend({
+  changedFiles: () => {
+    return [
+      {
+        filename: 'README.md',
+        diff: `This is the README.md file.
+
+- and this was removed!
++ and this was added!
+          `,
+      },
+      {
+        filename: 'server.rb',
+        diff: `    end
+
+    def listen
+      loop do
+        client = @server.accept
++       handle_client(client)
++     end
++   end
++
++   def handle_client(client)
++     loop do
++       client.gets
++
+        # TODO: Handle commands other than PING
+        client.write("+PONG\\r\\n")
+      end
+    end
+  end`,
+      },
+    ];
+  },
+
   createdAt: () => new Date(),
   githubStorageHtmlUrl: 'https://github.com',
 
@@ -11,7 +45,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 11290), // 11.29s
-        logs: '[stage-1] failure\n[stage-2] failure',
+        logs: btoa('[stage-1] failure\n[stage-2] failure'),
       });
     },
   }),
@@ -23,7 +57,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 4219), // 4.219s
-        logs: '\\033[92m[stage-1] passed\\033[0m\n[stage-2] passed',
+        logs: btoa('\\033[92m[stage-1] passed\\033[0m\n[stage-2] passed'),
       });
 
       server.create('course-stage-completion', {

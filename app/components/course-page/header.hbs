@@ -10,6 +10,14 @@
         BETA
       </div>
     {{/if}}
+
+    {{#if this.currentUser.isStaff}}
+      <LinkTo @route="course.admin.submissions" @model={{@course.slug}}>
+        <TertiaryButton @size="small" class="ml-2">
+          Admin
+        </TertiaryButton>
+      </LinkTo>
+    {{/if}}
   </div>
 
   {{#if (gt @repositories.length 0)}}

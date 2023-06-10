@@ -24,6 +24,7 @@ module.exports = {
       { blankLine: 'always', prev: 'multiline-block-like', next: '*' },
     ],
     'ember/no-array-prototype-extensions': 'off', // Get to this later
+    'ember/no-empty-glimmer-component-classes': 'off', // It's useful to have empty components since the names are shown in devtools
   },
   overrides: [
     // node files

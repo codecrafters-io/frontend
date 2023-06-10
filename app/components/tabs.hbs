@@ -1,0 +1,17 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div>
+  <ul class="flex items-center overflow-x-scroll pb-4 mb-2">
+    {{#each @tabs as |tab|}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon={{tab.icon}}
+        @text={{tab.title}}
+        @isActive={{eq this.activeTabSlug tab.slug}}
+        {{on "click" (fn (mut this.activeTabSlug) tab.slug)}}
+      />
+    {{/each}}
+  </ul>
+
+  <div>
+    {{yield this.activeTabSlug}}
+  </div>
+</div>

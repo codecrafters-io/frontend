@@ -9,9 +9,14 @@ export default class SubmissionModel extends Model {
   @hasMany('badge-award', { async: false }) badgeAwards;
   @hasMany('submission-evaluation', { async: false }) evaluations;
 
+  @attr('') changedFiles; // free-form JSON
   @attr('date') createdAt;
   @attr('string') githubStorageHtmlUrl;
   @attr('string') status;
+
+  get hasChangedFiles() {
+    return this.changedFiles && this.changedFiles.length > 0;
+  }
 
   get isRecent() {
     return new Date() - this.createdAt <= 300 * 1000; // in last 5 minutes
