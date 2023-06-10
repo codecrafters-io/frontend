@@ -12,6 +12,7 @@ export default class SubmissionModel extends Model {
   @attr('') changedFiles; // free-form JSON
   @attr('date') createdAt;
   @attr('string') githubStorageHtmlUrl;
+  @attr('boolean') isSubmittedViaCli;
   @attr('string') status;
 
   get hasChangedFiles() {
@@ -20,6 +21,10 @@ export default class SubmissionModel extends Model {
 
   get isRecent() {
     return new Date() - this.createdAt <= 300 * 1000; // in last 5 minutes
+  }
+
+  get isSubmittedViaGit() {
+    return !this.isSubmittedViaCli;
   }
 
   get statusIsEvaluating() {

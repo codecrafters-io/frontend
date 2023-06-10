@@ -5,30 +5,41 @@
   data-test-timeline-entry
 >
   <div class="flex items-start py-2 flex-grow">
-    {{#if @submission.statusIsSuccess}}
-      <div class="w-4 h-4 rounded-full bg-green-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
-        {{svg-jar "check" class="w-3 fill-current text-white"}}
-      </div>
-    {{else if @submission.statusIsFailure}}
-      <div class="w-4 h-4 rounded-full bg-red-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
-        {{svg-jar "x" class="w-3 fill-current text-white"}}
-      </div>
-    {{else if @submission.statusIsEvaluating}}
-      <div class="w-4 h-4 rounded-full bg-yellow-600 mr-3 flex items-center justify-center flex-shrink-0 mt-1">
-        {{svg-jar "dots-horizontal" class="w-3 fill-current text-white"}}
-      </div>
-    {{/if}}
+    <AvatarImage @user={{@submission.repository.user}} class="w-6 h-6 mr-3 filter drop-shadow-sm ring-1 ring-gray-300 rounded-full" />
     <div>
-      <div class="text-gray-700 text-sm {{if @isSelected 'font-bold'}}">
-        #{{@submission.courseStage.position}}
-        using
-        {{@submission.repository.language.name}}
+      <div class="flex items-center">
+        <div class="text-gray-700 text-sm {{if @isSelected 'font-bold'}}">
+          #{{@submission.courseStage.position}}
+          using
+          {{@submission.repository.language.name}}
+        </div>
+        {{#if @submission.statusIsSuccess}}
+          <div class="w-3 h-3 rounded-full bg-green-600 ml-1.5 flex items-center justify-center flex-shrink-0">
+            {{svg-jar "check" class="w-2 fill-current text-white"}}
+          </div>
+        {{else if @submission.statusIsFailure}}
+          <div class="w-3 h-3 rounded-full bg-red-600 ml-1.5 flex items-center justify-center flex-shrink-0">
+            {{svg-jar "x" class="w-2 fill-current text-white"}}
+          </div>
+        {{else if @submission.statusIsEvaluating}}
+          <div class="w-3 h-3 rounded-full bg-yellow-600 ml-1.5 flex items-center justify-center flex-shrink-0">
+            {{svg-jar "dots-horizontal" class="w-2 fill-current text-white"}}
+          </div>
+        {{/if}}
       </div>
       <div class="text-gray-400 text-xs">by {{@submission.repository.user.username}}</div>
     </div>
   </div>
 
-  <div class="text-xs text-gray-400 ml-2 py-2">
-    {{this.formattedTimestamp}}
+  <div class="flex flex-col items-end">
+    <div class="text-xs text-gray-400 ml-2 pt-2">
+      {{this.formattedTimestamp}}
+    </div>
+    {{#if @submission.isSubmittedViaCli}}
+      <div class="mt-1">
+        {{svg-jar "terminal" class="text-gray-400 w-4 fill-current"}}
+        <EmberTooltip @text="Submitted via CLI" />
+      </div>
+    {{/if}}
   </div>
 </div>
