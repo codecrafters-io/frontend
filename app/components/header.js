@@ -7,6 +7,7 @@ import logoImage from '/assets/images/logo/logomark-color.svg';
 export default class HeaderComponent extends Component {
   logoImage = logoImage;
 
+  @service containerWidth;
   @service('current-user') currentUserService;
   @service featureFlags;
   @service router;
