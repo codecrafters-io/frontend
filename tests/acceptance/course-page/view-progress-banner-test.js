@@ -25,7 +25,7 @@ module('Acceptance | course-page | view-progress-banner', function (hooks) {
       language: python,
       user: currentUser,
       createdAt: new Date(2002),
-      progressBannerUrl: 'https://example.com/progress-banner.png',
+      progressBannerUrl: '/assets/images/svg-icons/spinner.svg',
     });
 
     await coursesPage.visit();
