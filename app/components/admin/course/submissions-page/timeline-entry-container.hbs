@@ -35,7 +35,7 @@
     <div class="text-xs text-gray-400 ml-2 pt-2">
       {{this.formattedTimestamp}}
     </div>
-    {{#if @submission.isSubmittedViaCli}}
+    {{#if @submission.wasSubmittedViaCli}}
       <div class="mt-1">
         {{svg-jar "terminal" class="text-gray-400 w-4 fill-current"}}
         <EmberTooltip @text="Submitted via CLI" />

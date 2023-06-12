@@ -12,7 +12,7 @@ export default class SubmissionModel extends Model {
   @attr('') changedFiles; // free-form JSON
   @attr('date') createdAt;
   @attr('string') githubStorageHtmlUrl;
-  @attr('boolean') isSubmittedViaCli;
+  @attr('boolean') wasSubmittedViaCli;
   @attr('string') status;
 
   get hasChangedFiles() {
@@ -24,7 +24,7 @@ export default class SubmissionModel extends Model {
   }
 
   get isSubmittedViaGit() {
-    return !this.isSubmittedViaCli;
+    return !this.wasSubmittedViaCli;
   }
 
   get statusIsEvaluating() {
