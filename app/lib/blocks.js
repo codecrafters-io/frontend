@@ -28,10 +28,16 @@ class MarkdownBlock extends Block {
   markdown;
 }
 
+class ConceptAnimationBlock extends Block {
+  static type = 'concept_animation';
+
+  conceptAnimationSlug;
+}
+
 class ConceptQuestionBlock extends Block {
   static type = 'concept_question';
 
   conceptQuestionSlug;
 }
 
-export { ClickToContinueBlock, MarkdownBlock, ConceptQuestionBlock };
+export { ClickToContinueBlock, MarkdownBlock, ConceptQuestionBlock, ConceptAnimationBlock };

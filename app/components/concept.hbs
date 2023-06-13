@@ -4,6 +4,8 @@
     {{#each this.visibleBlocks as |block|}}
       {{#if (eq block.type "markdown")}}
         <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
+      {{else if (eq block.type "concept_animation")}}
+        <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6" />
       {{else if (eq block.type "concept_question")}}
         <Blocks::ConceptQuestionBlock
           @model={{block}}
