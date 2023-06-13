@@ -87,7 +87,7 @@ module.exports = function (defaults) {
             //   },
             // },
             {
-              test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico)$/,
+              test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico|lottie\.json)$/,
               type: 'asset/resource',
               generator: {
                 filename: 'assets/[hash][ext][query]',

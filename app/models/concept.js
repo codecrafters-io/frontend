@@ -2,7 +2,7 @@ import { attr, hasMany } from '@ember-data/model';
 import { htmlSafe } from '@ember/template';
 import Model from '@ember-data/model';
 import showdown from 'showdown';
-import { MarkdownBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 
 export default class Concept extends Model {
   @hasMany('concept-question', { async: false }) questions;
@@ -21,7 +21,7 @@ export default class Concept extends Model {
   }
 
   get parsedBlocks() {
-    const blockClasses = [MarkdownBlock, ConceptQuestionBlock, ClickToContinueBlock];
+    const blockClasses = [MarkdownBlock, ConceptQuestionBlock, ClickToContinueBlock, ConceptAnimationBlock];
 
     const blockTypeMapping = blockClasses.reduce((mapping, blockClass) => {
       mapping[blockClass.type] = blockClass;
