@@ -31,7 +31,11 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeStageCompletionVideos() {
-    return this.currentUser && this.currentUser.isStaff;
+    if (this.currentUser && this.currentUser.isStaff) {
+      return true;
+    }
+
+    return this.getFeatureFlagValue('can-see-stage-completion-videos') === 'test';
   }
 
   // Either 'control', 'explain', or 'icon-with-counts'

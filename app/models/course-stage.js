@@ -29,7 +29,7 @@ export default class CourseStageModel extends Model {
   // We're testing this on the first stage of Redis for now
   get completionVideoId() {
     if (this.course.isRedis && this.isFirst) {
-      return '717263263';
+      return '835420864';
     } else {
       return null;
     }
