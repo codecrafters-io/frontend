@@ -51,9 +51,13 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
+      - run: npx ember --version
+
+      - run: npx percy --version
+
       - run: npm run tailwind:build
 
-      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam  --silent --reporter xunit --split=3 --parallel | tee test-results.xml
+      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam  --silent --reporter xunit | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
