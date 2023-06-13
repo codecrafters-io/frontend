@@ -57,8 +57,6 @@ export default class ConceptAnimationBlockComponent extends Component<Signature>
       path: this.animationFileUrl, // the path to the animation json
     });
 
-    this.animation.setSpeed(2);
-
     this.animation.addEventListener('DOMLoaded', () => {
       run(() => {
         this.isLoaded = true;
