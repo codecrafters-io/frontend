@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { cached } from '@glimmer/tracking';
 
 export default class ConceptComponent extends Component {
   @service store;
@@ -12,6 +13,7 @@ export default class ConceptComponent extends Component {
   @tracked lastRevealedBlockIndex = null;
   @tracked interactedBlockIndexes = new TrackedSet([]);
 
+  @cached
   get allBlocks() {
     return this.args.concept.parsedBlocks.map((block, index) => {
       return {

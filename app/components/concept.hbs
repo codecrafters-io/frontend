@@ -1,7 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div {{did-insert this.handleDidInsertContainer}}>
   <AnimatedContainer>
-    {{#animated-each this.visibleBlocks key="index" use=this.listTransition duration=200 as |block|}}
+    {{#each this.visibleBlocks as |block|}}
       {{#if (eq block.type "markdown")}}
         <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
       {{else if (eq block.type "concept_question")}}
@@ -21,6 +21,6 @@
           {{block.type}}.
         </div>
       {{/if}}
-    {{/animated-each}}
+    {{/each}}
   </AnimatedContainer>
 </div>
