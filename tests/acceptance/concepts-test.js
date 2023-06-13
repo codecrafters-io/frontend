@@ -15,7 +15,7 @@ function createConcepts(server) {
 
   const networkingProtocolsConcept = server.create('concept', {
     title: 'Networking Protocols',
-    slug: 'networking-protocols',
+    slug: 'network-protocols',
     descriptionMarkdown: 'Learn about the various networking protocols and how they differ.',
     blocks: [
       {
@@ -28,6 +28,12 @@ Some examples of networking protocols are:
 - HTTP, used for web browsing
 - FTP, used for transferring files
 - SMTP, used for sending emails`,
+        },
+      },
+      {
+        type: 'concept_animation',
+        args: {
+          concept_animation_slug: 'network-protocols/intro',
         },
       },
       {
@@ -114,6 +120,17 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.visit();
     assert.strictEqual(1, 1);
+
+    // Workaround this bug: https://github.com/pretenderjs/pretender/issues/354#issuecomment-1299297701
+    const NativeXMLHttpRequest = window.XMLHttpRequest;
+
+    window.XMLHttpRequest = function XMLHttpRequest() {
+      const request = new NativeXMLHttpRequest(arguments);
+      delete request.onloadend;
+
+      return request;
+    };
+    // Workaround end
 
     await conceptsPage.clickOnConceptCard('Networking Protocols');
     await conceptPage.clickOnContinueButton();

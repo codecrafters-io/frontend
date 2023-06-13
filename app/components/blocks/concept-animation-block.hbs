@@ -1,2 +1,7 @@
-<div {{did-insert this.handleDidInsertContainer}} {{in-viewport onEnter=this.handleDidEnterViewport}} ...attributes>
+<div
+  {{did-insert this.handleDidInsertContainer}}
+  {{in-viewport onEnter=this.handleDidEnterViewport}}
+  style="{{unless this.isLoaded 'min-height: 300px;'}}"
+  ...attributes
+>
 </div>
