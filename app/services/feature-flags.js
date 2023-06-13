@@ -31,6 +31,10 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeStageCompletionVideos() {
+    if (this.currentUser && this.currentUser.isStaff) {
+      return true;
+    }
+
     return this.getFeatureFlagValue('can-see-stage-completion-videos') === 'test';
   }
 
