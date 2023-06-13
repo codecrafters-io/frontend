@@ -165,6 +165,7 @@
     "array-to-sentence": "^2.0.0",
     "date-fns": "^2.30.0",
     "fuse.js": "^6.5.3",
+    "lottie-web": "^5.12.2",
     "moment": "^2.29.4",
     "mustache": "^4.2.0",
     "node-html-parser": "^6.1.4",
