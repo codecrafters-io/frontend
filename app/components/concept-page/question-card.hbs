@@ -16,38 +16,33 @@
     {{/each}}
   </div>
 
-  <AnimatedContainer>
-    {{#animated-if this.explanationIsVisible use=this.transition duration=200}}
-      <div class="shadow-sm mt-4 p-4 border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-white'}}">
-        <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
-          {{#if this.selectedOptionIsCorrect}}
-            <span class="mr-1">🎉</span>
-            Correct!
-          {{else}}
-            <span class="mr-1">👀</span>
-            Incorrect
-          {{/if}}
-        </div>
-
-        <AnimatedContainer>
-          {{#animated-value this.selectedOption.explanationHTML use=this.transition duration=200 as |v|}}
-            <div class="leading-7 prose max-w-none {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
-              {{html-safe v}}
-            </div>
-          {{/animated-value}}
-        </AnimatedContainer>
+  {{#if this.explanationIsVisible}}
+    <div class="shadow-sm mt-4 p-4 border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-white'}}">
+      <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
+        {{#if this.selectedOptionIsCorrect}}
+          <span class="mr-1">🎉</span>
+          Correct!
+        {{else}}
+          <span class="mr-1">👀</span>
+          Incorrect
+        {{/if}}
       </div>
-    {{/animated-if}}
-  </AnimatedContainer>
+
+      <div class="leading-7 prose max-w-none {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
+        {{html-safe this.selectedOption.explanationHTML}}
+      </div>
+    </div>
+  {{/if}}
 
   <div class="flex flex-col sm:flex-row gap-x-2 gap-y-2 mt-4">
     {{#if this.hasSubmitted}}
       {{#if @shouldShowContinueButton}}
         <PrimaryButton
+          class="scroll-mb-10"
           @isDisabled={{is-empty this.selectedOptionIndex}}
           {{on "click" @onContinueButtonClick}}
-          data-test-question-card-continue-button
           {{did-insert this.handleContinueButtonInserted}}
+          data-test-question-card-continue-button
         >
           <div class="flex items-center justify-center">
             {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
