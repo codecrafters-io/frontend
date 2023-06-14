@@ -1,7 +1,10 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div {{did-insert this.handleDidInsertContainer}} ...attributes>
   {{#each this.visibleBlockGroups as |blockGroup|}}
-    <div class="scroll-mb-10 scroll-mt-10" {{did-insert (fn this.handleBlockGroupContainerInserted blockGroup)}}>
+    <div
+      class="scroll-mb-10 scroll-mt-10 {{if (not-eq blockGroup.index this.currentBlockGroupIndex) 'opacity-50'}}"
+      {{did-insert (fn this.handleBlockGroupContainerInserted blockGroup)}}
+    >
       {{#each blockGroup.blocks as |block|}}
         {{#if (eq block.type "markdown")}}
           <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
