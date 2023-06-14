@@ -1,8 +1,5 @@
 import Component from '@glimmer/component';
-import move from 'ember-animated/motions/move';
-import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
-import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
@@ -10,8 +7,8 @@ import { cached } from '@glimmer/tracking';
 export default class ConceptComponent extends Component {
   @service store;
 
-  @tracked lastRevealedBlockIndex = null;
-  @tracked interactedBlockIndexes = new TrackedSet([]);
+  @tracked lastRevealedBlockGroupIndex = null;
+  @tracked hasFinished = false;
 
   @cached
   get allBlocks() {
@@ -24,8 +21,42 @@ export default class ConceptComponent extends Component {
     });
   }
 
-  get currentBlockIndex() {
-    return this.lastRevealedBlockIndex || this.initialBlockIndex;
+  @cached
+  get allBlockGroups() {
+    return this.allBlocks.reduce((groups, block) => {
+      if (groups.length === 0) {
+        groups.push({ index: 0, blocks: [] });
+      }
+
+      groups[groups.length - 1].blocks.push(block);
+
+      if (block.isInteractable || groups.length === 0) {
+        groups.push({ index: groups.length, blocks: [] });
+      }
+
+      return groups;
+    }, []);
+  }
+
+  get completedBlocksCount() {
+    return this.allBlockGroups.reduce((count, blockGroup) => {
+      if (blockGroup.index < this.currentBlockGroupIndex) {
+        count += blockGroup.blocks.length;
+      }
+
+      return count;
+    }, 0);
+  }
+
+  get currentBlockGroupIndex() {
+    return this.lastRevealedBlockGroupIndex || 0;
+  }
+
+  @action
+  handleBlockGroupContainerInserted(blockGroup, containerElement) {
+    if (blockGroup.index === this.currentBlockGroupIndex) {
+      containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
   @action
@@ -38,26 +69,12 @@ export default class ConceptComponent extends Component {
       .save();
   }
 
-  get unrevealedBlocks() {
-    return this.allBlocks.slice(this.currentBlockIndex + 1);
-  }
-
-  get nextUnrevealedBlockThatNeedsInteraction() {
-    return this.unrevealedBlocks.find((block) => block.type === 'concept_question' || block.type === 'click_to_continue');
-  }
-
-  get lastBlockIndex() {
-    return this.allBlocks.length - 1;
-  }
-
   @action
   handleContinueButtonClick() {
-    this.interactedBlockIndexes.add(this.currentBlockIndex);
-
-    if (this.nextUnrevealedBlockThatNeedsInteraction) {
-      this.updateLastRevealedBlockIndex(this.nextUnrevealedBlockThatNeedsInteraction.index);
+    if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
+      this.hasFinished = true;
     } else {
-      this.updateLastRevealedBlockIndex(this.lastBlockIndex);
+      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
     }
 
     this.store
@@ -68,61 +85,24 @@ export default class ConceptComponent extends Component {
       .save();
   }
 
-  get lastInteractedBlock() {
-    return this.allBlocks.findLast((block) => this.interactedBlockIndexes.has(block.index));
-  }
-
-  get lastInteractableBlock() {
-    return this.allBlocks.findLast((block) => block.type === 'concept_question' || block.type === 'click_to_continue');
-  }
-
-  get initialBlockIndex() {
-    const firstClickToContinueBlock = this.allBlocks.find((block) => block.type === 'click_to_continue');
-
-    return firstClickToContinueBlock ? firstClickToContinueBlock.index : this.allBlocks.length - 1;
-  }
-
-  // eslint-disable-next-line require-yield
-  *listTransition({ duration, insertedSprites, keptSprites, removedSprites }) {
-    for (let sprite of keptSprites) {
-      move(sprite, { duration });
-    }
-
-    for (let sprite of insertedSprites) {
-      fadeIn(sprite, { duration });
-    }
-
-    for (let sprite of removedSprites) {
-      fadeOut(sprite, { duration });
-    }
-  }
-
   get progressPercentage() {
-    if (!this.lastInteractableBlock) {
-      return 100; // We can't calculate progress unless there's at least one interactable block
-    }
-
-    if (!this.lastInteractedBlock) {
+    if (!this.lastRevealedBlockGroupIndex) {
       return 0; // The user hasn't interacted with any blocks yet
     }
 
-    if (this.lastInteractedBlock.index === this.lastInteractableBlock.index) {
+    if (this.hasFinished) {
       return 100;
     } else {
-      return Math.round(100 * ((this.lastInteractedBlock.index + 1) / this.allBlocks.length));
+      return Math.round(100 * (this.completedBlocksCount / this.allBlocks.length));
     }
   }
 
-  get revealedBlocks() {
-    return this.allBlocks.slice(0, (this.currentBlockIndex || this.initialBlockIndex) + 1);
+  get visibleBlockGroups() {
+    return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
   }
 
-  updateLastRevealedBlockIndex(newBlockIndex) {
-    this.lastRevealedBlockIndex = newBlockIndex;
+  updateLastRevealedBlockGroupIndex(newBlockGroupIndex) {
+    this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
     this.args.onProgressPercentageChange(this.progressPercentage);
-  }
-
-  get visibleBlocks() {
-    return this.revealedBlocks.reject((block) => block.type === 'click_to_continue' && this.interactedBlockIndexes.has(block.index));
   }
 }

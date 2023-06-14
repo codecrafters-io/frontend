@@ -11,6 +11,11 @@ export default class QuestionCardComponent extends Component {
   transition = fade;
 
   @action
+  handleContinueButtonInserted(buttonElement) {
+    buttonElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  @action
   handleILearnedSomethingButtonClick() {
     this.didLearnSomething = !this.didLearnSomething;
   }

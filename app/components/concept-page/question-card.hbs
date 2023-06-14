@@ -47,6 +47,7 @@
           @isDisabled={{is-empty this.selectedOptionIndex}}
           {{on "click" @onContinueButtonClick}}
           data-test-question-card-continue-button
+          {{did-insert this.handleContinueButtonInserted}}
         >
           <div class="flex items-center justify-center">
             {{svg-jar "arrow-down" class="w-4 h-4 mr-1 text-white"}}
