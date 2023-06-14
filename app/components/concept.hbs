@@ -1,34 +1,32 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div {{did-insert this.handleDidInsertContainer}}>
-  <AnimatedContainer>
-    {{#each this.visibleBlockGroups as |blockGroup|}}
-      <div class="scroll-mb-10" {{did-insert (fn this.handleBlockGroupContainerInserted blockGroup)}}>
-        {{#each blockGroup.blocks as |block|}}
-          {{#if (eq block.type "markdown")}}
-            <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
-          {{else if (eq block.type "concept_animation")}}
-            <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6" />
-          {{else if (eq block.type "concept_question")}}
-            <Blocks::ConceptQuestionBlock
-              @model={{block}}
-              class="mb-6"
-              @onContinueButtonClick={{this.handleContinueButtonClick}}
-              @shouldShowContinueButton={{eq blockGroup.index this.currentBlockGroupIndex}}
-            />
-          {{else if (eq block.type "click_to_continue")}}
-            {{#if (eq blockGroup.index this.currentBlockGroupIndex)}}
-              <TertiaryButton class="mb-6" {{on "click" this.handleContinueButtonClick}} data-test-continue-button>
-                {{block.buttonText}}
-              </TertiaryButton>
-            {{/if}}
-          {{else}}
-            <div class="mb-6">
-              Unknown block type:
-              {{block.type}}.
-            </div>
+  {{#each this.visibleBlockGroups as |blockGroup|}}
+    <div class="scroll-mb-10 scroll-mt-10" {{did-insert (fn this.handleBlockGroupContainerInserted blockGroup)}}>
+      {{#each blockGroup.blocks as |block|}}
+        {{#if (eq block.type "markdown")}}
+          <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
+        {{else if (eq block.type "concept_animation")}}
+          <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6" />
+        {{else if (eq block.type "concept_question")}}
+          <Blocks::ConceptQuestionBlock
+            @model={{block}}
+            class="mb-6"
+            @onContinueButtonClick={{this.handleContinueButtonClick}}
+            @shouldShowContinueButton={{eq blockGroup.index this.currentBlockGroupIndex}}
+          />
+        {{else if (eq block.type "click_to_continue")}}
+          {{#if (eq blockGroup.index this.currentBlockGroupIndex)}}
+            <TertiaryButton class="mb-6" {{on "click" this.handleContinueButtonClick}} data-test-continue-button>
+              {{block.buttonText}}
+            </TertiaryButton>
           {{/if}}
-        {{/each}}
-      </div>
-    {{/each}}
-  </AnimatedContainer>
+        {{else}}
+          <div class="mb-6">
+            Unknown block type:
+            {{block.type}}.
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  {{/each}}
 </div>

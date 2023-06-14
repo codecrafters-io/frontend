@@ -1,5 +1,5 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="border p-3 sm:p-4 bg-gray-50 rounded shadow-sm" data-test-question-card ...attributes>
+<div class="border p-3 sm:p-4 bg-gray-50 rounded shadow-sm scroll-mb-10" {{did-insert this.handleDidInsertContainer}} data-test-question-card ...attributes>
   <div class="text-gray-800 mr-2 mb-2 border-b pt-1 pb-3">
     {{@question.queryHTML}}
   </div>
@@ -38,7 +38,6 @@
     {{#if this.hasSubmitted}}
       {{#if @shouldShowContinueButton}}
         <PrimaryButton
-          class="scroll-mb-10"
           @isDisabled={{is-empty this.selectedOptionIndex}}
           {{on "click" @onContinueButtonClick}}
           {{did-insert this.handleContinueButtonInserted}}

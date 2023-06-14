@@ -54,7 +54,7 @@ export default class ConceptComponent extends Component {
 
   @action
   handleBlockGroupContainerInserted(blockGroup, containerElement) {
-    if (blockGroup.index === this.currentBlockGroupIndex) {
+    if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }

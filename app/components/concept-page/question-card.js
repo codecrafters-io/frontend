@@ -7,10 +7,18 @@ export default class QuestionCardComponent extends Component {
   @tracked didLearnSomething = false;
   @tracked selectedOptionIndex;
   @tracked hasSubmitted = false;
+  @tracked containerElement;
 
   @action
-  handleContinueButtonInserted(buttonElement) {
-    buttonElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  handleContinueButtonInserted() {
+    if (this.containerElement) {
+      this.containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  @action
+  handleDidInsertContainer(element) {
+    this.containerElement = element;
   }
 
   @action
