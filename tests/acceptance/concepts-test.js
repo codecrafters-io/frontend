@@ -33,7 +33,7 @@ Some examples of networking protocols are:
       {
         type: 'concept_animation',
         args: {
-          concept_animation_slug: 'network-protocols/intro',
+          concept_animation_slug: 'network-protocols/dummy',
         },
       },
       {
@@ -120,17 +120,6 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.visit();
     assert.strictEqual(1, 1);
-
-    // Workaround this bug: https://github.com/pretenderjs/pretender/issues/354#issuecomment-1299297701
-    const NativeXMLHttpRequest = window.XMLHttpRequest;
-
-    window.XMLHttpRequest = function XMLHttpRequest() {
-      const request = new NativeXMLHttpRequest(arguments);
-      delete request.onloadend;
-
-      return request;
-    };
-    // Workaround end
 
     await conceptsPage.clickOnConceptCard('Networking Protocols');
     await conceptPage.clickOnContinueButton();
