@@ -1,8 +1,26 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="bg-white">
+  {{! Mobile !}}
+  {{#unless this.hasCompletedConcept}}
+    <div class="block md:hidden px-3 border-b flex-shrink-0 sticky top-0 backdrop-blur-sm bg-white/80 z-20 w-full">
+      {{#if (gt this.currentProgressPercentage 0)}}
+        <div class="py-5">
+          <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} />
+        </div>
+      {{else}}
+        <div class="py-5">
+          <CodeWalkthroughPage::MetadataItem @icon="clock">
+            <span class="font-semibold">3 min</span>
+            reading time
+          </CodeWalkthroughPage::MetadataItem>
+        </div>
+      {{/if}}
+    </div>
+  {{/unless}}
+
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6">
-    <div class="flex flex-col-reverse md:flex-row">
-      <div class="md:pr-8 pt-10 pb-60 w-full min-w-0">
+    <div class="flex flex-col-reverse items-stretch md:flex-row">
+      <div class="md:pr-8 pt-10 pb-60 min-w-0">
         <Concept @concept={{@concept}} @onProgressPercentageChange={{this.handleProgressPercentageChanged}} />
 
         {{#animated-if this.hasCompletedConcept}}
@@ -28,13 +46,14 @@
         {{/animated-if}}
       </div>
 
-      <div class="border-b md:border-b-0 md:border-l md:pl-8 flex-shrink-0 w-full py-0 md:py-2 md:w-64">
+      {{! Desktop !}}
+      <div class="hidden md:block border-l pl-8 flex-shrink-0 py-2 w-64">
         {{#if (gt this.currentProgressPercentage 0)}}
-          <div class="hidden md:block sticky py-9 top-0 bg-white">
+          <div class="sticky py-9 top-0 bg-white">
             <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} />
           </div>
         {{else}}
-          <div class="py-6 md:py-9">
+          <div class="py-9">
             <CodeWalkthroughPage::MetadataItem @icon="clock">
               <span class="font-semibold">3 min</span>
               reading time
