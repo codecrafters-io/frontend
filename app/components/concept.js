@@ -85,6 +85,17 @@ export default class ConceptComponent extends Component {
       .save();
   }
 
+  @action
+  handleStepBackButtonClick() {
+    if (this.currentBlockGroupIndex === 0) {
+      return;
+    } else {
+      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
+    }
+
+    // TODO: Add analytics event?
+  }
+
   get progressPercentage() {
     if (!this.lastRevealedBlockGroupIndex) {
       return 0; // The user hasn't interacted with any blocks yet

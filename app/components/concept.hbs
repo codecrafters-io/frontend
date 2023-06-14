@@ -19,9 +19,19 @@
           />
         {{else if (eq block.type "click_to_continue")}}
           {{#if (eq blockGroup.index this.currentBlockGroupIndex)}}
-            <TertiaryButton class="mb-6" {{on "click" this.handleContinueButtonClick}} data-test-continue-button>
-              {{block.buttonText}}
-            </TertiaryButton>
+            <div class="flex items-center mb-6">
+              <PrimaryButton {{on "click" this.handleContinueButtonClick}} data-test-continue-button>
+                {{block.buttonText}}
+              </PrimaryButton>
+              {{#if (not-eq this.currentBlockGroupIndex 0)}}
+                <div class="flex items-center ml-4 group" role="button" data-test-step-back-button {{on "click" this.handleStepBackButtonClick}}>
+                  <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
+                  <div class="ml-1 text-gray-500 group-hover:text-gray-800 text-xs hover:underline">
+                    Step back
+                  </div>
+                </div>
+              {{/if}}
+            </div>
           {{/if}}
         {{else}}
           <div class="mb-6">
