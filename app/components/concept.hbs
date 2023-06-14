@@ -1,5 +1,5 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div {{did-insert this.handleDidInsertContainer}}>
+<div {{did-insert this.handleDidInsertContainer}} ...attributes>
   {{#each this.visibleBlockGroups as |blockGroup|}}
     <div class="scroll-mb-10 scroll-mt-10" {{did-insert (fn this.handleBlockGroupContainerInserted blockGroup)}}>
       {{#each blockGroup.blocks as |block|}}
