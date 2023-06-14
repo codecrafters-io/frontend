@@ -29,16 +29,19 @@ export default class QuestionCardComponent extends Component {
   @action
   handleSubmitClick() {
     this.hasSubmitted = true;
+
+    console.log('submit clicked');
+
+    if (this.args.onSubmit) {
+      console.log('submitted!');
+      this.args.onSubmit();
+    }
   }
 
   @action
   handleShowExplanationClick() {
     this.selectedOptionIndex = this.args.question.correctOptionIndex;
     this.hasSubmitted = true;
-  }
-
-  get explanationIsVisible() {
-    return this.hasSubmitted;
   }
 
   get options() {

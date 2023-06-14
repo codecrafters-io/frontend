@@ -1,13 +1,15 @@
 import Component from '@glimmer/component';
+import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class ConceptComponent extends Component {
   @service store;
 
   @tracked lastRevealedBlockGroupIndex = null;
+  @tracked interactedBlockIndexes = new TrackedSet([]);
   @tracked hasFinished = false;
 
   @cached
@@ -70,12 +72,18 @@ export default class ConceptComponent extends Component {
   }
 
   @action
-  handleContinueButtonClick() {
+  handleContinueButtonClick(block) {
+    this.allBlockGroups[this.currentBlockGroupIndex].blocks.forEach((block) => {
+      this.interactedBlockIndexes.add(block.index);
+    });
+
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
     }
+
+    this.interactedBlockIndexes.add(block.index);
 
     this.store
       .createRecord('analytics-event', {
@@ -86,10 +94,24 @@ export default class ConceptComponent extends Component {
   }
 
   @action
+  handleQuestionBlockSubmitted(block) {
+    this.interactedBlockIndexes.add(block.index);
+  }
+
+  @action
+  handleContinueBlockInsertedAfterQuestion(element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  @action
   handleStepBackButtonClick() {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
+      this.allBlockGroups[this.currentBlockGroupIndex].blocks.forEach((block) => {
+        this.interactedBlockIndexes.delete(block.index);
+      });
+
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
     }
 

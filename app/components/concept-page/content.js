@@ -13,4 +13,9 @@ export default class ContentComponent extends Component {
   get hasCompletedConcept() {
     return this.currentProgressPercentage === 100;
   }
+
+  @action
+  handleCompletionContainerInserted(element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 }
