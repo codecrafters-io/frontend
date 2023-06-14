@@ -2,13 +2,24 @@ import Component from '@glimmer/component';
 import showdown from 'showdown';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import fade from 'ember-animated/transitions/fade';
 
 export default class QuestionCardComponent extends Component {
   @tracked didLearnSomething = false;
   @tracked selectedOptionIndex;
   @tracked hasSubmitted = false;
-  transition = fade;
+  @tracked containerElement;
+
+  @action
+  handleContinueButtonInserted() {
+    if (this.containerElement) {
+      this.containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  @action
+  handleDidInsertContainer(element) {
+    this.containerElement = element;
+  }
 
   @action
   handleILearnedSomethingButtonClick() {

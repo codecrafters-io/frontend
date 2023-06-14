@@ -1,8 +1,11 @@
 {{! template-lint-disable no-inline-styles }}
-<div
-  {{did-insert this.handleDidInsertContainer}}
-  {{in-viewport onEnter=this.handleDidEnterViewport}}
-  style={{html-safe (unless this.isLoaded "min-height: 300px;")}}
-  ...attributes
->
+<div class="flex justify-center items-center">
+  <div
+    {{did-insert this.handleDidInsertContainer}}
+    {{in-viewport onEnter=this.handleDidEnterViewport}}
+    style={{html-safe (unless this.isLoaded "min-height: 300px;")}}
+    class="max-w-lg"
+    ...attributes
+  >
+  </div>
 </div>
