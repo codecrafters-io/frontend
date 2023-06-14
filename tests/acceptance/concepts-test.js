@@ -125,7 +125,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].selectOption('DNS (Domain Name System)');
     await conceptPage.questionCards[0].clickOnSubmitButton();
-    await conceptPage.questionCards[0].clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
   });
@@ -142,7 +142,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].selectOption('DNS (Domain Name System)');
     await conceptPage.questionCards[0].clickOnSubmitButton();
-    await conceptPage.questionCards[0].clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
