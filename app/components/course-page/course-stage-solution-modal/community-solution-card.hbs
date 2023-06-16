@@ -69,7 +69,7 @@
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
           <div>
             {{#if @solution.hasPublicGithubRepository}}
-              <a href={{fn @solution.githubUrlForFile changedFile.filename}} target="_blank" rel="noopener noreferrer" class="flex gap-x-1 items-center group">
+              <a href={{call (fn @solution.githubUrlForFile changedFile.filename)}} target="_blank" rel="noopener noreferrer" class="flex gap-x-1 items-center group">
                 <span class="text-[10px] text-gray-700 group-hover:underline">
                   View on GitHub
                 </span>

@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import { action } from '@ember/object';
 
 export default class CommunityCourseStageSolutionModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'communitySolutions' }) courseStage;
@@ -19,6 +20,7 @@ export default class CommunityCourseStageSolutionModel extends Model {
     return !!this.explanationMarkdown;
   }
 
+  @action
   githubUrlForFile(filename) {
     return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
   }
