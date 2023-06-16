@@ -66,6 +66,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
+    await this.pauseTest();
 
     await coursePage.courseStageSolutionModal.languageDropdown.toggle();
     await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
