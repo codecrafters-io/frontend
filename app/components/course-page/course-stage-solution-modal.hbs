@@ -34,6 +34,7 @@
       @repository={{@repository}}
       @onViewCommunitySolutionsInOtherLanguagesButtonClick={{this.handleViewCommunitySolutionsInOtherLanguagesButtonClick}}
       @onViewCommentsButtonClick={{this.handleViewCommentsButtonClick}}
+      @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
     />
   {{else if (eq this.activeTab "source_walkthrough")}}
     <CodeWalkthrough @model={{this.courseStage.sourceWalkthrough}} />

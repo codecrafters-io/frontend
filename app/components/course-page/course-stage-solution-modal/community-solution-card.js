@@ -31,6 +31,10 @@ export default class CommunitySolutionCardComponent extends Component {
     return this.args.solution.comments.filter((comment) => comment.isTopLevelComment && !comment.isNew);
   }
 
+  get currentUser() {
+    return this.currentUserService.record;
+  }
+
   // get debug() {
   //   return JSON.stringify({
   //     all: this.store.peekAll('community-course-stage-solution-comment').length,
@@ -118,11 +122,19 @@ export default class CommunitySolutionCardComponent extends Component {
     return !this.isExpanded;
   }
 
+  get isCurrentUserSolution() {
+    return this.currentUser.id === this.args.solution.user.id;
+  }
+
   get shouldShowComments() {
     return this.comments.length > 0;
   }
 
   get shouldShowExplanation() {
     return this.isExpanded && this.explanationHTML && this.currentUserService.record.isStaff;
+  }
+
+  get shouldShowPublishToGithubButton() {
+    return this.isCurrentUserSolution && !this.args.solution.isPublishedToGithub;
   }
 }

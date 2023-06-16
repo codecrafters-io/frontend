@@ -25,7 +25,11 @@ export default class CommunityCourseStageSolutionModel extends Model {
     return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
   }
 
-  get hasPublicGithubRepository() {
-    return !this.githubRepositoryIsPrivate && this.githubRepositoryName;
+  get isPublishedToPublicGithubRepository() {
+    return this.isPublishedToGithub && !this.githubRepositoryIsPrivate;
+  }
+
+  get isPublishedToGithub() {
+    return this.githubRepositoryName;
   }
 }

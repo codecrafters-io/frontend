@@ -31,6 +31,7 @@
 {{#if (and this.currentCourseStageForSolutionModal this.courseStageSolutionModalIntent)}}
   <ModalBackdrop>
     <CoursePage::CourseStageSolutionModal
+      @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
       @courseStage={{this.currentCourseStageForSolutionModal}}
       @repository={{@activeRepository}}
       @onClose={{this.handleModalClose}}
