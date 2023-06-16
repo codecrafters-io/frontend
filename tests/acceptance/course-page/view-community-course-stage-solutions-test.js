@@ -55,7 +55,13 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     createCommunityCourseStageSolution(this.server, redis, 2, python);
     createCommunityCourseStageSolution(this.server, redis, 2, go);
-    createCommunityCourseStageSolution(this.server, redis, 2, go);
+    const solution3 = createCommunityCourseStageSolution(this.server, redis, 2, go);
+
+    solution3.update({
+      commitSha: '1234567890',
+      githubRepositoryName: 'sarupbanskota/redis',
+      githubRepositoryIsPrivate: false,
+    });
 
     await coursesPage.visit();
     await coursesPage.clickOnCourse('Build your own Redis');
@@ -66,7 +72,6 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
-    await this.pauseTest();
 
     await coursePage.courseStageSolutionModal.languageDropdown.toggle();
     await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');

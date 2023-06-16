@@ -69,9 +69,11 @@
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
           <div>
             {{#if @solution.hasPublicGithubRepository}}
-              <a href={{fn @solution.githubUrlForFile changedFile.filename}} target="_blank" rel="noopener noreferrer" class="ml-2">
-                {{svg-jar "github" class="w-3 h-3 text-gray-500"}}
-                View on GitHub →
+              <a href={{fn @solution.githubUrlForFile changedFile.filename}} target="_blank" rel="noopener noreferrer" class="flex gap-x-1 items-center group">
+                <span class="text-[10px] text-gray-700 group-hover:underline">
+                  View on GitHub
+                </span>
+                {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600"}}
               </a>
             {{/if}}
           </div>
