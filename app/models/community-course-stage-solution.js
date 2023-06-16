@@ -9,10 +9,21 @@ export default class CommunityCourseStageSolutionModel extends Model {
 
   @attr('') changedFiles; // free-form JSON
   @attr('string') explanationMarkdown;
+  @attr('string') commitSha;
+  @attr('string') githubRepositoryName;
+  @attr('boolean') githubRepositoryIsPrivate;
   @attr('date') submittedAt;
   @attr('boolean') isRestrictedToTeam; // if true, only fellow team members can see this solution
 
   get hasExplanation() {
     return !!this.explanationMarkdown;
+  }
+
+  githubUrlForFile(filename) {
+    return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
+  }
+
+  get hasPublicGithubRepository() {
+    return !this.githubRepositoryIsPrivate && this.githubRepositoryName;
   }
 }

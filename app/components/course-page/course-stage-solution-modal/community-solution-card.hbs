@@ -65,8 +65,16 @@
     {{/if}}
     {{#each this.changedFilesForRender key="filename" as |changedFile index|}}
       <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
-        <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+        <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center justify-between">
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+          <div>
+            {{#if @solution.hasPublicGithubRepository}}
+              <a href={{fn @solution.githubUrlForFile changedFile.filename}} target="_blank" rel="noopener noreferrer" class="ml-2">
+                {{svg-jar "github" class="w-3 h-3 text-gray-500"}}
+                View on GitHub →
+              </a>
+            {{/if}}
+          </div>
         </div>
 
         <div class="text-sm">
