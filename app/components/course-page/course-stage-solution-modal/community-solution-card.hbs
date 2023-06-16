@@ -65,8 +65,23 @@
     {{/if}}
     {{#each this.changedFilesForRender key="filename" as |changedFile index|}}
       <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
-        <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+        <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center justify-between">
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+          <div>
+            {{#if @solution.hasPublicGithubRepository}}
+              <a
+                href={{call (fn @solution.githubUrlForFile changedFile.filename)}}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex gap-x-1 items-center group"
+              >
+                <span class="text-[10px] text-gray-700 group-hover:underline">
+                  View on GitHub
+                </span>
+                {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600"}}
+              </a>
+            {{/if}}
+          </div>
         </div>
 
         <div class="text-sm">
@@ -83,12 +98,12 @@
     {{#if this.isCollapsed}}
       <div
         role="button"
-        class="absolute rounded top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center group z-10"
+        class="absolute rounded inset-0 vertical-mask p-4 flex items-end justify-center group z-10"
         data-test-expand-button
         {{on "click" this.handleExpandButtonClick}}
       >
         <div
-          class="border group-hover:bg-gray-100 hover:group-border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"
+          class="border bg-white group-hover:bg-gray-100 hover:group-border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"
         >
           <div class="font-bold flex items-center sm:mb-0">
             Expand solution
