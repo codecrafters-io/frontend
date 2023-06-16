@@ -19,6 +19,7 @@
       {{else if (gt this.sortedSolutions.length 0)}}
         {{#each this.visibleSolutions as |solution solutionIndex|}}
           <CoursePage::CourseStageSolutionModal::CommunitySolutionCard
+            @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
             @solution={{solution}}
             @isCollapsedByDefault={{true}}
             @positionInList={{add solutionIndex 1}}
