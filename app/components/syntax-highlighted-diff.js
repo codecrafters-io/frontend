@@ -4,8 +4,13 @@ import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
 import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 import { action } from '@ember/object';
+import { TrackedMap } from 'tracked-built-ins';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
+  containerElement;
+  lineElementStartOffsetMap = new TrackedMap();
+  lineElementEndOffsetMap = new TrackedMap();
+
   @tracked asyncHighlightedHTML;
   @tracked lineNumberWithExpandedComments = null;
 
@@ -73,6 +78,18 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get topLevelComments() {
     return (this.args.comments || []).filter((comment) => comment.isTopLevelComment && !comment.isNew);
+  }
+
+  @action
+  handleDidInsertContainer(containerElement) {
+    this.containerElement = containerElement;
+  }
+
+  @action
+  handleDidInsertOrUpdateLine(line, lineElement) {
+    console.log('didInsertOrUpdate');
+    this.lineElementStartOffsetMap.set(line.number, lineElement.offsetTop);
+    this.lineElementEndOffsetMap.set(line.number, lineElement.offsetTop + lineElement.offsetHeight);
   }
 
   @action

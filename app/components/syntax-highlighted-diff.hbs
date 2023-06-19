@@ -1,7 +1,7 @@
-<div class="py-4 overflow-x-scroll" ...attributes>
+<div class="relative py-4 overflow-x-scroll" {{did-insert this.handleDidInsertContainer}} ...attributes>
   <div class="min-w-fit">
     {{#each this.linesForRender key="number" as |line|}}
-      <div class="relative min-w-fit">
+      <div class="min-w-fit">
         {{#if line.hasComments}}
           <div class="absolute right-2 -top-2 z-10">
             <SyntaxHighlightedDiff::ToggleCommentsButton
@@ -18,7 +18,9 @@
         {{! prettier-ignore }}
         <pre class="shiki github-light min-w-fit">{{!
         }}<code class="block diff-highlight min-w-fit">{{!
-          }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
+          }}<div class="px-2 {{line.type}}-line min-w-fit"
+              {{did-update (fn this.handleDidInsertOrUpdateLine line) lineNumberWithExpandedComments}}
+              {{did-insert (fn this.handleDidInsertOrUpdateLine line)}}>{{!
             }}{{#if (eq line.type "added")}}{{!
                 }}<span class="inserted-marker select-none">+ </span>{{!
               }}{{else if (eq line.type "removed")}}{{!
@@ -26,7 +28,7 @@
               }}{{else}}{{!
                 }}<span class="unchanged-marker select-none">  </span>{{!
               }}{{/if}}{{!
-            }}{{line.html}}{{!
+            }}{{line.html}} {{map-get this.lineElementStartOffsetMap line.number}}{{!
           }}</div>{{!
         }}</code>{{!
       }}</pre>
