@@ -1,4 +1,4 @@
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
@@ -28,8 +28,8 @@ module('Acceptance | course-page | view-progress-banner', function (hooks) {
       progressBannerUrl: '/assets/images/svg-icons/spinner.svg',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Progress Banner');

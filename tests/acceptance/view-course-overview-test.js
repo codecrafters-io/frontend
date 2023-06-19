@@ -1,4 +1,4 @@
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
@@ -14,8 +14,8 @@ module('Acceptance | view-course-overview', function (hooks) {
   test('it renders when user is not logged in', async function (assert) {
     testScenario(this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
@@ -24,8 +24,8 @@ module('Acceptance | view-course-overview', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis/overview');
   });

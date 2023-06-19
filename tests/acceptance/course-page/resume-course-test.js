@@ -1,6 +1,6 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -28,8 +28,8 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
       user: currentUser,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
@@ -47,6 +47,6 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is not expanded');
     assert.notOk(coursePage.setupItemIsActive, 'setup item is not expanded');
 
-    await coursesPage.visit(); // Poller is active
+    await catalogPage.visit(); // Poller is active
   });
 });

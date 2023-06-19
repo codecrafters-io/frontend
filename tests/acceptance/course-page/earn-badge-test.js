@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -42,8 +42,8 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
       user: currentUser,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');

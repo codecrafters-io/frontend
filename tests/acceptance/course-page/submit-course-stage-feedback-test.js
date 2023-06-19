@@ -4,7 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -39,8 +39,8 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       courseStage: redis.stages.models.sortBy('position')[2], // Stage #3
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', '4th is expanded');
 
@@ -106,8 +106,8 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '4th is expanded');
 
@@ -179,8 +179,8 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd stage is active');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is git push listener');

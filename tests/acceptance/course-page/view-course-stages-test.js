@@ -1,6 +1,6 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
@@ -19,8 +19,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.setupItemIsActive, 'setup item is active by default');
@@ -80,8 +80,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
 
@@ -147,8 +147,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
     assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
@@ -192,8 +192,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
   });
@@ -228,8 +228,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       courseStage: docker.stages.models.sortBy('position').toArray()[2],
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
   });
@@ -278,8 +278,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     let loadingIndicatorWasRendered = false;
 
-    await coursesPage.visit();
-    coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    catalogPage.clickOnCourse('Build your own Redis');
 
     await waitUntil(() => {
       if (isSettled()) {

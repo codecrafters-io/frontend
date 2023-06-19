@@ -2,7 +2,7 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
@@ -21,8 +21,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -48,8 +48,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -67,8 +67,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
 
     // Test whether this works with a course that doesn't have solutions
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own SQLite');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own SQLite');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Print table names');
@@ -124,8 +124,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     const revealSolutionOverlay = coursePage.courseStageSolutionModal.revealSolutionOverlay;
 
@@ -242,8 +242,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
 
@@ -299,8 +299,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.collapsedItems[3].click(); // The previous completed stage
     await animationsSettled();
@@ -350,8 +350,8 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.collapsedItems[3].click(); // The previous completed stage
     await animationsSettled();

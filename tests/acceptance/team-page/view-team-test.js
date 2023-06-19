@@ -4,7 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import teamPage from 'codecrafters-frontend/tests/pages/team-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
@@ -19,21 +19,21 @@ module('Acceptance | view-team-test', function (hooks) {
     testScenario(this.server);
     signInAsTeamMember(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
 
-    assert.ok(coursesPage.accountDropdown.hasLink('View Team'), 'View team link is present');
+    assert.ok(catalogPage.accountDropdown.hasLink('View Team'), 'View team link is present');
   });
 
   test('non-team member does not see view team option in account dropdown', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
 
-    assert.notOk(coursesPage.accountDropdown.hasLink('View Team'), 'Manage team link is not present');
-    assert.ok(coursesPage.accountDropdown.hasLink('Invite Your Team'), 'Invite team link is present');
+    assert.notOk(catalogPage.accountDropdown.hasLink('View Team'), 'Manage team link is not present');
+    assert.ok(catalogPage.accountDropdown.hasLink('Invite Your Team'), 'Invite team link is present');
   });
 
   test('team member can view team members when multiple members exist', async function (assert) {

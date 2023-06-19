@@ -2,7 +2,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -39,8 +39,8 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     await animationsSettled();
     assert.ok(coursePage.courseCompletedItemIsActive, 'course completed item should be active');

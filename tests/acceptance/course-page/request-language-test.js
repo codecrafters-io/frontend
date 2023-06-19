@@ -1,6 +1,6 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
@@ -19,8 +19,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
@@ -52,8 +52,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     this.server.create('course-language-request', { user: currentUser, language: python, course: docker });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
@@ -72,8 +72,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
@@ -97,8 +97,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
       course: this.server.schema.courses.findBy({ slug: 'redis' }),
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 
@@ -121,8 +121,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
       course: this.server.schema.courses.findBy({ slug: 'redis' }),
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 

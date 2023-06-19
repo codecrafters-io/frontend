@@ -1,6 +1,6 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
@@ -36,8 +36,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       user: user,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -56,8 +56,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -106,8 +106,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       user: user,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -135,8 +135,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -172,8 +172,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -199,8 +199,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -250,8 +250,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       user: user,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');

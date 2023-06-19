@@ -1,5 +1,5 @@
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
@@ -46,8 +46,8 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
       status: 'closed',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Docker');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
 
     assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
     assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');

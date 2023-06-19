@@ -1,4 +1,4 @@
-import tracksPage from 'codecrafters-frontend/tests/pages/tracks-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
@@ -14,9 +14,9 @@ module('Acceptance | submit-site-feedback', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const feedbackDropdown = tracksPage.header.feedbackDropdown;
+    const feedbackDropdown = catalogPage.header.feedbackDropdown;
 
-    await tracksPage.visit();
+    await catalogPage.visit();
 
     await feedbackDropdown.toggle();
     assert.ok(feedbackDropdown.isOpen, 'Feedback dropdown is open');

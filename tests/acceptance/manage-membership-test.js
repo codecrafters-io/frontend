@@ -3,7 +3,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsSubscriber, signInAsTrialingSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import tracksPage from 'codecrafters-frontend/tests/pages/tracks-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import moment from 'moment';
 import membershipPage from 'codecrafters-frontend/tests/pages/membership-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -18,9 +18,9 @@ module('Acceptance | manage-membership-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await tracksPage.visit();
-    await tracksPage.accountDropdown.toggle();
-    await tracksPage.accountDropdown.clickOnLink('Manage Membership');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Membership');
 
     assert.strictEqual(currentURL(), '/membership');
   });

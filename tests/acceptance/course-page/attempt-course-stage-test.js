@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsSubscriber, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -30,8 +30,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       user: currentUser,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
 
@@ -57,8 +57,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await this.clock.tick(2001); // Wait for poll
 
     // force re-computation
-    await coursesPage.visit(); // This interacts with start-course-stage, not sure why
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit(); // This interacts with start-course-stage, not sure why
+    await catalogPage.clickOnCourse('Build your own Redis');
     await animationsSettled();
 
     assert.strictEqual(
@@ -69,13 +69,13 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await this.clock.tick(1000 * 601); // Wait for poll + 10 minutes to pass
 
     // force re-computation
-    await coursesPage.visit(); // This interacts with start-course-stage, not sure why
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit(); // This interacts with start-course-stage, not sure why
+    await catalogPage.clickOnCourse('Build your own Redis');
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Last attempt 10 minutes ago. Try again?', 'footer text includes timestamp');
 
-    await coursesPage.visit(); // This interacts with start-course-stage, not sure why
+    await catalogPage.visit(); // This interacts with start-course-stage, not sure why
   });
 
   test('can pass course stage', async function (assert) {
@@ -92,8 +92,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       user: currentUser,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
@@ -125,8 +125,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       user: currentUser,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
@@ -159,8 +159,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       user: currentUser,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
@@ -205,8 +205,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       user: currentUser,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
@@ -230,8 +230,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     setupFirstStageScenario(this.owner, this.server);
 
     await this.clock.tick(1000 * 1741); // Wait for poll + 29 minutes to pass
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await animationsSettled();
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
@@ -243,8 +243,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     setupFirstStageScenario(this.owner, this.server);
 
     await this.clock.tick(1000 * 1801); // Wait for poll + 30 minutes to pass
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await animationsSettled();
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');

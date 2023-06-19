@@ -1,6 +1,6 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -45,8 +45,8 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       'fetch leaderboard entries (course page)',
     ].length;
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount);

@@ -1,6 +1,6 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -41,8 +41,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       user: user,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -104,8 +104,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       user: user,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -164,8 +164,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       user: user,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
@@ -191,8 +191,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   testScenario(this.server);
   //   signIn(this.owner, this.server);
 
-  //   await coursesPage.visit();
-  //   await coursesPage.clickOnCourse('Build your own Redis');
+  //   await catalogPage.visit();
+  //   await catalogPage.clickOnCourse('Build your own Redis');
   //   await courseOverviewPage.clickOnStartCourse();
 
   //   await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -218,8 +218,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   testScenario(this.server);
   //   signIn(this.owner, this.server);
 
-  //   await coursesPage.visit();
-  //   await coursesPage.clickOnCourse('Build your own Redis');
+  //   await catalogPage.visit();
+  //   await catalogPage.clickOnCourse('Build your own Redis');
   //   await courseOverviewPage.clickOnStartCourse();
 
   //   await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -269,8 +269,8 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //     user: user,
   //   });
 
-  //   await coursesPage.visit();
-  //   await coursesPage.clickOnCourse('Build your own Redis');
+  //   await catalogPage.visit();
+  //   await catalogPage.clickOnCourse('Build your own Redis');
   //   await courseOverviewPage.clickOnStartCourse();
 
   //   await coursePage.clickOnCollapsedItem('Respond to PING');

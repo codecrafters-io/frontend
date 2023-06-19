@@ -1,8 +1,8 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
-import tracksPage from 'codecrafters-frontend/tests/pages/tracks-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
@@ -25,8 +25,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
@@ -106,8 +106,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
@@ -128,8 +128,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.setupItem.clickOnLanguageButton('Python');
@@ -138,8 +138,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
-    await coursePage.header.clickOnTracksLink();
-    await tracksPage.clickOnTrack('Python');
+    await coursePage.header.clickOnCatalogLink();
+    await catalogPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Redis');
 
     assert.strictEqual(currentURL(), '/courses/redis?track=python', 'current URL is changed to not include invalid repo');
