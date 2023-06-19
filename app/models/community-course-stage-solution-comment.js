@@ -43,9 +43,9 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
       return { startLine: null, endLine: null };
     }
 
-    const [startLine, endLine] = this.subtargetLocator.split(':')[1].split('-');
+    const [startLineStr, endLineStr] = this.subtargetLocator.split(':')[1].split('-');
 
-    return { startLine, endLine };
+    return { startLine: parseInt(startLineStr), endLine: parseInt(endLineStr) };
   }
 
   get isTopLevelComment() {

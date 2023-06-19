@@ -8,8 +8,9 @@ import { TrackedMap } from 'tracked-built-ins';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   containerElement;
-  lineElementStartOffsetMap = new TrackedMap();
-  lineElementEndOffsetMap = new TrackedMap();
+  @tracked lineElementStartOffsetMap = new TrackedMap();
+  @tracked lineElementEndOffsetMap = new TrackedMap();
+  @tracked mutationsCacheKey = 0; // Used to force re-rendering line markers
 
   @tracked asyncHighlightedHTML;
   @tracked lineNumberWithExpandedComments = null;
@@ -81,6 +82,11 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   @action
+  handleContainerResizeObserverTriggered() {
+    this.mutationsCacheKey = this.mutationsCacheKey + 1;
+  }
+
+  @action
   handleDidInsertContainer(containerElement) {
     this.containerElement = containerElement;
   }
@@ -93,15 +99,12 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   @action
-  handleToggleCommentsButtonClick(lineNumber) {
-    if (this.lineNumberWithExpandedComments === lineNumber) {
+  handleToggleCommentsButtonClick(comment) {
+    if (this.lineNumberWithExpandedComments === comment.subtargetEndLine) {
       this.lineNumberWithExpandedComments = null;
     } else {
-      this.lineNumberWithExpandedComments = lineNumber;
-
-      (this.topLevelCommentsGroupedByLine[lineNumber] || []).forEach((comment) => {
-        this.args.onCommentView && this.args.onCommentView(comment);
-      });
+      this.lineNumberWithExpandedComments = comment.subtargetEndLine;
+      this.args.onCommentView && this.args.onCommentView(comment);
     }
   }
 
@@ -130,6 +133,23 @@ export default class SyntaxHighlightedDiffComponent extends Component {
         comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
         hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
         commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
+      };
+    });
+  }
+
+  get commentsForRender() {
+    return this.topLevelComments.map((comment) => {
+      return {
+        comment,
+        isExpanded: this.expandedComments.includes(comment),
+        style: htmlSafe(
+          [
+            `top: ${this.lineElementStartOffsetMap.get(comment.subtargetStartLine)}px;`,
+            `height: ${
+              this.lineElementEndOffsetMap.get(comment.subtargetEndLine) - this.lineElementStartOffsetMap.get(comment.subtargetStartLine)
+            }px;`,
+          ].join(' ')
+        ),
       };
     });
   }
