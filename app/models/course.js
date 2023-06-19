@@ -122,7 +122,7 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
         docker: 2,
         git: 3,
         sqlite: 4,
-        grep: 5
+        grep: 5,
       }[this.slug] || 6
     );
   }

@@ -5,40 +5,41 @@
   data-test-course-card
 >
   {{! Logo }}
-  <div class="w-12 lg:w-24 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
+  <div class="w-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
     <CourseLogo @course={{@course}} />
   </div>
 
   {{! Text }}
   <div class="mb-8">
-    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-16 lg:pr-32">
+    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
       <div class="text-lg font-bold text-gray-600 mr-2" data-test-course-name>
         {{@course.name}}
       </div>
-
-      {{#if @course.releaseStatusIsBeta}}
-        <div class="text-xs text-teal-500 font-bold border border-teal-500 rounded px-2 py-1 mr-3" data-test-course-beta-label>
-          BETA
-        </div>
-      {{else if @course.releaseStatusIsAlpha}}
-        <div class="text-xs text-blue-500 font-bold border border-blue-500 rounded px-2 py-1 mr-3" data-test-course-alpha-label>
-          ALPHA
-        </div>
-      {{/if}}
     </div>
 
-    <div class="text-sm leading-relaxed text-gray-500 pr-16 lg:pr-32" data-test-course-description>
+    <div class="text-sm leading-relaxed text-gray-500 pr-10" data-test-course-description>
       {{@course.shortDescriptionMarkdown}}
     </div>
   </div>
 
   {{! Footer }}
   <div class="flex items-center justify-between">
-    {{#if this.lastPushedRepository}}
-      <CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} />
-    {{else}}
-      <CourseCard::DifficultyLabel @course={{@course}} />
-    {{/if}}
+    <div class="flex items-center gap-3">
+      {{#if this.lastPushedRepository}}
+        <CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} />
+      {{else}}
+        <CourseCard::DifficultyLabel @course={{@course}} />
+      {{/if}}
+      {{#if @course.releaseStatusIsBeta}}
+        <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-course-beta-label>
+          BETA
+        </div>
+      {{else if @course.releaseStatusIsAlpha}}
+        <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-course-alpha-label>
+          ALPHA
+        </div>
+      {{/if}}
+    </div>
 
     <div class="flex items-center">
       <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>

@@ -22,7 +22,9 @@ export default class TracksController extends Controller {
   // TODO: The sort implementation here is incorrect! It should compare values and return 1/-1, not return the value.
   get orderedCourses() {
     if (this.currentUser.isAnonymous) {
-      return this.courses;
+      return this.courses.toArray().sort((course1, course2) => {
+        return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
+      });
     } else {
       return this.courses.toArray().sort((course1, course2) => {
         let repositoriesForCourse1 = this.currentUser.record.repositories.filterBy('course', course1).filterBy('firstSubmissionCreated');
@@ -42,7 +44,7 @@ export default class TracksController extends Controller {
         } else if (!lastSubmissionForCourse1At && lastSubmissionForCourse2At) {
           return -1;
         } else {
-          return course1.sortPositionForTrack > course2.sortPosition ? 1 : -1;
+          return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
         }
       });
     }
