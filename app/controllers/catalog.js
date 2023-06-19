@@ -12,19 +12,40 @@ export default class TracksController extends Controller {
     return this.model.courses.rejectBy('releaseStatusIsAlpha');
   }
 
-  get orderedLiveLanguages() {
-    return this.orderedLanguages.filterBy('trackStatusIsLive');
-  }
-
-  get orderedBetaLanguages() {
-    return this.orderedLanguages.filterBy('trackStatusIsBeta');
-  }
-
   get languages() {
     return this.model.courses
       .toArray()
       .flatMap((course) => course.betaOrLiveLanguages.toArray())
       .uniq();
+  }
+
+  // TODO: The sort implementation here is incorrect! It should compare values and return 1/-1, not return the value.
+  get orderedCourses() {
+    if (this.currentUser.isAnonymous) {
+      return this.courses;
+    } else {
+      return this.courses.toArray().sort((course1, course2) => {
+        let repositoriesForCourse1 = this.currentUser.record.repositories.filterBy('course', course1).filterBy('firstSubmissionCreated');
+        let repositoriesForCourse2 = this.currentUser.record.repositories.filterBy('course', course2).filterBy('firstSubmissionCreated');
+
+        let lastSubmissionForCourse1At =
+          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt.getTime() : null;
+        let lastSubmissionForCourse2At =
+          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt.getTime() : null;
+
+        if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At > lastSubmissionForCourse2At) {
+          return 1;
+        } else if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At < lastSubmissionForCourse2At) {
+          return -2;
+        } else if (lastSubmissionForCourse1At && !lastSubmissionForCourse2At) {
+          return 1;
+        } else if (!lastSubmissionForCourse1At && lastSubmissionForCourse2At) {
+          return -1;
+        } else {
+          return course1.sortPositionForTrack > course2.sortPosition ? 1 : -1;
+        }
+      });
+    }
   }
 
   get orderedLanguages() {
