@@ -8,8 +8,10 @@ export default function createCourseStageSolution(server, course, stagePosition,
         filename: 'README.md',
         diff: `This is the README.md file.
 
-- and this was removed!
+- this was removed!
 + and this was added!
+
+Here's a very very long line that should overflow the container and cause a scrollbar to appear. If it wasn't long enough before, now it should be.
           `,
       },
       {
