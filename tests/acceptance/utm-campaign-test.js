@@ -28,7 +28,7 @@ module('Acceptance | utm-campaign', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit({ r: '3bc' });
-    assert.strictEqual(currentURL(), '/courses');
+    assert.strictEqual(currentURL(), '/catalog');
 
     const lastViewedPageEvent = () => {
       return this.server.schema.analyticsEvents.all().models.find((event) => {

@@ -117,7 +117,7 @@ module('Acceptance | view-team-test', function (hooks) {
     window.confirm = () => true;
     await teamPage.memberByUsername('rohitpaulk').clickLeaveTeamButton();
 
-    assert.strictEqual(currentURL(), '/tracks', 'should redirect to tracks page');
+    assert.strictEqual(currentURL(), '/catalog', 'should redirect to catalog page');
   });
 
   test('team member can switch between teams when multiple exist', async function (assert) {
