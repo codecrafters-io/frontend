@@ -36,13 +36,13 @@ export default class TracksController extends Controller {
           repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt.getTime() : null;
 
         if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At > lastSubmissionForCourse2At) {
-          return 1;
-        } else if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At < lastSubmissionForCourse2At) {
-          return -2;
-        } else if (lastSubmissionForCourse1At && !lastSubmissionForCourse2At) {
-          return 1;
-        } else if (!lastSubmissionForCourse1At && lastSubmissionForCourse2At) {
           return -1;
+        } else if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At < lastSubmissionForCourse2At) {
+          return 1;
+        } else if (lastSubmissionForCourse1At && !lastSubmissionForCourse2At) {
+          return -1;
+        } else if (!lastSubmissionForCourse1At && lastSubmissionForCourse2At) {
+          return 1;
         } else {
           return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
         }

@@ -18,7 +18,7 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
-    await percySnapshot('Courses Page');
+    await percySnapshot('Catalog Page');
 
     assert.notOk(catalogPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
@@ -34,7 +34,7 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 6, 'expected 6 course cards to be present');
 
-    assert.ok(catalogPage.courseCards[4].hasAlphaLabel, 'alpha challenges should have alpha label');
+    assert.ok(catalogPage.courseCards[5].hasAlphaLabel, 'alpha challenges should have alpha label');
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
