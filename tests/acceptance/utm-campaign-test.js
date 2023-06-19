@@ -55,7 +55,7 @@ module('Acceptance | utm-campaign', function (hooks) {
     };
 
     await catalogPage.visit({ r: 'dummy' });
-    assert.strictEqual(currentURL(), '/courses?r=dummy');
+    assert.strictEqual(currentURL(), '/catalog?r=dummy');
 
     assert.strictEqual(lastViewedPageEvent().properties.utm_id, undefined);
   });
