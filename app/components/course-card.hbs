@@ -29,15 +29,15 @@
         <CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} class="flex-shrink-0" />
       {{else}}
         <CourseCard::DifficultyLabel @course={{@course}} class="flex-shrink-0" />
-      {{/if}}
-      {{#if @course.releaseStatusIsBeta}}
-        <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-course-beta-label>
-          BETA
-        </div>
-      {{else if @course.releaseStatusIsAlpha}}
-        <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-course-alpha-label>
-          ALPHA
-        </div>
+        {{#if @course.releaseStatusIsBeta}}
+          <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-course-beta-label>
+            BETA
+          </div>
+        {{else if @course.releaseStatusIsAlpha}}
+          <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-course-alpha-label>
+            ALPHA
+          </div>
+        {{/if}}
       {{/if}}
     </div>
 
