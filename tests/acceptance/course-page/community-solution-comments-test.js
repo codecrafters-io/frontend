@@ -17,7 +17,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
   test('can view community solution comments', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server); // Move off of staff
+    signIn(this.owner, this.server);
 
     const python = this.server.schema.languages.findBy({ slug: 'python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
