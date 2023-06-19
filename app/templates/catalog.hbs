@@ -1,22 +1,22 @@
-{{page-title "Tracks"}}
+{{page-title "Catalog"}}
 
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
   <div class="border-b pb-2 mb-6">
-    <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Tracks</h1>
+    <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Challenges</h1>
   </div>
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 mb-8">
-    {{#each this.orderedLiveLanguages as |language|}}
-      <TracksPage::TrackCard @language={{language}} />
+    {{#each this.orderedCourses as |course|}}
+      <CourseCard @course={{course}} />
     {{/each}}
   </div>
 
   <div class="border-b pb-2 mb-6">
-    <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Beta Tracks</h1>
+    <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Language Tracks</h1>
   </div>
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 mb-8">
-    {{#each this.orderedBetaLanguages as |language|}}
+    {{#each this.orderedLanguages as |language|}}
       <TracksPage::TrackCard @language={{language}} />
     {{/each}}
   </div>

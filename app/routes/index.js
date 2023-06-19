@@ -5,6 +5,6 @@ export default class IndexRoute extends ApplicationRoute {
   @service router;
 
   beforeModel() {
-    this.router.transitionTo('tracks');
+    this.router.transitionTo('catalog');
   }
 }

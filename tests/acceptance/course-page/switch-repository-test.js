@@ -1,6 +1,6 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
@@ -40,8 +40,8 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       name: 'Go #1',
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     const baseRequestsCount = [
       'fetch courses (courses listing page)',
@@ -71,6 +71,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.ok(coursePage.repositoryDropdown.isClosed, 'repository dropdown should be closed');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
 
-    await coursesPage.visit(); // Poller is active
+    await catalogPage.visit(); // Poller is active
   });
 });

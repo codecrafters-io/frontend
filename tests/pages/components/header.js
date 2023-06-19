@@ -11,6 +11,6 @@ export default {
     toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
   },
 
-  clickOnTracksLink: clickable('[data-test-tracks-link]'),
+  clickOnCatalogLink: clickable('[data-test-catalog-link]'),
   scope: '[data-test-header]',
 };

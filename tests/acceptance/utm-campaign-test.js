@@ -1,4 +1,4 @@
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -27,8 +27,8 @@ module('Acceptance | utm-campaign', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursesPage.visit({ r: '3bc' });
-    assert.strictEqual(currentURL(), '/courses');
+    await catalogPage.visit({ r: '3bc' });
+    assert.strictEqual(currentURL(), '/catalog');
 
     const lastViewedPageEvent = () => {
       return this.server.schema.analyticsEvents.all().models.find((event) => {
@@ -38,7 +38,7 @@ module('Acceptance | utm-campaign', function (hooks) {
 
     assert.strictEqual(lastViewedPageEvent().properties.utm_id, '3bc');
 
-    await coursesPage.courseCards[0].click();
+    await catalogPage.courseCards[0].click();
     assert.strictEqual(currentURL(), '/courses/redis/overview');
 
     assert.strictEqual(lastViewedPageEvent().properties.utm_id, '3bc');
@@ -54,8 +54,8 @@ module('Acceptance | utm-campaign', function (hooks) {
       });
     };
 
-    await coursesPage.visit({ r: 'dummy' });
-    assert.strictEqual(currentURL(), '/courses?r=dummy');
+    await catalogPage.visit({ r: 'dummy' });
+    assert.strictEqual(currentURL(), '/catalog?r=dummy');
 
     assert.strictEqual(lastViewedPageEvent().properties.utm_id, undefined);
   });

@@ -3,7 +3,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import teamPage from 'codecrafters-frontend/tests/pages/team-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
@@ -30,9 +30,9 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
 
     signIn(this.owner, this.server, user);
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
     assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot is valid until January 1, 2099 12:00 AM.");
@@ -55,9 +55,9 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
 
     signIn(this.owner, this.server, user);
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
     assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1, 1999.");
@@ -86,9 +86,9 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
 
     signIn(this.owner, this.server, user);
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
     assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1, 1999.");
@@ -119,9 +119,9 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
 
     signIn(this.owner, this.server, user);
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.strictEqual(teamPage.setupSubscriptionContainer.instructionsText, 'To setup your team subscription, start by adding a payment method:');
 

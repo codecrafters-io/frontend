@@ -1,6 +1,6 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
@@ -21,8 +21,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     let currentUser = this.server.schema.users.first();
@@ -102,8 +102,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       lastAttemptAt: new Date(),
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
@@ -184,8 +184,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       createdAt: new Date(2003),
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
@@ -233,8 +233,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       createdAt: new Date(2003),
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own grep');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own grep');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
@@ -275,8 +275,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       lastAttemptAt: new Date(),
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
 
@@ -300,8 +300,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     signIn(this.owner, this.server, user);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -319,8 +319,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     signInAsTeamMember(this.owner, this.server, user);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -334,8 +334,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     signIn(this.owner, this.server, user);
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');

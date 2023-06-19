@@ -4,7 +4,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsTeamAdmin } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitUntil } from '@ember/test-helpers';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import teamPage from 'codecrafters-frontend/tests/pages/team-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
@@ -18,9 +18,9 @@ module('Acceptance | team-page | manage-team-members-test', function (hooks) {
     testScenario(this.server);
     signInAsTeamAdmin(this.owner, this.server);
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.strictEqual(teamPage.members.length, 1, 'expected only one members to be present');
 
@@ -50,9 +50,9 @@ module('Acceptance | team-page | manage-team-members-test', function (hooks) {
     this.server.create('team-membership', { user: member1, team: team, createdAt: new Date(), isAdmin: false });
     this.server.create('team-membership', { user: member2, team: team, createdAt: new Date(), isAdmin: false });
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.strictEqual(teamPage.members.length, 3, 'expected 3 members to be present');
 
@@ -82,9 +82,9 @@ module('Acceptance | team-page | manage-team-members-test', function (hooks) {
     this.server.create('team-membership', { user: member1, team: team, createdAt: new Date(2021, 1, 1), isAdmin: false });
     this.server.create('team-membership', { user: member2, team: team, createdAt: new Date(2021, 2, 1), isAdmin: false });
 
-    await coursesPage.visit();
-    await coursesPage.accountDropdown.toggle();
-    await coursesPage.accountDropdown.clickOnLink('Manage Team');
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.strictEqual(teamPage.members.length, 3, 'expected 3 members to be present');
 

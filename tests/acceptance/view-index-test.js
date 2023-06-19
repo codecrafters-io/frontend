@@ -14,6 +14,6 @@ module('Acceptance | view-index', function (hooks) {
     signIn(this.owner, this.server);
 
     await visit('/');
-    assert.strictEqual(currentURL(), '/tracks');
+    assert.strictEqual(currentURL(), '/catalog');
   });
 });

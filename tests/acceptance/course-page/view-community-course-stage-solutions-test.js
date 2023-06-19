@@ -1,6 +1,6 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import coursesPage from 'codecrafters-frontend/tests/pages/courses-page';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
 import percySnapshot from '@percy/ember';
@@ -63,8 +63,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
       githubRepositoryIsPrivate: false,
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -129,8 +129,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
 
     const revealSolutionOverlay = coursePage.courseStageSolutionModal.revealSolutionOverlay;
 
@@ -244,8 +244,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     let otherUserSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
     otherUserSolution.update({ user: otherUser });
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
@@ -285,8 +285,8 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
       createCommunityCourseStageSolution(this.server, redis, 2, python);
     }
 
-    await coursesPage.visit();
-    await coursesPage.clickOnCourse('Build your own Redis');
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Respond to PING');
