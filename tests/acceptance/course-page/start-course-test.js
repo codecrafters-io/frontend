@@ -2,7 +2,6 @@ import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-c
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
