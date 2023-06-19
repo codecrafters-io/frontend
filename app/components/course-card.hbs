@@ -26,9 +26,9 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       {{#if this.lastPushedRepository}}
-        <CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} />
+        <CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} class="flex-shrink-0" />
       {{else}}
-        <CourseCard::DifficultyLabel @course={{@course}} />
+        <CourseCard::DifficultyLabel @course={{@course}} class="flex-shrink-0" />
       {{/if}}
       {{#if @course.releaseStatusIsBeta}}
         <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-course-beta-label>
