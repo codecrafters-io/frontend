@@ -9,7 +9,6 @@ import showdown from 'showdown';
 import Mustache from 'mustache';
 
 export default class CourseStageItemComponent extends Component {
-  @service featureFlags;
   @service store;
   @service visibility;
   @tracked manualFeedbackFlowIsActive = false;
