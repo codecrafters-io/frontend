@@ -1,10 +1,13 @@
-<div class="relative">
+<div class="relative" {{did-resize this.handleContainerDidResize}}>
   <div class="py-4 overflow-x-scroll" ...attributes>
     <div class="min-w-fit">
       {{#each this.linesForRender key="number" as |line|}}
         {{log this.lineElementTopOffsetMap.size}}
         {{! prettier-ignore }}
-        <pre class="shiki github-light min-w-fit" {{did-insert (fn this.handleDidInsertLine line)}}>{{!
+        <pre class="shiki github-light min-w-fit"
+          {{did-insert (fn this.handleDidInsertOrUpdateLine line)}}
+          {{did-update (fn this.handleDidInsertOrUpdateLine line) this.containerResizeCount}}
+          >{{!
         }}<code class="block diff-highlight min-w-fit">{{!
           }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
             }}{{#if (eq line.type "added")}}{{!

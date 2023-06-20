@@ -9,6 +9,7 @@ import { TrackedMap } from 'tracked-built-ins';
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
   @tracked lineNumberWithExpandedComments = null;
+  @tracked containerResizeCount = 0;
 
   lineElementStartOffsetMap = new TrackedMap();
   lineElementEndOffsetMap = new TrackedMap();
@@ -93,9 +94,14 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   @action
-  handleDidInsertLine(line, element) {
+  handleDidInsertOrUpdateLine(line, element) {
     this.lineElementStartOffsetMap.set(line.number, element.offsetTop);
     this.lineElementEndOffsetMap.set(line.number, element.offsetTop + element.offsetHeight);
+  }
+
+  @action
+  handleContainerDidResize() {
+    this.containerResizeCount += 1;
   }
 
   @action
