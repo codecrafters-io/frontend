@@ -3,20 +3,17 @@ import { inject as service } from '@ember/service';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
   namespace = 'api/v1';
-  @service serverVariables;
   @service currentUser;
 
   get headers() {
     const headers = {};
 
-    if (this.serverVariables.get('csrfToken')) {
-      headers['X-CSRF-Token'] = this.serverVariables.get('csrfToken');
-    }
-
+    // TODO: Add session ID header?
     return headers;
   }
 
   get host() {
-    return this.serverVariables.get('serverUrl');
+    // TODO: Fetch this from env?
+    return 'https://cc-paul-backend.ngrok.io';
   }
 }

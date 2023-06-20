@@ -9,7 +9,6 @@ export default class HeaderAccountDropdownComponent extends Component {
   @service('currentUser') currentUserService;
   @tracked isCreatingBillingSession = false;
   @service router;
-  @service serverVariables;
   @service store;
 
   get currentUser() {
@@ -36,14 +35,8 @@ export default class HeaderAccountDropdownComponent extends Component {
 
   @action
   handleLogoutClick() {
-    // https://stackoverflow.com/a/24766685
-    let f = document.createElement('form');
-    f.action = `${this.serverVariables.get('serverUrl')}/logout`;
-    f.method = 'POST';
-    // f.target='_blank';
-
-    document.body.appendChild(f);
-    f.submit();
+    // TODO: Convert this to destroy session
+    console.log('logout');
   }
 
   @action

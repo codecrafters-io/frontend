@@ -5,17 +5,13 @@ export default class CurrentUserService extends Service {
   @service serverVariables;
   @service store;
 
+  // TODO: Implement
   authenticate() {
-    if (!this.isAuthenticated || this.record) {
-      return;
-    }
-
-    let dupedPayload = JSON.parse(JSON.stringify(this.currentUserPayload));
-    this.store.pushPayload(dupedPayload);
+    return;
   }
 
   get currentUserPayload() {
-    return this.serverVariables.get('currentUserPayload');
+    return null;
   }
 
   get currentUserId() {
