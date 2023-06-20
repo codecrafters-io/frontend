@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
 const { Webpack } = require('@embroider/webpack');
