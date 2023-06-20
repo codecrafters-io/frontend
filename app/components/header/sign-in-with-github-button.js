@@ -1,13 +1,12 @@
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
-import window from 'ember-window-mock';
 
 export default class HeaderSignInWithGithubButton extends Component {
-  @service router;
+  @service authentication;
 
   @action
   handleClicked() {
-    window.location.href = '/login?next=' + encodeURIComponent(this.router.currentURL);
+    this.authentication.initiateLogin();
   }
 }

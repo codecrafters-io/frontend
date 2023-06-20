@@ -1,26 +1,61 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class CurrentUserService extends Service {
-  @service serverVariables;
+  @service router;
   @service store;
+  @service sessionTokenStorage;
 
-  // TODO: Implement
-  authenticate() {
-    return;
+  @tracked currentUserId = null;
+  @tracked isAuthenticating = false;
+  @tracked currentSession = false;
+
+  async authenticate() {
+    if (!this.sessionTokenStorage.hasToken) {
+      return;
+    }
+
+    if (this.isAuthenticated) {
+      return;
+    }
+
+    const includedResources = [
+      'user',
+      'user.feature_suggestions',
+      'user.referral_activations_as_customer.referrer',
+      'user.referral_links',
+      'user.referral_links.user',
+      'user.team_memberships',
+      'user.team_memberships.team.memberships.user',
+      'user.team_memberships.team.subscriptions',
+      'user.team_memberships.team.pilots',
+      'user.team_memberships.team.payment_methods',
+      'user.subscriptions',
+      'user.subscriptions.user',
+    ];
+
+    this.isAuthenticating = true;
+    const session = (await this.store.query('session', { include: includedResources.join(',') }))[0];
+    this.isAuthenticating = false;
+
+    if (!session) {
+      this.sessionTokenStorage.clearToken();
+
+      return;
+    }
+
+    this.currentUserId = session.user.id;
   }
 
-  get currentUserPayload() {
-    return null;
+  // Useful in cases where we don't want to wait for the session request to go through
+  get couldBeAuthenticated() {
+    return this.sessionTokenStorage.hasToken;
   }
 
-  get currentUserId() {
-    return this.currentUserPayload && this.currentUserPayload.data.id;
-  }
-
-  // Used in situations where authenticate hasn't been called yet.
+  // TODO: Change this to handle situations where authenticate hasn't been called yet.
   get currentUserUsername() {
-    return this.currentUserPayload && this.currentUserPayload.data.attributes.username;
+    return this.record?.username;
   }
 
   get isAnonymous() {

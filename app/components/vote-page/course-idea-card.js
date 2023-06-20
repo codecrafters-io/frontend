@@ -4,8 +4,8 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class CourseIdeaCardComponent extends Component {
+  @service authentication;
   @service('current-user') currentUserService;
-  @service router;
   @service store;
 
   @tracked isVotingOrUnvoting = false;
@@ -24,7 +24,7 @@ export default class CourseIdeaCardComponent extends Component {
   @action
   async handleSupervoteButtonClick() {
     if (this.currentUserService.isAnonymous) {
-      window.location.href = '/login?next=' + encodeURIComponent(this.router.currentURL);
+      this.authentication.initiateLogin();
 
       return;
     }
@@ -45,7 +45,7 @@ export default class CourseIdeaCardComponent extends Component {
   @action
   async handleVoteButtonClick() {
     if (this.currentUserService.isAnonymous) {
-      window.location.href = '/login?next=' + encodeURIComponent(this.router.currentURL);
+      this.authentication.initiateLogin();
 
       return;
     }

@@ -10,6 +10,8 @@ export default class ReferRoute extends ApplicationRoute {
   }
 
   async model() {
+    await this.currentUserService.authenticate();
+
     if (this.currentUserService.record.hasJoinedReferralProgram) {
       await this.store.query('referral-link', {
         user_id: this.currentUserService.record.id,

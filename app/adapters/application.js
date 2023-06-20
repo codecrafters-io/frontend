@@ -4,12 +4,15 @@ import config from 'codecrafters-frontend/config/environment';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
   namespace = 'api/v1';
-  @service currentUser;
+  @service sessionTokenStorage;
 
   get headers() {
     const headers = {};
 
-    // TODO: Add session ID header?
+    if (this.sessionTokenStorage.hasToken) {
+      headers['X-Session-Token'] = this.sessionTokenStorage.currentToken;
+    }
+
     return headers;
   }
 

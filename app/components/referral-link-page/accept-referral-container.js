@@ -8,6 +8,7 @@ import logoImage from '/assets/images/logo/logomark-color.svg';
 export default class AcceptReferralContainerComponent extends Component {
   logoImage = logoImage;
 
+  @service authentication;
   @service('current-user') currentUserService;
   @service store;
   @service router;
@@ -29,7 +30,7 @@ export default class AcceptReferralContainerComponent extends Component {
   @action
   async handleAcceptOfferButtonClick() {
     if (this.currentUserIsAnonymous) {
-      window.location.href = '/login?next=' + encodeURIComponent(this.router.currentURL);
+      this.authentication.initiateLogin();
     } else if (this.acceptOfferButtonIsEnabled) {
       this.isCreatingReferralActivation = true;
 

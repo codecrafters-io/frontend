@@ -4,21 +4,23 @@ import window from 'ember-window-mock';
 
 export default class ApplicationRoute extends Route {
   allowsAnonymousAccess = false;
+  @service authentication;
   @service currentUser;
   @service router;
   @service utmCampaignIdTracker;
 
   beforeModel(transition) {
-    if (this.currentUser.isAnonymous && !this.allowsAnonymousAccess) {
+    if (!this.allowsAnonymousAccess && !this.currentUser.couldBeAuthenticated) {
       if (Object.keys(transition.to.params).length > 0) {
-        window.location.href = `/login?next=${encodeURIComponent(this.router.urlFor(transition.to.name, transition.to.params))}`;
+        this.authentication.initiateLogin(this.router.urlFor(transition.to.name, transition.to.params));
       } else {
-        window.location.href = `/login?next=${encodeURIComponent(this.router.urlFor(transition.to.name))}`;
+        this.authentication.initiateLogin(this.router.urlFor(transition.to.name));
       }
 
       transition.abort();
     }
 
+    // TODO: Handle case where `isAuthenticated` isn't present yet
     if (window.origin.includes('codecrafters.io')) {
       if (window.posthog && this.currentUser.isAuthenticated) {
         window.posthog.identify(this.currentUser.currentUserId, { username: this.currentUser.currentUserUsername });
