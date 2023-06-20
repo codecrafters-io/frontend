@@ -6,21 +6,23 @@ The front-end app that is served by [codecrafters-io/server](https://github.com/
 
 You will need the following things properly installed on your computer.
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with npm)
-* [Ember CLI](https://cli.emberjs.com/release/)
-* [Google Chrome](https://google.com/chrome/)
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) (with npm)
+- [Ember CLI](https://cli.emberjs.com/release/)
+- [Google Chrome](https://google.com/chrome/)
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd codecrafters-frontend`
-* `npm install`
+- `git clone <repository-url>` this repository
+- `cd codecrafters-frontend`
+- `npm install`
 
 ## Running / Development
 
-* `npm run start`
-* View your app via https://codecrafters-<username>.ngrok.io
+**TODO: Update this**
+
+- `npm run start`
+- View your app via https://codecrafters-<username>.ngrok.io
 
 ## Running tests
 
@@ -28,10 +30,12 @@ You will need the following things properly installed on your computer.
 
 ### Linting
 
-* `npm run lint`
-* `npm run lint:fix`
+- `npm run lint`
+- `npm run lint:fix`
 
 ### Deploying
+
+**TODO: Update this**
 
 - This app is served via [codecrafters-io/server](https://github.com/codecrafters-io/server)
 - When a commit is merged into master, GitHub Actions will create a corresponding PR [like this](https://github.com/codecrafters-io/server/pull/39).

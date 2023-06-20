@@ -15,13 +15,6 @@ module.exports = function (defaults) {
       plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
     },
 
-    emberCLIDeploy: {
-      // Change development -> production & use "ember serve --prod" to test purgecss
-      runOnPostBuild: EmberApp.env() === 'development' ? 'development-postbuild' : false,
-      configFile: 'config/deploy.js',
-      shouldActivate: true,
-    },
-
     '@embroider/macros': {
       setConfig: {
         '@ember-data/store': {
