@@ -149,7 +149,7 @@
     "webpack-bundle-analyzer": "^4.8.0"
   },
   "engines": {
-    "node": "14.* || 16.* || >= 18"
+    "node": "18.*"
   },
   "ember": {
     "edition": "octane"
