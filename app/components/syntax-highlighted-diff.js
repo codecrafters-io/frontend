@@ -4,10 +4,14 @@ import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
 import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 import { action } from '@ember/object';
+import { TrackedMap } from 'tracked-built-ins';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
   @tracked lineNumberWithExpandedComments = null;
+
+  lineElementStartOffsetMap = new TrackedMap();
+  lineElementEndOffsetMap = new TrackedMap();
 
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
@@ -77,11 +81,21 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get topLevelCommentsForRender() {
     return this.topLevelComments.map((comment) => {
+      const startOffset = this.lineElementStartOffsetMap.get(comment.subtargetStartLine);
+      const endOffset = this.lineElementEndOffsetMap.get(comment.subtargetEndLine);
+
       return {
         comment: comment,
         isExpanded: this.expandedComments.includes(comment),
+        containerStyle: htmlSafe([`top: ${startOffset}px;`, `height: ${endOffset - startOffset}px;`].join(' ')),
       };
     });
+  }
+
+  @action
+  handleDidInsertLine(line, element) {
+    this.lineElementStartOffsetMap.set(line.number, element.offsetTop);
+    this.lineElementEndOffsetMap.set(line.number, element.offsetTop + element.offsetHeight);
   }
 
   @action

@@ -1,8 +1,9 @@
 <div class="relative py-4 overflow-x-scroll" ...attributes>
   <div class="min-w-fit">
     {{#each this.linesForRender key="number" as |line|}}
+      {{log this.lineElementTopOffsetMap.size}}
       {{! prettier-ignore }}
-      <pre class="shiki github-light min-w-fit">{{!
+      <pre class="shiki github-light min-w-fit" {{did-insert (fn this.handleDidInsertLine line)}}>{{!
         }}<code class="block diff-highlight min-w-fit">{{!
           }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
             }}{{#if (eq line.type "added")}}{{!
@@ -33,13 +34,15 @@
     {{/each}}
   </div>
   {{#each this.topLevelCommentsForRender as |commentForRender|}}
-    <div class="absolute right-2 -top-2 z-10">
-      <SyntaxHighlightedDiff::ToggleCommentsButton
-        @commentsAreExpanded={{commentForRender.isExpanded}}
-        {{on "click" (fn this.handleToggleCommentsButtonClick commentForRender.comment)}}
-      />
-    </div>
-    <div class="absolute right-0 top-0 bottom-0 w-0.5 {{if commentForRender.isExpanded 'bg-teal-500' 'bg-gray-300'}}">
+    <div class="absolute right-0 flex items-stretch justify-stretch" style={{commentForRender.containerStyle}}>
+      <div class="relative w-0.5 {{if commentForRender.isExpanded 'bg-teal-500' 'bg-gray-300'}}">
+        <div class="absolute right-2 bottom-[-5px] z-10">
+          <SyntaxHighlightedDiff::ToggleCommentsButton
+            @commentsAreExpanded={{commentForRender.isExpanded}}
+            {{on "click" (fn this.handleToggleCommentsButtonClick commentForRender.comment)}}
+          />
+        </div>
+      </div>
     </div>
   {{/each}}
 </div>
