@@ -1,5 +1,6 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
   namespace = 'api/v1';
@@ -13,7 +14,6 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
   }
 
   get host() {
-    // TODO: Fetch this from env?
-    return 'https://cc-paul-backend.ngrok.io';
+    return config.x.backendUrl;
   }
 }
