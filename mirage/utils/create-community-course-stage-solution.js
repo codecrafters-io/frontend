@@ -10,6 +10,8 @@ export default function createCourseStageSolution(server, course, stagePosition,
 
 - and this was removed!
 + and this was added!
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.
           `,
       },
       {

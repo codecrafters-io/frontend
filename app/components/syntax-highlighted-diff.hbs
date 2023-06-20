@@ -1,22 +1,8 @@
-<div class="py-4 overflow-x-scroll" ...attributes>
+<div class="relative py-4 overflow-x-scroll" ...attributes>
   <div class="min-w-fit">
     {{#each this.linesForRender key="number" as |line|}}
-      <div class="relative min-w-fit">
-        {{#if line.hasComments}}
-          <div class="absolute right-2 -top-2 z-10">
-            <SyntaxHighlightedDiff::ToggleCommentsButton
-              @commentsAreExpanded={{line.commentsAreExpanded}}
-              {{on "click" (fn this.handleToggleCommentsButtonClick line.number)}}
-            />
-          </div>
-        {{/if}}
-        {{#if line.isTargetedByComments}}
-          <div class="absolute right-0 top-0 bottom-0 w-0.5 {{if line.isTargetedByExpandedComments 'bg-teal-500' 'bg-gray-300'}}">
-          </div>
-        {{/if}}
-
-        {{! prettier-ignore }}
-        <pre class="shiki github-light min-w-fit">{{!
+      {{! prettier-ignore }}
+      <pre class="shiki github-light min-w-fit">{{!
         }}<code class="block diff-highlight min-w-fit">{{!
           }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
             }}{{#if (eq line.type "added")}}{{!
@@ -30,7 +16,6 @@
           }}</div>{{!
         }}</code>{{!
       }}</pre>
-      </div>
 
       {{#if (and line.commentsAreExpanded line.hasComments)}}
         <div class="py-2 my-4 border-t border-b space-y-4 px-4">
@@ -47,4 +32,14 @@
       {{/if}}
     {{/each}}
   </div>
+  {{#each this.topLevelCommentsForRender as |commentForRender|}}
+    <div class="absolute right-2 -top-2 z-10">
+      <SyntaxHighlightedDiff::ToggleCommentsButton
+        @commentsAreExpanded={{commentForRender.isExpanded}}
+        {{on "click" (fn this.handleToggleCommentsButtonClick commentForRender.comment)}}
+      />
+    </div>
+    <div class="absolute right-0 top-0 bottom-0 w-0.5 {{if commentForRender.isExpanded 'bg-teal-500' 'bg-gray-300'}}">
+    </div>
+  {{/each}}
 </div>

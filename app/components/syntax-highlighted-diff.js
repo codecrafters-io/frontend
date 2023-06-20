@@ -75,14 +75,23 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return (this.args.comments || []).filter((comment) => comment.isTopLevelComment && !comment.isNew);
   }
 
+  get topLevelCommentsForRender() {
+    return this.topLevelComments.map((comment) => {
+      return {
+        comment: comment,
+        isExpanded: this.expandedComments.includes(comment),
+      };
+    });
+  }
+
   @action
-  handleToggleCommentsButtonClick(lineNumber) {
-    if (this.lineNumberWithExpandedComments === lineNumber) {
+  handleToggleCommentsButtonClick(comment) {
+    if (this.lineNumberWithExpandedComments === comment.subtargetEndLine) {
       this.lineNumberWithExpandedComments = null;
     } else {
-      this.lineNumberWithExpandedComments = lineNumber;
+      this.lineNumberWithExpandedComments = comment.subtargetEndLine;
 
-      (this.topLevelCommentsGroupedByLine[lineNumber] || []).forEach((comment) => {
+      (this.topLevelCommentsGroupedByLine[comment.subtargetEndLine] || []).forEach((comment) => {
         this.args.onCommentView && this.args.onCommentView(comment);
       });
     }
