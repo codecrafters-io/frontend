@@ -1,51 +1,17 @@
-{{#if this.variantIsIconWithCounts}}
-  <button
-    type="button"
-    class="relative rounded-full w-8 h-8 flex items-center justify-center border shadow
-      {{if
-        @commentsAreExpanded
-        'text-teal-500 border-teal-500 hover:border-teal-600 bg-white'
-        'bg-white border-gray-300 text-gray-500 hover:border-gray-400 hover:text-gray-600'
-      }}
-      "
-    data-test-toggle-comments-button
-    ...attributes
-  >
-    {{svg-jar "chat-alt" class="w-5 fill-current"}}
-    <div
-      class="absolute -bottom-0.5 -right-0.5 rounded-full w-3 h-3 flex items-center justify-center bg-teal-500 text-white text-[8px] font-semibold"
-    >
-      1
-    </div>
-  </button>
-{{else if this.variantIsExplain}}
-  <button
-    type="button"
-    class="rounded flex items-center justify-center border py-1 px-2
-      {{if
-        @commentsAreExpanded
-        'text-teal-500 border-teal-500 hover:border-teal-600 bg-white'
-        'bg-white border-gray-300 text-gray-600 hover:border-gray-400 hover:text-gray-700'
-      }}
-      "
-    data-test-toggle-comments-button
-    ...attributes
-  >
-    Explain
-  </button>
-{{else}}
-  <button
-    type="button"
-    class="rounded-full w-8 h-8 flex items-center justify-center border shadow
-      {{if
-        @commentsAreExpanded
-        'text-teal-500 border-teal-500 hover:border-teal-600 bg-white'
-        'bg-white border-gray-300 text-gray-500 hover:border-gray-400 hover:text-gray-600'
-      }}
-      "
-    data-test-toggle-comments-button
-    ...attributes
-  >
-    {{svg-jar "chat-alt" class="w-5 fill-current"}}
-  </button>
-{{/if}}
+<button
+  type="button"
+  class="relative rounded-full w-8 h-8 flex items-center justify-center border shadow
+    {{if
+      @commentsAreExpanded
+      'text-teal-500 border-teal-500 hover:border-teal-600 bg-white'
+      'bg-white border-gray-300 text-gray-500 hover:border-gray-400 hover:text-gray-600'
+    }}
+    "
+  data-test-toggle-comments-button
+  ...attributes
+>
+  {{svg-jar "chat-alt" class="w-5 fill-current"}}
+  <div class="absolute -bottom-0.5 -right-0.5 rounded-full w-3 h-3 flex items-center justify-center bg-teal-500 text-white text-[8px] font-semibold">
+    1
+  </div>
+</button>

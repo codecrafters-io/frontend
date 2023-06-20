@@ -38,11 +38,6 @@ export default class FeatureFlagsService extends Service {
     return this.getFeatureFlagValue('can-see-stage-completion-videos') === 'test';
   }
 
-  // Either 'control', 'explain', or 'icon-with-counts'
-  get solutionCommentsButtonVariant() {
-    return this.getFeatureFlagValue('solution-comments-button') || 'control';
-  }
-
   get cannotUseTrial() {
     return this.getFeatureFlagValue('no-trials') === 'test';
   }
