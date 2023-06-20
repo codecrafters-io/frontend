@@ -1,14 +1,8 @@
-<div
-  class="relative py-4"
-  {{did-resize this.handleContainerResizeObserverTriggered}}
-  {{did-insert this.handleDidInsertContainer}}
-  ...attributes
->
+<div class="relative py-4" {{did-resize this.handleContainerResizeObserverTriggered}} {{did-insert this.handleDidInsertContainer}} ...attributes>
   <div class="overflow-x-scroll">
-    <div class="min-w-fit">
-      {{#each this.linesForRender key="number" as |line|}}
-        {{! prettier-ignore }}
-        <pre class="shiki github-light min-w-fit">{{!
+    {{#each this.linesForRender key="number" as |line|}}
+      {{! prettier-ignore }}
+      <pre class="shiki github-light min-w-fit">{{!
         }}<code class="block diff-highlight min-w-fit">{{!
           }}<div class="px-2 {{line.type}}-line min-w-fit"
               {{did-update (fn this.handleDidInsertOrUpdateLine line) this.mutationsCacheKey}}
@@ -25,21 +19,20 @@
         }}</code>{{!
       }}</pre>
 
-        {{#if (and line.commentsAreExpanded line.hasComments)}}
-          <div class="py-2 my-4 border-t border-b space-y-4 px-4">
-            {{#if line.commentsAreExpanded}}
-              {{#each line.comments key="id" as |comment|}}
-                <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
-                  <div class="shadow-sm rounded border border-gray-300 w-full">
-                    <CommentCard @comment={{comment}} />
-                  </div>
-                </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
-              {{/each}}
-            {{/if}}
-          </div>
-        {{/if}}
-      {{/each}}
-    </div>
+      {{#if (and line.commentsAreExpanded line.hasComments)}}
+        <div class="py-2 my-4 border-t border-b space-y-4 px-4">
+          {{#if line.commentsAreExpanded}}
+            {{#each line.comments key="id" as |comment|}}
+              <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
+                <div class="shadow-sm rounded border border-gray-300 w-full">
+                  <CommentCard @comment={{comment}} />
+                </div>
+              </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
+            {{/each}}
+          {{/if}}
+        </div>
+      {{/if}}
+    {{/each}}
 
     {{#each this.commentsForRender as |commentForRender|}}
       <div

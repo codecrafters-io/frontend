@@ -64,8 +64,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     assert.strictEqual(communitySolutionsTab.solutionCards[0].toggleCommentsButtons.length, 2);
     assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 0);
 
-    await this.pauseTest();
-
     await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
     assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards.length, 1);
 
