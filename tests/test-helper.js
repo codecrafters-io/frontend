@@ -16,6 +16,10 @@ setupQunitAssertionsExtra(QUnit.assert);
 
 start();
 
+QUnit.testStart(function () {
+  window.localStorage.clear(); // We use localStorage for session tokens
+});
+
 QUnit.done(async function () {
   forceModulesToBeLoaded((type, moduleName) => {
     if (moduleName === 'codecrafters-frontend/tailwind.config') {

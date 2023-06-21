@@ -3,10 +3,7 @@ export async function signIn(owner, server, user) {
   const session = server.schema.sessions.create({ user: user, id: 'current-session-id', token: crypto.randomUUID() });
 
   const sessionTokenStorageService = owner.lookup('service:session-token-storage');
-  const currentUserService = owner.lookup('service:current-user');
-
   sessionTokenStorageService.setToken(session.token);
-  await currentUserService.authenticate();
 }
 
 export async function signInAsAdmin(owner, server, user) {
