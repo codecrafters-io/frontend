@@ -7,7 +7,7 @@ export default class TrackLeaderboardEntryComponent extends Component {
   @service store;
 
   get isForCurrentUser() {
-    return this.authenticator.isAuthenticated && this.args.entry.user.id === this.currentUser.currentUserId;
+    return this.authenticator.isAuthenticated && this.args.entry.user.id === this.authenticator.currentUserId;
   }
 
   get progressNumerator() {

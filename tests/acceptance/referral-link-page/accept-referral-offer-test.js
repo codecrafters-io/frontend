@@ -24,7 +24,11 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
     await referralLinkPage.visit({ via: 'referral1' });
     await referralLinkPage.acceptReferralButton.click();
 
-    assert.strictEqual(window.location.href, `${window.location.origin}/login?next=%2Fjoin%3Fvia%3Dreferral1`, 'should redirect to login URL');
+    assert.strictEqual(
+      window.location.href,
+      `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fjoin%3Fvia%3Dreferral1`,
+      'should redirect to login URL'
+    );
   });
 
   test('can accept referral offer', async function (assert) {

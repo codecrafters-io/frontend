@@ -27,11 +27,11 @@ export default class CourseLeaderboardComponent extends Component {
   }
 
   get currentUserIsTeamMember() {
-    return this.authenticator.userIsLoaded && !!this.currentUserTeams.firstObject;
+    return this.authenticator.currentUserIsLoaded && !!this.currentUserTeams.firstObject;
   }
 
   get currentUserTeams() {
-    if (this.authenticator.userIsLoaded) {
+    if (this.authenticator.currentUserIsLoaded) {
       return this.authenticator.currentUser.teams;
     } else {
       return [];

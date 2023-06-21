@@ -6,10 +6,10 @@ export default class MembershipRoute extends ApplicationRoute {
   @service router;
   @service authenticator;
 
-  beforeModel() {
-    super.beforeModel(...arguments);
+  async model() {
+    await this.authenticator.authenticate();
 
-    if (this.authenticator.currentUser.subscriptions.length === 0) {
+    if (this.authenticator.currentUser && this.authenticator.currentUser.subscriptions.length === 0) {
       this.router.transitionTo('pay');
     }
   }
