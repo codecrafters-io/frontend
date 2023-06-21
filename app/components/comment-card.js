@@ -8,17 +8,17 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class CommentCardComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
   @tracked isEditing = false;
   @tracked shouldShowReplyForm = false;
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   get currentUserIsStaff() {
-    return this.currentUserService.record.isStaff;
+    return this.currentUser && this.currentUser.isStaff;
   }
 
   get bodyHTML() {
@@ -67,10 +67,10 @@ export default class CommentCardComponent extends Component {
   get visibleChildComments() {
     let persistedComments = this.args.comment.childComments.rejectBy('isNew');
 
-    if (this.currentUser.isStaff) {
+    if (this.currentUserIsStaff) {
       return persistedComments;
     } else {
-      return persistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+      return persistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
     }
   }
 }

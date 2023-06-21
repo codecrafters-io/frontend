@@ -8,7 +8,7 @@ import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class ConfigureGithubIntegrationModalComponent extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   @tracked isLoading = true;

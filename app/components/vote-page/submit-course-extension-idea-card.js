@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { createPopup } from '@typeform/embed';
 
 export default class SubmitCourseIdeaExtensionCardComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   @action
   handleClick() {

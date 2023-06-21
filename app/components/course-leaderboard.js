@@ -17,7 +17,7 @@ export default class CourseLeaderboardComponent extends Component {
   @tracked entriesFromAPI;
   @tracked polledCourse;
   @tracked team;
-  @service currentUser;
+  @service authenticator;
   @service store;
   @service visibility;
 
@@ -27,12 +27,12 @@ export default class CourseLeaderboardComponent extends Component {
   }
 
   get currentUserIsTeamMember() {
-    return this.currentUser.isAuthenticated && !!this.currentUserTeams.firstObject;
+    return this.authenticator.userIsLoaded && !!this.currentUserTeams.firstObject;
   }
 
   get currentUserTeams() {
-    if (this.currentUser.isAuthenticated) {
-      return this.currentUser.record.teams;
+    if (this.authenticator.userIsLoaded) {
+      return this.authenticator.currentUser.teams;
     } else {
       return [];
     }
@@ -46,7 +46,7 @@ export default class CourseLeaderboardComponent extends Component {
     let entries = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.currentUser.record));
+      entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.authenticator.currentUser));
     } else {
       entries = entries.concat(this.entriesFromAPI.toArray());
     }

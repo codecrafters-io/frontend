@@ -4,7 +4,7 @@ import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 
 export default class TrackRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   activate() {

@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class UpgradePromptComponent extends Component {
   @service('router') router;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @tracked isSaving = false;
 
   @action

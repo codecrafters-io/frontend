@@ -12,7 +12,7 @@ export default class HeaderAccountDropdownComponent extends Component {
   @service store;
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action

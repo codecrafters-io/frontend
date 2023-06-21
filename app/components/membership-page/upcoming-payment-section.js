@@ -9,7 +9,7 @@ export default class UpcomingPaymentSectionComponent extends Component {
 
   @tracked isLoading = true;
   @tracked nextInvoicePreview;
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   @action
   async handleDidInsert() {

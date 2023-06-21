@@ -4,7 +4,7 @@ import RSVP from 'rsvp';
 
 export default class VoteRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service router;
   @service store;
 

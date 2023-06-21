@@ -8,7 +8,7 @@ export default class AcceptReferralContainerComponent extends Component {
   logoImage = logoImage;
 
   @service authentication;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
   @service router;
 
@@ -19,7 +19,7 @@ export default class AcceptReferralContainerComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   get currentUserIsAnonymous() {

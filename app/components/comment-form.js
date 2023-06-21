@@ -8,7 +8,7 @@ import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 
 export default class CommentFormComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   @tracked comment;
@@ -41,7 +41,7 @@ export default class CommentFormComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action

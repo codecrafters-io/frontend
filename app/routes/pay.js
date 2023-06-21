@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 
 export default class PayRoute extends ApplicationRoute {
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   activate() {

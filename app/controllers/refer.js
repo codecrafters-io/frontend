@@ -2,10 +2,10 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 
 export default class ReferController extends Controller {
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   get referralLink() {

@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 
 export default class SubscribtionSettingsContainerComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   get currentUserIsTeamAdmin() {

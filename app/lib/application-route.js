@@ -5,7 +5,7 @@ import window from 'ember-window-mock';
 export default class ApplicationRoute extends Route {
   allowsAnonymousAccess = false;
   @service authentication;
-  @service currentUser;
+  @service authenticator;
   @service router;
   @service utmCampaignIdTracker;
 

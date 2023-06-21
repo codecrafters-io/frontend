@@ -9,7 +9,7 @@ import lifetimeEarningsImage from '/assets/images/referral-program-features/life
 
 export default class JoinReferralProgramContainerComponent extends Component {
   @service store;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @tracked isCreatingReferralLink = false;
 
   get features() {

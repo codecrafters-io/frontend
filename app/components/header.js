@@ -9,7 +9,7 @@ export default class HeaderComponent extends Component {
   logoImage = logoImage;
 
   @service containerWidth;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service featureFlags;
   @service router;
   @service colorScheme;
@@ -21,22 +21,16 @@ export default class HeaderComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action
   handleDidInsert() {
-    if (this.currentUserService.isAuthenticated) {
+    if (this.authenticator.isAuthenticated) {
       let username = this.currentUser.username;
 
       if (username && window.FS) {
-        window.FS.identify(username, { displayName: username });
-      }
-
-      if (username && window.clarity) {
-        window.clarity('set', 'username', username);
-        window.clarity('set', 'user_id', this.currentUserService.currentUserId);
-        window.clarity('identify', username);
+        window.FS.identify(username, { displayName: this.authenticator.currentUsername });
       }
     }
 

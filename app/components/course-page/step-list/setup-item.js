@@ -6,7 +6,7 @@ import fade from 'ember-animated/transitions/fade';
 
 export default class CoursePageContentStepListSetupItemComponent extends Component {
   @tracked shouldShowUpgradePrompt = false;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
   transition = fade;
 

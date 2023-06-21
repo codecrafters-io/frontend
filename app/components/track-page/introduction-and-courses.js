@@ -7,7 +7,7 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component 
   logoImage = logoImage;
   comingSoonImage = comingSoonImage;
 
-  @service currentUser;
+  @service authenticator;
 
   get coursesWithProgress() {
     return this.args.courses.map((course) => {

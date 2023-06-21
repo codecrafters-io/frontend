@@ -11,7 +11,7 @@ export default class CourseExtensionIdeasController extends Controller {
 
   @tracked selectedCourseSlug;
 
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   get orderedCourses() {

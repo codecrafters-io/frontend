@@ -12,7 +12,7 @@ export default class CommunitySolutionCardComponent extends Component {
   @tracked isLoadingComments = false;
   @tracked containerElement;
   @service store;
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   get changedFilesForRender() {
     return this.args.solution.changedFiles.map((changedFile) => {
@@ -32,7 +32,7 @@ export default class CommunitySolutionCardComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   // get debug() {

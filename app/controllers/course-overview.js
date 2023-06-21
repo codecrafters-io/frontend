@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
 export default class CourseOverviewController extends Controller {
-  @service currentUser;
+  @service authenticator;
 
   get activeRepository() {
     if (this.currentUser.isAuthenticated) {

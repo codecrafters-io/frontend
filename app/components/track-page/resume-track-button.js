@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class CourseOverviewResumeTrackButtonComponent extends Component {
-  @service currentUser;
+  @service authenticator;
   @service router;
 
   get activeCourse() {

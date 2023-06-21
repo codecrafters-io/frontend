@@ -19,7 +19,7 @@ export default class CourseController extends Controller {
   @tracked selectedRepositoryId;
   @tracked newRepository;
   @tracked track;
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   get activeRepository() {

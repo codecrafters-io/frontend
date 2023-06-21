@@ -4,7 +4,7 @@ import RSVP from 'rsvp';
 
 export default class CatalogRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   async model() {

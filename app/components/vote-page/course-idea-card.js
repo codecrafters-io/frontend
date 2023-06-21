@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default class CourseIdeaCardComponent extends Component {
   @service authentication;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   @tracked isVotingOrUnvoting = false;

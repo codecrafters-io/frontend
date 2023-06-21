@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import showdown from 'showdown';
 
 export default class CourseOverviewPageStageListItemComponent extends Component {
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   get marketingHTML() {

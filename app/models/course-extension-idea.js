@@ -18,7 +18,7 @@ export default class CourseExtensionIdeaModel extends Model {
   @attr('number') votesCount;
   @attr('number') supervotesCount;
 
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   get descriptionHtml() {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));

@@ -7,12 +7,12 @@ import fade from 'ember-animated/transitions/fade';
 
 export default class CoursePageRepositoryDropdownComponent extends Component {
   transition = fade;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service router;
   @tracked gitRepositoryURLWasCopiedRecently;
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action

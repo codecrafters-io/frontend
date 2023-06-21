@@ -4,7 +4,7 @@ import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 import RSVP from 'rsvp';
 
 export default class CourseRoute extends ApplicationRoute {
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   activate() {

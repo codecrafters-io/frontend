@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 export default class MembershipRoute extends ApplicationRoute {
   @service store;
   @service router;
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   beforeModel() {
     super.beforeModel(...arguments);

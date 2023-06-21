@@ -1,7 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 
 export default class FeatureFlagsService extends Service {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   constructor() {
@@ -35,7 +35,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   getFeatureFlagValue(flagName) {

@@ -23,7 +23,7 @@ export default class CourseIdeaModel extends Model {
   @equal('developmentStatus', 'in_progress') developmentStatusIsInProgress;
   @equal('developmentStatus', 'released') developmentStatusIsReleased;
 
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   get descriptionHtml() {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
