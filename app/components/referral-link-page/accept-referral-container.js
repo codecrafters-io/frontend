@@ -8,7 +8,6 @@ export default class AcceptReferralContainerComponent extends Component {
   logoImage = logoImage;
 
   @service authenticator;
-  @service authenticator;
   @service store;
   @service router;
 

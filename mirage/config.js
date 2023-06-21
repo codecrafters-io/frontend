@@ -307,7 +307,7 @@ function routes() {
     return schema.users.where({ username: request.queryParams.username });
   });
 
-  this.get('/users/current', function (schema, request) {
+  this.get('/users/current', function (schema) {
     const session = schema.sessions.find('current-session-id');
 
     if (session) {

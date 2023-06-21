@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 
 export default class CourseOverviewStartTrackButtonComponent extends Component {
   @service authenticator;
-  @service authenticator;
   @service router;
 
   @action
