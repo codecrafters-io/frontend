@@ -46,6 +46,6 @@ export default class PricingCardComponent extends Component {
   }
 
   get user() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 }

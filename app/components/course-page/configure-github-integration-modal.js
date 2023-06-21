@@ -107,10 +107,10 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   }
 
   get githubAppInstallation() {
-    return this.currentUserService.record.githubAppInstallation;
+    return this.authenticator.currentUser.githubAppInstallation;
   }
 
   get recommendedRepositoryName() {
-    return `${this.currentUserService.record.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
+    return `${this.authenticator.currentUser.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
   }
 }

@@ -4,11 +4,11 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class MembershipController extends Controller {
-  @service('currentUser') currentUserService;
+  @service('authenticator') authenticator;
   @tracked isCancellingSubscription = false;
 
   get activeSubscription() {
-    return this.currentUserService.record.activeSubscription;
+    return this.authenticator.currentUser.activeSubscription;
   }
 
   get activeOrExpiredSubscription() {
@@ -16,7 +16,7 @@ export default class MembershipController extends Controller {
   }
 
   get expiredSubscription() {
-    return this.currentUserService.record.expiredSubscription;
+    return this.authenticator.currentUser.expiredSubscription;
   }
 
   @action

@@ -45,7 +45,7 @@ export default class CommentsTabComponent extends Component {
     if (this.currentUser.isStaff) {
       return topLevelPersistedComments;
     } else {
-      return topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+      return topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
     }
   }
 }

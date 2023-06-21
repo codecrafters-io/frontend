@@ -23,7 +23,7 @@ export default class CourseIdeaCardComponent extends Component {
 
   @action
   async handleSupervoteButtonClick() {
-    if (this.currentUserService.isAnonymous) {
+    if (this.authenticator.isAnonymous) {
       this.authentication.initiateLogin();
 
       return;
@@ -44,7 +44,7 @@ export default class CourseIdeaCardComponent extends Component {
 
   @action
   async handleVoteButtonClick() {
-    if (this.currentUserService.isAnonymous) {
+    if (this.authenticator.isAnonymous) {
       this.authentication.initiateLogin();
 
       return;
@@ -66,11 +66,11 @@ export default class CourseIdeaCardComponent extends Component {
   }
 
   get userHasVoted() {
-    if (this.currentUserService.isAnonymous) {
+    if (this.authenticator.isAnonymous) {
       return false;
     }
 
-    return this.currentUserService.record.courseExtensionIdeaVotes.mapBy('courseExtensionIdea').includes(this.args.courseExtensionIdea);
+    return this.authenticator.currentUser.courseExtensionIdeaVotes.mapBy('courseExtensionIdea').includes(this.args.courseExtensionIdea);
   }
 
   get userHasSupervoted() {
@@ -78,15 +78,15 @@ export default class CourseIdeaCardComponent extends Component {
   }
 
   get userHasSupervotesAvailable() {
-    return this.currentUserService.record.availableCourseExtensionIdeaSupervotes > 0;
+    return this.authenticator.currentUser.availableCourseExtensionIdeaSupervotes > 0;
   }
 
   get userSupervotesCount() {
-    if (this.currentUserService.isAnonymous) {
+    if (this.authenticator.isAnonymous) {
       return 0;
     }
 
-    return this.currentUserService.record.courseExtensionIdeaSupervotes.filterBy('courseExtensionIdea', this.args.courseExtensionIdea).length;
+    return this.authenticator.currentUser.courseExtensionIdeaSupervotes.filterBy('courseExtensionIdea', this.args.courseExtensionIdea).length;
   }
 
   get userHasVotedOrSupervoted() {

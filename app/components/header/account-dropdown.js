@@ -5,11 +5,12 @@ import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 
 export default class HeaderAccountDropdownComponent extends Component {
+  @service authenticator;
   @service colorScheme;
-  @service('currentUser') currentUserService;
-  @tracked isCreatingBillingSession = false;
   @service router;
   @service store;
+
+  @tracked isCreatingBillingSession = false;
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -77,7 +78,7 @@ export default class HeaderAccountDropdownComponent extends Component {
   @action
   handleViewProfileClick(dropdownActions) {
     dropdownActions.close();
-    this.router.transitionTo('user', this.currentUser.username);
+    this.router.transitionTo('user', this.authenticator.currentUsername);
   }
 
   @action

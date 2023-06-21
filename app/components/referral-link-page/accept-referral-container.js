@@ -23,7 +23,7 @@ export default class AcceptReferralContainerComponent extends Component {
   }
 
   get currentUserIsAnonymous() {
-    return this.currentUserService.isAnonymous;
+    return this.authenticator.isAnonymous;
   }
 
   @action
@@ -36,7 +36,7 @@ export default class AcceptReferralContainerComponent extends Component {
       await this.store
         .createRecord('referral-activation', {
           referralLink: this.args.referralLink,
-          customer: this.currentUserService.record,
+          customer: this.authenticator.currentUser,
           referrer: this.args.referralLink.user,
         })
         .save();
@@ -45,18 +45,14 @@ export default class AcceptReferralContainerComponent extends Component {
     }
   }
   get currentUserIsReferrer() {
-    if (this.currentUserService.isAnonymous) {
+    if (this.authenticator.isAnonymous) {
       return false;
     } else {
-      return this.args.referralLink.user === this.currentUserService.record;
+      return this.args.referralLink.user === this.authenticator.currentUser;
     }
   }
 
   get currentUserIsAlreadyEligibleForReferralDiscount() {
-    if (this.currentUserService.isAnonymous) {
-      return false;
-    } else {
-      return this.currentUserService.record.isEligibleForReferralDiscount;
-    }
+    return this.authenticator.currentUser && this.authenticator.currentUser.isEligibleForReferralDiscount;
   }
 }

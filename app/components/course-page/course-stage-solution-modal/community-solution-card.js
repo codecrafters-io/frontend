@@ -131,7 +131,7 @@ export default class CommunitySolutionCardComponent extends Component {
   }
 
   get shouldShowExplanation() {
-    return this.isExpanded && this.explanationHTML && this.currentUserService.record.isStaff;
+    return this.isExpanded && this.explanationHTML && this.authenticator.currentUser.isStaff;
   }
 
   get shouldShowPublishToGithubButton() {

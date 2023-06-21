@@ -9,7 +9,7 @@ export default class MembershipRoute extends ApplicationRoute {
   beforeModel() {
     super.beforeModel(...arguments);
 
-    if (this.currentUserService.record.subscriptions.length === 0) {
+    if (this.authenticator.currentUser.subscriptions.length === 0) {
       this.router.transitionTo('pay');
     }
   }

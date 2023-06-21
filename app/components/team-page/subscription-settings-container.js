@@ -6,6 +6,6 @@ export default class SubscribtionSettingsContainerComponent extends Component {
   @service store;
 
   get currentUserIsTeamAdmin() {
-    return this.args.team.admins.includes(this.currentUserService.record);
+    return this.args.team.admins.includes(this.authenticator.currentUser);
   }
 }

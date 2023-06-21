@@ -13,7 +13,7 @@ export default class UpcomingPaymentSectionComponent extends Component {
 
   @action
   async handleDidInsert() {
-    this.nextInvoicePreview = await this.currentUserService.record.fetchNextInvoicePreview();
+    this.nextInvoicePreview = await this.authenticator.currentUser.fetchNextInvoicePreview();
     this.isLoading = false;
   }
 }

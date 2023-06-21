@@ -18,8 +18,8 @@ export default class FeatureFlagSyncer extends Service {
       return;
     }
 
-    if (this.currentUserService.record) {
-      this.currentUserService.record.syncFeatureFlags();
+    if (this.authenticator.currentUser) {
+      this.authenticator.currentUser.syncFeatureFlags();
       this.lastSyncedAt = new Date();
     }
   }

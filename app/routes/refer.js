@@ -10,11 +10,11 @@ export default class ReferRoute extends ApplicationRoute {
   }
 
   async model() {
-    await this.currentUserService.authenticate();
+    await this.authenticator.authenticate(); // Force loading referral links
 
-    if (this.currentUserService.record.hasJoinedReferralProgram) {
+    if (this.authenticator.currentUser.hasJoinedReferralProgram) {
       await this.store.query('referral-link', {
-        user_id: this.currentUserService.record.id,
+        user_id: this.authenticator.currentUser.id,
         include: 'activations,activations.customer,activations.referrer',
       });
     } else {

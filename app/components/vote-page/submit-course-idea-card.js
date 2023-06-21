@@ -10,7 +10,7 @@ export default class SubmitCourseIdeaCardComponent extends Component {
   handleClick() {
     createPopup('kJNvFVQM', {
       hidden: {
-        github_username: this.currentUserService.record.username,
+        github_username: this.authenticator.currentUser.username,
       },
     }).toggle();
   }

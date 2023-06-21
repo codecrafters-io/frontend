@@ -46,7 +46,7 @@ export default class CourseIdeaModel extends Model {
   supervote() {
     this.supervotesCount += 1;
 
-    let supervote = this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.currentUserService.record });
+    let supervote = this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.authenticator.currentUser });
     this.currentUserSupervotes.addObject(supervote);
 
     return supervote.save();
@@ -55,7 +55,7 @@ export default class CourseIdeaModel extends Model {
   vote() {
     this.votesCount += 1;
 
-    let vote = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.currentUserService.record });
+    let vote = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.authenticator.currentUser });
     this.currentUserVotes.addObject(vote);
 
     return vote.save();

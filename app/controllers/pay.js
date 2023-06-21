@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class PayController extends Controller {
-  @service('currentUser') currentUserService;
+  @service authenticator;
   @service router;
   @service store;
   @tracked isCreatingCheckoutSession = false;
@@ -32,6 +32,6 @@ export default class PayController extends Controller {
   }
 
   get user() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 }

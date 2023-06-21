@@ -73,7 +73,7 @@ export default class CoursePageContentComponent extends Component {
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion() {
-    if (this.currentUserService.isAnonymous || this.currentUser.isTeamMember) {
+    if (this.authenticator.isAnonymous || (this.currentUser && this.currentUser.isTeamMember)) {
       return null;
     }
 

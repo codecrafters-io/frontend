@@ -5,6 +5,6 @@ export default class MembersContainerComponent extends Component {
   @service authenticator;
 
   get currentUserIsTeamAdmin() {
-    return this.args.team.admins.includes(this.currentUserService.record);
+    return this.args.team.admins.includes(this.authenticator.currentUser);
   }
 }

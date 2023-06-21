@@ -23,9 +23,9 @@ export default class VoteRoute extends ApplicationRoute {
       include: 'course,current-user-votes,current-user-votes.user,current-user-supervotes,current-user-supervotes.user',
     });
 
-    if (this.currentUserService.isAuthenticated) {
+    if (this.authenticator.currentUserId) {
       // No need to wait on this, can load in the background
-      this.store.findRecord('user', this.currentUserService.record.id, {
+      this.store.findRecord('user', this.authenticator.currentUserId, {
         include: 'course-idea-supervote-grants,course-extension-idea-supervote-grants',
         reload: true,
       });

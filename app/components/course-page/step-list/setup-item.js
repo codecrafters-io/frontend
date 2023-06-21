@@ -14,7 +14,7 @@ export default class CoursePageContentStepListSetupItemComponent extends Compone
   async handleLanguageSelection(language) {
     this.args.repository.language = language;
 
-    if (this.currentUserService.record.canCreateRepository(this.args.repository.course, language)) {
+    if (this.authenticator.currentUser.canCreateRepository(this.args.repository.course, language)) {
       this.shouldShowUpgradePrompt = false;
       await this.args.repository.save();
       this.args.onRepositoryCreate();

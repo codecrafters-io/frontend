@@ -3,7 +3,7 @@ import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
   get currentUserDownvotes() {
-    return this.store.peekAll('downvote').filterBy('targetId', this.id).filterBy('user.id', this.currentUserService.record.id);
+    return this.store.peekAll('downvote').filterBy('targetId', this.id).filterBy('user.id', this.authenticator.currentUser.id);
   },
 
   get downvotes() {
@@ -25,7 +25,7 @@ export default Mixin.create({
     let downvote = this.store.createRecord('downvote', {
       targetId: this.id,
       targetType: this.constructor.modelName,
-      user: this.currentUserService.record,
+      user: this.authenticator.currentUser,
     });
 
     this.currentUserDownvotes.addObject(downvote);
