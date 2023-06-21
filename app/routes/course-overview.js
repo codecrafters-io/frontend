@@ -18,7 +18,7 @@ export default class CourseOverviewRoute extends ApplicationRoute {
       });
       let course = courses.findBy('slug', params.course_slug);
 
-      if (this.currentUser.isAuthenticated) {
+      if (this.authenticator.isAuthenticated) {
         await this.store.query('repository', {
           include: RepositoryPoller.defaultIncludedResources,
           course_id: course.id,

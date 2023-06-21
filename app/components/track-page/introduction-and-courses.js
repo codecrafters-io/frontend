@@ -11,7 +11,7 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component 
 
   get coursesWithProgress() {
     return this.args.courses.map((course) => {
-      let repositoryWithMostProgress = this.currentUser.isAuthenticated
+      let repositoryWithMostProgress = this.authenticator.isAuthenticated
         ? this.currentUser.record.repositories
             .filterBy('language', this.args.language)
             .filterBy('course', course)
@@ -28,7 +28,7 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component 
 
   get userHasStartedTrack() {
     return (
-      this.currentUser.isAuthenticated &&
+      this.authenticator.isAuthenticated &&
       this.currentUser.record.repositories.filterBy('language', this.args.language).filterBy('lastSubmissionAt').firstObject
     );
   }

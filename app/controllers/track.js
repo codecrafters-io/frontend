@@ -5,7 +5,7 @@ export default class TrackController extends Controller {
   @service authenticator;
 
   get courses() {
-    if (this.currentUser.isAuthenticated && this.currentUser.record.isStaff) {
+    if (this.authenticator.isAuthenticated && this.currentUser.record.isStaff) {
       return this.model.courses;
     }
 

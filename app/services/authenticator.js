@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 export default class AuthenticatorService extends Service {
   @service router;
   @service sessionTokenStorage;
-  @service authenticatorCacheStorage;
+  @service currentUserCacheStorage;
   @service store;
 
   // TODO: See if there's a way around using this
@@ -58,7 +58,7 @@ export default class AuthenticatorService extends Service {
   get currentUser() {
     this.cacheBuster; // Force reload on cacheBuster change
 
-    if (this.isAuthenticated) {
+    if (this.currentUserCacheStorage.userId) {
       return this.store.peekRecord('user', this.currentUserCacheStorage.userId);
     } else {
       return null;

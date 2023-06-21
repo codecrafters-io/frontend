@@ -5,7 +5,7 @@ export default class CourseOverviewController extends Controller {
   @service authenticator;
 
   get activeRepository() {
-    if (this.currentUser.isAuthenticated) {
+    if (this.authenticator.isAuthenticated) {
       return this.currentUser.record.repositories.filterBy('course', this.model.course).filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt')
         .lastObject;
     } else {
@@ -14,7 +14,7 @@ export default class CourseOverviewController extends Controller {
   }
 
   get userRepositories() {
-    if (this.currentUser.isAuthenticated) {
+    if (this.authenticator.isAuthenticated) {
       return this.currentUser.record.repositories.filterBy('course', this.model.course).filterBy('firstSubmissionCreated');
     } else {
       return [];

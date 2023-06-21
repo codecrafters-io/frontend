@@ -26,14 +26,6 @@ export default class HeaderComponent extends Component {
 
   @action
   handleDidInsert() {
-    if (this.authenticator.isAuthenticated) {
-      let username = this.currentUser.username;
-
-      if (username && window.FS) {
-        window.FS.identify(username, { displayName: this.authenticator.currentUsername });
-      }
-    }
-
     this.router.on('routeWillChange', this.handleRouteChange);
   }
 

@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class CourseIdeaCardComponent extends Component {
-  @service authentication;
+  @service authenticator;
   @service authenticator;
   @service store;
 
@@ -24,7 +24,7 @@ export default class CourseIdeaCardComponent extends Component {
   @action
   async handleSupervoteButtonClick() {
     if (this.authenticator.isAnonymous) {
-      this.authentication.initiateLogin();
+      this.authenticator.initiateLogin();
 
       return;
     }
@@ -45,7 +45,7 @@ export default class CourseIdeaCardComponent extends Component {
   @action
   async handleVoteButtonClick() {
     if (this.authenticator.isAnonymous) {
-      this.authentication.initiateLogin();
+      this.authenticator.initiateLogin();
 
       return;
     }

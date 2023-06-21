@@ -10,7 +10,7 @@ export default class CatalogRoute extends ApplicationRoute {
   async model() {
     let modelPromises = {};
 
-    if (this.currentUser.isAuthenticated) {
+    if (this.authenticator.isAuthenticated) {
       modelPromises.repositories = this.store.findAll('repository', {
         reload: false,
         include: 'language,course,user,course-stage-completions.course-stage,last-submission.course-stage',
