@@ -23,6 +23,7 @@ module.exports = function (environment) {
     },
     x: {
       backendUrl: process.env.BACKEND_URL,
+      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     },
   };
 
