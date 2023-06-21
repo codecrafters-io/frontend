@@ -56,10 +56,6 @@ export default class UserModel extends Model {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
-  get cannotUseTrial() {
-    return this.featureFlagsService.cannotUseTrial;
-  }
-
   canAttemptCourseStage(courseStage) {
     return courseStage.isFree || this.canAccessPaidContent;
   }

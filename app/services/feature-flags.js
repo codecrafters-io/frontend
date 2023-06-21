@@ -34,10 +34,6 @@ export default class FeatureFlagsService extends Service {
     return this.getFeatureFlagValue('can-see-stage-completion-videos') === 'test';
   }
 
-  get cannotUseTrial() {
-    return this.getFeatureFlagValue('no-trials') === 'test';
-  }
-
   get currentUser() {
     return this.currentUserService.record;
   }
