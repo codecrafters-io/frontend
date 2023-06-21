@@ -12,7 +12,9 @@ export default class VoteRoute extends ApplicationRoute {
     window.scrollTo({ top: 0 });
   }
 
-  model() {
+  async model() {
+    await this.authenticator.authenticate();
+
     const modelPromises = {};
 
     modelPromises.courseIdeas = this.store.findAll('course-idea', {
@@ -31,7 +33,7 @@ export default class VoteRoute extends ApplicationRoute {
       });
     }
 
-    return RSVP.hash(modelPromises);
+    return await RSVP.hash(modelPromises);
   }
 
   afterModel(model, transition) {
