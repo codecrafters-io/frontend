@@ -4,7 +4,7 @@ on: push
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 10
 
     steps:
@@ -57,7 +57,7 @@ jobs:
 
       - run: npm run tailwind:build
 
-      - run: ./node_modules/.bin/percy exec --quiet -- ./node_modules/.bin/ember exam  --silent --reporter xunit | tee test-results.xml
+      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --split=6 --parallel=1 | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
