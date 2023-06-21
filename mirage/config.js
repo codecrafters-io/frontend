@@ -299,6 +299,16 @@ function routes() {
     return schema.users.where({ username: request.queryParams.username });
   });
 
+  this.get('/users/current', function (schema, request) {
+    const session = schema.sessions.find('current-session-id');
+
+    if (session) {
+      return session.user;
+    } else {
+      return new Response(200, {}, { data: {} });
+    }
+  });
+
   this.get('/users/:id');
 
   this.get('/users/:id/next-invoice-preview', function (schema) {

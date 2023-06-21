@@ -18,7 +18,7 @@ export default class ReferRoute extends ApplicationRoute {
         include: 'activations,activations.customer,activations.referrer',
       });
     } else {
-      // Referral links themselves are loaded in the serverVariables payload
+      // Referral links themselves are loaded in the /users/current payload
     }
   }
 }
