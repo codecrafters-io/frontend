@@ -1,7 +1,6 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import User from 'codecrafters-frontend/models/user';
 
 export default class CurrentUserService extends Service {
   @service router;

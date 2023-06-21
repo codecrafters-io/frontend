@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import window from 'ember-window-mock';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 
 export default class AcceptReferralContainerComponent extends Component {

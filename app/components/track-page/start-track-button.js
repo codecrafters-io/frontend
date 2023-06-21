@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import window from 'ember-window-mock';
 
 export default class CourseOverviewStartTrackButtonComponent extends Component {
   @service authentication;
