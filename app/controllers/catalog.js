@@ -51,7 +51,7 @@ export default class TracksController extends Controller {
   }
 
   get orderedLanguages() {
-    if (this.authenticator.currentUser) {
+    if (!this.authenticator.currentUser) {
       return this.languages.sortBy('sortPositionForTrack');
     } else {
       return this.languages.toArray().sort((language1, language2) => {
