@@ -28,7 +28,6 @@ export default class PricingCardComponent extends Component {
       customDiscount: this.args.customDiscount,
       earlyBirdDiscountEnabled: this.args.earlyBirdDiscountEnabled,
       referralDiscountEnabled: this.args.referralDiscountEnabled,
-      trialDisabled: true,
       successUrl: `${window.location.origin}/tracks`,
       cancelUrl: `${window.location.origin}/pay`,
       pricingFrequency: this.args.pricingFrequency,

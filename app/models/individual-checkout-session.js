@@ -9,7 +9,6 @@ export default class IndividualCheckoutSessionModel extends Model {
   @attr('string') promotionCode;
   @attr('boolean') referralDiscountEnabled;
   @attr('string') successUrl;
-  @attr('boolean') trialDisabled;
   @attr('string') cancelUrl;
   @attr('string') url;
   @attr('string') pricingFrequency;
