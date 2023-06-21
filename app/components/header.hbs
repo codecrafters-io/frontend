@@ -60,13 +60,15 @@
         >Vote</LinkTo>
 
         {{#if this.currentUser.isAdmin}}
-          <a href="/admin" class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Admin</a>
+          <a href={{this.adminPanelLink}} class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Admin</a>
         {{/if}}
       </div>
 
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center ml-6">
-        {{#if this.currentUser}}
+        {{#if this.currentUserService.isAuthenticating}}
+          <LoadingSkeleton @width=150 />
+        {{else if this.currentUser}}
           <FeedbackButton class="mr-4" as |dd|>
             <div
               role="button"

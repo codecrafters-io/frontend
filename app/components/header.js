@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import logoImage from '/assets/images/logo/logomark-color.svg';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class HeaderComponent extends Component {
   logoImage = logoImage;
@@ -14,6 +15,10 @@ export default class HeaderComponent extends Component {
   @service colorScheme;
 
   @tracked mobileMenuIsExpanded = false;
+
+  get adminPanelLink() {
+    return `${config.x.backendUrl}/admin`;
+  }
 
   get currentUser() {
     return this.currentUserService.record;

@@ -1,6 +1,7 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import User from 'codecrafters-frontend/models/user';
 
 export default class CurrentUserService extends Service {
   @service router;
@@ -21,31 +22,30 @@ export default class CurrentUserService extends Service {
     }
 
     const includedResources = [
-      'user',
-      'user.feature_suggestions',
-      'user.referral_activations_as_customer.referrer',
-      'user.referral_links',
-      'user.referral_links.user',
-      'user.team_memberships',
-      'user.team_memberships.team.memberships.user',
-      'user.team_memberships.team.subscriptions',
-      'user.team_memberships.team.pilots',
-      'user.team_memberships.team.payment_methods',
-      'user.subscriptions',
-      'user.subscriptions.user',
+      'feature_suggestions',
+      'referral_activations_as_customer.referrer',
+      'referral_links',
+      'referral_links.user',
+      'team_memberships',
+      'team_memberships.team.memberships.user',
+      'team_memberships.team.subscriptions',
+      'team_memberships.team.pilots',
+      'team_memberships.team.payment_methods',
+      'subscriptions',
+      'subscriptions.user',
     ];
 
     this.isAuthenticating = true;
-    const session = (await this.store.query('session', { include: includedResources.join(',') }))[0];
+    const user = await this.store.createRecord('user').fetchCurrent({ include: includedResources.join(',') });
     this.isAuthenticating = false;
 
-    if (!session) {
+    if (!user) {
       this.sessionTokenStorage.clearToken();
 
       return;
     }
 
-    this.currentUserId = session.user.id;
+    this.currentUserId = user.id;
   }
 
   // Useful in cases where we don't want to wait for the session request to go through
