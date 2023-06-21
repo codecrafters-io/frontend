@@ -3,7 +3,7 @@ import Service from '@ember/service';
 export default class SessionTokenStorageService extends Service {
   static LOCAL_STORAGE_KEY = 'session_token_v1';
 
-  clearToken(): void {
+  clear(): void {
     localStorage.removeItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
   }
 

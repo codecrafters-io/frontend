@@ -10,6 +10,8 @@ export default class ApplicationRoute extends Route {
   @service utmCampaignIdTracker;
 
   beforeModel(transition) {
+    this.currentUser.authenticate();
+
     if (!this.allowsAnonymousAccess && !this.currentUser.couldBeAuthenticated) {
       if (Object.keys(transition.to.params).length > 0) {
         this.authentication.initiateLogin(this.router.urlFor(transition.to.name, transition.to.params));
