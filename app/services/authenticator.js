@@ -1,6 +1,7 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import window from 'ember-window-mock';
 
 export default class AuthenticatorService extends Service {
   @service router;
