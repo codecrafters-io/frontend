@@ -5,7 +5,7 @@ export default class TracksController extends Controller {
   @service authenticator;
 
   get courses() {
-    if (this.authenticator.isAuthenticated && this.currentUser.record.isStaff) {
+    if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {
       return this.model.courses;
     }
 
@@ -21,14 +21,14 @@ export default class TracksController extends Controller {
 
   // TODO: The sort implementation here is incorrect! It should compare values and return 1/-1, not return the value.
   get orderedCourses() {
-    if (this.currentUser.isAnonymous) {
+    if (!this.authenticator.currentUser) {
       return this.courses.toArray().sort((course1, course2) => {
         return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
       });
     } else {
       return this.courses.toArray().sort((course1, course2) => {
-        let repositoriesForCourse1 = this.currentUser.record.repositories.filterBy('course', course1).filterBy('firstSubmissionCreated');
-        let repositoriesForCourse2 = this.currentUser.record.repositories.filterBy('course', course2).filterBy('firstSubmissionCreated');
+        let repositoriesForCourse1 = this.authenticator.currentUser.repositories.filterBy('course', course1).filterBy('firstSubmissionCreated');
+        let repositoriesForCourse2 = this.authenticator.currentUser.repositories.filterBy('course', course2).filterBy('firstSubmissionCreated');
 
         let lastSubmissionForCourse1At =
           repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt.getTime() : null;
@@ -51,12 +51,12 @@ export default class TracksController extends Controller {
   }
 
   get orderedLanguages() {
-    if (this.currentUser.isAnonymous) {
+    if (this.authenticator.currentUser) {
       return this.languages.sortBy('sortPositionForTrack');
     } else {
       return this.languages.toArray().sort((language1, language2) => {
-        let repositoriesForLanguage1 = this.currentUser.record.repositories.filterBy('language', language1).filterBy('firstSubmissionCreated');
-        let repositoriesForLanguage2 = this.currentUser.record.repositories.filterBy('language', language2).filterBy('firstSubmissionCreated');
+        let repositoriesForLanguage1 = this.authenticator.currentUser.repositories.filterBy('language', language1).filterBy('firstSubmissionCreated');
+        let repositoriesForLanguage2 = this.authenticator.currentUser.repositories.filterBy('language', language2).filterBy('firstSubmissionCreated');
 
         if (repositoriesForLanguage1.length > 0 && repositoriesForLanguage2.length > 0) {
           let lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt;

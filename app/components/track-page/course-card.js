@@ -10,7 +10,7 @@ export default class TrackPageCourseCardComponent extends Component {
   @service store;
 
   get currentUserIsAnonymous() {
-    return this.currentUser.isAnonymous;
+    return this.authenticator.isAnonymous;
   }
 
   @action

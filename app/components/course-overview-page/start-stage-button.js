@@ -5,6 +5,6 @@ export default class CourseOverviewStartStageButtonComponent extends Component {
   @service authenticator;
 
   get currentUserIsAnonymous() {
-    return this.currentUser.isAnonymous;
+    return this.authenticator.isAnonymous;
   }
 }

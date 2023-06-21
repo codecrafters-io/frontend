@@ -6,6 +6,6 @@ export default class HeaderComponent extends Component {
   @service featureFlags;
 
   get currentUserIsStaff() {
-    return this.currentUser.record.isStaff;
+    return this.authenticator.currentUser && this.authenticator.currentUser.isStaff;
   }
 }

@@ -5,10 +5,10 @@ export default class CourseOverviewPageHeaderComponent extends Component {
   @service authenticator;
 
   get currentUserHasStartedCourse() {
-    return this.authenticator.isAuthenticated && this.currentUser.record.repositories.filterBy('course', this.args.course).firstObject;
+    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', this.args.course).firstObject;
   }
 
   get currentUserIsAnonymous() {
-    return this.currentUser.isAnonymous;
+    return this.authenticator.isAnonymous;
   }
 }

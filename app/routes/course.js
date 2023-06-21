@@ -40,7 +40,7 @@ export default class CourseRoute extends ApplicationRoute {
 
     controller.set(
       'newRepository',
-      this.store.createRecord('repository', { course: model.courses.findBy('slug', model.courseSlug), user: this.currentUser.record })
+      this.store.createRecord('repository', { course: model.courses.findBy('slug', model.courseSlug), user: this.authenticator.currentUser })
     );
   }
 }

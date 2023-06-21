@@ -17,6 +17,6 @@ export default class CourseOverviewStartTrackButtonComponent extends Component {
   }
 
   get currentUserIsAnonymous() {
-    return this.currentUser.isAnonymous;
+    return this.authenticator.isAnonymous;
   }
 }

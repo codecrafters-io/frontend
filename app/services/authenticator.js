@@ -42,8 +42,7 @@ export default class AuthenticatorService extends Service {
       return;
     }
 
-    this.currentUserCacheStorage.userId = user.id;
-    this.currentUserCacheStorage.username = user.username;
+    this.currentUserCacheStorage.setValues(user.id, user.username);
     this.cacheBuster++;
   }
 
