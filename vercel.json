@@ -1,6 +1,6 @@
 {
   "rewrites": [
     { "source": "/submissions", "destination": "backend.codecrafters.io/submissions" },
-    { "source": "/submissions/:match*", "destination": "backend.codecrafters.io/submissions/:match*"
+    { "source": "/submissions/:match*", "destination": "backend.codecrafters.io/submissions/:match*" }
   ]
 }
