@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import config from 'codecrafters-frontend/config/environment';
 import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
