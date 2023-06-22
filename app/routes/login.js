@@ -1,9 +1,15 @@
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
-import config from 'codecrafters-frontend/config/environment';
+import { inject as service } from '@ember/service';
 
 export default class LoginRoute extends ApplicationRoute {
+  @service authenticator;
+
   beforeModel(transition) {
-    window.location = `${config.x.backendUrl}/login?next=${encodeURIComponent(transition.to.queryParams.next)}`;
+    if (transition.to.queryParams.next) {
+      this.authenticator.initiateLogin(transition.to.queryParams.next);
+    } else {
+      this.authenticator.initiateLogin();
+    }
   }
 
   // Show loading screen as we redirect the user

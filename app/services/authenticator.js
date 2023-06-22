@@ -1,6 +1,7 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import config from 'codecrafters-frontend/config/environment';
 import window from 'ember-window-mock';
 
 export default class AuthenticatorService extends Service {
@@ -37,8 +38,8 @@ export default class AuthenticatorService extends Service {
     this.isLoadingUser = false;
 
     if (!user) {
-      this.sessionTokenStorage.clear();
-      this.currentUserCacheStorage.clear();
+      this.logout();
+      window.location.reload();
 
       return;
     }
@@ -77,9 +78,9 @@ export default class AuthenticatorService extends Service {
 
   initiateLogin(redirectPath) {
     if (redirectPath) {
-      window.location.href = '/login?next=' + encodeURIComponent(`${window.origin}${redirectPath}`);
+      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPath}`);
     } else {
-      window.location.href = '/login?next=' + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
+      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
     }
   }
 
