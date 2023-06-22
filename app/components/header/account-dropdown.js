@@ -36,8 +36,16 @@ export default class HeaderAccountDropdownComponent extends Component {
 
   @action
   handleLogoutClick() {
-    // TODO: Convert this to destroy session
-    console.log('logout');
+    this.authenticator.logout();
+
+    // https://stackoverflow.com/a/24766685
+    let f = document.createElement('form');
+    f.action = `${this.serverVariables.get('serverUrl')}/logout`;
+    f.method = 'POST';
+    // f.target='_blank';
+
+    document.body.appendChild(f);
+    f.submit();
   }
 
   @action

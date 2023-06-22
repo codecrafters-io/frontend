@@ -47,14 +47,6 @@ export default class AuthenticatorService extends Service {
     this.cacheBuster++;
   }
 
-  initiateLogin(redirectPath) {
-    if (redirectPath) {
-      window.location.href = '/login?next=' + encodeURIComponent(`${window.origin}${redirectPath}`);
-    } else {
-      window.location.href = '/login?next=' + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
-    }
-  }
-
   get currentUser() {
     this.cacheBuster; // Force reload on cacheBuster change
 
@@ -81,6 +73,20 @@ export default class AuthenticatorService extends Service {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.currentUser ? this.currentUser.username : this.currentUserCacheStorage.username;
+  }
+
+  initiateLogin(redirectPath) {
+    if (redirectPath) {
+      window.location.href = '/login?next=' + encodeURIComponent(`${window.origin}${redirectPath}`);
+    } else {
+      window.location.href = '/login?next=' + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
+    }
+  }
+
+  logout() {
+    this.sessionTokenStorage.clear();
+    this.currentUserCacheStorage.clear();
+    this.cacheBuster++;
   }
 
   get isAnonymous() {
