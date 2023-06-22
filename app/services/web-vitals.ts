@@ -31,7 +31,7 @@ export default class WebVitalsService extends Service {
       return;
     }
 
-    const vitalsUrl = 'https://api.vercel.com/v1/vitals';
+    const vitalsUrl = 'https://vitals.vercel-insights.com/v1/vitals';
     const body = {
       dsn: vercelAnalyticsId,
       event_name: metric.name,
