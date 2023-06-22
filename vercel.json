@@ -1,8 +1,7 @@
 {
   "rewrites": [
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
-    { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
-    { "source": "/api/:match*", "destination": "https://backend.codecrafters.io/api/:match*" }
+    { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" }
   ],
   "github": {
     "silent": true
