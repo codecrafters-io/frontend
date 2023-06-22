@@ -11,4 +11,11 @@ export default class LoggedInRoute extends ApplicationRoute {
     this.sessionTokenStorage.setToken(sessionToken);
     window.location = redirectUri;
   }
+
+  // Show loading screen as we redirect the user
+  async model() {
+    await new Promise((resolve) => setTimeout(resolve, 10_000));
+
+    return {};
+  }
 }
