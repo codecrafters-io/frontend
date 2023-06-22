@@ -14,11 +14,11 @@ export default class TrackLeaderboardComponent extends Component {
   transition = fade;
   @tracked isLoadingEntries = true;
   @tracked entriesFromAPI;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   get currentUser() {
-    return this.currentUserService.isAuthenticated ? this.currentUserService.record : null;
+    return this.authenticator.currentUser;
   }
 
   get entries() {

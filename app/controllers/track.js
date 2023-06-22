@@ -2,10 +2,10 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 
 export default class TrackController extends Controller {
-  @service currentUser;
+  @service authenticator;
 
   get courses() {
-    if (this.currentUser.isAuthenticated && this.currentUser.record.isStaff) {
+    if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {
       return this.model.courses;
     }
 

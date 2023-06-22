@@ -2,13 +2,12 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import window from 'ember-window-mock';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 
 export default class AcceptReferralContainerComponent extends Component {
   logoImage = logoImage;
 
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
   @service router;
 
@@ -19,24 +18,24 @@ export default class AcceptReferralContainerComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   get currentUserIsAnonymous() {
-    return this.currentUserService.isAnonymous;
+    return this.authenticator.isAnonymous;
   }
 
   @action
   async handleAcceptOfferButtonClick() {
     if (this.currentUserIsAnonymous) {
-      window.location.href = '/login?next=' + encodeURIComponent(this.router.currentURL);
+      this.authenticator.initiateLogin();
     } else if (this.acceptOfferButtonIsEnabled) {
       this.isCreatingReferralActivation = true;
 
       await this.store
         .createRecord('referral-activation', {
           referralLink: this.args.referralLink,
-          customer: this.currentUserService.record,
+          customer: this.authenticator.currentUser,
           referrer: this.args.referralLink.user,
         })
         .save();
@@ -45,18 +44,14 @@ export default class AcceptReferralContainerComponent extends Component {
     }
   }
   get currentUserIsReferrer() {
-    if (this.currentUserService.isAnonymous) {
+    if (this.authenticator.isAnonymous) {
       return false;
     } else {
-      return this.args.referralLink.user === this.currentUserService.record;
+      return this.args.referralLink.user === this.authenticator.currentUser;
     }
   }
 
   get currentUserIsAlreadyEligibleForReferralDiscount() {
-    if (this.currentUserService.isAnonymous) {
-      return false;
-    } else {
-      return this.currentUserService.record.isEligibleForReferralDiscount;
-    }
+    return this.authenticator.currentUser && this.authenticator.currentUser.isEligibleForReferralDiscount;
   }
 }

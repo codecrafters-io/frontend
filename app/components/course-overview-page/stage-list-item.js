@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import showdown from 'showdown';
 
 export default class CourseOverviewPageStageListItemComponent extends Component {
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   get marketingHTML() {
@@ -12,7 +12,7 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
   }
 
   get userHasStartedCourse() {
-    return this.currentUser.isAuthenticated && this.currentUser.record.repositories.filterBy('course', this.args.course).firstObject;
+    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', this.args.course).firstObject;
   }
 
   get recentlyAttemptedUsers() {

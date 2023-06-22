@@ -9,11 +9,11 @@ export default class UpcomingPaymentSectionComponent extends Component {
 
   @tracked isLoading = true;
   @tracked nextInvoicePreview;
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   @action
   async handleDidInsert() {
-    this.nextInvoicePreview = await this.currentUserService.record.fetchNextInvoicePreview();
+    this.nextInvoicePreview = await this.authenticator.currentUser.fetchNextInvoicePreview();
     this.isLoading = false;
   }
 }

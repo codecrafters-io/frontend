@@ -5,13 +5,13 @@ import window from 'ember-window-mock';
 import Component from '@glimmer/component';
 
 export default class TeamPageMembersListItemComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service router;
   @service store;
   @tracked isRemoving;
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   get currentUserIsTeamAdmin() {

@@ -7,12 +7,12 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component 
   logoImage = logoImage;
   comingSoonImage = comingSoonImage;
 
-  @service currentUser;
+  @service authenticator;
 
   get coursesWithProgress() {
     return this.args.courses.map((course) => {
-      let repositoryWithMostProgress = this.currentUser.isAuthenticated
-        ? this.currentUser.record.repositories
+      let repositoryWithMostProgress = this.authenticator.currentUser
+        ? this.authenticator.currentUser.repositories
             .filterBy('language', this.args.language)
             .filterBy('course', course)
             .filterBy('firstSubmissionCreated')
@@ -28,8 +28,8 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component 
 
   get userHasStartedTrack() {
     return (
-      this.currentUser.isAuthenticated &&
-      this.currentUser.record.repositories.filterBy('language', this.args.language).filterBy('lastSubmissionAt').firstObject
+      this.authenticator.currentUser &&
+      this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('lastSubmissionAt').firstObject
     );
   }
 }

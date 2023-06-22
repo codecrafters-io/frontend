@@ -3,7 +3,7 @@ import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
 
 export default class UserRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
-  @service currentUser;
+  @service authenticator;
   @service router;
   @service store;
 

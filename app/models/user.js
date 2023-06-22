@@ -1,5 +1,5 @@
 import Model, { attr, hasMany } from '@ember-data/model';
-import { memberAction } from 'ember-api-actions';
+import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
 export default class UserModel extends Model {
@@ -184,6 +184,22 @@ UserModel.prototype.fetchNextInvoicePreview = memberAction({
       this.store.pushPayload(response);
 
       return this.store.peekRecord('invoice', response.data.id);
+    } else {
+      return null;
+    }
+  },
+});
+
+UserModel.prototype.fetchCurrent = collectionAction({
+  path: 'current',
+  type: 'get',
+  urlType: 'findRecord',
+
+  after(response) {
+    if (response.data) {
+      this.store.pushPayload(response);
+
+      return this.store.peekRecord('user', response.data.id);
     } else {
       return null;
     }

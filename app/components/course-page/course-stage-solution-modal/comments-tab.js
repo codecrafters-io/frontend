@@ -9,7 +9,7 @@ export default class CommentsTabComponent extends Component {
   @tracked isLoading = true;
   @service featureFlags;
   @service store;
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   constructor() {
     super(...arguments);
@@ -18,7 +18,7 @@ export default class CommentsTabComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action
@@ -45,7 +45,7 @@ export default class CommentsTabComponent extends Component {
     if (this.currentUser.isStaff) {
       return topLevelPersistedComments;
     } else {
-      return topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.currentUserService.record);
+      return topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
     }
   }
 }

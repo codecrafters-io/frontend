@@ -1,13 +1,10 @@
 import Component from '@glimmer/component';
 import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { loadStripe } from '@stripe/stripe-js';
-import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class PaymentDetailsStepContainerComponent extends Component {
-  @service serverVariables;
-
   @tracked errorMessage;
   @tracked stripeElementsObject;
   @tracked isConfirmingPaymentDetails = false;
@@ -75,7 +72,7 @@ export default class PaymentDetailsStepContainerComponent extends Component {
 
   // We need the same shared instance for form errors to work properly
   async stripeLib() {
-    this.stripeLibObject ||= await loadStripe(this.serverVariables.get('stripePublishableKey'));
+    this.stripeLibObject ||= await loadStripe(config.x.stripePublishableKey);
 
     return this.stripeLibObject;
   }

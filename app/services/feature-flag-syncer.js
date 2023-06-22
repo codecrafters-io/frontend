@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class FeatureFlagSyncer extends Service {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service router;
   @tracked lastSyncedAt = null;
 
@@ -18,8 +18,8 @@ export default class FeatureFlagSyncer extends Service {
       return;
     }
 
-    if (this.currentUserService.record) {
-      this.currentUserService.record.syncFeatureFlags();
+    if (this.authenticator.currentUser) {
+      this.authenticator.currentUser.syncFeatureFlags();
       this.lastSyncedAt = new Date();
     }
   }

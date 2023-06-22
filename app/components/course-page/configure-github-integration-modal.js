@@ -8,7 +8,7 @@ import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class ConfigureGithubIntegrationModalComponent extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   @tracked isLoading = true;
@@ -107,10 +107,10 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   }
 
   get githubAppInstallation() {
-    return this.currentUserService.record.githubAppInstallation;
+    return this.authenticator.currentUser.githubAppInstallation;
   }
 
   get recommendedRepositoryName() {
-    return `${this.currentUserService.record.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
+    return `${this.authenticator.currentUser.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
   }
 }

@@ -3,10 +3,10 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 
 export default class CourseLeaderboardEntryComponent extends Component {
-  @service currentUser;
+  @service authenticator;
 
   get isForCurrentUser() {
-    return this.currentUser.isAuthenticated && this.args.entry.user.id === this.currentUser.currentUserId;
+    return this.authenticator.isAuthenticated && this.args.entry.user.id === this.authenticator.currentUserId;
   }
 
   get progressNumerator() {

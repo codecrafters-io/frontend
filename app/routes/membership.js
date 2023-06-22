@@ -4,12 +4,12 @@ import { inject as service } from '@ember/service';
 export default class MembershipRoute extends ApplicationRoute {
   @service store;
   @service router;
-  @service('current-user') currentUserService;
+  @service authenticator;
 
-  beforeModel() {
-    super.beforeModel(...arguments);
+  async model() {
+    await this.authenticator.authenticate();
 
-    if (this.currentUserService.record.subscriptions.length === 0) {
+    if (this.authenticator.currentUser && this.authenticator.currentUser.subscriptions.length === 0) {
       this.router.transitionTo('pay');
     }
   }

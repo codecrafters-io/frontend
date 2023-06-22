@@ -5,12 +5,12 @@ import { inject as service } from '@ember/service';
 import showdown from 'showdown';
 
 export default class TrackPageCourseCardComponent extends Component {
-  @service currentUser;
+  @service authenticator;
   @service router;
   @service store;
 
   get currentUserIsAnonymous() {
-    return this.currentUser.isAnonymous;
+    return this.authenticator.isAnonymous;
   }
 
   @action

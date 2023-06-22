@@ -1,14 +1,6 @@
 {
   "disableAnalytics": false,
 
-  "liveReloadOptions": {
-    "port": 443,
-    "https": true,
-    "host": "codecrafters-paul-ember-dev-proxy.ngrok.io"
-  },
-
-  "liveReloadJsUrl": "https://codecrafters-paul-ember-dev-proxy.ngrok.io/_lr/livereload.js",
-
   /**
     Setting `isTypeScriptProject` to true will force the blueprint generators to generate TypeScript
     rather than JavaScript by default, when a TypeScript version of a given blueprint is available.

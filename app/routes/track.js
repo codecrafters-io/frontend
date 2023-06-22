@@ -4,7 +4,7 @@ import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 
 export default class TrackRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   activate() {
@@ -17,7 +17,7 @@ export default class TrackRoute extends ApplicationRoute {
     });
     let language = this.store.peekAll('language').findBy('slug', params.track_slug);
 
-    if (this.currentUser.isAuthenticated) {
+    if (this.authenticator.isAuthenticated) {
       await this.store.findAll('repository', {
         include: RepositoryPoller.defaultIncludedResources,
       });

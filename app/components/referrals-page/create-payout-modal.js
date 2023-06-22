@@ -9,12 +9,12 @@ export default class CreatePayoutModalComponent extends Component {
   paypalImage = paypalImage;
   amazonImage = amazonImage;
 
-  @service('current-user') currentUserService;
+  @service authenticator;
   @tracked selectedPayoutMethod = null;
   @tracked payoutWasCreated = false;
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action

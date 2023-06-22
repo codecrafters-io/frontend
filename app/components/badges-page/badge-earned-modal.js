@@ -3,11 +3,11 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 export default class BadgeEarnedModalComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   get currentUserBadgeAwards() {

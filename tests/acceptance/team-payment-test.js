@@ -11,10 +11,6 @@ module('Acceptance | team-payment-test', function (hooks) {
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  hooks.beforeEach(function () {
-    this.owner.lookup('service:serverVariables').set('stripePublishableKey', 'pk_test_12345');
-  });
-
   test('user can setup team', async function (assert) {
     testScenario(this.server);
 

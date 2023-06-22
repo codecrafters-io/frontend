@@ -24,7 +24,7 @@
     </span>
   {{/if}}
 
-  {{#if this.currentUserService.isAnonymous}}
+  {{#if this.authenticator.isAnonymous}}
     <EmberTooltip @text="Click to login via GitHub" />
   {{else if (not @userHasSupervotesAvailable)}}
     <EmberTooltip @event="click" @hideOn="mouseleave" @text="You're out of supervotes. Earn more by completing CodeCrafters challenges!">

@@ -148,11 +148,12 @@ module('Acceptance | concepts-test', function (hooks) {
 
     const analyticsEvents = this.server.schema.analyticsEvents.all().models;
 
-    assert.strictEqual(analyticsEvents.length, 7, 'Expected 3 analytics events to be tracked');
+    assert.strictEqual(analyticsEvents.length, 8, 'Expected 8 analytics events to be tracked');
 
     assert.deepEqual(
       analyticsEvents.map((event) => event.name),
       [
+        'feature_flag_called', // Can see badges?
         'viewed_page',
         'viewed_page',
         'viewed_concept',

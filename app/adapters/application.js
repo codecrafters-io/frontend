@@ -1,22 +1,22 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
   namespace = 'api/v1';
-  @service serverVariables;
-  @service currentUser;
+  @service sessionTokenStorage;
 
   get headers() {
     const headers = {};
 
-    if (this.serverVariables.get('csrfToken')) {
-      headers['X-CSRF-Token'] = this.serverVariables.get('csrfToken');
+    if (this.sessionTokenStorage.hasToken) {
+      headers['X-Session-Token'] = this.sessionTokenStorage.currentToken;
     }
 
     return headers;
   }
 
   get host() {
-    return this.serverVariables.get('serverUrl');
+    return config.x.backendUrl;
   }
 }

@@ -1,26 +1,30 @@
 # codecrafters-frontend
 
-The front-end app that is served by [codecrafters-io/server](https://github.com/codecrafters-io/server).
+The front-end app that powers [app.codecrafters.io](https://app.codecrafters.io).
 
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with npm)
-* [Ember CLI](https://cli.emberjs.com/release/)
-* [Google Chrome](https://google.com/chrome/)
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) (with npm)
+- [Ember CLI](https://cli.emberjs.com/release/)
+- [Google Chrome](https://google.com/chrome/)
 
-## Installation
+You can run tests locally without a backend server, but to use the app you'll also need an instance of
+[codecrafters-io/core](https://github.com/codecrafters-io/core) running locally. Visit that repo for setup instructions.
 
-* `git clone <repository-url>` this repository
-* `cd codecrafters-frontend`
-* `npm install`
+## Setup / Installation
+
+- `git clone <repository-url>` this repository
+- `cd codecrafters-frontend`
+- `npm install`
+- Copy `.env.example` to `.env` and fill in the values
 
 ## Running / Development
 
-* `npm run start`
-* View your app via https://codecrafters-<username>.ngrok.io
+- `npm run start`
+- View your app via https://cc-<username>.ngrok.io
 
 ## Running tests
 
@@ -28,12 +32,10 @@ You will need the following things properly installed on your computer.
 
 ### Linting
 
-* `npm run lint`
-* `npm run lint:fix`
+- `npm run lint`
+- `npm run lint:fix`
 
 ### Deploying
 
-- This app is served via [codecrafters-io/server](https://github.com/codecrafters-io/server)
-- When a commit is merged into master, GitHub Actions will create a corresponding PR [like this](https://github.com/codecrafters-io/server/pull/39).
-- Merge that PR, and the app will be deployed.
-- It can take 2-3 minutes for the PR to be created.
+- This app is automatically deployed to [app.codecrafters.io](https://app.codecrafters.io) when a commit is merged into master.
+- Each branch is also deployed to a preview URL via Vercel.

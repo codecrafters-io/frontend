@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class TrackCardComponent extends Component {
-  @service currentUser;
+  @service authenticator;
   @service router;
   @service store;
 
@@ -13,7 +13,11 @@ export default class TrackCardComponent extends Component {
   }
 
   get completedStagesCount() {
-    return this.currentUser.record.repositories
+    if (!this.authenticator.currentUser) {
+      return 0;
+    }
+
+    return this.authenticator.currentUser.repositories
       .filterBy('language', this.args.language)
       .toArray()
       .flatMap((repository) => repository.completedStages)
@@ -21,8 +25,8 @@ export default class TrackCardComponent extends Component {
   }
 
   get currentUserHasStartedTrack() {
-    if (this.currentUser.isAuthenticated) {
-      return !!this.currentUser.record.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated').firstObject;
+    if (this.authenticator.currentUser) {
+      return !!this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated').firstObject;
     } else {
       return false;
     }

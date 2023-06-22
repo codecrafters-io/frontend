@@ -4,7 +4,7 @@ import RSVP from 'rsvp';
 
 export default class VoteRoute extends ApplicationRoute {
   allowsAnonymousAccess = true;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service router;
   @service store;
 
@@ -12,7 +12,9 @@ export default class VoteRoute extends ApplicationRoute {
     window.scrollTo({ top: 0 });
   }
 
-  model() {
+  async model() {
+    await this.authenticator.authenticate();
+
     const modelPromises = {};
 
     modelPromises.courseIdeas = this.store.findAll('course-idea', {
@@ -23,15 +25,15 @@ export default class VoteRoute extends ApplicationRoute {
       include: 'course,current-user-votes,current-user-votes.user,current-user-supervotes,current-user-supervotes.user',
     });
 
-    if (this.currentUserService.isAuthenticated) {
+    if (this.authenticator.currentUserId) {
       // No need to wait on this, can load in the background
-      this.store.findRecord('user', this.currentUserService.record.id, {
+      this.store.findRecord('user', this.authenticator.currentUserId, {
         include: 'course-idea-supervote-grants,course-extension-idea-supervote-grants',
         reload: true,
       });
     }
 
-    return RSVP.hash(modelPromises);
+    return await RSVP.hash(modelPromises);
   }
 
   afterModel(model, transition) {

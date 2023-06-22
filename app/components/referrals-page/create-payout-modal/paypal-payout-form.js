@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class PaypalPayoutFormComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
   @tracked emailAddress = '';
   @tracked formElement;
@@ -18,7 +18,7 @@ export default class PaypalPayoutFormComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   get formIsComplete() {

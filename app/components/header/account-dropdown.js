@@ -1,19 +1,19 @@
+import Component from '@glimmer/component';
+import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import Component from '@glimmer/component';
-import window from 'ember-window-mock';
 
 export default class HeaderAccountDropdownComponent extends Component {
+  @service authenticator;
   @service colorScheme;
-  @service('currentUser') currentUserService;
-  @tracked isCreatingBillingSession = false;
   @service router;
-  @service serverVariables;
   @service store;
 
+  @tracked isCreatingBillingSession = false;
+
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action
@@ -36,14 +36,7 @@ export default class HeaderAccountDropdownComponent extends Component {
 
   @action
   handleLogoutClick() {
-    // https://stackoverflow.com/a/24766685
-    let f = document.createElement('form');
-    f.action = `${this.serverVariables.get('serverUrl')}/logout`;
-    f.method = 'POST';
-    // f.target='_blank';
-
-    document.body.appendChild(f);
-    f.submit();
+    this.store.createRecord('session').logout();
   }
 
   @action
@@ -84,7 +77,7 @@ export default class HeaderAccountDropdownComponent extends Component {
   @action
   handleViewProfileClick(dropdownActions) {
     dropdownActions.close();
-    this.router.transitionTo('user', this.currentUser.username);
+    this.router.transitionTo('user', this.authenticator.currentUsername);
   }
 
   @action

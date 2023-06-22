@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 
 export default class CourseStageItemActionButtonListComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service featureFlags;
   @service store;
   @service visibility;

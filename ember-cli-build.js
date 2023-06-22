@@ -1,25 +1,18 @@
 'use strict';
 
+require('dotenv').config();
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
 const { Webpack } = require('@embroider/webpack');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // const _isProduction = EmberApp.env() === 'production';
-const cdnBaseURL = process.env.CDN_BASE_URL;
-const shouldUseCDN = !!cdnBaseURL;
 
 module.exports = function (defaults) {
   const appOptions = {
     babel: {
       plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
-    },
-
-    emberCLIDeploy: {
-      // Change development -> production & use "ember serve --prod" to test purgecss
-      runOnPostBuild: EmberApp.env() === 'development' ? 'development-postbuild' : false,
-      configFile: 'config/deploy.js',
-      shouldActivate: true,
     },
 
     '@embroider/macros': {
@@ -50,17 +43,6 @@ module.exports = function (defaults) {
     },
   };
 
-  if (shouldUseCDN) {
-    appOptions.fingerprint = {
-      extensions: ['js', 'css', 'png', 'jpg', 'jpeg', 'gif', 'map', 'svg', 'ico'],
-      prepend: cdnBaseURL,
-    };
-
-    appOptions.autoImport = {
-      publicAssetURL: `${cdnBaseURL}assets`,
-    };
-  }
-
   let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
@@ -71,21 +53,13 @@ module.exports = function (defaults) {
     staticComponents: true,
     splitAtRoutes: ['badges'], // can also be a RegExp
     packagerOptions: {
-      publicAssetURL: shouldUseCDN ? cdnBaseURL : '/',
+      publicAssetURL: '/',
       webpackConfig: {
         // plugins: EmberApp.env() === 'development' ? [new BundleAnalyzerPlugin()] : [],
         plugins: [],
-        devtool: shouldUseCDN ? 'source-map' : 'eval-source-map',
+        devtool: EmberApp.env() === 'development' ? 'eval-source-map' : 'source-map',
         module: {
           rules: [
-            // {
-            //   test: /\.(gltf)$/,
-            //   loader: require.resolve('./vendor/gltf-loader.js'),
-            //   options: {
-            //     filePath: `/assets/models`,
-            //     // ...
-            //   },
-            // },
             {
               test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico|lottie\.json)$/,
               type: 'asset/resource',

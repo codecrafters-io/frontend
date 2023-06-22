@@ -4,24 +4,27 @@ import window from 'ember-window-mock';
 
 export default class ApplicationRoute extends Route {
   allowsAnonymousAccess = false;
-  @service currentUser;
+  @service authenticator;
   @service router;
   @service utmCampaignIdTracker;
 
   beforeModel(transition) {
-    if (this.currentUser.isAnonymous && !this.allowsAnonymousAccess) {
+    this.authenticator.authenticate();
+
+    if (!this.allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
       if (Object.keys(transition.to.params).length > 0) {
-        window.location.href = `/login?next=${encodeURIComponent(this.router.urlFor(transition.to.name, transition.to.params))}`;
+        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name, transition.to.params));
       } else {
-        window.location.href = `/login?next=${encodeURIComponent(this.router.urlFor(transition.to.name))}`;
+        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name));
       }
 
       transition.abort();
     }
 
+    // TODO: Handle case where `isAuthenticated` isn't present yet
     if (window.origin.includes('codecrafters.io')) {
-      if (window.posthog && this.currentUser.isAuthenticated) {
-        window.posthog.identify(this.currentUser.currentUserId, { username: this.currentUser.currentUserUsername });
+      if (window.posthog && this.authenticator.currentUserId) {
+        window.posthog.identify(this.authenticator.currentUserId, { username: this.authenticator.currentUsername });
       }
     }
 

@@ -9,7 +9,7 @@ export default class CoursePageContentComponent extends Component {
   @tracked courseStageSolutionModalIntent;
   @tracked isConfiguringGithubIntegration = false;
   @tracked isViewingProgressBanner = false;
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service router;
 
   constructor() {
@@ -25,7 +25,7 @@ export default class CoursePageContentComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action
@@ -73,7 +73,7 @@ export default class CoursePageContentComponent extends Component {
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion() {
-    if (this.currentUserService.isAnonymous || this.currentUser.isTeamMember) {
+    if (this.authenticator.isAnonymous || (this.currentUser && this.currentUser.isTeamMember)) {
       return null;
     }
 

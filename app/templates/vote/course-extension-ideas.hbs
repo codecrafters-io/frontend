@@ -14,7 +14,7 @@
     <VotePage::CourseExtensionIdeaCard @courseExtensionIdea={{courseExtensionIdea}} />
   {{/each}}
 
-  {{#if this.currentUserService.isAuthenticated}}
+  {{#if this.authenticator.isAuthenticated}}
     <VotePage::SubmitCourseExtensionIdeaCard @course={{this.selectedCourse}} />
   {{/if}}
 </div>

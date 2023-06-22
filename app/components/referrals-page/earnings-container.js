@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class EarningsContainerComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
   @service store;
   @tracked isCreatingPayout = false;
   @tracked isLoadingPayouts = true;
@@ -15,7 +15,7 @@ export default class EarningsContainerComponent extends Component {
   }
 
   get currentUser() {
-    return this.currentUserService.record;
+    return this.authenticator.currentUser;
   }
 
   @action

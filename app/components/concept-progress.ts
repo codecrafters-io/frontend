@@ -13,4 +13,8 @@ export default class ConceptProgressComponent extends Component<Signature> {
   rules() {
     return fade;
   }
+
+  get widthStyle(): string {
+    return `width: ${this.args.progressPercentage}%`;
+  }
 }

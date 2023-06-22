@@ -1,9 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
-import { inject as service } from '@ember/service';
 
 export default class RepositoryModel extends Model {
-  @service serverVariables;
-
   @belongsTo('course', { async: false }) course;
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
   @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;

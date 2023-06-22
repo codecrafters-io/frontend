@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class VisibilityService extends Service {
-  @service serverVariables;
   @service store;
   @tracked isVisible;
 

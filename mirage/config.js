@@ -1,5 +1,6 @@
 import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer, belongsTo, hasMany, Model } from 'miragejs';
+import config from 'codecrafters-frontend/config/environment';
 
 export default function (config) {
   let finalConfig = {
@@ -37,9 +38,16 @@ function routes() {
   this.passthrough('/write-coverage'); // used by ember-cli-code-coverage
   this.passthrough('/assets/**'); // 3d models?
 
-  this.urlPrefix = '';
+  this.urlPrefix = config.x.backendUrl;
   this.namespace = '/api/v1';
   this.timing = 1000;
+
+  this.pretender.prepareHeaders = function (headers) {
+    headers['Access-Control-Allow-Origin'] = '*';
+    headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS';
+
+    return headers;
+  };
 
   window.server = this; // Hack! Is there a better way?
 
@@ -297,6 +305,16 @@ function routes() {
 
   this.get('/users', function (schema, request) {
     return schema.users.where({ username: request.queryParams.username });
+  });
+
+  this.get('/users/current', function (schema) {
+    const session = schema.sessions.find('current-session-id');
+
+    if (session) {
+      return session.user;
+    } else {
+      return new Response(200, {}, { data: {} });
+    }
   });
 
   this.get('/users/:id');

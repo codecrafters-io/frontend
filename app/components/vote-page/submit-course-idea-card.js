@@ -4,13 +4,13 @@ import { inject as service } from '@ember/service';
 import { createPopup } from '@typeform/embed';
 
 export default class SubmitCourseIdeaCardComponent extends Component {
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   @action
   handleClick() {
     createPopup('kJNvFVQM', {
       hidden: {
-        github_username: this.currentUserService.record.username,
+        github_username: this.authenticator.currentUser.username,
       },
     }).toggle();
   }

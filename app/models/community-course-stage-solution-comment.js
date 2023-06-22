@@ -7,7 +7,7 @@ import UpvotableMixin from '../mixins/upvotable';
 import DownvotableMixin from '../mixins/downvotable';
 
 export default class CommunityCourseStageSolutionCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin) {
-  @service('current-user') currentUserService;
+  @service authenticator;
 
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'comments' }) target;
   @belongsTo('language', { async: false, inverse: null }) language;

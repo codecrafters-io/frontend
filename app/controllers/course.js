@@ -19,7 +19,7 @@ export default class CourseController extends Controller {
   @tracked selectedRepositoryId;
   @tracked newRepository;
   @tracked track;
-  @service currentUser;
+  @service authenticator;
   @service store;
 
   get activeRepository() {
@@ -43,7 +43,7 @@ export default class CourseController extends Controller {
     this.track = null;
     this.selectedRepositoryId = this.newRepository.id;
     this.isCreatingNewRepository = false;
-    this.newRepository = this.store.createRecord('repository', { course: this.course, user: this.currentUser.record });
+    this.newRepository = this.store.createRecord('repository', { course: this.course, user: this.authenticator.currentUser });
   }
 
   get isDevelopmentOrTest() {
@@ -59,7 +59,11 @@ export default class CourseController extends Controller {
   }
 
   get repositories() {
-    return this.currentUser.record.repositories.filterBy('course', this.course).without(this.newRepository);
+    if (!this.authenticator.currentUser) {
+      return [];
+    }
+
+    return this.authenticator.currentUser.repositories.filterBy('course', this.course).without(this.newRepository);
   }
 
   get hasRecentlyCompletedGitHubIntegrationSetup() {

@@ -18,7 +18,7 @@
     {{/if}}
   </span>
 
-  {{#if this.currentUserService.isAnonymous}}
+  {{#if this.authenticator.isAnonymous}}
     <EmberTooltip @text="Click to login via GitHub" />
   {{/if}}
 </button>
