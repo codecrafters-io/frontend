@@ -22,7 +22,7 @@ module.exports = function (environment) {
       // when it is created
     },
     x: {
-      backendUrl: process.env.BACKEND_URL,
+      backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     },
   };
