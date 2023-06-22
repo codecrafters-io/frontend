@@ -6,7 +6,7 @@
       <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">Badges</h1>
     </div>
 
-    {{#animated-if this.selectedBadge use=this.transition duration=500}}
+    {{#animated-if this.selectedBadge use=this.transition duration=300}}
       <ModalBackdrop class="backdrop-blur">
         <BadgesPage::BadgeEarnedModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
       </ModalBackdrop>

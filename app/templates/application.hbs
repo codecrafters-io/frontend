@@ -1,9 +1,11 @@
 {{page-title "CodeCrafters"}}
 
-<div class="bg-gray-50 min-h-screen">
+<div class="bg-gray-50">
   <Header />
 
-  {{outlet}}
+  <div class="min-h-screen">
+    {{outlet}}
+  </div>
 
   {{#if this.isAnyModalOpen}}
     <ModalBackdrop>
