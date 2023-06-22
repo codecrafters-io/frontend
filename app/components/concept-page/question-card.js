@@ -30,10 +30,7 @@ export default class QuestionCardComponent extends Component {
   handleSubmitClick() {
     this.hasSubmitted = true;
 
-    console.log('submit clicked');
-
     if (this.args.onSubmit) {
-      console.log('submitted!');
       this.args.onSubmit();
     }
   }
@@ -41,7 +38,7 @@ export default class QuestionCardComponent extends Component {
   @action
   handleShowExplanationClick() {
     this.selectedOptionIndex = this.args.question.correctOptionIndex;
-    this.hasSubmitted = true;
+    this.handleSubmitClick();
   }
 
   get options() {
