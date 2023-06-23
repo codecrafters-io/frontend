@@ -13,9 +13,9 @@ export default class PayController extends Controller {
     if (this.user.isEligibleForCustomDiscount) {
       return this.user.availableCustomDiscount.discountedYearlyPriceInDollars;
     } else if (this.user.isEligibleForReferralDiscount) {
-      return 590;
+      return 240;
     } else if (this.user.isEligibleForEarlyBirdDiscount) {
-      return 594;
+      return 240;
     } else {
       return null;
     }

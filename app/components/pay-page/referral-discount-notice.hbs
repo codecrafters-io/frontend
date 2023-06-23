@@ -4,7 +4,7 @@
     {{svg-jar "clock" class="w-6 fill-current text-blue-400 animate-pulse"}}
   </div>
 
-  <div class="text-blue-700 prose prose-blue leading-7">
+  <div class="text-blue-700 prose max-w-none prose-blue leading-7">
     <AvatarImage
       @user={{@referralActivation.referrer}}
       class="inline-block mb-0 w-6 h-6 border border-gray-100 rounded-full transform -translate-y-px"
@@ -13,7 +13,7 @@
     <b>{{@referralActivation.referrer.username}}</b>'s referral offer: Subscribe by
     <span class="font-semibold">{{moment-format @referralActivation.discountPeriodEndsAt "LLL"}}</span>
     to get
-    <span class="font-semibold">$400 off</span>
-    the annual plan.
+    <span class="font-semibold">$120 off</span>
+    the 1 year plan.
   </div>
 </div>

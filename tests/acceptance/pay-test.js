@@ -55,7 +55,7 @@ module('Acceptance | pay-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$594', 'should show discounted price');
+    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$240', 'should show discounted price');
 
     await percySnapshot('Pay page - with early bird discount');
 
@@ -78,7 +78,7 @@ module('Acceptance | pay-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$590', 'should show discounted price');
+    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$240', 'should show discounted price');
 
     await percySnapshot('Pay page - with referral discount');
 
@@ -108,7 +108,7 @@ module('Acceptance | pay-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$100', 'should show discounted price');
+    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$100', 'should show discounted price');
 
     await percySnapshot('Pay page - with custom discount');
 
