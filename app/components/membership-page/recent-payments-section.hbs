@@ -29,7 +29,7 @@
         <div class="flex items-center justify-end">
           {{#if (and charge.invoiceId charge.statusIsSucceeded)}}
             <a
-              href="/invoices/{{charge.invoiceId}}/download"
+              href={{charge.invoiceDownloadUrl}}
               target="_blank"
               class="text-teal-500 hover:text-teal-600 font-semibold text-sm"
               data-test-download-invoice-link

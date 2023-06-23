@@ -1,6 +1,7 @@
 import { attr, belongsTo } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class Charge extends Model {
   @attr('date') createdAt;
@@ -22,5 +23,13 @@ export default class Charge extends Model {
 
   get amountRefundedInDollars() {
     return this.amountRefunded / 100;
+  }
+
+  get invoiceDownloadUrl() {
+    if (!this.invoiceId) {
+      return null;
+    }
+
+    return `${config.x.backendUrl}/invoices/${this.invoiceId}/download`;
   }
 }
