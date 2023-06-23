@@ -16,37 +16,31 @@
 
     <div class="flex flex-col-reverse md:flex-row gap-x-8 gap-y-8 items-start mt-12">
       <PayPage::PricingCard
-        @title="Monthly"
-        @autoRenewSubscription={{true}}
-        @actualPrice={{99}}
-        @subtitle="Recurring subscription"
-        @pricingFrequency="monthly"
-        @footerText="No charge today. Cancel anytime."
-        data-test-monthly-pricing-card
-      />
-
-      <PayPage::PricingCard
-        @title="3 months"
-        @autoRenewSubscription={{false}}
-        @actualPrice={{249}}
-        @subtitle="Full access for 3 months"
+        @title="3 months access"
+        @actualPrice={{120}}
         @pricingFrequency="quarterly"
         @footerText="One-time payment."
         data-test-quarterly-pricing-card
       />
 
       <PayPage::PricingCard
-        @footerText="Ideal for expensing."
-        @autoRenewSubscription={{false}}
-        @title="1 year"
-        @subtitle="Learn at your own pace"
-        @actualPrice={{990}}
+        @title="1 year access"
+        @actualPrice={{360}}
         @discountedPrice={{this.discountedYearlyPrice}}
         @pricingFrequency="yearly"
+        @footerText="One-time payment."
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
         @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
         @customDiscount={{this.user.availableCustomDiscount}}
         data-test-yearly-pricing-card
+      />
+
+      <PayPage::PricingCard
+        @footerText="Ideal for expensing."
+        @title="Lifetime access"
+        @actualPrice={{990}}
+        @pricingFrequency="lifetime"
+        data-test-lifetime-pricing-card
       />
     </div>
 

@@ -246,7 +246,7 @@ function routes() {
 
   this.post('/subscriptions/:id/cancel', function (schema, request) {
     const subscription = schema.subscriptions.find(request.params.id);
-    subscription.update({ cancelAtPeriodEnd: true, cancelAt: subscription.currentPeriodEnd });
+    subscription.update({ cancelAt: subscription.currentPeriodEnd });
 
     return subscription;
   });

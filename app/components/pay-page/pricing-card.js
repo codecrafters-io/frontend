@@ -10,13 +10,7 @@ export default class PricingCardComponent extends Component {
   @tracked isCreatingCheckoutSession = false;
 
   get featureDescriptions() {
-    return [
-      `200+ hours worth of practice`,
-      `Expert approaches (beta)`,
-      `Members community for Q&A`,
-      `Download invoice for expensing`,
-      `Private leaderboard for your team`,
-    ];
+    return [`Unrestricted content access`, `Download invoice for expensing`, `Private leaderboard for your team`];
   }
 
   @action
@@ -24,7 +18,7 @@ export default class PricingCardComponent extends Component {
     this.isCreatingCheckoutSession = true;
 
     let checkoutSession = this.store.createRecord('individual-checkout-session', {
-      autoRenewSubscription: this.args.autoRenewSubscription,
+      autoRenewSubscription: false, // None of our plans are subscriptions at the moment
       customDiscount: this.args.customDiscount,
       earlyBirdDiscountEnabled: this.args.earlyBirdDiscountEnabled,
       referralDiscountEnabled: this.args.referralDiscountEnabled,
