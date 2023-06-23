@@ -5,7 +5,6 @@ import { memberAction } from 'ember-api-actions';
 export default class SubscriptionModel extends Model {
   @belongsTo('user', { async: false }) user;
   @attr('date') cancelAt;
-  @attr('boolean') cancelAtPeriodEnd;
   @attr('date') currentPeriodEnd;
   @attr('date') endedAt;
   @attr('date') startDate;
