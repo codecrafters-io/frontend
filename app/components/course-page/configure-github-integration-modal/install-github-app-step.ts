@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import config from 'codecrafters-frontend/config/environment';
 import window from 'ember-window-mock';
 import { action } from '@ember/object';
 
@@ -13,6 +14,6 @@ interface Signature {
 export default class InstallGitHubAppStepComponent extends Component<Signature> {
   @action
   handleInstallGitHubAppButtonClick() {
-    window.location.href = `/github_app_installations/start?repository_id=${this.args.repository.id}`;
+    window.location.href = `${config.x.backendUrl}/github_app_installations/start?repository_id=${this.args.repository.id}`;
   }
 }
