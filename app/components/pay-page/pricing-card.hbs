@@ -1,11 +1,7 @@
 <div class="rounded-lg bg-gray-50 border filter drop-shadow-lg w-full max-w-xs" data-test-pricing-card ...attributes>
   <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6 pt-8 pb-8">
-    <div class="text-xl font-bold text-gray-700">
+    <div class="text-xl font-bold text-gray-700 border-b-2">
       {{@title}}
-    </div>
-
-    <div class="text-sm text-gray-500 mt-1 text-center">
-      {{@subtitle}}
     </div>
 
     {{#if @highlightedText}}
@@ -17,7 +13,7 @@
     {{/if}}
 
     {{#if @discountedPrice}}
-      <div class="mt-6 flex items-center">
+      <div class="mt-8 flex items-center">
         <div>
           <span class="text-4xl text-gray-700 font-bold line-through">${{@actualPrice}}</span>
           {{#if @autoRenewSubscription}}
@@ -32,7 +28,7 @@
         </div>
       </div>
     {{else}}
-      <div class="mt-6">
+      <div class="mt-8">
         <span class="text-4xl text-gray-700 font-bold">${{@actualPrice}}</span>
         {{#if @autoRenewSubscription}}
           <span class="text-lg text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
