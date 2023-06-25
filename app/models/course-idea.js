@@ -43,22 +43,28 @@ export default class CourseIdeaModel extends Model {
     return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
   }
 
-  supervote() {
+  async supervote() {
     this.supervotesCount += 1;
 
-    let supervote = this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.authenticator.currentUser });
-    this.currentUserSupervotes.addObject(supervote);
+    const supervote = this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.authenticator.currentUser });
 
-    return supervote.save();
+    await supervote.save();
+
+    this.currentUserSupervotes = [...this.currentUserSupervotes, supervote];
+
+    return supervote;
   }
 
-  vote() {
+  async vote() {
     this.votesCount += 1;
 
-    let vote = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.authenticator.currentUser });
-    this.currentUserVotes.addObject(vote);
+    const vote = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.authenticator.currentUser });
 
-    return vote.save();
+    await vote.save();
+
+    this.currentUserVotes = [...this.currentUserVotes, vote];
+
+    return vote;
   }
 }
 
@@ -67,14 +73,14 @@ CourseIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    this.currentUserSupervotes.toArray().forEach((record) => {
+    for (const record of [...this.currentUserSupervotes]) {
       this.supervotesCount -= 1;
       record.unloadRecord();
-    });
+    }
 
-    this.currentUserVotes.toArray().forEach((record) => {
+    for (const record of [...this.currentUserVotes]) {
       this.votesCount -= 1;
       record.unloadRecord();
-    });
+    }
   },
 });
