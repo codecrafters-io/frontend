@@ -3,12 +3,16 @@ import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
   get currentUserDownvotes() {
-    return this.store.peekAll('downvote').filterBy('targetId', this.id).filterBy('user.id', this.authenticator.currentUser.id);
+    return this.downvotes.filterBy('user.id', this.authenticator.currentUser.id);
   },
 
   get downvotes() {
     // TODO: Filter by targetType too
-    return this.store.peekAll('downvote').filterBy('targetId', this.id);
+    return this.allDownvotes.filterBy('targetId', this.id);
+  },
+
+  get allDownvotes() {
+    return this.store.peekAll('downvote');
   },
 
   async downvote() {
@@ -27,8 +31,6 @@ export default Mixin.create({
       targetType: this.constructor.modelName,
       user: this.authenticator.currentUser,
     });
-
-    this.currentUserDownvotes.addObject(downvote);
 
     await downvote.save();
   },
