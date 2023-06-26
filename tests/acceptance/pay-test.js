@@ -50,7 +50,7 @@ module('Acceptance | pay-test', function (hooks) {
     testScenario(this.server);
 
     let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000));
+    user.update('createdAt', new Date(new Date().getTime() - 23 * 60 * 60 * 1000));
 
     signIn(this.owner, this.server);
 
