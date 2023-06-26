@@ -47,11 +47,6 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   }
 
   get shouldPulseViewSolutionButton() {
-    // TODO: Remove this if experiment is successful
-    if (!this.featureFlags.canSeePulsingSolutionsButtonForFirstStage) {
-      return false;
-    }
-
     return this.shouldShowViewSolutionButton && this.args.courseStage.shouldShowPulsingViewSolutionButtonFor(this.args.repository);
   }
 
