@@ -7,6 +7,7 @@ import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 export default class CommentsTabComponent extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked isLoading = true;
+  @tracked rejectedCommentsAreExpanded = false;
   @service featureFlags;
   @service store;
   @service authenticator;
@@ -24,6 +25,7 @@ export default class CommentsTabComponent extends Component {
   @action
   async loadComments() {
     this.isLoading = true;
+    this.rejectedCommentsAreExpanded = false;
 
     await this.store.query('course-stage-comment', {
       target_id: this.args.courseStage.id,
@@ -39,13 +41,20 @@ export default class CommentsTabComponent extends Component {
     return this.visibleComments.sortBy('createdAt').reverse();
   }
 
-  get visibleComments() {
-    let topLevelPersistedComments = this.args.courseStage.comments.filter((comment) => !comment.isNew && comment.isTopLevelComment);
+  get rejectedComments() {
+    return this.topLevelPersistedComments.filter((comment) => comment.isRejected);
+  }
 
+  get topLevelPersistedComments() {
+    return this.args.courseStage.comments.filter((comment) => !comment.isNew && comment.isTopLevelComment);
+  }
+
+  get visibleComments() {
     if (this.currentUser.isStaff) {
-      return topLevelPersistedComments;
+      // Include pending approval for staff users
+      return this.topLevelPersistedComments.filter((comment) => !comment.isRejected || comment.user === this.authenticator.currentUser);
     } else {
-      return topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
+      return this.topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
     }
   }
 }

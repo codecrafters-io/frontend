@@ -23,5 +23,32 @@
         </div>
       </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
     {{/each}}
+
+    {{#if (and this.currentUser.isStaff (gt this.rejectedComments.length 0))}}
+      <div class="flex flex-col items-center">
+        <div class="h-px my-4 bg-gray-200 w-full" />
+        {{#if this.rejectedCommentsAreExpanded}}
+          <TertiaryButton @size="small" {{on "click" (fn (mut this.rejectedCommentsAreExpanded) false)}} class="mb-4">
+            Hide rejected comments
+          </TertiaryButton>
+        {{else}}
+          <TertiaryButton @size="small" {{on "click" (fn (mut this.rejectedCommentsAreExpanded) true)}} class="mb-4">
+            Show
+            {{this.rejectedComments.length}}
+            rejected comments
+          </TertiaryButton>
+        {{/if}}
+      </div>
+
+      {{#if this.rejectedCommentsAreExpanded}}
+        {{#each this.rejectedComments key="id" as |comment|}}
+          <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
+            <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
+              <CommentCard @comment={{comment}} />
+            </div>
+          </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
+        {{/each}}
+      {{/if}}
+    {{/if}}
   {{/if}}
 </div>
