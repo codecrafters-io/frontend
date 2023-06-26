@@ -13,23 +13,25 @@
 
 <div class="flex flex-wrap items-center justify-between">
   <div class="flex items-center overflow-x-scroll pb-4 mb-2">
-    <CoursePage::CourseStageSolutionModal::HeaderTabLink
-      @icon="light-bulb"
-      @text="Hints"
-      @isActive={{eq @activeTab "comments"}}
-      {{on "click" (fn @onTabLinkClick "comments")}}
-    />
+    {{#if (includes "comments" @availableTabs)}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="light-bulb"
+        @text="Hints"
+        @isActive={{eq @activeTab "comments"}}
+        {{on "click" (fn @onTabLinkClick "comments")}}
+      />
+    {{/if}}
 
-    {{#unless @courseStage.isFirst}}
+    {{#if (includes "community_solutions" @availableTabs)}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @icon="user-group"
         @text="Solutions"
         @isActive={{eq @activeTab "community_solutions"}}
         {{on "click" (fn @onTabLinkClick "community_solutions")}}
       />
-    {{/unless}}
+    {{/if}}
 
-    {{#if @currentSolution}}
+    {{#if (includes "verified_solution" @availableTabs)}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @icon="code"
         @text="Verified Solution"
@@ -40,7 +42,7 @@
       />
     {{/if}}
 
-    {{#if @courseStage.sourceWalkthrough}}
+    {{#if (includes "source_walkthrough" @availableTabs)}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @iconUrl={{@courseStage.course.logoUrl}}
         @text="Source Walkthrough"
@@ -48,7 +50,6 @@
         {{on "click" (fn @onTabLinkClick "source_walkthrough")}}
       />
     {{/if}}
-
   </div>
 
   <div>
