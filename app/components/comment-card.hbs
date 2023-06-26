@@ -38,18 +38,27 @@
       </div>
 
       <div class="flex items-center">
-        {{#if (and this.currentUserIsStaff (not @comment.isApprovedByModerator))}}
+        {{#if (and this.currentUserIsStaff @comment.isAwaitingApproval)}}
           <a
             target="_blank"
-            href="/admin/course_stage_comments/{{@comment.id}}/edit"
-            class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-xs"
+            href={{@comment.adminPanelEditUrl}}
+            class="bg-yellow-500 text-white px-2 py-1 rounded font-semibold text-xs"
             rel="noopener noreferrer"
           >
-            unapproved
+            {{@comment.approvalStatus}}
+          </a>
+        {{else if (and this.currentUserIsStaff @comment.isRejected)}}
+          <a
+            target="_blank"
+            href={{@comment.adminPanelEditUrl}}
+            class="bg-gray-500 text-white px-2 py-1 rounded font-semibold text-xs"
+            rel="noopener noreferrer"
+          >
+            {{@comment.approvalStatus}}
           </a>
         {{/if}}
 
-        {{#if (eq this.currentUser @comment.user)}}
+        {{#if (or this.currentUserIsStaff (eq this.currentUser @comment.user))}}
           <div class="ml-2">
             <CommentCard::MoreDropdown
               @comment={{@comment}}
