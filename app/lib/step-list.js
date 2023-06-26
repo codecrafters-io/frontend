@@ -38,7 +38,7 @@ export class CourseStageItem {
       return false;
     }
 
-    if (this.featureFlags.canSeeStageCompletionVideos && this.courseStage.hasCompletionVideo) {
+    if (this.courseStage.hasCompletionVideo) {
       return false;
     }
 
