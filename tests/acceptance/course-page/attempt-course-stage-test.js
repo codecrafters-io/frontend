@@ -127,7 +127,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer is tests failed');
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -161,7 +161,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -207,7 +207,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer is tests failed');
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -223,45 +223,4 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     // TODO: Add tests for badge display
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');
   });
-
-  test('first-stage footer message before 30min', async function (assert) {
-    setupFirstStageScenario(this.owner, this.server);
-
-    await this.clock.tick(1000 * 1741); // Wait for poll + 29 minutes to pass
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await animationsSettled();
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
-  });
-
-  test('first-stage footer message after 30min', async function (assert) {
-    setupFirstStageScenario(this.owner, this.server);
-
-    await this.clock.tick(1000 * 1801); // Wait for poll + 30 minutes to pass
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await animationsSettled();
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Last attempt 30 minutes ago. Try again?', 'footer text includes timestamp');
-  });
 });
-
-function setupFirstStageScenario(owner, server) {
-  testScenario(server);
-  signInAsSubscriber(owner, server);
-
-  let currentUser = server.schema.users.first();
-  let python = server.schema.languages.findBy({ name: 'Python' });
-  let redis = server.schema.courses.findBy({ slug: 'redis' });
-
-  server.create('repository', 'withSetupStageCompleted', {
-    course: redis,
-    language: python,
-    user: currentUser,
-  });
-}

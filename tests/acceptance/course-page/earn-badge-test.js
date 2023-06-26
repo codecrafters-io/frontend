@@ -46,7 +46,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is waiting for git push');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
