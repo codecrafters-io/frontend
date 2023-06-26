@@ -109,7 +109,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage passed');
   });
 
-  test('passing first stage automatically advances for existing users', async function (assert) {
+  test('passing first stage does not automatically advance to next for existing users', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -140,7 +140,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await this.clock.tick(2001); // Wait for auto-advance
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'second stage is still active');
+    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'second stage is still active');
   });
 
   test('passing first stage shows badges for staff users', async function (assert) {
