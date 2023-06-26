@@ -13,6 +13,13 @@
 
 <div class="flex flex-wrap items-center justify-between">
   <div class="flex items-center overflow-x-scroll pb-4 mb-2">
+    <CoursePage::CourseStageSolutionModal::HeaderTabLink
+      @icon="light-bulb"
+      @text="Hints"
+      @isActive={{eq @activeTab "comments"}}
+      {{on "click" (fn @onTabLinkClick "comments")}}
+    />
+
     {{#unless @courseStage.isFirst}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @icon="user-group"
@@ -42,12 +49,6 @@
       />
     {{/if}}
 
-    <CoursePage::CourseStageSolutionModal::HeaderTabLink
-      @icon="light-bulb"
-      @text="Hints"
-      @isActive={{eq @activeTab "comments"}}
-      {{on "click" (fn @onTabLinkClick "comments")}}
-    />
   </div>
 
   <div>
