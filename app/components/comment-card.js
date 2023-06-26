@@ -70,7 +70,7 @@ export default class CommentCardComponent extends Component {
     if (this.currentUserIsStaff) {
       return persistedComments;
     } else {
-      return persistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
+      return persistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
     }
   }
 }

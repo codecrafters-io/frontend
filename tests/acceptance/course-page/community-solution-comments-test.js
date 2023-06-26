@@ -257,7 +257,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //     createdAt: new Date('2022-01-02'),
   //     bodyMarkdown: 'This is the **first** comment',
   //     target: redis.stages.models.sortBy('position')[1],
-  //     isApprovedByModerator: true,
+  //     approvalStatus: 'approved',
   //     user: user,
   //   });
 
@@ -265,7 +265,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //     createdAt: new Date('2020-01-01'),
   //     bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
   //     target: redis.stages.models.sortBy('position')[1],
-  //     isApprovedByModerator: true,
+  //     approvalStatus: 'approved',
   //     user: user,
   //   });
 

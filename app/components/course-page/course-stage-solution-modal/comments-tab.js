@@ -54,7 +54,7 @@ export default class CommentsTabComponent extends Component {
       // Include pending approval for staff users
       return this.topLevelPersistedComments.filter((comment) => !comment.isRejected || comment.user === this.authenticator.currentUser);
     } else {
-      return this.topLevelPersistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
+      return this.topLevelPersistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
     }
   }
 }
