@@ -30,22 +30,16 @@
       {{/if}}
 
       {{this.instructionsHTML}}
-
-      {{#if (and @courseStage.course.isRedis @courseStage.isFirst)}}
-        <p>
-          Want to learn more about network protocols &amp; TCP? Try our interactive guides:
-
-          <ul>
-            <li>
-              <a href="/concepts/network-protocols" rel="noopener noreferrer" target="_blank">Network Protocols</a>
-            </li>
-            <li>
-              <a href="/concepts/tcp-overview" rel="noopener noreferrer" target="_blank">TCP: An overview</a>
-            </li>
-          </ul>
-        </p>
-      {{/if}}
     </div>
+
+    {{#if this.shouldShowFirstStageHints}}
+      <CoursePage::StepList::CourseStageItem::FirstStageHint
+        @courseStage={{@courseStage}}
+        @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
+        @repository={{@repository}}
+        class="mt-6"
+      />
+    {{/if}}
 
     <CoursePage::StepList::CourseStageItem::ActionButtonList
       @courseStage={{@courseStage}}
@@ -76,14 +70,7 @@
       <CoursePage::StepList::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
     {{/if}}
 
-    {{#if this.shouldShowFirstStageHints}}
-      <CoursePage::StepList::CourseStageItem::FirstStageHint
-        @courseStage={{@courseStage}}
-        @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
-        @repository={{@repository}}
-        class="mt-6"
-      />
-    {{else if this.shouldShowCLIUsageInstructions}}
+    {{#if this.shouldShowCLIUsageInstructions}}
       <CoursePage::StepList::CourseStageItem::CliUsageInstructions class="mt-6" />
     {{/if}}
 
