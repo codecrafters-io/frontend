@@ -20,6 +20,8 @@ export default class CourseRoute extends ApplicationRoute {
       include: RepositoryPoller.defaultIncludedResources,
     });
 
+    await this.authenticator.authenticate();
+
     return RSVP.hash({
       courseSlug: params.course_slug,
       courses: courses,
