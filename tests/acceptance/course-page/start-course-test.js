@@ -93,6 +93,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.ok(coursePage.activeCourseStageItem.stageInstructionsText.startsWith('CodeCrafters runs tests'), 'Instructions prelude must be present');
 
     await percySnapshot('Start Course - Waiting For Second Push');
+    await this.pauseTest();
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
