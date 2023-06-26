@@ -1,4 +1,4 @@
-<div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm" ...attributes>
+<div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm" ...attributes {{on "click" this.handleClick}} role="button">
   <div class="mr-3 mt-0.5 w-6 h-6 relative">
     {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
     <span
@@ -7,9 +7,9 @@
   </div>
   <div class="text-blue-900 prose prose-blue leading-7 text-sm">
     {{#if this.solutionIsAvailable}}
-      Since this is your first stage, we recommend
-      <b class="underline" role="button" {{on "click" @onViewSolutionButtonClick}}>viewing the solution</b>
-      for instructions on how to pass.
+      Since this is your first stage, we've included the code to pass this stage in your repository.
+      <b class="underline" role="button" {{on "click" @onViewSolutionButtonClick}}>View the solution</b>
+      for instructions on how to uncomment the code and pass this stage.
     {{else}}
       Since this is your first stage, you can consult
       <a href={{this.readmeURL}} target="_blank" rel="noopener noreferrer">the README</a>

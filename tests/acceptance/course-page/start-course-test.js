@@ -92,6 +92,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.ok(coursePage.activeCourseStageItem.stageInstructionsText.startsWith('CodeCrafters runs tests'), 'Instructions prelude must be present');
 
+    await this.pauseTest();
+
     await percySnapshot('Start Course - Waiting For Second Push');
 
     await coursePage.repositoryDropdown.click();
