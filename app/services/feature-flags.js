@@ -34,6 +34,14 @@ export default class FeatureFlagsService extends Service {
     return this.authenticator.currentUser;
   }
 
+  get canSeeDiscountBanner() {
+    if (this.currentUser && this.currentUser.isStaff) {
+      return true;
+    }
+
+    return this.getFeatureFlagValue('can-see-banner') === 'test';
+  }
+
   getFeatureFlagValue(flagName) {
     const value = this.currentUser && this.currentUser.featureFlags && this.currentUser.featureFlags[flagName];
 

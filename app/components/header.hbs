@@ -129,7 +129,9 @@
     {{/if}}
   </div>
 </div>
-<div class="bg-black text-white flex gap-2 justify-center py-1">
-  <div>Upgrade today to get 40% off</div>
-  {{svg-jar "arrow-right" class="w-4"}}
-</div>
+{{#if this.featureFlags.canSeeDiscountBanner}}
+  <div class="bg-black text-white flex gap-2 justify-center py-1">
+    <div>Upgrade today to get 40% off</div>
+    {{svg-jar "arrow-right" class="w-4"}}
+  </div>
+{{/if}}
