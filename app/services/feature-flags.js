@@ -39,6 +39,10 @@ export default class FeatureFlagsService extends Service {
       return true;
     }
 
+    if (this.currentUser && !this.currentUser.hasActiveSubscription) {
+      return false;
+    }
+
     return this.getFeatureFlagValue('can-see-banner') === 'test';
   }
 
