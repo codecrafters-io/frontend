@@ -114,7 +114,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   @action
   handleCourseStageUpdated() {
     if (!this.tabIsAvailable(this.activeTab)) {
-      this.activeTab = 'community_solutions';
+      this.activeTab = this.availableTabs[0];
     }
   }
 
