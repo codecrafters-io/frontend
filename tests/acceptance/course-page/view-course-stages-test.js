@@ -289,7 +289,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       }
     });
 
-    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
+    assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
   });
 });
