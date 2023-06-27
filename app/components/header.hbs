@@ -45,9 +45,7 @@
           data-test-catalog-link
         >Catalog</LinkTo>
 
-        {{#if this.featureFlags.canSeeBadges}}
-          <LinkTo @route="badges" class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Badges</LinkTo>
-        {{/if}}
+        <LinkTo @route="badges" class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Badges</LinkTo>
 
         {{#if this.featureFlags.canSeeConceptsIndex}}
           <LinkTo @route="concepts" class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Concepts</LinkTo>
@@ -104,10 +102,7 @@
 
         <div class="py-3">
           <LinkTo @route="catalog" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Catalog</LinkTo>
-
-          {{#if this.featureFlags.canSeeBadges}}
-            <LinkTo @route="badges" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Badges</LinkTo>
-          {{/if}}
+          <LinkTo @route="badges" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Badges</LinkTo>
 
           {{#if this.featureFlags.canSeeConceptsIndex}}
             <LinkTo @route="concepts" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Concepts</LinkTo>
