@@ -85,7 +85,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
   });
 
   // eslint-disable-next-line qunit/require-expect
-  test.skip('can view solutions after starting course', async function (assert) {
+  test('can view solutions after starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -166,48 +166,50 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
 
+    // Temp: we're not showing the "Taking a peek?" overlay anymore, to see if it affects completion rates
+
     // Stage 3 (Incomplete, no solutions in other languages, no comments)
-    await switchToSolutionsForStage(3);
-    await percySnapshot('Community Solutions Overlay | No other langs, no comments');
+    // await switchToSolutionsForStage(3);
+    // await percySnapshot('Community Solutions Overlay | No other langs, no comments');
 
-    assertHeading('Taking a peek?');
-    assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
-    assertButtons(['Just taking a peek']);
-    await clickButton('Just taking a peek');
+    // assertHeading('Taking a peek?');
+    // assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
+    // assertButtons(['Just taking a peek']);
+    // await clickButton('Just taking a peek');
 
-    assert.notOk(revealSolutionOverlay.isVisible);
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
+    // assert.notOk(revealSolutionOverlay.isVisible);
+    // assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
 
-    // Stage 4: Incomplete, has solutions in other language, no comments
-    await switchToSolutionsForStage(4);
-    await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
+    // // Stage 4: Incomplete, has solutions in other language, no comments
+    // await switchToSolutionsForStage(4);
+    // await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
 
-    assertInstructions(
-      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
-    );
-    assertButtons(['Good idea', 'Reveal Python solutions']);
+    // assertInstructions(
+    //   "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
+    // );
+    // assertButtons(['Good idea', 'Reveal Python solutions']);
 
-    assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
-    await clickButton('Good idea');
-    assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
+    // assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
+    // await clickButton('Good idea');
+    // assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
 
-    // Stage 5: Create comments
-    await switchToSolutionsForStage(5);
-    await percySnapshot('Community Solutions Overlay | No other langs, has comments');
+    // // Stage 5: Create comments
+    // await switchToSolutionsForStage(5);
+    // await percySnapshot('Community Solutions Overlay | No other langs, has comments');
 
-    assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
-    assertButtons(['View hints', 'Reveal solutions']);
-    await clickButton('View hints');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Hints', 'active header tab link should be comments');
+    // assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
+    // assertButtons(['View hints', 'Reveal solutions']);
+    // await clickButton('View hints');
+    // assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Hints', 'active header tab link should be comments');
 
-    // Stage 6: Incomplete, has solutions in other language & has comments
-    await switchToSolutionsForStage(6);
-    await percySnapshot('Community Solutions Overlay | Has other langs & comments');
+    // // Stage 6: Incomplete, has solutions in other language & has comments
+    // await switchToSolutionsForStage(6);
+    // await percySnapshot('Community Solutions Overlay | Has other langs & comments');
 
-    assertInstructions(
-      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
-    );
-    assertButtons(['View hints', 'Another language', 'Reveal Python solutions']);
+    // assertInstructions(
+    //   "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
+    // );
+    // assertButtons(['View hints', 'Another language', 'Reveal Python solutions']);
   });
 
   test('can view team-restricted solutions', async function (assert) {
