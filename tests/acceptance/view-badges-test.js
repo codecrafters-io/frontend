@@ -3,7 +3,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 function createBadges(server) {
   server.create('badge', { name: 'Turing', shortDescription: 'Complete 3 stages within a day', slug: 'three-in-a-day' });
@@ -31,7 +31,7 @@ module('Acceptance | view-badges', function (hooks) {
 
   test('it renders when all badges are unearned', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     createBadges(this.server);
 
@@ -41,7 +41,7 @@ module('Acceptance | view-badges', function (hooks) {
 
   test('it renders when some badges are earned', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     createBadges(this.server);
 
@@ -55,5 +55,13 @@ module('Acceptance | view-badges', function (hooks) {
 
     await badgesPage.clickOnBadge('The Turing badge');
     assert.strictEqual(badgesPage.badgeEarnedModal.badgeName, 'The Turing badge');
+  });
+
+  test('renders when user is not logged in', async function (assert) {
+    testScenario(this.server);
+    createBadges(this.server);
+
+    await badgesPage.visit();
+    assert.strictEqual(1, 1);
   });
 });
