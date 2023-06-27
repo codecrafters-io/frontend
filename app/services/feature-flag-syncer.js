@@ -9,7 +9,7 @@ export default class FeatureFlagSyncer extends Service {
   @tracked lastSyncedAt = null;
 
   @action
-  handleRouteChange() {
+  async handleRouteChange() {
     if (config.environment === 'test') {
       return;
     }
@@ -17,6 +17,8 @@ export default class FeatureFlagSyncer extends Service {
     if (this.lastSyncedAt && new Date() - this.lastSyncedAt < 10_000) {
       return;
     }
+
+    await this.authenticator.authenticate();
 
     if (this.authenticator.currentUser) {
       this.authenticator.currentUser.syncFeatureFlags();
