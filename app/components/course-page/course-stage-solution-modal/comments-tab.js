@@ -38,7 +38,7 @@ export default class CommentsTabComponent extends Component {
   }
 
   get sortedComments() {
-    return this.visibleComments.sortBy('createdAt').reverse();
+    return this.visibleComments.sortBy('score').reverse();
   }
 
   get rejectedComments() {
