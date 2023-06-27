@@ -134,28 +134,28 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
 
     const revealSolutionOverlay = coursePage.courseStageSolutionModal.revealSolutionOverlay;
 
-    const switchToSolutionsForStage = async function (stageNumber) {
-      await coursePage.courseStageSolutionModal.clickOnCloseButton();
-      await coursePage.collapsedItems[stageNumber - 1].click();
-      await animationsSettled();
-      await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
-    };
+    // const switchToSolutionsForStage = async function (stageNumber) {
+    //   await coursePage.courseStageSolutionModal.clickOnCloseButton();
+    //   await coursePage.collapsedItems[stageNumber - 1].click();
+    //   await animationsSettled();
+    //   await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    // };
 
-    const assertHeading = function (expectedText) {
-      assert.strictEqual(revealSolutionOverlay.headingText, expectedText, 'heading is present');
-    };
+    // const assertHeading = function (expectedText) {
+    //   assert.strictEqual(revealSolutionOverlay.headingText, expectedText, 'heading is present');
+    // };
 
-    const assertInstructions = function (expectedInstructions) {
-      assert.strictEqual(revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
-    };
+    // const assertInstructions = function (expectedInstructions) {
+    //   assert.strictEqual(revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
+    // };
 
-    const assertButtons = function (expectedButtons) {
-      assert.deepEqual(revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
-    };
+    // const assertButtons = function (expectedButtons) {
+    //   assert.deepEqual(revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
+    // };
 
-    const clickButton = async function (buttonText) {
-      await revealSolutionOverlay.clickOnActionButton(buttonText);
-    };
+    // const clickButton = async function (buttonText) {
+    //   await revealSolutionOverlay.clickOnActionButton(buttonText);
+    // };
 
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.collapsedItems[2].click();
