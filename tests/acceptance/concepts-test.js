@@ -153,7 +153,6 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.deepEqual(
       analyticsEvents.map((event) => event.name),
       [
-        'feature_flag_called', // Can see badges?
         'viewed_page',
         'viewed_page',
         'viewed_concept',
