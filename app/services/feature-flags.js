@@ -23,7 +23,11 @@ export default class FeatureFlagsService extends Service {
       return true;
     }
 
-    if (this.currentUser && this.currentUser.hasActiveSubscription) {
+    if (
+      this.currentUser &&
+      this.currentUser.hasActiveSubscription &&
+      this.currentUser.isEligibleForEarlyBirdDiscount
+    ) {
       return false;
     }
 
