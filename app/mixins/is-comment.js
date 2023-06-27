@@ -7,9 +7,10 @@ import config from '../config/environment';
 
 export default Mixin.create({
   approvalStatus: attr('string'),
-  downvotesCount: attr('number'),
-  upvotesCount: attr('number'),
   bodyMarkdown: attr('string'),
+  downvotesCount: attr('number'),
+  score: attr('number'),
+  upvotesCount: attr('number'),
 
   get adminPanelUrl() {
     return `${config.x.backendUrl}/admin/${pluralize(underscore(this.constructor.modelName))}/${this.id}`;
