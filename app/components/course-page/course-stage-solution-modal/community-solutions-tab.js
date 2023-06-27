@@ -66,23 +66,24 @@ export default class CommunitySolutionsTabComponent extends Component {
   }
 
   get shouldShowRevealSolutionOverlay() {
-    // For the first stage, let users view anyway
-    if (this.args.courseStage.isFirst) {
-      return false;
-    }
+    return false; // Temp: let's see if disabling this increases completion rate
 
-    // If we don't have solutions, don't make it look like we do
-    if (!this.communitySolutionsAreAvailableForCurrentLanguage) {
-      return false;
-    }
+    // if (this.args.courseStage.isFirst) {
+    //   return false;
+    // }
 
-    // Only show if viewing for the current repository's language
-    if (this.args.requestedSolutionLanguage !== this.args.repository.language) {
-      return false;
-    }
+    // // If we don't have solutions, don't make it look like we do
+    // if (!this.communitySolutionsAreAvailableForCurrentLanguage) {
+    //   return false;
+    // }
 
-    // If we have solutions and the user hasn't completed the stage, show the overlay
-    return !this.hasCompletedStage && !this.revealSolutionOverlayWasDisabledByUser;
+    // // Only show if viewing for the current repository's language
+    // if (this.args.requestedSolutionLanguage !== this.args.repository.language) {
+    //   return false;
+    // }
+
+    // // If we have solutions and the user hasn't completed the stage, show the overlay
+    // return !this.hasCompletedStage && !this.revealSolutionOverlayWasDisabledByUser;
   }
 
   get sortedSolutions() {
