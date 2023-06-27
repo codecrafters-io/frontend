@@ -34,11 +34,11 @@ export class CourseStageItem {
   }
 
   get shouldAdvanceToNextItemAutomatically() {
-    if (this.featureFlags.canSeeBadges && this.courseStage.isFirst && this.badgeAwards.length > 0) {
+    if (this.courseStage.isFirst && this.badgeAwards.length > 0) {
       return false;
     }
 
-    if (this.featureFlags.canSeeStageCompletionVideos && this.courseStage.hasCompletionVideo) {
+    if (this.courseStage.hasCompletionVideo) {
       return false;
     }
 

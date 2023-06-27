@@ -25,7 +25,8 @@ module('Acceptance | course-page | view-course-stage-source-walkthroughs', funct
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Source Walkthrough');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
+    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Source Walkthrough');
 
     await percySnapshot('Source Walkthrough');
     assert.strictEqual(1, 1);

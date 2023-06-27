@@ -10,24 +10,8 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
-  get canSeeBadges() {
-    if (this.currentUser && this.currentUser.isStaff) {
-      return true;
-    }
-
-    return this.getFeatureFlagValue('stage-1-badges') === 'test';
-  }
-
   get canSeeConceptsIndex() {
     return this.currentUser && this.currentUser.isStaff;
-  }
-
-  get canSeeStageCompletionVideos() {
-    if (this.currentUser && this.currentUser.isStaff) {
-      return true;
-    }
-
-    return this.getFeatureFlagValue('can-see-stage-completion-videos') === 'test';
   }
 
   get currentUser() {

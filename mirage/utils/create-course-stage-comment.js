@@ -5,6 +5,6 @@ export default function createCourseStageComment(server, course, stagePosition) 
     user: server.schema.users.first(),
     bodyMarkdown: 'This is a comment',
     target: stage,
-    isApprovedByModerator: true,
+    approvalStatus: 'approved',
   });
 }

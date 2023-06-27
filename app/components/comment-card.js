@@ -23,7 +23,12 @@ export default class CommentCardComponent extends Component {
 
   get bodyHTML() {
     return htmlSafe(
-      new showdown.Converter({ simplifiedAutoLink: true, openLinksInNewWindow: true, strikethrough: true }).makeHtml(this.args.comment.bodyMarkdown)
+      new showdown.Converter({
+        simplifiedAutoLink: true,
+        openLinksInNewWindow: true,
+        strikethrough: true,
+        disableForced4SpacesIndentedSublists: true,
+      }).makeHtml(this.args.comment.bodyMarkdown)
     );
   }
 
@@ -70,7 +75,7 @@ export default class CommentCardComponent extends Component {
     if (this.currentUserIsStaff) {
       return persistedComments;
     } else {
-      return persistedComments.filter((comment) => comment.isApprovedByModerator || comment.user === this.authenticator.currentUser);
+      return persistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
     }
   }
 }
