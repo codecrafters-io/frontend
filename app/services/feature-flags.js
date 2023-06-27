@@ -18,7 +18,7 @@ export default class FeatureFlagsService extends Service {
     return this.authenticator.currentUser;
   }
 
-  get canSeeDiscountBanner() {
+  get canSeeEarlyBirdDiscountBanner() {
     if (this.currentUser && this.currentUser.isStaff) {
       return true;
     }
@@ -31,7 +31,7 @@ export default class FeatureFlagsService extends Service {
       return false;
     }
 
-    return this.getFeatureFlagValue('can-see-banner') === 'test';
+    return this.getFeatureFlagValue('can-see-early-bird-discount-banner') === 'test';
   }
 
   getFeatureFlagValue(flagName) {
