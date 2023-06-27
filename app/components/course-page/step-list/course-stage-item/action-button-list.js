@@ -50,7 +50,7 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   }
 
   get shouldShowViewCommentsButton() {
-    return true; // Comments are always available
+    return !this.args.courseStage.isFirst;
   }
 
   get shouldShowViewSolutionButton() {
