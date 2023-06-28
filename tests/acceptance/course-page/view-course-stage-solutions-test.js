@@ -30,7 +30,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Solutions', 'active header tab link should be solutions');
+    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Code Examples', 'active header tab link should be solutions');
 
     await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Verified Solution');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Verified Solution', 'active tab should be Verified Solution');
@@ -133,7 +133,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       await coursePage.courseStageSolutionModal.clickOnCloseButton();
       await coursePage.collapsedItems[stageNumber - 1].click();
       await animationsSettled();
-      await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+      await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
       await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Verified Solution');
     };
 
@@ -156,7 +156,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.collapsedItems[2].click();
     await animationsSettled();
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
 
     assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
 
