@@ -62,7 +62,7 @@ export default class CourseStageSolutionModalComponent extends Component {
     if (tab === 'verified_solution') {
       return !!this.solution;
     } else if (tab === 'source_walkthrough') {
-      return this.courseStage.hasSourceWalkthrough;
+      return this.courseStage.hasSourceWalkthrough && !this.courseStage.isSecond; // Hide on stage 2 for now
     } else {
       return true;
     }
