@@ -1,14 +1,14 @@
 <div class="rounded-lg bg-gray-50 border filter drop-shadow-sm w-full max-w-3xl">
   <div class="flex justify-between py-4 px-6">
     <div class="text-sm sm:text-base text-gray-700 font-bold">{{@faq.query}}</div>
-    <button {{on 'click' this.toggleItem}}>
+    <button type="button" {{on "click" this.toggleItem}}>
       {{#if @isOpen}}
         <div>
-          {{svg-jar 'minus' class="w-4 h-4"}}
+          {{svg-jar "minus" class="w-4 h-4"}}
         </div>
       {{else}}
         <div>
-          {{svg-jar 'plus' class="w-4 h-4"}}
+          {{svg-jar "plus" class="w-4 h-4"}}
         </div>
       {{/if}}
     </button>
