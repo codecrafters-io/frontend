@@ -2,7 +2,6 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { isToday, isYesterday } from 'date-fns';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import showdown from 'showdown';
