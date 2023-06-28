@@ -46,11 +46,23 @@ export default class CourseStageSolutionModalComponent extends Component {
     this.emitAnalyticsEvent();
   }
 
-  tabIsAvailableForCourseStage(tab) {
+  get availableTabs() {
+    return ['comments', 'community_solutions', 'verified_solution', 'source_walkthrough'].filter((tab) => this.tabIsAvailable(tab));
+  }
+
+  tabIsAvailable(tab) {
+    if (this.courseStage.isFirst) {
+      if (this.args.repository.stageIsComplete(this.courseStage)) {
+        return ['source_walkthrough', 'verified_solution', 'comments'].includes(tab);
+      } else {
+        return ['verified_solution', 'comments'].includes(tab);
+      }
+    }
+
     if (tab === 'verified_solution') {
       return !!this.solution;
     } else if (tab === 'source_walkthrough') {
-      return this.courseStage.hasSourceWalkthrough;
+      return this.courseStage.hasSourceWalkthrough && !this.courseStage.isSecond; // Hide on stage 2 for now
     } else {
       return true;
     }
@@ -101,8 +113,8 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   handleCourseStageUpdated() {
-    if (!this.tabIsAvailableForCourseStage(this.activeTab)) {
-      this.activeTab = 'community_solutions';
+    if (!this.tabIsAvailable(this.activeTab)) {
+      this.activeTab = this.availableTabs[0];
     }
   }
 

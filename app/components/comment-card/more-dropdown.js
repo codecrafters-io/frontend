@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default class MoreDropdownComponent extends Component {
+  @service authenticator;
+
   @action
   handleDeleteButtonClick(dropdownActions) {
     dropdownActions.close();
@@ -14,5 +17,17 @@ export default class MoreDropdownComponent extends Component {
     dropdownActions.close();
 
     return this.args.onEditButtonClick();
+  }
+
+  get shouldShowEditButton() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.id === this.args.comment.user.id;
+  }
+
+  get shouldShowDeleteButton() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.id === this.args.comment.user.id;
+  }
+
+  get shouldShowEditInAdminPanelButton() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.isStaff;
   }
 }

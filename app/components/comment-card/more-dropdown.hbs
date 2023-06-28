@@ -5,26 +5,42 @@
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-more-dropdown-content>
-      <div
-        class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
-        role="button"
-        {{on "click" (fn this.handleEditButtonClick dd.actions)}}
-      >
-        <span class="mr-4">
+    <div class="py-2 border rounded shadow text-sm text-gray-600 min-w-[150px] max-w-xl bg-white" data-test-more-dropdown-content>
+      {{#if this.shouldShowEditButton}}
+        <div
+          class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+          role="button"
+          {{on "click" (fn this.handleEditButtonClick dd.actions)}}
+        >
           Edit
-        </span>
-      </div>
+        </div>
+      {{/if}}
 
-      <div
-        class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group text-red-600"
-        role="button"
-        {{on "click" (fn this.handleDeleteButtonClick dd.actions)}}
-      >
-        <span class="mr-4">
+      {{#if this.shouldShowDeleteButton}}
+        <div
+          class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group text-red-600"
+          role="button"
+          {{on "click" (fn this.handleDeleteButtonClick dd.actions)}}
+        >
           Delete
-        </span>
-      </div>
+        </div>
+      {{/if}}
+
+      {{#if this.shouldShowEditInAdminPanelButton}}
+        <a
+          href={{@comment.adminPanelEditUrl}}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+        >
+          Edit as admin
+        </a>
+
+        <div class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group">
+          Score:
+          <span class="font-mono">{{round @comment.score}}</span>
+        </div>
+      {{/if}}
     </div>
   </dd.Content>
 </BasicDropdown>

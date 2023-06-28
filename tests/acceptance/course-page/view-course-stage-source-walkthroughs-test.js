@@ -22,10 +22,11 @@ module('Acceptance | course-page | view-course-stage-source-walkthroughs', funct
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Source Walkthrough');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
+    await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Source Walkthrough');
 
     await percySnapshot('Source Walkthrough');
     assert.strictEqual(1, 1);

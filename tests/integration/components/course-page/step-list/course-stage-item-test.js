@@ -12,7 +12,7 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
   test('opens all links in new tab', async function (assert) {
     const store = this.owner.lookup('service:store');
     const mirageUser = this.server.create('user', { createdAt: new Date(), id: 'dummy', username: 'test' });
-    store.createRecord('user', { createdAt: new Date(), id: 'dummy', username: 'test' });
+    const user = store.createRecord('user', { createdAt: new Date(), id: 'dummy', username: 'test' });
 
     signIn(this.owner, this.server, mirageUser);
 
@@ -26,7 +26,7 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
       descriptionMarkdownTemplate: `[link1](https://link1.com), [link2](https://link2.com)`,
     });
 
-    const repository = store.createRecord('repository', { course: course });
+    const repository = store.createRecord('repository', { course: course, user: user });
 
     this.set('courseStage', courseStage);
     this.set('repository', repository);
@@ -41,7 +41,7 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
   @onViewSourceWalkthroughButtonClick={{this.noop}}
 />`);
 
-    assert.strictEqual(this.element.querySelectorAll('a').length, 3); // includes first stage link
-    assert.strictEqual(this.element.querySelectorAll('a[target="_blank"]').length, 3);
+    assert.strictEqual(this.element.querySelectorAll('a').length, 2); // includes first stage link
+    assert.strictEqual(this.element.querySelectorAll('a[target="_blank"]').length, 2);
   });
 });

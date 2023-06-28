@@ -1,25 +1,22 @@
 /* eslint-disable ember/no-mixins */
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
+import { inject as service } from '@ember/service';
 
 import UpvotableMixin from '../mixins/upvotable';
 import DownvotableMixin from '../mixins/downvotable';
+import IsCommentMixin from '../mixins/is-comment';
 
-export default class CourseStageCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin) {
-  @service authenticator;
+export default class CourseStageCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin, IsCommentMixin) {
+  @service authenticator; // used by UpvotableMixin and DownvotableMixin
 
   @belongsTo('course-stage', { async: false }) target;
   @belongsTo('language', { async: false }) language;
   @belongsTo('user', { async: false }) user;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
 
-  @attr('number') upvotesCount;
-  @attr('number') downvotesCount;
-  @attr('boolean') isApprovedByModerator;
   @attr('date') createdAt;
   @attr('date') updatedAt;
-  @attr('string') bodyMarkdown;
 
   get courseStage() {
     return this.target;

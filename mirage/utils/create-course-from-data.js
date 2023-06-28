@@ -1,3 +1,5 @@
+import createCourseStageSolution from './create-course-stage-solution';
+
 export default function createCourseFromData(server, courseData) {
   const course = server.create('course', {
     completionPercentage: courseData.completion_percentage,
@@ -32,13 +34,16 @@ export default function createCourseFromData(server, courseData) {
   }
 
   for (const languageConfigurationData of courseData.languages) {
+    const language = server.schema.languages.findBy({ slug: languageConfigurationData.slug });
     server.create('course-language-configuration', {
       course: course,
-      language: server.schema.languages.findBy({ slug: languageConfigurationData.slug }),
+      language: language,
       releaseStatus: languageConfigurationData.release_status || 'live',
       starterRepositoryUrl: languageConfigurationData.starter_repository_url,
       alphaTesterUsernames: languageConfigurationData.alphaTesterUsernames || [],
     });
+
+    createCourseStageSolution(server, course, 1, language);
   }
 
   return course;

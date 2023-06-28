@@ -5,21 +5,18 @@ import { memberAction } from 'ember-api-actions';
 
 import UpvotableMixin from '../mixins/upvotable';
 import DownvotableMixin from '../mixins/downvotable';
+import IsCommentMixin from '../mixins/is-comment';
 
-export default class CommunityCourseStageSolutionCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin) {
-  @service authenticator;
+export default class CommunityCourseStageSolutionCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin, IsCommentMixin) {
+  @service authenticator; // used by UpvotableMixin and DownvotableMixin
 
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'comments' }) target;
   @belongsTo('language', { async: false, inverse: null }) language;
   @belongsTo('user', { async: false, inverse: null }) user;
   @belongsTo('community-course-stage-solution-comment', { async: false, inverse: null }) parentComment;
 
-  @attr('number') upvotesCount;
-  @attr('number') downvotesCount;
-  @attr('boolean') isApprovedByModerator;
   @attr('date') createdAt;
   @attr('date') updatedAt;
-  @attr('string') bodyMarkdown;
   @attr('string') subtargetLocator; // filename.js or filename.js:line1-line2
 
   get solution() {
@@ -28,10 +25,6 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
 
   set solution(value) {
     this.target = value;
-  }
-
-  get childComments() {
-    return this.target.comments.filter((comment) => comment.parentComment && comment.parentComment.id === this.id);
   }
 
   get filename() {
@@ -46,10 +39,6 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
     const [startLine, endLine] = this.subtargetLocator.split(':')[1].split('-');
 
     return { startLine, endLine };
-  }
-
-  get isTopLevelComment() {
-    return !this.parentComment;
   }
 
   get subtargetStartLine() {

@@ -31,35 +31,44 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   }
 
   get shouldShowSubmitFeedbackButton() {
-    return (
-      !this.args.shouldHideFeedbackButtons &&
-      !this.shouldShowEditFeedbackButton &&
-      (this.args.repository.stageIsComplete(this.args.courseStage) || this.args.repository.activeStage === this.args.courseStage)
-    );
+    // Hide if we're asked to hide feedback
+    if (this.args.shouldHideFeedbackButtons) {
+      return false;
+    }
+
+    // Hide if edit feedback button is visible
+    if (this.shouldShowEditFeedbackButton) {
+      return false;
+    }
+
+    if (this.args.repository.stageIsComplete(this.args.courseStage)) {
+      return true; // Always show feedback button if stage is complete
+    }
+
+    // Show when stage is active except for stage 1
+    return !this.args.courseStage.isFirst && this.args.repository.activeStage === this.args.courseStage;
   }
 
   get shouldShowViewCommentsButton() {
-    return true; // Comments are always available
+    return !this.args.courseStage.isFirst;
   }
 
   get shouldShowViewSolutionButton() {
     return true; // Community solutions are always available!
   }
 
-  get shouldPulseViewSolutionButton() {
-    // TODO: Remove this if experiment is successful
-    if (!this.featureFlags.canSeePulsingSolutionsButtonForFirstStage) {
-      return false;
+  get shouldShowViewTestCasesButton() {
+    if (this.args.courseStage.isFirst || this.args.courseStage.isSecond) {
+      return false; // Don't expose user to too many features at once
     }
 
-    return this.shouldShowViewSolutionButton && this.args.courseStage.shouldShowPulsingViewSolutionButtonFor(this.args.repository);
-  }
-
-  get shouldShowViewTestCasesButton() {
     return this.args.courseStage.testerSourceCodeUrl;
   }
 
   get shouldShowViewSourceWalkthroughButton() {
-    return this.args.courseStage.sourceWalkthrough;
+    // This can be distracting, especially in early stages. Let's disable for now.
+    return false;
+
+    // return this.args.courseStage.sourceWalkthrough;
   }
 }

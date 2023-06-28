@@ -19,6 +19,10 @@ export default class AuthenticatorService extends Service {
       return;
     }
 
+    if (this.currentUserIsLoaded) {
+      return;
+    }
+
     const includedResources = [
       'feature_suggestions',
       'referral_activations_as_customer.referrer',

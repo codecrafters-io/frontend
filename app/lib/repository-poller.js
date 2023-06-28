@@ -18,6 +18,7 @@ export default class RepositoryPoller extends Poller {
     'github-repository-sync-configurations',
     'last-submission',
     'last-submission.course-stage',
+    'last-submission.evaluations',
   ].join(',');
 
   async doPoll() {
