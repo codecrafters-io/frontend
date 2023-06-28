@@ -61,11 +61,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await animationsSettled();
 
-    assert.strictEqual(
-      coursePage.activeCourseStageItem.footerText,
-      'Tests failed. Check your git push output for logs.',
-      'footer text is tests failed'
-    );
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Show logs', 'footer text is tests failed');
     await this.clock.tick(1000 * 601); // Wait for poll + 10 minutes to pass
 
     // force re-computation
@@ -73,7 +69,11 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Last attempt 10 minutes ago. Try again?', 'footer text includes timestamp');
+    assert.strictEqual(
+      coursePage.activeCourseStageItem.footerText,
+      'Last attempt 10 minutes ago. Try again? Show logs',
+      'footer text includes timestamp'
+    );
 
     await catalogPage.visit(); // This interacts with start-course-stage, not sure why
   });
@@ -127,7 +127,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer is tests failed');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Show logs', 'footer is tests failed');
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -161,7 +161,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer is tests failed');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Show logs', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -207,7 +207,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Check your git push output for logs.', 'footer is tests failed');
+    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Show logs', 'footer is tests failed');
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
