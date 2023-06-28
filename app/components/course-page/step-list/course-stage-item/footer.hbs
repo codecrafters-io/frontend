@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between w-full">
+<div class="flex items-center justify-between w-full min-h-[40px]">
   <div class="flex items-center text-xs" data-test-course-stage-item-footer>
     {{#if @shouldShowUpgradePrompt}}
       <StaticDot @class="flex-shrink-0 mr-3" @color="gray" />
@@ -14,12 +14,20 @@
 
       <span class="text-gray-600" data-test-footer-text>
         {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
-          Tests failed. Check your git push output for logs.
+          Tests failed.
         {{else if this.lastFailedSubmissionCreatedAt}}
           Last attempt
           {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
         {{else}}
           Last attempt failed. Try again?
+        {{/if}}
+
+        {{#if this.lastFailedSubmission}}
+          <span
+            class="inline-block border border-gray-400 rounded ml-3 px-1.5 py-0.5 font-medium text-gray-800 bg-white"
+            role="button"
+            {{on "click" (fn (mut this.logsAreExpanded) (not this.logsAreExpanded))}}
+          >{{if this.logsAreExpanded "Hide logs" "Show logs"}}</span>
         {{/if}}
       </span>
     {{else if (eq @status "complete")}}
@@ -48,3 +56,13 @@
     Stage #{{@courseStage.position}}
   </div>
 </div>
+{{#if (and this.lastFailedSubmission this.logsAreExpanded)}}
+  <div class="pb-3">
+    <SubmissionLogsPreview @submission={{this.lastFailedSubmission}} />
+
+    <div class="mt-3 prose prose-sm text-xs">
+      Read our article on
+      <a href={{this.debuggingArticleLink}} target="_blank" rel="noopener noreferrer">debugging test failures</a>.
+    </div>
+  </div>
+{{/if}}
