@@ -1,4 +1,4 @@
-<div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded max-h-[400px] overflow-y-auto" ...attributes>
+<div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded max-h-[400px] overflow-y-auto" {{did-insert this.handleDidInsert}} ...attributes>
   {{#if this.evaluation}}
     {{#each this.logLines as |logLine index|}}
       <div class="flex items-center">
