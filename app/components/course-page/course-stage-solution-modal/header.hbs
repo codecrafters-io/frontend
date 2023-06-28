@@ -24,8 +24,8 @@
 
     {{#if (includes "community_solutions" @availableTabs)}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="user-group"
-        @text="Solutions"
+        @icon="code"
+        @text="Code Examples"
         @isActive={{eq @activeTab "community_solutions"}}
         {{on "click" (fn @onTabLinkClick "community_solutions")}}
       />
@@ -33,7 +33,7 @@
 
     {{#if (includes "verified_solution" @availableTabs)}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
-        @icon="code"
+        @icon="academic-cap"
         @text="Verified Solution"
         @isActive={{eq @activeTab "verified_solution"}}
         @authorDetails={{@currentSolution.authorDetails}}
