@@ -41,17 +41,6 @@ export default class CourseStageItemComponent extends Component {
     return this.completedAt && isYesterday(this.completedAt);
   }
 
-  get firstStageInstructionsPreludeHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.firstStageInstructionsPreludeMarkdown));
-  }
-
-  get firstStageInstructionsPreludeMarkdown() {
-    return `
-CodeCrafters runs tests when you do a git push. Your first push should have
-streamed back a \`Test failed\` error — that's expected. Once you implement this stage, you'll pass the test!
-    `;
-  }
-
   @action
   handleFeedbackActionButtonClicked() {
     this.manualFeedbackFlowIsActive = true;
@@ -128,14 +117,6 @@ streamed back a \`Test failed\` error — that's expected. Once you implement th
 
   get shouldShowPublishToGitHubPrompt() {
     return !this.args.repository.githubRepositorySyncConfiguration && this.isActiveStage && !this.statusIsComplete && this.args.courseStage.isThird;
-  }
-
-  get solutionIsAvailableInAnyLanguage() {
-    return !!this.args.courseStage.solutions.firstObject;
-  }
-
-  get solutionIsAvailableInUserLanguage() {
-    return !!this.args.courseStage.solutions.findBy('language', this.args.repository.language);
   }
 
   get status() {
