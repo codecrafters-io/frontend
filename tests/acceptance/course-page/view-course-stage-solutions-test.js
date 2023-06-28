@@ -137,21 +137,21 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
       await coursePage.courseStageSolutionModal.clickOnHeaderTabLink('Verified Solution');
     };
 
-    const assertHeading = function (expectedText) {
-      assert.strictEqual(revealSolutionOverlay.headingText, expectedText, 'heading is present');
-    };
+    // const assertHeading = function (expectedText) {
+    //   assert.strictEqual(revealSolutionOverlay.headingText, expectedText, 'heading is present');
+    // };
 
-    const assertInstructions = function (expectedInstructions) {
-      assert.strictEqual(revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
-    };
+    // const assertInstructions = function (expectedInstructions) {
+    //   assert.strictEqual(revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
+    // };
 
-    const assertButtons = function (expectedButtons) {
-      assert.deepEqual(revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
-    };
+    // const assertButtons = function (expectedButtons) {
+    //   assert.deepEqual(revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
+    // };
 
-    const clickButton = async function (buttonText) {
-      await revealSolutionOverlay.clickOnActionButton(buttonText);
-    };
+    // const clickButton = async function (buttonText) {
+    //   await revealSolutionOverlay.clickOnActionButton(buttonText);
+    // };
 
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.collapsedItems[2].click();
@@ -162,45 +162,48 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     // Stage 3 (Incomplete, no solutions in other languages, no comments)
     await switchToSolutionsForStage(3);
-    await percySnapshot('Verified Solutions Overlay | No other langs, no comments');
+    assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
 
-    assertHeading('Taking a peek?');
-    assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
-    assertButtons(['Just taking a peek']);
-    await clickButton('Just taking a peek');
+    // We don't have the overlay anymore
+    // await percySnapshot('Verified Solutions Overlay | No other langs, no comments');
 
-    assert.notOk(revealSolutionOverlay.isVisible);
+    // assertHeading('Taking a peek?');
+    // assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
+    // assertButtons(['Just taking a peek']);
+    // await clickButton('Just taking a peek');
 
-    // Stage 4: Incomplete, has solutions in other language, no comments
-    await switchToSolutionsForStage(4);
-    await percySnapshot('Verified Solutions Overlay | Has other langs, no comments');
+    // assert.notOk(revealSolutionOverlay.isVisible);
 
-    assertInstructions(
-      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
-    );
-    assertButtons(['Good idea', 'Reveal Python solution']);
+    // // Stage 4: Incomplete, has solutions in other language, no comments
+    // await switchToSolutionsForStage(4);
+    // await percySnapshot('Verified Solutions Overlay | Has other langs, no comments');
 
-    assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
-    await clickButton('Good idea');
-    assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
+    // assertInstructions(
+    //   "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
+    // );
+    // assertButtons(['Good idea', 'Reveal Python solution']);
 
-    // Stage 5: Create comments
-    await switchToSolutionsForStage(5);
-    await percySnapshot('Verified Solutions Overlay | No other langs, has comments');
+    // assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
+    // await clickButton('Good idea');
+    // assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
 
-    assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
-    assertButtons(['View hints', 'Reveal solution']);
-    await clickButton('View hints');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Hints', 'active header tab link should be comments');
+    // // Stage 5: Create comments
+    // await switchToSolutionsForStage(5);
+    // await percySnapshot('Verified Solutions Overlay | No other langs, has comments');
 
-    // Stage 6: Incomplete, has solutions in other language & has comments
-    await switchToSolutionsForStage(6);
-    await percySnapshot('Verified Solutions Overlay | Has other langs & comments');
+    // assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
+    // assertButtons(['View hints', 'Reveal solution']);
+    // await clickButton('View hints');
+    // assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Hints', 'active header tab link should be comments');
 
-    assertInstructions(
-      "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
-    );
-    assertButtons(['View hints', 'Another language', 'Reveal Python solution']);
+    // // Stage 6: Incomplete, has solutions in other language & has comments
+    // await switchToSolutionsForStage(6);
+    // await percySnapshot('Verified Solutions Overlay | Has other langs & comments');
+
+    // assertInstructions(
+    //   "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
+    // );
+    // assertButtons(['View hints', 'Another language', 'Reveal Python solution']);
   });
 
   test('can view solutions for previous stages after completing them', async function (assert) {
