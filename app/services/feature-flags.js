@@ -19,14 +19,6 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeEarlyBirdDiscountBanner() {
-    if (this.currentUser && this.currentUser.isStaff) {
-      return true;
-    }
-
-    if (this.currentUser && this.currentUser.hasActiveSubscription && this.currentUser.isEligibleForEarlyBirdDiscount) {
-      return false;
-    }
-
     return this.getFeatureFlagValue('can-see-early-bird-discount-banner') === 'test';
   }
 
