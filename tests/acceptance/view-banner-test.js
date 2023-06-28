@@ -29,6 +29,7 @@ module('Acceptance | view-banner', function (hooks) {
     const bodyText = document.body.textContent;
     assert.notOk(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is not visible');
   });
+
   test('it does not render if feaure flag is not set', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -38,6 +39,7 @@ module('Acceptance | view-banner', function (hooks) {
     const bodyText = document.body.textContent;
     assert.notOk(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is not visible');
   });
+
   test('it does not render if there are active subscriptions', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -52,6 +54,7 @@ module('Acceptance | view-banner', function (hooks) {
     const bodyText = document.body.textContent;
     assert.notOk(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is not visible');
   });
+
   test('it does not render if the user is not eligible', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -66,6 +69,7 @@ module('Acceptance | view-banner', function (hooks) {
     const bodyText = document.body.textContent;
     assert.notOk(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is not visible');
   });
+
   test('it renders when user is signed in, feature flags are on, user does not have a subscription, and is eligible for discount', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
