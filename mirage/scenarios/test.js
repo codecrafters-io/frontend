@@ -40,4 +40,5 @@ export default function (server) {
   // TODO: Fetch this programmatically
   createCourseStageSourceWalkthrough(server, redis, 1, 'redis-bind-port');
   createCourseStageSourceWalkthrough(server, redis, 2, 'redis-ping');
+  createCourseStageSourceWalkthrough(server, redis, 3, 'redis-concurrency');
 }
