@@ -15,7 +15,7 @@ export default class SubmissionDetailsContainerComponent extends Component {
       },
       {
         slug: 'community_solution',
-        title: 'Community Solution',
+        title: 'Code Example',
         icon: 'users',
       },
     ];

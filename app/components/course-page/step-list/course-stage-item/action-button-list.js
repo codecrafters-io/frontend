@@ -57,12 +57,8 @@ export default class CourseStageItemActionButtonListComponent extends Component 
     return true; // Community solutions are always available!
   }
 
-  get shouldPulseViewSolutionButton() {
-    return this.shouldShowViewSolutionButton && this.args.courseStage.shouldShowPulsingViewSolutionButtonFor(this.args.repository);
-  }
-
   get shouldShowViewTestCasesButton() {
-    if (this.args.courseStage.isFirst) {
+    if (this.args.courseStage.isFirst || this.args.courseStage.isSecond) {
       return false; // Don't expose user to too many features at once
     }
 
