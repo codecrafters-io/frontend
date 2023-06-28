@@ -1,0 +1,8 @@
+<div class="w-full max-w-3xl mx-auto" ...attributes>
+  <div class="text-2xl sm:text-3xl font-bold text-gray-700 text-center">Frequently Asked Questions</div>
+  <div class="flex flex-col gap-2.5 pt-10">
+    {{#each this.faqs as |faq|}}
+      <FaqItem @faq={{faq}} @onToggle={{this.handleToggle}} @isOpen={{eq faq this.openItem}} />
+    {{/each}}
+  </div>
+</div>
