@@ -48,6 +48,7 @@ export default class HeaderComponent extends Component {
     if (this.currentUser && !this.currentUser.hasActiveSubscription && this.currentUser.isEligibleForEarlyBirdDiscount) {
       return this.featureFlags.canSeeEarlyBirdDiscountBanner;
     }
+
     return false;
   }
 }

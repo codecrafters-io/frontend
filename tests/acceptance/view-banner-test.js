@@ -13,15 +13,15 @@ function createActiveSubscription(server, user) {
     user,
     startDate: date,
     pricingPlanName: 'Monthly',
-    currentPeriodEnd: periodEnd
-  })
+    currentPeriodEnd: periodEnd,
+  });
 }
 
-module('Acceptance | view-banner', function(hooks) {
+module('Acceptance | view-banner', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('it does not render if a user is not signed in', async function(assert) {
+  test('it does not render if a user is not signed in', async function (assert) {
     testScenario(this.server);
 
     await catalogPage.visit();
@@ -29,7 +29,7 @@ module('Acceptance | view-banner', function(hooks) {
     const bodyText = document.body.textContent;
     assert.notOk(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is not visible');
   });
-  test('it does not render if feaure flag is not set', async function(assert) {
+  test('it does not render if feaure flag is not set', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -38,13 +38,13 @@ module('Acceptance | view-banner', function(hooks) {
     const bodyText = document.body.textContent;
     assert.notOk(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is not visible');
   });
-  test('it does not render if there are active subscriptions', async function(assert) {
+  test('it does not render if there are active subscriptions', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
     currentUser.update('createdAt', new Date());
-    currentUser.update('featureFlags', { 'can-see-early-bird-discount-banner': 'test' })
+    currentUser.update('featureFlags', { 'can-see-early-bird-discount-banner': 'test' });
     createActiveSubscription(this.server, currentUser);
 
     await catalogPage.visit();
@@ -52,13 +52,13 @@ module('Acceptance | view-banner', function(hooks) {
     const bodyText = document.body.textContent;
     assert.notOk(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is not visible');
   });
-  test('it does not render if the user is not eligible', async function(assert) {
+  test('it does not render if the user is not eligible', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
     currentUser.update('createdAt', new Date(2019, 1, 1));
-    currentUser.update('featureFlags', { 'can-see-early-bird-discount-banner': 'test' })
+    currentUser.update('featureFlags', { 'can-see-early-bird-discount-banner': 'test' });
     createActiveSubscription(this.server, currentUser);
 
     await catalogPage.visit();
@@ -72,7 +72,7 @@ module('Acceptance | view-banner', function(hooks) {
 
     const currentUser = this.server.schema.users.first();
     currentUser.update('createdAt', new Date());
-    currentUser.update('featureFlags', { 'can-see-early-bird-discount-banner': 'test' })
+    currentUser.update('featureFlags', { 'can-see-early-bird-discount-banner': 'test' });
 
     await catalogPage.visit();
 
@@ -80,4 +80,3 @@ module('Acceptance | view-banner', function(hooks) {
     assert.ok(/Upgrade today to get 40% off/.test(bodyText), 'Discount banner is visible');
   });
 });
-
