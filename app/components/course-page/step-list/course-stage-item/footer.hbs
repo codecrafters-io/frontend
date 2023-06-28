@@ -1,0 +1,50 @@
+<div class="flex items-center justify-between w-full">
+  <div class="flex items-center text-xs" data-test-course-stage-item-footer>
+    {{#if @shouldShowUpgradePrompt}}
+      <StaticDot @class="flex-shrink-0 mr-3" @color="gray" />
+      <span class="text-gray-600" data-test-footer-text>Membership required.</span>
+    {{else if (eq @status "waiting")}}
+      <BlinkingDot @class="flex-shrink-0 mr-3" @color="gray" />
+      <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
+    {{else if (eq @status "evaluating")}}
+      <BlinkingDot @class="flex-shrink-0 mr-3" @color="yellow" />
+      <span class="text-gray-600" data-test-footer-text>Running tests...</span>
+    {{else if (eq @status "failed")}}
+      <StaticDot @class="flex-shrink-0 mr-3" @color="red" />
+
+      <span class="text-gray-600" data-test-footer-text>
+        {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
+          Tests failed. Check your git push output for logs.
+        {{else if this.lastFailedSubmissionCreatedAt}}
+          Last attempt
+          {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
+        {{else}}
+          Last attempt failed. Try again?
+        {{/if}}
+      </span>
+    {{else if (eq @status "complete")}}
+      <StaticDot @class="flex-shrink-0 mr-3" @color="green" />
+      <span class="text-gray-600" data-test-footer-text>
+        {{#if this.completedAtWasToday}}
+          You completed this stage today.
+        {{else if this.completedAtWasYesterday}}
+          You completed this stage yesterday.
+        {{else if this.completedAt}}
+          You completed this stage
+          {{moment-from-now this.completedAt}}.
+        {{else}}
+          You've completed this stage.
+        {{/if}}
+      </span>
+    {{else if (eq @status "locked")}}
+      {{#if @courseStage.isFirst}}
+        <span class="text-gray-600" data-test-footer-text>Complete repository setup to gain access to this stage.</span>
+      {{else}}
+        <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="text-gray-500 text-xs pl-3 -mr-1 md:-mr-3 flex-shrink-0 hidden sm:block">
+    Stage #{{@courseStage.position}}
+  </div>
+</div>
