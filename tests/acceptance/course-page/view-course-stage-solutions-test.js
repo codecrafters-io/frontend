@@ -28,7 +28,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Code Examples', 'active header tab link should be solutions');
 
@@ -55,7 +55,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
 
@@ -72,7 +72,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.clickOnCollapsedItem('Print table names');
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Print table names', 'title should be respond to ping');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
   });
@@ -253,7 +253,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING');
 
@@ -263,7 +263,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
@@ -308,7 +308,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.collapsedItems[3].click(); // The previous completed stage
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
@@ -317,7 +317,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.collapsedItems[4].click(); // The next pending stage
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
   });
@@ -359,7 +359,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.collapsedItems[3].click(); // The previous completed stage
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should be open');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Respond to multiple PINGs');
 
@@ -368,7 +368,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
     await coursePage.collapsedItems[4].click(); // The next pending stage
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solution');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.ok(coursePage.courseStageSolutionModal.isOpen, 'modal should not be open');
     assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #5: Implement the ECHO command');
   });
