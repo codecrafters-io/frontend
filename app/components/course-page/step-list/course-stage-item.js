@@ -2,7 +2,6 @@ import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { isToday, isYesterday } from 'date-fns';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import showdown from 'showdown';
@@ -27,18 +26,6 @@ export default class CourseStageItemComponent extends Component {
     return this.args.repository.user.badgeAwards.filter((badgeAward) => {
       return badgeAward.submission.repository.id === this.args.repository.id && badgeAward.submission.courseStage.id === this.args.courseStage.id;
     });
-  }
-
-  get completedAt() {
-    return this.args.repository.stageCompletedAt(this.args.courseStage);
-  }
-
-  get completedAtWasToday() {
-    return this.completedAt && isToday(this.completedAt, new Date());
-  }
-
-  get completedAtWasYesterday() {
-    return this.completedAt && isYesterday(this.completedAt);
   }
 
   @action
@@ -91,18 +78,6 @@ export default class CourseStageItemComponent extends Component {
     return this.args.repository.activeStage === this.args.courseStage;
   }
 
-  get lastFailedSubmissionWasWithinLast10Minutes() {
-    return this.lastFailedSubmissionCreatedAt && new Date() - this.lastFailedSubmissionCreatedAt <= 600 * 1000; // in last 10 minutes
-  }
-
-  get lastFailedSubmissionCreatedAt() {
-    if (this.args.repository.lastSubmissionHasFailureStatus) {
-      return this.args.repository.lastSubmission.createdAt;
-    } else {
-      return null;
-    }
-  }
-
   get shouldShowCLIUsageInstructions() {
     return this.args.courseStage.isSecond;
   }
@@ -141,13 +116,5 @@ export default class CourseStageItemComponent extends Component {
 
   get statusIsComplete() {
     return this.status === 'complete';
-  }
-
-  get statusIsLocked() {
-    return this.status === 'locked';
-  }
-
-  get statusIsWaiting() {
-    return this.status === 'waiting';
   }
 }

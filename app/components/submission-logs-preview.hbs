@@ -1,0 +1,13 @@
+<div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded" ...attributes>
+  {{#if this.evaluation}}
+    {{#each this.logLines as |logLine index|}}
+      <div class="flex items-center">
+        <div class="text-gray-500 w-4 text-right mr-3">{{add index 1}}</div>
+        <div>{{logLine}}</div>
+      </div>
+    {{/each}}
+  {{else}}
+    <div>Hmm, we weren't able to find any logs for this submission.</div>
+    <div>Please contact us at hello@codecrafters.io if this error persists.</div>
+  {{/if}}
+</div>
