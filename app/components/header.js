@@ -45,7 +45,7 @@ export default class HeaderComponent extends Component {
   }
 
   get canSeeEarlyBirdDiscountBanner() {
-    if (this.currentUser && !this.currentUser.hasActiveSubscripiton && this.currentUser.isEligibleForEarlyBirdDiscount) {
+    if (this.currentUser && !this.currentUser.hasActiveSubscription && this.currentUser.isEligibleForEarlyBirdDiscount) {
       return this.featureFlags.canSeeEarlyBirdDiscountBanner;
     }
     return false;
