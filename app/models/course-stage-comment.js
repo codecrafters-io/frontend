@@ -40,14 +40,14 @@ CourseStageCommentModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    this.currentUserUpvotes.toArray().forEach((record) => {
+    for (const record of [...this.currentUserUpvotes]) {
       this.upvotesCount -= 1;
       record.unloadRecord();
-    });
+    }
 
-    this.currentUserDownvotes.toArray().forEach((record) => {
+    for (const record of [...this.currentUserDownvotes]) {
       this.downvotesCount -= 1;
       record.unloadRecord();
-    });
+    }
   },
 });
