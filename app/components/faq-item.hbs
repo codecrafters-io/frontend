@@ -1,0 +1,22 @@
+<div
+  class="py-4 px-6 rounded-lg border {{if @isOpen 'border-gray-300 drop-shadow-sm' 'border-gray-200'}} filter w-full bg-white"
+  role="button"
+  {{on "click" this.toggleItem}}
+>
+  <div class="flex justify-between items-center">
+    <div class="text-sm sm:text-base text-gray-800 {{if @isOpen 'font-semibold' 'font-normal'}}">{{@faq.query}}</div>
+    <div class="text-gray-500 pl-4">
+      {{#if @isOpen}}
+        {{svg-jar "minus" class="w-4 h-4"}}
+      {{else}}
+        {{svg-jar "plus" class="w-4 h-4"}}
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if @isOpen}}
+    <div class="w-full h-px bg-gray-200 mt-3 mb-4">
+    </div>
+    <div class="prose prose-sm sm:prose-base">{{@faq.answer}}</div>
+  {{/if}}
+</div>
