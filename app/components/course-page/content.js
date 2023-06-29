@@ -42,14 +42,6 @@ export default class CoursePageContentComponent extends Component {
   }
 
   @action
-  async handleViewSourceWalkthroughButtonClick(courseStage) {
-    await this.handleModalClose();
-
-    this.courseStageSolutionModalIntent = 'view_source_walkthrough';
-    this.currentCourseStageForSolutionModal = courseStage;
-  }
-
-  @action
   async handleViewCommentsButtonClick(courseStage) {
     await this.handleModalClose();
 

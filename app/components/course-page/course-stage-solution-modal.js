@@ -24,7 +24,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-diff';
 
 export default class CourseStageSolutionModalComponent extends Component {
-  @tracked activeTab; // community_solutions/verified_solution/source_walkthrough
+  @tracked activeTab; // community_solutions/verified_solution/comments
   @tracked courseStage;
   @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
@@ -47,7 +47,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   get availableTabs() {
-    return ['comments', 'community_solutions', 'verified_solution', 'source_walkthrough'].filter((tab) => this.tabIsAvailable(tab));
+    return ['comments', 'community_solutions', 'verified_solution'].filter((tab) => this.tabIsAvailable(tab));
   }
 
   tabIsAvailable(tab) {
@@ -57,24 +57,16 @@ export default class CourseStageSolutionModalComponent extends Component {
 
     if (tab === 'verified_solution') {
       return !!this.solution;
-    } else if (tab === 'source_walkthrough') {
-      return this.courseStage.hasSourceWalkthrough && !this.courseStage.isSecond; // Hide on stage 2 for now
     } else {
       return true;
     }
   }
 
   computeActiveTabFromIntent() {
-    // intent is either view_solution or view_source_walkthrough
+    // intent is either view_solution or view_comments
     if (this.args.intent === 'view_solution') {
       if (this.courseStage.isFirst && this.solution) {
         this.activeTab = 'verified_solution';
-      } else {
-        this.activeTab = 'community_solutions';
-      }
-    } else if (this.args.intent === 'view_source_walkthrough') {
-      if (this.courseStage.hasSourceWalkthrough) {
-        this.activeTab = 'source_walkthrough';
       } else {
         this.activeTab = 'community_solutions';
       }
@@ -84,17 +76,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   emitAnalyticsEvent() {
-    if (this.activeTab === 'source_walkthrough') {
-      this.store
-        .createRecord('analytics-event', {
-          name: 'viewed_course_stage_source_walkthrough',
-          properties: {
-            course_slug: this.courseStage.course.slug,
-            course_stage_slug: this.courseStage.slug,
-          },
-        })
-        .save();
-    } else if (this.activeTab === 'comments') {
+    if (this.activeTab === 'comments') {
       this.store
         .createRecord('analytics-event', {
           name: 'viewed_course_stage_comments',

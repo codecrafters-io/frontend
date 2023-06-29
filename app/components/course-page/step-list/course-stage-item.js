@@ -52,11 +52,6 @@ export default class CourseStageItemComponent extends Component {
     window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
   }
 
-  @action
-  handleViewSourceWalkthroughButtonClicked() {
-    this.args.onViewSourceWalkthroughButtonClick();
-  }
-
   get instructionsHTML() {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.instructionsMarkdown));
   }
