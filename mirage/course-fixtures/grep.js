@@ -3,7 +3,7 @@ export default {
   "name": "Build your own grep",
   "short_name": "grep",
   "release_status": "beta",
-  "description_md": "[Regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (Regexes, for short) are patterns used to \nmatch character combinations in strings. [`grep`](https://en.wikipedia.org/wiki/Grep) is a CLI tool for searching \nusing Regexes.\n\nIn this challenge you'll build your own implementation of `grep`. Along the way we'll learn about Regex syntax and \nhow Regexes are evaluated. \n",
+  "description_md": "[Regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (Regexes, for short) are patterns used to \nmatch character combinations in strings. [`grep`](https://en.wikipedia.org/wiki/Grep) is a CLI tool for searching \nusing Regexes.\n\nIn this challenge you'll build your own implementation of `grep`. Along the way we'll learn about Regex syntax and \nhow Regexes are evaluated.\n",
   "short_description_md": "Learn how regular expressions work, including character classes, quantifiers and more\n",
   "completion_percentage": 30,
   "languages": [
@@ -14,6 +14,24 @@ export default {
     {
       "slug": "rust",
       "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-rust"
+    },
+    {
+      "slug": "go",
+      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-go"
+    },
+    {
+      "slug": "haskell",
+      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-haskell",
+      "release_status": "beta"
+    },
+    {
+      "slug": "ruby",
+      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-ruby",
+      "release_status": "alpha",
+      "alpha_tester_usernames": [
+        "rohitpaulk",
+        "sreeram-venkitesh"
+      ]
     }
   ],
   "marketing": {
@@ -24,14 +42,14 @@ export default {
       {
         "author_name": "Ananthalakshmi Sankar",
         "author_description": "Automation Engineer at Apple",
-        "author_avatar": "https://codecrafters.io/images/testimonials/ananthalakshmi_sankar.jpeg",
+        "author_avatar": "https://codecrafters.io/images/external/testimonials/oxta.jpeg",
         "link": "https://github.com/anu294",
         "text": "There are few sites I like as much that have a step by step guide. The real-time feedback is so good, it's creepy!"
       },
       {
         "author_name": "Patrick Burris",
         "author_description": "Senior Software Developer, CenturyLink",
-        "author_avatar": "https://codecrafters.io/images/testimonials/patrick_burris.jpeg",
+        "author_avatar": "https://codecrafters.io/images/external/testimonials/patrick-burris.jpeg",
         "link": "https://github.com/Jumballaya",
         "text": "I think the instant feedback right there in the git push is really cool.\nDidn't even know that was possible!\n"
       }
@@ -78,7 +96,7 @@ export default {
       "name": "Combining Character Classes",
       "difficulty": "medium",
       "description_md": "In this stage, we'll add support for patterns that combine the character classes we've seen so far. \n\nThis is where your regex matcher will start to _feel_ useful. \n\nKeep in mind that this stage is harder than the previous ones. You'll likely need to rework your \nimplementation to process user input character-by-character instead of the whole line at once. \n\nWe recommend taking a look at the example code in [\"A Regular Expression Matcher\"](https://www.cs.princeton.edu/courses/archive/spr09/cos333/beautiful.html) \nby Rob Pike to guide your implementation.\n\n**Examples:** \n\n- `\\d apple` should match \"1 apple\", but not \"1 orange\".\n- `\\d\\d\\d apple` should match \"100 apples\", but not \"1 apple\".\n- `\\d \\w\\w\\ws` should match \"3 dogs\" and \"4 cats\" but not \"1 dog\" (because the \"s\" is not present at the end).\n\nYour program will be executed like this: \n\n```bash\n$ echo \"1 apple\" | ./your_grep.sh -E \"\\d apple\"\n```\n\nYou program must exit with 0 if the pattern matches the input, and 1 if not.\n",
-      "marketing_md": "In this stage, we'll support patterns that combine the character classes we've seen so far. \n\n**Examples:** \n\n- `\\d apple` should match \"1 apple\", but not \"1 orange\".\n- `\\d\\d\\d apple` should match \"100 apples\", but not \"1 apple\".\n- `\\d \\w\\w\\ws` should match \"3 dogs\" and \"4 cats\" but not \"1 dog\" (because the \"s\" is not present at the end).\n\nThis stage is significantly harder than the previous ones. You'll likely need to rework your \nimplementation to process user input character-by-character instead of the whole line at once. \n"
+      "marketing_md": "In this stage, we'll support patterns that combine the character classes we've seen so far. \n\n**Examples:** \n\n- `\\d apple` should match \"1 apple\", but not \"1 orange\".\n- `\\d\\d\\d apple` should match \"100 apples\", but not \"1 apple\".\n- `\\d \\w\\w\\ws` should match \"3 dogs\" and \"4 cats\" but not \"1 dog\" (because the \"s\" is not present at the end).\n\nThis stage is significantly harder than the previous ones. You'll likely need to rework your \nimplementation to process user input character-by-character instead of the whole line at once.\n"
     },
     {
       "slug": "start_of_string_anchor",

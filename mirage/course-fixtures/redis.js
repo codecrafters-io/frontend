@@ -70,14 +70,14 @@ export default {
       {
         "author_name": "Charles Guo",
         "author_description": "Software Engineer, Stripe",
-        "author_avatar": "https://codecrafters.io/images/testimonials/charles_guo.jpeg",
+        "author_avatar": "https://codecrafters.io/images/external/testimonials/charles-guo.png",
         "link": "https://github.com/shaldengeki",
         "text": "The Redis challenge was extremely fun. I ended up having to read the\nRedis Protocol specification doc pretty carefully in its entirety! The result\nfelt like lightly-guided independent study, if that makes sense. (Which, again, was lots of fun)\n"
       },
       {
         "author_name": "Patrick Burris",
         "author_description": "Senior Software Developer, CenturyLink",
-        "author_avatar": "https://codecrafters.io/images/testimonials/patrick_burris.jpeg",
+        "author_avatar": "https://codecrafters.io/images/external/testimonials/patrick-burris.jpeg",
         "link": "https://github.com/Jumballaya",
         "text": "I think the instant feedback right there in the git push is really cool.\nDidn't even know that was possible!\n"
       }
@@ -97,7 +97,7 @@ export default {
       "slug": "ping-pong",
       "name": "Respond to PING",
       "difficulty": "easy",
-      "description_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command.\n\nSince the tester client _only_ sends `PING` at the moment, it's okay to\nignore what the client sends and hardcode a response. We'll get to parsing\nclient input in later stages.\n\nKeep in mind that Redis clients & servers speak the Redis protocol, so\njust sending \"PONG\" back won't suffice. You'll need to encode it as a\n[RESP simple\nstring](https://redis.io/topics/protocol#resp-simple-strings).\n",
+      "description_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command.\n\nYour server should respond with `+PONG\\r\\n`, which is \"PONG\" encoded as a [RESP simple string](https://redis.io/docs/reference/protocol-spec/#resp-simple-strings).\n\nSince the tester client _only_ sends the PING command at the moment, it's okay to\nignore what the client sends and hardcode a response. We'll get to parsing\nclient input in later stages.\n",
       "marketing_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command. You'll use [the Redis\nprotocol](https://redis.io/topics/protocol) to encode the reply.\n",
       "source_walkthrough_slug": "redis-ping-command",
       "tester_source_code_url": "https://github.com/codecrafters-io/redis-tester/blob/a58b9d58b33870fe26a164c0e323f809275a7250/internal/test_ping_pong.go#L9"
@@ -106,7 +106,7 @@ export default {
       "slug": "ping-pong-multiple",
       "name": "Respond to multiple PINGs",
       "difficulty": "easy",
-      "description_md": "In this stage, you'll respond to multiple\n[PING](https://redis.io/commands/ping) commands sent by the same client.\n\n{{#lang_is_javascript}}\nIn most languages, you'd need to run a loop that reads input from a client and sends a\nresponse back. In JavaScript however, if you're listening to the\n[`data`](https://nodejs.org/api/net.html#net_event_data) event, this should be automatically handled for you. It\nis very likely that the code you had for the previous stage will pass this stage without any changes!\n{{/lang_is_javascript}}\n\n{{^lang_is_javascript}}\nYou'll need to run a loop that reads input from a client and sends a\nresponse back.\n{{/lang_is_javascript}}\n",
+      "description_md": "In this stage, you'll respond to multiple\n[PING](https://redis.io/commands/ping) commands sent by the same connection.\n\nTo test your implementation using the [official Redis CLI](https://redis.io/docs/ui/cli/), you can start your server using \n`./spawn_redis_server.sh` and then run `echo -e \"ping\\nping\" | redis-cli` from your terminal. This will send two PING commands\nusing the same connection. \n\n{{#lang_is_javascript}}\nIn most languages, you'd need to run a loop that reads input from a connection and sends a\nresponse back. In JavaScript however, if you're listening to the\n[`data`](https://nodejs.org/api/net.html#net_event_data) event, this should be automatically handled for you. **It\nis very likely that the code you had for the previous stage will pass this stage without any changes!**\n{{/lang_is_javascript}}\n\n{{^lang_is_javascript}}\nYou'll need to run a loop that reads input from a connection and sends a\nresponse back.\n{{/lang_is_javascript}}\n",
       "marketing_md": "In this stage, you'll respond to multiple\n[PING](https://redis.io/commands/ping) commands sent by the same client.\n",
       "tester_source_code_url": "https://github.com/codecrafters-io/redis-tester/blob/a58b9d58b33870fe26a164c0e323f809275a7250/internal/test_ping_pong.go#L35"
     },
@@ -114,7 +114,7 @@ export default {
       "slug": "concurrent-clients",
       "name": "Handle concurrent clients",
       "difficulty": "medium",
-      "description_md": "In this stage, your server will need to handle multiple concurrent\nclients. Just like the previous stages, all clients will only send `PING`\ncommands for now.\n\n{{#lang_is_javascript}}\nIn most languages, you'd need to either use threads or implement an\n[Event Loop](https://en.wikipedia.org/wiki/Event_loop) to do this. In JavaScript however, since [the concurrency\nmodel itself is based on an event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop), most\nstandard library functions are designed to support this kind of concurrent behaviour out of the box. It is very\nlikely that the code you had for the previous stage will pass this stage without any changes!\n{{/lang_is_javascript}}\n\n{{^lang_is_javascript}}\nTo achieve this, you'll need to either use threads, or, if you're feeling\nadventurous, an [Event Loop](https://en.wikipedia.org/wiki/Event_loop) (like\nthe official Redis implementation does).\n{{/lang_is_javascript}}\n",
+      "description_md": "In this stage, your server will need to handle multiple concurrent\nclients. Just like the previous stages, all clients will only send `PING`\ncommands for now.\n\n{{#lang_is_javascript}}\nIn most languages, you'd need to either use threads or implement an\n[Event Loop](https://en.wikipedia.org/wiki/Event_loop) to do this. In JavaScript however, since [the concurrency\nmodel itself is based on an event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop), most\nstandard library functions are designed to support this kind of concurrent behaviour out of the box. **It is very\nlikely that the code you had for the previous stage will pass this stage without any changes!**\n{{/lang_is_javascript}}\n\n{{^lang_is_javascript}}\nTo achieve this, you'll need to either use threads, or, if you're feeling\nadventurous, an [Event Loop](https://en.wikipedia.org/wiki/Event_loop) (like\nthe official Redis implementation does).\n{{/lang_is_javascript}}\n",
       "marketing_md": "In this stage, you'll add support for multiple concurrent clients to your\nRedis server. To achieve this you'll use an [Event\nLoop](https://en.wikipedia.org/wiki/Event_loop),\nlike the official Redis implementation does.\n",
       "tester_source_code_url": "https://github.com/codecrafters-io/redis-tester/blob/a58b9d58b33870fe26a164c0e323f809275a7250/internal/test_ping_pong.go#L56"
     },
@@ -138,7 +138,7 @@ export default {
       "slug": "expiry",
       "name": "Expiry",
       "difficulty": "medium",
-      "description_md": "In this stage, you'll need to support setting a key with an expiry. The\nexpiry is provided using the \"PX\" argument to the\n[SET](https://redis.io/commands/set) command.\n\n{{#lang_is_haskell}}\nThe [time](https://hackage.haskell.org/package/time) package is available\nto use as a dependency.\n{{/lang_is_haskell}}\n",
+      "description_md": "In this stage, you'll need to support setting a key with an expiry. The\nexpiry is provided using the \"PX\" argument to the\n[SET](https://redis.io/commands/set) command.\n\nThe tester will first send a `SET` command with an expiry, like this: `SET <key> <value> PX <expiry>`.\nThen, it will send a `GET` command to retrieve the value, like this: `GET <key>`. If the key has expired, the \ntester will expect a Null value as the response. Read about \"Null Bulk Strings\" \n[here](https://redis.io/docs/reference/protocol-spec/#resp-bulk-strings) to know how to send a Null value.\n\n{{#lang_is_haskell}}\nThe [time](https://hackage.haskell.org/package/time) package is available\nto use as a dependency.\n{{/lang_is_haskell}}\n",
       "marketing_md": "In this stage, you'll add support for setting a key with an expiry. The\nexpiry is provided using the \"PX\" argument to the\n[SET](https://redis.io/commands/set) command.\n",
       "tester_source_code_url": "https://github.com/codecrafters-io/redis-tester/blob/master/internal/test_expiry.go"
     }

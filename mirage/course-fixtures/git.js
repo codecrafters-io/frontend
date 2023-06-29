@@ -34,14 +34,14 @@ export default {
       {
         "author_name": "Beyang Liu",
         "author_description": "CTO, Sourcegraph",
-        "author_avatar": "https://codecrafters.io/images/testimonials/beyang_liu.jpeg",
+        "author_avatar": "https://codecrafters.io/images/external/testimonials/beyang-liu.jpeg",
         "link": "https://twitter.com/beyang/status/1271225214886506496",
         "text": "Found out about CodeCrafters from a colleague. It's a tutorial site that has you build your own version of things\nlike Git and Docker from scratch. A cool way to build a stronger mental model of how those tools work.\n"
       },
       {
         "author_name": "Lacronicus",
         "author_description": "Reddit user",
-        "author_avatar": "https://codecrafters.io/images/testimonials/lacronicus.png",
+        "author_avatar": "https://codecrafters.io/images/external/testimonials/reddit-user.png",
         "link": "https://www.reddit.com/r/programming/comments/fefrka/advanced_programming_challenges/fjoxu7n/",
         "text": "Never in my life have I needed something so much and not known until I received it.\n"
       }
@@ -92,7 +92,7 @@ export default {
       "slug": "create_commit",
       "name": "Create a commit",
       "difficulty": "medium",
-      "description_md": "Let's move on to the last git object we'll be dealing with in this\nchallenge: the commit.\n\nTo create a commit, you'll need the following information:\n\n- Committer/Author name + email\n- Timestamp\n- Tree SHA\n- Parent commit SHA(s), if any\n\nIn this stage, you'll implement [`git\ncommit-tree`](https://git-scm.com/docs/git-commit-tree), a plumbing\ncommand that creates a commit.\n\nYour program will be invoked like this:\n\n```\n./your_git.sh commit-tree <tree_sha> -p <commit_sha> -m <message>\n```\n\nYou'll receive exactly one parent commit, and exactly one line in the\nmessage. You're free to hardcode any valid name/email for the\nauthor/committer fields.\n\nYour program must create a commit object and print its 40-char SHA to\nstdout.\n\nTo verify your changes, the tester will read the commit object from the\n`.git` directory. It'll use the `git show` command to do this.\n",
+      "description_md": "Let's move on to the last git object we'll be dealing with in this\nchallenge: [the commit](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects#_git_commit_objects).\n\nTo create a commit, you'll need the following information:\n\n- Committer/Author name + email\n- Timestamp\n- Tree SHA\n- Parent commit SHA(s), if any\n\nIn this stage, you'll implement [`git\ncommit-tree`](https://git-scm.com/docs/git-commit-tree), a plumbing\ncommand that creates a commit.\n\nYour program will be invoked like this:\n\n```\n./your_git.sh commit-tree <tree_sha> -p <commit_sha> -m <message>\n```\n\nYou'll receive exactly one parent commit, and exactly one line in the\nmessage. You're free to hardcode any valid name/email for the\nauthor/committer fields.\n\nYour program must create a commit object and print its 40-char SHA to\nstdout.\n\nTo verify your changes, the tester will read the commit object from the\n`.git` directory. It'll use the `git show` command to do this.\n",
       "marketing_md": "Let's move on to the last git object we'll be dealing with in this\nchallenge: the commit. In this stage, you'll create a commit by\nimplementing the [`git commit-tree`](https://git-scm.com/docs/git-commit-tree)\ncommand.\n",
       "tester_source_code_url": "https://github.com/codecrafters-io/git-tester/blob/master/internal/stage_create_commit.go"
     },
