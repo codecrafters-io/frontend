@@ -52,11 +52,7 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   tabIsAvailable(tab) {
     if (this.courseStage.isFirst) {
-      if (this.args.repository.stageIsComplete(this.courseStage)) {
-        return ['source_walkthrough', 'verified_solution', 'comments'].includes(tab);
-      } else {
-        return ['verified_solution', 'comments'].includes(tab);
-      }
+      return ['verified_solution', 'comments'].includes(tab);
     }
 
     if (tab === 'verified_solution') {
