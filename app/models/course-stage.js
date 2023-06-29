@@ -57,6 +57,10 @@ export default class CourseStageModel extends Model {
     return !!this.completionVideoId;
   }
 
+  get hasScreencasts() {
+    return this.course.isRedis && this.isSecond;
+  }
+
   hasSolutionForLanguage(language) {
     return !!this.solutions.findBy('language', language);
   }

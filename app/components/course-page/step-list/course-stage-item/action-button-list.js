@@ -30,7 +30,7 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   }
 
   get shouldShowViewScreencastsButton() {
-    return this.args.courseStage.course.isRedis && this.args.courseStage.isSecond;
+    return this.args.courseStage.hasScreencasts;
   }
 
   get shouldShowSubmitFeedbackButton() {

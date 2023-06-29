@@ -47,7 +47,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   get availableTabs() {
-    return ['comments', 'community_solutions', 'verified_solution'].filter((tab) => this.tabIsAvailable(tab));
+    return ['comments', 'community_solutions', 'verified_solution', 'screencasts'].filter((tab) => this.tabIsAvailable(tab));
   }
 
   tabIsAvailable(tab) {
@@ -57,13 +57,15 @@ export default class CourseStageSolutionModalComponent extends Component {
 
     if (tab === 'verified_solution') {
       return !!this.solution;
+    } else if (tab === 'screencasts') {
+      return this.args.courseStage.hasScreencasts;
     } else {
       return true;
     }
   }
 
   computeActiveTabFromIntent() {
-    // intent is either view_solution or view_comments
+    // intent is either view_solution, view_comments or view_screencasts
     if (this.args.intent === 'view_solution') {
       if (this.courseStage.isFirst && this.solution) {
         this.activeTab = 'verified_solution';
@@ -72,6 +74,8 @@ export default class CourseStageSolutionModalComponent extends Component {
       }
     } else if (this.args.intent === 'view_comments') {
       this.activeTab = 'comments';
+    } else if (this.args.intent === 'view_screencasts') {
+      this.activeTab = 'screencasts';
     }
   }
 

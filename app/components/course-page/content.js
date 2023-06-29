@@ -50,6 +50,14 @@ export default class CoursePageContentComponent extends Component {
   }
 
   @action
+  async handleViewScreencastsButtonClick(courseStage) {
+    await this.handleModalClose();
+
+    this.courseStageSolutionModalIntent = 'view_screencasts';
+    this.currentCourseStageForSolutionModal = courseStage;
+  }
+
+  @action
   async handleViewSolutionButtonClick(courseStage) {
     await this.handleModalClose();
 

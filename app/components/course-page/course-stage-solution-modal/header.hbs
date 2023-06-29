@@ -31,6 +31,15 @@
       />
     {{/if}}
 
+    {{#if (includes "screencasts" @availableTabs)}}
+      <CoursePage::CourseStageSolutionModal::HeaderTabLink
+        @icon="play"
+        @text="Screencasts"
+        @isActive={{eq @activeTab "screencasts"}}
+        {{on "click" (fn @onTabLinkClick "screencasts")}}
+      />
+    {{/if}}
+
     {{#if (includes "verified_solution" @availableTabs)}}
       <CoursePage::CourseStageSolutionModal::HeaderTabLink
         @icon="academic-cap"

@@ -39,5 +39,7 @@
     />
   {{else if (eq this.activeTab "comments")}}
     <CoursePage::CourseStageSolutionModal::CommentsTab @courseStage={{this.courseStage}} @language={{@repository.language}} />
+  {{else if (eq this.activeTab "screencasts")}}
+    <CoursePage::CourseStageSolutionModal::ScreencastsTab @courseStage={{this.courseStage}} @language={{@repository.language}} />
   {{/if}}
 </ModalBody>
