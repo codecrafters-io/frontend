@@ -58,7 +58,7 @@ export default class CourseStageSolutionModalComponent extends Component {
     if (tab === 'verified_solution') {
       return !!this.solution;
     } else if (tab === 'screencasts') {
-      return this.args.courseStage.hasScreencasts;
+      return this.courseStage.hasScreencasts;
     } else {
       return true;
     }
@@ -95,6 +95,8 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   handleCourseStageUpdated() {
+    console.log(this.activeTab, this.tabIsAvailable(this.activeTab));
+
     if (!this.tabIsAvailable(this.activeTab)) {
       this.activeTab = this.availableTabs[0];
     }
