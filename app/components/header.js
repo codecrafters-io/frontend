@@ -43,4 +43,12 @@ export default class HeaderComponent extends Component {
   toggleMobileMenu() {
     this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
   }
+
+  get canSeeEarlyBirdDiscountBanner() {
+    if (this.currentUser && !this.currentUser.canAccessPaidContent && this.currentUser.isEligibleForEarlyBirdDiscount) {
+      return this.featureFlags.canSeeEarlyBirdDiscountBanner;
+    }
+
+    return false;
+  }
 }
