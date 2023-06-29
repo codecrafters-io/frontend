@@ -50,9 +50,9 @@
       />
     {{/if}}
 
-    {{#if (and @courseStage.hasCompletionVideo this.statusIsComplete)}}
+    {{!-- {{#if (and @courseStage.hasCompletionVideo this.statusIsComplete)}}
       <CoursePage::StepList::CourseStageItem::CompletionVideo @courseStage={{@courseStage}} class="mt-6" />
-    {{/if}}
+    {{/if}} --}}
 
     {{#if (gt this.badgeAwards.length 0)}}
       <CoursePage::StepList::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
