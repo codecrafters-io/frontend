@@ -1,24 +1,10 @@
-<div
-  class="flex p-3 bg-blue-100 border border-blue-300 hover:border-blue-400 hover:shadow rounded shadow-sm"
-  ...attributes
-  {{on "click" this.handleClick}}
-  role="button"
->
+<div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm" ...attributes>
   <div class="mr-3 mt-0.5 w-6 h-6 relative">
     {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
-    <span
-      class="animate-ping absolute inset-1 inline-flex h-4 w-4 rounded-full bg-blue-400 opacity-75 {{if this.shouldPulse 'inline-flex' 'hidden'}}"
-    ></span>
   </div>
-  <div class="text-blue-900 prose prose-blue leading-7 text-sm">
-    {{#if this.solutionIsAvailable}}
-      Since this is your first stage, we've included the code to pass this stage in your repository.
-      <b class="underline">View the solution</b>
-      for instructions on how to uncomment the code and pass this stage.
-    {{else}}
-      Since this is your first stage, you can consult
-      <b class="underline">the README</b>
-      in your repository for instructions on how to pass.
-    {{/if}}
+  <div class="text-blue-800 prose prose-blue leading-7 text-sm">
+    CodeCrafters runs tests when you do a git push. Your first push should have streamed back a
+    <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Test failed</code>
+    error — that's expected. Once you implement this stage, you'll pass the test!
   </div>
 </div>

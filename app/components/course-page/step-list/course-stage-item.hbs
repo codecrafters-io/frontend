@@ -1,20 +1,11 @@
 <CoursePage::StepList::ExpandedItem @class="relative {{@class}}" @willBeReplaced={{@willBeReplaced}} data-test-course-stage-item>
   <:content>
-    <div class="flex items-center justify-between mb-6 gap-x-3">
-      <div class="flex items-center flex-wrap gap-y-3">
-        <span class="text-xl md:text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
-
-        {{#if this.statusIsComplete}}
-          <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
-        {{else if this.statusIsLocked}}
-          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>PENDING</span>
-        {{else if this.shouldShowUpgradePrompt}}
-          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>MEMBERSHIP REQUIRED</span>
-        {{else}}
-          <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
-        {{/if}}
-      </div>
-    </div>
+    <CoursePage::StepList::CourseStageItem::Header
+      @courseStage={{@courseStage}}
+      @status={{this.status}}
+      @shouldShowUpgradePrompt={{this.shouldShowUpgradePrompt}}
+      class="mb-6"
+    />
 
     {{#if this.shouldShowUpgradePrompt}}
       <CoursePage::StepList::CourseStageItem::UpgradePrompt @class="mb-4" @color="yellow" />
@@ -26,20 +17,17 @@
 
     <div class="text-gray-700 leading-7 prose" data-test-stage-instructions>
       {{#if this.shouldShowFirstStageHints}}
-        {{this.firstStageInstructionsPreludeHTML}}
+        <CoursePage::StepList::CourseStageItem::FirstStageHint class="mb-4" />
       {{/if}}
 
       {{this.instructionsHTML}}
-    </div>
 
-    {{#if this.shouldShowFirstStageHints}}
-      <CoursePage::StepList::CourseStageItem::FirstStageHint
-        @courseStage={{@courseStage}}
-        @onViewSolutionButtonClick={{fn @onViewSolutionButtonClick @courseStage}}
-        @repository={{@repository}}
-        class="mt-6"
-      />
-    {{/if}}
+      {{#if this.shouldShowFirstStageHints}}
+        Since this is your first stage, we've included the code to pass this stage in your repository. Click on the
+        <span class="underline text-blue-500 font-semibold" role="button" {{on "click" (fn @onViewSolutionButtonClick @courseStage)}}>Solution</span>
+        button below for instructions on how to uncomment the code and pass this stage.
+      {{/if}}
+    </div>
 
     <CoursePage::StepList::CourseStageItem::ActionButtonList
       @courseStage={{@courseStage}}
@@ -84,55 +72,11 @@
   </:content>
 
   <:footerContent>
-    <div class="flex items-center justify-between w-full">
-      <div class="flex items-center text-xs" data-test-course-stage-item-footer>
-        {{#if this.shouldShowUpgradePrompt}}
-          <StaticDot @class="flex-shrink-0 mr-3" @color="gray" />
-          <span class="text-gray-600" data-test-footer-text>Membership required.</span>
-        {{else if (eq this.status "waiting")}}
-          <BlinkingDot @class="flex-shrink-0 mr-3" @color="gray" />
-          <span class="text-gray-600" data-test-footer-text>Listening for a git push...</span>
-        {{else if (eq this.status "evaluating")}}
-          <BlinkingDot @class="flex-shrink-0 mr-3" @color="yellow" />
-          <span class="text-gray-600" data-test-footer-text>Running tests...</span>
-        {{else if (eq this.status "failed")}}
-          <StaticDot @class="flex-shrink-0 mr-3" @color="red" />
-
-          <span class="text-gray-600" data-test-footer-text>
-            {{#if this.lastFailedSubmissionWasWithinLast10Minutes}}
-              Tests failed. Check your git push output for logs.
-            {{else if this.lastFailedSubmissionCreatedAt}}
-              Last attempt
-              {{moment-from-now this.lastFailedSubmissionCreatedAt}}. Try again?
-            {{else}}
-              Last attempt failed. Try again?
-            {{/if}}
-          </span>
-        {{else if (eq this.status "complete")}}
-          <StaticDot @class="flex-shrink-0 mr-3" @color="green" />
-          <span class="text-gray-600" data-test-footer-text>
-            {{#if this.completedAtWasToday}}
-              You completed this stage today.
-            {{else if this.completedAtWasYesterday}}
-              You completed this stage yesterday.
-            {{else if this.completedAt}}
-              You completed this stage
-              {{moment-from-now this.completedAt}}.
-            {{else}}
-              You've completed this stage.
-            {{/if}}
-          </span>
-        {{else if (eq this.status "locked")}}
-          {{#if @courseStage.isFirst}}
-            <span class="text-gray-600" data-test-footer-text>Complete repository setup to gain access to this stage.</span>
-          {{else}}
-            <span class="text-gray-600" data-test-footer-text>Complete previous stages to gain access to this stage.</span>
-          {{/if}}
-        {{/if}}
-      </div>
-      <div class="text-gray-500 text-xs pl-3 -mr-1 md:-mr-3 flex-shrink-0 hidden sm:block">
-        Stage #{{@courseStage.position}}
-      </div>
-    </div>
+    <CoursePage::StepList::CourseStageItem::Footer
+      @courseStage={{@courseStage}}
+      @status={{this.status}}
+      @shouldShowUpgradePrompt={{this.shouldShowUpgradePrompt}}
+      @repository={{@repository}}
+    />
   </:footerContent>
 </CoursePage::StepList::ExpandedItem>

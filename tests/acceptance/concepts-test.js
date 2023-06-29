@@ -147,11 +147,12 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
 
     const analyticsEvents = this.server.schema.analyticsEvents.all().models;
+    const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
 
-    assert.strictEqual(analyticsEvents.length, 7, 'Expected 7 analytics events to be tracked');
+    assert.strictEqual(filteredAnalyticsEvents.length, 7, 'Expected 7 analytics events to be tracked');
 
     assert.deepEqual(
-      analyticsEvents.map((event) => event.name),
+      filteredAnalyticsEvents.map((event) => event.name),
       [
         'viewed_page',
         'viewed_page',

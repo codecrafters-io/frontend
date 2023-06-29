@@ -9,7 +9,7 @@ export default class SubmissionEvaluationModel extends Model {
     try {
       return atob(this.logs);
     } catch (DOMException) {
-      return 'Malformed logs.';
+      return 'Hmm, we were unable to fetch logs for this submission.\n\n Trying again might help. Please contact us at hello@codecrafters.io if this error persists.';
     }
   }
 }

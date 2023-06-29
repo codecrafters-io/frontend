@@ -8,7 +8,7 @@
       {{#if (eq activeTabSlug "diff")}}
         <Admin::Course::SubmissionsPage::SubmissionDetails::DiffContainer @submission={{@submission}} />
       {{else if (eq activeTabSlug "logs")}}
-        <Admin::Course::SubmissionsPage::SubmissionDetails::LogsContainer @submission={{@submission}} />
+        <SubmissionLogsPreview @submission={{@submission}} />
       {{else if (eq activeTabSlug "community_solution")}}
         <Admin::Course::SubmissionsPage::SubmissionDetails::CommunitySolutionContainer @submission={{@submission}} />
       {{/if}}

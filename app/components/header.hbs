@@ -124,3 +124,9 @@
     {{/if}}
   </div>
 </div>
+{{#if this.canSeeEarlyBirdDiscountBanner}}
+  <LinkTo @route="pay" class="bg-black border-b border-gray-800 text-gray-100 flex gap-2 justify-center py-2 text-sm">
+    <div>Upgrade today to get 40% off</div>
+    {{svg-jar "arrow-right" class="w-4"}}
+  </LinkTo>
+{{/if}}

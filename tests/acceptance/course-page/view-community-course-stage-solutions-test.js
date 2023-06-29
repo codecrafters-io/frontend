@@ -70,7 +70,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
 
     await coursePage.courseStageSolutionModal.languageDropdown.toggle();
@@ -138,7 +138,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     //   await coursePage.courseStageSolutionModal.clickOnCloseButton();
     //   await coursePage.collapsedItems[stageNumber - 1].click();
     //   await animationsSettled();
-    //   await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    //   await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     // };
 
     // const assertHeading = function (expectedText) {
@@ -160,7 +160,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.collapsedItems[2].click();
     await animationsSettled();
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     await percySnapshot('Community Solutions');
 
     assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
@@ -253,7 +253,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
   });
 
@@ -294,7 +294,7 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursePage.clickOnCollapsedItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Solutions');
+    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 3);
 
     await scrollTo('[data-test-course-stage-solution-modal]', 0, 99999);
