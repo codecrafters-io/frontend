@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { default as AnsiUp } from 'ansi_up';
-import { htmlSafe } from '@ember/template';
 import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 
