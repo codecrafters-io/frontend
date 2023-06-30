@@ -47,10 +47,10 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let kotlin = this.server.schema.languages.findBy({ name: 'Kotlin' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
-    this.server.create('course-language-request', { user: currentUser, language: python, course: docker });
+    this.server.create('course-language-request', { user: currentUser, language: kotlin, course: docker });
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
@@ -62,7 +62,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     await coursePage.setupItem.clickOnRequestLanguageButton();
-    await coursePage.setupItem.requestLanguageDropdown.clickOnLanguageSuggestion('Python');
+    await coursePage.setupItem.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
 
     await animationsSettled();
     assert.notOk(coursePage.setupItem.hasRequestedLanguagesPrompt, 'requested languages prompt is removed');
