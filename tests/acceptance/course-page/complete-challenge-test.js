@@ -1,6 +1,6 @@
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
