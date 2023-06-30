@@ -1,15 +1,17 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="flex items-center overflow-hidden group" role="button" ...attributes>
-  <div class="relative mr-4 w-full max-w-[33%] border">
+<div class="flex gap-4 flex-col md:flex-row items-center overflow-hidden group" role="button" ...attributes>
+  {{!-- thumbnail --}}
+  <div class="relative w-full md:max-w-[33%] border">
     <img src={{@screencast.thumbnailUrl}} alt="thumbnail" />
     <div class="absolute inset-0 flex items-center justify-center">
       {{svg-jar "play" class="w-[25%] text-gray-100 opacity-75 group-hover:opacity-100 transition-opacity duration-100"}}
     </div>
   </div>
+  {{!-- details --}}
   <div class="w-full">
     <span
       class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
-    >Rust</span>
+    >{{@screencast.language.name}}</span>
     <div class="font-semibold text-gray-800 text-lg mt-2">{{@screencast.title}}</div>
     <div class="flex items-center gap-1 mt-1">
       <img src={{@screencast.sourceIconUrl}} class="h-5" />
