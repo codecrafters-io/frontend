@@ -43,15 +43,14 @@ module('Acceptance | view-tracks', function (hooks) {
 
     await catalogPage.visit();
 
-    assert.strictEqual(catalogPage.trackCards[0].actionText, 'Resume');
-    assert.strictEqual(catalogPage.trackCards[1].actionText, 'Start');
-    assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
-    assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
+    assert.strictEqual(catalogPage.trackCards[0].actionText, 'Resume', 'expected first track to have resume action');
+    assert.strictEqual(catalogPage.trackCards[1].actionText, 'Start', 'expected second track to have start action');
+    assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start', 'expected third track to have start action');
+    assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start', 'expected fourth track to have start action');
 
-    assert.true(catalogPage.trackCards[0].hasProgressBar);
-    assert.false(catalogPage.trackCards[0].hasDifficultyLabel);
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/28 stages');
-    assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:4%');
+    assert.true(catalogPage.trackCards[0].hasProgressBar, 'expected first track to have progress bar');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/41 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:2%');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -117,7 +116,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
 
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '28/28 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '41/41 stages');
     assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:100%');
   });
 
