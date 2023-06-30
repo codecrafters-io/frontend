@@ -73,7 +73,7 @@ module('Acceptance | course-page | view-course-stage-solutions', function (hooks
 
     await coursePage.clickOnCollapsedItem('Print table names');
     await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Print table names', 'title should be respond to ping');
+    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #3: Print table names', 'title should be print table names');
     await coursePage.courseStageSolutionModal.clickOnCloseButton();
   });
 
