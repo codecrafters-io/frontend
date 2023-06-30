@@ -17,6 +17,7 @@ export default class ScreencastsTabComponent extends Component<Signature> {
       'https://www.youtube.com/watch?v=XSqteQFaHBA&ab_channel=RaghavDua',
       'https://vimeo.com/725342679',
       'https://www.youtube.com/watch?v=Lhmyb3vD3P0',
+      'https://www.loom.com/share/1dd746eaaba34bc2b5459ad929934c08?sid=a5f6ec60-5ae4-4e9c-9566-33235d483431',
     ];
   }
 
