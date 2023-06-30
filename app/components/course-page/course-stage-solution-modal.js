@@ -97,8 +97,6 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   @action
   handleCourseStageUpdated() {
-    console.log(this.activeTab, this.tabIsAvailable(this.activeTab));
-
     if (!this.tabIsAvailable(this.activeTab)) {
       this.activeTab = this.availableTabs[0];
     }

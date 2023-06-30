@@ -59,7 +59,7 @@ export default class CourseStageModel extends Model {
   }
 
   get hasScreencasts() {
-    return this.course.isRedis && this.isSecond;
+    return this.screencasts.length > 0;
   }
 
   hasSolutionForLanguage(language) {
