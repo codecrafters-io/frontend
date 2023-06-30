@@ -1,4 +1,4 @@
-<div data-test-screencasts-tab {{did-insert this.handleDidInsert}}>
+<div data-test-screencasts-tab>
   <Alert class="mb-6">
     Screencasts are recordings of CodeCrafters users passing this stage. This is a beta feature, please send us
     <div class="inline-flex">
@@ -8,13 +8,23 @@
   </Alert>
   {{#if this.selectedScreencast}}
     {{! @glint-expect-error: not typesafe yet }}
-    <CourseStageScreencastPlayer @screencast={{this.selectedScreencast}} class="border-b pb-8 mb-8 scroll-mt-16" {{did-insert this.handleDidInsertScreencastPlayer}} />
+    <CourseStageScreencastPlayer
+      @screencast={{this.selectedScreencast}}
+      class="border-b pb-8 mb-8 scroll-mt-16"
+      {{did-insert this.handleDidInsertScreencastPlayer}}
+    />
   {{/if}}
 
   <div class="grid grid-cols-1 gap-6 pb-16">
-    {{#each this.courseStageScreencastsForList as |screencast|}}
+    {{#each this.screencastsForList as |screencast|}}
       {{! @glint-expect-error: not typesafe yet }}
       <CourseStageScreencastPreview @screencast={{screencast}} {{on "click" (fn this.handleScreencastClicked screencast)}} />
     {{/each}}
+
+    {{#if (eq this.screencasts.length 0)}}
+      <div class="text-center text-gray-500 py-16 text-sm">
+        No screencasts found for this stage.
+      </div>
+    {{/if}}
   </div>
 </div>

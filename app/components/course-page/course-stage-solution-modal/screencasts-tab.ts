@@ -7,6 +7,14 @@ import { next } from '@ember/runloop';
 
 interface Signature {
   Element: HTMLDivElement;
+
+  Args: {
+    courseStage: {
+      screencasts: {
+        id: string;
+      }[];
+    };
+  };
 }
 
 export default class ScreencastsTabComponent extends Component<Signature> {
@@ -15,26 +23,12 @@ export default class ScreencastsTabComponent extends Component<Signature> {
   @tracked screencastPlayerElement: HTMLDivElement | undefined;
   @service declare store: Store;
 
-  get screencastUrls() {
-    return [
-      'https://www.youtube.com/watch?v=XSqteQFaHBA&ab_channel=RaghavDua',
-      'https://vimeo.com/725342679',
-      'https://www.youtube.com/watch?v=Lhmyb3vD3P0',
-      'https://www.loom.com/share/1dd746eaaba34bc2b5459ad929934c08?sid=a5f6ec60-5ae4-4e9c-9566-33235d483431',
-    ];
+  get screencasts() {
+    return this.args.courseStage.screencasts;
   }
 
-  get courseStageScreencasts() {
-    return this.store
-      .peekAll('course-stage-screencast')
-      .filter((screencast) => this.screencastUrls.includes(screencast.originalUrl))
-      .sort((a, b) => {
-        return b.createdAt.getTime() - a.createdAt.getTime();
-      });
-  }
-
-  get courseStageScreencastsForList() {
-    return this.courseStageScreencasts.filter((screencast) => screencast !== this.selectedScreencast);
+  get screencastsForList() {
+    return this.screencasts.filter((screencast) => screencast !== this.selectedScreencast);
   }
 
   @action
@@ -51,44 +45,5 @@ export default class ScreencastsTabComponent extends Component<Signature> {
   @action
   async handleDidInsertScreencastPlayer(element: HTMLDivElement) {
     this.screencastPlayerElement = element;
-  }
-
-  @action
-  async handleDidInsert() {
-    this.screencastUrls.forEach(async (screencastUrl) => {
-      const screencast = this.store.peekAll('course-stage-screencast').find((screencast) => screencast.originalUrl === screencastUrl);
-      if (!screencast) {
-        const iframelyJson = await this.fetchIframelyJson(screencastUrl);
-
-        this.store.createRecord('course-stage-screencast', {
-          authorName: iframelyJson.meta.author,
-          canonicalUrl: iframelyJson.meta.canonical,
-          createdAt: new Date(iframelyJson.meta.date),
-          description: iframelyJson.meta.description,
-          durationInSeconds: iframelyJson.meta.duration,
-          embedHtml: iframelyJson.html,
-          originalUrl: screencastUrl,
-          sourceIconUrl: iframelyJson.links.icon[0].href,
-          thumbnailUrl: iframelyJson.links.thumbnail[0].href,
-          title: iframelyJson.meta.title,
-        });
-      }
-    });
-  }
-
-  async fetchIframelyJson(screencastUrl: string) {
-    const params = new URLSearchParams();
-    params.set('url', screencastUrl);
-    params.set('key', '3aafd05f43d700b9a7382620ac7cdfa3');
-    params.set('click_to_play', '1');
-    params.set('playerjs', '1');
-    params.set('iframe', '1');
-    params.set('omit_script', '1');
-
-    // params.set('autoplay', '1');
-    // params.set('card', 'small');
-
-    const response = await fetch(`http://cdn.iframe.ly/api/iframely?${params.toString()}`);
-    return await response.json();
   }
 }

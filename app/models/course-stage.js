@@ -8,6 +8,7 @@ export default class CourseStageModel extends Model {
   @hasMany('course-stage-comments', { async: false }) comments;
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions;
   @hasMany('course-stage-solution', { async: false }) solutions;
+  @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) screencasts;
 
   @attr('string') difficulty;
   @attr('boolean') isPaid;
