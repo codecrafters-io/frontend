@@ -58,7 +58,11 @@
       {{#if (eq item.type "CourseCompletedItem")}}
         <AnimatedContainer>
           {{#animated-if (eq index this.expandedItemIndex) use=this.transition duration=this.transitionDuration}}
-            <CoursePage::StepList::CourseCompletedItem @repository={{@repository}} @class="mb-4" />
+            <CoursePage::StepList::CourseCompletedItem
+              @repository={{@repository}}
+              @onPublishToGithubClick={{@onPublishToGithubButtonClick}}
+              @class="mb-4"
+            />
           {{else}}
             <CoursePage::StepList::CollapsedItem
               @class="mb-4"
