@@ -28,6 +28,8 @@ export default class CourseStageSolutionModalComponent extends Component {
   @tracked courseStage;
   @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
+
+  @service featureFlags;
   @service store;
 
   constructor() {
@@ -58,7 +60,7 @@ export default class CourseStageSolutionModalComponent extends Component {
     if (tab === 'verified_solution') {
       return !!this.solution;
     } else if (tab === 'screencasts') {
-      return this.courseStage.hasScreencasts;
+      return this.featureFlags.canSeeScreencasts && this.courseStage.hasScreencasts;
     } else {
       return true;
     }

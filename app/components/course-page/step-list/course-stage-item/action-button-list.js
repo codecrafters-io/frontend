@@ -30,7 +30,7 @@ export default class CourseStageItemActionButtonListComponent extends Component 
   }
 
   get shouldShowViewScreencastsButton() {
-    return this.args.courseStage.hasScreencasts;
+    return this.featureFlags.canSeeScreencasts && this.args.courseStage.hasScreencasts;
   }
 
   get shouldShowSubmitFeedbackButton() {
