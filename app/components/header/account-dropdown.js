@@ -35,6 +35,7 @@ export default class HeaderAccountDropdownComponent extends Component {
         email: this.currentUser.primaryEmailAddress,
       });
     }
+
     window.Beacon('open');
     dropdownActions.close();
   }
