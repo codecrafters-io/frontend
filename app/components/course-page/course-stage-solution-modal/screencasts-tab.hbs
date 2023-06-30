@@ -7,9 +7,8 @@
     </div>.
   </Alert>
   {{#if this.selectedScreencast}}
-    <div class="mb-8">
-      {{{this.selectedScreencast.embedHtml}}}
-    </div>
+    {{! @glint-expect-error: not typesafe yet }}
+    <CourseStageScreencastPlayer @screencast={{this.selectedScreencast}} class="border-b pb-8 mb-8 scroll-mt-16" {{did-insert this.handleDidInsertScreencastPlayer}} />
   {{/if}}
 
   <div class="grid grid-cols-1 gap-6 pb-16">
