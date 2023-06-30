@@ -30,9 +30,11 @@ export default class HeaderAccountDropdownComponent extends Component {
 
   @action
   handleGetHelpClick(dropdownActions) {
-    window.Beacon('prefill', {
-      email: this.currentUser.primaryEmailAddress,
-    });
+    if (this.currentUser) {
+      window.Beacon('prefill', {
+        email: this.currentUser.primaryEmailAddress,
+      });
+    }
     window.Beacon('open');
     dropdownActions.close();
   }
