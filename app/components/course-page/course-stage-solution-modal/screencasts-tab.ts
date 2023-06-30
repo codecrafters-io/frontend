@@ -10,6 +10,7 @@ interface Signature {
 
 export default class ScreencastsTabComponent extends Component<Signature> {
   @tracked embedHtml: string | undefined;
+  @tracked selectedScreencast: any | undefined;
   @service declare store: Store;
 
   get screencastUrls() {
@@ -28,6 +29,15 @@ export default class ScreencastsTabComponent extends Component<Signature> {
       .sort((a, b) => {
         return b.createdAt.getTime() - a.createdAt.getTime();
       });
+  }
+
+  get courseStageScreencastsForList() {
+    return this.courseStageScreencasts.filter((screencast) => screencast !== this.selectedScreencast);
+  }
+
+  @action
+  handleScreencastClicked(screencast: any) {
+    this.selectedScreencast = screencast;
   }
 
   @action
@@ -57,7 +67,8 @@ export default class ScreencastsTabComponent extends Component<Signature> {
     const params = new URLSearchParams();
     params.set('url', screencastUrl);
     params.set('key', '3aafd05f43d700b9a7382620ac7cdfa3');
-    params.set('click_to_play', '1');
+    // params.set('click_to_play', '1');
+    params.set('autoplay', '1');
     // params.set('card', 'small');
     params.set('iframe', '1');
     params.set('omit_script', '1');

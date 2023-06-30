@@ -6,10 +6,16 @@
       <FeedbackButton class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton>
     </div>.
   </Alert>
+  {{#if this.selectedScreencast}}
+    <div class="mb-8">
+      {{{this.selectedScreencast.embedHtml}}}
+    </div>
+  {{/if}}
 
   <div class="grid grid-cols-1 gap-6 pb-16">
-    {{#each this.courseStageScreencasts as |screencast|}}
-      <CourseStageScreencastPreview @screencast={{screencast}} />
+    {{#each this.courseStageScreencastsForList as |screencast|}}
+      {{! @glint-expect-error: not typesafe yet }}
+      <CourseStageScreencastPreview @screencast={{screencast}} {{on "click" (fn this.handleScreencastClicked screencast)}} />
     {{/each}}
   </div>
 </div>
