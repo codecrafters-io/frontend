@@ -1,7 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="flex gap-4 flex-col md:flex-row items-center overflow-hidden group" role="button" ...attributes>
   {{!-- thumbnail --}}
-  <div class="relative w-full md:max-w-[33%] border">
+  <div class="relative w-full md:max-w-[50%] lg:max-w-[33%] border">
     <img src={{@screencast.thumbnailUrl}} alt="thumbnail" />
     <div class="absolute inset-0 flex items-center justify-center">
       {{svg-jar "play" class="w-[25%] text-gray-100 opacity-75 group-hover:opacity-100 transition-opacity duration-100"}}
