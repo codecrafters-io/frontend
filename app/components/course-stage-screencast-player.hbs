@@ -1,4 +1,3 @@
-{{! @glint-nocheck: not typesafe yet }}
-<div ...attributes>
+<div ...attributes {{did-insert this.handleDidInsertContainer}} {{did-update this.handleDidUpdateScreencast @screencast.originalUrl}}>
   {{{@screencast.embedHtml}}}
 </div>

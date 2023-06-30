@@ -80,11 +80,13 @@ export default class ScreencastsTabComponent extends Component<Signature> {
     const params = new URLSearchParams();
     params.set('url', screencastUrl);
     params.set('key', '3aafd05f43d700b9a7382620ac7cdfa3');
-    // params.set('click_to_play', '1');
-    params.set('autoplay', '1');
-    // params.set('card', 'small');
+    params.set('click_to_play', '1');
+    params.set('playerjs', '1');
     params.set('iframe', '1');
     params.set('omit_script', '1');
+
+    // params.set('autoplay', '1');
+    // params.set('card', 'small');
 
     const response = await fetch(`http://cdn.iframe.ly/api/iframely?${params.toString()}`);
     return await response.json();

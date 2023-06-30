@@ -58,8 +58,6 @@ export default class CourseStageModel extends Model {
   }
 
   get hasScreencasts() {
-    console.log('isRedis', this.course.isRedis, 'isSecond', this.isSecond);
-
     return this.course.isRedis && this.isSecond;
   }
 
