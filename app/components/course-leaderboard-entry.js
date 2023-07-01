@@ -6,7 +6,15 @@ export default class CourseLeaderboardEntryComponent extends Component {
   @service authenticator;
 
   get isForCurrentUser() {
+    if (this.isSkeleton) {
+      return false;
+    }
+
     return this.authenticator.isAuthenticated && this.args.entry.user.id === this.authenticator.currentUserId;
+  }
+
+  get isSkeleton() {
+    return !this.args.entry;
   }
 
   get progressNumerator() {
