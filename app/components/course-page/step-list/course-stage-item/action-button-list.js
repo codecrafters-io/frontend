@@ -14,7 +14,6 @@ export default class CourseStageItemActionButtonListComponent extends Component 
     return (
       this.shouldShowViewSolutionButton ||
       this.shouldShowViewTestCasesButton ||
-      this.shouldShowViewSourceWalkthroughButton ||
       this.shouldShowSubmitFeedbackButton ||
       this.shouldShowEditFeedbackButton ||
       this.shouldShowViewCommentsButton
@@ -30,6 +29,10 @@ export default class CourseStageItemActionButtonListComponent extends Component 
     return !this.args.shouldHideFeedbackButtons && !!this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage);
   }
 
+  get shouldShowViewScreencastsButton() {
+    return this.featureFlags.canSeeScreencasts && this.args.courseStage.hasScreencasts;
+  }
+
   get shouldShowSubmitFeedbackButton() {
     // Hide if we're asked to hide feedback
     if (this.args.shouldHideFeedbackButtons) {
@@ -41,12 +44,12 @@ export default class CourseStageItemActionButtonListComponent extends Component 
       return false;
     }
 
-    if (this.args.repository.stageIsComplete(this.args.courseStage)) {
-      return true; // Always show feedback button if stage is complete
+    if (this.args.repository.stageIsComplete(this.args.courseStage) && !this.args.courseStage.isFirst) {
+      return true; // Always show feedback button if stage is complete (except stage 1)
     }
 
-    // Show when stage is active except for stage 1
-    return !this.args.courseStage.isFirst && this.args.repository.activeStage === this.args.courseStage;
+    // Show when stage is active except for stage 1 & 2
+    return !this.args.courseStage.isFirst && !this.args.courseStage.isSecond && this.args.repository.activeStage === this.args.courseStage;
   }
 
   get shouldShowViewCommentsButton() {
@@ -63,12 +66,5 @@ export default class CourseStageItemActionButtonListComponent extends Component 
     }
 
     return this.args.courseStage.testerSourceCodeUrl;
-  }
-
-  get shouldShowViewSourceWalkthroughButton() {
-    // This can be distracting, especially in early stages. Let's disable for now.
-    return false;
-
-    // return this.args.courseStage.sourceWalkthrough;
   }
 }

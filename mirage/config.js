@@ -37,6 +37,8 @@ export default function (config) {
 function routes() {
   this.passthrough('/write-coverage'); // used by ember-cli-code-coverage
   this.passthrough('/assets/**'); // 3d models?
+  this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
+  this.passthrough('https://unpkg.com/**'); // Shiki
 
   this.urlPrefix = config.x.backendUrl;
   this.namespace = '/api/v1';
@@ -326,7 +328,4 @@ function routes() {
       lineItems: [{ amount: 7900, amount_after_discounts: 7900, quantity: 1 }],
     });
   });
-
-  this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
-  this.passthrough('https://unpkg.com/**'); // Shiki
 }

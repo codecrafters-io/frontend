@@ -38,7 +38,6 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
   @onViewNextStageButtonClick={{this.noop}}
   @onViewCommentsButtonClick={{this.noop}}
   @onViewSolutionButtonClick={{this.noop}}
-  @onViewSourceWalkthroughButtonClick={{this.noop}}
 />`);
 
     assert.strictEqual(this.element.querySelectorAll('a').length, 2); // includes first stage link

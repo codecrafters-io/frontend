@@ -34,15 +34,7 @@ export class CourseStageItem {
   }
 
   get shouldAdvanceToNextItemAutomatically() {
-    if (this.courseStage.isFirst && this.badgeAwards.length > 0) {
-      return false;
-    }
-
-    if (this.courseStage.hasCompletionVideo) {
-      return false;
-    }
-
-    return !this.shouldShowFeedbackPromptIfStageIsComplete;
+    return false; // Make moving to next stage explicit
   }
 
   get shouldShowFeedbackPromptIfStageIsComplete() {

@@ -27,11 +27,11 @@
       />
     {{/if}}
 
-    {{#if this.shouldShowViewSourceWalkthroughButton}}
+    {{#if this.shouldShowViewScreencastsButton}}
       <CoursePage::StepList::CourseStageItem::ActionButton
-        @text="Source Walkthrough"
-        @iconUrl={{@courseStage.course.logoUrl}}
-        {{on "click" (fn @onViewSourceWalkthroughButtonClick @courseStage)}}
+        @text="Screencasts"
+        @icon="play"
+        {{on "click" (fn @onViewScreencastsButtonClick @courseStage)}}
         class="mt-3 mr-3"
       />
     {{/if}}

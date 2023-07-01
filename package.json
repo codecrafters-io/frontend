@@ -166,6 +166,7 @@
     "moment": "^2.29.4",
     "mustache": "^4.2.0",
     "node-html-parser": "^6.1.4",
+    "player.js": "^0.1.0",
     "showdown": "^2.1.0",
     "three": "^0.152.2",
     "tracked-built-ins": "^3.1.1",
