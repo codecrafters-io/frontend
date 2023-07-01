@@ -18,7 +18,7 @@ export default class CatalogRoute extends ApplicationRoute {
     }
 
     modelPromises.courses = this.store.findAll('course', {
-      include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
+      include: 'stages,language-configurations.language',
     });
 
     return RSVP.hash(modelPromises);
