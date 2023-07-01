@@ -1,6 +1,10 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div data-test-loading class="container mx-auto lg:max-w-screen-lg px-6">
   <div class="flex flex-col items-center justify-center min-h-screen">
-    <LoadingIndicator {{did-insert this.handleDidInsertLoadingIndicator}} {{will-destroy this.handleWillDestroyLoadingIndicator}} class="opacity-0 transition-opacity duration-300" />
+    <LoadingIndicator
+      {{did-insert this.handleDidInsertLoadingIndicator}}
+      {{will-destroy this.handleWillDestroyLoadingIndicator}}
+      class="opacity-0 transition-opacity duration-300"
+    />
   </div>
 </div>
