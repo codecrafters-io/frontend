@@ -66,6 +66,7 @@
     "@types/ember__test": "^4.0.2",
     "@types/ember__test-helpers": "^2.9.1",
     "@types/ember__utils": "^4.0.3",
+    "@types/ember-cli-fastboot": "^2.2.2",
     "@types/ember-data": "^4.4.10",
     "@types/ember-data__adapter": "^4.0.2",
     "@types/ember-data__model": "^4.0.1",
