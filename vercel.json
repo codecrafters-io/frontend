@@ -6,5 +6,11 @@
   ],
   "github": {
     "silent": true
-  }
+  },
+  "headers": [
+    {
+      "source": "/assets/([a-fA-F0-9]{20}).(svg|jpg|png)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31556952, immutable" }]
+    }
+  ]
 }
