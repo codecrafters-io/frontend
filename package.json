@@ -176,5 +176,8 @@
   },
   "overrides": {
     "ember-element-helper": "0.6.0"
-  }
+  },
+  "fastbootDependencies": [
+    "crypto"
+  ]
 }
