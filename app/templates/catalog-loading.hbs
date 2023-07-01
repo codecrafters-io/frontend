@@ -20,5 +20,9 @@
   </div>
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 mb-8">
+    {{#each (repeat 6)}}
+      {{! @glint-expect-error }}
+      <CourseCard />
+    {{/each}}
   </div>
 </div>
