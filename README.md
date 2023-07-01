@@ -35,6 +35,10 @@ You can run tests locally without a backend server, but to use the app you'll al
 - `npm run lint`
 - `npm run lint:fix`
 
+### Analyzing bundle size
+
+- Run `ANALYZE_BUNDLE=true ember server --environment=production`
+
 ### Deploying
 
 - This app is automatically deployed to [app.codecrafters.io](https://app.codecrafters.io) when a commit is merged into master.
