@@ -1,12 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import fade from 'ember-animated/transitions/fade';
 
 export default class CourseCardComponent extends Component {
   @service authenticator;
   @service router;
-  transition = fade;
 
   @action
   async navigateToCourse() {

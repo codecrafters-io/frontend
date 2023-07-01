@@ -7,27 +7,27 @@
 >
   {{! Logo }}
   <div class="w-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
-    {{#animated-if this.isSkeleton use=this.transition}}
+    {{#if this.isSkeleton}}
       <div class="bg-gray-100 w-8 h-8 rounded-full" />
     {{else}}
       <CourseLogo @course={{@course}} />
-    {{/animated-if}}
+    {{/if}}
   </div>
 
   {{! Text }}
   <div class="mb-6">
     <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
       <div class="text-lg font-semibold text-gray-600 mr-2" data-test-course-name>
-        {{#animated-if this.isSkeleton use=this.transition}}
+        {{#if this.isSkeleton}}
           <span class="inline-block bg-gray-100 rounded">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
         {{else}}
           <span>{{@course.name}}</span>
-        {{/animated-if}}
+        {{/if}}
       </div>
     </div>
 
     <div class="text-sm leading-relaxed text-gray-500 pr-10" data-test-course-description>
-      {{#animated-if this.isSkeleton use=this.transition duration=10000}}
+      {{#if this.isSkeleton}}
         <div>
           <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
             <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 rounded"></div>
@@ -38,14 +38,14 @@
         </div>
       {{else}}
         <span>{{@course.shortDescriptionMarkdown}}</span>
-      {{/animated-if}}
+      {{/if}}
     </div>
   </div>
 
   {{! Footer }}
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      {{#animated-if this.isSkeleton use=this.transition}}
+      {{#if this.isSkeleton}}
         <div class="bg-gray-100 rounded h-4 w-24"></div>
       {{else}}
         {{#if this.lastPushedRepository}}
@@ -62,7 +62,7 @@
             </div>
           {{/if}}
         {{/if}}
-      {{/animated-if}}
+      {{/if}}
     </div>
 
     <div class="flex items-center">
