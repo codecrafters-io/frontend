@@ -28,7 +28,7 @@ export default class WebVitalsService extends Service {
     const vercelAnalyticsId = config.x.vercelAnalyticsId;
 
     if (!vercelAnalyticsId) {
-      console.log(metric);
+      // console.log(metric);
       return;
     }
 

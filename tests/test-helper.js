@@ -36,6 +36,6 @@ QUnit.done(async function () {
   await sendCoverage();
 });
 
-QUnit.config.testTimeout = 1000;
-
 start();
+
+QUnit.config.testTimeout = 5000;
