@@ -8,6 +8,10 @@ export default class CourseCardComponent extends Component {
 
   @action
   async navigateToCourse() {
+    if (this.isSkeleton) {
+      return;
+    }
+
     if (this.lastPushedRepository) {
       await this.router.transitionTo('course', this.args.course.slug, { queryParams: { fresh: null } });
     } else {
@@ -15,7 +19,15 @@ export default class CourseCardComponent extends Component {
     }
   }
 
+  get isSkeleton() {
+    return !this.args.course;
+  }
+
   get lastPushedRepository() {
+    if (this.isSkeleton) {
+      return null;
+    }
+
     if (this.authenticator.currentUserIsLoaded) {
       return this.authenticator.currentUser.repositories
         .filterBy('course', this.args.course)
