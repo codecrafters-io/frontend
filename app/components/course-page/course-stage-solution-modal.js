@@ -57,8 +57,6 @@ export default class CourseStageSolutionModalComponent extends Component {
 
     if (tab === 'verified_solution') {
       return !!this.solution;
-    } else if (tab === 'source_walkthrough') {
-      return this.courseStage.hasSourceWalkthrough && !this.courseStage.isSecond; // Hide on stage 2 for now
     } else {
       return true;
     }
@@ -69,12 +67,6 @@ export default class CourseStageSolutionModalComponent extends Component {
     if (this.args.intent === 'view_solution') {
       if (this.courseStage.isFirst && this.solution) {
         this.activeTab = 'verified_solution';
-      } else {
-        this.activeTab = 'community_solutions';
-      }
-    } else if (this.args.intent === 'view_source_walkthrough') {
-      if (this.courseStage.hasSourceWalkthrough) {
-        this.activeTab = 'source_walkthrough';
       } else {
         this.activeTab = 'community_solutions';
       }
