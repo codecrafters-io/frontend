@@ -3,7 +3,6 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
@@ -15,7 +14,6 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
 
   test('can view leaderboard when no recent players are present', async function (assert) {
     testScenario(this.server);
@@ -39,15 +37,15 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await this.clock.tick(2001); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
     await finishRender();
 
-    await this.clock.tick(2001); // Wait for transition
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for transition
     await finishRender();
 
     this.server.schema.submissions.find(1).update({ status: 'failed' });
 
-    await this.clock.tick(2001);
+    await new Promise((resolve) => setTimeout(resolve, 2001));
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
@@ -55,7 +53,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await this.clock.tick(2001);
+    await new Promise((resolve) => setTimeout(resolve, 2001));
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
@@ -68,10 +66,10 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       courseStage: repository.course.stages.models.find((x) => x.position === 1),
     });
 
-    await this.clock.tick(2001); // Poll
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Poll
     await finishRender();
 
-    await this.clock.tick(2001); // Transition
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Transition
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
@@ -127,10 +125,10 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       }),
     });
 
-    await this.clock.tick(2001); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
     await finishRender();
 
-    await this.clock.tick(2001); // Wait for transition
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for transition
     await finishRender();
 
     this.server.schema.submissions.find(1).update({ status: 'success' });
@@ -141,10 +139,10 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       completedAt: new Date(),
     });
 
-    await this.clock.tick(2001); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
     await finishRender();
 
-    await this.clock.tick(2001); // Wait for transition
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for transition
     await finishRender();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once other user has been passed');

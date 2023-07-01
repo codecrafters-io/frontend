@@ -1,7 +1,6 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -14,7 +13,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
 
   test('can switch repository', async function (assert) {
     testScenario(this.server);
@@ -57,7 +55,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
-    await this.clock.tick(3000);
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'polling should have run');
 

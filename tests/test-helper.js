@@ -14,8 +14,6 @@ setApplication(Application.create(config.APP));
 setupQunitDom(QUnit.assert);
 setupQunitAssertionsExtra(QUnit.assert);
 
-start();
-
 QUnit.testStart(function () {
   window.localStorage.clear(); // We use localStorage for session tokens
 });
@@ -37,3 +35,7 @@ QUnit.done(async function () {
 
   await sendCoverage();
 });
+
+start();
+
+QUnit.config.testTimeout = 5000;

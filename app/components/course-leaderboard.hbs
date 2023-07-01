@@ -19,16 +19,13 @@
   </div>
 
   <AnimatedContainer>
-    {{#animated-if this.isLoadingEntries use=this.transition}}
-      <div class="flex p-4 items-center mb-40">
-        <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4 mr-2" />
-        <span class="text-sm text-gray-600">
-          Loading...
-        </span>
-      </div>
+    {{#if this.isLoadingEntries}}
+      {{#each (repeat 12)}}
+        <CourseLeaderboardEntry />
+      {{/each}}
     {{else}}
       <div>
-        {{#animated-each this.mergedEntries key="userId" use=this.listTransition as |entry|}}
+        {{#animated-each this.mergedEntries key="userId" use=this.listTransition duration=300 as |entry|}}
           <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
         {{/animated-each}}
 
@@ -48,6 +45,6 @@
           </div>
         {{/animated-if}}
       </div>
-    {{/animated-if}}
+    {{/if}}
   </AnimatedContainer>
 </div>

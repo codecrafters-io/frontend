@@ -5,14 +5,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | earn-badge', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
 
   // Scroll tests don't work with the container docked to the side
   // TODO: Extract this into a common setupApplicationTest function
@@ -64,10 +62,10 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
       submission: submission,
     });
 
-    await this.clock.tick(2001); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
     await animationsSettled();
 
-    await this.clock.tick(2001); // Wait for auto-advance
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for auto-advance
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');

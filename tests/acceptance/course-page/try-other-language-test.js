@@ -2,10 +2,9 @@ import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-c
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -15,9 +14,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
 
   test('can try other language', async function (assert) {
+    await settled();
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -75,12 +74,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await this.clock.tick(2001); // Run poller
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Run poller
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 4, 'polling should have run');
 
-    await this.clock.tick(2001); // Run active item index updater
+    await new Promise((resolve) => setTimeout(resolve, 2001)); // Run active item index updater
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run again');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');

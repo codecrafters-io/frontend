@@ -3,14 +3,12 @@ import LeaderboardEntry from '../lib/leaderboard-entry';
 import LeaderboardPoller from 'codecrafters-frontend/lib/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
-import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class CourseLeaderboardComponent extends Component {
-  rippleSpinnerImage = rippleSpinnerImage;
   transition = fade;
   @tracked isLoadingEntries = true;
   @tracked isReloadingEntries = false;

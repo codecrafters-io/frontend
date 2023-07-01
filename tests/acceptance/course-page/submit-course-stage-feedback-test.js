@@ -6,14 +6,12 @@ import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authenti
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | submit-course-stage-feedback', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
 
   test('can submit course stage feedback after passing course stage', async function (assert) {
     testScenario(this.server);
@@ -124,7 +122,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
         courseStage: redis.stages.models.sortBy('position')[stageNumber - 1], // Stage #3
       });
 
-      await this.clock.tick(2001); // Wait for poll
+      await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
     };
 
     await completeStage(3);
