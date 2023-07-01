@@ -5,7 +5,6 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
-import setupClock from 'codecrafters-frontend/tests/support/setup-clock';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
@@ -18,7 +17,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupClock(hooks);
 
   test('can start course', async function (assert) {
     testScenario(this.server);
@@ -66,7 +64,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
       'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript'
     );
 
-    await this.clock.tick(2001);
+    await new Promise((resolve) => setTimeout(resolve, 2001));
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'poll request was executed');
@@ -75,7 +73,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await this.clock.tick(2001);
+    await new Promise((resolve) => setTimeout(resolve, 2001));
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
@@ -84,7 +82,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await percySnapshot('Start Course - Git Push Received');
 
-    await this.clock.tick(2001);
+    await new Promise((resolve) => setTimeout(resolve, 2001));
     await animationsSettled();
 
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');
