@@ -10,6 +10,14 @@ export default class CatalogRoute extends ApplicationRoute {
   async model() {
     let modelPromises = {};
 
+    const currentUser = this.authenticator.currentUser;
+
+    if (currentUser && currentUser.primaryEmailAddress) {
+      window.Beacon('prefill', {
+        email: this.currentUser.primaryEmailAddress,
+      });
+    }
+
     if (this.authenticator.isAuthenticated) {
       modelPromises.repositories = this.store.findAll('repository', {
         reload: false,
