@@ -20,6 +20,8 @@ export default class AuthenticatorService extends Service {
     }
 
     if (this.currentUserIsLoaded) {
+      this.prefillBeaconEmail();
+
       return;
     }
 
@@ -48,6 +50,7 @@ export default class AuthenticatorService extends Service {
       return;
     }
 
+    this.prefillBeaconEmail();
     this.currentUserCacheStorage.setValues(user.id, user.username);
     this.cacheBuster++;
   }
@@ -106,5 +109,13 @@ export default class AuthenticatorService extends Service {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.sessionTokenStorage.hasToken;
+  }
+
+  prefillBeaconEmail() {
+    if (window.Beacon && this.currentUser && this.currentUser.primaryEmailAddress) {
+      window.Beacon('prefill', {
+        email: this.currentUser.primaryEmailAddress,
+      });
+    }
   }
 }
