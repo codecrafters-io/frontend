@@ -21,6 +21,7 @@ export default class AuthenticatorService extends Service {
 
     if (this.currentUserIsLoaded) {
       this.prefillBeaconEmail();
+
       return;
     }
 
@@ -111,8 +112,8 @@ export default class AuthenticatorService extends Service {
   }
 
   prefillBeaconEmail() {
-    if (this.currentUser && this.currentUser.primaryEmailAddress) {
-      window.beacon('prefill', {
+    if (window.Beacon && this.currentUser && this.currentUser.primaryEmailAddress) {
+      window.Beacon('prefill', {
         email: this.currentUser.primaryEmailAddress,
       });
     }
