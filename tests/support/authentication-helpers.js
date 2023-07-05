@@ -20,6 +20,23 @@ export async function signInAsStaff(owner, server, user) {
   await signIn(owner, server, user);
 }
 
+/*
+export async function signInAsPartner(owner, server, user) {
+  user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+  user.update('isCodecraftersPartner', true);
+
+  await signIn(owner, server, user);
+}
+
+export async function signInAsPartnerWithExpiry(owner, server, user) {
+  user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+  user.update('isCodecraftersPartner', true);
+  user.update('codecraftersPartnerStatusExpiresAt', new Date(new Date.getTime() + 24 * 60 * 60 * 1000));
+
+  await signIn(owner, server, user);
+}
+*/
+
 export async function signInAsSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
