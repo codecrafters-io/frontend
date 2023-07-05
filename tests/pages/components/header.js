@@ -1,4 +1,4 @@
-import { clickable, clickOnText,fillable, isVisible } from 'ember-cli-page-object';
+import { clickable, clickOnText, fillable, isVisible } from 'ember-cli-page-object';
 
 export default {
   feedbackDropdown: {
