@@ -5,10 +5,10 @@ export default class CourseStageItemHeaderComponent extends Component {
   @service featureFlags;
 
   get shouldShowCompletionPercentage() {
-    if (!this.args.courseStage.isSecond || this.args.courseStage.course.isRedis) {
+    if (this.args.courseStage.isSecond && this.args.courseStage.course.isRedis) {
+      return this.featureFlags.canSeeStage2CompletionRate;
+    } else {
       return false; // Only test for stage 2 now
     }
-
-    return this.featureFlags.canSeeStage2CompletionRate;
   }
 }
