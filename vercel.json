@@ -8,6 +8,10 @@
     {
       "source": "/join_team",
       "destination": "https://backend.codecrafters.io/join_team"
+    },
+    {
+      "source": "/setup_team",
+      "destination": "https://backend.codecrafters.io/setup_team"
     }
   ],
   "github": {
