@@ -1,0 +1,11 @@
+{{#if (eq @type "route")}}
+  <LinkTo
+    @route={{@route}}
+    class="text-sm {{if (eq @screen 'mobile') 'block py-3' 'px-2'}} {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}"
+    data-test-header-link
+  >
+    {{@text}}
+  </LinkTo>
+{{else if (eq @type "link")}}
+  <a href={{@route}} class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">{{@text}}</a>
+{{/if}}
