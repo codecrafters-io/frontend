@@ -1,19 +1,25 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { later } from '@ember/runloop';
 import playerjs from 'player.js';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { later } from '@ember/runloop';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    screencast: { embedHtml: string; originalUrl: string };
+    screencast: { embedHtml: string; originalUrl: string; id: string };
   };
 }
 
 export default class CourseStageScreencastPlayer extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | undefined;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+
+  playedTimeInSeconds: number | undefined;
+  totalDurationInSeconds: number | undefined;
 
   @action
   handleDidInsertContainer(element: HTMLDivElement) {
@@ -24,6 +30,8 @@ export default class CourseStageScreencastPlayer extends Component<Signature> {
   @action
   handleDidUpdateScreencast(element: HTMLDivElement) {
     this.containerElement = element;
+    this.playedTimeInSeconds = undefined;
+    this.totalDurationInSeconds = undefined;
     this.installListeners();
   }
 
@@ -40,12 +48,22 @@ export default class CourseStageScreencastPlayer extends Component<Signature> {
       const player = new playerjs.Player(iframe);
 
       player.on('ready', () => {
-        player.on('play', (playEvent: any) => {
-          console.log('play', playEvent);
+        player.on('timeupdate', (data: { seconds: number; duration: number }) => {
+          this.playedTimeInSeconds = data.seconds;
+          this.totalDurationInSeconds = data.duration;
         });
 
-        player.on('pause', (pauseEvent: any) => {
-          console.log('pause', pauseEvent);
+        player.on('play', () => {
+          this.analyticsEventTracker.track('played-screencast', { screencast_id: this.args.screencast.id });
+        });
+
+        player.on('pause', () => {
+          this.analyticsEventTracker.track('paused-screencast', {
+            screencast_id: this.args.screencast.id,
+            played_percentage:
+              this.playedTimeInSeconds && this.totalDurationInSeconds ? (this.playedTimeInSeconds / this.totalDurationInSeconds) * 100 : -1,
+            played_time_in_seconds: this.playedTimeInSeconds && this.totalDurationInSeconds ? this.playedTimeInSeconds : -1,
+          });
         });
       });
     });
