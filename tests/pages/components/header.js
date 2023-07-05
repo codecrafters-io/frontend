@@ -1,4 +1,4 @@
-import { clickable, fillable, isVisible } from 'ember-cli-page-object';
+import { clickable, clickOnText,fillable, isVisible } from 'ember-cli-page-object';
 
 export default {
   feedbackDropdown: {
@@ -11,6 +11,6 @@ export default {
     toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
   },
 
-  clickOnCatalogLink: clickable('[data-test-catalog-link]'),
+  clickOnHeaderLink: clickOnText('[data-test-header-link]'),
   scope: '[data-test-header]',
 };

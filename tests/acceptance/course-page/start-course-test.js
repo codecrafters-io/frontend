@@ -135,7 +135,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
-    await coursePage.header.clickOnCatalogLink();
+    await coursePage.header.clickOnHeaderLink('Catalog');
     await catalogPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Redis');
 
