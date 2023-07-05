@@ -29,6 +29,7 @@ export default class CourseStageSolutionModalComponent extends Component {
   @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
 
+  @service analyticsEventTracker;
   @service featureFlags;
   @service store;
 
@@ -83,15 +84,12 @@ export default class CourseStageSolutionModalComponent extends Component {
 
   emitAnalyticsEvent() {
     if (this.activeTab === 'comments') {
-      this.store
-        .createRecord('analytics-event', {
-          name: 'viewed_course_stage_comments',
-          properties: {
-            course_slug: this.courseStage.course.slug,
-            course_stage_slug: this.courseStage.slug,
-          },
-        })
-        .save();
+      this.analyticsEventTracker.track('viewed_course_stage_comments', {
+        course_slug: this.courseStage.course.slug,
+        course_stage_slug: this.courseStage.slug,
+      });
+    } else if (this.activeTab === 'screencasts') {
+      this.analyticsEventTracker.track('viewed_screencast_list', { course_stage_id: this.courseStage.id });
     }
   }
 

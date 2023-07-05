@@ -54,11 +54,11 @@ export default class CourseStageScreencastPlayer extends Component<Signature> {
         });
 
         player.on('play', () => {
-          this.analyticsEventTracker.track('played-screencast', { screencast_id: this.args.screencast.id });
+          this.analyticsEventTracker.track('played_screencast', { screencast_id: this.args.screencast.id });
         });
 
         player.on('pause', () => {
-          this.analyticsEventTracker.track('paused-screencast', {
+          this.analyticsEventTracker.track('paused_screencast', {
             screencast_id: this.args.screencast.id,
             played_percentage:
               this.playedTimeInSeconds && this.totalDurationInSeconds ? (this.playedTimeInSeconds / this.totalDurationInSeconds) * 100 : -1,
