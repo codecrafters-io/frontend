@@ -40,7 +40,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     await catalogPage.accountDropdown.toggle();
     await catalogPage.accountDropdown.clickOnLink('Manage Membership');
 
-    assert.dom('[data-test-membership-plan-description]').hasText('🎉 You have VIP access to all CodeCrafters content.')
+    assert.dom('[data-test-membership-plan-description]').hasText('🎉 You have VIP access to all CodeCrafters content.');
   });
 
   test('VIP subscriber with expiry has correct membership plan copy', async function (assert) {
@@ -60,7 +60,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     await catalogPage.accountDropdown.toggle();
     await catalogPage.accountDropdown.clickOnLink('Manage Membership');
 
-    assert.dom('[data-test-membership-plan-description]').includesText('🎉 You have VIP access to all CodeCrafters content, valid until')
+    assert.dom('[data-test-membership-plan-description]').includesText('🎉 You have VIP access to all CodeCrafters content, valid until');
   });
 
   test('subscriber can cancel trial', async function (assert) {
