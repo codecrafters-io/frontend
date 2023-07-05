@@ -22,14 +22,6 @@ export default class SubscriptionModel extends Model {
   get isTrialing() {
     return this.isActive && this.trialEnd && new Date() < this.trialEnd;
   }
-
-  get hasVIPAccess() {
-    return this.user.isCodecraftersPartner;
-  }
-
-  get hasVIPExpiry() {
-    return this.user.codecraftersPartnerStatusExpiresAt;
-  }
 }
 
 SubscriptionModel.prototype.cancelTrial = memberAction({
