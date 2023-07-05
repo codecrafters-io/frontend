@@ -58,7 +58,7 @@ export default class CourseStageSolutionModalComponent extends Component {
     }
 
     if (tab === 'verified_solution') {
-      return !!this.solution;
+      return false;
     } else if (tab === 'screencasts') {
       return this.featureFlags.canSeeScreencasts && this.courseStage.hasScreencasts;
     } else {
