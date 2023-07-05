@@ -7,8 +7,15 @@
       plan is currently active.
     {{else if @subscription.isActive}}
       {{#if @subscription.cancelAt}}
-        Your CodeCrafters membership is valid until
-        <b class="font-semibold">{{moment-format @subscription.cancelAt "LLL"}}</b>.
+        {{#if (and @subscription.hasVIPAccess @subscription.hasVIPExpiry)}}
+          🎉 You have VIP access to all CodeCrafters content, valid until
+          <b class="font-semibold">{{moment-format @subscription.cancelAt "LLL"}}</b>.
+        {{else if @subscription.hasVIPAccess}}
+          🎉 You have VIP access to all CodeCrafters content.
+        {{else}}
+          Your CodeCrafters membership is valid until
+          <b class="font-semibold">{{moment-format @subscription.cancelAt "LLL"}}</b>.
+        {{/if}}
       {{else}}
         You are currently subscribed to the
         <b class="font-semibold">{{@subscription.pricingPlanName}}</b>
