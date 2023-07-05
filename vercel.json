@@ -4,6 +4,12 @@
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" }
   ],
+  "redirects": [
+    {
+      "source": "/join_team",
+      "destination": "https://backend.codecrafters.io/join_team"
+    }
+  ],
   "github": {
     "silent": true
   },
