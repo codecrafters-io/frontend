@@ -52,7 +52,14 @@ module.exports = function (defaults) {
     staticHelpers: true,
     staticModifiers: true,
     staticComponents: true,
-    splitAtRoutes: ['badges', 'concept'], // can also be a RegExp
+    splitAtRoutes: [
+      'badges',
+      'concept',
+      'course',
+      'vote',
+      'course.admin',
+      'code-walkthrough', // Uses prismjs
+    ], // can also be a RegExp
     packagerOptions: {
       publicAssetURL: '/',
       webpackConfig: {
