@@ -28,7 +28,7 @@ You can run tests locally without a backend server, but to use the app you'll al
 
 ## Running against staging
 
-- RUn `BACKEND_URL="https://backend-staging.codecrafters.io" npm run start`
+- Run `BACKEND_URL="https://backend-staging.codecrafters.io" npm run start`
 - View your app at http://localhost:4200
 
 ## Running tests
