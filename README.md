@@ -26,6 +26,11 @@ You can run tests locally without a backend server, but to use the app you'll al
 - `npm run start`
 - View your app via https://cc-<username>.ngrok.io
 
+## Running against staging
+
+- RUn `BACKEND_URL="https://backend-staging.codecrafters.io" npm run start`
+- View your app at http://localhost:4200
+
 ## Running tests
 
 - `ember test --server` (will launch a Chrome instance that'll run your tests)
