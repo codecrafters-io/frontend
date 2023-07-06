@@ -36,7 +36,7 @@ module.exports = function (environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     // To run against mirage
-    // ENV.x.backendUrl = 'https://localhost:4200';
+    // ENV.x.backendUrl = 'http://localhost:4200';
     // ENV['ember-cli-mirage'] = { enabled: true };
 
     // To run against development server
