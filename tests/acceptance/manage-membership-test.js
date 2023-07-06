@@ -54,7 +54,9 @@ module('Acceptance | manage-membership-test', function (hooks) {
     await catalogPage.accountDropdown.toggle();
     await catalogPage.accountDropdown.clickOnLink('Manage Membership');
 
-    assert.dom('[data-test-membership-plan-section] div:nth-of-type(3)').includesText('🎉 You have VIP access to all CodeCrafters content, valid until');
+    assert
+      .dom('[data-test-membership-plan-section] div:nth-of-type(3)')
+      .includesText('🎉 You have VIP access to all CodeCrafters content, valid until');
   });
 
   test('subscriber can cancel trial', async function (assert) {
