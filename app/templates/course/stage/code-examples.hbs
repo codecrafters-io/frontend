@@ -1,0 +1,57 @@
+{{! @glint-nocheck: not typesafe yet !}}
+<div class="pt-8 pb-16" {{did-update this.loadSolutions this.courseStage}} {{did-insert this.loadSolutions}} data-test-code-examples-tab>
+  {{!-- <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-4" ...attributes>
+      <div class="mr-3 mt-0.5">
+        {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
+      </div>
+      <div class="text-blue-900 prose prose-blue leading-7 text-sm">
+        Code Examples are experimental, please send us
+        <div class="inline-flex"><FeedbackButton class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton></div>.
+      </div>
+    </div> --}}
+
+  <div class="flex items-center justify-between mb-6 pb-2 border-b">
+    <div class="flex items-center gap-x-3 gap-y-2 flex-wrap">
+      <h2 class="font-semibold text-lg">Code Examples using {{this.currentLanguage.name}}</h2>
+
+      {{#if (and this.repository.language (not-eq this.repository.language this.currentLanguage))}}
+        <TertiaryButton @size="small" class="pl-1.5" {{on "click" (fn this.handleRequestedLanguageChange this.repository.language)}}>
+          <div class="flex items-center">
+            {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+            <span>
+              Back to
+              {{this.repository.language.name}}
+            </span>
+          </div>
+        </TertiaryButton>
+      {{/if}}
+    </div>
+
+    <CoursePage::CourseStageStep::CommunitySolutionsLanguageDropdown
+      @courseStage={{this.courseStage}}
+      @requestedLanguage={{this.currentLanguage}}
+      @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+      @onDidInsertDropdown={{(noop)}}
+      class="flex-shrink-0"
+    />
+  </div>
+
+  <div>
+    {{#if this.isLoading}}
+      <div class="flex justify-center items-center pt-32 pb-96 w-full">
+        <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+        <span class="ml-3 text-gray-700">Loading...</span>
+      </div>
+    {{else if (gt this.sortedSolutions.length 0)}}
+      <CoursePage::CourseStageStep::CommunitySolutionsList @solutions={{this.sortedSolutions}} />
+    {{else}}
+      <div class="flex py-16 justify-center items-center w-full">
+        <div class="text-sm text-gray-500 text-center max-w-lg">
+          No code examples available for
+          {{this.currentLanguage.name}}. Complete this stage to be the first!
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>

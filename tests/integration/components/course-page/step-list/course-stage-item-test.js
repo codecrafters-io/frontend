@@ -32,7 +32,7 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
     this.set('repository', repository);
     this.set('noop', () => {});
 
-    await render(hbs`<CoursePage::StepList::CourseStageItem
+    await render(hbs`<CoursePage::CourseStageItem
   @courseStage={{this.courseStage}}
   @repository={{this.repository}}
   @onViewNextStageButtonClick={{this.noop}}

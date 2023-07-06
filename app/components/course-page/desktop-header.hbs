@@ -1,0 +1,41 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div class="bg-gray-50 border-b" data-test-desktop-header ...attributes>
+  <div class="flex justify-between items-start mb-3">
+    <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
+    <LinkTo
+      @route="catalog"
+      class="inline-flex items-center text-gray-500 hover:text-gray-600 transition-colors text-xs p-2 border border-gray-300 rounded-lg"
+    >
+      {{svg-jar "x-circle" class="w-4 mr-1 fill-current"}}
+      <span class="font-bold uppercase tracking-wide">Exit</span>
+    </LinkTo>
+  </div>
+  <div>
+    <div class="flex flex-col items-start">
+      <div class="flex items-center flex-wrap gap-x-3">
+        <div class="text-lg md:text-2xl" data-test-step-name>
+          {{#if (eq @currentStep.type "SetupStep")}}
+            <span class="font-bold text-gray-700">Repository Setup</span>
+          {{else if (eq @currentStep.type "CourseStageStep")}}
+            <span class="text-gray-600 mr-1">Stage #{{@currentStep.courseStage.position}}:</span>
+            <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
+          {{else if (eq @currentStep.type "CourseCompletedStep")}}
+            <span class="font-bold text-gray-700">Challenge completed!</span>
+          {{/if}}
+        </div>
+
+        <div class="flex items-center md:h-[2rem] h-[1.75rem] flex-shrink-0">
+          <CoursePage::StepStatusPill @step={{@currentStep}} />
+        </div>
+      </div>
+
+      <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+    </div>
+  </div>
+
+  <div class="flex items-center overflow-x-scroll pt-8">
+    {{#each this.availableTabs key="slug" as |tab|}}
+      <CoursePage::HeaderTabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+    {{/each}}
+  </div>
+</div>

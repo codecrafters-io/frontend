@@ -6,39 +6,20 @@
   {{did-insert this.handleDidInsertModalBody}}
   data-test-course-stage-solution-modal
 >
-  <CoursePage::CourseStageSolutionModal::Header
-    @currentSolution={{this.solution}}
-    @activeTab={{this.activeTab}}
-    @availableTabs={{this.availableTabs}}
-    @onTabLinkClick={{this.handleTabLinkClick}}
-    @onRequestedSolutionLanguageChange={{this.handleRequestedSolutionLanguageChange}}
-    @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
-    @onDidInsertLanguageDropdown={{this.handleDidInsertLanguageDropdown}}
-    @courseStage={{this.courseStage}}
-    @onPreviousStageButtonClick={{this.handlePreviousStageButtonClick}}
-    @onNextStageButtonClick={{this.handleNextStageButtonClick}}
-  />
+  {{! header }}
 
   {{#if (eq this.activeTab "verified_solution")}}
-    <CoursePage::CourseStageSolutionModal::VerifiedSolutionTab
-      @courseStage={{this.courseStage}}
-      @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
-      @repository={{@repository}}
-      @solution={{this.solution}}
-      @onViewVerifiedSolutionInOtherLanguagesButtonClick={{this.handleViewVerifiedSolutionInOtherLanguagesButtonClick}}
-      @onViewCommentsButtonClick={{this.handleViewCommentsButtonClick}}
-    />
+    {{! verified solution tab }}
   {{else if (eq this.activeTab "community_solutions")}}
     <CoursePage::CourseStageSolutionModal::CommunitySolutionsTab
       @courseStage={{this.courseStage}}
       @requestedSolutionLanguage={{this.requestedSolutionLanguage}}
       @repository={{@repository}}
       @onViewCommunitySolutionsInOtherLanguagesButtonClick={{this.handleViewCommunitySolutionsInOtherLanguagesButtonClick}}
-      @onViewCommentsButtonClick={{this.handleViewCommentsButtonClick}}
       @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
     />
   {{else if (eq this.activeTab "comments")}}
-    <CoursePage::CourseStageSolutionModal::CommentsTab @courseStage={{this.courseStage}} @language={{@repository.language}} />
+    {{!-- <CoursePage::CourseStageSolutionModal::CommentsTab @courseStage={{this.courseStage}} @language={{@repository.language}} /> --}}
   {{else if (eq this.activeTab "screencasts")}}
     <CoursePage::CourseStageSolutionModal::ScreencastsTab @courseStage={{this.courseStage}} @language={{@repository.language}} />
   {{/if}}

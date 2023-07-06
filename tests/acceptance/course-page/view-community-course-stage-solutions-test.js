@@ -66,22 +66,20 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
-    await animationsSettled();
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2, 'expected 2 Go solutions to be present'); // Go is picked by default
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 1, 'expected 1 python solution to be present');
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1);
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('C');
 
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('C');
-
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 0);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 0, 'expected no C solutions to be present');
   });
 
   // eslint-disable-next-line qunit/require-expect
@@ -132,84 +130,13 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    const revealSolutionOverlay = coursePage.courseStageSolutionModal.revealSolutionOverlay;
-
-    // const switchToSolutionsForStage = async function (stageNumber) {
-    //   await coursePage.courseStageSolutionModal.clickOnCloseButton();
-    //   await coursePage.collapsedItems[stageNumber - 1].click();
-    //   await animationsSettled();
-    //   await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    // };
-
-    // const assertHeading = function (expectedText) {
-    //   assert.strictEqual(revealSolutionOverlay.headingText, expectedText, 'heading is present');
-    // };
-
-    // const assertInstructions = function (expectedInstructions) {
-    //   assert.strictEqual(revealSolutionOverlay.instructionsText, expectedInstructions, 'instructions are present');
-    // };
-
-    // const assertButtons = function (expectedButtons) {
-    //   assert.deepEqual(revealSolutionOverlay.availableActionButtons, expectedButtons, 'buttons are present');
-    // };
-
-    // const clickButton = async function (buttonText) {
-    //   await revealSolutionOverlay.clickOnActionButton(buttonText);
-    // };
-
     // Stage 2: (Completed, has solutions & comments)
-    await coursePage.collapsedItems[2].click();
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING').click();
     await animationsSettled();
-    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     await percySnapshot('Community Solutions');
 
-    assert.notOk(revealSolutionOverlay.isVisible, 'Blurred overlay is not visible');
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
-
-    // Temp: we're not showing the "Taking a peek?" overlay anymore, to see if it affects completion rates
-
-    // Stage 3 (Incomplete, no solutions in other languages, no comments)
-    // await switchToSolutionsForStage(3);
-    // await percySnapshot('Community Solutions Overlay | No other langs, no comments');
-
-    // assertHeading('Taking a peek?');
-    // assertInstructions("Looks like you haven't completed this stage yet. Just a heads up, this tab will expose solutions.");
-    // assertButtons(['Just taking a peek']);
-    // await clickButton('Just taking a peek');
-
-    // assert.notOk(revealSolutionOverlay.isVisible);
-    // assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 1, 'Solutions are visible');
-
-    // // Stage 4: Incomplete, has solutions in other language, no comments
-    // await switchToSolutionsForStage(4);
-    // await percySnapshot('Community Solutions Overlay | Has other langs, no comments');
-
-    // assertInstructions(
-    //   "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also check out solutions in other languages. Could inspire you."
-    // );
-    // assertButtons(['Good idea', 'Reveal Python solutions']);
-
-    // assert.notOk(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'Language dropdown is not visible');
-    // await clickButton('Good idea');
-    // assert.ok(coursePage.courseStageSolutionModal.languageDropdown.isVisible, 'clicking button should reveal language dropdown');
-
-    // // Stage 5: Create comments
-    // await switchToSolutionsForStage(5);
-    // await percySnapshot('Community Solutions Overlay | No other langs, has comments');
-
-    // assertInstructions("Looks like you haven't completed this stage yet. In case you wanted a hint, you can also peek at the comments.");
-    // assertButtons(['View hints', 'Reveal solutions']);
-    // await clickButton('View hints');
-    // assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Hints', 'active header tab link should be comments');
-
-    // // Stage 6: Incomplete, has solutions in other language & has comments
-    // await switchToSolutionsForStage(6);
-    // await percySnapshot('Community Solutions Overlay | Has other langs & comments');
-
-    // assertInstructions(
-    //   "Looks like you haven't completed this stage in Python yet. In case you wanted a hint, you can also peek at the comments, or check out solutions in other languages."
-    // );
-    // assertButtons(['View hints', 'Another language', 'Reveal Python solutions']);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 1, 'Solutions are visible');
   });
 
   test('can view team-restricted solutions', async function (assert) {
@@ -250,11 +177,11 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 2);
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2);
   });
 
   test('paginates if more than three solutions', async function (assert) {
@@ -291,31 +218,31 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 3);
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3);
 
-    await scrollTo('[data-test-course-stage-solution-modal]', 0, 99999);
+    await scrollTo('[data-test-course-page-scrollable-area]', 0, 99999);
     await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 5);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 5);
 
-    await scrollTo('[data-test-course-stage-solution-modal]', 0, 99999);
+    await scrollTo('[data-test-course-page-scrollable-area]', 0, 99999);
     await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 7);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7);
 
-    await scrollTo('[data-test-course-stage-solution-modal]', 0, 99999);
+    await scrollTo('[data-test-course-page-scrollable-area]', 0, 99999);
     await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 7); // No more to load
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7); // No more to load
 
     // Switching to other language must restart pagination
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.communitySolutionsTab.solutionCards.length, 3);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3);
   });
 });

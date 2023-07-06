@@ -53,7 +53,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
 
@@ -67,7 +67,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');
     assert.ok(coursePage.repositoryDropdown.isClosed, 'repository dropdown should be closed');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING');
 
     await catalogPage.visit(); // Poller is active
   });

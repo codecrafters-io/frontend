@@ -1,10 +1,12 @@
-<div
-  class="fixed top-0 right-0 left-0 bottom-0 bg-gray-800 bg-opacity-80"
-  {{did-insert this.handleDidInsert}}
-  {{will-destroy this.handleWillDestroy}}
-  ...attributes
->
-  <div class="flex flex-col w-screen h-screen overflow-hidden px-2 py-4 sm:px-16 justify-center items-center">
-    {{yield}}
+{{#in-element this.containerElement}}
+  <div
+    class="fixed top-0 right-0 left-0 bottom-0 bg-gray-800 bg-opacity-80"
+    {{did-insert this.handleDidInsert}}
+    {{will-destroy this.handleWillDestroy}}
+    ...attributes
+  >
+    <div class="flex flex-col w-screen h-screen overflow-hidden px-2 py-4 sm:px-16 justify-center items-center">
+      {{yield}}
+    </div>
   </div>
-</div>
+{{/in-element}}

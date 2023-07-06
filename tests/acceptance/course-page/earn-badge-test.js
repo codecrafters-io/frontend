@@ -43,8 +43,8 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Show logs', 'footer is tests failed');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is active');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -68,7 +68,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is still active');
     assert.contains(coursePage.activeCourseStageItem.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'text');
 
     await coursePage.activeCourseStageItem.earnedBadgeNotice.clickOnViewButton();

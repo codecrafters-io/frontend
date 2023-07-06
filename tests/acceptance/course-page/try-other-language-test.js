@@ -49,7 +49,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, `expected ${baseRequestsCount} requests`);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'first stage should be active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'first stage should be active');
 
     await coursePage.repositoryDropdown.click();
     await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
@@ -82,7 +82,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await settled();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 7, 'polling should have run again');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port');
 
     await animationsSettled();
   });

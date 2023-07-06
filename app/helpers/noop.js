@@ -1,7 +1,9 @@
-import Helper from '@ember/component/helper';
+import { helper } from '@ember/component/helper';
 
-export default class NoopHelper extends Helper {
-  compute() {
-    return () => {};
-  }
+export function noop() {
+  return function () {
+    // This is a noop function that does nothing
+  };
 }
+
+export default helper(noop);

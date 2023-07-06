@@ -1,0 +1,39 @@
+<CoursePage::InstructionsCard data-test-repository-setup-card ...attributes>
+  <:content>
+    <div class="flex items-center gap-x-3 w-full border-b pb-2 mb-5">
+      <h2 class="font-semibold text-lg text-gray-700">Repository Setup</h2>
+      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+    </div>
+    <AnimatedContainer>
+      {{#animated-if @repository.isNew use=this.transition}}
+        <CoursePage::SetupStep::RepositorySetupCard::CreateRepositoryStep
+          @preferredLanguageSlug={{@preferredLanguageSlug}}
+          @repository={{@repository}}
+          @onLanguageSelection={{this.handleLanguageSelection}}
+        />
+      {{else}}
+        <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} />
+      {{/animated-if}}
+
+      {{#animated-if this.shouldShowUpgradePrompt use=this.transition}}
+        <CoursePage::SetupStep::RepositorySetupCard::UpgradePrompt class="mt-3" />
+      {{/animated-if}}
+
+      {{#animated-if (eq this.coursePageState.currentStep.status "complete")}}
+        <div class="mt-4 flex">
+          <PrimaryLinkButton
+            @route={{this.coursePageState.activeStep.routeParams.route}}
+            @models={{this.coursePageState.activeStep.routeParams.models}}
+            data-test-continue-button
+          >
+            Continue →
+          </PrimaryLinkButton>
+        </div>
+      {{/animated-if}}
+    </AnimatedContainer>
+  </:content>
+
+  <:footerContent>
+    <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} />
+  </:footerContent>
+</CoursePage::InstructionsCard>

@@ -45,17 +45,16 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    const communitySolutionsTab = coursePage.courseStageSolutionModal.communitySolutionsTab;
+    const communitySolutionsTab = coursePage.codeExamplesTab;
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.title, 'Stage #2: Respond to PING', 'title should be respond to ping');
-    assert.strictEqual(coursePage.courseStageSolutionModal.activeHeaderTabLinkText, 'Code Examples', 'active header tab link should be comments');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
 
     await percySnapshot('Community Solution Comments - Collapsed');
@@ -108,14 +107,14 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    const communitySolutionsTab = coursePage.courseStageSolutionModal.communitySolutionsTab;
+    const communitySolutionsTab = coursePage.codeExamplesTab;
 
     await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
     await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
@@ -167,13 +166,13 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
-    await coursePage.activeCourseStageItem.clickOnActionButton('Code Examples');
-    await coursePage.courseStageSolutionModal.languageDropdown.toggle();
-    await coursePage.courseStageSolutionModal.languageDropdown.clickOnLink('Python');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    const communitySolutionsTab = coursePage.courseStageSolutionModal.communitySolutionsTab;
+    const communitySolutionsTab = coursePage.codeExamplesTab;
     const solutionCard = communitySolutionsTab.solutionCards[0];
 
     await solutionCard.clickOnExpandButton();
@@ -195,10 +194,10 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await catalogPage.clickOnCourse('Build your own Redis');
   //   await courseOverviewPage.clickOnStartCourse();
 
-  //   await coursePage.clickOnCollapsedItem('Respond to PING');
+  //   await coursePage.sidebar.clickOnStepListItem('Respond to PING');
   //   await animationsSettled();
 
-  //   await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
+  //   await coursePage.yourTaskCard.clickOnActionButton('Hints');
   //   await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
   //   await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
 
@@ -222,10 +221,10 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await catalogPage.clickOnCourse('Build your own Redis');
   //   await courseOverviewPage.clickOnStartCourse();
 
-  //   await coursePage.clickOnCollapsedItem('Respond to PING');
+  //   await coursePage.sidebar.clickOnStepListItem('Respond to PING');
   //   await animationsSettled();
 
-  //   await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
+  //   await coursePage.yourTaskCard.clickOnActionButton('Hints');
   //   await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
   //   await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
 
@@ -273,10 +272,10 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await catalogPage.clickOnCourse('Build your own Redis');
   //   await courseOverviewPage.clickOnStartCourse();
 
-  //   await coursePage.clickOnCollapsedItem('Respond to PING');
+  //   await coursePage.sidebar.clickOnStepListItem('Respond to PING');
   //   await animationsSettled();
 
-  //   await coursePage.activeCourseStageItem.clickOnActionButton('Hints');
+  //   await coursePage.yourTaskCard.clickOnActionButton('Hints');
 
   //   const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
   //   await firstCommentCard.clickOnReplyButton();

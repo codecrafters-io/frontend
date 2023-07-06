@@ -1,0 +1,21 @@
+<div class="flex items-center {{if (eq @size 'large') 'text-base' 'text-xs'}} " data-test-setup-item-footer ...attributes>
+  {{#if @step.progressIndicator}}
+    <AnimatedContainer>
+      {{#if (eq @step.progressIndicator.dotType "none")}}
+        <div></div>
+      {{else}}
+        {{#if (eq @step.progressIndicator.dotType "blinking")}}
+          {{! @glint-expect-error: not typesafe yet }}
+          <BlinkingDot @class="mr-2" @color={{@step.progressIndicator.dotColor}} />
+        {{else}}
+          {{! @glint-expect-error: not typesafe yet }}
+          <StaticDot @class="mr-2" @color={{@step.progressIndicator.dotColor}} />
+        {{/if}}
+      {{/if}}
+    </AnimatedContainer>
+
+    <span class="text-gray-600" data-test-progress-indicator-text>{{@step.progressIndicator.text}}</span>
+  {{else}}
+    <span>&nbsp;</span>
+  {{/if}}
+</div>

@@ -6,13 +6,58 @@
   </div>
 {{/if}}
 
-<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
-  <CoursePage::Content
-    @hasRecentlyCompletedGitHubIntegrationSetup={{this.hasRecentlyCompletedGitHubIntegrationSetup}}
-    @course={{this.course}}
-    @repositories={{this.repositories}}
-    @activeRepository={{this.activeRepository}}
-    @onRepositoryCreate={{this.handleRepositoryCreate}}
-    @preferredLanguageSlug={{this.track}}
+<div
+  class="flex h-screen w-full"
+  {{did-insert this.handleDidInsertContainer}}
+  {{will-destroy this.handleWillDestroyContainer}}
+  {{did-update this.handleDidUpdateActiveRepository @model.activeRepository}}
+>
+  <CoursePage::Sidebar
+    @course={{@model.course}}
+    @repositories={{@model.repositories}}
+    @activeRepository={{@model.activeRepository}}
+    @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
+    @onViewProgressBannerButtonClick={{this.handleViewProgressBannerButtonClick}}
+    class="p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden md:block"
   />
+
+  <div class="flex flex-col max-h-screen overflow-y-auto flex-grow" data-test-course-page-scrollable-area>
+    <CoursePage::DesktopHeader
+      @stepList={{this.coursePageState.stepList}}
+      @currentStep={{this.coursePageState.currentStep}}
+      class="px-6 md:pl-10 pt-6"
+    />
+
+    <div class="flex flex-grow bg-white">
+      <div class="px-6 md:px-10 flex-grow min-w-0">
+        {{outlet}}
+      </div>
+
+      <div class="w-80 flex-shrink-0 border-l pt-6 bg-gray-50 hidden xl:block pr-6">
+        <CourseLeaderboard @course={{@model.course}} @activeRepository={{@model.activeRepository}} @repositories={{@model.repositories}} />
+
+        {{#if this.visiblePrivateLeaderboardFeatureSuggestion}}
+          <PrivateLeaderboardFeatureSuggestion @featureSuggestion={{this.visiblePrivateLeaderboardFeatureSuggestion}} class="ml-4 mt-6" />
+        {{/if}}
+      </div>
+    </div>
+  </div>
 </div>
+
+{{!-- {{#if (and this.currentCourseStageForSolutionModal this.courseStageSolutionModalIntent)}}
+  <ModalBackdrop>
+    <CoursePage::CourseStageSolutionModal
+      @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
+      @courseStage={{this.currentCourseStageForSolutionModal}}
+      @repository={{@model.activeRepository}}
+      @onClose={{this.handleModalClose}}
+      @intent={{this.courseStageSolutionModalIntent}}
+    />
+  </ModalBackdrop>
+{{/if}} --}}
+
+{{#if this.isViewingProgressBanner}}
+  <ModalBackdrop>
+    <CoursePage::ProgressBannerModal @repository={{@model.activeRepository}} @onClose={{this.handleModalClose}} />
+  </ModalBackdrop>
+{{/if}}

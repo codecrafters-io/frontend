@@ -54,12 +54,12 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
-    await coursePage.collapsedItems[3].click(); // The previous completed stage
+    await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The previous completed stage
     await animationsSettled();
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
 
-    await coursePage.collapsedItems[4].click(); // The next pending stage
+    await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The next pending stage
     await animationsSettled();
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');

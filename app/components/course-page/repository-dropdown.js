@@ -10,6 +10,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
   @service authenticator;
   @service router;
   @tracked gitRepositoryURLWasCopiedRecently;
+  @tracked configureGithubIntegrationModalIsOpen = false;
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -49,25 +50,26 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
       return;
     }
 
-    this.args.onPublishToGithubButtonClick();
+    this.configureGithubIntegrationModalIsOpen = true;
     dropdownActions.close();
   }
 
   @action
   async handleRepositoryLinkClick(repository, dropdownActions) {
-    await this.router.transitionTo('course', repository.course.get('slug'), { queryParams: { repo: repository.id, track: null } });
+    // TODO: Even though we're using replaceWith, this does seem to cause a history entry to be added. Debug why?
+    await this.router.replaceWith('course', repository.course.slug, { queryParams: { repo: repository.id } }).followRedirects();
     dropdownActions.close();
   }
 
   @action
   async handleRetryWithSameLanguageActionClick(dropdownActions) {
-    await this.router.transitionTo({ queryParams: { fresh: true, repo: null, track: this.args.activeRepository.get('language.slug') } });
+    await this.router.transitionTo({ queryParams: { repo: 'new', track: this.args.activeRepository.language.slug } }).followRedirects();
     dropdownActions.close();
   }
 
   @action
   async handleTryDifferentLanguageActionClick(dropdownActions) {
-    await this.router.transitionTo({ queryParams: { fresh: true, repo: null, track: null } });
+    await this.router.transitionTo({ queryParams: { repo: 'new', track: null } });
     dropdownActions.close();
   }
 

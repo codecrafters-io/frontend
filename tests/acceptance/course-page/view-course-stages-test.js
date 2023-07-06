@@ -25,17 +25,17 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(coursePage.setupItemIsActive, 'setup item is active by default');
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is active if clicked on');
 
-    await coursePage.clickOnCollapsedItem('Bind to a port');
+    await coursePage.sidebar.clickOnStepListItem('Bind to a port');
     await animationsSettled();
 
     assert.ok(coursePage.courseStageItemIsActive, 'course stage item is active if clicked on');
 
-    await coursePage.clickOnCollapsedItem('Repository Setup');
+    await coursePage.sidebar.clickOnStepListItem('Repository Setup');
     await animationsSettled();
 
     assert.ok(coursePage.setupItemIsActive, 'setup item is active if clicked on');
@@ -85,10 +85,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'course stage item is active if clicked on');
     assert.strictEqual(
       coursePage.activeCourseStageItem.footerText,
       'You completed this stage 5 days ago.',
@@ -97,21 +97,21 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await percySnapshot('Course Stages - Completed stage');
 
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', 'course stage item is active if clicked on');
     assert.strictEqual(
       coursePage.activeCourseStageItem.footerText,
       'You completed this stage yesterday.',
       'footer text for stage completed yesterday'
     );
 
-    await coursePage.clickOnCollapsedItem('Handle concurrent clients');
+    await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', 'course stage item is active if clicked on');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text for stage completed today');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #4: Handle concurrent clients', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
   test('stages should have an upgrade prompt if they are paid', async function (assert) {
@@ -155,12 +155,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
-    await coursePage.collapsedItems[3].click(); // The previous completed stage
+    await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The previous completed stage
     await animationsSettled();
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
 
-    await coursePage.collapsedItems[4].click(); // The next pending stage
+    await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The next pending stage
     await animationsSettled();
 
     assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
@@ -256,7 +256,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING');
   });
 
   test('transition from courses page has no loading page', async function (assert) {
@@ -290,6 +290,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING');
   });
 });

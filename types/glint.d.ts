@@ -7,6 +7,7 @@ declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends RenderModifiersRegistry {
     'in-viewport': ModifierLike<{ Args: { Named: { onEnter: () => void } } }>;
     'html-safe': HelperLike<{ Return: string; Args: { Positional: [string | undefined] } }>;
+    noop: HelperLike<{ Return: () => void }>;
     AnimatedContainer: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     AnimatedOrphans: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     'animated-value': ComponentLike<{

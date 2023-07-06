@@ -1,0 +1,32 @@
+<div class="inline-flex" data-test-language-dropdown ...attributes>
+  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-left" @registerAPI={{@onDidInsertDropdown}} as |dd|>
+    <dd.Trigger>
+      <button
+        type="button"
+        class="inline-flex justify-center rounded-md border border-gray-300
+          {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
+          shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
+        data-test-language-dropdown-trigger
+      >
+        <span class="mr-1" data-test-current-language-name>
+          {{@currentLanguage.name}}
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-language-dropdown-content>
+        {{#each this.languagesWithSolutions as |language|}}
+          <CoursePage::SolutionLanguageDropdownLink
+            @language={{language}}
+            @isEnabled={{true}}
+            @isCurrent={{eq language @currentLanguage}}
+            @isRequested={{eq language @requestedLanguage}}
+            @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
+          />
+        {{/each}}
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>

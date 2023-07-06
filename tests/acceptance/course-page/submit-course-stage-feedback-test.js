@@ -40,23 +40,23 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', '4th is expanded');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #4: Handle concurrent clients', '4th is expanded');
 
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd is expanded');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', '3rd is expanded');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage completed');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', '2nd stage is expanded');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage completed');
     assert.notOk(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
 
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
@@ -82,7 +82,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.activeCourseStageItem.feedbackPrompt.clickOnSubmitButton();
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', 'Next stage is expanded');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #4: Handle concurrent clients', 'Next stage is expanded');
   });
 
   test('is shown different prompts based on stage number', async function (assert) {
@@ -107,12 +107,12 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '4th is expanded');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', '4th is expanded');
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', '2nd stage is expanded');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
     assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Nice work! How did we do?');
 
@@ -126,15 +126,15 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     };
 
     await completeStage(3);
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd stage is expanded');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', '3rd stage is expanded');
     assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
     assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Great streak! How did we do?');
 
     await completeStage(6);
-    await coursePage.clickOnCollapsedItem('Implement the SET & GET commands');
+    await coursePage.sidebar.clickOnStepListItem('Implement the SET & GET commands');
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the SET & GET commands', 'penultimate stage is expanded');
@@ -142,7 +142,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Just one more to go! How did we do?');
 
     await completeStage(7);
-    await coursePage.clickOnCollapsedItem('Expiry');
+    await coursePage.sidebar.clickOnStepListItem('Expiry');
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Expiry', 'last stage is expanded');
@@ -180,8 +180,8 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is git push listener');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', '3rd stage is active');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is git push listener');
 
     await animationsSettled();
   });

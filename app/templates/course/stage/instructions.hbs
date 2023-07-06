@@ -1,0 +1,16 @@
+{{! @glint-nocheck: not typesafe yet !}}
+<div class="pt-8 pb-16">
+  {{#if this.shouldShowFirstStageHints}}
+    <CoursePage::CourseStageItem::FirstStageHint class="mb-6" />
+  {{/if}}
+
+  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
+
+  {{#if this.shouldShowFirstStageHints}}
+    <CoursePage::CourseStageStep::FirstStageInstructionsCard @repository={{@model.activeRepository}} class="mt-6" />
+  {{/if}}
+
+  <h2 class="font-semibold border-b pb-2 mb-6 text-lg mt-8">Hints</h2>
+
+  <CoursePage::CommentList @courseStage={{@model.courseStage}} @language={{@model.activeRepository.language}} />
+</div>

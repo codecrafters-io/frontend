@@ -1,0 +1,40 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div class="inline-flex rounded items-stretch shadow-sm" ...attributes>
+  {{#if this.previousStep}}
+    <LinkTo
+      @route={{this.previousStep.routeParams.route}}
+      @models={{this.previousStep.routeParams.models}}
+      @replace={{true}}
+      class="rounded-l border-r-0 flex items-center border border-gray-300 transition-colors duration-75 px-1 py-1.5 text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-500"
+      data-test-previous-stage-button
+    >
+      {{svg-jar "chevron-left" class="w-4 fill-current"}}
+    </LinkTo>
+  {{else}}
+    <div
+      class="rounded-l border-r-0 flex items-center border border-gray-300 transition-colors duration-75 px-1 py-1.5 text-gray-500 bg-white cursor-not-allowed opacity-50"
+      data-test-previous-stage-button
+    >
+      {{svg-jar "chevron-left" class="w-4 fill-current"}}
+    </div>
+  {{/if}}
+
+  {{#if this.nextStep}}
+    <LinkTo
+      @route={{this.nextStep.routeParams.route}}
+      @models={{this.nextStep.routeParams.models}}
+      @replace={{true}}
+      class="rounded-r flex items-center border border-gray-300 transition-colors duration-75 px-1 py-1.5 text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-500"
+      data-test-next-stage-button
+    >
+      {{svg-jar "chevron-right" class="w-4 fill-current"}}
+    </LinkTo>
+  {{else}}
+    <div
+      class="rounded-r flex items-center border border-gray-300 transition-colors duration-75 px-1 py-1.5 text-gray-500 bg-white cursor-not-allowed opacity-50"
+      data-test-next-stage-button
+    >
+      {{svg-jar "chevron-right" class="w-4 fill-current"}}
+    </div>
+  {{/if}}
+</div>

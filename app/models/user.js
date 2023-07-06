@@ -111,6 +111,10 @@ export default class UserModel extends Model {
     return this.referralLinks.rejectBy('isNew').length > 0;
   }
 
+  hasStartedCourse(course) {
+    return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
+  }
+
   get isEligibleForEarlyBirdDiscount() {
     if (this.isEligibleForReferralDiscount || this.isEligibleForCustomDiscount) {
       return false; // Prioritize referral & custom discount

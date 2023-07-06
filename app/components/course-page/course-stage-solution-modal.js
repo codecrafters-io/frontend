@@ -26,7 +26,6 @@ import 'prismjs/components/prism-diff';
 export default class CourseStageSolutionModalComponent extends Component {
   @tracked activeTab; // community_solutions/verified_solution/comments
   @tracked courseStage;
-  @tracked modalBodyElement;
   @tracked requestedSolutionLanguage;
 
   @service analyticsEventTracker;
@@ -37,14 +36,6 @@ export default class CourseStageSolutionModalComponent extends Component {
     super(...arguments);
 
     this.courseStage = this.args.courseStage;
-
-    this.requestedSolutionLanguage =
-      this.args.repository.language ||
-      (this.courseStage.solutions.sortBy('language.name').firstObject
-        ? this.courseStage.solutions.sortBy('language.name').firstObject.language
-        : null) ||
-      this.courseStage.course.languageConfigurations.sortBy('language.name').firstObject.language;
-
     this.computeActiveTabFromIntent();
     this.emitAnalyticsEvent();
   }
@@ -67,21 +58,6 @@ export default class CourseStageSolutionModalComponent extends Component {
     }
   }
 
-  computeActiveTabFromIntent() {
-    // intent is either view_solution, view_comments or view_screencasts
-    if (this.args.intent === 'view_solution') {
-      if (this.courseStage.isFirst && this.solution) {
-        this.activeTab = 'verified_solution';
-      } else {
-        this.activeTab = 'community_solutions';
-      }
-    } else if (this.args.intent === 'view_comments') {
-      this.activeTab = 'comments';
-    } else if (this.args.intent === 'view_screencasts') {
-      this.activeTab = 'screencasts';
-    }
-  }
-
   emitAnalyticsEvent() {
     if (this.activeTab === 'comments') {
       this.analyticsEventTracker.track('viewed_course_stage_comments', {
@@ -98,11 +74,6 @@ export default class CourseStageSolutionModalComponent extends Component {
     if (!this.tabIsAvailable(this.activeTab)) {
       this.activeTab = this.availableTabs[0];
     }
-  }
-
-  @action
-  handleDidInsertModalBody(modalBodyElement) {
-    this.modalBodyElement = modalBodyElement;
   }
 
   @action
@@ -129,11 +100,6 @@ export default class CourseStageSolutionModalComponent extends Component {
   }
 
   @action
-  handleViewCommentsButtonClick() {
-    this.activeTab = 'comments';
-  }
-
-  @action
   handleViewCommunitySolutionsInOtherLanguagesButtonClick() {
     this.languageDropdown.actions.open();
   }
@@ -146,7 +112,6 @@ export default class CourseStageSolutionModalComponent extends Component {
   @action
   handleTabLinkClick(tab) {
     this.activeTab = tab;
-    this.modalBodyElement.scrollTo({ top: 0, behavior: 'smooth' });
     this.emitAnalyticsEvent();
   }
 

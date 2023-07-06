@@ -1,9 +1,6 @@
 {{! @glint-nocheck: not typesafe yet }}
 {{#if @submission.communityCourseStageSolution}}
-  <CoursePage::CourseStageSolutionModal::CommunitySolutionCard
-    @solution={{@submission.communityCourseStageSolution}}
-    @isCollapsedByDefault={{true}}
-  />
+  <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{@submission.communityCourseStageSolution}} @isCollapsedByDefault={{true}} />
 {{else}}
   <div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded mb-4">
     This submission doesn't have a community stage solution yet.
