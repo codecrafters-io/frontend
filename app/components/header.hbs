@@ -39,27 +39,9 @@
         <div class="{{if this.colorScheme.isDark 'bg-gray-700' 'bg-gray-200'}} w-px h-5 mr-3"></div>
 
         {{! Top-level links }}
-        <LinkTo
-          @route="catalog"
-          class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}"
-          data-test-catalog-link
-        >Catalog</LinkTo>
-
-        <LinkTo @route="badges" class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Badges</LinkTo>
-
-        {{#if this.featureFlags.canSeeConceptsIndex}}
-          <LinkTo @route="concepts" class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Concepts</LinkTo>
-        {{/if}}
-
-        <LinkTo
-          @route="vote"
-          class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}"
-          data-test-course-ideas-link
-        >Vote</LinkTo>
-
-        {{#if this.currentUser.isAdmin}}
-          <a href={{this.adminPanelLink}} class="text-sm px-2 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Admin</a>
-        {{/if}}
+        {{#each this.links as |link|}}
+          <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="px-2" />
+        {{/each}}
       </div>
 
       {{! Account Dropdown on Desktop }}
@@ -101,18 +83,9 @@
         </div>
 
         <div class="py-3">
-          <LinkTo @route="catalog" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Catalog</LinkTo>
-          <LinkTo @route="badges" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Badges</LinkTo>
-
-          {{#if this.featureFlags.canSeeConceptsIndex}}
-            <LinkTo @route="concepts" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Concepts</LinkTo>
-          {{/if}}
-
-          <LinkTo @route="vote" class="block text-sm py-3 {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">Vote</LinkTo>
-
-          {{#if this.currentUser.isAdmin}}
-            <a href="/admin" class="block text-sm py-3 text-gray-600">Admin</a>
-          {{/if}}
+          {{#each this.links as |link|}}
+            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="block py-3" />
+          {{/each}}
 
           {{#if this.currentUser}}
             <Header::AccountDropdown />

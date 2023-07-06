@@ -16,6 +16,24 @@ export default class HeaderComponent extends Component {
 
   @tracked mobileMenuIsExpanded = false;
 
+  get links() {
+    const links = [
+      { text: 'Catalog', route: 'catalog', type: 'route' },
+      { text: 'Badges', route: 'badges', type: 'route' },
+      { text: 'Vote', route: 'vote', type: 'route' },
+    ];
+
+    if (this.featureFlags.canSeeConceptsIndex) {
+      links.push({ text: 'Concepts', route: 'concepts', type: 'route' });
+    }
+
+    if (this.currentUser && this.currentUser.isAdmin) {
+      links.push({ text: 'Admin', route: this.adminPanelLink, type: 'link' });
+    }
+
+    return links;
+  }
+
   get adminPanelLink() {
     return `${config.x.backendUrl}/admin`;
   }
