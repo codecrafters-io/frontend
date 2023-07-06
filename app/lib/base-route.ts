@@ -3,6 +3,8 @@ import { inject as service } from '@ember/service';
 import window from 'ember-window-mock';
 import RouterService from '@ember/routing/router-service';
 import paramsFromRouteInfo from 'codecrafters-frontend/lib/params-from-route-info';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
+
 type Transition = ReturnType<RouterService['transitionTo']>;
 
 export default class BaseRoute extends Route {
@@ -10,6 +12,7 @@ export default class BaseRoute extends Route {
   @service authenticator: unknown;
   @service declare router: RouterService;
   @service utmCampaignIdTracker: unknown;
+  @service declare fastboot: FastBootService;
 
   beforeModel(transition: Transition) {
     // @ts-ignore
@@ -31,7 +34,7 @@ export default class BaseRoute extends Route {
     }
 
     // TODO: Handle case where `isAuthenticated` isn't present yet
-    if (window.origin.includes('codecrafters.io')) {
+    if (!this.fastboot.isFastBoot && window.origin.includes('codecrafters.io')) {
       // @ts-ignore
       if (window.posthog && this.authenticator.currentUserId) {
         // @ts-ignore
