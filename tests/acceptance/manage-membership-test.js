@@ -25,6 +25,40 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(currentURL(), '/membership');
   });
 
+  test('subscriber that is a partner has correct membership plan copy', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update('isCodecraftersPartner', true);
+
+    signInAsSubscriber(this.owner, this.server, user);
+
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Membership');
+
+    assert.dom('[data-test-membership-plan-section] div:nth-of-type(3)').includesText('🎉 You have VIP access to all CodeCrafters content.');
+  });
+
+  test('subscriber that is a partner with expiry has correct membership plan copy', async function (assert) {
+    testScenario(this.server);
+
+    const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    const user = this.server.schema.users.first();
+    user.update('isCodecraftersPartner', true);
+    user.update('codecraftersPartnerStatusExpiresAt', expiryDate);
+
+    signInAsSubscriber(this.owner, this.server, user);
+
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Manage Membership');
+
+    assert
+      .dom('[data-test-membership-plan-section] div:nth-of-type(3)')
+      .includesText('🎉 You have VIP access to all CodeCrafters content, valid until');
+  });
+
   test('subscriber can cancel trial', async function (assert) {
     testScenario(this.server);
     signInAsTrialingSubscriber(this.owner, this.server);
