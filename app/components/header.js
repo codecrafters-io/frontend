@@ -24,12 +24,14 @@ export default class HeaderComponent extends Component {
     ];
 
     if (this.featureFlags.canSeeConceptsIndex) {
-      links.push({ text: 'Concepts', route: 'concepts', type: 'route' })
+      links.push({ text: 'Concepts', route: 'concepts', type: 'route' });
     }
 
     if (this.currentUser && this.currentUser.isAdmin) {
-      links.push({ text: 'Admin', route: this.adminPanelLink, type: 'link' })
+      links.push({ text: 'Admin', route: this.adminPanelLink, type: 'link' });
     }
+
+    return links;
   }
 
   get adminPanelLink() {
