@@ -40,13 +40,7 @@
 
         {{! Top-level links }}
         {{#each this.links as |link|}}
-          {{#if (and (eq link.route "concepts") this.featureFlags.canSeeConceptsIndex)}}
-            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} />
-          {{else if (and (eq link.text "Admin") this.currentUser.isAdmin)}}
-            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} />
-          {{else if (and (not (eq link.route "concepts")) (not (eq link.text "Admin")))}}
-            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} />
-          {{/if}}
+            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="px-2" />
         {{/each}}
       </div>
 
@@ -90,13 +84,7 @@
 
         <div class="py-3">
           {{#each this.links as |link|}}
-            {{#if (and (eq link.route "concepts") this.featureFlags.canSeeConceptsIndex)}}
-              <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @screen="mobile" />
-            {{else if (and (eq link.text "Admin") this.currentUser.isAdmin)}}
-              <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @screen="mobile" />
-            {{else if (and (not (eq link.route "concepts")) (not (eq link.text "Admin")))}}
-              <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @screen="mobile" />
-            {{/if}}
+            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="block py-3" />
           {{/each}}
 
           {{#if this.currentUser}}
