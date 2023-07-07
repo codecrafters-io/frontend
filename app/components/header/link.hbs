@@ -4,5 +4,5 @@
     {{@text}}
   </LinkTo>
 {{else if (eq @type "link")}}
-  <a href={{@route}} class="text-sm {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}">{{@text}}</a>
+  <a href={{@route}} class="text-sm {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}}" ...attributes>{{@text}}</a>
 {{/if}}
