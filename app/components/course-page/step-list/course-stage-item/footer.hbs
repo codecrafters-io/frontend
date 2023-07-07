@@ -26,7 +26,7 @@
           <span
             class="inline-block border border-gray-400 rounded ml-3 px-1.5 py-0.5 font-medium text-gray-800 bg-white"
             role="button"
-            {{on "click" (fn (mut this.logsAreExpanded) (not this.logsAreExpanded))}}
+            {{on "click" this.handleLogsButtonClick}}
           >{{if this.logsAreExpanded "Hide logs" "Show logs"}}</span>
         {{/if}}
       </span>
