@@ -45,7 +45,7 @@ export default class CourseStageItemFooterComponent extends Component {
 
     if (this.logsAreExpanded && this.lastFailedSubmission) {
       this.analyticsEventTracker.track('viewed_logs', {
-        submussion_id: this.lastFailedSubmission.id,
+        submission_id: this.lastFailedSubmission.id,
       });
     }
   }
