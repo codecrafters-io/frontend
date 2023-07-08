@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 import RSVP from 'rsvp';
 
 export default class VoteRoute extends ApplicationRoute {
@@ -9,7 +10,7 @@ export default class VoteRoute extends ApplicationRoute {
   @service store;
 
   activate() {
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   }
 
   async model() {
