@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 
-export default class UserRoute extends ApplicationRoute {
+export default class UserRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service router;

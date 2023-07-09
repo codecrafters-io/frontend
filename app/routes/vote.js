@@ -1,9 +1,9 @@
 import { inject as service } from '@ember/service';
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 import RSVP from 'rsvp';
 
-export default class VoteRoute extends ApplicationRoute {
+export default class VoteRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service router;

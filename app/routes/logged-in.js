@@ -1,7 +1,7 @@
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import { service } from '@ember/service';
 
-export default class LoggedInRoute extends ApplicationRoute {
+export default class LoggedInRoute extends BaseRoute {
   @service sessionTokenStorage;
 
   beforeModel(transition) {
