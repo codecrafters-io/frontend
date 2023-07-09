@@ -42,6 +42,10 @@ module.exports = function (defaults) {
     svgJar: {
       sourceDirs: ['public/assets/images/heroicons/outline', 'public/assets/images/heroicons/solid', 'public/assets/images/svg-icons'],
     },
+
+    prember: {
+      urls: ['/', '/catalog'],
+    },
   };
 
   let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
