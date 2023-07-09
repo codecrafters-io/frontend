@@ -1,8 +1,8 @@
 import { inject as service } from '@ember/service';
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RSVP from 'rsvp';
 
-export default class BadgesRoute extends ApplicationRoute {
+export default class BadgesRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;

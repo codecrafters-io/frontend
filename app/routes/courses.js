@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 
-export default class CoursesRoute extends ApplicationRoute {
+export default class CoursesRoute extends BaseRoute {
   @service router;
 
   beforeModel() {

@@ -1,8 +1,8 @@
 import { inject as service } from '@ember/service';
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 
-export default class JoinRoute extends ApplicationRoute {
+export default class JoinRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
   @service authenticator;

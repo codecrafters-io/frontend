@@ -1,7 +1,7 @@
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import { inject as service } from '@ember/service';
 
-export default class MembershipRoute extends ApplicationRoute {
+export default class MembershipRoute extends BaseRoute {
   @service store;
   @service router;
   @service authenticator;

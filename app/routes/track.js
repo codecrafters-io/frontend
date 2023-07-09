@@ -1,9 +1,9 @@
 import { inject as service } from '@ember/service';
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 
-export default class TrackRoute extends ApplicationRoute {
+export default class TrackRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;

@@ -1,6 +1,6 @@
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 
-export default class CourseExtensionIdeasRoute extends ApplicationRoute {
+export default class CourseExtensionIdeasRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
   setupController(controller, model) {

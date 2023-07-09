@@ -1,9 +1,9 @@
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import config from 'codecrafters-frontend/config/environment';
 import { inject as service } from '@ember/service';
 import { loadStripe } from '@stripe/stripe-js';
 
-export default class TeamsPayRoute extends ApplicationRoute {
+export default class TeamsPayRoute extends BaseRoute {
   @service store;
 
   allowsAnonymousAccess = true;

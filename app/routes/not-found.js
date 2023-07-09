@@ -1,5 +1,5 @@
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 
-export default class NotFoundRoute extends ApplicationRoute {
+export default class NotFoundRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 }

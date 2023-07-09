@@ -1,7 +1,7 @@
-import ApplicationRoute from 'codecrafters-frontend/lib/application-route';
+import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import { inject as service } from '@ember/service';
 
-export default class CodeWalkthroughRoute extends ApplicationRoute {
+export default class CodeWalkthroughRoute extends BaseRoute {
   @service store;
   allowsAnonymousAccess = true;
 
