@@ -62,10 +62,10 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
       submission: submission,
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for poll
     await animationsSettled();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for auto-advance
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');

@@ -74,12 +74,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Run poller
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Run poller
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 4, 'polling should have run');
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Run active item index updater
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Run active item index updater
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run again');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');

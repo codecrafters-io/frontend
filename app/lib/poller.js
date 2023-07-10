@@ -1,4 +1,5 @@
 import { run } from '@ember/runloop';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class Poller {
   isActive;
@@ -13,6 +14,14 @@ export default class Poller {
 
     this.isActive = false;
     this.model = null;
+  }
+
+  get effectiveIntervalMilliseconds() {
+    if (config.environment === 'test') {
+      return 100; // Always 100ms in tests
+    } else {
+      return this.intervalMilliseconds;
+    }
   }
 
   get isPaused() {
@@ -35,7 +44,7 @@ export default class Poller {
       if (this.isActive) {
         this.scheduleDelayedPoll();
       }
-    }, this.intervalMilliseconds);
+    }, this.effectiveIntervalMilliseconds);
   }
 
   start(model, onPoll) {

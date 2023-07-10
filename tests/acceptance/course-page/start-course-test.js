@@ -64,7 +64,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
       'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript'
     );
 
-    await new Promise((resolve) => setTimeout(resolve, 2001));
+    await new Promise((resolve) => setTimeout(resolve, 101));
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'poll request was executed');
@@ -73,7 +73,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001));
+    await new Promise((resolve) => setTimeout(resolve, 101));
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
@@ -82,7 +82,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await percySnapshot('Start Course - Git Push Received');
 
-    await new Promise((resolve) => setTimeout(resolve, 2001));
+    await new Promise((resolve) => setTimeout(resolve, 101));
     await animationsSettled();
 
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');

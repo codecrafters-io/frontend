@@ -37,15 +37,15 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for poll
     await finishRender();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for transition
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
     await finishRender();
 
     this.server.schema.submissions.find(1).update({ status: 'failed' });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001));
+    await new Promise((resolve) => setTimeout(resolve, 101));
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
@@ -53,7 +53,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001));
+    await new Promise((resolve) => setTimeout(resolve, 101));
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
@@ -66,10 +66,10 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       courseStage: repository.course.stages.models.find((x) => x.position === 1),
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Poll
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Poll
     await finishRender();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Transition
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Transition
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
@@ -125,10 +125,10 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       }),
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for poll
     await finishRender();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for transition
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
     await finishRender();
 
     this.server.schema.submissions.find(1).update({ status: 'success' });
@@ -139,10 +139,10 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       completedAt: new Date(),
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for poll
     await finishRender();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for transition
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
     await finishRender();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once other user has been passed');
