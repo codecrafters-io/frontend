@@ -57,17 +57,18 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.ok(coursePage.setupItem.isOnCloneRepositoryStep, 'current step is clone repository step');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
-    assert.strictEqual(coursePage.setupItem.footerText, 'Listening for a git push...');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Listening for a git push...', 'footer text is listening for git push');
 
     assert.strictEqual(
       coursePage.setupItem.copyableCloneRepositoryInstructions,
-      'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript'
+      'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript',
+      'clone repository instructions are correct'
     );
 
     await new Promise((resolve) => setTimeout(resolve, 101));
     await finishRender();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is still in-progress');
 
     let repository = this.server.schema.repositories.find(1);
@@ -76,9 +77,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await new Promise((resolve) => setTimeout(resolve, 101));
     await finishRender();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'poll request was executed');
     assert.ok(coursePage.setupItem.statusIsComplete, 'current status is complete');
-    assert.strictEqual(coursePage.setupItem.footerText, 'Git push received.');
+    assert.strictEqual(coursePage.setupItem.footerText, 'Git push received.', 'footer text is git push received');
 
     await percySnapshot('Start Course - Git Push Received');
 

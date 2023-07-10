@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { later, next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { CourseCompletedItem, CourseStageItem, SetupItem } from 'codecrafters-frontend/lib/step-list';
+import config from 'codecrafters-frontend/config/environment';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import fade from 'ember-animated/transitions/fade';
 
@@ -132,7 +133,7 @@ export default class CoursePageContentStepListComponent extends Component {
         this.activeItemWillBeReplaced = false;
         this.updateActiveItemIndex(newActiveItemIndex);
       },
-      2000
+      config.environment === 'test' ? 100 : 2000
     );
   }
 
