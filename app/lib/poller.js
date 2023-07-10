@@ -34,6 +34,11 @@ export default class Poller {
 
   scheduleDelayedPoll() {
     this.scheduledPollTimeoutId = setTimeout(async () => {
+      // Triggered in tests
+      if (this.store.isDestroyed) {
+        return;
+      }
+
       if (this.isActive && !this.isPaused) {
         run(async () => {
           let pollResult = await this.doPoll();
