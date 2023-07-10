@@ -67,22 +67,22 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 4, `expected ${baseRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, `expected ${baseRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/redis?repo=2', 'current URL is course page URL with repo query param');
 
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await new Promise((resolve) => setTimeout(resolve, 101)); // Run poller
+    window.pollerInstances.map((poller) => poller.forcePoll());
     await settled();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 6, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run');
 
-    await new Promise((resolve) => setTimeout(resolve, 101)); // Run poller + active item index updater
+    window.pollerInstances.map((poller) => poller.forcePoll());
     await settled();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'polling should have run again');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 7, 'polling should have run again');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
     await animationsSettled();

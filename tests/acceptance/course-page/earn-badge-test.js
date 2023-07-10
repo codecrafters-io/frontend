@@ -62,7 +62,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
       submission: submission,
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for poll
+    window.pollerInstances.map((poller) => poller.forcePoll());
     await animationsSettled();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
