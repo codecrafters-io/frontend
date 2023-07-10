@@ -1,3 +1,7 @@
+---
+include: ['**/**.js', '**/**.ts', '**/**.hbs', '**/**.gts', '**/**.gjs']
+---
+
 Make sure our code follows these best practices, UNLESS there's a comment explaining why it's okay to break the rule.
 
 1. Avoid typos.
