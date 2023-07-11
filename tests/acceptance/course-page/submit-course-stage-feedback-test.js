@@ -122,7 +122,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
         courseStage: redis.stages.models.sortBy('position')[stageNumber - 1], // Stage #3
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+      await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     };
 
     await completeStage(3);

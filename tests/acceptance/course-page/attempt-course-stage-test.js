@@ -52,7 +52,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[1],
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
 
     // force re-computation
     await catalogPage.visit(); // This interacts with start-course-stage, not sure why
@@ -101,7 +101,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[1],
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage passed');
@@ -132,10 +132,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[0],
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for auto-advance
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'second stage is still active');
@@ -177,10 +177,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       submission: submission,
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for auto-advance
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
     await animationsSettled();
 
     // TODO: Add tests for badge display
@@ -212,10 +212,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[0],
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for poll
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    await new Promise((resolve) => setTimeout(resolve, 2001)); // Wait for auto-advance
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
     await animationsSettled();
 
     // TODO: Add tests for badge display

@@ -1,4 +1,9 @@
 import { run } from '@ember/runloop';
+import config from 'codecrafters-frontend/config/environment';
+
+if (config.environment === 'test') {
+  window.pollerInstances = [];
+}
 
 export default class Poller {
   isActive;
@@ -13,6 +18,10 @@ export default class Poller {
 
     this.isActive = false;
     this.model = null;
+
+    if (config.environment === 'test') {
+      window.pollerInstances.push(this);
+    }
   }
 
   get isPaused() {
@@ -23,18 +32,28 @@ export default class Poller {
     console.log('doPoll not implemented');
   }
 
-  scheduleDelayedPoll() {
-    this.scheduledPollTimeoutId = setTimeout(async () => {
-      if (this.isActive && !this.isPaused) {
-        run(async () => {
-          let pollResult = await this.doPoll();
-          this.onPoll(pollResult);
-        });
-      }
+  async pollFn() {
+    if (config.environment === 'test' && this.store.isDestroyed) {
+      window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
 
-      if (this.isActive) {
-        this.scheduleDelayedPoll();
-      }
+      return;
+    }
+
+    if (this.isActive && !this.isPaused) {
+      await run(async () => {
+        let pollResult = await this.doPoll();
+        this.onPoll(pollResult);
+      });
+    }
+
+    if (this.isActive) {
+      this.scheduleDelayedPoll();
+    }
+  }
+
+  scheduleDelayedPoll() {
+    this.scheduledPollTimeoutId = setTimeout(() => {
+      this.pollFn();
     }, this.intervalMilliseconds);
   }
 
@@ -48,5 +67,10 @@ export default class Poller {
   stop() {
     this.isActive = false;
     clearTimeout(this.scheduledPollTimeoutId);
+  }
+
+  async forcePoll() {
+    clearTimeout(this.scheduledPollTimeoutId);
+    await this.pollFn();
   }
 }
