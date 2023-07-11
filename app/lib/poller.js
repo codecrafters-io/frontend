@@ -35,6 +35,8 @@ export default class Poller {
   async pollFn() {
     if (config.environment === 'test' && this.store.isDestroyed) {
       window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
+
+      return;
     }
 
     if (this.isActive && !this.isPaused) {
