@@ -34,11 +34,11 @@ export default class Poller {
 
   async pollFn() {
     if (config.environment === 'test' && this.store.isDestroyed) {
-      window.pollerInstances.delete(this);
+      window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
     }
 
     if (this.isActive && !this.isPaused) {
-      run(async () => {
+      await run(async () => {
         let pollResult = await this.doPoll();
         this.onPoll(pollResult);
       });
@@ -67,8 +67,8 @@ export default class Poller {
     clearTimeout(this.scheduledPollTimeoutId);
   }
 
-  forcePoll() {
+  async forcePoll() {
     clearTimeout(this.scheduledPollTimeoutId);
-    this.pollFn();
+    await this.pollFn();
   }
 }

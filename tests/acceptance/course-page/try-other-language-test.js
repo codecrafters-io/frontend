@@ -74,12 +74,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await settled();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run');
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await settled();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 7, 'polling should have run again');

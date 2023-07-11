@@ -37,7 +37,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
@@ -125,7 +125,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       }),
     });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
@@ -139,7 +139,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       completedAt: new Date(),
     });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition

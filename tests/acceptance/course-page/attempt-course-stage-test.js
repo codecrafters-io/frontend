@@ -52,7 +52,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[1],
     });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
 
     // force re-computation
     await catalogPage.visit(); // This interacts with start-course-stage, not sure why
@@ -101,7 +101,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[1],
     });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
     assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage passed');
@@ -132,7 +132,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[0],
     });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
@@ -177,7 +177,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       submission: submission,
     });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
@@ -212,7 +212,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[0],
     });
 
-    window.pollerInstances.map((poller) => poller.forcePoll());
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
