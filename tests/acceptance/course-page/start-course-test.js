@@ -65,7 +65,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
       'clone repository instructions are correct'
     );
 
-    await new Promise((resolve) => setTimeout(resolve, 101));
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
@@ -74,7 +74,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await new Promise((resolve) => setTimeout(resolve, 101));
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'poll request was executed');
@@ -83,7 +83,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await percySnapshot('Start Course - Git Push Received');
 
-    await new Promise((resolve) => setTimeout(resolve, 101));
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
     await animationsSettled();
 
     assert.notOk(coursePage.setupItemIsActive, 'setup item is collapsed');

@@ -45,7 +45,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     this.server.schema.submissions.find(1).update({ status: 'failed' });
 
-    await new Promise((resolve) => setTimeout(resolve, 101));
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
@@ -53,7 +53,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await new Promise((resolve) => setTimeout(resolve, 101));
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
@@ -66,7 +66,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       courseStage: repository.course.stages.models.find((x) => x.position === 1),
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 101)); // Poll
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Transition

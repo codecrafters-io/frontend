@@ -55,7 +55,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
 
-    await new Promise((resolve) => setTimeout(resolve, 101));
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'polling should have run');
 
