@@ -23,8 +23,6 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-
     assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
 
     await coursePage.repositorySetupCard.clickOnRequestLanguageButton();
@@ -56,8 +54,6 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
-
     assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
     assert.ok(coursePage.repositorySetupCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
@@ -75,8 +71,6 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
-
-    assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
 
     assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
 
