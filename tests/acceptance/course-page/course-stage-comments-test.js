@@ -43,10 +43,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Hints');
-
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'title should be respond to ping');
-    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 2);
+    assert.strictEqual(coursePage.commentList.commentCards.length, 2);
 
     await percySnapshot('Course Stage Comments');
   });
@@ -62,21 +60,19 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Hints');
-
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'title should be respond to ping');
-    assert.ok(coursePage.courseStageSolutionModal.commentsTab.submitButtonIsDisabled, 'submit button should be disabled if no input is provided');
+    assert.ok(coursePage.commentList.submitButtonIsDisabled, 'submit button should be disabled if no input is provided');
 
-    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
-    assert.notOk(coursePage.courseStageSolutionModal.commentsTab.submitButtonIsDisabled, 'submit button should not be disabled if input is provided');
+    await coursePage.commentList.fillInCommentInput('This is a comment');
+    assert.notOk(coursePage.commentList.submitButtonIsDisabled, 'submit button should not be disabled if input is provided');
 
-    await coursePage.courseStageSolutionModal.commentsTab.clickOnTabHeader('Preview');
+    await coursePage.commentList.clickOnTabHeader('Preview');
     await percySnapshot('Course Stage Comments - Preview');
 
-    await coursePage.courseStageSolutionModal.commentsTab.clickOnTabHeader('Write');
-    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+    await coursePage.commentList.clickOnTabHeader('Write');
+    await coursePage.commentList.clickOnSubmitButton();
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
+    assert.strictEqual(coursePage.commentList.commentCards.length, 1);
   });
 
   test('can upvote / downvote comments', async function (assert) {
@@ -111,9 +107,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Hints');
-
-    const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    const firstCommentCard = coursePage.commentList.commentCards[0];
     assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
 
     await firstCommentCard.upvoteButton.click();
@@ -140,13 +134,12 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Hints');
-    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
-    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+    await coursePage.commentList.fillInCommentInput('This is a comment');
+    await coursePage.commentList.clickOnSubmitButton();
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
+    assert.strictEqual(coursePage.commentList.commentCards.length, 1);
 
-    const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    const commentCard = coursePage.commentList.commentCards[0];
 
     await commentCard.toggleDropdown();
     await commentCard.clickOnDropdownLink('Edit');
@@ -177,20 +170,19 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Hints');
-    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
-    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+    await coursePage.commentList.fillInCommentInput('This is a comment');
+    await coursePage.commentList.clickOnSubmitButton();
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
+    assert.strictEqual(coursePage.commentList.commentCards.length, 1);
 
-    const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    const commentCard = coursePage.commentList.commentCards[0];
 
     window.confirm = () => true;
 
     await commentCard.toggleDropdown();
     await commentCard.clickOnDropdownLink('Delete');
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0);
+    assert.strictEqual(coursePage.commentList.commentCards.length, 0);
   });
 
   test('can delete comment with replies', async function (assert) {
@@ -204,25 +196,24 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Hints');
-    await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
-    await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+    await coursePage.commentList.fillInCommentInput('This is a comment');
+    await coursePage.commentList.clickOnSubmitButton();
 
-    const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    const firstCommentCard = coursePage.commentList.commentCards[0];
     await firstCommentCard.clickOnReplyButton();
     await firstCommentCard.commentForm.commentInput.fillIn('This is a reply');
     await firstCommentCard.commentForm.clickOnPostReplyButton();
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 2, '2 comments cards should be present');
+    assert.strictEqual(coursePage.commentList.commentCards.length, 2, '2 comments cards should be present');
 
-    const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    const commentCard = coursePage.commentList.commentCards[0];
 
     window.confirm = () => true;
 
     await commentCard.toggleDropdown();
     await commentCard.clickOnDropdownLink('Delete');
 
-    assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0, 'no comment cards should be present');
+    assert.strictEqual(coursePage.commentList.commentCards.length, 0, 'no comment cards should be present');
   });
 
   test('can reply to comments', async function (assert) {
@@ -255,9 +246,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Hints');
-
-    const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+    const firstCommentCard = coursePage.commentList.commentCards[0];
     await firstCommentCard.clickOnReplyButton();
 
     assert.ok(firstCommentCard.commentForm.isVisible, 'reply form should be visible');

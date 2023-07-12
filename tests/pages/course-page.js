@@ -1,4 +1,5 @@
 import { collection, clickable, clickOnText, create, text, visitable } from 'ember-cli-page-object';
+import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
 import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
@@ -42,6 +43,8 @@ export default create({
 
     scope: '[data-test-code-examples-tab]',
   },
+
+  commentList: CommentList,
 
   configureGithubIntegrationModal: {
     get isOpen() {

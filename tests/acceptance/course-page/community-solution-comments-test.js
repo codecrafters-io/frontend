@@ -198,19 +198,19 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await animationsSettled();
 
   //   await coursePage.yourTaskCard.clickOnActionButton('Hints');
-  //   await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
-  //   await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+  //   await coursePage.commentList.fillInCommentInput('This is a comment');
+  //   await coursePage.commentList.clickOnSubmitButton();
 
-  //   assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 1);
+  //   assert.strictEqual(coursePage.commentList.commentCards.length, 1);
 
-  //   const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+  //   const commentCard = coursePage.commentList.commentCards[0];
 
   //   window.confirm = () => true;
 
   //   await commentCard.toggleDropdown();
   //   await commentCard.clickOnDropdownLink('Delete');
 
-  //   assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0);
+  //   assert.strictEqual(coursePage.commentList.commentCards.length, 0);
   // });
 
   // test('can delete comment with replies', async function (assert) {
@@ -225,24 +225,24 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   //   await animationsSettled();
 
   //   await coursePage.yourTaskCard.clickOnActionButton('Hints');
-  //   await coursePage.courseStageSolutionModal.commentsTab.fillInCommentInput('This is a comment');
-  //   await coursePage.courseStageSolutionModal.commentsTab.clickOnSubmitButton();
+  //   await coursePage.commentList.fillInCommentInput('This is a comment');
+  //   await coursePage.commentList.clickOnSubmitButton();
 
-  //   const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+  //   const firstCommentCard = coursePage.commentList.commentCards[0];
   //   await firstCommentCard.clickOnReplyButton();
   //   await firstCommentCard.commentForm.commentInput.fillIn('This is a reply');
   //   await firstCommentCard.commentForm.clickOnPostReplyButton();
 
-  //   assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 2, '2 comments cards should be present');
+  //   assert.strictEqual(coursePage.commentList.commentCards.length, 2, '2 comments cards should be present');
 
-  //   const commentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+  //   const commentCard = coursePage.commentList.commentCards[0];
 
   //   window.confirm = () => true;
 
   //   await commentCard.toggleDropdown();
   //   await commentCard.clickOnDropdownLink('Delete');
 
-  //   assert.strictEqual(coursePage.courseStageSolutionModal.commentsTab.commentCards.length, 0, 'no comment cards should be present');
+  //   assert.strictEqual(coursePage.commentList.commentCards.length, 0, 'no comment cards should be present');
   // });
 
   // test('can reply to comments', async function (assert) {
@@ -277,7 +277,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
   //   await coursePage.yourTaskCard.clickOnActionButton('Hints');
 
-  //   const firstCommentCard = coursePage.courseStageSolutionModal.commentsTab.commentCards[0];
+  //   const firstCommentCard = coursePage.commentList.commentCards[0];
   //   await firstCommentCard.clickOnReplyButton();
 
   //   assert.ok(firstCommentCard.commentForm.isVisible, 'reply form should be visible');
