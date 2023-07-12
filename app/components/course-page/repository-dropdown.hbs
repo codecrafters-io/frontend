@@ -7,10 +7,12 @@
           {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
           shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
       >
-        <span class="mr-1" data-test-active-repository-name>
+        <span>
           {{#if @activeRepository.name}}
             using
-            {{@activeRepository.name}}
+            <span data-test-active-repository-name>
+              {{@activeRepository.name}}
+            </span>
           {{else}}
             New Repository
           {{/if}}
