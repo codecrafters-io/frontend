@@ -31,7 +31,7 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
 
     assert.strictEqual(
       apiRequestsCount(this.server),
@@ -41,12 +41,8 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
         'fetch courses (course page)',
         'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',
+        'fetch hints (course page)',
       ].length
     );
-
-    assert.ok(coursePage.courseStageItemIsActive, 'course stage item is not expanded');
-    assert.notOk(coursePage.setupItemIsActive, 'setup item is not expanded');
-
-    await catalogPage.visit(); // Poller is active
   });
 });

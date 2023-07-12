@@ -68,7 +68,5 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');
     assert.ok(coursePage.repositoryDropdown.isClosed, 'repository dropdown should be closed');
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING');
-
-    await catalogPage.visit(); // Poller is active
   });
 });
