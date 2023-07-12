@@ -133,7 +133,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    await this.pauseTest();
+    // await this.pauseTest();
 
     assert.ok(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
     assert.strictEqual(coursePage.yourTaskCard.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
