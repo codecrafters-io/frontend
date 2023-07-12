@@ -1,5 +1,5 @@
 <div class="flex items-center text-xs min-h-[40px]">
-  <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} />
+  <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} data-test-footer-text />
 
   {{#if (and (eq this.coursePageState.currentStep.testsStatus "failed") this.lastFailedSubmission)}}
     <span

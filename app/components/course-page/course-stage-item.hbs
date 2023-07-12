@@ -6,12 +6,6 @@
   <CoursePage::CourseStageItem::PublishToGithubPrompt @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}} class="mb-4" />
 {{/if}}
 
-<div class="text-gray-700 leading-7 prose" data-test-stage-instructions>
-  {{#if this.shouldShowFirstStageHints}}
-    {{html-safe this.submitChangesInstructionsHTML}}
-  {{/if}}
-</div>
-
 {{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
   <CoursePage::CourseStageItem::FeedbackPrompt
     @onClose={{this.handleFeedbackPromptClosed}}

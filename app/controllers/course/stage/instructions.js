@@ -8,7 +8,15 @@ export default class CourseStageInstructionsController extends Controller {
     return this.coursePageState.currentStep;
   }
 
-  get shouldShowFirstStageHints() {
-    return this.coursePageState.currentStep.courseStage.isFirst && this.coursePageState.currentStep.status !== 'complete';
+  get isActiveStage() {
+    return this.model.activeRepository.activeStage === this.model.courseStage;
+  }
+
+  get shouldShowTestFailureExpectedHint() {
+    return this.model.courseStage.isFirst && this.currentStep.status !== 'complete';
+  }
+
+  get shouldShowUpgradePrompt() {
+    return this.isActiveStage && !this.statusIsComplete && !this.args.repository.user.canAttemptCourseStage(this.args.courseStage);
   }
 }

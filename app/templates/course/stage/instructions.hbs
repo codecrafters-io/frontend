@@ -1,12 +1,12 @@
 {{! @glint-nocheck: not typesafe yet !}}
 <div class="pt-8 pb-16">
-  {{#if this.shouldShowFirstStageHints}}
-    <CoursePage::CourseStageItem::FirstStageHint class="mb-6" />
+  {{#if this.shouldShowTestFailureExpectedHint}}
+    <CoursePage::TestFailureExpectedHint class="mb-6" />
   {{/if}}
 
   <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
 
-  {{#if this.shouldShowFirstStageHints}}
+  {{#if @model.courseStage.isFirst}}
     <CoursePage::CourseStageStep::FirstStageInstructionsCard @repository={{@model.activeRepository}} class="mt-6" />
   {{/if}}
 

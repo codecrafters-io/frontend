@@ -49,20 +49,20 @@ module('Acceptance | course-page | view-daily-limit-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
+    assert.ok(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.strictEqual(coursePage.yourTaskCard.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
     await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The previous completed stage
     await animationsSettled();
 
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
+    assert.notOk(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
 
     await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The next pending stage
     await animationsSettled();
 
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
+    assert.notOk(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
+    assert.strictEqual(coursePage.yourTaskCard.statusText, 'PENDING', 'status text should be pending');
   });
 });

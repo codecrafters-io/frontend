@@ -69,9 +69,9 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is still active');
-    assert.contains(coursePage.activeCourseStageItem.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'text');
+    assert.contains(coursePage.yourTaskCard.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'text');
 
-    await coursePage.activeCourseStageItem.earnedBadgeNotice.clickOnViewButton();
-    assert.strictEqual(coursePage.activeCourseStageItem.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla badge');
+    await coursePage.yourTaskCard.earnedBadgeNotice.clickOnViewButton();
+    assert.strictEqual(coursePage.yourTaskCard.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla badge');
   });
 });

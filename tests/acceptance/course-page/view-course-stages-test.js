@@ -8,7 +8,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsSubscriber, signInAsSubscribedTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
+import { currentURL, waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -23,22 +23,16 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.ok(coursePage.setupItemIsActive, 'setup item is active by default');
+    assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown by default');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await animationsSettled();
-
-    assert.ok(coursePage.courseStageItemIsActive, 'course stage item is active if clicked on');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'stage 2 is shown');
 
     await coursePage.sidebar.clickOnStepListItem('Bind to a port');
-    await animationsSettled();
-
-    assert.ok(coursePage.courseStageItemIsActive, 'course stage item is active if clicked on');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/1', 'stage 1 is shown');
 
     await coursePage.sidebar.clickOnStepListItem('Repository Setup');
-    await animationsSettled();
-
-    assert.ok(coursePage.setupItemIsActive, 'setup item is active if clicked on');
+    assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown');
   });
 
   test('can view previous stages after completing them', async function (assert) {
@@ -83,17 +77,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the ECHO command');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #5: Implement the ECHO command');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'course stage item is active if clicked on');
-    assert.strictEqual(
-      coursePage.activeCourseStageItem.footerText,
-      'You completed this stage 5 days ago.',
-      'footer text for stage completed > 1 day'
-    );
+    assert.strictEqual(coursePage.yourTaskCard.footerText, 'You completed this stage 5 days ago.', 'footer text for stage completed > 1 day');
 
     await percySnapshot('Course Stages - Completed stage');
 
@@ -101,11 +91,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', 'course stage item is active if clicked on');
-    assert.strictEqual(
-      coursePage.activeCourseStageItem.footerText,
-      'You completed this stage yesterday.',
-      'footer text for stage completed yesterday'
-    );
+    assert.strictEqual(coursePage.yourTaskCard.footerText, 'You completed this stage yesterday.', 'footer text for stage completed yesterday');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
@@ -131,14 +117,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       user: currentUser,
     });
 
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[1],
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('course-stage-completion', {
+        repository: repository,
+        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+      });
     });
 
     this.server.create('course-stage-feedback-submission', {
@@ -150,21 +133,23 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.ok(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
+    await this.pauseTest();
+
+    assert.ok(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.strictEqual(coursePage.yourTaskCard.statusText, 'MEMBERSHIP REQUIRED', 'status text should be membership required');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
     await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The previous completed stage
     await animationsSettled();
 
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
+    assert.notOk(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
 
     await coursePage.sidebar.clickOnStepListItem('<fill_in>').click(); // The next pending stage
     await animationsSettled();
 
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.statusText, 'PENDING', 'status text should be pending');
+    assert.notOk(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
+    assert.strictEqual(coursePage.yourTaskCard.statusText, 'PENDING', 'status text should be pending');
   });
 
   test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
@@ -195,7 +180,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.notOk(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
   });
 
   test('stages should not have an upgrade prompt if user team has a subscription', async function (assert) {
@@ -231,7 +216,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.notOk(coursePage.activeCourseStageItem.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.notOk(coursePage.yourTaskCard.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
   });
 
   test('first time visit has loading page', async function (assert) {

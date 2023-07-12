@@ -1,7 +1,8 @@
-import { clickOnText } from 'ember-cli-page-object';
+import { clickOnText, text } from 'ember-cli-page-object';
 
 export default {
   clickOnActionButton: clickOnText('[data-test-action-button]'),
+  footerText: text('[data-test-footer-text]'),
 
   // earnedBadgeNotice: {
   //   badgeEarnedModal: {
