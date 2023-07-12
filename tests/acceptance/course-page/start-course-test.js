@@ -103,7 +103,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.setupItem.clickOnLanguageButton('Python');
+    await coursePage.repositorySetupCard.clickOnLanguageButton('Python');
     assert.contains(currentURL(), '/courses/redis?repo=', 'current URL includes repo ID');
 
     await coursePage.repositoryDropdown.click();
@@ -115,10 +115,10 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(currentURL(), '/courses/redis?track=python', 'current URL is changed to not include invalid repo');
 
-    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
-    assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
-    await coursePage.setupItem.clickOnLanguageButton('Python');
+    await coursePage.repositorySetupCard.clickOnLanguageButton('Python');
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
