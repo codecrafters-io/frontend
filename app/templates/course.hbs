@@ -16,8 +16,6 @@
     @course={{@model.course}}
     @repositories={{@model.repositories}}
     @activeRepository={{@model.activeRepository}}
-    @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
-    @onViewProgressBannerButtonClick={{this.handleViewProgressBannerButtonClick}}
     class="p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden md:block"
   />
 
@@ -44,20 +42,11 @@
   </div>
 </div>
 
-{{!-- {{#if (and this.currentCourseStageForSolutionModal this.courseStageSolutionModalIntent)}}
+{{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
-    <CoursePage::CourseStageSolutionModal
-      @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
-      @courseStage={{this.currentCourseStageForSolutionModal}}
+    <CoursePage::ConfigureGithubIntegrationModal
       @repository={{@model.activeRepository}}
-      @onClose={{this.handleModalClose}}
-      @intent={{this.courseStageSolutionModalIntent}}
+      @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
     />
-  </ModalBackdrop>
-{{/if}} --}}
-
-{{#if this.isViewingProgressBanner}}
-  <ModalBackdrop>
-    <CoursePage::ProgressBannerModal @repository={{@model.activeRepository}} @onClose={{this.handleModalClose}} />
   </ModalBackdrop>
 {{/if}}

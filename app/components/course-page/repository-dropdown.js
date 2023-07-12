@@ -11,6 +11,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
   @service router;
   @tracked gitRepositoryURLWasCopiedRecently;
   @tracked configureGithubIntegrationModalIsOpen = false;
+  @tracked progressBannerModalIsOpen = false;
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -23,7 +24,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
     }
 
     dropdownActions.close();
-    this.args.onViewProgressBannerButtonClick();
+    this.progressBannerModalIsOpen = true;
   }
 
   @action

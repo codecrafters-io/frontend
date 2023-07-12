@@ -111,3 +111,9 @@
     />
   </ModalBackdrop>
 {{/if}}
+
+{{#if this.progressBannerModalIsOpen}}
+  <ModalBackdrop>
+    <CoursePage::ProgressBannerModal @repository={{@activeRepository}} @onClose={{fn (mut this.progressBannerModalIsOpen) false}} />
+  </ModalBackdrop>
+{{/if}}

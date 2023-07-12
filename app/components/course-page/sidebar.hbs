@@ -23,13 +23,7 @@
   {{/if}}
 
   {{! @glint-expect-error: not typesafe yet}}
-  <CoursePage::RepositoryDropdown
-    @repositories={{@repositories}}
-    @activeRepository={{@activeRepository}}
-    @onPublishToGithubButtonClick={{(noop)}}
-    @onViewProgressBannerButtonClick={{(noop)}}
-    class="mt-4"
-  />
+  <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
 
   <LinkTo
     @route="catalog"

@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
@@ -20,19 +21,11 @@ export default class CourseController extends Controller {
   @tracked track;
 
   @tracked polledRepository;
-
-  // Legacy: remove these
-  @tracked courseStageSolutionModalIntent;
-  @tracked currentCourseStageForSolutionModal;
-  @tracked isConfiguringGithubIntegration = false;
-  @tracked isViewingProgressBanner = false;
+  @tracked configureGithubIntegrationModalIsOpen = false;
+  @tracked isViewingProgressBanner = false; // TODO: Still needed?
 
   get currentUser() {
     return this.authenticator.currentUser;
-  }
-
-  get hasRecentlyCompletedGitHubIntegrationSetup() {
-    return this.action === 'github_app_installation_completed';
   }
 
   get isDevelopmentOrTest() {
@@ -55,14 +48,13 @@ export default class CourseController extends Controller {
   handleDidInsertContainer() {
     this.startRepositoryPoller();
 
-    // TODO: How do we fetch the "hasRecentlyCompletedGitHubIntegrationSetup" query param?
-    // if (this.args.hasRecentlyCompletedGitHubIntegrationSetup) {
-    //   this.isConfiguringGithubIntegration = true;
+    if (this.action === 'github_app_installation_completed') {
+      this.configureGithubIntegrationModalIsOpen = true;
 
-    //   next(() => {
-    //     this.router.transitionTo({ queryParams: { action: null } }); // reset param
-    //   });
-    // }
+      next(() => {
+        this.router.transitionTo({ queryParams: { action: null } }); // reset param
+      });
+    }
   }
 
   @action
@@ -71,43 +63,6 @@ export default class CourseController extends Controller {
       this.stopRepositoryPoller();
       this.startRepositoryPoller();
     }
-  }
-
-  @action
-  async handleModalClose() {
-    this.currentCourseStageForSolutionModal = null;
-    this.courseStageSolutionModalIntent = null;
-    this.isConfiguringGithubIntegration = false;
-    this.isViewingProgressBanner = false;
-  }
-
-  @action
-  async handleViewProgressBannerButtonClick() {
-    this.isViewingProgressBanner = true;
-  }
-
-  @action
-  async handleViewCommentsButtonClick(courseStage) {
-    await this.handleModalClose();
-
-    this.courseStageSolutionModalIntent = 'view_comments';
-    this.currentCourseStageForSolutionModal = courseStage;
-  }
-
-  @action
-  async handleViewScreencastsButtonClick(courseStage) {
-    await this.handleModalClose();
-
-    this.courseStageSolutionModalIntent = 'view_screencasts';
-    this.currentCourseStageForSolutionModal = courseStage;
-  }
-
-  @action
-  async handleViewSolutionButtonClick(courseStage) {
-    await this.handleModalClose();
-
-    this.courseStageSolutionModalIntent = 'view_solution';
-    this.currentCourseStageForSolutionModal = courseStage;
   }
 
   @action
