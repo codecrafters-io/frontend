@@ -1,7 +1,11 @@
 {{! @glint-nocheck: not typesafe yet !}}
 <div class="pt-8 pb-16">
   {{#if this.shouldShowTestFailureExpectedHint}}
-    <CoursePage::TestFailureExpectedHint class="mb-6" />
+    <CoursePage::CourseStageStep::TestFailureExpectedHint class="mb-6" />
+  {{/if}}
+
+  {{#if this.shouldShowUpgradePrompt}}
+    <CoursePage::CourseStageStep::UpgradePrompt @class="mb-6" @color="yellow" />
   {{/if}}
 
   <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />

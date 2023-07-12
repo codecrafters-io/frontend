@@ -23,7 +23,6 @@ export default {
   },
 
   hasFeedbackPrompt: isPresent('[data-test-feedback-prompt]'),
-  hasUpgradePrompt: isPresent('[data-test-upgrade-prompt]'),
 
   upgradePrompt: {
     clickOnSubscribeButton: clickable('[data-test-subscribe-button]'),

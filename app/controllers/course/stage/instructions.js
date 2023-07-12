@@ -17,6 +17,8 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowUpgradePrompt() {
-    return this.isActiveStage && !this.statusIsComplete && !this.args.repository.user.canAttemptCourseStage(this.args.courseStage);
+    return (
+      this.isActiveStage && this.currentStep.status !== 'complete' && !this.model.activeRepository.user.canAttemptCourseStage(this.model.courseStage)
+    );
   }
 }

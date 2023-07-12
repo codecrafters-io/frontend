@@ -1,7 +1,3 @@
-{{#if this.shouldShowUpgradePrompt}}
-  <CoursePage::CourseStageItem::UpgradePrompt @class="mb-4" @color="yellow" />
-{{/if}}
-
 {{#if this.shouldShowPublishToGitHubPrompt}}
   <CoursePage::CourseStageItem::PublishToGithubPrompt @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}} class="mb-4" />
 {{/if}}
