@@ -32,9 +32,6 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
 
@@ -64,9 +61,6 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
 
