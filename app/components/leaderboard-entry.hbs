@@ -7,7 +7,7 @@
   data-test-leaderboard-entry
 >
   <div class="flex items-center">
-    <div class="{{unless @isCollapsed 'mr-2'}} flex-shrink-0">
+    <div class="{{unless @isCollapsed 'mr-1'}} flex-shrink-0">
       {{#if this.isSkeleton}}
         <div class="w-8 h-8 bg-gray-200 rounded"></div>
       {{else}}
@@ -19,7 +19,7 @@
       {{#if this.isSkeleton}}
         <span class="text-xs inline-block rounded bg-gray-200 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
       {{else}}
-        <span class="text-xs text-gray-600 group-hover/leaderboard-entry:underline mr-2 flex-shrink" data-test-username>{{@user.username}}</span>
+        <span class="text-xs text-gray-600 group-hover/leaderboard-entry:underline mr-2 flex-shrink truncate" data-test-username>{{@user.username}}</span>
       {{/if}}
 
       {{yield to="afterUsername"}}
