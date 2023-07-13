@@ -1,4 +1,6 @@
 <div class="bg-gray-100 border-r" data-test-course-page-sidebar ...attributes>
+  {{yield}}
+
   <div class="flex items-center">
     {{! @glint-expect-error: not typesafe yet}}
     <CourseLogo @course={{@course}} class="w-8 h-8 mr-3" />
