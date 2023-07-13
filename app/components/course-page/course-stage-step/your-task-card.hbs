@@ -29,6 +29,14 @@
       />
     {{/if}}
 
+    {{log this.badgeAwards}}
+
+    {{! @glint-expect-error not ts-ified yet }}
+    {{#if (gt this.badgeAwards.length 0)}}
+      {{! @glint-expect-error not ts-ified yet }}
+      <CoursePage::CourseStageStep::YourTaskCard::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
+    {{/if}}
+
     {{#if (and (eq this.coursePageState.currentStep.status "complete") (eq @courseStage.nextStage @repository.activeStage))}}
       <div class="mt-4 flex">
         {{! @glint-expect-error not ts-ified yet }}

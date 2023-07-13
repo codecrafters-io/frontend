@@ -4,15 +4,16 @@ export default {
   clickOnActionButton: clickOnText('[data-test-action-button]'),
   footerText: text('[data-test-footer-text]'),
 
-  // earnedBadgeNotice: {
-  //   badgeEarnedModal: {
-  //     badgeName: text('[data-test-badge-name]'),
-  //     scope: '[data-test-badge-earned-modal]',
-  //   },
+  earnedBadgeNotice: {
+    badgeEarnedModal: {
+      badgeName: text('[data-test-badge-name]'),
+      resetScope: true,
+      scope: '[data-test-badge-earned-modal]',
+    },
 
-  //   clickOnViewButton: clickable('[data-test-view-button]'),
-  //   scope: '[data-test-earned-badge-notice]',
-  // },
+    clickOnViewButton: clickable('[data-test-view-button]'),
+    scope: '[data-test-earned-badge-notice]',
+  },
 
   feedbackPrompt: {
     clickOnOption: clickOnText('[data-test-feedback-prompt-option]'),

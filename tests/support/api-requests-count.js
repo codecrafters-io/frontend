@@ -6,9 +6,9 @@ export default function apiRequestsCount(server) {
   });
 
   // Debugging
-  console.group(`API Requests (${filteredRequests.length})`);
-  filteredRequests.map((request) => console.log(new URL(request.url).pathname));
-  console.groupEnd();
+  // console.group(`API Requests (${filteredRequests.length})`);
+  // filteredRequests.map((request) => console.log(new URL(request.url).pathname));
+  // console.groupEnd();
 
   return filteredRequests.length;
 }

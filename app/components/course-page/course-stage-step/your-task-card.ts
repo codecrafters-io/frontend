@@ -28,6 +28,9 @@ interface Signature {
       defaultReadmeUrl: string;
       starterRepositoryUrl: string;
       defaultStarterRepositoryUrl: string;
+      user: {
+        badgeAwards: unknown[];
+      };
     };
   };
 
@@ -48,6 +51,13 @@ export default class YourTaskCardComponent extends Component<Signature> {
       this.args.repository.highestCompletedStage === this.args.courseStage &&
       !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
     );
+  }
+
+  get badgeAwards() {
+    return this.args.repository.user.badgeAwards.filter((badgeAward) => {
+      // @ts-ignore
+      return badgeAward.submission.repository.id === this.args.repository.id && badgeAward.submission.courseStage.id === this.args.courseStage.id;
+    });
   }
 
   @action
