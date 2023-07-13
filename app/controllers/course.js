@@ -48,6 +48,7 @@ export default class CourseController extends Controller {
 
   @action
   handleDidInsertContainer() {
+    this.setupRouteChangeListeners();
     this.startRepositoryPoller();
 
     if (this.action === 'github_app_installation_completed') {
@@ -74,7 +75,23 @@ export default class CourseController extends Controller {
 
   @action
   async handleWillDestroyContainer() {
+    this.teardownRouteChangeListeners();
     this.stopRepositoryPoller();
+  }
+
+  @action
+  async handleRouteChanged() {
+    this.sidebarIsExpandedOnMobile = false;
+  }
+
+  @action
+  setupRouteChangeListeners() {
+    this.router.on('routeDidChange', this.handleRouteChanged);
+  }
+
+  @action
+  teardownRouteChangeListeners() {
+    this.router.off('routeDidChange', this.handleRouteChanged);
   }
 
   startRepositoryPoller() {
