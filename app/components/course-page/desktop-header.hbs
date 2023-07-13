@@ -1,6 +1,8 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="bg-gray-50 border-b" data-test-desktop-header ...attributes>
   <div class="flex justify-between items-center mb-3">
+    {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
+
     <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
 
     <div class="flex items-center gap-x-3">
@@ -13,10 +15,9 @@
       {{/if}}
       <LinkTo
         @route="catalog"
-        class="inline-flex items-center text-gray-500 hover:text-gray-600 transition-colors text-xs py-1.5 px-2 border border-gray-300 rounded-lg"
+        class="inline-flex items-center text-gray-500 hover:text-gray-600 transition-colors text-xs p-1.5 border border-gray-300 rounded"
       >
-        {{svg-jar "x-circle" class="w-4 mr-1 fill-current"}}
-        <span class="font-bold uppercase tracking-wide">Exit</span>
+        {{svg-jar "x" class="w-4 fill-current"}}
       </LinkTo>
     </div>
   </div>
