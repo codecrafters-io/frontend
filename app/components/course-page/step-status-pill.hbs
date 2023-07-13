@@ -1,13 +1,13 @@
 {{#if (eq @step.status "complete")}}
-  <span class="inline-flex border border-green-300 rounded-full bg-green-100 px-2.5 text-sm font-semibold text-green-700">
+  <div class="inline-flex border border-green-300 rounded-full bg-green-100 px-2.5 text-sm font-semibold text-green-700" ...attributes>
     Completed
-  </span>
+  </div>
 {{else if (eq @step.status "locked")}}
-  <span class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2.5 text-sm font-semibold text-gray-700">
+  <div class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2.5 text-sm font-semibold text-gray-700" ...attributes>
     Pending
-  </span>
+  </div>
 {{else if (eq @step.status "in_progress")}}
-  <span class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2.5 text-sm font-semibold text-yellow-700">
+  <div class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2.5 text-sm font-semibold text-yellow-700" ...attributes>
     In-progress
-  </span>
+  </div>
 {{/if}}

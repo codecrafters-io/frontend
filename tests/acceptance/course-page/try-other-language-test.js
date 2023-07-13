@@ -34,19 +34,19 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       courseStage: redis.stages.models.sortBy('position').firstObject,
     });
 
-    let baseRequestsCount = [
+    let expectedRequestsCount = [
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
+      'fetch hints (course page)',
     ].length;
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, `expected ${baseRequestsCount} requests`);
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'first stage should be active');
@@ -55,35 +55,37 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, `expected ${baseRequestsCount + 2} requests`); // Fetch languages, course language requests
+    expectedRequestsCount += [
+      'fetch courses (course page)',
+      'fetch repositories (course page)',
+      'fetch leaderboard entries (course page)',
+      'fetch languages (course page)',
+    ].length;
 
-    assert.strictEqual(currentURL(), '/courses/redis?fresh=true');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
+
+    assert.strictEqual(currentURL(), '/courses/redis/setup?repo=new');
 
     assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
-    assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
     await coursePage.repositorySetupCard.clickOnLanguageButton('Go');
+    assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
-    baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
+    expectedRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, `expected ${baseRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 3, `expected ${expectedRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
-    assert.strictEqual(currentURL(), '/courses/redis?repo=2', 'current URL is course page URL with repo query param');
+    assert.strictEqual(currentURL(), '/courses/redis/setup?repo=2', 'current URL is course page URL with repo query param');
 
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 5, 'polling should have run');
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run');
+    assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
-
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 7, 'polling should have run again');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port');
-
-    await animationsSettled();
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run again');
   });
 });

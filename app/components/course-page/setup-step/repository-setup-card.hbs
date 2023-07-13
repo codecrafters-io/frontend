@@ -2,7 +2,7 @@
   <:content>
     <div class="flex items-center gap-x-3 w-full border-b pb-2 mb-5">
       <h2 class="font-semibold text-lg text-gray-700">Repository Setup</h2>
-      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} data-test-status-text />
     </div>
     <AnimatedContainer>
       {{#animated-if @repository.isNew use=this.transition}}

@@ -64,13 +64,14 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
 
   @action
   async handleRetryWithSameLanguageActionClick(dropdownActions) {
-    await this.router.transitionTo({ queryParams: { repo: 'new', track: this.args.activeRepository.language.slug } }).followRedirects();
+    this.router.transitionTo('course.setup', { queryParams: { repo: 'new', track: this.args.activeRepository.language.slug } }).followRedirects();
+
     dropdownActions.close();
   }
 
   @action
   async handleTryDifferentLanguageActionClick(dropdownActions) {
-    await this.router.transitionTo({ queryParams: { repo: 'new', track: null } });
+    this.router.transitionTo('course.setup', { queryParams: { repo: 'new', track: null } });
     dropdownActions.close();
   }
 

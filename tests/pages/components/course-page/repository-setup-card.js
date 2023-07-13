@@ -21,11 +21,11 @@ export default {
   scope: '[data-test-repository-setup-card]',
 
   get statusIsInProgress() {
-    return this.statusText === 'IN PROGRESS';
+    return this.statusText === 'In-progress';
   },
 
   get statusIsComplete() {
-    return this.statusText === 'COMPLETE';
+    return this.statusText === 'Completed';
   },
 
   statusText: text('[data-test-status-text]'),
