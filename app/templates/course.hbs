@@ -16,10 +16,10 @@
     @course={{@model.course}}
     @repositories={{@model.repositories}}
     @activeRepository={{@model.activeRepository}}
-    class="relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden {{if this.sidebarIsExpanded "lg:block"}}"
+    class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden {{if this.sidebarIsExpanded "lg:block"}}"
   >
     {{#if this.sidebarIsExpanded}}
-      <CoursePage::CollapseSidebarButton class="absolute top-6 right-0" {{on "click" (fn (mut this.sidebarIsExpanded) false)}} />
+      <CoursePage::CollapseSidebarButton class="opacity-0 group-hover:opacity-100 absolute top-6 right-0" {{on "click" (fn (mut this.sidebarIsExpanded) false)}} />
     {{/if}}
   </CoursePage::Sidebar>
 
