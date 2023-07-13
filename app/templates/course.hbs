@@ -16,22 +16,22 @@
     @course={{@model.course}}
     @repositories={{@model.repositories}}
     @activeRepository={{@model.activeRepository}}
-    class="p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden md:block"
+    class="p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:block"
   />
 
   <div class="flex flex-col max-h-screen overflow-y-auto flex-grow" data-test-course-page-scrollable-area>
     <CoursePage::DesktopHeader
       @stepList={{this.coursePageState.stepList}}
       @currentStep={{this.coursePageState.currentStep}}
-      class="px-6 md:pl-10 pt-6"
+      class="px-6 lg:pl-10 pt-6"
     />
 
     <div class="flex flex-grow bg-white">
-      <div class="px-6 md:px-10 flex-grow min-w-0">
+      <div class="px-6 lg:px-10 flex-grow min-w-0">
         {{outlet}}
       </div>
 
-      <div class="w-80 flex-shrink-0 border-l pt-6 bg-gray-50 hidden xl:block pr-6">
+      <div class="w-64 xl:w-80 flex-shrink-0 border-l pt-6 bg-gray-50 hidden md:block pr-6">
         <CourseLeaderboard @course={{@model.course}} @activeRepository={{@model.activeRepository}} @repositories={{@model.repositories}} />
 
         {{#if this.visiblePrivateLeaderboardFeatureSuggestion}}

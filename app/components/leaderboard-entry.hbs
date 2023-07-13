@@ -7,7 +7,7 @@
   data-test-leaderboard-entry
 >
   <div class="flex items-center">
-    <div class="mr-2">
+    <div class="mr-2 flex-shrink-0">
       {{#if this.isSkeleton}}
         <div class="w-8 h-8 bg-gray-200 rounded"></div>
       {{else}}
@@ -17,11 +17,11 @@
     {{#if this.isSkeleton}}
       <span class="text-xs inline-block rounded bg-gray-200 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
     {{else}}
-      <span class="text-xs text-gray-600 group-hover:underline mr-2" data-test-username>{{@user.username}}</span>
+      <span class="text-xs text-gray-600 group-hover:underline mr-2 flex-shrink" data-test-username>{{@user.username}}</span>
     {{/if}}
     {{yield to="afterUsername"}}
   </div>
-  <div class="flex items-center">
+  <div class="flex items-center flex-shrink-0">
     <span
       class="mr-2 text-xs font-bold
         {{if (eq @status 'evaluating') 'text-yellow-500' 'text-teal-500'}}

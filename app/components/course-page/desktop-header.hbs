@@ -1,6 +1,6 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="bg-gray-50 border-b" data-test-desktop-header ...attributes>
-  <div class="flex justify-between items-start mb-3">
+  <div class="flex justify-between items-center mb-3">
     <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
     <LinkTo
       @route="catalog"
@@ -13,7 +13,7 @@
   <div>
     <div class="flex flex-col items-start">
       <div class="flex items-center flex-wrap gap-x-3">
-        <div class="text-lg md:text-2xl" data-test-step-name>
+        <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
           {{#if (eq @currentStep.type "SetupStep")}}
             <span class="font-bold text-gray-700">Repository Setup</span>
           {{else if (eq @currentStep.type "CourseStageStep")}}
