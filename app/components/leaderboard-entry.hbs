@@ -7,11 +7,14 @@
   data-test-leaderboard-entry
 >
   <div class="flex items-center">
-    <div class="{{unless @isCollapsed 'mr-1'}} flex-shrink-0">
+    <div class="{{unless @isCollapsed 'mr-2'}} flex-shrink-0">
       {{#if this.isSkeleton}}
         <div class="w-8 h-8 bg-gray-200 rounded"></div>
       {{else}}
-        <AvatarImage @user={{@user}} class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover/leaderboard-entry:shadow transition-shadow" />
+        <AvatarImage
+          @user={{@user}}
+          class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover/leaderboard-entry:shadow transition-shadow"
+        />
       {{/if}}
     </div>
 
@@ -19,7 +22,10 @@
       {{#if this.isSkeleton}}
         <span class="text-xs inline-block rounded bg-gray-200 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
       {{else}}
-        <span class="text-xs text-gray-600 group-hover/leaderboard-entry:underline mr-2 flex-shrink truncate" data-test-username>{{@user.username}}</span>
+        <span
+          class="text-xs text-gray-600 group-hover/leaderboard-entry:underline mr-2 flex-shrink truncate"
+          data-test-username
+        >{{@user.username}}</span>
       {{/if}}
 
       {{yield to="afterUsername"}}
@@ -47,7 +53,11 @@
       {{else}}
         <div
           class="w-12 h-3.5 rounded flex overflow-hidden border group-hover/leaderboard-entry:bg-white transition-all
-            {{if (eq @status 'evaluating') 'bg-yellow-50 border-yellow-500 animate-pulse' 'bg-teal-50 border-teal-500 group-hover/leaderboard-entry:shadow-sm'}}"
+            {{if
+              (eq @status 'evaluating')
+              'bg-yellow-50 border-yellow-500 animate-pulse'
+              'bg-teal-50 border-teal-500 group-hover/leaderboard-entry:shadow-sm'
+            }}"
           data-test-progress-bar-container
         >
           {{!s Look like a tailwind 3.3.0 bug, from-0% and to-100% are required to make the gradient work }}

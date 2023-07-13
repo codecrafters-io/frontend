@@ -20,12 +20,13 @@
             </div>
 
             <div class="text-sm">
+              {{! @glint-expect-error: not ts-ified yet }}
               <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
             </div>
           </div>
         {{/each}}
       </div>
-    {{else if (not this.repository.language)}}
+    {{else if (not @repository.language)}}
       <div class="prose mb-5">
         <p>
           <span class="text-lg">⚠️</span>

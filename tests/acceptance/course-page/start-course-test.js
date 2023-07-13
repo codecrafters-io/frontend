@@ -49,7 +49,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await coursePage.repositorySetupCard.clickOnLanguageButton('JavaScript');
 
-    baseRequestsCount += 4; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
+    baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'create repository request was executed');
 

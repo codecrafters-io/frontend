@@ -12,6 +12,9 @@ interface Signature {
       course: {
         firstStage: {
           solutions: {
+            changedFiles: {
+              filename: string;
+            }[];
             language: unknown;
           }[];
         };

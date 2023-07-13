@@ -16,7 +16,11 @@
         class="w-4 h-4 mr-2 opacity-90 group-hover/leaderboard-entry:opacity-100 transition-all"
       />
     {{else}}
-      <img alt="{{@entry.language.name}}" src={{@entry.language.tealLogoUrl}} class="w-4 h-4 mr-2 opacity-0 group-hover/leaderboard-entry:opacity-100 transition-all" />
+      <img
+        alt="{{@entry.language.name}}"
+        src={{@entry.language.tealLogoUrl}}
+        class="w-4 h-4 mr-2 opacity-0 group-hover/leaderboard-entry:opacity-100 transition-all"
+      />
     {{/if}}
   </:afterUsername>
 </LeaderboardEntry>

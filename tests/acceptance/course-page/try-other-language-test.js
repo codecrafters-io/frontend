@@ -71,8 +71,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositorySetupCard.clickOnLanguageButton('Go');
     assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
-    expectedRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
-
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 3, `expected ${expectedRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/redis/setup?repo=2', 'current URL is course page URL with repo query param');

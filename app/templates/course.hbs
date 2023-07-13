@@ -40,7 +40,7 @@
   <div class="flex flex-col max-h-screen overflow-y-auto flex-grow relative" data-test-course-page-scrollable-area>
     {{! For collapse/expand on desktop }}
     <CoursePage::ExpandSidebarButton
-      class="hidden {{if (not this.sidebarIsExpandedOnDesktop) 'lg:block'}} absolute top-6 left-0"
+      class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
       {{on "click" (fn (mut this.sidebarIsExpandedOnDesktop) true)}}
     />
 

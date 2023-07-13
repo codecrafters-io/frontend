@@ -33,7 +33,8 @@ export default class CoursePageStateService extends Service {
         (step) => step.type === 'CourseStageStep' && step.courseStage.position === parseInt(courseStageRoute.params.stage_number, 10)
       ) as Step;
     } else {
-      throw new Error(`Unknown route: ${this.router.currentRouteName}`);
+      // happens on course.index for example, when we're redirecting to /catalog
+      return this.stepList.steps[0] as Step;
     }
   }
 }
