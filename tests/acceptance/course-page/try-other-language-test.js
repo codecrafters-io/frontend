@@ -2,7 +2,7 @@ import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-c
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
