@@ -25,6 +25,7 @@ export default class CourseController extends Controller {
   @tracked isViewingProgressBanner = false; // TODO: Still needed?
   @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;
+  @tracked leaderboardIsExpanded = true;
 
   get currentUser() {
     return this.authenticator.currentUser;

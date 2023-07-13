@@ -56,10 +56,27 @@
         {{outlet}}
       </div>
 
-      <div class="w-64 xl:w-80 flex-shrink-0 border-l pt-6 bg-gray-50 hidden md:block pr-6">
-        <CourseLeaderboard @course={{@model.course}} @activeRepository={{@model.activeRepository}} @repositories={{@model.repositories}} />
+      <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block relative group">
+        {{#if this.leaderboardIsExpanded}}
+          <CoursePage::CollapseLeaderboardButton
+            class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+            {{on "click" (fn (mut this.leaderboardIsExpanded) false)}}
+          />
+        {{else}}
+          <CoursePage::ExpandLeaderboardButton
+            class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+            {{on "click" (fn (mut this.leaderboardIsExpanded) true)}}
+          />
+        {{/if}}
 
-        {{#if this.visiblePrivateLeaderboardFeatureSuggestion}}
+        <CourseLeaderboard
+          @course={{@model.course}}
+          @activeRepository={{@model.activeRepository}}
+          @repositories={{@model.repositories}}
+          @isCollapsed={{not this.leaderboardIsExpanded}}
+        />
+
+        {{#if (and this.leaderboardIsExpanded this.visiblePrivateLeaderboardFeatureSuggestion)}}
           <PrivateLeaderboardFeatureSuggestion @featureSuggestion={{this.visiblePrivateLeaderboardFeatureSuggestion}} class="ml-4 mt-6" />
         {{/if}}
       </div>

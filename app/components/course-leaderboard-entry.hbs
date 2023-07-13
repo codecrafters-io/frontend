@@ -1,4 +1,5 @@
 <LeaderboardEntry
+  @isCollapsed={{@isCollapsed}}
   @route="user"
   @routeModel={{unless this.isSkeleton @entry.user.username}}
   @isForCurrentUser={{this.isForCurrentUser}}
