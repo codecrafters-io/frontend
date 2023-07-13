@@ -21,14 +21,6 @@
   <CoursePage::CourseStageItem::CliUsageInstructions class="mt-6" />
 {{/if}}
 
-{{#if (and this.statusIsComplete (eq @courseStage.nextStage @repository.activeStage))}}
-  <div class="mt-6 flex">
-    <PrimaryButton {{on "click" @onViewNextStageButtonClick}}>
-      View Next Stage →
-    </PrimaryButton>
-  </div>
-{{/if}}
-
 {{!-- <div class="border border-gray-300 rounded relative bg-gray-100 mt-6">
   <div class="px-5 min-h-[40px] flex items-center">
     <div class="w-full">

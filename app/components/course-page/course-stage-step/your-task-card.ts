@@ -16,9 +16,11 @@ interface Signature {
     courseStage: {
       isFirst: boolean;
       descriptionMarkdownTemplate: string;
+      nextStage: unknown;
     };
 
     repository: {
+      activeStage: unknown;
       hasClosedCourseStageFeedbackSubmissionFor: (stage: unknown) => boolean;
       highestCompletedStage: unknown;
       language: unknown;
@@ -50,7 +52,7 @@ export default class YourTaskCardComponent extends Component<Signature> {
 
   @action
   handleFeedbackActionButtonClicked() {
-    this.manualFeedbackFlowIsActive = true;
+    this.manualFeedbackFlowIsActive = !this.manualFeedbackFlowIsActive;
   }
 
   @action

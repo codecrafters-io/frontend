@@ -28,6 +28,19 @@
         class="mt-6"
       />
     {{/if}}
+
+    {{#if (and (eq this.coursePageState.currentStep.status "complete") (eq @courseStage.nextStage @repository.activeStage))}}
+      <div class="mt-4 flex">
+        {{! @glint-expect-error not ts-ified yet }}
+        <PrimaryLinkButton
+          @route={{this.coursePageState.activeStep.routeParams.route}}
+          @models={{this.coursePageState.activeStep.routeParams.models}}
+          data-test-continue-button
+        >
+          View Next Stage →
+        </PrimaryLinkButton>
+      </div>
+    {{/if}}
   </:content>
   <:footerContent>
     {{! @glint-expect-error not ts-ified yet }}

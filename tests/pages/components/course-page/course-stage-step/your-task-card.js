@@ -1,4 +1,4 @@
-import { clickOnText, text } from 'ember-cli-page-object';
+import { attribute, clickable, clickOnText, isVisible, text } from 'ember-cli-page-object';
 
 export default {
   clickOnActionButton: clickOnText('[data-test-action-button]'),
@@ -14,21 +14,15 @@ export default {
   //   scope: '[data-test-earned-badge-notice]',
   // },
 
-  // feedbackPrompt: {
-  //   clickOnOption: clickOnText('[data-test-feedback-prompt-option]'),
-  //   clickOnSubmitButton: clickable('button'),
-  //   explanationTextareaPlaceholder: attribute('placeholder', 'textarea'),
-  //   questionText: text('[data-test-question-text]'),
-  //   scope: '[data-test-feedback-prompt]',
-  // },
+  feedbackPrompt: {
+    clickOnOption: clickOnText('[data-test-feedback-prompt-option]'),
+    clickOnSubmitButton: clickable('button'),
+    explanationTextareaPlaceholder: attribute('placeholder', 'textarea'),
+    questionText: text('[data-test-question-text]'),
+    scope: '[data-test-feedback-prompt]',
+  },
 
-  // hasFeedbackPrompt: isPresent('[data-test-feedback-prompt]'),
-  // hasUpgradePrompt: isPresent('[data-test-upgrade-prompt]'),
+  hasFeedbackPrompt: isVisible('[data-test-feedback-prompt]'),
 
   scope: '[data-test-your-task-card]',
-
-  // upgradePrompt: {
-  //   clickOnSubscribeButton: clickable('[data-test-subscribe-button]'),
-  //   scope: '[data-test-upgrade-prompt]',
-  // },
 };
