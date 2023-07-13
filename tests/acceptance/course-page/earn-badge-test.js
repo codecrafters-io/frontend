@@ -67,12 +67,12 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is still active');
-    assert.contains(coursePage.yourTaskCard.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'badge notice text is correct');
+    assert.contains(coursePage.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'badge notice text is correct');
 
     await percySnapshot('Course Stage - Earned Badged Notice');
 
-    await coursePage.yourTaskCard.earnedBadgeNotice.clickOnViewButton();
-    assert.strictEqual(coursePage.yourTaskCard.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla badge');
+    await coursePage.earnedBadgeNotice.clickOnViewButton();
+    assert.strictEqual(coursePage.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla badge');
 
     await percySnapshot('Course Stage - View Earned Badged');
   });

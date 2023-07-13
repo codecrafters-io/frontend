@@ -63,6 +63,18 @@ export default create({
   },
 
   desktopHeader: DesktopHeader,
+
+  earnedBadgeNotice: {
+    badgeEarnedModal: {
+      badgeName: text('[data-test-badge-name]'),
+      resetScope: true,
+      scope: '[data-test-badge-earned-modal]',
+    },
+
+    clickOnViewButton: clickable('[data-test-view-button]'),
+    scope: '[data-test-earned-badge-notice]',
+  },
+
   hasUpgradePrompt: isVisible('[data-test-upgrade-prompt]'),
   leaderboard: Leaderboard,
   repositoryDropdown: RepositoryDropdown,

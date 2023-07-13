@@ -8,6 +8,10 @@
     <CoursePage::CourseStageStep::UpgradePrompt @class="mb-6" @color="yellow" />
   {{/if}}
 
+  {{#if (gt this.badgeAwards.length 0)}}
+    <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
+  {{/if}}
+
   <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
   {{#if @model.courseStage.isFirst}}

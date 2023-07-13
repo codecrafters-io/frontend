@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
-export default class EarnedBadgeNotice extends Component {
+export default class EarnedBadgeNoticeComponent extends Component {
   @tracked selectedBadge;
 
   @action

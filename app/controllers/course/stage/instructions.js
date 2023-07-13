@@ -4,6 +4,15 @@ import { inject as service } from '@ember/service';
 export default class CourseStageInstructionsController extends Controller {
   @service coursePageState;
 
+  get badgeAwards() {
+    return this.model.activeRepository.user.badgeAwards.filter((badgeAward) => {
+      // @ts-ignore
+      return (
+        badgeAward.submission.repository.id === this.model.activeRepository.id && badgeAward.submission.courseStage.id === this.model.courseStage.id
+      );
+    });
+  }
+
   get currentStep() {
     return this.coursePageState.currentStep;
   }

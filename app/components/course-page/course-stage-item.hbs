@@ -2,34 +2,6 @@
   <CoursePage::CourseStageItem::PublishToGithubPrompt @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}} class="mb-4" />
 {{/if}}
 
-{{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
-  <CoursePage::CourseStageItem::FeedbackPrompt
-    @onClose={{this.handleFeedbackPromptClosed}}
-    @onSubmit={{this.handleFeedbackSubmitted}}
-    @courseStage={{@courseStage}}
-    @repository={{@repository}}
-    @wasTriggeredManually={{this.manualFeedbackFlowIsActive}}
-    class="mt-6"
-  />
-{{/if}}
-
-{{#if (gt this.badgeAwards.length 0)}}
-  <CoursePage::CourseStageItem::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mt-6" />
-{{/if}}
-
 {{#if this.shouldShowCLIUsageInstructions}}
   <CoursePage::CourseStageItem::CliUsageInstructions class="mt-6" />
 {{/if}}
-
-{{!-- <div class="border border-gray-300 rounded relative bg-gray-100 mt-6">
-  <div class="px-5 min-h-[40px] flex items-center">
-    <div class="w-full">
-      <CoursePage::CourseStageItem::Footer
-        @courseStage={{@courseStage}}
-        @status={{this.status}}
-        @shouldShowUpgradePrompt={{this.shouldShowUpgradePrompt}}
-        @repository={{@repository}}
-      />
-    </div>
-  </div>
-</div> --}}
