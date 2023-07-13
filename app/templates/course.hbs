@@ -26,6 +26,31 @@
     </CoursePage::Sidebar>
   {{/if}}
 
+  {{#if this.sidebarIsExpandedOnMobile}}
+    <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-900/90"></div>
+      <div class="fixed inset-0 flex">
+        <div class="relative mr-8 flex w-full max-w-xs flex-1">
+          <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
+            <button type="button" class="-m-2.5 p-2.5" {{on "click" (fn (mut this.sidebarIsExpandedOnMobile) false)}}>
+              <span class="sr-only">Close sidebar</span>
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <CoursePage::Sidebar
+            @course={{@model.course}}
+            @repositories={{@model.repositories}}
+            @activeRepository={{@model.activeRepository}}
+            class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen block lg:hidden"
+          />
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
   <div class="flex flex-col max-h-screen overflow-y-auto flex-grow relative" data-test-course-page-scrollable-area>
     {{! For collapse/expand on desktop }}
     <CoursePage::ExpandSidebarButton
