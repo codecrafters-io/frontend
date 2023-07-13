@@ -36,6 +36,7 @@
     <CoursePage::DesktopHeader
       @stepList={{this.coursePageState.stepList}}
       @currentStep={{this.coursePageState.currentStep}}
+      @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
       class="px-3 md:px-6 xl:pl-10 pt-3 sm:pt-6"
     />
 

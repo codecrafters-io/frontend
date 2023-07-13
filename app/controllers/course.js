@@ -24,6 +24,7 @@ export default class CourseController extends Controller {
   @tracked configureGithubIntegrationModalIsOpen = false;
   @tracked isViewingProgressBanner = false; // TODO: Still needed?
   @tracked sidebarIsExpandedOnDesktop = true;
+  @tracked sidebarIsExpandedOnMobile = false;
 
   get currentUser() {
     return this.authenticator.currentUser;

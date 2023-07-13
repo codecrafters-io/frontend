@@ -1,7 +1,9 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="bg-gray-50 border-b" data-test-desktop-header ...attributes>
   <div class="flex justify-between items-center mb-3">
-    {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
+    <button class="flex items-center" {{on "click" @onMobileSidebarButtonClick}}>
+      {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
+    </button>
 
     <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
 
