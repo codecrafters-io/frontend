@@ -1,4 +1,4 @@
-<div class="flex flex-col" ...attributes>
+<div class="flex flex-col gap-y-1" ...attributes>
   {{#each @stepList.visibleSteps as |step|}}
     <CoursePage::StepListItem @step={{step}} @isCurrent={{eq this.currentStep step}} @isActive={{eq this.activeStep step}} />
   {{/each}}

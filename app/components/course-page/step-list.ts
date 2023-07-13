@@ -20,7 +20,7 @@ export default class StepListComponent extends Component<Signature> {
 
   get activeStep() {
     return this.coursePageState.activeStep;
-  }
+    }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

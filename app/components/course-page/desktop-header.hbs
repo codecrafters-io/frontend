@@ -2,6 +2,7 @@
 <div class="bg-gray-50 border-b" data-test-desktop-header ...attributes>
   <div class="flex justify-between items-center mb-3">
     <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
+
     <div class="flex items-center gap-x-3">
       {{#if this.currentUser.isStaff}}
         <LinkTo @route="course.admin.submissions" @model={{@course.slug}}>
