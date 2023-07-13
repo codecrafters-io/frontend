@@ -22,6 +22,9 @@ export default class DesktopHeaderComponent extends Component<Signature> {
   // @ts-ignore
   @service authenticator;
 
+  // @ts-ignore
+  @service featureFlags;
+
   @service declare router: RouterService;
 
   get allTabs(): Tab[] {
@@ -46,24 +49,39 @@ export default class DesktopHeaderComponent extends Component<Signature> {
   }
 
   get stageTabs() {
-    return [
-      {
-        icon: 'document-text',
-        name: 'Instructions',
-        slug: 'instructions',
-        route: 'course.stage.instructions',
+    const tabs: Tab[] = [];
+
+    tabs.push({
+      icon: 'document-text',
+      name: 'Instructions',
+      slug: 'instructions',
+      route: 'course.stage.instructions',
+      models: this.args.currentStep.routeParams.models,
+      isActive: this.router.currentRouteName === 'course.stage.instructions',
+    });
+
+    tabs.push({
+      icon: 'code',
+      name: 'Code Examples',
+      slug: 'code_examples',
+      route: 'course.stage.code-examples',
+      models: this.args.currentStep.routeParams.models,
+      isActive: this.router.currentRouteName === 'course.stage.code-examples',
+    });
+
+    // @ts-ignore
+    if (this.featureFlags.canSeeScreencasts && this.args.currentStep.courseStage.hasScreencasts) {
+      tabs.push({
+        icon: 'play',
+        name: 'Screencasts',
+        slug: 'screencasts',
+        route: 'course.stage.screencasts',
         models: this.args.currentStep.routeParams.models,
-        isActive: this.router.currentRouteName === 'course.stage.instructions',
-      },
-      {
-        icon: 'code',
-        name: 'Code Examples',
-        slug: 'code_examples',
-        route: 'course.stage.code-examples',
-        models: this.args.currentStep.routeParams.models,
-        isActive: this.router.currentRouteName === 'course.stage.code-examples',
-      },
-    ];
+        isActive: this.router.currentRouteName === 'course.stage.screencasts',
+      });
+    }
+
+    return tabs;
   }
 
   get setupTabs() {

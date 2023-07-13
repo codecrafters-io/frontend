@@ -27,6 +27,11 @@ export default class ActionButtonListComponent extends Component {
     this.router.transitionTo('course.stage.code-examples', this.args.courseStage.position);
   }
 
+  @action
+  handleViewScreencastsButtonClicked() {
+    this.router.transitionTo('course.stage.screencasts', this.args.courseStage.position);
+  }
+
   get shouldShowEditFeedbackButton() {
     return !this.args.shouldHideFeedbackButtons && !!this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage);
   }

@@ -1,4 +1,4 @@
-import Component from '@glimmer/component';
+import Controller from '@ember/controller';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { createPopup } from '@typeform/embed';
@@ -6,25 +6,25 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
 
-interface Signature {
-  Element: HTMLDivElement;
-
-  Args: {
-    courseStage: {
+type ModelType = {
+  courseStage: {
+    slug: string;
+    course: {
       slug: string;
-      course: {
-        slug: string;
-      };
-      screencasts: {
-        id: string;
-      }[];
     };
+    screencasts: {
+      id: string;
+    }[];
   };
-}
+};
 
-export default class ScreencastsTabComponent extends Component<Signature> {
+export default class ScreencastsTabComponent extends Controller {
+  queryParams = ['selectedScreencastId'];
+
+  declare model: ModelType;
+
   @tracked embedHtml: string | undefined;
-  @tracked selectedScreencast: any | undefined;
+  @tracked selectedScreencastId: any | undefined;
   @tracked screencastPlayerElement: HTMLDivElement | undefined;
 
   // @ts-ignore
@@ -32,8 +32,21 @@ export default class ScreencastsTabComponent extends Component<Signature> {
 
   @service declare store: Store;
 
+  get selectedScreencast() {
+    if (!this.selectedScreencastId) {
+      return null;
+    }
+
+    const screencast = this.store.peekRecord('course-stage-screencast', this.selectedScreencastId);
+
+    // If screencast belongs to another stage (query params are persisted between stages), don't show it
+    if (screencast && screencast.courseStage === this.model.courseStage) {
+      return screencast;
+    }
+  }
+
   get screencasts() {
-    return this.args.courseStage.screencasts;
+    return this.model.courseStage.screencasts;
   }
 
   get screencastsForList() {
@@ -42,7 +55,7 @@ export default class ScreencastsTabComponent extends Component<Signature> {
 
   @action
   handleScreencastClicked(screencast: any) {
-    this.selectedScreencast = screencast;
+    this.selectedScreencastId = screencast.id;
 
     next(() => {
       if (this.screencastPlayerElement) {
@@ -56,8 +69,8 @@ export default class ScreencastsTabComponent extends Component<Signature> {
     createPopup('Dl5342qZ', {
       hidden: {
         github_username: this.authenticator.currentUser.username,
-        course_slug: this.args.courseStage.course.slug,
-        course_stage_slug: this.args.courseStage.slug,
+        course_slug: this.model.courseStage.course.slug,
+        course_stage_slug: this.model.courseStage.slug,
       },
     }).toggle();
   }

@@ -47,7 +47,8 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await coursePage.yourTaskCard.clickOnActionButton('Screencasts');
 
-    // await this.pauseTest();
+    // TODO: Check that N screencasts are available
+    // TODO: Check that clicking on a screencast shows it as active one
 
     assert.strictEqual(1, 1);
   });
