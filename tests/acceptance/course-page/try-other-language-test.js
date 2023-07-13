@@ -89,7 +89,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run again');
   });
 
-  test('can try other language from repository setup page', async function (assert) {
+  test('can try other language from repository setup page (regression)', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 

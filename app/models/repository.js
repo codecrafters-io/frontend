@@ -17,6 +17,10 @@ export default class RepositoryModel extends Model {
   @attr('string') starterRepositoryUrl;
 
   get cloneDirectory() {
+    if (!this.course || !this.language) {
+      return 'codecrafters'; // This is triggered when the clone step is animating out for an old repo
+    }
+
     return `codecrafters-${this.course.slug}-${this.language.slug}`;
   }
 
