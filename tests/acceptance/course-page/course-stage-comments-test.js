@@ -46,7 +46,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.commentList.commentCards.length, 2);
 
-    await percySnapshot('Course Stage Comments');
+    await percySnapshot('Course Stage Comments', { scope: '[data-percy-hints-section]' });
   });
 
   test('can create comment', async function (assert) {
@@ -67,7 +67,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     assert.notOk(coursePage.commentList.submitButtonIsDisabled, 'submit button should not be disabled if input is provided');
 
     await coursePage.commentList.clickOnTabHeader('Preview');
-    await percySnapshot('Course Stage Comments - Preview');
+    await percySnapshot('Course Stage Comments - Preview', { scope: '[data-percy-hints-section]' });
 
     await coursePage.commentList.clickOnTabHeader('Write');
     await coursePage.commentList.clickOnSubmitButton();
@@ -144,7 +144,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await commentCard.toggleDropdown();
     await commentCard.clickOnDropdownLink('Edit');
 
-    await percySnapshot('Course Stage Comments / Edit Form');
+    await percySnapshot('Course Stage Comments / Edit Form', { scope: '[data-percy-hints-section]' });
 
     await commentCard.commentForm.commentInput.fillIn('This is an edited comment');
     await commentCard.commentForm.clickOnCancelButton();
@@ -251,7 +251,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     assert.ok(firstCommentCard.commentForm.isVisible, 'reply form should be visible');
 
-    await percySnapshot('Course Stage Comments / Reply Form');
+    await percySnapshot('Course Stage Comments / Reply Form', { scope: '[data-percy-hints-section]' });
 
     await firstCommentCard.commentForm.commentInput.fillIn('This is a reply');
     await firstCommentCard.commentForm.clickOnPostReplyButton();

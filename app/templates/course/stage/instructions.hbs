@@ -18,7 +18,9 @@
     <CoursePage::CourseStageStep::FirstStageInstructionsCard @repository={{@model.activeRepository}} class="mt-6" />
   {{/if}}
 
-  <h2 class="font-semibold border-b pb-2 mb-6 text-lg mt-8">Hints</h2>
+  <div data-percy-hints-section>
+    <h2 class="font-semibold border-b pb-2 mb-6 text-lg mt-8">Hints</h2>
 
-  <CoursePage::CommentList @courseStage={{@model.courseStage}} @language={{@model.activeRepository.language}} />
+    <CoursePage::CommentList @courseStage={{@model.courseStage}} @language={{@model.activeRepository.language}} />
+  </div>
 </div>
