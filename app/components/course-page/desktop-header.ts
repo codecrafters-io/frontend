@@ -70,7 +70,7 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     });
 
     // @ts-ignore
-    if (this.featureFlags.canSeeScreencasts && this.args.currentStep.courseStage.hasScreencasts) {
+    if (this.featureFlags.canSeeScreencasts && this.args.currentStep.courseStage && this.args.currentStep.courseStage.hasScreencasts) {
       tabs.push({
         icon: 'play',
         name: 'Screencasts',

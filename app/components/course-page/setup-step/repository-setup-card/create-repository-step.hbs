@@ -9,8 +9,8 @@
 </div>
 
 <div>
-  {{#if @repository.isSaving}}
-    <div class="flex items-center mt-3">
+  {{#if (or @repository.isSaving (not @repository.isNew))}}
+    <div class="flex items-center py-5">
       <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
       <span class="ml-3 text-gray-700">Initializing a Git Repository...</span>
     </div>
