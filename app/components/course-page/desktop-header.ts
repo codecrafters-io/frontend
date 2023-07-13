@@ -41,6 +41,10 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     ];
   }
 
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   get stageTabs() {
     return [
       {
@@ -104,9 +108,5 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     // } else {
     //   return true;
     // }
-  }
-
-  get currentUser() {
-    return this.authenticator.currentUser;
   }
 }

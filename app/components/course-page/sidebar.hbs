@@ -25,13 +25,13 @@
   {{! @glint-expect-error: not typesafe yet}}
   <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
 
-  <LinkTo
+  {{!-- <LinkTo
     @route="catalog"
     class="inline-flex items-center text-gray-500 hover:text-gray-600 transition-colors mt-4 text-xs p-2 border border-gray-300 rounded-lg"
   >
     {{svg-jar "arrow-circle-left" class="w-4 mr-1 fill-current"}}
     <span class="font-bold uppercase tracking-wide">Back to Catalog</span>
-  </LinkTo>
+  </LinkTo> --}}
 
   <CoursePage::StepList @stepList={{this.stepList}} class="mt-10 -mx-3" />
 
