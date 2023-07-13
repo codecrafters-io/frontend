@@ -1,7 +1,7 @@
 <LinkTo
   @route={{@step.routeParams.route}}
   @models={{@step.routeParams.models}}
-  class="flex items-start gap-x-2 py-1.5 {{if @isCurrent 'bg-gray-200' 'hover:bg-gray-200'}} px-3 rounded"
+  class="flex items-start gap-x-2 py-1.5 {{if @isCurrent 'bg-gray-300 bg-opacity-50' 'hover:bg-gray-300 hover:bg-opacity-50'}} px-3 rounded"
   data-test-step-list-item
 >
   {{#if (eq @step.status "complete")}}
