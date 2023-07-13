@@ -88,4 +88,31 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run again');
   });
+
+  test('can try other language from repository setup page', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.sidebar.clickOnStepListItem('Repository Setup');
+
+    await coursePage.repositoryDropdown.click();
+    await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
+    await coursePage.repositoryDropdown.clickOnAction('Try a different language');
+
+    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
+  });
 });
