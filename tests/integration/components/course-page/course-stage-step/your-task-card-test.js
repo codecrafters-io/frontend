@@ -5,7 +5,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Integration | Component | course-page/step-list/course-stage-item', function (hooks) {
+module('Integration | Component | course-page/course-stage-step/your-task-card', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -32,12 +32,9 @@ module('Integration | Component | course-page/step-list/course-stage-item', func
     this.set('repository', repository);
     this.set('noop', () => {});
 
-    await render(hbs`<CoursePage::CourseStageItem
-  @courseStage={{this.courseStage}}
-  @repository={{this.repository}}
-  @onViewNextStageButtonClick={{this.noop}}
-  @onViewCommentsButtonClick={{this.noop}}
-  @onViewSolutionButtonClick={{this.noop}}
+    await render(hbs`<CoursePage::CourseStageStep::YourTaskCard
+    @repository={{this.repository}}
+    @courseStage={{this.courseStage}}
 />`);
 
     assert.strictEqual(this.element.querySelectorAll('a').length, 2); // includes first stage link
