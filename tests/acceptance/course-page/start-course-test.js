@@ -86,7 +86,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.repositorySetupCard.continueButton.click();
     assert.strictEqual(currentURL(), '/courses/redis/stages/1?repo=1', 'current URL is course page URL');
 
-    await percySnapshot('Start Course - Waiting For Second Push');
+    await percySnapshot('Start Course - Waiting For Second Push', {
+      percyCss: '[data-test-course-page-scrollable-area] { overflow-y: visible !important; }',
+    });
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
