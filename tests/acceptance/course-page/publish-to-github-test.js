@@ -2,7 +2,6 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';

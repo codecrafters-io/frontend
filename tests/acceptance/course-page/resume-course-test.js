@@ -1,5 +1,4 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';

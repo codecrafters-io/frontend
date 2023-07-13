@@ -32,10 +32,7 @@ module('Integration | Component | course-page/course-stage-step/your-task-card',
     this.set('repository', repository);
     this.set('noop', () => {});
 
-    await render(hbs`<CoursePage::CourseStageStep::YourTaskCard
-    @repository={{this.repository}}
-    @courseStage={{this.courseStage}}
-/>`);
+    await render(hbs`<CoursePage::CourseStageStep::YourTaskCard @repository={{this.repository}} @courseStage={{this.courseStage}} />`);
 
     assert.strictEqual(this.element.querySelectorAll('a').length, 2); // includes first stage link
     assert.strictEqual(this.element.querySelectorAll('a[target="_blank"]').length, 2);
