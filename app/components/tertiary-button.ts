@@ -1,14 +1,11 @@
 import Component from '@glimmer/component';
 
 interface Signature {
-  Element: HTMLAnchorElement;
+  Element: HTMLButtonElement;
 
   Args: {
     size?: 'small' | 'regular';
     isDisabled?: boolean;
-    route: string;
-    model?: string;
-    models?: string[];
   };
 
   Blocks: {
@@ -16,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class PrimaryLinkButtonComponent extends Component<Signature> {
+export default class TertiaryButtonComponent extends Component<Signature> {
   get sizeIsSmall(): boolean {
     return this.args.size === 'small';
   }
@@ -24,6 +21,6 @@ export default class PrimaryLinkButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    PrimaryLinkButton: typeof PrimaryLinkButtonComponent;
+    TertiaryButton: typeof TertiaryButtonComponent;
   }
 }

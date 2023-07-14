@@ -1,13 +1,21 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
-import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import RouterService from '@ember/routing/router-service';
+import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
+import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import { inject as service } from '@ember/service';
 
 type Signature = {
+  Element: HTMLDivElement;
+
   Args: {
+    course: {
+      slug: string;
+    };
     activeStep: Step;
     nextStep: Step | null;
     currentStep: Step;
+    stepList: StepList;
+    onMobileSidebarButtonClick: () => void;
   };
 };
 

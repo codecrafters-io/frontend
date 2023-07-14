@@ -33,11 +33,6 @@ interface Signature {
       };
     };
   };
-
-  Blocks: {
-    content: [];
-    footerContent: [];
-  };
 }
 
 export default class YourTaskCardComponent extends Component<Signature> {

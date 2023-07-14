@@ -1,4 +1,3 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="border-b" data-test-desktop-header ...attributes>
   <div class="flex justify-between items-center mb-6 gap-x-3">
     <div class="flex items-center gap-x-3">
@@ -32,7 +31,9 @@
           {{#if (eq @currentStep.type "SetupStep")}}
             <span class="font-bold text-gray-700">Repository Setup</span>
           {{else if (eq @currentStep.type "CourseStageStep")}}
+            {{! @glint-expect-error not typesafe }}
             <span class="text-gray-600 mr-1">Stage #{{@currentStep.courseStage.position}}:</span>
+            {{! @glint-expect-error not typesafe }}
             <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
           {{else if (eq @currentStep.type "CourseCompletedStep")}}
             <span class="font-bold text-gray-700">Challenge completed!</span>
@@ -66,6 +67,7 @@
 
   <div class="flex items-center overflow-x-scroll">
     {{#each this.availableTabs key="slug" as |tab|}}
+      {{! @glint-expect-error not typesafe }}}
       <CoursePage::HeaderTabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
     {{/each}}
   </div>
