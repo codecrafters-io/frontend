@@ -1,18 +1,6 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div ...attributes>
-  <div class="flex items-center flex-wrap gap-y-3">
-    <span class="text-xl md:text-2xl text-gray-700 mr-3" data-test-course-stage-name>{{@courseStage.name}}</span>
-
-    {{#if (eq @status "complete")}}
-      <span class="bg-teal-600 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>COMPLETE</span>
-    {{else if (eq @status "locked")}}
-      <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>PENDING</span>
-    {{else if @shouldShowUpgradePrompt}}
-      <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>MEMBERSHIP REQUIRED</span>
-    {{else}}
-      <span class="bg-yellow-500 text-white rounded px-2 py-1 font-bold text-sm" data-test-status-text>IN PROGRESS</span>
-    {{/if}}
-  </div>
+  {{! title }}
   {{#if this.shouldShowCompletionPercentage}}
     <div class="inline-flex mt-3">
       <span class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2">
