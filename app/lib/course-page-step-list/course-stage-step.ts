@@ -141,6 +141,11 @@ export default class CourseStageStep extends Step {
     };
   }
 
+  get shortTitle(): string {
+    // @ts-ignore
+    return `Stage ${this.courseStage.position}`;
+  }
+
   get title() {
     // @ts-ignore
     return this.courseStage.name;

@@ -5,6 +5,8 @@ import RouterService from '@ember/routing/router-service';
 
 type Signature = {
   Args: {
+    activeStep: Step;
+    nextStep: Step | null;
     currentStep: Step;
   };
 };

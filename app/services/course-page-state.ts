@@ -37,4 +37,13 @@ export default class CoursePageStateService extends Service {
       return this.stepList.steps[0] as Step;
     }
   }
+
+  get nextStep(): Step | null {
+    if (!this.stepList) {
+      // @ts-ignore
+      return null;
+    }
+
+    return this.stepList.nextVisibleStepFor(this.currentStep);
+  }
 }

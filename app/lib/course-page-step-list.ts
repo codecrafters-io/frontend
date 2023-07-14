@@ -21,12 +21,12 @@ export class StepList {
     return this.steps.find((step) => step.status !== 'complete');
   }
 
-  nextVisibleStepFor(step: Step) {
-    return this.visibleSteps[this.visibleSteps.indexOf(step) + 1];
+  nextVisibleStepFor(step: Step): Step | null {
+    return this.visibleSteps[this.visibleSteps.indexOf(step) + 1] || null;
   }
 
-  previousVisibleStepFor(step: Step) {
-    return this.visibleSteps[this.visibleSteps.indexOf(step) - 1];
+  previousVisibleStepFor(step: Step): Step | null {
+    return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
   }
 }
 

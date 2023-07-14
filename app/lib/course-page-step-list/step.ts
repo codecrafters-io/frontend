@@ -15,6 +15,11 @@ export default class Step {
     throw new Error('Subclasses of Step must implement a status getter');
   }
 
+  // Can be overridden
+  get shortTitle(): string {
+    return this.title;
+  }
+
   get title(): string {
     throw new Error('Subclasses of Step must implement a title getter');
   }
