@@ -39,4 +39,8 @@ export default class CourseCompletedStep extends Step {
   get title() {
     return 'Challenge completed!';
   }
+
+  get type(): 'CourseCompletedStep' {
+    return 'CourseCompletedStep';
+  }
 }

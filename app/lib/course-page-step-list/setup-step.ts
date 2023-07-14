@@ -62,4 +62,8 @@ export default class SetupStep extends Step {
   get title() {
     return 'Repository Setup';
   }
+
+  get type(): 'SetupStep' {
+    return 'SetupStep';
+  }
 }

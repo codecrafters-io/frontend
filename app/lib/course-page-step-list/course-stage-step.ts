@@ -145,4 +145,8 @@ export default class CourseStageStep extends Step {
     // @ts-ignore
     return this.courseStage.name;
   }
+
+  get type(): 'CourseStageStep' {
+    return 'CourseStageStep';
+  }
 }

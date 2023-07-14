@@ -47,8 +47,8 @@ export default class Step {
     }
   }
 
-  get type() {
-    return this.constructor.name as 'SetupStep' | 'CourseStageStep' | 'CourseCompletedStep';
+  get type(): 'SetupStep' | 'CourseStageStep' | 'CourseCompletedStep' {
+    throw new Error('Subclasses of Step must implement a routeParams getter');
   }
 
   get isHidden(): boolean {
