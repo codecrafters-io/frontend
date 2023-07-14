@@ -106,7 +106,7 @@
     "ember-click-outside": "^6.0.1",
     "ember-composable-helpers": "^5.0.0",
     "ember-cookies": "^1.0.0",
-    "ember-data": "~4.11.3",
+    "ember-data": "~5.1.1",
     "ember-exam": "^8.0.0",
     "ember-fetch": "^8.1.2",
     "ember-in-viewport": "^4.1.0",
