@@ -27,7 +27,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
 
-    await coursePage.setupItem.clickOnLanguageButton('Python');
+    await coursePage.repositorySetupCard.clickOnLanguageButton('Python');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, '1 leaderboard entry should be present once course has started');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to current user');
@@ -108,7 +108,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 7', 'progress text must be shown');
 
-    await coursePage.setupItem.clickOnLanguageButton('Python');
+    await coursePage.repositorySetupCard.clickOnLanguageButton('Python');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once course has started');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should be sorted by last attempt');

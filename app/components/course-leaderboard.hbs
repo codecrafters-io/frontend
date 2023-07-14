@@ -1,47 +1,64 @@
-<div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} class="{{@class}}" data-test-leaderboard>
-  <div class="flex items-center justify-between mb-2 pl-4">
-    <div class="flex items-center">
-      <span class="uppercase text-teal-500 text-xs font-bold">RECENT ATTEMPTS</span>
+<div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} data-test-leaderboard ...attributes>
+  {{#if @isCollapsed}}
+    <div class="pl-4 mb-3 h-6 flex justify-center items-center">
+      {{svg-jar (if this.team "user-group" "globe") class="fill-current text-gray-600 w-5"}}
+    </div>
+  {{else}}
+    <div class="flex items-center justify-between mb-2 pl-4">
+      <div class="flex items-center">
+        <span class="uppercase text-teal-500 text-xs font-bold">RECENT ATTEMPTS</span>
 
-      <span
-        class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2
-          {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}}
-          transition-all"
-      >
-        {{this.mergedEntries.length}}
-      </span>
+        <span
+          class="text-white bg-teal-500 text-xs font-bold rounded px-1.5 py-0.5 ml-2
+            {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}}
+            transition-all"
+        >
+          {{this.mergedEntries.length}}
+        </span>
+      </div>
+
+      <div>
+        {{#if (gt this.currentUserTeams.length 0)}}
+          <CourseLeaderboardTeamDropdown @team={{this.team}} @teams={{this.currentUserTeams}} @onChange={{this.handleTeamChange}} />
+        {{/if}}
+      </div>
     </div>
-    <div>
-      {{#if (gt this.currentUserTeams.length 0)}}
-        <CourseLeaderboardTeamDropdown @team={{this.team}} @teams={{this.currentUserTeams}} @onChange={{this.handleTeamChange}} />
-      {{/if}}
-    </div>
-  </div>
+  {{/if}}
 
   <AnimatedContainer>
     {{#if this.isLoadingEntries}}
       {{#each (repeat 12)}}
-        <CourseLeaderboardEntry />
+        <CourseLeaderboardEntry @isCollapsed={{@isCollapsed}} />
       {{/each}}
     {{else}}
       <div>
         {{#animated-each this.mergedEntries key="userId" use=this.listTransition duration=300 as |entry|}}
-          <CourseLeaderboardEntry @entry={{entry}} @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}} />
+          <CourseLeaderboardEntry
+            @entry={{entry}}
+            @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}}
+            @isCollapsed={{@isCollapsed}}
+          />
         {{/animated-each}}
 
         {{#animated-if (eq this.mergedEntries.length 0)}}
-          <div class="flex px-4 py-2 items-center">
-            <div class="text-sm text-gray-500">
-              <p class="mb-2">
-                {{#if this.team}}
-                  No one from
-                  {{this.team.name}}
-                  has attempted this challenge recently.
-                {{else}}
-                  No one has attempted this challenge recently.
-                {{/if}}
-              </p>
-            </div>
+          <div class="flex pl-4 py-2 items-center">
+            {{#if @isCollapsed}}
+              <div class="text-sm text-gray-500 text-center w-full">
+                -
+              </div>
+            {{else}}
+              <div class="text-sm text-gray-500">
+                <p class="mb-2">
+                  {{#if this.team}}
+                    No one from
+                    {{this.team.name}}
+                    has attempted this challenge recently.
+                  {{else}}
+                    No one has attempted this challenge recently.
+                  {{/if}}
+                </p>
+              </div>
+            {{/if}}
           </div>
         {{/animated-if}}
       </div>

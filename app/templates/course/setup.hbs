@@ -1,0 +1,10 @@
+<div class="w-full pt-8 pb-16">
+  <CoursePage::SetupStep::WelcomeCard @repository={{@model.activeRepository}} class="mb-6" />
+
+  <CoursePage::SetupStep::RepositorySetupCard
+    @course={{@model.course}}
+    @repository={{@model.activeRepository}}
+    {{! TODO: Fetch this from query params? !}}
+    @preferredLanguageSlug={{null}}
+  />
+</div>

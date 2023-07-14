@@ -1,0 +1,34 @@
+<div class="pt-8 pb-16" data-test-screencasts-tab>
+  <Alert class="mb-6">
+    Screencasts are recordings of CodeCrafters users passing this stage. This is a beta feature, please send us
+    <div class="inline-flex">
+      {{! @glint-expect-error: not typesafe yet }}
+      <FeedbackButton class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton>
+    </div>.
+  </Alert>
+  {{#if this.selectedScreencast}}
+    {{! @glint-expect-error: not typesafe yet }}
+    <CourseStageScreencastPlayer
+      @screencast={{this.selectedScreencast}}
+      class="border-b pb-8 mb-8 scroll-mt-16"
+      {{did-insert this.handleDidInsertScreencastPlayer}}
+    />
+  {{/if}}
+
+  <div class="grid grid-cols-1 gap-6 pb-16">
+    {{#each this.screencastsForList as |screencast|}}
+      {{! @glint-expect-error: not typesafe yet }}
+      <CourseStageScreencastPreview @screencast={{screencast}} {{on "click" (fn this.handleScreencastClicked screencast)}} />
+    {{/each}}
+
+    {{#if (eq this.screencasts.length 0)}}
+      <div class="text-center text-gray-500 py-16 text-sm">
+        No screencasts found for this stage.
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="flex items-center justify-center">
+    <TertiaryButton {{on "click" this.handleSubmitScreencastButtonClicked}}>Submit a screencast</TertiaryButton>
+  </div>
+</div>

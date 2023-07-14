@@ -27,7 +27,7 @@
       {{else if (eq this.activeTab "preview")}}
         {{! template-lint-disable no-inline-styles }}
         <div class="px-2 py-2 border-b-2 mb-2" style="min-height: 135px;">
-          <div class="leading-relaxed prose-sm prose max-w-none comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
+          <div class="leading-relaxed prose-sm prose max-w-none break-words comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
             {{this.bodyHTML}}
           </div>
         </div>

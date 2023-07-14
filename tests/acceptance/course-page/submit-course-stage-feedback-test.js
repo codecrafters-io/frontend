@@ -27,62 +27,57 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       user: currentUser,
     });
 
-    this.server.create('submission', 'withSuccessStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
-    });
-
-    this.server.create('submission', 'withSuccessStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2], // Stage #3
+    // Stages 2 and 3 are completed
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('submission', 'withSuccessStatus', {
+        repository: repository,
+        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1],
+      });
     });
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', '4th is expanded');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #4: Handle concurrent clients', 'stage 4 is active');
 
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', 'stage 3 is active');
+
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage completed');
+    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd is expanded');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
-    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage completed');
+    assert.notOk(coursePage.yourTaskCard.hasFeedbackPrompt, 'does not have feedback prompt');
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', '2nd stage is expanded');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'You completed this stage today.', 'footer text is stage completed');
-    assert.notOk(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'does not have feedback prompt');
-
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
-    await animationsSettled();
-
-    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
+    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
     await percySnapshot('Course Stage Feedback Prompt - No Selection');
 
-    await coursePage.activeCourseStageItem.feedbackPrompt.clickOnOption('😍');
+    await coursePage.yourTaskCard.feedbackPrompt.clickOnOption('😍');
     await percySnapshot('Course Stage Feedback Prompt - With Selection');
 
     assert.strictEqual(
-      coursePage.activeCourseStageItem.feedbackPrompt.explanationTextareaPlaceholder,
+      coursePage.yourTaskCard.feedbackPrompt.explanationTextareaPlaceholder,
       'Tell us more!',
       'explanation textarea placeholder is correct'
     );
 
-    await coursePage.activeCourseStageItem.feedbackPrompt.clickOnOption('😭');
+    await coursePage.yourTaskCard.feedbackPrompt.clickOnOption('😭');
 
     assert.strictEqual(
-      coursePage.activeCourseStageItem.feedbackPrompt.explanationTextareaPlaceholder,
+      coursePage.yourTaskCard.feedbackPrompt.explanationTextareaPlaceholder,
       'What could be better?',
       'explanation textarea placeholder is correct'
     );
 
-    await coursePage.activeCourseStageItem.feedbackPrompt.clickOnSubmitButton();
-    await animationsSettled();
-
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Handle concurrent clients', 'Next stage is expanded');
+    await coursePage.yourTaskCard.feedbackPrompt.clickOnSubmitButton();
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', 'same stage is shown');
   });
 
   test('is shown different prompts based on stage number', async function (assert) {
@@ -107,14 +102,14 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '4th is expanded');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', '4th is expanded');
 
-    await coursePage.clickOnCollapsedItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', '2nd stage is expanded');
-    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Nice work! How did we do?');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', '2nd stage is expanded');
+    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'Nice work! How did we do?');
 
     const completeStage = async (stageNumber) => {
       this.server.create('submission', 'withSuccessStatus', {
@@ -126,28 +121,28 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     };
 
     await completeStage(3);
-    await coursePage.clickOnCollapsedItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd stage is expanded');
-    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Great streak! How did we do?');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', '3rd stage is expanded');
+    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'Great streak! How did we do?');
 
     await completeStage(6);
-    await coursePage.clickOnCollapsedItem('Implement the SET & GET commands');
+    await coursePage.sidebar.clickOnStepListItem('Implement the SET & GET commands');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Implement the SET & GET commands', 'penultimate stage is expanded');
-    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'Just one more to go! How did we do?');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #6: Implement the SET & GET commands', 'penultimate stage is expanded');
+    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'Just one more to go! How did we do?');
 
     await completeStage(7);
-    await coursePage.clickOnCollapsedItem('Expiry');
+    await coursePage.sidebar.clickOnStepListItem('Expiry');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Expiry', 'last stage is expanded');
-    assert.ok(coursePage.activeCourseStageItem.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.activeCourseStageItem.feedbackPrompt.questionText, 'You did it! How did we do?');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #7: Expiry', 'last stage is expanded');
+    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'You did it! How did we do?');
   });
 
   test('is not prompted for course stage feedback again if closed', async function (assert) {
@@ -180,8 +175,8 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to multiple PINGs', '3rd stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Listening for a git push...', 'footer text is git push listener');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', '3rd stage is active');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is git push listener');
 
     await animationsSettled();
   });

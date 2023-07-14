@@ -4,7 +4,6 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -23,23 +22,21 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
+    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
 
-    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
-
-    await coursePage.setupItem.clickOnRequestLanguageButton();
-    await coursePage.setupItem.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
+    await coursePage.repositorySetupCard.clickOnRequestLanguageButton();
+    await coursePage.repositorySetupCard.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
 
     await animationsSettled();
-    assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+    assert.ok(coursePage.repositorySetupCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     await percySnapshot('Requested Languages Prompt');
 
-    await coursePage.setupItem.clickOnRequestLanguageButton();
-    await coursePage.setupItem.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
+    await coursePage.repositorySetupCard.clickOnRequestLanguageButton();
+    await coursePage.repositorySetupCard.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
 
     await animationsSettled();
-    assert.notOk(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+    assert.notOk(coursePage.repositorySetupCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
   });
 
   test('can view requested languages', async function (assert) {
@@ -56,16 +53,14 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
+    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.ok(coursePage.repositorySetupCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
-    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
-    assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
-
-    await coursePage.setupItem.clickOnRequestLanguageButton();
-    await coursePage.setupItem.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
+    await coursePage.repositorySetupCard.clickOnRequestLanguageButton();
+    await coursePage.repositorySetupCard.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
 
     await animationsSettled();
-    assert.notOk(coursePage.setupItem.hasRequestedLanguagesPrompt, 'requested languages prompt is removed');
+    assert.notOk(coursePage.repositorySetupCard.hasRequestedLanguagesPrompt, 'requested languages prompt is removed');
   });
 
   test('can view no language found text', async function (assert) {
@@ -76,12 +71,10 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/docker', 'current URL is course page URL');
+    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
 
-    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
-
-    await coursePage.setupItem.clickOnRequestLanguageButton();
-    await coursePage.setupItem.requestLanguageDropdown.fillInLanguage('Unknown');
+    await coursePage.repositorySetupCard.clickOnRequestLanguageButton();
+    await coursePage.repositorySetupCard.requestLanguageDropdown.fillInLanguage('Unknown');
 
     await animationsSettled();
     await percySnapshot('Unknown Request Language');
@@ -102,7 +95,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 
-    assert.notOk(coursePage.setupItem.hasRequestedLanguagesPrompt, 'does not requested languages prompt');
+    assert.notOk(coursePage.repositorySetupCard.hasRequestedLanguagesPrompt, 'does not requested languages prompt');
   });
 
   test('sees language prompt if subset of requested languages are still unsupported', async function (assert) {
@@ -126,10 +119,10 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 
-    assert.ok(coursePage.setupItem.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+    assert.ok(coursePage.repositorySetupCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     assert.strictEqual(
-      coursePage.setupItem.requestedLanguagesPrompt.willLetYouKnowText,
+      coursePage.repositorySetupCard.requestedLanguagesPrompt.willLetYouKnowText,
       "We'll let you know once Kotlin support is available on this challenge."
     );
   });

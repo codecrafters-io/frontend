@@ -7,6 +7,7 @@ declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends RenderModifiersRegistry {
     'in-viewport': ModifierLike<{ Args: { Named: { onEnter: () => void } } }>;
     'html-safe': HelperLike<{ Return: string; Args: { Positional: [string | undefined] } }>;
+    noop: HelperLike<{ Return: () => void }>;
     AnimatedContainer: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     AnimatedOrphans: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     'animated-value': ComponentLike<{
@@ -17,7 +18,10 @@ declare module '@glint/environment-ember-loose/registry' {
     }>;
     'svg-jar': ComponentLike<{ Args: { Named: { class: string }; Positional: [string] } }>;
     or: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: string }>;
+    and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     eq: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
+    not: HelperLike<{ Args: { Positional: [unknown] }; Return: boolean }>;
+    'not-eq': HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'page-title': HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     repeat: HelperLike<{ Return: string[]; Args: { Positional: [number] } }>;
     // ...

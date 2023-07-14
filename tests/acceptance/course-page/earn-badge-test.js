@@ -5,6 +5,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | earn-badge', function (hooks) {
@@ -43,8 +44,8 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.activeCourseStageItem.footerText, 'Tests failed. Show logs', 'footer is tests failed');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is active');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -65,13 +66,14 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for auto-advance
-    await animationsSettled();
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is still active');
+    assert.contains(coursePage.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'badge notice text is correct');
 
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port', 'first stage is still active');
-    assert.contains(coursePage.activeCourseStageItem.earnedBadgeNotice.text, 'You earned the Tesla badge.', 'text');
+    await percySnapshot('Course Stage - Earned Badged Notice');
 
-    await coursePage.activeCourseStageItem.earnedBadgeNotice.clickOnViewButton();
-    assert.strictEqual(coursePage.activeCourseStageItem.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla badge');
+    await coursePage.earnedBadgeNotice.clickOnViewButton();
+    assert.strictEqual(coursePage.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla badge');
+
+    await percySnapshot('Course Stage - View Earned Badged');
   });
 });

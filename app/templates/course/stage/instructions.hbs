@@ -1,0 +1,26 @@
+{{! @glint-nocheck: not typesafe yet !}}
+<div class="pt-8 pb-16">
+  {{#if this.shouldShowTestFailureExpectedHint}}
+    <CoursePage::CourseStageStep::TestFailureExpectedHint class="mb-6" />
+  {{/if}}
+
+  {{#if this.shouldShowUpgradePrompt}}
+    <CoursePage::CourseStageStep::UpgradePrompt @class="mb-6" @color="yellow" />
+  {{/if}}
+
+  {{#if (gt this.badgeAwards.length 0)}}
+    <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
+  {{/if}}
+
+  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
+
+  {{#if @model.courseStage.isFirst}}
+    <CoursePage::CourseStageStep::FirstStageInstructionsCard @repository={{@model.activeRepository}} class="mt-6" />
+  {{/if}}
+
+  <div data-percy-hints-section>
+    <h2 class="font-semibold border-b pb-2 mb-6 text-lg mt-8">Hints</h2>
+
+    <CoursePage::CommentList @courseStage={{@model.courseStage}} @language={{@model.activeRepository.language}} />
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="flex items-center text-xs min-h-[40px]">
+  <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} data-test-footer-text />
+
+  {{#if (and (eq this.coursePageState.currentStep.testsStatus "failed") this.lastFailedSubmission)}}
+    <span
+      class="inline-block border border-gray-400 rounded ml-3 px-1.5 py-0.5 font-medium text-gray-800 bg-white"
+      role="button"
+      {{on "click" this.handleLogsButtonClick}}
+    >{{if this.logsAreExpanded "Hide logs" "Show logs"}}</span>
+  {{/if}}
+</div>
+
+{{#if (and this.lastFailedSubmission this.logsAreExpanded)}}
+  <div class="pb-3">
+    <SubmissionLogsPreview @submission={{this.lastFailedSubmission}} />
+
+    <div class="mt-3 prose prose-sm text-xs">
+      Read our article on
+      <a href={{this.debuggingArticleLink}} target="_blank" rel="noopener noreferrer">debugging test failures</a>.
+    </div>
+  </div>
+{{/if}}

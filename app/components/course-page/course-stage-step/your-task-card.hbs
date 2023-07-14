@@ -1,0 +1,49 @@
+<CoursePage::InstructionsCard data-test-your-task-card ...attributes>
+  <:content>
+    <div class="flex items-center gap-x-3 w-full border-b pb-2 mb-5">
+      <h2 class="font-semibold text-lg text-gray-700">Your Task</h2>
+      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+    </div>
+
+    <div class="prose" data-test-stage-instructions>
+      {{html-safe this.instructionsHTML}}
+    </div>
+
+    {{! @glint-expect-error not ts-ified yet }}
+    <CoursePage::CourseStageStep::YourTaskCard::ActionButtonList
+      @courseStage={{@courseStage}}
+      @repository={{@repository}}
+      @onFeedbackButtonClick={{this.handleFeedbackActionButtonClicked}}
+      @shouldHideFeedbackButtons={{this.automaticFeedbackFlowIsActive}}
+      class="mt-3"
+    />
+
+    {{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
+      {{! @glint-expect-error not ts-ified yet }}
+      <CoursePage::CourseStageStep::YourTaskCard::FeedbackPrompt
+        @onClose={{this.handleFeedbackPromptClosed}}
+        @onSubmit={{this.handleFeedbackSubmitted}}
+        @courseStage={{@courseStage}}
+        @repository={{@repository}}
+        @wasTriggeredManually={{this.manualFeedbackFlowIsActive}}
+        class="mt-6"
+      />
+    {{/if}}
+
+    {{#if (and (eq this.coursePageState.currentStep.status "complete") (eq @courseStage.nextStage @repository.activeStage))}}
+      <div class="mt-4 flex">
+        <PrimaryLinkButton
+          @route={{this.coursePageState.activeStep.routeParams.route}}
+          @models={{this.coursePageState.activeStep.routeParams.models}}
+          data-test-continue-button
+        >
+          View Next Stage →
+        </PrimaryLinkButton>
+      </div>
+    {{/if}}
+  </:content>
+  <:footerContent>
+    {{! @glint-expect-error not ts-ified yet }}
+    <CoursePage::CourseStageStep::YourTaskCard::Footer @repository={{@repository}} @courseStage={{@courseStage}} />
+  </:footerContent>
+</CoursePage::InstructionsCard>

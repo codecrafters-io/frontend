@@ -1,0 +1,53 @@
+<div class="text-gray-700 prose mb-5" data-test-create-repository-step>
+  <p>
+    To get started, let's create a Git repository with starter code for you to work on.
+  </p>
+
+  <p>
+    <b>Which language would you like to use?</b>
+  </p>
+</div>
+
+<div>
+  {{#if (or @repository.isSaving (not @repository.isNew))}}
+    <div class="flex items-center py-5">
+      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+      <span class="ml-3 text-gray-700">Initializing a Git Repository...</span>
+    </div>
+  {{else}}
+    <div class="flex items-center flex-wrap max-w-3xl">
+      {{#if (and (gt this.preferredLanguages.length 0) (not this.shouldShowNonPreferredLanguages))}}
+        {{#each this.preferredLanguages as |language|}}
+          <CoursePage::SetupStep::RepositorySetupCard::LanguageButton
+            @language={{language}}
+            {{on "click" (fn this.handleLanguageButtonClick language)}}
+          />
+        {{/each}}
+
+        <CoursePage::SetupStep::RepositorySetupCard::ShowOtherLanguagesButton
+          @course={{@repository.course}}
+          @user={{@repository.user}}
+          {{on "click" this.handleShowOtherLanguagesButtonClick}}
+        />
+      {{else}}
+        {{#each this.orderedLanguageConfigurations as |languageConfiguration|}}
+          <CoursePage::SetupStep::RepositorySetupCard::LanguageButton
+            @language={{languageConfiguration.language}}
+            @releaseStatusIsAlpha={{languageConfiguration.releaseStatusIsAlpha}}
+            {{on "click" (fn this.handleLanguageButtonClick languageConfiguration.language)}}
+          />
+        {{/each}}
+
+        <CoursePage::SetupStep::RepositorySetupCard::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />
+      {{/if}}
+    </div>
+
+    <AnimatedContainer>
+      {{#animated-if (gt this.requestedAndUnsupportedLanguages.length 0) use=this.requestedLanguagesPromptTransition}}
+        <CoursePage::SetupStep::RepositorySetupCard::RequestedLanguagesPrompt
+          @requestedAndUnsupportedLanguages={{this.requestedAndUnsupportedLanguages}}
+        />
+      {{/animated-if}}
+    </AnimatedContainer>
+  {{/if}}
+</div>

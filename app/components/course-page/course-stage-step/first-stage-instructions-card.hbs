@@ -1,0 +1,56 @@
+<CoursePage::InstructionsCard @title="How to pass this stage" ...attributes>
+  <:content>
+    <div class="prose mb-5">
+      <p>
+        Since this is your first stage, we've included commented code to pass this stage in your repository.
+      </p>
+
+      <p>
+        <b>Step 1:</b>
+        Uncomment the code.
+      </p>
+    </div>
+
+    {{#if this.solutionIsAvailable}}
+      <div class="mb-5">
+        {{#each this.solution.changedFiles as |changedFile|}}
+          <div class="mb-4 bg-white shadow-sm rounded border border-gray-300">
+            <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+              <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+            </div>
+
+            <div class="text-sm">
+              {{! @glint-expect-error: not ts-ified yet }}
+              <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else if (not @repository.language)}}
+      <div class="prose mb-5">
+        <p>
+          <span class="text-lg">⚠️</span>
+          Complete repository setup to see the code you need to uncomment.
+        </p>
+      </div>
+    {{else}}
+      <div class="prose mb-5">
+        <p>
+          View the README in your repository for instructions on how to uncomment the code.
+        </p>
+      </div>
+    {{/if}}
+
+    <div class="prose">
+      <p>
+        <b>Step 2:</b>
+        Commit and push your changes.
+      </p>
+      <p>
+        Run the following commands to submit your changes:
+      </p>
+
+      {{html-safe this.submitChangesInstructionsHTML}}
+    </div>
+  </:content>
+</CoursePage::InstructionsCard>

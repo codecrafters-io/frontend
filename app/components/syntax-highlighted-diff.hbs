@@ -36,11 +36,11 @@
         <div class="py-2 my-4 border-t border-b space-y-4 px-4">
           {{#if line.commentsAreExpanded}}
             {{#each line.comments key="id" as |comment|}}
-              <CoursePage::CourseStageSolutionModal::CommentTimelineItem @author={{comment.user}}>
+              <CoursePage::CommentTimelineItem @author={{comment.user}}>
                 <div class="shadow-sm rounded border border-gray-300 w-full">
                   <CommentCard @comment={{comment}} />
                 </div>
-              </CoursePage::CourseStageSolutionModal::CommentTimelineItem>
+              </CoursePage::CommentTimelineItem>
             {{/each}}
           {{/if}}
         </div>

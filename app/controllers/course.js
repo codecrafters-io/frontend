@@ -1,72 +1,115 @@
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
+import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import config from 'codecrafters-frontend/config/environment';
 
 export default class CourseController extends Controller {
-  queryParams = [
-    {
-      action: 'action',
-      selectedRepositoryId: 'repo',
-      isCreatingNewRepository: 'fresh',
-      track: 'track',
-    },
-  ];
+  queryParams = ['action', 'track', 'repo'];
 
-  @tracked action = null;
-  @tracked isCreatingNewRepository = false;
-  @tracked selectedRepositoryId;
-  @tracked newRepository;
-  @tracked track;
   @service authenticator;
+  @service coursePageState;
   @service store;
+  @service router;
+  @service visibility;
 
-  get activeRepository() {
-    if (this.selectedRepositoryId) {
-      return this.repositories.findBy('id', this.selectedRepositoryId);
-    } else if (this.isCreatingNewRepository) {
-      return this.newRepository;
-    } else if (this.track) {
-      return this.lastPushedRepositoryForTrack || this.newRepository;
-    } else {
-      return this.lastPushedRepository || this.newRepository;
-    }
-  }
+  // query params
+  @tracked action;
+  @tracked repo; // repository id
+  @tracked track;
 
-  get course() {
-    return this.model.courses.findBy('slug', this.model.courseSlug);
-  }
+  @tracked polledRepository;
+  @tracked configureGithubIntegrationModalIsOpen = false;
+  @tracked isViewingProgressBanner = false; // TODO: Still needed?
+  @tracked sidebarIsExpandedOnDesktop = true;
+  @tracked sidebarIsExpandedOnMobile = false;
+  @tracked leaderboardIsExpanded = true;
 
-  @action
-  handleRepositoryCreate() {
-    this.track = null;
-    this.selectedRepositoryId = this.newRepository.id;
-    this.isCreatingNewRepository = false;
-    this.newRepository = this.store.createRecord('repository', { course: this.course, user: this.authenticator.currentUser });
+  get currentUser() {
+    return this.authenticator.currentUser;
   }
 
   get isDevelopmentOrTest() {
     return config.environment !== 'production';
   }
 
-  get lastPushedRepository() {
-    return this.repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+  get selectedRepositoryId() {
+    return this.repo;
   }
 
-  get lastPushedRepositoryForTrack() {
-    return this.repositories.filterBy('language.slug', this.track).filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
-  }
-
-  get repositories() {
-    if (!this.authenticator.currentUser) {
-      return [];
+  get visiblePrivateLeaderboardFeatureSuggestion() {
+    if (this.authenticator.isAnonymous || (this.currentUser && this.currentUser.isTeamMember)) {
+      return null;
     }
 
-    return this.authenticator.currentUser.repositories.filterBy('course', this.course).without(this.newRepository);
+    return this.currentUser.featureSuggestions.filterBy('featureIsPrivateLeaderboard').rejectBy('isDismissed').firstObject;
   }
 
-  get hasRecentlyCompletedGitHubIntegrationSetup() {
-    return this.action === 'github_app_installation_completed';
+  @action
+  handleDidInsertContainer() {
+    this.setupRouteChangeListeners();
+    this.startRepositoryPoller();
+
+    if (this.action === 'github_app_installation_completed') {
+      this.configureGithubIntegrationModalIsOpen = true;
+
+      next(() => {
+        this.router.transitionTo({ queryParams: { action: null } }); // reset param
+      });
+    }
+  }
+
+  @action
+  handleDidUpdateActiveRepository() {
+    if (this.model.activeRepository !== this.polledRepository) {
+      this.stopRepositoryPoller();
+      this.startRepositoryPoller();
+    }
+  }
+
+  @action
+  async handlePoll() {
+    // Nothing to do at the moment
+  }
+
+  @action
+  async handleWillDestroyContainer() {
+    this.teardownRouteChangeListeners();
+    this.stopRepositoryPoller();
+  }
+
+  @action
+  async handleRouteChanged() {
+    this.sidebarIsExpandedOnMobile = false;
+  }
+
+  @action
+  setupRouteChangeListeners() {
+    this.router.on('routeDidChange', this.handleRouteChanged);
+  }
+
+  @action
+  teardownRouteChangeListeners() {
+    this.router.off('routeDidChange', this.handleRouteChanged);
+  }
+
+  startRepositoryPoller() {
+    this.stopRepositoryPoller();
+
+    if (this.model.activeRepository) {
+      this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility, intervalMilliseconds: 2000 });
+      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll);
+      this.polledRepository = this.model.activeRepository;
+    }
+  }
+
+  stopRepositoryPoller() {
+    if (this.repositoryPoller) {
+      this.repositoryPoller.stop();
+    }
+
+    this.polledRepository = null;
   }
 }

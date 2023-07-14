@@ -1,17 +1,18 @@
 {{page-title "CodeCrafters"}}
 
 <div class="bg-gray-50 min-h-screen">
-  <Header />
+  {{#if this.layout.shouldShowHeader}}
+    <Header />
+  {{/if}}
 
   {{outlet}}
 
-  {{#if this.isAnyModalOpen}}
-    <ModalBackdrop>
-      {{! Modals go here }}
-    </ModalBackdrop>
-  {{/if}}
+  <div id="modal-backdrop-container">
+  </div>
 
-  <Footer />
+  {{#if this.layout.shouldShowFooter}}
+    <Footer />
+  {{/if}}
 </div>
 
 <LoadingIndicatorRemover />

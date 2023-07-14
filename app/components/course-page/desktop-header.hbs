@@ -1,0 +1,74 @@
+<div class="border-b" data-test-desktop-header ...attributes>
+  <div class="flex justify-between items-center mb-6 gap-x-3">
+    <div class="flex items-center gap-x-3">
+      <button class="flex items-center lg:hidden" type="button" {{on "click" @onMobileSidebarButtonClick}}>
+        {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
+      </button>
+
+      <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
+    </div>
+
+    <div class="flex items-center gap-x-3">
+      {{#if this.currentUser.isStaff}}
+        <LinkTo @route="course.admin.submissions" @model={{@course.slug}}>
+          <TertiaryButton @size="small" class="py-1 text-xs">
+            Admin
+          </TertiaryButton>
+        </LinkTo>
+      {{/if}}
+      <LinkTo
+        @route="catalog"
+        class="inline-flex items-center text-gray-500 hover:text-gray-600 transition-colors text-xs p-1.5 border border-gray-300 rounded hover:bg-white"
+      >
+        {{svg-jar "x" class="w-4 fill-current"}}
+      </LinkTo>
+    </div>
+  </div>
+  <div class="mb-6">
+    <div class="flex flex-col items-start">
+      <div class="flex items-center flex-wrap gap-x-3">
+        <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
+          {{#if (eq @currentStep.type "SetupStep")}}
+            <span class="font-bold text-gray-700">Repository Setup</span>
+          {{else if (eq @currentStep.type "CourseStageStep")}}
+            {{! @glint-expect-error not typesafe }}
+            <span class="text-gray-600 mr-1">Stage #{{@currentStep.courseStage.position}}:</span>
+            {{! @glint-expect-error not typesafe }}
+            <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
+          {{else if (eq @currentStep.type "CourseCompletedStep")}}
+            <span class="font-bold text-gray-700">Challenge completed!</span>
+          {{/if}}
+        </div>
+
+        <div class="flex items-center md:h-[2rem] h-[1.75rem] flex-shrink-0">
+          <CoursePage::StepStatusPill @step={{@currentStep}} />
+        </div>
+      </div>
+
+      <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+    </div>
+  </div>
+
+  {{#if (and (not-eq @currentStep @activeStep) (not-eq @activeStep.type "CourseCompletedStep"))}}
+    <div class="mb-6">
+      <PrimaryLinkButton @size="small" @route={{@activeStep.routeParams.route}} @models={{@activeStep.routeParams.models}}>
+        <div class="flex items-center">
+          {{#if (eq @nextStep @activeStep)}}
+            <span>View next stage</span>
+            {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+          {{else}}
+            <span>Back to {{@activeStep.shortTitle}}</span>
+            {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+          {{/if}}
+        </div>
+      </PrimaryLinkButton>
+    </div>
+  {{/if}}
+
+  <div class="flex items-center overflow-x-scroll">
+    {{#each this.availableTabs key="slug" as |tab|}}
+      {{! @glint-expect-error not typesafe }}
+      <CoursePage::HeaderTabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+    {{/each}}
+  </div>
+</div>

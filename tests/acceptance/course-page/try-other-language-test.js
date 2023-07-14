@@ -2,7 +2,7 @@ import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-c
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -34,56 +34,83 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       courseStage: redis.stages.models.sortBy('position').firstObject,
     });
 
-    let baseRequestsCount = [
+    let expectedRequestsCount = [
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
+      'fetch hints (course page)',
     ].length;
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, `expected ${baseRequestsCount} requests`);
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Respond to PING', 'first stage should be active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'first stage should be active');
 
     await coursePage.repositoryDropdown.click();
     await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, `expected ${baseRequestsCount + 2} requests`); // Fetch languages, course language requests
+    expectedRequestsCount += [
+      'fetch courses (course page)',
+      'fetch repositories (course page)',
+      'fetch leaderboard entries (course page)',
+      'fetch languages (course page)',
+    ].length;
 
-    assert.strictEqual(currentURL(), '/courses/redis?fresh=true');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
-    assert.ok(coursePage.setupItem.isOnCreateRepositoryStep, 'current step is create repository step');
-    assert.ok(coursePage.setupItem.statusIsInProgress, 'current status is in-progress');
+    assert.strictEqual(currentURL(), '/courses/redis/setup?repo=new');
 
-    await coursePage.setupItem.clickOnLanguageButton('Go');
+    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
 
-    baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
+    await coursePage.repositorySetupCard.clickOnLanguageButton('Go');
+    assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, `expected ${baseRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 3, `expected ${expectedRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
-    assert.strictEqual(currentURL(), '/courses/redis?repo=2', 'current URL is course page URL with repo query param');
+    assert.strictEqual(currentURL(), '/courses/redis/setup?repo=2', 'current URL is course page URL with repo query param');
 
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 5, 'polling should have run');
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'polling should have run');
+    assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run again');
+  });
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 7, 'polling should have run again');
-    assert.strictEqual(coursePage.activeCourseStageItem.title, 'Bind to a port');
+  test('can try other language from repository setup page (regression)', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
 
-    await animationsSettled();
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.sidebar.clickOnStepListItem('Repository Setup');
+
+    await coursePage.repositoryDropdown.click();
+    await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
+    await coursePage.repositoryDropdown.clickOnAction('Try a different language');
+
+    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
   });
 });

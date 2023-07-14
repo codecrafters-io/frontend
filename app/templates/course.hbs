@@ -6,13 +6,106 @@
   </div>
 {{/if}}
 
-<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
-  <CoursePage::Content
-    @hasRecentlyCompletedGitHubIntegrationSetup={{this.hasRecentlyCompletedGitHubIntegrationSetup}}
-    @course={{this.course}}
-    @repositories={{this.repositories}}
-    @activeRepository={{this.activeRepository}}
-    @onRepositoryCreate={{this.handleRepositoryCreate}}
-    @preferredLanguageSlug={{this.track}}
-  />
+<div
+  class="flex flex-row-reverse h-screen w-full"
+  {{did-insert this.handleDidInsertContainer}}
+  {{will-destroy this.handleWillDestroyContainer}}
+  {{did-update this.handleDidUpdateActiveRepository @model.activeRepository}}
+>
+  {{#if this.sidebarIsExpandedOnMobile}}
+    <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-900/90"></div>
+      <div class="fixed inset-0 flex">
+        <div class="relative mr-8 flex w-full max-w-xs flex-1">
+          <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
+            <button type="button" class="-m-2.5 p-2.5" {{on "click" (fn (mut this.sidebarIsExpandedOnMobile) false)}}>
+              <span class="sr-only">Close sidebar</span>
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <CoursePage::Sidebar
+            @course={{@model.course}}
+            @repositories={{@model.repositories}}
+            @activeRepository={{@model.activeRepository}}
+            class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
+          />
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="flex flex-col max-h-screen overflow-y-auto flex-grow relative" data-test-course-page-scrollable-area>
+    {{! For collapse/expand on desktop }}
+    <CoursePage::ExpandSidebarButton
+      class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
+      {{on "click" (fn (mut this.sidebarIsExpandedOnDesktop) true)}}
+    />
+
+    <CoursePage::DesktopHeader
+      @stepList={{this.coursePageState.stepList}}
+      @currentStep={{this.coursePageState.currentStep}}
+      @activeStep={{this.coursePageState.activeStep}}
+      @nextStep={{this.coursePageState.nextStep}}
+      @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
+      class="px-3 md:px-6 lg:pl-10 pt-3 sm:pt-6"
+    />
+
+    <div class="flex flex-grow bg-white">
+      <div class="px-3 md:px-6 lg:px-10 flex-grow min-w-0">
+        {{outlet}}
+      </div>
+
+      <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block relative group">
+        {{#if this.leaderboardIsExpanded}}
+          <CoursePage::CollapseLeaderboardButton
+            class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+            {{on "click" (fn (mut this.leaderboardIsExpanded) false)}}
+          />
+        {{else}}
+          <CoursePage::ExpandLeaderboardButton
+            class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+            {{on "click" (fn (mut this.leaderboardIsExpanded) true)}}
+          />
+        {{/if}}
+
+        <CourseLeaderboard
+          @course={{@model.course}}
+          @activeRepository={{@model.activeRepository}}
+          @repositories={{@model.repositories}}
+          @isCollapsed={{not this.leaderboardIsExpanded}}
+        />
+
+        {{#if (and this.leaderboardIsExpanded this.visiblePrivateLeaderboardFeatureSuggestion)}}
+          <PrivateLeaderboardFeatureSuggestion @featureSuggestion={{this.visiblePrivateLeaderboardFeatureSuggestion}} class="ml-4 mt-6" />
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  {{#if this.sidebarIsExpandedOnDesktop}}
+    <CoursePage::Sidebar
+      @course={{@model.course}}
+      @repositories={{@model.repositories}}
+      @activeRepository={{@model.activeRepository}}
+      class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
+    >
+      <CoursePage::CollapseSidebarButton
+        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5"
+        {{on "click" (fn (mut this.sidebarIsExpandedOnDesktop) false)}}
+      />
+    </CoursePage::Sidebar>
+  {{/if}}
+
 </div>
+
+{{#if this.configureGithubIntegrationModalIsOpen}}
+  <ModalBackdrop>
+    <CoursePage::ConfigureGithubIntegrationModal
+      @repository={{@model.activeRepository}}
+      @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
+    />
+  </ModalBackdrop>
+{{/if}}

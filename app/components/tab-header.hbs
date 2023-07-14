@@ -1,0 +1,15 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div
+  role="button"
+  class="flex flex-shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm {{if @isActive 'border-teal-500' 'border-gray-200'}}"
+  data-test-tab-header
+  ...attributes
+>
+  {{#if @iconUrl}}
+    <img src={{@iconUrl}} alt="icon" class="h-5 mr-2" />
+  {{else}}
+    {{svg-jar @icon class="text-gray-600 w-5 mr-2 fill-current"}}
+  {{/if}}
+
+  <span class="whitespace-nowrap {{if @isActive 'font-medium text-gray-700' 'text-gray-600'}}">{{@text}}</span>
+</div>

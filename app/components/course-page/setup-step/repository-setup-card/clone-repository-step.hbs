@@ -1,0 +1,37 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div class="text-gray-700 prose" data-test-clone-repository-step>
+  <p class="mb-5">
+    We've prepared a starter repository with some
+    {{@repository.language.name}}
+    code for you.
+  </p>
+
+  <p class="mb-4">
+    <b class="text-teal-600">Step 1:</b>
+    Clone the repository.
+  </p>
+
+  <CopyableCode
+    @code="git clone {{@repository.cloneUrl}} {{@repository.cloneDirectory}} && cd {{@repository.cloneDirectory}}"
+    @class="mb-5"
+    data-test-copyable-repository-clone-instructions
+  />
+
+  <p class="mb-4">
+    <b class="text-teal-600">Step 2:</b>
+    Push an empty commit.
+  </p>
+
+  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" @class="mb-5" />
+
+  {{#if @repository.firstSubmissionCreated}}
+    <p>
+      <span class="text-lg mr-2">🎉</span>
+      Git push received! The first stage is now activated.
+    </p>
+  {{else}}
+    <p>
+      When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
+    </p>
+  {{/if}}
+</div>

@@ -2,7 +2,6 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
@@ -32,9 +31,6 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
 
@@ -64,9 +60,6 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-
-    assert.strictEqual(currentURL(), '/courses/redis', 'current URL is course page URL');
-
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
 

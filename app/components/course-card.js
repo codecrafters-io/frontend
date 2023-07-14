@@ -13,9 +13,9 @@ export default class CourseCardComponent extends Component {
     }
 
     if (this.lastPushedRepository) {
-      await this.router.transitionTo('course', this.args.course.slug, { queryParams: { fresh: null } });
+      this.router.transitionTo('course', this.args.course.slug, { queryParams: { fresh: null } });
     } else {
-      await this.router.transitionTo('course-overview', this.args.course.slug);
+      this.router.transitionTo('course-overview', this.args.course.slug);
     }
   }
 

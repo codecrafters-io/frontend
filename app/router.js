@@ -13,7 +13,18 @@ Router.map(function () {
   this.route('concepts');
   this.route('concept', { path: '/concepts/:concept_slug' });
   this.route('courses');
-  this.route('course', { path: '/courses/:course_slug' });
+
+  this.route('course', { path: '/courses/:course_slug' }, function () {
+    this.route('setup');
+
+    this.route('stage', { path: '/stages/:stage_number' }, function () {
+      this.route('code-examples');
+      this.route('instructions', { path: '/' });
+      this.route('screencasts');
+    });
+
+    this.route('completed');
+  });
 
   this.route('course.admin', { path: '/courses/:course_slug/admin' }, function () {
     this.route('submissions');

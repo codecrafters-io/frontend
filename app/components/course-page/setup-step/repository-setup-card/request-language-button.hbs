@@ -1,0 +1,20 @@
+<BasicDropdown @horizontalPosition="left" as |dd|>
+  <dd.Trigger>
+    <TertiaryButton class="flex items-center mr-3 mb-3 group" {{did-insert this.handleDidInsert}}>
+      <div class="flex items-center mr-2">
+        {{#if dd.isOpen}}
+          {{svg-jar "code" class="text-teal-500 h-4 fill-current"}}
+        {{else}}
+          {{svg-jar "code" class="text-gray-400 h-4 fill-current group-hover:text-teal-500"}}
+        {{/if}}
+      </div>
+
+      <div class="text-base {{if dd.isOpen 'text-teal-500' 'text-gray-700'}} group-hover:text-teal-500">
+        Request Other
+      </div>
+    </TertiaryButton>
+  </dd.Trigger>
+  <dd.Content>
+    <CoursePage::SetupStep::RepositorySetupCard::RequestLanguageDropdown @course={{@course}} @user={{@user}} @onClose={{dd.actions.close}} />
+  </dd.Content>
+</BasicDropdown>
