@@ -19,7 +19,7 @@
 
     {{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
       {{! @glint-expect-error not ts-ified yet }}
-      <CoursePage::CourseStageItem::FeedbackPrompt
+      <CoursePage::CourseStageStep::YourTaskCard::FeedbackPrompt
         @onClose={{this.handleFeedbackPromptClosed}}
         @onSubmit={{this.handleFeedbackSubmitted}}
         @courseStage={{@courseStage}}

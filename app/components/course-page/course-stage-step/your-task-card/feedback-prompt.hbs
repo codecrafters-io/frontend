@@ -23,7 +23,7 @@
 
     <div class="flex items-center mt-2">
       {{#each this.answerOptions as |answerOption|}}
-        <CoursePage::CourseStageItem::FeedbackPromptOption
+        <CoursePage::CourseStageStep::YourTaskCard::FeedbackPromptOption
           @emoji={{answerOption}}
           @isSelected={{eq this.feedbackSubmission.selectedAnswer answerOption}}
           {{on "click" (fn this.handleAnswerOptionSelected answerOption)}}
