@@ -156,7 +156,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^1.46.0",
+    "@stripe/stripe-js": "^1.54.1",
     "@tailwindcss/typography": "^0.5.8",
     "@typeform/embed": "^2.5.0",
     "@vimeo/player": "^2.19.0",
