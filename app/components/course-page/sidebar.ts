@@ -22,14 +22,7 @@ interface Signature {
 }
 
 export default class CoursePageSidebarComponent extends Component<Signature> {
-  // @ts-ignore
-  @service authenticator;
-
   @service declare coursePageState: CoursePageStateService;
-
-  get currentUser() {
-    return this.authenticator.currentUser;
-  }
 
   get currentStep() {
     return this.coursePageState.currentStep;
