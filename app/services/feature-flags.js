@@ -22,14 +22,6 @@ export default class FeatureFlagsService extends Service {
     return this.getFeatureFlagValue('can-see-stage-2-screencasts') === 'test';
   }
 
-  get canSeeStage2CompletionRate() {
-    if (this.currentUser && this.currentUser.isStaff) {
-      return true;
-    }
-
-    return this.getFeatureFlagValue('can-see-stage-2-completion-rate') === 'test';
-  }
-
   get currentUser() {
     return this.authenticator.currentUser;
   }
