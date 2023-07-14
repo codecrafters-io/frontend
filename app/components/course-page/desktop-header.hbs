@@ -67,7 +67,7 @@
 
   <div class="flex items-center overflow-x-scroll">
     {{#each this.availableTabs key="slug" as |tab|}}
-      {{! @glint-expect-error not typesafe }}}
+      {{! @glint-expect-error not typesafe }}
       <CoursePage::HeaderTabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
     {{/each}}
   </div>

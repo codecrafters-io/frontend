@@ -44,7 +44,7 @@
         <span class="ml-3 text-gray-700">Loading...</span>
       </div>
     {{else if (gt this.sortedSolutions.length 0)}}
-      <CoursePage::CourseStageStep::CommunitySolutionsList @solutions={{this.sortedSolutions}} />
+      <CoursePage::CourseStageStep::CommunitySolutionsList @solutions={{this.sortedSolutions}} @repository={{@model.activeRepository}} />
     {{else}}
       <div class="flex py-16 justify-center items-center w-full">
         <div class="text-sm text-gray-500 text-center max-w-lg">

@@ -8,6 +8,7 @@ export default class CommunitySolutionsListComponent extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked isLoadingNextBatch = false; // We don't "actually paginate" yet, we only do this because rendering solutions is expensive.
   @tracked lastVisibleSolutionIndex = 2;
+  @tracked configureGithubIntegrationModalIsOpen = false;
 
   @action
   async handleListEndReached() {

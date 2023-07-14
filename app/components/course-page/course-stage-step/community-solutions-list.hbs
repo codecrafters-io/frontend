@@ -1,6 +1,6 @@
 {{#each this.visibleSolutions as |solution solutionIndex|}}
   <CoursePage::CourseStageStep::CommunitySolutionCard
-    @onPublishToGithubButtonClick={{(noop)}}
+    @onPublishToGithubButtonClick={{fn (mut this.configureGithubIntegrationModalIsOpen) true}}
     @solution={{solution}}
     @isCollapsedByDefault={{true}}
     @positionInList={{add solutionIndex 1}}
@@ -19,4 +19,14 @@
     <div {{in-viewport onEnter=this.handleListEndReached}} key={{this.visibleSolutions.length}}>
     </div>
   {{/if}}
+{{/if}}
+
+{{#if this.configureGithubIntegrationModalIsOpen}}
+  <ModalBackdrop>
+    <CoursePage::ConfigureGithubIntegrationModal
+      {{! TODO: We actually don't know if the solution belongs to the **active** repository, just that it belongs to the user !}}
+      @repository={{@repository}}
+      @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
+    />
+  </ModalBackdrop>
 {{/if}}
