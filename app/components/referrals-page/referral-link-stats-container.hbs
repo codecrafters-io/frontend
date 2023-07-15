@@ -20,9 +20,13 @@
       @helpText="The number of referred users who've converted to paying users."
     >
       <div class="flex items-center">
-        <span class="text-gray-700 text-lg sm:text-2xl font-bold">0</span>
-        {{!        <span class="text-teal-500 text-lg font-bold ml-1">($440)</span>}}
-        <span class="text-gray-300 text-xs ml-1">(no payments yet)</span>
+        {{#if (eq this.paidUsersCount 0)}}
+          <span class="text-gray-300 text-xs ml-1">(no payments yet)</span>
+        {{else}}
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold">
+            {{this.paidUsersCount}}
+          </span>
+        {{/if}}
       </div>
     </ReferralsPage::ReferralLinkStatContainer>
   </div>

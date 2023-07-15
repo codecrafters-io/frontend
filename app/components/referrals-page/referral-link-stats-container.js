@@ -11,4 +11,8 @@ export default class ReferralLinkStatsContainerComponent extends Component {
   get trialCount() {
     return this.args.referralLink.activations.filterBy('hasStartedTrial').length;
   }
+
+  get paidUsersCount() {
+    return this.args.referralLink.visibleActivations.filter((activation) => activation.spentAmountInDollars > 0).length;
+  }
 }
