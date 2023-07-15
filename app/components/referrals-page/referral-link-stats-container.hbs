@@ -1,4 +1,4 @@
-<PageSection @title="Stats" data-test-subscription-settings-container ...attributes>
+<PageSection @title="Stats" data-test-referral-stats-container ...attributes>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <ReferralsPage::ReferralLinkStatContainer
       @title="Referrals"
@@ -19,7 +19,7 @@
       @icon="gift"
       @helpText="The number of referred users who've converted to paying users."
     >
-      <div class="flex items-center">
+      <div class="flex items-center" data-test-referral-stats-paid-users>
         {{#if (eq this.paidUsersCount 0)}}
           <span class="text-gray-300 text-xs ml-1">(no payments yet)</span>
         {{else}}

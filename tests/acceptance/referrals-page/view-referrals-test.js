@@ -6,6 +6,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
+import { find } from '@ember/test-helpers';
 
 module('Acceptance | referrals-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
@@ -89,6 +90,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralsPage.visit();
+    const paidUsers = find('[data-test-referral-stats-paid-users]');
+    assert.ok(paidUsers.textContent.includes('2'), 'Expect number of paid users to be correct');
     assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
     await percySnapshot('Referrals Page | Referral Stats');
