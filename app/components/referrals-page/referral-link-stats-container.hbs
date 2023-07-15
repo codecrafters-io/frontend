@@ -1,15 +1,5 @@
 <PageSection @title="Stats" data-test-subscription-settings-container ...attributes>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <ReferralsPage::ReferralLinkStatContainer @title="Link Views" @icon="link" @helpText="The number of unique users that have viewed your link.">
-      <div class="flex items-center">
-        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.uniqueViewerCount}}</span>
-
-        {{#if (eq @referralLink.uniqueViewerCount 0)}}
-          <span class="text-gray-300 text-xs ml-1">(no views yet)</span>
-        {{/if}}
-      </div>
-    </ReferralsPage::ReferralLinkStatContainer>
-
     <ReferralsPage::ReferralLinkStatContainer
       @title="Referrals"
       @icon="cursor-click"
@@ -20,19 +10,6 @@
 
         {{#if (eq @referralLink.activations.length 0)}}
           <span class="text-gray-300 text-xs ml-1">(no referrals yet)</span>
-        {{/if}}
-      </div>
-    </ReferralsPage::ReferralLinkStatContainer>
-
-    <ReferralsPage::ReferralLinkStatContainer @title="Trials" @icon="credit-card" @helpText="The number of referred users who've started a trial.">
-      <div class="flex items-center">
-        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{this.trialCount}}</span>
-
-        {{#if (eq this.trialCount 0)}}
-          <span class="text-gray-300 text-xs ml-1">(no trials yet)</span>
-        {{else}}
-          {{! TODO: Wireup payments }}
-          {{!          <span class="text-yellow-500 text-lg font-bold ml-1">($990)</span>}}
         {{/if}}
       </div>
     </ReferralsPage::ReferralLinkStatContainer>
