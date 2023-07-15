@@ -45,7 +45,7 @@
     "@glint/template": "^1.0.2",
     "@percy/cli": "^1.16.0",
     "@percy/ember": "^4.0.0",
-    "@sentry/ember": "^7.58.1",
+    "@sentry/ember": "^7.27.0",
     "@sinonjs/fake-timers": "^10.0.2",
     "@tsconfig/ember": "^2.0.0",
     "@types/ember": "^4.0.3",
