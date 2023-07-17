@@ -48,7 +48,7 @@
     "@sentry/ember": "^7.27.0",
     "@sinonjs/fake-timers": "^10.0.2",
     "@tsconfig/ember": "^2.0.0",
-    "@types/ember": "^4.0.3",
+    "@types/ember": "^4.0.4",
     "@types/ember__application": "^4.0.6",
     "@types/ember__array": "^4.0.3",
     "@types/ember__component": "^4.0.13",
