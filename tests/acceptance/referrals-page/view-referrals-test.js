@@ -88,8 +88,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralsPage.visit();
-    const paidUsers = find('[data-test-referral-stats-paid-users]');
-    assert.ok(paidUsers.textContent.includes('2'), 'Expect number of paid users to be correct');
+    assert.ok(referralsPage.referralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
     assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
   });
 
