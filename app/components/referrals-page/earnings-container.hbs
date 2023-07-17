@@ -1,4 +1,4 @@
-<PageSection @title="Earnings" data-test-referred-users-container ...attributes>
+<PageSection @title="Earnings" data-test-earnings-container ...attributes>
   {{#if (gt this.totalEarningsAmountInDollars 0)}}
     <table class="max-w-xs">
       <tbody>
@@ -38,7 +38,7 @@
       {{/if}}
     </div>
   {{else}}
-    <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
+    <div class="text-gray-600 text-sm text-center py-10" data-test-earnings-description>
       When your earnings are ready to withdraw, you'll be able to view details here.
     </div>
   {{/if}}

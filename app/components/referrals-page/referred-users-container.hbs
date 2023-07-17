@@ -1,10 +1,33 @@
 {{! @glint-nocheck: not typesafe yet }}
 <PageSection @title="Referred Users" data-test-referred-users-container ...attributes>
-  {{#each @referralLink.visibleActivations as |referralActivation|}}
+  {{#each this.paidActivations as |referralActivation|}}
     <ReferralsPage::ReferredUserItem @referralActivation={{referralActivation}} />
   {{else}}
     <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
-      When your refer users, you'll be able to view their details here.
+      No paid users found.
     </div>
   {{/each}}
+
+  <div class="text-center pb-2">
+    <TertiaryButton
+      {{on "click" (fn (mut this.unpaidActivationsAreVisible) (not this.unpaidActivationsAreVisible))}}
+      data-test-referred-users-show-all-button
+    >
+      {{#if this.unpaidActivationsAreVisible}}
+        Hide signups
+      {{else}}
+        Show all signups
+      {{/if}}
+    </TertiaryButton>
+  </div>
+
+  {{#if this.unpaidActivationsAreVisible}}
+    {{#each this.unpaidActivations as |referralActivation|}}
+      <ReferralsPage::ReferredUserItem @referralActivation={{referralActivation}} />
+    {{else}}
+      <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
+        When your refer users, you'll be able to view their details here.
+      </div>
+    {{/each}}
+  {{/if}}
 </PageSection>
