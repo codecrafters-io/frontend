@@ -139,7 +139,7 @@
     "qunit": "^2.19.4",
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^2.0.0",
-    "shiki": "^0.14.2",
+    "shiki": "^0.14.3",
     "stylelint": "^15.4.0",
     "stylelint-config-standard": "^32.0.0",
     "stylelint-prettier": "^3.0.0",
