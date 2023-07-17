@@ -9,7 +9,10 @@
   {{/each}}
 
   <div class="text-center pb-2">
-    <TertiaryButton {{on "click" (fn (mut this.unpaidActivationsAreVisible) (not this.unpaidActivationsAreVisible))}} data-test-referred-users-show-all-button>
+    <TertiaryButton
+      {{on "click" (fn (mut this.unpaidActivationsAreVisible) (not this.unpaidActivationsAreVisible))}}
+      data-test-referred-users-show-all-button
+    >
       {{#if this.unpaidActivationsAreVisible}}
         Hide signups
       {{else}}
