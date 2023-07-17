@@ -16,3 +16,7 @@ updates:
       embroider:
         patterns:
           - '@embroider/*'
+      ember-types:
+        patterns:
+          - '@types/ember'
+          - '@types/ember*'
