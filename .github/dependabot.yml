@@ -5,7 +5,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: 'npm' # See documentation for possible values
+    directory: '/' # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: 'daily'
+    ignore:
+      - dependency-name: 'ember-source'
+      - dependency-name: 'ember-data'
+    groups:
+      embroider:
+        patterns:
+          - '@embroider/*'
