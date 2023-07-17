@@ -54,7 +54,10 @@ module('Acceptance | view-badges', function (hooks) {
     assert.strictEqual(1, 1);
 
     await badgesPage.clickOnBadge('The Turing badge');
-    assert.strictEqual(badgesPage.badgeEarnedModal.badgeName, 'The Turing badge');
+    assert.strictEqual(badgesPage.badgeEarnedModal.badgeName, 'The Turing badge', 'badge name is visible');
+
+    await badgesPage.clickOnModalBackdrop();
+    assert.notOk(badgesPage.badgeEarnedModal.isVisible, 'badge earned modal is hidden');
   });
 
   test('renders when user is not logged in', async function (assert) {
