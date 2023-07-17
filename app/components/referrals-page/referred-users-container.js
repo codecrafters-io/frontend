@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 
 export default class ReferredUsersContainerComponent extends Component {
   @tracked unpaidActivationsAreVisible = false;
@@ -15,10 +14,5 @@ export default class ReferredUsersContainerComponent extends Component {
 
   get unpaidActivations() {
     return this.referralLink.visibleActivations.filter((activation) => !activation.spentAmountInDollars);
-  }
-
-  @action
-  handleShowAllSignupsClick() {
-    this.unpaidActivationsAreVisible = !this.unpaidActivationsAreVisible;
   }
 }
