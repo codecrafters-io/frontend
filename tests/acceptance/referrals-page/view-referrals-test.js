@@ -91,8 +91,6 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
 
     await referralsPage.visit();
     assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
-
-    await percySnapshot('Referrals Page | Referral Stats');
   });
 
   test('should show paid users by default', async function (assert) {
@@ -172,12 +170,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralsPage.visit();
-
-    const referredUsers = find('[data-test-referred-users-container]');
-    assert.ok(referredUsers.textContent.includes('mrdoob'), 'Expect paid user to be found');
-    assert.notOk(referredUsers.textContent.includes('gufran'), 'Expect unpaid user to not be found');
-
-    await percySnapshot('Referrals Page | Referral Stats');
+    assert.ok(referralsPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.notOk(referralsPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
   });
 
   test('should show unpaid users after clicking show all button', async function (assert) {
@@ -257,15 +251,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralsPage.visit();
-
-    const referredUsers = find('[data-test-referred-users-container]');
-    const showAllButton = find('[data-test-referred-users-show-all-button]');
-
-    await click(showAllButton);
-
-    assert.ok(referredUsers.textContent.includes('mrdoob'), 'Expect paid user to be found');
-    assert.ok(referredUsers.textContent.includes('gufran'), 'Expect unpaid user to be found');
-
-    await percySnapshot('Referrals Page | Referral Stats');
+    await referralsPage.clickShowAllButton();
+    assert.ok(referralsPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.ok(referralsPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to be found');
   });
 });

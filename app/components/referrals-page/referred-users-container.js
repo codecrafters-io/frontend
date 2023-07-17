@@ -3,8 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class ReferredUsersContainerComponent extends Component {
-  @tracked
-  areAllSignupsShown = false;
+  @tracked unpaidActivationsAreVisible = false;
 
   get referralLink() {
     return this.args.referralLink;
@@ -15,15 +14,11 @@ export default class ReferredUsersContainerComponent extends Component {
   }
 
   get unpaidActivations() {
-    return this.referralLink.visibleActivations.filter((activation) => {
-      if (!activation.spentAmountInDollars) {
-        return activation;
-      }
-    });
+    return this.referralLink.visibleActivations.filter((activation) => !activation.spentAmountInDollars);
   }
 
   @action
   handleShowAllSignupsClick() {
-    this.areAllSignupsShown = !this.areAllSignupsShown;
+    this.unpaidActivationsAreVisible = !this.unpaidActivationsAreVisible;
   }
 }

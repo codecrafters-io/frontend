@@ -1,4 +1,4 @@
-import { clickOnText, collection, text, visitable } from 'ember-cli-page-object';
+import { clickOnText, collection, text, visitable, clickable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -28,6 +28,10 @@ export default createPage({
   getStartedButton: {
     scope: '[data-test-get-started-button]',
   },
+
+  referredUsersContainerText: text('[data-test-referred-users-container]'),
+
+  clickShowAllButton: clickable('[data-test-referred-users-show-all-button]'),
 
   initiatePayoutButton: {
     scope: '[data-test-initiate-payout-button]',
