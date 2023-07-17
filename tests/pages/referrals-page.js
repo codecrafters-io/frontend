@@ -31,6 +31,8 @@ export default createPage({
 
   referredUsersContainerText: text('[data-test-referred-users-container]'),
 
+  referralStatsPaidUsersText: text('[data-test-referral-stats-paid-users]'),
+
   clickShowAllButton: clickable('[data-test-referred-users-show-all-button]'),
 
   initiatePayoutButton: {
