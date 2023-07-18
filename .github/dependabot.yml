@@ -12,6 +12,7 @@ updates:
     ignore:
       - dependency-name: 'ember-source'
       - dependency-name: 'ember-data'
+      - dependency-name: 'ember-cli'
     groups:
       embroider:
         patterns:
