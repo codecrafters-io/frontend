@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import testimonialsData from 'codecrafters-frontend/lib/testimonials-data';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
@@ -27,8 +28,12 @@ export default class PayController extends Controller {
     this.router.transitionTo('tracks');
   }
 
-  get testimonials() {
-    return this.model.courses.findBy('slug', 'docker').testimonials;
+  get testimonialGroups() {
+    let testimonialGroup1 = [testimonialsData['ananthalakshmi-sankar'], testimonialsData['raghav-dua']];
+    let testimonialGroup2 = [testimonialsData['beyang-liu'], testimonialsData['kang-ming-tay']];
+    let testimonialGroup3 = [testimonialsData['jonathan-lorimer'], testimonialsData['akshata-mohan']];
+
+    return [testimonialGroup1, testimonialGroup2, testimonialGroup3];
   }
 
   get user() {
