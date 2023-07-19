@@ -1,6 +1,6 @@
 {{page-title "Pay"}}
 
-<div class="container mx-auto lg:max-w-screen-lg py-16 px-3 md:px-6">
+<div class="container mx-auto xl:max-w-screen-xl py-16 px-3 md:px-6">
   <div class="flex flex-col items-center justify-center">
     <h1 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-2xl text-center">
       Choose your CodeCrafters membership
@@ -14,46 +14,56 @@
       <PayPage::ReferralDiscountNotice @referralActivation={{this.user.currentReferralActivation}} class="mt-8" />
     {{/if}}
 
-    <div class="flex flex-col-reverse md:flex-row gap-x-8 gap-y-8 items-start mt-12">
+    <div class="flex flex-col lg:flex-row gap-x-8 gap-y-8 items-start mt-12">
       <PayPage::PricingCard
-        @title="3 months access"
+        @actualPrice={{990}}
+        @footerText="Pay once, access for life."
+        @isRecommended={{false}}
+        @pricingFrequency="lifetime"
+        @shouldShowAmortizedMonthlyPrice={{false}}
+        @title="Lifetime access"
+        data-test-lifetime-pricing-card
+      />
+
+      <PayPage::PricingCard
         @actualPrice={{120}}
+        @footerText="Billed once, as a single payment of $120."
+        @isRecommended={{false}}
         @pricingFrequency="quarterly"
-        @footerText="One-time payment."
+        @shouldShowAmortizedMonthlyPrice={{true}}
+        @title="3 months access"
         data-test-quarterly-pricing-card
       />
 
       <PayPage::PricingCard
-        @title="1 year access"
         @actualPrice={{360}}
-        @discountedPrice={{this.discountedYearlyPrice}}
-        @pricingFrequency="yearly"
-        @footerText="One-time payment."
-        @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
-        @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
         @customDiscount={{this.user.availableCustomDiscount}}
+        @discountedPrice={{this.discountedYearlyPrice}}
+        @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
+        @footerText="Billed once, as a single payment of ${{or this.discountedYearlyPrice 360}}."
+        @isRecommended={{true}}
+        @pricingFrequency="yearly"
+        @shouldShowAmortizedMonthlyPrice={{true}}
+        @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
+        @title="1 year access"
         data-test-yearly-pricing-card
-      />
-
-      <PayPage::PricingCard
-        @footerText="Ideal for expensing."
-        @title="Lifetime access"
-        @actualPrice={{990}}
-        @pricingFrequency="lifetime"
-        data-test-lifetime-pricing-card
       />
     </div>
 
-    <div role="button" class="mt-8 text-sm text-gray-400 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>
+    <div role="button" class="font-medium mt-16 text-sm text-gray-700 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>
       I'm still exploring →
     </div>
 
-    <FaqList class="mt-16" />
-
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
-      {{#each this.testimonials as |testimonial|}}
-        <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-2">
+      {{#each this.testimonialGroups as |testimonialGroup index|}}
+        <div class="flex-col space-y-2 {{if (eq index 0) 'hidden md:flex' 'flex'}}">
+          {{#each testimonialGroup as |testimonial|}}
+            <PayPage::TestimonialListItem @testimonial={{testimonial}} />
+          {{/each}}
+        </div>
       {{/each}}
     </div>
+
+    <FaqList class="mt-16" />
   </div>
 </div>

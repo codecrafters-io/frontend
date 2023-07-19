@@ -1,6 +1,20 @@
-<div class="rounded-lg bg-gray-50 border filter drop-shadow-lg w-full max-w-xs" data-test-pricing-card ...attributes>
+<div
+  class="rounded-lg bg-gray-50 drop-shadow-md
+    {{if @isRecommended 'border-2 border-teal-500' 'border-2 border-gray-200'}}
+    filter w-full max-w-xs relative"
+  data-test-pricing-card
+  ...attributes
+>
+  {{#if @isRecommended}}
+    <div class="absolute -top-5 left-0 right-0 flex items-center justify-center">
+      <div class="text-teal-500 font-semibold px-4 border-2 border-teal-500 h-10 inline-flex items-center bg-white rounded">
+        Most popular
+      </div>
+    </div>
+  {{/if}}
+
   <div class="flex flex-col items-center bg-white rounded-t-lg border-b px-6 pt-8 pb-8">
-    <div class="text-xl font-bold text-gray-700 border-b-2">
+    <div class="text-2xl font-bold text-gray-700 border-b-2 pb-2 border-gray-100">
       {{@title}}
     </div>
 
@@ -15,31 +29,42 @@
     {{#if @discountedPrice}}
       <div class="mt-8 flex items-center">
         <div>
-          <span class="text-4xl text-gray-700 font-bold line-through">${{@actualPrice}}</span>
-          {{#if @autoRenewSubscription}}
-            <span class="text-lg text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
+          {{#if @shouldShowAmortizedMonthlyPrice}}
+            <span class="text-4xl text-gray-700 font-bold line-through">${{this.actualAmortizedMonthlyPrice}}</span>
+          {{else}}
+            <span class="text-4xl text-gray-700 font-bold line-through">${{@actualPrice}}</span>
           {{/if}}
         </div>
         <div class="ml-2">
-          <span class="text-xl text-teal-500 font-bold" data-test-discounted-price>${{@discountedPrice}}</span>
-          {{#if @autoRenewSubscription}}
-            <span class="text-xl text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
+          {{#if @shouldShowAmortizedMonthlyPrice}}
+            <span class="text-2xl text-teal-500 font-bold" data-test-discounted-price>${{this.discountedAmortizedMonthlyPrice}}</span>
+            <span class="text-2xl text-gray-400 font-bold">/mo</span>
+          {{else}}
+            <span class="text-2xl text-teal-500 font-bold" data-test-discounted-price>${{@discountedPrice}}</span>
           {{/if}}
         </div>
       </div>
     {{else}}
       <div class="mt-8">
-        <span class="text-4xl text-gray-700 font-bold">${{@actualPrice}}</span>
-        {{#if @autoRenewSubscription}}
-          <span class="text-lg text-gray-400 font-bold">/{{this.pricingFrequencyAbbreviation}}</span>
+        {{#if @shouldShowAmortizedMonthlyPrice}}
+          <span class="text-4xl text-gray-700 font-bold">${{this.actualAmortizedMonthlyPrice}}</span>
+          <span class="text-lg text-gray-400 font-bold">/mo</span>
+        {{else}}
+          <span class="text-4xl text-gray-700 font-bold">${{@actualPrice}}</span>
         {{/if}}
       </div>
     {{/if}}
 
     <button
-      class="flex items-center justify-center mt-8 bg-teal-500
-        {{if this.isCreatingCheckoutSession 'bg-teal-600 cursor-wait' 'hover:bg-teal-600'}}
-        transition-colors px-5 py-3 text-white font-bold rounded-full max-w-lg shadow"
+      class="flex items-center justify-center mt-8 transition-colors px-5 py-3 font-bold rounded-full max-w-lg shadow
+        {{if
+          @isRecommended
+          'border-2 border-teal-500 bg-teal-500 text-white hover:bg-teal-600 hover:border-teal-600'
+          'border-2 border-teal-500 text-teal-500 hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50'
+        }}
+        {{if (and @isRecommended this.isCreatingCheckoutSession) 'bg-teal-600 cursor-wait'}}
+        {{if (and (not @isRecommended) this.isCreatingCheckoutSession) 'border-teal-600 cursor-wait'}}
+        "
       data-test-start-payment-button
       type="button"
       {{on "click" this.handleStartPaymentButtonClicked}}
@@ -47,7 +72,7 @@
       Start membership
 
       {{#if this.isCreatingCheckoutSession}}
-        <svg class="animate-spin ml-2 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg class="animate-spin ml-2 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path
             class="opacity-75"
