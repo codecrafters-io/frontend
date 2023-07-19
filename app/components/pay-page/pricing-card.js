@@ -10,7 +10,7 @@ export default class PricingCardComponent extends Component {
   @tracked isCreatingCheckoutSession = false;
 
   get actualAmortizedMonthlyPrice() {
-    return this.args.actualPrice / this.numberOfMonths;
+    return Math.round((this.args.actualPrice / this.numberOfMonths) * 100) / 100;
   }
 
   get discountedAmortizedMonthlyPrice() {
@@ -18,7 +18,7 @@ export default class PricingCardComponent extends Component {
       return null;
     }
 
-    return this.args.discountedPrice / this.numberOfMonths;
+    return Math.round((this.args.discountedPrice / this.numberOfMonths) * 100) / 100;
   }
 
   get featureDescriptions() {
