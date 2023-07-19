@@ -18,6 +18,7 @@
       <PayPage::PricingCard
         @actualPrice={{990}}
         @footerText="Pay once, access for life."
+        @isRecommended={{false}}
         @pricingFrequency="lifetime"
         @shouldShowAmortizedMonthlyPrice={{false}}
         @title="Lifetime access"
@@ -27,6 +28,7 @@
       <PayPage::PricingCard
         @actualPrice={{120}}
         @footerText="Billed once, as a single payment of $120."
+        @isRecommended={{false}}
         @pricingFrequency="quarterly"
         @shouldShowAmortizedMonthlyPrice={{true}}
         @title="3 months access"
@@ -39,6 +41,7 @@
         @discountedPrice={{this.discountedYearlyPrice}}
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
         @footerText="Billed once, as a single payment of ${{or this.discountedYearlyPrice 360}}."
+        @isRecommended={{true}}
         @pricingFrequency="yearly"
         @shouldShowAmortizedMonthlyPrice={{true}}
         @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}

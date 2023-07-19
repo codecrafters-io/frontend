@@ -43,9 +43,11 @@
     {{/if}}
 
     <button
-      class="flex items-center justify-center mt-8 bg-teal-500
-        {{if this.isCreatingCheckoutSession 'bg-teal-600 cursor-wait' 'hover:bg-teal-600'}}
-        transition-colors px-5 py-3 text-white font-bold rounded-full max-w-lg shadow"
+      class="flex items-center justify-center mt-8 transition-colors px-5 py-3 font-bold rounded-full max-w-lg shadow
+        {{if @isRecommended 'bg-teal-500 text-white hover:bg-teal-600' 'border-2 border-teal-500 text-teal-500 hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50'}}
+        {{if (and @isRecommended this.isCreatingCheckoutSession) 'bg-teal-600 cursor-wait'}}
+        {{if (and (not @isRecommended) this.isCreatingCheckoutSession) 'border-teal-600 cursor-wait'}}
+      "
       data-test-start-payment-button
       type="button"
       {{on "click" this.handleStartPaymentButtonClicked}}
@@ -53,7 +55,7 @@
       Start membership
 
       {{#if this.isCreatingCheckoutSession}}
-        <svg class="animate-spin ml-2 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg class="animate-spin ml-2 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path
             class="opacity-75"
