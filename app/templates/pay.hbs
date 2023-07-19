@@ -38,7 +38,7 @@
         @customDiscount={{this.user.availableCustomDiscount}}
         @discountedPrice={{this.discountedYearlyPrice}}
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
-        @footerText="Billed once, as a single payment of $360."
+        @footerText="Billed once, as a single payment of ${{or this.discountedYearlyPrice 360}}."
         @pricingFrequency="yearly"
         @shouldShowAmortizedMonthlyPrice={{true}}
         @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
