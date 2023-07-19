@@ -16,31 +16,31 @@
 
     <div class="flex flex-col-reverse md:flex-row gap-x-8 gap-y-8 items-start mt-12">
       <PayPage::PricingCard
-        @title="3 months access"
+        @actualPrice={{990}}
+        @footerText="Pay once, access for life."
+        @pricingFrequency="lifetime"
+        @title="Lifetime access"
+        data-test-lifetime-pricing-card
+      />
+
+      <PayPage::PricingCard
         @actualPrice={{120}}
+        @footerText="Billed once, as a single payment of $120."
         @pricingFrequency="quarterly"
-        @footerText="One-time payment."
+        @title="3 months access"
         data-test-quarterly-pricing-card
       />
 
       <PayPage::PricingCard
-        @title="1 year access"
         @actualPrice={{360}}
-        @discountedPrice={{this.discountedYearlyPrice}}
-        @pricingFrequency="yearly"
-        @footerText="One-time payment."
-        @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
-        @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
         @customDiscount={{this.user.availableCustomDiscount}}
+        @discountedPrice={{this.discountedYearlyPrice}}
+        @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
+        @footerText="Billed once, as a single payment of $360."
+        @pricingFrequency="yearly"
+        @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
+        @title="1 year access"
         data-test-yearly-pricing-card
-      />
-
-      <PayPage::PricingCard
-        @footerText="Ideal for expensing."
-        @title="Lifetime access"
-        @actualPrice={{990}}
-        @pricingFrequency="lifetime"
-        data-test-lifetime-pricing-card
       />
     </div>
 
