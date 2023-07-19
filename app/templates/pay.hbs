@@ -1,6 +1,6 @@
 {{page-title "Pay"}}
 
-<div class="container mx-auto lg:max-w-screen-lg py-16 px-3 md:px-6">
+<div class="container mx-auto xl:max-w-screen-xl py-16 px-3 md:px-6">
   <div class="flex flex-col items-center justify-center">
     <h1 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-2xl text-center">
       Choose your CodeCrafters membership
@@ -14,7 +14,7 @@
       <PayPage::ReferralDiscountNotice @referralActivation={{this.user.currentReferralActivation}} class="mt-8" />
     {{/if}}
 
-    <div class="flex flex-col-reverse md:flex-row gap-x-8 gap-y-8 items-start mt-12">
+    <div class="flex flex-col-reverse lg:flex-row gap-x-8 gap-y-8 items-start mt-12">
       <PayPage::PricingCard
         @actualPrice={{990}}
         @footerText="Pay once, access for life."
