@@ -19,6 +19,7 @@
         @actualPrice={{990}}
         @footerText="Pay once, access for life."
         @pricingFrequency="lifetime"
+        @shouldShowAmortizedMonthlyPrice={{false}}
         @title="Lifetime access"
         data-test-lifetime-pricing-card
       />
@@ -27,6 +28,7 @@
         @actualPrice={{120}}
         @footerText="Billed once, as a single payment of $120."
         @pricingFrequency="quarterly"
+        @shouldShowAmortizedMonthlyPrice={{true}}
         @title="3 months access"
         data-test-quarterly-pricing-card
       />
@@ -38,6 +40,7 @@
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
         @footerText="Billed once, as a single payment of $360."
         @pricingFrequency="yearly"
+        @shouldShowAmortizedMonthlyPrice={{true}}
         @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
         @title="1 year access"
         data-test-yearly-pricing-card
