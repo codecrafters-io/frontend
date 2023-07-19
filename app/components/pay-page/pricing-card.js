@@ -22,7 +22,13 @@ export default class PricingCardComponent extends Component {
   }
 
   get featureDescriptions() {
-    return [`Unrestricted content access`, `Download invoice for expensing`, `Private leaderboard for your team`];
+    return [
+      'One time payment',
+      'Unrestricted content access',
+      'Members community for Q&A',
+      'Download invoice for expensing',
+      'Private leaderboard for your team',
+    ];
   }
 
   @action
