@@ -35,10 +35,10 @@
         </div>
         <div class="ml-2">
           {{#if @shouldShowAmortizedMonthlyPrice}}
-            <span class="text-xl text-teal-500 font-bold" data-test-discounted-price>${{this.discountedAmortizedMonthlyPrice}}</span>
-            <span class="text-xl text-gray-400 font-bold">/mo</span>
+            <span class="text-2xl text-teal-500 font-bold" data-test-discounted-price>${{this.discountedAmortizedMonthlyPrice}}</span>
+            <span class="text-2xl text-gray-400 font-bold">/mo</span>
           {{else}}
-            <span class="text-xl text-teal-500 font-bold" data-test-discounted-price>${{@discountedPrice}}</span>
+            <span class="text-2xl text-teal-500 font-bold" data-test-discounted-price>${{@discountedPrice}}</span>
           {{/if}}
         </div>
       </div>
