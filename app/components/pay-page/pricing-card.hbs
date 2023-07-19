@@ -29,7 +29,6 @@
         <div>
           {{#if @shouldShowAmortizedMonthlyPrice}}
             <span class="text-4xl text-gray-700 font-bold line-through">${{this.actualAmortizedMonthlyPrice}}</span>
-            <span class="text-lg text-gray-400 font-bold">/mo</span>
           {{else}}
             <span class="text-4xl text-gray-700 font-bold line-through">${{@actualPrice}}</span>
           {{/if}}
