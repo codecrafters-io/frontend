@@ -125,7 +125,7 @@
     "ember-window-mock": "^0.9.0",
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-ember": "^11.5.0",
+    "eslint-plugin-ember": "^11.10.0",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^7.3.4",
