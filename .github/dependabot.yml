@@ -26,5 +26,7 @@ updates:
           - 'prettier'
           - 'eslint-config-prettier'
           - 'eslint-plugin-prettier'
+          - 'ember-template-lint-plugin-prettier'
+          - 'stylelint-prettier'
 
 
