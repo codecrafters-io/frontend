@@ -47,7 +47,7 @@ export default class CommentCardComponent extends Component {
         openLinksInNewWindow: true,
         strikethrough: true,
         disableForced4SpacesIndentedSublists: true,
-      }).makeHtml(this.args.comment.bodyMarkdown)
+      }).makeHtml(this.args.comment.bodyMarkdown),
     );
   }
 

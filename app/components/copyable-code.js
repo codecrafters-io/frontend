@@ -17,7 +17,7 @@ export default class CopyableCodeComponent extends Component {
       () => {
         this.codeWasCopiedRecently = false;
       },
-      1000
+      1000,
     );
   }
 }

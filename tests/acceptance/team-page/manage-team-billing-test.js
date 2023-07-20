@@ -96,7 +96,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
 
     assert.strictEqual(
       teamPage.setupSubscriptionContainer.firstInvoiceDetailsText,
-      "Your team's payment method will be charged $790/seat/yr for 10 seats. Contact us for questions."
+      "Your team's payment method will be charged $790/seat/yr for 10 seats. Contact us for questions.",
     );
 
     await teamPage.setupSubscriptionContainer.clickOnStartSubscriptionButton();

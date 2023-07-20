@@ -82,7 +82,7 @@ export default class FeedbackPromptComponent extends Component {
       () => {
         this.feedbackSubmission.save();
       },
-      500
+      500,
     );
   }
 

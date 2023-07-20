@@ -123,7 +123,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     assert.strictEqual(
       coursePage.repositorySetupCard.requestedLanguagesPrompt.willLetYouKnowText,
-      "We'll let you know once Kotlin support is available on this challenge."
+      "We'll let you know once Kotlin support is available on this challenge.",
     );
   });
 });

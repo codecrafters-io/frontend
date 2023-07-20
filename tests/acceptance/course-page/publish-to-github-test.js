@@ -77,7 +77,7 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     assert.notOk(
       coursePage.configureGithubIntegrationModal.fixGitHubAppInstallationPrompt.isVisible,
-      'fix github app installation prompt is not visible'
+      'fix github app installation prompt is not visible',
     );
   });
 

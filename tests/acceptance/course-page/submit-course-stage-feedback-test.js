@@ -65,7 +65,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(
       coursePage.yourTaskCard.feedbackPrompt.explanationTextareaPlaceholder,
       'Tell us more!',
-      'explanation textarea placeholder is correct'
+      'explanation textarea placeholder is correct',
     );
 
     await coursePage.yourTaskCard.feedbackPrompt.clickOnOption('😭');
@@ -73,7 +73,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(
       coursePage.yourTaskCard.feedbackPrompt.explanationTextareaPlaceholder,
       'What could be better?',
-      'explanation textarea placeholder is correct'
+      'explanation textarea placeholder is correct',
     );
 
     await coursePage.yourTaskCard.feedbackPrompt.clickOnSubmitButton();

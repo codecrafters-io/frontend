@@ -41,7 +41,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
       () => {
         this.gitRepositoryURLWasCopiedRecently = false;
       },
-      1000
+      1000,
     );
   }
 
