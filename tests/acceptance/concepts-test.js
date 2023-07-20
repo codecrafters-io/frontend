@@ -161,7 +161,7 @@ module('Acceptance | concepts-test', function (hooks) {
         'progressed_through_concept',
         'progressed_through_concept',
         'progressed_through_concept',
-      ]
+      ],
     );
   });
 });

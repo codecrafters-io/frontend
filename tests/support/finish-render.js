@@ -10,6 +10,6 @@ export default function finishRender() {
 
       return !(hasRunLoop || hasPendingRequests || hasPendingWaiters || hasPendingTransitions);
     },
-    { timeout: 5000 } // Avoids timeouts if this.server.timing is manually set to a non-zero value in tests.
+    { timeout: 5000 }, // Avoids timeouts if this.server.timing is manually set to a non-zero value in tests.
   );
 }

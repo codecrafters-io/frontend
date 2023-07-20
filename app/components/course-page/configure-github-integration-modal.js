@@ -24,7 +24,7 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
   get accessibleRepositoryGroups() {
     let [recentlyCreatedRepositories, allOtherRepositories] = partition(
       this.accessibleRepositories,
-      (repository) => new Date() - repository.createdAt < 1000 * 60 * 60 // 1 hour
+      (repository) => new Date() - repository.createdAt < 1000 * 60 * 60, // 1 hour
     );
 
     let groups = [];

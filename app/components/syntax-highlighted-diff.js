@@ -21,7 +21,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
     let highlighterPromise = getOrCreateCachedHighlighterPromise(
       SyntaxHighlightedDiffComponent.highlighterId,
-      SyntaxHighlightedDiffComponent.highlighterOptions
+      SyntaxHighlightedDiffComponent.highlighterOptions,
     );
 
     highlighterPromise.then((highlighter) => {

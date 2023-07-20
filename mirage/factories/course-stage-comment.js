@@ -7,7 +7,7 @@ export default Factory.extend({
   afterCreate(courseStageComment) {
     courseStageComment.target.update(
       'approvedCommentsCount',
-      courseStageComment.target.comments.models.filterBy('approvalStatus', 'approved').length
+      courseStageComment.target.comments.models.filterBy('approvalStatus', 'approved').length,
     );
   },
 });

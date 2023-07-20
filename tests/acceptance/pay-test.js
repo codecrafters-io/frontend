@@ -28,7 +28,7 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(
       window.location.href,
       `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fpay`,
-      'should redirect to login URL'
+      'should redirect to login URL',
     );
   });
 

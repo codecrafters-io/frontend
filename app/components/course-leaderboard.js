@@ -90,7 +90,7 @@ export default class CourseLeaderboardComponent extends Component {
           language: entryWithHighestCourseStage.language,
           user: entryWithHighestCourseStage.user,
           lastAttemptAt: entryWithHighestCourseStage.lastAttemptAt,
-        })
+        }),
       );
     }
 

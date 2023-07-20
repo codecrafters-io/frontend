@@ -116,7 +116,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     assert.strictEqual(
       membershipPage.membershipPlanSection.descriptionText,
-      `Your CodeCrafters membership is valid until ${moment(subscription.currentPeriodEnd).format('LLL')}.`
+      `Your CodeCrafters membership is valid until ${moment(subscription.currentPeriodEnd).format('LLL')}.`,
     );
   });
 

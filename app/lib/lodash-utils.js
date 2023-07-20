@@ -24,7 +24,7 @@ export function partition(collection, predicate) {
 
       return acc;
     },
-    [[], []]
+    [[], []],
   );
 }
 

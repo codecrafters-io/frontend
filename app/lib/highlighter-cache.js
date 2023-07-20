@@ -49,6 +49,6 @@ export async function preloadHighlighter(cacheId, options, languages) {
   await Promise.all(
     (languages || []).map((language) => {
       highlighter.loadLanguage(language);
-    })
+    }),
   );
 }

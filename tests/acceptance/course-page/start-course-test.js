@@ -61,7 +61,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(
       coursePage.repositorySetupCard.copyableCloneRepositoryInstructions,
       'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript',
-      'copyable clone repository instructions are correct'
+      'copyable clone repository instructions are correct',
     );
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

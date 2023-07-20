@@ -20,7 +20,7 @@ export default class CommunitySolutionsListComponent extends Component {
         this.isLoadingNextBatch = false;
         this.lastVisibleSolutionIndex += 2;
       },
-      100
+      100,
     );
   }
 
