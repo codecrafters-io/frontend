@@ -9,8 +9,26 @@ export default class PricingCardComponent extends Component {
   @service store;
   @tracked isCreatingCheckoutSession = false;
 
+  get actualAmortizedMonthlyPrice() {
+    return Math.round((this.args.actualPrice / this.numberOfMonths) * 100) / 100;
+  }
+
+  get discountedAmortizedMonthlyPrice() {
+    if (this.args.discountedPrice === null) {
+      return null;
+    }
+
+    return Math.round((this.args.discountedPrice / this.numberOfMonths) * 100) / 100;
+  }
+
   get featureDescriptions() {
-    return [`Unrestricted content access`, `Download invoice for expensing`, `Private leaderboard for your team`];
+    return [
+      'One time payment',
+      'Unrestricted content access',
+      'Members community for Q&A',
+      'Download invoice for expensing',
+      'Private leaderboard for your team',
+    ];
   }
 
   @action
@@ -31,12 +49,14 @@ export default class PricingCardComponent extends Component {
     window.location.href = checkoutSession.url;
   }
 
-  get pricingFrequencyAbbreviation() {
-    return {
-      monthly: 'mo',
-      yearly: 'yr',
-      quarterly: 'qtr',
-    }[this.args.pricingFrequency];
+  get numberOfMonths() {
+    if (this.args.pricingFrequency === 'quarterly') {
+      return 3;
+    } else if (this.args.pricingFrequency === 'yearly') {
+      return 12;
+    } else {
+      throw new Error(`Unknown pricing frequency: ${this.args.pricingFrequency}`);
+    }
   }
 
   get user() {

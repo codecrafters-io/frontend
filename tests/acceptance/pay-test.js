@@ -16,6 +16,7 @@ module('Acceptance | pay-test', function (hooks) {
   test('redirects to login page if user is not signed in', async function (assert) {
     testScenario(this.server);
 
+    /* eslint-disable-next-line qunit/require-expect */
     assert.expect(2);
 
     try {
@@ -55,7 +56,7 @@ module('Acceptance | pay-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
+    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$18', 'should show discounted price');
 
     await percySnapshot('Pay page - with early bird discount');
 
@@ -78,7 +79,7 @@ module('Acceptance | pay-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
+    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$18', 'should show discounted price');
 
     await percySnapshot('Pay page - with referral discount');
 
@@ -108,7 +109,7 @@ module('Acceptance | pay-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$100', 'should show discounted price');
+    assert.strictEqual(payPage.pricingCards[2].discountedPriceText, '$8.33', 'should show discounted price');
 
     await percySnapshot('Pay page - with custom discount');
 

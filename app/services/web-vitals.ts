@@ -2,7 +2,7 @@ import RouterService from '@ember/routing/router-service';
 import Service from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
 import type { Metric } from 'web-vitals';
-import { onCLS, onFCP, onFID, onLCP, onTTFB } from 'web-vitals';
+import { onCLS, onFCP, onFID, onLCP, onTTFB, onINP } from 'web-vitals';
 import { inject as service } from '@ember/service';
 
 export default class WebVitalsService extends Service {
@@ -21,6 +21,7 @@ export default class WebVitalsService extends Service {
     onLCP((metric) => this.reportMetric(metric));
     onTTFB((metric) => this.reportMetric(metric));
     onFID((metric) => this.reportMetric(metric));
+    onINP((metric) => this.reportMetric(metric));
   }
 
   reportMetric(metric: Metric): void {
