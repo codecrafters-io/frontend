@@ -1,3 +1,4 @@
+/* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -16,7 +17,6 @@ module('Acceptance | pay-test', function (hooks) {
   test('redirects to login page if user is not signed in', async function (assert) {
     testScenario(this.server);
 
-    /* eslint-disable-next-line qunit/require-expect */
     assert.expect(2);
 
     try {
