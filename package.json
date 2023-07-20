@@ -132,7 +132,7 @@
     "loader.js": "^4.7.0",
     "postcss": "^8.4.26",
     "postcss-import": "^15.1.0",
-    "prettier": "^2.8.7",
+    "prettier": "^3.0.0",
     "prismjs": "^1.28.0",
     "qunit": "^2.19.4",
     "qunit-assertions-extra": "^1.0",
