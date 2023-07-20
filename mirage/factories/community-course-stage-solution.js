@@ -6,7 +6,7 @@ export default Factory.extend({
     const communitySolutionCounts = {};
 
     for (let [languageSlug, solutions] of Object.entries(
-      groupBy(communitySolution.courseStage.communitySolutions.models, (solution) => solution.language.slug)
+      groupBy(communitySolution.courseStage.communitySolutions.models, (solution) => solution.language.slug),
     )) {
       communitySolutionCounts[languageSlug] = solutions.length;
     }

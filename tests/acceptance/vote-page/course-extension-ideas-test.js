@@ -76,7 +76,7 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
     assert.strictEqual(courseExtensionIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote');
     assert.strictEqual(
       courseExtensionIdeaCard.supervoteButtonTooltipText,
-      "You're out of supervotes. Earn more by completing CodeCrafters challenges!"
+      "You're out of supervotes. Earn more by completing CodeCrafters challenges!",
     );
 
     await courseExtensionIdeaCard.clickOnVoteButton();

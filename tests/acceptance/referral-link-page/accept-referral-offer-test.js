@@ -27,7 +27,7 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
     assert.strictEqual(
       window.location.href,
       `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fjoin%3Fvia%3Dreferral1`,
-      'should redirect to login URL'
+      'should redirect to login URL',
     );
   });
 

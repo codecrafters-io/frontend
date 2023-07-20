@@ -57,7 +57,7 @@ export default class BadgePreviewComponent extends Component {
         camera.lookAt(center); // Make the camera look at the center of the box
       },
       () => {},
-      (error) => console.log('An error happened', error)
+      (error) => console.log('An error happened', error),
     );
 
     const renderer = new THREE.WebGLRenderer({ alpha: true });

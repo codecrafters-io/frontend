@@ -74,7 +74,7 @@ module('Acceptance | view-team-test', function (hooks) {
     assert.strictEqual(
       teamPage.inviteURLDescription,
       'To invite new members, ask one of the team admins for an invite URL.',
-      'invite url description should say contact admin'
+      'invite url description should say contact admin',
     );
 
     await percySnapshot('View Team - Multiple Members Present');
