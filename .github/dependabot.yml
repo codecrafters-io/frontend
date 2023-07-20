@@ -21,3 +21,10 @@ updates:
         patterns:
           - '@types/ember'
           - '@types/ember*'
+      prettier:
+        patterns:
+          - 'prettier'
+          - 'eslint-config-prettier'
+          - 'eslint-plugin-prettier'
+
+
