@@ -90,7 +90,6 @@ export default {
       "description_md": "In this stage, your task is to start a TCP server on port 6379, the default port that redis uses.\n",
       "difficulty": "very_easy",
       "marketing_md": "In this stage, you'll start a TCP server on port 6379, which is the\ndefault port that Redis uses.\n",
-      "source_walkthrough_slug": "redis-bind-port",
       "tester_source_code_url": "https://github.com/codecrafters-io/redis-tester/blob/a58b9d58b33870fe26a164c0e323f809275a7250/internal/test_bind.go#L11"
     },
     {
@@ -99,7 +98,6 @@ export default {
       "difficulty": "easy",
       "description_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command.\n\nYour server should respond with `+PONG\\r\\n`, which is \"PONG\" encoded as a [RESP simple string](https://redis.io/docs/reference/protocol-spec/#resp-simple-strings).\n\nSince the tester client _only_ sends the PING command at the moment, it's okay to\nignore what the client sends and hardcode a response. We'll get to parsing\nclient input in later stages.\n",
       "marketing_md": "In this stage, you'll respond to the\n[PING](https://redis.io/commands/ping) command. You'll use [the Redis\nprotocol](https://redis.io/topics/protocol) to encode the reply.\n",
-      "source_walkthrough_slug": "redis-ping-command",
       "tester_source_code_url": "https://github.com/codecrafters-io/redis-tester/blob/a58b9d58b33870fe26a164c0e323f809275a7250/internal/test_ping_pong.go#L9"
     },
     {

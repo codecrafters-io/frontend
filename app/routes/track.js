@@ -14,7 +14,7 @@ export default class TrackRoute extends BaseRoute {
 
   async model(params) {
     let courses = await this.store.findAll('course', {
-      include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
+      include: 'stages,stages.solutions.language,language-configurations.language',
     });
     let language = this.store.peekAll('language').findBy('slug', params.track_slug);
 

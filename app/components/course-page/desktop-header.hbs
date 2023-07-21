@@ -10,7 +10,7 @@
 
     <div class="flex items-center gap-x-3">
       {{#if this.currentUser.isStaff}}
-        <LinkTo @route="course.admin.submissions" @model={{@course.slug}}>
+        <LinkTo @route="course-admin.submissions" @model={{@course.slug}}>
           <TertiaryButton @size="small" class="py-1 text-xs">
             Admin
           </TertiaryButton>

@@ -22,7 +22,10 @@ export default class CourseRoute extends BaseRoute {
   async model(params, transition) {
     const [allCourses, allRepositories] = await this.loadResources();
     const course = allCourses.find((course) => course.slug === params.course_slug);
-    const repositories = allRepositories.filter((repository) => !repository.isNew && repository.course.id === course.id);
+
+    const repositories = allRepositories.filter((repository) => {
+      return !repository.isNew && repository.course.id === course.id && repository.user.id === this.authenticator.currentUser.id;
+    });
 
     const activeRepository = this.findOrCreateRepository(course, params, transition, repositories);
     this.coursePageState.setStepList(buildStepList(activeRepository));
@@ -93,7 +96,6 @@ export default class CourseRoute extends BaseRoute {
   async loadResources() {
     const includedCourseResources = [
       'stages.solutions.language',
-      'stages.source-walkthrough',
       'language-configurations.language',
       'stages.screencasts',
       'stages.screencasts.language',

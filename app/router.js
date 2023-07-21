@@ -26,8 +26,9 @@ Router.map(function () {
     this.route('completed');
   });
 
-  this.route('course.admin', { path: '/courses/:course_slug/admin' }, function () {
+  this.route('course-admin', { path: '/courses/:course_slug/admin' }, function () {
     this.route('submissions');
+    this.route('updates');
   });
 
   this.route('course-overview', { path: '/courses/:course_slug/overview' });

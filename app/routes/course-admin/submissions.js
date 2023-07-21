@@ -6,10 +6,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
   @service store;
 
   async model(params) {
-    let courses = await this.store.findAll('course', {
-      include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
-    });
-    let course = courses.findBy('slug', this.paramsFor('course.admin').course_slug);
+    let course = this.modelFor('course-admin').course;
 
     let filters = { course_id: course.id };
 

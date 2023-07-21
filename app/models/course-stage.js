@@ -3,7 +3,6 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false }) course;
-  @belongsTo('code-walkthrough', { async: false }) sourceWalkthrough;
 
   @hasMany('course-stage-comments', { async: false }) comments;
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions;
@@ -68,10 +67,6 @@ export default class CourseStageModel extends Model {
 
   hasSolutionForLanguagesOtherThan(language) {
     return this.solutions.any((solution) => solution.language !== language);
-  }
-
-  get hasSourceWalkthrough() {
-    return !!this.sourceWalkthrough;
   }
 
   get isFirst() {

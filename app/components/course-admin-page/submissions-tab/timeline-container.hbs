@@ -6,7 +6,7 @@
       </div>
 
       {{#each submissionsInGroup as |submission|}}
-        <Admin::Course::SubmissionsPage::TimelineEntryContainer
+        <CourseAdminPage::SubmissionsTab::TimelineEntryContainer
           @onClick={{fn @onSubmissionSelect submission}}
           @submission={{submission}}
           @isSelected={{eq submission @selectedSubmission}}

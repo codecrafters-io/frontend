@@ -5,7 +5,7 @@ export default class ContainerWidthService extends Service {
   @service declare router: RouterService;
 
   get maxWidthIsXl(): boolean {
-    if (this.router.currentRouteName.startsWith('course.admin')) {
+    if (this.router.currentRouteName.startsWith('course-admin')) {
       return true;
     } else {
       return false;
