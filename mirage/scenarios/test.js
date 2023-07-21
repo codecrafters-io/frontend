@@ -35,9 +35,4 @@ export default function (server) {
   createCourseStageSolution(server, redis, 3);
   createCourseStageSolution(server, redis, 4);
   createCourseStageSolution(server, redis, 5);
-
-  // TODO: Fetch this programmatically
-  createCourseStageSourceWalkthrough(server, redis, 1, 'redis-bind-port');
-  createCourseStageSourceWalkthrough(server, redis, 2, 'redis-ping');
-  createCourseStageSourceWalkthrough(server, redis, 3, 'redis-concurrency');
 }
