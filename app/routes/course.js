@@ -96,7 +96,6 @@ export default class CourseRoute extends BaseRoute {
   async loadResources() {
     const includedCourseResources = [
       'stages.solutions.language',
-      'stages.source-walkthrough',
       'language-configurations.language',
       'stages.screencasts',
       'stages.screencasts.language',

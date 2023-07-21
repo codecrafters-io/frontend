@@ -14,7 +14,7 @@ export default class CourseOverviewRoute extends BaseRoute {
       };
     } else {
       let courses = await this.store.findAll('course', {
-        include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
+        include: 'stages,stages.solutions.language,language-configurations.language',
       });
       let course = courses.findBy('slug', params.course_slug);
 

@@ -1,7 +1,6 @@
 import createCourseFromData from 'codecrafters-frontend/mirage/utils/create-course-from-data';
 import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
 import createLanguages from 'codecrafters-frontend/mirage/utils/create-languages';
-import createCourseStageSourceWalkthrough from 'codecrafters-frontend/mirage/utils/create-course-stage-source-walkthrough';
 import dockerCourseData from 'codecrafters-frontend/mirage/course-fixtures/docker';
 import gitCourseData from 'codecrafters-frontend/mirage/course-fixtures/git';
 import grepCourseData from 'codecrafters-frontend/mirage/course-fixtures/grep';
