@@ -74,7 +74,7 @@
     "@types/ember-qunit": "^6.1.1",
     "@types/ember-resolver": "^9.0.0",
     "@types/mustache": "^4.2.2",
-    "@types/qunit": "^2.19.5",
+    "@types/qunit": "^2.19.6",
     "@types/rsvp": "^4.0.4",
     "@types/showdown": "^2.0.1",
     "autoprefixer": "^10.4.14",
