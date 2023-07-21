@@ -11,19 +11,10 @@
       </p>
     </div>
 
-    {{#if this.solutionIsAvailable}}
+    {{#if this.solution}}
       <div class="mb-5">
         {{#each this.solution.changedFiles as |changedFile|}}
-          <div class="mb-4 bg-white shadow-sm rounded border border-gray-300">
-            <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
-              <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
-            </div>
-
-            <div class="text-sm">
-              {{! @glint-expect-error: not ts-ified yet }}
-              <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
-            </div>
-          </div>
+          <FileContentsCard class="mb-4" @filename={{changedFile.filename}} @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
         {{/each}}
       </div>
     {{else if (not @repository.language)}}

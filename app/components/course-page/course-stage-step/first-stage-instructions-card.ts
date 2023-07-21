@@ -14,8 +14,11 @@ interface Signature {
           solutions: {
             changedFiles: {
               filename: string;
+              diff: string;
             }[];
-            language: unknown;
+            language: {
+              slug: string;
+            };
           }[];
         };
       };
@@ -42,10 +45,6 @@ git add .
 git commit -m "pass 1st stage" # any msg
 git push origin master
 \`\`\``;
-  }
-
-  get solutionIsAvailable() {
-    return !!this.solution;
   }
 
   get solution() {
