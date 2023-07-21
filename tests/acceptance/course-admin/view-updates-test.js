@@ -10,7 +10,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('it renders when no updates are present', async function (assert) {
+  test('it renders when no updates are present', async function () {
     testScenario(this.server);
     signIn(this.owner, this.server);
 

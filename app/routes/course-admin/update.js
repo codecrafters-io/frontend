@@ -5,7 +5,7 @@ export default class CourseAdminUpdateRoute extends BaseRoute {
   @service authenticator;
   @service store;
 
-  async model(params) {
+  async model() {
     let course = this.modelFor('course-admin').course;
 
     return {
