@@ -2,15 +2,15 @@
 <div class="p-6" ...attributes>
 
   {{#if @submission}}
-    <CourseAdminPage::SubmissionsPage::SubmissionDetails::HeaderContainer @submission={{@submission}} />
+    <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainer @submission={{@submission}} />
     <div class="border-b pb-4 mb-4"></div>
     <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
       {{#if (eq activeTabSlug "diff")}}
-        <CourseAdminPage::SubmissionsPage::SubmissionDetails::DiffContainer @submission={{@submission}} />
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::DiffContainer @submission={{@submission}} />
       {{else if (eq activeTabSlug "logs")}}
         <SubmissionLogsPreview @submission={{@submission}} />
       {{else if (eq activeTabSlug "community_solution")}}
-        <CourseAdminPage::SubmissionsPage::SubmissionDetails::CommunitySolutionContainer @submission={{@submission}} />
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::CommunitySolutionContainer @submission={{@submission}} />
       {{/if}}
     </Tabs>
   {{else}}
