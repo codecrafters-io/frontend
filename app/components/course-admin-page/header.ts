@@ -36,7 +36,7 @@ export default class CourseAdminHeaderComponent extends Component<Signature> {
         icon: 'github',
         name: 'Updates',
         slug: 'updates',
-        route: 'course-admin.submissions',
+        route: 'course-admin.updates',
         models: [this.args.course.slug],
         isActive: this.router.currentRouteName === 'course-admin.updates',
       },
