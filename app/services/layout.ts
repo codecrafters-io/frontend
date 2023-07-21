@@ -5,7 +5,7 @@ export default class LayoutService extends Service {
   @service declare router: RouterService;
 
   get shouldShowHeader(): boolean {
-    if (this.router.currentRouteName === 'course' || this.router.currentRouteName.startsWith('course.')) {
+    if (this.router.currentRouteName === 'course' || this.router.currentRouteName.startsWith('course.') || this.router.currentRouteName.startsWith('course-admin')) {
       return false;
     } else {
       return true;
