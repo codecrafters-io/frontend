@@ -1,8 +1,8 @@
-<Admin::CoursePageHeader @course={{this.model.course}} />
+<CourseAdminPage::Header @course={{this.model.course}} />
 
 <div class="bg-gray-50">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <Admin::Course::SubmissionsPage
+    <CourseAdminPage::SubmissionsTab
       @course={{this.model.course}}
       @submissions={{this.model.submissions}}
       @filteredLanguages={{this.filteredLanguages}}
