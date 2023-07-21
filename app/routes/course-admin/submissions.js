@@ -9,7 +9,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
     let courses = await this.store.findAll('course', {
       include: 'stages.solutions.language,stages.source-walkthrough,language-configurations.language',
     });
-    let course = courses.findBy('slug', this.paramsFor('course.admin').course_slug);
+    let course = courses.findBy('slug', this.paramsFor('course-admin').course_slug);
 
     let filters = { course_id: course.id };
 
