@@ -9,13 +9,13 @@
 
 <div class="border-t pb-4">
   <div class="flex h-screen items-stretch">
-    <CourseAdminPage::SubmissionsPage::TimelineContainer
+    <CourseAdmin::SubmissionsPage::TimelineContainer
       @onSubmissionSelect={{mut this.selectedSubmission}}
       @submissions={{@submissions}}
       @selectedSubmission={{this.selectedSubmission}}
       class="w-1/4 border-r overflow-y-scroll"
     />
 
-    <CourseAdminPage::SubmissionsPage::SubmissionDetailsContainer @submission={{this.selectedSubmission}} class="w-3/4 pr-0 overflow-y-scroll" />
+    <CourseAdmin::SubmissionsPage::SubmissionDetailsContainer @submission={{this.selectedSubmission}} class="w-3/4 pr-0 overflow-y-scroll" />
   </div>
 </div>
