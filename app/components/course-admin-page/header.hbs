@@ -15,18 +15,9 @@
     </div>
 
     <div class="flex items-center">
-      <div class="flex items-center px-3 py-2 mr-2 border-b-2 border-teal-500">
-        {{svg-jar "code" class="text-gray-600 w-5 mr-2 fill-current"}}
-        <span class="font-medium text-gray-700">Submissions</span>
-      </div>
-      <div class="flex items-center px-3 py-2 mr-2 border-b-2 border-opacity-0">
-        {{svg-jar "academic-cap" class="text-gray-400 w-5 mr-2 fill-current"}}
-        <span class="text-gray-600">Learners</span>
-      </div>
-      <div class="flex items-center px-3 py-2 mr-2 border-b-2 border-opacity-0">
-        {{svg-jar "cog" class="text-gray-400 w-5 mr-2 fill-current"}}
-        <span class="text-gray-600">Settings</span>
-      </div>
+      {{#each this.tabs key="slug" as |tab|}}
+        <CoursePage::HeaderTabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+      {{/each}}
     </div>
   </div>
 </div>
