@@ -1,13 +1,26 @@
-<div class="bg-white">
+<div class="bg-white min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <div class="py-3">
-      <h3 class="text-lg font-bold text-gray-800 mb-1">
-        Updates
-      </h3>
-      <a href="https://github.com/" class="text-gray-400 flex items-center hover:text-gray-600">
-        {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
-        <span class="text-xs underline font-medium">codecrafters-io/build-your-own-redis</span>
-      </a>
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Updates
+        </h3>
+        <div class="text-xs text-gray-400">
+          These updates are synced from your course's GitHub repository. They need to be applied to take effect.
+        </div>
+      </div>
+      <div>
+        <a href="https://github.com/" class="text-gray-400 flex items-center hover:text-gray-600">
+          {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
+          <span class="text-xs underline font-medium">codecrafters-io/build-your-own-redis</span>
+        </a>
+      </div>
     </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
+      <CourseAdmin::UpdatesPage::UpdateListItem />
+      <CourseAdmin::UpdatesPage::UpdateListItem />
+      <CourseAdmin::UpdatesPage::UpdateListItem />
+    </ul>
   </div>
 </div>
