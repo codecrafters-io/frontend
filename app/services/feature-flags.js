@@ -14,14 +14,6 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && this.currentUser.isStaff;
   }
 
-  get canSeeScreencasts() {
-    if (this.currentUser && this.currentUser.isStaff) {
-      return true;
-    }
-
-    return this.getFeatureFlagValue('can-see-stage-2-screencasts') === 'test';
-  }
-
   get currentUser() {
     return this.authenticator.currentUser;
   }
