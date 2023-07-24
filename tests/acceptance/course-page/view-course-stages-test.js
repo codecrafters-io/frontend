@@ -303,13 +303,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    const leaderboard = document.querySelector('[data-test-leaderboard]');
-
-    assert.dom(leaderboard).includesText('RECENT ATTEMPTS');
+    assert.ok(coursePage.hasExpandedLeaderboard, 'leaderboard should be expanded by default');
     await coursePage.clickOnCollapseLeaderboardButton();
-    assert.dom(leaderboard).doesNotIncludeText('RECENT ATTEMPTS');
+    assert.notOk(coursePage.hasExpandedLeaderboard, 'leaderboard should be collapsed');
     await coursePage.clickOnExpandLeaderboardButton();
-    assert.dom(leaderboard).includesText('RECENT ATTEMPTS');
+    assert.ok(coursePage.hasExpandedLeaderboard, 'leaderboard should be expanded');
 
     const analyticsEventNames = [];
     const store = this.owner.lookup('service:store');

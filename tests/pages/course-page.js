@@ -89,7 +89,8 @@ export default create({
   visit: visitable('/courses/:course_slug'),
   yourTaskCard: YourTaskCard,
 
-  hasExpandedSidebar: isVisible('[data-test-course-page-sidebar]'),
+  hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
+  hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
   clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
