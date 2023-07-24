@@ -269,4 +269,57 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING');
   });
+
+  test('it should have a working expand/collapse sidebar button', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+
+    assert.ok(coursePage.hasExpandedSidebar, 'sidebar should be expanded by default');
+    await coursePage.clickOnCollapseSidebarButton();
+    assert.notOk(coursePage.hasExpandedSidebar, 'sidebar should be collapsed');
+    await coursePage.clickOnExpandSidebarButton();
+    assert.ok(coursePage.hasExpandedSidebar, 'sidebar should be expanded');
+
+    const analyticsEventNames = [];
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false })
+    analyticsEvents.map(item => {
+      analyticsEventNames.push(item.get('name'));
+    });
+
+    assert.ok(analyticsEventNames.includes('collapsed_course_page_sidebar'), 'collapsed_course_page_sidebar event should be tracked');
+    assert.ok(analyticsEventNames.includes('expanded_course_page_sidebar'), 'expanded_course_page_sidebar event should be tracked');
+  });
+
+  test('it should have a working expand/collapse leaderboard button', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    const leaderboard = document.querySelector('[data-test-leaderboard]');
+    
+    assert.dom(leaderboard).includesText('RECENT ATTEMPTS');
+    await coursePage.clickOnCollapseLeaderboardButton();
+    assert.dom(leaderboard).doesNotIncludeText('RECENT ATTEMPTS');
+    await coursePage.clickOnExpandLeaderboardButton();
+    assert.dom(leaderboard).includesText('RECENT ATTEMPTS');
+
+    const analyticsEventNames = [];
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false })
+    analyticsEvents.map(item => {
+      analyticsEventNames.push(item.get('name'));
+    });
+
+    assert.ok(analyticsEventNames.includes('collapsed_course_page_leaderboard'), 'collapsed_course_page_leaderboard event should be tracked');
+    assert.ok(analyticsEventNames.includes('expanded_course_page_leaderboard'), 'expanded_course_page_leaderboard event should be tracked');
+  });
 });
