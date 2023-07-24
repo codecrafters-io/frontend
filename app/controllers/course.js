@@ -101,7 +101,7 @@ export default class CourseController extends Controller {
     this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
 
     this.analyticsEventTracker.track('expanded_course_page_sidebar', {
-      course_id: this.model.course.id
+      course_id: this.model.course.id,
     });
   }
 
@@ -110,7 +110,7 @@ export default class CourseController extends Controller {
     this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
 
     this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
-      course_id: this.model.course.id
+      course_id: this.model.course.id,
     });
   }
 
@@ -119,7 +119,7 @@ export default class CourseController extends Controller {
     this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
 
     this.analyticsEventTracker.track('expanded_course_page_leaderboard', {
-      course_id: this.model.course.id
+      course_id: this.model.course.id,
     });
   }
 
@@ -128,7 +128,7 @@ export default class CourseController extends Controller {
     this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
 
     this.analyticsEventTracker.track('collapsed_course_page_leaderboard', {
-      course_id: this.model.course.id
+      course_id: this.model.course.id,
     });
   }
 

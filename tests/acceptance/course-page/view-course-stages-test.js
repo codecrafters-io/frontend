@@ -278,7 +278,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-
     assert.ok(coursePage.hasExpandedSidebar, 'sidebar should be expanded by default');
     await coursePage.clickOnCollapseSidebarButton();
     assert.notOk(coursePage.hasExpandedSidebar, 'sidebar should be collapsed');
@@ -287,8 +286,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     const analyticsEventNames = [];
     const store = this.owner.lookup('service:store');
-    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false })
-    analyticsEvents.map(item => {
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    analyticsEvents.map((item) => {
       analyticsEventNames.push(item.get('name'));
     });
 
@@ -305,7 +304,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     const leaderboard = document.querySelector('[data-test-leaderboard]');
-    
+
     assert.dom(leaderboard).includesText('RECENT ATTEMPTS');
     await coursePage.clickOnCollapseLeaderboardButton();
     assert.dom(leaderboard).doesNotIncludeText('RECENT ATTEMPTS');
@@ -314,8 +313,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     const analyticsEventNames = [];
     const store = this.owner.lookup('service:store');
-    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false })
-    analyticsEvents.map(item => {
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    analyticsEvents.map((item) => {
       analyticsEventNames.push(item.get('name'));
     });
 
