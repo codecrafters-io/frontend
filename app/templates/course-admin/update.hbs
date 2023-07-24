@@ -1,7 +1,7 @@
 <div class="bg-white min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6">
     <div class="pt-3 pb-6 border-b mb-6">
-      <TertiaryLinkButton @route="course-admin.updates" @models={{array "redis"}} @size="small" class="pl-1.5 mb-3">
+      <TertiaryLinkButton @route="course-admin.updates" @models={{array @model.update.course.slug}} @size="small" class="pl-1.5 mb-3">
         <div class="flex items-center">
           {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
 
@@ -47,6 +47,6 @@
       </div>
     </div>
 
-    <FileContentsCard class="mb-4" @filename="course-definition.yml" @code="-abcd\\n+efgh" @language="yaml" />
+    <FileContentsCard class="mb-4" @filename="course-definition.yml" @code={{@model.update.definitionFileContentsDiff}} @language="yaml" />
   </div>
 </div>

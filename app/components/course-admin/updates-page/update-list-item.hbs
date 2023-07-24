@@ -36,6 +36,6 @@
     </div>
   </div>
   <div class="flex flex-none items-center gap-x-4">
-    <TertiaryLinkButton @size="small" @route="course-admin.update" @models={{array "redis" @update.id}} data-test-view-update-button>View update</TertiaryLinkButton>
+    <TertiaryLinkButton @size="small" @route="course-admin.update" @models={{array @update.course.slug @update.id}} data-test-view-update-button>View update</TertiaryLinkButton>
   </div>
 </li>

@@ -5,6 +5,7 @@ export default class CourseDefinitionUpdateModel extends Model {
   @belongsTo('user', { async: false }) declare applier: unknown;
 
   @attr('date') declare appliedAt?: Date;
+  @attr('string') declare definitionFileContentsDiff: string;
   @attr('string') declare description?: string;
   @attr('string') declare lastErrorMessage?: string;
   @attr('date') declare lastSyncedAt?: Date;
