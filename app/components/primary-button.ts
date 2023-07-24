@@ -5,7 +5,7 @@ interface Signature {
 
   Args: {
     size: 'small' | 'regular';
-    isDisabled: boolean;
+    isDisabled?: boolean;
   };
 
   Blocks: {
@@ -16,5 +16,11 @@ interface Signature {
 export default class PrimaryButtonComponent extends Component<Signature> {
   get sizeIsSmall(): boolean {
     return this.args.size === 'small';
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    PrimaryButton: typeof PrimaryButtonComponent;
   }
 }

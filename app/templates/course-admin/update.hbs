@@ -13,21 +13,30 @@
 
       <div class="flex items-start justify-between">
         <div>
-          <h3 class="text-lg font-bold text-gray-800 mb-1">
-            GraphQL API
+          <h3 class="text-lg font-bold text-gray-800 mb-0.5">
+            {{@model.update.summary}}
           </h3>
-          <div class="text-xs text-gray-400">
-            Update course description
+          <div class="prose prose-sm text-gray-400">
+            <p>
+              {{@model.update.description}}
+            </p>
           </div>
-          <div class="flex items-center mt-6 gap-x-3">
-            <PrimaryButton @size="small">
-              Apply Update
-            </PrimaryButton>
+          {{#if (eq @model.update.status "pending")}}
+            <div class="flex items-center mt-6 gap-x-3">
+              <PrimaryButton @size="small">
+                Apply Update
+              </PrimaryButton>
 
-            <TertiaryButton @size="small">
-              Refresh from GitHub
-            </TertiaryButton>
-          </div>
+              <TertiaryButton @size="small">
+                Refresh from GitHub
+              </TertiaryButton>
+            </div>
+          {{else if (eq @model.update.status "applied")}}
+            <div class="flex items-center mt-6 gap-x-1">
+              {{svg-jar "check-circle" class="w-6 fill-current text-teal-500"}}
+              <span class="text-gray-600 text-sm">Applied</span>
+            </div>
+          {{/if}}
         </div>
         <div class="flex flex-col items-end">
           <a href="https://github.com/" class="text-gray-400 flex items-center hover:text-gray-600">

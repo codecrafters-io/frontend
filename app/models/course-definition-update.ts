@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseDefinitionUpdateModel extends Model {
-  @belongsTo('course', { async: false }) declare course: unknown;
+  @belongsTo('course', { async: false }) declare course: { slug: string };
   @belongsTo('user', { async: false }) declare applier: unknown;
 
   @attr('date') declare appliedAt?: Date;
