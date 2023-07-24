@@ -93,6 +93,8 @@ function routes() {
 
   this.get('/courses');
 
+  this.get('/course-definition-updates');
+
   this.get('/course-language-requests');
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');

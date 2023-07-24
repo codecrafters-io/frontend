@@ -1,9 +1,12 @@
 import Component from '@glimmer/component';
+import CourseDefinitionUpdateModel from 'codecrafters-frontend/models/course-definition-update';
 
 type Signature = {
   Element: HTMLDivElement;
 
-  Args: {};
+  Args: {
+    update: CourseDefinitionUpdateModel;
+  };
 };
 
 export default class UpdateListItemComponent extends Component<Signature> {}
