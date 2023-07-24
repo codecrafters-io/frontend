@@ -97,33 +97,39 @@ export default class CourseController extends Controller {
   }
 
   @action
-  handleSidebarButtonClick() {
+  handleExpandSidebarButtonClick() {
     this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
 
-    if (this.sidebarIsExpandedOnDesktop) {
-      this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
-        course_name: this.model.course.name,
-      });
-    } else {
-      this.analyticsEventTracker.track('expanded_course_page_sidebar', {
-        course_name: this.model.course.name,
-      });
-    }
+    this.analyticsEventTracker.track('expanded_course_page_sidebar', {
+      course_id: this.model.course.id
+    });
   }
 
   @action
-  handleLeaderboardButtonClick() {
+  handleCollapseSidebarButtonClick() {
+    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
+
+    this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
+      course_id: this.model.course.id
+    });
+  }
+
+  @action
+  handleExpandLeaderboardButtonClick() {
     this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
 
-    if (this.leaderboardIsExpanded) {
-      this.analyticsEventTracker.track('collapsed_course_page_leaderboard', {
-        course_name: this.model.course.name,
-      });
-    } else {
-      this.analyticsEventTracker.track('expanded_course_page_leaderboard', {
-        course_name: this.model.course.name,
-      });
-    }
+    this.analyticsEventTracker.track('expanded_course_page_leaderboard', {
+      course_id: this.model.course.id
+    });
+  }
+
+  @action
+  handleCollapseLeaderboardButtonClick() {
+    this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
+
+    this.analyticsEventTracker.track('collapsed_course_page_leaderboard', {
+      course_id: this.model.course.id
+    });
   }
 
   startRepositoryPoller() {

@@ -41,7 +41,7 @@
     {{! For collapse/expand on desktop }}
     <CoursePage::ExpandSidebarButton
       class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
-      {{on "click" this.handleSidebarButtonClick}}
+      {{on "click" this.handleExpandSidebarButtonClick}}
     />
 
     <CoursePage::DesktopHeader
@@ -62,12 +62,12 @@
         {{#if this.leaderboardIsExpanded}}
           <CoursePage::CollapseLeaderboardButton
             class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
-            {{on "click" this.handleLeaderboardButtonClick}}
+            {{on "click" this.handleCollapseLeaderboardButtonClick}}
           />
         {{else}}
           <CoursePage::ExpandLeaderboardButton
             class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
-            {{on "click" this.handleLeaderboardButtonClick}}
+            {{on "click" this.handleExpandLeaderboardButtonClick}}
           />
         {{/if}}
 
@@ -94,7 +94,7 @@
     >
       <CoursePage::CollapseSidebarButton
         class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5"
-        {{on "click" this.handleSidebarButtonClick}}
+        {{on "click" this.handleCollapseSidebarButtonClick}}
       />
     </CoursePage::Sidebar>
   {{/if}}
