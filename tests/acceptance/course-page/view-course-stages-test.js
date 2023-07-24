@@ -284,12 +284,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.clickOnExpandSidebarButton();
     assert.ok(coursePage.hasExpandedSidebar, 'sidebar should be expanded');
 
-    const analyticsEventNames = [];
     const store = this.owner.lookup('service:store');
     const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
-    analyticsEvents.map((item) => {
-      analyticsEventNames.push(item.get('name'));
-    });
+    const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
 
     assert.ok(analyticsEventNames.includes('collapsed_course_page_sidebar'), 'collapsed_course_page_sidebar event should be tracked');
     assert.ok(analyticsEventNames.includes('expanded_course_page_sidebar'), 'expanded_course_page_sidebar event should be tracked');
@@ -309,12 +306,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.clickOnExpandLeaderboardButton();
     assert.ok(coursePage.hasExpandedLeaderboard, 'leaderboard should be expanded');
 
-    const analyticsEventNames = [];
     const store = this.owner.lookup('service:store');
     const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
-    analyticsEvents.map((item) => {
-      analyticsEventNames.push(item.get('name'));
-    });
+    const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
 
     assert.ok(analyticsEventNames.includes('collapsed_course_page_leaderboard'), 'collapsed_course_page_leaderboard event should be tracked');
     assert.ok(analyticsEventNames.includes('expanded_course_page_leaderboard'), 'expanded_course_page_leaderboard event should be tracked');

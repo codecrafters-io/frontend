@@ -10,6 +10,11 @@ import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/co
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 
 export default create({
+  clickOnCollapseLeaderboardButton: clickable('[data-test-collapse-leaderboard-button]'),
+  clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
+  clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
+  clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
+
   courseCompletedCard: {
     clickOnPublishToGithubLink: clickable('span:contains("Click here")'),
     instructionsText: text('[data-test-instructions-text]'),
@@ -75,6 +80,8 @@ export default create({
     scope: '[data-test-earned-badge-notice]',
   },
 
+  hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
+  hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
   hasUpgradePrompt: isVisible('[data-test-upgrade-prompt]'),
   leaderboard: Leaderboard,
   repositoryDropdown: RepositoryDropdown,
@@ -88,11 +95,4 @@ export default create({
   repositorySetupCard: RepositorySetupCard,
   visit: visitable('/courses/:course_slug'),
   yourTaskCard: YourTaskCard,
-
-  hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
-  hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
-  clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
-  clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
-  clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
-  clickOnCollapseLeaderboardButton: clickable('[data-test-collapse-leaderboard-button]'),
 });
