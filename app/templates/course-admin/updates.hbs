@@ -18,9 +18,13 @@
     </div>
 
     <ul role="list" class="divide-y divide-gray-100">
-      <CourseAdmin::UpdatesPage::UpdateListItem />
-      <CourseAdmin::UpdatesPage::UpdateListItem />
-      <CourseAdmin::UpdatesPage::UpdateListItem />
+      {{#each @model.courseDefinitionUpdates as |courseDefinitionUpdate|}}
+        <CourseAdmin::UpdatesPage::UpdateListItem @update={{courseDefinitionUpdate}} />
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No updates found.
+        </div>
+      {{/each}}
     </ul>
   </div>
 </div>

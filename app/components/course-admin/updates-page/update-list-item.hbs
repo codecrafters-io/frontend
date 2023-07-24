@@ -1,20 +1,47 @@
-<li class="flex items-center justify-between gap-x-6 py-5 hover:bg-gray-50 px-1" data-test-update-list-item>
+<li
+  class="flex items-center justify-between gap-x-6 py-5 hover:bg-gray-50 px-1"
+  data-test-update-list-item
+  {{on "click" this.handleClick}}
+  role="button"
+>
   <div class="min-w-0">
     <div class="flex items-start gap-x-3">
-      <p class="text-sm font-semibold leading-6 text-gray-900">GraphQL API</p>
-      <p
-        class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20"
-      >Complete</p>
+      <p class="text-sm font-semibold leading-6 text-gray-900">{{@update.summary}}</p>
+      {{#if (eq @update.status "pending")}}
+        <p
+          class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-yellow-700 bg-yellow-50 ring-yellow-600/20"
+        >
+          Pending
+        </p>
+      {{else if (eq @update.status "applied")}}
+        <p
+          class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20"
+        >
+          Applied
+        </p>
+      {{/if}}
     </div>
     <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-      <p class="whitespace-nowrap">Applied on <time datetime="2023-03-17T00:00Z">March 17, 2023</time></p>
-      <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
-        <circle cx="1" cy="1" r="1" />
-      </svg>
-      <p class="truncate">by Leslie Alexander</p>
+      <p class="whitespace-nowrap">
+        {{#if @update.appliedAt}}
+          Applied on
+          {{moment-format @update.appliedAt "MMMM D, YYYY"}}
+        {{else if @update.lastSyncedAt}}
+          Last synced
+          {{moment-from-now @update.lastSyncedAt}}
+        {{/if}}
+      </p>
+      {{#if @update.applier}}
+        <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+          <circle cx="1" cy="1" r="1" />
+        </svg>
+        {{! @glint-expect-error user is not ts-ified yet !}}
+        <p class="truncate">by {{@update.applier.username}}</p>
+      {{/if}}
     </div>
   </div>
   <div class="flex flex-none items-center gap-x-4">
-    <TertiaryLinkButton @size="small" @route="course-admin.update" @models={{array "redis" "abcd"}} data-test-view-update-button>View update</TertiaryLinkButton>
+    <TertiaryLinkButton @size="small" @route="course-admin.update" @models={{array @update.course.slug @update.id}} data-test-view-update-button>View
+      update</TertiaryLinkButton>
   </div>
 </li>
