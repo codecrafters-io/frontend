@@ -26,6 +26,9 @@ module.exports = function (environment) {
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
     },
+    fastboot: {
+      hostWhitelist: [/^localhost:\d+$/],
+    },
   };
 
   if (environment === 'development') {
