@@ -14,6 +14,7 @@ export default class CourseController extends Controller {
   @service store;
   @service router;
   @service visibility;
+  @service analyticsEventTracker;
 
   // query params
   @tracked action;
@@ -93,6 +94,42 @@ export default class CourseController extends Controller {
   @action
   teardownRouteChangeListeners() {
     this.router.off('routeDidChange', this.handleRouteChanged);
+  }
+
+  @action
+  handleExpandSidebarButtonClick() {
+    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
+
+    this.analyticsEventTracker.track('expanded_course_page_sidebar', {
+      course_id: this.model.course.id,
+    });
+  }
+
+  @action
+  handleCollapseSidebarButtonClick() {
+    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
+
+    this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
+      course_id: this.model.course.id,
+    });
+  }
+
+  @action
+  handleExpandLeaderboardButtonClick() {
+    this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
+
+    this.analyticsEventTracker.track('expanded_course_page_leaderboard', {
+      course_id: this.model.course.id,
+    });
+  }
+
+  @action
+  handleCollapseLeaderboardButtonClick() {
+    this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
+
+    this.analyticsEventTracker.track('collapsed_course_page_leaderboard', {
+      course_id: this.model.course.id,
+    });
   }
 
   startRepositoryPoller() {
