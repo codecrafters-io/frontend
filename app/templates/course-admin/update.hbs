@@ -23,11 +23,16 @@
           </div>
           {{#if (eq @model.update.status "pending")}}
             <div class="flex items-center mt-6 gap-x-3">
-              <PrimaryButton @size="small">
+              <PrimaryButtonWithSpinner
+                @shouldShowSpinner={{this.isApplyingUpdate}}
+                @size="small"
+                {{on "click" this.handleApplyUpdateButtonClick}}
+                data-test-apply-update-button
+              >
                 Apply Update
-              </PrimaryButton>
+              </PrimaryButtonWithSpinner>
 
-              <TertiaryButton @size="small">
+              <TertiaryButton @size="small" @isDisabled={{true}}>
                 Refresh from GitHub
               </TertiaryButton>
             </div>
@@ -45,6 +50,15 @@
           </a>
         </div>
       </div>
+
+      {{#if @model.update.lastErrorMessage}}
+        <div class="border rounded p-4 border-red-300 bg-red-50 mt-6" data-test-error-message>
+          <div class="text-red-600 font-semibold mb-2">We encountered an error when applying this update:</div>
+          <div class="border-l-2 border-red-400 pl-6 py-4">
+            <pre class="text-sm text-red-600"><code>{{@model.update.lastErrorMessage}}</code></pre>
+          </div>
+        </div>
+      {{/if}}
     </div>
 
     <FileContentsCard class="mb-4" @filename="course-definition.yml" @code={{@model.update.definitionFileContentsDiff}} @language="yaml" />

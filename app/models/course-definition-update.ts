@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 
 export default class CourseDefinitionUpdateModel extends Model {
   @belongsTo('course', { async: false }) declare course: { slug: string };
@@ -15,4 +16,15 @@ export default class CourseDefinitionUpdateModel extends Model {
   @attr('string') declare oldDefinitionFileContents: string;
   @attr('string') declare status: 'pending' | 'applied';
   @attr('string') declare summary?: string;
+
+  declare apply: (this: Model, payload: any) => Promise<void>;
 }
+
+CourseDefinitionUpdateModel.prototype.apply = memberAction({
+  path: 'apply',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});
