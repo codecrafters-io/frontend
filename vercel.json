@@ -13,6 +13,10 @@
     {
       "source": "/setup_team",
       "destination": "https://backend.codecrafters.io/setup_team"
+    },
+    {
+      "source": "/package.json",
+      "destination": "/"
     }
   ],
   "github": {
