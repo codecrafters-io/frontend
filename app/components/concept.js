@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class ConceptComponent extends Component {
-  @service store;
+  @service analyticsEventTracker;
 
   @tracked lastRevealedBlockGroupIndex = null;
   @tracked interactedBlockIndexes = new TrackedSet([]);
@@ -63,12 +63,7 @@ export default class ConceptComponent extends Component {
 
   @action
   handleDidInsertContainer() {
-    this.store
-      .createRecord('analytics-event', {
-        name: 'viewed_concept',
-        properties: { concept_id: this.args.concept.id },
-      })
-      .save();
+    this.analyticsEventTracker.track('viewed_concept', { concept_id: this.args.concept.id });
   }
 
   @action
@@ -85,12 +80,10 @@ export default class ConceptComponent extends Component {
 
     this.interactedBlockIndexes.add(block.index);
 
-    this.store
-      .createRecord('analytics-event', {
-        name: 'progressed_through_concept',
-        properties: { concept_id: this.args.concept.id, progress_percentage: this.progressPercentage },
-      })
-      .save();
+    this.analyticsEventTracker.track('progressed_through_concept', {
+      concept_id: this.args.concept.id,
+      progress_percentage: this.progressPercentage,
+    });
   }
 
   @action
