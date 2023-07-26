@@ -3,8 +3,8 @@ import { isEqual } from '@ember/utils';
 import { action } from '@ember/object';
 
 export default class PageViewTracker extends Service {
+  @service analyticsEventTracker;
   @service router;
-  @service store;
   @service utmCampaignIdTracker;
 
   @action
@@ -27,12 +27,9 @@ export default class PageViewTracker extends Service {
   #buildAnalyticsEvent() {
     let baseURL = `${window.location.protocol}//${window.location.host}`; // 'https://app.codecrafters.io
 
-    return this.store.createRecord('analytics-event', {
-      name: 'viewed_page',
-      properties: {
-        utm_id: this.utmCampaignIdTracker.firstSeenCampaignId,
-        url: `${baseURL}${this.router.currentURL}`,
-      },
+    return this.analyticsEventTracker.track('viewed_page', {
+      utm_id: this.utmCampaignIdTracker.firstSeenCampaignId,
+      url: `${baseURL}${this.router.currentURL}`,
     });
   }
 
