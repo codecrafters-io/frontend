@@ -32,13 +32,7 @@ export default class PricingCardComponent extends Component {
   }
 
   get threeMonthFeatureDescriptions() {
-    return [
-      'One time payment',
-      'No limits on content',
-      'Members community for Q&A',
-      'Priority builds',
-      'Priority support'
-    ];
+    return ['One time payment', 'No limits on content', 'Members community for Q&A', 'Priority builds', 'Priority support'];
   }
 
   @action
