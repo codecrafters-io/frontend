@@ -91,11 +91,20 @@
     </div>
   </div>
   <div class="p-6 rounded-b-lg">
-    {{#each this.featureDescriptions as |featureDescription|}}
-      <div class="flex items-center py-1">
-        {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
-        <span class="text-gray-600 text-sm ml-2">{{featureDescription}}</span>
-      </div>
-    {{/each}}
+    {{#if (eq @title '3 months access')}}
+      {{#each this.threeMonthFeatureDescriptions as |featureDescription|}}
+        <div class="flex items-center py-1">
+          {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
+          <span class="text-gray-600 text-sm ml-2">{{featureDescription}}</span>
+        </div>
+      {{/each}}
+    {{else}}
+      {{#each this.featureDescriptions as |featureDescription|}}
+        <div class="flex items-center py-1">
+          {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
+          <span class="text-gray-600 text-sm ml-2">{{featureDescription}}</span>
+        </div>
+      {{/each}}
+    {{/if}}
   </div>
 </div>
