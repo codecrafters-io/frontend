@@ -1,8 +1,8 @@
 import Service, { inject as service } from '@ember/service';
 
 export default class FeatureFlagsService extends Service {
+  @service analyticsEventTracker;
   @service authenticator;
-  @service store;
 
   constructor() {
     super(...arguments);
@@ -26,12 +26,10 @@ export default class FeatureFlagsService extends Service {
     const value = this.currentUser && this.currentUser.featureFlags && this.currentUser.featureFlags[flagName];
 
     if (!this.notifiedFeatureFlags.has(flagName)) {
-      this.store
-        .createRecord('analytics-event', {
-          name: 'feature_flag_called',
-          properties: { feature_flag: flagName, feature_flag_response: value },
-        })
-        .save();
+      this.analyticsEventTracker.track('feature_flag_called', {
+        feature_flag: flagName,
+        feature_flag_response: value,
+      });
 
       this.notifiedFeatureFlags.add(flagName);
     }
