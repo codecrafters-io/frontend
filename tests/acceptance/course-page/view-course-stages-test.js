@@ -350,6 +350,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.ok(coursePage.hasScreencastsLink, 'screencasts link should be present');
+
+    await percySnapshot('Course Stages - How to pass this stage');
   });
 
   test('it should not show a screencasts link in the second stage if there are no screencasts available', async function (assert) {

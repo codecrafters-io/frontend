@@ -36,8 +36,8 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   @service declare store: Store;
   @service declare router: RouterService;
 
-  get courseStagePosition() {
-    return this.args.repository.course.secondStage.position;
+  get courseSecondStage() {
+    return this.args.repository.course.secondStage
   }
 
   get submitChangesInstructionsHTML() {
@@ -50,9 +50,5 @@ git add .
 git commit -m "pass 2nd stage" # any msg
 git push origin master
 \`\`\``;
-  }
-
-  get hasScreencasts() {
-    return this.args.repository.course.secondStage.screencasts.length > 0;
   }
 }
