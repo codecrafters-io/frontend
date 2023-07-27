@@ -28,6 +28,7 @@
         @footerText="Pay once, access for life."
         @isRecommended={{false}}
         @pricingFrequency="lifetime"
+        @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @shouldShowAmortizedMonthlyPrice={{false}}
         @title="Lifetime access"
         data-test-lifetime-pricing-card
@@ -38,6 +39,7 @@
         @footerText="Billed once, as a single payment of $120."
         @isRecommended={{false}}
         @pricingFrequency="quarterly"
+        @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @shouldShowAmortizedMonthlyPrice={{true}}
         @title="3 months access"
         data-test-quarterly-pricing-card
@@ -51,6 +53,7 @@
         @footerText="Billed once, as a single payment of ${{or this.discountedYearlyPrice 360}}."
         @isRecommended={{true}}
         @pricingFrequency="yearly"
+        @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @shouldShowAmortizedMonthlyPrice={{true}}
         @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
         @title="1 year access"

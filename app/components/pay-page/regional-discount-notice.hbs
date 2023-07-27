@@ -8,7 +8,8 @@
     </div>
 
     <div class="mt-3 flex items-center">
-      <Input @type="checkbox" @checked={{@shouldApplyRegionalDiscount}} />
+      {{! template-lint-disable require-input-label }}
+      <Input @type="checkbox" @checked={{@shouldApplyRegionalDiscount}} data-test-apply-regional-discount-button />
       <span class="text-green-700 text-sm ml-2">
         I'd like to apply a
         {{@regionalDiscount.percentOff}}% discount.

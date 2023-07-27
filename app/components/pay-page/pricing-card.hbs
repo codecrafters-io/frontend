@@ -86,6 +86,18 @@
         </div>
       {{/if}}
     </button>
+
+    {{#if @regionalDiscount}}
+      <div class="mt-4 border rounded flex items-center p-2 border-green-400 bg-green-50" data-test-regional-discount-notice>
+        {{svg-jar "globe" class="w-6 h-6 mr-1 flex-shrink-0 text-green-400 transform scale-90"}}
+
+        <div class="text-green-700 text-sm leading-relaxed">
+          <b>{{@regionalDiscount.percentOff}}% off</b>
+          applied at checkout.
+        </div>
+      </div>
+    {{/if}}
+
     <div class="mt-4 text-xs text-gray-500 text-center">
       {{@footerText}}
     </div>
