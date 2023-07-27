@@ -82,6 +82,7 @@ export default create({
 
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
+  hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
   hasUpgradePrompt: isVisible('[data-test-upgrade-prompt]'),
   leaderboard: Leaderboard,
   repositoryDropdown: RepositoryDropdown,

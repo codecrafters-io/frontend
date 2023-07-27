@@ -13,14 +13,14 @@
 
       <p>
         We recommend taking a look at the
-        <span class="font-semibold underline" role="button" {{on "click" this.handleViewCodeExamplesButtonClicked}}>Code Examples</span>
+        <LinkTo @route="course.stage.code-examples" @model={{this.courseStagePosition}} class="font-semibold underline">Code Examples</LinkTo>
         tab, which contains code examples from other users.
       </p>
 
       {{#if this.hasScreencasts}}
         <p>
           If you prefer more detailed video walkthroughs, take a look at the
-          <span class="font-semibold underline" role="button" {{on "click" this.handleViewScreencastsButtonClicked}}>Screencasts</span>
+          <LinkTo @route="course.stage.screencasts" @model={{this.courseStagePosition}} class="font-semibold underline" data-test-screencasts-link>Screencasts</LinkTo>
           tab.
         </p>
       {{/if}}

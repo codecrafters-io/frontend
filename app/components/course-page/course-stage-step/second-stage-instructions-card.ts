@@ -1,4 +1,3 @@
-import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
@@ -37,6 +36,10 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   @service declare store: Store;
   @service declare router: RouterService;
 
+  get courseStagePosition() {
+    return this.args.repository.course.secondStage.position;
+  }
+
   get submitChangesInstructionsHTML() {
     return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.submitChangesInstructionsMarkdown);
   }
@@ -44,22 +47,12 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   get submitChangesInstructionsMarkdown() {
     return `\`\`\`
 git add .
-git commit -m "pass 1st stage" # any msg
+git commit -m "pass 2nd stage" # any msg
 git push origin master
 \`\`\``;
   }
 
   get hasScreencasts() {
     return this.args.repository.course.secondStage.screencasts.length > 0;
-  }
-
-  @action
-  handleViewCodeExamplesButtonClicked() {
-    this.router.transitionTo('course.stage.code-examples', this.args.repository.course.secondStage.position);
-  }
-
-  @action
-  handleViewScreencastsButtonClicked() {
-    this.router.transitionTo('course.stage.screencasts', this.args.repository.course.secondStage.position);
   }
 }
