@@ -61,6 +61,10 @@ export default class CourseModel extends Model {
       sqlite: sqliteLogo,
       react: reactLogo,
       grep: grepLogo,
+      'http-server': grepLogo, // temporary
+      'dns-server': grepLogo, // temporary
+      bittorrent: grepLogo, // temporary
+      interpreter: grepLogo, // temporary
     }[this.slug];
   }
 
