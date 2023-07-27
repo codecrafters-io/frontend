@@ -214,6 +214,16 @@ function routes() {
     return schema.referralLinks.create(attrs);
   });
 
+  this.get('/regional-discounts/current', function (schema) {
+    const regionalDiscount = schema.regionalDiscounts.find('current-discount-id');
+
+    if (regionalDiscount) {
+      return regionalDiscount;
+    } else {
+      return new Response(200, {}, { data: {} });
+    }
+  });
+
   this.get('/repositories', function (schema, request) {
     let repositories;
 

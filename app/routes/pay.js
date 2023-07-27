@@ -1,7 +1,6 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
-import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 
 export default class PayRoute extends BaseRoute {
   @service authenticator;
