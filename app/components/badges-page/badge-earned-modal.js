@@ -3,8 +3,8 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 export default class BadgeEarnedModalComponent extends Component {
+  @service analyticsEventTracker;
   @service authenticator;
-  @service store;
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -16,14 +16,9 @@ export default class BadgeEarnedModalComponent extends Component {
 
   @action
   handleDidInsert() {
-    this.store
-      .createRecord('analytics-event', {
-        name: 'viewed_badge',
-        properties: {
-          badge_id: this.args.badge.id,
-        },
-      })
-      .save();
+    this.analyticsEventTracker.track('viewed_badge', {
+      badge_id: this.args.badge.id,
+    });
   }
 
   get lastAwardedAt() {

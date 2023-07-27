@@ -5,9 +5,9 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class PayController extends Controller {
+  @service analyticsEventTracker;
   @service authenticator;
   @service router;
-  @service store;
   @tracked isCreatingCheckoutSession = false;
 
   get discountedYearlyPrice() {
@@ -24,7 +24,7 @@ export default class PayController extends Controller {
 
   @action
   async handleTryNowPayLaterButtonClicked() {
-    this.store.createRecord('analytics-event', { name: 'dismissed_payment_prompt' }).save();
+    this.analyticsEventTracker.track('dismissed_payment_prompt');
     this.router.transitionTo('tracks');
   }
 
