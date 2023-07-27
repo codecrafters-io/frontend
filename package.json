@@ -45,7 +45,7 @@
     "@glint/template": "^1.0.2",
     "@percy/cli": "^1.26.2",
     "@percy/ember": "^4.0.0",
-    "@sentry/ember": "^7.60.0",
+    "@sentry/ember": "^7.60.1",
     "@tsconfig/ember": "^2.0.0",
     "@types/ember": "^4.0.4",
     "@types/ember__application": "^4.0.6",
