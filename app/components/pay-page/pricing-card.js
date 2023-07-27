@@ -22,17 +22,7 @@ export default class PricingCardComponent extends Component {
   }
 
   get featureDescriptions() {
-    if (this.args.pricingFrequency === 'quarterly') {
-      return ['One time payment', 'No limits on content', 'Members community for Q&A', 'Priority builds', 'Priority support'];
-    } else {
-      return [
-        'One time payment',
-        'Unrestricted content access',
-        'Members community for Q&A',
-        'Download invoice for expensing',
-        'Private leaderboard for your team',
-      ];
-    }
+    return ['One time payment', 'No limits on content', 'Members community for Q&A', 'Priority builds', 'Priority support'];
   }
 
   @action
