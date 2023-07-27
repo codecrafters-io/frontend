@@ -71,7 +71,7 @@ module('Acceptance | pay-test', function (hooks) {
     user.update('createdAt', new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000));
 
     this.server.create('referral-activation', {
-      activatedAt: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
+      activatedAt: new Date(new Date('2023-07-27T08:30:00').getTime() - 2 * 24 * 60 * 60 * 1000),
       referrer: user,
       customer: user,
     });
