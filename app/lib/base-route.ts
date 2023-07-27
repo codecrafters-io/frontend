@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import window from 'ember-window-mock';
 import RouterService from '@ember/routing/router-service';
+import paramsFromRouteInfo from 'codecrafters-frontend/lib/params-from-route-info';
 type Transition = ReturnType<RouterService['transitionTo']>;
 
 export default class BaseRoute extends Route {
@@ -16,9 +17,11 @@ export default class BaseRoute extends Route {
 
     // @ts-ignore
     if (!this.allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
-      if (Object.keys(transition.to.params).length > 0) {
+      const params = paramsFromRouteInfo(transition.to);
+
+      if (Object.keys(params).length > 0) {
         // @ts-ignore
-        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name, transition.to.params));
+        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name, params));
       } else {
         // @ts-ignore
         this.authenticator.initiateLogin(this.router.urlFor(transition.to.name));

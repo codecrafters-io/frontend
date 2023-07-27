@@ -1,14 +1,34 @@
+import config from 'codecrafters-frontend/config/environment';
+import percySnapshot from '@percy/ember';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import updatesPage from 'codecrafters-frontend/tests/pages/course-admin/updates-page';
+import window from 'ember-window-mock';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import updatesPage from 'codecrafters-frontend/tests/pages/course-admin/updates-page';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | course-admin | view-updates', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+  setupWindowMock(hooks);
+
+  test('it forces login when user is not logged in', async function (assert) {
+    testScenario(this.server);
+
+    try {
+      await updatesPage.visit({ course_slug: 'redis' });
+    } catch (e) {
+      // pass
+    }
+
+    assert.strictEqual(
+      window.location.href,
+      `${config.x.backendUrl}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fcourses%2Fredis%2Fadmin%2Fupdates`,
+      'should redirect to team billing session URL',
+    );
+  });
 
   test('it renders when no updates are present', async function (assert) {
     assert.expect(0); // temp
