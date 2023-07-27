@@ -9,6 +9,7 @@ export default class PayController extends Controller {
   @service authenticator;
   @service router;
   @tracked isCreatingCheckoutSession = false;
+  @tracked shouldApplyRegionalDiscount = false;
 
   get discountedYearlyPrice() {
     if (this.user.isEligibleForCustomDiscount) {
