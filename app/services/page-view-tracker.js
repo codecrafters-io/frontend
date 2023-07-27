@@ -13,7 +13,12 @@ export default class PageViewTracker extends Service {
       return;
     }
 
-    this.#buildAnalyticsEvent().save();
+    let baseURL = `${window.location.protocol}//${window.location.host}`; // 'https://app.codecrafters.io
+
+    this.analyticsEventTracker.track('viewed_page', {
+      utm_id: this.utmCampaignIdTracker.firstSeenCampaignId,
+      url: `${baseURL}${this.router.currentURL}`,
+    });
   }
 
   setupListener() {
@@ -22,15 +27,6 @@ export default class PageViewTracker extends Service {
 
   willDestroy() {
     this.router.off('routeDidChange', this.handleRouteChange);
-  }
-
-  #buildAnalyticsEvent() {
-    let baseURL = `${window.location.protocol}//${window.location.host}`; // 'https://app.codecrafters.io
-
-    return this.analyticsEventTracker.track('viewed_page', {
-      utm_id: this.utmCampaignIdTracker.firstSeenCampaignId,
-      url: `${baseURL}${this.router.currentURL}`,
-    });
   }
 
   #shouldIgnoreEventForTransition(transition) {
