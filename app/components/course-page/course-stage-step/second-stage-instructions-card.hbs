@@ -20,7 +20,12 @@
       {{#if this.hasScreencasts}}
         <p>
           If you prefer more detailed video walkthroughs, take a look at the
-          <LinkTo @route="course.stage.screencasts" @model={{this.courseStagePosition}} class="font-semibold underline" data-test-screencasts-link>Screencasts</LinkTo>
+          <LinkTo
+            @route="course.stage.screencasts"
+            @model={{this.courseStagePosition}}
+            class="font-semibold underline"
+            data-test-screencasts-link
+          >Screencasts</LinkTo>
           tab.
         </p>
       {{/if}}
