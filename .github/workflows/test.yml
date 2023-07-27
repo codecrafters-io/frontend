@@ -84,6 +84,7 @@ jobs:
       - run: cat test-results.xml
 
       - name: Publish Buildkite analytics
+        continue-on-error: true
         run: |
           curl -XPOST --fail \
             -H "Authorization: Token token=\"$BUILDKITE_ANALYTICS_TOKEN\"" \
