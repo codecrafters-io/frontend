@@ -53,9 +53,9 @@
     </script>
   </head>
   <body style="margin: 0; background-color: rgb(248 250 252)">
-    <div class="ember-load-indicator" style="height: 100vh; align-items: center; justify-content: center; margin-top: 52px; display:none; opacity: 0; transition: opacity 0.3s;">
-      <div style="display: flex; flex-direction: column; align-items: center;">
-        <svg width="100" height="100" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="ember-load-indicator">
+      <div class="indicator-container">
+        <svg class="indicator-icon" width="100" height="100" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0)">
             <g filter="url(#filter0_d)">
               <path d="M494.841 237.638L379.155 115.073C372.276 107.569 360.395 106.944 352.891 114.448C345.387 121.326 344.761 133.208 352.265 140.712L455.445 250.77L351.64 360.203C344.761 367.707 344.761 379.588 352.265 386.467C356.017 389.594 360.395 391.47 365.397 391.47C370.4 391.47 375.403 389.594 379.155 385.842L494.841 263.277C501.72 256.398 501.72 245.142 494.841 237.638Z" fill="url(#paint0_linear)"/>
@@ -115,7 +115,7 @@
             </clipPath>
           </defs>
         </svg>
-        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+        <div class="indicator-spinner-container">
           <div class="sk-circle">
             <div class="sk-circle1 sk-child"></div>
             <div class="sk-circle2 sk-child"></div>
@@ -130,7 +130,7 @@
             <div class="sk-circle11 sk-child"></div>
             <div class="sk-circle12 sk-child"></div>
           </div>
-          <span style="font-family: Montserrat, sans-serif; color: #64748B; margin-top: 1.5em">
+          <span class="indicator-loading-text">
             Loading...
           </span>
         </div>
@@ -138,6 +138,32 @@
     </div>
 
     <style>
+      .ember-load-indicator {
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        margin-top: 52px;
+        display:none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .ember-load-indicator .indicator-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .ember-load-indicator .indicator-spinner-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+      }
+      .ember-load-indicator .indicator-loading-text {
+        font-family: Montserrat, sans-serif;
+        color: #64748B;
+        margin-top: 1.5em;
+      }
+
       .sk-circle {
         width: 40px;
         height: 40px;
