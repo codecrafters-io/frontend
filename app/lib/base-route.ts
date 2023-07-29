@@ -18,6 +18,11 @@ export default class BaseRoute extends Route {
     // @ts-ignore
     this.authenticator.authenticate();
 
+    // Routes attempting to call `initiateLogin` don't support FastBoot at this time
+    if (!this.allowsAnonymousAccess && this.fastboot.isFastBoot) {
+      throw new Error('FastBoot is not supported on routes without "allowsAnonymousAccess=true"');
+    }
+
     // @ts-ignore
     if (!this.allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
       const params = paramsFromRouteInfo(transition.to);
