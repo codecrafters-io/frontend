@@ -164,6 +164,29 @@
         margin-top: 1.5em;
       }
 
+      .ember-load-indicator[is-fastboot=true] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        margin-top: 0;
+        z-index: 1000;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-container {
+        margin-top: 56px;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-spinner-container {
+        margin-top: 0;
+        padding: 8px 0;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-icon {
+        display: none;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-loading-text {
+        display: none;
+      }
+
       .sk-circle {
         width: 40px;
         height: 40px;
@@ -287,17 +310,21 @@
     </style>
 
     <script>
+      // Wait for the DOM to render fully
       setTimeout(() => {
-        const elems = document.querySelectorAll(`.ember-load-indicator`);
-
-        /**
-         * Very important to iterate over the NodeList this way to maintain ie11 compatibility (maybe we don't need this anymore?)
-         */
-        for (let i = 0; i < elems.length; i++) {
-          elems[i].style.display = `flex`; // Don't even show this initially, affects CLS score
-          elems[i].style.opacity = `1`;
-        }
-      }, 3000);
+        const shoeBoxes = document.querySelectorAll('script[type="fastboot/shoebox"]'); // Find all FastBoot Shoeboxes
+        const isFastBootPage = shoeBoxes.length > 0; // If Shoeboxes exist, assume this is a FastBoot page
+        // Delay the appearence of the loading indicator
+        setTimeout(() => {
+          const elems = document.querySelectorAll('.ember-load-indicator');
+          // Iterate over the NodeList this way to maintain ie11 compatibility
+          for (let i = 0; i < elems.length; i++) {
+            elems[i].style.display = 'flex';
+            elems[i].style.opacity = '1';
+            elems[i].setAttribute('is-fastboot', isFastBootPage); // CSS uses this to show FastBoot-specific indicator
+          }
+        }, isFastBootPage ? 3000 : 3000); // Different delay for FastBoot and regular indicator
+      }, 0); // Postpone to the next run-loop
     </script>
 
     {{content-for "body"}}
