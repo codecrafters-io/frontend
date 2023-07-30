@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 export default class PageViewTracker extends Service {
   @service analyticsEventTracker;
   @service router;
-  @service utmCampaignIdTracker;
 
   @action
   handleRouteChange(transition) {
@@ -13,12 +12,7 @@ export default class PageViewTracker extends Service {
       return;
     }
 
-    let baseURL = `${window.location.protocol}//${window.location.host}`; // 'https://app.codecrafters.io
-
-    this.analyticsEventTracker.track('viewed_page', {
-      utm_id: this.utmCampaignIdTracker.firstSeenCampaignId,
-      url: `${baseURL}${this.router.currentURL}`,
-    });
+    this.analyticsEventTracker.track('viewed_page');
   }
 
   setupListener() {
