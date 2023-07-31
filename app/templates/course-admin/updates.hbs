@@ -10,7 +10,12 @@
         </div>
       </div>
       <div data-test-definition-repository-link>
-        <a href={{@model.course.definitionRepositoryLink}} class="text-gray-400 flex items-center hover:text-gray-600" target="_blank">
+        <a
+          href={{@model.course.definitionRepositoryLink}}
+          class="text-gray-400 flex items-center hover:text-gray-600"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">{{@model.course.definition_repository_full_name}}</span>
         </a>
