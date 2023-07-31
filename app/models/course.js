@@ -50,6 +50,10 @@ export default class CourseModel extends Model {
     return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
   }
 
+  get definitionRepositoryLink() {
+    return `https://github.com/${this.definition_repository_full_name}`;
+  }
+
   get firstStage() {
     return this.sortedStages[0];
   }

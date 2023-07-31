@@ -9,8 +9,8 @@
           These updates are synced from your course's GitHub repository. They need to be applied to take effect.
         </div>
       </div>
-      <div>
-        <a href="https://github.com/" class="text-gray-400 flex items-center hover:text-gray-600">
+      <div data-test-definition-repository-link>
+        <a href={{@model.course.definitionRepositoryLink}} class="text-gray-400 flex items-center hover:text-gray-600" target="_blank">
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">{{@model.course.definition_repository_full_name}}</span>
         </a>
