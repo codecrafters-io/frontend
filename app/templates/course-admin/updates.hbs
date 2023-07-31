@@ -9,11 +9,16 @@
           These updates are synced from your course's GitHub repository. They need to be applied to take effect.
         </div>
       </div>
-      <div>
+      <div class="text-right">
         <a href="https://github.com/" class="text-gray-400 flex items-center hover:text-gray-600">
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">codecrafters-io/build-your-own-redis</span>
         </a>
+        <TertiaryButtonWithSpinner 
+          @shouldShowSpinner={{this.isSyncingWithGithub}}
+          {{on "click" this.handleSyncWithGithubButtonClick}} 
+          class="mt-4" 
+        >Sync with Github</TertiaryButtonWithSpinner>
       </div>
     </div>
 

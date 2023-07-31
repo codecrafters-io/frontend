@@ -1,4 +1,5 @@
 import { attr, hasMany } from '@ember-data/model';
+import { collectionAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 
@@ -131,3 +132,13 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
     );
   }
 }
+
+CourseModel.prototype.syncCourseDefinitionUpdates = collectionAction({
+  path: 'sync_course_definition_updates',
+  type: 'post',
+
+  after(response) {
+    console.log(response);
+    this.store.pushPayload(response);
+  },
+});
