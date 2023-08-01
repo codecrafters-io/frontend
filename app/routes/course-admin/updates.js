@@ -11,7 +11,10 @@ export default class CourseUpdatessRoute extends BaseRoute {
   async model() {
     let course = this.modelFor('course-admin').course;
 
-    this.courseDefinitionUpdates = await this.store.findAll('course-definition-update');
+    this.courseDefinitionUpdates = await this.store.findAll('course-definition-update', {
+      course_id: course.id,
+      include: ['course', 'applier'].join(','),
+    });
 
     return {
       course: course,
