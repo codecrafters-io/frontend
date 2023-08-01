@@ -15,7 +15,7 @@
   <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
   {{#if @model.courseStage.isFirst}}
-    <CoursePage::CourseStageStep::FirstStageInstructionsCard @repository={{@model.activeRepository}} class="mt-6" />
+    <CoursePage::CourseStageStep::FirstStageInstructionsCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
   {{/if}}
 
   {{#if @model.courseStage.isSecond}}
