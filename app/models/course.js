@@ -138,6 +138,6 @@ CourseModel.prototype.syncCourseDefinitionUpdates = collectionAction({
   type: 'post',
 
   after(response) {
-    this.store.pushPayload(response);
+    this.store.pushPayload('course-definition-update', response);
   },
 });
