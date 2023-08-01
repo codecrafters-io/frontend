@@ -1,8 +1,8 @@
 export default {
   "slug": "grep",
   "name": "Build your own grep",
-  "short_name": "grep",
   "definition_repository_full_name": "codecrafters-io/build-your-own-grep",
+  "short_name": "grep",
   "release_status": "beta",
   "description_md": "[Regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (Regexes, for short) are patterns used to \nmatch character combinations in strings. [`grep`](https://en.wikipedia.org/wiki/Grep) is a CLI tool for searching \nusing Regexes.\n\nIn this challenge you'll build your own implementation of `grep`. Along the way we'll learn about Regex syntax and \nhow Regexes are evaluated.\n",
   "short_description_md": "Learn how regular expressions work, including character classes, quantifiers and more\n",
