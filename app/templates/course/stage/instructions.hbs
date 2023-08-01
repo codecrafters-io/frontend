@@ -19,7 +19,11 @@
   {{/if}}
 
   {{#if @model.courseStage.isSecond}}
-    <CoursePage::CourseStageStep::SecondStageInstructionsCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
+    <CoursePage::CourseStageStep::SecondStageInstructionsCard
+      @repository={{@model.activeRepository}}
+      @courseStage={{@model.courseStage}}
+      class="mt-6"
+    />
   {{/if}}
 
   <div data-percy-hints-section>
