@@ -14,10 +14,10 @@
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">codecrafters-io/build-your-own-redis</span>
         </a>
-        <TertiaryButtonWithSpinner 
+        <TertiaryButtonWithSpinner
           @shouldShowSpinner={{this.isSyncingWithGithub}}
-          {{on "click" this.handleSyncWithGithubButtonClick}} 
-          class="mt-4" 
+          {{on "click" this.handleSyncWithGithubButtonClick}}
+          class="mt-4"
           data-test-sync-with-github-button
         >Sync with Github</TertiaryButtonWithSpinner>
       </div>
