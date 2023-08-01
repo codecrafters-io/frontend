@@ -57,6 +57,8 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     });
 
     await updatesPage.visit({ course_slug: 'redis' });
+    console.log(this.server.schema.courses.findBy({ slug: 'redis' }));
+    await this.pauseTest();
     await percySnapshot('Admin - Course Updates - With Updates');
 
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();

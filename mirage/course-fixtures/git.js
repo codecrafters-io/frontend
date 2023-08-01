@@ -2,6 +2,7 @@ export default {
   "slug": "git",
   "name": "Build your own Git",
   "short_name": "Git",
+  "definition_repository_full_name": "codecrafters-io/build-your-own-git",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along the\nway, you'll learn about the `.git` directory, Git objects (blobs, commits,\ntrees etc.), packfiles, Git's transfer protocols and much more.\n",
   "short_description_md": "Learn about git objects, plumbing commands, git transfer protocols and more\n",

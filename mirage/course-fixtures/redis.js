@@ -1,6 +1,7 @@
 export default {
   "slug": "redis",
   "name": "Build your own Redis",
+  "definition_repository_full_name": "codecrafters-io/build-your-own-redis",
   "short_name": "Redis",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a toy Redis clone\nthat's capable of handling basic commands like PING, GET\nand SET. Along the way, we'll learn about event loops, the Redis\nProtocol and more.\n",
