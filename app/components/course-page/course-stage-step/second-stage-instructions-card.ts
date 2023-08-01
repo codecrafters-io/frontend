@@ -28,17 +28,17 @@ interface Signature {
       starterRepositoryUrl: string;
       defaultStarterRepositoryUrl: string;
     };
-  };
+    courseStage: {
+      position: number;
+      screencasts: {}[];
+    };
+  }
 }
 
 export default class SecondStageInstructionsCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
   @service declare router: RouterService;
-
-  get courseSecondStage() {
-    return this.args.repository.course.secondStage
-  }
 
   get submitChangesInstructionsHTML() {
     return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.submitChangesInstructionsMarkdown);

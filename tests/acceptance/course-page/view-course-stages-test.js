@@ -349,9 +349,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.ok(coursePage.hasScreencastsLink, 'screencasts link should be present');
+    assert.ok(coursePage.secondStageInstructionsCard.hasScreencastsLink, 'screencasts link should be present');
 
-    await percySnapshot('Course Stages - How to pass this stage');
+    await percySnapshot('Course Stages - How to pass stage 2');
   });
 
   test('it should not show a screencasts link in the second stage if there are no screencasts available', async function (assert) {
@@ -372,6 +372,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.notOk(coursePage.hasScreencastsLink, 'screencasts link should be present');
+    assert.notOk(coursePage.secondStageInstructionsCard.hasScreencastsLink, 'screencasts link should be present');
   });
 });
