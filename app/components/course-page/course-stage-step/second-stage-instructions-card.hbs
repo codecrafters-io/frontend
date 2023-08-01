@@ -1,0 +1,50 @@
+<CoursePage::InstructionsCard @title="How to pass this stage" ...attributes>
+  <:content>
+    <div class="prose mb-5">
+      <p>
+        Welcome to Stage 2! Unlike stage 1, your repository doesn't contain commented code to pass this stage - you'll be writing your own. Don't
+        worry, this stage should be pretty easy. Almost everyone who attempts this stage passes it.
+      </p>
+
+      <p>
+        <b>Step 1:</b>
+        Implement your solution
+      </p>
+
+      <p>
+        We recommend taking a look at the
+        <LinkTo @route="course.stage.code-examples" @model={{@courseStage.position}} class="font-semibold underline">Code Examples</LinkTo>
+        tab, which contains code examples from other users.
+      </p>
+
+      {{#if (gt @courseStage.screencasts.length 0)}}
+        <p>
+          If you prefer more detailed video walkthroughs, take a look at the
+          <LinkTo
+            @route="course.stage.screencasts"
+            @model={{@courseStage.position}}
+            class="font-semibold underline"
+            data-test-screencasts-link
+          >Screencasts</LinkTo>
+          tab.
+        </p>
+      {{/if}}
+    </div>
+
+    <div class="prose">
+      <p>
+        <b>Step 2:</b>
+        Commit and push your changes.
+      </p>
+      <p>
+        Run the following commands to submit your changes:
+      </p>
+
+      {{html-safe this.submitChangesInstructionsHTML}}
+    </div>
+  </:content>
+  <:footerContent>
+    {{! @glint-expect-error not ts-ified yet }}
+    <CoursePage::CourseStageStep::Card::Footer @repository={{@repository}} @courseStage={{@courseStage}} />
+  </:footerContent>
+</CoursePage::InstructionsCard>
