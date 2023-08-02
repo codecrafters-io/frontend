@@ -9,4 +9,5 @@ snapshot:
       content: "July 23, 2023 2:45 PM"; 
       visibility: visible;
       position: relative;
+      display: block;
     }
