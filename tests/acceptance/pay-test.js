@@ -116,4 +116,43 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().customDiscount.id, customDiscount.id);
   });
+
+  test('user can create checkout session with regional discount applied', async function (assert) {
+    testScenario(this.server);
+
+    let user = this.server.schema.users.first();
+    user.update('createdAt', new Date(user.createdAt.getTime() - 5 * 24 * 60 * 60 * 1000));
+
+    this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
+
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+    await percySnapshot('Pay page - with regional discount (not applied)');
+
+    await payPage.clickOnApplyRegionalDiscountButton();
+    await percySnapshot('Pay page - with regional discount (applied)');
+
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscountId, 'current-discount-id');
+  });
+
+  test('user can create checkout session with regional discount not applied', async function (assert) {
+    testScenario(this.server);
+
+    let user = this.server.schema.users.first();
+    user.update('createdAt', new Date(user.createdAt.getTime() - 5 * 24 * 60 * 60 * 1000));
+
+    this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
+
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+    // todo: Check that discount notice is visible
+
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
+    assert.notOk(this.server.schema.individualCheckoutSessions.first().regionalDiscountId);
+  });
 });

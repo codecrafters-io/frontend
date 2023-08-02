@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import Player from '@vimeo/player';
 
 export default class CompletionVideoComponent extends Component {
-  @service store;
+  @service analyticsEventTracker;
 
   trackedPercentages = new Set();
 
@@ -13,17 +13,12 @@ export default class CompletionVideoComponent extends Component {
     let player = new Player(element.querySelector('iframe'));
 
     player.on('play', (eventData) => {
-      this.store
-        .createRecord('analytics-event', {
-          name: 'started_stage_completion_video',
-          properties: {
-            course_stage_slug: this.args.courseStage.slug,
-            course_slug: this.args.courseStage.course.slug,
-            played_percentage: eventData.percent * 100,
-            played_time_in_seconds: eventData.seconds,
-          },
-        })
-        .save();
+      this.analyticsEventTracker.track('started_stage_completion_video', {
+        course_stage_slug: this.args.courseStage.slug,
+        course_slug: this.args.courseStage.course.slug,
+        played_percentage: eventData.percent * 100,
+        played_time_in_seconds: eventData.seconds,
+      });
     });
 
     player.on('timeupdate', (eventData) => {
@@ -34,33 +29,23 @@ export default class CompletionVideoComponent extends Component {
         return;
       }
 
-      this.store
-        .createRecord('analytics-event', {
-          name: 'viewed_stage_completion_video',
-          properties: {
-            course_stage_slug: this.args.courseStage.slug,
-            course_slug: this.args.courseStage.course.slug,
-            played_percentage: roundedPercentage,
-            played_time_in_seconds: eventData.seconds,
-          },
-        })
-        .save();
+      this.analyticsEventTracker.track('viewed_stage_completion_video', {
+        course_stage_slug: this.args.courseStage.slug,
+        course_slug: this.args.courseStage.course.slug,
+        played_percentage: roundedPercentage,
+        played_time_in_seconds: eventData.seconds,
+      });
 
       this.trackedPercentages.add(roundedPercentage);
     });
 
     player.on('pause', (eventData) => {
-      this.store
-        .createRecord('analytics-event', {
-          name: 'paused_stage_completion_video',
-          properties: {
-            course_stage_slug: this.args.courseStage.slug,
-            course_slug: this.args.courseStage.course.slug,
-            played_percentage: eventData.percent * 100,
-            played_time_in_seconds: eventData.seconds,
-          },
-        })
-        .save();
+      this.analyticsEventTracker.track('paused_stage_completion_video', {
+        course_stage_slug: this.args.courseStage.slug,
+        course_slug: this.args.courseStage.course.slug,
+        played_percentage: eventData.percent * 100,
+        played_time_in_seconds: eventData.seconds,
+      });
     });
   }
 }

@@ -44,4 +44,8 @@
       {{html-safe this.submitChangesInstructionsHTML}}
     </div>
   </:content>
+  <:footerContent>
+    {{! @glint-expect-error not ts-ified yet }}
+    <CoursePage::CourseStageStep::Card::Footer @repository={{@repository}} @courseStage={{@courseStage}} />
+  </:footerContent>
 </CoursePage::InstructionsCard>
