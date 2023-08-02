@@ -2,6 +2,7 @@ import { attribute, clickable, collection, create, clickOnText, visitable } from
 
 export default create({
   clickOnLink: clickOnText(),
+  clickOnSyncWithGithubButton: clickable('[data-test-sync-with-github-button]'),
 
   definitionRepositoryLink: {
     scope: '[data-test-definition-repository-link]',

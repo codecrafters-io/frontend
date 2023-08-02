@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 
 export default class PrivateLeaderboardFeatureSuggestion extends Component {
-  @service store;
+  @service analyticsEventTracker;
   @service router;
 
   constructor() {
@@ -15,12 +15,9 @@ export default class PrivateLeaderboardFeatureSuggestion extends Component {
 
   @action
   async handleCreateTeamButtonClick() {
-    this.store
-      .createRecord('analytics-event', {
-        name: 'clicked_feature_suggestion',
-        properties: { feature_suggestion_id: this.currentOrPreviouslyShownFeatureSuggestion.id },
-      })
-      .save();
+    this.analyticsEventTracker.track('clicked_feature_suggestion', {
+      feature_suggestion_id: this.currentOrPreviouslyShownFeatureSuggestion.id,
+    });
 
     this.router.transitionTo('teams.create');
   }
