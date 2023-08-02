@@ -2,12 +2,9 @@ version: 1
 snapshot:
   percy-css: |
     .percy-timestamp {
-      visibility: hidden;
-      position: absolute;
+      font-size: 0;
     } 
     .percy-timestamp::before {
       content: "July 23, 2023 2:45 PM"; 
-      visibility: visible;
-      position: relative;
-      display: block;
+      font-size: 1rem;
     }
