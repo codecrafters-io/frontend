@@ -4,7 +4,6 @@ export default function createCourseFromData(server, courseData) {
   const course = server.create('course', {
     completionPercentage: courseData.completion_percentage,
     descriptionMarkdown: courseData.description_md,
-    definitionRepositoryFullName: courseData.definition_repository_full_name,
     difficulty: courseData.marketing.difficulty,
     name: courseData.name,
     releaseStatus: courseData.release_status,

@@ -1,7 +1,6 @@
 export default {
   "slug": "sqlite",
   "name": "Build your own SQLite",
-  "definition_repository_full_name": "codecrafters-io/build-your-own-sqlite",
   "short_name": "SQLite",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
