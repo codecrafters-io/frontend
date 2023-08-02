@@ -139,7 +139,7 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
   type: 'post',
 
   after(response) {
-    if (!response.data[0].id) {
+    if (!response.data[0]?.id) {
       return;
     }
 
