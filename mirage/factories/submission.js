@@ -35,7 +35,7 @@ export default Factory.extend({
     ];
   },
 
-  createdAt: () => new Date('2023-07-28T08:30:00'),
+  createdAt: () => new Date(),
   githubStorageHtmlUrl: 'https://github.com',
 
   withFailureStatus: trait({

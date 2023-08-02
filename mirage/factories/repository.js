@@ -1,7 +1,7 @@
 import { Factory, trait } from 'miragejs';
 
 export default Factory.extend({
-  createdAt: () => new Date('2023-07-27T08:30:00'),
+  createdAt: () => new Date(),
   cloneUrl: 'https://git.codecraters.io/a-long-test-string.git',
   name: 'Dummy name',
   starterRepositoryUrl: 'https://github.com/codecrafters-io/redis-starter-go',
