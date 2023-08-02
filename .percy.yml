@@ -8,3 +8,10 @@ snapshot:
       content: "July 23, 2023 2:45 PM"; 
       font-size: 1rem;
     }
+    .percy-time {
+      font-size: 0;
+    }
+    .percy-timestamp::before {
+      content: "11:11 PM",
+      font-size: 0.6rem;
+    }
