@@ -53,8 +53,9 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
         .percy-timestamp::before {
           content: "July 23, 2023 2:45 PM"; 
         } 
-        .percy-timestamp::after {
-          content: "";
+        .percy-timestamp {
+          font-size: 0;
+          color: transparent;
         }
       `,
     });
