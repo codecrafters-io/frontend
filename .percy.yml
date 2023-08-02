@@ -1,0 +1,10 @@
+version: 1
+snapshot:
+  percy-css: |
+    .percy-timestamp {
+      visibility: hidden;
+    } 
+    .percy-timestamp::after {
+      content: "July 23, 2023 2:45 PM"; 
+      visibility: visible;
+    }
