@@ -24,7 +24,7 @@
     </div>
 
     <ul role="list" class="divide-y divide-gray-100">
-      {{#each @model.courseDefinitionUpdates as |courseDefinitionUpdate|}}
+      {{#each @model.course.definitionUpdates as |courseDefinitionUpdate|}}
         <CourseAdmin::UpdatesPage::UpdateListItem @update={{courseDefinitionUpdate}} />
       {{else}}
         <div class="text-gray-400 py-32 flex items-center justify-center">

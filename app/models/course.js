@@ -1,5 +1,5 @@
 import { attr, hasMany } from '@ember-data/model';
-import { collectionAction } from 'ember-api-actions';
+import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 
@@ -26,6 +26,7 @@ export default class CourseModel extends Model {
   @hasMany('course-extension-idea', { async: false }) extensionIdeas;
   @hasMany('course-language-configuration', { async: false }) languageConfigurations;
   @hasMany('course-stage', { async: false }) stages;
+  @hasMany('course-definition-update', { async: false }) definitionUpdates;
 
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;
@@ -133,11 +134,15 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
   }
 }
 
-CourseModel.prototype.syncCourseDefinitionUpdates = collectionAction({
-  path: 'sync_course_definition_updates',
+CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
+  path: 'sync-course-definition-updates',
   type: 'post',
 
   after(response) {
+    if (!response.data[0].id) {
+      return;
+    }
+
     this.store.pushPayload('course-definition-update', response);
   },
 });

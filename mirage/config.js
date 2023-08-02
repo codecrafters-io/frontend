@@ -92,8 +92,8 @@ function routes() {
   this.post('/community-course-stage-solution-comments/:id/unvote', () => {});
 
   this.get('/courses');
-  this.post('/courses/sync_course_definition_updates', function (schema, request) {
-    const course_id = request.params.course_id;
+  this.post('/courses/:id/sync-course-definition-updates', function (schema, request) {
+    const course_id = request.params.id;
 
     return schema.courseDefinitionUpdates.where({ course_id });
   });
