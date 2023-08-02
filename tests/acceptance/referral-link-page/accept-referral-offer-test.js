@@ -49,7 +49,14 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
 
     assert.strictEqual(currentURL(), '/pay', 'should redirect to pay URL');
     await percySnapshot('Pay Page | With Referral Offer', {
-      percyCSS: '.percy-timestamp::before { content: "July 23, 2023 2:45 PM" } .percy-timestamp::after { content: "" }',
+      percyCSS: `
+        .percy-timestamp::before {
+          content: "July 23, 2023 2:45 PM"; 
+        } 
+        .percy-timestamp::after {
+          content: "";
+        }
+      `,
     });
   });
 });
