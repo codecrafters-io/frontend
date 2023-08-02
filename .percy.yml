@@ -5,7 +5,8 @@ snapshot:
       visibility: hidden;
       position: absolute;
     } 
-    .percy-timestamp::before {
+    .percy-timestamp::after {
       content: "July 23, 2023 2:45 PM"; 
       visibility: visible;
+      position: relative;
     }
