@@ -21,8 +21,8 @@ export default class CourseAdminUpdateController extends Controller {
 
   get viewDiffLink() {
     if (!this.model.update.oldCommitSha) {
-      return `http://github.com/${this.model.course.definitionRepositoryFullName}/commit/${this.model.update.newCommitSha}`
+      return `https://github.com/${this.model.course.definitionRepositoryFullName}/commit/${this.model.update.newCommitSha}`
     }
-    return `http://github.com/${this.model.course.definitionRepositoryFullName}/compare/${this.model.update.oldCommitSha}..${this.model.update.newCommitSha}`
+    return `https://github.com/${this.model.course.definitionRepositoryFullName}/compare/${this.model.update.oldCommitSha}..${this.model.update.newCommitSha}`
   }
 }
