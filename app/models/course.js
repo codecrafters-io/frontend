@@ -139,10 +139,20 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
   type: 'post',
 
   after(response) {
-    if (!response.data[0]?.id) {
+    if (!response.data) {
       return;
     }
 
-    this.store.pushPayload('course-definition-update', response);
+    const filteredResponseData = response.data.filter((update) => {
+      if (!update.id) {
+        return false;
+      }
+
+      return update;
+    });
+
+    this.store.pushPayload('course-definition-update', {
+      data: filteredResponseData,
+    });
   },
 });
