@@ -36,7 +36,7 @@ You can run tests locally without a backend server, but to use the app you'll al
 - FastBoot is **enabled** when running `ember build --environment=production`
   - Pre-rendering is done only for routes configured under `prember` section in `ember-cli-build.js`
 - FastBoot is **enabled for all routes** when running `ember server`
-  - To disable it, run `FASTBOOT_DISABLED="" ember server` 
+  - To disable it, run `FASTBOOT_DISABLED=true ember server` 
   - Alternatively, append `?fastboot=false` query parameter to each request URL
 - Add `FASTBOOT_DISABLED=true` to your local `.env` file to disable FastBoot completely
   - You can override it by passing `FASTBOOT_DISABLED=""` in the command line
