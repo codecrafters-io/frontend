@@ -1,14 +1,17 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
+import LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
 export default class SessionTokenStorageService extends Service {
   static LOCAL_STORAGE_KEY = 'session_token_v1';
 
+  @service declare localStorage: LocalStorageService;
+
   clear(): void {
-    localStorage.removeItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
+    this.localStorage.removeItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
   }
 
   get currentToken(): string | null {
-    return localStorage.getItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
+    return this.localStorage.getItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
   }
 
   get hasToken(): boolean {
@@ -16,6 +19,6 @@ export default class SessionTokenStorageService extends Service {
   }
 
   setToken(sessionToken: string): void {
-    localStorage.setItem(SessionTokenStorageService.LOCAL_STORAGE_KEY, sessionToken);
+    this.localStorage.setItem(SessionTokenStorageService.LOCAL_STORAGE_KEY, sessionToken);
   }
 }

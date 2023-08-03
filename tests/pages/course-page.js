@@ -91,6 +91,10 @@ export default create({
     scope: '[data-test-progress-banner-modal]',
   },
 
+  secondStageInstructionsCard: {
+    hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
+  },
+
   sidebar: Sidebar,
   repositorySetupCard: RepositorySetupCard,
   visit: visitable('/courses/:course_slug'),

@@ -13,6 +13,7 @@ export default class CommunitySolutionCardComponent extends Component {
   @tracked containerElement;
   @service store;
   @service authenticator;
+  @service analyticsEventTracker;
 
   get changedFilesForRender() {
     return this.args.solution.changedFiles.map((changedFile) => {
@@ -53,14 +54,9 @@ export default class CommunitySolutionCardComponent extends Component {
 
   @action
   handleCommentView(comment) {
-    this.store
-      .createRecord('analytics-event', {
-        name: 'viewed_comment',
-        properties: {
-          comment_id: comment.id,
-        },
-      })
-      .save();
+    this.analyticsEventTracker.track('viewed_comment', {
+      comment_id: comment.id,
+    });
   }
 
   @action
@@ -73,15 +69,10 @@ export default class CommunitySolutionCardComponent extends Component {
     this.isExpanded = true;
     this.loadComments();
 
-    this.store
-      .createRecord('analytics-event', {
-        name: 'viewed_community_course_stage_solution',
-        properties: {
-          community_course_stage_solution_id: this.args.solution.id,
-          position_in_list: this.args.positionInList,
-        },
-      })
-      .save();
+    this.analyticsEventTracker.track('viewed_community_course_stage_solution', {
+      community_course_stage_solution_id: this.args.solution.id,
+      position_in_list: this.args.positionInList,
+    });
   }
 
   @action

@@ -9,7 +9,7 @@
           These updates are synced from your course's GitHub repository. They need to be applied to take effect.
         </div>
       </div>
-      <div data-test-definition-repository-link>
+      <div class="text-right" data-test-definition-repository-link>
         <a
           href={{@model.course.definitionRepositoryLink}}
           class="text-gray-400 flex items-center hover:text-gray-600"
@@ -19,6 +19,12 @@
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">{{@model.course.definitionRepositoryFullName}}</span>
         </a>
+        <TertiaryButtonWithSpinner
+          @shouldShowSpinner={{this.isSyncingWithGithub}}
+          {{on "click" this.handleSyncWithGithubButtonClick}}
+          class="mt-4"
+          data-test-sync-with-github-button
+        >Sync with Github</TertiaryButtonWithSpinner>
       </div>
     </div>
 
