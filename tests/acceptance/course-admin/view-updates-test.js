@@ -127,4 +127,16 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     await updatesPage.clickOnSyncWithGithubButton();
     assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
   });
+
+  test('it has the correct definition repository link', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    course.update('definitionRepositoryFullName', 'codecrafters-io/redis');
+
+    await updatesPage.visit({ course_slug: course.slug });
+    assert.strictEqual(updatesPage.definitionRepositoryLink.href, course.definitionRepositoryLink);
+    assert.strictEqual(updatesPage.definitionRepositoryLink.text, course.definitionRepositoryFullName);
+  });
 });

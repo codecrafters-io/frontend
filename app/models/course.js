@@ -12,6 +12,7 @@ import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 
 export default class CourseModel extends Model {
   @attr('number') completionPercentage;
+  @attr('string') definitionRepositoryFullName;
   @attr('string') descriptionMarkdown;
   @attr('string') difficulty;
   @attr('string') name;
@@ -49,6 +50,10 @@ export default class CourseModel extends Model {
 
   get betaOrLiveLanguages() {
     return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+  }
+
+  get definitionRepositoryLink() {
+    return `https://github.com/${this.definitionRepositoryFullName}`;
   }
 
   get firstStage() {

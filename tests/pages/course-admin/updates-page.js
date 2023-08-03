@@ -4,6 +4,10 @@ export default create({
   clickOnLink: clickOnText(),
   clickOnSyncWithGithubButton: clickable('[data-test-sync-with-github-button]'),
 
+  definitionRepositoryLink: {
+    scope: '[data-test-definition-repository-link]',
+  },
+
   updateListItems: collection('[data-test-update-list-item]', {
     clickOnViewUpdateButton: clickable('[data-test-view-update-button]'),
   }),
