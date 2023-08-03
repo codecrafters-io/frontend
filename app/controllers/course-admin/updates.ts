@@ -34,6 +34,6 @@ export default class CourseAdminUpdatesController extends Controller {
 
   get sortedDefinitionUpdates() {
     // @ts-ignore
-    return this.model.course.definitionUpdates.sortBy('createdAt').reverse();
+    return this.model.course.definitionUpdates.sortBy('lastSyncedAt').reverse();
   }
 }
