@@ -4,7 +4,7 @@ interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
-    size: 'small' | 'regular';
+    size?: 'small' | 'regular';
     isDisabled?: boolean;
   };
 

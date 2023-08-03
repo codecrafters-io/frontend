@@ -20,6 +20,16 @@ export default class PrimaryLinkButtonComponent extends Component<Signature> {
   get sizeIsSmall(): boolean {
     return this.args.size === 'small';
   }
+
+  get normalizedModels(): string[] {
+    if (this.args.model) {
+      return [this.args.model];
+    } else if (this.args.models) {
+      return this.args.models;
+    } else {
+      return [];
+    }
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

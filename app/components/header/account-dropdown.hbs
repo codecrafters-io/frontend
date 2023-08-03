@@ -13,25 +13,6 @@
   </dd.Trigger>
   <dd.Content>
     <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-account-dropdown-content>
-      {{#if this.currentUser.isTeamAdmin}}
-        <Header::AccountDropdownLink
-          @text="Manage Team"
-          @icon="users"
-          {{on "click" (fn this.handleManageTeamClick dd.actions (get this.currentUser.managedTeams "0"))}}
-        />
-      {{else if this.currentUser.isTeamMember}}
-        <Header::AccountDropdownLink
-          @text="View Team"
-          @icon="users"
-          {{on "click" (fn this.handleViewTeamClick dd.actions (get this.currentUser.teams "0"))}}
-        />
-      {{else}}
-        <Header::AccountDropdownLink @text="Invite Your Team" @icon="users" {{on "click" (fn this.handleCreateTeamClick dd.actions)}} />
-      {{/if}}
-
-      <Header::AccountDropdownLink @text="Your Profile" @icon="user" {{on "click" (fn this.handleViewProfileClick dd.actions)}} />
-      <Header::AccountDropdownLink @text="Referrals" @icon="gift" {{on "click" (fn this.handleReferralsLinkClick dd.actions)}} />
-
       {{#if this.currentUser.hasActiveSubscription}}
         <div
           class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
@@ -67,6 +48,26 @@
           {{svg-jar "credit-card" class="w-5 text-gray-300 group-hover:text-teal-500"}}
         </div>
       {{/if}}
+
+      <Header::AccountDropdownLink @text="Your Profile" @icon="user" {{on "click" (fn this.handleViewProfileClick dd.actions)}} />
+
+      {{#if this.currentUser.isTeamAdmin}}
+        <Header::AccountDropdownLink
+          @text="Manage Team"
+          @icon="users"
+          {{on "click" (fn this.handleManageTeamClick dd.actions (get this.currentUser.managedTeams "0"))}}
+        />
+      {{else if this.currentUser.isTeamMember}}
+        <Header::AccountDropdownLink
+          @text="View Team"
+          @icon="users"
+          {{on "click" (fn this.handleViewTeamClick dd.actions (get this.currentUser.teams "0"))}}
+        />
+      {{else}}
+        <Header::AccountDropdownLink @text="Invite Your Team" @icon="users" {{on "click" (fn this.handleCreateTeamClick dd.actions)}} />
+      {{/if}}
+
+      <Header::AccountDropdownLink @text="Referrals" @icon="gift" {{on "click" (fn this.handleReferralsLinkClick dd.actions)}} />
 
       <Header::AccountDropdownLink @text="Community" @icon="user-group" {{on "click" (fn this.handleCommunityClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />

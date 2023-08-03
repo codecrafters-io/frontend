@@ -46,6 +46,12 @@
 
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center ml-6">
+        {{#unless this.currentUser.canAccessPaidContent}}
+          <PrimaryLinkButton @size="small" @route="pay" class="mr-4">
+            Subscribe
+          </PrimaryLinkButton>
+        {{/unless}}
+
         {{#if this.authenticator.isAuthenticated}}
           <FeedbackButton class="mr-4" as |dd|>
             <div
