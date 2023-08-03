@@ -71,7 +71,10 @@
 
           {{#if this.shouldShowSubscribeButton}}
             <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4">
-              Subscribe
+              <span class="flex items-center gap-x-1">
+                <span>Subscribe</span>
+                {{svg-jar "lock-open" class="w-4"}}
+              </span>
             </PrimaryLinkButton>
           {{/if}}
 
