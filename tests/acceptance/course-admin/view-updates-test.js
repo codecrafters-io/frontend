@@ -76,6 +76,6 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
 
     await updatesPage.visit({ course_slug: course.slug });
     assert.strictEqual(updatesPage.definitionRepositoryLink.href, course.definitionRepositoryLink);
-    assert.dom(updatesPage.definitionRepositoryLink.scope).hasText(course.definitionRepositoryFullName);
+    assert.strictEqual(updatesPage.definitionRepositoryLink.text, course.definitionRepositoryFullName);
   });
 });
