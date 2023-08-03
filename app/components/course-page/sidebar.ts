@@ -22,10 +22,16 @@ interface Signature {
 }
 
 export default class CoursePageSidebarComponent extends Component<Signature> {
+  @service declare authenticator: unknown;
   @service declare coursePageState: CoursePageStateService;
 
   get currentStep() {
     return this.coursePageState.currentStep;
+  }
+
+  get currentUser() {
+    // @ts-ignore
+    return this.authenticator.currentUser;
   }
 
   get stepList() {

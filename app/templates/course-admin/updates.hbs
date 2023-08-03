@@ -21,6 +21,7 @@
           <span class="text-xs underline font-medium">{{@model.course.definitionRepositoryFullName}}</span>
         </a>
         <TertiaryButtonWithSpinner
+          @size="small"
           @shouldShowSpinner={{this.isSyncingWithGithub}}
           {{on "click" this.handleSyncWithGithubButtonClick}}
           class="mt-4"
