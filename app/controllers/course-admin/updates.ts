@@ -1,10 +1,20 @@
 import Controller from '@ember/controller';
+import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class CourseAdminUpdatesController extends Controller {
-  @service store;
+  declare model: {
+    course: {
+      id: string;
+      definitionRepositoryLink: string,
+      definitionRepositoryFullName: string,
+      syncCourseDefinitionUpdates: () => Promise<void>
+    }
+  };
+
+  @service declare store: Store;
 
   @tracked isSyncingWithGithub = false;
 
@@ -20,5 +30,10 @@ export default class CourseAdminUpdatesController extends Controller {
     });
 
     this.isSyncingWithGithub = false;
+  }
+
+  get sortedDefinitionUpdates() {
+    // @ts-ignore
+    return this.model.course.definitionUpdates.sortBy('createdAt').reverse();
   }
 }

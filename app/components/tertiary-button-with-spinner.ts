@@ -8,6 +8,7 @@ interface Signature {
     size?: BaseButtonSignature['Args']['size'];
     isDisabled?: BaseButtonSignature['Args']['isDisabled'];
     isDark?: boolean;
+    shouldShowSpinner?: boolean;
   };
 
   Blocks: {
@@ -15,10 +16,10 @@ interface Signature {
   };
 }
 
-export default class TertiaryButtonComponent extends Component<Signature> {}
+export default class TertiaryButtonWithSpinnerComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TertiaryButton: typeof TertiaryButtonComponent;
+    TertiaryButtonWithSpinner: typeof TertiaryButtonWithSpinnerComponent;
   }
 }
