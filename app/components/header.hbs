@@ -69,11 +69,11 @@
             <Header::VipBadge class="mr-3" />
           {{/if}}
 
-          {{#unless this.currentUser.canAccessPaidContent}}
+          {{#if this.shouldShowSubscribeButton}}
             <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4">
               Subscribe
             </PrimaryLinkButton>
-          {{/unless}}
+          {{/if}}
 
           <Header::AccountDropdown />
         {{else}}
