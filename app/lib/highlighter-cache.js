@@ -14,7 +14,7 @@ export default function getOrCreateCachedHighlighterPromise(cacheId, options) {
   if (!highlighterCacheAsync.has(cacheId)) {
     let highlighterPromise;
 
-    if (config.environment === 'test') {
+    if (config.environment === 'test' || !window.fetch || !window.XMLHttpRequest) {
       // Ignore error for now!
       highlighterPromise = new Promise((resolve) => {
         resolve({

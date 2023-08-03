@@ -2,7 +2,8 @@
   "rewrites": [
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
-    { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" }
+    { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
+    { "source": "/:path*", "destination": "/_empty.html" }
   ],
   "redirects": [
     {
@@ -12,6 +13,10 @@
     {
       "source": "/setup_team",
       "destination": "https://backend.codecrafters.io/setup_team"
+    },
+    {
+      "source": "/package.json",
+      "destination": "/"
     }
   ],
   "github": {

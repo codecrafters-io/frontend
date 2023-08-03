@@ -1,13 +1,20 @@
 import Service, { service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import Store from '@ember-data/store';
 
 export default class AnalyticsEventTrackerService extends Service {
   @service declare store: Store;
   @service declare router: RouterService;
+  @service declare fastboot: FastBootService;
   @service utmCampaignIdTracker: unknown;
 
-  track(eventName: string, eventProperties: Record<string, unknown>) {
+  track(eventName: string, eventProperties: Record<string, unknown>): void {
+    // Don't track any analytics during FastBoot runs
+    if (this.fastboot.isFastBoot) {
+      return;
+    }
+
     const baseURL = `${window.location.protocol}//${window.location.host}`; // 'https://app.codecrafters.io
 
     const defaultProperties = {

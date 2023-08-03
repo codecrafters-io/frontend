@@ -1,12 +1,13 @@
+import Service, { inject as service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
-import Service from '@ember/service';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import config from 'codecrafters-frontend/config/environment';
 import type { Metric } from 'web-vitals';
 import { onCLS, onFCP, onFID, onLCP, onTTFB, onINP } from 'web-vitals';
-import { inject as service } from '@ember/service';
 
 export default class WebVitalsService extends Service {
   @service declare router: RouterService;
+  @service declare fastboot: FastBootService;
 
   static getConnectionSpeed(): string {
     // @ts-ignore
@@ -16,6 +17,9 @@ export default class WebVitalsService extends Service {
   }
 
   setupCallbacks() {
+    if (this.fastboot.isFastBoot) {
+      return;
+    }
     onCLS((metric) => this.reportMetric(metric));
     onFCP((metric) => this.reportMetric(metric));
     onLCP((metric) => this.reportMetric(metric));

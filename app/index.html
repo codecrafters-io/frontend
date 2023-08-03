@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CodeCrafters</title>
+
     <meta name="description" content="Real-world proficiency projects designed for experienced engineers. Develop software craftsmanship by recreating popular devtools from scratch.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -53,9 +53,9 @@
     </script>
   </head>
   <body style="margin: 0; background-color: rgb(248 250 252)">
-    <div class="ember-load-indicator" style="height: 100vh; align-items: center; justify-content: center; margin-top: 52px; display:none; opacity: 0; transition: opacity 0.3s;">
-      <div style="display: flex; flex-direction: column; align-items: center;">
-        <svg width="100" height="100" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="ember-load-indicator">
+      <div class="indicator-container">
+        <svg class="indicator-icon" width="100" height="100" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0)">
             <g filter="url(#filter0_d)">
               <path d="M494.841 237.638L379.155 115.073C372.276 107.569 360.395 106.944 352.891 114.448C345.387 121.326 344.761 133.208 352.265 140.712L455.445 250.77L351.64 360.203C344.761 367.707 344.761 379.588 352.265 386.467C356.017 389.594 360.395 391.47 365.397 391.47C370.4 391.47 375.403 389.594 379.155 385.842L494.841 263.277C501.72 256.398 501.72 245.142 494.841 237.638Z" fill="url(#paint0_linear)"/>
@@ -115,7 +115,7 @@
             </clipPath>
           </defs>
         </svg>
-        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+        <div class="indicator-spinner-container">
           <div class="sk-circle">
             <div class="sk-circle1 sk-child"></div>
             <div class="sk-circle2 sk-child"></div>
@@ -130,7 +130,7 @@
             <div class="sk-circle11 sk-child"></div>
             <div class="sk-circle12 sk-child"></div>
           </div>
-          <span style="font-family: Montserrat, sans-serif; color: #64748B; margin-top: 1.5em">
+          <span class="indicator-loading-text">
             Loading...
           </span>
         </div>
@@ -138,6 +138,55 @@
     </div>
 
     <style>
+      .ember-load-indicator {
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        margin-top: 52px;
+        display:none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .ember-load-indicator .indicator-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .ember-load-indicator .indicator-spinner-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+      }
+      .ember-load-indicator .indicator-loading-text {
+        font-family: Montserrat, sans-serif;
+        color: #64748B;
+        margin-top: 1.5em;
+      }
+
+      .ember-load-indicator[is-fastboot=true] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        margin-top: 0;
+        z-index: 1000;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-container {
+        margin-top: 56px;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-spinner-container {
+        margin-top: 0;
+        padding: 8px 0;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-icon {
+        display: none;
+      }
+      .ember-load-indicator[is-fastboot=true] .indicator-loading-text {
+        display: none;
+      }
+
       .sk-circle {
         width: 40px;
         height: 40px;
@@ -261,17 +310,21 @@
     </style>
 
     <script>
+      // Wait for the DOM to render fully
       setTimeout(() => {
-        const elems = document.querySelectorAll(`.ember-load-indicator`);
-
-        /**
-         * Very important to iterate over the NodeList this way to maintain ie11 compatibility (maybe we don't need this anymore?)
-         */
-        for (let i = 0; i < elems.length; i++) {
-          elems[i].style.display = `flex`; // Don't even show this initially, affects CLS score
-          elems[i].style.opacity = `1`;
-        }
-      }, 3000);
+        const shoeBoxes = document.querySelectorAll('script[type="fastboot/shoebox"]'); // Find all FastBoot Shoeboxes
+        const isFastBootPage = shoeBoxes.length > 0; // If Shoeboxes exist, assume this is a FastBoot page
+        // Delay the appearence of the loading indicator
+        setTimeout(() => {
+          const elems = document.querySelectorAll('.ember-load-indicator');
+          // Iterate over the NodeList this way to maintain ie11 compatibility
+          for (let i = 0; i < elems.length; i++) {
+            elems[i].style.display = 'flex';
+            elems[i].style.opacity = '1';
+            elems[i].setAttribute('is-fastboot', isFastBootPage); // CSS uses this to show FastBoot-specific indicator
+          }
+        }, isFastBootPage ? 3000 : 3000); // Different delay for FastBoot and regular indicator
+      }, 0); // Postpone to the next run-loop
     </script>
 
     {{content-for "body"}}

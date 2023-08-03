@@ -22,8 +22,10 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "start:ember": "ember serve",
+    "start:ember": "FASTBOOT_DISABLED=true ember serve",
+    "start:ember:fastboot": "FASTBOOT_DISABLED=\"\" ember serve",
     "start": "concurrently \"npm:tailwind:watch\" \"npm:start:ember\" --names \"tailwind,ember:\"",
+    "start:fastboot": "concurrently \"npm:tailwind:watch\" \"npm:start:ember:fastboot\" --names \"tailwind,ember:\"",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
@@ -66,6 +68,7 @@
     "@types/ember__test": "^4.0.2",
     "@types/ember__test-helpers": "^2.9.1",
     "@types/ember__utils": "^4.0.3",
+    "@types/ember-cli-fastboot": "^2.2.2",
     "@types/ember-data": "^4.4.10",
     "@types/ember-data__adapter": "^4.0.2",
     "@types/ember-data__model": "^4.0.1",
@@ -92,6 +95,7 @@
     "ember-cli-code-coverage": "https://gitpkg.now.sh/kategengler/ember-cli-code-coverage/packages/ember-cli-code-coverage?master",
     "ember-cli-dependency-checker": "^3.3.2",
     "ember-cli-deprecation-workflow": "^2.0.0",
+    "ember-cli-fastboot": "^4.1.1",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-mirage": "^3.0.0-alpha.3",
@@ -132,6 +136,7 @@
     "loader.js": "^4.7.0",
     "postcss": "^8.4.27",
     "postcss-import": "^15.1.0",
+    "prember": "^2.0.0",
     "prettier": "^3.0.0",
     "prismjs": "^1.28.0",
     "qunit": "^2.19.4",
@@ -174,5 +179,8 @@
   },
   "overrides": {
     "ember-element-helper": "0.6.0"
-  }
+  },
+  "fastbootDependencies": [
+    "crypto"
+  ]
 }
