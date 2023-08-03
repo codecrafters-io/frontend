@@ -9,7 +9,6 @@ import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
-import { updateLanguageServiceSourceFile } from 'typescript';
 
 export default class CourseModel extends Model {
   @attr('number') completionPercentage;
@@ -146,7 +145,7 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
 
     const filteredResponse = response.data.filter((update) => {
       if (!update.id) {
-        return;
+        return false;
       }
 
       return update;
