@@ -1,12 +1,10 @@
-<LinkTo
+<BaseLinkButton
   @route={{@route}}
   @models={{@models}}
-  class="inline-block bg-teal-500 hover:bg-teal-600 border border-teal-500 hover:border-teal-600
-    {{if this.sizeIsSmall 'px-3 py-1.5' 'px-3 py-2'}}
-    text-white rounded shadow-sm font-semibold
-    {{if this.sizeIsSmall 'text-sm' 'text-base'}}
-    {{if @isDisabled 'cursor-not-allowed opacity-25'}}"
+  @model={{@model}}
+  @size={{@size}}
+  class="bg-teal-500 hover:bg-teal-600 border-teal-500 hover:border-teal-600 text-white"
   ...attributes
 >
   {{yield}}
-</LinkTo>
+</BaseLinkButton>

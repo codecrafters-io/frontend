@@ -1,26 +1,17 @@
 import Component from '@glimmer/component';
+import { BaseLinkButtonSignature } from './base-link-button';
 
 interface Signature {
   Element: HTMLAnchorElement;
 
-  Args: {
-    size?: 'small' | 'regular';
-    isDisabled?: boolean;
-    route: string;
-    model?: string;
-    models?: string[];
-  };
+  Args: BaseLinkButtonSignature['Args'];
 
   Blocks: {
     default: [];
   };
 }
 
-export default class PrimaryLinkButtonComponent extends Component<Signature> {
-  get sizeIsSmall(): boolean {
-    return this.args.size === 'small';
-  }
-}
+export default class PrimaryLinkButtonComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

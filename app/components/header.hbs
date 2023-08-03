@@ -69,6 +69,12 @@
             <Header::VipBadge class="mr-3" />
           {{/if}}
 
+          {{#if this.shouldShowSubscribeButton}}
+            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4">
+              Subscribe
+            </PrimaryLinkButton>
+          {{/if}}
+
           <Header::AccountDropdown />
         {{else}}
           <Header::SignInWithGithubButton />

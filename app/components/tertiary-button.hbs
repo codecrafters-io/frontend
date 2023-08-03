@@ -1,14 +1,11 @@
-{{! @glint-nocheck: not typesafe yet }}
-<button
-  type="button"
-  class="rounded-md shadow-sm font-semibold inline-block border transition-colors duration-75
+<BaseButton
+  @size={{@size}}
+  @isDisabled={{@isDisabled}}
+  class="transition-colors duration-75
     {{if @isDark 'bg-transparent' 'bg-white hover:bg-gray-50'}}
     {{if @isDark 'text-gray-200 hover:text-white' 'text-gray-900'}}
-    {{if @isDark 'border-gray-300 hover:border-gray-200' 'border-gray-300'}}
-    {{if (eq @size 'small') 'px-3 py-1.5' 'px-3 py-2'}}
-    {{if (eq @size 'small') 'text-sm' 'text-base'}}
-    {{if @isDisabled 'cursor-not-allowed opacity-50'}}"
+    {{if @isDark 'border-gray-300 hover:border-gray-200' 'border-gray-300'}}"
   ...attributes
 >
   {{yield}}
-</button>
+</BaseButton>

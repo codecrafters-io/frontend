@@ -1,0 +1,16 @@
+<LinkTo
+  @route={{@route}}
+  @models={{this.normalizedModels}}
+  class="inline-block border
+    {{if this.sizeIsRegular 'px-3 py-2'}}
+    {{if this.sizeIsSmall 'px-3 py-1.5'}}
+    {{if this.sizeIsExtraSmall 'px-2 py-1'}}
+    rounded shadow-sm font-semibold
+    {{if this.sizeIsRegular 'text-base'}}
+    {{if this.sizeIsSmall 'text-sm'}}
+    {{if this.sizeIsExtraSmall 'text-xs'}}
+    {{if @isDisabled 'cursor-not-allowed opacity-25'}}"
+  ...attributes
+>
+  {{yield}}
+</LinkTo>
