@@ -5,7 +5,7 @@
       data-test-account-dropdown-trigger
     >
       <span class="mr-0.5 text-sm md:text-xs">
-        {{this.currentUser.username}}
+        {{this.authenticator.currentUsername}}
       </span>
 
       {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
