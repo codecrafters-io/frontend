@@ -127,7 +127,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     await updatesPage.clickOnSyncWithGithubButton();
     assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
   });
-  
+
   test('it has the correct definition repository link', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
