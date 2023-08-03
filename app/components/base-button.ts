@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-interface Signature {
+export interface BaseButtonSignature {
   Element: HTMLButtonElement;
 
   Args: {
@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class BaseButtonComponent extends Component<Signature> {
+export default class BaseButtonComponent extends Component<BaseButtonSignature> {
   get sizeIsSmall(): boolean {
     return this.args.size === 'small';
   }
