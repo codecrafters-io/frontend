@@ -1,5 +1,6 @@
-<button
-  type="button"
+<LinkTo
+  @route={{@route}}
+  @models={{this.normalizedModels}}
   class="inline-block border
     {{if this.sizeIsRegular 'px-3 py-2'}}
     {{if this.sizeIsSmall 'px-3 py-1.5'}}
@@ -12,4 +13,4 @@
   ...attributes
 >
   {{yield}}
-</button>
+</LinkTo>
