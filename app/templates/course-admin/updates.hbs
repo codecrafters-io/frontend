@@ -9,12 +9,13 @@
           These updates are synced from your course's GitHub repository. They need to be applied to take effect.
         </div>
       </div>
-      <div class="text-right" data-test-definition-repository-link>
+      <div class="text-right">
         <a
           href={{@model.course.definitionRepositoryLink}}
           class="text-gray-400 flex items-center hover:text-gray-600"
           target="_blank"
           rel="noopener noreferrer"
+          data-test-definition-repository-link
         >
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">{{@model.course.definitionRepositoryFullName}}</span>
