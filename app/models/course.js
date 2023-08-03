@@ -143,7 +143,7 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
       return;
     }
 
-    const filteredResponse = response.data.filter((update) => {
+    const filteredResponseData = response.data.filter((update) => {
       if (!update.id) {
         return false;
       }
@@ -151,6 +151,8 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
       return update;
     });
 
-    this.store.pushPayload('course-definition-update', filteredResponse);
+    this.store.pushPayload('course-definition-update', {
+      data: filteredResponseData,
+    });
   },
 });
