@@ -1,0 +1,11 @@
+<button
+  type="button"
+  class="inline-block border
+    {{if this.sizeIsSmall 'px-3 py-1.5' 'px-3 py-2'}}
+    rounded shadow-sm font-semibold
+    {{if this.sizeIsSmall 'text-sm' 'text-base'}}
+    {{if @isDisabled 'cursor-not-allowed opacity-25'}}"
+  ...attributes
+>
+  {{yield}}
+</button>

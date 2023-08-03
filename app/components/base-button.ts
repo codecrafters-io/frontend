@@ -6,7 +6,6 @@ interface Signature {
   Args: {
     size?: 'small' | 'regular';
     isDisabled?: boolean;
-    isDark?: boolean;
   };
 
   Blocks: {
@@ -14,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class TertiaryButtonComponent extends Component<Signature> {
+export default class BaseButtonComponent extends Component<Signature> {
   get sizeIsSmall(): boolean {
     return this.args.size === 'small';
   }
@@ -22,6 +21,6 @@ export default class TertiaryButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TertiaryButton: typeof TertiaryButtonComponent;
+    BaseButton: typeof BaseButtonComponent;
   }
 }
