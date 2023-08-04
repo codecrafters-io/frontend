@@ -3,7 +3,7 @@ import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 
-export default class CourseAdminUpdatesController extends Controller {
+export default class CourseTesterVersionsController extends Controller {
   declare model: {
     course: {
       id: string;

@@ -7,7 +7,7 @@ export default class CourseTesterVersionModel extends Model {
   @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;
   @attr('date') declare lastActivatedAt?: Date;
-  @attr('string') declare isLatest: boolean;
-  @attr('string') declare isActive: boolean;
+  @attr('boolean') declare isLatest: boolean;
+  @attr('boolean') declare isActive: boolean;
   @attr('string') declare name: string;
 }
