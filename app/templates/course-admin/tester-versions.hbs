@@ -6,7 +6,7 @@
           Tester Versions
         </h3>
         <div class="text-xs text-gray-400">
-          These updates are synced from your course's tester repository. They need to be activated to take effect.
+          These versions are synced from your course's tester repository.
         </div>
       </div>
       <div class="text-right">
@@ -20,7 +20,7 @@
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">{{@model.course.testerRepositoryFullName}}</span>
         </a>
-        <TertiaryButtonWithSpinner @size="small" @shouldShowSpinner={{false}} class="mt-4" data-test-sync-with-github-button>Sync with Github</TertiaryButtonWithSpinner>
+        <TertiaryButtonWithSpinner @isDisabled={{true}} @size="small" @shouldShowSpinner={{false}} class="mt-4" data-test-sync-with-github-button>Sync with Github</TertiaryButtonWithSpinner>
       </div>
     </div>
 
