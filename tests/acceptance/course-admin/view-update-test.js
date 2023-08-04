@@ -22,7 +22,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
-      lastSyncedAt: new Date(),
+      lastSyncedAt: new Date(2020, 1, 1),
       newCommitSha: '0987654321',
       newDefinitionFileContents: 'new contents',
       status: 'pending',
@@ -34,7 +34,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
-      lastSyncedAt: new Date(),
+      lastSyncedAt: new Date(2021, 1, 1),
       newCommitSha: '1234567890',
       newDefinitionFileContents: 'new contents',
       oldCommitSha: '0987654321',
@@ -46,8 +46,10 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     await updatesPage.visit({ course_slug: 'redis' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
     assert.strictEqual(updatePage.viewDiffLink.href, `https://github.com/${course.definitionRepositoryFullName}/commit/${update.newCommitSha}`);
+
     await updatesPage.visit({ course_slug: 'redis' });
     await updatesPage.updateListItems[1].clickOnViewUpdateButton();
+
     assert.strictEqual(
       updatePage.viewDiffLink.href,
       `https://github.com/${course.definitionRepositoryFullName}/compare/${secondUpdate.oldCommitSha}..${secondUpdate.newCommitSha}`,
