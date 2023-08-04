@@ -7,6 +7,6 @@ branch: 'master'
 gha_enabled: True
 # This is the description of your project. It will be used by sweep when creating PRs. You can tell Sweep what's unique about your project, what frameworks you use, or anything else you want.
 # Here's an example: sweepai/sweep is a python project. The main api endpoints are in sweepai/api.py. Write code that adheres to PEP8.
-description: ''
+description: 'This is a frontend project using React and Redux. The main components are in the src/components directory. Please adhere to the Airbnb React/JSX Style Guide.'
 
 # Default Values: https://github.com/sweepai/sweep/blob/main/sweep.yaml
