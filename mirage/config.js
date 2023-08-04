@@ -144,6 +144,8 @@ function routes() {
   this.patch('/course-stage-comments/:id');
   this.post('/course-stage-comments/:id/unvote', () => {});
 
+  this.get('/course-tester-versions');
+
   this.get('/custom-discounts');
 
   this.post('/downvotes');

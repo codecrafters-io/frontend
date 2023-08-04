@@ -40,6 +40,14 @@ export default class CourseAdminHeaderComponent extends Component<Signature> {
         models: [this.args.course.slug],
         isActive: this.router.currentRouteName === 'course-admin.updates' || this.router.currentRouteName === 'course-admin.update',
       },
+      {
+        icon: 'clipboard-check',
+        name: 'Tester Versions',
+        slug: 'tester-versions',
+        route: 'course-admin.tester-versions',
+        models: [this.args.course.slug],
+        isActive: this.router.currentRouteName === 'course-admin.tester-versions',
+      },
     ];
   }
 }
