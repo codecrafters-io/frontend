@@ -1,0 +1,54 @@
+<li class="flex items-center justify-between gap-x-6 py-5 group/version-list-item hover:bg-gray-50 px-1" data-test-version-list-item role="button">
+  <div class="min-w-0">
+    <div class="flex items-start gap-x-3">
+      <p class="text-sm font-semibold leading-6 text-gray-900">{{@courseTesterVersion.name}}</p>
+      {{#if @courseTesterVersion.isActive}}
+        <p
+          class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20"
+        >
+          Active
+        </p>
+      {{else if @courseTesterVersion.isLatest}}
+        <p
+          class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-yellow-700 bg-yellow-50 ring-yellow-600/20"
+        >
+          Latest
+        </p>
+      {{/if}}
+    </div>
+    <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+      <p class="whitespace-nowrap">
+        {{#if (and @courseTesterVersion.isActive @courseTesterVersion.lastActivatedAt)}}
+          Activated on
+          {{! @glint-expect-error and isn't TS-ified properly yet !}}}
+          {{moment-format @courseTesterVersion.lastActivatedAt "MMMM D, YYYY"}}
+
+          {{#if @courseTesterVersion.activator}}
+            <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+              <circle cx="1" cy="1" r="1" />
+            </svg>
+            {{! @glint-expect-error user is not ts-ified yet !}}
+            <p class="truncate">by {{@courseTesterVersion.activator.username}}</p>
+          {{/if}}
+        {{else if @courseTesterVersion.createdAt}}
+          Created
+          {{moment-from-now @courseTesterVersion.createdAt}}
+        {{/if}}
+      </p>
+    </div>
+  </div>
+  <div class="flex flex-none items-center gap-x-4">
+    {{#unless @courseTesterVersion.isActive}}
+      {{#if @courseTesterVersion.isLatest}}
+        <TertiaryButtonWithSpinner @size="small" @shouldShowSpinner={{false}} data-test-activate-button>Activate</TertiaryButtonWithSpinner>
+      {{else}}
+        <TertiaryButtonWithSpinner
+          @size="small"
+          @shouldShowSpinner={{false}}
+          class="opacity-0 group-hover/version-list-item:opacity-100"
+          data-test-activate-button
+        >Activate</TertiaryButtonWithSpinner>
+      {{/if}}
+    {{/unless}}
+  </div>
+</li>
