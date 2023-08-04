@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class CourseAdminUpdateController extends Controller {
-  declare model: { update: CourseDefinitionUpdateModel; course: unknown };
+  declare model: { update: CourseDefinitionUpdateModel; course: { definitionRepositoryFullName: string }};
   @tracked isApplyingUpdate = false;
 
   @action
@@ -17,5 +17,12 @@ export default class CourseAdminUpdateController extends Controller {
 
       this.isApplyingUpdate = false;
     }
+  }
+
+  get viewDiffLink() {
+    if (!this.model.update.oldCommitSha) {
+      return `https://github.com/${this.model.course.definitionRepositoryFullName}/commit/${this.model.update.newCommitSha}`
+    }
+    return `https://github.com/${this.model.course.definitionRepositoryFullName}/compare/${this.model.update.oldCommitSha}..${this.model.update.newCommitSha}`
   }
 }
