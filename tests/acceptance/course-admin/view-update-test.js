@@ -44,11 +44,11 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     });
 
     await updatesPage.visit({ course_slug: 'redis' });
-    await updatesPage.updateListItems[0].clickOnViewUpdateButton();
+    await updatesPage.updateListItems[1].clickOnViewUpdateButton();
     assert.strictEqual(updatePage.viewDiffLink.href, `https://github.com/${course.definitionRepositoryFullName}/commit/${update.newCommitSha}`);
 
     await updatesPage.visit({ course_slug: 'redis' });
-    await updatesPage.updateListItems[1].clickOnViewUpdateButton();
+    await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
     assert.strictEqual(
       updatePage.viewDiffLink.href,
