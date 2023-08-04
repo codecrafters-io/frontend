@@ -11,7 +11,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | start-course', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,7 +20,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
   test('can start course', async function (assert) {
     testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
@@ -99,7 +99,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
   // TODO handle this better
   skip('can start repo and abandon halfway (regression)', async function (assert) {
     testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
