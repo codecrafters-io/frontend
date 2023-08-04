@@ -22,12 +22,14 @@ export default class CourseModel extends Model {
   @attr('string') shortDescriptionMarkdown;
   @attr('string') shortName;
   @attr('string') slug;
+  @attr('string') testerRepositoryFullName;
   @attr() testimonials; // free-form JSON
 
+  @hasMany('course-definition-update', { async: false }) definitionUpdates;
   @hasMany('course-extension-idea', { async: false }) extensionIdeas;
   @hasMany('course-language-configuration', { async: false }) languageConfigurations;
   @hasMany('course-stage', { async: false }) stages;
-  @hasMany('course-definition-update', { async: false }) definitionUpdates;
+  @hasMany('course-tester-version', { async: false }) testerVersions;
 
   @equal('difficulty', 'easy') difficultyIsEasy;
   @equal('difficulty', 'hard') difficultyIsHard;

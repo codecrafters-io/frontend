@@ -1,0 +1,38 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Tester Versions
+        </h3>
+        <div class="text-xs text-gray-400">
+          These versions are synced from your course's tester repository.
+        </div>
+      </div>
+      <div class="text-right">
+        <a
+          href={{@model.course.testerRepositoryLink}}
+          class="text-gray-400 flex items-center hover:text-gray-600"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-test-tester-repository-link
+        >
+          {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
+          <span class="text-xs underline font-medium">{{@model.course.testerRepositoryFullName}}</span>
+        </a>
+        <TertiaryButtonWithSpinner @isDisabled={{true}} @size="small" @shouldShowSpinner={{false}} class="mt-4" data-test-sync-with-github-button>Sync
+          with Github</TertiaryButtonWithSpinner>
+      </div>
+    </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
+      {{#each this.sortedTesterVersions as |courseTesterVersion|}}
+        <CourseAdmin::TesterVersionsPage::VersionListItem @courseTesterVersion={{courseTesterVersion}} />
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No updates found.
+        </div>
+      {{/each}}
+    </ul>
+  </div>
+</div>
