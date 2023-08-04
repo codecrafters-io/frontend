@@ -12,6 +12,6 @@ snapshot:
       font-size: 0;
     }
     .percy-time::before {
-      content: "11:11 PM",
+      content: "11:11 PM";
       font-size: 0.6rem;
     }
