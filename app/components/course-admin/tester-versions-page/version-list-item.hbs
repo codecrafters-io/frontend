@@ -40,9 +40,15 @@
   <div class="flex flex-none items-center gap-x-4">
     {{#unless @courseTesterVersion.isActive}}
       {{#if @courseTesterVersion.isLatest}}
-        <TertiaryButtonWithSpinner @size="small" @shouldShowSpinner={{false}} data-test-activate-button>Activate</TertiaryButtonWithSpinner>
+        <TertiaryButtonWithSpinner
+          @isDisabled={{true}}
+          @size="small"
+          @shouldShowSpinner={{false}}
+          data-test-activate-button
+        >Activate</TertiaryButtonWithSpinner>
       {{else}}
         <TertiaryButtonWithSpinner
+          @isDisabled={{true}}
           @size="small"
           @shouldShowSpinner={{false}}
           class="opacity-0 group-hover/version-list-item:opacity-100"
