@@ -128,7 +128,7 @@
     "ember-truth-helpers": "^3.0.0",
     "ember-window-mock": "^0.9.0",
     "eslint": "^8.46.0",
-    "eslint-config-prettier": "^8.10.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-ember": "^11.10.0",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-prettier": "^5.0.0",
