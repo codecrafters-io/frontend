@@ -32,8 +32,13 @@
                 Apply Update
               </PrimaryButtonWithSpinner>
 
-              <TertiaryButton @size="small" @isDisabled={{true}}>
-                Refresh from GitHub
+              <TertiaryButton 
+                @size="small"
+                @shouldShowSpinner={{this.isSyncingWithGithub}}
+                {{on "click" this.handleSyncWithGithubButtonClick}}
+                data-test-sync-with-github-button
+              >
+                Sync with Github
               </TertiaryButton>
             </div>
           {{else if (eq @model.update.status "applied")}}
