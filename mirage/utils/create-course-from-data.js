@@ -39,7 +39,6 @@ export default function createCourseFromData(server, courseData) {
       course: course,
       language: language,
       releaseStatus: languageConfigurationData.release_status || 'live',
-      starterRepositoryUrl: languageConfigurationData.starter_repository_url,
       alphaTesterUsernames: languageConfigurationData.alphaTesterUsernames || [],
     });
 

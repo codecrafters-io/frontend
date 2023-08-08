@@ -12,7 +12,7 @@ interface Signature {
     repository: {
       course: {
         secondStage: {
-          position: number
+          position: number;
           solutions: {
             changedFiles: {
               filename: string;
@@ -25,14 +25,12 @@ interface Signature {
       language: unknown;
       readmeUrl: string;
       defaultReadmeUrl: string;
-      starterRepositoryUrl: string;
-      defaultStarterRepositoryUrl: string;
     };
     courseStage: {
       position: number;
       screencasts: {}[];
     };
-  }
+  };
 }
 
 export default class SecondStageInstructionsCardComponent extends Component<Signature> {

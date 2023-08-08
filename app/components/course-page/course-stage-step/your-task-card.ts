@@ -26,8 +26,6 @@ interface Signature {
       language: unknown;
       readmeUrl: string;
       defaultReadmeUrl: string;
-      starterRepositoryUrl: string;
-      defaultStarterRepositoryUrl: string;
       user: {
         badgeAwards: unknown[];
       };
@@ -79,7 +77,6 @@ export default class YourTaskCardComponent extends Component<Signature> {
     });
 
     variables['readme_url'] = this.args.repository.readmeUrl || this.args.repository.defaultReadmeUrl;
-    variables['starter_repo_url'] = this.args.repository.starterRepositoryUrl || this.args.repository.defaultStarterRepositoryUrl;
 
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
   }

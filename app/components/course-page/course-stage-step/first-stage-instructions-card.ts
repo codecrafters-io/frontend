@@ -25,8 +25,6 @@ interface Signature {
       language: unknown;
       readmeUrl: string;
       defaultReadmeUrl: string;
-      starterRepositoryUrl: string;
-      defaultStarterRepositoryUrl: string;
     };
   };
 }
