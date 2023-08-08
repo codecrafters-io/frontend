@@ -14,7 +14,6 @@ export default class RepositoryModel extends Model {
   @attr('date') createdAt;
   @attr('string') name;
   @attr('string') progressBannerUrl;
-  @attr('string') readmeUrl;
 
   get cloneDirectory() {
     if (!this.course || !this.language) {

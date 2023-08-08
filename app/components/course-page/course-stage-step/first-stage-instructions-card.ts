@@ -23,7 +23,6 @@ interface Signature {
         };
       };
       language: unknown;
-      readmeUrl?: string;
     };
   };
 }

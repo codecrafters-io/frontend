@@ -24,7 +24,6 @@ interface Signature {
       hasClosedCourseStageFeedbackSubmissionFor: (stage: unknown) => boolean;
       highestCompletedStage: unknown;
       language: unknown;
-      readmeUrl?: string;
       user: {
         badgeAwards: unknown[];
       };
@@ -74,8 +73,6 @@ export default class YourTaskCardComponent extends Component<Signature> {
     this.store.peekAll('language').forEach((language) => {
       variables[`lang_is_${language.slug}`] = this.args.repository.language === language;
     });
-
-    variables['readme_url'] = this.args.repository.readmeUrl; // Can be nil
 
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
   }
