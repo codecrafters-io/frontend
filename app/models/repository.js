@@ -14,7 +14,7 @@ export default class RepositoryModel extends Model {
   @attr('date') createdAt;
   @attr('string') name;
   @attr('string') progressBannerUrl;
-  @attr('string') starterRepositoryUrl;
+  @attr('string') readmeUrl;
 
   get cloneDirectory() {
     if (!this.course || !this.language) {
@@ -34,10 +34,6 @@ export default class RepositoryModel extends Model {
 
   courseStageFeedbackSubmissionFor(courseStage) {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
-  }
-
-  get defaultStarterRepositoryUrl() {
-    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.betaOrLiveLanguages.firstObject.slug}`;
   }
 
   get firstSubmissionCreated() {
@@ -100,18 +96,6 @@ export default class RepositoryModel extends Model {
 
   get lastSubmissionHasFailureStatus() {
     return this.lastSubmission && this.lastSubmission.statusIsFailure;
-  }
-
-  get defaultReadmeUrl() {
-    return `https://github.com/codecrafters-io/${this.course.slug}-starter-${this.course.betaOrLiveLanguages.firstObject.slug}`;
-  }
-
-  get readmeUrl() {
-    if (!this.starterRepositoryUrl) {
-      return null;
-    }
-
-    return `${this.starterRepositoryUrl}/blob/master/README.md`;
   }
 
   stageCompletedAt(courseStage) {

@@ -23,8 +23,7 @@ interface Signature {
         };
       };
       language: unknown;
-      readmeUrl: string;
-      defaultReadmeUrl: string;
+      readmeUrl?: string;
     };
     courseStage: {
       position: number;
