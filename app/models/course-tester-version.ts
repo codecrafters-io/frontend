@@ -9,5 +9,5 @@ export default class CourseTesterVersionModel extends Model {
   @attr('date') declare lastActivatedAt?: Date;
   @attr('boolean') declare isLatest: boolean;
   @attr('boolean') declare isActive: boolean;
-  @attr('string') declare name: string;
+  @attr('string') declare tagName: string;
 }
