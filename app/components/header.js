@@ -62,14 +62,6 @@ export default class HeaderComponent extends Component {
     this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
   }
 
-  get canSeeEarlyBirdDiscountBanner() {
-    if (this.currentUser && !this.currentUser.canAccessPaidContent && this.currentUser.isEligibleForEarlyBirdDiscount) {
-      return this.featureFlags.canSeeEarlyBirdDiscountBanner;
-    }
-
-    return false;
-  }
-
   get shouldShowSubscribeButton() {
     return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }
