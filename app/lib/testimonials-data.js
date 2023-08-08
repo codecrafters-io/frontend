@@ -9,6 +9,8 @@ import beyangLiuImage from '/assets/images/user-avatars/beyang-liu.jpg';
 import akshataMohanImage from '/assets/images/user-avatars/akshata-mohan.jpg';
 import jonathanImage from '/assets/images/user-avatars/jonathan.jpg';
 import patrickBurrisImage from '/assets/images/user-avatars/patrick-burris.jpg';
+import cindyWuImage from '/assets/images/user-avatars/cindy-wu.jpg';
+import vladislavTenImage from '/assets/images/user-avatars/vladislav-ten.jpg';
 
 const testimonials = {
   'charles-guo': {
@@ -84,6 +86,20 @@ const testimonials = {
     authorDesignation: 'Senior Software Developer at CenturyLink',
     authorAvatarImage: patrickBurrisImage,
     text: "The instant feedback right there in the git push is really cool. Didn't even know that was possible!",
+  },
+
+  'cindy-wu': {
+    authorName: 'Cindy Wu',
+    authorDesignation: 'Participant at Recurse Center',
+    authorAvatarImage: cindyWuImage,
+    text: "I've started the SQLite challenge, enjoying it a lot so far. Just the right level of guidance, helpful yet gives you a lot of freedom to explore and learn for yourself.",
+  },
+
+  'vladislav-ten': {
+    authorName: 'Vladislav Ten',
+    authorDesignation: 'Software Engineer at Microsoft',
+    authorAvatarImage: vladislavTenImage,
+    text: 'In a perfect world, job interviews ask for assignments like CodeCrafters instead of Leetcode. The best way to refresh your programming language skills and learn something new about Redis, Git, SQLite internals.',
   },
 };
 
