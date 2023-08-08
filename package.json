@@ -30,7 +30,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.22.9",
+    "@babel/eslint-parser": "^7.22.10",
     "@babel/plugin-proposal-decorators": "^7.22.10",
     "@ember/optional-features": "^2.0.0",
     "@ember/render-modifiers": "^2.0.4",
@@ -159,7 +159,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^1.54.2",
+    "@stripe/stripe-js": "^2.0.0",
     "@tailwindcss/typography": "^0.5.8",
     "@typeform/embed": "^2.16.0",
     "@vimeo/player": "^2.20.1",
