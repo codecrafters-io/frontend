@@ -84,6 +84,11 @@ export default create({
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
   hasUpgradePrompt: isVisible('[data-test-upgrade-prompt]'),
   leaderboard: Leaderboard,
+
+  monthlyChallengeBanner: {
+    scope: '[data-test-monthly-challenge-banner]',
+  },
+
   repositoryDropdown: RepositoryDropdown,
   privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
 

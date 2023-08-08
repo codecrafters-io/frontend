@@ -9,7 +9,11 @@ import airpodsImage from '/assets/images/monthly-challenges/airpods.png';
 interface Signature {
   Element: HTMLAnchorElement;
 
-  Args: {};
+  Args: {
+    course: {
+      id: number,
+    },
+  };
 }
 
 export default class MonthlyChallengeBannerComponent extends Component<Signature> {
@@ -20,8 +24,7 @@ export default class MonthlyChallengeBannerComponent extends Component<Signature
   @action
   handleMonthlyChallengeBannerClick() {
     this.analyticsEventTracker.track('clicked_monthly_challenge_banner', {
-      // @ts-ignore
-      course_id: this.model.course.id,
+      course_id: this.args.course.id,
     });
   }
 }
