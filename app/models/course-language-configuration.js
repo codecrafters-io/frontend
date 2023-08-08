@@ -3,7 +3,6 @@ import { attr, belongsTo } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
 export default class CourseLanguageConfigurationModel extends Model {
-  @attr('string') starterRepositoryUrl;
   @attr('') alphaTesterUsernames;
   @attr('string') releaseStatus;
 

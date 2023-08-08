@@ -4,7 +4,6 @@ export default Factory.extend({
   createdAt: () => new Date(),
   cloneUrl: 'https://git.codecraters.io/a-long-test-string.git',
   name: 'Dummy name',
-  starterRepositoryUrl: 'https://github.com/codecrafters-io/redis-starter-go',
 
   withFirstStageInProgress: trait({
     afterCreate(repository, server) {
