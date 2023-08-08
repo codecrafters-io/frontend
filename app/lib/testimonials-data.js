@@ -10,7 +10,7 @@ import akshataMohanImage from '/assets/images/user-avatars/akshata-mohan.jpg';
 import jonathanImage from '/assets/images/user-avatars/jonathan.jpg';
 import patrickBurrisImage from '/assets/images/user-avatars/patrick-burris.jpg';
 import cindyWuImage from '/assets/images/user-avatars/cindy-wu.jpg';
-import vladislavTenImage from '/assets/images/user-avatars/vladislav-ten.jpg';
+import vladislavTenImage from '/assets/images/user-avatars/vladislav-ten.jpeg';
 
 const testimonials = {
   'charles-guo': {
