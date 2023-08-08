@@ -116,7 +116,7 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     await courseIdeaCard.hoverOnTrackBetaLabel();
 
     assertTooltipContent(assert, {
-      contentString: "This challenge is now available! Visit the catalog to try it out.",
+      contentString: 'This challenge is now available! Visit the catalog to try it out.',
     });
   });
 });
