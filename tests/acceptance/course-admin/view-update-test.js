@@ -55,4 +55,29 @@ module('Acceptance | course-admin | view-update', function (hooks) {
       `https://github.com/${course.definitionRepositoryFullName}/compare/${secondUpdate.oldCommitSha}..${secondUpdate.newCommitSha}`,
     );
   });
+
+  test('it should have a working button for syncing with github for individual update', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const update = this.server.create('course-definition-update', {
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      definitionFileContentsDiff: 'old contents',
+      description: 'Updated stage instructions for stage 1 & stage 2',
+      lastErrorMessage: null,
+      lastSyncedAt: new Date(2020, 1, 1),
+      newCommitSha: '0987654321',
+      newDefinitionFileContents: 'new contents',
+      status: 'pending',
+      summary: 'test',
+    });
+
+    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.updateListItems[0].clickOnViewUpdateButton();
+
+    update.update('definitionFileContentsDiff', 'updated diff');
+
+    await updatePage.clickOnSyncWithGithubButton();
+    assert.ok(updatePage.fileContentsDiff.text.includes('updated diff'), 'diff should be updated after syncing with github');
+  });
 });

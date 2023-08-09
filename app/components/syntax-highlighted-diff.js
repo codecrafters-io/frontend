@@ -19,16 +19,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   constructor() {
     super(...arguments);
 
-    let highlighterPromise = getOrCreateCachedHighlighterPromise(
-      SyntaxHighlightedDiffComponent.highlighterId,
-      SyntaxHighlightedDiffComponent.highlighterOptions,
-    );
-
-    highlighterPromise.then((highlighter) => {
-      highlighter.loadLanguage(this.args.language).then(() => {
-        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
-      });
-    });
+    this.highlightCode();
   }
 
   get codeLinesWithTypes() {
@@ -65,6 +56,19 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     }
   }
 
+  highlightCode() {
+    let highlighterPromise = getOrCreateCachedHighlighterPromise(
+      SyntaxHighlightedDiffComponent.highlighterId,
+      SyntaxHighlightedDiffComponent.highlighterOptions,
+    );
+
+    highlighterPromise.then((highlighter) => {
+      highlighter.loadLanguage(this.args.language).then(() => {
+        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
+      });
+    });
+  }
+
   get temporaryHTML() {
     const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line)}</span>`).join('');
 
@@ -73,6 +77,11 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get topLevelComments() {
     return (this.args.comments || []).filter((comment) => comment.isTopLevelComment && !comment.isNew);
+  }
+
+  @action
+  handleDidUpdateCode() {
+    this.highlightCode();
   }
 
   @action
@@ -101,6 +110,9 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   get linesForRender() {
+    console.log('is this triggered');
+    console.log(this.codeLinesWithTypes);
+    console.log(this.highlightedHtml);
     const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
 
     return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
