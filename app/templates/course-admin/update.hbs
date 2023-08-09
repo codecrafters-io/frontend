@@ -32,7 +32,7 @@
                 Apply Update
               </PrimaryButtonWithSpinner>
 
-              <TertiaryButtonWithSpinner 
+              <TertiaryButtonWithSpinner
                 @size="small"
                 @shouldShowSpinner={{this.isSyncingWithGithub}}
                 {{on "click" this.handleSyncWithGithubButtonClick}}
@@ -66,6 +66,12 @@
       {{/if}}
     </div>
 
-    <FileContentsCard class="mb-4" @filename="course-definition.yml" @code={{@model.update.definitionFileContentsDiff}} @language="yaml" data-test-file-contents-diff />
+    <FileContentsCard
+      class="mb-4"
+      @filename="course-definition.yml"
+      @code={{@model.update.definitionFileContentsDiff}}
+      @language="yaml"
+      data-test-file-contents-diff
+    />
   </div>
 </div>
