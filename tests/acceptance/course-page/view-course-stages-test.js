@@ -374,4 +374,30 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.notOk(coursePage.secondStageInstructionsCard.hasScreencastsLink, 'screencasts link should be present');
   });
+
+  test('it should track when the monthly challenge banner is clicked', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await coursePage.monthlyChallengeBanner.click();
+
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
+
+    assert.ok(analyticsEventNames.includes('clicked_monthly_challenge_banner'), 'clicked_monthly_challenge_banner event should be tracked');
+  });
 });

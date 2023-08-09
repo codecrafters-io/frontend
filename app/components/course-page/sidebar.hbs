@@ -29,7 +29,7 @@
   <div class="flex flex-col mt-4">
     {{#unless this.currentUser.canAccessPaidContent}}
       {{! @glint-expect-error: not typesafe yet }}
-      <CoursePage::Sidebar::MonthlyChallengeBanner class="mb-4" />
+      <CoursePage::Sidebar::MonthlyChallengeBanner @course={{@course}} class="mb-4" />
 
       <PrimaryLinkButton @size="small" @route="pay" class="mb-4">
         <span class="flex items-center gap-x-1 justify-center w-full">
