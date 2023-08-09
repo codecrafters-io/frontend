@@ -1,3 +1,4 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Controller from '@ember/controller';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
@@ -14,6 +15,7 @@ export default class CourseAdminUpdatesController extends Controller {
     }
   };
 
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare store: Store;
 
   @tracked isSyncingWithGithub = false;
@@ -30,6 +32,9 @@ export default class CourseAdminUpdatesController extends Controller {
     });
 
     this.isSyncingWithGithub = false;
+    this.analyticsEventTracker.track('synced_course_definition_updates', {
+      course_id: this.model.course.id,
+    });
   }
 
   get sortedDefinitionUpdates() {

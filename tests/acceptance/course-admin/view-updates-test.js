@@ -126,6 +126,12 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
 
     await updatesPage.clickOnSyncWithGithubButton();
     assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
+
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    const analyticsEventNames = analyticsEvents.map((event) => event.name);
+
+    assert.ok(analyticsEventNames.includes('synced_course_definition_updates'), 'should have sent an analytics event');
   });
 
   test('it has the correct definition repository link', async function (assert) {
