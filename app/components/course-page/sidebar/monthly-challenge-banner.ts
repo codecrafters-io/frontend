@@ -22,7 +22,7 @@ export default class MonthlyChallengeBannerComponent extends Component<Signature
   airpodsImage = airpodsImage;
 
   @action
-  handleMonthlyChallengeBannerClick() {
+  handleClick() {
     this.analyticsEventTracker.track('clicked_monthly_challenge_banner', {
       course_id: this.args.course.id,
     });
