@@ -18,10 +18,6 @@ export default class FeatureFlagsService extends Service {
     return this.authenticator.currentUser;
   }
 
-  get canSeeEarlyBirdDiscountBanner() {
-    return this.getFeatureFlagValue('can-see-early-bird-discount-banner') === 'test';
-  }
-
   getFeatureFlagValue(flagName) {
     const value = this.currentUser && this.currentUser.featureFlags && this.currentUser.featureFlags[flagName];
 
