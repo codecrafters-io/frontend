@@ -1,6 +1,9 @@
 version: 1
 snapshot:
   percy-css: |
+    .percy-carousel {
+      display: none;
+    }
     .percy-timestamp {
       font-size: 0;
     } 
