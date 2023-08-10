@@ -12,6 +12,7 @@ interface Signature {
   Args: {
     sections: Section[];
     expandedSection: Section;
+    onSectionClick: (section: Section) => void;
   };
 
   Blocks: {

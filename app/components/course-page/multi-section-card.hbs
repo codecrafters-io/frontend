@@ -6,8 +6,8 @@
 
     <div class="divide-y divide-gray-200">
       {{#each @sections as |section|}}
-        <div class="px-4 sm:px-6 {{if (eq @expandedSection section) 'py-5' 'py-3'}} {{if (not-eq @expandedSection section) 'hover:bg-gray-50'}} ">
-          {{#if (eq @expandedSection section)}}
+        {{#if (eq @expandedSection section)}}
+          <div class="px-4 sm:px-6 py-3">
             <div class="flex items-center justify-between mb-3">
               <div class="inline-flex font-semibold text-lg text-teal-500 underline">
                 {{section.title}}
@@ -19,7 +19,9 @@
             </div>
 
             {{yield to="expandedSectionContent"}}
-          {{else}}
+          </div>
+        {{else}}
+          <div class="px-4 sm:px-6 py-3 hover:bg-gray-50" {{on "click" (fn @onSectionClick section)}} role="button">
             <div class="flex items-center justify-between">
               <div class="font-semibold text-lg text-gray-700">
                 {{section.title}}
@@ -29,8 +31,8 @@
                 {{svg-jar "chevron-up" class="w-6 h-6 text-gray-400"}}
               </div>
             </div>
-          {{/if}}
-        </div>
+          </div>
+        {{/if}}
       {{/each}}
     </div>
   </div>

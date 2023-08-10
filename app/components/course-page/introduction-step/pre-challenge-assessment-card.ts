@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 // @ts-ignore
 import { cached } from '@glimmer/tracking';
 
+import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
@@ -70,17 +71,24 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
   @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
+  @tracked expandedSectionIndex: number = 0;
+
+  get expandedSection(): Section {
+    return this.sections[this.expandedSectionIndex] as Section;
+  }
+
   @action
   async handleLanguageSelection(language: unknown) {
-    console.log('handleLanguageSelection');
     // @ts-ignore
     this.args.repository.language = language;
     await this.args.repository.save();
     this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
+    this.expandedSectionIndex = 1;
   }
 
-  get expandedSection(): Section {
-    return this.sections[0] as Section;
+  @action
+  handleSectionExpanded(section: Section) {
+    this.expandedSectionIndex = this.sections.indexOf(section);
   }
 
   @cached
