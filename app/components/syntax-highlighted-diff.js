@@ -110,9 +110,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   get linesForRender() {
-    console.log('is this triggered');
-    console.log(this.codeLinesWithTypes);
-    console.log(this.highlightedHtml);
     const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
 
     return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
