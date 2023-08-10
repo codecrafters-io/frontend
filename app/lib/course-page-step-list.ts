@@ -1,8 +1,9 @@
 import { tracked } from '@glimmer/tracking';
-import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
-import SetupStep from 'codecrafters-frontend/lib/course-page-step-list/setup-step';
-import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 import CourseCompletedStep from 'codecrafters-frontend/lib/course-page-step-list/course-completed-step';
+import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import IntroductionStep from 'codecrafters-frontend/lib/course-page-step-list/introduction-step';
+import SetupStep from 'codecrafters-frontend/lib/course-page-step-list/setup-step';
+import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 
 export { Step };
 
@@ -33,6 +34,7 @@ export class StepList {
 export function buildStepList(repository: unknown): StepList {
   let steps = [];
 
+  steps.push(new IntroductionStep(repository));
   steps.push(new SetupStep(repository));
 
   // @ts-ignore
