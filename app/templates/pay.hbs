@@ -65,15 +65,7 @@
       I'm still exploring →
     </div>
 
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-2">
-      {{#each this.testimonialGroups as |testimonialGroup index|}}
-        <div class="flex-col space-y-2 {{if (eq index 0) 'hidden md:flex' 'flex'}}">
-          {{#each testimonialGroup as |testimonial|}}
-            <PayPage::TestimonialListItem @testimonial={{testimonial}} />
-          {{/each}}
-        </div>
-      {{/each}}
-    </div>
+    <Testimonials />
 
     <FaqList class="mt-16" />
   </div>
