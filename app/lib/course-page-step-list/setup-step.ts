@@ -25,11 +25,11 @@ export default class SetupStep extends Step {
         text: 'Listening for a git push...',
       };
       // @ts-ignore
-    } else if (this.repository.isSaving && this.repository.language) {
+    } else if (this.status === 'locked') {
       return {
         dotType: 'none',
         // @ts-ignore
-        text: `Creating a ${this.repository.language.name} repository...`,
+        text: `Complete introduction step to proceed`,
       };
     } else {
       return {
