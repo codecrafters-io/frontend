@@ -23,7 +23,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start:ember": "FASTBOOT_DISABLED=true ember serve",
-    "start:ember:fastboot": "FASTBOOT_DISABLED=\"\" ember serve",
+    "start:ember:fastboot": "FASTBOOT_DISABLED=\"\" EXPERIMENTAL_RENDER_MODE_SERIALIZE=true ember serve",
     "start": "concurrently \"npm:tailwind:watch\" \"npm:start:ember\" --names \"tailwind,ember:\"",
     "start:fastboot": "concurrently \"npm:tailwind:watch\" \"npm:start:ember:fastboot\" --names \"tailwind,ember:\"",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
