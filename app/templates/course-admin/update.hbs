@@ -32,9 +32,14 @@
                 Apply Update
               </PrimaryButtonWithSpinner>
 
-              <TertiaryButton @size="small" @isDisabled={{true}}>
-                Refresh from GitHub
-              </TertiaryButton>
+              <TertiaryButtonWithSpinner
+                @size="small"
+                @shouldShowSpinner={{this.isSyncingWithGithub}}
+                {{on "click" this.handleSyncWithGithubButtonClick}}
+                data-test-sync-with-github-button
+              >
+                Sync with Github
+              </TertiaryButtonWithSpinner>
             </div>
           {{else if (eq @model.update.status "applied")}}
             <div class="flex items-center mt-6 gap-x-1">
@@ -61,6 +66,12 @@
       {{/if}}
     </div>
 
-    <FileContentsCard class="mb-4" @filename="course-definition.yml" @code={{@model.update.definitionFileContentsDiff}} @language="yaml" />
+    <FileContentsCard
+      class="mb-4"
+      @filename="course-definition.yml"
+      @code={{@model.update.definitionFileContentsDiff}}
+      @language="yaml"
+      data-test-file-contents-diff
+    />
   </div>
 </div>

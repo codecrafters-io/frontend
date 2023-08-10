@@ -12,7 +12,7 @@ export default class CourseAdminUpdateRoute extends BaseRoute {
 
     return {
       course: course,
-      update: update,
+      update: update
     };
   }
 }
