@@ -2,6 +2,7 @@ import votePage from 'codecrafters-frontend/tests/pages/vote-page';
 import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -80,5 +81,42 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     await courseIdeaCard.clickOnVoteButton();
     assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
     assert.strictEqual(courseIdeaCard.supervoteButtonText, '0 supervotes', 'expected supervote button to say 0 supervotes');
+  });
+
+  test('label has the correct tooltip text', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    createCourseIdeas(this.server);
+
+    const regexCourseIdea = this.server.schema.courseIdeas.findBy({ name: 'Build your own Regex Parser' });
+    regexCourseIdea.update('developmentStatus', 'in_progress');
+    const sqliteCourseIdea = this.server.schema.courseIdeas.findBy({ name: 'Build your own SQLite' });
+    sqliteCourseIdea.update('developmentStatus', 'released');
+
+    await votePage.visit();
+
+    let courseIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
+    await courseIdeaCard.hoverOnTrackBetaLabel();
+
+    assertTooltipContent(assert, {
+      contentString: "We're currently building this challenge. Upvote this idea to be notified when it launches.",
+    });
+
+    await courseIdeaCard.clickOnVoteButton();
+    await courseIdeaCard.hoverOnTrackBetaLabel();
+
+    assertTooltipContent(assert, {
+      contentString: "We're currently building this challenge. We'll notify you when it launches.",
+    });
+
+    await courseIdeaCard.clickOnVoteButton();
+
+    courseIdeaCard = votePage.findCourseIdeaCard('Build your own SQLite');
+    await courseIdeaCard.hoverOnTrackBetaLabel();
+
+    assertTooltipContent(assert, {
+      contentString: 'This challenge is now available! Visit the catalog to try it out.',
+    });
   });
 });

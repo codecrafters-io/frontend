@@ -1,4 +1,4 @@
-import { clickable, collection, text, visitable } from 'ember-cli-page-object';
+import { clickable, collection, text, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -15,6 +15,7 @@ export default createPage({
     clickOnSupervoteButton: clickable('[data-test-supervote-button]'),
     clickOnVoteButton: clickable('[data-test-vote-button]'),
     name: text('[data-test-course-idea-name]'),
+    hoverOnTrackBetaLabel: triggerable('mouseenter', '[data-test-track-beta-label]'),
     supervoteButtonText: text('[data-test-supervote-button]'),
     supervoteButtonTooltipText: text('.ember-tooltip'),
     voteButtonText: text('[data-test-vote-button]'),
