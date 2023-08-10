@@ -11,7 +11,12 @@
       <div class="flex gap-x-3">
         <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
 
-        <TertiaryLinkButton @isDisabled={{@repository.isNew}} @route="course.introduction" @models={{array @repository.course.slug}} @query={{hash repo="new" track=null}}>
+        <TertiaryLinkButton
+          @isDisabled={{@repository.isNew}}
+          @route="course.introduction"
+          @models={{array @repository.course.slug}}
+          @query={{hash repo="new" track=null}}
+        >
           Change language
         </TertiaryLinkButton>
       </div>
