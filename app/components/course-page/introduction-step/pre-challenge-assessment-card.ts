@@ -1,21 +1,25 @@
+import { action } from '@ember/object';
+
 // @ts-ignore
 import { cached } from '@glimmer/tracking';
 
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RouterService from '@ember/routing/router-service';
+
+type RepositoryModel = {
+  id: null | string;
+  save(): Promise<void>;
+};
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    repository: {
-      course: {};
-    };
+    repository: RepositoryModel;
   };
 };
-
-type RepositoryModel = {};
 
 class QuestionnaireQuestionSection {
   repository: RepositoryModel;
@@ -63,7 +67,17 @@ class SelectLanguageSection {
 type Section = SelectLanguageSection | QuestionnaireQuestionSection;
 
 export default class PreChallengeAssessmentCardComponent extends Component<Signature> {
+  @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
+
+  @action
+  async handleLanguageSelection(language: unknown) {
+    console.log('handleLanguageSelection');
+    // @ts-ignore
+    this.args.repository.language = language;
+    await this.args.repository.save();
+    this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
+  }
 
   get expandedSection(): Section {
     return this.sections[0] as Section;
@@ -76,6 +90,10 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
       new QuestionnaireQuestionSection(this.args.repository, 'git-push'),
       new QuestionnaireQuestionSection(this.args.repository, 'git-clone'),
     ];
+  }
+
+  get selectLanguageSection(): SelectLanguageSection {
+    return this.sections[0] as SelectLanguageSection;
   }
 }
 

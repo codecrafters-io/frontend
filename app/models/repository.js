@@ -81,6 +81,10 @@ export default class RepositoryModel extends Model {
     return this.courseStageCompletions.sortBy('courseStage.position').lastObject.courseStage;
   }
 
+  get onboardingQuestionnaireSubmission() {
+    return {};
+  }
+
   get lastSubmissionAt() {
     return this.lastSubmission && this.lastSubmission.createdAt;
   }

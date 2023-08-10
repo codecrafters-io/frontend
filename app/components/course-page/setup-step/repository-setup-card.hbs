@@ -5,15 +5,7 @@
       <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} data-test-status-text />
     </div>
     <AnimatedContainer>
-      {{#animated-if @repository.isNew use=this.transition}}
-        <CoursePage::SetupStep::RepositorySetupCard::CreateRepositoryStep
-          @preferredLanguageSlug={{@preferredLanguageSlug}}
-          @repository={{@repository}}
-          @onLanguageSelection={{this.handleLanguageSelection}}
-        />
-      {{else}}
-        <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} />
-      {{/animated-if}}
+      <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} />
 
       {{#animated-if this.shouldShowUpgradePrompt use=this.transition}}
         <CoursePage::SetupStep::RepositorySetupCard::UpgradePrompt class="mt-3" />

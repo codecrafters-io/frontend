@@ -1,17 +1,25 @@
 <CoursePage::MultiSectionCard @sections={{this.sections}} @expandedSection={{this.expandedSection}}>
   <:headerContent>
-    <div class="px-4 sm:px-6 flex items-center py-2.5">
+    <div class="px-4 sm:px-6 flex items-center py-2.5 gap-x-3">
       <h2 class="font-semibold text-gray-700">Pre-Challenge Assessment</h2>
       <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
     </div>
   </:headerContent>
 
   <:expandedSectionContent>
-    {{! @glint-nocheck not ts-fied yet}}
-    <CoursePage::SetupStep::RepositorySetupCard::CreateRepositoryStep
-      @preferredLanguageSlug={{null}}
-      @repository={{@repository}}
-      @onLanguageSelection={{(noop)}}
-    />
+    {{#if (eq this.expandedSection this.selectLanguageSection)}}
+      {{! @glint-nocheck not ts-fied yet}}
+      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectLanguageStep
+        @preferredLanguageSlug={{null}} {{! TODO: Fetch this from query params? }}
+        @repository={{@repository}}
+        @onLanguageSelection={{this.handleLanguageSelection}}
+      />
+    {{else}}
+      <div class="px-4 sm:px-6 py-2.5">
+        <p class="text-gray-700">
+          This is a pre-challenge assessment to help you determine if you are ready to take on the challenge.
+        </p>
+      </div>
+    {{/if}}
   </:expandedSectionContent>
 </CoursePage::MultiSectionCard>
