@@ -1,5 +1,5 @@
 <h1 class="font-semibold text-4xl text-gray-700 text-center w-fit mb-3 mx-auto flex-shrink-0">
-  Refer one friend to CodeCrafters.<br/>
+  Refer one friend to CodeCrafters.<br />
   Earn up to $594. Right away.
 </h1>
 
@@ -19,19 +19,14 @@
   </PrimaryButtonWithSpinner>
 
   <TertiaryButton>
-    <a
-      href="https://docs.codecrafters.io/community/partner-program"
-      target="_blank"
-      role="button"
-      rel="noopener noreferrer"
-    >
+    <a href="https://docs.codecrafters.io/community/partner-program" target="_blank" role="button" rel="noopener noreferrer">
       Read the doc
     </a>
   </TertiaryButton>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
   {{#each this.features as |feature|}}
-    <FeatureCard @title={{feature.title}} @description={{feature.description}} @imageUrl={{feature.imageUrl}} />
+    <FeatureCard @title={{feature.title}} @description={{feature.description}} @pricing={{feature.pricing}} @imageUrl={{feature.imageUrl}} />
   {{/each}}
 </div>

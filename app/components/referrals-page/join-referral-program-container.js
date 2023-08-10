@@ -3,9 +3,9 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-import easyToShareImage from '/assets/images/referral-program-features/easy-to-share.png';
-import easyToClaimImage from '/assets/images/referral-program-features/easy-to-claim.png';
-import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.png';
+import freeForFriendImage from '/assets/images/referral-program-features/free-for-friend.jpg';
+import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.jpg';
+import simplePayoutImage from '/assets/images/referral-program-features/simple-payout.jpg';
 
 export default class JoinReferralProgramContainerComponent extends Component {
   @service store;
@@ -15,19 +15,39 @@ export default class JoinReferralProgramContainerComponent extends Component {
   get features() {
     return [
       {
-        title: 'Easy to share',
-        description: 'All you’ve got to do is share a referral link, we take care of the rest!',
-        imageUrl: easyToShareImage,
-      },
-      {
-        title: 'Easy to claim',
-        description: 'Get paid via PayPal, or via 30+ different types of gift cards.',
-        imageUrl: easyToClaimImage,
-      },
-      {
-        title: '60% for life',
-        description: `Earn 60% of earnings from every customer you refer, forever. Sky is the limit.`,
+        title: '60% Revenue Share.',
+        description: ['Earn 60% of what we make through your referrals. Example payouts for a single paid referral (before discounting):'],
+        pricing: [
+          {
+            amount: '$594',
+            plan: 'lifetime plan',
+          },
+          {
+            amount: '$216',
+            plan: 'one year plan',
+          },
+          {
+            amount: '$72',
+            plan: '3-month plan',
+          },
+        ],
         imageUrl: lifetimeEarningsImage,
+      },
+      {
+        title: 'No forms to fill. Simple payout.',
+        description: [
+          'Activate your link with one click.',
+          'Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or any of the 30+ gift cards that we support.',
+        ],
+        imageUrl: simplePayoutImage,
+      },
+      {
+        title: '(Probably) Free for your friend.',
+        description: [
+          'Most developers can get their CodeCrafters fees fully reimbursed through their corporate L&D budget.',
+          'Remind them about it, help them save money, and help make their decision easier.',
+        ],
+        imageUrl: freeForFriendImage,
       },
     ];
   }
