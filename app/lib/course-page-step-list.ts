@@ -33,16 +33,17 @@ export class StepList {
 
 export function buildStepList(repository: unknown): StepList {
   let steps = [];
+  let currentStepPosition = 0;
 
-  steps.push(new IntroductionStep(repository));
-  steps.push(new SetupStep(repository));
+  steps.push(new IntroductionStep(repository, currentStepPosition++));
+  steps.push(new SetupStep(repository, currentStepPosition++));
 
   // @ts-ignore
   repository.course.sortedStages.forEach((courseStage) => {
-    steps.push(new CourseStageStep(repository, courseStage));
+    steps.push(new CourseStageStep(repository, courseStage, currentStepPosition++));
   });
 
-  steps.push(new CourseCompletedStep(repository));
+  steps.push(new CourseCompletedStep(repository, currentStepPosition++));
 
   return new StepList(steps);
 }

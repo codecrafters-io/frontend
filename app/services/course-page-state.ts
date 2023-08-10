@@ -21,8 +21,10 @@ export default class CoursePageStateService extends Service {
       return null;
     }
 
-    if (this.router.currentRouteName === 'course.setup') {
+    if (this.router.currentRouteName === 'course.introduction') {
       return this.stepList.steps[0] as Step;
+    } else if (this.router.currentRouteName === 'course.setup') {
+      return this.stepList.steps[1] as Step;
     } else if (this.router.currentRouteName === 'course.completed') {
       return this.stepList.steps[this.stepList.steps.length - 1] as Step;
     } else if (this.router.currentRouteName.startsWith('course.stage')) {
@@ -30,7 +32,7 @@ export default class CoursePageStateService extends Service {
 
       return this.stepList.steps.find(
         // @ts-ignore
-        (step) => step.type === 'CourseStageStep' && step.courseStage.position === parseInt(courseStageRoute.params.stage_number, 10)
+        (step) => step.type === 'CourseStageStep' && step.courseStage.position === parseInt(courseStageRoute.params.stage_number, 10),
       ) as Step;
     } else {
       // happens on course.index for example, when we're redirecting to /catalog
