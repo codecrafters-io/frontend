@@ -52,7 +52,7 @@ export default class Step {
     }
   }
 
-  get type(): 'SetupStep' | 'CourseStageStep' | 'CourseCompletedStep' {
+  get type(): 'IntroductionStep' | 'SetupStep' | 'CourseStageStep' | 'CourseCompletedStep' {
     throw new Error('Subclasses of Step must implement a routeParams getter');
   }
 
