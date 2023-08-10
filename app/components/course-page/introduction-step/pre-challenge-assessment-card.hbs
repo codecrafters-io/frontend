@@ -1,0 +1,17 @@
+<CoursePage::MultiSectionCard @sections={{this.sections}} @expandedSection={{this.expandedSection}}>
+  <:headerContent>
+    <div class="px-4 sm:px-6 flex items-center py-2.5">
+      <h2 class="font-semibold text-gray-700">Pre-Challenge Assessment</h2>
+      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+    </div>
+  </:headerContent>
+
+  <:expandedSectionContent>
+    {{! @glint-nocheck not ts-fied yet}}
+    <CoursePage::SetupStep::RepositorySetupCard::CreateRepositoryStep
+      @preferredLanguageSlug={{null}}
+      @repository={{@repository}}
+      @onLanguageSelection={{(noop)}}
+    />
+  </:expandedSectionContent>
+</CoursePage::MultiSectionCard>

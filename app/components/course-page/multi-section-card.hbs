@@ -1,0 +1,37 @@
+<div class="bg-gray-50 rounded-md w-full" ...attributes>
+  <div class="bg-white border border-gray-300 {{if (has-block 'footerContent') 'rounded-t border-b-0' 'rounded'}}">
+    <div class="bg-gray-50 border-gray-300 border-b border-opacity-75 rounded-t relative">
+      {{yield to="headerContent"}}
+    </div>
+
+    <div class="divide-y divide-gray-200">
+      {{#each @sections as |section|}}
+        <div class="px-4 sm:px-6 {{if (eq @expandedSection section) 'py-5' 'py-3'}} {{if (not-eq @expandedSection section) 'hover:bg-gray-50'}} ">
+          {{#if (eq @expandedSection section)}}
+            <div class="flex items-center justify-between mb-3">
+              <div class="inline-flex font-semibold text-lg text-teal-500 underline">
+                {{section.title}}
+              </div>
+
+              <div>
+                {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400"}}
+              </div>
+            </div>
+
+            {{yield to="expandedSectionContent"}}
+          {{else}}
+            <div class="flex items-center justify-between">
+              <div class="font-semibold text-lg text-gray-700">
+                {{section.title}}
+              </div>
+
+              <div>
+                {{svg-jar "chevron-up" class="w-6 h-6 text-gray-400"}}
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
