@@ -97,6 +97,15 @@ module.exports = {
           },
         },
       },
+      keyframes: {
+        ['infinite-slide']: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+      },
+      animation: {
+        ['infinite-slide']: 'infinite-slide 30s linear infinite',
+      },
     },
   },
   variants: {

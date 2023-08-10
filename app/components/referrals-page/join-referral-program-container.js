@@ -7,10 +7,56 @@ import freeForFriendImage from '/assets/images/referral-program-features/free-fo
 import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.jpg';
 import simplePayoutImage from '/assets/images/referral-program-features/simple-payout.jpg';
 
+import adobeImage from '/assets/images/company-logos/adobe-company-logo.svg';
+import amazonImage from '/assets/images/company-logos/amazon-company-logo.svg';
+import coinbaseImage from '/assets/images/company-logos/coinbase-company-logo.svg';
+import dockerImage from '/assets/images/company-logos/docker-company-logo.svg';
+import googleImage from '/assets/images/company-logos/google-company-logo.svg';
+import linearImage from '/assets/images/company-logos/linear-company-logo.svg';
+import slackImage from '/assets/images/company-logos/slack-company-logo.svg';
+import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
+
 export default class JoinReferralProgramContainerComponent extends Component {
   @service store;
   @service authenticator;
   @tracked isCreatingReferralLink = false;
+
+  get companies() {
+    return [
+      {
+        name: 'Google',
+        imageUrl: googleImage,
+      },
+      {
+        name: 'Slack',
+        imageUrl: slackImage,
+      },
+      {
+        name: 'Amazon',
+        imageUrl: amazonImage,
+      },
+      {
+        name: 'Adobe',
+        imageUrl: adobeImage,
+      },
+      {
+        name: 'Stripe',
+        imageUrl: stripeImage,
+      },
+      {
+        name: 'Docker',
+        imageUrl: dockerImage,
+      },
+      {
+        name: 'Coinbase',
+        imageUrl: coinbaseImage,
+      },
+      {
+        name: 'Linear',
+        imageUrl: linearImage,
+      },
+    ];
+  }
 
   get features() {
     return [
