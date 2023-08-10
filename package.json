@@ -13,7 +13,7 @@
   "scripts": {
     "tailwind:build": "npx tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css",
     "tailwind:watch": "npx tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css --watch",
-    "build": "npm run tailwind:build && ember build --environment=production",
+    "build": "npm run tailwind:build && EXPERIMENTAL_RENDER_MODE_SERIALIZE=true ember build --environment=production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
