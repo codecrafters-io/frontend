@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 
 export class Section {
-  get collapsedTitle(): string {
+  get descriptionWhenCollapsed(): string | null {
     throw new Error('Not implemented');
   }
 
@@ -31,8 +31,9 @@ export class SelectLanguageSection extends Section {
     this.repository = repository;
   }
 
-  get collapsedTitle() {
-    return 'Preferred Language';
+  get descriptionWhenCollapsed() {
+    // @ts-ignore
+    return this.repository.language ? `${this.repository.language.name}` : null;
   }
 
   get isComplete() {
@@ -58,13 +59,14 @@ export class SelectLanguageProficiencyLevelSection extends Section {
     this.repository = repository;
   }
 
-  get collapsedTitle() {
-    return 'Language Proficiency';
+  get descriptionWhenCollapsed() {
+    // @ts-ignore
+    return this.repository.languageProficiencyLevel ? `${this.repository.humanizedLanguageProficiencyLevel}` : null;
   }
 
   get isComplete() {
     // @ts-ignore
-    return !!this.repository.language;
+    return !!this.repository.languageProficiencyLevel;
   }
 
   get title() {

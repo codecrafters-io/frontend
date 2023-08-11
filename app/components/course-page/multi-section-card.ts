@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 
 export interface Section {
   title: string;
-  collapsedTitle: string; // Used when the section is collapsed
+  descriptionWhenCollapsed: string | null; // Used when the section is collapsed
   isComplete: boolean;
 }
 
