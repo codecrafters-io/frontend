@@ -28,19 +28,23 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 sm:mt-20">
   {{#each this.features as |feature|}}
     <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.content.title}}>
-      <:bodyParagraphListContent>
-        {{#each feature.content.bodyParagraphList as |paragraph|}}
-          <p>{{paragraph}}</p>
-        {{/each}}
-      </:bodyParagraphListContent>
-      <:pricingListContent>
-        {{#each feature.content.pricingList as |pricingListItem|}}
-          <li class="list-disc ml-4">
-            <span class="font-bold">{{pricingListItem.amount}}</span>
-            ({{pricingListItem.plan}})
-          </li>
-        {{/each}}
-      </:pricingListContent>
+      <:content>
+        <div class="flex flex-col gap-3">
+          {{#each feature.content.bodyParagraphList as |paragraph|}}
+            <p>{{paragraph}}</p>
+          {{/each}}
+        </div>
+        {{#if feature.content.pricingList}}
+          <ul class="pt-2">
+            {{#each feature.content.pricingList as |pricingListItem|}}
+              <li class="list-disc ml-4">
+                <span class="font-bold">{{pricingListItem.amount}}</span>
+                ({{pricingListItem.plan}})
+              </li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      </:content>
     </FeatureCard>
   {{/each}}
 </div>
