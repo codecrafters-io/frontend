@@ -1,3 +1,16 @@
 import Component from '@glimmer/component';
 
-export default class CarouselComponent extends Component {}
+interface ScrollingLogoListSignature {
+  Element: HTMLDivElement;
+
+  Args: {
+    images: [
+      {
+        name: string;
+        url: string;
+      }
+    ]
+  }
+}
+
+export default class ScrollingLogoListComponent extends Component<ScrollingLogoListSignature> {}
