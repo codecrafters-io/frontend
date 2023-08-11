@@ -1,4 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
+import { cached } from '@glimmer/tracking';
 
 export default class RepositoryModel extends Model {
   @belongsTo('course', { async: false }) course;
@@ -13,6 +15,7 @@ export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
   @attr('date') createdAt;
   @attr('string') name;
+  @attr('string') languageProficiency;
   @attr('string') progressBannerUrl;
 
   get cloneDirectory() {
@@ -99,6 +102,11 @@ export default class RepositoryModel extends Model {
 
   get lastSubmissionHasFailureStatus() {
     return this.lastSubmission && this.lastSubmission.statusIsFailure;
+  }
+
+  @cached
+  get preChallengeAssessmentSectionList() {
+    return buildPreChallengeAssessmentSectionList(this);
   }
 
   stageCompletedAt(courseStage) {

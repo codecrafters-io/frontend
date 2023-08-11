@@ -7,10 +7,11 @@
   </:headerContent>
 
   <:expandedSectionContent>
-    {{#if (eq this.expandedSection this.selectLanguageSection)}}
+    {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
       {{! @glint-nocheck not ts-fied yet}}
       <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectLanguageStep
-        @preferredLanguageSlug={{null}} {{! TODO: Fetch this from query params? }}
+        {{! TODO: Fetch this from query params? }}
+        @preferredLanguageSlug={{null}}
         @repository={{@repository}}
         @onLanguageSelection={{this.handleLanguageSelection}}
       />

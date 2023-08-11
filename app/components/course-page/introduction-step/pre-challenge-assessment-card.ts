@@ -9,6 +9,8 @@ import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RouterService from '@ember/routing/router-service';
 
+import { Section, SectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
+
 type RepositoryModel = {
   id: null | string;
   save(): Promise<void>;
@@ -22,51 +24,6 @@ type Signature = {
   };
 };
 
-class QuestionnaireQuestionSection {
-  repository: RepositoryModel;
-  questionSlug: string;
-
-  constructor(repository: RepositoryModel, questionSlug: string) {
-    this.repository = repository;
-    this.questionSlug = questionSlug;
-  }
-
-  get collapsedTitle() {
-    return 'Questionnaire';
-  }
-
-  get isComplete() {
-    return false;
-  }
-
-  get title() {
-    return `Question ${this.questionSlug}`;
-  }
-}
-
-class SelectLanguageSection {
-  repository: RepositoryModel;
-
-  constructor(repository: RepositoryModel) {
-    this.repository = repository;
-  }
-
-  get collapsedTitle() {
-    return 'Preferred Language';
-  }
-
-  get isComplete() {
-    // @ts-ignore
-    return !!this.repository.language;
-  }
-
-  get title() {
-    return 'Preferred Language';
-  }
-}
-
-type Section = SelectLanguageSection | QuestionnaireQuestionSection;
-
 export default class PreChallengeAssessmentCardComponent extends Component<Signature> {
   @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
@@ -74,7 +31,7 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
   @tracked expandedSectionIndex: number = 0;
 
   get expandedSection(): Section {
-    return this.sections[this.expandedSectionIndex] as Section;
+    return this.sectionList.sections[this.expandedSectionIndex] as Section;
   }
 
   @action
@@ -88,20 +45,12 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
 
   @action
   handleSectionExpanded(section: Section) {
-    this.expandedSectionIndex = this.sections.indexOf(section);
+    this.expandedSectionIndex = this.sectionList.indexOf(section);
   }
 
-  @cached
-  get sections(): Section[] {
-    return [
-      new SelectLanguageSection(this.args.repository),
-      new QuestionnaireQuestionSection(this.args.repository, 'git-push'),
-      new QuestionnaireQuestionSection(this.args.repository, 'git-clone'),
-    ];
-  }
-
-  get selectLanguageSection(): SelectLanguageSection {
-    return this.sections[0] as SelectLanguageSection;
+  get sectionList(): SectionList {
+    // @ts-ignore
+    return this.args.repository.preChallengeAssessmentSectionList;
   }
 }
 
