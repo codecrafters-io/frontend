@@ -89,6 +89,10 @@ export class SectionList {
     return this.sections.find((section) => !section.isComplete) || (this.sections[this.sections.length - 1] as Section);
   }
 
+  get isComplete(): boolean {
+    return this.sections.every((section) => section.isComplete);
+  }
+
   indexOf(section: Section): number {
     return this.sections.indexOf(section);
   }

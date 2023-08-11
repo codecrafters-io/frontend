@@ -46,7 +46,7 @@ export default class SetupStep extends Step {
     }
 
     // @ts-ignore
-    if (this.repository.isNew || !this.repository.onboardingQuestionnaireSubmission.isComplete) {
+    if (this.repository.isNew || !this.repository.preChallengeAssessmentSectionList.isComplete) {
       return 'locked';
     }
 

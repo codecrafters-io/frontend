@@ -6,25 +6,22 @@
 </div>
 
 <div>
-  <div class="flex items-center flex-wrap max-w-3xl">
+  <div class="flex gap-3 items-center flex-wrap max-w-3xl">
     {{#if @repository.language}}
-      <div class="flex gap-x-3">
-        <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
+      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
 
-        <TertiaryLinkButton
-          @isDisabled={{@repository.isNew}}
-          @route="course.introduction"
-          @models={{array @repository.course.slug}}
-          @query={{hash repo="new" track=null}}
-        >
-          Try other language
-        </TertiaryLinkButton>
-      </div>
+      <TertiaryLinkButton
+        @isDisabled={{@repository.isNew}}
+        @route="course.introduction"
+        @models={{array @repository.course.slug}}
+        @query={{hash repo="new" track=null}}
+      >
+        Try other language
+      </TertiaryLinkButton>
     {{else}}
       {{#if (and (gt this.preferredLanguages.length 0) (not this.shouldShowNonPreferredLanguages))}}
         {{#each this.preferredLanguages as |language|}}
           <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton
-            class="mr-3 mb-3"
             @language={{language}}
             {{on "click" (fn this.handleLanguageButtonClick language)}}
           />
@@ -38,7 +35,6 @@
       {{else}}
         {{#each this.orderedLanguageConfigurations as |languageConfiguration|}}
           <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton
-            class="mr-3 mb-3"
             @language={{languageConfiguration.language}}
             @releaseStatusIsAlpha={{languageConfiguration.releaseStatusIsAlpha}}
             {{on "click" (fn this.handleLanguageButtonClick languageConfiguration.language)}}

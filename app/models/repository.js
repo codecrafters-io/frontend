@@ -3,6 +3,13 @@ import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'code
 import { cached } from '@glimmer/tracking';
 
 export default class RepositoryModel extends Model {
+  static languageProficiencyLevelMappings = {
+    not_tried: 'Not tried',
+    beginner: 'Beginner',
+    intermediate: 'Intermediate',
+    advanced: 'Advanced',
+  };
+
   @belongsTo('course', { async: false }) course;
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
   @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;
@@ -15,7 +22,7 @@ export default class RepositoryModel extends Model {
   @attr('string') cloneUrl;
   @attr('date') createdAt;
   @attr('string') name;
-  @attr('string') languageProficiency;
+  @attr('string') languageProficiencyLevel;
   @attr('string') progressBannerUrl;
 
   get cloneDirectory() {
@@ -84,8 +91,8 @@ export default class RepositoryModel extends Model {
     return this.courseStageCompletions.sortBy('courseStage.position').lastObject.courseStage;
   }
 
-  get onboardingQuestionnaireSubmission() {
-    return {};
+  get languageProficiencyLevelHumanized() {
+    return RepositoryModel.languageProficiencyLevelMappings[this.languageProficiencyLevel];
   }
 
   get lastSubmissionAt() {

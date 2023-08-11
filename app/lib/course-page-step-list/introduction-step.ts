@@ -38,14 +38,14 @@ export default class IntroductionStep extends Step {
       return 'not_started';
     }
 
-    // Old users don't have a questionnaire submission, let's still show this as completed for them.
+    // Old users don't have a pre-challenge assessment, let's still show this as completed for them.
     // @ts-ignore
     if (this.repository.firstSubmissionCreated) {
       return 'complete';
     }
 
     // @ts-ignore
-    if (this.repository.onboardingQuestionnaireSubmission.isComplete) {
+    if (this.repository.preChallengeAssessmentSectionList.isComplete) {
       return 'complete';
     }
 
