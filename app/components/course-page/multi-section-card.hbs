@@ -19,9 +19,15 @@
         {{else}}
           <div class="px-4 sm:px-6 py-3 hover:bg-gray-50" {{on "click" (fn @onSectionClick section)}} role="button">
             <div class="flex items-center justify-between">
-              <div class="font-semibold text-lg text-gray-700">
-                {{section.title}}
-              </div>
+              {{#if section.isComplete}}
+                <div class="text-lg text-gray-400">
+                  <span class="font-semibold">{{section.title}}</span>: Complete
+                </div>
+              {{else}}
+                <div class="font-semibold text-lg text-gray-700">
+                  {{section.title}}
+                </div>
+              {{/if}}
 
               <div>
                 {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400"}}
