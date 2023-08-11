@@ -12,10 +12,6 @@
               <div class="inline-flex font-semibold text-lg text-teal-500 underline">
                 {{section.title}}
               </div>
-
-              <div>
-                {{svg-jar "chevron-down" class="w-6 h-6 text-teal-500"}}
-              </div>
             </div>
 
             {{yield to="expandedSectionContent"}}
@@ -28,7 +24,7 @@
               </div>
 
               <div>
-                {{svg-jar "chevron-up" class="w-6 h-6 text-gray-400"}}
+                {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400"}}
               </div>
             </div>
           </div>

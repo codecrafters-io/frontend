@@ -9,6 +9,7 @@ import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RouterService from '@ember/routing/router-service';
 
+import { Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 
 type RepositoryModel = {
@@ -44,8 +45,8 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
   }
 
   @action
-  handleSectionExpanded(section: Section) {
-    this.expandedSectionIndex = this.sectionList.indexOf(section);
+  handleSectionExpanded(section: MultiSectionCardSection) {
+    this.expandedSectionIndex = this.sectionList.indexOf(section as Section);
   }
 
   get sectionList(): SectionList {

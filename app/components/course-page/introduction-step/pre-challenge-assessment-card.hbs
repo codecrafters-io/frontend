@@ -1,4 +1,4 @@
-<CoursePage::MultiSectionCard @sections={{this.sections}} @expandedSection={{this.expandedSection}} @onSectionClick={{this.handleSectionExpanded}}>
+<CoursePage::MultiSectionCard @sections={{this.sectionList.sections}} @expandedSection={{this.expandedSection}} @onSectionClick={{this.handleSectionExpanded}}>
   <:headerContent>
     <div class="px-4 sm:px-6 flex items-center py-2.5 gap-x-3">
       <h2 class="font-semibold text-gray-700">Pre-Challenge Assessment</h2>
@@ -8,7 +8,7 @@
 
   <:expandedSectionContent>
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
-      {{! @glint-nocheck not ts-fied yet}}
+      {{! @glint-expect-error not ts-fied yet }}
       <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectLanguageStep
         {{! TODO: Fetch this from query params? }}
         @preferredLanguageSlug={{null}}

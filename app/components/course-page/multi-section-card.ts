@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-interface Section {
+export interface Section {
   title: string;
   collapsedTitle: string; // Used when the section is collapsed
   isComplete: boolean;
