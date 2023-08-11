@@ -45,7 +45,7 @@ export default class FeedbackComponent extends Component {
 
     if (this.formElement.checkValidity()) {
       this.isSaving = true;
-      this.feedbackSubmission.pageUrl = this.router.currentURL;
+      this.feedbackSubmission.pageUrl = window.location.href;
       await this.feedbackSubmission.save();
       this.isSaving = false;
       this.wasSaved = true;
