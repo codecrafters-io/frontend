@@ -27,7 +27,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 sm:mt-20">
   {{#each this.features as |feature|}}
-    <FeatureCard @imageUrl={{feature.imageUrl}}>
+    <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.content.title}}>
       <:contentBody>
         {{#each feature.content.body as |paragraph|}}
           <p>{{paragraph}}</p>
