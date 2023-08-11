@@ -6,37 +6,40 @@
 
     <div class="divide-y divide-gray-200">
       {{#each @sections as |section|}}
-        {{#if (eq @expandedSection section)}}
-          <div class="px-4 sm:px-6 py-3">
-            <div class="flex items-center justify-between mb-3">
-              <div class="inline-flex font-semibold text-lg text-teal-500 underline">
-                {{section.title}}
-              </div>
-            </div>
-
-            {{yield to="expandedSectionContent"}}
-          </div>
-        {{else}}
-          <div class="px-4 sm:px-6 py-3 hover:bg-gray-50" {{on "click" (fn @onSectionClick section)}} role="button">
-            <div class="flex items-center justify-between">
-              {{#if section.isComplete}}
-                <div class="flex items-center text-lg text-gray-400">
-                  <span class="font-semibold">{{section.title}}</span>:
-                  {{section.descriptionWhenCollapsed}}
-                  {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 ml-1"}}
-                </div>
-              {{else}}
-                <div class="font-semibold text-lg text-gray-700">
+        <AnimatedContainer>
+          {{! @glint-expect-error not ts-ified yet }}
+          {{#animated-if (eq @expandedSection section) use=this.transition}}
+            <div class="px-4 sm:px-6 pt-3 pb-5">
+              <div class="flex items-center justify-between mb-3">
+                <div class="inline-flex font-semibold text-lg text-teal-500 underline">
                   {{section.title}}
                 </div>
-              {{/if}}
+              </div>
 
-              <div>
-                {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400"}}
+              {{yield to="expandedSectionContent"}}
+            </div>
+          {{else}}
+            <div class="px-4 sm:px-6 py-3 hover:bg-gray-50" {{on "click" (fn @onSectionClick section)}} role="button">
+              <div class="flex items-center justify-between">
+                {{#if section.isComplete}}
+                  <div class="flex items-center text-lg text-gray-400">
+                    <span class="font-semibold">{{section.title}}</span>:
+                    {{section.descriptionWhenCollapsed}}
+                    {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 ml-1"}}
+                  </div>
+                {{else}}
+                  <div class="font-semibold text-lg text-gray-700">
+                    {{section.title}}
+                  </div>
+                {{/if}}
+
+                <div>
+                  {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400"}}
+                </div>
               </div>
             </div>
-          </div>
-        {{/if}}
+          {{/animated-if}}
+        </AnimatedContainer>
       {{/each}}
     </div>
   </div>

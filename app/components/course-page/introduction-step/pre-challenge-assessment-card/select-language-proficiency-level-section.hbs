@@ -1,14 +1,60 @@
 <div class="text-gray-700 prose mb-5" data-test-select-language-proficiency-level-section>
   <p>
     How would you describe your experience level with
+    {{! @glint-expect-error not ts-ified yet }}
     {{if @repository.language @repository.language.name "this language"}}? We can tailor your experience accordingly.
   </p>
 </div>
 
 <div>
   <div class="flex items-center flex-wrap max-w-3xl gap-3">
+    {{! @glint-expect-error not ts-ified yet }}
     {{#each-in @repository.constructor.languageProficiencyLevelMappings as |key value|}}
-      <TertiaryButton>{{value}}</TertiaryButton>
+      <TertiaryButton
+        {{! @glint-expect-error not ts-ified yet }}
+        class="{{if (eq @repository.languageProficiencyLevel key) 'border-teal-500 text-teal-500'}}"
+        {{! @glint-expect-error not ts-ified yet }}
+        {{on "click" (fn (mut @repository.languageProficiencyLevel) key)}}
+      >
+        {{value}}
+      </TertiaryButton>
     {{/each-in}}
+
+    {{! @glint-expect-error not ts-ified yet }}
+    {{#if (eq @repository.languageProficiencyLevel "not_tried")}}
+      <Alert>
+        We recommend learning basic
+        {{! @glint-expect-error not ts-ified yet }}
+        {{if @repository.language @repository.language.name}}
+        syntax before attempting this challenge.
+        <a href="https://exercism.com">Exercism</a>
+        is a good place to start.
+      </Alert>
+    {{else if (eq @repository.languageProficiencyLevel "beginner")}}
+      <Alert>
+        If you're just starting out with
+        {{! @glint-expect-error not ts-ified yet }}
+        {{if @repository.language @repository.language.name "this language"}}, CodeCrafters can be a good way to learn. We recommend using our
+        <b>Code Examples</b>
+        feature to see code from other users before attempting each stage.
+      </Alert>
+    {{else if (eq @repository.languageProficiencyLevel "intermediate")}}
+      <Alert>
+        If you're already familiar with
+        {{! @glint-expect-error not ts-ified yet }}
+        {{if @repository.language @repository.language.name "this language"}}, CodeCrafters can be a good way to improve. We recommend using our
+        <b>Code Examples</b>
+        feature to see code from other users.
+      </Alert>
+    {{else if (eq @repository.languageProficiencyLevel "advanced")}}
+      <Alert>
+        If you're already familiar with
+        {{! @glint-expect-error not ts-ified yet }}
+        {{if @repository.language @repository.language.name "this language"}}, CodeCrafters can be a good way to further your mastery. If you get
+        stuck, you can use our
+        <b>Code Examples</b>
+        feature to view code from other users.
+      </Alert>
+    {{/if}}
   </div>
 </div>

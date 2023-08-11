@@ -61,7 +61,7 @@ export class SelectLanguageProficiencyLevelSection extends Section {
 
   get descriptionWhenCollapsed() {
     // @ts-ignore
-    return this.repository.languageProficiencyLevel ? `${this.repository.humanizedLanguageProficiencyLevel}` : null;
+    return this.repository.languageProficiencyLevel ? `${this.repository.languageProficiencyLevelHumanized}` : null;
   }
 
   get isComplete() {
@@ -103,5 +103,9 @@ export class SectionList {
 }
 
 export function buildSectionList(repository: unknown) {
-  return new SectionList([new SelectLanguageSection(repository), new SelectLanguageProficiencyLevelSection(repository)]);
+  return new SectionList([
+    new SelectLanguageSection(repository),
+    new SelectLanguageProficiencyLevelSection(repository),
+    new SelectLanguageSection(repository),
+  ]);
 }

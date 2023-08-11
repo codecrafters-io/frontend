@@ -39,9 +39,10 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
   async handleLanguageSelection(language: unknown) {
     // @ts-ignore
     this.args.repository.language = language;
+    this.expandedSectionIndex = 1;
+
     await this.args.repository.save();
     this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
-    this.expandedSectionIndex = 1;
   }
 
   @action

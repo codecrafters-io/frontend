@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import fade from 'ember-animated/transitions/fade';
 
 export interface Section {
   title: string;
@@ -21,7 +22,9 @@ interface Signature {
   };
 }
 
-export default class MultiSectionCardComponent extends Component<Signature> {}
+export default class MultiSectionCardComponent extends Component<Signature> {
+  transition = fade;
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
