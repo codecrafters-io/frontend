@@ -28,19 +28,19 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 sm:mt-20">
   {{#each this.features as |feature|}}
     <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.content.title}}>
-      <:contentBody>
-        {{#each feature.content.body as |paragraph|}}
+      <:bodyParagraphListContent>
+        {{#each feature.content.bodyParagraphList as |paragraph|}}
           <p>{{paragraph}}</p>
         {{/each}}
-      </:contentBody>
-      <:contentList>
-        {{#each feature.content.list as |listItem|}}
+      </:bodyParagraphListContent>
+      <:pricingListContent>
+        {{#each feature.content.pricingList as |pricingListItem|}}
           <li class="list-disc ml-4">
-            <span class="font-bold">{{listItem.amount}}</span>
-            ({{listItem.plan}})
+            <span class="font-bold">{{pricingListItem.amount}}</span>
+            ({{pricingListItem.plan}})
           </li>
         {{/each}}
-      </:contentList>
+      </:pricingListContent>
     </FeatureCard>
   {{/each}}
 </div>

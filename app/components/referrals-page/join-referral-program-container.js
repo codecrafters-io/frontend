@@ -63,8 +63,8 @@ export default class JoinReferralProgramContainerComponent extends Component {
       {
         content: {
           title: '60% Revenue Share.',
-          body: ['Earn 60% of what we make through your referrals. Example payouts for a single paid referral (before discounting):'],
-          list: [
+          bodyParagraphList: ['Earn 60% of what we make through your referrals. Example payouts for a single paid referral (before discounting):'],
+          pricingList: [
             {
               amount: '$594',
               plan: 'lifetime plan',
@@ -84,7 +84,7 @@ export default class JoinReferralProgramContainerComponent extends Component {
       {
         content: {
           title: 'No forms to fill. Simple payout.',
-          body: [
+          bodyParagraphList: [
             'Activate your link with one click.',
             'Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or any of the 30+ gift cards that we support.',
           ],
@@ -94,7 +94,7 @@ export default class JoinReferralProgramContainerComponent extends Component {
       {
         content: {
           title: '(Probably) Free for your friend.',
-          body: [
+          bodyParagraphList: [
             'Most developers can get their CodeCrafters fees fully reimbursed through their corporate L&D budget.',
             'Remind them about it, help them save money, and help make their decision easier.',
           ],
