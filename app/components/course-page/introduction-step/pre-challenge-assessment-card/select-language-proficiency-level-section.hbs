@@ -1,0 +1,19 @@
+<div class="text-gray-700 prose mb-5" data-test-select-language-proficiency-level-section>
+  <p>
+    How would you describe your experience level with
+    {{if @repository.language @repository.language.name "this language"}}? We can tailor your experience accordingly.
+  </p>
+</div>
+
+<div>
+  <div class="flex items-center flex-wrap max-w-3xl">
+    {{#each this.orderedLanguageConfigurations as |languageConfiguration|}}
+      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton
+        class="mr-3 mb-3"
+        @language={{languageConfiguration.language}}
+        @releaseStatusIsAlpha={{languageConfiguration.releaseStatusIsAlpha}}
+        {{on "click" (fn this.handleLanguageButtonClick languageConfiguration.language)}}
+      />
+    {{/each}}
+  </div>
+</div>
