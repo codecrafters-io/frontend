@@ -1,7 +1,6 @@
 <div class="text-gray-700 prose mb-5" data-test-select-language-proficiency-level-section>
   <p>
     How would you describe your experience level with
-    {{! @glint-expect-error not ts-ified yet }}
     {{if @repository.language @repository.language.name "this language"}}? We can tailor your experience accordingly.
   </p>
 </div>
@@ -18,8 +17,6 @@
         {{value}}
       </TertiaryButton>
     {{/each-in}}
-
-    {{log @repository.languageProficiencyLevel}}
 
     {{! @glint-expect-error not ts-ified yet }}
     {{#animated-if this.feedbackAlertHtml transition=this.transition duration=300}}

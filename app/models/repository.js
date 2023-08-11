@@ -3,6 +3,12 @@ import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'code
 import { cached } from '@glimmer/tracking';
 
 export default class RepositoryModel extends Model {
+  static expectedActivityFrequencyMappings = {
+    every_day: 'Every day',
+    once_a_week: 'Once a week',
+    multiple_times_a_week: 'Multiple times a week',
+  };
+
   static languageProficiencyLevelMappings = {
     never_tried: 'Never tried',
     beginner: 'Beginner',
@@ -21,9 +27,11 @@ export default class RepositoryModel extends Model {
 
   @attr('string') cloneUrl;
   @attr('date') createdAt;
+  @attr('string') expectedActivityFrequency;
   @attr('string') name;
   @attr('string') languageProficiencyLevel;
   @attr('string') progressBannerUrl;
+  @attr('boolean', { allowNull: true }) remindersAreEnabled;
 
   get cloneDirectory() {
     if (!this.course || !this.language) {
@@ -43,6 +51,10 @@ export default class RepositoryModel extends Model {
 
   courseStageFeedbackSubmissionFor(courseStage) {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
+  }
+
+  get expectedActivityFrequencyHumanized() {
+    return RepositoryModel.expectedActivityFrequencyMappings[this.expectedActivityFrequency];
   }
 
   get firstSubmissionCreated() {

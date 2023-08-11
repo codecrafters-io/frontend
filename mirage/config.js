@@ -253,6 +253,8 @@ function routes() {
     return schema.repositories.create(attrs);
   });
 
+  this.patch('/repositories/:id');
+
   this.post('/site-feedback-submissions');
 
   this.delete('/slack-integrations/:id');

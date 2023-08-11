@@ -1,6 +1,12 @@
 import { tracked } from '@glimmer/tracking';
 
 export class Section {
+  repository: unknown;
+
+  constructor(repository: unknown) {
+    this.repository = repository;
+  }
+
   get descriptionWhenCollapsed(): string | null {
     throw new Error('Not implemented');
   }
@@ -16,21 +22,13 @@ export class Section {
   get type():
     | 'SelectLanguageSection'
     | 'SelectLanguageProficiencyLevelSection'
-    | 'SelectActivityFrequencySection'
+    | 'SelectExpectedActivityFrequencySection'
     | 'SelectRemindersPreferenceSection' {
     throw new Error('Not implemented');
   }
 }
 
 export class SelectLanguageSection extends Section {
-  repository: unknown;
-
-  constructor(repository: unknown) {
-    super();
-
-    this.repository = repository;
-  }
-
   get descriptionWhenCollapsed() {
     // @ts-ignore
     return this.repository.language ? `${this.repository.language.name}` : null;
@@ -51,14 +49,6 @@ export class SelectLanguageSection extends Section {
 }
 
 export class SelectLanguageProficiencyLevelSection extends Section {
-  repository: unknown;
-
-  constructor(repository: unknown) {
-    super();
-
-    this.repository = repository;
-  }
-
   get descriptionWhenCollapsed() {
     // @ts-ignore
     return this.repository.languageProficiencyLevel ? `${this.repository.languageProficiencyLevelHumanized}` : null;
@@ -78,6 +68,48 @@ export class SelectLanguageProficiencyLevelSection extends Section {
   }
 }
 
+export class SelectExpectedActivityFrequencySection extends Section {
+  get descriptionWhenCollapsed() {
+    // @ts-ignore
+    return this.repository.expectedActivityFrequencyHumanized ? `${this.repository.expectedActivityFrequencyHumanized}` : null;
+  }
+
+  get isComplete() {
+    // @ts-ignore
+    return !!this.repository.expectedActivityFrequency;
+  }
+
+  get title() {
+    return 'Practice Cadence';
+  }
+
+  get type() {
+    return 'SelectExpectedActivityFrequencySection' as 'SelectExpectedActivityFrequencySection';
+  }
+}
+
+export class SelectRemindersPreferenceSection extends Section {
+  get descriptionWhenCollapsed() {
+    // @ts-ignore
+    return this.repository.remindersAreEnabled ? 'Yes please' : "I'll pass";
+  }
+
+  get isComplete() {
+    // @ts-ignore
+    console.log(this.repository.remindersAreEnabled === true, this.repository.remindersAreEnabled === false);
+    // @ts-ignore
+    return this.repository.remindersAreEnabled === true || this.repository.remindersAreEnabled === false;
+  }
+
+  get title() {
+    return 'Accountability';
+  }
+
+  get type() {
+    return 'SelectRemindersPreferenceSection' as 'SelectRemindersPreferenceSection';
+  }
+}
+
 export class SectionList {
   @tracked sections: Section[];
 
@@ -90,6 +122,7 @@ export class SectionList {
   }
 
   get isComplete(): boolean {
+    console.log(this.sections.map((section) => section.isComplete));
     return this.sections.every((section) => section.isComplete);
   }
 
@@ -106,6 +139,7 @@ export function buildSectionList(repository: unknown) {
   return new SectionList([
     new SelectLanguageSection(repository),
     new SelectLanguageProficiencyLevelSection(repository),
-    new SelectLanguageSection(repository),
+    new SelectExpectedActivityFrequencySection(repository),
+    new SelectRemindersPreferenceSection(repository),
   ]);
 }

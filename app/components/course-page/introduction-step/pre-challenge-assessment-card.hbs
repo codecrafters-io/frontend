@@ -21,18 +21,29 @@
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
       {{! @glint-expect-error not ts-fied yet }}
-      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectLanguageProficiencyLevelSection
-        {{! TODO: Fetch this from query params? }}
-        @preferredLanguageSlug={{null}}
+      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectLanguageProficiencyLevelSection @repository={{@repository}} />
+
+      {{#if this.expandedSection.isComplete}}
+        {{! @glint-expect-error not ts-fied yet }}
+        <PrimaryButton class="mt-6" {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}>↓ Next question</PrimaryButton>
+      {{/if}}
+    {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
+      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectExpectedActivityFrequencySection
+        {{! @glint-expect-error not ts-fied yet }}
         @repository={{@repository}}
-        @onLanguageSelection={{this.handleLanguageSelection}}
+        @onSelect={{this.handleExpectedActivityFrequencySelection}}
       />
-    {{else}}
-      <div class="px-4 sm:px-6 py-2.5">
-        <p class="text-gray-700">
-          This is a pre-challenge assessment to help you determine if you are ready to take on the challenge.
-        </p>
-      </div>
+    {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
+      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectExpectedActivityFrequencySection
+        {{! @glint-expect-error not ts-fied yet }}
+        @repository={{@repository}}
+        @onSelect={{this.handleExpectedActivityFrequencySelection}}
+      />
+
+      {{#if this.expandedSection.isComplete}}
+        {{! @glint-expect-error not ts-fied yet }}
+        <PrimaryButton class="mt-6" {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}>Continue →</PrimaryButton>
+      {{/if}}
     {{/if}}
   </:expandedSectionContent>
 </CoursePage::MultiSectionCard>

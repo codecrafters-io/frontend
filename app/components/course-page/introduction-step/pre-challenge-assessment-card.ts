@@ -1,8 +1,4 @@
 import { action } from '@ember/object';
-
-// @ts-ignore
-import { cached } from '@glimmer/tracking';
-
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
@@ -33,6 +29,11 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
 
   get expandedSection(): Section {
     return this.sectionList.sections[this.expandedSectionIndex] as Section;
+  }
+
+  @action
+  async handleExpectedActivityFrequencySelection() {
+    this.expandedSectionIndex += 1;
   }
 
   @action
