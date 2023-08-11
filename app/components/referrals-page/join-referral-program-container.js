@@ -25,35 +25,35 @@ export default class JoinReferralProgramContainerComponent extends Component {
     return [
       {
         name: 'Google',
-        imageUrl: googleImage,
+        url: googleImage,
       },
       {
         name: 'Slack',
-        imageUrl: slackImage,
+        url: slackImage,
       },
       {
         name: 'Amazon',
-        imageUrl: amazonImage,
+        url: amazonImage,
       },
       {
         name: 'Adobe',
-        imageUrl: adobeImage,
+        url: adobeImage,
       },
       {
         name: 'Stripe',
-        imageUrl: stripeImage,
+        url: stripeImage,
       },
       {
         name: 'Docker',
-        imageUrl: dockerImage,
+        url: dockerImage,
       },
       {
         name: 'Coinbase',
-        imageUrl: coinbaseImage,
+        url: coinbaseImage,
       },
       {
         name: 'Linear',
-        imageUrl: linearImage,
+        url: linearImage,
       },
     ];
   }
@@ -61,38 +61,44 @@ export default class JoinReferralProgramContainerComponent extends Component {
   get features() {
     return [
       {
-        title: '60% Revenue Share.',
-        description: ['Earn 60% of what we make through your referrals. Example payouts for a single paid referral (before discounting):'],
-        pricing: [
-          {
-            amount: '$594',
-            plan: 'lifetime plan',
-          },
-          {
-            amount: '$216',
-            plan: 'one year plan',
-          },
-          {
-            amount: '$72',
-            plan: '3-month plan',
-          },
-        ],
+        content: {
+          title: '60% Revenue Share.',
+          body: ['Earn 60% of what we make through your referrals. Example payouts for a single paid referral (before discounting):'],
+          list: [
+            {
+              amount: '$594',
+              plan: 'lifetime plan',
+            },
+            {
+              amount: '$216',
+              plan: 'one year plan',
+            },
+            {
+              amount: '$72',
+              plan: '3-month plan',
+            },
+          ],
+        },
         imageUrl: lifetimeEarningsImage,
       },
       {
-        title: 'No forms to fill. Simple payout.',
-        description: [
-          'Activate your link with one click.',
-          'Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or any of the 30+ gift cards that we support.',
-        ],
+        content: {
+          title: 'No forms to fill. Simple payout.',
+          body: [
+            'Activate your link with one click.',
+            'Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or any of the 30+ gift cards that we support.',
+          ],
+        },
         imageUrl: simplePayoutImage,
       },
       {
-        title: '(Probably) Free for your friend.',
-        description: [
-          'Most developers can get their CodeCrafters fees fully reimbursed through their corporate L&D budget.',
-          'Remind them about it, help them save money, and help make their decision easier.',
-        ],
+        content: {
+          title: '(Probably) Free for your friend.',
+          body: [
+            'Most developers can get their CodeCrafters fees fully reimbursed through their corporate L&D budget.',
+            'Remind them about it, help them save money, and help make their decision easier.',
+          ],
+        },
         imageUrl: freeForFriendImage,
       },
     ];

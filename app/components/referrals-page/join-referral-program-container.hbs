@@ -27,20 +27,36 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 sm:mt-20">
   {{#each this.features as |feature|}}
-    <FeatureCard @title={{feature.title}} @description={{feature.description}} @pricing={{feature.pricing}} @imageUrl={{feature.imageUrl}} />
+    <FeatureCard @imageUrl={{feature.imageUrl}}>
+      <:contentBody>
+        {{#each feature.content.body as |paragraph|}}
+          <p>{{paragraph}}</p>
+        {{/each}}
+      </:contentBody>
+      {{#if feature.content.list}}
+        <:contentList>
+          {{#each feature.content.list as |listItem|}}
+            <li class="list-disc ml-4">
+              <span class="font-bold">{{listItem.amount}}</span>
+              ({{listItem.plan}})
+            </li>
+          {{/each}}
+        </:contentList>
+      {{/if}}
+    </FeatureCard>
   {{/each}}
 </div>
 
-<div class="my-32 text-center percy-carousel">
+<div class="my-32 text-center">
   <p class="prose mb-8 text-sm sm:text-base mx-auto">Engineers at the world's best companies use their learning stipend towards CodeCrafters</p>
   <div class="sm:hidden max-h-96 grid grid-cols-2 gap-4 justify-items-center">
     {{#each this.companies as |company|}}
-      <img src={{company.imageUrl}} alt={{company.name}} class="h-16 w-auto" />
+      <img src={{company.url}} alt={{company.name}} class="h-16 w-auto" />
     {{/each}}
   </div>
   <div class="hidden sm:block">
-    <Carousel @images={{this.companies}} />
+    <ScrollingLogoList @images={{this.companies}} />
   </div>
 </div>
 
-<Testimonials />
+<TestimonialList />

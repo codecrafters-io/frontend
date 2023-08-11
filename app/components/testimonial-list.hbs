@@ -2,7 +2,7 @@
   {{#each this.testimonialGroups as |testimonialGroup index|}}
     <div class="flex-col space-y-2 {{if (eq index 0) 'hidden md:flex' 'flex'}}">
       {{#each testimonialGroup as |testimonial|}}
-        <PayPage::TestimonialListItem @testimonial={{testimonial}} />
+        <TestimonialListItem @testimonial={{testimonial}} />
       {{/each}}
     </div>
   {{/each}}

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import testimonialsData from 'codecrafters-frontend/lib/testimonials-data';
 
-export default class TestimonialsComponent extends Component {
+export default class TestimonialListComponent extends Component {
   get testimonialGroups() {
     let testimonialGroup1 = [
       testimonialsData['ananthalakshmi-sankar'],
