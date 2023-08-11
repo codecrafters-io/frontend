@@ -4,7 +4,7 @@ import { cached } from '@glimmer/tracking';
 
 export default class RepositoryModel extends Model {
   static languageProficiencyLevelMappings = {
-    not_tried: 'Not tried',
+    never_tried: 'Never tried',
     beginner: 'Beginner',
     intermediate: 'Intermediate',
     advanced: 'Advanced',
