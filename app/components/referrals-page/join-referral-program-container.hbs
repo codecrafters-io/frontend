@@ -33,16 +33,14 @@
           <p>{{paragraph}}</p>
         {{/each}}
       </:contentBody>
-      {{#if feature.content.list}}
-        <:contentList>
-          {{#each feature.content.list as |listItem|}}
-            <li class="list-disc ml-4">
-              <span class="font-bold">{{listItem.amount}}</span>
-              ({{listItem.plan}})
-            </li>
-          {{/each}}
-        </:contentList>
-      {{/if}}
+      <:contentList>
+        {{#each feature.content.list as |listItem|}}
+          <li class="list-disc ml-4">
+            <span class="font-bold">{{listItem.amount}}</span>
+            ({{listItem.plan}})
+          </li>
+        {{/each}}
+      </:contentList>
     </FeatureCard>
   {{/each}}
 </div>
