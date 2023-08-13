@@ -7,16 +7,17 @@ export default class ApplicationSerializer extends JSONAPISerializer {
   @service fastboot;
 
   normalize(...args) {
-    const normalizedRecord = super.normalize(...args);
-
     if (this.fastboot.isFastBoot) {
+      // Get the record's original resorce hash that was passed in arguments
+      const [, resourceHash] = args;
+
       // Retrieve existing records from shoebox cache
       const shoeboxRecords = this.fastboot.shoebox.retrieve(SERIALIZER_SHOEBOX_IDENTIFIER) || [];
 
       // Update shoebox cache, adding the new record
-      this.fastboot.shoebox.put(SERIALIZER_SHOEBOX_IDENTIFIER, [...shoeboxRecords, normalizedRecord]);
+      this.fastboot.shoebox.put(SERIALIZER_SHOEBOX_IDENTIFIER, [...shoeboxRecords, resourceHash]);
     }
 
-    return normalizedRecord;
+    return super.normalize(...args);
   }
 }

@@ -12,10 +12,8 @@ export default class ApplicationRoute extends Route {
       // Extract pre-rendered & cached records from shoebox cache
       const shoeboxRecords = this.fastboot.shoebox.retrieve(SERIALIZER_SHOEBOX_IDENTIFIER) || [];
 
-      // Inject shoebox cache records into the store
-      for (const record of shoeboxRecords) {
-        this.store.push(record);
-      }
+      // Inject all shoebox cache records into the store
+      this.store.pushPayload({ data: shoeboxRecords });
     }
   }
 }
