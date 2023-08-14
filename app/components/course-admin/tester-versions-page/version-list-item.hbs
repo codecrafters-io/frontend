@@ -1,6 +1,6 @@
 <li class="flex items-center justify-between gap-x-6 py-5 group/version-list-item hover:bg-gray-50 px-1" data-test-version-list-item role="button">
   <div class="min-w-0">
-    <div class="flex items-start gap-x-3">
+    <div class="flex items-start gap-x-3" data-test-version-list-item-header>
       <p class="text-sm font-semibold leading-6 text-gray-900">{{@courseTesterVersion.tagName}}</p>
       {{#if @courseTesterVersion.isActive}}
         <p
@@ -45,6 +45,7 @@
         <TertiaryButtonWithSpinner
           @size="small"
           @shouldShowSpinner={{this.isActivating}}
+          {{on "click" this.handleActivateButtonClick}}
           data-test-activate-button
         >Activate</TertiaryButtonWithSpinner>
       {{else}}
@@ -52,6 +53,7 @@
           @size="small"
           @shouldShowSpinner={{this.isActivating}}
           class="opacity-0 group-hover/version-list-item:opacity-100"
+          {{on "click" this.handleActivateButtonClick}}
           data-test-activate-button
         >Activate</TertiaryButtonWithSpinner>
       {{/if}}

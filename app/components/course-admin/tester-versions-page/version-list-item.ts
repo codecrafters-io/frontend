@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
+import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -13,6 +15,8 @@ type Signature = {
 };
 
 export default class VersionListItemComponent extends Component<Signature> {
+  @service declare store: Store;
+
   @tracked isActivating = false;
 
   async activate() {
@@ -21,6 +25,12 @@ export default class VersionListItemComponent extends Component<Signature> {
 
       // @ts-ignore
       await this.args.courseTesterVersion.activate();
+
+      await this.store.query('course-tester-version', {
+        // @ts-ignore
+        course_id: this.args.courseTesterVersion.course.id,
+        include: ['course', 'activator'].join(','),
+      });
 
       this.isActivating = false;
     }

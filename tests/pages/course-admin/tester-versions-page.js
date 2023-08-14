@@ -8,7 +8,13 @@ export default create({
   },
 
   testerVersionListItem: collection('[data-test-version-list-item]', {
-    clickOnActivateButton: clickable('[data-test-activate-button]'),
+    activateButton: {
+      scope: '[data-test-activate-button]',
+    },
+
+    header: {
+      scope: '[data-test-version-list-item-header]',
+    },
   }),
 
   visit: visitable('/courses/:course_slug/admin/tester-versions'),
