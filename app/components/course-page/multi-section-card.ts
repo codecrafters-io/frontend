@@ -17,7 +17,7 @@ interface Signature {
   };
 
   Blocks: {
-    expandedSection: [];
+    'expanded-section': [];
     header: [];
   };
 }

@@ -9,7 +9,7 @@ interface Signature {
 
   Blocks: {
     content: [];
-    footerContent: [];
+    footer: [];
   };
 }
 
