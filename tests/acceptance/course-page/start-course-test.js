@@ -103,7 +103,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 7, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Git push received.', 'progress text is git push received');
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
