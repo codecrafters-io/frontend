@@ -4,6 +4,7 @@ import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | view-user-profile', function (hooks) {
   setupApplicationTest(hooks);
@@ -67,4 +68,47 @@ module('Acceptance | view-user-profile', function (hooks) {
   });
 
   // TODO: Add test for not found
+  test('it does not have a label if user is not staff or challenge author', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+
+    await userPage.visit({ username: user.username });
+    assert.false(userPage.userLabel.isPresent);
+  });
+
+  test('it has the staff label if user is staff', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+    user.update({ isStaff: true });
+
+    await userPage.visit({ username: user.username });
+    assert.strictEqual(userPage.userLabel.text, 'staff');
+  });
+
+  test('it has the staff label if user is staff and course author', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+    user.update({ isStaff: true });
+    user.update({ authoredCourseSlugsList: ['redis'] });
+
+    await userPage.visit({ username: user.username });
+    assert.strictEqual(userPage.userLabel.text, 'staff');
+  });
+
+  test('it has the challenge author label if user is course author', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+    user.update({ authoredCourseSlugsList: ['redis'] });
+
+    await userPage.visit({ username: user.username });
+    assert.strictEqual(userPage.userLabel.text, 'challenge author');
+  });
 });

@@ -1,6 +1,9 @@
-<span 
-  class="bg-gray-400 text-white ml-1 px-1 py-0.5 rounded font-semibold text-xs"
-  ...attributes
->
-  {{this.label}}
-</span>
+{{#if this.label}}
+  <span 
+     class="bg-gray-400 text-white px-1 py-0.5 rounded font-semibold text-xs {{if this.isCourseRoute 'ml-1'}}"
+    ...attributes
+    data-test-user-label
+  >
+    {{this.label}}
+  </span>
+{{/if}}
