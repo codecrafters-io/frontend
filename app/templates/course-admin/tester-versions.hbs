@@ -20,7 +20,7 @@
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">{{@model.course.testerRepositoryFullName}}</span>
         </a>
-        <TertiaryButtonWithSpinner 
+        <TertiaryButtonWithSpinner
           @size="small"
           @shouldShowSpinner={{this.isSyncingWithGithub}}
           class="mt-4"
