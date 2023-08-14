@@ -4,7 +4,6 @@ import showdown from 'showdown';
 import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
-import { tracked } from '@glimmer/tracking';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -16,8 +15,6 @@ type Signature = {
 };
 
 export default class SelectLanguageProficiencyLevelSectionComponent extends Component<Signature> {
-  @tracked isSaving = false;
-
   transition = fade;
 
   get feedbackAlertMarkdown() {
@@ -48,16 +45,10 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
 
   @action
   async handleSelect(proficiencyLevel: TemporaryRepositoryModel['languageProficiencyLevel']) {
-    if (!this.isSaving) {
+    if (!this.args.repository.isSaving) {
       this.args.repository.languageProficiencyLevel = proficiencyLevel;
 
-      this.isSaving = true;
-
-      try {
-        await this.args.repository.save();
-      } finally {
-        this.isSaving = false;
-      }
+      await this.args.repository.save();
     }
   }
 }

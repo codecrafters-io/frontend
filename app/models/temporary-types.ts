@@ -9,6 +9,8 @@ export class TemporaryLanguageModel {
 export class TemporaryRepositoryModel {
   declare expectedActivityFrequency: 'every_day' | 'once_a_week' | 'multiple_times_a_week';
   declare id: null | string;
+  declare isNew: boolean;
+  declare isSaving: boolean;
   declare language: null | TemporaryLanguageModel;
   declare languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
