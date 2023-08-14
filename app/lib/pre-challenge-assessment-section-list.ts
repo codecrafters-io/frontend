@@ -1,9 +1,10 @@
 import { tracked } from '@glimmer/tracking';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
 export class Section {
-  repository: unknown;
+  repository: TemporaryRepositoryModel;
 
-  constructor(repository: unknown) {
+  constructor(repository: TemporaryRepositoryModel) {
     this.repository = repository;
   }
 
@@ -34,12 +35,10 @@ export class Section {
 
 export class SelectLanguageSection extends Section {
   get descriptionWhenCollapsed() {
-    // @ts-ignore
     return this.repository.language ? `${this.repository.language.name}` : null;
   }
 
   get isComplete() {
-    // @ts-ignore
     return !!this.repository.language;
   }
 
@@ -54,12 +53,10 @@ export class SelectLanguageSection extends Section {
 
 export class SelectLanguageProficiencyLevelSection extends Section {
   get descriptionWhenCollapsed() {
-    // @ts-ignore
-    return this.repository.languageProficiencyLevel ? `${this.repository.languageProficiencyLevelHumanized}` : null;
+    return this.repository.languageProficiencyLevelHumanized ? `${this.repository.languageProficiencyLevelHumanized}` : null;
   }
 
   get isComplete() {
-    // @ts-ignore
     return !!this.repository.languageProficiencyLevel;
   }
 
@@ -78,12 +75,10 @@ export class SelectLanguageProficiencyLevelSection extends Section {
 
 export class SelectExpectedActivityFrequencySection extends Section {
   get descriptionWhenCollapsed() {
-    // @ts-ignore
     return this.repository.expectedActivityFrequencyHumanized ? `${this.repository.expectedActivityFrequencyHumanized}` : null;
   }
 
   get isComplete() {
-    // @ts-ignore
     return !!this.repository.expectedActivityFrequency;
   }
 
@@ -102,12 +97,10 @@ export class SelectExpectedActivityFrequencySection extends Section {
 
 export class SelectRemindersPreferenceSection extends Section {
   get descriptionWhenCollapsed() {
-    // @ts-ignore
     return this.repository.remindersAreEnabled ? 'Yes please' : "I'll pass";
   }
 
   get isComplete() {
-    // @ts-ignore
     return this.repository.remindersAreEnabled === true || this.repository.remindersAreEnabled === false;
   }
 
@@ -148,7 +141,7 @@ export class SectionList {
   }
 }
 
-export function buildSectionList(repository: unknown) {
+export function buildSectionList(repository: TemporaryRepositoryModel) {
   return new SectionList([
     new SelectLanguageSection(repository),
     new SelectLanguageProficiencyLevelSection(repository),

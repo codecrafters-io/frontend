@@ -14,6 +14,10 @@ export class TemporaryRepositoryModel {
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
   declare remindersAreEnabled: boolean | null;
 
+  get expectedActivityFrequencyHumanized(): string {
+    return '';
+  }
+
   get expectedActivityFrequencyMappings(): Record<TemporaryRepositoryModel['expectedActivityFrequency'], string> {
     return {
       every_day: 'Every day',
@@ -29,6 +33,10 @@ export class TemporaryRepositoryModel {
       intermediate: 'Intermediate',
       advanced: 'Advanced',
     };
+  }
+
+  get languageProficiencyLevelHumanized(): string {
+    return 'dummy';
   }
 
   save(): Promise<void> {
