@@ -1,4 +1,4 @@
-import { clickOnText, clickable, collection, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, triggerable, text } from 'ember-cli-page-object';
 import CommentForm from './course-page/course-stage-solution-modal/comment-form';
 
 export default {
@@ -10,6 +10,9 @@ export default {
   replyCards: collection('[data-test-comment-card]', {}),
   toggleDropdown: clickable('[data-test-more-dropdown-toggle]:eq(0)'),
   upvoteButton: { scope: '[data-test-upvote-button]' },
-  userLabel: { scope: '[data-test-user-label]' },
+  userLabel: {
+    scope: '[data-test-user-label]',
+    hover: triggerable('mouseenter'),
+  },
   scope: '[data-test-comment-card]',
 };

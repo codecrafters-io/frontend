@@ -5,6 +5,7 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -284,7 +285,6 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
     const user = this.server.schema.users.first();
-    user.update({ isStaff: true });
 
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
@@ -300,7 +300,23 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
+    assert.false(coursePage.commentList.commentCards[0].userLabel.isPresent, 'should have no label if not staff or current course author');
+
+    user.update({ isStaff: true });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
     assert.strictEqual(coursePage.commentList.commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
+
+    await coursePage.commentList.commentCards[0].userLabel.hover();
+    assertTooltipContent(assert, {
+      contentString: 'This user works at CodeCrafters',
+    });
 
     user.update({ authoredCourseSlugsList: ['redis'] });
 
@@ -327,6 +343,11 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       'challenge author',
       'should have challenge author label if comment is on authored course',
     );
+
+    await coursePage.commentList.commentCards[0].userLabel.hover();
+    assertTooltipContent(assert, {
+      contentString: 'This user is the author of this challenge',
+    });
 
     user.update({ authoredCourseSlugsList: ['git'] });
 

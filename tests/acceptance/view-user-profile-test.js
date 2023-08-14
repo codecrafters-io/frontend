@@ -1,6 +1,7 @@
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -87,6 +88,11 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: user.username });
     assert.strictEqual(userPage.userLabel.text, 'staff');
+
+    await userPage.userLabel.hover();
+    assertTooltipContent(assert, {
+      contentString: 'This user works at CodeCrafters',
+    });
   });
 
   test('it has the staff label if user is staff and course author', async function (assert) {
@@ -110,5 +116,10 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: user.username });
     assert.strictEqual(userPage.userLabel.text, 'challenge author');
+
+    await userPage.userLabel.hover();
+    assertTooltipContent(assert, {
+      contentString: 'This user is the author of one or more CodeCrafters challenges',
+    });
   });
 });

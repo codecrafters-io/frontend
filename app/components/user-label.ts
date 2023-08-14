@@ -41,7 +41,7 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
     return this.args.user.authoredCourseSlugsList.includes(this.args.course.slug);
   }
 
-  get label() {
+  get text() {
     if (this.args.user.isStaff) {
       return 'staff';
     }
@@ -52,6 +52,22 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
 
     if (this.isUserRoute && this.isUserCourseAuthor) {
       return 'challenge author';
+    }
+
+    return
+  }
+
+  get tooltipText() {
+    if (this.args.user.isStaff) {
+      return 'This user works at CodeCrafters';
+    }
+
+    if (this.isCourseRoute && this.isUserCurrentCourseAuthor) {
+      return 'This user is the author of this challenge';
+    }
+
+    if (this.isUserRoute && this.isUserCourseAuthor) {
+      return 'This user is the author of one or more CodeCrafters challenges';
     }
 
     return
