@@ -146,7 +146,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
     assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
-    await coursePage.repositorySetupCard.clickOnLanguageButton('Python');
+    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 

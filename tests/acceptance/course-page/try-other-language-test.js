@@ -2,7 +2,7 @@ import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-c
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -52,7 +52,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'first stage should be active');
 
     await coursePage.repositoryDropdown.click();
-    await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
     expectedRequestsCount += [
@@ -63,28 +62,38 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     ].length;
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
-
     assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=new');
-
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
 
-    await coursePage.repositorySetupCard.clickOnLanguageButton('Go');
-    assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
+    await coursePage.createRepositoryCard.clickOnLanguageButton('Go');
+    await animationsSettled();
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 3, `expected ${expectedRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=2', 'current URL is course page URL with repo query param');
 
+    await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
+    await animationsSettled();
+    await coursePage.createRepositoryCard.clickOnNextQuestionButton();
+    await animationsSettled();
+    await coursePage.createRepositoryCard.clickOnOptionButton('Every day');
+    await animationsSettled();
+    await coursePage.createRepositoryCard.clickOnOptionButton('Yes please');
+    await animationsSettled();
+    await coursePage.createRepositoryCard.clickOnContinueButton();
+
+    assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in progress');
+
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 5, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run');
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run again');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 9, 'polling should have run again');
   });
 
   test('can try other language from repository setup page (regression)', async function (assert) {
@@ -108,7 +117,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Repository Setup');
 
     await coursePage.repositoryDropdown.click();
-    await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
