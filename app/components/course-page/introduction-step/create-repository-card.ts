@@ -48,7 +48,6 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   }
 
   get sectionList(): SectionList {
-    // @ts-ignore
     return this.args.repository.preChallengeAssessmentSectionList;
   }
 }
