@@ -48,9 +48,10 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   @action
   async handleLanguageSelection(language: TemporaryLanguageModel) {
     this.args.repository.language = language;
-    this.expandNextSection(); // Don't wait for the save to complete
 
-    await this.args.repository.save();
+    await this.args.repository.save(); // TODO: This is kinda slow, investigate ways to make it faster
+    this.expandNextSection();
+
     this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
   }
 

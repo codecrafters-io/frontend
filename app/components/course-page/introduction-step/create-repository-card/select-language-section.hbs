@@ -8,16 +8,23 @@
 <div>
   <div class="flex gap-3 items-center flex-wrap max-w-3xl">
     {{#if @repository.language}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
+      {{#if @repository.isSaving}}
+        <div class="flex items-center">
+          <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+          <span class="ml-3 text-gray-700">Creating repository...</span>
+        </div>
+      {{else}}
+        <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
 
-      <TertiaryLinkButton
-        @isDisabled={{@repository.isNew}}
-        @route="course.introduction"
-        @models={{array @repository.course.slug}}
-        @query={{hash repo="new" track=null}}
-      >
-        Try other language
-      </TertiaryLinkButton>
+        <TertiaryLinkButton
+          @isDisabled={{@repository.isNew}}
+          @route="course.introduction"
+          @models={{array @repository.course.slug}}
+          @query={{hash repo="new" track=null}}
+        >
+          Try other language
+        </TertiaryLinkButton>
+      {{/if}}
     {{else}}
       {{#if (and (gt this.preferredLanguages.length 0) (not this.shouldShowNonPreferredLanguages))}}
         {{#each this.preferredLanguages as |language|}}
