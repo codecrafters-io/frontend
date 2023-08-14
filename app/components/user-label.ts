@@ -4,7 +4,6 @@ import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 
 interface UserLabelSignature {
-  // The arguments accepted by the component
   Args: {
     user: {
       authoredCourseSlugsList: string[];
@@ -14,12 +13,6 @@ interface UserLabelSignature {
       slug: string;
     }
   };
-  // Any blocks yielded by the component
-  Blocks: {
-    default: []
-  };
-  // The element to which `...attributes` is applied in the component template
-  Element: null;
 }
 
 export default class UserLabelComponent extends Component<UserLabelSignature> {
