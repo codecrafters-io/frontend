@@ -64,7 +64,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
-    assert.strictEqual(currentURL(), '/courses/redis/setup?repo=new');
+    assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=new');
 
     assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
 
@@ -73,7 +73,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 3, `expected ${expectedRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
-    assert.strictEqual(currentURL(), '/courses/redis/setup?repo=2', 'current URL is course page URL with repo query param');
+    assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=2', 'current URL is course page URL with repo query param');
 
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
