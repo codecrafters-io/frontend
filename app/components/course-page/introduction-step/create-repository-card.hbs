@@ -13,7 +13,7 @@
   <:expandedSectionContent>
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
       {{! @glint-expect-error not ts-fied yet }}
-      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectLanguageSection
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
         {{! TODO: Fetch this from query params? }}
         @preferredLanguageSlug={{null}}
         @repository={{@repository}}
@@ -21,23 +21,23 @@
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
       {{! @glint-expect-error not ts-fied yet }}
-      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectLanguageProficiencyLevelSection @repository={{@repository}} />
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection @repository={{@repository}} />
 
       {{#if this.expandedSection.isComplete}}
         {{! @glint-expect-error not ts-fied yet }}
         <PrimaryButton class="mt-6" {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}>↓ Next question</PrimaryButton>
       {{/if}}
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
-      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectExpectedActivityFrequencySection
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
         {{! @glint-expect-error not ts-fied yet }}
         @repository={{@repository}}
         @onSelect={{this.handleExpectedActivityFrequencySelection}}
       />
     {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
-      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::SelectExpectedActivityFrequencySection
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection
         {{! @glint-expect-error not ts-fied yet }}
         @repository={{@repository}}
-        @onSelect={{this.handleExpectedActivityFrequencySelection}}
+        @onSelect={{this.handleRemindersPreferenceSelection}}
       />
 
       {{#if this.expandedSection.isComplete}}

@@ -1,12 +1,11 @@
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RouterService from '@ember/routing/router-service';
-
 import { Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 type RepositoryModel = {
   id: null | string;
@@ -21,7 +20,7 @@ type Signature = {
   };
 };
 
-export default class PreChallengeAssessmentCardComponent extends Component<Signature> {
+export default class CreateRepositoryCardComponent extends Component<Signature> {
   @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
@@ -47,6 +46,13 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
   }
 
   @action
+  async handleRemindersPreferenceSelection(remindersAreEnabled: boolean) {
+    // @ts-ignore
+    this.args.repository.remindersAreEnabled = remindersAreEnabled;
+    await this.args.repository.save();
+  }
+
+  @action
   handleSectionExpanded(section: MultiSectionCardSection) {
     this.expandedSectionIndex = this.sectionList.indexOf(section as Section);
   }
@@ -59,6 +65,6 @@ export default class PreChallengeAssessmentCardComponent extends Component<Signa
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::PreChallengeAssessmentCard': typeof PreChallengeAssessmentCardComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard': typeof CreateRepositoryCardComponent;
   }
 }

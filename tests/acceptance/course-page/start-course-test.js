@@ -26,7 +26,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/redis/setup', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis/introduction', 'current URL is course page URL');
 
     let baseRequestsCount = [
       'fetch courses (courses listing page)',
@@ -43,8 +43,13 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await percySnapshot('Start Course - Select Language');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Repository Setup', 'step name is repository setup');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Select a language to proceed', 'footer text is select language to proceed');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+
+    assert.strictEqual(
+      coursePage.desktopHeader.progressIndicatorText,
+      'Select a language to proceed',
+      'progress indicator says select language to proceed',
+    );
     // assert.ok(coursePage.desktopHeader.statusIsInProgress, 'current status is in-progress');
 
     await coursePage.repositorySetupCard.clickOnLanguageButton('JavaScript');

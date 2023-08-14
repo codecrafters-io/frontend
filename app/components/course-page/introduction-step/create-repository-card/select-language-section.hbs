@@ -8,7 +8,7 @@
 <div>
   <div class="flex gap-3 items-center flex-wrap max-w-3xl">
     {{#if @repository.language}}
-      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
+      <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
 
       <TertiaryLinkButton
         @isDisabled={{@repository.isNew}}
@@ -21,34 +21,34 @@
     {{else}}
       {{#if (and (gt this.preferredLanguages.length 0) (not this.shouldShowNonPreferredLanguages))}}
         {{#each this.preferredLanguages as |language|}}
-          <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton
+          <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton
             @language={{language}}
             {{on "click" (fn this.handleLanguageButtonClick language)}}
           />
         {{/each}}
 
-        <CoursePage::IntroductionStep::PreChallengeAssessmentCard::ShowOtherLanguagesButton
+        <CoursePage::IntroductionStep::CreateRepositoryCard::ShowOtherLanguagesButton
           @course={{@repository.course}}
           @user={{@repository.user}}
           {{on "click" this.handleShowOtherLanguagesButtonClick}}
         />
       {{else}}
         {{#each this.orderedLanguageConfigurations as |languageConfiguration|}}
-          <CoursePage::IntroductionStep::PreChallengeAssessmentCard::LanguageButton
+          <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton
             @language={{languageConfiguration.language}}
             @releaseStatusIsAlpha={{languageConfiguration.releaseStatusIsAlpha}}
             {{on "click" (fn this.handleLanguageButtonClick languageConfiguration.language)}}
           />
         {{/each}}
 
-        <CoursePage::IntroductionStep::PreChallengeAssessmentCard::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />
+        <CoursePage::IntroductionStep::CreateRepositoryCard::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />
       {{/if}}
     {{/if}}
   </div>
 
   <AnimatedContainer>
     {{#animated-if (gt this.requestedAndUnsupportedLanguages.length 0) use=this.requestedLanguagesPromptTransition}}
-      <CoursePage::IntroductionStep::PreChallengeAssessmentCard::RequestedLanguagesPrompt
+      <CoursePage::IntroductionStep::CreateRepositoryCard::RequestedLanguagesPrompt
         @requestedAndUnsupportedLanguages={{this.requestedAndUnsupportedLanguages}}
       />
     {{/animated-if}}
