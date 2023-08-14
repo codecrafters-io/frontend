@@ -143,7 +143,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(currentURL(), '/courses/redis?track=python', 'current URL is changed to not include invalid repo');
 
-    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
     assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
     await coursePage.repositorySetupCard.clickOnLanguageButton('Python');

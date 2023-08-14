@@ -5,8 +5,6 @@ export default {
   copyableCloneRepositoryInstructions: text('[data-test-copyable-repository-clone-instructions] .font-mono'),
   description: text('[data-test-course-description]'),
   footerText: text('[data-test-footer]'),
-  isOnCreateRepositoryStep: isVisible('[data-test-create-repository-step]'),
-  isOnCloneRepositoryStep: isVisible('[data-test-clone-repository-step]'),
 
   scope: '[data-test-repository-setup-card]',
 

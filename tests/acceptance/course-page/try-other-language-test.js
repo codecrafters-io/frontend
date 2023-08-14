@@ -66,7 +66,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=new');
 
-    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.repositorySetupCard.clickOnLanguageButton('Go');
     assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
@@ -111,6 +111,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await settled(); // This is supposed to be executed as part of the click action above, but it isn't?
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    assert.ok(coursePage.repositorySetupCard.isOnCreateRepositoryStep, 'current step is create repository step');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
   });
 });
