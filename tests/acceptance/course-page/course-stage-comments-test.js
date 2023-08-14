@@ -278,4 +278,65 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
   });
 
   // TODO: Can delete comment with replies
+  test('comment has correct user label', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const user = this.server.schema.users.first();
+    user.update({ isStaff: true });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-01-02'),
+      bodyMarkdown: 'This is the **first** comment',
+      target: redis.stages.models.sortBy('position')[1],
+      user: user,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.commentList.commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
+
+    user.update({ authoredCourseSlugsList: ['redis'] });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.commentList.commentCards[0].userLabel.text, 'staff', 'should have staff label if staff and course author');
+
+    user.update({ isStaff: false });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[0].userLabel.text,
+      'challenge author',
+      'should have challenge author label if comment is on authored course',
+    );
+
+    user.update({ authoredCourseSlugsList: ['git'] });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    assert.false(coursePage.commentList.commentCards[0].userLabel.isPresent, 'should not have challenge author if comment is not on authored course');
+  });
 });
