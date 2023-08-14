@@ -26,7 +26,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     assert.strictEqual(
       window.location.href,
       `${config.x.backendUrl}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fcourses%2Fredis%2Fadmin%2Ftester-versions`,
-      'should redirect to team billing session URL',
+      'should redirect to login',
     );
   });
 
