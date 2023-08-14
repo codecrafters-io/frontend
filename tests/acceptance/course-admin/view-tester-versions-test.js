@@ -26,17 +26,17 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     );
   });
 
-  test('it renders when no updates are present', async function (assert) {
+  test('it renders when no tester versions are present', async function (assert) {
     assert.expect(0); // temp
 
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
-    await percySnapshot('Admin - Course Tester Versions - No Updates');
+    await percySnapshot('Admin - Course Tester Versions - No Tester Versions');
   });
 
-  test('it renders when updates are present', async function (assert) {
+  test('it renders when tester versions are present', async function (assert) {
     assert.expect(0); // temp
 
     testScenario(this.server);
@@ -64,7 +64,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     });
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
-    await percySnapshot('Admin - Course Tester Versions - With Updates');
+    await percySnapshot('Admin - Course Tester Versions - With Tester Versions');
   });
 
   test('it should have a working button for syncing with github', async function (assert) {
@@ -82,7 +82,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     });
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 1, 'should have 1 update');
+    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 1, 'should have 1 tester version');
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
@@ -96,7 +96,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     });
 
     await testerVersionsPage.clickOnSyncWithGithubButton();
-    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 updates');
+    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 tester versions');
   });
 
   test('it has the correct tester repository link', async function (assert) {
