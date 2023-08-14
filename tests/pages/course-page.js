@@ -4,7 +4,7 @@ import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-ca
 import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
-import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/pre-challenge-assessment-card';
+import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/course-page/repository-setup-card';
@@ -68,6 +68,7 @@ export default create({
     scope: '[data-test-configure-github-integration-modal]',
   },
 
+  createRepositoryCard: CreateRepositoryCard,
   desktopHeader: DesktopHeader,
 
   earnedBadgeNotice: {
@@ -91,7 +92,6 @@ export default create({
   },
 
   repositoryDropdown: RepositoryDropdown,
-  CreateRepositoryCard: CreateRepositoryCard,
   privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
 
   progressBannerModal: {

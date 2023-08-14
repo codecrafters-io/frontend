@@ -5,6 +5,7 @@ type RepositoryModel = {
   id: null | string;
   language: null | { name: string };
   expectedActivityFrequency: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
+  remindersAreEnabled: boolean;
   save(): Promise<void>;
 };
 
@@ -13,16 +14,14 @@ type Signature = {
 
   Args: {
     repository: RepositoryModel;
-    onSelect: () => void;
   };
 };
 
 export default class SelectRemindersPreferenceSectionComponent extends Component<Signature> {
   @action
-  async handleSelect(frequency: RepositoryModel['expectedActivityFrequency']) {
-    this.args.repository.expectedActivityFrequency = frequency;
-    this.args.repository.save(); // Saving can happen in the background, no need to await
-    this.args.onSelect();
+  async handleSelect(remindersAreEnabled: RepositoryModel['remindersAreEnabled']) {
+    this.args.repository.remindersAreEnabled = remindersAreEnabled;
+    await this.args.repository.save();
   }
 }
 

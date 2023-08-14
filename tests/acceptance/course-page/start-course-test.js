@@ -44,6 +44,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Select Language');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
 
     assert.strictEqual(
       coursePage.desktopHeader.progressIndicatorText,
@@ -52,29 +53,49 @@ module('Acceptance | course-page | start-course', function (hooks) {
     );
     // assert.ok(coursePage.desktopHeader.statusIsInProgress, 'current status is in-progress');
 
-    await coursePage.repositorySetupCard.clickOnLanguageButton('JavaScript');
+    await coursePage.createRepositoryCard.clickOnLanguageButton('JavaScript');
+    await animationsSettled();
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
-
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'create repository request was executed');
 
-    await percySnapshot('Start Course - Clone Repository');
-
-    assert.ok(coursePage.repositorySetupCard.isOnCloneRepositoryStep, 'current step is clone repository step');
-    assert.strictEqual(coursePage.repositorySetupCard.footerText, 'Listening for a git push...', 'footer text is listening for git push');
-
-    assert.strictEqual(
-      coursePage.repositorySetupCard.copyableCloneRepositoryInstructions,
-      'git clone https://git.codecraters.io/a-long-test-string.git codecrafters-redis-javascript && cd codecrafters-redis-javascript',
-      'copyable clone repository instructions are correct',
-    );
+    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
+    await percySnapshot('Start Course - Select Language Proficiency');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for git push');
-    assert.notOk(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is not visible');
+
+    assert.strictEqual(
+      coursePage.desktopHeader.progressIndicatorText,
+      'Complete pre-challenge assessment to proceed',
+      'progress text is pre-challenge assessment',
+    );
+
+    assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
+
+    await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
+    await percySnapshot('Start Course - Language Proficiency Selected');
+
+    await coursePage.createRepositoryCard.clickOnNextQuestionButton();
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Practice Cadence', 'current section title is practice cadence');
+    await percySnapshot('Start Course - Select Practice Cadence');
+
+    await coursePage.createRepositoryCard.clickOnOptionButton('Every day');
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Accountability', 'current section title is accountability');
+    await percySnapshot('Start Course - Accountability');
+    await coursePage.createRepositoryCard.clickOnOptionButton('Yes please');
+    await coursePage.createRepositoryCard.clickOnContinueButton();
+
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Repository Setup', 'step name is repository setup');
+    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
+
+    await percySnapshot('Start Course - Listening for Git push');
 
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
@@ -82,7 +103,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 5, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 7, 'poll request was executed');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Git push received.', 'progress text is git push received');
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
@@ -110,7 +131,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.repositorySetupCard.clickOnLanguageButton('Python');
+    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     assert.contains(currentURL(), '/courses/redis?repo=', 'current URL includes repo ID');
 
     await coursePage.repositoryDropdown.click();

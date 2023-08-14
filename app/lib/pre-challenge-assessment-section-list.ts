@@ -96,8 +96,6 @@ export class SelectRemindersPreferenceSection extends Section {
 
   get isComplete() {
     // @ts-ignore
-    console.log(this.repository.remindersAreEnabled === true, this.repository.remindersAreEnabled === false);
-    // @ts-ignore
     return this.repository.remindersAreEnabled === true || this.repository.remindersAreEnabled === false;
   }
 
@@ -122,7 +120,6 @@ export class SectionList {
   }
 
   get isComplete(): boolean {
-    console.log(this.sections.map((section) => section.isComplete));
     return this.sections.every((section) => section.isComplete);
   }
 

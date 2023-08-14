@@ -2,6 +2,7 @@
   @sections={{this.sectionList.sections}}
   @expandedSection={{this.expandedSection}}
   @onSectionClick={{this.handleSectionExpanded}}
+  data-test-create-repository-card
 >
   <:headerContent>
     <div class="px-4 sm:px-6 flex items-center py-2.5 gap-x-3">
@@ -25,7 +26,11 @@
 
       {{#if this.expandedSection.isComplete}}
         {{! @glint-expect-error not ts-fied yet }}
-        <PrimaryButton class="mt-6" {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}>↓ Next question</PrimaryButton>
+        <PrimaryButton
+          class="mt-6"
+          {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}
+          data-test-next-question-button
+        >↓ Next question</PrimaryButton>
       {{/if}}
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
@@ -37,12 +42,10 @@
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection
         {{! @glint-expect-error not ts-fied yet }}
         @repository={{@repository}}
-        @onSelect={{this.handleRemindersPreferenceSelection}}
       />
 
       {{#if this.expandedSection.isComplete}}
-        {{! @glint-expect-error not ts-fied yet }}
-        <PrimaryButton class="mt-6" {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}>Continue →</PrimaryButton>
+        <PrimaryLinkButton class="mt-6" @route="course.setup" data-test-continue-button>Continue →</PrimaryLinkButton>
       {{/if}}
     {{/if}}
   </:expandedSectionContent>

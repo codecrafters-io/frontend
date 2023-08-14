@@ -2,11 +2,15 @@ import { clickable, clickOnText, isVisible, text } from 'ember-cli-page-object';
 import requestLanguageDropdown from './repository-setup-card/request-language-dropdown';
 
 export default {
+  clickOnContinueButton: clickable('[data-test-continue-button]'),
   clickOnLanguageButton: clickOnText('button'),
+  clickOnNextQuestionButton: clickable('[data-test-next-question-button]'),
+  clickOnOptionButton: clickOnText('button'),
   clickOnRequestLanguageButton: clickable('.ember-basic-dropdown-trigger'),
   continueButton: { scope: '[data-test-continue-button]' },
   copyableCloneRepositoryInstructions: text('[data-test-copyable-repository-clone-instructions] .font-mono'),
   description: text('[data-test-course-description]'),
+  expandedSectionTitle: text('[data-test-expanded-section-title]'),
   footerText: text('[data-test-footer]'),
   hasRequestedLanguagesPrompt: isVisible('[data-test-requested-languages-prompt]'),
 

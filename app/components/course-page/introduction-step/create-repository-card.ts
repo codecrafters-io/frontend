@@ -24,7 +24,13 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
-  @tracked expandedSectionIndex: number = 0;
+  @tracked expandedSectionIndex;
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    this.expandedSectionIndex = this.sectionList.indexOf(this.sectionList.activeSection as Section);
+  }
 
   get expandedSection(): Section {
     return this.sectionList.sections[this.expandedSectionIndex] as Section;
@@ -43,13 +49,6 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
 
     await this.args.repository.save();
     this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
-  }
-
-  @action
-  async handleRemindersPreferenceSelection(remindersAreEnabled: boolean) {
-    // @ts-ignore
-    this.args.repository.remindersAreEnabled = remindersAreEnabled;
-    await this.args.repository.save();
   }
 
   @action

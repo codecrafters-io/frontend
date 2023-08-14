@@ -20,7 +20,6 @@ type Signature = {
 export default class SelectExpectedActivityFrequencySectionComponent extends Component<Signature> {
   @action
   async handleSelect(frequency: RepositoryModel['expectedActivityFrequency']) {
-    console.log('handleSelect', frequency);
     this.args.repository.expectedActivityFrequency = frequency;
     this.args.repository.save(); // Saving can happen in the background, no need to await
     this.args.onSelect();
