@@ -6,6 +6,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    isDisabled: boolean;
     repository: TemporaryRepositoryModel;
     onSelect: () => void;
   };

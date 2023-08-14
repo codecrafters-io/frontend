@@ -10,6 +10,7 @@
     {{! @glint-expect-error not ts-ified yet }}
     {{#each-in @repository.constructor.languageProficiencyLevelMappings as |key value|}}
       <TertiaryButton
+        @isDisabled={{@isDisabled}}
         class="{{if (eq @repository.languageProficiencyLevel key) 'border-teal-500 text-teal-500'}}"
         {{! @glint-expect-error not ts-ified yet }}
         {{on "click" (fn (mut @repository.languageProficiencyLevel) key)}}

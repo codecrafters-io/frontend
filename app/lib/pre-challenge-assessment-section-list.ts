@@ -15,6 +15,10 @@ export class Section {
     throw new Error('Not implemented');
   }
 
+  get isDisabled(): boolean {
+    return false;
+  }
+
   get title(): string {
     throw new Error('Not implemented');
   }
@@ -59,6 +63,10 @@ export class SelectLanguageProficiencyLevelSection extends Section {
     return !!this.repository.languageProficiencyLevel;
   }
 
+  get isDisabled() {
+    return !new SelectLanguageSection(this.repository).isComplete;
+  }
+
   get title() {
     return 'Language Proficiency';
   }
@@ -79,6 +87,10 @@ export class SelectExpectedActivityFrequencySection extends Section {
     return !!this.repository.expectedActivityFrequency;
   }
 
+  get isDisabled() {
+    return !new SelectLanguageSection(this.repository).isComplete;
+  }
+
   get title() {
     return 'Practice Cadence';
   }
@@ -97,6 +109,10 @@ export class SelectRemindersPreferenceSection extends Section {
   get isComplete() {
     // @ts-ignore
     return this.repository.remindersAreEnabled === true || this.repository.remindersAreEnabled === false;
+  }
+
+  get isDisabled() {
+    return !new SelectLanguageSection(this.repository).isComplete;
   }
 
   get title() {

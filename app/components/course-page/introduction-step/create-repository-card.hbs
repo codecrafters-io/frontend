@@ -21,7 +21,10 @@
         @onLanguageSelection={{this.handleLanguageSelection}}
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection @repository={{@repository}} />
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
+        @isDisabled={{this.expandedSection.isDisabled}}
+        @repository={{@repository}}
+      />
 
       {{#if this.expandedSection.isComplete}}
         <PrimaryButton
@@ -32,11 +35,15 @@
       {{/if}}
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
+        @isDisabled={{this.expandedSection.isDisabled}}
         @repository={{@repository}}
         @onSelect={{fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1)}}
       />
     {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection @repository={{@repository}} />
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection
+        @repository={{@repository}}
+        @isDisabled={{this.expandedSection.isDisabled}}
+      />
 
       {{#if this.expandedSection.isComplete}}
         <PrimaryLinkButton class="mt-6" @route="course.setup" data-test-continue-button>Continue →</PrimaryLinkButton>

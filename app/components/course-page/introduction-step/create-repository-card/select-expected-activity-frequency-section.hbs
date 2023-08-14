@@ -9,6 +9,7 @@
   <div class="flex items-center flex-wrap max-w-3xl gap-3">
     {{#each-in @repository.expectedActivityFrequencyMappings as |key value|}}
       <TertiaryButton
+        @isDisabled={{@isDisabled}}
         class="{{if (eq @repository.expectedActivityFrequency key) 'border-teal-500 text-teal-500'}}"
         {{on "click" (fn this.handleSelect key)}}
       >
