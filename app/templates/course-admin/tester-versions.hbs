@@ -20,8 +20,15 @@
           {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
           <span class="text-xs underline font-medium">{{@model.course.testerRepositoryFullName}}</span>
         </a>
-        <TertiaryButtonWithSpinner @isDisabled={{true}} @size="small" @shouldShowSpinner={{false}} class="mt-4" data-test-sync-with-github-button>Sync
-          with Github</TertiaryButtonWithSpinner>
+        <TertiaryButtonWithSpinner 
+          @size="small"
+          @shouldShowSpinner={{this.isSyncingWithGithub}}
+          class="mt-4"
+          {{on "click" this.handleSyncWithGithubButtonClick}}
+          data-test-sync-with-github-button
+        >
+          Sync with Github
+        </TertiaryButtonWithSpinner>
       </div>
     </div>
 

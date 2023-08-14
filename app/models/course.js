@@ -139,6 +139,10 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
       }[this.slug] || 6
     );
   }
+
+  get testerRepositoryLink() {
+    return `https://github.com/${this.testerRepositoryFullName}`;
+  }
 }
 
 CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
@@ -160,6 +164,17 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
 
     this.store.pushPayload('course-definition-update', {
       data: filteredResponseData,
+    });
+  },
+});
+
+CourseModel.prototype.syncCourseTesterVersions = memberAction({
+  path: 'sync-course-tester-versions',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload('course-tester-version', {
+      data: response.data,
     });
   },
 });
