@@ -35,7 +35,7 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   @action
   async handleLanguageSelection(language: TemporaryLanguageModel) {
     this.args.repository.language = language;
-    this.expandedSectionIndex = 1;
+    this.expandedSectionIndex += 1;
 
     await this.args.repository.save();
     this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
