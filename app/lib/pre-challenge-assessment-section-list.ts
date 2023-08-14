@@ -125,7 +125,11 @@ export class SectionList {
   }
 
   get activeSection(): Section {
-    return this.sections.find((section) => !section.isComplete) || (this.sections[this.sections.length - 1] as Section);
+    return this.firstIncompleteSection || (this.sections[this.sections.length - 1] as Section);
+  }
+
+  get firstIncompleteSection(): Section | null {
+    return this.sections.find((section) => !section.isComplete) || null;
   }
 
   get isComplete(): boolean {

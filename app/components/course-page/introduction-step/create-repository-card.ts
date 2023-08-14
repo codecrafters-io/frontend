@@ -20,22 +20,35 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
-  @tracked expandedSectionIndex;
+  @tracked expandedSectionIndex: number | null = null;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
 
-    this.expandedSectionIndex = this.sectionList.indexOf(this.sectionList.activeSection as Section);
+    if (this.sectionList.firstIncompleteSection) {
+      this.expandedSectionIndex = this.sectionList.indexOf(this.sectionList.firstIncompleteSection);
+    }
   }
 
-  get expandedSection(): Section {
+  get expandedSection(): Section | null {
+    if (this.expandedSectionIndex === null) {
+      return null;
+    }
+
     return this.sectionList.sections[this.expandedSectionIndex] as Section;
+  }
+
+  @action
+  expandNextSection(): void {
+    if (this.expandedSectionIndex !== null) {
+      this.expandedSectionIndex += 1;
+    }
   }
 
   @action
   async handleLanguageSelection(language: TemporaryLanguageModel) {
     this.args.repository.language = language;
-    this.expandedSectionIndex += 1;
+    this.expandNextSection(); // Don't wait for the save to complete
 
     await this.args.repository.save();
     this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });

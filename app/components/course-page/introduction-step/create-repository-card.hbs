@@ -22,27 +22,23 @@
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
-        @isDisabled={{this.expandedSection.isDisabled}}
+        @isDisabled={{bool this.expandedSection.isDisabled}}
         @repository={{@repository}}
       />
 
       {{#if this.expandedSection.isComplete}}
-        <PrimaryButton
-          class="mt-6"
-          {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}
-          data-test-next-question-button
-        >↓ Next question</PrimaryButton>
+        <PrimaryButton class="mt-6" {{on "click" this.expandNextSection}} data-test-next-question-button>↓ Next question</PrimaryButton>
       {{/if}}
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
-        @isDisabled={{this.expandedSection.isDisabled}}
+        @isDisabled={{bool this.expandedSection.isDisabled}}
         @repository={{@repository}}
-        @onSelect={{fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1)}}
+        @onSelect={{this.expandNextSection}}
       />
     {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection
         @repository={{@repository}}
-        @isDisabled={{this.expandedSection.isDisabled}}
+        @isDisabled={{bool this.expandedSection.isDisabled}}
       />
 
       {{#if this.expandedSection.isComplete}}
