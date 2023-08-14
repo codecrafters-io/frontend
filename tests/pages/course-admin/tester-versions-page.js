@@ -7,7 +7,9 @@ export default create({
     scope: '[data-test-tester-repository-link]',
   },
 
-  testerVersionListItem: collection('[data-test-version-list-item]'),
+  testerVersionListItem: collection('[data-test-version-list-item]', {
+    clickOnActivateButton: clickable('[data-test-activate-button]'),
+  }),
 
   visit: visitable('/courses/:course_slug/admin/tester-versions'),
 });

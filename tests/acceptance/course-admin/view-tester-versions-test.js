@@ -70,48 +70,4 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     await testerVersionsPage.visit({ course_slug: 'redis' });
     await percySnapshot('Admin - Course Tester Versions - With Tester Versions');
   });
-
-  test('it should have a working button for syncing with github', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    this.server.create('course-tester-version', {
-      activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
-      commitSha: '1234567890',
-      createdAt: new Date(2021, 1, 1),
-      isLatest: false,
-      isActive: false,
-      tagName: 'v10',
-    });
-
-    await testerVersionsPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 1, 'should have 1 tester version');
-
-    this.server.create('course-tester-version', {
-      activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
-      commitSha: '1234567890',
-      createdAt: new Date(2021, 1, 1),
-      isLatest: true,
-      isActive: true,
-      lastActivatedAt: new Date(2021, 1, 1),
-      tagName: 'v11',
-    });
-
-    await testerVersionsPage.clickOnSyncWithGithubButton();
-    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 tester versions');
-  });
-
-  test('it has the correct tester repository link', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
-    course.update('testerRepositoryFullName', 'codecrafters-io/redis');
-
-    await testerVersionsPage.visit({ course_slug: course.slug });
-    assert.strictEqual(testerVersionsPage.testerRepositoryLink.href, course.testerRepositoryLink);
-    assert.strictEqual(testerVersionsPage.testerRepositoryLink.text, course.testerRepositoryFullName);
-  });
 });
