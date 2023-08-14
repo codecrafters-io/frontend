@@ -8,8 +8,8 @@ export default class CourseStageStep extends Step {
   @tracked courseStage;
   @tracked repository;
 
-  constructor(repository: unknown, courseStage: unknown) {
-    super();
+  constructor(repository: unknown, courseStage: unknown, position: number) {
+    super(position);
 
     this.repository = repository;
     this.courseStage = courseStage;

@@ -2,6 +2,7 @@
 <LinkTo
   @route={{@route}}
   @models={{@models}}
+  @query={{if @query @query (hash)}}
   class="rounded-md shadow-sm font-semibold inline-block border transition-colors duration-75
     {{if @isDark 'bg-transparent' 'bg-white hover:bg-gray-50'}}
     {{if @isDark 'text-gray-200 hover:text-white' 'text-gray-900'}}

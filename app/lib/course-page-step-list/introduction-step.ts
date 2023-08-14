@@ -2,7 +2,7 @@ import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 import { tracked } from '@glimmer/tracking';
 
-export default class SetupStep extends Step {
+export default class IntroductionStep extends Step {
   @tracked repository;
 
   constructor(repository: unknown, position: number) {
@@ -16,20 +16,13 @@ export default class SetupStep extends Step {
       return {
         dotColor: 'green',
         dotType: 'static',
-        text: 'Git push received.',
+        text: 'Introduction complete.',
       };
     } else if (this.status === 'in_progress') {
       return {
         dotColor: 'yellow',
         dotType: 'blinking',
-        text: 'Listening for a git push...',
-      };
-      // @ts-ignore
-    } else if (this.status === 'locked') {
-      return {
-        dotType: 'none',
-        // @ts-ignore
-        text: `Complete introduction step to proceed`,
+        text: 'Complete pre-challenge assessment to proceed',
       };
     } else {
       return {
@@ -41,13 +34,19 @@ export default class SetupStep extends Step {
 
   get status() {
     // @ts-ignore
+    if (this.repository.isNew) {
+      return 'not_started';
+    }
+
+    // Old users don't have a pre-challenge assessment, let's still show this as completed for them.
+    // @ts-ignore
     if (this.repository.firstSubmissionCreated) {
       return 'complete';
     }
 
     // @ts-ignore
-    if (this.repository.isNew || !this.repository.preChallengeAssessmentSectionList.isComplete) {
-      return 'locked';
+    if (this.repository.preChallengeAssessmentSectionList.isComplete) {
+      return 'complete';
     }
 
     return 'in_progress';
@@ -55,17 +54,17 @@ export default class SetupStep extends Step {
 
   get routeParams() {
     return {
-      route: 'course.setup',
+      route: 'course.introduction',
       // @ts-ignore
       models: [this.repository.course.slug],
     };
   }
 
   get title() {
-    return 'Repository Setup';
+    return 'Introduction';
   }
 
-  get type(): 'SetupStep' {
-    return 'SetupStep';
+  get type(): 'IntroductionStep' {
+    return 'IntroductionStep';
   }
 }

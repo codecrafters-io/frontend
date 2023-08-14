@@ -240,7 +240,7 @@ function routes() {
       repositories = schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
     }
 
-    return repositories.filter((repository) => !!repository.lastSubmission); // API doesn't return repositories without submissions
+    return repositories;
   });
 
   this.post('/repositories', function (schema) {
@@ -252,6 +252,8 @@ function routes() {
 
     return schema.repositories.create(attrs);
   });
+
+  this.patch('/repositories/:id');
 
   this.post('/site-feedback-submissions');
 

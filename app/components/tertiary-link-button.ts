@@ -10,6 +10,7 @@ interface Signature {
     route: string;
     model?: string;
     models?: string[];
+    query?: Record<string, null | string>;
   };
 
   Blocks: {

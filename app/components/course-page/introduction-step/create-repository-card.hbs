@@ -1,0 +1,49 @@
+<CoursePage::MultiSectionCard
+  @sections={{this.sectionList.sections}}
+  @expandedSection={{this.expandedSection}}
+  @onSectionClick={{this.handleSectionExpanded}}
+  data-test-create-repository-card
+>
+  <:header>
+    <div class="px-4 sm:px-6 flex items-center py-2.5 gap-x-3">
+      <h2 class="font-semibold text-gray-700">Pre-Challenge Assessment</h2>
+      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+    </div>
+  </:header>
+
+  <:expandedSection>
+    {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
+      {{! @glint-expect-error not ts-fied yet }}
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
+        {{! TODO: Fetch this from query params? }}
+        @preferredLanguageSlug={{null}}
+        @repository={{@repository}}
+        @onLanguageSelection={{this.handleLanguageSelection}}
+      />
+    {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
+        @isDisabled={{bool this.expandedSection.isDisabled}}
+        @repository={{@repository}}
+      />
+
+      {{#if this.expandedSection.isComplete}}
+        <PrimaryButton class="mt-6" {{on "click" this.expandNextSection}} data-test-next-question-button>↓ Next question</PrimaryButton>
+      {{/if}}
+    {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
+        @isDisabled={{bool this.expandedSection.isDisabled}}
+        @repository={{@repository}}
+        @onSelect={{this.expandNextSection}}
+      />
+    {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection
+        @repository={{@repository}}
+        @isDisabled={{bool this.expandedSection.isDisabled}}
+      />
+
+      {{#if this.expandedSection.isComplete}}
+        <PrimaryLinkButton class="mt-6" @route="course.setup" data-test-continue-button>Continue →</PrimaryLinkButton>
+      {{/if}}
+    {{/if}}
+  </:expandedSection>
+</CoursePage::MultiSectionCard>

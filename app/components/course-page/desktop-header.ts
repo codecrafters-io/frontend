@@ -38,7 +38,12 @@ export default class DesktopHeaderComponent extends Component<Signature> {
   @service declare router: RouterService;
 
   get allTabs(): Tab[] {
-    return { SetupStep: this.setupTabs, CourseCompletedStep: this.courseCompletedTabs, CourseStageStep: this.stageTabs }[this.args.currentStep.type];
+    return {
+      SetupStep: this.setupTabs,
+      CourseCompletedStep: this.courseCompletedTabs,
+      CourseStageStep: this.stageTabs,
+      IntroductionStep: this.introductionTabs,
+    }[this.args.currentStep.type];
   }
 
   get courseCompletedTabs() {
@@ -56,6 +61,19 @@ export default class DesktopHeaderComponent extends Component<Signature> {
 
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  get introductionTabs() {
+    return [
+      {
+        icon: 'document-text',
+        name: 'Instructions',
+        slug: 'instructions',
+        route: this.args.currentStep.routeParams.route,
+        models: this.args.currentStep.routeParams.models,
+        isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
+      },
+    ];
   }
 
   get stageTabs() {
