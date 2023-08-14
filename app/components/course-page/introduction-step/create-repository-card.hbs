@@ -21,11 +21,12 @@
         @onLanguageSelection={{this.handleLanguageSelection}}
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
-      {{! @glint-expect-error not ts-fied yet }}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection @repository={{@repository}} />
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
+        {{! @glint-expect-error not ts-fied yet }}
+        @repository={{@repository}}
+      />
 
       {{#if this.expandedSection.isComplete}}
-        {{! @glint-expect-error not ts-fied yet }}
         <PrimaryButton
           class="mt-6"
           {{on "click" (fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1))}}
