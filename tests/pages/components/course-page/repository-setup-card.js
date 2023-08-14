@@ -1,4 +1,4 @@
-import { isVisible, text } from 'ember-cli-page-object';
+import { text } from 'ember-cli-page-object';
 
 export default {
   continueButton: { scope: '[data-test-continue-button]' },

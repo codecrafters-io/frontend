@@ -6,7 +6,6 @@
 
 <div>
   <div class="flex items-center flex-wrap max-w-3xl gap-3">
-    {{log @repository.remindersAreEnabled}}
     <TertiaryButton
       class="{{if (eq @repository.remindersAreEnabled true) 'border-teal-500 text-teal-500'}}"
       {{! @glint-expect-error not ts-ified yet }}
