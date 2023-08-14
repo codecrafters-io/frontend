@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 export default class UserModel extends Model {
   @service('feature-flags') featureFlagsService;
 
+  @attr() authoredCourseSlugsList;
   @attr('string') avatarUrl;
   @attr('date') createdAt;
   @attr('string') githubUsername;
