@@ -337,6 +337,9 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.false(coursePage.commentList.commentCards[0].userLabel.isPresent, 'should not have challenge author if comment is not on authored course');
+    assert.false(
+      coursePage.commentList.commentCards[0].userLabel.isPresent,
+      'should not have challenge author label if comment is not on authored course',
+    );
   });
 });
