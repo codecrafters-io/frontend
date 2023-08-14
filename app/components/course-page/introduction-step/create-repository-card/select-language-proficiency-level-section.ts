@@ -2,7 +2,9 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import showdown from 'showdown';
 import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
+import { tracked } from '@glimmer/tracking';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -14,6 +16,8 @@ type Signature = {
 };
 
 export default class SelectLanguageProficiencyLevelSectionComponent extends Component<Signature> {
+  @tracked isSaving = false;
+
   transition = fade;
 
   get feedbackAlertMarkdown() {
@@ -39,6 +43,21 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
       return htmlSafe(new showdown.Converter().makeHtml(this.feedbackAlertMarkdown));
     } else {
       return null;
+    }
+  }
+
+  @action
+  async handleSelect(proficiencyLevel: TemporaryRepositoryModel['languageProficiencyLevel']) {
+    if (!this.isSaving) {
+      this.args.repository.languageProficiencyLevel = proficiencyLevel;
+
+      this.isSaving = true;
+
+      try {
+        await this.args.repository.save();
+      } finally {
+        this.isSaving = false;
+      }
     }
   }
 }

@@ -11,7 +11,7 @@
       <TertiaryButton
         @isDisabled={{@isDisabled}}
         class="{{if (eq @repository.languageProficiencyLevel key) 'border-teal-500 text-teal-500'}}"
-        {{on "click" (fn (mut @repository.languageProficiencyLevel) key)}}
+        {{on "click" (fn this.handleSelect key)}}
       >
         {{value}}
       </TertiaryButton>
