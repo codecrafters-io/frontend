@@ -22,6 +22,15 @@ export class TemporaryRepositoryModel {
     };
   }
 
+  get languageProficiencyLevelMappings(): Record<TemporaryRepositoryModel['languageProficiencyLevel'], string> {
+    return {
+      never_tried: 'Never tried',
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced',
+    };
+  }
+
   save(): Promise<void> {
     return new Promise((resolve) => {
       resolve();

@@ -33,6 +33,28 @@ export default class RepositoryModel extends Model {
   @attr('string') progressBannerUrl;
   @attr('boolean', { allowNull: true }) remindersAreEnabled;
 
+  get activeStage() {
+    if (!this.highestCompletedStage) {
+      if (this.firstSubmissionCreated) {
+        return this.course.firstStage;
+      } else {
+        return null;
+      }
+    }
+
+    let lastStagePosition = this.course.stages.sortBy('position').lastObject.position;
+
+    if (this.highestCompletedStage.get('position') === lastStagePosition) {
+      return this.course.get('stages').findBy('position', lastStagePosition);
+    } else {
+      return this.course.get('stages').findBy('position', this.highestCompletedStage.get('position') + 1);
+    }
+  }
+
+  get allStagesAreComplete() {
+    return this.highestCompletedStage && this.highestCompletedStage.position === this.course.stages.sortBy('position').lastObject.position;
+  }
+
   get cloneDirectory() {
     if (!this.course || !this.language) {
       return 'codecrafters'; // This is triggered when the clone step is animating out for an old repo
@@ -74,32 +96,6 @@ export default class RepositoryModel extends Model {
     return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
-  get isRecentlyCreated() {
-    return new Date() - this.createdAt <= 1800 * 1000; // 30min
-  }
-
-  get activeStage() {
-    if (!this.highestCompletedStage) {
-      if (this.firstSubmissionCreated) {
-        return this.course.firstStage;
-      } else {
-        return null;
-      }
-    }
-
-    let lastStagePosition = this.course.stages.sortBy('position').lastObject.position;
-
-    if (this.highestCompletedStage.get('position') === lastStagePosition) {
-      return this.course.get('stages').findBy('position', lastStagePosition);
-    } else {
-      return this.course.get('stages').findBy('position', this.highestCompletedStage.get('position') + 1);
-    }
-  }
-
-  get allStagesAreComplete() {
-    return this.highestCompletedStage && this.highestCompletedStage.position === this.course.stages.sortBy('position').lastObject.position;
-  }
-
   get highestCompletedStage() {
     if (this.courseStageCompletions.length === 0) {
       return null;
@@ -108,8 +104,17 @@ export default class RepositoryModel extends Model {
     return this.courseStageCompletions.sortBy('courseStage.position').lastObject.courseStage;
   }
 
+  get isRecentlyCreated() {
+    return new Date() - this.createdAt <= 1800 * 1000; // 30min
+  }
+
   get languageProficiencyLevelHumanized() {
     return RepositoryModel.languageProficiencyLevelMappings[this.languageProficiencyLevel];
+  }
+
+  // TODO: Only to bypass TS checks - find out how to use RepositoryModel#languageProficiencyLevelMappings directly in a .hbs template
+  get languageProficiencyLevelMappings() {
+    return RepositoryModel.languageProficiencyLevelMappings;
   }
 
   get lastSubmissionAt() {
