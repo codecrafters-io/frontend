@@ -3,7 +3,7 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import RouterService from '@ember/routing/router-service';
 import { Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -33,8 +33,7 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   }
 
   @action
-  async handleLanguageSelection(language: unknown) {
-    // @ts-ignore
+  async handleLanguageSelection(language: TemporaryLanguageModel) {
     this.args.repository.language = language;
     this.expandedSectionIndex = 1;
 
