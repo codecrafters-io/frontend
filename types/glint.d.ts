@@ -16,6 +16,12 @@ declare module '@glint/environment-ember-loose/registry' {
       Yields: { default: [string] };
       Return: string;
     }>;
+    'animated-if': ComponentLike<{
+      Args: { Positional: [unknown]; Named: { duration: number; transition: unknown } };
+      Blocks: { default: [unknown] };
+      Yields: { default: [string] };
+      Return: string;
+    }>;
     'svg-jar': ComponentLike<{ Args: { Named: { class: string }; Positional: [string] } }>;
     or: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: string }>;
     add: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
