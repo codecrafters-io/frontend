@@ -17,11 +17,15 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
   test('it forces login when user is not logged in', async function (assert) {
     testScenario(this.server);
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    try {
+      await testerVersionsPage.visit({ course_slug: 'redis' });
+    } catch (e) {
+      // pass
+    }
 
     assert.strictEqual(
       window.location.href,
-      `${config.x.backendUrl}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fcourses%2Fredis%2Fadmin%2Fupdates`,
+      `${config.x.backendUrl}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fcourses%2Fredis%2Fadmin%2Ftester-versions`,
       'should redirect to team billing session URL',
     );
   });
