@@ -33,11 +33,6 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   }
 
   @action
-  async handleExpectedActivityFrequencySelection() {
-    this.expandedSectionIndex += 1;
-  }
-
-  @action
   async handleLanguageSelection(language: unknown) {
     // @ts-ignore
     this.args.repository.language = language;

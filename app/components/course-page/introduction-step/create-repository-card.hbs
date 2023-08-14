@@ -33,7 +33,7 @@
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
         @repository={{@repository}}
-        @onSelect={{this.handleExpectedActivityFrequencySelection}}
+        @onSelect={{fn (mut this.expandedSectionIndex) (add this.expandedSectionIndex 1)}}
       />
     {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection @repository={{@repository}} />
