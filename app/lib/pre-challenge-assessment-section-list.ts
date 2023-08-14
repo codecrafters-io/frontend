@@ -135,10 +135,6 @@ export class SectionList {
   indexOf(section: Section): number {
     return this.sections.indexOf(section);
   }
-
-  nextSectionFor(section: Section): Section | null {
-    return this.sections[this.sections.indexOf(section) + 1] || null;
-  }
 }
 
 export function buildSectionList(repository: TemporaryRepositoryModel) {
