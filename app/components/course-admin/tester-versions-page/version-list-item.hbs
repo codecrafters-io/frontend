@@ -43,16 +43,14 @@
     {{#unless @courseTesterVersion.isActive}}
       {{#if @courseTesterVersion.isLatest}}
         <TertiaryButtonWithSpinner
-          @isDisabled={{true}}
           @size="small"
-          @shouldShowSpinner={{false}}
+          @shouldShowSpinner={{this.isActivating}}
           data-test-activate-button
         >Activate</TertiaryButtonWithSpinner>
       {{else}}
         <TertiaryButtonWithSpinner
-          @isDisabled={{true}}
           @size="small"
-          @shouldShowSpinner={{false}}
+          @shouldShowSpinner={{this.isActivating}}
           class="opacity-0 group-hover/version-list-item:opacity-100"
           data-test-activate-button
         >Activate</TertiaryButtonWithSpinner>

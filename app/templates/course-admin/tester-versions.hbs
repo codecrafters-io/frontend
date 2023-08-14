@@ -27,7 +27,7 @@
 
     <ul role="list" class="divide-y divide-gray-100">
       {{#each this.sortedTesterVersions as |courseTesterVersion|}}
-        <CourseAdmin::TesterVersionsPage::VersionListItem @courseTesterVersion={{courseTesterVersion}} />
+        <CourseAdmin::TesterVersionsPage::VersionListItem @courseTesterVersion={{courseTesterVersion}} @latestTesterVersion={{this.latestTesterVersion}} />
       {{else}}
         <div class="text-gray-400 py-32 flex items-center justify-center">
           No updates found.
