@@ -8,7 +8,7 @@
   @progressDenominator={{unless this.isSkeleton this.progressDenominator}}
   @status={{unless this.isSkeleton @entry.status}}
 >
-  <:after-username>
+  <:afterUsername>
     {{#if @shouldShowLanguageIconsWithoutHover}}
       <img
         alt="{{@entry.language.name}}"
@@ -22,5 +22,5 @@
         class="w-4 h-4 mr-2 opacity-0 group-hover/leaderboard-entry:opacity-100 transition-all"
       />
     {{/if}}
-  </:after-username>
+  </:afterUsername>
 </LeaderboardEntry>

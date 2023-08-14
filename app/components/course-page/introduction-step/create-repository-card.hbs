@@ -11,7 +11,7 @@
     </div>
   </:header>
 
-  <:expanded-section>
+  <:expandedSection>
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
       {{! @glint-expect-error not ts-fied yet }}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
@@ -49,5 +49,5 @@
         <PrimaryLinkButton class="mt-6" @route="course.setup" data-test-continue-button>Continue →</PrimaryLinkButton>
       {{/if}}
     {{/if}}
-  </:expanded-section>
+  </:expandedSection>
 </CoursePage::MultiSectionCard>
