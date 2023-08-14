@@ -1,25 +1,19 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-
-type RepositoryModel = {
-  id: null | string;
-  language: null | { name: string };
-  expectedActivityFrequency: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
-  save(): Promise<void>;
-};
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    repository: RepositoryModel;
+    repository: TemporaryRepositoryModel;
     onSelect: () => void;
   };
 };
 
 export default class SelectExpectedActivityFrequencySectionComponent extends Component<Signature> {
   @action
-  async handleSelect(frequency: RepositoryModel['expectedActivityFrequency']) {
+  async handleSelect(frequency: TemporaryRepositoryModel['expectedActivityFrequency']) {
     this.args.repository.expectedActivityFrequency = frequency;
     this.args.repository.save(); // Saving can happen in the background, no need to await
     this.args.onSelect();

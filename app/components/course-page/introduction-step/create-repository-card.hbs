@@ -21,10 +21,7 @@
         @onLanguageSelection={{this.handleLanguageSelection}}
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
-        {{! @glint-expect-error not ts-fied yet }}
-        @repository={{@repository}}
-      />
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection @repository={{@repository}} />
 
       {{#if this.expandedSection.isComplete}}
         <PrimaryButton
@@ -35,15 +32,11 @@
       {{/if}}
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
-        {{! @glint-expect-error not ts-fied yet }}
         @repository={{@repository}}
         @onSelect={{this.handleExpectedActivityFrequencySelection}}
       />
     {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection
-        {{! @glint-expect-error not ts-fied yet }}
-        @repository={{@repository}}
-      />
+      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection @repository={{@repository}} />
 
       {{#if this.expandedSection.isComplete}}
         <PrimaryLinkButton class="mt-6" @route="course.setup" data-test-continue-button>Continue →</PrimaryLinkButton>

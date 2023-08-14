@@ -1,20 +1,14 @@
 import Component from '@glimmer/component';
-import showdown from 'showdown';
-import { htmlSafe } from '@ember/template';
 import fade from 'ember-animated/transitions/fade';
-
-type RepositoryModel = {
-  id: null | string;
-  language: null | { name: string };
-  languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
-  save(): Promise<void>;
-};
+import showdown from 'showdown';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { htmlSafe } from '@ember/template';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    repository: RepositoryModel;
+    repository: TemporaryRepositoryModel;
   };
 };
 

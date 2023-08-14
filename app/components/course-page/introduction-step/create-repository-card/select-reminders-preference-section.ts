@@ -1,25 +1,18 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-
-type RepositoryModel = {
-  id: null | string;
-  language: null | { name: string };
-  expectedActivityFrequency: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
-  remindersAreEnabled: boolean;
-  save(): Promise<void>;
-};
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    repository: RepositoryModel;
+    repository: TemporaryRepositoryModel;
   };
 };
 
 export default class SelectRemindersPreferenceSectionComponent extends Component<Signature> {
   @action
-  async handleSelect(remindersAreEnabled: RepositoryModel['remindersAreEnabled']) {
+  async handleSelect(remindersAreEnabled: TemporaryRepositoryModel['remindersAreEnabled']) {
     this.args.repository.remindersAreEnabled = remindersAreEnabled;
     await this.args.repository.save();
   }
