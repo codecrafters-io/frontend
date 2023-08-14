@@ -1,17 +1,30 @@
 // TypeScript file for temporary types until we migrate all models to TS
 import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 
-export type TemporaryLanguageModel = {
-  id: string;
-  name: string;
-};
+export class TemporaryLanguageModel {
+  declare id: string;
+  declare name: string;
+}
 
-export type TemporaryRepositoryModel = {
-  expectedActivityFrequency: 'every_day' | 'once_a_week' | 'multiple_times_a_week';
-  id: null | string;
-  language: null | TemporaryLanguageModel;
-  languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
-  preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
-  remindersAreEnabled: boolean | null;
-  save(): Promise<void>;
-};
+export class TemporaryRepositoryModel {
+  declare expectedActivityFrequency: 'every_day' | 'once_a_week' | 'multiple_times_a_week';
+  declare id: null | string;
+  declare language: null | TemporaryLanguageModel;
+  declare languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
+  declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
+  declare remindersAreEnabled: boolean | null;
+
+  get expectedActivityFrequencyMappings(): Record<TemporaryRepositoryModel['expectedActivityFrequency'], string> {
+    return {
+      every_day: 'Every day',
+      once_a_week: 'Once a week',
+      multiple_times_a_week: 'Multiple times a week',
+    };
+  }
+
+  save(): Promise<void> {
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
+}

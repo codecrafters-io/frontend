@@ -7,11 +7,9 @@
 
 <div>
   <div class="flex items-center flex-wrap max-w-3xl gap-3">
-    {{! @glint-expect-error not ts-ified yet }}
-    {{#each-in @repository.constructor.expectedActivityFrequencyMappings as |key value|}}
+    {{#each-in @repository.expectedActivityFrequencyMappings as |key value|}}
       <TertiaryButton
         class="{{if (eq @repository.expectedActivityFrequency key) 'border-teal-500 text-teal-500'}}"
-        {{! @glint-expect-error not ts-ified yet }}
         {{on "click" (fn this.handleSelect key)}}
       >
         {{value}}

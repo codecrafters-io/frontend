@@ -53,6 +53,11 @@ export default class RepositoryModel extends Model {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
   }
 
+  // TODO: Only to bypass TS checks - find out how to use RepositoryModel#expectedActivityFrequencyMappings directly in a .hbs templates
+  get expectedActivityFrequencyMappings() {
+    return RepositoryModel.expectedActivityFrequencyMappings;
+  }
+
   get expectedActivityFrequencyHumanized() {
     return RepositoryModel.expectedActivityFrequencyMappings[this.expectedActivityFrequency];
   }
