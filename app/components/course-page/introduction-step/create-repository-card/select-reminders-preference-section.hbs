@@ -8,7 +8,6 @@
   <div class="flex items-center flex-wrap max-w-3xl gap-3">
     <TertiaryButton
       class="{{if (eq @repository.remindersAreEnabled true) 'border-teal-500 text-teal-500'}}"
-      {{! @glint-expect-error not ts-ified yet }}
       {{on "click" (fn this.handleSelect true)}}
     >
       Yes please
@@ -16,7 +15,6 @@
 
     <TertiaryButton
       class="{{if (eq @repository.remindersAreEnabled false) 'border-teal-500 text-teal-500'}}"
-      {{! @glint-expect-error not ts-ified yet }}
       {{on "click" (fn this.handleSelect false)}}
     >
       I'll pass
