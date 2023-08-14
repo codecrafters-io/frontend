@@ -1,7 +1,7 @@
 <div class="bg-gray-50 rounded-md w-full" ...attributes>
   <div class="bg-white border border-gray-300 {{if (has-block 'footerContent') 'rounded-t border-b-0' 'rounded'}}">
     <div class="bg-gray-50 border-gray-300 border-b border-opacity-75 rounded-t relative">
-      {{yield to="headerContent"}}
+      {{yield to="header"}}
     </div>
 
     <div class="divide-y divide-gray-200">
@@ -16,7 +16,7 @@
                 </div>
               </div>
 
-              {{yield to="expandedSectionContent"}}
+              {{yield to="expandedSection"}}
             </div>
           {{else}}
             <div class="px-4 sm:px-6 py-3 hover:bg-gray-50" {{on "click" (fn @onSectionClick section)}} role="button">

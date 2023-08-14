@@ -17,8 +17,8 @@ interface Signature {
   };
 
   Blocks: {
-    expandedSectionContent: [];
-    headerContent: [];
+    expandedSection: [];
+    header: [];
   };
 }
 

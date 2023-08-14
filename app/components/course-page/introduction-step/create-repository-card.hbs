@@ -4,14 +4,14 @@
   @onSectionClick={{this.handleSectionExpanded}}
   data-test-create-repository-card
 >
-  <:headerContent>
+  <:header>
     <div class="px-4 sm:px-6 flex items-center py-2.5 gap-x-3">
       <h2 class="font-semibold text-gray-700">Pre-Challenge Assessment</h2>
       <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
     </div>
-  </:headerContent>
+  </:header>
 
-  <:expandedSectionContent>
+  <:expandedSection>
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
       {{! @glint-expect-error not ts-fied yet }}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
@@ -42,5 +42,5 @@
         <PrimaryLinkButton class="mt-6" @route="course.setup" data-test-continue-button>Continue →</PrimaryLinkButton>
       {{/if}}
     {{/if}}
-  </:expandedSectionContent>
+  </:expandedSection>
 </CoursePage::MultiSectionCard>
