@@ -2,8 +2,8 @@ import Component from '@glimmer/component';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 type Signature = {
   Element: HTMLDivElement;
