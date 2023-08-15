@@ -17,7 +17,7 @@ export default class CourseAdminUpdateController extends Controller {
   @service declare store: Store;
 
   @tracked isApplyingUpdate = false;
-  @tracked isSyncingWithGithub = false;
+  @tracked isSyncingWithGitHub = false;
 
   @action
   async handleApplyUpdateButtonClick() {
@@ -32,8 +32,8 @@ export default class CourseAdminUpdateController extends Controller {
   }
 
   @action
-  async handleSyncWithGithubButtonClick() {
-    this.isSyncingWithGithub = true;
+  async handleSyncWithGitHubButtonClick() {
+    this.isSyncingWithGitHub = true;
 
     await this.model.course.syncCourseDefinitionUpdates();
 
@@ -42,7 +42,7 @@ export default class CourseAdminUpdateController extends Controller {
       include: ['course', 'applier'].join(','),
     });
 
-    this.isSyncingWithGithub = false;
+    this.isSyncingWithGitHub = false;
   }
 
   get viewDiffLink() {

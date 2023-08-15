@@ -34,11 +34,11 @@
 
               <TertiaryButtonWithSpinner
                 @size="small"
-                @shouldShowSpinner={{this.isSyncingWithGithub}}
-                {{on "click" this.handleSyncWithGithubButtonClick}}
+                @shouldShowSpinner={{this.isSyncingWithGitHub}}
+                {{on "click" this.handleSyncWithGitHubButtonClick}}
                 data-test-sync-with-github-button
               >
-                Sync with Github
+                Sync with GitHub
               </TertiaryButtonWithSpinner>
             </div>
           {{else if (eq @model.update.status "applied")}}

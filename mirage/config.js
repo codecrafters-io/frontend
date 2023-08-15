@@ -92,10 +92,17 @@ function routes() {
   this.post('/community-course-stage-solution-comments/:id/unvote', () => {});
 
   this.get('/courses');
+
   this.post('/courses/:id/sync-course-definition-updates', function (schema, request) {
     const course_id = request.params.id;
 
     return schema.courseDefinitionUpdates.where({ course_id });
+  });
+
+  this.post('/courses/:id/sync-course-tester-versions', function (schema, request) {
+    const course_id = request.params.id;
+
+    return schema.courseTesterVersions.where({ course_id });
   });
 
   this.get('/course-definition-updates');
