@@ -1,7 +1,7 @@
 import { clickable, collection, create, visitable } from 'ember-cli-page-object';
 
 export default create({
-  clickOnSyncWithGithubButton: clickable('[data-test-sync-with-github-button]'),
+  clickOnSyncWithGitHubButton: clickable('[data-test-sync-with-github-button]'),
 
   testerRepositoryLink: {
     scope: '[data-test-tester-repository-link]',

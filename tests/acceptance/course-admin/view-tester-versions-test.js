@@ -99,7 +99,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       tagName: 'v11',
     });
 
-    await testerVersionsPage.clickOnSyncWithGithubButton();
+    await testerVersionsPage.clickOnSyncWithGitHubButton();
     assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 tester versions');
   });
 

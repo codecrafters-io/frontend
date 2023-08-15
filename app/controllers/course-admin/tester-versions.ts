@@ -18,11 +18,11 @@ export default class CourseTesterVersionsController extends Controller {
 
   @service declare store: Store;
 
-  @tracked isSyncingWithGithub = false;
+  @tracked isSyncingWithGitHub = false;
 
   @action
-  async handleSyncWithGithubButtonClick() {
-    this.isSyncingWithGithub = true;
+  async handleSyncWithGitHubButtonClick() {
+    this.isSyncingWithGitHub = true;
 
     await this.model.course.syncCourseTesterVersions();
 
@@ -31,7 +31,7 @@ export default class CourseTesterVersionsController extends Controller {
       include: ['course', 'activator'].join(','),
     });
 
-    this.isSyncingWithGithub = false;
+    this.isSyncingWithGitHub = false;
   }
 
 

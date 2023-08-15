@@ -124,7 +124,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
       summary: 'Description update',
     });
 
-    await updatesPage.clickOnSyncWithGithubButton();
+    await updatesPage.clickOnSyncWithGitHubButton();
     assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
   });
 
