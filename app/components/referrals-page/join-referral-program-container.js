@@ -1,33 +1,93 @@
 import Component from '@glimmer/component';
+import showdown from 'showdown';
 import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-import easyToShareImage from '/assets/images/referral-program-features/easy-to-share.png';
-import easyToClaimImage from '/assets/images/referral-program-features/easy-to-claim.png';
-import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.png';
+import freeForFriendImage from '/assets/images/referral-program-features/free-for-friend.jpg';
+import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.jpg';
+import simplePayoutImage from '/assets/images/referral-program-features/simple-payout.jpg';
+
+import adobeImage from '/assets/images/company-logos/adobe-company-logo.svg';
+import amazonImage from '/assets/images/company-logos/amazon-company-logo.svg';
+import coinbaseImage from '/assets/images/company-logos/coinbase-company-logo.svg';
+import dockerImage from '/assets/images/company-logos/docker-company-logo.svg';
+import googleImage from '/assets/images/company-logos/google-company-logo.svg';
+import linearImage from '/assets/images/company-logos/linear-company-logo.svg';
+import slackImage from '/assets/images/company-logos/slack-company-logo.svg';
+import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
 
 export default class JoinReferralProgramContainerComponent extends Component {
   @service store;
   @service authenticator;
   @tracked isCreatingReferralLink = false;
 
-  get features() {
+  get companies() {
     return [
       {
-        title: 'Easy to share',
-        description: 'All you’ve got to do is share a referral link, we take care of the rest!',
-        imageUrl: easyToShareImage,
+        name: 'Google',
+        url: googleImage,
       },
       {
-        title: 'Easy to claim',
-        description: 'Get paid via PayPal, or via 30+ different types of gift cards.',
-        imageUrl: easyToClaimImage,
+        name: 'Slack',
+        url: slackImage,
       },
       {
-        title: '60% for life',
-        description: `Earn 60% of earnings from every customer you refer, forever. Sky is the limit.`,
+        name: 'Amazon',
+        url: amazonImage,
+      },
+      {
+        name: 'Adobe',
+        url: adobeImage,
+      },
+      {
+        name: 'Stripe',
+        url: stripeImage,
+      },
+      {
+        name: 'Docker',
+        url: dockerImage,
+      },
+      {
+        name: 'Coinbase',
+        url: coinbaseImage,
+      },
+      {
+        name: 'Linear',
+        url: linearImage,
+      },
+    ];
+  }
+
+  get features() {
+    return this.featuresMarkdown.map((feature) => {
+      return {
+        ...feature,
+        body: htmlSafe(new showdown.Converter().makeHtml(feature.bodyMarkdown)),
+      };
+    });
+  }
+
+  get featuresMarkdown() {
+    return [
+      {
+        title: '60% Revenue Share.',
+        bodyMarkdown:
+          'Earn 60% of what we make through your referrals. Example payouts for a single paid referral (before discounting):<br /><br />\n- **$594** (lifetime plan)\n- **$216** (one year plan)\n- **$72** (3-month plan)',
         imageUrl: lifetimeEarningsImage,
+      },
+      {
+        title: 'No forms to fill. Simple payout.',
+        bodyMarkdown:
+          'Activate your link with one click.<br /><br />Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or any of the 30+ gift cards that we support.',
+        imageUrl: simplePayoutImage,
+      },
+      {
+        title: '(Probably) Free for your friend.',
+        bodyMarkdown:
+          'Most developers can get their CodeCrafters fees fully reimbursed through their corporate L&D budget.<br /><br />Remind them about it, help them save money, and help make their decision easier.',
+        imageUrl: freeForFriendImage,
       },
     ];
   }
