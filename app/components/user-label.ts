@@ -9,20 +9,6 @@ interface UserLabelSignature {
       authoredCourseSlugsList: string[];
       isStaff: boolean;
     }
-    comment: {
-      courseStage?: {
-        course: {
-          slug: string;
-        }
-      }
-      communityCourseStageSolution?: {
-        courseStage: {
-          course: {
-            slug: string;
-          }
-        }
-      }
-    }
   };
 }
 
@@ -30,7 +16,11 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
   @service declare router: RouterService;
 
   get courseSlug() {
-    return this.args.comment.courseStage?.course.slug || this.args.comment.communityCourseStageSolution?.courseStage.course.slug;
+    if (!this.isCourseRoute) {
+      return;
+    }
+
+    return this.router.currentURL.split('/')[2];
   }
 
   get isUserRoute() {

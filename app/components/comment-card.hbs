@@ -19,7 +19,7 @@
           rel="noopener noreferrer"
         >{{@comment.user.username}}</a>
 
-        <UserLabel @user={{@comment.user}} @comment={{@comment}} />
+        <UserLabel @user={{@comment.user}} />
 
         {{#if (eq @comment.user.username "codecrafters-bot")}}
           <span class="bg-gray-400 text-white ml-1 px-1 py-0.5 rounded font-semibold text-xs">
