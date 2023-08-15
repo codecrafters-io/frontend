@@ -9,7 +9,3 @@
 
 // Not sure if this is supposed to go here...
 import '@glint/environment-ember-loose';
-
-declare global {
-  namespace EmberTooltip {}
-}
