@@ -23,10 +23,6 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
     return this.router.currentURL.split('/')[2];
   }
 
-  get isUserRoute() {
-    return this.router.currentRouteName.includes('user');
-  }
-
   get isCourseRoute() {
     return this.router.currentRouteName.includes('course');
   }
@@ -37,6 +33,10 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
 
   get isUserCurrentCourseAuthor() {
     return this.args.user.authoredCourseSlugsList.includes(this.courseSlug as string);
+  }
+
+  get isUserRoute() {
+    return this.router.currentRouteName.includes('user');
   }
 
   get text() {
