@@ -10,9 +10,11 @@ export default {
   replyCards: collection('[data-test-comment-card]', {}),
   toggleDropdown: clickable('[data-test-more-dropdown-toggle]:eq(0)'),
   upvoteButton: { scope: '[data-test-upvote-button]' },
+
   userLabel: {
     scope: '[data-test-user-label]',
     hover: triggerable('mouseenter'),
   },
+
   scope: '[data-test-comment-card]',
 };
