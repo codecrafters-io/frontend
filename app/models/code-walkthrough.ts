@@ -1,7 +1,8 @@
-import { attr } from '@ember-data/model';
-import { htmlSafe } from '@ember/template';
 import Model from '@ember-data/model';
 import showdown from 'showdown';
+import { attr } from '@ember-data/model';
+import { htmlSafe } from '@ember/template';
+import { SafeString } from '@ember/template/-private/handlebars';
 
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
@@ -9,17 +10,41 @@ import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 
-export default class CodeWalkthrough extends Model {
-  @attr('string') conclusionMarkdown;
-  @attr('string') descriptionMarkdown;
-  @attr('string') hackerNewsUrl;
-  @attr('string') introductionMarkdown;
-  @attr('') sections; // free-form JSON
-  @attr('string') slug;
-  @attr('string') title;
-  @attr('date') updatedAt;
+type SectionDescription = {
+  type: 'string',
+  markdown: 'string'
+}
 
-  get introductionHTML() {
+type SectionProperties = {
+  code: 'string',
+  link: 'string',
+  type: 'string',
+  file_path: 'string',
+  language_slug: 'string',
+  highlighted_lines: 'string'
+}
+
+type Section = SectionDescription | SectionProperties;
+
+export default class CodeWalkthrough extends Model {
+  @attr('string')
+  declare conclusionMarkdown: string;
+  @attr('string')
+  declare descriptionMarkdown: string;
+  @attr('string')
+  declare hackerNewsUrl: string;
+  @attr('string')
+  declare introductionMarkdown: string;
+  @attr() 
+  declare sections: Array<Section>; // free-form JSON
+  @attr('string') 
+  declare slug: string;
+  @attr('string')
+  declare title: string;
+  @attr('date')
+  declare updatedAt: Date;
+
+  get introductionHTML(): SafeString | null {
     if (this.introductionMarkdown) {
       return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.introductionMarkdown));
     } else {
@@ -27,7 +52,7 @@ export default class CodeWalkthrough extends Model {
     }
   }
 
-  get conclusionHTML() {
+  get conclusionHTML(): SafeString | null {
     if (this.conclusionMarkdown) {
       return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.conclusionMarkdown));
     } else {
@@ -35,7 +60,7 @@ export default class CodeWalkthrough extends Model {
     }
   }
 
-  get logoURL() {
+  get logoURL(): string {
     if (this.slug.startsWith('redis')) {
       return redisLogo;
     } else if (this.slug.startsWith('git')) {
