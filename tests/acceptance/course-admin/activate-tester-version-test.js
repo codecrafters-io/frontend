@@ -33,18 +33,14 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
       tagName: 'v11',
     });
 
+    window.confirm = () => true;
+
     await testerVersionsPage.visit({ course_slug: 'redis' });
-
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
-
-    // const store = this.owner.lookup('service:store');
-    // const testerVersion = this.server.schema.courseTesterVersions.findBy({ tagName: 'v11' });
-    // console.log(testerVersion);
-    // const cachedTesterVersion = await store.findRecord('course-tester-version', testerVersion.id);
-    // cachedTesterVersion.isActive = true;
-
     await testerVersionsPage.testerVersionListItem[0].activateButton.click();
-
-    assert.notOk(testerVersionsPage.testerVersionListItem[0].activateButton.isVisible);
+    assert.notOk(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
+    await testerVersionsPage.testerVersionListItem[1].activateButton.click();
+    assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
+    assert.notOk(testerVersionsPage.testerVersionListItem[1].activateButton.isPresent);
   });
 });

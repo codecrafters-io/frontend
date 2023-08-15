@@ -149,26 +149,8 @@ function routes() {
     const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
     courseTesterVersion.update({ isActive: true });
 
-    const activeCourseTesterVersion = schema.courseTesterVersions.where({ isActive: true });
-    activeCourseTesterVersion.update({ isActive: false });
-
-    // return {
-    //   data: {
-    //     id: courseTesterVersion.id,
-    //     attributes: {
-    //       'commit-sha': courseTesterVersion.commitSha,
-    //       'created-at': courseTesterVersion.createdAt,
-    //       'is-active': true,
-    //       'is-latest': courseTesterVersion.isLatest,
-    //       'tag-name': courseTesterVersion.tagName,
-    //     },
-    //     type: 'course-tester-version',
-    //     relationships: {
-    //       course: courseTesterVersion.course,
-    //       activator: courseTesterVersion.activator,
-    //     },
-    //   },
-    // };
+    const otherTesterVersions = schema.courseTesterVersions.where((version) => version.id !== courseTesterVersion.id);
+    otherTesterVersions.update({ isActive: false });
 
     return courseTesterVersion;
   });
