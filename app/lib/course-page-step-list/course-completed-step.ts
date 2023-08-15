@@ -5,8 +5,8 @@ import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 export default class CourseCompletedStep extends Step {
   @tracked repository;
 
-  constructor(repository: unknown) {
-    super();
+  constructor(repository: unknown, position: number) {
+    super(position);
 
     this.repository = repository;
   }

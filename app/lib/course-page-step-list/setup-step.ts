@@ -5,8 +5,8 @@ import { tracked } from '@glimmer/tracking';
 export default class SetupStep extends Step {
   @tracked repository;
 
-  constructor(repository: unknown) {
-    super();
+  constructor(repository: unknown, position: number) {
+    super(position);
 
     this.repository = repository;
   }
@@ -25,11 +25,11 @@ export default class SetupStep extends Step {
         text: 'Listening for a git push...',
       };
       // @ts-ignore
-    } else if (this.repository.isSaving && this.repository.language) {
+    } else if (this.status === 'locked') {
       return {
         dotType: 'none',
         // @ts-ignore
-        text: `Creating a ${this.repository.language.name} repository...`,
+        text: `Complete introduction step to proceed`,
       };
     } else {
       return {
@@ -43,12 +43,14 @@ export default class SetupStep extends Step {
     // @ts-ignore
     if (this.repository.firstSubmissionCreated) {
       return 'complete';
-      // @ts-ignore
-    } else if (!this.repository.isNew) {
-      return 'in_progress';
-    } else {
-      return 'not_started';
     }
+
+    // @ts-ignore
+    if (this.repository.isNew || !this.repository.preChallengeAssessmentSectionList.isComplete) {
+      return 'locked';
+    }
+
+    return 'in_progress';
   }
 
   get routeParams() {

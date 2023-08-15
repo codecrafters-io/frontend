@@ -15,6 +15,7 @@ Router.map(function () {
   this.route('courses');
 
   this.route('course', { path: '/courses/:course_slug' }, function () {
+    this.route('introduction');
     this.route('setup');
 
     this.route('stage', { path: '/stages/:stage_number' }, function () {

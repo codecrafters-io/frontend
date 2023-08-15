@@ -6,6 +6,7 @@ import config from 'codecrafters-frontend/config/environment';
 import Component from '@glimmer/component';
 
 export default class FeedbackComponent extends Component {
+  @service router;
   @service store;
   @tracked feedbackSubmission;
   @tracked isSaving = false;
@@ -44,6 +45,7 @@ export default class FeedbackComponent extends Component {
 
     if (this.formElement.checkValidity()) {
       this.isSaving = true;
+      this.feedbackSubmission.pageUrl = window.location.href;
       await this.feedbackSubmission.save();
       this.isSaving = false;
       this.wasSaved = true;

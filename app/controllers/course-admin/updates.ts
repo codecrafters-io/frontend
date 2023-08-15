@@ -16,11 +16,11 @@ export default class CourseAdminUpdatesController extends Controller {
 
   @service declare store: Store;
 
-  @tracked isSyncingWithGithub = false;
+  @tracked isSyncingWithGitHub = false;
 
   @action
-  async handleSyncWithGithubButtonClick() {
-    this.isSyncingWithGithub = true;
+  async handleSyncWithGitHubButtonClick() {
+    this.isSyncingWithGitHub = true;
 
     await this.model.course.syncCourseDefinitionUpdates();
 
@@ -29,7 +29,7 @@ export default class CourseAdminUpdatesController extends Controller {
       include: ['course', 'applier'].join(','),
     });
 
-    this.isSyncingWithGithub = false;
+    this.isSyncingWithGitHub = false;
   }
 
   get sortedDefinitionUpdates() {

@@ -4,7 +4,7 @@ export default create({
   applyUpdateButton: {
     scope: '[data-test-apply-update-button]',
   },
-  clickOnSyncWithGithubButton: clickable('[data-test-sync-with-github-button]'),
+  clickOnSyncWithGitHubButton: clickable('[data-test-sync-with-github-button]'),
   fileContentsDiff: {
     scope: '[data-test-file-contents-diff]',
   },

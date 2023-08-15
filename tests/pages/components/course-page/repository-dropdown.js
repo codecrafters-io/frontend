@@ -1,12 +1,12 @@
 import { clickable, clickOnText, text, count } from 'ember-cli-page-object';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
+import { settled } from '@ember/test-helpers';
 
 export default {
   activeRepositoryName: text('[data-test-active-repository-name]'),
 
   async click() {
     this.clickRaw();
-    await finishRender();
+    await settled();
   },
 
   clickRaw: clickable('button'),

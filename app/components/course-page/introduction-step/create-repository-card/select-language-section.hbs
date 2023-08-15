@@ -1,0 +1,63 @@
+<div class="text-gray-700 prose mb-5" data-test-select-language-section>
+  <p>
+    <b>Which language would you like to use?</b>
+    We'll create a Git repository with starter code for you to work on.
+  </p>
+</div>
+
+<div>
+  <div class="flex gap-3 items-center flex-wrap max-w-3xl">
+    {{#if @repository.language}}
+      {{#if @repository.isSaving}}
+        <div class="flex items-center">
+          <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+          <span class="ml-3 text-gray-700">Creating repository...</span>
+        </div>
+      {{else}}
+        <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
+
+        <TertiaryLinkButton
+          @isDisabled={{@repository.isNew}}
+          @route="course.introduction"
+          @models={{array @repository.course.slug}}
+          @query={{hash repo="new" track=null}}
+        >
+          Try other language
+        </TertiaryLinkButton>
+      {{/if}}
+    {{else}}
+      {{#if (and (gt this.preferredLanguages.length 0) (not this.shouldShowNonPreferredLanguages))}}
+        {{#each this.preferredLanguages as |language|}}
+          <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton
+            @language={{language}}
+            {{on "click" (fn this.handleLanguageButtonClick language)}}
+          />
+        {{/each}}
+
+        <CoursePage::IntroductionStep::CreateRepositoryCard::ShowOtherLanguagesButton
+          @course={{@repository.course}}
+          @user={{@repository.user}}
+          {{on "click" this.handleShowOtherLanguagesButtonClick}}
+        />
+      {{else}}
+        {{#each this.orderedLanguageConfigurations as |languageConfiguration|}}
+          <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton
+            @language={{languageConfiguration.language}}
+            @releaseStatusIsAlpha={{languageConfiguration.releaseStatusIsAlpha}}
+            {{on "click" (fn this.handleLanguageButtonClick languageConfiguration.language)}}
+          />
+        {{/each}}
+
+        <CoursePage::IntroductionStep::CreateRepositoryCard::RequestLanguageButton @course={{@repository.course}} @user={{@repository.user}} />
+      {{/if}}
+    {{/if}}
+  </div>
+
+  <AnimatedContainer>
+    {{#animated-if (gt this.requestedAndUnsupportedLanguages.length 0) use=this.requestedLanguagesPromptTransition}}
+      <CoursePage::IntroductionStep::CreateRepositoryCard::RequestedLanguagesPrompt
+        @requestedAndUnsupportedLanguages={{this.requestedAndUnsupportedLanguages}}
+      />
+    {{/animated-if}}
+  </AnimatedContainer>
+</div>

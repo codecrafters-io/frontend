@@ -23,7 +23,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown by default');
+    assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'stage 2 is shown');

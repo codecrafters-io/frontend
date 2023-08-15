@@ -1,0 +1,20 @@
+<div class="text-gray-700 prose mb-5" data-test-select-expected-activity-frequency-section>
+  <p>
+    <b>How often do you intend to practice?</b>
+    Learners that maintain a consistent cadence are most likely to meet their learning objectives.
+  </p>
+</div>
+
+<div>
+  <div class="flex items-center flex-wrap max-w-3xl gap-3">
+    {{#each-in @repository.expectedActivityFrequencyMappings as |key value|}}
+      <TertiaryButton
+        @isDisabled={{@isDisabled}}
+        class="{{if (eq @repository.expectedActivityFrequency key) 'border-teal-500 text-teal-500'}}"
+        {{on "click" (fn this.handleSelect key)}}
+      >
+        {{value}}
+      </TertiaryButton>
+    {{/each-in}}
+  </div>
+</div>
