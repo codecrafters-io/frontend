@@ -24,8 +24,9 @@ export default class CourseAdminUpdateController extends Controller {
   get descriptionHTML() {
     if (this.model.update.description) {
       return htmlSafe(new showdown.Converter().makeHtml(this.model.update.description));
+    } else {
+      return null
     }
-    return
   }
 
   @action
