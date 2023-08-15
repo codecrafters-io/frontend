@@ -40,11 +40,12 @@ export default class VersionListItemComponent extends Component<Signature> {
   async handleActivateButtonClick() {
     if (this.args.courseTesterVersion.isLatest) {
       await this.activate();
-    } else {
-      const message = `${this.args.latestTesterVersion.tagName} is the latest version. Are you sure you want to activate ${this.args.courseTesterVersion.tagName} instead?`;
-      if (window.confirm(message)) {
-        await this.activate();
-      }
+      return;
+    }
+
+    const message = `${this.args.latestTesterVersion.tagName} is the latest version. Are you sure you want to activate ${this.args.courseTesterVersion.tagName} instead?`;
+    if (window.confirm(message)) {
+      await this.activate();
     }
   }
 }

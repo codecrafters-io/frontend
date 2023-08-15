@@ -16,7 +16,7 @@ export default class CourseTesterVersionsController extends Controller {
   @service declare store: Store;
 
   get latestTesterVersion() {
-    return this.model.course.testerVersions.find((version) => version.isLatest);
+    return this.model.course.testerVersions.find((version) => version.isLatest) as CourseTesterVersionModel;
   }
 
   get sortedTesterVersions() {
