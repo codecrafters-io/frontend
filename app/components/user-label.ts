@@ -9,14 +9,29 @@ interface UserLabelSignature {
       authoredCourseSlugsList: string[];
       isStaff: boolean;
     }
-    course: {
-      slug: string;
+    comment: {
+      courseStage?: {
+        course: {
+          slug: string;
+        }
+      }
+      communityCourseStageSolution?: {
+        courseStage: {
+          course: {
+            slug: string;
+          }
+        }
+      }
     }
   };
 }
 
 export default class UserLabelComponent extends Component<UserLabelSignature> {
   @service declare router: RouterService;
+
+  get courseSlug() {
+    return this.args.comment.courseStage?.course.slug || this.args.comment.communityCourseStageSolution?.courseStage.course.slug;
+  }
 
   get isUserRoute() {
     return this.router.currentRouteName.includes('user');
@@ -31,7 +46,7 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
   }
 
   get isUserCurrentCourseAuthor() {
-    return this.args.user.authoredCourseSlugsList.includes(this.args.course.slug);
+    return this.args.user.authoredCourseSlugsList.includes(this.courseSlug as string);
   }
 
   get text() {
