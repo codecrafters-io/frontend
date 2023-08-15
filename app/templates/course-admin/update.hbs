@@ -18,7 +18,7 @@
           </h3>
           <div class="prose prose-sm text-gray-400">
             <p>
-              {{@model.update.description}}
+              {{this.descriptionHTML}}
             </p>
           </div>
           {{#if (eq @model.update.status "pending")}}
