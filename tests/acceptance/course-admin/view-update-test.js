@@ -77,7 +77,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
 
     update.update('definitionFileContentsDiff', 'updated diff');
 
-    await updatePage.clickOnSyncWithGithubButton();
+    await updatePage.clickOnSyncWithGitHubButton();
     assert.ok(updatePage.fileContentsDiff.text.includes('updated diff'), 'diff should be updated after syncing with github');
   });
 });

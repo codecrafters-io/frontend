@@ -31,18 +31,15 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
   });
 
   test('it renders when no tester versions are present', async function (assert) {
-    assert.expect(0); // temp
-
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 0, 'should have no tester versions');
     await percySnapshot('Admin - Course Tester Versions - No Tester Versions');
   });
 
   test('it renders when tester versions are present', async function (assert) {
-    assert.expect(0); // temp
-
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -68,6 +65,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     });
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 tester versions');
     await percySnapshot('Admin - Course Tester Versions - With Tester Versions');
   });
 

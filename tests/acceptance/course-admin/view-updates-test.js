@@ -31,18 +31,16 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
   });
 
   test('it renders when no updates are present', async function (assert) {
-    assert.expect(0); // temp
-
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     await updatesPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(updatesPage.updateListItems.length, 0, 'should have no updates');
+
     await percySnapshot('Admin - Course Updates - No Updates');
   });
 
   test('it renders when updates are present', async function (assert) {
-    assert.expect(0); // temp
-
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -77,6 +75,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     });
 
     await updatesPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
     await percySnapshot('Admin - Course Updates - With Updates');
 
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
