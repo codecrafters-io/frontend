@@ -150,21 +150,7 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
   type: 'post',
 
   after(response) {
-    if (!response.data) {
-      return;
-    }
-
-    const filteredResponseData = response.data.filter((update) => {
-      if (!update.id) {
-        return false;
-      }
-
-      return update;
-    });
-
-    this.store.pushPayload('course-definition-update', {
-      data: filteredResponseData,
-    });
+    this.store.pushPayload(response);
   },
 });
 
@@ -173,8 +159,6 @@ CourseModel.prototype.syncCourseTesterVersions = memberAction({
   type: 'post',
 
   after(response) {
-    this.store.pushPayload('course-tester-version', {
-      data: response.data,
-    });
+    this.store.pushPayload(response);
   },
 });
