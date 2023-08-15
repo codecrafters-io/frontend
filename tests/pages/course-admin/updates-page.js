@@ -1,4 +1,4 @@
-import { clickable, collection, create, clickOnText, visitable } from 'ember-cli-page-object';
+import { attribute, clickable, collection, create, clickOnText, visitable } from 'ember-cli-page-object';
 
 export default create({
   clickOnLink: clickOnText(),
@@ -6,6 +6,7 @@ export default create({
 
   definitionRepositoryLink: {
     scope: '[data-test-definition-repository-link]',
+    href: attribute('href'),
   },
 
   updateListItems: collection('[data-test-update-list-item]', {

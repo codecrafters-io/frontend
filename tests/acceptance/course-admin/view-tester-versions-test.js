@@ -106,10 +106,10 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     signIn(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'redis' });
-    course.update('testerRepositoryFullName', 'codecrafters-io/redis');
+    course.update('testerRepositoryFullName', 'codecrafters-io/redis-tester');
 
     await testerVersionsPage.visit({ course_slug: course.slug });
-    assert.strictEqual(testerVersionsPage.testerRepositoryLink.href, course.testerRepositoryLink);
-    assert.strictEqual(testerVersionsPage.testerRepositoryLink.text, course.testerRepositoryFullName);
+    assert.strictEqual(testerVersionsPage.testerRepositoryLink.href, 'https://github.com/codecrafters-io/redis-tester');
+    assert.strictEqual(testerVersionsPage.testerRepositoryLink.text, 'codecrafters-io/redis-tester');
   });
 });

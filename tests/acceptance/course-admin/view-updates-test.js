@@ -135,7 +135,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     course.update('definitionRepositoryFullName', 'codecrafters-io/redis');
 
     await updatesPage.visit({ course_slug: course.slug });
-    assert.strictEqual(updatesPage.definitionRepositoryLink.href, course.definitionRepositoryLink);
-    assert.strictEqual(updatesPage.definitionRepositoryLink.text, course.definitionRepositoryFullName);
+    assert.strictEqual(updatesPage.definitionRepositoryLink.href, 'https://github.com/codecrafters-io/redis');
+    assert.strictEqual(updatesPage.definitionRepositoryLink.text, 'codecrafters-io/redis');
   });
 });
