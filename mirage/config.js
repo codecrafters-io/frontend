@@ -145,6 +145,7 @@ function routes() {
   this.post('/course-stage-comments/:id/unvote', () => {});
 
   this.get('/course-tester-versions');
+
   this.post('/course-tester-versions/:id/activate', function (schema, request) {
     const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
     courseTesterVersion.update({ isActive: true });
