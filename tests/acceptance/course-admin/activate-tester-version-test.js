@@ -33,7 +33,13 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
       tagName: 'v11',
     });
 
-    window.confirm = () => true;
+    let lastConfirmationMessage;
+
+    window.confirm = (message) => {
+      lastConfirmationMessage = message;
+
+      return true;
+    };
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
@@ -44,5 +50,16 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
     await testerVersionsPage.testerVersionListItem[1].activateButton.click();
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
     assert.notOk(testerVersionsPage.testerVersionListItem[1].activateButton.isPresent);
+
+    assert.strictEqual(lastConfirmationMessage, 'v11 is the latest version. Are you sure you want to activate v10 instead?');
+
+    const latestTesterVersion = this.server.schema.courseTesterVersions.findBy({ tagName: 'v11' });
+    latestTesterVersion.update({ isLatest: false });
+
+    await testerVersionsPage.visit({ course_slug: 'git' });
+    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.testerVersionListItem[0].activateButton.click();
+
+    assert.strictEqual(lastConfirmationMessage, 'v11 is not the latest version. Are you sure you want to activate it?');
   });
 });

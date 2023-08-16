@@ -37,7 +37,7 @@ export default class VersionListItemComponent extends Component<Signature> {
 
   get activationConfirmationMessage() {
     // @ts-ignore
-    const latestTesterVersion = this.args.courseTesterVersion.course.latestCourseTesterVersion;
+    const latestTesterVersion = this.args.courseTesterVersion.course.latestTesterVersion;
     if (latestTesterVersion) {
       return `${latestTesterVersion.tagName} is the latest version. Are you sure you want to activate ${this.args.courseTesterVersion.tagName} instead?`;
     } else {
