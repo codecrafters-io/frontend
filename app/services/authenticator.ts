@@ -15,8 +15,8 @@ export default class AuthenticatorService extends Service {
   @service declare store: Store;
 
   // TODO: See if there's a way around using this
-  @tracked isLoadingUser = false;
-  @tracked cacheBuster = 0;
+  @tracked isLoadingUser: boolean = false;
+  @tracked cacheBuster: number = 0;
 
   async authenticate(): Promise<void> {
     if (!this.sessionTokenStorage.hasToken) {
