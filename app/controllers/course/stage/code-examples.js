@@ -30,7 +30,7 @@ export default class CodeExamplesController extends Controller {
     this.solutions = await this.store.query('community-course-stage-solution', {
       course_stage_id: this.courseStage.id,
       language_id: this.currentLanguage.id,
-      include: 'user,language,comments,comments.user,comments.target',
+      include: 'user,language,comments,comments.user,comments.target,courseStage',
     });
 
     this.isLoading = false;

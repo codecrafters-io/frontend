@@ -10,8 +10,15 @@ interface UserLabelSignature {
       hasAuthoredCourses: boolean;
       isStaff: boolean;
     }
-    course: {
-      slug: string;
+    target: {
+      course?: {
+        slug: string;
+      }
+      courseStage?: {
+        course: {
+          slug: string;
+        }
+      }
     }
   };
 }
@@ -24,16 +31,20 @@ type Label = {
 export default class UserLabelComponent extends Component<UserLabelSignature> {
   @service declare router: RouterService;
 
-  get hasCourseContext() {
-    return !!this.args.course;
+  get courseSlug(): string | undefined {
+    return this.args.target.course?.slug || this.args.target.courseStage?.course.slug;
   }
 
-  get isUserCurrentCourseAuthor() {
-    return this.args.user.authoredCourseSlugsList.includes(this.args.course.slug);
+  get hasCourseContext(): boolean {
+    return !!this.args.target;
   }
 
-  get isUserRoute() {
-    return this.router.currentRouteName.includes('user');
+  get isUserCurrentCourseAuthor(): boolean {
+    if (!this.courseSlug) {
+      return false
+    }
+
+    return this.args.user.authoredCourseSlugsList.includes(this.courseSlug);
   }
 
   get label(): Label | null {
