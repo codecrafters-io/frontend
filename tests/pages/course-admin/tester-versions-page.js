@@ -11,7 +11,7 @@ export default create({
   testerVersionListItem: collection('[data-test-version-list-item]', {
     activateButton: {
       scope: '[data-test-activate-button]',
-    }
+    },
   }),
 
   visit: visitable('/courses/:course_slug/admin/tester-versions'),
