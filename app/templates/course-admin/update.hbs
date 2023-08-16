@@ -47,7 +47,13 @@
           {{/if}}
         </div>
         <div class="flex flex-col items-end">
-          <a href={{this.viewDiffLink}} class="text-gray-400 flex items-center hover:text-gray-600" data-test-view-diff-link>
+          <a
+            href={{this.viewDiffLink}}
+            class="text-gray-400 flex items-center hover:text-gray-600"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-test-view-diff-link
+          >
             {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
             <span class="text-xs underline font-medium">View diff</span>
           </a>
