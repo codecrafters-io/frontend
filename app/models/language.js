@@ -1,7 +1,6 @@
 import Model from '@ember-data/model';
 import showdown from 'showdown';
 import { attr, hasMany } from '@ember-data/model';
-import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { htmlSafe } from '@ember/template';
 
 import grayLogoC from '/assets/images/language-logos/c-gray-500.svg';
@@ -46,25 +45,6 @@ export default class LanguageModel extends Model {
   @attr('string') name;
   @attr('string') slug;
   @attr('string') trackStatus;
-
-  @equal('slug', 'c') isC;
-  @equal('slug', 'cpp') isCpp;
-  @equal('slug', 'csharp') isCsharp;
-  @equal('slug', 'elixir') isElixir;
-  @equal('slug', 'go') isGo;
-  @equal('slug', 'haskell') isHaskell;
-  @equal('slug', 'java') isJava;
-  @equal('slug', 'javascript') isJavascript;
-  @equal('slug', 'kotlin') isKotlin;
-  @equal('slug', 'nim') isNim;
-  @equal('slug', 'php') isPhp;
-  @equal('slug', 'python') isPython;
-  @equal('slug', 'ruby') isRuby;
-  @equal('slug', 'rust') isRust;
-  @equal('slug', 'swift') isSwift;
-
-  @equal('trackStatus', 'beta') trackStatusIsBeta;
-  @equal('trackStatus', 'live') trackStatusIsLive;
 
   get grayLogoUrl() {
     return {

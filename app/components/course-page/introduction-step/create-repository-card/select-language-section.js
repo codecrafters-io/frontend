@@ -7,7 +7,7 @@ import fade from 'ember-animated/transitions/fade';
 import showdown from 'showdown';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
-export default class CreateRepositoryStepComponent extends Component {
+export default class SelectLanguageSectionComponent extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
   @service store;
   requestedLanguagesPromptTransition = fade;

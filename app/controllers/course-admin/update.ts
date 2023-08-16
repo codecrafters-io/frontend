@@ -1,7 +1,9 @@
 import Controller from '@ember/controller';
 import CourseDefinitionUpdateModel from 'codecrafters-frontend/models/course-definition-update';
+import showdown from 'showdown';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
@@ -17,7 +19,15 @@ export default class CourseAdminUpdateController extends Controller {
   @service declare store: Store;
 
   @tracked isApplyingUpdate = false;
-  @tracked isSyncingWithGithub = false;
+  @tracked isSyncingWithGitHub = false;
+
+  get descriptionHTML() {
+    if (this.model.update.description) {
+      return htmlSafe(new showdown.Converter().makeHtml(this.model.update.description));
+    } else {
+      return null
+    }
+  }
 
   @action
   async handleApplyUpdateButtonClick() {
@@ -32,8 +42,8 @@ export default class CourseAdminUpdateController extends Controller {
   }
 
   @action
-  async handleSyncWithGithubButtonClick() {
-    this.isSyncingWithGithub = true;
+  async handleSyncWithGitHubButtonClick() {
+    this.isSyncingWithGitHub = true;
 
     await this.model.course.syncCourseDefinitionUpdates();
 
@@ -42,7 +52,7 @@ export default class CourseAdminUpdateController extends Controller {
       include: ['course', 'applier'].join(','),
     });
 
-    this.isSyncingWithGithub = false;
+    this.isSyncingWithGitHub = false;
   }
 
   get viewDiffLink() {

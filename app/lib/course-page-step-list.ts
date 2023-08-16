@@ -1,8 +1,9 @@
 import { tracked } from '@glimmer/tracking';
-import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
-import SetupStep from 'codecrafters-frontend/lib/course-page-step-list/setup-step';
-import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 import CourseCompletedStep from 'codecrafters-frontend/lib/course-page-step-list/course-completed-step';
+import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import IntroductionStep from 'codecrafters-frontend/lib/course-page-step-list/introduction-step';
+import SetupStep from 'codecrafters-frontend/lib/course-page-step-list/setup-step';
+import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 
 export { Step };
 
@@ -32,15 +33,17 @@ export class StepList {
 
 export function buildStepList(repository: unknown): StepList {
   let steps = [];
+  let currentStepPosition = 0;
 
-  steps.push(new SetupStep(repository));
+  steps.push(new IntroductionStep(repository, currentStepPosition++));
+  steps.push(new SetupStep(repository, currentStepPosition++));
 
   // @ts-ignore
   repository.course.sortedStages.forEach((courseStage) => {
-    steps.push(new CourseStageStep(repository, courseStage));
+    steps.push(new CourseStageStep(repository, courseStage, currentStepPosition++));
   });
 
-  steps.push(new CourseCompletedStep(repository));
+  steps.push(new CourseCompletedStep(repository, currentStepPosition++));
 
   return new StepList(steps);
 }
