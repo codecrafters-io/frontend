@@ -4,7 +4,7 @@ import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 
 interface UserLabelSignature {
-  Element: HTMLDivElement;
+  Element: HTMLSpanElement;
 
   Args: {
     user: {
