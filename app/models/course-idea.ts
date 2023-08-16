@@ -8,6 +8,7 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import { htmlSafe } from '@ember/template';
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
+import { SafeString } from '@ember/template/-private/handlebars';
 
 export default class CourseIdeaModel extends Model {
   @hasMany('course-idea-vote', { async: false }) 
@@ -41,15 +42,15 @@ export default class CourseIdeaModel extends Model {
 
   @service declare authenticator: AuthenticatorService;
 
-  get descriptionHtml() {
+  get descriptionHtml(): SafeString {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
   }
 
-  get isNewlyCreated() {
+  get isNewlyCreated(): boolean {
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votesCount < 20;
   }
 
-  get reverseSortPositionForCourseIdeasPage() {
+  get reverseSortPositionForCourseIdeasPage(): string {
     let reverseSortPositionFromDevelopmentStatus = {
       not_started: 3,
       in_progress: 2,
@@ -59,7 +60,7 @@ export default class CourseIdeaModel extends Model {
     return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
   }
 
-  async supervote() {
+  async supervote(): Promise<CourseIdeaSupervoteModel> {
     this.supervotesCount += 1;
 
     const supervote: CourseIdeaSupervoteModel = this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.authenticator.currentUser });
@@ -71,7 +72,7 @@ export default class CourseIdeaModel extends Model {
     return supervote;
   }
 
-  async vote() {
+  async vote(): Promise<CourseIdeaVoteModel> {
     this.votesCount += 1;
 
     const vote: CourseIdeaVoteModel = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.authenticator.currentUser });
