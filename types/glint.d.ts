@@ -16,6 +16,7 @@ declare module '@glint/environment-ember-loose/registry' {
       Yields: { default: [string] };
       Return: string;
     }>;
+    EmberTooltip: ComponentLike<{ Args: { Named: { text: string } } }>;
     'svg-jar': ComponentLike<{ Args: { Named: { class: string }; Positional: [string] } }>;
     or: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: string }>;
     and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
