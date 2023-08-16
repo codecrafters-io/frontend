@@ -13,10 +13,10 @@
 
       <div class="flex items-start justify-between">
         <div>
-          <h3 class="text-lg font-bold text-gray-800 mb-0.5">
+          <h3 class="text-lg font-bold text-gray-800 mb-2">
             {{@model.update.summary}}
           </h3>
-          <div class="prose prose-sm text-gray-400" data-test-description>
+          <div class="prose prose-sm" data-test-description>
             {{this.descriptionHTML}}
           </div>
           {{#if (eq @model.update.status "pending")}}
