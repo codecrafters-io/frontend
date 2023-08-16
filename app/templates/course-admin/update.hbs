@@ -16,10 +16,8 @@
           <h3 class="text-lg font-bold text-gray-800 mb-0.5">
             {{@model.update.summary}}
           </h3>
-          <div class="prose prose-sm text-gray-400">
-            <p>
-              {{@model.update.description}}
-            </p>
+          <div class="prose prose-sm text-gray-400" data-test-description>
+            {{this.descriptionHTML}}
           </div>
           {{#if (eq @model.update.status "pending")}}
             <div class="flex items-center mt-6 gap-x-3">
