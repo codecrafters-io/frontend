@@ -10,7 +10,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { create } from 'ember-cli-page-object';
 
 module('Acceptance | course-page | community-solution-comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -318,8 +317,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       subtargetLocator: 'README.md:3-4',
       user: user,
     });
-
-    // console.log('created comment from community solution comments test', createdComment);
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
