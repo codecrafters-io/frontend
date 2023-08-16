@@ -299,7 +299,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
   // // TODO: Can delete comment with replies
 
-  test('comment has the correct user label', async function (assert) {
+  test('comment has correct user label', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
 
