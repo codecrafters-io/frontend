@@ -1,18 +1,24 @@
 import { camelize } from '@ember/string';
 
+interface BlockJSON {
+  [key: string]: any;
+}
+
 class Block {
-  static fromJSON(json) {
+  static type: string;
+
+  static fromJSON(json: BlockJSON): Block {
     const block = new this();
 
     for (const [key, value] of Object.entries(json)) {
-      block[camelize(key)] = value;
+      (block as any)[camelize(key)] = value;
     }
 
     return block;
   }
 
-  get type() {
-    return this.constructor.type;
+  get type(): string {
+    return (this.constructor as typeof Block).type;
   }
 }
 
@@ -26,21 +32,21 @@ class ClickToContinueBlock extends Block {
 class MarkdownBlock extends Block {
   static type = 'markdown';
 
-  markdown;
+  markdown?: string;
   isInteractable = false;
 }
 
 class ConceptAnimationBlock extends Block {
   static type = 'concept_animation';
 
-  conceptAnimationSlug;
+  conceptAnimationSlug?: string;
   isInteractable = false;
 }
 
 class ConceptQuestionBlock extends Block {
   static type = 'concept_question';
 
-  conceptQuestionSlug;
+  conceptQuestionSlug?: string;
   isInteractable = true;
 }
 
