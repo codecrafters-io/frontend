@@ -12,6 +12,11 @@ interface UserLabelSignature {
   };
 }
 
+type Label = {
+  text: string
+  tooltipText: string
+}
+
 export default class UserLabelComponent extends Component<UserLabelSignature> {
   @service declare router: RouterService;
 
@@ -39,35 +44,24 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
     return this.router.currentRouteName.includes('user');
   }
 
-  get text() {
+  get label(): Label | null {
     if (this.args.user.isStaff) {
-      return 'staff';
+      return {
+        text: 'staff',
+        tooltipText: 'This user works at CodeCrafters'
+      }
+    } else if (this.isCourseRoute && this.isUserCurrentCourseAuthor) {
+      return {
+        text: 'challenge author',
+        tooltipText: 'This user is the author of this challenge'
+      }
+    } else if (!this.isCourseRoute && this.isUserCourseAuthor) {
+      return {
+        text: 'challenge author',
+        tooltipText: 'This user is the author of one or more CodeCrafters challenges'
+      }
+    } else {
+      return null;
     }
-
-    if (this.isCourseRoute && this.isUserCurrentCourseAuthor) {
-      return 'challenge author';
-    }
-
-    if (this.isUserRoute && this.isUserCourseAuthor) {
-      return 'challenge author';
-    }
-
-    return
-  }
-
-  get tooltipText() {
-    if (this.args.user.isStaff) {
-      return 'This user works at CodeCrafters';
-    }
-
-    if (this.isCourseRoute && this.isUserCurrentCourseAuthor) {
-      return 'This user is the author of this challenge';
-    }
-
-    if (this.isUserRoute && this.isUserCourseAuthor) {
-      return 'This user is the author of one or more CodeCrafters challenges';
-    }
-
-    return
   }
 }
