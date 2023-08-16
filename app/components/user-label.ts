@@ -7,6 +7,7 @@ interface UserLabelSignature {
   Args: {
     user: {
       authoredCourseSlugsList: string[];
+      hasAuthoredCourses: boolean;
       isStaff: boolean;
     }
   };
@@ -32,10 +33,6 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
     return this.router.currentRouteName.includes('course');
   }
 
-  get isUserCourseAuthor() {
-    return this.args.user.authoredCourseSlugsList.length > 0;
-  }
-
   get isUserCurrentCourseAuthor() {
     return this.args.user.authoredCourseSlugsList.includes(this.courseSlug as string);
   }
@@ -55,7 +52,7 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
         text: 'challenge author',
         tooltipText: 'This user is the author of this challenge'
       }
-    } else if (!this.isCourseRoute && this.isUserCourseAuthor) {
+    } else if (!this.isCourseRoute && this.args.user.hasAuthoredCourses) {
       return {
         text: 'challenge author',
         tooltipText: 'This user is the author of one or more CodeCrafters challenges'

@@ -92,6 +92,10 @@ export default class UserModel extends Model {
     return new Date(this.createdAt.getTime() + 24 * 60 * 60 * 1000);
   }
 
+  get hasAuthoredCourses() {
+    return this.authoredCourseSlugsList.length > 0;
+  }
+
   get githubAppInstallation() {
     return this.githubAppInstallations.firstObject;
   }
