@@ -10,7 +10,6 @@ type Signature = {
 
   Args: {
     courseTesterVersion: CourseTesterVersionModel;
-    latestTesterVersion: CourseTesterVersionModel;
   };
 };
 
@@ -36,6 +35,16 @@ export default class VersionListItemComponent extends Component<Signature> {
     }
   }
 
+  get activationConfirmationMessage() {
+    // @ts-ignore
+    const latestTesterVersion = this.args.courseTesterVersion.course.latestCourseTesterVersion;
+    if (latestTesterVersion) {
+      return `${latestTesterVersion.tagName} is the latest version. Are you sure you want to activate ${this.args.courseTesterVersion.tagName} instead?`;
+    } else {
+      return `${this.args.courseTesterVersion.tagName} is not the latest version. Are you sure you want to activate it?`;
+    }
+  }
+
   @action 
   async handleActivateButtonClick() {
     if (this.args.courseTesterVersion.isLatest) {
@@ -43,8 +52,7 @@ export default class VersionListItemComponent extends Component<Signature> {
       return;
     }
 
-    const message = `${this.args.latestTesterVersion.tagName} is the latest version. Are you sure you want to activate ${this.args.courseTesterVersion.tagName} instead?`;
-    if (window.confirm(message)) {
+    if (window.confirm(this.activationConfirmationMessage)) {
       await this.activate();
     }
   }

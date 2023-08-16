@@ -37,8 +37,10 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
+
     await testerVersionsPage.testerVersionListItem[0].activateButton.click();
     assert.notOk(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
+
     await testerVersionsPage.testerVersionListItem[1].activateButton.click();
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
     assert.notOk(testerVersionsPage.testerVersionListItem[1].activateButton.isPresent);

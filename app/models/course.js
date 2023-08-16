@@ -62,6 +62,10 @@ export default class CourseModel extends Model {
     return this.sortedStages[0];
   }
 
+  get latestTesterVersion() {
+    return this.testerVersions.find((testerVersion) => testerVersion.isLatest);
+  }
+
   get logoUrl() {
     return {
       redis: redisLogo,
