@@ -38,15 +38,13 @@
     <div class="flex flex-col items-start">
       <div class="flex items-center flex-wrap gap-x-3">
         <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
-          {{#if (eq @currentStep.type "SetupStep")}}
-            <span class="font-bold text-gray-700">Repository Setup</span>
-          {{else if (eq @currentStep.type "CourseStageStep")}}
+          {{#if (eq @currentStep.type "CourseStageStep")}}
             {{! @glint-expect-error not typesafe }}
             <span class="text-gray-600 mr-1">Stage #{{@currentStep.courseStage.position}}:</span>
             {{! @glint-expect-error not typesafe }}
             <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
-          {{else if (eq @currentStep.type "CourseCompletedStep")}}
-            <span class="font-bold text-gray-700">Challenge completed!</span>
+          {{else}}
+            <span class="font-bold text-gray-700">{{@currentStep.title}}</span>
           {{/if}}
         </div>
 
@@ -67,8 +65,13 @@
             <span>View next stage</span>
             {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
           {{else}}
-            <span>Back to {{@activeStep.shortTitle}}</span>
-            {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+            {{#if (gt @currentStep.position @activeStep.position)}}
+              {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
+              <span>Back to {{@activeStep.shortTitle}}</span>
+            {{else}}
+              <span>Back to {{@activeStep.shortTitle}}</span>
+              {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+            {{/if}}
           {{/if}}
         </div>
       </PrimaryLinkButton>

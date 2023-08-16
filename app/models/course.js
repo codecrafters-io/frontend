@@ -143,6 +143,10 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
       }[this.slug] || 6
     );
   }
+
+  get testerRepositoryLink() {
+    return `https://github.com/${this.testerRepositoryFullName}`;
+  }
 }
 
 CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
@@ -150,20 +154,15 @@ CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
   type: 'post',
 
   after(response) {
-    if (!response.data) {
-      return;
-    }
+    this.store.pushPayload(response);
+  },
+});
 
-    const filteredResponseData = response.data.filter((update) => {
-      if (!update.id) {
-        return false;
-      }
+CourseModel.prototype.syncCourseTesterVersions = memberAction({
+  path: 'sync-course-tester-versions',
+  type: 'post',
 
-      return update;
-    });
-
-    this.store.pushPayload('course-definition-update', {
-      data: filteredResponseData,
-    });
+  after(response) {
+    this.store.pushPayload(response);
   },
 });

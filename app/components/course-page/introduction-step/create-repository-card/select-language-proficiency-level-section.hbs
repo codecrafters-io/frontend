@@ -1,0 +1,26 @@
+<div class="text-gray-700 prose mb-5" data-test-select-language-proficiency-level-section>
+  <p>
+    How would you describe your experience level with
+    {{if @repository.language @repository.language.name "this language"}}? We can tailor your experience accordingly.
+  </p>
+</div>
+
+<div>
+  <div class="flex items-center flex-wrap max-w-3xl gap-3">
+    {{#each-in @repository.languageProficiencyLevelMappings as |key value|}}
+      <TertiaryButton
+        @isDisabled={{@isDisabled}}
+        class="{{if (eq @repository.languageProficiencyLevel key) 'border-teal-500 text-teal-500'}}"
+        {{on "click" (fn this.handleSelect key)}}
+      >
+        {{value}}
+      </TertiaryButton>
+    {{/each-in}}
+
+    {{#animated-if this.feedbackAlertHtml transition=this.transition duration=300}}
+      <Alert>
+        {{this.feedbackAlertHtml}}
+      </Alert>
+    {{/animated-if}}
+  </div>
+</div>

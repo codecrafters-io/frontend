@@ -1,0 +1,23 @@
+{{! @glint-nocheck: not typesafe yet }}
+<TertiaryButton class="group {{if @isSelected 'border-teal-500'}}" ...attributes>
+  <div class="flex items-center">
+    <div class="flex items-center mr-2">
+      {{#if @isSelected}}
+        {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
+      {{else}}
+        <img src={{@language.grayLogoUrl}} alt={{@language.name}} class="h-6 block group-hover:hidden" />
+        <img src={{@language.tealLogoUrl}} alt={{@language.name}} class="h-6 hidden group-hover:block" />
+      {{/if}}
+    </div>
+
+    <div class="text-base {{if @isSelected 'text-teal-500' 'text-gray-700 group-hover:text-teal-500'}} font-semibold">
+      {{@language.name}}
+    </div>
+
+    {{#if @releaseStatusIsAlpha}}
+      <div class="text-xs text-gray-500 ml-2">
+        (Alpha)
+      </div>
+    {{/if}}
+  </div>
+</TertiaryButton>

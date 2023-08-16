@@ -1,11 +1,12 @@
-import { clickable, collection, create, clickOnText, visitable } from 'ember-cli-page-object';
+import { attribute, clickable, collection, create, clickOnText, visitable } from 'ember-cli-page-object';
 
 export default create({
   clickOnLink: clickOnText(),
-  clickOnSyncWithGithubButton: clickable('[data-test-sync-with-github-button]'),
+  clickOnSyncWithGitHubButton: clickable('[data-test-sync-with-github-button]'),
 
   definitionRepositoryLink: {
     scope: '[data-test-definition-repository-link]',
+    href: attribute('href'),
   },
 
   updateListItems: collection('[data-test-update-list-item]', {
