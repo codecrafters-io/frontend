@@ -4,6 +4,7 @@ import showdown from 'showdown';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
 import { htmlSafe } from '@ember/template';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { SafeString } from '@ember/template/-private/handlebars';
 
 type BlockJSON = {
   type: string,
@@ -19,7 +20,7 @@ export default class Concept extends Model {
   @attr('string') declare title: string;
   @attr('date') declare updatedAt: Date;
 
-  get descriptionHTML() {
+  get descriptionHTML(): SafeString | null {
     if (this.descriptionMarkdown) {
       return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
     } else {
@@ -27,7 +28,7 @@ export default class Concept extends Model {
     }
   }
 
-  get parsedBlocks() {
+  get parsedBlocks(): BlockJSON[] {
     type BlockClass = typeof MarkdownBlock | typeof ConceptQuestionBlock | typeof ClickToContinueBlock | typeof ConceptAnimationBlock;
     type BlockClassMapping = Record<string, BlockClass>;
 
