@@ -10,39 +10,31 @@ import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 
-type SectionDescription = {
-  type: 'string',
+type ProseSection = {
   markdown: 'string'
+  type: 'string',
 }
 
-type SectionProperties = {
+type ReferredCodeSection = {
   code: 'string',
+  file_path: 'string',
+  highlighted_lines: 'string'
+  language_slug: 'string',
   link: 'string',
   type: 'string',
-  file_path: 'string',
-  language_slug: 'string',
-  highlighted_lines: 'string'
 }
 
-type Section = SectionDescription | SectionProperties;
+type Section = ProseSection | ReferredCodeSection;
 
 export default class CodeWalkthrough extends Model {
-  @attr('string')
-  declare conclusionMarkdown: string;
-  @attr('string')
-  declare descriptionMarkdown: string;
-  @attr('string')
-  declare hackerNewsUrl: string;
-  @attr('string')
-  declare introductionMarkdown: string;
-  @attr() 
-  declare sections: Array<Section>; // free-form JSON
-  @attr('string') 
-  declare slug: string;
-  @attr('string')
-  declare title: string;
-  @attr('date')
-  declare updatedAt: Date;
+  @attr('string') declare conclusionMarkdown: string;
+  @attr('string') declare descriptionMarkdown: string;
+  @attr('string') declare hackerNewsUrl: string;
+  @attr('string') declare introductionMarkdown: string;
+  @attr() declare sections: Array<Section>; // free-form JSON
+  @attr('string') declare slug: string;
+  @attr('string') declare title: string;
+  @attr('date') declare updatedAt: Date;
 
   get introductionHTML(): SafeString | null {
     if (this.introductionMarkdown) {
