@@ -16,6 +16,7 @@ declare module '@glint/environment-ember-loose/registry' {
       Yields: { default: [string] };
       Return: string;
     }>;
+    EmberTooltip: ComponentLike<{ Args: { Named: { text: string } } }>;
     'animated-if': ComponentLike<{
       Args: { Positional: [unknown]; Named: { duration: number; transition: unknown } };
       Blocks: { default: [unknown] };

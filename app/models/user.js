@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 export default class UserModel extends Model {
   @service('feature-flags') featureFlagsService;
 
+  @attr() authoredCourseSlugs;
   @attr('string') avatarUrl;
   @attr('date') createdAt;
   @attr('string') githubUsername;
@@ -89,6 +90,10 @@ export default class UserModel extends Model {
 
   get earlyBirdDiscountEligibilityExpiresAt() {
     return new Date(this.createdAt.getTime() + 24 * 60 * 60 * 1000);
+  }
+
+  get hasAuthoredCourses() {
+    return this.authoredCourseSlugs.length > 0;
   }
 
   get githubAppInstallation() {
