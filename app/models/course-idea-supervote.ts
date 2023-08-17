@@ -3,11 +3,8 @@ import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseIdeaSupervoteModel extends Model {
-  @attr('date')
-  declare createdAt: Date;
+  @attr('date') declare createdAt: Date;
 
-  @belongsTo('course-idea', { async: false, inverse: null })
-  declare courseIdea: CourseIdeaModel;
-  // @ts-ignore
-  @belongsTo('user', { async: false, inverse: 'courseIdeaSupervotes' }) user;
+  @belongsTo('course-idea', { async: false, inverse: null }) declare courseIdea: CourseIdeaModel;
+  @belongsTo('user', { async: false, inverse: 'courseIdeaSupervotes' }) declare user: unknown;
 }
