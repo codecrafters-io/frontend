@@ -76,13 +76,13 @@ export default class AuthenticatorService extends Service {
     return !!this.currentUser;
   }
 
-  get currentUserId(): string {
+  get currentUserId(): string | null {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.currentUser ? this.currentUser.id : this.currentUserCacheStorage.userId;
   }
 
-  get currentUsername(): string {
+  get currentUsername(): string | null {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.currentUser ? this.currentUser.username : this.currentUserCacheStorage.username;
