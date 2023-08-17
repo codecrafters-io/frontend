@@ -32,21 +32,21 @@ class ClickToContinueBlock extends Block {
 class MarkdownBlock extends Block {
   static type = 'markdown';
 
-  markdown?: string;
+  markdown!: string;
   isInteractable = false;
 }
 
 class ConceptAnimationBlock extends Block {
   static type = 'concept_animation';
 
-  conceptAnimationSlug?: string;
+  conceptAnimationSlug!: string;
   isInteractable = false;
 }
 
 class ConceptQuestionBlock extends Block {
   static type = 'concept_question';
 
-  conceptQuestionSlug?: string;
+  conceptQuestionSlug!: string;
   isInteractable = true;
 }
 
