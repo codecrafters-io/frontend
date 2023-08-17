@@ -10,17 +10,13 @@ type BlockJSON = {
   args?: any
 }
 
-type BlockClass = typeof MarkdownBlock | typeof ConceptQuestionBlock | typeof ClickToContinueBlock | typeof ConceptAnimationBlock;
-
-type BlockTypeMapping = Record<string, BlockClass>;
-
 export default class Concept extends Model {
   @hasMany('concept-question', { async: false }) 
   declare questions: SyncHasMany<ConceptQuestion>;
   @attr('string')
   declare descriptionMarkdown: string;
   @attr() 
-  declare blocks: Array<BlockClass>;
+  declare blocks: Array<BlockJSON>;
   @attr('string')
   declare slug: string;
   @attr('string')
@@ -37,13 +33,16 @@ export default class Concept extends Model {
   }
 
   get parsedBlocks() {
+    type BlockClass = typeof MarkdownBlock | typeof ConceptQuestionBlock | typeof ClickToContinueBlock | typeof ConceptAnimationBlock;
+    type BlockClassMapping = Record<string, BlockClass>;
+
     const blockClasses = [MarkdownBlock, ConceptQuestionBlock, ClickToContinueBlock, ConceptAnimationBlock];
 
-    const blockTypeMapping = blockClasses.reduce<BlockTypeMapping>((mapping, blockClass) => {
+    const blockTypeMapping = blockClasses.reduce<BlockClassMapping>((mapping, blockClass) => {
       mapping[blockClass.type] = blockClass;
 
       return mapping;
-    }, {} as BlockTypeMapping);
+    }, {} as BlockClassMapping);
 
     return this.blocks.map((blockJSON: BlockJSON) => {
 
