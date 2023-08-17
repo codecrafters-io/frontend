@@ -12,14 +12,10 @@ type Option = {
 }
 
 export default class ConceptQuestion extends Model {
-  @belongsTo('concept', { async: false })
-  declare concept: Concept;
-  @attr('string')
-  declare queryMarkdown: string;
-  @attr('string')
-  declare slug: string;
-  @attr()
-  declare options: Array<Option>;
+  @belongsTo('concept', { async: false }) declare concept: Concept;
+  @attr('string') declare queryMarkdown: string;
+  @attr('string') declare slug: string;
+  @attr() declare options: Array<Option>;
 
   get correctOptionIndex(): number {
     return this.options.findIndex((option) => option.is_correct);

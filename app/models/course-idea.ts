@@ -11,34 +11,21 @@ import { inject as service } from '@ember/service';
 import { SafeString } from '@ember/template/-private/handlebars';
 
 export default class CourseIdeaModel extends Model {
-  @hasMany('course-idea-vote', { async: false }) 
-  declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
-  @hasMany('course-idea-supervote', { async: false }) 
-  declare currentUserSupervotes: SyncHasMany<CourseIdeaSupervoteModel>
+  @hasMany('course-idea-vote', { async: false }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
+  @hasMany('course-idea-supervote', { async: false }) declare currentUserSupervotes: SyncHasMany<CourseIdeaSupervoteModel>
 
-  @attr('date')
-  declare createdAt: Date;
-  @attr('string')
-  declare descriptionMarkdown: string;
-  @attr('string')
-  declare developmentStatus: string;
-  @attr('boolean')
-  declare isArchived: boolean;
-  @attr('string')
-  declare name: string;
-  @attr('string')
-  declare slug: string;
-  @attr('number')
-  declare votesCount: number;
-  @attr('number')
-  declare supervotesCount: number;
+  @attr('date') declare createdAt: Date;
+  @attr('string') declare descriptionMarkdown: string;
+  @attr('string') declare developmentStatus: string;
+  @attr('boolean') declare isArchived: boolean;
+  @attr('string') declare name: string;
+  @attr('string') declare slug: string;
+  @attr('number') declare votesCount: number;
+  @attr('number') declare supervotesCount: number;
 
-  @equal('developmentStatus', 'not_started')
-  declare developmentStatusIsNotStarted: boolean;
-  @equal('developmentStatus', 'in_progress')
-  declare developmentStatusIsInProgress: boolean;
-  @equal('developmentStatus', 'released')
-  declare developmentStatusIsReleased: boolean;
+  @equal('developmentStatus', 'not_started') declare developmentStatusIsNotStarted: boolean;
+  @equal('developmentStatus', 'in_progress') declare developmentStatusIsInProgress: boolean;
+  @equal('developmentStatus', 'released') declare developmentStatusIsReleased: boolean;
 
   @service declare authenticator: AuthenticatorService;
 

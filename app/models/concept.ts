@@ -11,18 +11,13 @@ type BlockJSON = {
 }
 
 export default class Concept extends Model {
-  @hasMany('concept-question', { async: false }) 
-  declare questions: SyncHasMany<ConceptQuestion>;
-  @attr('string')
-  declare descriptionMarkdown: string;
-  @attr() 
-  declare blocks: Array<BlockJSON>;
-  @attr('string')
-  declare slug: string;
-  @attr('string')
-  declare title: string;
-  @attr('date')
-  declare updatedAt: Date;
+  @hasMany('concept-question', { async: false }) declare questions: SyncHasMany<ConceptQuestion>;
+
+  @attr('string') declare descriptionMarkdown: string;
+  @attr() declare blocks: Array<BlockJSON>;
+  @attr('string') declare slug: string;
+  @attr('string') declare title: string;
+  @attr('date') declare updatedAt: Date;
 
   get descriptionHTML() {
     if (this.descriptionMarkdown) {
