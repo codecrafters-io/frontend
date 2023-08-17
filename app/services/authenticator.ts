@@ -90,13 +90,10 @@ export default class AuthenticatorService extends Service {
 
   initiateLogin(redirectPath: string | null) {
     if (redirectPath) {
-      // @ts-ignore
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPath}`);
     } else if (this.router.currentURL) {
-      // @ts-ignore
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
     } else {
-      //@ts-ignore
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(window.origin);
     }
   }
