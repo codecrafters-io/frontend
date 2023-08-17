@@ -360,7 +360,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       contentString: 'This user works at CodeCrafters',
     });
 
-    user.update({ authoredCourseSlugsList: ['redis'] });
+    user.update({ authoredCourseSlugs: ['redis'] });
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
@@ -409,7 +409,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
       contentString: 'This user is the author of this challenge',
     });
 
-    user.update({ authoredCourseSlugsList: ['git'] });
+    user.update({ authoredCourseSlugs: ['git'] });
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');

@@ -16,7 +16,7 @@ export default function (server) {
     githubUsername: 'rohitpaulk',
     username: 'rohitpaulk',
     name: 'Paul Kuruvilla',
-    authoredCourseSlugsList: [],
+    authoredCourseSlugs: [],
   });
 
   createLanguages(server);

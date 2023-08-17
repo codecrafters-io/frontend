@@ -101,7 +101,7 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
     user.update({ isStaff: true });
-    user.update({ authoredCourseSlugsList: ['redis'] });
+    user.update({ authoredCourseSlugs: ['redis'] });
 
     await userPage.visit({ username: user.username });
     assert.strictEqual(userPage.userLabel.text, 'staff');
@@ -112,7 +112,7 @@ module('Acceptance | view-user-profile', function (hooks) {
     signIn(this.owner, this.server);
 
     const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
-    user.update({ authoredCourseSlugsList: ['redis'] });
+    user.update({ authoredCourseSlugs: ['redis'] });
 
     await userPage.visit({ username: user.username });
     assert.strictEqual(userPage.userLabel.text, 'challenge author');

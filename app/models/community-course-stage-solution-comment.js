@@ -19,16 +19,20 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
   @attr('date') updatedAt;
   @attr('string') subtargetLocator; // filename.js or filename.js:line1-line2
 
+  get contextForUserLabel() {
+    return this.target.courseStage.course;
+  }
+
+  get filename() {
+    return this.subtargetLocator.split(':')[0];
+  }
+
   get solution() {
     return this.target;
   }
 
   set solution(value) {
     this.target = value;
-  }
-
-  get filename() {
-    return this.subtargetLocator.split(':')[0];
   }
 
   get subtargetLines() {
