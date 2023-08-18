@@ -15,7 +15,7 @@ type ProseSection = {
   type: 'string',
 }
 
-type ReferredCodeSection = {
+type ReferencedCodeSection = {
   code: 'string',
   file_path: 'string',
   highlighted_lines: 'string'
@@ -24,7 +24,7 @@ type ReferredCodeSection = {
   type: 'string',
 }
 
-type Section = ProseSection | ReferredCodeSection;
+type Section = ProseSection | ReferencedCodeSection;
 
 export default class CodeWalkthrough extends Model {
   @attr('string') declare conclusionMarkdown: string;

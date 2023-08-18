@@ -6,6 +6,8 @@ import { htmlSafe } from '@ember/template';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 import { SafeString } from '@ember/template/-private/handlebars';
 
+type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
+
 type BlockJSON = {
   type: string,
   args?: any
@@ -28,7 +30,7 @@ export default class Concept extends Model {
     }
   }
 
-  get parsedBlocks(): BlockJSON[] {
+  get parsedBlocks(): Block[] {
     type BlockClass = typeof MarkdownBlock | typeof ConceptQuestionBlock | typeof ClickToContinueBlock | typeof ConceptAnimationBlock;
     type BlockClassMapping = Record<string, BlockClass>;
 
