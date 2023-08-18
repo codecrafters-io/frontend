@@ -134,6 +134,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-qunit": "^8.0.0",
     "loader.js": "^4.7.0",
+    "node-fetch": "^2.6.12",
     "postcss": "^8.4.27",
     "postcss-import": "^15.1.0",
     "prember": "^2.0.0",

@@ -17,6 +17,6 @@ export default class TrackController extends Controller {
   }
 
   get testimonials() {
-    return this.sortedCourses[0].testimonials;
+    return this.sortedCourses[0] ? this.sortedCourses[0].testimonials : [];
   }
 }

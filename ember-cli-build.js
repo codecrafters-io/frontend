@@ -8,7 +8,8 @@ const { Webpack } = require('@embroider/webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
 
-// const _isProduction = EmberApp.env() === 'production';
+const fetch = require('node-fetch');
+const config = require('./config/environment')(EmberApp.env());
 
 module.exports = function (defaults) {
   const appOptions = {
@@ -44,7 +45,30 @@ module.exports = function (defaults) {
     },
 
     prember: {
-      urls: ['/', '/catalog'],
+      urls: async function generatePremberUrls() {
+        // Default routes to pre-generate with FastBoot
+        const urls = ['/', '/catalog'];
+
+        // Get a list of Courses and Languages from the API
+        const apiResponse = await fetch(`${config.x.backendUrl}/api/v1/courses?include=language-configurations.language`);
+
+        if (apiResponse.status !== 200) {
+          throw new Error(`Failed to load Courses and Languages from the API, status: ${apiResponse.status}`);
+        }
+
+        // Parse the response and make a combined list of all models
+        const payload = await apiResponse.json();
+        const models = [...(payload.data || []), ...(payload.included || [])];
+
+        // Add routes for all Courses
+        urls.push(...models.filter(({ type }) => type === 'courses').map(({ attributes: { slug } }) => `/courses/${slug}/overview`));
+
+        // Add routes for all Languages
+        urls.push(...models.filter(({ type }) => type === 'languages').map(({ attributes: { slug } }) => `/tracks/${slug}`));
+
+        // Return the full list of routes
+        return urls;
+      },
     },
   };
 
