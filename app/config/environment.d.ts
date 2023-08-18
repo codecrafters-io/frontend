@@ -3,12 +3,15 @@
  *    import config from 'my-app/config/environment'
  */
 declare const config: {
+  APP: Record<string, unknown>;
   environment: string;
   modulePrefix: string;
-  podModulePrefix: string;
   locationType: 'history' | 'hash' | 'none' | 'auto';
+  podModulePrefix: string;
   rootURL: string;
-  APP: Record<string, unknown>;
+  x: {
+    backendUrl: string;
+  }
 };
 
 export default config;

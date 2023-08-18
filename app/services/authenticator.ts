@@ -1,20 +1,24 @@
+import config from 'codecrafters-frontend/config/environment';
+import CurrentUserCacheStorageService from 'codecrafters-frontend/services/current-user-cache-storage';
+import RouterService from '@ember/routing/router-service';
 import Service from '@ember/service';
+import SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
+import Store from '@ember-data/store';
+import window from 'ember-window-mock';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import config from 'codecrafters-frontend/config/environment';
-import window from 'ember-window-mock';
 
 export default class AuthenticatorService extends Service {
-  @service router;
-  @service sessionTokenStorage;
-  @service currentUserCacheStorage;
-  @service store;
+  @service declare router: RouterService;
+  @service declare sessionTokenStorage: SessionTokenStorageService;
+  @service declare currentUserCacheStorage: CurrentUserCacheStorageService;
+  @service declare store: Store;
 
   // TODO: See if there's a way around using this
-  @tracked isLoadingUser = false;
-  @tracked cacheBuster = 0;
+  @tracked isLoadingUser: boolean = false;
+  @tracked cacheBuster: number = 0;
 
-  async authenticate() {
+  async authenticate(): Promise<void> {
     if (!this.sessionTokenStorage.hasToken) {
       return;
     }
@@ -55,6 +59,7 @@ export default class AuthenticatorService extends Service {
     this.cacheBuster++;
   }
 
+  // TODO: Update this when User model is converted to typescript
   get currentUser() {
     this.cacheBuster; // Force reload on cacheBuster change
 
@@ -65,25 +70,25 @@ export default class AuthenticatorService extends Service {
     }
   }
 
-  get currentUserIsLoaded() {
+  get currentUserIsLoaded(): boolean {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return !!this.currentUser;
   }
 
-  get currentUserId() {
+  get currentUserId(): string | null {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.currentUser ? this.currentUser.id : this.currentUserCacheStorage.userId;
   }
 
-  get currentUsername() {
+  get currentUsername(): string | null {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.currentUser ? this.currentUser.username : this.currentUserCacheStorage.username;
   }
 
-  initiateLogin(redirectPath) {
+  initiateLogin(redirectPath: string | null) {
     if (redirectPath) {
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPath}`);
     } else if (this.router.currentURL) {
@@ -93,26 +98,28 @@ export default class AuthenticatorService extends Service {
     }
   }
 
-  logout() {
+  logout(): void {
     this.sessionTokenStorage.clear();
     this.currentUserCacheStorage.clear();
     this.cacheBuster++;
   }
 
-  get isAnonymous() {
+  get isAnonymous(): boolean {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return !this.isAuthenticated;
   }
 
-  get isAuthenticated() {
+  get isAuthenticated(): boolean {
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.sessionTokenStorage.hasToken;
   }
 
   prefillBeaconEmail() {
+    //@ts-ignore
     if (window.Beacon && this.currentUser && this.currentUser.primaryEmailAddress) {
+      //@ts-ignore
       window.Beacon('prefill', {
         email: this.currentUser.primaryEmailAddress,
       });
