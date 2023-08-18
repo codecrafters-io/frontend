@@ -18,6 +18,10 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   @attr('date') createdAt;
   @attr('date') updatedAt;
 
+  get contextForUserLabel() {
+    return this.target.course;
+  }
+
   get courseStage() {
     return this.target;
   }

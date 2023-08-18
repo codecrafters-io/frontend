@@ -5,6 +5,7 @@ import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/uti
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -297,4 +298,136 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
   // });
 
   // // TODO: Can delete comment with replies
+
+  test('comment has correct user label', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server); // Move off of staff
+
+    const python = this.server.schema.languages.findBy({ slug: 'python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const user = this.server.schema.users.first();
+
+    const solution = createCommunityCourseStageSolution(this.server, redis, 2, python);
+    console.log('solution from test', solution);
+
+    this.server.create('community-course-stage-solution-comment', {
+      createdAt: new Date('2022-01-02'),
+      bodyMarkdown: 'This is the **first** comment',
+      target: solution,
+      subtargetLocator: 'README.md:3-4',
+      user: user,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
+
+    const communitySolutionsTab = coursePage.codeExamplesTab;
+    await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
+
+    assert.false(
+      communitySolutionsTab.solutionCards[0].commentCards[0].userLabel.isPresent,
+      'should have no label if not staff or current course author',
+    );
+
+    user.update({ isStaff: true });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
+
+    await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
+
+    assert.strictEqual(communitySolutionsTab.solutionCards[0].commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
+
+    await communitySolutionsTab.solutionCards[0].commentCards[0].userLabel.hover();
+    assertTooltipContent(assert, {
+      contentString: 'This user works at CodeCrafters',
+    });
+
+    user.update({ authoredCourseSlugs: ['redis'] });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
+
+    await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
+
+    assert.strictEqual(
+      communitySolutionsTab.solutionCards[0].commentCards[0].userLabel.text,
+      'staff',
+      'should have staff label if staff and course author',
+    );
+
+    user.update({ isStaff: false });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
+
+    await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
+
+    assert.strictEqual(
+      communitySolutionsTab.solutionCards[0].commentCards[0].userLabel.text,
+      'challenge author',
+      'should have challenge author label if comment is on authored course',
+    );
+
+    await communitySolutionsTab.solutionCards[0].commentCards[0].userLabel.hover();
+    assertTooltipContent(assert, {
+      contentString: 'This user is the author of this challenge',
+    });
+
+    user.update({ authoredCourseSlugs: ['git'] });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
+
+    await communitySolutionsTab.solutionCards[0].clickOnExpandButton();
+    await communitySolutionsTab.solutionCards[0].toggleCommentsButtons[0].click();
+
+    assert.false(
+      communitySolutionsTab.solutionCards[0].commentCards[0].userLabel.isPresent,
+      'should not have challenge author label if comment is not on authored course',
+    );
+  });
 });

@@ -80,4 +80,26 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     await updatePage.clickOnSyncWithGitHubButton();
     assert.ok(updatePage.fileContentsDiff.text.includes('updated diff'), 'diff should be updated after syncing with github');
   });
+
+  test('it should properly be properly rendered as an html', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.create('course-definition-update', {
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      definitionFileContentsDiff: 'old contents',
+      description: 'Dummy description in markdown:\n- item 1\n- item 2\n- item 3',
+      lastErrorMessage: null,
+      lastSyncedAt: new Date(2020, 1, 1),
+      newCommitSha: '0987654321',
+      newDefinitionFileContents: 'new contents',
+      status: 'pending',
+      summary: 'test',
+    });
+
+    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.updateListItems[0].clickOnViewUpdateButton();
+
+    assert.dom('[data-test-description] ul').exists('description should be properly rendered as html');
+  });
 });
