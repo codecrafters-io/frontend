@@ -153,6 +153,16 @@ function routes() {
 
   this.get('/course-tester-versions');
 
+  this.post('/course-tester-versions/:id/activate', function (schema, request) {
+    const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
+    courseTesterVersion.update({ isActive: true });
+
+    const otherTesterVersions = schema.courseTesterVersions.where((version) => version.id !== courseTesterVersion.id);
+    otherTesterVersions.update({ isActive: false });
+
+    return courseTesterVersion;
+  });
+
   this.get('/custom-discounts');
 
   this.post('/downvotes');

@@ -8,7 +8,11 @@ export default create({
     href: attribute('href'),
   },
 
-  testerVersionListItem: collection('[data-test-version-list-item]'),
+  testerVersionListItem: collection('[data-test-version-list-item]', {
+    activateButton: {
+      scope: '[data-test-activate-button]',
+    },
+  }),
 
   visit: visitable('/courses/:course_slug/admin/tester-versions'),
 });
