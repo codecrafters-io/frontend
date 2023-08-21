@@ -1,0 +1,24 @@
+<div class="py-6 px-5 mb-6 rounded bg-teal-50 border border-teal-600">
+  <div class="max-w-3xl mx-auto flex justify-between items-center">
+    <div>
+      <div class="font-bold text-slate-600 text-2xl">
+        This stage requires a<br />
+        CodeCrafters Membership.
+      </div>
+      <div class="pt-3 pb-6 text-slate-700">
+        {{this.secondaryCopy}}
+      </div>
+      <PrimaryButton>View Membership Plans →</PrimaryButton>
+    </div>
+    <div class="flex flex-col gap-2">
+      {{#each this.featureList as |feature|}}
+        <div class="flex gap-4">
+          {{svg-jar "check" class="w-8 h-8 p-1 fill-current rounded bg-teal-500 text-white"}}
+          <div class="rounded bg-white border border-slate-200 px-4 text-slate-600 flex items-center">
+            {{feature}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

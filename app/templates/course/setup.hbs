@@ -1,6 +1,7 @@
 <div class="w-full pt-8 pb-16">
   <CoursePage::SetupStep::RepositorySetupCard
     @course={{@model.course}}
+    @regionalDiscount={{model.regionalDiscount}}
     @repository={{@model.activeRepository}}
     {{! TODO: Fetch this from query params? !}}
     @preferredLanguageSlug={{null}}

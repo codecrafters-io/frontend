@@ -33,6 +33,7 @@ export default class CourseRoute extends BaseRoute {
     return {
       course: allCourses.find((course) => course.slug === params.course_slug),
       activeRepository: activeRepository,
+      regionalDiscount: await this.store.createRecord('regional-discount').fetchCurrent(),
       repositories: repositories,
     };
   }
