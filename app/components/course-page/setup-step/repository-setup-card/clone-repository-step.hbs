@@ -21,7 +21,7 @@
   {{else}}
     <CopyableCode
       @code="git clone {{@repository.cloneUrl}} {{@repository.cloneDirectory}} && cd {{@repository.cloneDirectory}}"
-      @class="mb-5"
+      class="mb-5"
       data-test-copyable-repository-clone-instructions
     />
   {{/if}}
@@ -31,7 +31,7 @@
     Push an empty commit.
   </p>
 
-  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" @class="mb-5" />
+  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" class="mb-5" />
 
   {{#if @repository.firstSubmissionCreated}}
     <p>
