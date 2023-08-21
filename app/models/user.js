@@ -121,7 +121,7 @@ export default class UserModel extends Model {
   }
 
   isCourseAuthor(course) {
-    return this.authoredCourseSlugs.includes(course.slug);
+    return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 
   get isEligibleForEarlyBirdDiscount() {
