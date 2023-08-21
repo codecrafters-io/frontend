@@ -1,0 +1,30 @@
+<a
+  class="relative flex px-2 py-4 mt-16 w-full max-w-screen-xl rounded border border-gray-200 hover:border-gray-300 bg-white h-80 overflow-hidden group/monthly-challenge-banner transition-all"
+  href="https://codecrafters.io/aug-2023"
+  target="_blank"
+  rel="noopener noreferrer"
+  data-test-monthly-challenge-banner
+  ...attributes
+>
+  <div class="relative z-10 my-auto px-16">
+    <div class="py-2 px-6 w-fit font-bold rounded-full text-teal-500 bg-white border border-teal-500">
+      AUG 2023 CHALLENGE
+    </div>
+
+    <div
+      class="font-bold pt-4 pb-8 text-2xl text-slate-600 group-hover/monthly-challenge-banner:text-slate-700"
+    >
+      Complete any one challenge.<br />
+      Win an AirPods Max →
+    </div>
+
+    <PrimaryButton>
+      <a href="https://codecrafters.io/aug-2023" target="_blank" rel="noopener noreferrer">Learn how →</a>
+    </PrimaryButton>
+  </div>
+  <div
+    class="absolute top-1/2 right-0 px-2 vertical-mask transform -translate-y-1/2 scale-90 group-hover/monthly-challenge-banner:scale-100 transition-transform"
+  >
+    <img alt="airpods max" src={{this.airpodsImage}} />
+  </div>
+</a>
