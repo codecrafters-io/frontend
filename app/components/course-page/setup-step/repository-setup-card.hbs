@@ -7,10 +7,6 @@
     <AnimatedContainer>
       <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} />
 
-      {{#animated-if this.shouldShowUpgradePrompt use=this.transition}}
-        <CoursePage::UpgradePrompt @regionalDiscount={{@regionalDiscount}} />
-      {{/animated-if}}
-
       {{#if (eq this.coursePageState.currentStep.status "complete")}}
         <div class="mt-4 flex">
           <PrimaryLinkButton
