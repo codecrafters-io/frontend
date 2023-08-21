@@ -120,6 +120,10 @@ export default class UserModel extends Model {
     return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
   }
 
+  isCourseAuthor(course) {
+    return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
+  }
+
   get isEligibleForEarlyBirdDiscount() {
     if (this.isEligibleForReferralDiscount || this.isEligibleForCustomDiscount) {
       return false; // Prioritize referral & custom discount

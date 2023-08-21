@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between" ...attributes>
+<div class="flex items-center justify-between" ...attributes data-test-course-overview-header>
   <div>
     <h1 class="text-3xl md:text-5xl text-gray-700 font-bold tracking-tighter mb-3">{{@course.name}}</h1>
 
@@ -11,7 +11,7 @@
         COMING SOON
       </div>
     {{else}}
-      <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
+      <div class="flex items-center flex-wrap-reverse gap-x-4 gap-y-4">
         <CourseOverviewPage::StartCourseButton @course={{@course}} />
 
         <div class="flex items-center flex-wrap gap-2 flex-grow">

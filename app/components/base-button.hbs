@@ -1,13 +1,15 @@
 <button
   type="button"
   class="inline-block border
-    {{if this.sizeIsRegular 'px-3 py-2'}}
-    {{if this.sizeIsSmall 'px-3 py-1.5'}}
     {{if this.sizeIsExtraSmall 'px-2 py-1'}}
+    {{if this.sizeIsSmall 'px-3 py-1.5'}}
+    {{if this.sizeIsRegular 'px-3 py-2'}}
+    {{if this.sizeIsLarge 'px-4 py-3'}}
     rounded shadow-sm font-semibold
-    {{if this.sizeIsRegular 'text-base'}}
-    {{if this.sizeIsSmall 'text-sm'}}
     {{if this.sizeIsExtraSmall 'text-xs'}}
+    {{if this.sizeIsSmall 'text-sm'}}
+    {{if this.sizeIsRegular 'text-base'}}
+    {{if this.sizeIsLarge 'text-lg'}}
     {{if @isDisabled 'cursor-not-allowed opacity-25'}}"
   ...attributes
 >

@@ -4,7 +4,7 @@ export interface BaseButtonSignature {
   Element: HTMLButtonElement;
 
   Args: {
-    size?: 'extra-small' | 'small' | 'regular';
+    size?: 'extra-small' | 'small' | 'regular' | 'large';
     isDisabled?: boolean;
   };
 
@@ -24,6 +24,10 @@ export default class BaseButtonComponent extends Component<BaseButtonSignature> 
 
   get sizeIsExtraSmall(): boolean {
     return this.args.size === 'extra-small';
+  }
+
+  get sizeIsLarge(): boolean {
+    return this.args.size === 'large';
   }
 }
 

@@ -7,12 +7,26 @@
     <div class="flex-grow">
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
 
+      {{#if (or (current-user-is-course-author this.model.course) (current-user-is-staff))}}
+        <PageSection @title="Admin Options" class="mb-6">
+          <div class="mb-4">
+            <TertiaryLinkButton @size="small" @route="course-admin.submissions" @model={{this.model.course.slug}}>
+              Admin Panel
+            </TertiaryLinkButton>
+          </div>
+
+          <div>
+            <CourseOverviewPage::StartCourseButton @size="regular" @course={{this.model.course}} />
+          </div>
+        </PageSection>
+      {{/if}}
+
       <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full" />
     </div>
 
     {{#if this.model.course.releaseStatusIsAlpha}}
       <div class="lg:w-80 lg:flex-shrink-0 ml-2">
-        <div class="flex lg:px-4 py-2 items-center">
+        <div class="lg:px-4 py-2">
           <div class="lg:text-sm lg:leading-relaxed text-gray-500 leading-relaxed">
             <p class="mb-3">
               This is a preview of a CodeCrafters challenge that is launching soon.

@@ -1,9 +1,16 @@
 // TypeScript file for temporary types until we migrate all models to TS
 import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 
+export class TemporaryCourseModel {
+  declare id: string;
+  declare name: string;
+  declare slug: string;
+}
+
 export class TemporaryLanguageModel {
   declare id: string;
   declare name: string;
+  declare slug: string;
 }
 
 export class TemporaryRepositoryModel {
