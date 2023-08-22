@@ -40,6 +40,5 @@ refresh_course_definitions:
 
 	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
 
-release:
-	git tag v$(next_version_number)
-	git push origin master v$(next_version_number)
+serve:
+	npm run start

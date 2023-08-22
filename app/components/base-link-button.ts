@@ -30,6 +30,10 @@ export default class BaseLinkButtonComponent extends Component<BaseLinkButtonSig
     return this.args.size === 'regular' || !this.args.size;
   }
 
+  get sizeIsLarge(): boolean {
+    return this.args.size === 'large';
+  }
+
   get normalizedModels(): string[] {
     if (this.args.model) {
       return [this.args.model];

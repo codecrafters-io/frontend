@@ -11,18 +11,27 @@
     Clone the repository.
   </p>
 
-  <CopyableCode
-    @code="git clone {{@repository.cloneUrl}} {{@repository.cloneDirectory}} && cd {{@repository.cloneDirectory}}"
-    @class="mb-5"
-    data-test-copyable-repository-clone-instructions
-  />
+  {{#if @repository.isNew}}
+    <div class="prose mb-5">
+      <p>
+        <span class="text-lg">⚠️</span>
+        Select a language to see instructions to clone your repository.
+      </p>
+    </div>
+  {{else}}
+    <CopyableCode
+      @code="git clone {{@repository.cloneUrl}} {{@repository.cloneDirectory}} && cd {{@repository.cloneDirectory}}"
+      class="mb-5"
+      data-test-copyable-repository-clone-instructions
+    />
+  {{/if}}
 
   <p class="mb-4">
     <b class="text-teal-600">Step 2:</b>
     Push an empty commit.
   </p>
 
-  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" @class="mb-5" />
+  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" class="mb-5" />
 
   {{#if @repository.firstSubmissionCreated}}
     <p>

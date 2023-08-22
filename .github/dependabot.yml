@@ -21,6 +21,9 @@ updates:
         patterns:
           - '@types/ember'
           - '@types/ember*'
+      glint:
+        patterns:
+          - '@glint/*'
       prettier:
         patterns:
           - 'prettier'

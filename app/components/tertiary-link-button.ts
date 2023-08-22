@@ -7,6 +7,7 @@ interface Signature {
   Args: {
     size?: BaseButtonSignature['Args']['size'];
     isDisabled?: BaseButtonSignature['Args']['isDisabled'];
+    isDark?: boolean;
     route: string;
     model?: string;
     models?: string[];
