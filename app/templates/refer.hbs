@@ -12,9 +12,7 @@
         <ReferralsPage::ReferredUsersContainer @referralLink={{this.referralLink}} class="mt-4" />
       </div>
 
-      <div class="basis-1/3 flex flex-col gap-4">
-        <ReferralsPage::ReferralFeatureCards />
-      </div>
+      <ReferralsPage::ReferralFeatureCards class="basis-1/3 flex flex-col gap-4" />
     </div>
   {{else}}
     <ReferralsPage::JoinReferralProgramContainer />
