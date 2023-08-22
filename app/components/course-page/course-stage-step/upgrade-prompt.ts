@@ -45,7 +45,7 @@ export default class UpgradePromptComponent extends Component<Signature> {
   }
 
   @action
-  onResize(entry: ResizeObserverEntry) {
+  onResize(entry: ResizeObserverEntry): void {
     if (!entry.borderBoxSize?.[0]?.inlineSize) {
       return;
     }
