@@ -42,7 +42,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
         'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',
         'fetch hints (course page)',
-        'fetch regional discounts',
       ].length,
     );
 
