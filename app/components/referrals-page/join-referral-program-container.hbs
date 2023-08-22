@@ -26,9 +26,7 @@
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 sm:mt-20">
-  {{#each this.features as |feature|}}
-    <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.title}} @content={{feature.body}} />
-  {{/each}}
+  <ReferralsPage::ReferralFeatureCards />
 </div>
 
 <div class="my-32 text-center">
