@@ -180,7 +180,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/mo $15/mo (discounted price for India). Save an additional 40% by joining within an hour.');
+    assert.strictEqual(
+      coursePage.upgradePrompt.secondaryCopy,
+      'Plans start at $30/mo $15/mo (discounted price for India). Save an additional 40% by joining within an hour.',
+    );
   });
 
   test('upgrade prompt should have the correct copy when the user is eligible for an early bird discount', async function (assert) {
