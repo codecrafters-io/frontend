@@ -11,7 +11,6 @@ export default class CourseStageRoute extends BaseRoute {
     return {
       courseStage: courseStage,
       ...courseRouteModel,
-      regionalDiscount: await this.store.createRecord('regional-discount').fetchCurrent(),
     };
   }
 }
