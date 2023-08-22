@@ -51,11 +51,11 @@ export default class UpgradePromptComponent extends Component<Signature> {
 
   get secondaryCopy(): SafeString {
     if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount && this.args.regionalDiscount) {
-      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.args.regionalDiscount.countryName}). Save an additional 40% by joining within the next ${moment(this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt).fromNow(true)}.`)
+      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.args.regionalDiscount.countryName}). Save an additional 40% by joining within ${moment(this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt).fromNow(true)}.`)
     } else if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount) {
-      return this.convertToHTML(`Plans start at $30/mo. Save 40% by joining within the next ${moment(this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt).fromNow(true)}.`)
+      return this.convertToHTML(`Plans start at $30/mo. Save 40% by joining within ${moment(this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt).fromNow(true)}.`)
     } else if (this.args.regionalDiscount) {
-      return this.convertToHTML(`Plans start at <s>$30/mo</s> $15/mo (discounted price for ${this.args.regionalDiscount.countryName}).`)
+      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.args.regionalDiscount.countryName}).`)
     } else {
       return this.convertToHTML("Plans start at $30/mo.")
     }
