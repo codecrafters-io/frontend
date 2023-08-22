@@ -2,7 +2,9 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import moment from 'moment';
 import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -14,6 +16,8 @@ interface Signature {
 export default class UpgradePromptComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
+  @tracked isLarge: boolean = false;
+
   get featureList(): string[] {
     return [
       "No limits on content",
@@ -21,6 +25,20 @@ export default class UpgradePromptComponent extends Component<Signature> {
       "Priority Builds",
       "Community features",
     ]
+  }
+
+  @action
+  onResize(entry: ResizeObserverEntry) {
+    if (!entry.borderBoxSize?.[0]?.inlineSize) {
+      return;
+    }
+
+    console.log(entry.borderBoxSize[0].inlineSize)
+    if (entry.borderBoxSize[0].inlineSize > 640) {
+      this.isLarge = true;
+    } else {
+      this.isLarge = false;
+    }
   }
 
   get secondaryCopy(): string {

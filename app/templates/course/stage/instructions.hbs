@@ -5,7 +5,7 @@
   {{/if}}
 
   {{#if this.shouldShowUpgradePrompt}}
-    <CoursePage::CoursePageStep::UpgradePrompt @regionalDiscount={{@model.regionalDiscount}} />
+    <CoursePage::CourseStageStep::UpgradePrompt @regionalDiscount={{@model.regionalDiscount}} />
   {{/if}}
 
   {{#if (gt this.badgeAwards.length 0)}}
