@@ -84,7 +84,6 @@ export default create({
 
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
-  hasUpgradePrompt: isVisible('[data-test-upgrade-prompt]'),
   leaderboard: Leaderboard,
 
   monthlyChallengeBanner: {

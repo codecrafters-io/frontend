@@ -133,7 +133,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.ok(coursePage.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.ok(coursePage.upgradePrompt.isVisible, 'course stage item that is not free should have upgrade prompt');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 

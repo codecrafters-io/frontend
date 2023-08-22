@@ -41,6 +41,7 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
         'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',
         'fetch hints (course page)',
+        'fetch regional discounts',
       ].length,
     );
   });
