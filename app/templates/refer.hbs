@@ -2,7 +2,18 @@
 
 <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
   {{#if this.currentUser.hasJoinedReferralProgram}}
-    <h1 class="font-semibold text-2xl text-gray-700 mb-5 flex-shrink-0">Referrals</h1>
+    <div class="flex justify-between items-baseline">
+      <h1 class="font-semibold text-2xl text-gray-700 mb-5 flex-shrink-0">Referrals</h1>
+      <TertiaryButton @size="small">
+        <a
+          href="https://docs.codecrafters.io/community/partner-program"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Partner Docs
+        </a>
+      </TertiaryButton>
+    </div>
 
     <ReferralsPage::ReferralLinksContainer />
     <ReferralsPage::ReferralLinkStatsContainer @referralLink={{this.referralLink}} class="mt-4" />
