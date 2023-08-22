@@ -102,8 +102,14 @@ export default create({
     hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
   },
 
-  sidebar: Sidebar,
   repositorySetupCard: RepositorySetupCard,
+  sidebar: Sidebar,
+
+  upgradePrompt: {
+    scope: '[data-test-upgrade-prompt]',
+    secondaryCopy: text('[data-test-upgrade-prompt-secondary-copy]'),
+  },
+
   visit: visitable('/courses/:course_slug'),
   yourTaskCard: YourTaskCard,
 });

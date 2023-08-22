@@ -1,11 +1,11 @@
-<div class="py-6 px-5 mb-6 rounded bg-teal-50 border border-teal-600" {{did-resize this.onResize}}>
+<div class="py-6 px-5 mb-6 rounded bg-teal-50 border border-teal-600" {{did-resize this.onResize}} data-test-upgrade-prompt>
   <div class="max-w-3xl flex justify-between {{if this.isLarge 'mx-auto flex-row items-center' 'flex-col'}}">
     <div>
       <div class="font-bold text-slate-600 {{if this.isLarge 'text-2xl' 'text-xl'}}">
         This stage requires a<br />
         CodeCrafters Membership.
       </div>
-      <div class="pt-3 pb-6 max-w-sm text-slate-700 {{if this.isLarge 'text-base' 'text-sm'}}">
+      <div class="pt-3 pb-6 max-w-sm text-slate-700 {{if this.isLarge 'text-base' 'text-sm'}}" data-test-upgrade-prompt-secondary-copy>
         {{this.secondaryCopy}}
       </div>
       <PrimaryButton class="{{if this.isLarge 'w-fit' 'w-full'}}">View Membership Plans →</PrimaryButton>
