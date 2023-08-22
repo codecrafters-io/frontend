@@ -33,7 +33,6 @@ export default class UpgradePromptComponent extends Component<Signature> {
       return;
     }
 
-    console.log(entry.borderBoxSize[0].inlineSize)
     if (entry.borderBoxSize[0].inlineSize > 640) {
       this.isLarge = true;
     } else {
