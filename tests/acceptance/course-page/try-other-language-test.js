@@ -41,6 +41,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
       'fetch hints (course page)',
+      'fetch regional discounts',
     ].length;
 
     await catalogPage.visit();
