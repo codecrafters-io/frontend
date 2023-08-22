@@ -7,6 +7,14 @@ import freeForFriendImage from '/assets/images/referral-program-features/free-fo
 import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.jpg';
 import simplePayoutImage from '/assets/images/referral-program-features/simple-payout.jpg';
 
+interface Signature {
+  Element: HTMLDivElement;
+
+  Blocks: {
+    default: [];
+  };
+}
+
 type FeatureMarkdown = {
   bodyMarkdown: string;
   imageUrl: string;
@@ -17,7 +25,7 @@ type FeatureHTML = FeatureMarkdown & {
   body: SafeString;
 }
 
-export default class ReferralFeatureCardsComponent extends Component {
+export default class ReferralFeatureCardsComponent extends Component<Signature> {
   get featureList(): FeatureHTML[] {
     return this.featureMarkdownList.map((feature) => {
       return {
