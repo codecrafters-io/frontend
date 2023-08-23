@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsCourseAuthor } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import submissionsPage from 'codecrafters-frontend/tests/pages/course-admin/submissions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
@@ -83,5 +83,26 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     await submissionsPage.visit({ course_slug: 'redis', languages: 'python,ruby' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
+  });
+
+  test('it should not be accessible if user is course author and did not author current course', async function (assert) {
+    testScenario(this.server);
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, course);
+
+    await submissionsPage.visit({ course_slug: 'git' });
+    let route = this.owner.lookup('route:application');
+    console.log(route);
+    assert.strictEqual(route._router.currentPath, 'catalog', 'should redirect to catalog page');
+  });
+
+  test('it should be accessible if user is course author and authored current course', async function (assert) {
+    testScenario(this.server);
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, course);
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+    let route = this.owner.lookup('route:application');
+    assert.strictEqual(route._router.currentPath, 'course-admin.submissions', 'should redirect to catalog page');
   });
 });
