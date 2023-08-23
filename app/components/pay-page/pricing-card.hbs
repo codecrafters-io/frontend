@@ -1,13 +1,13 @@
 <div
   class="rounded-lg bg-gray-50 shadow-md shadow-gray-300/50
-    {{if @isRecommended 'border-1 border-teal-500' 'border-1 border-gray-100'}}
+    {{if @isRecommended 'border border-teal-500' 'border border-gray-100'}}
     filter w-full max-w-xs relative"
   data-test-pricing-card
   ...attributes
 >
   {{#if @isRecommended}}
     <div class="absolute -top-5 left-0 right-0 flex items-center justify-center">
-      <div class="text-teal-500 font-medium px-4 border-1 border-teal-500 h-10 inline-flex items-center bg-white rounded">
+      <div class="text-teal-500 font-medium px-4 border border-teal-500 h-10 inline-flex items-center bg-white rounded">
         Most popular
       </div>
     </div>
