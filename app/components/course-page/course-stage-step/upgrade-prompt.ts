@@ -40,7 +40,6 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @action
   async handleDidInsert(): Promise<void> {
       this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
-      console.log('is this being called');
       this.isLoadingRegionalDiscount = false;
   }
 
