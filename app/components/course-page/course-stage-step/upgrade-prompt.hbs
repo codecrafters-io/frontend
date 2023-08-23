@@ -20,7 +20,11 @@
         {{/if}}
       </div>
 
-      <PrimaryButton class="{{if this.isLarge 'w-fit' 'w-full'}}">View Membership Plans →</PrimaryButton>
+      <PrimaryButton class="{{if this.isLarge 'w-fit' 'w-full'}}">
+        <LinkTo @route="pay">
+          View Membership Plans →
+        </LinkTo>
+      </PrimaryButton>
     </div>
 
     <div class="flex flex-col gap-2 {{if this.isLarge 'mt-0' 'mt-10'}}">
