@@ -1,8 +1,9 @@
 <div
-  class="py-6 px-5 mb-6 rounded bg-teal-50 border border-teal-600"
+  class="py-6 px-5 rounded bg-teal-50 border border-teal-600"
   {{did-insert this.handleDidInsert}}
   {{did-resize this.onResize}}
   data-test-upgrade-prompt
+  ...attributes
 >
   <div class="max-w-3xl flex justify-between {{if this.isLarge 'mx-auto flex-row items-center' 'flex-col'}}">
     <div>
