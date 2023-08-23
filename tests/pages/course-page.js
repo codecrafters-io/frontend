@@ -11,6 +11,10 @@ import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/co
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 
 export default create({
+  adminButton: {
+    scope: '[data-test-course-admin-button]',
+  },
+
   clickOnCollapseLeaderboardButton: clickable('[data-test-collapse-leaderboard-button]'),
   clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
