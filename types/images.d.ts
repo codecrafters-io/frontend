@@ -4,4 +4,5 @@
 // in the tsconfig.json file.
 
 declare module '*.jpg';
+declare module '*.png';
 declare module '*.svg';

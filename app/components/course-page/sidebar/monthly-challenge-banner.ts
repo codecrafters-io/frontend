@@ -3,7 +3,6 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-// @ts-ignore
 import airpodsImage from '/assets/images/monthly-challenges/airpods.png';
 
 interface Signature {
