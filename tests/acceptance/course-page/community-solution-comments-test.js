@@ -308,7 +308,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     const user = this.server.schema.users.first();
 
     const solution = createCommunityCourseStageSolution(this.server, redis, 2, python);
-    console.log('solution from test', solution);
 
     this.server.create('community-course-stage-solution-comment', {
       createdAt: new Date('2022-01-02'),

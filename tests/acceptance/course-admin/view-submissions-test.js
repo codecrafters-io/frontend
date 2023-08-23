@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsCourseAuthor } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsCourseAuthor } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import submissionsPage from 'codecrafters-frontend/tests/pages/course-admin/submissions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
@@ -12,7 +12,8 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
   test('it renders when no submissions are present', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, redis);
 
     await submissionsPage.visit({ course_slug: 'redis' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 0);
@@ -22,11 +23,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
   test('it renders when submissions are present', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
-
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, redis, currentUser);
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
@@ -47,14 +47,14 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
   test('it filters by username(s) if given', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, redis);
 
     let user1 = this.server.create('user', { username: 'user1' });
     let user2 = this.server.create('user', { username: 'user2' });
     let user3 = this.server.create('user', { username: 'user3' });
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user2 });
@@ -66,7 +66,8 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
   test('it filters by languages(s) if given', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, redis);
 
     let user1 = this.server.create('user', { username: 'user1' });
     let user2 = this.server.create('user', { username: 'user2' });
@@ -75,7 +76,6 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let javascript = this.server.schema.languages.findBy({ slug: 'javascript' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
@@ -92,7 +92,6 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     await submissionsPage.visit({ course_slug: 'git' });
     let route = this.owner.lookup('route:application');
-    console.log(route);
     assert.strictEqual(route._router.currentPath, 'catalog', 'should redirect to catalog page');
   });
 
