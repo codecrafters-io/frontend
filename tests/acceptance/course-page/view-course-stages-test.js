@@ -133,7 +133,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.ok(coursePage.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.ok(coursePage.upgradePrompt.isVisible, 'course stage item that is not free should have upgrade prompt');
 
     await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
 
@@ -142,6 +142,158 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await coursePage.sidebar.clickOnStepListItem('Process isolation').click(); // The next pending stage
     assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
+  });
+
+  test('upgrade prompt should have the correct copy when the user is eligible for both early bird and regional discounts', async function (assert) {
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    currentUser.update('createdAt', new Date(new Date().getTime() - 23 * 60 * 60 * 1000));
+
+    this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
+
+    signIn(this.owner, this.server);
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('course-stage-completion', {
+        repository: repository,
+        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+      });
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
+
+    assert.strictEqual(
+      coursePage.upgradePrompt.secondaryCopy,
+      'Plans start at $30/mo $15/mo (discounted price for India). Save an additional 40% by joining within an hour.',
+    );
+  });
+
+  test('upgrade prompt should have the correct copy when the user is eligible for an early bird discount', async function (assert) {
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    currentUser.update('createdAt', new Date(new Date().getTime() - 23 * 60 * 60 * 1000));
+
+    signIn(this.owner, this.server);
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('course-stage-completion', {
+        repository: repository,
+        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+      });
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
+
+    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/mo. Save 40% by joining within an hour.');
+  });
+
+  test('upgrade prompt should have the correct copy when the user is eligible for a regional discount', async function (assert) {
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
+
+    signIn(this.owner, this.server);
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('course-stage-completion', {
+        repository: repository,
+        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+      });
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
+
+    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/mo $15/mo (discounted price for India).');
+  });
+
+  test('upgrade prompt should have the correct copy when there are no discounts', async function (assert) {
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    signIn(this.owner, this.server);
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user: currentUser,
+    });
+
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('course-stage-completion', {
+        repository: repository,
+        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+      });
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
+
+    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/mo.');
   });
 
   test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
