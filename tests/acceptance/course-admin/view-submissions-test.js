@@ -1,3 +1,4 @@
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -91,8 +92,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await submissionsPage.visit({ course_slug: 'git' });
-    let route = this.owner.lookup('route:application');
-    assert.strictEqual(route._router.currentPath, 'catalog', 'should redirect to catalog page');
+    assert.strictEqual(currentURL(), '/catalog', 'should redirect to catalog page');
   });
 
   test('it should be accessible if user is course author and authored current course', async function (assert) {
@@ -101,7 +101,6 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await submissionsPage.visit({ course_slug: 'redis' });
-    let route = this.owner.lookup('route:application');
-    assert.strictEqual(route._router.currentPath, 'course-admin.submissions', 'route should be accessible');
+    assert.strictEqual(currentURL(), '/courses/redis/admin/submissions', 'route should be accessible');
   });
 });

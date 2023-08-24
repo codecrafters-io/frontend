@@ -1,6 +1,7 @@
 import percySnapshot from '@percy/ember';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -101,8 +102,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await testerVersionsPage.visit({ course_slug: 'git' });
-    let route = this.owner.lookup('route:application');
-    assert.strictEqual(route._router.currentPath, 'catalog', 'should redirect to catalog page');
+    assert.strictEqual(currentURL(), '/catalog', 'should redirect to catalog page');
   });
 
   test('it should be accessible if user is course author and authored current course', async function (assert) {
@@ -111,7 +111,6 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
-    let route = this.owner.lookup('route:application');
-    assert.strictEqual(route._router.currentPath, 'course-admin.tester-versions', 'route should be accessible');
+    assert.strictEqual(currentURL(), '/courses/redis/admin/tester-versions', 'route should be accessible');
   });
 });
