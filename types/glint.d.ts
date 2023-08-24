@@ -36,7 +36,6 @@ declare module '@glint/environment-ember-loose/registry' {
     'page-title': HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     repeat: HelperLike<{ Return: string[]; Args: { Positional: [number] } }>;
     gt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
-    FeatureCard: ComponentLike<{ Args: { Named: { content: SafeString, imageUrl: string, title: string } } }>;
     // ...
   }
 }
