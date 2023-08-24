@@ -55,8 +55,8 @@
           <div class="flex items-center">
             {{@submission.testerVersion.tagName}}
 
-            {{#if @submission.testerVersion.isLatest}}
-              (latest)
+            {{#if @submission.testerVersion.isActive}}
+              (active)
             {{else}}
               <TertiaryButtonWithSpinner
                 @shouldShowSpinner={{this.isUpdatingTesterVersion}}
@@ -64,7 +64,7 @@
                 class="ml-2"
                 {{on "click" this.handleTesterVersionUpdateButtonClick}}
               >
-                Force Update
+                Update to active version
               </TertiaryButtonWithSpinner>
             {{/if}}
           </div>
