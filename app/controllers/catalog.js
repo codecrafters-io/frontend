@@ -9,7 +9,13 @@ export default class TracksController extends Controller {
       return this.model.courses;
     }
 
-    return this.model.courses.rejectBy('releaseStatusIsAlpha');
+    return this.model.courses.filter((course) => {
+      if (course.releaseStatusIsAlpha) {
+        return this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
+      } else {
+        return true;
+      }
+    });
   }
 
   get languages() {
