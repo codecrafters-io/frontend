@@ -25,7 +25,6 @@ export default class TracksController extends Controller {
       .uniq();
   }
 
-  // TODO: The sort implementation here is incorrect! It should compare values and return 1/-1, not return the value.
   get orderedCourses() {
     if (!this.authenticator.currentUser) {
       return this.courses.toArray().sort((course1, course2) => {
