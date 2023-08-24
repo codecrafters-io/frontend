@@ -1,4 +1,5 @@
 import type RenderModifiersRegistry from '@ember/render-modifiers/template-registry';
+import { SafeString } from '@ember/template/-private/handlebars';
 import type { ModifierLike } from '@glint/template';
 import type { HelperLike } from '@glint/template';
 import type { ComponentLike } from '@glint/template';
