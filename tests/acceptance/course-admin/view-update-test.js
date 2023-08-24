@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import updatesPage from 'codecrafters-frontend/tests/pages/course-admin/updates-page';
 import updatePage from 'codecrafters-frontend/tests/pages/course-admin/update-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -12,7 +12,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
 
   test('it has the correct link for viewing diffs', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'redis' });
     course.update('definitionRepositoryFullName', 'codecrafters-io/redis');
@@ -58,7 +58,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
 
   test('it should have a working button for syncing with github for individual update', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     const update = this.server.create('course-definition-update', {
       course: this.server.schema.courses.findBy({ slug: 'redis' }),
@@ -83,7 +83,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
 
   test('it should properly be properly rendered as an html', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
       course: this.server.schema.courses.findBy({ slug: 'redis' }),

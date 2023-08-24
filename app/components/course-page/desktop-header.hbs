@@ -9,9 +9,9 @@
     </div>
 
     <div class="flex items-center gap-x-3">
-      {{#if this.currentUser.isStaff}}
+      {{#if (or this.currentUser.isStaff (current-user-is-course-author @course))}}
         <LinkTo @route="course-admin.submissions" @model={{@course.slug}}>
-          <TertiaryButton @size="small">
+          <TertiaryButton @size="small" data-test-course-admin-button>
             Admin
           </TertiaryButton>
         </LinkTo>

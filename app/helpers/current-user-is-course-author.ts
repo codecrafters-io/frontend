@@ -22,3 +22,9 @@ export default class CurrentUserIsCourseAuthor extends Helper<Signature> {
     return this.authenticator.currentUser && this.authenticator.currentUser.isCourseAuthor(course);
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'current-user-is-course-author': typeof CurrentUserIsCourseAuthor;
+  }
+}

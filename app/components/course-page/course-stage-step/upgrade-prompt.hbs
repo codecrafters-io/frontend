@@ -1,22 +1,42 @@
 <div
-  class="border rounded flex items-center p-4
-    {{if (eq @color 'gray') 'border-gray-300' 'border-yellow-300'}}
-    {{if (eq @color 'gray') 'bg-gray-50' 'bg-yellow-50'}}
-    {{@class}}"
+  class="py-6 px-5 rounded bg-teal-50 border border-teal-600"
+  {{did-insert this.handleDidInsert}}
+  {{did-resize this.onResize}}
   data-test-upgrade-prompt
+  ...attributes
 >
-  {{svg-jar "exclamation" class=(concat "w-8 h-8 mr-2 flex-shrink-0 " (if (eq @color "gray") "text-gray-300" "text-yellow-300"))}}
-
-  <div class="{{if (eq @color 'gray') 'text-gray-500' 'text-yellow-700'}} text-sm leading-relaxed">
-    <div class="mb-1">
-      This stage requires a CodeCrafters Membership.
-    </div>
+  <div class="flex justify-between {{if this.isLarge 'flex-row items-center' 'flex-col'}}">
     <div>
-      <span class="underline" role="button" {{on "click" this.handleSubscribeLinkClicked}} data-test-subscribe-button>
-        <b class="font-semibold">
-          Start your membership now.
-        </b>
-      </span>
+      <div class="font-bold text-slate-600 {{if this.isLarge 'text-2xl' 'text-xl'}}">
+        This stage requires a<br />
+        CodeCrafters Membership.
+      </div>
+
+      <div class="pt-3 pb-6 max-w-sm text-slate-700 {{if this.isLarge 'text-base' 'text-sm'}}" data-test-upgrade-prompt-secondary-copy>
+        {{#if this.isLoadingRegionalDiscount}}
+          Plans start at $30/mo.
+        {{else}}
+          {{this.secondaryCopy}}
+        {{/if}}
+      </div>
+
+      <PrimaryButton class="{{if this.isLarge 'w-fit' 'w-full'}}">
+        <LinkTo @route="pay">
+          View Membership Plans →
+        </LinkTo>
+      </PrimaryButton>
+    </div>
+
+    <div class="flex flex-col gap-2 {{if this.isLarge 'mt-0' 'mt-10'}}">
+      {{#each this.featureList as |feature|}}
+        <div class="flex gap-4">
+          {{svg-jar "check" class="w-8 h-8 p-1 fill-current rounded bg-teal-500 text-white"}}
+
+          <div class="rounded bg-white border border-slate-200 px-4 text-slate-600 flex items-center">
+            {{feature}}
+          </div>
+        </div>
+      {{/each}}
     </div>
   </div>
 </div>

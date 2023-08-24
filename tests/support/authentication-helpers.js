@@ -13,6 +13,13 @@ export async function signInAsAdmin(owner, server, user) {
   await signIn(owner, server, user);
 }
 
+export async function signInAsCourseAuthor(owner, server, course, user) {
+  user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+  user.update('authoredCourseSlugs', [course.slug]);
+
+  await signInAsSubscriber(owner, server, user);
+}
+
 export async function signInAsStaff(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isStaff', true);

@@ -11,6 +11,10 @@ import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/co
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 
 export default create({
+  adminButton: {
+    scope: '[data-test-course-admin-button]',
+  },
+
   clickOnCollapseLeaderboardButton: clickable('[data-test-collapse-leaderboard-button]'),
   clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
@@ -84,7 +88,6 @@ export default create({
 
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
-  hasUpgradePrompt: isVisible('[data-test-upgrade-prompt]'),
   leaderboard: Leaderboard,
 
   monthlyChallengeBanner: {
@@ -102,8 +105,14 @@ export default create({
     hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
   },
 
-  sidebar: Sidebar,
   repositorySetupCard: RepositorySetupCard,
+  sidebar: Sidebar,
+
+  upgradePrompt: {
+    scope: '[data-test-upgrade-prompt]',
+    secondaryCopy: text('[data-test-upgrade-prompt-secondary-copy]'),
+  },
+
   visit: visitable('/courses/:course_slug'),
   yourTaskCard: YourTaskCard,
 });
