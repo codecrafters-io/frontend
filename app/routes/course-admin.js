@@ -7,6 +7,8 @@ export default class CourseAdminRoute extends BaseRoute {
   @service store;
 
   async beforeModel() {
+    await super.beforeModel(...arguments);
+
     await this.authenticator.authenticate();
     let { course_slug } = this.paramsFor('course-admin');
 
