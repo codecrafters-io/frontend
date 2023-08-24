@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import updatesPage from 'codecrafters-frontend/tests/pages/course-admin/updates-page';
 import updatePage from 'codecrafters-frontend/tests/pages/course-admin/update-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -13,7 +13,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
 
   test('can apply update', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
       course: this.server.schema.courses.findBy({ slug: 'redis' }),
@@ -39,7 +39,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
 
   test('can apply update with error', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
       course: this.server.schema.courses.findBy({ slug: 'redis' }),

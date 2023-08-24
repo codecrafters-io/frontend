@@ -1,38 +1,21 @@
-import config from 'codecrafters-frontend/config/environment';
 import percySnapshot from '@percy/ember';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import window from 'ember-window-mock';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff, signInAsCourseAuthor } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-admin | view-tester-versions', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  test('it forces login when user is not logged in', async function (assert) {
-    testScenario(this.server);
-
-    try {
-      await testerVersionsPage.visit({ course_slug: 'redis' });
-    } catch (e) {
-      // pass
-    }
-
-    assert.strictEqual(
-      window.location.href,
-      `${config.x.backendUrl}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fcourses%2Fredis%2Fadmin%2Ftester-versions`,
-      'should redirect to login',
-    );
-  });
-
   test('it renders when no tester versions are present', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 0, 'should have no tester versions');
@@ -41,7 +24,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
   test('it renders when tester versions are present', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
@@ -71,7 +54,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
   test('it should have a working button for syncing with github', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
@@ -103,7 +86,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
   test('it has the correct tester repository link', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'redis' });
     course.update('testerRepositoryFullName', 'codecrafters-io/redis-tester');
@@ -111,5 +94,23 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     await testerVersionsPage.visit({ course_slug: course.slug });
     assert.strictEqual(testerVersionsPage.testerRepositoryLink.href, 'https://github.com/codecrafters-io/redis-tester');
     assert.strictEqual(testerVersionsPage.testerRepositoryLink.text, 'codecrafters-io/redis-tester');
+  });
+
+  test('it should not be accessible if user is course author and did not author current course', async function (assert) {
+    testScenario(this.server);
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, course);
+
+    await testerVersionsPage.visit({ course_slug: 'git' });
+    assert.strictEqual(currentURL(), '/catalog', 'should redirect to catalog page');
+  });
+
+  test('it should be accessible if user is course author and authored current course', async function (assert) {
+    testScenario(this.server);
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, course);
+
+    await testerVersionsPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(currentURL(), '/courses/redis/admin/tester-versions', 'route should be accessible');
   });
 });

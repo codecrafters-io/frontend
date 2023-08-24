@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -11,7 +11,7 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
 
   test('can activate tester version', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsStaff(this.owner, this.server);
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),

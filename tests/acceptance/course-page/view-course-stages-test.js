@@ -7,7 +7,12 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsSubscriber, signInAsSubscribedTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import {
+  signIn,
+  signInAsCourseAuthor,
+  signInAsSubscriber,
+  signInAsSubscribedTeamMember,
+} from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL, waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
@@ -551,5 +556,29 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
 
     assert.ok(analyticsEventNames.includes('clicked_monthly_challenge_banner'), 'clicked_monthly_challenge_banner event should be tracked');
+  });
+
+  test('stage should restrict admin access to user if user is course author and course is not authored by user', async function (assert) {
+    testScenario(this.server);
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, course);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Git');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.false(coursePage.adminButton.isVisible, 'admin button should not be visible');
+  });
+
+  test('stage should not restrict admin access to user if user is course author and course is authored by user', async function (assert) {
+    testScenario(this.server);
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, course);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.true(coursePage.adminButton.isVisible, 'admin button should be visible');
   });
 });
