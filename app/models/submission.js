@@ -2,8 +2,9 @@ import Model, { hasMany } from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
 
 export default class SubmissionModel extends Model {
-  @belongsTo('courseStage', { async: false }) courseStage;
-  @belongsTo('communityCourseStageSolution', { async: false }) communityCourseStageSolution;
+  @belongsTo('course-stage', { async: false }) courseStage;
+  @belongsTo('community-course-stage-solution', { async: false }) communityCourseStageSolution;
+  @belongsTo('course-tester-version', { async: false, inverse: null }) courseTesterVersion;
   @belongsTo('repository', { async: false, inverse: 'submissions' }) repository;
 
   @hasMany('badge-award', { async: false }) badgeAwards;
