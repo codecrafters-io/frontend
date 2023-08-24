@@ -35,7 +35,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
-    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot is valid until January 1, 2099 12:00 AM.");
+    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot is valid until January 1st, 2099 at 12:00 AM.");
   });
 
   test('team with expired pilot sees payment method prompt', async function (assert) {
@@ -60,7 +60,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
-    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1, 1999.");
+    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1st, 1999.");
     assert.strictEqual(teamPage.setupSubscriptionContainer.instructionsText, 'To setup your team subscription, start by adding a payment method:');
 
     await teamPage.setupSubscriptionContainer.clickOnAddPaymentMethodButton();
@@ -91,7 +91,7 @@ module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
     await catalogPage.accountDropdown.clickOnLink('Manage Team');
 
     assert.ok(teamPage.setupSubscriptionContainer.isPresent, 'pilot details are visible');
-    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1, 1999.");
+    assert.strictEqual(teamPage.setupSubscriptionContainer.pilotDetailsText, "Your team's pilot ended on January 1st, 1999.");
     assert.strictEqual(teamPage.setupSubscriptionContainer.instructionsText, 'Click below to start your subscription:');
 
     assert.strictEqual(
