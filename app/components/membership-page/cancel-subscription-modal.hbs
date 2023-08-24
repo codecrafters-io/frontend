@@ -8,7 +8,7 @@
       Your trial will be cancelled immediately. If you'd like to proceed, please pick a reason below and click on "Cancel Trial".
     {{else}}
       Your membership will remain active until
-      <span class="font-semibold">{{moment-format this.subscription.currentPeriodEnd "LLL"}}</span>. If you'd like to proceed with cancellation,
+      <span class="font-semibold">{{date-format this.subscription.currentPeriodEnd format="LLL"}}</span>. If you'd like to proceed with cancellation,
       please pick a reason below and click on "Cancel Subscription".
     {{/if}}
   </div>

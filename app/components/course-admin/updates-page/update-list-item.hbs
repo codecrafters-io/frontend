@@ -25,7 +25,7 @@
       <p class="whitespace-nowrap">
         {{#if @update.appliedAt}}
           Applied on
-          {{moment-format @update.appliedAt "LL"}}
+          {{date-format @update.appliedAt format="LL"}}
         {{else if @update.lastSyncedAt}}
           Last synced
           {{moment-from-now @update.lastSyncedAt}}

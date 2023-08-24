@@ -6,7 +6,7 @@
 
   <div class="text-blue-700 prose prose-blue leading-7">
     Subscribe by
-    <span class="font-semibold percy-timestamp">{{moment-format @customDiscount.expiresAt "LLL"}}</span>
+    <span class="font-semibold percy-timestamp">{{date-format @customDiscount.expiresAt format="LLL"}}</span>
     to get the 1 year plan for
     <span class="font-semibold">${{@customDiscount.discountedYearlyPriceInDollars}}</span>.
   </div>
