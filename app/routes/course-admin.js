@@ -10,7 +10,7 @@ export default class CourseAdminRoute extends BaseRoute {
     await this.authenticator.authenticate();
     let { course_slug } = this.paramsFor('course-admin');
 
-    if (!this.authenticator.currentUser.isCourseAuthor({ slug: course_slug })) {
+    if (!this.authenticator.currentUser.isCourseAuthor({ slug: course_slug }) && !this.authenticator.currentUser.isStaff) {
       this.router.transitionTo('catalog');
     }
   }
