@@ -26,7 +26,7 @@
       <PayPage::PricingCard
         @actualPrice={{120}}
         @footerText="Single payment of $120."
-        @isRecommended={{false}}
+        @isRecommended={{true}}
         @pricingFrequency="quarterly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @title="3 months access"
@@ -39,7 +39,7 @@
         @discountedPrice={{this.discountedYearlyPrice}}
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
         @footerText="Singly payment of ${{or this.discountedYearlyPrice 360}}."
-        @isRecommended={{true}}
+        @isRecommended={{false}}
         @pricingFrequency="yearly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
