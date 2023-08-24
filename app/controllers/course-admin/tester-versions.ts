@@ -36,6 +36,6 @@ export default class CourseTesterVersionsController extends Controller {
 
 
   get sortedTesterVersions() {
-    return this.model.course.testerVersions.sortBy('lastSyncedAt').reverse();
+    return this.model.course.testerVersions.sortBy('createdAt').reverse();
   }
 }
