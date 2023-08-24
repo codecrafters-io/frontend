@@ -9,18 +9,6 @@ export default class PricingCardComponent extends Component {
   @service store;
   @tracked isCreatingCheckoutSession = false;
 
-  get actualAmortizedMonthlyPrice() {
-    return Math.round((this.args.actualPrice / this.numberOfMonths) * 100) / 100;
-  }
-
-  get discountedAmortizedMonthlyPrice() {
-    if (this.args.discountedPrice === null) {
-      return null;
-    }
-
-    return Math.round((this.args.discountedPrice / this.numberOfMonths) * 100) / 100;
-  }
-
   get featureDescriptions() {
     return ['One time payment', 'No limits on content', 'Community features', 'Priority builds', 'Priority support'];
   }
