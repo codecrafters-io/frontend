@@ -56,7 +56,7 @@
             {{@submission.testerVersion.tagName}}
 
             {{#if @submission.testerVersion.isActive}}
-              (active)
+              <span class="ml-1 text-gray-400 text-sm">(active)</span>
             {{else}}
               <TertiaryButtonWithSpinner
                 @shouldShowSpinner={{this.isUpdatingTesterVersion}}
