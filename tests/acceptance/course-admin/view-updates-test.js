@@ -138,6 +138,6 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
 
     await updatesPage.visit({ course_slug: 'redis' });
     let route = this.owner.lookup('route:application');
-    assert.strictEqual(route._router.currentPath, 'course-admin.updates', 'should redirect to catalog page');
+    assert.strictEqual(route._router.currentPath, 'course-admin.updates', 'route should be accessible');
   });
 });

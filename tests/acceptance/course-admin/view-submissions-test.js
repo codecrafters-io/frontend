@@ -102,6 +102,6 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     await submissionsPage.visit({ course_slug: 'redis' });
     let route = this.owner.lookup('route:application');
-    assert.strictEqual(route._router.currentPath, 'course-admin.submissions', 'should redirect to catalog page');
+    assert.strictEqual(route._router.currentPath, 'course-admin.submissions', 'route should be accessible');
   });
 });

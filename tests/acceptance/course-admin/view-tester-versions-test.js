@@ -112,6 +112,6 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     let route = this.owner.lookup('route:application');
-    assert.strictEqual(route._router.currentPath, 'course-admin.tester-versions', 'should redirect to catalog page');
+    assert.strictEqual(route._router.currentPath, 'course-admin.tester-versions', 'route should be accessible');
   });
 });
