@@ -72,10 +72,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let user2 = this.server.create('user', { username: 'user2' });
     let user3 = this.server.create('user', { username: 'user3' });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let javascript = this.server.schema.languages.findBy({ slug: 'javascript' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
