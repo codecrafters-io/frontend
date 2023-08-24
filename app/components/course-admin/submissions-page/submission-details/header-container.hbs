@@ -7,7 +7,7 @@
 
     <table>
       <tbody>
-        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="status">
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Status">
           <div class="flex items-center">
             {{#if @submission.statusIsSuccess}}
               Tests passed
@@ -37,20 +37,36 @@
             <span class="mr-2 text-gray-600">
               {{@submission.repository.language.name}}
             </span>
-            <button
-              class="mr-2 bg-gray-100 border border-gray-300 rounded p-1 inline-block text-gray-400 hover:shadow-xs hover:text-gray-500 active:shadow-sm active:bg-gray-200 transition-all"
-              type="button"
-              {{on "click" this.handleCopyRepositoryURLButtonClick}}
-            >
-              {{svg-jar "download" class="w-4 fill-current"}}
-            </button>
-            <button
-              class="bg-gray-100 border border-gray-300 rounded p-1 inline-block text-gray-400 hover:shadow-xs hover:text-gray-500 active:shadow-sm active:bg-gray-200 transition-all"
-              type="button"
-              {{on "click" this.handleViewCodeButtonClick}}
-            >
-              {{svg-jar "code" class="w-4 fill-current"}}
-            </button>
+
+            <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleCopyRepositoryURLButtonClick}}>
+              {{svg-jar "download" class="w-4 text-gray-500"}}
+              <EmberTooltip @text="Click to copy Git URL" />
+            </TertiaryButton>
+
+            {{#if (current-user-is-staff)}}
+              <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleViewCodeButtonClick}}>
+                {{svg-jar "code" class="w-4 text-gray-500"}}
+                <EmberTooltip @text="Click to view diff on GitHub (login as codecrafters-bot)" />
+              </TertiaryButton>
+            {{/if}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Tester version" class="group/tester-version-row">
+          <div class="flex items-center">
+            {{@submission.testerVersion.tagName}}
+
+            {{#if @submission.testerVersion.isLatest}}
+              (latest)
+            {{else}}
+              <TertiaryButtonWithSpinner
+                @shouldShowSpinner={{this.isUpdatingTesterVersion}}
+                @size="extra-small"
+                class="ml-2"
+                {{on "click" this.handleTesterVersionUpdateButtonClick}}
+              >
+                Force Update
+              </TertiaryButtonWithSpinner>
+            {{/if}}
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
       </tbody>
