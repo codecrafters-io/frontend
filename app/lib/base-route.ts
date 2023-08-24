@@ -4,18 +4,18 @@ import window from 'ember-window-mock';
 import RouterService from '@ember/routing/router-service';
 import paramsFromRouteInfo from 'codecrafters-frontend/lib/params-from-route-info';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 type Transition = ReturnType<RouterService['transitionTo']>;
 
 export default class BaseRoute extends Route {
   allowsAnonymousAccess = false;
-  @service authenticator: unknown;
+  @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service utmCampaignIdTracker: unknown;
   @service declare fastboot: FastBootService;
 
   beforeModel(transition: Transition) {
-    // @ts-ignore
     this.authenticator.authenticate();
 
     // Routes attempting to call `initiateLogin` don't support FastBoot at this time
@@ -23,15 +23,12 @@ export default class BaseRoute extends Route {
       throw new Error('FastBoot is not supported on routes without "allowsAnonymousAccess=true"');
     }
 
-    // @ts-ignore
     if (!this.allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
       const params = paramsFromRouteInfo(transition.to);
 
       if (Object.keys(params).length > 0) {
-        // @ts-ignore
         this.authenticator.initiateLogin(this.router.urlFor(transition.to.name, params));
       } else {
-        // @ts-ignore
         this.authenticator.initiateLogin(this.router.urlFor(transition.to.name));
       }
 

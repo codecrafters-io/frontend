@@ -1,6 +1,7 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 import { cached } from '@glimmer/tracking';
+import { memberAction } from 'ember-api-actions';
 
 export default class RepositoryModel extends Model {
   static expectedActivityFrequencyMappings = {
@@ -148,3 +149,8 @@ export default class RepositoryModel extends Model {
     return this.highestCompletedStage && this.highestCompletedStage.position >= courseStage.position;
   }
 }
+
+RepositoryModel.prototype.updateTesterVersion = memberAction({
+  path: 'update-tester-version',
+  type: 'post',
+});

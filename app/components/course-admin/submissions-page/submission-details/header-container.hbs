@@ -7,63 +7,68 @@
 
     <table>
       <tbody>
-        <tr>
-          <td class="py-1 pr-12 text-gray-400">Status</td>
-          <td class="text-gray-600">
-            <div class="flex items-center">
-              {{#if @submission.statusIsSuccess}}
-                Tests passed
-                <div class="w-4 h-4 rounded-full bg-green-600 ml-2 flex items-center justify-center">
-                  {{svg-jar "check" class="w-3 fill-current text-white"}}
-                </div>
-              {{else if @submission.statusIsFailure}}
-                Tests failed
-                <div class="w-4 h-4 rounded-full bg-red-600 ml-2 flex items-center justify-center">
-                  {{svg-jar "x" class="w-3 fill-current text-white"}}
-                </div>
-              {{else if @submission.statusIsEvaluatin}}
-                Evaluating
-              {{else if @submission.statusIsInternalError}}
-                Internal Error
-              {{/if}}
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-1 pr-12 text-gray-400">Time taken</td>
-          <td class="text-gray-600">
-            <div class="flex items-center">
-              {{this.formattedDuration}}
-              {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-1 pr-12 text-gray-400">Language</td>
-          <td>
-            <div class="flex items-center">
-              <span class="mr-2 text-gray-600">
-                {{@submission.repository.language.name}}
-              </span>
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Status">
+          <div class="flex items-center">
+            {{#if @submission.statusIsSuccess}}
+              Tests passed
+              <div class="w-4 h-4 rounded-full bg-green-600 ml-2 flex items-center justify-center">
+                {{svg-jar "check" class="w-3 fill-current text-white"}}
+              </div>
+            {{else if @submission.statusIsFailure}}
+              Tests failed
+              <div class="w-4 h-4 rounded-full bg-red-600 ml-2 flex items-center justify-center">
+                {{svg-jar "x" class="w-3 fill-current text-white"}}
+              </div>
+            {{else if @submission.statusIsEvaluatin}}
+              Evaluating
+            {{else if @submission.statusIsInternalError}}
+              Internal Error
+            {{/if}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Time taken">
+          <div class="flex items-center">
+            {{this.formattedDuration}}
+            {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Language">
+          <div class="flex items-center">
+            <span class="mr-2 text-gray-600">
+              {{@submission.repository.language.name}}
+            </span>
 
-              <button
-                class="mr-2 bg-gray-100 border border-gray-300 rounded p-1 inline-block text-gray-400 hover:shadow-xs hover:text-gray-500 active:shadow-sm active:bg-gray-200 transition-all"
-                type="button"
-                {{on "click" this.handleCopyRepositoryURLButtonClick}}
-              >
-                {{svg-jar "download" class="w-4 fill-current"}}
-              </button>
+            <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleCopyRepositoryURLButtonClick}}>
+              {{svg-jar "download" class="w-4 text-gray-500"}}
+              <EmberTooltip @text="Click to copy Git URL" />
+            </TertiaryButton>
 
-              <button
-                class="bg-gray-100 border border-gray-300 rounded p-1 inline-block text-gray-400 hover:shadow-xs hover:text-gray-500 active:shadow-sm active:bg-gray-200 transition-all"
-                type="button"
-                {{on "click" this.handleViewCodeButtonClick}}
+            {{#if (current-user-is-staff)}}
+              <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleViewCodeButtonClick}}>
+                {{svg-jar "code" class="w-4 text-gray-500"}}
+                <EmberTooltip @text="Click to view diff on GitHub (login as codecrafters-bot)" />
+              </TertiaryButton>
+            {{/if}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Tester version" class="group/tester-version-row">
+          <div class="flex items-center">
+            {{@submission.testerVersion.tagName}}
+
+            {{#if @submission.testerVersion.isLatest}}
+              (latest)
+            {{else}}
+              <TertiaryButtonWithSpinner
+                @shouldShowSpinner={{this.isUpdatingTesterVersion}}
+                @size="extra-small"
+                class="ml-2"
+                {{on "click" this.handleTesterVersionUpdateButtonClick}}
               >
-                {{svg-jar "code" class="w-4 fill-current"}}
-              </button>
-            </div>
-          </td>
-        </tr>
+                Force Update
+              </TertiaryButtonWithSpinner>
+            {{/if}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
       </tbody>
     </table>
   </div>

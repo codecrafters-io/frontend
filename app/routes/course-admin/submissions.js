@@ -30,6 +30,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
           'community-course-stage-solution.comments',
           'community-course-stage-solution.comments.user',
           'community-course-stage-solution.comments.target',
+          'tester-version',
         ].join(','),
       },
     });
