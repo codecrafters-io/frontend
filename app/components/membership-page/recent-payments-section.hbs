@@ -12,7 +12,7 @@
       <div class="border-b pb-2"></div>
 
       {{#each this.charges as |charge|}}
-        <div class="text-gray-600 text-sm">{{date-format charge.createdAt format="LL"}}</div>
+        <div class="text-gray-600 text-sm">{{date-format charge.createdAt format="PPP"}}</div>
 
         <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right">
           <span class="font-semibold">${{charge.amountInDollars}}</span>

@@ -21,7 +21,7 @@
         <p class="whitespace-nowrap">
           Activated on
           {{! @glint-expect-error and isn't TS-ified properly yet !}}
-          {{date-format @courseTesterVersion.lastActivatedAt format="LL"}}
+          {{date-format @courseTesterVersion.lastActivatedAt format="PPP"}}
         </p>
 
         {{#if @courseTesterVersion.activator}}
