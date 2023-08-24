@@ -2,8 +2,8 @@
 import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 
 export class TemporaryCourseModel {
-  declare id: string;
-  declare name: string;
+  declare id?: string;
+  declare name?: string;
   declare slug: string;
 }
 

@@ -36,7 +36,6 @@ declare module '@glint/environment-ember-loose/registry' {
     repeat: HelperLike<{ Return: string[]; Args: { Positional: [number] } }>;
     gt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
-    'current-user-is-course-author': HelperLike<{ Args: { Positional: [unknown] }; Return: boolean }>;
     // ...
   }
 }
