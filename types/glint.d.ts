@@ -30,7 +30,7 @@ declare module '@glint/environment-ember-loose/registry' {
     and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     eq: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'date-format': HelperLike<{ Return: string; Args: { Positional: [Date], Named: { format?: string } } }>;
-    'moment-from-now': HelperLike<{ Return: string; Args: { Positional: [Date] } }>;
+    'date-from-now': HelperLike<{ Return: string; Args: { Positional: [Date], Named: { currentDate?: Date } } }>;
     not: HelperLike<{ Args: { Positional: [unknown] }; Return: boolean }>;
     'not-eq': HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'page-title': HelperLike<{ Return: string; Args: { Positional: [string] } }>;
