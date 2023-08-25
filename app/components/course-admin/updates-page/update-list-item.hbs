@@ -28,7 +28,7 @@
           {{date-format @update.appliedAt format="PPP"}}
         {{else if @update.lastSyncedAt}}
           Last synced
-          {{moment-from-now @update.lastSyncedAt}}
+          {{date-from-now @update.lastSyncedAt}}
         {{/if}}
       </p>
       {{#if @update.applier}}

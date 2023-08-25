@@ -16,7 +16,7 @@
         <span class="font-semibold" data-test-username>{{@referralActivation.customer.username}}</span>
       </div>
       <div class="text-gray-700 text-sm block lg:hidden">
-        <span class="text-gray-400 text-xs">{{moment-from-now @referralActivation.activatedAt}}</span>
+        <span class="text-gray-400 text-xs">{{date-from-now @referralActivation.activatedAt}}</span>
       </div>
     </div>
   </a>
@@ -59,6 +59,6 @@
       {{/if}}
     </div>
 
-    <span class="text-gray-400 text-xs hidden lg:block">{{moment-from-now @referralActivation.activatedAt}}</span>
+    <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @referralActivation.activatedAt}}</span>
   </div>
 </div>
