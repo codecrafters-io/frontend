@@ -1,6 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import moment from 'moment';
+import { formatDistanceStrictWithOptions } from 'date-fns/fp';
 import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import showdown from 'showdown';
 import Store from '@ember-data/store';
@@ -58,9 +58,9 @@ export default class UpgradePromptComponent extends Component<Signature> {
 
   get secondaryCopy(): SafeString {
     if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
-      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.regionalDiscount.countryName}). Save an additional 40% by joining within ${moment(this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt).fromNow(true)}.`)
+      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.regionalDiscount.countryName}). Save an additional 40% by joining within ${formatDistanceStrictWithOptions({}, new Date(), this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt)}.`)
     } else if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount) {
-      return this.convertToHTML(`Plans start at $30/mo. Save 40% by joining within ${moment(this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt).fromNow(true)}.`)
+      return this.convertToHTML(`Plans start at $30/mo. Save 40% by joining within ${formatDistanceStrictWithOptions({}, new Date(), this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt)}.`)
     } else if (this.regionalDiscount) {
       return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.regionalDiscount.countryName}).`)
     } else {
