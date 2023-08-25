@@ -29,15 +29,29 @@
     {{#if @discountedPrice}}
       <div class="mt-8 flex items-center">
         <div>
-          <span class="text-4xl text-gray-700 font-bold line-through">${{@actualPrice}}</span>
+          {{#if @shouldShowAmortizedMonthlyPrice}}
+            <span class="text-4xl text-gray-700 font-bold line-through">${{this.actualAmortizedMonthlyPrice}}</span>
+          {{else}}
+            <span class="text-4xl text-gray-700 font-bold line-through">${{@actualPrice}}</span>
+          {{/if}}
         </div>
         <div class="ml-2">
-          <span class="text-2xl text-teal-500 font-bold" data-test-discounted-price>${{@discountedPrice}}</span>
+          {{#if @shouldShowAmortizedMonthlyPrice}}
+            <span class="text-2xl text-teal-500 font-bold" data-test-discounted-price>${{this.discountedAmortizedMonthlyPrice}}</span>
+            <span class="text-2xl text-gray-400 font-bold">/mo</span>
+          {{else}}
+            <span class="text-2xl text-teal-500 font-bold" data-test-discounted-price>${{@discountedPrice}}</span>
+          {{/if}}
         </div>
       </div>
     {{else}}
       <div class="mt-8">
-        <span class="text-4xl text-gray-700 font-bold">${{@actualPrice}}</span>
+        {{#if @shouldShowAmortizedMonthlyPrice}}
+          <span class="text-4xl text-gray-700 font-bold">${{this.actualAmortizedMonthlyPrice}}</span>
+          <span class="text-lg text-gray-400 font-bold">/mo</span>
+        {{else}}
+          <span class="text-4xl text-gray-700 font-bold">${{@actualPrice}}</span>
+        {{/if}}
       </div>
     {{/if}}
 

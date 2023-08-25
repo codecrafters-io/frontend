@@ -29,6 +29,7 @@
         @isRecommended={{true}}
         @pricingFrequency="quarterly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
+        @shouldShowAmortizedMonthlyPrice={{false}}
         @title="3 months access"
         data-test-quarterly-pricing-card
       />
@@ -43,6 +44,7 @@
         @pricingFrequency="yearly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @referralDiscountEnabled={{this.user.isEligibleForReferralDiscount}}
+        @shouldShowAmortizedMonthlyPrice={{false}}
         @title="1 year access"
         data-test-yearly-pricing-card
       />
@@ -53,6 +55,7 @@
         @isRecommended={{false}}
         @pricingFrequency="lifetime"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
+        @shouldShowAmortizedMonthlyPrice={{false}}
         @title="Lifetime access"
         data-test-lifetime-pricing-card
       />
