@@ -5,9 +5,11 @@
 
   <div class="flex items-start flex-col lg:flex-row">
     <div class="flex-grow">
-      <Alert @type="success" class="mb-4">
-        This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
-      </Alert>
+      {{#if this.model.course.releaseStatusIsBeta}}
+        <Alert @type="success" class="mb-4">
+          This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
+        </Alert>
+      {{/if}}
 
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
 
