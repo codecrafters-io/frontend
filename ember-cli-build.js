@@ -80,7 +80,7 @@ module.exports = function (defaults) {
     staticHelpers: true,
     staticModifiers: true,
     staticComponents: true,
-    splitAtRoutes: ['badges', 'concept'], // can also be a RegExp
+    splitAtRoutes: ['badges', 'concept', 'code-walkthrough'], // can also be a RegExp
     packagerOptions: {
       publicAssetURL: '/',
       webpackConfig: {
