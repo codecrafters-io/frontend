@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { default as AnsiUp } from 'ansi_up';
+import { AnsiUp } from 'ansi_up';
 import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 
