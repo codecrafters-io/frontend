@@ -3,10 +3,10 @@
     <div class="text-gray-600 text-sm leading-6 mb-4" data-test-pilot-details-text>
       {{#if @team.activePilot}}
         Your team's pilot is valid until
-        <b class="font-semibold">{{moment-format @team.activePilot.endDate "LLL"}}</b>.
+        <b class="font-semibold">{{date-format @team.activePilot.endDate format="PPPp"}}</b>.
       {{else if @team.expiredPilot}}
         Your team's pilot ended on
-        <b class="font-semibold">{{moment-format @team.expiredPilot.endDate "LL"}}</b>.
+        <b class="font-semibold">{{date-format @team.expiredPilot.endDate format="PPP"}}</b>.
       {{/if}}
     </div>
   {{/if}}

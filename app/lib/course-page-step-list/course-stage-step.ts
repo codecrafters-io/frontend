@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { isToday, isYesterday } from 'date-fns';
-import moment from 'moment';
+import { formatDistanceStrictWithOptions } from 'date-fns/fp';
 import ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 
@@ -72,7 +72,7 @@ export default class CourseStageStep extends Step {
     } else if (this.completedAtWasYesterday) {
       return 'You completed this stage yesterday.';
     } else if (this.completedAt) {
-      return `You completed this stage ${moment(this.completedAt).fromNow()}.`;
+      return `You completed this stage ${formatDistanceStrictWithOptions({ addSuffix: true }, new Date(), this.completedAt || new Date())}.`;
     } else {
       return `You've completed this stage.`;
     }
@@ -113,7 +113,7 @@ export default class CourseStageStep extends Step {
     if (this.lastFailedSubmissionWasWithinLast10Minutes) {
       return 'Tests failed.';
     } else if (this.lastFailedSubmissionCreatedAt) {
-      return `Last attempt ${moment(this.lastFailedSubmissionCreatedAt).fromNow()}. Try again?`;
+      return `Last attempt ${formatDistanceStrictWithOptions({ addSuffix: true }, new Date(), this.lastFailedSubmissionCreatedAt || new Date())}. Try again?`;
     } else {
       return 'Last attempt failed. Try again?';
     }

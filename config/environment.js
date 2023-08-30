@@ -4,9 +4,6 @@ module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'codecrafters-frontend',
     environment,
-    moment: {
-      outputFormat: 'L',
-    },
     rootURL: '/',
     locationType: 'history',
     EmberENV: {

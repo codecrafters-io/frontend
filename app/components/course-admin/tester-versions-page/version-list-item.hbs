@@ -21,7 +21,7 @@
         <p class="whitespace-nowrap">
           Activated on
           {{! @glint-expect-error and isn't TS-ified properly yet !}}
-          {{moment-format @courseTesterVersion.lastActivatedAt "MMMM D, YYYY"}}
+          {{date-format @courseTesterVersion.lastActivatedAt format="PPP"}}
         </p>
 
         {{#if @courseTesterVersion.activator}}
@@ -34,7 +34,7 @@
       {{else if @courseTesterVersion.createdAt}}
         <p class="whitespace-nowrap">
           Created
-          {{moment-from-now @courseTesterVersion.createdAt}}
+          {{date-from-now @courseTesterVersion.createdAt}}
         </p>
       {{/if}}
     </div>

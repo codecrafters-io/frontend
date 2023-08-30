@@ -8,7 +8,7 @@
     Your payment method will be charged
     <span class="font-semibold">${{if this.isLoading "⋯" this.nextInvoicePreview.amountDueInDollars}}</span>
     on
-    {{if this.isLoading "⋯" (moment-format this.nextInvoicePreview.createdAt "LL")}}.
+    {{if this.isLoading "⋯" (date-format this.nextInvoicePreview.createdAt format="PPP")}}.
   {{else}}
     <div class="text-gray-700">
       No upcoming payment.
