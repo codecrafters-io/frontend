@@ -125,6 +125,9 @@ files, and handling custom file formats.`;
     } else if (this.isGrep) {
       return `
 Learn about regular expressions and how they're evaluated. Implement your own version of \`grep\` in ${language.name}.`;
+    } else if (this.slug === 'bittorrent') {
+      return `
+Learn about .torrent files and the famous BitTorrent protocol. Implement your own BitTorrent client in ${language.name}.`;
     }
   }
 
