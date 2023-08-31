@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 
-import airpodsImage from '/assets/images/monthly-challenges/airpods.png';
+import opalC1Image from '/assets/images/monthly-challenges/opal-c1.png';
 
 interface Signature {
   Element: HTMLAnchorElement;
 }
 
 export default class MonthlyChallengeBannerComponent extends Component<Signature> {
-  airpodsImage = airpodsImage;
+  opalC1Image = opalC1Image;
 }
