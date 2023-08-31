@@ -1,7 +1,7 @@
 <div class="bg-gray-100 border-r flex flex-col justify-between" data-test-course-page-sidebar ...attributes>
   {{yield}}
 
-  <div>
+  <div class="overflow-y-auto overflow-x-hidden">
     <div class="flex items-center">
       {{! @glint-expect-error: not typesafe yet}}
       <CourseLogo @course={{@course}} class="w-8 h-8 mr-3" />
