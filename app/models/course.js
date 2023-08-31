@@ -3,6 +3,7 @@ import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 
+import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
@@ -67,18 +68,17 @@ export default class CourseModel extends Model {
   }
 
   get logoUrl() {
-    return {
-      redis: redisLogo,
-      docker: dockerLogo,
-      git: gitLogo,
-      sqlite: sqliteLogo,
-      react: reactLogo,
-      grep: grepLogo,
-      'http-server': grepLogo, // temporary
-      'dns-server': grepLogo, // temporary
-      bittorrent: grepLogo, // temporary
-      interpreter: grepLogo, // temporary
-    }[this.slug];
+    return (
+      {
+        bittorrent: bittorrentLogo,
+        docker: dockerLogo,
+        git: gitLogo,
+        grep: grepLogo,
+        react: reactLogo,
+        redis: redisLogo,
+        sqlite: sqliteLogo,
+      }[this.slug] || grepLogo
+    );
   }
 
   get roundedCompletionPercentage() {
