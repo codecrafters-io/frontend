@@ -6,7 +6,7 @@ import { htmlSafe } from '@ember/template';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 import { SafeString } from '@ember/template/-private/handlebars';
 
-type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
+export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
 type BlockJSON = {
   type: string,
@@ -43,7 +43,6 @@ export default class Concept extends Model {
     }, {} as BlockClassMapping);
 
     return this.blocks.map((blockJSON: BlockJSON) => {
-
       const blockClass = blockTypeMapping[blockJSON.type];
 
       if (!blockClass) {

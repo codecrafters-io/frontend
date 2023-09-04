@@ -1,16 +1,49 @@
 import Component from '@glimmer/component';
 import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
+
+// @ts-ignore
 import { cached } from '@glimmer/tracking';
+
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import ConceptModel from 'codecrafters-frontend/models/concept';
+import type { Block } from 'codecrafters-frontend/models/concept';
+import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 
-export default class ConceptComponent extends Component {
-  @service analyticsEventTracker;
+interface Signature {
+  Args: {
+    concept: ConceptModel;
+    onProgressPercentageChange: (percentage: number) => void;
+  };
 
-  @tracked lastRevealedBlockGroupIndex = null;
-  @tracked interactedBlockIndexes = new TrackedSet([]);
+  Element: HTMLElement;
+}
+
+interface BlockGroup {
+  index: number;
+  blocks: Block[];
+}
+
+export default class ConceptComponent extends Component<Signature> {
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+
+  @tracked lastRevealedBlockGroupIndex: number | null = null;
+  @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
   @tracked hasFinished = false;
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
+    const urlParams = new URLSearchParams(window.location.search);
+    const bgiQueryParam = urlParams.get('bgi');
+
+    if (bgiQueryParam) {
+      this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
+    }
+  }
 
   @cached
   get allBlocks() {
@@ -24,20 +57,20 @@ export default class ConceptComponent extends Component {
   }
 
   @cached
-  get allBlockGroups() {
+  get allBlockGroups(): BlockGroup[] {
     return this.allBlocks.reduce((groups, block) => {
-      if (groups.length === 0) {
+      if (groups.length <= 0) {
         groups.push({ index: 0, blocks: [] });
       }
 
-      groups[groups.length - 1].blocks.push(block);
+      (groups[groups.length - 1] as BlockGroup).blocks.push(block);
 
       if (block.isInteractable || groups.length === 0) {
         groups.push({ index: groups.length, blocks: [] });
       }
 
       return groups;
-    }, []);
+    }, [] as BlockGroup[]);
   }
 
   get completedBlocksCount() {
@@ -55,7 +88,7 @@ export default class ConceptComponent extends Component {
   }
 
   @action
-  handleBlockGroupContainerInserted(blockGroup, containerElement) {
+  handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -67,18 +100,12 @@ export default class ConceptComponent extends Component {
   }
 
   @action
-  handleContinueButtonClick(block) {
-    this.allBlockGroups[this.currentBlockGroupIndex].blocks.forEach((block) => {
-      this.interactedBlockIndexes.add(block.index);
-    });
-
+  handleContinueButtonClick() {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
     }
-
-    this.interactedBlockIndexes.add(block.index);
 
     this.analyticsEventTracker.track('progressed_through_concept', {
       concept_id: this.args.concept.id,
@@ -87,12 +114,12 @@ export default class ConceptComponent extends Component {
   }
 
   @action
-  handleQuestionBlockSubmitted(block) {
-    this.interactedBlockIndexes.add(block.index);
+  handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
+    this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
 
   @action
-  handleContinueBlockInsertedAfterQuestion(element) {
+  handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
@@ -101,8 +128,10 @@ export default class ConceptComponent extends Component {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
-      this.allBlockGroups[this.currentBlockGroupIndex].blocks.forEach((block) => {
-        this.interactedBlockIndexes.delete(block.index);
+      (this.allBlockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
+        if (block.type === 'concept_question') {
+          this.submittedQuestionSlugs.delete((block as ConceptQuestionBlock).conceptQuestionSlug);
+        }
       });
 
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
@@ -127,7 +156,7 @@ export default class ConceptComponent extends Component {
     return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
   }
 
-  updateLastRevealedBlockGroupIndex(newBlockGroupIndex) {
+  updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
     this.args.onProgressPercentageChange(this.progressPercentage);
   }

@@ -1,12 +1,18 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import ConceptModel from 'codecrafters-frontend/models/concept';
 
-export default class ContentComponent extends Component {
+interface Signature {
+  concept: ConceptModel;
+  onProgressPercentageChange: (percentage: number) => void;
+}
+
+export default class ContentComponent extends Component<Signature> {
   @tracked currentProgressPercentage = 0;
 
   @action
-  handleProgressPercentageChanged(progressPercentage) {
+  handleProgressPercentageChanged(progressPercentage: number) {
     this.currentProgressPercentage = progressPercentage;
   }
 
@@ -15,7 +21,7 @@ export default class ContentComponent extends Component {
   }
 
   @action
-  handleCompletionContainerInserted(element) {
+  handleCompletionContainerInserted(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
