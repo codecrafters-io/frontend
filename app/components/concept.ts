@@ -33,6 +33,18 @@ export default class ConceptComponent extends Component<Signature> {
   @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
   @tracked hasFinished = false;
 
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
+    const urlParams = new URLSearchParams(window.location.search);
+    const bgiQueryParam = urlParams.get('bgi');
+
+    if (bgiQueryParam) {
+      this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
+    }
+  }
+
   @cached
   get allBlocks() {
     return this.args.concept.parsedBlocks.map((block, index) => {
