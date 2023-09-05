@@ -581,4 +581,17 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.true(coursePage.adminButton.isVisible, 'admin button should be visible');
   });
+
+  test('beta label renders properly', async function () {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('releaseStatus', 'beta');
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await percySnapshot('Course Stages - Beta Release Status');
+  });
 });
