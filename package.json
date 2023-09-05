@@ -149,7 +149,7 @@
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.0.2",
     "tailwindcss": "^3.3.3",
-    "tracked-built-ins": "^3.1.1",
+    "tracked-built-ins": "^3.2.0",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
     "webpack-bundle-analyzer": "^4.9.1"
@@ -174,7 +174,7 @@
     "player.js": "^0.1.0",
     "showdown": "^2.1.0",
     "three": "^0.156.1",
-    "tracked-built-ins": "^3.1.1",
+    "tracked-built-ins": "^3.2.0",
     "web-vitals": "^3.4.0"
   },
   "overrides": {
