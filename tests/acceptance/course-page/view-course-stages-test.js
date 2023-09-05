@@ -594,6 +594,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await percySnapshot('Course Stages - Beta Release Status');
 
-    assert.expect(0);
+    assert.strictEqual(coursePage.betaLabelText, 'FREE DURING BETA', 'beta label should be present');
   });
 });
