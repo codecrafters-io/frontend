@@ -1,25 +1,23 @@
-<div class="bg-gray-100 border-r flex flex-col justify-between" data-test-course-page-sidebar ...attributes>
+<div class="bg-gray-100 border-r flex flex-col" data-test-course-page-sidebar ...attributes>
   {{yield}}
 
-  <div>
-    <div class="flex items-center">
-      {{! @glint-expect-error: not typesafe yet}}
-      <CourseLogo @course={{@course}} class="w-8 h-8 mr-3" />
-
-      <h1 class="text-gray-800 font-semibold mr-3 tracking-tight">
-        {{@course.name}}
-      </h1>
-    </div>
-
-    {{#if @course.releaseStatusIsBeta}}
-      <BetaCourseLabel class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
-    {{/if}}
-
+  <div class="flex items-center">
     {{! @glint-expect-error: not typesafe yet}}
-    <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
+    <CourseLogo @course={{@course}} class="w-8 h-8 mr-3" />
 
-    <CoursePage::StepList @stepList={{this.stepList}} class="mt-10 -mx-3" />
+    <h1 class="text-gray-800 font-semibold mr-3 tracking-tight">
+      {{@course.name}}
+    </h1>
   </div>
+
+  {{#if @course.releaseStatusIsBeta}}
+    <BetaCourseLabel class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
+  {{/if}}
+
+  {{! @glint-expect-error: not typesafe yet}}
+  <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
+
+  <CoursePage::StepList @stepList={{this.stepList}} class="mt-10 -mx-3 flex-grow overflow-y-auto" />
 
   <div class="flex flex-col mt-4">
     {{#unless this.currentUser.canAccessPaidContent}}
