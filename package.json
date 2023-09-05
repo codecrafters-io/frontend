@@ -173,7 +173,7 @@
     "node-html-parser": "^6.1.6",
     "player.js": "^0.1.0",
     "showdown": "^2.1.0",
-    "three": "^0.156.0",
+    "three": "^0.156.1",
     "tracked-built-ins": "^3.1.1",
     "web-vitals": "^3.4.0"
   },
