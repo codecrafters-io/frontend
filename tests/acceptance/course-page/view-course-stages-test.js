@@ -582,7 +582,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.true(coursePage.adminButton.isVisible, 'admin button should be visible');
   });
 
-  test('beta label renders properly', async function () {
+  test('beta label renders properly', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -593,5 +593,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await percySnapshot('Course Stages - Beta Release Status');
+
+    assert.expect(0);
   });
 });
