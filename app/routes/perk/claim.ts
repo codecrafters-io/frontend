@@ -14,6 +14,10 @@ export default class PerksClaimRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
+  redirectTo(url: string): void {
+    window.location.href = url;
+  }
+
   async model(params: { slug: string }): Promise<{ data: { id: string, attributes: PerkModel } }> {
     const adapter = this.store.adapterFor('application' as never) as JSONAPIAdapter;
     const url = adapter.buildURL() + `/perks/${params.slug}/claim`;
@@ -25,9 +29,9 @@ export default class PerksClaimRoute extends BaseRoute {
   }
 
   async afterModel(normalizedResponse: { data: { id: string, attributes: PerkModel } }): Promise<void> {
-    if (normalizedResponse.data.attributes.claimUrl && this.authenticator.currentUser.canAccessPaidContent) {
+    if (normalizedResponse.data.attributes.claimUrl && (this.authenticator.currentUser.canAccessPaidContent || this.authenticator.currentUser.isStaff)) {
       this.analyticsEventTracker.track('claimed_perk', { perk_id: normalizedResponse.data.id });
-      window.location.href = normalizedResponse.data.attributes.claimUrl;
+      this.redirectTo(normalizedResponse.data.attributes.claimUrl);
     } else {
       this.router.transitionTo('pay');
     }
