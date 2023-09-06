@@ -159,5 +159,14 @@ export default class ConceptComponent extends Component<Signature> {
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
     this.args.onProgressPercentageChange(this.progressPercentage);
+
+    // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
+    const urlParams = new URLSearchParams(window.location.search);
+    const bgiQueryParam = urlParams.get('bgi');
+
+    if (bgiQueryParam) {
+      urlParams.set('bgi', newBlockGroupIndex.toString());
+      window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+    }
   }
 }
