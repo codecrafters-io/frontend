@@ -22,7 +22,7 @@ export default class PerksClaimRoute extends BaseRoute {
 
   async afterModel(normalizedResponse: { data: { id: string, attributes: PerkModel } }): Promise<void> {
     if (normalizedResponse.data.attributes.claimUrl && this.authenticator.currentUser.canAccessPaidContent) {
-      return
+      window.location.href = normalizedResponse.data.attributes.claimUrl;
     }
   }
 }
