@@ -1,3 +1,4 @@
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import JSONAPISerializer from '@ember-data/serializer/json-api';
@@ -6,6 +7,7 @@ import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 
 export default class PerksClaimRoute extends BaseRoute {
+  @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   async model(params: { slug: string }): Promise<PerkModel> {
@@ -19,7 +21,7 @@ export default class PerksClaimRoute extends BaseRoute {
   }
 
   async afterModel(perk: PerkModel): Promise<void> {
-    if (perk.claimUrl) {
+    if (perk.claimUrl && this.authenticator.currentUser.canAccessPaidContent) {
       window.location.href = perk.claimUrl;
     }
   }
