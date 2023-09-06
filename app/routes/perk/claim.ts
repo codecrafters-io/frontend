@@ -1,3 +1,4 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
@@ -8,6 +9,7 @@ import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 
 export default class PerksClaimRoute extends BaseRoute {
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare store: Store;
@@ -24,6 +26,7 @@ export default class PerksClaimRoute extends BaseRoute {
 
   async afterModel(normalizedResponse: { data: { id: string, attributes: PerkModel } }): Promise<void> {
     if (normalizedResponse.data.attributes.claimUrl && this.authenticator.currentUser.canAccessPaidContent) {
+      this.analyticsEventTracker.track('claimed_perk', { perk_id: normalizedResponse.data.id });
       window.location.href = normalizedResponse.data.attributes.claimUrl;
     } else {
       this.router.transitionTo('pay');
