@@ -10,19 +10,19 @@ export default class PerksClaimRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
-  async model(params: { slug: string }): Promise<PerkModel> {
+  async model(params: { slug: string }): Promise<{ data: { id: string, attributes: PerkModel } }> {
     const adapter = this.store.adapterFor('application' as never) as JSONAPIAdapter;
     const url = adapter.buildURL() + `/perks/${params.slug}/claim`;
     const rawResponse = await adapter.ajax(url, 'GET');
     const serializer = this.store.serializerFor('application' as never) as JSONAPISerializer;
-    const normalizedResponse = serializer.normalizeResponse(this.store, this.store.modelFor('perk'), rawResponse, rawResponse["data"]["id"], 'findRecord') as { data: { attributes: PerkModel } };
+    const normalizedResponse = serializer.normalizeResponse(this.store, this.store.modelFor('perk'), rawResponse, rawResponse["data"]["id"], 'findRecord') as { data: { id: string, attributes: PerkModel } };
 
-    return normalizedResponse.data.attributes;
+    return normalizedResponse;
   }
 
-  async afterModel(perk: PerkModel): Promise<void> {
-    if (perk.claimUrl && this.authenticator.currentUser.canAccessPaidContent) {
-      window.location.href = perk.claimUrl;
+  async afterModel(normalizedResponse: { data: { id: string, attributes: PerkModel } }): Promise<void> {
+    if (normalizedResponse.data.attributes.claimUrl && this.authenticator.currentUser.canAccessPaidContent) {
+      return
     }
   }
 }
