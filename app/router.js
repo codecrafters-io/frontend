@@ -41,8 +41,8 @@ Router.map(function () {
   this.route('membership');
   this.route('pay');
 
-  this.route('perk', { path: '/perks' }, function () {
-    this.route('claim', { path: '/:slug/claim' });
+  this.route('perk', { path: '/perks/:slug' }, function () {
+    this.route('claim');
   });
 
   this.route('refer');

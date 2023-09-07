@@ -9,8 +9,9 @@ export default class PerkRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  async model () {
-    return await this.store.query('perk', {});
+  async model (params: { slug: string }) {
+    const perk = await this.store.query('perk', { slug: params.slug });
+    return perk.firstObject;
   }
 
   async afterModel() {

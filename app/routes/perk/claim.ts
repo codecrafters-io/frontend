@@ -1,12 +1,10 @@
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
-import JSONAPIAdapter from '@ember-data/adapter/json-api';
-import JSONAPISerializer from '@ember-data/serializer/json-api';
-import PerkModel from 'codecrafters-frontend/models/perk';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
+import PerkModel from 'codecrafters-frontend/models/perk';
 
 export default class PerksClaimRoute extends BaseRoute {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
@@ -18,20 +16,16 @@ export default class PerksClaimRoute extends BaseRoute {
     window.location.href = url;
   }
 
-  async model(params: { slug: string }): Promise<{ data: { id: string, attributes: PerkModel } }> {
-    const adapter = this.store.adapterFor('application' as never) as JSONAPIAdapter;
-    const url = adapter.buildURL() + `/perks/${params.slug}/claim`;
-    const rawResponse = await adapter.ajax(url, 'GET');
-    const serializer = this.store.serializerFor('application' as never) as JSONAPISerializer;
-    const normalizedResponse = serializer.normalizeResponse(this.store, this.store.modelFor('perk'), rawResponse, rawResponse["data"]["id"], 'findRecord') as { data: { id: string, attributes: PerkModel } };
+  async model() {
+    const perk = this.modelFor('perk') as PerkModel;
+    this.analyticsEventTracker.track('claimed_perk', { perk_id: perk.id });
 
-    return normalizedResponse;
+    return await perk.claim({}) as unknown as { claim_url: string };
   }
 
-  async afterModel(normalizedResponse: { data: { id: string, attributes: PerkModel } }): Promise<void> {
-    if (normalizedResponse.data.attributes.claimUrl && (this.authenticator.currentUser.canAccessPaidContent || this.authenticator.currentUser.isStaff)) {
-      this.analyticsEventTracker.track('claimed_perk', { perk_id: normalizedResponse.data.id });
-      this.redirectTo(normalizedResponse.data.attributes.claimUrl);
+  async afterModel(urlResponse: { claim_url: string }) {
+    if (urlResponse.claim_url && (this.authenticator.currentUser.canAccessPaidContent || this.authenticator.currentUser.isStaff)) {
+      this.redirectTo(urlResponse.claim_url);
     } else {
       this.router.transitionTo('pay');
     }

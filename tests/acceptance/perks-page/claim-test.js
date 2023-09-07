@@ -13,6 +13,8 @@ module('Acceptance | perks-page | claim-test', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
+    this.server.create('perk', { slug: 'dummy' });
+
     const route = this.owner.lookup('route:perk.claim');
     let urlRedirectedTo;
 
@@ -28,6 +30,8 @@ module('Acceptance | perks-page | claim-test', function (hooks) {
   test('it tracks claimed perk events', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
+
+    this.server.create('perk', { slug: 'dummy' });
 
     const route = this.owner.lookup('route:perk.claim');
     route.redirectTo = () => {};

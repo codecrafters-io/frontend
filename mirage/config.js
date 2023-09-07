@@ -218,17 +218,15 @@ function routes() {
     return result;
   });
 
-  this.get('/perks');
+  this.get('/perks', function (schema, request) {
+    const slug = request.queryParams.slug;
 
-  this.get('/perks/:slug/claim', function () {
+    return schema.perks.where({ slug });
+  });
+
+  this.post('/perks/:slug/claim', function () {
     return {
-      data: {
-        id: '1',
-        type: 'perks',
-        attributes: {
-          'claim-url': 'https://dummy-claim-url.com',
-        },
-      },
+      claim_url: 'https://dummy-claim-url.com',
     };
   });
 
