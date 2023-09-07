@@ -31,7 +31,11 @@ export default class Concept extends Model {
   }
 
   get estimatedReadingTimeInMinutes(): number {
-    return Math.round((this.blocks.length * 10) / 60);
+    if (this.blocks) {
+      return Math.round((this.blocks.length * 10) / 60);
+    } else {
+      return 5;
+    }
   }
 
   get parsedBlocks(): Block[] {
