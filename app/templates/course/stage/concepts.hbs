@@ -1,0 +1,42 @@
+<div class="pt-8 pb-16" data-test-concepts-tab>
+  <Alert class="mb-6">
+    Concepts are interactive tutorials that teach you fundamental concepts related to this challenge. This is a beta feature, please send us
+    <div class="inline-flex">
+      {{! @glint-expect-error: not typesafe yet }}
+      <FeedbackButton class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton>
+    </div>.
+  </Alert>
+
+  {{#if (gt this.model.courseStage.concepts.length 0)}}
+    <div class="border-b pb-1 mb-6 flex items-center gap-2">
+      <h1 class="text-xl text-gray-700 font-bold tracking-tighter">Related to this stage</h1>
+
+      <div>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        <EmberTooltip @text={{"These concepts are directly related to this stage."}} />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2 mb-6">
+      {{#each this.model.courseStage.concepts as |concept|}}
+        <ConceptsPage::ConceptCard @concept={{concept}} />
+      {{/each}}
+    </div>
+  {{/if}}
+
+  {{#if (gt this.model.courseStage.otherConceptsForCourse.length 0)}}
+    <div class="border-b pb-1 mb-6 flex items-center gap-2">
+      <h1 class="text-xl text-gray-700 font-bold tracking-tighter">Related to this challenge</h1>
+      <div>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        <EmberTooltip @text={{"These concepts are not directly related to this stage, but they're related to the challenge."}} />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2 mb-6">
+      {{#each this.model.courseStage.otherConceptsForCourse as |concept|}}
+        <ConceptsPage::ConceptCard @concept={{concept}} />
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

@@ -61,7 +61,7 @@
           <div class="py-9">
             {{! @glint-expect-error not ts-ified yet}}
             <CodeWalkthroughPage::MetadataItem @icon="clock">
-              <span class="font-semibold">3 min</span>
+              <span class="font-semibold">{{@concept.estimatedReadingTimeInMinutes}} min</span>
               reading time
             </CodeWalkthroughPage::MetadataItem>
           </div>
