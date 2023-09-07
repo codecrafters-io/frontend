@@ -224,7 +224,7 @@ function routes() {
     return schema.perks.where({ slug });
   });
 
-  this.post('/perks/:slug/claim', function () {
+  this.post('/perks/:id/claim', function () {
     return {
       claim_url: 'https://dummy-claim-url.com',
     };
