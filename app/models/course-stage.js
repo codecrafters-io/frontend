@@ -9,6 +9,7 @@ export default class CourseStageModel extends Model {
   @hasMany('course-stage-solution', { async: false }) solutions;
   @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) screencasts;
 
+  @attr('') conceptSlugs; // Array of strings
   @attr('string') difficulty;
   @attr('boolean') isPaid;
   @attr('string') name;
@@ -35,6 +36,10 @@ export default class CourseStageModel extends Model {
     }
   }
 
+  get concepts() {
+    return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
+  }
+
   get hasApprovedComments() {
     return this.approvedCommentsCount > 0;
   }
@@ -55,6 +60,10 @@ export default class CourseStageModel extends Model {
 
   get hasCompletionVideo() {
     return !!this.completionVideoId;
+  }
+
+  get hasConcepts() {
+    return this.conceptSlugs && this.conceptSlugs.length > 0;
   }
 
   get hasScreencasts() {
@@ -95,6 +104,10 @@ export default class CourseStageModel extends Model {
 
   get nextStage() {
     return this.course.sortedStages[this.course.sortedStages.indexOf(this) + 1];
+  }
+
+  get otherConceptsForCourse() {
+    return this.course.concepts.reject((concept) => this.concepts.includes(concept));
   }
 
   get previousStage() {
