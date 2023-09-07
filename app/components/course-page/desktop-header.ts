@@ -109,6 +109,15 @@ export default class DesktopHeaderComponent extends Component<Signature> {
       });
     }
 
+    tabs.push({
+      icon: 'academic-cap',
+      name: 'Concepts',
+      slug: 'concepts',
+      route: 'course.stage.concepts',
+      models: this.args.currentStep.routeParams.models,
+      isActive: this.router.currentRouteName === 'course.stage.concepts',
+    });
+
     return tabs;
   }
 
@@ -135,13 +144,11 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     }
 
     if (this.args.currentStep.type === 'CourseStageStep') {
-      if (tab.slug === 'instructions') {
+      // @ts-ignore
+      if (this.args.currentStep.courseStage.isFirst) {
+        return tab.slug === 'instructions';
+      } else {
         return true;
-      }
-
-      if (tab.slug === 'code_examples') {
-        // @ts-ignore
-        return !this.args.currentStep.courseStage.isFirst;
       }
     }
 
