@@ -1,16 +1,12 @@
-import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
-import RouterService from '@ember/routing/router-service';
-import Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
 import PerkModel from 'codecrafters-frontend/models/perk';
+import RouterService from '@ember/routing/router-service';
+import { inject as service } from '@ember/service';
 
 export default class PerksClaimRoute extends BaseRoute {
-  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
-  @service declare store: Store;
 
   redirectTo(url: string): void {
     window.location.href = url;
@@ -18,7 +14,6 @@ export default class PerksClaimRoute extends BaseRoute {
 
   async model() {
     const perk = this.modelFor('perk') as PerkModel;
-    this.analyticsEventTracker.track('claimed_perk', { perk_id: perk.id });
 
     return await perk.claim({}) as unknown as { claim_url: string };
   }
