@@ -1,9 +1,9 @@
-import perksPage from 'codecrafters-frontend/tests/pages/perks-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { visit } from '@ember/test-helpers';
 
 module('Acceptance | perks-page | claim-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -22,7 +22,7 @@ module('Acceptance | perks-page | claim-test', function (hooks) {
       urlRedirectedTo = url;
     };
 
-    await perksPage.visitClaim({ slug: 'dummy' });
+    await visit('/perks/dummy/claim');
 
     assert.strictEqual(urlRedirectedTo, 'https://dummy-claim-url.com');
   });
