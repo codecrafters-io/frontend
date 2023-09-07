@@ -13,6 +13,7 @@ import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 
 export default class CourseModel extends Model {
   @attr('number') completionPercentage;
+  @attr('') conceptSlugs; // Array of strings
   @attr('string') definitionRepositoryFullName;
   @attr('string') descriptionMarkdown;
   @attr('string') difficulty;
@@ -53,6 +54,14 @@ export default class CourseModel extends Model {
 
   get betaOrLiveLanguages() {
     return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+  }
+
+  get concepts() {
+    return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
+  }
+
+  get hasConcepts() {
+    return this.conceptSlugs && this.conceptSlugs.length > 0;
   }
 
   get definitionRepositoryLink() {

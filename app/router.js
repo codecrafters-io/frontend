@@ -20,6 +20,7 @@ Router.map(function () {
 
     this.route('stage', { path: '/stages/:stage_number' }, function () {
       this.route('code-examples');
+      this.route('concepts');
       this.route('instructions', { path: '/' });
       this.route('screencasts');
     });

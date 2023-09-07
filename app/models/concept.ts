@@ -9,9 +9,9 @@ import { SafeString } from '@ember/template/-private/handlebars';
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
 type BlockJSON = {
-  type: string,
-  args?: any
-}
+  type: string;
+  args?: any;
+};
 
 export default class Concept extends Model {
   @hasMany('concept-question', { async: false }) declare questions: SyncHasMany<ConceptQuestion>;
@@ -27,6 +27,14 @@ export default class Concept extends Model {
       return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
     } else {
       return null;
+    }
+  }
+
+  get estimatedReadingTimeInMinutes(): number {
+    if (this.blocks) {
+      return Math.round((this.blocks.length * 10) / 60);
+    } else {
+      return 5;
     }
   }
 

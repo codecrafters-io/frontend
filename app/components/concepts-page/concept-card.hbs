@@ -1,10 +1,34 @@
 {{! @glint-nocheck: not typesafe yet }}
-<LinkTo class="border p-4 bg-white" @route="concept" @model={{@concept.slug}} data-test-concept-card>
-  <div class="text-lg font-bold text-gray-600 mr-2 mb-4" data-test-concept-title>
+<LinkTo
+  class="group border p-5 bg-white rounded-md shadow-sm hover:shadow cursor-pointer"
+  @route="concept"
+  @model={{@concept.slug}}
+  data-test-concept-card
+>
+  <div class="text-lg font-bold text-gray-600 mr-2 mb-2" data-test-concept-title>
     {{@concept.title}}
   </div>
 
-  <div class="prose prose-sm">
+  <div class="prose prose-sm mb-5">
     {{@concept.descriptionHTML}}
+  </div>
+
+  {{! Footer }}
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300"}}
+      <span class="text-xs text-gray-400">
+        {{@concept.estimatedReadingTimeInMinutes}}
+        mins
+      </span>
+    </div>
+
+    <div class="flex items-center">
+      <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
+        View
+      </span>
+
+      {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
+    </div>
   </div>
 </LinkTo>
