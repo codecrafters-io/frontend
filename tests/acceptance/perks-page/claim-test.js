@@ -20,6 +20,6 @@ module('Acceptance | perks-page | claim-test', function (hooks) {
 
     await visit('/perks/dummy/claim');
 
-    assert.strictEqual(window.location.href, 'https://dummy-claim-url.com');
+    assert.strictEqual(window.location.href, 'https://dummy-claim-url.com/');
   });
 });
