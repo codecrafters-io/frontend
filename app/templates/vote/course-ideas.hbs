@@ -1,3 +1,7 @@
+<Alert class="mb-6">
+  Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
+</Alert>
+
 <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
   {{#each this.orderedCourseIdeas as |courseIdea|}}
     <VotePage::CourseIdeaCard @courseIdea={{courseIdea}} />
