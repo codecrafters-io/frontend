@@ -109,14 +109,17 @@ export default class DesktopHeaderComponent extends Component<Signature> {
       });
     }
 
-    tabs.push({
-      icon: 'academic-cap',
-      name: 'Concepts',
-      slug: 'concepts',
-      route: 'course.stage.concepts',
-      models: this.args.currentStep.routeParams.models,
-      isActive: this.router.currentRouteName === 'course.stage.concepts',
-    });
+    // @ts-ignore
+    if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.course.hasConcepts) {
+      tabs.push({
+        icon: 'academic-cap',
+        name: 'Concepts',
+        slug: 'concepts',
+        route: 'course.stage.concepts',
+        models: this.args.currentStep.routeParams.models,
+        isActive: this.router.currentRouteName === 'course.stage.concepts',
+      });
+    }
 
     return tabs;
   }
