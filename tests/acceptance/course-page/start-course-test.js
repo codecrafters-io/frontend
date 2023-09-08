@@ -32,6 +32,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
       'fetch courses (courses listing page)',
       'fetch repositories (courses listing page)',
       'fetch leaderboard entries (course overview page)',
+      'refresh course (course overview page)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
