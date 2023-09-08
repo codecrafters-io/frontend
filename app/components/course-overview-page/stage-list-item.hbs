@@ -35,9 +35,5 @@
     <div class="leading-relaxed prose mb-4 mr-8">
       {{this.marketingHTML}}
     </div>
-
-    {{#if (and (not @stage.course.releaseStatusIsAlpha) @stage.isFirst (not this.userHasStartedCourse))}}
-      <CourseOverviewPage::StartStageButton @course={{@stage.course}} class="mb-4" />
-    {{/if}}
   </div>
 </div>
