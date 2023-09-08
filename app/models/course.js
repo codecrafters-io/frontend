@@ -4,12 +4,13 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import Model from '@ember-data/model';
 
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
-import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
-import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
-import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
+import httpServerLogo from '/assets/images/challenge-logos/challenge-logo-http-server.svg';
+import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
+import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
+import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
 export default class CourseModel extends Model {
   @attr('number') completionPercentage;
@@ -83,6 +84,7 @@ export default class CourseModel extends Model {
         docker: dockerLogo,
         git: gitLogo,
         grep: grepLogo,
+        'http-server': httpServerLogo,
         react: reactLogo,
         redis: redisLogo,
         sqlite: sqliteLogo,
