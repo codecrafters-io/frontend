@@ -13,10 +13,4 @@ export default class PerkRoute extends BaseRoute {
     const perk = await this.store.query('perk', { slug: params.slug });
     return perk.firstObject;
   }
-
-  async afterModel() {
-    if (!this.authenticator.currentUser.isStaff) {
-      this.router.transitionTo('catalog');
-    }
-  }
 }
