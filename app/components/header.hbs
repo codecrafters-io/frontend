@@ -9,11 +9,12 @@
   <div class="container {{if this.containerWidth.maxWidthIsLg 'lg:max-w-screen-lg'}} mx-auto flex items-stretch flex-col md:flex-row px-3 md:px-6">
     <div class="flex items-center justify-between">
       {{! Logo }}
-      <div class="flex items-center">
-        <img class="h-8 w-8 my-3 mr-2" src={{this.logoImage}} alt="CodeCrafters" />
-
+      <div class="flex">
         <div class="{{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}} pr-5 text-sm flex-grow">
-          <LinkTo @route="catalog">CodeCrafters</LinkTo>
+          <LinkTo class="flex items-center" @route="catalog">
+            <img class="h-8 w-8 my-3 mr-2" src={{this.logoImage}} alt="CodeCrafters" />
+            CodeCrafters
+          </LinkTo>
         </div>
       </div>
 
