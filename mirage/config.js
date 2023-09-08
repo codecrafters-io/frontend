@@ -218,6 +218,18 @@ function routes() {
     return result;
   });
 
+  this.get('/perks', function (schema, request) {
+    const slug = request.queryParams.slug;
+
+    return schema.perks.where({ slug });
+  });
+
+  this.post('/perks/:id/claim', function () {
+    return {
+      claim_url: 'https://dummy-claim-url.com',
+    };
+  });
+
   this.post('/referral-activations', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.activatedAt = new Date();
