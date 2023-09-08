@@ -9,6 +9,11 @@ export default class CourseOverviewRoute extends BaseRoute {
 
   async model(params) {
     if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
+      // Trigger a refresh anyway
+      this.store.findAll('course', {
+        include: 'stages,stages.solutions.language,language-configurations.language',
+      });
+
       return {
         course: this.store.peekAll('course').findBy('slug', params.course_slug),
       };
@@ -16,6 +21,7 @@ export default class CourseOverviewRoute extends BaseRoute {
       let courses = await this.store.findAll('course', {
         include: 'stages,stages.solutions.language,language-configurations.language',
       });
+
       let course = courses.findBy('slug', params.course_slug);
 
       if (this.authenticator.isAuthenticated) {
