@@ -8,7 +8,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
-import window from 'ember-window-mock';
+import windowMock from 'ember-window-mock';
 
 module('Acceptance | referral-link-page | accept-referral-offer', function (hooks) {
   setupApplicationTest(hooks);
@@ -25,8 +25,8 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
     await referralLinkPage.acceptReferralButton.click();
 
     assert.strictEqual(
-      window.location.href,
-      `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fjoin%3Fvia%3Dreferral1`,
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fjoin%3Fvia%3Dreferral1`,
       'should redirect to login URL',
     );
   });
