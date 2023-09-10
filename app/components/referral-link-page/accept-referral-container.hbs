@@ -38,7 +38,7 @@
       {{else if this.currentUserIsReferrer}}
         <EmberTooltip @text="You can't accept your own referral offer." />
       {{else if this.currentUserIsAlreadyEligibleForReferralDiscount}}
-        <EmberTooltip @text="You've already accepted {{this.currentUser.currentReferralActivation.user.username}}'s referral offer." />
+        <EmberTooltip @text="You've already accepted {{this.currentUser.currentReferralActivation.referrer.username}}'s referral offer." />
       {{/if}}
     </div>
 
