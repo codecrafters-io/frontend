@@ -45,7 +45,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 11290), // 11.29s
-        logs: btoa('[stage-1] failure\n[stage-2] failure'),
+        logsBase64: btoa('[stage-1] failure\n[stage-2] failure'),
       });
     },
   }),
@@ -57,7 +57,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 4219), // 4.219s
-        logs: btoa('\\033[92m[stage-1] passed\\033[0m\n[stage-2] passed'),
+        logsBase64: btoa('\\033[92m[stage-1] passed\\033[0m\n[stage-2] passed'),
       });
 
       server.create('course-stage-completion', {
