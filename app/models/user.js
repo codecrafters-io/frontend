@@ -21,11 +21,7 @@ export default class UserModel extends Model {
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
   @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes;
-  @hasMany('course-extension-idea-supervote', { async: false }) courseExtensionIdeaSupervotes;
-  @hasMany('course-extension-idea-supervote-grants', { async: false }) courseExtensionIdeaSupervoteGrants;
   @hasMany('course-idea-vote', { async: false }) courseIdeaVotes;
-  @hasMany('course-idea-supervote', { async: false }) courseIdeaSupervotes;
-  @hasMany('course-idea-supervote-grants', { async: false }) courseIdeaSupervoteGrants;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('custom-discount', { async: false }) customDiscounts;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
@@ -41,14 +37,6 @@ export default class UserModel extends Model {
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
-  }
-
-  get availableCourseIdeaSupervotes() {
-    return this.courseIdeaSupervoteGrants.mapBy('numberOfSupervotes').reduce((a, b) => a + b, 0) - this.courseIdeaSupervotes.length;
-  }
-
-  get availableCourseExtensionIdeaSupervotes() {
-    return this.courseExtensionIdeaSupervoteGrants.mapBy('numberOfSupervotes').reduce((a, b) => a + b, 0) - this.courseExtensionIdeaSupervotes.length;
   }
 
   get availableCustomDiscount() {
