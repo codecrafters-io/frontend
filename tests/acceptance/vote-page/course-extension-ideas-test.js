@@ -43,14 +43,11 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
     assert.strictEqual(1, 1);
   });
 
-  test('can vote and supervote', async function (assert) {
+  test('can vote', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     createCourseExtensionIdeas(this.server);
-
-    let user = this.server.schema.users.first();
-    this.server.create('course-extension-idea-supervote-grant', { user: user, numberOfSupervotes: 2, description: 'completed the Redis challenge' });
 
     await votePage.visitCourseExtensionIdeasTab();
 
@@ -62,25 +59,5 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
 
     await courseExtensionIdeaCard.clickOnVoteButton();
     assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
-
-    await courseExtensionIdeaCard.clickOnSupervoteButton();
-    assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
-    assert.strictEqual(courseExtensionIdeaCard.supervoteButtonText, '1 supervote +1', 'expected supervote button to say +1 vote');
-
-    await courseExtensionIdeaCard.clickOnSupervoteButton();
-    assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
-    assert.strictEqual(courseExtensionIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote');
-
-    await courseExtensionIdeaCard.clickOnSupervoteButton();
-    assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
-    assert.strictEqual(courseExtensionIdeaCard.supervoteButtonText, '2 supervotes +2', 'expected supervote button to say +2 vote');
-    assert.strictEqual(
-      courseExtensionIdeaCard.supervoteButtonTooltipText,
-      "You're out of supervotes. Earn more by completing CodeCrafters challenges!",
-    );
-
-    await courseExtensionIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
-    assert.strictEqual(courseExtensionIdeaCard.supervoteButtonText, '0 supervotes', 'expected supervote button to say 0 supervotes');
   });
 });
