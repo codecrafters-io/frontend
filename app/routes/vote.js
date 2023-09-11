@@ -19,20 +19,12 @@ export default class VoteRoute extends BaseRoute {
     const modelPromises = {};
 
     modelPromises.courseIdeas = this.store.findAll('course-idea', {
-      include: 'current-user-votes,current-user-votes.user,current-user-supervotes,current-user-supervotes.user',
+      include: 'current-user-votes,current-user-votes.user',
     });
 
     modelPromises.courseExtensionIdeas = this.store.findAll('course-extension-idea', {
-      include: 'course,current-user-votes,current-user-votes.user,current-user-supervotes,current-user-supervotes.user',
+      include: 'course,current-user-votes,current-user-votes.user',
     });
-
-    if (this.authenticator.currentUserId) {
-      // No need to wait on this, can load in the background
-      this.store.findRecord('user', this.authenticator.currentUserId, {
-        include: 'course-idea-supervote-grants,course-extension-idea-supervote-grants',
-        reload: true,
-      });
-    }
 
     return await RSVP.hash(modelPromises);
   }
