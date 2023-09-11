@@ -10,13 +10,18 @@ export default class PerksClaimRoute extends BaseRoute {
   @service declare router: RouterService;
 
   async model() {
+    await this.authenticator.authenticate();
     const perk = this.modelFor('perk') as PerkModel;
 
-    return await perk.claim({}) as unknown as { claim_url: string };
+    if (this.authenticator.currentUser.canAccessPaidContent) {
+      return await perk.claim({}) as unknown as { claim_url: string };
+    }
+
+    return
   }
 
   async afterModel(urlResponse: { claim_url: string }) {
-    if (urlResponse.claim_url && (this.authenticator.currentUser.canAccessPaidContent || this.authenticator.currentUser.isStaff)) {
+    if (urlResponse?.claim_url) {
       window.location.href = urlResponse.claim_url;
     } else {
       this.router.transitionTo('pay');
