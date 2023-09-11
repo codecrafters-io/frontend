@@ -127,12 +127,10 @@ function routes() {
   this.get('/course-extension-ideas');
   this.post('/course-extension-ideas/:id/unvote', () => {});
   this.post('/course-extension-idea-votes');
-  this.post('/course-extension-idea-supervotes');
 
   this.get('/course-ideas');
   this.post('/course-ideas/:id/unvote', () => {});
   this.post('/course-idea-votes');
-  this.post('/course-idea-supervotes');
 
   this.get('/course-stage-comments', function (schema, request) {
     let result = schema.courseStageComments.all().filter((comment) => comment.targetId.toString() === request.queryParams.target_id);
