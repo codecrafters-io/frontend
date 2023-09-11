@@ -21,27 +21,6 @@ export default class CourseIdeaCardComponent extends Component {
   }
 
   @action
-  async handleSupervoteButtonClick() {
-    if (this.authenticator.isAnonymous) {
-      this.authenticator.initiateLogin();
-
-      return;
-    }
-
-    if (!this.userHasSupervotesAvailable) {
-      return;
-    }
-
-    if (this.userHasVoted) {
-      await this.args.courseExtensionIdea.supervote();
-    } else {
-      this.isVotingOrUnvoting = true;
-      await Promise.all([this.args.courseExtensionIdea.vote(), this.args.courseExtensionIdea.supervote()]);
-      this.isVotingOrUnvoting = false;
-    }
-  }
-
-  @action
   async handleVoteButtonClick() {
     if (this.authenticator.isAnonymous) {
       this.authenticator.initiateLogin();
@@ -70,25 +49,5 @@ export default class CourseIdeaCardComponent extends Component {
     }
 
     return this.authenticator.currentUser.courseExtensionIdeaVotes.mapBy('courseExtensionIdea').includes(this.args.courseExtensionIdea);
-  }
-
-  get userHasSupervoted() {
-    return this.userSupervotesCount > 0;
-  }
-
-  get userHasSupervotesAvailable() {
-    return this.authenticator.currentUser.availableCourseExtensionIdeaSupervotes > 0;
-  }
-
-  get userSupervotesCount() {
-    if (this.authenticator.isAnonymous) {
-      return 0;
-    }
-
-    return this.authenticator.currentUser.courseExtensionIdeaSupervotes.filterBy('courseExtensionIdea', this.args.courseExtensionIdea).length;
-  }
-
-  get userHasVotedOrSupervoted() {
-    return this.userHasVoted || this.userHasSupervoted;
   }
 }

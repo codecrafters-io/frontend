@@ -50,8 +50,4 @@ export default class CourseIdeaCardComponent extends Component {
 
     return this.authenticator.currentUser.courseIdeaVotes.mapBy('courseIdea').includes(this.args.courseIdea);
   }
-
-  get userHasVotedOrSupervoted() {
-    return this.userHasVoted || this.userHasSupervoted;
-  }
 }
