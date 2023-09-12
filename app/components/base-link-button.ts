@@ -10,6 +10,7 @@ export interface BaseLinkButtonSignature {
     route: string;
     model?: string;
     models?: string[];
+    query?: Record<string, null | string>;
   };
 
   Blocks: {
@@ -44,6 +45,10 @@ export default class BaseLinkButtonComponent extends Component<BaseLinkButtonSig
     }
 
     return [];
+  }
+
+  get query() {
+    return this.args.query || {};
   }
 }
 

@@ -72,8 +72,17 @@
       </tbody>
     </table>
   </div>
-  <div class="text-right flex-shrink-0 pl-4">
+  <div class="flex flex-col items-end flex-shrink-0 pl-4">
     <div class="text-gray-700 text-xs">{{@submission.repository.user.username}}</div>
     <div class="text-gray-400 text-xs">Started {{date-from-now @submission.repository.createdAt}}</div>
+
+    <TertiaryLinkButton
+      class="mt-2"
+      @size="extra-small"
+      @route="course-admin.submissions"
+      @query={{hash usernames=@submission.repository.user.username}}
+    >
+      View all submissions
+    </TertiaryLinkButton>
   </div>
 </div>
