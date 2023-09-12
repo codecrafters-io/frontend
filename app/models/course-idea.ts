@@ -1,5 +1,4 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import CourseIdeaSupervoteModel from 'codecrafters-frontend/models/course-idea-supervote';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
 import Model from '@ember-data/model';
 import showdown from 'showdown';
@@ -12,7 +11,6 @@ import { SafeString } from '@ember/template/-private/handlebars';
 
 export default class CourseIdeaModel extends Model {
   @hasMany('course-idea-vote', { async: false }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
-  @hasMany('course-idea-supervote', { async: false }) declare currentUserSupervotes: SyncHasMany<CourseIdeaSupervoteModel>
 
   @attr('date') declare createdAt: Date;
   @attr('string') declare descriptionMarkdown: string;
@@ -21,7 +19,6 @@ export default class CourseIdeaModel extends Model {
   @attr('string') declare name: string;
   @attr('string') declare slug: string;
   @attr('number') declare votesCount: number;
-  @attr('number') declare supervotesCount: number;
 
   @equal('developmentStatus', 'not_started') declare developmentStatusIsNotStarted: boolean;
   @equal('developmentStatus', 'in_progress') declare developmentStatusIsInProgress: boolean;
@@ -47,18 +44,6 @@ export default class CourseIdeaModel extends Model {
     return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
   }
 
-  async supervote(): Promise<CourseIdeaSupervoteModel> {
-    this.supervotesCount += 1;
-
-    const supervote: CourseIdeaSupervoteModel = this.store.createRecord('course-idea-supervote', { courseIdea: this, user: this.authenticator.currentUser });
-
-    await supervote.save();
-
-    this.currentUserSupervotes = [...this.currentUserSupervotes.toArray(), supervote] as unknown as SyncHasMany<CourseIdeaSupervoteModel>;
-
-    return supervote;
-  }
-
   async vote(): Promise<CourseIdeaVoteModel> {
     this.votesCount += 1;
 
@@ -79,13 +64,6 @@ CourseIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    // @ts-ignore
-    for (const record of [...this.currentUserSupervotes]) {
-      // @ts-ignore
-      this.supervotesCount -= 1;
-      record.unloadRecord();
-    }
-
     // @ts-ignore
     for (const record of [...this.currentUserVotes]) {
       // @ts-ignore

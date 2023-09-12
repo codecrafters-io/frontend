@@ -7,7 +7,6 @@ export default function createCourseIdeas(server) {
       name: courseIdeaData.name,
       descriptionMarkdown: courseIdeaData.description_md,
       votesCount: 0,
-      supervotesCount: 0,
     });
   }
 }
