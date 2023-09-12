@@ -30,13 +30,22 @@ export default class ExtensionCardComponent extends Component<Signature> {
 
   @action
   async handleClick(): Promise<void> {
-    if (this.isSaving) return;
+    if (this.isSaving) {
+      return;
+    }
 
     this.isSaving = true;
 
     if (this.isActivated) {
       for (const activation of this.activations) {
-        await activation.destroyRecord();
+        try {
+          await activation.destroyRecord();
+        } catch (e) {
+          // @ts-ignore
+          if (e.errors[0].status === '404') {
+            // This is fine, it means the activation was already deleted.
+          }
+        }
       }
     } else {
       await this.store
