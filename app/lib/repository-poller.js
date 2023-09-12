@@ -4,6 +4,8 @@ export default class RepositoryPoller extends Poller {
   static defaultIncludedResources = [
     'language',
     'course',
+    'course.stages',
+    'course.extensions',
     'user',
     'user.badge-awards',
     'user.badge-awards.badge',
