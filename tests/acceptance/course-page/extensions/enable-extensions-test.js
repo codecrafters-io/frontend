@@ -18,8 +18,6 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    this.server.timing = 500;
-
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
