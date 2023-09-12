@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import { inject as service } from '@ember/service';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -13,7 +15,7 @@ interface Signature {
       releaseStatusIsBeta: boolean;
     };
     repositories: unknown[];
-    activeRepository: unknown;
+    activeRepository: TemporaryRepositoryModel;
   };
 
   Blocks: {
@@ -24,6 +26,8 @@ interface Signature {
 export default class CoursePageSidebarComponent extends Component<Signature> {
   @service declare authenticator: unknown;
   @service declare coursePageState: CoursePageStateService;
+
+  @tracked configureExtensionsModalIsOpen = false;
 
   get currentStep() {
     return this.coursePageState.currentStep;

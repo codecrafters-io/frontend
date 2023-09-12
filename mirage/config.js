@@ -120,6 +120,9 @@ function routes() {
     return courseDefinitionUpdate;
   });
 
+  this.post('/course-extension-activations');
+  this.delete('/course-extension-activations/:id');
+
   this.get('/course-language-requests');
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');

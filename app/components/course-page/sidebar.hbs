@@ -17,7 +17,19 @@
   {{! @glint-expect-error: not typesafe yet}}
   <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
 
-  <CoursePage::StepList @stepList={{this.stepList}} class="mt-10 -mx-3 flex-grow overflow-y-auto" />
+  <div class="flex-grow overflow-y-auto mt-10">
+    <CoursePage::StepList @stepList={{this.stepList}} class="-mx-3" />
+    {{#if (current-user-is-staff)}}
+      <div class="flex justify-center mt-3">
+        <TertiaryButton @size="extra-small" {{on "click" (fn (mut this.configureExtensionsModalIsOpen) (not this.configureExtensionsModalIsOpen))}} data-test-configure-extensions-button>
+          <div class="flex items-center">
+            {{svg-jar "plus-circle" class="w-3 h-3 mr-1 text-gray-500"}}
+            Extensions
+          </div>
+        </TertiaryButton>
+      </div>
+    {{/if}}
+  </div>
 
   <div class="flex flex-col mt-4">
     {{#unless this.currentUser.canAccessPaidContent}}
@@ -40,4 +52,11 @@
       <span class="font-bold uppercase tracking-wide">Back to Catalog</span>
     </LinkTo>
   </div>
+
+  {{#if this.configureExtensionsModalIsOpen}}
+    <ModalBackdrop>
+      {{! @glint-expect-error: mut helper types don't agree?}}
+      <CoursePage::ConfigureExtensionsModal @repository={{@activeRepository}} @onClose={{fn (mut this.configureExtensionsModalIsOpen) false}} />
+    </ModalBackdrop>
+  {{/if}}
 </div>
