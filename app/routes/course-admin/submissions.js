@@ -5,6 +5,15 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
   @service authenticator;
   @service store;
 
+  queryParams = {
+    usernames: {
+      refreshModel: true,
+    },
+    languages: {
+      refreshModel: true,
+    },
+  };
+
   async model(params) {
     let course = this.modelFor('course-admin').course;
 
