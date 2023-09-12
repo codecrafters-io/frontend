@@ -6,8 +6,10 @@ import { memberAction } from 'ember-api-actions';
 export default class RepositoryModel extends Model {
   static expectedActivityFrequencyMappings = {
     every_day: 'Every day',
+    few_times_a_week: 'Few times a week',
     once_a_week: 'Once a week',
-    multiple_times_a_week: 'Multiple times a week',
+    few_times_a_month: 'Few times a month',
+    once_a_month: 'Once a month',
   };
 
   static languageProficiencyLevelMappings = {
