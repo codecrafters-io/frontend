@@ -19,9 +19,13 @@
 
   <div class="flex-grow overflow-y-auto mt-10 -mx-3">
     <CoursePage::StepList @stepList={{this.stepList}} />
-    {{#if (current-user-is-staff)}}
+    {{#if (and (current-user-is-staff) (gt @course.extensions.length 0))}}
       <div class="flex justify-center mt-3 px-3">
-        <TertiaryButton @size="extra-small" {{on "click" (fn (mut this.configureExtensionsModalIsOpen) (not this.configureExtensionsModalIsOpen))}} data-test-configure-extensions-button>
+        <TertiaryButton
+          @size="extra-small"
+          {{on "click" (fn (mut this.configureExtensionsModalIsOpen) (not this.configureExtensionsModalIsOpen))}}
+          data-test-configure-extensions-button
+        >
           <div class="flex items-center">
             {{svg-jar "plus-circle" class="w-3 h-3 mr-1 text-gray-500"}}
             Extensions

@@ -8,6 +8,7 @@ export class TemporaryCourseModel {
   declare name?: string;
   declare slug: string;
   declare extensions: CourseExtensionModel[];
+  declare releaseStatusIsBeta: boolean;
 }
 
 export class TemporaryLanguageModel {
