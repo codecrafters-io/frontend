@@ -32,13 +32,9 @@
       <UserLabel @user={{@user}} />
     </div>
 
-    {{#if @user.isAdmin }}
+    {{#if @user.isAdmin}}
       <TertiaryButton @size="extra-small" data-test-admin-profile-button class="w-fit">
-        <a
-          href="https://backend.codecrafters.io/admin/users/{{@user.id}}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Admin Profile</a>
+        <a href="https://backend.codecrafters.io/admin/users/{{@user.id}}" target="_blank" rel="noopener noreferrer">Admin Profile</a>
       </TertiaryButton>
     {{/if}}
   </div>
