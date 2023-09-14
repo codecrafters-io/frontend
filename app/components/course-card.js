@@ -20,13 +20,13 @@ export default class CourseCardComponent extends Component {
         model: this.args.course.slug,
         query: { fresh: null },
       };
+    } else {
+      return {
+        name: 'course-overview',
+        model: this.args.course.slug,
+        query: {},
+      };
     }
-
-    return {
-      name: 'course-overview',
-      model: this.args.course.slug,
-      query: {},
-    };
   }
 
   get isSkeleton() {
