@@ -22,10 +22,24 @@
     </div>
   {{/if}}
 
-  <div class="text-xs text-gray-400">
-    joined
-    {{date-from-now @user.createdAt}}
-  </div>
+  <div class="flex flex-col gap-4">
+    <div>
+      <div class="text-xs text-gray-400">
+        joined
+        {{date-from-now @user.createdAt}}
+      </div>
 
-  <UserLabel @user={{@user}} />
+      <UserLabel @user={{@user}} />
+    </div>
+
+    {{#if @user.isAdmin }}
+      <TertiaryButton @size="extra-small" data-test-admin-profile-button class="w-fit">
+        <a
+          href="https://backend.codecrafters.io/admin/users/{{@user.id}}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Admin Profile</a>
+      </TertiaryButton>
+    {{/if}}
+  </div>
 </div>
