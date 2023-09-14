@@ -163,7 +163,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^2.1.5",
     "@tailwindcss/typography": "^0.5.10",
-    "@typeform/embed": "^2.16.1",
+    "@typeform/embed": "^3.0.0",
     "@vimeo/player": "^2.20.1",
     "ansi_up": "^6.0.2",
     "array-to-sentence": "^2.0.0",
