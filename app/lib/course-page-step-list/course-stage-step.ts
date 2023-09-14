@@ -83,7 +83,7 @@ export default class CourseStageStep extends Step {
     if (this.repository.stageIsComplete(this.courseStage)) {
       return 'complete';
       // @ts-ignore
-    } else if (this.repository.activeStage === this.courseStage) {
+    } else if (this.repository.currentStage === this.courseStage) {
       return 'in_progress';
     } else {
       return 'locked';
@@ -113,7 +113,11 @@ export default class CourseStageStep extends Step {
     if (this.lastFailedSubmissionWasWithinLast10Minutes) {
       return 'Tests failed.';
     } else if (this.lastFailedSubmissionCreatedAt) {
-      return `Last attempt ${formatDistanceStrictWithOptions({ addSuffix: true }, new Date(), this.lastFailedSubmissionCreatedAt || new Date())}. Try again?`;
+      return `Last attempt ${formatDistanceStrictWithOptions(
+        { addSuffix: true },
+        new Date(),
+        this.lastFailedSubmissionCreatedAt || new Date(),
+      )}. Try again?`;
     } else {
       return 'Last attempt failed. Try again?';
     }

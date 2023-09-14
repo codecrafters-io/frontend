@@ -6,28 +6,15 @@ import showdown from 'showdown';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     title?: string;
-
-    courseStage: {
-      isFirst: boolean;
-      descriptionMarkdownTemplate: string;
-      nextStage: unknown;
-    };
-
-    repository: {
-      activeStage: unknown;
-      hasClosedCourseStageFeedbackSubmissionFor: (stage: unknown) => boolean;
-      highestCompletedStage: unknown;
-      language: unknown;
-      user: {
-        badgeAwards: unknown[];
-      };
-    };
+    courseStage: TemporaryCourseStageModel
+    repository: TemporaryRepositoryModel;
   };
 }
 

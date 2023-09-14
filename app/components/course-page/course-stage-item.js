@@ -7,6 +7,6 @@ export default class CourseStageItemComponent extends Component {
   }
 
   get shouldShowPublishToGitHubPrompt() {
-    return !this.args.repository.githubRepositorySyncConfiguration && this.isActiveStage && !this.statusIsComplete && this.args.courseStage.isThird;
+    return !this.args.repository.githubRepositorySyncConfiguration && this.isCurrentStage && !this.statusIsComplete && this.args.courseStage.isThird;
   }
 }

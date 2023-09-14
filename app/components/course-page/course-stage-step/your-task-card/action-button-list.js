@@ -56,7 +56,7 @@ export default class ActionButtonListComponent extends Component {
     }
 
     // Show when stage is active except for stage 1 & 2
-    return !this.args.courseStage.isFirst && !this.args.courseStage.isSecond && this.args.repository.activeStage === this.args.courseStage;
+    return !this.args.courseStage.isFirst && !this.args.courseStage.isSecond && this.args.repository.currentStage === this.args.courseStage;
   }
 
   get shouldShowCodeExamplesButton() {

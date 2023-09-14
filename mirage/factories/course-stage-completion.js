@@ -1,4 +1,5 @@
 import { Factory } from 'miragejs';
+import syncRepositoryStageLists from '../utils/sync-repository-stage-lists';
 
 export default Factory.extend({
   afterCreate(courseStageCompletion, server) {
@@ -15,5 +16,7 @@ export default Factory.extend({
       currentCourseStage: nextStage || courseStageCompletion.courseStage,
       status: nextStage ? 'idle' : 'completed',
     });
+
+    syncRepositoryStageLists(server, courseStageCompletion.repository);
   },
 });

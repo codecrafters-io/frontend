@@ -17,8 +17,8 @@ export default class CourseStageInstructionsController extends Controller {
     return this.coursePageState.currentStep;
   }
 
-  get isActiveStage() {
-    return this.model.activeRepository.activeStage === this.model.courseStage;
+  get isCurrentStage() {
+    return this.model.activeRepository.currentStage === this.model.courseStage;
   }
 
   get shouldShowTestFailureExpectedHint() {
@@ -27,7 +27,7 @@ export default class CourseStageInstructionsController extends Controller {
 
   get shouldShowUpgradePrompt() {
     return (
-      this.isActiveStage && this.currentStep.status !== 'complete' && !this.model.activeRepository.user.canAttemptCourseStage(this.model.courseStage)
+      this.isCurrentStage && this.currentStep.status !== 'complete' && !this.model.activeRepository.user.canAttemptCourseStage(this.model.courseStage)
     );
   }
 }
