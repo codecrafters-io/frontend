@@ -20,6 +20,7 @@ export default class RepositoryModel extends Model {
   };
 
   @belongsTo('course', { async: false }) course;
+  @hasMany('course-extension-activation', { async: false }) courseExtensionActivations;
   @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
   @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;
   @hasMany('github-repository-sync-configuration', { async: false }) githubRepositorySyncConfigurations;
@@ -35,6 +36,10 @@ export default class RepositoryModel extends Model {
   @attr('string') languageProficiencyLevel;
   @attr('string') progressBannerUrl;
   @attr('boolean', { allowNull: true }) remindersAreEnabled;
+
+  get activatedCourseExtensions() {
+    return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
+  }
 
   get activeStage() {
     if (!this.highestCompletedStage) {

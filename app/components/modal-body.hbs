@@ -1,8 +1,7 @@
 <div
   class="rounded-md shadow-sm overflow-hidden border-gray-300 relative flex-shrink overflow-y-scroll px-4 py-12 sm:px-12 min-h-0
     {{if @isDark 'bg-black' 'bg-white'}}
-    {{if @isWide 'max-w-screen-lg' 'max-w-xl'}}
-    {{@class}}"
+    {{if @isWide 'max-w-screen-lg' 'max-w-xl'}}"
   {{on-click-outside this.handleClickOutside}}
   ...attributes
 >

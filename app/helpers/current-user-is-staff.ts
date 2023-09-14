@@ -17,3 +17,9 @@ export default class CurrentUserIsStaff extends Helper<Signature> {
     return this.authenticator.currentUser && this.authenticator.currentUser.isStaff;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'current-user-is-staff': typeof CurrentUserIsStaff;
+  }
+}

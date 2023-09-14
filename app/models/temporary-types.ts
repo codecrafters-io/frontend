@@ -1,10 +1,14 @@
 // TypeScript file for temporary types until we migrate all models to TS
 import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
+import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-extension-activation';
 
 export class TemporaryCourseModel {
-  declare id?: string;
+  declare id: string;
   declare name?: string;
   declare slug: string;
+  declare extensions: CourseExtensionModel[];
+  declare releaseStatusIsBeta: boolean;
 }
 
 export class TemporaryLanguageModel {
@@ -14,6 +18,8 @@ export class TemporaryLanguageModel {
 }
 
 export class TemporaryRepositoryModel {
+  declare course: TemporaryCourseModel;
+  declare courseExtensionActivations: CourseExtensionActivationModel[];
   declare expectedActivityFrequency: 'every_day' | 'once_a_week' | 'multiple_times_a_week';
   declare id: null | string;
   declare isNew: boolean;
@@ -22,6 +28,10 @@ export class TemporaryRepositoryModel {
   declare languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
   declare remindersAreEnabled: boolean | null;
+
+  get activatedCourseExtensions(): CourseExtensionModel[] {
+    return [];
+  }
 
   get expectedActivityFrequencyHumanized(): string {
     return '';

@@ -3,7 +3,11 @@ import Poller from 'codecrafters-frontend/lib/poller';
 export default class RepositoryPoller extends Poller {
   static defaultIncludedResources = [
     'language',
+    'course-extension-activations',
+    'course-extension-activations.extension',
+    'course-extension-activations.repository',
     'course',
+    'course.extensions',
     'user',
     'user.badge-awards',
     'user.badge-awards.badge',

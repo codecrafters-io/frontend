@@ -30,6 +30,7 @@ export default class CourseModel extends Model {
 
   @hasMany('course-definition-update', { async: false }) definitionUpdates;
   @hasMany('course-extension-idea', { async: false }) extensionIdeas;
+  @hasMany('course-extension', { async: false, inverse: 'course' }) extensions;
   @hasMany('course-language-configuration', { async: false }) languageConfigurations;
   @hasMany('course-stage', { async: false }) stages;
   @hasMany('course-tester-version', { async: false }) testerVersions;

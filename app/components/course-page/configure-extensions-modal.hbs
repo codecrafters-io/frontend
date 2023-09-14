@@ -1,0 +1,15 @@
+<ModalBody @isWide={{true}} @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-configure-extensions-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
+    Configure Extensions
+  </div>
+
+  <Alert class="mb-4">
+    Extensions are sets of additional stages that can be added to your repository. You can add &amp; remove extensions at any time.
+  </Alert>
+
+  <div class="grid grid-cols-2 gap-4">
+    {{#each @repository.course.extensions as |extension|}}
+      <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+    {{/each}}
+  </div>
+</ModalBody>
