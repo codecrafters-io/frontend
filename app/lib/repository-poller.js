@@ -7,7 +7,6 @@ export default class RepositoryPoller extends Poller {
     'course-extension-activations.extension',
     'course-extension-activations.repository',
     'course',
-    'course.stages',
     'course.extensions',
     'user',
     'user.badge-awards',
