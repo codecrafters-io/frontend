@@ -13,9 +13,11 @@ function syncRepositoryStageList(server, repository) {
     }
   });
 
-  const currentStage = highestCompletedStage
+  const nextStage = highestCompletedStage
     ? repository.course.stages.models.findBy('position', highestCompletedStage.position + 1)
-    : repository.course.stages.models.findBy('position', 1);
+    : repository.course.stages.models.sortBy('position')[0];
+
+  const currentStage = nextStage ? nextStage : highestCompletedStage;
 
   repository.course.stages.models.sortBy('position').forEach((stage, index) => {
     let stageListItem = repository.stageList.items.models.findBy('stage.id', stage.id);
@@ -34,6 +36,10 @@ function syncRepositoryStageList(server, repository) {
       isCurrent: currentStage && currentStage.id === stage.id,
     });
   });
+
+  if (!repository.stageList.items.models.find((item) => item.isCurrent)) {
+    throw new Error('Expected at least one currentStage to be present');
+  }
 }
 
 export default function syncRepositoryStageLists(server) {
