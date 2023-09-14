@@ -3,21 +3,26 @@ import { isToday, isYesterday } from 'date-fns';
 import { formatDistanceStrictWithOptions } from 'date-fns/fp';
 import ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
+import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
 export default class CourseStageStep extends Step {
-  @tracked courseStage;
+  @tracked stageListItem;
   @tracked repository;
 
-  constructor(repository: unknown, courseStage: unknown, position: number) {
+  constructor(repository: TemporaryRepositoryModel, stageListItem: RepositoryStageListItemModel, position: number) {
     super(position);
 
     this.repository = repository;
-    this.courseStage = courseStage;
+    this.stageListItem = stageListItem;
+  }
+
+  get courseStage() {
+    return this.stageListItem.stage;
   }
 
   get completedAt(): Date | null {
-    // @ts-ignore
-    return this.repository.stageCompletedAt(this.courseStage);
+    return this.stageListItem.completedAt;
   }
 
   get completedAtWasToday() {
@@ -56,7 +61,6 @@ export default class CourseStageStep extends Step {
     } else if (this.status === 'locked') {
       return {
         dotType: 'none',
-        // @ts-ignore
         text: this.courseStage.isFirst
           ? 'Complete repository setup to gain access to this stage.'
           : 'Complete previous stages to gain access to this stage.',
@@ -79,10 +83,9 @@ export default class CourseStageStep extends Step {
   }
 
   get status() {
-    // @ts-ignore
-    if (this.repository.stageIsComplete(this.courseStage)) {
+    // TODO: Might need to prioritize "in_progress" when allowing users to change currentStage
+    if (this.completedAt) {
       return 'complete';
-      // @ts-ignore
     } else if (this.repository.currentStage === this.courseStage) {
       return 'in_progress';
     } else {
@@ -91,8 +94,7 @@ export default class CourseStageStep extends Step {
   }
 
   get lastFailedSubmissionWasWithinLast10Minutes() {
-    // @ts-ignore
-    return this.lastFailedSubmissionCreatedAt && new Date() - this.lastFailedSubmissionCreatedAt <= 600 * 1000; // in last 10 minutes
+    return this.lastFailedSubmissionCreatedAt && new Date().getTime() - this.lastFailedSubmissionCreatedAt.getTime() <= 600 * 1000; // in last 10 minutes
   }
 
   get lastFailedSubmissionCreatedAt() {
@@ -100,9 +102,7 @@ export default class CourseStageStep extends Step {
   }
 
   get lastFailedSubmission() {
-    // @ts-ignore
     if (this.repository.lastSubmissionHasFailureStatus) {
-      // @ts-ignore
       return this.repository.lastSubmission;
     } else {
       return null;
@@ -124,13 +124,11 @@ export default class CourseStageStep extends Step {
   }
 
   get testsStatus(): 'evaluating' | 'failed' | 'passed_or_not_run' {
-    // @ts-ignore
-    if (this.repository.lastSubmissionIsEvaluating && this.repository.lastSubmission.courseStage === this.courseStage) {
+    if (this.repository.lastSubmissionIsEvaluating && this.repository.lastSubmission!.courseStage === this.courseStage) {
       return 'evaluating';
     }
 
-    // @ts-ignore
-    if (this.repository.lastSubmissionHasFailureStatus && this.repository.lastSubmission.courseStage === this.courseStage) {
+    if (this.repository.lastSubmissionHasFailureStatus && this.repository.lastSubmission!.courseStage === this.courseStage) {
       return 'failed';
     }
 
@@ -140,18 +138,15 @@ export default class CourseStageStep extends Step {
   get routeParams() {
     return {
       route: 'course.stage.instructions',
-      // @ts-ignore
-      models: [this.courseStage.course.slug, this.courseStage.position],
+      models: [this.courseStage.course.slug, this.courseStage.position.toString()],
     };
   }
 
   get shortTitle(): string {
-    // @ts-ignore
     return `Stage ${this.courseStage.position}`;
   }
 
   get title() {
-    // @ts-ignore
     return this.courseStage.name;
   }
 

@@ -47,9 +47,11 @@ export default class RepositoryModel extends Model {
       return null;
     }
 
-    const currentStageListItem = this.stageList.items.find((item) => item.isCurrent);
-
-    return currentStageListItem ? currentStageListItem.stage : null;
+    if (this.stageList) {
+      return this.stageList.items.find((item) => item.isCurrent).stage;
+    } else {
+      return null; // We haven't loaded the stage list yet
+    }
   }
 
   get allStagesAreComplete() {

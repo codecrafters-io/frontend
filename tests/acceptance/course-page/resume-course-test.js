@@ -30,8 +30,6 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    await this.pauseTest();
-
     assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
 
     assert.strictEqual(
