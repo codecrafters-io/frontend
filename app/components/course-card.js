@@ -1,22 +1,32 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class CourseCardComponent extends Component {
   @service authenticator;
   @service router;
 
-  @action
-  async navigateToCourse() {
+  get linkToRoute() {
     if (this.isSkeleton) {
-      return;
+      return {
+        name: 'catalog',
+        model: null,
+        query: {},
+      };
     }
 
     if (this.lastPushedRepository) {
-      this.router.transitionTo('course', this.args.course.slug, { queryParams: { fresh: null } });
-    } else {
-      this.router.transitionTo('course-overview', this.args.course.slug);
+      return {
+        name: 'course',
+        model: this.args.course.slug,
+        query: { fresh: null },
+      };
     }
+
+    return {
+      name: 'course-overview',
+      model: this.args.course.slug,
+      query: {},
+    };
   }
 
   get isSkeleton() {
