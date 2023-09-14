@@ -1,8 +1,9 @@
 {{! template-lint-disable no-invalid-interactive }}
-<div
+<LinkTo
   class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border relative"
-  role={{unless this.isSkeleton "button"}}
-  {{on "click" this.navigateToCourse}}
+  @route={{this.linkToRoute.name}}
+  @model={{this.linkToRoute.model}}
+  @query={{this.linkToRoute.query}}
   data-test-course-card
 >
   {{! Logo }}
@@ -78,4 +79,4 @@
       {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
     </div>
   </div>
-</div>
+</LinkTo>
