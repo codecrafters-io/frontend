@@ -32,6 +32,12 @@ refresh_course_definitions:
 		| yq -o json eval \
 		> mirage/course-fixtures/grep.js
 
+	hub api repos/codecrafters-io/build-your-own-dummy/contents/course-definition.yml \
+		| jq -r .content \
+		| base64 -d \
+		| yq -o json eval \
+		> mirage/course-fixtures/dummy.js
+
 	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
 
 serve:
