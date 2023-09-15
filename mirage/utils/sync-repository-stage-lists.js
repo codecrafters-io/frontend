@@ -3,24 +3,23 @@ function syncRepositoryStageList(server, repository) {
     repository.update({ stageList: server.create('repository-stage-list') });
   }
 
-  let highestCompletedStage = null;
-
-  repository.course.stages.models.sortBy('position').forEach((stage) => {
-    const courseStageCompletion = repository.courseStageCompletions.models.find((completion) => completion.courseStage.id === stage.id);
-
-    if (courseStageCompletion) {
-      highestCompletedStage = stage;
-    }
-  });
-
-  const nextStage = highestCompletedStage
-    ? repository.course.stages.models.findBy('position', highestCompletedStage.position + 1)
-    : repository.course.stages.models.sortBy('position')[0];
-
-  const currentStage = nextStage ? nextStage : highestCompletedStage;
+  let firstIncompleteStage = null;
 
   repository.course.stages.models.sortBy('position').forEach((stage, index) => {
     let stageListItem = repository.stageList.items.models.findBy('stage.id', stage.id);
+
+    // If the stage has a primary extension, but the user doesn't have an activation for it, then destroy the stageListItem
+    if (stage.primaryExtensionSlug) {
+      const extensionActivation = repository.courseExtensionActivations.models.findBy('extension.slug', stage.primaryExtensionSlug);
+
+      if (!extensionActivation) {
+        if (stageListItem) {
+          stageListItem.destroy();
+        }
+
+        return;
+      }
+    }
 
     if (!stageListItem) {
       stageListItem = server.create('repository-stage-list-item', { list: repository.stageList, stage: stage });
@@ -29,11 +28,15 @@ function syncRepositoryStageList(server, repository) {
     const courseStageCompletion = repository.courseStageCompletions.models.findBy('courseStage.id', stage.id);
     const isDisabled = false; // for now
 
+    if (!courseStageCompletion && !firstIncompleteStage) {
+      firstIncompleteStage = stage;
+    }
+
     stageListItem.update({
       position: index + 1,
       completedAt: courseStageCompletion ? courseStageCompletion.completedAt : null,
       isDisabled: isDisabled,
-      isCurrent: currentStage && currentStage.id === stage.id,
+      isCurrent: firstIncompleteStage && firstIncompleteStage.id === stage.id,
     });
   });
 

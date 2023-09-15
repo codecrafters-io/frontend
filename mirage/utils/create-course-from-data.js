@@ -28,6 +28,8 @@ export default function createCourseFromData(server, courseData) {
       difficulty: courseStageData.difficulty,
       testerSourceCodeUrl: courseStageData.tester_source_code_url,
       isPaid: courseStagePosition > 3,
+      primaryExtensionSlug: courseStageData.primary_extension_slug,
+      secondaryExtensionSlugs: courseStageData.secondary_extension_slugs || [],
     });
 
     courseStagePosition++;
@@ -35,6 +37,11 @@ export default function createCourseFromData(server, courseData) {
 
   for (const languageConfigurationData of courseData.languages) {
     const language = server.schema.languages.findBy({ slug: languageConfigurationData.slug });
+
+    if (!language) {
+      throw new Error(`Language with slug ${languageConfigurationData.slug} not found`);
+    }
+
     server.create('course-language-configuration', {
       course: course,
       language: language,
@@ -43,6 +50,15 @@ export default function createCourseFromData(server, courseData) {
     });
 
     createCourseStageSolution(server, course, 1, language);
+  }
+
+  for (const courseExtensionData of courseData.extensions || []) {
+    server.create('course-extension', {
+      course: course,
+      name: courseExtensionData.name,
+      slug: courseExtensionData.slug,
+      descriptionMarkdown: courseExtensionData.description_md,
+    });
   }
 
   return course;

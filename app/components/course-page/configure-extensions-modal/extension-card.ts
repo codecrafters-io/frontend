@@ -52,8 +52,10 @@ export default class ExtensionCardComponent extends Component<Signature> {
       }
 
       if (this.args.repository.stageList) {
-        this.args.repository.stageList.items.forEach((item) => {
-          item.unloadRecord();
+        this.args.repository.stageList.items.toArray().forEach((item) => {
+          if (item.stage.primaryExtensionSlug === this.args.extension.slug) {
+            item.unloadRecord();
+          }
         });
 
         await this.store.query('repository', {
