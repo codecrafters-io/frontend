@@ -82,7 +82,7 @@ export default class LanguageModel extends Model {
     return this.store
       .peekAll('course')
       .filter((course) => course.betaOrLiveLanguages.includes(this))
-      .map((course) => course.stages.length)
+      .map((course) => course.numberOfStages)
       .reduce((a, b) => a + b, 0);
   }
 

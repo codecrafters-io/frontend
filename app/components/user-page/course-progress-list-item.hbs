@@ -40,7 +40,8 @@
     {{else}}
       <UserPage::CourseProgressListItem::ProgressBar
         @completedStagesCount={{this.completedStagesCount}}
-        @totalStagesCount={{this.course.stages.length}}
+        {{! TODO[extensions]: should we list stages from extensions? }}
+        @totalStagesCount={{this.course.baseStages.length}}
       />
     {{/if}}
 

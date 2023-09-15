@@ -101,8 +101,9 @@ export default class CourseModel extends Model {
     return this.sortedStages[1];
   }
 
+  // TODO[Extensions]: Should we include stages from extensions?
   get sortedStages() {
-    return this.stages.sortBy('position');
+    return this.baseStages.sortBy('position');
   }
 
   trackIntroductionMarkdownFor(language) {
@@ -143,8 +144,9 @@ Learn about .torrent files and the famous BitTorrent protocol. Implement your ow
     }
   }
 
+  // TODO[Extensions]: Should we include stages from extensions?
   get numberOfStages() {
-    return this.stages.length;
+    return this.baseStages.length;
   }
 
   get sortPositionForTrack() {

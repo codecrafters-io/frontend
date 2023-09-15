@@ -89,6 +89,7 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedStages[this.course.sortedStages.length - 2];
   }
 
+  // TODO[Extensions]: Different logic if from extension vs. not
   get nextStage() {
     return this.course.sortedStages[this.course.sortedStages.indexOf(this) + 1];
   }
