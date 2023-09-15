@@ -1,6 +1,7 @@
 import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer, belongsTo, hasMany, Model } from 'miragejs';
 import config from 'codecrafters-frontend/config/environment';
+import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
 
 export default function (config) {
   let finalConfig = {
@@ -269,6 +270,8 @@ function routes() {
     } else {
       repositories = schema.repositories.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
     }
+
+    syncRepositoryStageLists(window.server);
 
     return repositories;
   });
