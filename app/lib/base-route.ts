@@ -26,8 +26,9 @@ export default class BaseRoute extends Route {
     if (!this.allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
       const params = paramsFromRouteInfo(transition.to);
 
-      if (Object.keys(params).length > 0) {
-        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name, params));
+      if (params.length > 0) {
+        const paramValues = params.map(([_, value]) => value);
+        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name, ...paramValues));
       } else {
         this.authenticator.initiateLogin(this.router.urlFor(transition.to.name));
       }
