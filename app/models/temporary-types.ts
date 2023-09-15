@@ -17,6 +17,9 @@ export class TemporaryCourseModel {
   declare extensions: CourseExtensionModel[];
   declare releaseStatusIsBeta: boolean;
   declare sortedStages: TemporaryCourseStageModel[];
+  declare sortedBaseStages: TemporaryCourseStageModel[];
+  declare primaryExtensionSlug: string | null;
+  declare secondaryExtensionSlugs: string[];
 }
 
 export class TemporaryCourseStageModel {
@@ -28,6 +31,8 @@ export class TemporaryCourseStageModel {
   declare name: string;
   declare position: number;
   declare nextStage: TemporaryCourseStageModel | null;
+  declare primaryExtensionSlug: string | null;
+  declare secondaryExtensionSlugs: string[];
 }
 
 export class TemporaryLanguageModel {

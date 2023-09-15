@@ -20,6 +20,8 @@ export default class CourseStageModel extends Model {
   @attr('') communitySolutionCounts; // JSON: { <language_slug>: count }
   @attr('string') shortName;
   @attr('string') slug;
+  @attr('string') primaryExtensionSlug;
+  @attr('') secondaryExtensionSlugs; // Array of strings
   @attr('string') testerSourceCodeUrl;
 
   @equal('difficulty', 'very_easy') difficultyIsVeryEasy;

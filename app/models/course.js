@@ -59,7 +59,7 @@ export default class CourseModel extends Model {
   }
 
   get baseStages() {
-    return this.stages; // TODO[Extensions]: Filter out stages with extensions
+    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
   }
 
   get concepts() {
@@ -103,6 +103,11 @@ export default class CourseModel extends Model {
 
   get secondStage() {
     return this.sortedStages[1];
+  }
+
+  // TODO[Extensions]: Should we include stages from extensions?
+  get sortedBaseStages() {
+    return this.baseStages.sortBy('position');
   }
 
   // TODO[Extensions]: Should we include stages from extensions?

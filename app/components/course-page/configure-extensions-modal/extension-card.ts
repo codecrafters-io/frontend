@@ -6,6 +6,9 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
+// @ts-ignore
+import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+
 type Signature = {
   Element: HTMLDivElement;
 
@@ -47,6 +50,17 @@ export default class ExtensionCardComponent extends Component<Signature> {
           }
         }
       }
+
+      if (this.args.repository.stageList) {
+        this.args.repository.stageList.items.forEach((item) => {
+          item.unloadRecord();
+        });
+
+        await this.store.query('repository', {
+          course_id: this.args.repository.course.id,
+          include: RepositoryPoller.defaultIncludedResources,
+        });
+      }
     } else {
       await this.store
         .createRecord('course-extension-activation', {
@@ -54,6 +68,11 @@ export default class ExtensionCardComponent extends Component<Signature> {
           extension: this.args.extension,
         })
         .save();
+
+      await this.store.query('repository', {
+        course_id: this.args.repository.course.id,
+        include: RepositoryPoller.defaultIncludedResources,
+      });
     }
 
     this.isSaving = false;

@@ -58,6 +58,11 @@ Along the way you'll learn about how Redis's leader-follower replication works, 
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
 
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 9, 'step list has 9 items');
+
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
+    await coursePage.configureExtensionsModal.enableExtension('Persistence');
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 11, 'step list has 3 items');
   });
 });
