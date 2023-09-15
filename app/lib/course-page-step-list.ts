@@ -7,13 +7,16 @@ import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
+// @ts-ignore: No types?
+import { cached } from '@glimmer/tracking';
+
 export { Step };
 
 export class StepList {
-  @tracked steps;
+  @tracked declare repository: TemporaryRepositoryModel;
 
-  constructor(steps: Step[]) {
-    this.steps = steps;
+  constructor(repository: TemporaryRepositoryModel) {
+    this.repository = repository;
   }
 
   get visibleSteps() {
@@ -31,28 +34,29 @@ export class StepList {
   previousVisibleStepFor(step: Step): Step | null {
     return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
   }
-}
 
-export function buildStepList(repository: TemporaryRepositoryModel): StepList {
-  let steps = [];
-  let currentStepPosition = 0;
+  @cached
+  get steps(): Step[] {
+    let steps: Step[] = [];
+    let currentStepPosition = 0;
 
-  steps.push(new IntroductionStep(repository, currentStepPosition++));
-  steps.push(new SetupStep(repository, currentStepPosition++));
+    steps.push(new IntroductionStep(this.repository, currentStepPosition++));
+    steps.push(new SetupStep(this.repository, currentStepPosition++));
 
-  if (!repository.stageList) {
-    repository.course.sortedStages.forEach((stage) => {
-      // TODO: Find better way around this
-      const fakeStageListItem = { stage: stage, isDisabled: true } as RepositoryStageListItemModel;
-      steps.push(new CourseStageStep(repository, fakeStageListItem, currentStepPosition++));
-    });
-  } else {
-    repository.stageList.items.forEach((item) => {
-      steps.push(new CourseStageStep(repository, item, currentStepPosition++));
-    });
+    if (!this.repository.stageList) {
+      this.repository.course.sortedStages.forEach((stage) => {
+        // TODO: Find better way around this?
+        const fakeStageListItem = { stage: stage, isDisabled: true } as RepositoryStageListItemModel;
+        steps.push(new CourseStageStep(this.repository, fakeStageListItem, currentStepPosition++));
+      });
+    } else {
+      this.repository.stageList.items.forEach((item) => {
+        steps.push(new CourseStageStep(this.repository, item, currentStepPosition++));
+      });
+    }
+
+    steps.push(new CourseCompletedStep(this.repository, currentStepPosition++));
+
+    return steps;
   }
-
-  steps.push(new CourseCompletedStep(repository, currentStepPosition++));
-
-  return new StepList(steps);
 }
