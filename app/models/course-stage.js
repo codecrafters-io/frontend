@@ -27,15 +27,6 @@ export default class CourseStageModel extends Model {
   @equal('difficulty', 'hard') difficultyIsHard;
   @equal('difficulty', 'medium') difficultyIsMedium;
 
-  // We're testing this on the first stage of Redis for now
-  get completionVideoId() {
-    if (this.course.isRedis && this.isFirst) {
-      return '835420864';
-    } else {
-      return null;
-    }
-  }
-
   get concepts() {
     return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
   }
@@ -56,10 +47,6 @@ export default class CourseStageModel extends Model {
     }
 
     return false;
-  }
-
-  get hasCompletionVideo() {
-    return !!this.completionVideoId;
   }
 
   get hasConcepts() {
