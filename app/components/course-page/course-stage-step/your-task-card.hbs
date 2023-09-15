@@ -30,7 +30,7 @@
       />
     {{/if}}
 
-    {{#if (and (eq this.coursePageState.currentStep.status "complete") (eq @courseStage.nextStage @repository.activeStage))}}
+    {{#if (and (eq this.coursePageState.currentStep.status "complete") (eq @courseStage.nextStage @repository.currentStage))}}
       <div class="mt-4 flex">
         <PrimaryLinkButton
           @route={{this.coursePageState.activeStep.routeParams.route}}

@@ -60,9 +60,10 @@ export default class CourseLeaderboardComponent extends Component {
     let allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
 
     return allRepositories.map((repository) => {
+      // TODO: Use "completed stages count" instead?
       return new LeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
-        currentCourseStage: repository.activeStage || repository.course.sortedStages.firstObject,
+        currentCourseStage: repository.currentStage || repository.course.sortedStages.firstObject,
         language: repository.language,
         user: repository.user,
         lastAttemptAt: repository.lastSubmissionAt || repository.createdAt,

@@ -27,6 +27,7 @@ export default class RepositoryModel extends Model {
   @belongsTo('user', { async: false }) user;
   @belongsTo('language', { async: false }) language;
   @belongsTo('submission', { async: false, inverse: null }) lastSubmission;
+  @belongsTo('repository-stage-list', { async: false }) stageList;
   @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
   @attr('string') cloneUrl;
@@ -41,21 +42,15 @@ export default class RepositoryModel extends Model {
     return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
   }
 
-  get activeStage() {
-    if (!this.highestCompletedStage) {
-      if (this.firstSubmissionCreated) {
-        return this.course.firstStage;
-      } else {
-        return null;
-      }
+  get currentStage() {
+    if (!this.firstSubmissionCreated) {
+      return null;
     }
 
-    let lastStagePosition = this.course.stages.sortBy('position').lastObject.position;
-
-    if (this.highestCompletedStage.get('position') === lastStagePosition) {
-      return this.course.get('stages').findBy('position', lastStagePosition);
+    if (this.stageList) {
+      return this.stageList.items.find((item) => item.isCurrent).stage;
     } else {
-      return this.course.get('stages').findBy('position', this.highestCompletedStage.get('position') + 1);
+      return null; // We haven't loaded the stage list yet
     }
   }
 

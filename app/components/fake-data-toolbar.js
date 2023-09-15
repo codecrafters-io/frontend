@@ -10,7 +10,7 @@ export default class FakeDataToolbarComponent extends Component {
     let submission = window.server.create('submission', {
       createdAt: new Date(),
       repository: window.server.schema.repositories.find(this.args.repository.id),
-      courseStage: window.server.schema.courseStages.find(this.args.repository.activeStage.id),
+      courseStage: window.server.schema.courseStages.find(this.args.repository.currentStage.id),
       status: 'evaluating',
     });
 

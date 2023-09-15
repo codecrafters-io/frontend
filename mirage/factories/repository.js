@@ -1,9 +1,14 @@
 import { Factory, trait } from 'miragejs';
+import syncRepositoryStageLists from '../utils/sync-repository-stage-lists';
 
 export default Factory.extend({
   createdAt: () => new Date(),
   cloneUrl: 'https://git.codecraters.io/a-long-test-string.git',
   name: 'Dummy name',
+
+  afterCreate(repository, server) {
+    syncRepositoryStageLists(server, repository);
+  },
 
   withFirstStageInProgress: trait({
     afterCreate(repository, server) {

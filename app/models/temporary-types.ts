@@ -2,6 +2,13 @@
 import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-extension-activation';
+import RepositoryStageListModel from './repository-stage-list';
+
+export class TemporaryUserModel {
+  declare id: string;
+  declare username: string;
+  declare badgeAwards: unknown[];
+}
 
 export class TemporaryCourseModel {
   declare id: string;
@@ -9,6 +16,18 @@ export class TemporaryCourseModel {
   declare slug: string;
   declare extensions: CourseExtensionModel[];
   declare releaseStatusIsBeta: boolean;
+  declare sortedStages: TemporaryCourseStageModel[];
+}
+
+export class TemporaryCourseStageModel {
+  declare id: string;
+  declare slug: string;
+  declare course: TemporaryCourseModel;
+  declare descriptionMarkdownTemplate: string;
+  declare isFirst: boolean;
+  declare name: string;
+  declare position: number;
+  declare nextStage: TemporaryCourseStageModel | null;
 }
 
 export class TemporaryLanguageModel {
@@ -17,9 +36,17 @@ export class TemporaryLanguageModel {
   declare slug: string;
 }
 
+export class TemporarySubmissionModel {
+  declare id: string;
+  declare status: 'evaluating' | 'failed' | 'success' | 'internal_error';
+  declare courseStage: TemporaryCourseStageModel;
+  declare createdAt: Date;
+}
+
 export class TemporaryRepositoryModel {
   declare course: TemporaryCourseModel;
   declare courseExtensionActivations: CourseExtensionActivationModel[];
+  declare currentStage: TemporaryCourseStageModel | null;
   declare expectedActivityFrequency: 'every_day' | 'once_a_week' | 'multiple_times_a_week';
   declare id: null | string;
   declare isNew: boolean;
@@ -27,7 +54,20 @@ export class TemporaryRepositoryModel {
   declare language: null | TemporaryLanguageModel;
   declare languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
+  declare stageList: RepositoryStageListModel | null;
   declare remindersAreEnabled: boolean | null;
+  declare user: TemporaryUserModel;
+  declare lastSubmission: TemporarySubmissionModel | null;
+  declare lastSubmissionIsEvaluating: boolean;
+  declare lastSubmissionHasFailureStatus: boolean;
+
+  hasClosedCourseStageFeedbackSubmissionFor(_stage: TemporaryCourseStageModel) {
+    return false;
+  }
+
+  get highestCompletedStage(): TemporaryCourseStageModel | null {
+    return null;
+  }
 
   get activatedCourseExtensions(): CourseExtensionModel[] {
     return [];

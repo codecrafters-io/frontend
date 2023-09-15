@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RSVP from 'rsvp';
-import { buildStepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 
 export default class CourseRoute extends BaseRoute {
   @service authenticator;
@@ -28,7 +28,7 @@ export default class CourseRoute extends BaseRoute {
     });
 
     const activeRepository = this.findOrCreateRepository(course, params, transition, repositories);
-    this.coursePageState.setStepList(buildStepList(activeRepository));
+    this.coursePageState.setStepList(new StepList(activeRepository));
 
     return {
       course: allCourses.find((course) => course.slug === params.course_slug),

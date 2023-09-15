@@ -4,7 +4,7 @@
   @route={{this.linkToRoute.name}}
   @model={{this.linkToRoute.model}}
   @query={{this.linkToRoute.query}}
-  data-test-course-card
+  data-test-course-card={{not this.isSkeleton}}
 >
   {{! Logo }}
   <div class="w-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">

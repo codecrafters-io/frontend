@@ -23,6 +23,9 @@ export default class RepositoryPoller extends Poller {
     'last-submission',
     'last-submission.course-stage',
     'last-submission.evaluations',
+    'stage-list',
+    'stage-list.items',
+    'stage-list.items.stage',
   ].join(',');
 
   async doPoll() {
