@@ -58,6 +58,10 @@ export default class CourseModel extends Model {
     return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
   }
 
+  get baseStages() {
+    return this.stages; // TODO[Extensions]: Filter out stages with extensions
+  }
+
   get concepts() {
     return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
   }
