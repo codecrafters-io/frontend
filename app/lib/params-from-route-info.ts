@@ -1,16 +1,16 @@
 import type RouteInfo from '@ember/routing/route-info';
 
-export default function paramsFromRouteInfo(routeInfo: RouteInfo) {
+export default function paramsFromRouteInfo(routeInfo: RouteInfo): [string, string][] {
   let currentRouteInfo = routeInfo;
-  let params = { ...currentRouteInfo.params };
+  let params = [] as [string, string][];
 
   while (true) {
-    if (currentRouteInfo.paramNames.length > 0) {
-      params = { ...currentRouteInfo.params, ...params };
+    for (const paramName of currentRouteInfo.paramNames) {
+      params.push([paramName, currentRouteInfo.params[paramName] as string]);
     }
 
     if (!currentRouteInfo.parent) {
-      return params;
+      return params.reverse();
     }
 
     currentRouteInfo = currentRouteInfo.parent;
