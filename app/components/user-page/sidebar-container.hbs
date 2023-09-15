@@ -34,7 +34,7 @@
 
     {{#if @user.isAdmin}}
       <TertiaryButton @size="extra-small" data-test-admin-profile-button class="w-fit">
-        <a href="https://backend.codecrafters.io/admin/users/{{@user.id}}" target="_blank" rel="noopener noreferrer">Admin Profile</a>
+        <a href={{@user.adminProfileUrl}} target="_blank" rel="noopener noreferrer">Admin Profile</a>
       </TertiaryButton>
     {{/if}}
   </div>
