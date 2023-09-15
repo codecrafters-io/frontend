@@ -2,36 +2,31 @@ export default {
   "slug": "grep",
   "name": "Build your own grep",
   "short_name": "grep",
-  "release_status": "beta",
+  "release_status": "live",
   "description_md": "[Regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (Regexes, for short) are patterns used to \nmatch character combinations in strings. [`grep`](https://en.wikipedia.org/wiki/Grep) is a CLI tool for searching \nusing Regexes.\n\nIn this challenge you'll build your own implementation of `grep`. Along the way we'll learn about Regex syntax and \nhow Regexes are evaluated.\n",
-  "short_description_md": "Learn how regular expressions work, including character classes, quantifiers and more\n",
+  "short_description_md": "Learn about regex syntax: character classes, quantifiers and more\n",
   "completion_percentage": 30,
   "languages": [
     {
-      "slug": "python",
-      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-python"
-    },
-    {
-      "slug": "rust",
-      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-rust"
-    },
-    {
-      "slug": "go",
-      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-go"
+      "slug": "go"
     },
     {
       "slug": "haskell",
-      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-haskell",
       "release_status": "beta"
     },
     {
+      "slug": "python"
+    },
+    {
       "slug": "ruby",
-      "starter_repository_url": "https://github.com/codecrafters-io/grep-starter-ruby",
       "release_status": "alpha",
       "alpha_tester_usernames": [
         "rohitpaulk",
         "sreeram-venkitesh"
       ]
+    },
+    {
+      "slug": "rust"
     }
   ],
   "marketing": {

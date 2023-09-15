@@ -2,37 +2,31 @@ current_version_number := $(shell git tag --list "v*" | sort -V | tail -n 1 | cu
 next_version_number := $(shell echo $$(($(current_version_number)+1)))
 
 refresh_course_definitions:
-	hub api repos/codecrafters-io/core/contents/data/courses/redis.yml \
+	hub api repos/codecrafters-io/build-your-own-redis/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
 		> mirage/course-fixtures/redis.js
 
-	hub api repos/codecrafters-io/core/contents/data/courses/docker.yml \
+	hub api repos/codecrafters-io/build-your-own-docker/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
 		> mirage/course-fixtures/docker.js
 
-	hub api repos/codecrafters-io/core/contents/data/courses/git.yml \
+	hub api repos/codecrafters-io/build-your-own-git/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
 		> mirage/course-fixtures/git.js
 
-	hub api repos/codecrafters-io/core/contents/data/courses/sqlite.yml \
+	hub api repos/codecrafters-io/build-your-own-sqlite/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
 		> mirage/course-fixtures/sqlite.js
 
-	hub api repos/codecrafters-io/core/contents/data/courses/react.yml \
-		| jq -r .content \
-		| base64 -d \
-		| yq -o json eval \
-		> mirage/course-fixtures/react.js
-
-	hub api repos/codecrafters-io/core/contents/data/courses/grep.yml \
+	hub api repos/codecrafters-io/build-your-own-grep/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \

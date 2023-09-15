@@ -4,37 +4,30 @@ export default {
   "short_name": "SQLite",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
-  "short_description_md": "Learn about parsing SQL syntax, SQLite's file format, how indexed data is stored in B-trees and more\n",
+  "short_description_md": "Learn about SQL syntax, SQLite's file format, B-trees and more\n",
   "completion_percentage": 5,
   "languages": [
     {
-      "slug": "csharp",
-      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-csharp"
+      "slug": "csharp"
     },
     {
-      "slug": "go",
-      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-go"
+      "slug": "go"
     },
     {
-      "slug": "javascript",
-      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-javascript"
+      "slug": "javascript"
     },
     {
-      "slug": "python",
-      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-python"
+      "slug": "python"
     },
     {
       "slug": "ruby",
-      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-ruby",
       "release_status": "beta"
     },
     {
-      "slug": "rust",
-      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-rust"
+      "slug": "rust"
     },
     {
       "slug": "swift",
-      "starter_repository_url": "https://github.com/codecrafters-io/sqlite-starter-swift",
       "release_status": "alpha",
       "alpha_tester_usernames": [
         "Terky"
@@ -42,9 +35,7 @@ export default {
     }
   ],
   "marketing": {
-    "description": "Learn about SQLite's file format, how indexed data is stored in B-trees and more.",
     "difficulty": "hard",
-    "introduction_md": "In this challenge, you'll build a barebones SQLite implementation that supports\nbasic SQL queries like SELECT. Along the way you'll learn about SQLite's\n[file format](https://sqlite.org/fileformat.html), how indexed data is\nstored in B-trees and more.\n",
     "sample_extension_idea_title": "Transactions",
     "sample_extension_idea_description": "A SQLite implementation that can handle atomic transactions using a write-ahead log (WAL) file",
     "testimonials": [
@@ -118,14 +109,14 @@ export default {
       "slug": "table_scan",
       "name": "Retrieve data using a full-table scan",
       "difficulty": "hard",
-      "description_md": "Time to play with larger amounts of data!\n\nIn this stage you'll deal with the same syntax as before: a query with a `WHERE` clause. However, this time, the\ntable you'll be querying will be larger and it'll span multiple pages.\n\nHere's how the tester will execute your program:\n\n```\n$ ./your_sqlite3.sh superheroes.db \"SELECT id, name FROM superheroes WHERE eye_color = 'Pink Eyes'\"\n```\n\nand here's the output it expects:\n\n```\n297|Stealth (New Earth)\n790|Tobias Whale (New Earth)\n1085|Felicity (New Earth)\n2729|Thrust (New Earth)\n3289|Angora Lapin (New Earth)\n3913|Matris Ater Clementia (New Earth)\n```\n\nThe tester is going to use a sample database of superheroes that is ~1MB in size. You can download a small\nversion of this to test locally, read the **Sample Databases** section in [the README]({{readme_url}}).\n\nYou'll need to traverse a [B-tree](https://en.wikipedia.org/wiki/B-tree) in this stage. If you're unfamiliar with\nhow B-trees work or just need a refresher, Vaidehi Joshi's\n[Busying Oneself With B-Trees](https://medium.com/basecs/busying-oneself-with-b-trees-78bbf10522e7) is a good place to\nstart. For specifics on how SQLite stores B-trees on disk, read the\n[B-tree Pages](https://www.sqlite.org/fileformat.html#b_tree_pages) documentation section.\n",
+      "description_md": "Time to play with larger amounts of data!\n\nIn this stage you'll deal with the same syntax as before: a query with a `WHERE` clause. However, this time, the\ntable you'll be querying will be larger and it'll span multiple pages.\n\nHere's how the tester will execute your program:\n\n```\n$ ./your_sqlite3.sh superheroes.db \"SELECT id, name FROM superheroes WHERE eye_color = 'Pink Eyes'\"\n```\n\nand here's the output it expects:\n\n```\n297|Stealth (New Earth)\n790|Tobias Whale (New Earth)\n1085|Felicity (New Earth)\n2729|Thrust (New Earth)\n3289|Angora Lapin (New Earth)\n3913|Matris Ater Clementia (New Earth)\n```\n\nThe tester is going to use a sample database of superheroes that is ~1MB in size. You can download a small\nversion of this to test locally, read the **Sample Databases** section in the **README** of your repository.\n\nYou'll need to traverse a [B-tree](https://en.wikipedia.org/wiki/B-tree) in this stage. If you're unfamiliar with\nhow B-trees work or just need a refresher, Vaidehi Joshi's\n[Busying Oneself With B-Trees](https://medium.com/basecs/busying-oneself-with-b-trees-78bbf10522e7) is a good place to\nstart. For specifics on how SQLite stores B-trees on disk, read the\n[B-tree Pages](https://www.sqlite.org/fileformat.html#b_tree_pages) documentation section.\n",
       "marketing_md": "In this stage, you'll filter records based on a `WHERE` clause. You'll assume that the query can't be served by\nan index, so you'll visit all records in a table and then filter out the matching ones.\n"
     },
     {
       "slug": "index_scan",
       "name": "Retrieve data using an index",
       "difficulty": "hard",
-      "description_md": "In this stage, we'll implement an index scan. Rather than reading _all_ rows in a table and then filtering\nin-memory, we'll use an index to perform a more intelligent search.\n\nTo test whether your implementation actually uses an index, the tester will use a database is ~1GB in size and\nexpect your program to return query results in less than 3 seconds.\n\nThe test database contains a `companies` table with an index named `idx_companies_country` on the\n`country` column.\n\nYou can download a small version of this database to test locally, read the **Sample Databases** section in\n[the README]({{readme_url}}) for details.\n\nHere's how the tester will execute your program:\n\n```\n$ ./your_sqlite3.sh companies.db \"SELECT id, name FROM companies WHERE country = 'eritrea'\"\n```\n\nand here's the output it expects:\n\n```\n121311|unilink s.c.\n2102438|orange asmara it solutions\n5729848|zara mining share company\n6634629|asmara rental\n```\n\nYou can assume that all queries run by the tester will include `country` in the `WHERE` clause,\nso they can be served by the index. The tester will run multiple randomized queries and expect all of them\nto return results in under 3 seconds.\n",
+      "description_md": "In this stage, we'll implement an index scan. Rather than reading _all_ rows in a table and then filtering\nin-memory, we'll use an index to perform a more intelligent search.\n\nTo test whether your implementation actually uses an index, the tester will use a database is ~1GB in size and\nexpect your program to return query results in less than 3 seconds.\n\nThe test database contains a `companies` table with an index named `idx_companies_country` on the\n`country` column.\n\nYou can download a small version of this database to test locally, read the **Sample Databases** section in the **README** \nof your repository for details.\n\nHere's how the tester will execute your program:\n\n```\n$ ./your_sqlite3.sh companies.db \"SELECT id, name FROM companies WHERE country = 'eritrea'\"\n```\n\nand here's the output it expects:\n\n```\n121311|unilink s.c.\n2102438|orange asmara it solutions\n5729848|zara mining share company\n6634629|asmara rental\n```\n\nYou can assume that all queries run by the tester will include `country` in the `WHERE` clause,\nso they can be served by the index. The tester will run multiple randomized queries and expect all of them\nto return results in under 3 seconds.\n",
       "marketing_md": "This stage is similar to the previous one, but focuses on enhancing query performance using an index. In this\nstage, your program will need to read through millions of rows in under 5 seconds.\n"
     }
   ]

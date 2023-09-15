@@ -4,42 +4,34 @@ export default {
   "short_name": "Docker",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a toy Docker implementation that can pull an\nimage from [Docker Hub](https://hub.docker.com/) and execute commands in it.\nAlong the way, you'll learn about\n[chroot](https://en.wikipedia.org/wiki/Chroot), [kernel\nnamespaces](https://en.wikipedia.org/wiki/Linux_namespaces), the [docker\nregistry API](https://docs.docker.com/registry/spec/api/) and much more.\n",
-  "short_description_md": "Learn about chroot, kernel namespaces, the docker registry API and more\n",
+  "short_description_md": "Learn about kernel namespaces, chroot, the registry API and more\n",
   "completion_percentage": 30,
   "languages": [
     {
-      "slug": "c",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-c"
+      "slug": "c"
     },
     {
-      "slug": "go",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-go"
+      "slug": "go"
     },
     {
-      "slug": "nim",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-nim"
+      "slug": "nim"
     },
     {
-      "slug": "php",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-php"
+      "slug": "php"
     },
     {
       "slug": "python",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-python",
       "release_status": "beta"
     },
     {
       "slug": "ruby",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-ruby",
       "release_status": "beta"
     },
     {
-      "slug": "rust",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-rust"
+      "slug": "rust"
     },
     {
       "slug": "swift",
-      "starter_repository_url": "https://github.com/codecrafters-io/docker-starter-swift",
       "release_status": "alpha",
       "alpha_tester_usernames": [
         "Terky"
@@ -47,9 +39,7 @@ export default {
     }
   ],
   "marketing": {
-    "description": "Learn about chroot, kernel namespaces, the docker registry API and more",
     "difficulty": "medium",
-    "introduction_md": "In this challenge, you'll build a toy Docker implementation that can pull an\nimage from [Docker Hub](https://hub.docker.com/) and execute commands in it.\nAlong the way, you'll learn about\n[chroot](https://en.wikipedia.org/wiki/Chroot), [kernel\nnamespaces](https://en.wikipedia.org/wiki/Linux_namespaces), the [docker\nregistry API](https://docs.docker.com/registry/spec/api/) and much more.\n",
     "sample_extension_idea_title": "Build from Dockerfile",
     "sample_extension_idea_description": "A Docker implementation that can build images from a Dockerfile",
     "testimonials": [
@@ -62,7 +52,7 @@ export default {
       },
       {
         "author_name": "Beyang Liu",
-        "author_designation": "CTO at SourceGraph",
+        "author_description": "CTO at SourceGraph",
         "author_avatar": "https://codecrafters.io/images/external/testimonials/beyang-liu.jpeg",
         "link": "https://twitter.com/beyang",
         "text": "CodeCrafters has you build your own version of things like Git and Docker from scratch. A cool way to build a stronger mental model of how those tools work.\n"
@@ -82,7 +72,7 @@ export default {
       "slug": "stdio",
       "name": "Wireup stdout & stderr",
       "difficulty": "easy",
-      "description_md": "You'll now pipe the program's stdout and stderr to the\nparent process.\n\nLike the last stage, the tester will run your program like this:\n\n```\nmydocker run ubuntu:latest /usr/local/bin/docker-explorer echo hey\n```\n\nTo test this behaviour locally, you could use the `echo` + `echo_stderr`\ncommands that `docker-explorer` exposes. Run `docker-explorer --help` to\nview usage.\n\nIf you've got any logs or print statements in your code, make sure to remove\nthem. The tester can't differentiate between debug logs and the actual\noutput!\n\nNote: The [README]({{readme_url}}) contains setup\ninformation for this stage and beyond (takes < 5 min).\n",
+      "description_md": "You'll now pipe the program's stdout and stderr to the\nparent process.\n\nLike the last stage, the tester will run your program like this:\n\n```\nmydocker run ubuntu:latest /usr/local/bin/docker-explorer echo hey\n```\n\nTo test this behaviour locally, you could use the `echo` + `echo_stderr`\ncommands that `docker-explorer` exposes. Run `docker-explorer --help` to\nview usage.\n\nIf you've got any logs or print statements in your code, make sure to remove\nthem. The tester can't differentiate between debug logs and the actual\noutput!\n\nNote: The **README** in your repository contains setup\ninformation for this stage and beyond (takes < 5 min).\n",
       "marketing_md": "In this stage, you'll relay the child program's stdout & stderr to the\nparent process.\n",
       "tester_source_code_url": "https://github.com/codecrafters-io/docker-tester/blob/18245703a5beed8ee0a7e1cbb7204a7ee3b3b5d1/internal/stage_stdio.go#L9"
     },
