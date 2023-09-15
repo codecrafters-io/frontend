@@ -7,6 +7,7 @@ import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
 
@@ -14,6 +15,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
+  setupWindowMock(hooks);
 
   test('redirects to login page if user is not signed in', async function (assert) {
     testScenario(this.server);
@@ -28,7 +30,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
 
     assert.strictEqual(
       window.location.href,
-      `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fpay`,
+      `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fcourses%2Fredis%2Fstages%2F2%2Fscreencasts`,
       'should redirect to login URL',
     );
   });
