@@ -5,7 +5,7 @@ import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsAdmin } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | view-user-profile', function (hooks) {
   setupApplicationTest(hooks);
@@ -121,5 +121,23 @@ module('Acceptance | view-user-profile', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'This user is the author of one or more CodeCrafters challenges',
     });
+  });
+
+  test('it has the admin profile button if user is admin', async function (assert) {
+    testScenario(this.server);
+    signInAsAdmin(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+    await userPage.visit({ username: user.username });
+    assert.ok(userPage.adminProfileButton.isPresent);
+  });
+
+  test('it does not have the admin profile button if user is not admin', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+    await userPage.visit({ username: user.username });
+    assert.notOk(userPage.adminProfileButton.isPresent);
   });
 });

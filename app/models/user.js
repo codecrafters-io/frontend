@@ -1,3 +1,4 @@
+import config from 'codecrafters-frontend/config/environment';
 import Model, { attr, hasMany } from '@ember-data/model';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
@@ -37,6 +38,10 @@ export default class UserModel extends Model {
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
+  }
+
+  get adminProfileUrl() {
+    return `${config.x.backendUrl}/admin/users/${this.id}`;
   }
 
   get availableCustomDiscount() {
