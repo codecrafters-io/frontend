@@ -33,11 +33,10 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
     this.server.timing = 1000;
-    // await this.pauseTest();
 
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 2, 'step list has 2 items');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items');
 
-    // await coursePage.sidebar.clickOnConfigureExtensionsButton();
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
     // await coursePage.configureExtensionsModal.enableExtension('Persistence');
 
     // assert.strictEqual(coursePage.sidebar.stepListItems.length, 11, 'step list has 3 items');
