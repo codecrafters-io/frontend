@@ -170,7 +170,7 @@
     "fuse.js": "^6.5.3",
     "lottie-web": "^5.12.2",
     "mustache": "^4.2.0",
-    "node-html-parser": "^6.1.9",
+    "node-html-parser": "^6.1.10",
     "player.js": "^0.1.0",
     "showdown": "^2.1.0",
     "three": "^0.156.1",
