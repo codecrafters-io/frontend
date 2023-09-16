@@ -38,7 +38,9 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     const forkedRepositoryId = forkResponse.data.id;
 
     // Force reload
-    window.location.href = this.router.urlFor('course', this.args.submission.repository.course.slug, { queryParams: { repo: forkedRepositoryId } });
+    window.location.href = this.router.urlFor('course.setup', this.args.submission.repository.course.slug, {
+      queryParams: { repo: forkedRepositoryId },
+    });
   }
 
   @action
