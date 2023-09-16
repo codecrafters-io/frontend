@@ -1,9 +1,12 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerComponent extends Component {
   @tracked isUpdatingTesterVersion = false;
+  @tracked isForking = false;
+  @service router;
 
   get durationInMilliseconds() {
     return this.args.submission.evaluations.firstObject.createdAt.getTime() - this.args.submission.createdAt.getTime();
@@ -20,6 +23,22 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
   @action
   async handleCopyRepositoryURLButtonClick() {
     await navigator.clipboard.writeText(this.args.submission.repository.cloneUrl);
+  }
+
+  @action
+  async handleForkButtonClick() {
+    if (this.isForking) {
+      return;
+    }
+
+    this.isForking = true;
+    const forkResponse = await this.args.submission.repository.fork();
+    this.isForking = false;
+
+    const forkedRepositoryId = forkResponse.data.id;
+
+    // Force reload
+    window.location.href = this.router.urlFor('course', this.args.submission.repository.course.slug, { queryParams: { repo: forkedRepositoryId } });
   }
 
   @action

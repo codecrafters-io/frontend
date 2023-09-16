@@ -43,6 +43,16 @@
               <EmberTooltip @text="Click to copy Git URL" />
             </TertiaryButton>
 
+            <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleForkButtonClick}}>
+              {{#if this.isForking}}
+                {{svg-jar "spinner" class="w-4 h-4 text-gray-500"}}
+              {{else}}
+                {{svg-jar "pencil" class="w-4 text-gray-500"}}
+              {{/if}}
+
+              <EmberTooltip @text="Fork this repository to your CodeCrafters account, to be able to edit and run tests." />
+            </TertiaryButton>
+
             {{#if (current-user-is-staff)}}
               <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleViewCodeButtonClick}}>
                 {{svg-jar "code" class="w-4 text-gray-500"}}
