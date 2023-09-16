@@ -156,3 +156,8 @@ RepositoryModel.prototype.updateTesterVersion = memberAction({
   path: 'update-tester-version',
   type: 'post',
 });
+
+RepositoryModel.prototype.fork = memberAction({
+  path: 'fork',
+  type: 'post',
+});
