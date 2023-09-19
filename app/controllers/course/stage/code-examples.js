@@ -56,11 +56,9 @@ export default class CodeExamplesController extends Controller {
       return this.repository.language;
     }
 
-    if (this.courseStage.solutions.length > 0) {
-      return this.courseStage.solutions.sortBy('language.name')[0].language;
-    }
+    const sortedBetaOrLiveLanguages = this.repository.course.betaOrLiveLanguages.sortBy('language.name');
 
-    return this.repository.course.betaOrLiveLanguages.sortBy('language.name')[0];
+    return sortedBetaOrLiveLanguages.find((language) => this.courseStage.hasCommunitySolutionsForLanguage(language)) || sortedBetaOrLiveLanguages[0];
   }
 
   get sortedSolutions() {
