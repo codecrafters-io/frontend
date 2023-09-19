@@ -3,24 +3,21 @@ function syncRepositoryStageList(server, repository) {
     repository.update({ stageList: server.create('repository-stage-list') });
   }
 
+  let currentStageListItemPosition = 1;
   let firstIncompleteStage = null;
 
-  console.group('syncRepositoryStageList');
+  console.groupCollapsed('syncRepositoryStageList');
 
-  repository.course.stages.models.sortBy('position').forEach((stage, index) => {
+  repository.course.stages.models.sortBy('position').forEach((stage) => {
     console.group(`${stage.slug} (${stage.position})`);
     let stageListItem = repository.stageList.items.models.findBy('stage.id', stage.id);
 
     // If the stage has a primary extension, but the user doesn't have an activation for it, then destroy the stageListItem
     if (stage.primaryExtensionSlug) {
       const extensionActivation = repository.courseExtensionActivations.models.findBy('extension.slug', stage.primaryExtensionSlug);
-      console.log(repository.courseExtensionActivations.models.length);
-      console.log(repository.courseExtensionActivations.models.mapBy('extension.slug'));
 
       if (!extensionActivation) {
-        console.log(
-          `No extension activation found for stage. stageExtensionSlug=${stage.primaryExtensionSlug}, activations=${repository.courseExtensionActivations.models.length}`,
-        );
+        console.log(`No extension activation found for stage. stageExtensionSlug=${stage.primaryExtensionSlug}`);
 
         if (stageListItem) {
           console.log('destroying stageListItem');
@@ -48,7 +45,7 @@ function syncRepositoryStageList(server, repository) {
     }
 
     stageListItem.update({
-      position: index + 1,
+      position: currentStageListItemPosition++,
       completedAt: courseStageCompletion ? courseStageCompletion.completedAt : null,
       isDisabled: isDisabled,
       isCurrent: firstIncompleteStage && firstIncompleteStage.id === stage.id,

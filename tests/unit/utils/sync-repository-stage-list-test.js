@@ -69,5 +69,12 @@ module('Unit | Utility | sync-repository-stage-list', function (hooks) {
     assert.strictEqual(repository.stageList.items.models[1].position, 2, 'second stage list item position is 2');
     assert.strictEqual(repository.stageList.items.models[2].position, 3, 'third stage list item position is 3');
     assert.strictEqual(repository.stageList.items.models[3].position, 4, 'fourth stage list item position is 4');
+
+    secondExtensionActivation.destroy();
+
+    syncRepositoryStageLists(this.server);
+    assert.strictEqual(repository.stageList.items.models.length, 2, 'repository has 2 stage list items');
+    assert.strictEqual(repository.stageList.items.models[0].position, 1, 'first stage list item position is 1');
+    assert.strictEqual(repository.stageList.items.models[1].position, 2, 'second stage list item position is 2');
   });
 });

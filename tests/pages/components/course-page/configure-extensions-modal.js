@@ -9,7 +9,14 @@ export default {
 
   clickOnCloseButton: clickable('[data-test-close-modal-button]'),
 
-  async enableExtension(name) {
+  extensionCards: collection('[data-test-course-extension-card]', {
+    name: text('[data-test-course-extension-name]'),
+    clickOnToggleExtensionButton: clickable('[data-test-toggle-extension-button]'),
+  }),
+
+  scope: '[data-test-configure-extensions-modal]',
+
+  async toggleExtension(name) {
     await waitUntil(() => this.extensionCards.toArray().length > 0, { timeoutMessage: 'No extension cards found' });
 
     await waitUntil(() => this.extensionCards.toArray().find((card) => card.name === name), {
@@ -21,11 +28,4 @@ export default {
       .find((card) => card.name === name)
       .clickOnToggleExtensionButton();
   },
-
-  extensionCards: collection('[data-test-course-extension-card]', {
-    name: text('[data-test-course-extension-name]'),
-    clickOnToggleExtensionButton: clickable('[data-test-toggle-extension-button]'),
-  }),
-
-  scope: '[data-test-configure-extensions-modal]',
 };

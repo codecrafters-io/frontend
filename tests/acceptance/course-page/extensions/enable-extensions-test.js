@@ -32,15 +32,27 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
-    this.server.timing = 1000;
-
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items');
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
-    await coursePage.configureExtensionsModal.enableExtension('Extension 1');
 
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items');
+    // Enable Extension 1
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is enabled');
 
-    // assert.strictEqual(coursePage.sidebar.stepListItems.length, 11, 'step list has 3 items');
+    // Enable Extension 2
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items when both extensions are enabled');
+
+    // Disable Extension 1
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
+
+    // TODO: This has something to do with the RecordCacheData error, investigate
+    // await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Disable Extension 2
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
   });
 });

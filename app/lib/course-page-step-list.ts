@@ -79,21 +79,27 @@ export class StepList {
     const stepGroups: ExtensionStepGroup[] = [];
 
     let stepsInNextGroup: Step[] = [];
-    let currentPositionInGroup = 0;
+    let currentPositionInGroup = 1;
     let currentGlobalPosition = (this.baseStagesStepGroup.steps[this.baseStagesStepGroup.steps.length - 1] as Step).globalPosition + 1;
 
     this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
       if (stepsInNextGroup[0] && item.stage.primaryExtension != (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension) {
         stepGroups.push(new ExtensionStepGroup(item.stage.primaryExtension as CourseExtensionModel, stepsInNextGroup));
         stepsInNextGroup = [];
-        currentPositionInGroup = 0;
-      } else {
-        currentPositionInGroup++;
-        currentGlobalPosition++;
+        currentPositionInGroup = 1;
       }
 
       stepsInNextGroup.push(new CourseStageStep(this.repository, item, currentPositionInGroup, currentGlobalPosition));
+
+      currentPositionInGroup++;
+      currentGlobalPosition++;
     });
+
+    if (stepsInNextGroup.length > 0) {
+      stepGroups.push(
+        new ExtensionStepGroup((stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension as CourseExtensionModel, stepsInNextGroup),
+      );
+    }
 
     return stepGroups;
   }
