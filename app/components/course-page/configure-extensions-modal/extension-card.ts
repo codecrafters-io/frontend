@@ -23,20 +23,21 @@ export default class ExtensionCardComponent extends Component<Signature> {
   @service store!: Store;
   @tracked unsavedIsActivatedValue: boolean | null = null;
 
-  get savedOrUnsavedIsActivatedValue(): boolean {
-    if (this.unsavedIsActivatedValue !== null) {
-      return this.unsavedIsActivatedValue;
-    } else {
-      return this.isActivated;
-    }
+  get activations() {
+    return this.args.repository.courseExtensionActivations.filter((activation) => activation.extension === this.args.extension);
   }
 
   get isActivated(): boolean {
     return this.activations.length > 0;
   }
 
-  get activations() {
-    return this.args.repository.courseExtensionActivations.filter((activation) => activation.extension === this.args.extension);
+
+  get optimisticValueForIsActivated(): boolean {
+    if (this.unsavedIsActivatedValue !== null) {
+      return this.unsavedIsActivatedValue;
+    } else {
+      return this.isActivated;
+    }
   }
 
   syncActivation = task({ keepLatest: true }, async (): Promise<void> => {
