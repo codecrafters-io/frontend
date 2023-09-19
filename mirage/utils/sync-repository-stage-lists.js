@@ -57,6 +57,10 @@ function syncRepositoryStageList(server, repository) {
   console.groupEnd();
 
   if (!repository.stageList.items.models.find((item) => item.isCurrent)) {
+    repository.stageList.items.models[repository.stageList.items.models.length - 1].update({ isCurrent: true });
+  }
+
+  if (!repository.stageList.items.models.find((item) => item.isCurrent)) {
     throw new Error('Expected at least one currentStage to be present');
   }
 }
