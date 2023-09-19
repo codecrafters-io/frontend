@@ -34,4 +34,8 @@ export default class StepGroup {
   get type(): 'BaseStagesStepGroup' | 'ExtensionStepGroup' {
     throw new Error('Subclasses of StepGroup must implement a type getter');
   }
+
+  get visibleSteps() {
+    return this.steps.filter((step) => !step.isHidden);
+  }
 }
