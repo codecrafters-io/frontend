@@ -40,7 +40,7 @@ export class StepList {
   }
 
   @cached
-  stepGroups(): StepGroup[] {
+  get stepGroups(): StepGroup[] {
     return [this.baseStagesStepGroup, ...this.extensionStepGroups];
   }
 
@@ -83,9 +83,7 @@ export class StepList {
     let currentGlobalPosition = (this.baseStagesStepGroup.steps[this.baseStagesStepGroup.steps.length - 1] as Step).globalPosition + 1;
 
     this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
-      const currentStepGroup = stepGroups[stepGroups.length - 1];
-
-      if (stepsInNextGroup.length != 0 && item.stage.primaryExtension != (currentStepGroup as ExtensionStepGroup).extension) {
+      if (stepsInNextGroup[0] && item.stage.primaryExtension != (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension) {
         stepGroups.push(new ExtensionStepGroup(item.stage.primaryExtension as CourseExtensionModel, stepsInNextGroup));
         stepsInNextGroup = [];
         currentPositionInGroup = 0;
@@ -101,6 +99,6 @@ export class StepList {
   }
 
   get steps(): Step[] {
-    return this.stepGroups().reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as Step[]);
+    return this.stepGroups.reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as Step[]);
   }
 }

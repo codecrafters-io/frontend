@@ -1,13 +1,14 @@
 import { collection, clickable, clickOnText, create, isVisible, text, visitable } from 'ember-cli-page-object';
-import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
-import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
-import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
-import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
+import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
+import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
+import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
+import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/course-page/repository-setup-card';
+import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 
 export default create({
@@ -56,6 +57,7 @@ export default create({
   },
 
   commentList: CommentList,
+  configureExtensionsModal: ConfigureExtensionsModal,
 
   configureGithubIntegrationModal: {
     get isOpen() {

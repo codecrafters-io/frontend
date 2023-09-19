@@ -37,7 +37,9 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items');
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
-    // await coursePage.configureExtensionsModal.enableExtension('Persistence');
+    await coursePage.configureExtensionsModal.enableExtension('Extension 1');
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items');
 
     // assert.strictEqual(coursePage.sidebar.stepListItems.length, 11, 'step list has 3 items');
   });

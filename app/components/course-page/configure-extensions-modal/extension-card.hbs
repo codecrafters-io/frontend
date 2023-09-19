@@ -6,12 +6,12 @@
   <div class="flex items-start justify-between mb-3">
     <div
       class="{{if this.optimisticIsActivated 'text-teal-600' 'text-gray-700'}} mr-2 mb-0.5 font-bold text-xl tracking-tight"
-      data-test-course-extension-idea-name
+      data-test-course-extension-name
     >
       {{@extension.name}}
     </div>
     <div>
-      <Toggle @isOn={{this.optimisticIsActivated}} {{on "click" this.handleClick}} />
+      <Toggle @isOn={{this.optimisticIsActivated}} {{on "click" this.handleClick}} data-test-toggle-extension-button />
     </div>
   </div>
   {{! Text }}
