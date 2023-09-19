@@ -1,17 +1,19 @@
 <div
-  class="group bg-white p-5 rounded-md shadow-sm flex flex-col border {{if this.optimisticIsActivated 'border-gray-300' 'border-gray-200'}} relative"
+  class="group bg-white p-5 rounded-md shadow-sm flex flex-col border
+    {{if this.savedOrUnsavedIsActivatedValue 'border-gray-300' 'border-gray-200'}}
+    relative"
   ...attributes
   data-test-course-extension-card
 >
   <div class="flex items-start justify-between mb-3">
     <div
-      class="{{if this.optimisticIsActivated 'text-teal-600' 'text-gray-700'}} mr-2 mb-0.5 font-bold text-xl tracking-tight"
+      class="{{if this.savedOrUnsavedIsActivatedValue 'text-teal-600' 'text-gray-700'}} mr-2 mb-0.5 font-bold text-xl tracking-tight"
       data-test-course-extension-name
     >
       {{@extension.name}}
     </div>
     <div>
-      <Toggle @isOn={{this.optimisticIsActivated}} {{on "click" this.handleClick}} data-test-toggle-extension-button />
+      <Toggle @isOn={{this.savedOrUnsavedIsActivatedValue}} {{on "click" this.handleClick}} data-test-toggle-extension-button />
     </div>
   </div>
   {{! Text }}

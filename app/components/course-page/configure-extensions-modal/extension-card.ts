@@ -23,7 +23,7 @@ export default class ExtensionCardComponent extends Component<Signature> {
   @service store!: Store;
   @tracked unsavedIsActivatedValue: boolean | null = null;
 
-  get optimisticIsActivated(): boolean {
+  get savedOrUnsavedIsActivatedValue(): boolean {
     if (this.unsavedIsActivatedValue !== null) {
       return this.unsavedIsActivatedValue;
     } else {
