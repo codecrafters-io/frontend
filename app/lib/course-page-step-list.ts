@@ -83,8 +83,9 @@ export class StepList {
     let currentGlobalPosition = (this.baseStagesStepGroup.steps[this.baseStagesStepGroup.steps.length - 1] as Step).globalPosition + 1;
 
     this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
-      if (stepsInNextGroup[0] && item.stage.primaryExtension != (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension) {
-        stepGroups.push(new ExtensionStepGroup(item.stage.primaryExtension as CourseExtensionModel, stepsInNextGroup));
+      const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
+      if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
+        stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
         stepsInNextGroup = [];
         currentPositionInGroup = 1;
       }
