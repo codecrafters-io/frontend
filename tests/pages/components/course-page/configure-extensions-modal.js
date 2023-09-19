@@ -1,5 +1,4 @@
-import { clickable, clickOnText, collection, fillable, hasClass, text } from 'ember-cli-page-object';
-import CommentCard from '../comment-card';
+import { clickable, collection, text } from 'ember-cli-page-object';
 import { waitUntil } from '@ember/test-helpers';
 
 export default {
