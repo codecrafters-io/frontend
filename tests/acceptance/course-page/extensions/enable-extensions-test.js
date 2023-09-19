@@ -49,7 +49,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
 
     // TODO: This has something to do with the RecordCacheData error, investigate
-    // await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     // Disable Extension 2
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
