@@ -37,7 +37,7 @@ export default class TrackCardComponent extends Component {
       .peekAll('course')
       .rejectBy('releaseStatusIsAlpha')
       .filter((course) => course.betaOrLiveLanguages.includes(this.args.language))
-      .mapBy('baseStages.length') // TODO[extensions]: Should we include stages from extensions in the denominator?
+      .mapBy('stages.length')
       .reduce((a, b) => a + b, 0);
   }
 }

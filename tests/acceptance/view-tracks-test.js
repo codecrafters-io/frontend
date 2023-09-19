@@ -16,7 +16,7 @@ module('Acceptance | view-tracks', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.trackCards.length, 14, 'expected 14 course cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
 
     await percySnapshot('Tracks Page');
 
@@ -96,7 +96,11 @@ module('Acceptance | view-tracks', function (hooks) {
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
     this.server.schema.courses.all().models.forEach((course) => {
-      if (course.languageConfigurations.models.map((languageConfiguration) => languageConfiguration.language.slug).includes(go.slug)) {
+      const courseSupportsGo = course.languageConfigurations.models
+        .map((languageConfiguration) => languageConfiguration.language.slug)
+        .includes(go.slug);
+
+      if (courseSupportsGo && course.releaseStatus != 'alpha') {
         this.server.create('repository', 'withAllStagesCompleted', {
           createdAt: new Date('2022-01-01'),
           course: course,
@@ -115,7 +119,6 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[1].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
-
     assert.strictEqual(catalogPage.trackCards[0].progressText, '41/41 stages');
     assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:100%');
   });
@@ -124,7 +127,7 @@ module('Acceptance | view-tracks', function (hooks) {
     testScenario(this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.trackCards.length, 14, 'expected 14 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
   });
 
   test('first time visit has loading page', async function (assert) {
@@ -136,7 +139,7 @@ module('Acceptance | view-tracks', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(catalogPage.trackCards.length, 14, 'expected 4 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -168,7 +171,7 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.trackCards.length, 14, 'expected 14 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -190,6 +193,6 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.trackCards.length, 14, 'expected 14 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
   });
 });
