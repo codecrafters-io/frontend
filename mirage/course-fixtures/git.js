@@ -4,30 +4,27 @@ export default {
   "short_name": "Git",
   "release_status": "live",
   "description_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along the\nway, you'll learn about the `.git` directory, Git objects (blobs, commits,\ntrees etc.), packfiles, Git's transfer protocols and much more.\n",
-  "short_description_md": "Learn about git objects, plumbing commands, git transfer protocols and more\n",
+  "short_description_md": "Learn about git objects, plumbing commands and more\n",
   "completion_percentage": 10,
   "languages": [
     {
-      "slug": "python",
-      "starter_repository_url": "https://github.com/codecrafters-io/git-starter-python"
+      "slug": "cpp"
     },
     {
-      "slug": "ruby",
-      "starter_repository_url": "https://github.com/codecrafters-io/git-starter-ruby"
+      "slug": "go"
     },
     {
-      "slug": "go",
-      "starter_repository_url": "https://github.com/codecrafters-io/git-starter-go"
+      "slug": "python"
     },
     {
-      "slug": "rust",
-      "starter_repository_url": "https://github.com/codecrafters-io/git-starter-rust"
+      "slug": "ruby"
+    },
+    {
+      "slug": "rust"
     }
   ],
   "marketing": {
-    "description": "Learn about git objects, plumbing commands, git transfer protocols and more",
     "difficulty": "hard",
-    "introduction_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along\nthe way, you'll learn about the [`.git`\ndirectory](http://gitready.com/advanced/2009/03/23/whats-inside-your-git-directory.html),\na few of Git's [\"plumbing\"\ncommands](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain),\n[Git objects](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)\n(blobs, commits, trees etc.), Git's [transfer\nprotocols](https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols) and\nmore.\n",
     "sample_extension_idea_title": "Push to remote repository",
     "sample_extension_idea_description": "A Git implementation that can push changes to a remote repository",
     "testimonials": [

@@ -11,6 +11,10 @@ export default class RepositoryStageListItemModel extends Model {
   @attr('boolean') declare isDisabled: boolean;
   @attr('number') declare position: number; // The position of the stage in the list
 
+  get isBaseStage(): boolean {
+    return this.stage.isBaseStage;
+  }
+
   get isCompleted(): boolean {
     return this.completedAt !== null;
   }

@@ -10,8 +10,8 @@ export default class CourseStageStep extends Step {
   @tracked stageListItem;
   @tracked repository;
 
-  constructor(repository: TemporaryRepositoryModel, stageListItem: RepositoryStageListItemModel, position: number) {
-    super(position);
+  constructor(repository: TemporaryRepositoryModel, stageListItem: RepositoryStageListItemModel, positionInGroup: number, globalPosition: number) {
+    super(positionInGroup, globalPosition);
 
     this.repository = repository;
     this.stageListItem = stageListItem;
@@ -142,6 +142,7 @@ export default class CourseStageStep extends Step {
     };
   }
 
+  // TODO[Extensions]: Can we avoid using CourseStage#position?
   get shortTitle(): string {
     return `Stage ${this.courseStage.position}`;
   }

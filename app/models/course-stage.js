@@ -20,6 +20,8 @@ export default class CourseStageModel extends Model {
   @attr('') communitySolutionCounts; // JSON: { <language_slug>: count }
   @attr('string') shortName;
   @attr('string') slug;
+  @attr('string') primaryExtensionSlug;
+  @attr('') secondaryExtensionSlugs; // Array of strings
   @attr('string') testerSourceCodeUrl;
 
   @equal('difficulty', 'very_easy') difficultyIsVeryEasy;
@@ -65,6 +67,10 @@ export default class CourseStageModel extends Model {
     return this.solutions.any((solution) => solution.language !== language);
   }
 
+  get isBaseStage() {
+    return !this.primaryExtensionSlug;
+  }
+
   get isFirst() {
     return this === this.course.sortedStages.firstObject;
   }
@@ -89,6 +95,7 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedStages[this.course.sortedStages.length - 2];
   }
 
+  // TODO[Extensions]: Different logic if from extension vs. not
   get nextStage() {
     return this.course.sortedStages[this.course.sortedStages.indexOf(this) + 1];
   }
@@ -99,6 +106,14 @@ export default class CourseStageModel extends Model {
 
   get previousStage() {
     return this.course.sortedStages[this.course.sortedStages.indexOf(this) - 1];
+  }
+
+  get primaryExtension() {
+    return this.course.extensions.find((extension) => extension.slug === this.primaryExtensionSlug);
+  }
+
+  get secondaryExtensions() {
+    return this.course.extensions.filter((extension) => this.secondaryExtensionSlugs.includes(extension.slug));
   }
 
   get solutionIsAccessibleToMembersOnly() {

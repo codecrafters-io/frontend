@@ -58,6 +58,10 @@ export default class CourseModel extends Model {
     return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
   }
 
+  get baseStages() {
+    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
+  }
+
   get concepts() {
     return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
   }
@@ -101,8 +105,14 @@ export default class CourseModel extends Model {
     return this.sortedStages[1];
   }
 
+  // TODO[Extensions]: Should we include stages from extensions?
+  get sortedBaseStages() {
+    return this.baseStages.sortBy('position');
+  }
+
+  // TODO[Extensions]: Should we include stages from extensions?
   get sortedStages() {
-    return this.stages.sortBy('position');
+    return this.baseStages.sortBy('position');
   }
 
   trackIntroductionMarkdownFor(language) {
@@ -141,10 +151,6 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
       return `
 Learn about .torrent files and the famous BitTorrent protocol. Implement your own BitTorrent client in ${language.name}.`;
     }
-  }
-
-  get numberOfStages() {
-    return this.stages.length;
   }
 
   get sortPositionForTrack() {

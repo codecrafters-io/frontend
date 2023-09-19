@@ -19,45 +19,40 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    this.server.create('course-extension', {
-      course: redis,
-      name: 'Persistence',
-      slug: 'persistence',
-      descriptionMarkdown: `In this challenge extension you'll add [persistence][redis-persistence] support to your Redis implementation.
-
-Along the way you'll learn about Redis's [RDB file format][rdb-file-format], the [SAVE][save-command] command, and more.
-
-[redis-persistence]: https://redis.io/docs/manual/persistence/
-[rdb-file-format]: https://github.com/sripathikrishnan/redis-rdb-tools/blob/548b11ec3c81a603f5b321228d07a61a0b940159/docs/RDB_File_Format.textile
-[save-command]: https://redis.io/commands/save/`,
-    });
-
-    this.server.create('course-extension', {
-      course: redis,
-      name: 'Replication',
-      slug: 'replication',
-      descriptionMarkdown: `In this challenge extension you'll add support for [Replication][1] to your Redis implementation.
-
-Along the way you'll learn about how Redis's leader-follower replication works, the [WAIT][2] command, the [PSYNC][3] command and more.
-
-[1]: https://redis.io/docs/manual/replication
-[2]: https://redis.io/commands/wait/
-[3]: https://redis.io/commands/psync/`,
-    });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: course,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items');
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
+
+    // Enable Extension 1
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is enabled');
+
+    // Enable Extension 2
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items when both extensions are enabled');
+
+    // Disable Extension 1
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
+
+    // TODO: This has something to do with the RecordCacheData error, investigate
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Disable Extension 2
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
   });
 });

@@ -54,8 +54,13 @@ export default class RepositoryModel extends Model {
     }
   }
 
+  // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
   get allStagesAreComplete() {
-    return this.highestCompletedStage && this.highestCompletedStage.position === this.course.stages.sortBy('position').lastObject.position;
+    if (!this.stageList) {
+      return false;
+    }
+
+    return this.stageList.items.length > 0 && this.stageList.items.every((item) => item.isCompleted);
   }
 
   get cloneDirectory() {
@@ -67,11 +72,7 @@ export default class RepositoryModel extends Model {
   }
 
   get completedStages() {
-    if (this.highestCompletedStage) {
-      return this.course.stages.filter((stage) => stage.position <= this.highestCompletedStage.position);
-    } else {
-      return [];
-    }
+    return this.courseStageCompletions.mapBy('courseStage');
   }
 
   courseStageFeedbackSubmissionFor(courseStage) {
@@ -141,14 +142,22 @@ export default class RepositoryModel extends Model {
     return buildPreChallengeAssessmentSectionList(this);
   }
 
-  stageCompletedAt(courseStage) {
-    const firstCompletion = this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt').firstObject;
+  courseStageCompletionFor(courseStage) {
+    return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
+  }
 
-    return firstCompletion ? firstCompletion.completedAt : null;
+  stageCompletedAt(courseStage) {
+    if (!this.stageList) {
+      return null;
+    }
+
+    const stageListItem = this.stageList.items.find((item) => item.stage === courseStage);
+
+    return stageListItem ? stageListItem.completedAt : null;
   }
 
   stageIsComplete(courseStage) {
-    return this.highestCompletedStage && this.highestCompletedStage.position >= courseStage.position;
+    return !!this.courseStageCompletionFor(courseStage);
   }
 }
 

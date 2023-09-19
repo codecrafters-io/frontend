@@ -15,6 +15,9 @@ module('Acceptance | view-courses', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    const course = this.server.schema.courses.findBy({ slug: 'grep' });
+    course.update({ releaseStatus: 'beta' });
+
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
@@ -130,6 +133,9 @@ module('Acceptance | view-courses', function (hooks) {
 
   test('it renders if user is not signed in', async function (assert) {
     testScenario(this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'grep' });
+    course.update({ releaseStatus: 'beta' });
 
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
