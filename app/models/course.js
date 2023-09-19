@@ -153,11 +153,6 @@ Learn about .torrent files and the famous BitTorrent protocol. Implement your ow
     }
   }
 
-  // TODO[Extensions]: Should we include stages from extensions?
-  get numberOfStages() {
-    return this.baseStages.length;
-  }
-
   get sortPositionForTrack() {
     return (
       {

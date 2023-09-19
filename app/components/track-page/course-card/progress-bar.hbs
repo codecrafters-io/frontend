@@ -8,14 +8,14 @@
         <div
           data-test-course-progress-bar
           class={{if @lastPushedRepository.allStagesAreComplete "bg-teal-500" "bg-blue-500"}}
-          style={{html-safe (concat "width:" (round (mult 100 (div @lastPushedRepository.completedStages.length @course.numberOfStages))) "%")}}
+          style={{html-safe (concat "width:" (round (mult 100 (div @lastPushedRepository.completedStages.length @course.stages.length))) "%")}}
         ></div>
       {{/if}}
     </div>
   </div>
 
   <div class="{{if @lastPushedRepository.allStagesAreComplete 'text-teal-500' 'text-blue-500'}} mr-3" data-test-course-progress-text>
-    <b class="font-bold">{{@lastPushedRepository.completedStages.length}}/{{@course.numberOfStages}}</b>
+    <b class="font-bold">{{@lastPushedRepository.completedStages.length}}/{{@course.stages.length}}</b>
     stages
   </div>
 </div>
