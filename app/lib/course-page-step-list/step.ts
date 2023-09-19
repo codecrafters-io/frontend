@@ -1,10 +1,12 @@
 import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 
 export default class Step {
-  position: number;
+  globalPosition: number;
+  positionInGroup: number;
 
-  constructor(position: number) {
-    this.position = position;
+  constructor(positionInGroup: number, globalPosition: number) {
+    this.positionInGroup = positionInGroup;
+    this.globalPosition = globalPosition;
   }
 
   get routeParams(): { route: string; models: string[] } {

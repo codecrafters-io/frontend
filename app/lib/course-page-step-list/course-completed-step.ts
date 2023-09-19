@@ -5,8 +5,8 @@ import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 export default class CourseCompletedStep extends Step {
   @tracked repository;
 
-  constructor(repository: unknown, position: number) {
-    super(position);
+  constructor(repository: unknown, positionInGroup: number, globalPosition: number) {
+    super(positionInGroup, globalPosition);
 
     this.repository = repository;
   }
@@ -16,7 +16,7 @@ export default class CourseCompletedStep extends Step {
     return !this.repository.allStagesAreComplete;
   }
 
-  get progressIndicator(): ProgressIndicator  {
+  get progressIndicator(): ProgressIndicator {
     return {
       dotColor: 'green',
       dotType: 'static',

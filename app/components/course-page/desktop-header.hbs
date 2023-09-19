@@ -65,7 +65,7 @@
             <span>View next stage</span>
             {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
           {{else}}
-            {{#if (gt @currentStep.position @activeStep.position)}}
+            {{#if (gt @currentStep.globalPosition @activeStep.globalPosition)}}
               {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
               <span>Back to {{@activeStep.shortTitle}}</span>
             {{else}}
