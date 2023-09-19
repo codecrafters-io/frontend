@@ -20,8 +20,7 @@ export default class CourseLeaderboardEntryComponent extends Component {
     return this.args.entry.completedStagesCount;
   }
 
-  // TODO[extensions]: Should we include stages from extensions in the denominator?
   get progressDenominator() {
-    return this.args.entry.currentCourseStage.course.baseStages.length;
+    return this.args.entry.currentCourseStage.course.stages.length;
   }
 }
