@@ -32,6 +32,10 @@ export default {
       "alpha_tester_usernames": [
         "Terky"
       ]
+    },
+    {
+      "slug": "zig",
+      "release_status": "beta"
     }
   ],
   "marketing": {

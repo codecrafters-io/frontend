@@ -16,4 +16,5 @@ export default function createLanguages(server) {
   server.create('language', { name: 'Ruby', slug: 'ruby', trackStatus: 'beta' });
   server.create('language', { name: 'Rust', slug: 'rust', trackStatus: 'live' });
   server.create('language', { name: 'Swift', slug: 'swift', trackStatus: 'beta' });
+  server.create('language', { name: 'Zig', slug: 'zig', trackStatus: 'beta' });
 }
