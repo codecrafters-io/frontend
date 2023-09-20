@@ -23,6 +23,7 @@ import 'prismjs/components/prism-haskell';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-swift';
+import 'prismjs/components/prism-zig';
 
 import 'prismjs/components/prism-diff';
 
