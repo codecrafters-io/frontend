@@ -1,0 +1,29 @@
+<div class="flex items-start py-3">
+  <LinkTo
+    @route="course-admin.submissions"
+    @query={{hash usernames=@feedbackSubmission.user.username}}
+    class="flex items-center h-9 w-32 pr-2 group flex-shrink-0"
+  >
+    <AvatarImage @user={{@feedbackSubmission.user}} class="w-5 h-5 mr-1.5 filter drop-shadow-sm ring-1 ring-gray-300 rounded-full" />
+    <span class="text-gray-500 text-xs truncate group-hover:underline group-hover:text-gray-600">
+      {{@feedbackSubmission.user.username}}
+    </span>
+  </LinkTo>
+
+  <div class="text-2xl px-2 flex-shrink-0">
+    {{@feedbackSubmission.selectedAnswer}}
+  </div>
+
+  <div class="flex-grow px-2">
+    <div class="prose prose-sm">
+      {{@feedbackSubmission.explanationHTML}}
+    </div>
+  </div>
+
+  <div class="flex-shrink-0 pl-2">
+    <TertiaryButton @size="extra-small">
+      Acknowledge
+      <EmberTooltip @text="Move this submission to the 'acknowledged' tab. The user won't be notified." />
+    </TertiaryButton>
+  </div>
+</div>
