@@ -16,7 +16,7 @@ module('Acceptance | view-tracks', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 16, 'expected 16 track cards to be present');
 
     await percySnapshot('Tracks Page');
 
@@ -127,7 +127,7 @@ module('Acceptance | view-tracks', function (hooks) {
     testScenario(this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 16, 'expected 16 track cards to be present');
   });
 
   test('first time visit has loading page', async function (assert) {
@@ -139,7 +139,7 @@ module('Acceptance | view-tracks', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 16, 'expected 16 track cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -171,7 +171,7 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 16, 'expected 16 track cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -193,6 +193,6 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.trackCards.length, 15, 'expected 15 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 16, 'expected 16 track cards to be present');
   });
 });
