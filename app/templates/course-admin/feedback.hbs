@@ -6,36 +6,34 @@
           Stage Feedback
         </h3>
         <div class="text-xs text-gray-400">
-          Feedback submitted by users. Feedback submissions without an explanation are automatically marked as acknowledged.
+          Feedback submissions without an explanation are automatically acknowledged.
         </div>
       </div>
-      <div class="text-right">
+      <div class="flex flex-col items-end">
+        <Toggle
+          @isOn={{not this.shouldShowAcknowledgedFeedbackSubmissions}}
+          {{on "click" (fn (mut this.shouldShowAcknowledgedFeedbackSubmissions) (not this.shouldShowAcknowledgedFeedbackSubmissions))}}
+        />
+
+        <div class="text-xs text-gray-400 mt-2">
+          {{#if this.shouldShowAcknowledgedFeedbackSubmissions}}
+            Show all
+          {{else}}
+            Show unacknowledged only
+          {{/if}}
+        </div>
       </div>
     </div>
 
-    {{!-- @glint-expect-error not ts-ified yet --}}
-    <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
-      {{#if (eq activeTabSlug "acknowledged")}}
-        <ul role="list" class="divide-y divide-gray-100">
-          {{#each this.acknowledgedFeedbackSubmissions as |feedbackSubmission|}}
-            <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
-          {{else}}
-            <div class="text-gray-400 py-32 flex items-center justify-center">
-              No feedback submissions found.
-            </div>
-          {{/each}}
-        </ul>
-      {{else if (eq activeTabSlug "unacknowledged")}}
-        <ul role="list" class="divide-y divide-gray-100">
-          {{#each this.unacknowledgedFeedbackSubmissions as |feedbackSubmission|}}
-            <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
-          {{else}}
-            <div class="text-gray-400 py-32 flex items-center justify-center">
-              No feedback submissions found.
-            </div>
-          {{/each}}
-        </ul>
-      {{/if}}
-    </Tabs>
+    <ul role="list" class="divide-y divide-gray-100">
+      {{! @glint-expect-error }}
+      {{#animated-each this.sortedFeedbackSubmissions key="id" duration=100 use=this.listTransition as |feedbackSubmission|}}
+        <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No feedback submissions found.
+        </div>
+      {{/animated-each}}
+    </ul>
   </div>
 </div>

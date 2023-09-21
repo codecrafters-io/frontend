@@ -1,29 +1,42 @@
-<div class="flex items-start py-3">
-  <LinkTo
-    @route="course-admin.submissions"
-    @query={{hash usernames=@feedbackSubmission.user.username}}
-    class="flex items-center h-9 w-32 pr-2 group flex-shrink-0"
-  >
-    <AvatarImage @user={{@feedbackSubmission.user}} class="w-5 h-5 mr-1.5 filter drop-shadow-sm ring-1 ring-gray-300 rounded-full" />
-    <span class="text-gray-500 text-xs truncate group-hover:underline group-hover:text-gray-600">
-      {{@feedbackSubmission.user.username}}
-    </span>
-  </LinkTo>
+<div class="flex items-start py-4 hover:bg-gray-50 px-0.5">
+  <div class="w-40 pr-3 flex-shrink-0 pt-1">
+    <LinkTo @route="course-admin.submissions" @query={{hash usernames=@feedbackSubmission.user.username}} class="flex items-center w-32 group">
+      <AvatarImage @user={{@feedbackSubmission.user}} class="w-5 h-5 mr-1.5 filter drop-shadow-sm ring-1 ring-gray-300 rounded-full" />
+      <span class="text-gray-500 text-xs truncate group-hover:underline group-hover:text-gray-600">
+        {{@feedbackSubmission.user.username}}
+      </span>
+      <EmberTooltip @text="Click to view user's submissions" />
+    </LinkTo>
+    <div class="text-sm text-gray-500 mt-3">
+      Stage
+      <span class="font-semibold">#{{@feedbackSubmission.courseStage.position}}</span>
+    </div>
+    <div class="text-xs text-gray-500 mt-1 truncate">
+      {{@feedbackSubmission.courseStage.name}}
+    </div>
+  </div>
 
-  <div class="text-2xl px-2 flex-shrink-0">
+  <div class="text-2xl px-3 flex-shrink-0">
     {{@feedbackSubmission.selectedAnswer}}
   </div>
 
-  <div class="flex-grow px-2">
+  <div class="flex-grow px-3">
     <div class="prose prose-sm">
       {{@feedbackSubmission.explanationHTML}}
     </div>
   </div>
 
-  <div class="flex-shrink-0 pl-2">
-    <TertiaryButton @size="extra-small">
-      Acknowledge
-      <EmberTooltip @text="Move this submission to the 'acknowledged' tab. The user won't be notified." />
-    </TertiaryButton>
+  <div class="flex-shrink-0 pl-3">
+    {{#if @feedbackSubmission.isAcknowledgedByStaff}}
+      <TertiaryButton @size="extra-small" {{on "click" this.handleUnacknowledgeButtonClick}}>
+        Unacknowledge
+        <EmberTooltip @text="The user won't be notified." />
+      </TertiaryButton>
+    {{else}}
+      <TertiaryButton @size="extra-small" {{on "click" this.handleAcknowledgeButtonClick}}>
+        Acknowledge
+        <EmberTooltip @text="The user won't be notified." />
+      </TertiaryButton>
+    {{/if}}
   </div>
 </div>
