@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0 # Ensure that all tags are available
 
       - name: 'Compute next version number'
-        run: |
+        run: |-
           currentVersionNumber=$(git tag --list "v*" | sort -V | tail -n 1 | cut -c 2-)
           nextVersionNumber=$(echo $currentVersionNumber + 1 | bc)
           echo "current: $currentVersionNumber"
