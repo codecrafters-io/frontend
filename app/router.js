@@ -29,6 +29,7 @@ Router.map(function () {
   });
 
   this.route('course-admin', { path: '/courses/:course_slug/admin' }, function () {
+    this.route('feedback');
     this.route('submissions');
     this.route('tester-versions');
     this.route('updates');

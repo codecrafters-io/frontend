@@ -1,0 +1,39 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Stage Feedback
+        </h3>
+        <div class="text-xs text-gray-400">
+          Feedback submissions without an explanation are automatically acknowledged.
+        </div>
+      </div>
+      <div class="flex flex-col items-end">
+        <Toggle
+          @isOn={{not this.shouldShowAcknowledgedFeedbackSubmissions}}
+          {{on "click" (fn (mut this.shouldShowAcknowledgedFeedbackSubmissions) (not this.shouldShowAcknowledgedFeedbackSubmissions))}}
+        />
+
+        <div class="text-xs text-gray-400 mt-2">
+          {{#if this.shouldShowAcknowledgedFeedbackSubmissions}}
+            Show all
+          {{else}}
+            Show unacknowledged only
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
+      {{! @glint-expect-error }}
+      {{#animated-each this.sortedFeedbackSubmissions key="id" duration=100 use=this.listTransition as |feedbackSubmission|}}
+        <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No feedback submissions found.
+        </div>
+      {{/animated-each}}
+    </ul>
+  </div>
+</div>

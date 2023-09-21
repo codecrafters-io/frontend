@@ -8,6 +8,7 @@ export class TemporaryUserModel {
   declare id: string;
   declare username: string;
   declare badgeAwards: unknown[];
+  declare avatarUrl: string;
 }
 
 export class TemporaryCourseModel {

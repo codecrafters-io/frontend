@@ -1,8 +1,17 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { TemporaryUserModel } from 'codecrafters-frontend/models/temporary-types';
 
-export default class CopyableCodeComponent extends Component {
+type Signature = {
+  Args: {
+    user: TemporaryUserModel;
+  };
+
+  Element: HTMLImageElement;
+};
+
+export default class AvatarImageComponent extends Component<Signature> {
   @tracked avatarImageFailedToLoad = false;
 
   @action
@@ -16,5 +25,11 @@ export default class CopyableCodeComponent extends Component {
     } else {
       return this.args.user.avatarUrl;
     }
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    AvatarImage: typeof AvatarImageComponent;
   }
 }
