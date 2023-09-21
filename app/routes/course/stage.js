@@ -7,19 +7,7 @@ export default class CourseStageRoute extends BaseRoute {
   async model(params) {
     const courseRouteModel = this.modelFor('course');
 
-    let courseStage;
-
-    if (params.stage_identifier.includes(':')) {
-      const [extensionSlug, position] = params.stage_identifier.split(':');
-
-      // Might be null
-      courseStage = courseRouteModel.course.stages.find(
-        (courseStage) => courseStage.positionWithinExtension === position && courseStage.primaryExtensionSlug === extensionSlug,
-      );
-    } else {
-      let position = parseInt(params.stage_identifier); // Might be Nan
-      courseStage = courseRouteModel.course.stages.find((courseStage) => courseStage.positionWithinCourse === position);
-    }
+    const courseStage = courseRouteModel.course.stages.find((courseStage) => courseStage.identifierForURL === params.stage_identifier);
 
     return {
       courseStage: courseStage,

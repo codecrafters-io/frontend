@@ -32,25 +32,13 @@ export default class CoursePageStateService extends Service {
 
       // @ts-ignore
       const routeParams = courseStageRoute.params as { stage_identifier: string };
+      const stageIdentifier = routeParams.stage_identifier;
 
-      if (routeParams.stage_identifier.includes(':')) {
-        const [extensionSlug, positionWithinExtension] = routeParams.stage_identifier.split(':');
-
+      // @ts-ignore
+      return this.stepList.steps.find(
         // @ts-ignore
-        return this.stepList.steps.find(
-          (step) =>
-            step.type === 'CourseStageStep' &&
-            // @ts-ignore
-            step.courseStage.primaryExtensionSlug === extensionSlug &&
-            // @ts-ignore
-            step.courseStage.positionWithinExtension === parseInt(positionWithinExtension, 10),
-        );
-      } else {
-        return this.stepList.steps.find(
-          // @ts-ignore
-          (step) => step.type === 'CourseStageStep' && step.courseStage.position === parseInt(routeParams.stage_identifier, 10),
-        ) as Step;
-      }
+        (step) => step.type === 'CourseStageStep' && step.courseStage.identifierForURL === stageIdentifier,
+      );
     } else {
       // happens on course.index for example, when we're redirecting to /catalog
       return this.stepList.steps[0] as Step;

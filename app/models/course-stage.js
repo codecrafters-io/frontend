@@ -69,6 +69,14 @@ export default class CourseStageModel extends Model {
     return this.solutions.any((solution) => solution.language !== language);
   }
 
+  get identifierForURL() {
+    if (this.isBaseStage) {
+      return `${this.positionWithinCourse}`; // Example: /stages/3
+    } else {
+      return `${this.primaryExtensionSlug}:${this.positionWithinExtension}`; // Example: /stages/ext2:1
+    }
+  }
+
   get isBaseStage() {
     return !this.primaryExtensionSlug;
   }
