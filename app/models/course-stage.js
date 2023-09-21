@@ -15,7 +15,9 @@ export default class CourseStageModel extends Model {
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
   @attr('string') marketingMarkdown;
-  @attr('number') position;
+  @attr('number') position; // TODO: Remove usages of this
+  @attr('number') positionWithinCourse;
+  @attr('number') positionWithinExtension;
   @attr('number') approvedCommentsCount;
   @attr('') communitySolutionCounts; // JSON: { <language_slug>: count }
   @attr('string') shortName;

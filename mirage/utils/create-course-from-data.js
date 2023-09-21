@@ -16,13 +16,21 @@ export default function createCourseFromData(server, courseData) {
   });
 
   let courseStagePosition = 1;
+  let max_position_by_extension_slug = {};
 
   for (const courseStageData of courseData.stages) {
+    if (courseStageData.primary_extension_slug) {
+      max_position_by_extension_slug[courseStageData.primary_extension_slug] ||= 0;
+      max_position_by_extension_slug[courseStageData.primary_extension_slug] += 1;
+    }
+
     server.create('course-stage', {
       course: course,
       name: courseStageData.name,
       marketingMarkdown: courseStageData.marketing_md,
-      position: courseStagePosition,
+      position: courseStagePosition, // TODO: Remove this
+      positionWithinCourse: courseStagePosition,
+      positionWithinExtension: max_position_by_extension_slug[courseStageData.primary_extension_slug] || null,
       slug: courseStageData.slug,
       descriptionMarkdownTemplate: courseStageData.description_md,
       difficulty: courseStageData.difficulty,
