@@ -28,7 +28,7 @@ export class StepList {
   }
 
   get activeStep() {
-    return this.steps.find((step) => step.status !== 'complete');
+    return this.visibleSteps.find((step) => step.status !== 'complete');
   }
 
   nextVisibleStepFor(step: Step): Step | null {

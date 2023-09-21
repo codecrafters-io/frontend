@@ -41,15 +41,7 @@ export default class CourseRoute extends BaseRoute {
     if (transition.to.name === 'course.index') {
       const activeStep = this.coursePageState.stepList.activeStep;
 
-      if (activeStep.type === 'IntroductionStep') {
-        this.router.replaceWith('course.introduction', model.course.slug);
-      } else if (activeStep.type === 'SetupStep') {
-        this.router.replaceWith('course.setup', model.course.slug);
-      } else if (activeStep.type === 'CourseStageStep') {
-        this.router.replaceWith('course.stage', model.course.slug, activeStep.courseStage.position);
-      } else if (activeStep.type === 'CourseCompletedStep') {
-        this.router.replaceWith('course.completed', model.course.slug);
-      }
+      this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
     }
   }
 

@@ -18,7 +18,8 @@ Router.map(function () {
     this.route('introduction');
     this.route('setup');
 
-    this.route('stage', { path: '/stages/:stage_number' }, function () {
+    // Stage identifier either be '1' (for base stages) or 'ext2:1' (for extension stages)
+    this.route('stage', { path: '/stages/:stage_identifier' }, function () {
       this.route('code-examples');
       this.route('concepts');
       this.route('instructions', { path: '/' });

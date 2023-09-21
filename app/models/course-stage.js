@@ -15,7 +15,9 @@ export default class CourseStageModel extends Model {
   @attr('string') name;
   @attr('string') descriptionMarkdownTemplate;
   @attr('string') marketingMarkdown;
-  @attr('number') position;
+  @attr('number') position; // TODO: Remove usages of this
+  @attr('number') positionWithinCourse;
+  @attr('number') positionWithinExtension;
   @attr('number') approvedCommentsCount;
   @attr('') communitySolutionCounts; // JSON: { <language_slug>: count }
   @attr('string') shortName;
@@ -65,6 +67,14 @@ export default class CourseStageModel extends Model {
 
   hasSolutionForLanguagesOtherThan(language) {
     return this.solutions.any((solution) => solution.language !== language);
+  }
+
+  get identifierForURL() {
+    if (this.isBaseStage) {
+      return `${this.positionWithinCourse}`; // Example: /stages/3
+    } else {
+      return `${this.primaryExtensionSlug}:${this.positionWithinExtension}`; // Example: /stages/ext2:1
+    }
   }
 
   get isBaseStage() {

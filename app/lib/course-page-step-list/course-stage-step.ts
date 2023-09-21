@@ -138,7 +138,7 @@ export default class CourseStageStep extends Step {
   get routeParams() {
     return {
       route: 'course.stage.instructions',
-      models: [this.courseStage.course.slug, this.courseStage.position.toString()],
+      models: [this.courseStage.course.slug, this.courseStage.identifierForURL],
     };
   }
 

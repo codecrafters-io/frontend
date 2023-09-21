@@ -30,10 +30,15 @@ export default class CoursePageStateService extends Service {
     } else if (this.router.currentRouteName.startsWith('course.stage')) {
       const courseStageRoute = this.router.currentRoute.find((route: any) => route.name === 'course.stage');
 
+      // @ts-ignore
+      const routeParams = courseStageRoute.params as { stage_identifier: string };
+      const stageIdentifier = routeParams.stage_identifier;
+
+      // @ts-ignore
       return this.stepList.steps.find(
         // @ts-ignore
-        (step) => step.type === 'CourseStageStep' && step.courseStage.position === parseInt(courseStageRoute.params.stage_number, 10),
-      ) as Step;
+        (step) => step.type === 'CourseStageStep' && step.courseStage.identifierForURL === stageIdentifier,
+      );
     } else {
       // happens on course.index for example, when we're redirecting to /catalog
       return this.stepList.steps[0] as Step;

@@ -28,6 +28,7 @@ export class TemporaryCourseStageModel {
   declare slug: string;
   declare course: TemporaryCourseModel;
   declare descriptionMarkdownTemplate: string;
+  declare identifierForURL: string;
   declare isBaseStage: boolean;
   declare isFirst: boolean;
   declare name: string;
