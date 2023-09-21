@@ -44,4 +44,52 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
     await coursePage.sidebar.clickOnStepListItem('Start with ext2');
     assert.strictEqual(currentURL(), '/courses/dummy/stages/ext2:1', 'current URL is stage page URL');
   });
+
+  test('can view extension stages after completing base stages', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    const repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    course.extensions.models.forEach((extension) => {
+      this.server.create('course-extension-activation', {
+        extension: extension,
+        repository: repository,
+      });
+    });
+
+    course.stages.models.forEach((stage) => {
+      if (!stage.primaryExtensionSlug) {
+        this.server.create('course-stage-completion', {
+          courseStage: stage,
+          repository: repository,
+        });
+      }
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is course page URL');
+
+    // assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items');
+
+    // await coursePage.sidebar.clickOnConfigureExtensionsButton();
+
+    // // Enable Extension 2
+    // await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    // assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when one extension is enabled');
+
+    // // View a stage from extension 2
+    // await coursePage.sidebar.clickOnStepListItem('Start with ext2');
+    // assert.strictEqual(currentURL(), '/courses/dummy/stages/ext2:1', 'current URL is stage page URL');
+  });
 });

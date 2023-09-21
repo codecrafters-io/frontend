@@ -17,6 +17,9 @@ export default class CourseStageRoute extends BaseRoute {
 
   afterModel(model) {
     if (!model.courseStage) {
+      // TODO: Figure out why this doesn't actually render the index route?
+      // this.router.transitionTo('course.index');
+
       this.router.transitionTo('catalog');
     }
   }
