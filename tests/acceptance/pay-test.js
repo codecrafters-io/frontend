@@ -7,7 +7,7 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import window from 'ember-window-mock';
+import windowMock from 'ember-window-mock';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -26,8 +26,8 @@ module('Acceptance | pay-test', function (hooks) {
     }
 
     assert.strictEqual(
-      window.location.href,
-      `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fpay`,
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fpay`,
       'should redirect to login URL',
     );
   });
