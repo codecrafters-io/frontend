@@ -13,14 +13,29 @@
       </div>
     </div>
 
-    <ul role="list" class="divide-y divide-gray-100">
-      {{#each @model.feedbackSubmissions as |feedbackSubmission|}}
-        <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
-      {{else}}
-        <div class="text-gray-400 py-32 flex items-center justify-center">
-          No feedback submissions found.
-        </div>
-      {{/each}}
-    </ul>
+    {{!-- @glint-expect-error not ts-ified yet --}}
+    <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
+      {{#if (eq activeTabSlug "acknowledged")}}
+        <ul role="list" class="divide-y divide-gray-100">
+          {{#each this.acknowledgedFeedbackSubmissions as |feedbackSubmission|}}
+            <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
+          {{else}}
+            <div class="text-gray-400 py-32 flex items-center justify-center">
+              No feedback submissions found.
+            </div>
+          {{/each}}
+        </ul>
+      {{else if (eq activeTabSlug "unacknowledged")}}
+        <ul role="list" class="divide-y divide-gray-100">
+          {{#each this.unacknowledgedFeedbackSubmissions as |feedbackSubmission|}}
+            <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
+          {{else}}
+            <div class="text-gray-400 py-32 flex items-center justify-center">
+              No feedback submissions found.
+            </div>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </Tabs>
   </div>
 </div>

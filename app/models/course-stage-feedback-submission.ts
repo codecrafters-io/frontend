@@ -10,6 +10,7 @@ export default class CourseStageFeedbackSubmissionModel extends Model {
   @belongsTo('repository', { async: false }) declare repository: TemporaryRepositoryModel;
   @belongsTo('user', { async: false }) declare user: TemporaryUserModel;
 
+  @attr('date') declare createdAt: Date;
   @attr('boolean') declare isAcknowledgedByStaff: boolean;
   @attr('string') declare selectedAnswer: string;
   @attr('string') declare explanation: string | null;
