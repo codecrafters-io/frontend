@@ -30,7 +30,6 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.22.15",
     "@babel/plugin-proposal-decorators": "^7.22.15",
     "@ember/optional-features": "^2.0.0",
     "@ember/render-modifiers": "^2.0.4",
@@ -80,6 +79,8 @@
     "@types/qunit": "^2.19.6",
     "@types/rsvp": "^4.0.4",
     "@types/showdown": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
     "autoprefixer": "^10.4.16",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.1",
