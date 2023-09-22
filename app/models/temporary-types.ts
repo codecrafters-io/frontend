@@ -12,6 +12,9 @@ export class TemporaryUserModel {
   declare avatarUrl: string;
   declare isStaff: boolean;
   declare primaryEmailAddress: string;
+  declare isEligibleForEarlyBirdDiscount: boolean;
+  declare earlyBirdDiscountEligibilityExpiresAt: Date;
+  declare canAccessPaidContent: boolean;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
 

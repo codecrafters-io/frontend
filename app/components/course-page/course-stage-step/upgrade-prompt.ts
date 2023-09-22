@@ -50,22 +50,22 @@ export default class UpgradePromptComponent extends Component<Signature> {
   }
 
   get secondaryCopy(): SafeString {
-    if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
+    if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
       return this.convertToHTML(
         `Plans start at ~~$30/mo~~ $15/mo (discounted price for ${
           this.regionalDiscount.countryName
         }). Save an additional 40% by joining within ${formatDistanceStrictWithOptions(
           {},
           new Date(),
-          this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt,
+          this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
         )}.`,
       );
-    } else if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount) {
+    } else if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount) {
       return this.convertToHTML(
         `Plans start at $30/mo. Save 40% by joining within ${formatDistanceStrictWithOptions(
           {},
           new Date(),
-          this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt,
+          this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
         )}.`,
       );
     } else if (this.regionalDiscount) {
