@@ -13,7 +13,7 @@ import {
   signInAsSubscriber,
   signInAsSubscribedTeamMember,
 } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { currentURL, waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
+import { currentURL, waitFor, waitUntil, find, isSettled, settled, visit } from '@ember/test-helpers';
 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -103,6 +103,14 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #4: Handle concurrent clients', 'course stage item is active if clicked on');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text for stage completed today');
+  });
+
+  test('trying to view an invalid stage number redirects to active step', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await visit('/courses/redis/stages/100');
+    assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
   });
 
   test('stages should have an upgrade prompt if they are paid', async function (assert) {
