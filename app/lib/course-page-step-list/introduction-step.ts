@@ -5,8 +5,8 @@ import { tracked } from '@glimmer/tracking';
 export default class IntroductionStep extends Step {
   @tracked repository;
 
-  constructor(repository: unknown, positionInGroup: number, globalPosition: number) {
-    super(positionInGroup, globalPosition);
+  constructor(repository: unknown) {
+    super();
 
     this.repository = repository;
   }

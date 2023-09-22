@@ -41,32 +41,48 @@ export class StepList {
 
   @cached
   get stepGroups(): StepGroup[] {
-    return [this.baseStagesStepGroup, ...this.extensionStepGroups];
+    const stepGroups = [this.baseStagesStepGroup, ...this.extensionStepGroups];
+
+    let globalPosition = 1;
+
+    stepGroups.forEach((stepGroup) => {
+      let positionInGroup = 1;
+
+      stepGroup.steps.forEach((step) => {
+        step.positionInGroup = positionInGroup;
+        step.globalPosition = globalPosition;
+
+        positionInGroup += 1;
+        globalPosition += 1;
+      });
+    });
+
+    return stepGroups;
+  }
+
+  get courseCompletedStepGroup(): StepGroup {
+    return new StepGroup([new CourseCompletedStep(this.repository)]);
   }
 
   get baseStagesStepGroup(): StepGroup {
     const steps: Step[] = [];
 
-    steps.push(new IntroductionStep(this.repository, 1, 1));
-    steps.push(new SetupStep(this.repository, 2, 2));
-
-    let currentStepPosition = 3;
+    steps.push(new IntroductionStep(this.repository));
+    steps.push(new SetupStep(this.repository));
 
     if (!this.repository.stageList) {
       this.repository.course.sortedBaseStages.forEach((stage) => {
         // TODO: Find better way around this?
         const fakeStageListItem = { stage: stage, isDisabled: false } as RepositoryStageListItemModel;
-        steps.push(new CourseStageStep(this.repository, fakeStageListItem, currentStepPosition, currentStepPosition));
-        currentStepPosition++;
+        steps.push(new CourseStageStep(this.repository, fakeStageListItem));
       });
     } else {
       this.repository.stageList.items.filterBy('isBaseStage').forEach((item) => {
-        steps.push(new CourseStageStep(this.repository, item, currentStepPosition, currentStepPosition));
-        currentStepPosition++;
+        steps.push(new CourseStageStep(this.repository, item));
       });
     }
 
-    steps.push(new CourseCompletedStep(this.repository, currentStepPosition, currentStepPosition));
+    steps.push(new CourseCompletedStep(this.repository));
 
     return new BaseStagesStepGroup(steps);
   }
@@ -79,8 +95,6 @@ export class StepList {
     const stepGroups: ExtensionStepGroup[] = [];
 
     let stepsInNextGroup: Step[] = [];
-    let currentPositionInGroup = 1;
-    let currentGlobalPosition = (this.baseStagesStepGroup.steps[this.baseStagesStepGroup.steps.length - 1] as Step).globalPosition + 1;
 
     this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
       const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
@@ -88,13 +102,9 @@ export class StepList {
       if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
         stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
         stepsInNextGroup = [];
-        currentPositionInGroup = 1;
       }
 
-      stepsInNextGroup.push(new CourseStageStep(this.repository, item, currentPositionInGroup, currentGlobalPosition));
-
-      currentPositionInGroup++;
-      currentGlobalPosition++;
+      stepsInNextGroup.push(new CourseStageStep(this.repository, item));
     });
 
     if (stepsInNextGroup.length > 0) {
