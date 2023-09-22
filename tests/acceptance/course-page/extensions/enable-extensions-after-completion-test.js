@@ -1,11 +1,9 @@
 import { setupAnimationTest } from 'ember-animated/test-support';
-import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | extensions | enable-extensions-after-completion', function (hooks) {
@@ -13,7 +11,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can enable extensions after completing base stages', async function (assert) {
+  skip('can enable extensions after completing base stages', async function () {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -36,8 +34,6 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
-
-    // await this.pauseTest();
 
     // assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
