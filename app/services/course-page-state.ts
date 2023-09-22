@@ -39,6 +39,7 @@ export default class CoursePageStateService extends Service {
       );
 
       if (!stageStep) {
+        // Can we avoid redirects in a getter?
         // @ts-ignore
         this.router.transitionTo(this.activeStep.routeParams.route, ...this.activeStep.routeParams.models);
 
