@@ -2,6 +2,7 @@ import Service, { service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
 import { StepList, Step } from 'codecrafters-frontend/lib/course-page-step-list';
 import { tracked } from '@glimmer/tracking';
+import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 
 export default class CoursePageStateService extends Service {
   @service declare router: RouterService;
@@ -30,18 +31,24 @@ export default class CoursePageStateService extends Service {
     } else if (this.router.currentRouteName.startsWith('course.stage')) {
       const courseStageRoute = this.router.currentRoute.find((route: any) => route.name === 'course.stage');
 
-      // @ts-ignore
-      const routeParams = courseStageRoute.params as { stage_identifier: string };
+      const routeParams = courseStageRoute!.params as { stage_identifier: string };
       const stageIdentifier = routeParams.stage_identifier;
 
-      // @ts-ignore
-      return this.stepList.steps.find(
-        // @ts-ignore
-        (step) => step.type === 'CourseStageStep' && step.courseStage.identifierForURL === stageIdentifier,
+      const stageStep = this.stepList.steps.find(
+        (step) => step.type === 'CourseStageStep' && (step as CourseStageStep).courseStage.identifierForURL === stageIdentifier,
       );
+
+      if (!stageStep) {
+        // @ts-ignore
+        this.router.transitionTo(this.activeStep.routeParams.route, ...this.activeStep.routeParams.models);
+
+        return this.activeStep;
+      } else {
+        return stageStep;
+      }
     } else {
       // happens on course.index for example, when we're redirecting to /catalog
-      return this.stepList.steps[0] as Step;
+      return this.activeStep;
     }
   }
 
