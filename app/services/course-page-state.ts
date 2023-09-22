@@ -8,48 +8,37 @@ export default class CoursePageStateService extends Service {
   @service declare router: RouterService;
   @tracked stepList?: StepList;
 
-  setStepList(stepList: StepList): void {
-    this.stepList = stepList;
-  }
-
   get activeStep(): Step {
-    return this.stepList?.activeStep as Step;
+    return this.stepList!.activeStep as Step;
   }
 
+  // Since the currentStep might be empty during a route transition, we return `activeStep` as a fallback to prevent errors.
+  // All operations that might require a route change are expected to call `navigateToActiveStepIfCurrentStepIsInvalid` if needed.
   get currentStep(): Step {
-    if (!this.stepList) {
-      // @ts-ignore
-      return null;
-    }
+    return this.currentStepSansFallback || this.activeStep;
+  }
 
+  // The "true" current step, without any fallbacks.
+  get currentStepSansFallback(): Step | null {
     if (this.router.currentRouteName === 'course.introduction') {
-      return this.stepList.steps[0] as Step;
+      return this.stepList!.steps[0] || null;
     } else if (this.router.currentRouteName === 'course.setup') {
-      return this.stepList.steps[1] as Step;
+      return this.stepList!.steps[1] || null;
     } else if (this.router.currentRouteName === 'course.completed') {
-      return this.stepList.steps[this.stepList.steps.length - 1] as Step;
+      return this.stepList!.steps[this.stepList!.steps.length - 1] || null;
     } else if (this.router.currentRouteName.startsWith('course.stage')) {
       const courseStageRoute = this.router.currentRoute.find((route: any) => route.name === 'course.stage');
 
       const routeParams = courseStageRoute!.params as { stage_identifier: string };
       const stageIdentifier = routeParams.stage_identifier;
 
-      const stageStep = this.stepList.steps.find(
-        (step) => step.type === 'CourseStageStep' && (step as CourseStageStep).courseStage.identifierForURL === stageIdentifier,
+      return (
+        this.stepList!.steps.find(
+          (step) => step.type === 'CourseStageStep' && (step as CourseStageStep).courseStage.identifierForURL === stageIdentifier,
+        ) || null
       );
-
-      if (!stageStep) {
-        // Can we avoid redirects in a getter?
-        // @ts-ignore
-        this.router.transitionTo(this.activeStep.routeParams.route, ...this.activeStep.routeParams.models);
-
-        return this.activeStep;
-      } else {
-        return stageStep;
-      }
     } else {
-      // happens on course.index for example, when we're redirecting to /catalog
-      return this.activeStep;
+      return null;
     }
   }
 
@@ -60,5 +49,16 @@ export default class CoursePageStateService extends Service {
     }
 
     return this.stepList.nextVisibleStepFor(this.currentStep);
+  }
+
+  navigateToActiveStepIfCurrentStepIsInvalid(): void {
+    if (!this.currentStepSansFallback) {
+      // @ts-ignore
+      this.router.transitionTo(this.activeStep.routeParams.route, ...this.activeStep.routeParams.models);
+    }
+  }
+
+  setStepList(stepList: StepList): void {
+    this.stepList = stepList;
   }
 }

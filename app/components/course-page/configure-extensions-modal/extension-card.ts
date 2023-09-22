@@ -9,6 +9,7 @@ import { tracked } from '@glimmer/tracking';
 
 // @ts-ignore
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -21,6 +22,8 @@ type Signature = {
 
 export default class ExtensionCardComponent extends Component<Signature> {
   @service store!: Store;
+  @service coursePageState!: CoursePageStateService;
+
   @tracked unsavedIsActivatedValue: boolean | null = null;
 
   get activations() {
@@ -30,7 +33,6 @@ export default class ExtensionCardComponent extends Component<Signature> {
   get isActivated(): boolean {
     return this.activations.length > 0;
   }
-
 
   get optimisticValueForIsActivated(): boolean {
     if (this.unsavedIsActivatedValue !== null) {
@@ -84,6 +86,9 @@ export default class ExtensionCardComponent extends Component<Signature> {
     if (shouldDestroy && this.unsavedIsActivatedValue === false && !this.isActivated) {
       this.unsavedIsActivatedValue = null;
     }
+
+    // The stage a user is currently on might not be present in the list anymore
+    this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
   });
 
   @action
