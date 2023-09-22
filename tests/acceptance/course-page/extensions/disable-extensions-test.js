@@ -43,6 +43,9 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is /stages/ext1:1');
 
+    // TODO: Triggers the recorddata error
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
 
     // TODO: Triggers the recorddata error
@@ -53,5 +56,8 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is /stages/2');
+
+    // TODO: Triggers the recorddata error
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   });
 });
