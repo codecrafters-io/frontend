@@ -22,4 +22,8 @@ export default class RepositoryStageListItemModel extends Model {
   get isEnabled(): boolean {
     return !this.isDisabled;
   }
+
+  get isExtensionStage(): boolean {
+    return !this.isBaseStage;
+  }
 }

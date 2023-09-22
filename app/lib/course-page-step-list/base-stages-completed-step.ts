@@ -3,7 +3,7 @@ import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-l
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
-export default class CourseCompletedStep extends Step {
+export default class BaseStagesCompletedStep extends Step {
   @tracked repository;
 
   constructor(repository: TemporaryRepositoryModel) {
@@ -13,7 +13,9 @@ export default class CourseCompletedStep extends Step {
   }
 
   get isHidden() {
-    return !this.repository.allStagesAreComplete;
+    console.log('this.repository.baseStagesAreComplete', this.repository.baseStagesAreComplete);
+
+    return !this.repository.baseStagesAreComplete;
   }
 
   get progressIndicator(): ProgressIndicator {
@@ -30,16 +32,16 @@ export default class CourseCompletedStep extends Step {
 
   get routeParams() {
     return {
-      route: 'course.completed',
+      route: 'course.base-stages-completed',
       models: [this.repository.course.slug],
     };
   }
 
   get title() {
-    return 'Challenge completed!';
+    return 'Base stages complete!';
   }
 
-  get type(): 'CourseCompletedStep' {
-    return 'CourseCompletedStep';
+  get type(): 'BaseStagesCompletedStep' {
+    return 'BaseStagesCompletedStep';
   }
 }

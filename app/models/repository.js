@@ -56,11 +56,11 @@ export default class RepositoryModel extends Model {
 
   // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
   get allStagesAreComplete() {
-    if (!this.stageList) {
-      return false;
-    }
+    return this.course.stages.every((stage) => this.stageIsComplete(stage));
+  }
 
-    return this.stageList.items.length > 0 && this.stageList.items.every((item) => item.isCompleted);
+  get baseStagesAreComplete() {
+    return this.course.stages.filter((stage) => stage.isBaseStage).every((stage) => this.stageIsComplete(stage));
   }
 
   get cloneDirectory() {

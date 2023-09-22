@@ -14,6 +14,7 @@ import BaseStagesStepGroup from './course-page-step-list/base-stages-step-group'
 import ExtensionStepGroup from './course-page-step-list/extension-step-group';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import CourseCompletedStepGroup from './course-page-step-list/course-completed-step-group';
+import BaseStagesCompletedStep from './course-page-step-list/base-stages-completed-step';
 
 export { Step };
 
@@ -82,6 +83,8 @@ export class StepList {
         steps.push(new CourseStageStep(this.repository, item));
       });
     }
+
+    steps.push(new BaseStagesCompletedStep(this.repository));
 
     return new BaseStagesStepGroup(steps);
   }

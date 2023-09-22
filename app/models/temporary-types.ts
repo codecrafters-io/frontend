@@ -67,6 +67,8 @@ export class TemporarySubmissionModel {
 }
 
 export class TemporaryRepositoryModel {
+  declare allStagesAreComplete: boolean;
+  declare baseStagesAreComplete: boolean;
   declare course: TemporaryCourseModel;
   declare courseExtensionActivations: CourseExtensionActivationModel[];
   declare currentStage: TemporaryCourseStageModel | null;

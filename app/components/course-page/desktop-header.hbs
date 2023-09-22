@@ -59,10 +59,15 @@
 
   {{#if (and (not-eq @currentStep @activeStep) (not-eq @activeStep.type "CourseCompletedStep"))}}
     <div class="mb-6">
-      <PrimaryLinkButton @size="small" @route={{@activeStep.routeParams.route}} @models={{@activeStep.routeParams.models}}>
+      <PrimaryLinkButton @size="small" @route={{@activeStep.routeParams.route}} @models={{@activeStep.routeParams.models}} data-test-next-step-button>
         <div class="flex items-center">
           {{#if (eq @nextStep @activeStep)}}
-            <span>View next stage</span>
+            {{#if (eq @nextStep.type "CourseStageStep")}}
+              <span>View next stage</span>
+            {{else}}
+              <span>View next step</span>
+            {{/if}}
+
             {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
           {{else}}
             {{#if (gt @currentStep.globalPosition @activeStep.globalPosition)}}

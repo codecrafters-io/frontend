@@ -26,6 +26,7 @@ Router.map(function () {
       this.route('screencasts');
     });
 
+    this.route('base-stages-completed');
     this.route('completed');
   });
 

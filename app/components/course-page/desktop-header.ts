@@ -42,6 +42,7 @@ export default class DesktopHeaderComponent extends Component<Signature> {
       CourseCompletedStep: this.courseCompletedTabs,
       CourseStageStep: this.stageTabs,
       IntroductionStep: this.introductionTabs,
+      BaseStagesCompletedStep: this.courseCompletedTabs, // Can be the same as CourseCompletedStep for now
     }[this.args.currentStep.type];
   }
 
