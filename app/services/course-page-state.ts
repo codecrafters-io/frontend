@@ -9,6 +9,12 @@ export default class CoursePageStateService extends Service {
   @tracked stepList?: StepList;
 
   get activeStep(): Step {
+    if (!this.stepList) {
+      // This triggers as a global failure in tests for some reason
+      // @ts-ignore
+      return null;
+    }
+
     return this.stepList!.activeStep as Step;
   }
 
