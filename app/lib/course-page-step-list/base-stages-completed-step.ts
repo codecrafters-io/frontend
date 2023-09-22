@@ -13,9 +13,7 @@ export default class BaseStagesCompletedStep extends Step {
   }
 
   get isHidden() {
-    console.log('this.repository.baseStagesAreComplete', this.repository.baseStagesAreComplete);
-
-    return !this.repository.baseStagesAreComplete;
+    return !this.repository.course.hasExtensions || !this.repository.baseStagesAreComplete;
   }
 
   get progressIndicator(): ProgressIndicator {
@@ -26,8 +24,12 @@ export default class BaseStagesCompletedStep extends Step {
     };
   }
 
-  get status(): 'not_started' {
-    return 'not_started';
+  get status() {
+    if (this.repository.activatedCourseExtensions.length > 0) {
+      return 'complete';
+    } else {
+      return 'not_started';
+    }
   }
 
   get routeParams() {

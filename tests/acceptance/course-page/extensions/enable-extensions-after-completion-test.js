@@ -50,10 +50,13 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     await percySnapshot('Base Stages Completed Page');
 
-    // await coursePage.sidebar.clickOnConfigureExtensionsButton();
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
+    // await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    // await coursePage.configureExtensionsModal.clickOnCloseButton();
+
+    // await this.pauseTest();
 
     // // Enable Extension 1
-    // await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     // assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is enabled');
 
     // // Enable Extension 2

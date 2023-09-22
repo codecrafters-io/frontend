@@ -27,6 +27,7 @@ export class TemporaryCourseModel {
   declare id: string;
   declare name?: string;
   declare slug: string;
+  declare hasExtensions: boolean;
   declare extensions: CourseExtensionModel[];
   declare releaseStatusIsBeta: boolean;
   declare sortedStages: TemporaryCourseStageModel[];

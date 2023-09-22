@@ -121,4 +121,8 @@ export class StepList {
   get steps(): Step[] {
     return this.stepGroups.reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as Step[]);
   }
+
+  stepByType(type: Step['type']): Step | null {
+    return this.steps.find((step) => step.type === type) || null;
+  }
 }
