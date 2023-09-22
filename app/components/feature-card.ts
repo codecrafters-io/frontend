@@ -8,7 +8,7 @@ interface Signature {
     content: SafeString;
     imageUrl: string;
     title: string;
-  }
+  };
 }
 
 export default class FeatureCardComponent extends Component<Signature> {}

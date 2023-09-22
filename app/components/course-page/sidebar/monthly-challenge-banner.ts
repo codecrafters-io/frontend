@@ -10,8 +10,8 @@ interface Signature {
 
   Args: {
     course: {
-      id: number,
-    },
+      id: number;
+    };
   };
 }
 

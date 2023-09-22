@@ -11,17 +11,17 @@ interface UserLabelSignature {
       authoredCourseSlugs: string[];
       hasAuthoredCourses: boolean;
       isStaff: boolean;
-    }
+    };
     context?: {
       slug: string;
-    }
+    };
   };
 }
 
 type Label = {
-  text: string
-  tooltipText: string
-}
+  text: string;
+  tooltipText: string;
+};
 
 export default class UserLabelComponent extends Component<UserLabelSignature> {
   @service declare router: RouterService;
@@ -42,18 +42,18 @@ export default class UserLabelComponent extends Component<UserLabelSignature> {
     if (this.args.user.isStaff) {
       return {
         text: 'staff',
-        tooltipText: 'This user works at CodeCrafters'
-      }
+        tooltipText: 'This user works at CodeCrafters',
+      };
     } else if (this.hasCourseContext && this.isUserCurrentCourseAuthor) {
       return {
         text: 'challenge author',
-        tooltipText: 'This user is the author of this challenge'
-      }
+        tooltipText: 'This user is the author of this challenge',
+      };
     } else if (!this.hasCourseContext && this.args.user.hasAuthoredCourses) {
       return {
         text: 'challenge author',
-        tooltipText: 'This user is the author of one or more CodeCrafters challenges'
-      }
+        tooltipText: 'This user is the author of one or more CodeCrafters challenges',
+      };
     } else {
       return null;
     }

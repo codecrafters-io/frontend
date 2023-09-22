@@ -23,7 +23,7 @@ export default class AnalyticsEventTrackerService extends Service {
       url: `${baseURL}${this.router.currentURL}`,
     };
 
-    const mergedProperties = Object.assign(defaultProperties,  eventProperties);
+    const mergedProperties = Object.assign(defaultProperties, eventProperties);
 
     this.store
       .createRecord('analytics-event', {

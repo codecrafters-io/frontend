@@ -23,24 +23,17 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
   convertToHTML(markdown: string): SafeString {
-    return htmlSafe(
-      new showdown.Converter({ strikethrough: true }).makeHtml(markdown),
-    );
+    return htmlSafe(new showdown.Converter({ strikethrough: true }).makeHtml(markdown));
   }
 
   get featureList(): string[] {
-    return [
-      "No limits on content",
-      "Priority support",
-      "Priority Builds",
-      "Community features",
-    ]
+    return ['No limits on content', 'Priority support', 'Priority Builds', 'Community features'];
   }
 
   @action
   async handleDidInsert(): Promise<void> {
-      this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
-      this.isLoadingRegionalDiscount = false;
+    this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
+    this.isLoadingRegionalDiscount = false;
   }
 
   @action
@@ -57,14 +50,28 @@ export default class UpgradePromptComponent extends Component<Signature> {
   }
 
   get secondaryCopy(): SafeString {
-    if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
-      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.regionalDiscount.countryName}). Save an additional 40% by joining within ${formatDistanceStrictWithOptions({}, new Date(), this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt)}.`)
-    } else if (this.authenticator.currentUser.isEligibleForEarlyBirdDiscount) {
-      return this.convertToHTML(`Plans start at $30/mo. Save 40% by joining within ${formatDistanceStrictWithOptions({}, new Date(), this.authenticator.currentUser.earlyBirdDiscountEligibilityExpiresAt)}.`)
+    if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
+      return this.convertToHTML(
+        `Plans start at ~~$30/mo~~ $15/mo (discounted price for ${
+          this.regionalDiscount.countryName
+        }). Save an additional 40% by joining within ${formatDistanceStrictWithOptions(
+          {},
+          new Date(),
+          this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
+        )}.`,
+      );
+    } else if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount) {
+      return this.convertToHTML(
+        `Plans start at $30/mo. Save 40% by joining within ${formatDistanceStrictWithOptions(
+          {},
+          new Date(),
+          this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
+        )}.`,
+      );
     } else if (this.regionalDiscount) {
-      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.regionalDiscount.countryName}).`)
+      return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.regionalDiscount.countryName}).`);
     } else {
-      return this.convertToHTML("Plans start at $30/mo.")
+      return this.convertToHTML('Plans start at $30/mo.');
     }
   }
 }

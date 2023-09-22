@@ -1,7 +1,7 @@
 import { camelize } from '@ember/string';
 
 interface BlockJSON {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 class Block {
@@ -11,7 +11,7 @@ class Block {
     const block = new this();
 
     for (const [key, value] of Object.entries(json)) {
-      (block as any)[camelize(key)] = value;
+      (block as any)[camelize(key)] = value; // eslint-disable-line @typescript-eslint/no-explicit-any
     }
 
     return block;

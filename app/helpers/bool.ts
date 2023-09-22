@@ -6,7 +6,7 @@ const boolHelper = helper(function bool([value]) {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'bool': typeof boolHelper;
+    bool: typeof boolHelper;
   }
 }
 

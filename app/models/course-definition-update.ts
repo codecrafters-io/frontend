@@ -17,7 +17,7 @@ export default class CourseDefinitionUpdateModel extends Model {
   @attr('string') declare status: 'pending' | 'applied';
   @attr('string') declare summary?: string;
 
-  declare apply: (this: Model, payload: any) => Promise<void>;
+  declare apply: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CourseDefinitionUpdateModel.prototype.apply = memberAction({

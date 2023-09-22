@@ -9,12 +9,12 @@ import { tracked } from '@glimmer/tracking';
 
 export default class CourseAdminUpdateController extends Controller {
   declare model: {
-    update: CourseDefinitionUpdateModel; 
+    update: CourseDefinitionUpdateModel;
     course: {
-      id: string,
-      definitionRepositoryFullName: string,
-      syncCourseDefinitionUpdates: () => Promise<void>
-    }
+      id: string;
+      definitionRepositoryFullName: string;
+      syncCourseDefinitionUpdates: () => Promise<void>;
+    };
   };
   @service declare store: Store;
 
@@ -25,7 +25,7 @@ export default class CourseAdminUpdateController extends Controller {
     if (this.model.update.description) {
       return htmlSafe(new showdown.Converter().makeHtml(this.model.update.description));
     } else {
-      return null
+      return null;
     }
   }
 
@@ -57,8 +57,9 @@ export default class CourseAdminUpdateController extends Controller {
 
   get viewDiffLink() {
     if (!this.model.update.oldCommitSha) {
-      return `https://github.com/${this.model.course.definitionRepositoryFullName}/commit/${this.model.update.newCommitSha}`
+      return `https://github.com/${this.model.course.definitionRepositoryFullName}/commit/${this.model.update.newCommitSha}`;
     }
-    return `https://github.com/${this.model.course.definitionRepositoryFullName}/compare/${this.model.update.oldCommitSha}..${this.model.update.newCommitSha}`
+
+    return `https://github.com/${this.model.course.definitionRepositoryFullName}/compare/${this.model.update.oldCommitSha}..${this.model.update.newCommitSha}`;
   }
 }

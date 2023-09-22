@@ -11,18 +11,18 @@ import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 
 type ProseSection = {
-  markdown: 'string'
-  type: 'string',
-}
+  markdown: 'string';
+  type: 'string';
+};
 
 type ReferencedCodeSection = {
-  code: 'string',
-  file_path: 'string',
-  highlighted_lines: 'string'
-  language_slug: 'string',
-  link: 'string',
-  type: 'string',
-}
+  code: 'string';
+  file_path: 'string';
+  highlighted_lines: 'string';
+  language_slug: 'string';
+  link: 'string';
+  type: 'string';
+};
 
 type Section = ProseSection | ReferencedCodeSection;
 

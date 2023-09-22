@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 export interface Signature {
   Args: {
     Positional: [];
-    Named: {};
   };
   Return: boolean;
 }
@@ -14,7 +13,7 @@ export default class CurrentUserIsStaff extends Helper<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   public compute(): boolean {
-    return this.authenticator.currentUser && this.authenticator.currentUser.isStaff;
+    return !!(this.authenticator.currentUser && this.authenticator.currentUser.isStaff);
   }
 }
 

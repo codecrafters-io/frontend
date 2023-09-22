@@ -35,7 +35,7 @@ export default class CourseIdeaModel extends Model {
   }
 
   get reverseSortPositionForCourseIdeasPage(): string {
-    let reverseSortPositionFromDevelopmentStatus = {
+    const reverseSortPositionFromDevelopmentStatus = {
       not_started: 3,
       in_progress: 2,
       released: 1,
@@ -47,7 +47,7 @@ export default class CourseIdeaModel extends Model {
   async vote(): Promise<CourseIdeaVoteModel> {
     this.votesCount += 1;
 
-    const vote: CourseIdeaVoteModel = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.authenticator.currentUser });
+    const vote = this.store.createRecord('course-idea-vote', { courseIdea: this, user: this.authenticator.currentUser }) as CourseIdeaVoteModel;
 
     await vote.save();
 
@@ -56,7 +56,7 @@ export default class CourseIdeaModel extends Model {
     return vote;
   }
 
-  declare unvote: (this: Model, payload: any) => Promise<void>;
+  declare unvote: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CourseIdeaModel.prototype.unvote = memberAction({

@@ -5,7 +5,7 @@ export default class RegionalDiscountModel extends Model {
   @attr('number') declare percentOff: number;
   @attr('string') declare countryName: string;
 
-  declare fetchCurrent: (payload: any) => Promise<void>;
+  declare fetchCurrent: (this: Model, payload: unknown) => Promise<unknown>;
 }
 
 RegionalDiscountModel.prototype.fetchCurrent = collectionAction({

@@ -3,12 +3,24 @@ import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-f
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-extension-activation';
 import RepositoryStageListModel from './repository-stage-list';
+import CourseStageScreencastModel from './course-stage-screencast';
 
 export class TemporaryUserModel {
   declare id: string;
   declare username: string;
   declare badgeAwards: unknown[];
   declare avatarUrl: string;
+  declare isStaff: boolean;
+  declare primaryEmailAddress: string;
+  declare isEligibleForEarlyBirdDiscount: boolean;
+  declare earlyBirdDiscountEligibilityExpiresAt: Date;
+  declare canAccessPaidContent: boolean;
+
+  declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
+
+  isCourseAuthor(_course: TemporaryCourseModel): boolean {
+    return false;
+  }
 }
 
 export class TemporaryCourseModel {
@@ -38,6 +50,7 @@ export class TemporaryCourseStageModel {
   declare secondaryExtensionSlugs: string[];
   declare primaryExtension: CourseExtensionModel | null;
   declare secondaryExtensions: CourseExtensionModel[];
+  declare screencasts: CourseStageScreencastModel[];
 }
 
 export class TemporaryLanguageModel {

@@ -1,4 +1,4 @@
-import StepGroup from "./step-group";
+import StepGroup from './step-group';
 
 export default class BaseStagesStepGroup extends StepGroup {
   get title() {

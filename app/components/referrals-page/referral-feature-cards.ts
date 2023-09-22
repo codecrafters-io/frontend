@@ -19,11 +19,11 @@ type FeatureMarkdown = {
   bodyMarkdown: string;
   imageUrl: string;
   title: string;
-}
+};
 
 type FeatureHTML = FeatureMarkdown & {
   body: SafeString;
-}
+};
 
 export default class ReferralFeatureCardsComponent extends Component<Signature> {
   get featureList(): FeatureHTML[] {

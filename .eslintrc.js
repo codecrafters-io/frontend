@@ -2,7 +2,7 @@
 
 module.exports = {
   root: true,
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -57,6 +57,18 @@ module.exports = {
       extends: ['plugin:qunit/recommended'],
       rules: {
         'qunit/no-commented-tests': 'off',
+      },
+    },
+    // TypeScript files
+    {
+      files: ['**/*.ts'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+      plugins: ['@typescript-eslint'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+        'no-unused-vars': 'off', // We use @typescript-eslint/no-unused-vars instead
+        '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+        'no-constant-condition': ['error', { checkLoops: false }],
       },
     },
   ],

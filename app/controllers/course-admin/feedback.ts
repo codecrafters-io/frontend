@@ -11,18 +11,18 @@ export default class CourseAdminFeedbackController extends Controller {
 
   @tracked shouldShowAcknowledgedFeedbackSubmissions = false;
 
-  // eslint-disable-next-line require-yield
   // @ts-ignore
+  // eslint-disable-next-line require-yield
   *listTransition({ insertedSprites, keptSprites, removedSprites }) {
-    for (let sprite of keptSprites) {
+    for (const sprite of keptSprites) {
       move(sprite);
     }
 
-    for (let sprite of insertedSprites) {
+    for (const sprite of insertedSprites) {
       fadeIn(sprite);
     }
 
-    for (let sprite of removedSprites) {
+    for (const sprite of removedSprites) {
       fadeOut(sprite);
     }
   }

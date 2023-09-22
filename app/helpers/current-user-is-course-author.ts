@@ -8,7 +8,6 @@ type Positional = [TemporaryCourseModel];
 export interface Signature {
   Args: {
     Positional: Positional;
-    Named: {};
   };
   Return: boolean;
 }
@@ -19,7 +18,7 @@ export default class CurrentUserIsCourseAuthor extends Helper<Signature> {
   public compute(positional: Positional): boolean {
     const course = positional[0];
 
-    return this.authenticator.currentUser && this.authenticator.currentUser.isCourseAuthor(course);
+    return !!(this.authenticator.currentUser && this.authenticator.currentUser.isCourseAuthor(course));
   }
 }
 

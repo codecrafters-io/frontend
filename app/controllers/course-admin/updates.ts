@@ -8,10 +8,10 @@ export default class CourseAdminUpdatesController extends Controller {
   declare model: {
     course: {
       id: string;
-      definitionRepositoryLink: string,
-      definitionRepositoryFullName: string,
-      syncCourseDefinitionUpdates: () => Promise<void>
-    }
+      definitionRepositoryLink: string;
+      definitionRepositoryFullName: string;
+      syncCourseDefinitionUpdates: () => Promise<void>;
+    };
   };
 
   @service declare store: Store;

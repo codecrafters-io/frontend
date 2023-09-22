@@ -7,7 +7,7 @@ export default class CourseTesterVersionsRoute extends BaseRoute {
 
   async model() {
     // @ts-ignore
-    let course = this.modelFor('course-admin').course;
+    const course = this.modelFor('course-admin').course;
 
     await this.store.query('course-tester-version', {
       course_id: course.id,

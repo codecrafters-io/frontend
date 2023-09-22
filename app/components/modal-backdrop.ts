@@ -4,8 +4,6 @@ import { action } from '@ember/object';
 type Signature = {
   Element: HTMLDivElement;
 
-  Args: {};
-
   Blocks: {
     default: [];
   };
