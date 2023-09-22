@@ -8,22 +8,6 @@ export default class StepGroup {
       throw new Error('StepGroup must have at least one step');
     }
 
-    const expectedStepPositionsInGroup = steps.map((_, index) => index + 1);
-    const actualStepPositionsInGroup = steps.map((step) => step.positionInGroup);
-
-    if (expectedStepPositionsInGroup.join(',') !== actualStepPositionsInGroup.join(',')) {
-      throw new Error(`StepGroup must have steps with consecutive positions. Actual positions: ${actualStepPositionsInGroup.join(', ')}`);
-    }
-
-    const expectedStepGlobalPositions = steps.map((_, index) => (steps[0] as Step).globalPosition + index);
-    const actualStepGlobalPositions = steps.map((step) => step.globalPosition);
-
-    if (expectedStepGlobalPositions.join(',') !== actualStepGlobalPositions.join(',')) {
-      throw new Error(
-        `StepGroup must have steps with consecutive global positions. Actual global positions: ${actualStepGlobalPositions.join(', ')}`,
-      );
-    }
-
     this.steps = steps;
   }
 

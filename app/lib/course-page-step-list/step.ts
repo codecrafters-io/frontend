@@ -1,13 +1,8 @@
 import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 
 export default class Step {
-  globalPosition: number;
-  positionInGroup: number;
-
-  constructor(positionInGroup: number, globalPosition: number) {
-    this.positionInGroup = positionInGroup;
-    this.globalPosition = globalPosition;
-  }
+  declare globalPosition: number; // Set soon after construction
+  declare positionInGroup: number; // Set soon after construction
 
   get routeParams(): { route: string; models: string[] } {
     throw new Error('Subclasses of Step must implement a routeParams getter');
