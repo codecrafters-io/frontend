@@ -45,6 +45,9 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
 
+    // TODO: Triggers the recorddata error
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
