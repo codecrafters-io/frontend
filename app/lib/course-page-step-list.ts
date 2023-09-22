@@ -13,6 +13,7 @@ import { cached } from '@glimmer/tracking';
 import BaseStagesStepGroup from './course-page-step-list/base-stages-step-group';
 import ExtensionStepGroup from './course-page-step-list/extension-step-group';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import CourseCompletedStepGroup from './course-page-step-list/course-completed-step-group';
 
 export { Step };
 
@@ -39,9 +40,13 @@ export class StepList {
     return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
   }
 
+  get courseCompletedStepGroup(): StepGroup {
+    return new CourseCompletedStepGroup([new CourseCompletedStep(this.repository)]);
+  }
+
   @cached
   get stepGroups(): StepGroup[] {
-    const stepGroups = [this.baseStagesStepGroup, ...this.extensionStepGroups];
+    const stepGroups = [this.baseStagesStepGroup, ...this.extensionStepGroups, this.courseCompletedStepGroup];
 
     let globalPosition = 1;
 
@@ -58,10 +63,6 @@ export class StepList {
     });
 
     return stepGroups;
-  }
-
-  get courseCompletedStepGroup(): StepGroup {
-    return new StepGroup([new CourseCompletedStep(this.repository)]);
   }
 
   get baseStagesStepGroup(): StepGroup {
@@ -81,8 +82,6 @@ export class StepList {
         steps.push(new CourseStageStep(this.repository, item));
       });
     }
-
-    steps.push(new CourseCompletedStep(this.repository));
 
     return new BaseStagesStepGroup(steps);
   }

@@ -15,7 +15,7 @@ export default class StepGroup {
     throw new Error('Subclasses of StepGroup must implement a title getter');
   }
 
-  get type(): 'BaseStagesStepGroup' | 'ExtensionStepGroup' {
+  get type(): 'BaseStagesStepGroup' | 'ExtensionStepGroup' | 'CourseCompletedStepGroup' {
     throw new Error('Subclasses of StepGroup must implement a type getter');
   }
 
