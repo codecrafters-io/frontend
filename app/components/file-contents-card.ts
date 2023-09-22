@@ -8,8 +8,6 @@ interface Signature {
     language: string;
     filename: string;
   };
-
-  Blocks: {};
 }
 
 export default class FileContentsCardComponent extends Component<Signature> {}

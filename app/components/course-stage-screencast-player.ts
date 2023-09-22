@@ -41,6 +41,7 @@ export default class CourseStageScreencastPlayer extends Component<Signature> {
 
     if (!iframe) {
       later(this.installListeners, 100);
+
       return;
     }
 

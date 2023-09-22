@@ -1,5 +1,4 @@
 import type RenderModifiersRegistry from '@ember/render-modifiers/template-registry';
-import { SafeString } from '@ember/template/-private/handlebars';
 import type { ModifierLike } from '@glint/template';
 import type { HelperLike } from '@glint/template';
 import type { ComponentLike } from '@glint/template';
@@ -11,7 +10,7 @@ declare module '@glint/environment-ember-loose/registry' {
     AnimatedContainer: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     AnimatedOrphans: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     'animated-value': ComponentLike<{
-      Args: { Positional: [unknown]; Named: { duration: number; rules: any } };
+      Args: { Positional: [unknown]; Named: { duration: number; rules: unknown } };
       Blocks: { default: [unknown] };
       Yields: { default: [string] };
       Return: string;

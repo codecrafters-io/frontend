@@ -20,6 +20,7 @@ export default class WebVitalsService extends Service {
     if (this.fastboot.isFastBoot) {
       return;
     }
+
     onCLS((metric) => this.reportMetric(metric));
     onFCP((metric) => this.reportMetric(metric));
     onLCP((metric) => this.reportMetric(metric));

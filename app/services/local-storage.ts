@@ -5,6 +5,7 @@ export default class LocalStorageService extends Service {
     if (!window.localStorage) {
       return 0;
     }
+
     return window.localStorage.length;
   }
 
@@ -12,6 +13,7 @@ export default class LocalStorageService extends Service {
     if (!window.localStorage) {
       return null;
     }
+
     return window.localStorage.key(index);
   }
 
@@ -19,6 +21,7 @@ export default class LocalStorageService extends Service {
     if (!window.localStorage) {
       return null;
     }
+
     return window.localStorage.getItem(keyName);
   }
 
@@ -26,6 +29,7 @@ export default class LocalStorageService extends Service {
     if (!window.localStorage) {
       throw new Error('Setting localStorage items is unavailable in the current context');
     }
+
     window.localStorage.setItem(keyName, keyValue);
   }
 
@@ -33,6 +37,7 @@ export default class LocalStorageService extends Service {
     if (!window.localStorage) {
       throw new Error('Removing localStorage items is unavailable in the current context');
     }
+
     window.localStorage.removeItem(keyName);
   }
 
@@ -40,6 +45,7 @@ export default class LocalStorageService extends Service {
     if (!window.localStorage) {
       throw new Error('Clearing localStorage items is unavailable in the current context');
     }
+
     window.localStorage.clear();
   }
 }

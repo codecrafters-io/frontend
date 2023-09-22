@@ -4,7 +4,7 @@ import { memberAction } from 'ember-api-actions';
 export default class PerkModel extends Model {
   @attr('string') declare slug: string;
 
-  declare claim: (this: Model, payload: any) => Promise<void>;
+  declare claim: (this: Model, payload: unknown) => Promise<void>;
 }
 
 PerkModel.prototype.claim = memberAction({

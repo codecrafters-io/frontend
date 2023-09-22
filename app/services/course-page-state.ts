@@ -33,7 +33,7 @@ export default class CoursePageStateService extends Service {
     } else if (this.router.currentRouteName === 'course.completed') {
       return this.stepList!.steps[this.stepList!.steps.length - 1] || null;
     } else if (this.router.currentRouteName && this.router.currentRouteName.startsWith('course.stage')) {
-      const courseStageRoute = this.router.currentRoute.find((route: any) => route.name === 'course.stage');
+      const courseStageRoute = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.stage');
 
       const routeParams = courseStageRoute!.params as { stage_identifier: string };
       const stageIdentifier = routeParams.stage_identifier;

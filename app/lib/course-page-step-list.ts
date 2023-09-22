@@ -45,7 +45,7 @@ export class StepList {
   }
 
   get baseStagesStepGroup(): StepGroup {
-    let steps: Step[] = [];
+    const steps: Step[] = [];
 
     steps.push(new IntroductionStep(this.repository, 1, 1));
     steps.push(new SetupStep(this.repository, 2, 2));
@@ -84,6 +84,7 @@ export class StepList {
 
     this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
       const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
+
       if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
         stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
         stepsInNextGroup = [];

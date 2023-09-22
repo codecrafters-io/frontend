@@ -6,14 +6,14 @@ import showdown from 'showdown';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryCourseStageModel, TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     title?: string;
-    courseStage: TemporaryCourseStageModel
+    courseStage: TemporaryCourseStageModel;
     repository: TemporaryRepositoryModel;
   };
 }
@@ -55,10 +55,10 @@ export default class YourTaskCardComponent extends Component<Signature> {
   }
 
   get instructionsMarkdown() {
-    const variables: Record<string, any> = {};
+    const variables: Record<string, unknown> = {};
 
     this.store.peekAll('language').forEach((language) => {
-      variables[`lang_is_${language.slug}`] = this.args.repository.language === language;
+      variables[`lang_is_${(language as TemporaryLanguageModel).slug}`] = this.args.repository.language === language;
     });
 
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);

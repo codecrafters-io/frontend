@@ -5,6 +5,7 @@ import { createPopup } from '@typeform/embed';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
+import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
 
 type ModelType = {
   courseStage: {
@@ -24,7 +25,7 @@ export default class ScreencastsTabComponent extends Controller {
   declare model: ModelType;
 
   @tracked embedHtml: string | undefined;
-  @tracked selectedScreencastId: any | undefined;
+  @tracked selectedScreencastId: string | undefined;
   @tracked screencastPlayerElement: HTMLDivElement | undefined;
 
   // @ts-ignore
@@ -37,11 +38,13 @@ export default class ScreencastsTabComponent extends Controller {
       return null;
     }
 
-    const screencast = this.store.peekRecord('course-stage-screencast', this.selectedScreencastId);
+    const screencast = this.store.peekRecord('course-stage-screencast', this.selectedScreencastId) as CourseStageScreencastModel | null;
 
     // If screencast belongs to another stage (query params are persisted between stages), don't show it
     if (screencast && screencast.courseStage === this.model.courseStage) {
       return screencast;
+    } else {
+      return null;
     }
   }
 
@@ -54,7 +57,7 @@ export default class ScreencastsTabComponent extends Controller {
   }
 
   @action
-  handleScreencastClicked(screencast: any) {
+  handleScreencastClicked(screencast: { id: string }) {
     this.selectedScreencastId = screencast.id;
 
     next(() => {

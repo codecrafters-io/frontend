@@ -34,7 +34,6 @@ export default class CourseTesterVersionsController extends Controller {
     this.isSyncingWithGitHub = false;
   }
 
-
   get sortedTesterVersions() {
     return this.model.course.testerVersions.sortBy('createdAt').reverse();
   }

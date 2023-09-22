@@ -10,7 +10,7 @@ export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock
 
 type BlockJSON = {
   type: string;
-  args?: any;
+  args?: unknown;
 };
 
 export default class Concept extends Model {
@@ -57,7 +57,7 @@ export default class Concept extends Model {
         throw new Error(`Unknown block type: ${blockJSON.type}`);
       }
 
-      return blockClass.fromJSON(blockJSON.args);
+      return blockClass.fromJSON(blockJSON.args as BlockJSON);
     });
   }
 }

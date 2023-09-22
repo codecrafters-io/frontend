@@ -12,7 +12,7 @@ export default class CourseTesterVersionModel extends Model {
   @attr('boolean') declare isActive: boolean;
   @attr('string') declare tagName: string;
 
-  declare activate: (this: Model, payload: any) => Promise<void>;
+  declare activate: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CourseTesterVersionModel.prototype.activate = memberAction({

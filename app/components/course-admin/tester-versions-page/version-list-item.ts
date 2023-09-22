@@ -46,10 +46,11 @@ export default class VersionListItemComponent extends Component<Signature> {
     }
   }
 
-  @action 
+  @action
   async handleActivateButtonClick() {
     if (this.args.courseTesterVersion.isLatest) {
       await this.activate();
+
       return;
     }
 

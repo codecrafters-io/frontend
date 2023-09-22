@@ -47,7 +47,7 @@ export class SelectLanguageSection extends Section {
   }
 
   get type() {
-    return 'SelectLanguageSection' as 'SelectLanguageSection';
+    return 'SelectLanguageSection' as const;
   }
 }
 
@@ -69,7 +69,7 @@ export class SelectLanguageProficiencyLevelSection extends Section {
   }
 
   get type() {
-    return 'SelectLanguageProficiencyLevelSection' as 'SelectLanguageProficiencyLevelSection';
+    return 'SelectLanguageProficiencyLevelSection' as const;
   }
 }
 
@@ -91,7 +91,7 @@ export class SelectExpectedActivityFrequencySection extends Section {
   }
 
   get type() {
-    return 'SelectExpectedActivityFrequencySection' as 'SelectExpectedActivityFrequencySection';
+    return 'SelectExpectedActivityFrequencySection' as const;
   }
 }
 
@@ -113,7 +113,7 @@ export class SelectRemindersPreferenceSection extends Section {
   }
 
   get type() {
-    return 'SelectRemindersPreferenceSection' as 'SelectRemindersPreferenceSection';
+    return 'SelectRemindersPreferenceSection' as const;
   }
 }
 

@@ -11,7 +11,7 @@ declare const config: {
   rootURL: string;
   x: {
     backendUrl: string;
-  }
+  };
 };
 
 export default config;

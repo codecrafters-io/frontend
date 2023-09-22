@@ -8,9 +8,9 @@ interface ScrollingLogoListSignature {
       {
         name: string;
         url: string;
-      }
-    ]
-  }
+      },
+    ];
+  };
 }
 
 export default class ScrollingLogoListComponent extends Component<ScrollingLogoListSignature> {}

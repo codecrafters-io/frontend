@@ -1,4 +1,4 @@
-import Concept from 'codecrafters-frontend/models/concept'
+import Concept from 'codecrafters-frontend/models/concept';
 import Model from '@ember-data/model';
 import showdown from 'showdown';
 import { attr, belongsTo } from '@ember-data/model';
@@ -6,10 +6,10 @@ import { htmlSafe } from '@ember/template';
 import { SafeString } from '@ember/template/-private/handlebars';
 
 type Option = {
-  markdown: string,
-  is_correct: boolean,
-  explanation_markdown: string,
-}
+  markdown: string;
+  is_correct: boolean;
+  explanation_markdown: string;
+};
 
 export default class ConceptQuestion extends Model {
   @belongsTo('concept', { async: false }) declare concept: Concept;

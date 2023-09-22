@@ -14,10 +14,10 @@ export default class PerksClaimRoute extends BaseRoute {
     const perk = this.modelFor('perk') as PerkModel;
 
     if (this.authenticator.currentUser.canAccessPaidContent) {
-      return await perk.claim({}) as unknown as { claim_url: string };
+      return (await perk.claim({})) as unknown as { claim_url: string };
     }
 
-    return
+    return;
   }
 
   async afterModel(urlResponse: { claim_url: string }) {

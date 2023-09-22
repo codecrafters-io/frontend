@@ -59,5 +59,17 @@ module.exports = {
         'qunit/no-commented-tests': 'off',
       },
     },
+    // TypeScript files
+    {
+      files: ['**/*.ts'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+      plugins: ['@typescript-eslint'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+        'no-unused-vars': 'off', // We use @typescript-eslint/no-unused-vars instead
+        '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+        'no-constant-condition': ['error', { checkLoops: false }],
+      },
+    },
   ],
 };

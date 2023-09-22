@@ -4,6 +4,7 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import RouterService from '@ember/routing/router-service';
 import showdown from 'showdown';
 import Store from '@ember-data/store';
+import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -19,14 +20,14 @@ interface Signature {
             }[];
             language: unknown;
           }[];
-          screencasts: {}[];
+          screencasts: CourseStageScreencastModel[];
         };
       };
       language: unknown;
     };
     courseStage: {
       position: number;
-      screencasts: {}[];
+      screencasts: CourseStageScreencastModel[];
     };
   };
 }
