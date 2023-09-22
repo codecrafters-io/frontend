@@ -1,6 +1,6 @@
 version: 1
 snapshot:
-  percy-css: |
+  percy-css: |-
     .percy-timestamp {
       font-size: 0;
     } 
