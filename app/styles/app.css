@@ -128,3 +128,15 @@
   list-style-type: disc;
   padding-left: 1.5em;
 }
+
+.metabase-iframe {
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+@media screen and (min-width: 80em) {
+  .metabase-iframe {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+}
