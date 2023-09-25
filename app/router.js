@@ -31,10 +31,11 @@ Router.map(function () {
 
   this.route('course-admin', { path: '/courses/:course_slug/admin' }, function () {
     this.route('feedback');
+    this.route('insights');
     this.route('submissions');
     this.route('tester-versions');
-    this.route('updates');
     this.route('update', { path: '/updates/:update_id' });
+    this.route('updates');
   });
 
   this.route('course-overview', { path: '/courses/:course_slug/overview' });
