@@ -1,0 +1,23 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Insights
+        </h3>
+        <div class="text-xs text-gray-400">
+          Statistics related to your challenge.
+        </div>
+      </div>
+    </div>
+    <iframe
+      title="Course Insights"
+      src="{{@model.courseInsightsDashboard.embedUrl}}"
+      scrolling="no"
+      frameborder="0"
+      class="w-full metabase-iframe"
+      onload="iFrameResize({}, this)"
+      allowtransparency
+    ></iframe>
+  </div>
+</div>
