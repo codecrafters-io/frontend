@@ -1,125 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta
-      name="description"
-      content="Real-world proficiency projects designed for experienced engineers. Develop software craftsmanship by recreating popular devtools from scratch."
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Real-world proficiency projects designed for experienced engineers. Develop software craftsmanship by recreating popular devtools from scratch.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta property="og:site_name" content="CodeCrafters" />
-    <meta
-      property="og:description"
-      content="Real-world proficiency projects designed for experienced engineers. Develop software craftsmanship by recreating popular devtools from scratch."
-    />
-    <meta property="og:image" content="https://codecrafters.io/images/og-index.jpg" />
-    <meta property="og:title" content="The Software Pro's Best Kept Secret." />
-    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Real-world proficiency projects designed for experienced engineers. Develop software craftsmanship by recreating popular devtools from scratch.">
+    <meta property="og:image" content="https://codecrafters.io/images/og-index.jpg">
+    <meta property="og:title" content="The Software Pro's Best Kept Secret.">
+    <meta property="og:type" content="website">
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:description"
-      content="Real-world proficiency projects designed for experienced engineers. Develop software craftsmanship by recreating popular devtools from scratch."
-    />
-    <meta name="twitter:image" content="https://codecrafters.io/images/og-index.jpg" />
-    <meta name="twitter:title" content="The Software Pro's Best Kept Secret." />
-    <meta name="twitter:site" content="@codecraftersio" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="Real-world proficiency projects designed for experienced engineers. Develop software craftsmanship by recreating popular devtools from scratch.">
+    <meta name="twitter:image" content="https://codecrafters.io/images/og-index.jpg">
+    <meta name="twitter:title" content="The Software Pro's Best Kept Secret.">
+    <meta name="twitter:site" content="@codecraftersio">
 
     {{content-for "head"}}
 
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/codecrafters-frontend.css" />
-    <link rel="icon" href="{{rootURL}}assets/favicon.ico" />
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/codecrafters-frontend.css">
+    <link rel="icon" href="{{rootURL}}assets/favicon.ico">
 
     {{content-for "head-footer"}}
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.cdnfonts.com/css/monaco" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/monaco" rel="stylesheet">
 
-    <script type="text/javascript">
-      !(function (e, t, n) {
-        function a() {
-          var e = t.getElementsByTagName('script')[0],
-            n = t.createElement('script');
-          (n.type = 'text/javascript'), (n.async = !0), (n.src = 'https://beacon-v2.helpscout.net'), e.parentNode.insertBefore(n, e);
-        }
-        if (
-          ((e.Beacon = n =
-            function (t, n, a) {
-              e.Beacon.readyQueue.push({ method: t, options: n, data: a });
-            }),
-          (n.readyQueue = []),
-          'complete' === t.readyState)
-        )
-          return a();
-        e.attachEvent ? e.attachEvent('onload', a) : e.addEventListener('load', a, !1);
-      })(window, document, window.Beacon || function () {});
+    <script type="text/javascript">!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});
     </script>
 
-    <script type="text/javascript">
-      window.Beacon('init', 'bb089ae9-a4ae-4114-8f7a-b660f6310158');
-    </script>
+    <script type="text/javascript">window.Beacon('init', 'bb089ae9-a4ae-4114-8f7a-b660f6310158')</script>
+    <script async src="https://metabase.codecrafters.io/app/iframeResizer.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N8D6K4M2HE"></script>
-    <script async src="https://metabase.codecrafters.io/app/iframeResizer.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'G-N8D6K4M2HE');
     </script>
 
     <script>
-      !(function (t, e) {
-        var o, n, p, r;
-        e.__SV ||
-          ((window.posthog = e),
-          (e._i = []),
-          (e.init = function (i, s, a) {
-            function g(t, e) {
-              var o = e.split('.');
-              2 == o.length && ((t = t[o[0]]), (e = o[1])),
-                (t[e] = function () {
-                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
-                });
-            }
-            ((p = t.createElement('script')).type = 'text/javascript'),
-              (p.async = !0),
-              (p.src = s.api_host + '/static/array.js'),
-              (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(p, r);
-            var u = e;
-            for (
-              void 0 !== a ? (u = e[a] = []) : (a = 'posthog'),
-                u.people = u.people || [],
-                u.toString = function (t) {
-                  var e = 'posthog';
-                  return 'posthog' !== a && (e += '.' + a), t || (e += ' (stub)'), e;
-                },
-                u.people.toString = function () {
-                  return u.toString(1) + '.people (stub)';
-                },
-                o =
-                  'capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags'.split(
-                    ' ',
-                  ),
-                n = 0;
-              n < o.length;
-              n++
-            )
-              g(u, o[n]);
-            e._i.push([i, s, a]);
-          }),
-          (e.__SV = 1));
-      })(document, window.posthog || []);
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 
       if (window.location.href.includes('codecrafters.io')) {
-        posthog.init('phc_jCl1mm3XbnvyIUr4h54oORqWEqj37gxhZIOebREBwxb', { api_host: 'https://app.posthog.com' });
+        posthog.init('phc_jCl1mm3XbnvyIUr4h54oORqWEqj37gxhZIOebREBwxb',{api_host:'https://app.posthog.com'})
       }
     </script>
   </head>
@@ -129,93 +59,60 @@
         <svg class="indicator-icon" width="100" height="100" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0)">
             <g filter="url(#filter0_d)">
-              <path
-                d="M494.841 237.638L379.155 115.073C372.276 107.569 360.395 106.944 352.891 114.448C345.387 121.326 344.761 133.208 352.265 140.712L455.445 250.77L351.64 360.203C344.761 367.707 344.761 379.588 352.265 386.467C356.017 389.594 360.395 391.47 365.397 391.47C370.4 391.47 375.403 389.594 379.155 385.842L494.841 263.277C501.72 256.398 501.72 245.142 494.841 237.638Z"
-                fill="url(#paint0_linear)"
-              />
+              <path d="M494.841 237.638L379.155 115.073C372.276 107.569 360.395 106.944 352.891 114.448C345.387 121.326 344.761 133.208 352.265 140.712L455.445 250.77L351.64 360.203C344.761 367.707 344.761 379.588 352.265 386.467C356.017 389.594 360.395 391.47 365.397 391.47C370.4 391.47 375.403 389.594 379.155 385.842L494.841 263.277C501.72 256.398 501.72 245.142 494.841 237.638Z" fill="url(#paint0_linear)"/>
             </g>
             <g filter="url(#filter1_d)">
-              <path
-                d="M147.157 114.448C139.653 107.569 127.771 107.569 120.893 115.073L4.58107 237.638C-2.29758 245.142 -2.29758 256.398 4.58107 263.277L120.267 385.842C124.019 389.594 129.022 391.47 134.025 391.47C138.402 391.47 143.405 389.594 147.157 386.467C154.661 379.588 155.286 367.707 147.782 360.203L43.977 250.77L147.782 141.337C154.661 133.833 154.661 121.952 147.157 114.448Z"
-                fill="url(#paint1_linear)"
-              />
+              <path d="M147.157 114.448C139.653 107.569 127.771 107.569 120.893 115.073L4.58107 237.638C-2.29758 245.142 -2.29758 256.398 4.58107 263.277L120.267 385.842C124.019 389.594 129.022 391.47 134.025 391.47C138.402 391.47 143.405 389.594 147.157 386.467C154.661 379.588 155.286 367.707 147.782 360.203L43.977 250.77L147.782 141.337C154.661 133.833 154.661 121.952 147.157 114.448Z" fill="url(#paint1_linear)"/>
             </g>
             <g filter="url(#filter2_d)">
-              <path
-                d="M280.352 51.9145C270.347 50.6638 260.342 57.5424 259.091 67.5478L204.062 427.739C202.811 437.744 209.69 447.749 219.695 449C220.946 449 221.571 449 222.822 449C232.202 449 239.706 442.121 241.582 433.367L296.611 73.1757C297.236 63.1704 290.358 53.7905 280.352 51.9145Z"
-                fill="url(#paint2_linear)"
-              />
+              <path d="M280.352 51.9145C270.347 50.6638 260.342 57.5424 259.091 67.5478L204.062 427.739C202.811 437.744 209.69 447.749 219.695 449C220.946 449 221.571 449 222.822 449C232.202 449 239.706 442.121 241.582 433.367L296.611 73.1757C297.236 63.1704 290.358 53.7905 280.352 51.9145Z" fill="url(#paint2_linear)"/>
             </g>
           </g>
           <defs>
-            <filter
-              id="filter0_d"
-              x="346.557"
-              y="109.123"
-              width="173.443"
-              height="302.347"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-              <feOffset dx="10" dy="10" />
-              <feGaussianBlur stdDeviation="5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix type="matrix" values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0" />
-              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+            <filter id="filter0_d" x="346.557" y="109.123" width="173.443" height="302.347" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset dx="10" dy="10"/>
+              <feGaussianBlur stdDeviation="5"/>
+              <feComposite in2="hardAlpha" operator="out"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
             </filter>
-            <filter
-              id="filter1_d"
-              x="-0.577919"
-              y="109.364"
-              width="173.685"
-              height="302.105"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-              <feOffset dx="10" dy="10" />
-              <feGaussianBlur stdDeviation="5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix type="matrix" values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0" />
-              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+            <filter id="filter1_d" x="-0.577919" y="109.364" width="173.685" height="302.105" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset dx="10" dy="10"/>
+              <feGaussianBlur stdDeviation="5"/>
+              <feComposite in2="hardAlpha" operator="out"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
             </filter>
-            <filter
-              id="filter2_d"
-              x="203.915"
-              y="51.7678"
-              width="112.735"
-              height="417.232"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-              <feOffset dx="10" dy="10" />
-              <feGaussianBlur stdDeviation="5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix type="matrix" values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0" />
-              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+            <filter id="filter2_d" x="203.915" y="51.7678" width="112.735" height="417.232" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset dx="10" dy="10"/>
+              <feGaussianBlur stdDeviation="5"/>
+              <feComposite in2="hardAlpha" operator="out"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0.101961 0 0 0 0 0.12549 0 0 0 0 0.172549 0 0 0 0.1 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
             </filter>
             <linearGradient id="paint0_linear" x1="423.279" y1="2.72149" x2="423.279" y2="445.507" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#00EFD1" />
-              <stop offset="1" stop-color="#00ACEA" />
+              <stop stop-color="#00EFD1"/>
+              <stop offset="1" stop-color="#00ACEA"/>
             </linearGradient>
             <linearGradient id="paint1_linear" x1="76.2647" y1="2.72148" x2="76.2647" y2="445.507" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#00EFD1" />
-              <stop offset="1" stop-color="#00ACEA" />
+              <stop stop-color="#00EFD1"/>
+              <stop offset="1" stop-color="#00ACEA"/>
             </linearGradient>
             <linearGradient id="paint2_linear" x1="250.283" y1="2.7215" x2="250.283" y2="445.507" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#00EFD1" />
-              <stop offset="1" stop-color="#00ACEA" />
+              <stop stop-color="#00EFD1"/>
+              <stop offset="1" stop-color="#00ACEA"/>
             </linearGradient>
             <clipPath id="clip0">
-              <rect width="500" height="500" fill="white" />
+              <rect width="500" height="500" fill="white"/>
             </clipPath>
           </defs>
         </svg>
@@ -234,7 +131,9 @@
             <div class="sk-circle11 sk-child"></div>
             <div class="sk-circle12 sk-child"></div>
           </div>
-          <span class="indicator-loading-text"> Loading... </span>
+          <span class="indicator-loading-text">
+            Loading...
+          </span>
         </div>
       </div>
     </div>
@@ -245,7 +144,7 @@
         align-items: center;
         justify-content: center;
         margin-top: 52px;
-        display: none;
+        display:none;
         opacity: 0;
         transition: opacity 0.3s;
       }
@@ -262,11 +161,11 @@
       }
       .ember-load-indicator .indicator-loading-text {
         font-family: Montserrat, sans-serif;
-        color: #64748b;
+        color: #64748B;
         margin-top: 1.5em;
       }
 
-      .ember-load-indicator[is-fastboot='true'] {
+      .ember-load-indicator[is-fastboot=true] {
         position: fixed;
         top: 0;
         left: 0;
@@ -275,17 +174,17 @@
         margin-top: 0;
         z-index: 1000;
       }
-      .ember-load-indicator[is-fastboot='true'] .indicator-container {
+      .ember-load-indicator[is-fastboot=true] .indicator-container {
         margin-top: 56px;
       }
-      .ember-load-indicator[is-fastboot='true'] .indicator-spinner-container {
+      .ember-load-indicator[is-fastboot=true] .indicator-spinner-container {
         margin-top: 0;
         padding: 8px 0;
       }
-      .ember-load-indicator[is-fastboot='true'] .indicator-icon {
+      .ember-load-indicator[is-fastboot=true] .indicator-icon {
         display: none;
       }
-      .ember-load-indicator[is-fastboot='true'] .indicator-loading-text {
+      .ember-load-indicator[is-fastboot=true] .indicator-loading-text {
         display: none;
       }
 
@@ -307,7 +206,7 @@
         margin: 0 auto;
         width: 15%;
         height: 15%;
-        background-color: #64748b;
+        background-color: #64748B;
         border-radius: 100%;
         -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
         animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
@@ -315,127 +214,99 @@
       .sk-circle .sk-circle2 {
         -webkit-transform: rotate(30deg);
         -ms-transform: rotate(30deg);
-        transform: rotate(30deg);
-      }
+        transform: rotate(30deg); }
       .sk-circle .sk-circle3 {
         -webkit-transform: rotate(60deg);
         -ms-transform: rotate(60deg);
-        transform: rotate(60deg);
-      }
+        transform: rotate(60deg); }
       .sk-circle .sk-circle4 {
         -webkit-transform: rotate(90deg);
         -ms-transform: rotate(90deg);
-        transform: rotate(90deg);
-      }
+        transform: rotate(90deg); }
       .sk-circle .sk-circle5 {
         -webkit-transform: rotate(120deg);
         -ms-transform: rotate(120deg);
-        transform: rotate(120deg);
-      }
+        transform: rotate(120deg); }
       .sk-circle .sk-circle6 {
         -webkit-transform: rotate(150deg);
         -ms-transform: rotate(150deg);
-        transform: rotate(150deg);
-      }
+        transform: rotate(150deg); }
       .sk-circle .sk-circle7 {
         -webkit-transform: rotate(180deg);
         -ms-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
+        transform: rotate(180deg); }
       .sk-circle .sk-circle8 {
         -webkit-transform: rotate(210deg);
         -ms-transform: rotate(210deg);
-        transform: rotate(210deg);
-      }
+        transform: rotate(210deg); }
       .sk-circle .sk-circle9 {
         -webkit-transform: rotate(240deg);
         -ms-transform: rotate(240deg);
-        transform: rotate(240deg);
-      }
+        transform: rotate(240deg); }
       .sk-circle .sk-circle10 {
         -webkit-transform: rotate(270deg);
         -ms-transform: rotate(270deg);
-        transform: rotate(270deg);
-      }
+        transform: rotate(270deg); }
       .sk-circle .sk-circle11 {
         -webkit-transform: rotate(300deg);
         -ms-transform: rotate(300deg);
-        transform: rotate(300deg);
-      }
+        transform: rotate(300deg); }
       .sk-circle .sk-circle12 {
         -webkit-transform: rotate(330deg);
         -ms-transform: rotate(330deg);
-        transform: rotate(330deg);
-      }
+        transform: rotate(330deg); }
       .sk-circle .sk-circle2:before {
         -webkit-animation-delay: -1.1s;
-        animation-delay: -1.1s;
-      }
+        animation-delay: -1.1s; }
       .sk-circle .sk-circle3:before {
         -webkit-animation-delay: -1s;
-        animation-delay: -1s;
-      }
+        animation-delay: -1s; }
       .sk-circle .sk-circle4:before {
         -webkit-animation-delay: -0.9s;
-        animation-delay: -0.9s;
-      }
+        animation-delay: -0.9s; }
       .sk-circle .sk-circle5:before {
         -webkit-animation-delay: -0.8s;
-        animation-delay: -0.8s;
-      }
+        animation-delay: -0.8s; }
       .sk-circle .sk-circle6:before {
         -webkit-animation-delay: -0.7s;
-        animation-delay: -0.7s;
-      }
+        animation-delay: -0.7s; }
       .sk-circle .sk-circle7:before {
         -webkit-animation-delay: -0.6s;
-        animation-delay: -0.6s;
-      }
+        animation-delay: -0.6s; }
       .sk-circle .sk-circle8:before {
         -webkit-animation-delay: -0.5s;
-        animation-delay: -0.5s;
-      }
+        animation-delay: -0.5s; }
       .sk-circle .sk-circle9:before {
         -webkit-animation-delay: -0.4s;
-        animation-delay: -0.4s;
-      }
+        animation-delay: -0.4s; }
       .sk-circle .sk-circle10:before {
         -webkit-animation-delay: -0.3s;
-        animation-delay: -0.3s;
-      }
+        animation-delay: -0.3s; }
       .sk-circle .sk-circle11:before {
         -webkit-animation-delay: -0.2s;
-        animation-delay: -0.2s;
-      }
+        animation-delay: -0.2s; }
       .sk-circle .sk-circle12:before {
         -webkit-animation-delay: -0.1s;
-        animation-delay: -0.1s;
-      }
+        animation-delay: -0.1s; }
 
       @-webkit-keyframes sk-circleBounceDelay {
-        0%,
-        80%,
-        100% {
+        0%, 80%, 100% {
           -webkit-transform: scale(0);
           transform: scale(0);
-        }
-        40% {
-          -webkit-transform: scale(1);
-          transform: scale(1);
-        }
+        } 40% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+          }
       }
 
       @keyframes sk-circleBounceDelay {
-        0%,
-        80%,
-        100% {
+        0%, 80%, 100% {
           -webkit-transform: scale(0);
           transform: scale(0);
-        }
-        40% {
-          -webkit-transform: scale(1);
-          transform: scale(1);
-        }
+        } 40% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+          }
       }
     </style>
 
@@ -445,18 +316,15 @@
         const shoeBoxes = document.querySelectorAll('script[type="fastboot/shoebox"]'); // Find all FastBoot Shoeboxes
         const isFastBootPage = shoeBoxes.length > 0; // If Shoeboxes exist, assume this is a FastBoot page
         // Delay the appearence of the loading indicator
-        setTimeout(
-          () => {
-            const elems = document.querySelectorAll('.ember-load-indicator');
-            // Iterate over the NodeList this way to maintain ie11 compatibility
-            for (let i = 0; i < elems.length; i++) {
-              elems[i].style.display = 'flex';
-              elems[i].style.opacity = '1';
-              elems[i].setAttribute('is-fastboot', isFastBootPage); // CSS uses this to show FastBoot-specific indicator
-            }
-          },
-          isFastBootPage ? 3000 : 3000,
-        ); // Different delay for FastBoot and regular indicator
+        setTimeout(() => {
+          const elems = document.querySelectorAll('.ember-load-indicator');
+          // Iterate over the NodeList this way to maintain ie11 compatibility
+          for (let i = 0; i < elems.length; i++) {
+            elems[i].style.display = 'flex';
+            elems[i].style.opacity = '1';
+            elems[i].setAttribute('is-fastboot', isFastBootPage); // CSS uses this to show FastBoot-specific indicator
+          }
+        }, isFastBootPage ? 3000 : 3000); // Different delay for FastBoot and regular indicator
       }, 0); // Postpone to the next run-loop
     </script>
 
