@@ -15,7 +15,7 @@ export default class CourseLanguageConfigurationModel extends Model {
 
   isAvailableForUser(user) {
     if (this.releaseStatusIsAlpha) {
-      return user.isStaff || this.alphaTesterUsernames.includes(user.username);
+      return user.isStaff || this.alphaTesterUsernames.includes(user.username) || user.isCourseAuthor(this.course);
     } else {
       return true;
     }
