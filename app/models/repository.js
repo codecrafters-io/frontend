@@ -72,7 +72,7 @@ export default class RepositoryModel extends Model {
   }
 
   get completedStages() {
-    return this.courseStageCompletions.mapBy('courseStage');
+    return this.courseStageCompletions.mapBy('courseStage').uniq();
   }
 
   courseStageFeedbackSubmissionFor(courseStage) {
