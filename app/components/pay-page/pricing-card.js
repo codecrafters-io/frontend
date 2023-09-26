@@ -22,7 +22,7 @@ export default class PricingCardComponent extends Component {
   }
 
   get featureDescriptions() {
-    return ['One time payment', 'No limits on content', 'Community features', 'Priority builds', 'Priority support'];
+    return ['One time payment', 'No limits on content', 'Community features', 'Access to Perks', 'Priority support'];
   }
 
   @action
