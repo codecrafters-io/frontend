@@ -78,7 +78,7 @@
     "@types/mustache": "^4.2.2",
     "@types/qunit": "^2.19.6",
     "@types/rsvp": "^4.0.4",
-    "@types/showdown": "^2.0.1",
+    "@types/showdown": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "autoprefixer": "^10.4.16",
