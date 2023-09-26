@@ -6,6 +6,14 @@
       </button>
 
       <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
+
+      {{! @glint-expect-error not typesafe }}
+      {{#if (and (eq @currentStep.type "CourseStageStep") @currentStep.courseStage.primaryExtension)}}
+        <div class="inline-flex border border-gray-300 rounded bg-gray-100 px-2.5 py-1.5 text-sm font-semibold text-gray-700">
+          {{! @glint-expect-error not typesafe }}
+          {{@currentStep.courseStage.primaryExtension.name}}
+        </div>
+      {{/if}}
     </div>
 
     <div class="flex items-center gap-x-3">
@@ -40,7 +48,7 @@
         <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
           {{#if (eq @currentStep.type "CourseStageStep")}}
             {{! @glint-expect-error not typesafe }}
-            <span class="text-gray-600 mr-1">Stage #{{@currentStep.courseStage.position}}:</span>
+            <span class="text-gray-600 mr-1">Stage #{{@currentStep.courseStage.positionWithinExtensionOrCourse}}:</span>
             {{! @glint-expect-error not typesafe }}
             <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
           {{else}}

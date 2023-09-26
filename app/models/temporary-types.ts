@@ -46,12 +46,15 @@ export class TemporaryCourseStageModel {
   declare isFirst: boolean;
   declare name: string;
   declare position: number;
+  declare positionWithinExtension: number;
+  declare positionWithinCourse: number;
   declare nextStage: TemporaryCourseStageModel | null;
   declare primaryExtensionSlug: string | null;
   declare secondaryExtensionSlugs: string[];
   declare primaryExtension: CourseExtensionModel | null;
   declare secondaryExtensions: CourseExtensionModel[];
   declare screencasts: CourseStageScreencastModel[];
+  declare isExtensionStage: boolean;
 }
 
 export class TemporaryLanguageModel {
