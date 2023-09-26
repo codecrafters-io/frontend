@@ -27,13 +27,13 @@ export default class CoursePageStateService extends Service {
   // The "true" current step, without any fallbacks.
   get currentStepSansFallback(): Step | null {
     if (this.router.currentRouteName === 'course.introduction') {
-      return this.stepList!.stepByType('IntroductionStep') || null;
+      return this.stepList!.visibleStepByType('IntroductionStep') || null;
     } else if (this.router.currentRouteName === 'course.setup') {
-      return this.stepList!.stepByType('SetupStep') || null;
+      return this.stepList!.visibleStepByType('SetupStep') || null;
     } else if (this.router.currentRouteName === 'course.completed') {
-      return this.stepList!.stepByType('CourseCompletedStep') || null;
+      return this.stepList!.visibleStepByType('CourseCompletedStep') || null;
     } else if (this.router.currentRouteName === 'course.base-stages-completed') {
-      return this.stepList!.stepByType('BaseStagesCompletedStep') || null;
+      return this.stepList!.visibleStepByType('BaseStagesCompletedStep') || null;
     } else if (this.router.currentRouteName && this.router.currentRouteName.startsWith('course.stage')) {
       const courseStageRoute = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.stage');
 

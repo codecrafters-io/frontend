@@ -8,6 +8,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { visit } from '@ember/test-helpers';
 
 module('Acceptance | course-page | complete-challenge-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -45,5 +46,23 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     await coursePage.courseCompletedCard.clickOnPublishToGithubLink();
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github integration modal is open');
+  });
+
+  test('visiting /completed route without completing course redirects to correct stage', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await visit('/courses/redis/completed');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'URL is /stages/2');
   });
 });

@@ -122,7 +122,7 @@ export class StepList {
     return this.stepGroups.reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as Step[]);
   }
 
-  stepByType(type: Step['type']): Step | null {
-    return this.steps.find((step) => step.type === type) || null;
+  visibleStepByType(type: Step['type']): Step | null {
+    return this.visibleSteps.find((step) => step.type === type) || null;
   }
 }
