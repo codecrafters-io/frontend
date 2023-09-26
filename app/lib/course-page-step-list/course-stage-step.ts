@@ -33,6 +33,18 @@ export default class CourseStageStep extends Step {
     return this.completedAt && isYesterday(this.completedAt);
   }
 
+  // If a user is on course.stage.concepts, we want to redirect them to course.stage.concepts
+  contextualRouteParamsFor(route: string) {
+    if (route.startsWith('course.stage')) {
+      return {
+        ...this.routeParams,
+        route: route,
+      };
+    } else {
+      return this.routeParams;
+    }
+  }
+
   get progressIndicator(): ProgressIndicator | null {
     if (this.testsStatus === 'evaluating') {
       return {

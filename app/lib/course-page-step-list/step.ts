@@ -4,6 +4,11 @@ export default class Step {
   declare globalPosition: number; // Set soon after construction
   declare positionInGroup: number; // Set soon after construction
 
+  // Allows steps to redirect to nested routes if they choose to
+  contextualRouteParamsFor(_route: string): { route: string; models: string[] } {
+    return this.routeParams;
+  }
+
   get routeParams(): { route: string; models: string[] } {
     throw new Error('Subclasses of Step must implement a routeParams getter');
   }
