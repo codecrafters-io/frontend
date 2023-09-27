@@ -105,6 +105,14 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
+  test('can navigate directly to stage even if previous stages are not completed', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await visit('/courses/redis/stages/2');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'stage 2 is shown');
+  });
+
   test('trying to view an invalid stage number redirects to active step', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);

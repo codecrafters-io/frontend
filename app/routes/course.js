@@ -3,6 +3,7 @@ import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RSVP from 'rsvp';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import { next } from '@ember/runloop';
 
 export default class CourseRoute extends BaseRoute {
   @service authenticator;
@@ -44,7 +45,10 @@ export default class CourseRoute extends BaseRoute {
       this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
     }
 
-    this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
+    // Schedule this to run in the next runloop, so that we aren't operating on a loading state
+    next(() => {
+      this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
+    });
   }
 
   findOrCreateRepository(course, params, transition, repositories) {
