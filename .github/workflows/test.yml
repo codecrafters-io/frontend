@@ -60,7 +60,7 @@ jobs:
 
       - run: npm run tailwind:build
 
-      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --split=6 --parallel=1 | tee test-results.xml
+      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --split=6 --parallel=1 --load-balance | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
