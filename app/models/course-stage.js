@@ -81,6 +81,10 @@ export default class CourseStageModel extends Model {
     return !this.primaryExtensionSlug;
   }
 
+  get isExtensionStage() {
+    return !this.isBaseStage;
+  }
+
   get isFirst() {
     return this === this.course.sortedStages.firstObject;
   }
@@ -112,6 +116,10 @@ export default class CourseStageModel extends Model {
 
   get otherConceptsForCourse() {
     return this.course.concepts.reject((concept) => this.concepts.includes(concept));
+  }
+
+  get positionWithinExtensionOrCourse() {
+    return this.isBaseStage ? this.positionWithinCourse : this.positionWithinExtension;
   }
 
   get previousStage() {

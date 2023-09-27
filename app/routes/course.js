@@ -43,6 +43,8 @@ export default class CourseRoute extends BaseRoute {
 
       this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
     }
+
+    this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
   }
 
   findOrCreateRepository(course, params, transition, repositories) {

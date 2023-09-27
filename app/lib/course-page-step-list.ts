@@ -13,6 +13,8 @@ import { cached } from '@glimmer/tracking';
 import BaseStagesStepGroup from './course-page-step-list/base-stages-step-group';
 import ExtensionStepGroup from './course-page-step-list/extension-step-group';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import CourseCompletedStepGroup from './course-page-step-list/course-completed-step-group';
+import BaseStagesCompletedStep from './course-page-step-list/base-stages-completed-step';
 
 export { Step };
 
@@ -39,9 +41,13 @@ export class StepList {
     return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
   }
 
+  get courseCompletedStepGroup(): StepGroup {
+    return new CourseCompletedStepGroup([new CourseCompletedStep(this.repository)]);
+  }
+
   @cached
   get stepGroups(): StepGroup[] {
-    const stepGroups = [this.baseStagesStepGroup, ...this.extensionStepGroups];
+    const stepGroups = [this.baseStagesStepGroup, ...this.extensionStepGroups, this.courseCompletedStepGroup];
 
     let globalPosition = 1;
 
@@ -58,10 +64,6 @@ export class StepList {
     });
 
     return stepGroups;
-  }
-
-  get courseCompletedStepGroup(): StepGroup {
-    return new StepGroup([new CourseCompletedStep(this.repository)]);
   }
 
   get baseStagesStepGroup(): StepGroup {
@@ -82,7 +84,7 @@ export class StepList {
       });
     }
 
-    steps.push(new CourseCompletedStep(this.repository));
+    steps.push(new BaseStagesCompletedStep(this.repository));
 
     return new BaseStagesStepGroup(steps);
   }
@@ -118,5 +120,9 @@ export class StepList {
 
   get steps(): Step[] {
     return this.stepGroups.reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as Step[]);
+  }
+
+  visibleStepByType(type: Step['type']): Step | null {
+    return this.visibleSteps.find((step) => step.type === type) || null;
   }
 }

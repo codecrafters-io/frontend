@@ -144,7 +144,11 @@ export default class CourseStageStep extends Step {
 
   // TODO[Extensions]: Can we avoid using CourseStage#position?
   get shortTitle(): string {
-    return `Stage ${this.courseStage.position}`;
+    if (this.courseStage.isExtensionStage) {
+      return `Stage ${this.courseStage.positionWithinExtension} (${this.courseStage.primaryExtension!.name})`;
+    } else {
+      return `Stage ${this.courseStage.positionWithinCourse}`;
+    }
   }
 
   get title() {

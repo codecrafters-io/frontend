@@ -70,6 +70,10 @@ export default class CourseModel extends Model {
     return this.conceptSlugs && this.conceptSlugs.length > 0;
   }
 
+  get hasExtensions() {
+    return this.extensions.length > 0;
+  }
+
   get definitionRepositoryLink() {
     return `https://github.com/${this.definitionRepositoryFullName}`;
   }
