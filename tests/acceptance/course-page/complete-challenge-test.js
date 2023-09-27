@@ -21,15 +21,15 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
     const repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: docker,
       language: python,
       user: currentUser,
     });
 
-    redis.stages.models.forEach((courseStage) => {
+    docker.stages.models.forEach((courseStage) => {
       this.server.create('submission', 'withSuccessStatus', {
         repository: repository,
         courseStage: courseStage,
@@ -37,8 +37,8 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    assert.strictEqual(currentURL(), '/courses/redis/completed', 'URL is /courses/redis/completed');
+    await catalogPage.clickOnCourse('Build your own Docker');
+    assert.strictEqual(currentURL(), '/courses/docker/completed', 'URL is /courses/docker/completed');
 
     assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations are in order. Only ~30% of users');
 
@@ -54,15 +54,15 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: docker,
       language: python,
       user: currentUser,
     });
 
-    await visit('/courses/redis/completed');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'URL is /stages/2');
+    await visit('/courses/docker/completed');
+    assert.strictEqual(currentURL(), '/courses/docker/stages/2', 'URL is /stages/2');
   });
 });
