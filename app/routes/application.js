@@ -8,6 +8,9 @@ export default class ApplicationRoute extends Route {
   @service fastboot;
 
   async beforeModel() {
+    this.store.shouldTrackAsyncRequests = true;
+    this.store.generateStackTracesForTrackedRequests = true;
+
     if (!this.fastboot.isFastBoot) {
       // Extract pre-rendered & cached records from shoebox cache
       const shoeboxRecords = this.fastboot.shoebox.retrieve(SERIALIZER_SHOEBOX_IDENTIFIER) || [];
