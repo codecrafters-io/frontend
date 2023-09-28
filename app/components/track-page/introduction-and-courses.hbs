@@ -9,20 +9,13 @@
 </TrackPage::IntroductionAndCourses::TimelineItem>
 
 {{#each this.coursesWithProgress as |courseWithProgress index|}}
-  <TrackPage::IntroductionAndCourses::TimelineItem
-    @shouldShowLogoBackground={{false}}
-    @logoImageUrl={{courseWithProgress.course.logoUrl}}
+  <TrackPage::CourseCard
+    @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
+    @course={{courseWithProgress.course}}
+    @language={{@language}}
     @logoImageAltText={{courseWithProgress.course.name}}
-    @isLastItem={{false}}
-  >
-    <TrackPage::CourseCard
-      @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
-      @course={{courseWithProgress.course}}
-      @language={{@language}}
-      @logoImageAltText={{courseWithProgress.course.name}}
-      @logoImageUrl={{courseWithProgress.course.logoUrl}}
-    />
-  </TrackPage::IntroductionAndCourses::TimelineItem>
+    @logoImageUrl={{courseWithProgress.course.logoUrl}}
+  />
 {{/each}}
 
 <TrackPage::IntroductionAndCourses::TimelineItem
