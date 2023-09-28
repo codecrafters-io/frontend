@@ -1,11 +1,31 @@
 <div class="border-b" data-test-desktop-header ...attributes>
-  <div class="flex justify-between items-center mb-6 gap-x-3">
-    <div class="flex items-center gap-x-3">
+  <div class="flex justify-between items-start mb-6 gap-x-3">
+    <div class="flex items-center gap-3 flex-wrap">
       <button class="flex items-center lg:hidden" type="button" {{on "click" @onMobileSidebarButtonClick}}>
         {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
       </button>
 
       <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
+
+      {{! @glint-expect-error not typesafe }}
+      {{#if (and (eq @currentStep.type "CourseStageStep"))}}
+        <div class="inline-flex text-xs font-semibold text-gray-500">
+          {{! @glint-expect-error not typesafe }}
+          {{#if @currentStep.courseStage.primaryExtension}}
+            {{! @glint-expect-error not typesafe }}
+            {{@currentStep.courseStage.primaryExtension.name}}
+            <span class="text-gray-300 px-2 inline-flex">&gt;</span>
+            Stage
+            {{! @glint-expect-error not typesafe }}
+            {{@currentStep.courseStage.positionWithinExtension}}/{{@currentStep.courseStage.primaryExtension.stages.length}}
+          {{else}}
+            Stage
+            {{! @glint-expect-error not typesafe }}
+            {{@currentStep.courseStage.positionWithinCourse}}/{{@currentStep.courseStage.course.baseStages.length}}
+          {{/if}}
+        </div>
+      {{/if}}
+
     </div>
 
     <div class="flex items-center gap-x-3">
@@ -36,25 +56,6 @@
   </div>
   <div class="mb-6">
     <div class="flex flex-col items-start">
-      {{! @glint-expect-error not typesafe }}
-      {{#if (and (eq @currentStep.type "CourseStageStep"))}}
-        <div class="inline-flex text-xs font-semibold text-gray-400 mb-3 border-b pb-1">
-            {{! @glint-expect-error not typesafe }}
-          {{#if @currentStep.courseStage.primaryExtension}}
-            {{! @glint-expect-error not typesafe }}
-            {{@currentStep.courseStage.primaryExtension.name}}
-            <span class="text-gray-300 px-3 inline-flex">&gt;</span>
-            Stage
-            {{! @glint-expect-error not typesafe }}
-            {{@currentStep.courseStage.positionWithinExtension}}/{{@currentStep.courseStage.primaryExtension.stages.length}}
-          {{else}}
-            Stage
-            {{! @glint-expect-error not typesafe }}
-            {{@currentStep.courseStage.positionWithinCourse}}/{{@currentStep.courseStage.course.baseStages.length}}
-          {{/if}}
-        </div>
-      {{/if}}
-
       <div class="flex items-center flex-wrap gap-x-3">
         <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
           {{#if (eq @currentStep.type "CourseStageStep")}}
