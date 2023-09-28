@@ -6,14 +6,6 @@
       </button>
 
       <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
-
-      {{! @glint-expect-error not typesafe }}
-      {{#if (and (eq @currentStep.type "CourseStageStep") @currentStep.courseStage.primaryExtension)}}
-        <div class="inline-flex border border-gray-300 rounded bg-gray-100 px-2.5 py-1.5 text-sm font-semibold text-gray-700">
-          {{! @glint-expect-error not typesafe }}
-          {{@currentStep.courseStage.primaryExtension.name}}
-        </div>
-      {{/if}}
     </div>
 
     <div class="flex items-center gap-x-3">
@@ -44,11 +36,28 @@
   </div>
   <div class="mb-6">
     <div class="flex flex-col items-start">
+      {{! @glint-expect-error not typesafe }}
+      {{#if (and (eq @currentStep.type "CourseStageStep"))}}
+        <div class="inline-flex text-xs font-semibold text-gray-400 mb-3 border-b pb-1">
+            {{! @glint-expect-error not typesafe }}
+          {{#if @currentStep.courseStage.primaryExtension}}
+            {{! @glint-expect-error not typesafe }}
+            {{@currentStep.courseStage.primaryExtension.name}}
+            <span class="text-gray-300 px-3 inline-flex">&gt;</span>
+            Stage
+            {{! @glint-expect-error not typesafe }}
+            {{@currentStep.courseStage.positionWithinExtension}}/{{@currentStep.courseStage.primaryExtension.stages.length}}
+          {{else}}
+            Stage
+            {{! @glint-expect-error not typesafe }}
+            {{@currentStep.courseStage.positionWithinCourse}}/{{@currentStep.courseStage.course.baseStages.length}}
+          {{/if}}
+        </div>
+      {{/if}}
+
       <div class="flex items-center flex-wrap gap-x-3">
         <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
           {{#if (eq @currentStep.type "CourseStageStep")}}
-            {{! @glint-expect-error not typesafe }}
-            <span class="text-gray-600 mr-1">Stage #{{@currentStep.courseStage.positionWithinExtensionOrCourse}}:</span>
             {{! @glint-expect-error not typesafe }}
             <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
           {{else}}
@@ -80,9 +89,9 @@
           {{else}}
             {{#if (gt @currentStep.globalPosition @activeStep.globalPosition)}}
               {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
-              <span>Back to {{@activeStep.shortTitle}}</span>
+              <span>Back to "{{@activeStep.shortTitle}}"</span>
             {{else}}
-              <span>Back to {{@activeStep.shortTitle}}</span>
+              <span>Back to "{{@activeStep.shortTitle}}"</span>
               {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
             {{/if}}
           {{/if}}
