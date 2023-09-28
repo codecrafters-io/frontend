@@ -1,13 +1,3 @@
-<TrackPage::IntroductionAndCourses::TimelineItem @shouldShowLogoBackground={{true}} @logoImageUrl={{this.logoImage}} @logoImageAltText="CodeCrafters">
-  <TrackPage::IntroductionCard
-    @isComplete={{this.userHasStartedTrack}}
-    @language={{@language}}
-    @courses={{@courses}}
-    @number="1"
-    @shouldShowStartTrackButton={{not this.userHasStartedTrack}}
-  />
-</TrackPage::IntroductionAndCourses::TimelineItem>
-
 {{#each this.coursesWithProgress as |courseWithProgress index|}}
   <TrackPage::CourseCard
     @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
