@@ -160,12 +160,14 @@ Learn about .torrent files and the famous BitTorrent protocol. Implement your ow
   get sortPositionForTrack() {
     return (
       {
-        redis: 1,
-        docker: 2,
-        git: 3,
-        sqlite: 4,
-        grep: 5,
-      }[this.slug] || 6
+        bittorrent: 1,
+        'http-server': 2,
+        grep: 3,
+        redis: 4,
+        docker: 5,
+        git: 6,
+        sqlite: 7,
+      }[this.slug] || 8
     );
   }
 
