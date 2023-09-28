@@ -19,6 +19,11 @@ export default create({
   },
 
   courseCards: collection('[data-test-course-card]', CourseCard),
+
+  courseCardByName(name) {
+    return this.courseCards.toArray().find((courseCard) => courseCard.name === name);
+  },
+
   trackCards: collection('[data-test-track-card]', TrackCard),
   header: Header,
   visit: visitable('/catalog'),

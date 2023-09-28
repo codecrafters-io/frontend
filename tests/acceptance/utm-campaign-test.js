@@ -38,7 +38,7 @@ module('Acceptance | utm-campaign', function (hooks) {
 
     assert.strictEqual(lastViewedPageEvent().properties.utm_id, '3bc');
 
-    await catalogPage.courseCards[0].click();
+    await catalogPage.courseCardByName('Build your own Redis').click();
     assert.strictEqual(currentURL(), '/courses/redis/overview');
 
     assert.strictEqual(lastViewedPageEvent().properties.utm_id, '3bc');
