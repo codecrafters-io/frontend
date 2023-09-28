@@ -75,7 +75,7 @@
     "@types/ember-data__store": "^4.0.4",
     "@types/ember-qunit": "^6.1.1",
     "@types/ember-resolver": "^9.0.0",
-    "@types/mustache": "^4.2.2",
+    "@types/mustache": "^4.2.3",
     "@types/qunit": "^2.19.6",
     "@types/rsvp": "^4.0.5",
     "@types/showdown": "^2.0.2",
