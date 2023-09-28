@@ -16,10 +16,11 @@
     @isLastItem={{false}}
   >
     <TrackPage::CourseCard
-      @language={{@language}}
-      @course={{courseWithProgress.course}}
-      @number={{add index 2}}
       @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
+      @course={{courseWithProgress.course}}
+      @language={{@language}}
+      @logoImageAltText={{courseWithProgress.course.name}}
+      @logoImageUrl={{courseWithProgress.course.logoUrl}}
     />
   </TrackPage::IntroductionAndCourses::TimelineItem>
 {{/each}}

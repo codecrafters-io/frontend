@@ -1,5 +1,5 @@
 {{#if this.currentUserIsAnonymous}}
-  <TrackPage::Card @title="{{@course.name}}" @number={{@number}} @recentParticipants={{this.recentParticipants}}>
+  <TrackPage::Card @title="{{@course.name}}" @logoImageUrl={{@logoImageUrl}} @logoImageAltText={{@logoImageAltText}} @recentParticipants={{this.recentParticipants}}>
     <div class="leading-6 prose mb-6">
       {{this.introductionHtml}}
     </div>
@@ -17,11 +17,12 @@
   </TrackPage::Card>
 {{else}}
   <TrackPage::Card
-    @title="{{@course.name}}"
-    @number={{@number}}
     @isComplete={{@activeRepository.allStagesAreComplete}}
     @isNavigatingToOtherPage={{true}}
+    @logoImageAltText={{@logoImageAltText}}
+    @logoImageUrl={{@logoImageUrl}}
     @recentParticipants={{this.recentParticipants}}
+    @title="{{@course.name}}"
     role="button"
     {{on "click" this.handleClick}}
   >
