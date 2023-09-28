@@ -1,8 +1,8 @@
 {{#if this.currentUserIsAnonymous}}
   <TrackPage::Card
+    @logoImageAltText={{@course.name}}
+    @logoImageUrl={{@course.logoUrl}}
     @title="{{@course.name}}"
-    @logoImageUrl={{@logoImageUrl}}
-    @logoImageAltText={{@logoImageAltText}}
     @recentParticipants={{this.recentParticipants}}
     class="mb-4"
   >
@@ -25,8 +25,8 @@
   <TrackPage::Card
     @isComplete={{@activeRepository.allStagesAreComplete}}
     @isNavigatingToOtherPage={{true}}
-    @logoImageAltText={{@logoImageAltText}}
-    @logoImageUrl={{@logoImageUrl}}
+    @logoImageAltText={{@course.name}}
+    @logoImageUrl={{@course.logoUrl}}
     @recentParticipants={{this.recentParticipants}}
     @title="{{@course.name}}"
     role="button"
