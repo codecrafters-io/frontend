@@ -6,10 +6,12 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { next } from '@ember/runloop';
 
 // @ts-ignore
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -55,14 +57,6 @@ export default class ExtensionCardComponent extends Component<Signature> {
       for (const activation of this.activations) {
         await activation.destroyRecord();
       }
-
-      if (this.args.repository.stageList) {
-        this.args.repository.stageList.items.toArray().forEach((item) => {
-          if (item.stage.primaryExtensionSlug === this.args.extension.slug) {
-            item.unloadRecord();
-          }
-        });
-      }
     } else {
       await this.store
         .createRecord('course-extension-activation', {
@@ -75,6 +69,22 @@ export default class ExtensionCardComponent extends Component<Signature> {
     await this.store.query('repository', {
       course_id: this.args.repository.course.id,
       include: RepositoryPoller.defaultIncludedResources,
+    });
+
+    // For some reason, running this in the current run-loop causes problems?
+    next(() => {
+      const newStageListItemIds = this.args.repository.stageList!.items.map((x) => x.id);
+      const itemsToRemove: RepositoryStageListItemModel[] = [];
+
+      this.store.peekAll('repository-stage-list-item').forEach((item) => {
+        if (!newStageListItemIds.includes(item.id)) {
+          itemsToRemove.push(item);
+        }
+      });
+
+      itemsToRemove.forEach((item) => {
+        item.unloadRecord();
+      });
     });
 
     // If we performed the same action as whatever the user's latest request was, then we can reset the request.

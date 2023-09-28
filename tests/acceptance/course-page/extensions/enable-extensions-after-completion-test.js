@@ -61,21 +61,18 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await coursePage.desktopHeader.clickOnNextStepButton();
     await percySnapshot('Extension - First Stage Page');
 
-    // await this.pauseTest();
+    // Enable Extension 2
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    await coursePage.configureExtensionsModal.clickOnCloseButton();
 
-    // // Enable Extension 2
-    // await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
-    // assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items when both extensions are enabled');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 9, 'step list has 9 items when both extensions are enabled');
 
-    // // Disable Extension 1
-    // await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    // assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
+    // Disable Extension 1
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    await coursePage.configureExtensionsModal.clickOnCloseButton();
 
-    // // TODO: This has something to do with the RecordCacheData error, investigate
-    // await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // // Disable Extension 2
-    // await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
-    // assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 7, 'step list has 7 items when first extension is removed');
   });
 });

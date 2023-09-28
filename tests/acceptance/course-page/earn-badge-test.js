@@ -44,7 +44,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withSuccessStatus', {
@@ -66,7 +66,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is still active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
     assert.contains(coursePage.earnedBadgeNotice.text, 'You earned the Tesla Badge.', 'badge notice text is correct');
 
     await percySnapshot('Course Stage - Earned Badged Notice');

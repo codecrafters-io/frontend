@@ -45,7 +45,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       ].length,
     );
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
 
     const submission = this.server.create('submission', 'withFailureStatus', {
@@ -81,7 +81,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withSuccessStatus', {
@@ -112,7 +112,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withSuccessStatus', {
@@ -135,6 +135,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await animationsSettled();
 
     // TODO: Add tests for badge display
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #1: Bind to a port', 'first stage is still active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
   });
 });

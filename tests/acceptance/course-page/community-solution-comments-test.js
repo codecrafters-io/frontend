@@ -55,7 +55,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     const communitySolutionsTab = coursePage.codeExamplesTab;
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'title should be respond to ping');
     assert.strictEqual(communitySolutionsTab.solutionCards.length, 1);
 
     await percySnapshot('Community Solution Comments - Collapsed');
