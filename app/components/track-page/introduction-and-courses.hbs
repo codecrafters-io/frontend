@@ -1,34 +1,9 @@
-<TrackPage::IntroductionAndCourses::TimelineItem @shouldShowLogoBackground={{true}} @logoImageUrl={{this.logoImage}} @logoImageAltText="CodeCrafters">
-  <TrackPage::IntroductionCard
-    @isComplete={{this.userHasStartedTrack}}
+{{#each this.coursesWithProgress as |courseWithProgress|}}
+  <TrackPage::CourseCard
+    @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
+    @course={{courseWithProgress.course}}
     @language={{@language}}
-    @courses={{@courses}}
-    @number="1"
-    @shouldShowStartTrackButton={{not this.userHasStartedTrack}}
   />
-</TrackPage::IntroductionAndCourses::TimelineItem>
-
-{{#each this.coursesWithProgress as |courseWithProgress index|}}
-  <TrackPage::IntroductionAndCourses::TimelineItem
-    @shouldShowLogoBackground={{false}}
-    @logoImageUrl={{courseWithProgress.course.logoUrl}}
-    @logoImageAltText={{courseWithProgress.course.name}}
-    @isLastItem={{false}}
-  >
-    <TrackPage::CourseCard
-      @language={{@language}}
-      @course={{courseWithProgress.course}}
-      @number={{add index 2}}
-      @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
-    />
-  </TrackPage::IntroductionAndCourses::TimelineItem>
 {{/each}}
 
-<TrackPage::IntroductionAndCourses::TimelineItem
-  @shouldShowLogoBackground={{false}}
-  @logoImageUrl={{this.comingSoonImage}}
-  @logoImageAltText="coming soon"
-  @isLastItem={{true}}
->
-  <TrackPage::UpcomingCoursesCard />
-</TrackPage::IntroductionAndCourses::TimelineItem>
+<TrackPage::UpcomingCoursesCard @logoImageUrl={{this.comingSoonImage}} @logoImageAltText="coming soon" />

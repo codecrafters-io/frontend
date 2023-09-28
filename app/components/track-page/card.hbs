@@ -1,7 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="bg-white rounded-md shadow-sm border border-gray-200 relative w-full" data-test-track-page-card ...attributes>
   <div class="p-4 md:p-6">
-    <div class="flex items-start justify-between">
+    <div class="flex items-center justify-between">
       <div class="flex items-center flex-wrap">
         <div
           class="text-lg md:text-xl font-semibold text-gray-700 mr-3 mb-4 flex items-center
@@ -26,8 +26,8 @@
       <div class="font-bold pl-4 text-gray-300 text-lg md:text-xl group-hover:text-gray-400 transition-colors mb-4">
         {{#if @isComplete}}
           {{svg-jar "check-circle" class="w-8 h-8 fill-current text-teal-500"}}
-        {{else if @number}}
-          #{{@number}}
+        {{else if (and @logoImageUrl @logoImageAltText)}}
+          <img src={{@logoImageUrl}} alt={{@logoImageAltText}} class="w-6 md:w-12 transform scale-100 group-hover:scale-105 transition-all" />
         {{/if}}
       </div>
     </div>
