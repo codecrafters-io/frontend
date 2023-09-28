@@ -1,4 +1,4 @@
-{{#each this.coursesWithProgress as |courseWithProgress index|}}
+{{#each this.coursesWithProgress as |courseWithProgress|}}
   <TrackPage::CourseCard
     @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
     @course={{courseWithProgress.course}}
@@ -8,7 +8,4 @@
   />
 {{/each}}
 
-<TrackPage::UpcomingCoursesCard
-  @logoImageUrl={{this.comingSoonImage}}
-  @logoImageAltText="coming soon"
-/>
+<TrackPage::UpcomingCoursesCard @logoImageUrl={{this.comingSoonImage}} @logoImageAltText="coming soon" />
