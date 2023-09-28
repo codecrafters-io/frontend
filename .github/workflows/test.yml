@@ -8,7 +8,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ${{ github.actor == 'dependabot[bot]' && 'ubuntu-latest-4-cores' || 'ubuntu-latest-16-cores' }}
+    runs-on: ${{ github.actor == 'dependabot[bot]' && 'ubuntu-latest-4-cores' || 'ubuntu-latest-4-cores' }}
     permissions: write-all
     timeout-minutes: 10
 
