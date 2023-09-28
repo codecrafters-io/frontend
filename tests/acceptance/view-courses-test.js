@@ -23,11 +23,17 @@ module('Acceptance | view-courses', function (hooks) {
 
     await percySnapshot('Catalog Page');
 
-    assert.notOk(catalogPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
-    assert.notOk(catalogPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
-    assert.notOk(catalogPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
-    assert.notOk(catalogPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
-    assert.ok(catalogPage.courseCards[4].hasBetaLabel, 'live challenges should have beta label');
+    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own grep');
+    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Redis');
+    assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Docker');
+    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Git');
+    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
+
+    assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own Docker').hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own Git').hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
   });
 
   test('it renders alpha courses if user is staff', async function (assert) {
@@ -140,11 +146,17 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
 
-    assert.notOk(catalogPage.courseCards[0].hasBetaLabel, 'live challenges should not have beta label');
-    assert.notOk(catalogPage.courseCards[1].hasBetaLabel, 'live challenges should not have beta label');
-    assert.notOk(catalogPage.courseCards[2].hasBetaLabel, 'live challenges should not have beta label');
-    assert.notOk(catalogPage.courseCards[3].hasBetaLabel, 'live challenges should not have beta label');
-    assert.ok(catalogPage.courseCards[4].hasBetaLabel, 'live challenges should not have beta label');
+    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own grep');
+    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Redis');
+    assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Docker');
+    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Git');
+    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
+
+    assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own Docker').hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own Git').hasBetaLabel, 'live challenges should not have beta label');
+    assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
   });
 
   test('first time visit has loading page', async function (assert) {
