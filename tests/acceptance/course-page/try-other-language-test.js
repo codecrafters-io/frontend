@@ -49,7 +49,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'first stage should be active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'first stage should be active');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');

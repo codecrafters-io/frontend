@@ -82,12 +82,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #5: Implement the ECHO command');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Implement the ECHO command');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'course stage item is active if clicked on');
     assert.strictEqual(coursePage.yourTaskCard.footerText, 'You completed this stage 5 days ago.', 'footer text for stage completed > 1 day');
 
     await percySnapshot('Course Stages - Completed stage');
@@ -95,13 +95,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #3: Respond to multiple PINGs', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
     assert.strictEqual(coursePage.yourTaskCard.footerText, 'You completed this stage yesterday.', 'footer text for stage completed yesterday');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #4: Handle concurrent clients', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text for stage completed today');
   });
 
@@ -406,7 +406,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING');
   });
 
   test('transition from courses page has no loading page', async function (assert) {
@@ -440,7 +440,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Stage #2: Respond to PING');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING');
   });
 
   test('it should have a working expand/collapse sidebar button', async function (assert) {
