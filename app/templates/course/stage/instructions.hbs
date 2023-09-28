@@ -8,6 +8,10 @@
     <CoursePage::CourseStageStep::UpgradePrompt class="mb-6" />
   {{/if}}
 
+  {{#if this.shouldShowCLIUsageInstructions}}
+    <CoursePage::CourseStageStep::CliUsageInstructions class="mb-6" />
+  {{/if}}
+
   {{#if (gt this.badgeAwards.length 0)}}
     <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
   {{/if}}

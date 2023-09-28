@@ -93,20 +93,21 @@ export default class CourseStageModel extends Model {
     return !this.isPaid;
   }
 
+  // TODO: Change usages to account for extensions!
   get isLast() {
     return this === this.course.sortedStages.lastObject;
   }
 
   get isSecond() {
-    return this === this.course.sortedStages[1];
+    return this === this.course.sortedBaseStages[1];
   }
 
   get isThird() {
-    return this === this.course.sortedStages[2];
+    return this === this.course.sortedBaseStages[2];
   }
 
   get isPenultimate() {
-    return this === this.course.sortedStages[this.course.sortedStages.length - 2];
+    return this === this.course.sortedBaseStages[this.course.sortedBaseStages.length - 2];
   }
 
   // TODO[Extensions]: Different logic if from extension vs. not
