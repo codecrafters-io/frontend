@@ -8,11 +8,7 @@
   />
 {{/each}}
 
-<TrackPage::IntroductionAndCourses::TimelineItem
-  @shouldShowLogoBackground={{false}}
+<TrackPage::UpcomingCoursesCard
   @logoImageUrl={{this.comingSoonImage}}
   @logoImageAltText="coming soon"
-  @isLastItem={{true}}
->
-  <TrackPage::UpcomingCoursesCard />
-</TrackPage::IntroductionAndCourses::TimelineItem>
+/>
