@@ -185,5 +185,10 @@
   },
   "fastbootDependencies": [
     "crypto"
-  ]
+  ],
+  "ember-addon": {
+    "paths": [
+      "lib/default-meta-tags"
+    ]
+  }
 }

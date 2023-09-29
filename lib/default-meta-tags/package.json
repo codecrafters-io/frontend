@@ -1,0 +1,13 @@
+{
+  "name": "default-meta-tags",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "html-entities": "*"
+  },
+  "ember-addon": {
+    "main": "index.js",
+    "after": ["prember"]
+  }
+}
