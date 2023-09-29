@@ -17,13 +17,13 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.17.1' # 18.18.0 causes problems?
           cache: 'npm'
 
       - name: Cache node modules
         uses: actions/cache@v3
         env:
-          cache-name: cache-node-modules-v3
+          cache-name: cache-node-modules-v4
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ./node_modules
-          key: modules-v3-${{ hashFiles('package-lock.json') }}
+          key: modules-v4-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -121,7 +121,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v3
         env:
-          cache-name: cache-node-modules
+          cache-name: cache-node-modules-v4
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -136,7 +136,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+          key: modules-v4-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
