@@ -92,7 +92,7 @@
     "ember-basic-dropdown": "^7.2.2",
     "ember-cli": "~4.12.1",
     "ember-cli-app-version": "^6.0.1",
-    "ember-cli-babel": "^8.0.0",
+    "ember-cli-babel": "^8.1.0",
     "ember-cli-bundle-analyzer": "^1.0.0",
     "ember-cli-code-coverage": "https://gitpkg.now.sh/ember-cli-code-coverage/ember-cli-code-coverage/packages/ember-cli-code-coverage?master",
     "ember-cli-dependency-checker": "^3.3.2",
