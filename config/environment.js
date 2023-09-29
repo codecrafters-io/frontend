@@ -22,6 +22,19 @@ module.exports = function (environment) {
       backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
+      defaultMetaTags: {
+        type: 'website',
+        siteName: 'CodeCrafters',
+        title: "The Software Pro's Best Kept Secret.",
+        description: [
+          'Real-world proficiency projects designed for experienced engineers.',
+          'Develop software craftsmanship by recreating popular devtools from scratch.',
+        ].join(' '),
+        imageUrl: 'https://codecrafters.io/images/og-index.jpg',
+        twitterCard: 'summary_large_image',
+        twitterSite: '@codecraftersio',
+      },
+      metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
     },
     fastboot: {
       hostWhitelist: [/^localhost:\d+$/],

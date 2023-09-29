@@ -2,11 +2,16 @@ import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
+import { tracked } from '@glimmer/tracking';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class TrackRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;
+  @service headData;
+
+  @tracked previousMetaImageUrl;
 
   activate() {
     scrollToTop();
@@ -28,5 +33,14 @@ export default class TrackRoute extends BaseRoute {
       courses: courses.filter((course) => course.betaOrLiveLanguages.includes(language)),
       language: language,
     };
+  }
+
+  async afterModel({ language: { slug } = {} } = {}) {
+    this.previousMetaImageUrl = this.headData.imageUrl;
+    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
+  }
+
+  deactivate() {
+    this.headData.imageUrl = this.previousMetaImageUrl;
   }
 }

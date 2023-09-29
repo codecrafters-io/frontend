@@ -98,6 +98,7 @@
     "ember-cli-dependency-checker": "^3.3.2",
     "ember-cli-deprecation-workflow": "^2.0.0",
     "ember-cli-fastboot": "^4.1.1",
+    "ember-cli-head": "^2.0.0",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-mirage": "^3.0.0-alpha.3",
@@ -136,6 +137,7 @@
     "eslint-plugin-n": "^16.1.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-qunit": "^8.0.0",
+    "html-entities": "^2.4.0",
     "loader.js": "^4.7.0",
     "node-fetch": "^2.6.12",
     "postcss": "^8.4.30",
@@ -183,5 +185,10 @@
   },
   "fastbootDependencies": [
     "crypto"
-  ]
+  ],
+  "ember-addon": {
+    "paths": [
+      "lib/default-meta-tags"
+    ]
+  }
 }

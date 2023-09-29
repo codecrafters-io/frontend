@@ -1,11 +1,16 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+import { tracked } from '@glimmer/tracking';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class CourseOverviewRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;
+  @service headData;
+
+  @tracked previousMetaImageUrl;
 
   async model(params) {
     if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
@@ -33,5 +38,14 @@ export default class CourseOverviewRoute extends BaseRoute {
 
       return { course };
     }
+  }
+
+  async afterModel({ course: { slug } = {} } = {}) {
+    this.previousMetaImageUrl = this.headData.imageUrl;
+    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${slug}.jpg`;
+  }
+
+  deactivate() {
+    this.headData.imageUrl = this.previousMetaImageUrl;
   }
 }
