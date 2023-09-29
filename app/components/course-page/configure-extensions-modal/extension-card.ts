@@ -77,9 +77,15 @@ export default class ExtensionCardComponent extends Component<Signature> {
       const itemsToRemove: RepositoryStageListItemModel[] = [];
 
       this.store.peekAll('repository-stage-list-item').forEach((item) => {
-        if (!newStageListItemIds.includes(item.id)) {
-          itemsToRemove.push(item);
+        if (item.list !== this.args.repository.stageList) {
+          return;
         }
+
+        if (newStageListItemIds.includes(item.id)) {
+          return;
+        }
+
+        itemsToRemove.push(item);
       });
 
       itemsToRemove.forEach((item) => {

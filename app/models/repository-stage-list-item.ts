@@ -3,7 +3,7 @@ import { TemporaryCourseStageModel } from './temporary-types';
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 
 export default class RepositoryStageListItemModel extends Model {
-  @belongsTo('repository-stage-list', { async: false }) declare list: RepositoryStageListModel;
+  @belongsTo('repository-stage-list', { async: false, inverse: 'items' }) declare list: RepositoryStageListModel;
   @belongsTo('course-stage', { async: false }) declare stage: TemporaryCourseStageModel;
 
   @attr('date') declare completedAt: Date | null; // If the user completed the stage, when they did

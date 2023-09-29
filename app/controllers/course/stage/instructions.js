@@ -21,6 +21,10 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.activeRepository.currentStage === this.model.courseStage;
   }
 
+  get shouldShowCLIUsageInstructions() {
+    return this.model.courseStage.isThird;
+  }
+
   get shouldShowTestFailureExpectedHint() {
     return this.model.courseStage.isFirst && this.currentStep.status !== 'complete';
   }

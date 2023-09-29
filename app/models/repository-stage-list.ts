@@ -4,5 +4,5 @@ import RepositoryStageListItemModel from 'codecrafters-frontend/models/repositor
 
 export default class RepositoryStageListModel extends Model {
   @belongsTo('repository', { async: false }) declare repository: TemporaryRepositoryModel;
-  @hasMany('repository-stage-list-item', { async: false }) declare items: RepositoryStageListItemModel[];
+  @hasMany('repository-stage-list-item', { async: false, inverse: 'list' }) declare items: RepositoryStageListItemModel[];
 }
