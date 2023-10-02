@@ -3,6 +3,7 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { TemporaryCourseModel } from 'codecrafters-frontend/models/temporary-types';
 import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
@@ -37,5 +38,18 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
 
   get stepList() {
     return this.coursePageState.stepList as StepList;
+  }
+
+  @action
+  handleConfigureExtensionsButtonClick() {
+    if (this.configureExtensionsButtonIsDisabled()) {
+      return;
+    }
+
+    this.configureExtensionsModalIsOpen = true;
+  }
+
+  configureExtensionsButtonIsDisabled() {
+    return this.args.activeRepository.isNew;
   }
 }

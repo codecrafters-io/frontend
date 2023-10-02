@@ -24,7 +24,7 @@
         <TertiaryButton
           @size="extra-small"
           @isDisabled={{@activeRepository.isNew}}
-          {{on "click" (fn (mut this.configureExtensionsModalIsOpen) (not this.configureExtensionsModalIsOpen))}}
+          {{on "click" this.handleConfigureExtensionsButtonClick}}
           data-test-configure-extensions-button
         >
           <div class="flex items-center">
