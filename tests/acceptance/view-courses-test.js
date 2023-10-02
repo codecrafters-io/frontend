@@ -70,8 +70,8 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.true(catalogPage.courseCards[0].hasProgressBar);
     assert.false(catalogPage.courseCards[0].hasDifficultyLabel);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/7 stages');
-    assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:14%');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/13 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:8%');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
