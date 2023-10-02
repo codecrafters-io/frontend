@@ -109,7 +109,6 @@ export default class CourseModel extends Model {
     return this.sortedBaseStages[1];
   }
 
-  // TODO[Extensions]: Should we include stages from extensions?
   get sortedBaseStages() {
     return this.baseStages.sortBy('position');
   }

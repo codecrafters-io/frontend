@@ -15,6 +15,12 @@ declare module '@glint/environment-ember-loose/registry' {
       Yields: { default: [string] };
       Return: string;
     }>;
+    'animated-each': ComponentLike<{
+      Args: { Positional: [unknown]; Named: { use: unknown } };
+      Blocks: { default: [unknown] };
+      Yields: { default: [string] };
+      Return: string;
+    }>;
     'animated-if': ComponentLike<{
       Args: { Positional: [unknown]; Named: { duration?: number; transition?: unknown } };
       Blocks: { default: [unknown] };
