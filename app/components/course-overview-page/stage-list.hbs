@@ -7,9 +7,9 @@
           class="w-3 h-3 border border-gray-300 rounded-full bg-gray-100 filter hover:shadow group-hover:bg-gray-200 group-hover:border-gray-400 transition-all"
         ></div>
 
-        {{#unless (eq index (sub this.allStages.length 1))}}
+        {{#if (not-eq index (sub this.allStages.length 1))}}
           <div class="w-0.5 bg-gray-200 mt-2 flex-grow group-hover:bg-gray-300"></div>
-        {{/unless}}
+        {{/if}}
       </div>
 
       {{! @glint-expect-error animated-each's yield not supported }}
