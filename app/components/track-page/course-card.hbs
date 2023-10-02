@@ -12,7 +12,7 @@
 
     {{! Contents are masked, hence the fixed height }}
     <div class="h-60 overflow-hidden">
-      {{#each @course.sortedStages as |stage|}}
+      {{#each @course.sortedBaseStages as |stage|}}
         <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} @isComplete={{false}} />
       {{/each}}
 
@@ -43,7 +43,7 @@
       {{this.introductionHtml}}
     </div>
 
-    {{#each @course.sortedStages as |stage|}}
+    {{#each @course.sortedBaseStages as |stage|}}
       <TrackPage::CourseCard::StageListItem
         @language={{@language}}
         @stage={{stage}}

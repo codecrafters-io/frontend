@@ -86,7 +86,7 @@ export default class CourseStageModel extends Model {
   }
 
   get isFirst() {
-    return this === this.course.sortedStages.firstObject;
+    return this === this.course.sortedBaseStages.firstObject;
   }
 
   get isFree() {
@@ -95,7 +95,7 @@ export default class CourseStageModel extends Model {
 
   // TODO: Change usages to account for extensions!
   get isLast() {
-    return this === this.course.sortedStages.lastObject;
+    return this === this.course.sortedBaseStages.lastObject;
   }
 
   get isSecond() {
@@ -110,21 +110,12 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedBaseStages[this.course.sortedBaseStages.length - 2];
   }
 
-  // TODO[Extensions]: Different logic if from extension vs. not
-  get nextStage() {
-    return this.course.sortedStages[this.course.sortedStages.indexOf(this) + 1];
-  }
-
   get otherConceptsForCourse() {
     return this.course.concepts.reject((concept) => this.concepts.includes(concept));
   }
 
   get positionWithinExtensionOrCourse() {
     return this.isBaseStage ? this.positionWithinCourse : this.positionWithinExtension;
-  }
-
-  get previousStage() {
-    return this.course.sortedStages[this.course.sortedStages.indexOf(this) - 1];
   }
 
   get primaryExtension() {

@@ -1,5 +1,6 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -43,5 +44,23 @@ module('Acceptance | view-course-overview', function (hooks) {
 
     await courseOverviewPage.visit({ course_slug: 'grep' });
     assert.strictEqual(currentURL(), '/courses/grep/overview');
+  });
+
+  test('it renders for course with extensions', async function (assert) {
+    testScenario(this.server);
+
+    await courseOverviewPage.visit({ course_slug: 'redis' });
+    await percySnapshot('Course Overview - With Extensions');
+
+    assert.strictEqual(currentURL(), '/courses/redis/overview');
+  });
+
+  test('it renders for course without extensions', async function (assert) {
+    testScenario(this.server);
+
+    await courseOverviewPage.visit({ course_slug: 'docker' });
+    await percySnapshot('Course Overview - No Extensions');
+
+    assert.strictEqual(currentURL(), '/courses/docker/overview');
   });
 });

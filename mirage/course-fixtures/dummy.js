@@ -34,7 +34,7 @@ export default {
         "author_description": "Senior Software Developer, CenturyLink",
         "author_avatar": "https://codecrafters.io/images/external/testimonials/patrick-burris.jpeg",
         "link": "https://github.com/Jumballaya",
-        "text": "I think the instant feedback right there in the git push is really cool.\nDidn't even know that was possible!\n"
+        "text": "I think the instant feedback right there in the git push is really cool.\nDidn't even know that was possible!"
       }
     ]
   },
@@ -42,12 +42,12 @@ export default {
     {
       "slug": "ext1",
       "name": "Extension 1",
-      "description_markdown": "In this challenge extension you'll add [persistence][redis-persistence] support to your Redis implementation.\n\nAlong the way you'll learn about Redis's [RDB file format][rdb-file-format], the [SAVE][save-command] command, and more.\n\n[redis-persistence]: https://redis.io/docs/manual/persistence/\n[rdb-file-format]: https://github.com/sripathikrishnan/redis-rdb-tools/blob/548b11ec3c81a603f5b321228d07a61a0b940159/docs/RDB_File_Format.textile\n[save-command]: https://redis.io/commands/save/\n"
+      "description_markdown": "In this challenge extension you'll add [persistence][redis-persistence] support to your Redis implementation.\n\nAlong the way you'll learn about Redis's [RDB file format][rdb-file-format], the [SAVE][save-command] command, and more.\n\n[redis-persistence]: https://redis.io/docs/manual/persistence/\n[rdb-file-format]: https://github.com/sripathikrishnan/redis-rdb-tools/blob/548b11ec3c81a603f5b321228d07a61a0b940159/docs/RDB_File_Format.textile\n[save-command]: https://redis.io/commands/save/"
     },
     {
       "slug": "ext2",
       "name": "Extension 2",
-      "description_markdown": "In this challenge extension you'll add support for the [Stream][redis-streams-data-type] data type to your Redis implementation.\n\nAlong the way you'll learn about commands like [XADD][xadd-command], [XRANGE][xrange-command] and more.\n\n[redis-streams-data-type]: https://redis.io/docs/data-types/streams/\n[xadd-command]: https://redis.io/commands/xadd/\n[xrange-command]: https://redis.io/commands/xrange/\n"
+      "description_markdown": "In this challenge extension you'll add support for the [Stream][redis-streams-data-type] data type to your Redis implementation.\n\nAlong the way you'll learn about commands like [XADD][xadd-command], [XRANGE][xrange-command] and more.\n\n[redis-streams-data-type]: https://redis.io/docs/data-types/streams/\n[xadd-command]: https://redis.io/commands/xadd/\n[xrange-command]: https://redis.io/commands/xrange/"
     }
   ],
   "stages": [

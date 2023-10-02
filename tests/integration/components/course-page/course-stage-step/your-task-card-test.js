@@ -34,7 +34,7 @@ module('Integration | Component | course-page/course-stage-step/your-task-card',
 
     await render(hbs`<CoursePage::CourseStageStep::YourTaskCard @repository={{this.repository}} @courseStage={{this.courseStage}} />`);
 
-    assert.strictEqual(this.element.querySelectorAll('a').length, 2); // includes first stage link
+    assert.strictEqual(this.element.querySelectorAll('a').length, 3); // includes first stage link
     assert.strictEqual(this.element.querySelectorAll('a[target="_blank"]').length, 2);
   });
 });
