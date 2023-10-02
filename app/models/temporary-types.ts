@@ -48,7 +48,6 @@ export class TemporaryCourseStageModel {
   declare position: number;
   declare positionWithinExtension: number;
   declare positionWithinCourse: number;
-  declare nextStage: TemporaryCourseStageModel | null;
   declare primaryExtensionSlug: string | null;
   declare secondaryExtensionSlugs: string[];
   declare primaryExtension: CourseExtensionModel | null;

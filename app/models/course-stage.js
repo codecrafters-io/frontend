@@ -110,22 +110,12 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedBaseStages[this.course.sortedBaseStages.length - 2];
   }
 
-  // TODO[Extensions]: Different logic if from extension vs. not
-  get nextStage() {
-    return this.course.sortedBaseStages[this.course.sortedBaseStages.indexOf(this) + 1];
-  }
-
   get otherConceptsForCourse() {
     return this.course.concepts.reject((concept) => this.concepts.includes(concept));
   }
 
   get positionWithinExtensionOrCourse() {
     return this.isBaseStage ? this.positionWithinCourse : this.positionWithinExtension;
-  }
-
-  // TODO[Extensions]: Different logic if from extension vs. not?
-  get previousStage() {
-    return this.course.sortedBaseStages[this.course.sortedBaseStages.indexOf(this) - 1];
   }
 
   get primaryExtension() {
