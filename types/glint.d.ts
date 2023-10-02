@@ -42,6 +42,7 @@ declare module '@glint/environment-ember-loose/registry' {
     or: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'page-title': HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     repeat: HelperLike<{ Return: string[]; Args: { Positional: [number] } }>;
+    sub: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     'svg-jar': ComponentLike<{ Args: { Named: { class: string }; Positional: [string] } }>;
     // ...
   }

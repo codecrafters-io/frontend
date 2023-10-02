@@ -15,14 +15,14 @@ export default class CourseOverviewPageStageListItemComponent extends Component<
   transition = fade;
 
   get allStages() {
-    return this.args.course.sortedBaseStages;
+    return [...this.args.course.sortedBaseStages, ...this.args.course.extensions.sortBy('slug').map((extension) => extension.stages)].flat();
   }
 
   get visibleStages() {
     if (this.shouldShowAllStages) {
-      return this.args.course.sortedBaseStages;
+      return this.allStages;
     } else {
-      return this.args.course.sortedBaseStages.slice(0, 2);
+      return this.allStages.slice(0, 2);
     }
   }
 
