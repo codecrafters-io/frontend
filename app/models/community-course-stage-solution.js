@@ -13,6 +13,7 @@ export default class CommunityCourseStageSolutionModel extends Model {
   @attr('string') commitSha;
   @attr('string') githubRepositoryName;
   @attr('boolean') githubRepositoryIsPrivate;
+  @attr('number') latestEloRatingScore;
   @attr('date') submittedAt;
   @attr('boolean') isRestrictedToTeam; // if true, only fellow team members can see this solution
 
