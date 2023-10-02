@@ -63,7 +63,7 @@ export default class CourseLeaderboardComponent extends Component {
       // TODO: Use "completed stages count" instead?
       return new LeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
-        currentCourseStage: repository.currentStage || repository.course.sortedBaseStages.firstObject,
+        currentCourseStage: repository.currentStage || repository.course.firstStage,
         language: repository.language,
         user: repository.user,
         lastAttemptAt: repository.lastSubmissionAt || repository.createdAt,
