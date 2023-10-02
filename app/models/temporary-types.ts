@@ -30,7 +30,6 @@ export class TemporaryCourseModel {
   declare hasExtensions: boolean;
   declare extensions: CourseExtensionModel[];
   declare releaseStatusIsBeta: boolean;
-  declare sortedStages: TemporaryCourseStageModel[];
   declare sortedBaseStages: TemporaryCourseStageModel[];
   declare primaryExtensionSlug: string | null;
   declare secondaryExtensionSlugs: string[];

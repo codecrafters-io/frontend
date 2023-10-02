@@ -9,14 +9,14 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
 
   get visibleStages() {
     if (this.shouldShowAllStages) {
-      return this.args.course.sortedStages;
+      return this.args.course.sortedBaseStages;
     } else {
-      return this.args.course.sortedStages.slice(0, 2);
+      return this.args.course.sortedBaseStages.slice(0, 2);
     }
   }
 
   get hiddenStagesCount() {
-    return this.args.course.sortedStages.length - 2;
+    return this.args.course.sortedBaseStages.length - 2;
   }
 
   // eslint-disable-next-line require-yield

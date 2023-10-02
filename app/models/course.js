@@ -79,7 +79,7 @@ export default class CourseModel extends Model {
   }
 
   get firstStage() {
-    return this.sortedStages[0];
+    return this.sortedBaseStages[0];
   }
 
   get latestTesterVersion() {
@@ -106,16 +106,11 @@ export default class CourseModel extends Model {
   }
 
   get secondStage() {
-    return this.sortedStages[1];
+    return this.sortedBaseStages[1];
   }
 
   // TODO[Extensions]: Should we include stages from extensions?
   get sortedBaseStages() {
-    return this.baseStages.sortBy('position');
-  }
-
-  // TODO[Extensions]: Should we include stages from extensions?
-  get sortedStages() {
     return this.baseStages.sortBy('position');
   }
 
