@@ -11,7 +11,7 @@ module.exports = {
       plugins: [['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]],
     },
   },
-  plugins: ['ember'],
+  plugins: ['ember', '@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true,
@@ -25,6 +25,15 @@ module.exports = {
     ],
     'ember/no-array-prototype-extensions': 'off', // Get to this later
     'ember/no-empty-glimmer-component-classes': 'off', // It's useful to have empty components since the names are shown in devtools
+    '@typescript-eslint/member-ordering': [
+      'error',
+      {
+        default: {
+          memberTypes: ['constructor', 'get', 'set', 'method'],
+          order: 'alphabetically',
+        },
+      },
+    ],
   },
   overrides: [
     // node files
