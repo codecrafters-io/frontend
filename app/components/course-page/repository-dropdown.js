@@ -11,6 +11,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
   @service router;
   @tracked gitRepositoryURLWasCopiedRecently;
   @tracked configureGithubIntegrationModalIsOpen = false;
+  @tracked deleteRepositoryModalIsOpen = false;
   @tracked progressBannerModalIsOpen = false;
 
   get currentUser() {

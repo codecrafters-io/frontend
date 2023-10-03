@@ -37,6 +37,7 @@ export default class RepositoryModel extends Model {
   @attr('string') languageProficiencyLevel;
   @attr('string') progressBannerUrl;
   @attr('boolean', { allowNull: true }) remindersAreEnabled;
+  @attr('number') submissionsCount;
 
   get activatedCourseExtensions() {
     return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
