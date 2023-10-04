@@ -17,4 +17,8 @@ export default class CourseExtensionModel extends Model {
   get stages() {
     return this.course.stages.filter((stage) => stage.primaryExtensionSlug === this.slug);
   }
+
+  get sortedStages() {
+    return this.stages.sortBy('positionWithinExtension');
+  }
 }
