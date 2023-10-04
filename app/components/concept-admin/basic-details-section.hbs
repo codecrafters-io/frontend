@@ -1,0 +1,14 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div class="grid grid-cols-1 sm:grid-cols-3 py-8 gap-6" ...attributes>
+  <div class="col-span-1">
+    <div class="text-gray-800 font-semibold mb-1 text-lg">{{@title}}</div>
+    <div class="text-gray-400 text-xs">
+      {{@description}}
+      {{yield to="description"}}
+    </div>
+  </div>
+
+  <div class="col-span-2">
+    {{yield to="content"}}
+  </div>
+</div>

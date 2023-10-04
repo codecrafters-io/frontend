@@ -1,0 +1,82 @@
+<div class="bg-white min-h-screen">
+  <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Basic Details
+        </h3>
+        <div class="text-xs text-gray-400">
+          Edit the basic details of this concept.
+        </div>
+      </div>
+      <div>
+        {{#animated-if this.updateConceptDetails.isRunning}}
+          <div class="flex items-center">
+            <span class="text-teal-500 font-semibold text-sm">Saving...</span>
+          </div>
+        {{else if this.wasSavedRecently}}
+          <div class="flex items-center">
+            {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
+            <span class="text-sm text-teal-500 font-semibold">Saved</span>
+          </div>
+        {{/animated-if}}
+      </div>
+    </div>
+
+    <div class="divide-y divide-gray-100">
+      <ConceptAdmin::BasicDetailsSection @title="Title">
+        <:description>
+          Displayed in the header, and in the page's title.
+        </:description>
+
+        <:content>
+          <Input
+            @value={{@model.concept.title}}
+            {{on "blur" this.handleValueUpdated}}
+            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
+            id="concept_input"
+            placeholder="Network Protocols"
+            size="40"
+            required
+          />
+        </:content>
+      </ConceptAdmin::BasicDetailsSection>
+
+      <ConceptAdmin::BasicDetailsSection @title="Slug">
+        <:description>
+          Changing this will break all previous links, be careful.
+        </:description>
+
+        <:content>
+          <Input
+            @value={{@model.concept.slug}}
+            size="40"
+            {{on "blur" this.handleValueUpdated}}
+            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
+            placeholder="network-protocols"
+            required
+          />
+        </:content>
+      </ConceptAdmin::BasicDetailsSection>
+
+      <ConceptAdmin::BasicDetailsSection @title="Description">
+        <:description>
+          Shown in the header. Markdown supported.
+        </:description>
+
+        <:content>
+          <Textarea
+            @value={{@model.concept.descriptionMarkdown}}
+            {{on "blur" this.handleValueUpdated}}
+            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
+            id="concept_input"
+            placeholder="Learn about various network protocols and the TCP/IP model."
+            rows="3"
+            cols="80"
+            required
+          />
+        </:content>
+      </ConceptAdmin::BasicDetailsSection>
+    </div>
+  </div>
+</div>

@@ -13,7 +13,7 @@ type BlockJSON = {
   args?: unknown;
 };
 
-export default class Concept extends Model {
+export default class ConceptModel extends Model {
   @hasMany('concept-question', { async: false }) declare questions: SyncHasMany<ConceptQuestion>;
 
   @attr('string') declare descriptionMarkdown: string;
