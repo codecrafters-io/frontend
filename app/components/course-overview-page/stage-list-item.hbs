@@ -1,5 +1,5 @@
 <div class="w-full" ...attributes>
-  <div class="flex items-center justify-between mb-4">
+  <div class="flex items-center justify-between mb-4 gap-4 flex-wrap">
     <div class="flex items-center">
       <div class="flex items-center mr-2 transition-all">
         <div class="text-teal-500 text-lg font-bold border-b">
@@ -14,7 +14,9 @@
       </div>
     </div>
 
-    <CourseStageDifficultyLabel @stage={{@stage}} class="flex-shrink-0 pl-4" />
+    <div class="hidden sm:inline-flex flex-shrink-0">
+      <CourseStageDifficultyLabel @stage={{@stage}} />
+    </div>
   </div>
 
   <div>
@@ -29,5 +31,9 @@
         extension)
       </div>
     {{/if}}
+
+    <div class="mb-4 inline-flex sm:hidden">
+      <CourseStageDifficultyLabel @stage={{@stage}} />
+    </div>
   </div>
 </div>
