@@ -15,7 +15,9 @@
     {{#if @isComplete}}
       {{svg-jar "check" class="ml-1 w-5 text-teal-500"}}
     {{else}}
-      <CourseStageDifficultyLabel @stage={{@stage}} class="flex-shrink-0 pl-4 hidden sm:flex" />
+      <div class="pl-4 hidden sm:flex flex-shrink-0">
+        <CourseStageDifficultyLabel @stage={{@stage}} />
+      </div>
     {{/if}}
   </div>
 </div>
