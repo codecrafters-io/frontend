@@ -1,4 +1,3 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="bg-white rounded-md shadow-sm border border-gray-200 relative w-full group" data-test-track-page-card ...attributes>
   <div class="p-4 md:p-6">
     <div class="flex items-center justify-between">
@@ -8,16 +7,13 @@
             {{if @isNavigatingToOtherPage 'group-hover:text-teal-500 transition-colors'}}"
           data-test-track-page-card-title
         >
-          {{@title}}
-
-          {{#if @isNavigatingToOtherPage}}
-            {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
-          {{/if}}
+          {{this.titleForDisplay}}
         </div>
 
         {{#if (gt @recentParticipants.length 0)}}
           <div class="flex -space-x-3 hover:space-x-1 items-center mb-4">
             {{#each @recentParticipants as |user|}}
+              {{! @glint-nocheck not ts-ified yet }}
               <TrackPage::Header::TopParticipantAvatar @user={{user}} />
             {{/each}}
           </div>
@@ -27,11 +23,13 @@
         {{#if @isComplete}}
           {{svg-jar "check-circle" class="w-8 h-8 fill-current text-teal-500"}}
         {{else if (and @logoImageUrl @logoImageAltText)}}
-          <img src={{@logoImageUrl}} alt={{@logoImageAltText}} class="w-6 md:w-12 transform scale-100 group-hover:scale-105 transition-all" />
+          <img src={{@logoImageUrl}} alt={{@logoImageAltText}} class="w-8 md:w-12 transform scale-100 group-hover:scale-105 transition-all" />
         {{/if}}
       </div>
     </div>
 
-    {{yield}}
+    <div class="pr-8 md:pr-12">
+      {{yield}}
+    </div>
   </div>
 </div>
