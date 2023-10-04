@@ -38,6 +38,7 @@ export class TemporaryCourseModel {
 
 export class TemporaryCourseStageModel {
   declare id: string;
+  declare difficulty: 'very_easy' | 'easy' | 'medium' | 'hard';
   declare slug: string;
   declare course: TemporaryCourseModel;
   declare descriptionMarkdownTemplate: string;
