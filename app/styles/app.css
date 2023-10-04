@@ -140,3 +140,7 @@
     margin-right: -1.5rem;
   }
 }
+
+.has-prism-highlighting pre[class*='language-'] {
+  background-color: #f1f5f9;
+}
