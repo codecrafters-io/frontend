@@ -5,7 +5,6 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    isVertical?: boolean;
     stage: TemporaryCourseStageModel;
   };
 }
