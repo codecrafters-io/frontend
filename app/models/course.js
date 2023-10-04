@@ -113,6 +113,10 @@ export default class CourseModel extends Model {
     return this.baseStages.sortBy('position');
   }
 
+  get sortedExtensions() {
+    return this.extensions.sortBy('name');
+  }
+
   trackIntroductionMarkdownFor(language) {
     if (this.isRedis) {
       if (language.isGo) {
