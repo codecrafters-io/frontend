@@ -28,11 +28,15 @@
           </div>
         </a>
       </div>
-      <div>
+      <div class="self-start">
         <div class="w-40 ml-4 hidden md:block">
           {{!-- <img alt="Walkthrough" src={{@codeWalkthrough.logoURL}} /> --}}
         </div>
       </div>
     </div>
+
+    {{#if (current-user-is-staff)}}
+      <TertiaryLinkButton @size="small" @route="concept-admin" class="mt-4">Edit Concept</TertiaryLinkButton>
+    {{/if}}
   </div>
 </div>

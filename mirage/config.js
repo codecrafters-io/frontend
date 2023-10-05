@@ -57,7 +57,10 @@ function routes() {
   this.post('/analytics-events');
 
   this.get('/badges');
+
   this.get('/concepts');
+  this.patch('/concepts/:id');
+
   this.get('/charges');
 
   this.get('/code-walkthroughs');
