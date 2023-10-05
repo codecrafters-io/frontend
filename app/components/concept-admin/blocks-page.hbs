@@ -1,0 +1,56 @@
+<div class="bg-white min-h-screen">
+  <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 mb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Blocks
+        </h3>
+        <div class="text-xs text-gray-400">
+          The content of a concept is made up of blocks.
+        </div>
+      </div>
+
+      <div class="flex flex-col items-end gap-2">
+        <PrimaryButtonWithSpinner @size="small" @isDisabled={{or this.isSaving (not this.changesArePresent)}} @shouldShowSpinner={{this.isSaving}}>
+          Publish Changes
+        </PrimaryButtonWithSpinner>
+
+        {{#if (not this.changesArePresent)}}
+          <div class="text-xs text-gray-400">
+            No changes to save
+          </div>
+        {{else}}
+          <div class="flex items-center gap-3">
+            {{#if (gt this.numberOfBlockChanges 0)}}
+              <Pill @color="yellow">{{this.numberOfBlockChanges}} changed</Pill>
+            {{/if}}
+            {{#if (gt this.numberOfBlockDeletions 0)}}
+              <Pill @color="red">{{this.numberOfBlockDeletions}} deleted</Pill>
+            {{/if}}
+            {{#if (gt this.numberOfBlockAdditions 0)}}
+              <Pill @color="green">{{this.numberOfBlockAdditions}} added</Pill>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="flex flex-col gap-6">
+      {{#each this.blocksWithMetadata key="index" as |blockWithMetadata index|}}
+        {{#if blockWithMetadata.wasDeleted}}
+          <span
+            class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+          >Changed</span>
+        {{else}}
+          <ConceptAdmin::BlocksPage::EditableBlock
+            @conceptBlock={{blockWithMetadata.block}}
+            @wasChanged={{blockWithMetadata.wasChanged}}
+            @wasDeleted={{blockWithMetadata.wasDeleted}}
+            @onBlockChanged={{fn this.handleBlockChanged index}}
+            @onBlockDeleted={{fn this.handleBlockDeleted index}}
+            @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded index}}
+          />
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>

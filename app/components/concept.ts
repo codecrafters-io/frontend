@@ -47,13 +47,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   @cached
   get allBlocks() {
-    return this.args.concept.parsedBlocks.map((block, index) => {
-      return {
-        ...block,
-        type: block.type,
-        index: index,
-      };
-    });
+    return this.args.concept.parsedBlocks;
   }
 
   @cached

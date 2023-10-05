@@ -8,9 +8,9 @@ import { SafeString } from '@ember/template/-private/handlebars';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
-type BlockJSON = {
-  type: string;
-  args?: unknown;
+export type BlockJSON = {
+  type: 'click_to_continue' | 'markdown' | 'concept_animation' | 'concept_question';
+  args: Record<string, unknown>;
 };
 
 export default class ConceptModel extends Model {
@@ -39,25 +39,22 @@ export default class ConceptModel extends Model {
   }
 
   get parsedBlocks(): Block[] {
-    type BlockClass = typeof MarkdownBlock | typeof ConceptQuestionBlock | typeof ClickToContinueBlock | typeof ConceptAnimationBlock;
-    type BlockClassMapping = Record<string, BlockClass>;
+    const blockClassMapping: Record<string, unknown> = {};
 
-    const blockClasses = [MarkdownBlock, ConceptQuestionBlock, ClickToContinueBlock, ConceptAnimationBlock];
+    const blockClasses = [ClickToContinueBlock, MarkdownBlock, ConceptAnimationBlock, ConceptQuestionBlock];
 
-    const blockTypeMapping = blockClasses.reduce<BlockClassMapping>((mapping, blockClass) => {
-      mapping[blockClass.type] = blockClass;
+    blockClasses.forEach((blockClass) => {
+      blockClassMapping[blockClass.type] = blockClass;
+    });
 
-      return mapping;
-    }, {} as BlockClassMapping);
-
-    return this.blocks.map((blockJSON: BlockJSON) => {
-      const blockClass = blockTypeMapping[blockJSON.type];
+    return this.blocks.map((blockJSON) => {
+      const blockClass = blockClassMapping[blockJSON.type] as new (json: BlockJSON) => Block;
 
       if (!blockClass) {
         throw new Error(`Unknown block type: ${blockJSON.type}`);
       }
 
-      return blockClass.fromJSON(blockJSON.args as BlockJSON);
+      return new blockClass(blockJSON);
     });
   }
 }

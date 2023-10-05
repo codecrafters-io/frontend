@@ -1,0 +1,67 @@
+<div
+  class="border rounded relative {{if this.isEditing 'border-gray-300' 'hover:bg-gray-50 hover:border-gray-300'}} overflow-hidden"
+  {{on "click" (if this.isEditing (noop) this.handleCollapsedBlockClicked)}}
+  role={{if this.isEditing "region" "button"}}
+  data-test-editable-block
+>
+  <div class="absolute right-0 top-0 p-4 flex items-center gap-3">
+    {{#if this.shouldShowDiscardChangesButton}}
+      <span
+        class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+        role="button"
+        {{on "click" this.handleDiscardChangesButtonClicked}}
+      >Discard changes</span>
+    {{/if}}
+
+    {{#if @wasChanged}}
+      <Pill @color="yellow">Changed</Pill>
+    {{else if @wasDeleted}}
+      <Pill @color="red">Deleted</Pill>
+    {{/if}}
+  </div>
+
+  {{#if this.isEditing}}
+    <div class="bg-gray-50 p-4 border-b">
+      <div class="font-semibold text-gray-800 text-sm underline mb-4">
+        Editor
+      </div>
+
+      {{#if this.mutableBlock}}
+        <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlock}} />
+      {{/if}}
+    </div>
+  {{/if}}
+
+  <div class="p-4">
+    {{#if (eq this.blockOrMutableBlock.type "markdown")}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <Blocks::MarkdownBlock @model={{this.blockOrMutableBlock}} />
+    {{else if (eq this.blockOrMutableBlock.type "concept_animation")}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <Blocks::ConceptAnimationBlock @model={{this.blockOrMutableBlock}} />
+    {{else if (eq this.blockOrMutableBlock.type "click_to_continue")}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <Concept::ContinueOrStepBack
+        @onContinueButtonClick={{(noop)}}
+        @onStepBackButtonClick={{(noop)}}
+        {{! @glint-expect-error: not typecast yet }}
+        @continueButtonText={{this.blockOrMutableBlock.buttonText}}
+        @shouldShowStepBackButton={{false}}
+      />
+    {{/if}}
+  </div>
+
+  {{#if this.isEditing}}
+    <div class="bg-gray-50 border-t px-4 py-3 flex items-center justify-between gap-4">
+      <div>
+        {{#if this.mutableBlockHasChanges}}
+          <PrimaryButton @size="small" {{on "click" this.handleUpdateBlockButtonClicked}} data-test-update-block-button>Update Block</PrimaryButton>
+        {{else}}
+          <PrimaryButton @size="small" {{on "click" this.handleCloseEditorButtonClicked}} data-test-close-editor-button>Close Editor</PrimaryButton>
+        {{/if}}
+      </div>
+
+      <TertiaryButton @size="small">Delete Block</TertiaryButton>
+    </div>
+  {{/if}}
+</div>
