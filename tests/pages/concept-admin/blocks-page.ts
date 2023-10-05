@@ -2,8 +2,8 @@ import { clickable, collection, create, fillable, visitable } from 'ember-cli-pa
 
 export default create({
   editableBlocks: collection('[data-test-editable-block]', {
-    clickOnCloseEditorButton: clickable('[data-test-close-editor-button]'),
-    clickOnUpdateBlockButton: clickable('[data-test-update-block-button]'),
+    clickOnSaveButton: clickable('[data-test-save-button]'),
+    clickOnDeleteButton: clickable('[data-test-delete-button]'),
 
     markdownBlockEditor: {
       fillInMarkdown: fillable('textarea'),

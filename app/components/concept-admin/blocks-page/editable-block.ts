@@ -61,7 +61,7 @@ export default class EditableBlockComponent extends Component<Signature> {
 
     // Ensure the click handler for the outer block doesn't interfere
     next(() => {
-      this.finishEditing();
+      this.abortEditing();
     });
   }
 

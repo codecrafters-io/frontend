@@ -53,6 +53,11 @@ export default class BlocksPageComponent extends Component<Signature> {
       oldBlock: this.args.concept.parsedBlocks[index]!,
     };
 
+    if (this.blockChanges[index]) {
+      delete this.blockChanges[index];
+    }
+
+    this.blockChanges = { ...this.blockChanges }; // Force re-render
     this.blockDeletions = { ...this.blockDeletions }; // Force re-render
   }
 
