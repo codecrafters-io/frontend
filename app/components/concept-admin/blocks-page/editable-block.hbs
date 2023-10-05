@@ -4,7 +4,7 @@
   role={{if this.isEditing "region" "button"}}
   data-test-editable-block
 >
-  <div class="absolute right-0 top-0 p-4 flex items-center gap-3">
+  <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
     {{#if this.shouldShowDiscardChangesButton}}
       <span
         class="text-xs text-gray-400 hover:underline hover:text-gray-500"
@@ -21,18 +21,22 @@
   </div>
 
   {{#if this.isEditing}}
-    <div class="bg-gray-50 p-4 border-b">
+    <div class="bg-gray-50 p-3 border-b">
       <div class="font-semibold text-gray-800 text-sm underline mb-4">
         Editor
       </div>
 
       {{#if this.mutableBlock}}
-        <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlock}} />
+        {{#if (eq this.mutableBlock.type "markdown")}}
+          <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlock}} />
+        {{else if (eq this.mutableBlock.type "click_to_continue")}}
+          <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlock}} />
+        {{/if}}
       {{/if}}
     </div>
   {{/if}}
 
-  <div class="p-4">
+  <div class="p-3">
     {{#if (eq this.blockOrMutableBlock.type "markdown")}}
       {{! @glint-expect-error: not ts-ified yet }}
       <Blocks::MarkdownBlock @model={{this.blockOrMutableBlock}} />
@@ -45,14 +49,14 @@
         @onContinueButtonClick={{(noop)}}
         @onStepBackButtonClick={{(noop)}}
         {{! @glint-expect-error: not typecast yet }}
-        @continueButtonText={{this.blockOrMutableBlock.buttonText}}
+        @continueButtonText={{this.blockOrMutableBlock.buttonTextForDisplay}}
         @shouldShowStepBackButton={{false}}
       />
     {{/if}}
   </div>
 
   {{#if this.isEditing}}
-    <div class="bg-gray-50 border-t px-4 py-3 flex items-center justify-between gap-4">
+    <div class="bg-gray-50 border-t px-3 py-2 flex items-center justify-between gap-3">
       <div>
         {{#if this.mutableBlockHasChanges}}
           <PrimaryButton @size="small" {{on "click" this.handleUpdateBlockButtonClicked}} data-test-update-block-button>Update Block</PrimaryButton>

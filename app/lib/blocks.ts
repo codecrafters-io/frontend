@@ -38,8 +38,12 @@ class ClickToContinueBlock extends Block {
     button_text?: string;
   };
 
-  get buttonText(): string {
-    return this.args.button_text || 'Continue';
+  get buttonText(): string | undefined {
+    return this.args.button_text;
+  }
+
+  get buttonTextForDisplay(): string {
+    return this.buttonText || 'Continue';
   }
 
   set buttonText(buttonText: string) {
