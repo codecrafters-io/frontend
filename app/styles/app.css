@@ -124,11 +124,6 @@
   font-weight: 500;
 }
 
-.bg-monthly-challenge {
-  background-image: url('/assets/images/monthly-challenges/oura-ring-horizon-banner.png');
-  background-position: 30% center;
-}
-
 .markdown-list ul {
   list-style-type: disc;
   padding-left: 1.5em;
@@ -143,12 +138,6 @@
   .metabase-iframe {
     margin-left: -1.5rem;
     margin-right: -1.5rem;
-  }
-}
-
-@media screen and (max-width: 64em) {
-  .bg-monthly-challenge {
-    background-position: left;
   }
 }
 
