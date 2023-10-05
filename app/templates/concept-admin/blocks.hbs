@@ -1,0 +1,27 @@
+<div class="bg-white min-h-screen">
+  <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Blocks
+        </h3>
+        <div class="text-xs text-gray-400">
+          The content of a concept is made up of blocks.
+        </div>
+      </div>
+      <div>
+        {{! @glint-expect-error animated-if with else isn't supported? }}
+        {{#animated-if this.updateConceptDetails.isRunning}}
+          <div class="flex items-center">
+            <span class="text-teal-500 font-semibold text-sm">Saving...</span>
+          </div>
+        {{else}}{{#if this.wasSavedRecently}}
+            <div class="flex items-center">
+              {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
+              <span class="text-sm text-teal-500 font-semibold">Saved</span>
+            </div>
+          {{/if}}{{/animated-if}}
+      </div>
+    </div>
+  </div>
+</div>
