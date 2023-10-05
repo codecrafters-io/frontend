@@ -41,12 +41,18 @@ export default class BlocksPageComponent extends Component<Signature> {
   }
 
   @action
+  handleBlockDeletionDiscarded(index: number) {
+    delete this.blockDeletions[index];
+
+    this.blockDeletions = { ...this.blockDeletions }; // Force re-render
+  }
+
+  @action
   handleBlockDeleted(index: number) {
     this.blockDeletions[index] = {
       oldBlock: this.args.concept.parsedBlocks[index]!,
     };
 
-    console.log('handleBlockDeleted');
     this.blockDeletions = { ...this.blockDeletions }; // Force re-render
   }
 

@@ -5,10 +5,10 @@
   data-test-editable-block
 >
   <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
-    {{#if (or @wasChanged this.mutableBlockHasChanges)}}
-      <Pill @color="yellow">Changed</Pill>
-    {{else if @wasDeleted}}
+    {{#if @wasDeleted}}
       <Pill @color="red">Deleted</Pill>
+    {{else if (or @wasChanged this.mutableBlockHasChanges)}}
+      <Pill @color="yellow">Changed</Pill>
     {{/if}}
   </div>
 
@@ -73,7 +73,7 @@
         {{/if}}
       </div>
 
-      <TertiaryButton @size="small">Delete Block</TertiaryButton>
+      <TertiaryButton @size="small" {{on "click" this.handleDeleteButtonClicked}} data-test-delete-button>Delete Block</TertiaryButton>
     </div>
   {{/if}}
 </div>

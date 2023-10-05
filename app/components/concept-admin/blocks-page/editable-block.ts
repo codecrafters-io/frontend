@@ -56,6 +56,16 @@ export default class EditableBlockComponent extends Component<Signature> {
   }
 
   @action
+  handleDeleteButtonClicked() {
+    this.args.onBlockDeleted();
+
+    // Ensure the click handler for the outer block doesn't interfere
+    next(() => {
+      this.finishEditing();
+    });
+  }
+
+  @action
   handleSaveButtonClicked() {
     // Ensure the click handler for the outer block doesn't interfere
     next(() => {
