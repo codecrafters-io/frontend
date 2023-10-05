@@ -45,6 +45,9 @@ module.exports = {
       mono: 'Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace',
     },
     extend: {
+      backgroundImage: {
+        'monthly-challenge-banner': "url('/assets/images/monthly-challenges/oura-ring-horizon-banner.png')",
+      },
       brightness: {
         102: '1.02',
       },

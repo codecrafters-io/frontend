@@ -124,7 +124,8 @@
   font-weight: 500;
 }
 
-.bg-pos-monthly-challenge {
+.bg-monthly-challenge {
+  background-image: url('/assets/images/monthly-challenges/oura-ring-horizon-banner.png');
   background-position: 30% center;
 }
 
@@ -146,7 +147,7 @@
 }
 
 @media screen and (max-width: 64em) {
-  .bg-pos-monthly-challenge {
+  .bg-monthly-challenge {
     background-position: left;
   }
 }
