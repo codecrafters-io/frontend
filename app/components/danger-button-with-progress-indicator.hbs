@@ -1,0 +1,17 @@
+<DangerButton
+  @isRelative=true
+  {{on "mouseenter" this.showProgressBar}}
+  {{on "mouseleave" this.handleMouseLeave}}
+  {{on "mousedown" this.startProgress}}
+  {{on "mouseup" this.stopProgress}}
+  ...attributes
+>
+  {{yield}}
+  {{#if this.isHovered}}
+    <div class="absolute bottom-0 left-0 w-full h-1 bg-red-600"></div>
+    <div
+      class="absolute bottom-0 left-0 h-1 bg-white"
+      style={{this.progressBarWidthStyle}}
+    ></div>
+  {{/if}}
+</DangerButton>
