@@ -48,10 +48,10 @@ export default class EditableBlockComponent extends Component<Signature> {
   }
 
   @action
-  handleCloseEditorButtonClicked() {
+  handleSaveButtonClicked() {
     // Ensure the click handler for the outer block doesn't interfere
     next(() => {
-      this.abortEditing();
+      this.finishEditing();
     });
   }
 
@@ -62,14 +62,6 @@ export default class EditableBlockComponent extends Component<Signature> {
     // Ensure the click handler for the outer block doesn't interfere
     next(() => {
       this.abortEditing();
-    });
-  }
-
-  @action
-  handleUpdateBlockButtonClicked() {
-    // Ensure the click handler for the outer block doesn't interfere
-    next(() => {
-      this.finishEditing();
     });
   }
 

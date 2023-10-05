@@ -5,15 +5,7 @@
   data-test-editable-block
 >
   <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
-    {{#if this.shouldShowDiscardChangesButton}}
-      <span
-        class="text-xs text-gray-400 hover:underline hover:text-gray-500"
-        role="button"
-        {{on "click" this.handleDiscardChangesButtonClicked}}
-      >Discard changes</span>
-    {{/if}}
-
-    {{#if @wasChanged}}
+    {{#if (or @wasChanged this.mutableBlockHasChanges)}}
       <Pill @color="yellow">Changed</Pill>
     {{else if @wasDeleted}}
       <Pill @color="red">Deleted</Pill>
@@ -57,11 +49,15 @@
 
   {{#if this.isEditing}}
     <div class="bg-gray-50 border-t px-3 py-2 flex items-center justify-between gap-3">
-      <div>
-        {{#if this.mutableBlockHasChanges}}
-          <PrimaryButton @size="small" {{on "click" this.handleUpdateBlockButtonClicked}} data-test-update-block-button>Update Block</PrimaryButton>
-        {{else}}
-          <PrimaryButton @size="small" {{on "click" this.handleCloseEditorButtonClicked}} data-test-close-editor-button>Close Editor</PrimaryButton>
+      <div class="flex items-center gap-3">
+        <PrimaryButton @size="small" {{on "click" this.handleSaveButtonClicked}} data-test-save-button>Save</PrimaryButton>
+
+        {{#if this.shouldShowDiscardChangesButton}}
+          <span
+            class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+            role="button"
+            {{on "click" this.handleDiscardChangesButtonClicked}}
+          >Discard changes</span>
         {{/if}}
       </div>
 
