@@ -1,8 +1,7 @@
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import basicDetailsPage from 'codecrafters-frontend/tests/pages/concept-admin/basic-details-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
@@ -19,5 +18,7 @@ module('Acceptance | concept-admin | view-basic-details', function (hooks) {
 
     await basicDetailsPage.visit({ concept_slug: 'dummy' });
     assert.strictEqual(1, 1);
+
+    await percySnapshot('Concept Admin - Basic Details');
   });
 });

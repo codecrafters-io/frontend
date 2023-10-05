@@ -16,7 +16,7 @@ type Tab = {
   name: string;
   slug: string;
   route: string;
-  models: unknown[];
+  models: string[];
   isActive: boolean;
 };
 
@@ -34,5 +34,11 @@ export default class ConceptAdminHeaderComponent extends Component<Signature> {
         isActive: this.router.currentRouteName === 'concept-admin.basic-details',
       },
     ];
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ConceptAdmin::Header': typeof ConceptAdminHeaderComponent;
   }
 }

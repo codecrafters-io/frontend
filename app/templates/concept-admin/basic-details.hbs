@@ -10,23 +10,26 @@
         </div>
       </div>
       <div>
+        {{! @glint-expect-error animated-if with else isn't supported? }}
         {{#animated-if this.updateConceptDetails.isRunning}}
           <div class="flex items-center">
             <span class="text-teal-500 font-semibold text-sm">Saving...</span>
           </div>
-        {{else if this.wasSavedRecently}}
-          <div class="flex items-center">
-            {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
-            <span class="text-sm text-teal-500 font-semibold">Saved</span>
-          </div>
-        {{/animated-if}}
+        {{else}}{{#if this.wasSavedRecently}}
+            <div class="flex items-center">
+              {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
+              <span class="text-sm text-teal-500 font-semibold">Saved</span>
+            </div>
+          {{/if}}{{/animated-if}}
       </div>
     </div>
 
     <div class="divide-y divide-gray-100">
       <ConceptAdmin::BasicDetailsSection @title="Title">
         <:description>
-          Displayed in the header, and in the page's title.
+          <label for="concept_title">
+            Displayed in the header, and in the page's title.
+          </label>
         </:description>
 
         <:content>
@@ -34,9 +37,9 @@
             @value={{@model.concept.title}}
             {{on "blur" this.handleValueUpdated}}
             class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
-            id="concept_input"
             placeholder="Network Protocols"
             size="40"
+            id="concept_title"
             required
           />
         </:content>
@@ -44,7 +47,9 @@
 
       <ConceptAdmin::BasicDetailsSection @title="Slug">
         <:description>
-          Changing this will break all previous links, be careful.
+          <label for="concept_slug">
+            Changing this will break all previous links, be careful.
+          </label>
         </:description>
 
         <:content>
@@ -54,6 +59,7 @@
             {{on "blur" this.handleValueUpdated}}
             class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
             placeholder="network-protocols"
+            id="concept_slug"
             required
           />
         </:content>
@@ -61,7 +67,9 @@
 
       <ConceptAdmin::BasicDetailsSection @title="Description">
         <:description>
-          Shown in the header. Markdown supported.
+          <label for="concept_description">
+            Shown in the header. Markdown supported.
+          </label>
         </:description>
 
         <:content>
@@ -69,10 +77,10 @@
             @value={{@model.concept.descriptionMarkdown}}
             {{on "blur" this.handleValueUpdated}}
             class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
-            id="concept_input"
             placeholder="Learn about various network protocols and the TCP/IP model."
             rows="3"
             cols="80"
+            id="concept_description"
             required
           />
         </:content>
