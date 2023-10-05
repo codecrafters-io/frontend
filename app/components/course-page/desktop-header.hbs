@@ -9,19 +9,26 @@
 
       {{! @glint-expect-error not typesafe }}
       {{#if (and (eq @currentStep.type "CourseStageStep"))}}
-        <div class="inline-flex text-xs font-semibold text-gray-500">
+        <div class="flex items-center">
+          <div class="inline-flex items-center text-xs font-semibold text-gray-500">
+            {{! @glint-expect-error not typesafe }}
+            {{#if @currentStep.courseStage.primaryExtension}}
+              {{! @glint-expect-error not typesafe }}
+              {{@currentStep.courseStage.primaryExtension.name}}
+              <span class="text-gray-300 px-2 inline-flex">&gt;</span>
+              Stage
+              {{! @glint-expect-error not typesafe }}
+              {{@currentStep.courseStage.positionWithinExtension}}/{{@currentStep.courseStage.primaryExtension.stages.length}}
+            {{else}}
+              Stage
+              {{! @glint-expect-error not typesafe }}
+              {{@currentStep.courseStage.positionWithinCourse}}/{{@currentStep.courseStage.course.baseStages.length}}
+            {{/if}}
+          </div>
+
           {{! @glint-expect-error not typesafe }}
           {{#if @currentStep.courseStage.primaryExtension}}
-            {{! @glint-expect-error not typesafe }}
-            {{@currentStep.courseStage.primaryExtension.name}}
-            <span class="text-gray-300 px-2 inline-flex">&gt;</span>
-            Stage
-            {{! @glint-expect-error not typesafe }}
-            {{@currentStep.courseStage.positionWithinExtension}}/{{@currentStep.courseStage.primaryExtension.stages.length}}
-          {{else}}
-            Stage
-            {{! @glint-expect-error not typesafe }}
-            {{@currentStep.courseStage.positionWithinCourse}}/{{@currentStep.courseStage.course.baseStages.length}}
+            <BetaCourseExtensionLabel class="ml-2" />
           {{/if}}
         </div>
       {{/if}}

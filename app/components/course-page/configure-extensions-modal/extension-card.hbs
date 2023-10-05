@@ -6,11 +6,14 @@
   data-test-course-extension-card
 >
   <div class="flex items-start justify-between mb-3">
-    <div
-      class="{{if this.optimisticValueForIsActivated 'text-teal-600' 'text-gray-700'}} mr-2 mb-0.5 font-bold text-xl tracking-tight"
-      data-test-course-extension-name
-    >
-      {{@extension.name}}
+    <div class="flex items-center gap-3 mr-2 mb-0.5">
+      <div
+        class="{{if this.optimisticValueForIsActivated 'text-teal-600' 'text-gray-700'}} font-bold text-xl tracking-tight"
+        data-test-course-extension-name
+      >
+        {{@extension.name}}
+      </div>
+      <BetaCourseExtensionLabel />
     </div>
     <div>
       <Toggle @isOn={{this.optimisticValueForIsActivated}} {{on "click" this.handleClick}} data-test-toggle-extension-button />
