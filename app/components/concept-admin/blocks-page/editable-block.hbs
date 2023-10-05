@@ -29,6 +29,12 @@
   {{/if}}
 
   <div class="p-3">
+    {{#if this.isEditing}}
+      <div class="font-semibold text-gray-800 text-sm underline mb-4">
+        Preview
+      </div>
+    {{/if}}
+
     {{#if (eq this.blockOrMutableBlock.type "markdown")}}
       {{! @glint-expect-error: not ts-ified yet }}
       <Blocks::MarkdownBlock @model={{this.blockOrMutableBlock}} />
@@ -58,6 +64,12 @@
             role="button"
             {{on "click" this.handleDiscardChangesButtonClicked}}
           >Discard changes</span>
+        {{else}}
+          <span
+            class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+            role="button"
+            {{on "click" this.handleCancelButtonClicked}}
+          >Cancel</span>
         {{/if}}
       </div>
 

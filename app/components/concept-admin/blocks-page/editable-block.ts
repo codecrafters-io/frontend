@@ -41,6 +41,14 @@ export default class EditableBlockComponent extends Component<Signature> {
   }
 
   @action
+  handleCancelButtonClicked() {
+    // Ensure the click handler for the outer block doesn't interfere
+    next(() => {
+      this.abortEditing();
+    });
+  }
+
+  @action
   handleCollapsedBlockClicked() {
     if (!this.isEditing) {
       this.startEditing();
