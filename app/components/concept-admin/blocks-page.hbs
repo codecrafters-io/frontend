@@ -21,11 +21,7 @@
           Publish Changes
         </PrimaryButtonWithSpinner>
 
-        {{#if (not this.mutationsArePresent)}}
-          <div class="text-xs text-gray-400">
-            No changes to save
-          </div>
-        {{else}}
+        {{#if this.mutationsArePresent}}
           <div class="flex items-center gap-3">
             {{#if (gt this.numberOfBlockChanges 0)}}
               <Pill @color="yellow">{{this.numberOfBlockChanges}} changed</Pill>
@@ -36,6 +32,10 @@
             {{#if (gt this.numberOfBlockAdditions 0)}}
               <Pill @color="green">{{this.numberOfBlockAdditions}} added</Pill>
             {{/if}}
+          </div>
+        {{else}}
+          <div class="text-xs text-gray-400">
+            No changes to save
           </div>
         {{/if}}
       </div>

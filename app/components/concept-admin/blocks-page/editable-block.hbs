@@ -1,3 +1,4 @@
+{{! template-lint-disable no-invalid-interactive }}
 <div
   class="border rounded relative {{if this.isEditing 'border-gray-300' 'hover:bg-gray-50 hover:border-gray-300'}} overflow-hidden"
   {{on "click" (if this.isEditing (noop) this.handleCollapsedBlockClicked)}}
