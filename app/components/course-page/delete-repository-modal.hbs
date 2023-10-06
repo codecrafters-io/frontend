@@ -23,5 +23,11 @@
     To proceed, press and hold the button below for 5 seconds:
   </div>
 
-  <DangerButtonWithProgressIndicator @size="regular">Delete</DangerButtonWithProgressIndicator>
+  <DangerButtonWithProgressIndicator 
+    @courseSlug={{@repository.course.slug}}
+    @deferredFunction={{this.deleteRepository}}
+    @size="regular"
+  >
+    Delete
+  </DangerButtonWithProgressIndicator>
 </ModalBody>

@@ -162,6 +162,14 @@ export default class RepositoryModel extends Model {
   }
 }
 
+RepositoryModel.prototype.deleteRepository = memberAction({
+  type: 'delete',
+
+  after() {
+    this.store.unloadRecord(this);
+  },
+});
+
 RepositoryModel.prototype.updateTesterVersion = memberAction({
   path: 'update-tester-version',
   type: 'post',
