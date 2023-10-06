@@ -53,6 +53,13 @@
         @continueButtonText={{this.blockOrMutableBlock.buttonTextForDisplay}}
         @shouldShowStepBackButton={{false}}
       />
+    {{else if (eq this.blockOrMutableBlock.type "concept_question")}}
+      <Blocks::ConceptQuestionBlock @model={{this.blockOrMutableBlockAsConceptQuestionBlock}} @onSubmit={{(noop)}} />
+    {{else}}
+      <div class="text-gray-600 text-sm">
+        Unknown block type:
+        {{this.blockOrMutableBlock.type}}.
+      </div>
     {{/if}}
   </div>
 
