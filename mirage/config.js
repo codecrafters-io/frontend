@@ -290,7 +290,7 @@ function routes() {
     if (regionalDiscount) {
       return regionalDiscount;
     } else {
-      return new Response(200, {}, { data: {} });
+      return new Response(200, {}, { data: null });
     }
   });
 
