@@ -18,12 +18,16 @@ export default class BlocksPageComponent extends Component<Signature> {
   @tracked isSaving = false;
 
   @action
-  handleBlockAdded(index: number, block: Block) {
-    if (this.blockAdditions[index]) {
-      this.blockAdditions[index]!.newBlocks.push(block);
+  handleBlockAddedOrAddedBlockChanged(anchorBlockIndex: number, insertAtIndex: number, newBlock: Block) {
+    if (this.blockAdditions[anchorBlockIndex]) {
+      this.blockAdditions[anchorBlockIndex]!.newBlocks.splice(insertAtIndex, 0, newBlock);
     } else {
+      if (insertAtIndex !== 0) {
+        throw new Error('Expected indexWithinAddition to be 0 when adding a new blockAddition');
+      }
+
       // anchorBlock is null if the block is being added at the start of the list
-      this.blockAdditions[index] = { anchorBlock: this.args.concept.parsedBlocks[index] || null, newBlocks: [block] };
+      this.blockAdditions[anchorBlockIndex] = { anchorBlock: this.args.concept.parsedBlocks[anchorBlockIndex] || null, newBlocks: [newBlock] };
     }
 
     this.blockAdditions = { ...this.blockAdditions }; // Force re-render
@@ -105,13 +109,13 @@ export default class BlocksPageComponent extends Component<Signature> {
         changeIsStale: changeIsStale,
         wasChanged: wasChanged,
         wasDeleted: wasDeleted,
-        addedBlocks: this.blockAdditions[index] || [],
+        addedBlocks: this.blockAdditions[index]?.newBlocks || [],
       };
     });
   }
 
   get changesArePresent() {
-    return Object.keys(this.blockChanges).length > 0 || Object.keys(this.blockDeletions).length > 0;
+    return this.numberOfBlockAdditions > 0 || this.numberOfBlockChanges > 0 || this.numberOfBlockDeletions > 0;
   }
 }
 

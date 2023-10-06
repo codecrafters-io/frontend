@@ -9,6 +9,7 @@ type Signature = {
 
   Args: {
     conceptBlock: Block;
+    wasAdded: boolean;
     wasChanged: boolean;
     wasDeleted: boolean;
     onBlockChanged: (newBlock: Block) => void;

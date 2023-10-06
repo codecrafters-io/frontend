@@ -7,6 +7,8 @@
   <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
     {{#if @wasDeleted}}
       <Pill @color="red">Deleted</Pill>
+    {{else if @wasAdded}}
+      <Pill @color="green">Added</Pill>
     {{else if (or @wasChanged this.mutableBlockHasChanges)}}
       <Pill @color="yellow">Changed</Pill>
     {{/if}}
