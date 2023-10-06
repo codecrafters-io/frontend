@@ -10,6 +10,12 @@ export default class CourseAdminRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
+  async afterModel(model: { concept: ConceptModel }) {
+    if (this.router.currentRouteName === 'concept-admin.index') {
+      this.router.transitionTo('concept-admin.blocks', model.concept.slug);
+    }
+  }
+
   async beforeModel(...args: unknown[]) {
     // @ts-ignore
     await super.beforeModel(...args);
@@ -27,11 +33,5 @@ export default class CourseAdminRoute extends BaseRoute {
     return {
       concept: allConcepts.find((concept) => concept.slug === params.concept_slug),
     };
-  }
-
-  async afterModel(model: { concept: ConceptModel }) {
-    if (this.router.currentRouteName === 'concept-admin.index') {
-      this.router.transitionTo('concept-admin.blocks', model.concept.slug);
-    }
   }
 }

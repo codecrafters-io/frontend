@@ -41,6 +41,14 @@ export default class EditableBlockComponent extends Component<Signature> {
     this.mutableBlock = null;
   }
 
+  finishEditing() {
+    if (this.mutableBlock) {
+      this.args.onBlockChanged(this.mutableBlock);
+    }
+
+    this.mutableBlock = null;
+  }
+
   @action
   handleCancelButtonClicked() {
     // Ensure the click handler for the outer block doesn't interfere
@@ -67,14 +75,6 @@ export default class EditableBlockComponent extends Component<Signature> {
   }
 
   @action
-  handleSaveButtonClicked() {
-    // Ensure the click handler for the outer block doesn't interfere
-    next(() => {
-      this.finishEditing();
-    });
-  }
-
-  @action
   handleDiscardChangesButtonClicked() {
     this.args.onBlockChangeDiscarded();
 
@@ -84,16 +84,16 @@ export default class EditableBlockComponent extends Component<Signature> {
     });
   }
 
-  startEditing() {
-    this.mutableBlock = this.args.conceptBlock.dup();
+  @action
+  handleSaveButtonClicked() {
+    // Ensure the click handler for the outer block doesn't interfere
+    next(() => {
+      this.finishEditing();
+    });
   }
 
-  finishEditing() {
-    if (this.mutableBlock) {
-      this.args.onBlockChanged(this.mutableBlock);
-    }
-
-    this.mutableBlock = null;
+  startEditing() {
+    this.mutableBlock = this.args.conceptBlock.dup();
   }
 }
 
