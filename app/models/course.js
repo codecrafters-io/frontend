@@ -67,7 +67,7 @@ export default class CourseModel extends Model {
   }
 
   get firstStage() {
-    return this.sortedStages[0];
+    return this.sortedBaseStages[0];
   }
 
   get hasConcepts() {
@@ -102,7 +102,7 @@ export default class CourseModel extends Model {
   }
 
   get secondStage() {
-    return this.sortedStages[1];
+    return this.sortedBaseStages[1];
   }
 
   get sortPositionForTrack() {
@@ -124,9 +124,8 @@ export default class CourseModel extends Model {
     return this.baseStages.sortBy('position');
   }
 
-  // TODO[Extensions]: Should we include stages from extensions?
-  get sortedStages() {
-    return this.baseStages.sortBy('position');
+  get sortedExtensions() {
+    return this.extensions.sortBy('name');
   }
 
   get testerRepositoryLink() {

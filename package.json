@@ -46,7 +46,7 @@
     "@glint/template": "^1.2.0",
     "@percy/cli": "^1.27.2",
     "@percy/ember": "^4.0.0",
-    "@sentry/ember": "^7.72.0",
+    "@sentry/ember": "^7.73.0",
     "@tsconfig/ember": "^2.0.0",
     "@types/ember": "^4.0.6",
     "@types/ember__application": "^4.0.8",
@@ -76,11 +76,12 @@
     "@types/ember-qunit": "^6.1.1",
     "@types/ember-resolver": "^9.0.0",
     "@types/mustache": "^4.2.3",
+    "@types/prismjs": "^1.26.1",
     "@types/qunit": "^2.19.6",
     "@types/rsvp": "^4.0.5",
     "@types/showdown": "^2.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
     "autoprefixer": "^10.4.16",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.1",
@@ -108,7 +109,7 @@
     "ember-cli-string-helpers": "^6.1.0",
     "ember-cli-terser": "^4.0.2",
     "ember-cli-typescript": "^5.2.1",
-    "ember-click-outside": "^6.0.1",
+    "ember-click-outside": "^6.1.0",
     "ember-composable-helpers": "^5.0.0",
     "ember-concurrency": "^3.1.1",
     "ember-cookies": "^1.0.0",
@@ -153,7 +154,7 @@
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.0.2",
     "tailwindcss": "^3.3.3",
-    "tracked-built-ins": "^3.2.0",
+    "tracked-built-ins": "^3.3.0",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
     "webpack-bundle-analyzer": "^4.9.1"
@@ -167,7 +168,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^2.1.6",
     "@tailwindcss/typography": "^0.5.10",
-    "@typeform/embed": "^3.0.0",
+    "@typeform/embed": "^4.0.0",
     "@vimeo/player": "^2.20.1",
     "ansi_up": "^6.0.2",
     "array-to-sentence": "^2.0.0",
@@ -178,7 +179,7 @@
     "player.js": "^0.1.0",
     "showdown": "^2.1.0",
     "three": "^0.157.0",
-    "web-vitals": "^3.4.0"
+    "web-vitals": "^3.5.0"
   },
   "overrides": {
     "ember-element-helper": "0.6.0"

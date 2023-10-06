@@ -25,7 +25,7 @@ export default class CourseOverviewRoute extends BaseRoute {
     if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
       // Trigger a refresh anyway
       this.store.findAll('course', {
-        include: 'stages,stages.solutions.language,language-configurations.language',
+        include: 'extensions,stages,stages.solutions.language,language-configurations.language,',
       });
 
       return {
@@ -33,7 +33,7 @@ export default class CourseOverviewRoute extends BaseRoute {
       };
     } else {
       let courses = await this.store.findAll('course', {
-        include: 'stages,stages.solutions.language,language-configurations.language',
+        include: 'extensions,stages,stages.solutions.language,language-configurations.language,',
       });
 
       let course = courses.findBy('slug', params.course_slug);

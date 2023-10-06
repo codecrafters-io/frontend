@@ -1,8 +1,8 @@
 <div class="w-full" ...attributes>
-  <div class="flex items-center justify-between mb-4">
+  <div class="flex items-center justify-between mb-4 gap-4 flex-wrap">
     <div class="flex items-center">
       <div class="flex items-center mr-2 transition-all">
-        <div class="text-teal-500 text-lg font-bold border-b border-teal-400">
+        <div class="text-teal-500 text-lg font-bold border-b">
           {{@stage.name}}
         </div>
       </div>
@@ -14,26 +14,26 @@
       </div>
     </div>
 
-    <div class="flex items-center text-gray-400 text-xs flex-shrink-0 pl-4">
-      {{#if @stage.isFirst}}
-        &lt; 5 minutes
-      {{else if @stage.difficultyIsVeryEasy}}
-        &lt; 5 minutes
-      {{else if @stage.difficultyIsEasy}}
-        5-10 minutes
-      {{else if @stage.difficultyIsMedium}}
-        30m - 1h
-      {{else if @stage.difficultyIsHard}}
-        1h +
-      {{/if}}
-
-      {{svg-jar "clock" class="fill-current text-gray-300 ml-1 w-4 h-4"}}
+    <div class="hidden sm:inline-flex flex-shrink-0">
+      <CourseStageDifficultyLabel @stage={{@stage}} />
     </div>
   </div>
 
   <div>
     <div class="leading-relaxed prose mb-4 mr-8">
       {{this.marketingHTML}}
+    </div>
+
+    {{#if @stage.primaryExtension}}
+      <div class="text-xs mb-4 text-gray-400">
+        (This stage is part of the
+        <b class="text-gray-400">"{{@stage.primaryExtension.name}}"</b>
+        extension)
+      </div>
+    {{/if}}
+
+    <div class="mb-4 inline-flex sm:hidden">
+      <CourseStageDifficultyLabel @stage={{@stage}} />
     </div>
   </div>
 </div>

@@ -1,0 +1,14 @@
+<div class="text-gray-500 text-xs flex items-baseline gap-2" data-test-course-difficulty-label>
+  {{! template-lint-disable style-concatenation }}
+  <span class="leading-none uppercase font-semibold {{this.labelColorClass}}">{{this.label}}</span>
+  <div class="flex items-end">
+    {{#each (range 1 4) as |currentBarNumber|}}
+      {{! template-lint-disable no-inline-styles }}
+      <div
+        class="{{if (gte this.numberOfBars currentBarNumber) this.barColorClass 'bg-gray-300'}}"
+        style="width: 4px; height: {{add 0.5 (mult 0.2 currentBarNumber)}}em; margin-right: 2px; border-radius: 1px;"
+      ></div>
+    {{/each}}
+  </div>
+  <EmberTooltip @text={{this.tooltipText}} />
+</div>
