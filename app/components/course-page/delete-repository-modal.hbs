@@ -1,4 +1,4 @@
-<ModalBody @allowManualClose={{true}} @repository={{@repository}} @onClose={{@onClose}} class="w-full" data-test-delete-repository-modal>
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-delete-repository-modal>
   <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
     Delete Repository
   </div>
@@ -29,7 +29,7 @@
     To proceed, press and hold the button below for 5 seconds:
   </div>
 
-  <DangerButtonWithProgressIndicator @courseSlug={{@repository.course.slug}} @deferredFunction={{this.deleteRepository}} @size="regular">
+  <DangerButtonWithProgressIndicator @deferredFunction={{this.deleteRepository}} @redirectTo="catalog" @size="regular">
     Delete
   </DangerButtonWithProgressIndicator>
 </ModalBody>
