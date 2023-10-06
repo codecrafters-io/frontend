@@ -1,6 +1,6 @@
 <div class="bg-white min-h-screen">
   <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
-    <div class="pt-3 pb-6 mb-6 border-b flex items-start justify-between">
+    <div class="pt-3 pb-6 mb-2 border-b flex items-start justify-between">
       <div>
         <h3 class="text-lg font-bold text-gray-800 mb-1">
           Blocks
@@ -34,7 +34,9 @@
         {{/if}}
       </div>
     </div>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col">
+      <ConceptAdmin::BlocksPage::InsertBlockMarker />
+
       {{#each this.blocksWithMetadata key="index" as |blockWithMetadata index|}}
         {{#if blockWithMetadata.wasDeleted}}
           <div class="border rounded p-3 flex items-center justify-between">
@@ -57,6 +59,8 @@
             @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded index}}
           />
         {{/if}}
+
+        <ConceptAdmin::BlocksPage::InsertBlockMarker />
       {{/each}}
     </div>
   </div>
