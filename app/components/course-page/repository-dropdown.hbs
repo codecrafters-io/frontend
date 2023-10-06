@@ -126,10 +126,7 @@
 
 {{#if this.deleteRepositoryModalIsOpen}}
   <ModalBackdrop>
-    <CoursePage::DeleteRepositoryModal
-      @repository={{@activeRepository}}
-      @onClose={{fn (mut this.deleteRepositoryModalIsOpen) false}}
-    />
+    <CoursePage::DeleteRepositoryModal @repository={{@activeRepository}} @onClose={{fn (mut this.deleteRepositoryModalIsOpen) false}} />
   </ModalBackdrop>
 {{/if}}
 

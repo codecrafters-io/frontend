@@ -1,7 +1,8 @@
 {{! @glint-nocheck: not typesafe yet }}
 <button
   type="button"
-  class="{{if @isRelative 'relative' 'inline-block'}} bg-red-600 hover:bg-red-700 border border-red-600 hover:border-red-700 px-3 py-2 text-white rounded shadow-sm font-semibold
+  class="{{if @isRelative 'relative' 'inline-block'}}
+    bg-red-600 hover:bg-red-700 border border-red-600 hover:border-red-700 px-3 py-2 text-white rounded shadow-sm font-semibold
     {{if (eq @size 'small') 'text-sm' 'text-base'}}
     {{if @isDisabled 'cursor-not-allowed opacity-50'}}"
   ...attributes

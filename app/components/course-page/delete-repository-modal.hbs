@@ -4,7 +4,11 @@
   </div>
 
   <div class="prose mb-4">
-    Are you sure you want to delete your {{@repository.name}} repository on the {{@repository.course.shortName}} challenge?
+    Are you sure you want to delete your
+    {{@repository.name}}
+    repository on the
+    {{@repository.course.shortName}}
+    challenge?
   </div>
 
   <div class="prose mb-4">
@@ -15,7 +19,9 @@
     {{#if @repository.submissionsCount}}
       You have not yet pushed code to this repository.
     {{else}}
-      You have pushed code to this repository {{@repository.submissionsCount}} times.
+      You have pushed code to this repository
+      {{@repository.submissionsCount}}
+      times.
     {{/if}}
   </div>
 
@@ -23,11 +29,7 @@
     To proceed, press and hold the button below for 5 seconds:
   </div>
 
-  <DangerButtonWithProgressIndicator 
-    @courseSlug={{@repository.course.slug}}
-    @deferredFunction={{this.deleteRepository}}
-    @size="regular"
-  >
+  <DangerButtonWithProgressIndicator @courseSlug={{@repository.course.slug}} @deferredFunction={{this.deleteRepository}} @size="regular">
     Delete
   </DangerButtonWithProgressIndicator>
 </ModalBody>
