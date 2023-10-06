@@ -2,6 +2,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
@@ -69,6 +70,18 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.hover();
-    assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator is visible');
+    assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
+
+    await coursePage.deleteRepositoryModal.deleteRepositoryButton.leave();
+    assert.notOk(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should not be visible');
+
+    await coursePage.deleteRepositoryModal.deleteRepositoryButton.press();
+    await new Promise((resolve) => setTimeout(resolve, 6000)); // added an extra second to wait for animation
+    assert.strictEqual(currentURL(), '/catalog', 'redirected to catalog page');
+
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.repositoryDropdown.click();
+    assert.notOk(coursePage.repositoryDropdown.content.text.includes('Delete Repository'), 'delete repository action should not be available');
   });
 });
