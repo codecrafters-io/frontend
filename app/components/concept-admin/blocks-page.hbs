@@ -69,8 +69,8 @@
             @wasAdded={{true}}
             @wasChanged={{false}}
             @wasDeleted={{false}}
-            @onBlockChanged={{(noop)}}
-            @onBlockDeleted={{(noop)}}
+            @onBlockChanged={{fn this.handleAddedBlockChanged index addedBlockIndex}}
+            @onBlockDeleted={{fn this.handleAddedBlockDeleted index addedBlockIndex}}
             @onBlockChangeDiscarded={{(noop)}}
           />
 

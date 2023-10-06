@@ -18,6 +18,18 @@ export default class BlocksPageComponent extends Component<Signature> {
   @tracked isSaving = false;
 
   @action
+  handleAddedBlockChanged(anchorBlockIndex: number, addedBlockIndex: number, newBlock: Block) {
+    this.blockAdditions[anchorBlockIndex]!.newBlocks[addedBlockIndex] = newBlock;
+    this.blockAdditions = { ...this.blockAdditions }; // Force re-render
+  }
+
+  @action
+  handleAddedBlockDeleted(anchorBlockIndex: number, addedBlockIndex: number) {
+    this.blockAdditions[anchorBlockIndex]!.newBlocks.splice(addedBlockIndex, 1);
+    this.blockAdditions = { ...this.blockAdditions }; // Force re-render
+  }
+
+  @action
   handleBlockAdded(anchorBlockIndex: number, insertAtIndex: number, newBlock: Block) {
     if (this.blockAdditions[anchorBlockIndex]) {
       this.blockAdditions[anchorBlockIndex]!.newBlocks.splice(insertAtIndex, 0, newBlock);
