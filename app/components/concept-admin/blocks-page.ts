@@ -13,7 +13,7 @@ type Signature = {
 
 export default class BlocksPageComponent extends Component<Signature> {
   @tracked blockChanges: Record<number, { oldBlock: Block; newBlock: Block }> = {};
-  @tracked blockAdditions: Record<number, { oldBlock: Block; newBlocks: Block[] }> = {};
+  @tracked blockAdditions: Record<number, { anchorBlock: Block; newBlocks: Block[] }> = {};
   @tracked blockDeletions: Record<number, { oldBlock: Block }> = {};
   @tracked isSaving = false;
 
@@ -22,7 +22,7 @@ export default class BlocksPageComponent extends Component<Signature> {
     if (this.blockAdditions[index]) {
       this.blockAdditions[index]!.newBlocks.push(block);
     } else {
-      this.blockAdditions[index] = { oldBlock: this.args.concept.parsedBlocks[index]!, newBlocks: [block] };
+      this.blockAdditions[index] = { anchorBlock: this.args.concept.parsedBlocks[index]!, newBlocks: [block] };
     }
 
     this.blockAdditions = { ...this.blockAdditions }; // Force re-render
