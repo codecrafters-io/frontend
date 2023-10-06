@@ -11,11 +11,6 @@ interface Signature {
 export default class ContentComponent extends Component<Signature> {
   @tracked currentProgressPercentage = 0;
 
-  @action
-  handleProgressPercentageChanged(progressPercentage: number) {
-    this.currentProgressPercentage = progressPercentage;
-  }
-
   get hasCompletedConcept() {
     return this.currentProgressPercentage === 100;
   }
@@ -23,5 +18,10 @@ export default class ContentComponent extends Component<Signature> {
   @action
   handleCompletionContainerInserted(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  @action
+  handleProgressPercentageChanged(progressPercentage: number) {
+    this.currentProgressPercentage = progressPercentage;
   }
 }

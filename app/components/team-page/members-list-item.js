@@ -18,11 +18,8 @@ export default class TeamPageMembersListItemComponent extends Component {
     return this.args.membership.team.admins.includes(this.currentUser);
   }
 
-  @action
-  async handleRemoveButtonClick(teamMembership) {
-    this.isRemoving = true;
-    await teamMembership.destroyRecord();
-    this.isRemoving = false;
+  get sortedCourses() {
+    return this.args.membership.user.courseParticipations.mapBy('course').uniq().sortBy('sortPositionForTrack');
   }
 
   @action
@@ -34,7 +31,10 @@ export default class TeamPageMembersListItemComponent extends Component {
     }
   }
 
-  get sortedCourses() {
-    return this.args.membership.user.courseParticipations.mapBy('course').uniq().sortBy('sortPositionForTrack');
+  @action
+  async handleRemoveButtonClick(teamMembership) {
+    this.isRemoving = true;
+    await teamMembership.destroyRecord();
+    this.isRemoving = false;
   }
 }

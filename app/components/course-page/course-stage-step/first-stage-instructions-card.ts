@@ -31,6 +31,10 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
+  get solution() {
+    return this.args.repository.course.firstStage.solutions.find((solution) => solution.language === this.args.repository.language);
+  }
+
   get submitChangesInstructionsHTML() {
     return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.submitChangesInstructionsMarkdown);
   }
@@ -41,9 +45,5 @@ git add .
 git commit -m "pass 1st stage" # any msg
 git push origin master
 \`\`\``;
-  }
-
-  get solution() {
-    return this.args.repository.course.firstStage.solutions.find((solution) => solution.language === this.args.repository.language);
   }
 }

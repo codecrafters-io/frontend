@@ -6,6 +6,10 @@ export default class CourseOverviewStartTrackButtonComponent extends Component {
   @service authenticator;
   @service router;
 
+  get currentUserIsAnonymous() {
+    return this.authenticator.isAnonymous;
+  }
+
   @action
   handleClicked() {
     if (this.currentUserIsAnonymous) {
@@ -13,9 +17,5 @@ export default class CourseOverviewStartTrackButtonComponent extends Component {
     } else {
       this.router.transitionTo('course', this.args.courses.firstObject.slug, { queryParams: { track: this.args.language.slug } });
     }
-  }
-
-  get currentUserIsAnonymous() {
-    return this.authenticator.isAnonymous;
   }
 }

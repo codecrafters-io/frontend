@@ -49,6 +49,24 @@ export default class CourseController extends Controller {
   }
 
   @action
+  handleCollapseLeaderboardButtonClick() {
+    this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
+
+    this.analyticsEventTracker.track('collapsed_course_page_leaderboard', {
+      course_id: this.model.course.id,
+    });
+  }
+
+  @action
+  handleCollapseSidebarButtonClick() {
+    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
+
+    this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
+      course_id: this.model.course.id,
+    });
+  }
+
+  @action
   handleDidInsertContainer() {
     this.setupRouteChangeListeners();
     this.startRepositoryPoller();
@@ -71,29 +89,12 @@ export default class CourseController extends Controller {
   }
 
   @action
-  async handlePoll() {
-    // Nothing to do at the moment
-  }
+  handleExpandLeaderboardButtonClick() {
+    this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
 
-  @action
-  async handleWillDestroyContainer() {
-    this.teardownRouteChangeListeners();
-    this.stopRepositoryPoller();
-  }
-
-  @action
-  async handleRouteChanged() {
-    this.sidebarIsExpandedOnMobile = false;
-  }
-
-  @action
-  setupRouteChangeListeners() {
-    this.router.on('routeDidChange', this.handleRouteChanged);
-  }
-
-  @action
-  teardownRouteChangeListeners() {
-    this.router.off('routeDidChange', this.handleRouteChanged);
+    this.analyticsEventTracker.track('expanded_course_page_leaderboard', {
+      course_id: this.model.course.id,
+    });
   }
 
   @action
@@ -106,30 +107,24 @@ export default class CourseController extends Controller {
   }
 
   @action
-  handleCollapseSidebarButtonClick() {
-    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
-
-    this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
-      course_id: this.model.course.id,
-    });
+  async handlePoll() {
+    // Nothing to do at the moment
   }
 
   @action
-  handleExpandLeaderboardButtonClick() {
-    this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
-
-    this.analyticsEventTracker.track('expanded_course_page_leaderboard', {
-      course_id: this.model.course.id,
-    });
+  async handleRouteChanged() {
+    this.sidebarIsExpandedOnMobile = false;
   }
 
   @action
-  handleCollapseLeaderboardButtonClick() {
-    this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
+  async handleWillDestroyContainer() {
+    this.teardownRouteChangeListeners();
+    this.stopRepositoryPoller();
+  }
 
-    this.analyticsEventTracker.track('collapsed_course_page_leaderboard', {
-      course_id: this.model.course.id,
-    });
+  @action
+  setupRouteChangeListeners() {
+    this.router.on('routeDidChange', this.handleRouteChanged);
   }
 
   startRepositoryPoller() {
@@ -148,5 +143,9 @@ export default class CourseController extends Controller {
     }
 
     this.polledRepository = null;
+  }
+  @action
+  teardownRouteChangeListeners() {
+    this.router.off('routeDidChange', this.handleRouteChanged);
   }
 }

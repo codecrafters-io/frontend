@@ -9,12 +9,12 @@ export default class LocalStorageService extends Service {
     return window.localStorage.length;
   }
 
-  key(index: number): string | null {
+  clear(): void {
     if (!window.localStorage) {
-      return null;
+      throw new Error('Clearing localStorage items is unavailable in the current context');
     }
 
-    return window.localStorage.key(index);
+    window.localStorage.clear();
   }
 
   getItem(keyName: string): string | null {
@@ -25,12 +25,12 @@ export default class LocalStorageService extends Service {
     return window.localStorage.getItem(keyName);
   }
 
-  setItem(keyName: string, keyValue: string): void {
+  key(index: number): string | null {
     if (!window.localStorage) {
-      throw new Error('Setting localStorage items is unavailable in the current context');
+      return null;
     }
 
-    window.localStorage.setItem(keyName, keyValue);
+    return window.localStorage.key(index);
   }
 
   removeItem(keyName: string): void {
@@ -41,11 +41,11 @@ export default class LocalStorageService extends Service {
     window.localStorage.removeItem(keyName);
   }
 
-  clear(): void {
+  setItem(keyName: string, keyValue: string): void {
     if (!window.localStorage) {
-      throw new Error('Clearing localStorage items is unavailable in the current context');
+      throw new Error('Setting localStorage items is unavailable in the current context');
     }
 
-    window.localStorage.clear();
+    window.localStorage.setItem(keyName, keyValue);
   }
 }

@@ -11,10 +11,6 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.args.stage.marketingMarkdown));
   }
 
-  get userHasStartedCourse() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', this.args.course).firstObject;
-  }
-
   get recentlyAttemptedUsers() {
     return this.store
       .peekAll('leaderboard-entry')
@@ -23,5 +19,9 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
       .uniqBy('user')
       .slice(0, 3)
       .mapBy('user');
+  }
+
+  get userHasStartedCourse() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', this.args.course).firstObject;
   }
 }

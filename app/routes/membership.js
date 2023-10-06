@@ -6,16 +6,16 @@ export default class MembershipRoute extends BaseRoute {
   @service router;
   @service authenticator;
 
+  afterModel() {
+    // Force a sync of subscriptions
+    this.store.findAll('subscription');
+  }
+
   async model() {
     await this.authenticator.authenticate();
 
     if (this.authenticator.currentUser && this.authenticator.currentUser.subscriptions.length === 0) {
       this.router.transitionTo('pay');
     }
-  }
-
-  afterModel() {
-    // Force a sync of subscriptions
-    this.store.findAll('subscription');
   }
 }

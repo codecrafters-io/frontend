@@ -17,27 +17,12 @@ export default class ActionButtonListComponent extends Component {
     );
   }
 
-  @action
-  handleViewTestCasesButtonClicked() {
-    window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
-  }
-
-  @action
-  handleViewCodeExamplesButtonClicked() {
-    this.router.transitionTo('course.stage.code-examples', this.args.courseStage.position);
-  }
-
-  @action
-  handleViewScreencastsButtonClicked() {
-    this.router.transitionTo('course.stage.screencasts', this.args.courseStage.position);
+  get shouldShowCodeExamplesButton() {
+    return !this.args.courseStage.isFirst;
   }
 
   get shouldShowEditFeedbackButton() {
     return !this.args.shouldHideFeedbackButtons && !!this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage);
-  }
-
-  get shouldShowViewScreencastsButton() {
-    return this.args.courseStage.hasScreencasts;
   }
 
   get shouldShowSubmitFeedbackButton() {
@@ -59,8 +44,8 @@ export default class ActionButtonListComponent extends Component {
     return !this.args.courseStage.isFirst && !this.args.courseStage.isSecond && this.args.repository.currentStage === this.args.courseStage;
   }
 
-  get shouldShowCodeExamplesButton() {
-    return !this.args.courseStage.isFirst;
+  get shouldShowViewScreencastsButton() {
+    return this.args.courseStage.hasScreencasts;
   }
 
   get shouldShowViewTestCasesButton() {
@@ -69,5 +54,19 @@ export default class ActionButtonListComponent extends Component {
     }
 
     return this.args.courseStage.testerSourceCodeUrl;
+  }
+
+  @action
+  handleViewCodeExamplesButtonClicked() {
+    this.router.transitionTo('course.stage.code-examples', this.args.courseStage.position);
+  }
+
+  @action
+  handleViewScreencastsButtonClicked() {
+    this.router.transitionTo('course.stage.screencasts', this.args.courseStage.position);
+  }
+  @action
+  handleViewTestCasesButtonClicked() {
+    window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
   }
 }

@@ -52,25 +52,20 @@ export default class UserModel extends Model {
     return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
-  canAttemptCourseStage(courseStage) {
-    return courseStage.isFree || this.canAccessPaidContent;
-  }
-
-  canCreateRepository(/* _course, _language */) {
-    // course & language are unused, earlier we used to limit access based on payment status
-    return true;
+  get codecraftersProfileUrl() {
+    return `/users/${this.username}`;
   }
 
   get completedCourseParticipations() {
     return this.courseParticipations.filterBy('isCompleted');
   }
 
-  get codecraftersProfileUrl() {
-    return `/users/${this.username}`;
-  }
-
   get currentReferralActivation() {
     return this.referralActivationsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
+  }
+
+  get earlyBirdDiscountEligibilityExpiresAt() {
+    return new Date(this.createdAt.getTime() + 24 * 60 * 60 * 1000);
   }
 
   get expiredSubscription() {
@@ -79,14 +74,6 @@ export default class UserModel extends Model {
     } else {
       return this.subscriptions.sortBy('startDate').reverse().findBy('isInactive');
     }
-  }
-
-  get earlyBirdDiscountEligibilityExpiresAt() {
-    return new Date(this.createdAt.getTime() + 24 * 60 * 60 * 1000);
-  }
-
-  get hasAuthoredCourses() {
-    return this.authoredCourseSlugs.length > 0;
   }
 
   get githubAppInstallation() {
@@ -101,6 +88,10 @@ export default class UserModel extends Model {
     return !!this.activeSubscription;
   }
 
+  get hasAuthoredCourses() {
+    return this.authoredCourseSlugs.length > 0;
+  }
+
   get hasEarnedThreeInADayBadge() {
     return this.badgeAwards.any((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
   }
@@ -109,12 +100,8 @@ export default class UserModel extends Model {
     return this.referralLinks.rejectBy('isNew').length > 0;
   }
 
-  hasStartedCourse(course) {
-    return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
-  }
-
-  isCourseAuthor(course) {
-    return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
+  get isEligibleForCustomDiscount() {
+    return !!this.availableCustomDiscount;
   }
 
   get isEligibleForEarlyBirdDiscount() {
@@ -135,10 +122,6 @@ export default class UserModel extends Model {
     } else {
       return false;
     }
-  }
-
-  get isEligibleForCustomDiscount() {
-    return !!this.availableCustomDiscount;
   }
 
   get isFree() {
@@ -171,6 +154,23 @@ export default class UserModel extends Model {
 
   get teams() {
     return this.teamMemberships.mapBy('team');
+  }
+
+  canAttemptCourseStage(courseStage) {
+    return courseStage.isFree || this.canAccessPaidContent;
+  }
+
+  canCreateRepository(/* _course, _language */) {
+    // course & language are unused, earlier we used to limit access based on payment status
+    return true;
+  }
+
+  hasStartedCourse(course) {
+    return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
+  }
+
+  isCourseAuthor(course) {
+    return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 }
 

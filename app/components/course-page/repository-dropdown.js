@@ -17,6 +17,10 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
     return this.authenticator.currentUser;
   }
 
+  get nonActiveRepositories() {
+    return this.args.repositories.reject((repository) => repository === this.args.activeRepository);
+  }
+
   @action
   async handleCopyGifBannerButtonClick(dropdownActions) {
     if (this.args.activeRepository.isNew) {
@@ -75,9 +79,5 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
   async handleTryDifferentLanguageActionClick(dropdownActions) {
     this.router.transitionTo('course.introduction', { queryParams: { repo: 'new', track: null } });
     dropdownActions.close();
-  }
-
-  get nonActiveRepositories() {
-    return this.args.repositories.reject((repository) => repository === this.args.activeRepository);
   }
 }

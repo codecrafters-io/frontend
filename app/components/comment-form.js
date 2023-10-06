@@ -27,11 +27,6 @@ export default class CommentFormComponent extends Component {
     }
   }
 
-  @action
-  setActiveTab(tab) {
-    this.activeTab = tab;
-  }
-
   get bodyHTML() {
     return htmlSafe(
       new showdown.Converter({ simplifiedAutoLink: true, openLinksInNewWindow: true, strikethrough: true }).makeHtml(
@@ -44,6 +39,27 @@ export default class CommentFormComponent extends Component {
     return this.authenticator.currentUser;
   }
 
+  get isReplying() {
+    return !!this.args.parentComment;
+  }
+
+  get placeholderText() {
+    if (this.isReplying) {
+      return 'Write a reply';
+    } else {
+      return 'Found an interesting resource? Share it with the community.';
+    }
+  }
+
+  get submitButtonIsDisabled() {
+    return !this.comment.bodyMarkdown || this.comment.bodyMarkdown.trim().length < 1 || this.isSaving;
+  }
+
+  @action
+  handleCancelReplyButtonClick() {
+    this.args.onCancel();
+  }
+
   @action
   handleDidInsertBodyHTML(element) {
     Prism.highlightAllUnder(element);
@@ -51,11 +67,6 @@ export default class CommentFormComponent extends Component {
 
   @action
   handleEditCancelButtonClick() {
-    this.args.onCancel();
-  }
-
-  @action
-  handleCancelReplyButtonClick() {
     this.args.onCancel();
   }
 
@@ -92,16 +103,9 @@ export default class CommentFormComponent extends Component {
     });
   }
 
-  get isReplying() {
-    return !!this.args.parentComment;
-  }
-
-  get placeholderText() {
-    if (this.isReplying) {
-      return 'Write a reply';
-    } else {
-      return 'Found an interesting resource? Share it with the community.';
-    }
+  @action
+  setActiveTab(tab) {
+    this.activeTab = tab;
   }
 
   setNewComment() {
@@ -120,9 +124,5 @@ export default class CommentFormComponent extends Component {
         language: this.args.language,
       });
     }
-  }
-
-  get submitButtonIsDisabled() {
-    return !this.comment.bodyMarkdown || this.comment.bodyMarkdown.trim().length < 1 || this.isSaving;
   }
 }

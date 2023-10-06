@@ -7,12 +7,12 @@ export default class MembershipController extends Controller {
   @service('authenticator') authenticator;
   @tracked isCancellingSubscription = false;
 
-  get activeSubscription() {
-    return this.authenticator.currentUser.activeSubscription;
-  }
-
   get activeOrExpiredSubscription() {
     return this.activeSubscription || this.expiredSubscription;
+  }
+
+  get activeSubscription() {
+    return this.authenticator.currentUser.activeSubscription;
   }
 
   get expiredSubscription() {

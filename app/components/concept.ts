@@ -46,17 +46,6 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @cached
-  get allBlocks() {
-    return this.args.concept.parsedBlocks.map((block, index) => {
-      return {
-        ...block,
-        type: block.type,
-        index: index,
-      };
-    });
-  }
-
-  @cached
   get allBlockGroups(): BlockGroup[] {
     return this.allBlocks.reduce((groups, block) => {
       if (groups.length <= 0) {
@@ -73,6 +62,17 @@ export default class ConceptComponent extends Component<Signature> {
     }, [] as BlockGroup[]);
   }
 
+  @cached
+  get allBlocks() {
+    return this.args.concept.parsedBlocks.map((block, index) => {
+      return {
+        ...block,
+        type: block.type,
+        index: index,
+      };
+    });
+  }
+
   get completedBlocksCount() {
     return this.allBlockGroups.reduce((count, blockGroup) => {
       if (blockGroup.index < this.currentBlockGroupIndex) {
@@ -87,6 +87,22 @@ export default class ConceptComponent extends Component<Signature> {
     return this.lastRevealedBlockGroupIndex || 0;
   }
 
+  get progressPercentage() {
+    if (!this.lastRevealedBlockGroupIndex) {
+      return 0; // The user hasn't interacted with any blocks yet
+    }
+
+    if (this.hasFinished) {
+      return 100;
+    } else {
+      return Math.round(100 * (this.completedBlocksCount / this.allBlocks.length));
+    }
+  }
+
+  get visibleBlockGroups() {
+    return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
+  }
+
   @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
@@ -95,8 +111,8 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleDidInsertContainer() {
-    this.analyticsEventTracker.track('viewed_concept', { concept_id: this.args.concept.id });
+  handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   @action
@@ -114,13 +130,13 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
-    this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
+  handleDidInsertContainer() {
+    this.analyticsEventTracker.track('viewed_concept', { concept_id: this.args.concept.id });
   }
 
   @action
-  handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
+    this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
 
   @action
@@ -138,22 +154,6 @@ export default class ConceptComponent extends Component<Signature> {
     }
 
     // TODO: Add analytics event?
-  }
-
-  get progressPercentage() {
-    if (!this.lastRevealedBlockGroupIndex) {
-      return 0; // The user hasn't interacted with any blocks yet
-    }
-
-    if (this.hasFinished) {
-      return 100;
-    } else {
-      return Math.round(100 * (this.completedBlocksCount / this.allBlocks.length));
-    }
-  }
-
-  get visibleBlockGroups() {
-    return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
   }
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {

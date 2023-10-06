@@ -38,6 +38,10 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
     return this.sectionList.sections[this.expandedSectionIndex] as Section;
   }
 
+  get sectionList(): SectionList {
+    return this.args.repository.preChallengeAssessmentSectionList;
+  }
+
   @action
   expandNextSection(): void {
     if (this.expandedSectionIndex !== null) {
@@ -58,10 +62,6 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   @action
   handleSectionExpanded(section: MultiSectionCardSection) {
     this.expandedSectionIndex = this.sectionList.indexOf(section as Section);
-  }
-
-  get sectionList(): SectionList {
-    return this.args.repository.preChallengeAssessmentSectionList;
   }
 }
 

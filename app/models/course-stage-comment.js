@@ -18,6 +18,10 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   @attr('date') createdAt;
   @attr('date') updatedAt;
 
+  get childComments() {
+    return this.target.comments.filter((comment) => comment.parentComment && comment.parentComment.id === this.id);
+  }
+
   get contextForUserLabel() {
     return this.target.course;
   }
@@ -26,16 +30,12 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
     return this.target;
   }
 
-  set courseStage(value) {
-    this.target = value;
-  }
-
-  get childComments() {
-    return this.target.comments.filter((comment) => comment.parentComment && comment.parentComment.id === this.id);
-  }
-
   get isTopLevelComment() {
     return !this.parentComment;
+  }
+
+  set courseStage(value) {
+    this.target = value;
   }
 }
 

@@ -20,37 +20,6 @@ export default class CourseRoute extends BaseRoute {
     },
   };
 
-  async model(params, transition) {
-    const [allCourses, allRepositories] = await this.loadResources();
-    const course = allCourses.find((course) => course.slug === params.course_slug);
-
-    const repositories = allRepositories.filter((repository) => {
-      return !repository.isNew && repository.course.id === course.id && repository.user.id === this.authenticator.currentUser.id;
-    });
-
-    const activeRepository = this.findOrCreateRepository(course, params, transition, repositories);
-    this.coursePageState.setStepList(new StepList(activeRepository));
-
-    return {
-      course: allCourses.find((course) => course.slug === params.course_slug),
-      activeRepository: activeRepository,
-      repositories: repositories,
-    };
-  }
-
-  redirect(model, transition) {
-    if (transition.to.name === 'course.index') {
-      const activeStep = this.coursePageState.stepList.activeStep;
-
-      this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
-    }
-
-    // Schedule this to run in the next runloop, so that we aren't operating on a loading state
-    next(() => {
-      this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
-    });
-  }
-
   findOrCreateRepository(course, params, transition, repositories) {
     if (transition.to.queryParams.repo && transition.to.queryParams.repo === 'new') {
       const existingNewRepository = this.store.peekAll('repository').find((repository) => repository.isNew);
@@ -113,5 +82,36 @@ export default class CourseRoute extends BaseRoute {
     const [allCourses, allRepositories] = await RSVP.all([coursesPromise, repositoriesPromise, this.authenticator.authenticate()]);
 
     return [allCourses, allRepositories];
+  }
+
+  async model(params, transition) {
+    const [allCourses, allRepositories] = await this.loadResources();
+    const course = allCourses.find((course) => course.slug === params.course_slug);
+
+    const repositories = allRepositories.filter((repository) => {
+      return !repository.isNew && repository.course.id === course.id && repository.user.id === this.authenticator.currentUser.id;
+    });
+
+    const activeRepository = this.findOrCreateRepository(course, params, transition, repositories);
+    this.coursePageState.setStepList(new StepList(activeRepository));
+
+    return {
+      course: allCourses.find((course) => course.slug === params.course_slug),
+      activeRepository: activeRepository,
+      repositories: repositories,
+    };
+  }
+
+  redirect(model, transition) {
+    if (transition.to.name === 'course.index') {
+      const activeStep = this.coursePageState.stepList.activeStep;
+
+      this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
+    }
+
+    // Schedule this to run in the next runloop, so that we aren't operating on a loading state
+    next(() => {
+      this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
+    });
   }
 }

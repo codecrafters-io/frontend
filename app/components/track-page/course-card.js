@@ -13,11 +13,6 @@ export default class TrackPageCourseCardComponent extends Component {
     return this.authenticator.isAnonymous;
   }
 
-  @action
-  handleClick() {
-    this.router.transitionTo('course', this.args.course.slug, { queryParams: { track: this.args.language.slug } });
-  }
-
   get introductionHtml() {
     return htmlSafe(new showdown.Converter().makeHtml(this.args.course.trackIntroductionMarkdownFor(this.args.language)));
   }
@@ -32,5 +27,10 @@ export default class TrackPageCourseCardComponent extends Component {
     //   .uniqBy('user')
     //   .slice(0, 3)
     //   .mapBy('user');
+  }
+
+  @action
+  handleClick() {
+    this.router.transitionTo('course', this.args.course.slug, { queryParams: { track: this.args.language.slug } });
   }
 }

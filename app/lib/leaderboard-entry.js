@@ -25,10 +25,6 @@ export default class LeaderboardEntry {
     return this.currentCourseStage.course;
   }
 
-  get userId() {
-    return this.user.id;
-  }
-
   get statusIsCompleted() {
     return this.status === 'completed';
   }
@@ -39,5 +35,9 @@ export default class LeaderboardEntry {
 
   get statusIsIdle() {
     return this.status === 'idle';
+  }
+
+  get userId() {
+    return this.user.id;
   }
 }

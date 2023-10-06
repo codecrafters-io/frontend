@@ -16,6 +16,14 @@ export default class HeaderComponent extends Component {
 
   @tracked mobileMenuIsExpanded = false;
 
+  get adminPanelLink() {
+    return `${config.x.backendUrl}/admin`;
+  }
+
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   get links() {
     const links = [
       { text: 'Catalog', route: 'catalog', type: 'route' },
@@ -34,12 +42,8 @@ export default class HeaderComponent extends Component {
     return links;
   }
 
-  get adminPanelLink() {
-    return `${config.x.backendUrl}/admin`;
-  }
-
-  get currentUser() {
-    return this.authenticator.currentUser;
+  get shouldShowSubscribeButton() {
+    return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }
 
   @action
@@ -48,21 +52,17 @@ export default class HeaderComponent extends Component {
   }
 
   @action
-  handleWillDestroy() {
-    this.router.off('routeWillChange', this.handleRouteChange);
-  }
-
-  @action
   handleRouteChange() {
     this.mobileMenuIsExpanded = false;
   }
 
   @action
-  toggleMobileMenu() {
-    this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
+  handleWillDestroy() {
+    this.router.off('routeWillChange', this.handleRouteChange);
   }
 
-  get shouldShowSubscribeButton() {
-    return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
+  @action
+  toggleMobileMenu() {
+    this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
   }
 }

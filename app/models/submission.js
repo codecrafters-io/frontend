@@ -32,15 +32,15 @@ export default class SubmissionModel extends Model {
     return this.status === 'evaluating';
   }
 
-  get statusIsSuccess() {
-    return this.status === 'success';
-  }
-
   get statusIsFailure() {
     return this.status === 'failure';
   }
 
   get statusIsInternalError() {
     return this.status === 'internal_error';
+  }
+
+  get statusIsSuccess() {
+    return this.status === 'success';
   }
 }

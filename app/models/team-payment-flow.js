@@ -27,10 +27,6 @@ export default class TeamPaymentFlowModel extends Model {
     return this.couponCode && this.couponCode.trim().length > 0;
   }
 
-  get teamNameIsComplete() {
-    return this.teamName && this.teamName.trim().length > 0;
-  }
-
   get numberOfSeatsIsComplete() {
     return this.numberOfSeats && this.numberOfSeats >= 5;
   }
@@ -45,6 +41,10 @@ export default class TeamPaymentFlowModel extends Model {
 
   get pricingPlanTypeIsComplete() {
     return ['monthly', 'yearly'].includes(this.pricingPlanType);
+  }
+
+  get teamNameIsComplete() {
+    return this.teamName && this.teamName.trim().length > 0;
   }
 }
 

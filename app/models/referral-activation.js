@@ -24,16 +24,8 @@ export default class ReferralActivationModel extends Model {
     return this.discountPeriodEndsAt > new Date();
   }
 
-  get statusIsTrialCancelled() {
-    return this.status === 'trial_cancelled';
-  }
-
-  get statusIsPendingTrial() {
-    return this.status === 'pending_trial';
-  }
-
-  get statusIsTrialing() {
-    return this.status === 'trialing';
+  get spentAmountInDollars() {
+    return this.spentAmountInCents / 100;
   }
 
   get statusIsFirstChargeSuccessful() {
@@ -44,8 +36,16 @@ export default class ReferralActivationModel extends Model {
     return this.status === 'inactive';
   }
 
-  get spentAmountInDollars() {
-    return this.spentAmountInCents / 100;
+  get statusIsPendingTrial() {
+    return this.status === 'pending_trial';
+  }
+
+  get statusIsTrialCancelled() {
+    return this.status === 'trial_cancelled';
+  }
+
+  get statusIsTrialing() {
+    return this.status === 'trialing';
   }
 
   get totalEarningsAmountInCents() {

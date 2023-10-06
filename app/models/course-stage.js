@@ -39,34 +39,12 @@ export default class CourseStageModel extends Model {
     return this.approvedCommentsCount > 0;
   }
 
-  hasCommunitySolutionsForLanguage(language) {
-    return ((this.communitySolutionCounts || {})[language.slug] || 0) > 0;
-  }
-
-  hasCommunitySolutionsForLanguagesOtherThan(language) {
-    for (let [languageSlug, solutionsCount] of Object.entries(this.communitySolutionCounts || {})) {
-      if (solutionsCount > 0 && languageSlug !== language.slug) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   get hasConcepts() {
     return this.conceptSlugs && this.conceptSlugs.length > 0;
   }
 
   get hasScreencasts() {
     return this.screencasts.length > 0;
-  }
-
-  hasSolutionForLanguage(language) {
-    return !!this.solutions.findBy('language', language);
-  }
-
-  hasSolutionForLanguagesOtherThan(language) {
-    return this.solutions.any((solution) => solution.language !== language);
   }
 
   get identifierForURL() {
@@ -98,16 +76,16 @@ export default class CourseStageModel extends Model {
     return this === this.course.sortedStages.lastObject;
   }
 
+  get isPenultimate() {
+    return this === this.course.sortedBaseStages[this.course.sortedBaseStages.length - 2];
+  }
+
   get isSecond() {
     return this === this.course.sortedBaseStages[1];
   }
 
   get isThird() {
     return this === this.course.sortedBaseStages[2];
-  }
-
-  get isPenultimate() {
-    return this === this.course.sortedBaseStages[this.course.sortedBaseStages.length - 2];
   }
 
   // TODO[Extensions]: Different logic if from extension vs. not
@@ -137,5 +115,26 @@ export default class CourseStageModel extends Model {
 
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
+  }
+  hasCommunitySolutionsForLanguage(language) {
+    return ((this.communitySolutionCounts || {})[language.slug] || 0) > 0;
+  }
+
+  hasCommunitySolutionsForLanguagesOtherThan(language) {
+    for (let [languageSlug, solutionsCount] of Object.entries(this.communitySolutionCounts || {})) {
+      if (solutionsCount > 0 && languageSlug !== language.slug) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  hasSolutionForLanguage(language) {
+    return !!this.solutions.findBy('language', language);
+  }
+
+  hasSolutionForLanguagesOtherThan(language) {
+    return this.solutions.any((solution) => solution.language !== language);
   }
 }

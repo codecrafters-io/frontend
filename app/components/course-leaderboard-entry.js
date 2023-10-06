@@ -16,11 +16,11 @@ export default class CourseLeaderboardEntryComponent extends Component {
     return !this.args.entry;
   }
 
-  get progressNumerator() {
-    return this.args.entry.completedStagesCount;
-  }
-
   get progressDenominator() {
     return this.args.entry.currentCourseStage.course.stages.length;
+  }
+
+  get progressNumerator() {
+    return this.args.entry.completedStagesCount;
   }
 }

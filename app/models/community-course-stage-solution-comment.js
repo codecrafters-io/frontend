@@ -31,8 +31,8 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
     return this.target;
   }
 
-  set solution(value) {
-    this.target = value;
+  get subtargetEndLine() {
+    return this.subtargetLines.endLine;
   }
 
   get subtargetLines() {
@@ -49,8 +49,8 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
     return this.subtargetLines.startLine;
   }
 
-  get subtargetEndLine() {
-    return this.subtargetLines.endLine;
+  set solution(value) {
+    this.target = value;
   }
 }
 

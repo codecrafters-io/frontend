@@ -56,14 +56,18 @@ export default class FeedbackPromptComponent extends Component {
     }
   }
 
+  get feedbackSubmission() {
+    return this.args.repository.courseStageFeedbackSubmissionFor(this.args.courseStage);
+  }
+
+  get stageIsComplete() {
+    return this.args.repository.stageIsComplete(this.args.courseStage);
+  }
+
   @action
   handleAnswerOptionSelected(answerOption) {
     this.feedbackSubmission.selectedAnswer = answerOption;
     this.feedbackSubmission.save();
-  }
-
-  get feedbackSubmission() {
-    return this.args.repository.courseStageFeedbackSubmissionFor(this.args.courseStage);
   }
 
   @action
@@ -84,9 +88,5 @@ export default class FeedbackPromptComponent extends Component {
       },
       500,
     );
-  }
-
-  get stageIsComplete() {
-    return this.args.repository.stageIsComplete(this.args.courseStage);
   }
 }

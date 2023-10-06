@@ -69,16 +69,6 @@ class ReferencedCodeSection {
 }
 
 export default class CodeWalkthroughComponent extends Component {
-  @action
-  handleDidInsertProseSectionHTML(element) {
-    Prism.highlightAllUnder(element);
-  }
-
-  @action
-  handleDidUpdateProseSectionHTML(element) {
-    Prism.highlightAllUnder(element);
-  }
-
   get sections() {
     return this.args.model.sections.map((section) => {
       if (section.type === 'prose') {
@@ -87,5 +77,15 @@ export default class CodeWalkthroughComponent extends Component {
         return new ReferencedCodeSection(section.code, section.language_slug, section.link, section.file_path, section.highlighted_lines);
       }
     });
+  }
+
+  @action
+  handleDidInsertProseSectionHTML(element) {
+    Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleDidUpdateProseSectionHTML(element) {
+    Prism.highlightAllUnder(element);
   }
 }

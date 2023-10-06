@@ -36,17 +36,17 @@ export default class CodeWalkthrough extends Model {
   @attr('string') declare title: string;
   @attr('date') declare updatedAt: Date;
 
-  get introductionHTML(): SafeString | null {
-    if (this.introductionMarkdown) {
-      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.introductionMarkdown));
+  get conclusionHTML(): SafeString | null {
+    if (this.conclusionMarkdown) {
+      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.conclusionMarkdown));
     } else {
       return null;
     }
   }
 
-  get conclusionHTML(): SafeString | null {
-    if (this.conclusionMarkdown) {
-      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.conclusionMarkdown));
+  get introductionHTML(): SafeString | null {
+    if (this.introductionMarkdown) {
+      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.introductionMarkdown));
     } else {
       return null;
     }

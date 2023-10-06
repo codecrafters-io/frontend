@@ -50,28 +50,16 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'beta') releaseStatusIsBeta;
   @equal('releaseStatus', 'live') releaseStatusIsLive;
 
-  availableLanguageConfigurationsForUser(user) {
-    return this.languageConfigurations.filter((languageConfiguration) => languageConfiguration.isAvailableForUser(user));
+  get baseStages() {
+    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
   }
 
   get betaOrLiveLanguages() {
     return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
   }
 
-  get baseStages() {
-    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
-  }
-
   get concepts() {
     return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
-  }
-
-  get hasConcepts() {
-    return this.conceptSlugs && this.conceptSlugs.length > 0;
-  }
-
-  get hasExtensions() {
-    return this.extensions.length > 0;
   }
 
   get definitionRepositoryLink() {
@@ -80,6 +68,14 @@ export default class CourseModel extends Model {
 
   get firstStage() {
     return this.sortedStages[0];
+  }
+
+  get hasConcepts() {
+    return this.conceptSlugs && this.conceptSlugs.length > 0;
+  }
+
+  get hasExtensions() {
+    return this.extensions.length > 0;
   }
 
   get latestTesterVersion() {
@@ -109,6 +105,20 @@ export default class CourseModel extends Model {
     return this.sortedStages[1];
   }
 
+  get sortPositionForTrack() {
+    return (
+      {
+        bittorrent: 1,
+        'http-server': 2,
+        grep: 3,
+        redis: 4,
+        docker: 5,
+        git: 6,
+        sqlite: 7,
+      }[this.slug] || 8
+    );
+  }
+
   // TODO[Extensions]: Should we include stages from extensions?
   get sortedBaseStages() {
     return this.baseStages.sortBy('position');
@@ -117,6 +127,14 @@ export default class CourseModel extends Model {
   // TODO[Extensions]: Should we include stages from extensions?
   get sortedStages() {
     return this.baseStages.sortBy('position');
+  }
+
+  get testerRepositoryLink() {
+    return `https://github.com/${this.testerRepositoryFullName}`;
+  }
+
+  availableLanguageConfigurationsForUser(user) {
+    return this.languageConfigurations.filter((languageConfiguration) => languageConfiguration.isAvailableForUser(user));
   }
 
   trackIntroductionMarkdownFor(language) {
@@ -155,24 +173,6 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
       return `
 Learn about .torrent files and the famous BitTorrent protocol. Implement your own BitTorrent client in ${language.name}.`;
     }
-  }
-
-  get sortPositionForTrack() {
-    return (
-      {
-        bittorrent: 1,
-        'http-server': 2,
-        grep: 3,
-        redis: 4,
-        docker: 5,
-        git: 6,
-        sqlite: 7,
-      }[this.slug] || 8
-    );
-  }
-
-  get testerRepositoryLink() {
-    return `https://github.com/${this.testerRepositoryFullName}`;
   }
 }
 

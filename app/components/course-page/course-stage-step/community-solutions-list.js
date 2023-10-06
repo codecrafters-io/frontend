@@ -10,6 +10,14 @@ export default class CommunitySolutionsListComponent extends Component {
   @tracked lastVisibleSolutionIndex = 2;
   @tracked configureGithubIntegrationModalIsOpen = false;
 
+  get hasNextResults() {
+    return this.lastVisibleSolutionIndex < this.args.solutions.length - 1;
+  }
+
+  get visibleSolutions() {
+    return this.args.solutions.slice(0, this.lastVisibleSolutionIndex + 1);
+  }
+
   @action
   async handleListEndReached() {
     this.isLoadingNextBatch = true;
@@ -22,13 +30,5 @@ export default class CommunitySolutionsListComponent extends Component {
       },
       100,
     );
-  }
-
-  get hasNextResults() {
-    return this.lastVisibleSolutionIndex < this.args.solutions.length - 1;
-  }
-
-  get visibleSolutions() {
-    return this.args.solutions.slice(0, this.lastVisibleSolutionIndex + 1);
   }
 }
