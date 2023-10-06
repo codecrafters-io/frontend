@@ -35,7 +35,7 @@ export default class BlocksPageComponent extends Component<Signature> {
       this.blockAdditions[anchorBlockIndex]!.newBlocks.splice(insertAtIndex, 0, newBlock);
     } else {
       if (insertAtIndex !== 0) {
-        throw new Error('Expected indexWithinAddition to be 0 when adding a new blockAddition');
+        throw new Error('Expected insertAtIndex to be 0 when adding a new blockAddition');
       }
 
       // anchorBlock is null if the block is being added at the start of the list
@@ -136,6 +136,10 @@ export default class BlocksPageComponent extends Component<Signature> {
 
   get rawBlocksAfterMutations() {
     const blocks: Block[] = [];
+
+    if (this.blockAdditions[-1]) {
+      blocks.push(...this.blockAdditions[-1]!.newBlocks);
+    }
 
     this.args.concept.parsedBlocks.forEach((block, index) => {
       if (this.blockDeletions[index]) {
