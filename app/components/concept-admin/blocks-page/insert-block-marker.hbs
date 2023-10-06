@@ -5,6 +5,7 @@
       class="relative flex items-center justify-center group/insert-block-marker
         {{if dd.isOpen 'opacity-100' 'opacity-0 hover:opacity-100'}}
         py-1 transition-opacity duration-200"
+      data-test-insert-block-marker
     >
       <div class="absolute h-px w-full bg-gray-100 top-1/2 left-0 right-0">
       </div>
@@ -20,7 +21,7 @@
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-screen-md bg-white" data-test-account-dropdown-content>
+    <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-screen-md bg-white" data-test-insert-block-marker-dropdown-content>
       <ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem
         @icon="markdown"
         @title="Markdown Block"
