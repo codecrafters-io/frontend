@@ -13,16 +13,16 @@ type Signature = {
 
 export default class BlocksPageComponent extends Component<Signature> {
   @tracked blockChanges: Record<number, { oldBlock: Block; newBlock: Block }> = {};
-  @tracked blockAdditions: Record<number, Block[]> = {};
+  @tracked blockAdditions: Record<number, { oldBlock: Block; newBlocks: Block[] }> = {};
   @tracked blockDeletions: Record<number, { oldBlock: Block }> = {};
   @tracked isSaving = false;
 
   @action
   handleBlockAdded(index: number, block: Block) {
     if (this.blockAdditions[index]) {
-      this.blockAdditions[index]!.push(block);
+      this.blockAdditions[index]!.newBlocks.push(block);
     } else {
-      this.blockAdditions[index] = [block];
+      this.blockAdditions[index] = { oldBlock: this.args.concept.parsedBlocks[index]!, newBlocks: [block] };
     }
 
     this.blockAdditions = { ...this.blockAdditions }; // Force re-render
@@ -73,7 +73,7 @@ export default class BlocksPageComponent extends Component<Signature> {
   }
 
   get numberOfBlockAdditions(): number {
-    return Object.entries(this.blockAdditions).reduce<number>((sum, [_, addedBlocks]) => sum + addedBlocks.length, 0);
+    return Object.entries(this.blockAdditions).reduce<number>((sum, [_, addition]) => sum + addition.newBlocks.length, 0);
   }
 
   get numberOfBlockChanges() {
