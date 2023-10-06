@@ -21,12 +21,18 @@
   </dd.Trigger>
   <dd.Content>
     <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-screen-md bg-white" data-test-account-dropdown-content>
-      <ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem @icon="markdown" @title="Markdown Block" @description="A block of markdown text" />
+      <ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem
+        @icon="markdown"
+        @title="Markdown Block"
+        @description="A block of markdown text"
+        {{on "click" (fn this.handleBlockTypeChosen "markdown" dd.actions.close)}}
+      />
 
       <ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem
         @icon="cursor-click"
         @title="Click to Continue Block"
         @description="A button to continue to the next group of blocks."
+        {{on "click" (fn this.handleBlockTypeChosen "click_to_continue" dd.actions.close)}}
       />
     </div>
   </dd.Content>

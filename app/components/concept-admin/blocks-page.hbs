@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="flex flex-col">
-      <ConceptAdmin::BlocksPage::InsertBlockMarker />
+      <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1}} />
 
       {{#each this.blocksWithMetadata key="index" as |blockWithMetadata index|}}
         {{#if blockWithMetadata.wasDeleted}}
@@ -60,7 +60,7 @@
           />
         {{/if}}
 
-        <ConceptAdmin::BlocksPage::InsertBlockMarker />
+        <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded index}} />
       {{/each}}
     </div>
   </div>

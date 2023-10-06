@@ -1,17 +1,33 @@
-import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { Block } from 'codecrafters-frontend/models/concept';
+import { MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
+import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLDivElement;
+
+  Args: {
+    onBlockAdded: (block: Block) => void;
+  };
 }
 
 export default class InsertBlockMarkerComponent extends Component<Signature> {
-  @tracked isChoosingBlockType = false;
-
   @action
-  handleClick() {
-    this.isChoosingBlockType = true;
+  handleBlockTypeChosen(blockType: Block['type'], closeDropdownFn: () => void) {
+    console.log('InsertBlockMarkerComponent.handleBlockTypeChosen')
+    const newBlock = this.newBlockForType(blockType);
+
+    this.args.onBlockAdded(newBlock);
+    closeDropdownFn();
+  }
+
+  newBlockForType(blockType: Block['type']): Block {
+    return new MarkdownBlock({
+      type: blockType,
+      args: {
+        markdown: 'Hello, world!',
+      },
+    });
   }
 }
 
