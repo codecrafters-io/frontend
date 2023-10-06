@@ -1,0 +1,81 @@
+<div
+  class="border rounded relative {{if this.isEditing 'border-gray-300' 'hover:bg-gray-50 hover:border-gray-300'}} overflow-hidden"
+  {{on "click" (if this.isEditing (noop) this.handleCollapsedBlockClicked)}}
+  role={{if this.isEditing "region" "button"}}
+  data-test-editable-block
+>
+  <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
+    {{#if @wasDeleted}}
+      <Pill @color="red">Deleted</Pill>
+    {{else if @wasAdded}}
+      <Pill @color="green">Added</Pill>
+    {{else if (or @wasChanged this.mutableBlockHasChanges)}}
+      <Pill @color="yellow">Changed</Pill>
+    {{/if}}
+  </div>
+
+  {{#if this.isEditing}}
+    <div class="bg-gray-50 p-3 border-b">
+      <div class="font-semibold text-gray-800 text-sm underline mb-4">
+        Editor
+      </div>
+
+      {{#if this.mutableBlock}}
+        {{#if (eq this.mutableBlock.type "markdown")}}
+          <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlock}} />
+        {{else if (eq this.mutableBlock.type "click_to_continue")}}
+          <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlock}} />
+        {{/if}}
+      {{/if}}
+    </div>
+  {{/if}}
+
+  <div class="p-3">
+    {{#if this.isEditing}}
+      <div class="font-semibold text-gray-800 text-sm underline mb-4">
+        Preview
+      </div>
+    {{/if}}
+
+    {{#if (eq this.blockOrMutableBlock.type "markdown")}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <Blocks::MarkdownBlock @model={{this.blockOrMutableBlock}} />
+    {{else if (eq this.blockOrMutableBlock.type "concept_animation")}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <Blocks::ConceptAnimationBlock @model={{this.blockOrMutableBlock}} />
+    {{else if (eq this.blockOrMutableBlock.type "click_to_continue")}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <Concept::ContinueOrStepBack
+        @onContinueButtonClick={{(noop)}}
+        @onStepBackButtonClick={{(noop)}}
+        {{! @glint-expect-error: not typecast yet }}
+        @continueButtonText={{this.blockOrMutableBlock.buttonTextForDisplay}}
+        @shouldShowStepBackButton={{false}}
+      />
+    {{/if}}
+  </div>
+
+  {{#if this.isEditing}}
+    <div class="bg-gray-50 border-t px-3 py-2 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <PrimaryButton @size="small" {{on "click" this.handleSaveButtonClicked}} data-test-save-button>Save</PrimaryButton>
+
+        {{#if this.shouldShowDiscardChangesButton}}
+          <span
+            class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+            role="button"
+            {{on "click" this.handleDiscardChangesButtonClicked}}
+          >Discard changes</span>
+        {{else}}
+          <span
+            class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+            role="button"
+            {{on "click" this.handleCancelButtonClicked}}
+          >Cancel</span>
+        {{/if}}
+      </div>
+
+      <TertiaryButton @size="small" {{on "click" this.handleDeleteButtonClicked}} data-test-delete-button>Delete Block</TertiaryButton>
+    </div>
+  {{/if}}
+</div>

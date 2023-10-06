@@ -28,4 +28,10 @@ export default class CourseAdminRoute extends BaseRoute {
       concept: allConcepts.find((concept) => concept.slug === params.concept_slug),
     };
   }
+
+  async afterModel(model: { concept: ConceptModel }) {
+    if (this.router.currentRouteName === 'concept-admin.index') {
+      this.router.transitionTo('concept-admin.blocks', model.concept.slug);
+    }
+  }
 }
