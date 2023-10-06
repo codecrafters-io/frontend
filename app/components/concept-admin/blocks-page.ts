@@ -104,6 +104,7 @@ export default class BlocksPageComponent extends Component<Signature> {
         changeIsStale: changeIsStale,
         wasChanged: wasChanged,
         wasDeleted: wasDeleted,
+        addedBlocks: this.blockAdditions[index] || [],
       };
     });
   }
