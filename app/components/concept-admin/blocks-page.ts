@@ -18,7 +18,7 @@ export default class BlocksPageComponent extends Component<Signature> {
   @tracked isSaving = false;
 
   @action
-  handleBlockAddedOrAddedBlockChanged(anchorBlockIndex: number, insertAtIndex: number, newBlock: Block) {
+  handleBlockAdded(anchorBlockIndex: number, insertAtIndex: number, newBlock: Block) {
     if (this.blockAdditions[anchorBlockIndex]) {
       this.blockAdditions[anchorBlockIndex]!.newBlocks.splice(insertAtIndex, 0, newBlock);
     } else {
