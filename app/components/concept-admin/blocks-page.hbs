@@ -1,0 +1,102 @@
+<div class="bg-white min-h-screen">
+  <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 mb-2 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Blocks
+        </h3>
+        <div class="text-xs text-gray-400">
+          The content of a concept is made up of blocks.
+        </div>
+      </div>
+
+      <div class="flex flex-col items-end gap-2">
+        <PrimaryButtonWithSpinner
+          @size="small"
+          @isDisabled={{or this.isSaving (not this.mutationsArePresent)}}
+          @shouldShowSpinner={{this.isSaving}}
+          {{on "click" this.handlePublishButtonClicked}}
+          data-test-publish-changes-button
+        >
+          Publish Changes
+        </PrimaryButtonWithSpinner>
+
+        {{#if this.mutationsArePresent}}
+          <div class="flex items-center gap-3">
+            {{#if (gt this.numberOfBlockChanges 0)}}
+              <Pill @color="yellow">{{this.numberOfBlockChanges}} changed</Pill>
+            {{/if}}
+            {{#if (gt this.numberOfBlockDeletions 0)}}
+              <Pill @color="red">{{this.numberOfBlockDeletions}} deleted</Pill>
+            {{/if}}
+            {{#if (gt this.numberOfBlockAdditions 0)}}
+              <Pill @color="green">{{this.numberOfBlockAdditions}} added</Pill>
+            {{/if}}
+          </div>
+        {{else}}
+          <div class="text-xs text-gray-400">
+            No changes to save
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1 0}} />
+
+      {{#each (get (get this.blockAdditions -1) "newBlocks") as |addedBlock addedBlockIndex|}}
+        <ConceptAdmin::BlocksPage::EditableBlock
+          @conceptBlock={{addedBlock}}
+          @wasAdded={{true}}
+          @wasChanged={{false}}
+          @wasDeleted={{false}}
+          @onBlockChanged={{fn this.handleAddedBlockChanged -1 addedBlockIndex}}
+          @onBlockDeleted={{fn this.handleAddedBlockDeleted -1 addedBlockIndex}}
+          @onBlockChangeDiscarded={{(noop)}}
+        />
+
+        <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1 (add addedBlockIndex 1)}} />
+      {{/each}}
+
+      {{#each this.blocksWithMetadata key="index" as |blockWithMetadata index|}}
+        {{#if blockWithMetadata.wasDeleted}}
+          <div class="border rounded p-3 flex items-center justify-between">
+            <div>
+              <TertiaryButton @size="small" {{on "click" (fn this.handleBlockDeletionDiscarded index)}}>
+                Undo Delete
+              </TertiaryButton>
+            </div>
+            <div>
+              <Pill @color="red">Deleted</Pill>
+            </div>
+          </div>
+        {{else}}
+          <ConceptAdmin::BlocksPage::EditableBlock
+            @conceptBlock={{blockWithMetadata.block}}
+            @wasAdded={{false}}
+            @wasChanged={{blockWithMetadata.wasChanged}}
+            @wasDeleted={{blockWithMetadata.wasDeleted}}
+            @onBlockChanged={{fn this.handleBlockChanged index}}
+            @onBlockDeleted={{fn this.handleBlockDeleted index}}
+            @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded index}}
+          />
+        {{/if}}
+
+        <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded index 0}} />
+
+        {{#each blockWithMetadata.addedBlocks as |addedBlock addedBlockIndex|}}
+          <ConceptAdmin::BlocksPage::EditableBlock
+            @conceptBlock={{addedBlock}}
+            @wasAdded={{true}}
+            @wasChanged={{false}}
+            @wasDeleted={{false}}
+            @onBlockChanged={{fn this.handleAddedBlockChanged index addedBlockIndex}}
+            @onBlockDeleted={{fn this.handleAddedBlockDeleted index addedBlockIndex}}
+            @onBlockChangeDiscarded={{(noop)}}
+          />
+
+          <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded index (add addedBlockIndex 1)}} />
+        {{/each}}
+      {{/each}}
+    </div>
+  </div>
+</div>

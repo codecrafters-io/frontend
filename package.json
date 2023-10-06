@@ -22,6 +22,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
+    "lint:glint": "glint",
+    "lint:glint:fix": "glint",
     "start:ember": "FASTBOOT_DISABLED=true ember serve",
     "start:ember:fastboot": "FASTBOOT_DISABLED=\"\" ember serve",
     "start": "concurrently \"npm:tailwind:watch\" \"npm:start:ember\" --names \"tailwind,ember:\"",

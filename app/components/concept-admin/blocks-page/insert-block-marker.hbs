@@ -1,0 +1,40 @@
+{{! @glint-expect-error not ts-ified }}
+<BasicDropdown @horizontalPosition="center" as |dd|>
+  <dd.Trigger>
+    <div
+      class="relative flex items-center justify-center group/insert-block-marker
+        {{if dd.isOpen 'opacity-100' 'opacity-0 hover:opacity-100'}}
+        py-1 transition-opacity duration-200"
+      data-test-insert-block-marker
+    >
+      <div class="absolute h-px w-full bg-gray-100 top-1/2 left-0 right-0">
+      </div>
+      <div class="relative">
+        <div class="text-xs text-gray-400 bg-white px-4">
+          {{#if dd.isOpen}}
+            Choose block
+          {{else}}
+            Click to add block
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </dd.Trigger>
+  <dd.Content>
+    <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-screen-md bg-white" data-test-insert-block-marker-dropdown-content>
+      <ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem
+        @icon="markdown"
+        @title="Markdown Block"
+        @description="A block of markdown text"
+        {{on "click" (fn this.handleBlockTypeChosen "markdown" dd.actions.close)}}
+      />
+
+      <ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem
+        @icon="cursor-click"
+        @title="Click to Continue Block"
+        @description="A button to continue to the next group of blocks."
+        {{on "click" (fn this.handleBlockTypeChosen "click_to_continue" dd.actions.close)}}
+      />
+    </div>
+  </dd.Content>
+</BasicDropdown>

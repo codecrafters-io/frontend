@@ -15,6 +15,7 @@ Router.map(function () {
 
   this.route('concept-admin', { path: '/concepts/:concept_slug/admin' }, function () {
     this.route('basic-details');
+    this.route('blocks');
   });
 
   this.route('courses');
