@@ -11,6 +11,16 @@ export default class CourseAdminFeedbackController extends Controller {
 
   @tracked shouldShowAcknowledgedFeedbackSubmissions = false;
 
+  get sortedFeedbackSubmissions() {
+    let submissions = this.model.feedbackSubmissions;
+
+    if (!this.shouldShowAcknowledgedFeedbackSubmissions) {
+      submissions = submissions.filter((feedbackSubmission) => !feedbackSubmission.isAcknowledgedByStaff);
+    }
+
+    return submissions.sortBy('createdAt').reverse();
+  }
+
   // @ts-ignore
   // eslint-disable-next-line require-yield
   *listTransition({ insertedSprites, keptSprites, removedSprites }) {
@@ -25,15 +35,5 @@ export default class CourseAdminFeedbackController extends Controller {
     for (const sprite of removedSprites) {
       fadeOut(sprite);
     }
-  }
-
-  get sortedFeedbackSubmissions() {
-    let submissions = this.model.feedbackSubmissions;
-
-    if (!this.shouldShowAcknowledgedFeedbackSubmissions) {
-      submissions = submissions.filter((feedbackSubmission) => !feedbackSubmission.isAcknowledgedByStaff);
-    }
-
-    return submissions.sortBy('createdAt').reverse();
   }
 }

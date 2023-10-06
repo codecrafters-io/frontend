@@ -32,6 +32,11 @@ export default class Poller {
     console.log('doPoll not implemented');
   }
 
+  async forcePoll() {
+    clearTimeout(this.scheduledPollTimeoutId);
+    await this.pollFn();
+  }
+
   async pollFn() {
     if (config.environment === 'test' && this.store.isDestroyed) {
       window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
@@ -67,10 +72,5 @@ export default class Poller {
   stop() {
     this.isActive = false;
     clearTimeout(this.scheduledPollTimeoutId);
-  }
-
-  async forcePoll() {
-    clearTimeout(this.scheduledPollTimeoutId);
-    await this.pollFn();
   }
 }

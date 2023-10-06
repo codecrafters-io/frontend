@@ -6,16 +6,24 @@ import { inject as service } from '@ember/service';
 export default class CourseProgressListItemComponent extends Component {
   @service router;
 
-  get course() {
-    return this.args.courseParticipations.firstObject.course;
-  }
-
   get completedAt() {
     return this.hasCompletedCourseUsingAnyLanguage ? this.completedCourseParticipations.firstObject.completedAt : null;
   }
 
+  get completedCourseParticipations() {
+    return this.args.courseParticipations.filterBy('isCompleted');
+  }
+
   get completedStagesCount() {
     return Math.max(...this.args.courseParticipations.mapBy('currentStage.position')) - 1;
+  }
+
+  get course() {
+    return this.args.courseParticipations.firstObject.course;
+  }
+
+  get hasCompletedCourseUsingAnyLanguage() {
+    return this.completedCourseParticipations.firstObject;
   }
 
   get languagesText() {
@@ -24,14 +32,6 @@ export default class CourseProgressListItemComponent extends Component {
     } else {
       return `using ${arrayToSentence(this.args.courseParticipations.mapBy('language.name').uniq())}`;
     }
-  }
-
-  get completedCourseParticipations() {
-    return this.args.courseParticipations.filterBy('isCompleted');
-  }
-
-  get hasCompletedCourseUsingAnyLanguage() {
-    return this.completedCourseParticipations.firstObject;
   }
 
   @action

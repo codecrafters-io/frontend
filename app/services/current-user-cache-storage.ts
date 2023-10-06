@@ -7,17 +7,17 @@ export default class CurrentUserCacheStorageService extends Service {
 
   @service declare localStorage: LocalStorageService;
 
-  clear(): void {
-    this.localStorage.removeItem(CurrentUserCacheStorageService.USER_ID_LOCAL_STORAGE_KEY);
-    this.localStorage.removeItem(CurrentUserCacheStorageService.USERNAME_LOCAL_STORAGE_KEY);
-  }
-
   get userId(): string | null {
     return this.localStorage.getItem(CurrentUserCacheStorageService.USER_ID_LOCAL_STORAGE_KEY);
   }
 
   get username(): string | null {
     return this.localStorage.getItem(CurrentUserCacheStorageService.USERNAME_LOCAL_STORAGE_KEY);
+  }
+
+  clear(): void {
+    this.localStorage.removeItem(CurrentUserCacheStorageService.USER_ID_LOCAL_STORAGE_KEY);
+    this.localStorage.removeItem(CurrentUserCacheStorageService.USERNAME_LOCAL_STORAGE_KEY);
   }
 
   setValues(userId: string, username: string): void {

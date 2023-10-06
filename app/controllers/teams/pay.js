@@ -12,6 +12,10 @@ export default class TeamsPayController extends Controller {
   @tracked currentStep;
   @tracked teamPaymentFlowId;
 
+  get completedSteps() {
+    return [this.isStep1Complete ? 1 : null, this.isStep2Complete ? 2 : null, this.isStep3Complete ? 3 : null].compact();
+  }
+
   get initialStep() {
     if (this.isStep1Complete && this.isStep2Complete) {
       return 3;
@@ -20,10 +24,6 @@ export default class TeamsPayController extends Controller {
     } else {
       return 1;
     }
-  }
-
-  get completedSteps() {
-    return [this.isStep1Complete ? 1 : null, this.isStep2Complete ? 2 : null, this.isStep3Complete ? 3 : null].compact();
   }
 
   get isStep1Complete() {

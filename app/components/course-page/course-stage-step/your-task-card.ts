@@ -35,6 +35,23 @@ export default class YourTaskCardComponent extends Component<Signature> {
     );
   }
 
+  get instructionsHTML() {
+    return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.instructionsMarkdown);
+  }
+
+  get instructionsMarkdown() {
+    const variables: Record<string, unknown> = {};
+
+    this.store.peekAll('language').forEach((language) => {
+      variables[`lang_is_${(language as TemporaryLanguageModel).slug}`] = this.args.repository.language === language;
+    });
+
+    return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
+  }
+
+  get shouldShowFeedbackPromptIfStageIsComplete() {
+    return !this.args.courseStage.isFirst;
+  }
   @action
   handleDidInsertInstructionsHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
@@ -62,23 +79,5 @@ export default class YourTaskCardComponent extends Component<Signature> {
     } else {
       // this.args.onViewNextStageButtonClick();
     }
-  }
-
-  get instructionsHTML() {
-    return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.instructionsMarkdown);
-  }
-
-  get instructionsMarkdown() {
-    const variables: Record<string, unknown> = {};
-
-    this.store.peekAll('language').forEach((language) => {
-      variables[`lang_is_${(language as TemporaryLanguageModel).slug}`] = this.args.repository.language === language;
-    });
-
-    return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
-  }
-
-  get shouldShowFeedbackPromptIfStageIsComplete() {
-    return !this.args.courseStage.isFirst;
   }
 }

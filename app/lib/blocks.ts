@@ -5,6 +5,10 @@ interface BlockJSON {
 }
 
 class Block {
+  get type(): string {
+    return (this.constructor as typeof Block).type;
+  }
+
   static type: string;
 
   static fromJSON(this: new () => Block, json: BlockJSON): Block {
@@ -15,10 +19,6 @@ class Block {
     }
 
     return block;
-  }
-
-  get type(): string {
-    return (this.constructor as typeof Block).type;
   }
 }
 

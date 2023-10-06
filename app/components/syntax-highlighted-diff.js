@@ -12,10 +12,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
 
-  static preloadHighlighter() {
-    preloadHighlighter(this.highlighterId, this.highlighterOptions);
-  }
-
   constructor() {
     super(...arguments);
 
@@ -44,10 +40,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return this.codeLinesWithTypes.map((array) => array[0]).join('\n');
   }
 
-  get topLevelCommentsGroupedByLine() {
-    return groupBy(this.args.comments || [], (comment) => comment.subtargetEndLine || 0);
-  }
-
   get expandedComments() {
     if (this.lineNumberWithExpandedComments === null) {
       return [];
@@ -56,16 +48,24 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     }
   }
 
-  highlightCode() {
-    let highlighterPromise = getOrCreateCachedHighlighterPromise(
-      SyntaxHighlightedDiffComponent.highlighterId,
-      SyntaxHighlightedDiffComponent.highlighterOptions,
-    );
+  get highlightedHtml() {
+    return this.asyncHighlightedHTML || this.temporaryHTML;
+  }
 
-    highlighterPromise.then((highlighter) => {
-      highlighter.loadLanguage(this.args.language).then(() => {
-        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
-      });
+  get linesForRender() {
+    const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
+
+    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
+      return {
+        isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
+        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
+        html: htmlSafe(`${node.outerHTML}`),
+        type: lineType,
+        number: index + 1,
+        comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
+        hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
+        commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
+      };
     });
   }
 
@@ -77,6 +77,14 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get topLevelComments() {
     return (this.args.comments || []).filter((comment) => comment.isTopLevelComment && !comment.isNew);
+  }
+
+  get topLevelCommentsGroupedByLine() {
+    return groupBy(this.args.comments || [], (comment) => comment.subtargetEndLine || 0);
+  }
+
+  commentTargetsLine(comment, lineNumber) {
+    return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
   }
 
   @action
@@ -97,32 +105,24 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     }
   }
 
-  get highlightedHtml() {
-    return this.asyncHighlightedHTML || this.temporaryHTML;
+  highlightCode() {
+    let highlighterPromise = getOrCreateCachedHighlighterPromise(
+      SyntaxHighlightedDiffComponent.highlighterId,
+      SyntaxHighlightedDiffComponent.highlighterOptions,
+    );
+
+    highlighterPromise.then((highlighter) => {
+      highlighter.loadLanguage(this.args.language).then(() => {
+        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
+      });
+    });
+  }
+
+  static preloadHighlighter() {
+    preloadHighlighter(this.highlighterId, this.highlighterOptions);
   }
 
   targetingCommentsForLine(lineNumber) {
     return (this.args.comments || []).filter((comment) => this.commentTargetsLine(comment, lineNumber));
-  }
-
-  commentTargetsLine(comment, lineNumber) {
-    return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
-  }
-
-  get linesForRender() {
-    const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
-
-    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
-      return {
-        isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
-        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
-        html: htmlSafe(`${node.outerHTML}`),
-        type: lineType,
-        number: index + 1,
-        comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
-        hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
-        commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
-      };
-    });
   }
 }

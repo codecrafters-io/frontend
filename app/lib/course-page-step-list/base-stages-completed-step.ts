@@ -24,19 +24,19 @@ export default class BaseStagesCompletedStep extends Step {
     };
   }
 
+  get routeParams() {
+    return {
+      route: 'course.base-stages-completed',
+      models: [this.repository.course.slug],
+    };
+  }
+
   get status() {
     if (this.repository.activatedCourseExtensions.length > 0) {
       return 'complete';
     } else {
       return 'not_started';
     }
-  }
-
-  get routeParams() {
-    return {
-      route: 'course.base-stages-completed',
-      models: [this.repository.course.slug],
-    };
   }
 
   get title() {

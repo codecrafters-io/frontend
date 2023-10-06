@@ -44,14 +44,14 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
   }
 
   @action
-  async handleViewCodeButtonClick() {
-    window.open(this.args.submission.githubStorageHtmlUrl, '_blank').focus();
-  }
-
-  @action
   async handleTesterVersionUpdateButtonClick() {
     this.isUpdatingTesterVersion = true;
     await this.args.submission.repository.updateTesterVersion();
     this.isUpdatingTesterVersion = false;
+  }
+
+  @action
+  async handleViewCodeButtonClick() {
+    window.open(this.args.submission.githubStorageHtmlUrl, '_blank').focus();
   }
 }

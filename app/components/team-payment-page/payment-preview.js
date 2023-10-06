@@ -13,17 +13,17 @@ export default class PaymentPreview extends Component {
     this.loadFirstInvoicePreview();
   }
 
-  @action
-  async loadFirstInvoicePreview() {
-    this.firstInvoicePreview = await this.args.teamPaymentFlow.fetchFirstInvoicePreview();
-    this.isLoadingFirstInvoicePreview = false;
+  get perUnitAmountInDollarsInFirstInvoicePreview() {
+    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
   }
 
   get subscriptionQuantityInFirstInvoicePreview() {
     return this.firstInvoicePreview.lineItems[0].quantity;
   }
 
-  get perUnitAmountInDollarsInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
+  @action
+  async loadFirstInvoicePreview() {
+    this.firstInvoicePreview = await this.args.teamPaymentFlow.fetchFirstInvoicePreview();
+    this.isLoadingFirstInvoicePreview = false;
   }
 }

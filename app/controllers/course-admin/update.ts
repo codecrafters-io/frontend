@@ -29,6 +29,14 @@ export default class CourseAdminUpdateController extends Controller {
     }
   }
 
+  get viewDiffLink() {
+    if (!this.model.update.oldCommitSha) {
+      return `https://github.com/${this.model.course.definitionRepositoryFullName}/commit/${this.model.update.newCommitSha}`;
+    }
+
+    return `https://github.com/${this.model.course.definitionRepositoryFullName}/compare/${this.model.update.oldCommitSha}..${this.model.update.newCommitSha}`;
+  }
+
   @action
   async handleApplyUpdateButtonClick() {
     if (!this.isApplyingUpdate) {
@@ -53,13 +61,5 @@ export default class CourseAdminUpdateController extends Controller {
     });
 
     this.isSyncingWithGitHub = false;
-  }
-
-  get viewDiffLink() {
-    if (!this.model.update.oldCommitSha) {
-      return `https://github.com/${this.model.course.definitionRepositoryFullName}/commit/${this.model.update.newCommitSha}`;
-    }
-
-    return `https://github.com/${this.model.course.definitionRepositoryFullName}/compare/${this.model.update.oldCommitSha}..${this.model.update.newCommitSha}`;
   }
 }

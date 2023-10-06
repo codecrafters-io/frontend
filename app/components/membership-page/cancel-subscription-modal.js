@@ -25,6 +25,14 @@ export default class CancelSubscriptionModalComponent extends Component {
     return this.subscription.isTrialing;
   }
 
+  get placeholderTextForReasonDescriptionInput() {
+    if (this.otherReasonIsSelected) {
+      return 'Please enter the reason here. We read and respond to every message.';
+    } else {
+      return 'Any other feedback? We read and respond to every message written here.';
+    }
+  }
+
   get suggestedReasons() {
     return ['Quality was less than expected', 'I need more content', 'I no longer need it', "It's too expensive"];
   }
@@ -56,23 +64,15 @@ export default class CancelSubscriptionModalComponent extends Component {
   }
 
   @action
-  handleSuggestedReasonSelect(reason) {
-    this.selectedReason = reason;
-    this.otherReasonIsSelected = false;
-  }
-
-  @action
   handleOtherReasonSelect() {
     this.selectedReason = null;
     this.otherReasonIsSelected = true;
     this.reasonDescriptionInputElement.focus();
   }
 
-  get placeholderTextForReasonDescriptionInput() {
-    if (this.otherReasonIsSelected) {
-      return 'Please enter the reason here. We read and respond to every message.';
-    } else {
-      return 'Any other feedback? We read and respond to every message written here.';
-    }
+  @action
+  handleSuggestedReasonSelect(reason) {
+    this.selectedReason = reason;
+    this.otherReasonIsSelected = false;
   }
 }

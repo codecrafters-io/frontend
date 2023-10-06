@@ -42,18 +42,6 @@ export default class RepositoryModel extends Model {
     return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
   }
 
-  get currentStage() {
-    if (!this.firstSubmissionCreated) {
-      return null;
-    }
-
-    if (this.stageList) {
-      return this.stageList.items.find((item) => item.isCurrent).stage;
-    } else {
-      return null; // We haven't loaded the stage list yet
-    }
-  }
-
   // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
   get allStagesAreComplete() {
     return this.course.stages.every((stage) => this.stageIsComplete(stage));
@@ -75,17 +63,25 @@ export default class RepositoryModel extends Model {
     return this.courseStageCompletions.mapBy('courseStage').uniq();
   }
 
-  courseStageFeedbackSubmissionFor(courseStage) {
-    return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
+  get currentStage() {
+    if (!this.firstSubmissionCreated) {
+      return null;
+    }
+
+    if (this.stageList) {
+      return this.stageList.items.find((item) => item.isCurrent).stage;
+    } else {
+      return null; // We haven't loaded the stage list yet
+    }
+  }
+
+  get expectedActivityFrequencyHumanized() {
+    return RepositoryModel.expectedActivityFrequencyMappings[this.expectedActivityFrequency];
   }
 
   // TODO: Only to bypass TS checks - find out how to use RepositoryModel#expectedActivityFrequencyMappings directly in a .hbs templates
   get expectedActivityFrequencyMappings() {
     return RepositoryModel.expectedActivityFrequencyMappings;
-  }
-
-  get expectedActivityFrequencyHumanized() {
-    return RepositoryModel.expectedActivityFrequencyMappings[this.expectedActivityFrequency];
   }
 
   get firstSubmissionCreated() {
@@ -94,10 +90,6 @@ export default class RepositoryModel extends Model {
 
   get githubRepositorySyncConfiguration() {
     return this.githubRepositorySyncConfigurations.firstObject;
-  }
-
-  hasClosedCourseStageFeedbackSubmissionFor(courseStage) {
-    return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
   get highestCompletedStage() {
@@ -125,16 +117,16 @@ export default class RepositoryModel extends Model {
     return this.lastSubmission && this.lastSubmission.createdAt;
   }
 
+  get lastSubmissionHasFailureStatus() {
+    return this.lastSubmission && this.lastSubmission.statusIsFailure;
+  }
+
   get lastSubmissionIsEvaluating() {
     return this.lastSubmission && this.lastSubmission.statusIsEvaluating;
   }
 
   get lastSubmissionIsRecent() {
     return this.lastSubmission && this.lastSubmission.isRecent;
-  }
-
-  get lastSubmissionHasFailureStatus() {
-    return this.lastSubmission && this.lastSubmission.statusIsFailure;
   }
 
   @cached
@@ -144,6 +136,14 @@ export default class RepositoryModel extends Model {
 
   courseStageCompletionFor(courseStage) {
     return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
+  }
+
+  courseStageFeedbackSubmissionFor(courseStage) {
+    return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
+  }
+
+  hasClosedCourseStageFeedbackSubmissionFor(courseStage) {
+    return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
   stageCompletedAt(courseStage) {

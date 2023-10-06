@@ -9,6 +9,13 @@ export default class CourseIdeaCardComponent extends Component {
 
   @tracked isVotingOrUnvoting = false;
 
+  get userHasVoted() {
+    if (this.authenticator.isAnonymous) {
+      return false;
+    }
+
+    return this.authenticator.currentUser.courseIdeaVotes.mapBy('courseIdea').includes(this.args.courseIdea);
+  }
   @action
   async handleUnvoteButtonClick() {
     if (this.isVotingOrUnvoting) {
@@ -41,13 +48,5 @@ export default class CourseIdeaCardComponent extends Component {
     }
 
     this.isVotingOrUnvoting = false;
-  }
-
-  get userHasVoted() {
-    if (this.authenticator.isAnonymous) {
-      return false;
-    }
-
-    return this.authenticator.currentUser.courseIdeaVotes.mapBy('courseIdea').includes(this.args.courseIdea);
   }
 }

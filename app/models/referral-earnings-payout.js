@@ -11,8 +11,8 @@ export default class ReferralEarningsPayoutModel extends Model {
   @attr('string') payoutMethodType; // 'paypal'
   @attr('') payoutMethodArgs;
 
-  get statusIsProcessing() {
-    return this.status === 'processing';
+  get amountInDollars() {
+    return this.amountInCents / 100;
   }
 
   get statusIsCompleted() {
@@ -23,7 +23,7 @@ export default class ReferralEarningsPayoutModel extends Model {
     return this.status === 'failed';
   }
 
-  get amountInDollars() {
-    return this.amountInCents / 100;
+  get statusIsProcessing() {
+    return this.status === 'processing';
   }
 }

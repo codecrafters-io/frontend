@@ -17,20 +17,20 @@ interface Signature {
 }
 
 export default class TertiaryButtonWithSpinnerComponent extends Component<Signature> {
-  get sizeIsSmall(): boolean {
-    return this.args.size === 'small';
-  }
-
-  get sizeIsRegular(): boolean {
-    return !this.args.size || this.args.size === 'regular';
-  }
-
   get sizeIsExtraSmall(): boolean {
     return this.args.size === 'extra-small';
   }
 
   get sizeIsLarge(): boolean {
     return this.args.size === 'large';
+  }
+
+  get sizeIsRegular(): boolean {
+    return !this.args.size || this.args.size === 'regular';
+  }
+
+  get sizeIsSmall(): boolean {
+    return this.args.size === 'small';
   }
 }
 

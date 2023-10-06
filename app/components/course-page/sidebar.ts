@@ -40,6 +40,10 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
     return this.coursePageState.stepList as StepList;
   }
 
+  configureExtensionsButtonIsDisabled() {
+    return this.args.activeRepository.isNew;
+  }
+
   @action
   handleConfigureExtensionsButtonClick() {
     if (this.configureExtensionsButtonIsDisabled()) {
@@ -47,9 +51,5 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
     }
 
     this.configureExtensionsModalIsOpen = true;
-  }
-
-  configureExtensionsButtonIsDisabled() {
-    return this.args.activeRepository.isNew;
   }
 }

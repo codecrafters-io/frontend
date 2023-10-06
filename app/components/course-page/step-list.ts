@@ -14,12 +14,12 @@ interface Signature {
 export default class StepListComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
-  get currentStep() {
-    return this.coursePageState.currentStep;
-  }
-
   get activeStep() {
     return this.coursePageState.activeStep;
+  }
+
+  get currentStep() {
+    return this.coursePageState.currentStep;
   }
 }
 

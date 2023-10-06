@@ -22,31 +22,8 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @tracked isLoadingRegionalDiscount: boolean = true;
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
-  convertToHTML(markdown: string): SafeString {
-    return htmlSafe(new showdown.Converter({ strikethrough: true }).makeHtml(markdown));
-  }
-
   get featureList(): string[] {
     return ['No limits on content', 'Priority support', 'Priority Builds', 'Community features'];
-  }
-
-  @action
-  async handleDidInsert(): Promise<void> {
-    this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
-    this.isLoadingRegionalDiscount = false;
-  }
-
-  @action
-  onResize(entry: ResizeObserverEntry): void {
-    if (!entry.borderBoxSize?.[0]?.inlineSize) {
-      return;
-    }
-
-    if (entry.borderBoxSize[0].inlineSize > 680) {
-      this.isLarge = true;
-    } else {
-      this.isLarge = false;
-    }
   }
 
   get secondaryCopy(): SafeString {
@@ -72,6 +49,29 @@ export default class UpgradePromptComponent extends Component<Signature> {
       return this.convertToHTML(`Plans start at ~~$30/mo~~ $15/mo (discounted price for ${this.regionalDiscount.countryName}).`);
     } else {
       return this.convertToHTML('Plans start at $30/mo.');
+    }
+  }
+
+  convertToHTML(markdown: string): SafeString {
+    return htmlSafe(new showdown.Converter({ strikethrough: true }).makeHtml(markdown));
+  }
+
+  @action
+  async handleDidInsert(): Promise<void> {
+    this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
+    this.isLoadingRegionalDiscount = false;
+  }
+
+  @action
+  onResize(entry: ResizeObserverEntry): void {
+    if (!entry.borderBoxSize?.[0]?.inlineSize) {
+      return;
+    }
+
+    if (entry.borderBoxSize[0].inlineSize > 680) {
+      this.isLarge = true;
+    } else {
+      this.isLarge = false;
     }
   }
 }

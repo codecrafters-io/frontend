@@ -18,6 +18,11 @@ export default class CourseAdminUpdatesController extends Controller {
 
   @tracked isSyncingWithGitHub = false;
 
+  get sortedDefinitionUpdates() {
+    // @ts-ignore
+    return this.model.course.definitionUpdates.sortBy('lastSyncedAt').reverse();
+  }
+
   @action
   async handleSyncWithGitHubButtonClick() {
     this.isSyncingWithGitHub = true;
@@ -30,10 +35,5 @@ export default class CourseAdminUpdatesController extends Controller {
     });
 
     this.isSyncingWithGitHub = false;
-  }
-
-  get sortedDefinitionUpdates() {
-    // @ts-ignore
-    return this.model.course.definitionUpdates.sortBy('lastSyncedAt').reverse();
   }
 }

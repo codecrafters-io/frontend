@@ -46,8 +46,49 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
     return groups;
   }
 
+  get githubAppInstallation() {
+    return this.authenticator.currentUser.githubAppInstallation;
+  }
+
   get githubRepositorySyncConfiguration() {
     return this.args.repository.githubRepositorySyncConfiguration;
+  }
+
+  get recommendedRepositoryName() {
+    return `${this.authenticator.currentUser.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
+  }
+
+  @action
+  async handleDisconnectRepositoryButtonClick() {
+    await this.githubRepositorySyncConfiguration.destroyRecord();
+    this.isLoading = true;
+    await this.loadResources();
+  }
+
+  @action
+  async handlePublishButtonClick() {
+    let repositoryIsRecentlyCreated = new Date() - this.selectedRepository.createdAt < 1000 * 60 * 60;
+
+    if (
+      repositoryIsRecentlyCreated ||
+      window.confirm(`Are you sure? Publishing will delete any existing contents in the ${this.selectedRepository.fullName} repository.`)
+    ) {
+      let githubRepositorySyncConfiguration = this.store.createRecord('github-repository-sync-configuration', {
+        githubRepositoryId: this.selectedRepository.id,
+        githubRepositoryName: this.selectedRepository.fullName,
+        repository: this.args.repository,
+      });
+
+      this.isCreatingGithubRepositorySyncConfiguration = true;
+      await githubRepositorySyncConfiguration.save();
+      this.isCreatingGithubRepositorySyncConfiguration = false;
+    }
+  }
+
+  @action
+  async handleRepositoryOptionSelected(event) {
+    let repositoryId = event.target.value;
+    this.selectedRepository = this.accessibleRepositories.find((repository) => repository.id.toString() === repositoryId);
   }
 
   @action
@@ -71,46 +112,5 @@ export default class ConfigureGithubIntegrationModalComponent extends Component 
     }
 
     this.isLoading = false;
-  }
-
-  @action
-  async handleDisconnectRepositoryButtonClick() {
-    await this.githubRepositorySyncConfiguration.destroyRecord();
-    this.isLoading = true;
-    await this.loadResources();
-  }
-
-  @action
-  async handleRepositoryOptionSelected(event) {
-    let repositoryId = event.target.value;
-    this.selectedRepository = this.accessibleRepositories.find((repository) => repository.id.toString() === repositoryId);
-  }
-
-  @action
-  async handlePublishButtonClick() {
-    let repositoryIsRecentlyCreated = new Date() - this.selectedRepository.createdAt < 1000 * 60 * 60;
-
-    if (
-      repositoryIsRecentlyCreated ||
-      window.confirm(`Are you sure? Publishing will delete any existing contents in the ${this.selectedRepository.fullName} repository.`)
-    ) {
-      let githubRepositorySyncConfiguration = this.store.createRecord('github-repository-sync-configuration', {
-        githubRepositoryId: this.selectedRepository.id,
-        githubRepositoryName: this.selectedRepository.fullName,
-        repository: this.args.repository,
-      });
-
-      this.isCreatingGithubRepositorySyncConfiguration = true;
-      await githubRepositorySyncConfiguration.save();
-      this.isCreatingGithubRepositorySyncConfiguration = false;
-    }
-  }
-
-  get githubAppInstallation() {
-    return this.authenticator.currentUser.githubAppInstallation;
-  }
-
-  get recommendedRepositoryName() {
-    return `${this.authenticator.currentUser.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
   }
 }

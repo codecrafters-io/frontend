@@ -46,6 +46,10 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     }[this.args.currentStep.type];
   }
 
+  get availableTabs() {
+    return this.allTabs.filter((tab) => this.tabIsAvailable(tab));
+  }
+
   get courseCompletedTabs() {
     return [
       {
@@ -64,6 +68,19 @@ export default class DesktopHeaderComponent extends Component<Signature> {
   }
 
   get introductionTabs() {
+    return [
+      {
+        icon: 'document-text',
+        name: 'Instructions',
+        slug: 'instructions',
+        route: this.args.currentStep.routeParams.route,
+        models: this.args.currentStep.routeParams.models,
+        isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
+      },
+    ];
+  }
+
+  get setupTabs() {
     return [
       {
         icon: 'document-text',
@@ -122,23 +139,6 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     }
 
     return tabs;
-  }
-
-  get setupTabs() {
-    return [
-      {
-        icon: 'document-text',
-        name: 'Instructions',
-        slug: 'instructions',
-        route: this.args.currentStep.routeParams.route,
-        models: this.args.currentStep.routeParams.models,
-        isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
-      },
-    ];
-  }
-
-  get availableTabs() {
-    return this.allTabs.filter((tab) => this.tabIsAvailable(tab));
   }
 
   tabIsAvailable(tab: Tab) {

@@ -30,6 +30,10 @@ export default class SyntaxHighlightedCodeComponent extends Component {
     // });
   }
 
+  get highlightedHtml() {
+    return this.asyncHighlightedHTML || this.temporaryHTML;
+  }
+
   get temporaryHTML() {
     const linesHTML = this.args.code
       .split('\n')
@@ -37,9 +41,5 @@ export default class SyntaxHighlightedCodeComponent extends Component {
       .join('');
 
     return htmlSafe(`<pre><code>${linesHTML}</code></pre>`);
-  }
-
-  get highlightedHtml() {
-    return this.asyncHighlightedHTML || this.temporaryHTML;
   }
 }

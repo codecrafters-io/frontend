@@ -24,12 +24,12 @@ export default class CommunitySolutionCardComponent extends Component {
     });
   }
 
-  get commentsGroupedByFilename() {
-    return groupBy(this.comments, 'filename');
-  }
-
   get comments() {
     return this.args.solution.comments.filter((comment) => comment.isTopLevelComment && !comment.isNew);
+  }
+
+  get commentsGroupedByFilename() {
+    return groupBy(this.comments, 'filename');
   }
 
   get currentUser() {
@@ -52,65 +52,12 @@ export default class CommunitySolutionCardComponent extends Component {
     }
   }
 
-  @action
-  handleCommentView(comment) {
-    this.analyticsEventTracker.track('viewed_comment', {
-      comment_id: comment.id,
-    });
-  }
-
-  @action
-  handleDidInsert(element) {
-    this.containerElement = element;
-  }
-
-  @action
-  handleExpandButtonClick() {
-    this.isExpanded = true;
-    this.loadComments();
-
-    this.analyticsEventTracker.track('viewed_community_course_stage_solution', {
-      community_course_stage_solution_id: this.args.solution.id,
-      position_in_list: this.args.positionInList,
-    });
-  }
-
-  @action
-  handleCollapseButtonClick() {
-    this.isExpanded = false;
-    this.containerElement.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  @action
-  handleDidInsertExplanationHTML(element) {
-    Prism.highlightAllUnder(element);
-  }
-
-  @action
-  handleDidUpdateExplanationHTML(element) {
-    Prism.highlightAllUnder(element);
-  }
-
-  @action
-  async loadComments() {
-    this.isLoadingComments = true;
-
-    await this.store.query('community-course-stage-solution-comment', {
-      target_id: this.args.solution.id,
-      include:
-        'user,language,target,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
-      reload: true,
-    });
-
-    this.isLoadingComments = false;
+  get isCollapsed() {
+    return !this.isExpanded;
   }
 
   get isCollapsedByDefault() {
     return this.args.isCollapsedByDefault; // TODO: Compute based on lines of code
-  }
-
-  get isCollapsed() {
-    return !this.isExpanded;
   }
 
   get isCurrentUserSolution() {
@@ -127,5 +74,58 @@ export default class CommunitySolutionCardComponent extends Component {
 
   get shouldShowPublishToGithubButton() {
     return this.isCurrentUserSolution && !this.args.solution.isPublishedToGithub;
+  }
+
+  @action
+  handleCollapseButtonClick() {
+    this.isExpanded = false;
+    this.containerElement.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  @action
+  handleCommentView(comment) {
+    this.analyticsEventTracker.track('viewed_comment', {
+      comment_id: comment.id,
+    });
+  }
+
+  @action
+  handleDidInsert(element) {
+    this.containerElement = element;
+  }
+
+  @action
+  handleDidInsertExplanationHTML(element) {
+    Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleDidUpdateExplanationHTML(element) {
+    Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleExpandButtonClick() {
+    this.isExpanded = true;
+    this.loadComments();
+
+    this.analyticsEventTracker.track('viewed_community_course_stage_solution', {
+      community_course_stage_solution_id: this.args.solution.id,
+      position_in_list: this.args.positionInList,
+    });
+  }
+
+  @action
+  async loadComments() {
+    this.isLoadingComments = true;
+
+    await this.store.query('community-course-stage-solution-comment', {
+      target_id: this.args.solution.id,
+      include:
+        'user,language,target,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
+      reload: true,
+    });
+
+    this.isLoadingComments = false;
   }
 }

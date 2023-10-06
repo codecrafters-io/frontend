@@ -20,16 +20,16 @@ export default class CommunityCourseStageSolutionModel extends Model {
     return !!this.explanationMarkdown;
   }
 
-  @action
-  githubUrlForFile(filename) {
-    return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
+  get isPublishedToGithub() {
+    return this.githubRepositoryName;
   }
 
   get isPublishedToPublicGithubRepository() {
     return this.isPublishedToGithub && !this.githubRepositoryIsPrivate;
   }
 
-  get isPublishedToGithub() {
-    return this.githubRepositoryName;
+  @action
+  githubUrlForFile(filename) {
+    return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
   }
 }

@@ -7,12 +7,12 @@ export default class GithubAppInstallation extends Model {
   @attr('string') githubConfigureUrl;
   @attr('string') status;
 
-  get isUninstalled() {
-    return this.status === 'uninstalled';
-  }
-
   get isBroken() {
     return this.status && this.status !== 'active';
+  }
+
+  get isUninstalled() {
+    return this.status === 'uninstalled';
   }
 }
 

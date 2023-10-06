@@ -11,33 +11,34 @@ export default class CodeExamplesController extends Controller {
   @service store;
   @tracked requestedLanguage = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
 
+  get communitySolutionsAreAvailableForCurrentLanguage() {
+    return this.courseStage.hasCommunitySolutionsForLanguage(this.currentLanguage);
+  }
+
   get courseStage() {
     return this.model.courseStage;
+  }
+
+  get currentLanguage() {
+    return this.requestedLanguage || this.defaultLanguage;
+  }
+
+  get defaultLanguage() {
+    if (this.repository.language) {
+      return this.repository.language;
+    }
+
+    const sortedBetaOrLiveLanguages = this.repository.course.betaOrLiveLanguages.sortBy('language.name');
+
+    return sortedBetaOrLiveLanguages.find((language) => this.courseStage.hasCommunitySolutionsForLanguage(language)) || sortedBetaOrLiveLanguages[0];
   }
 
   get repository() {
     return this.model.activeRepository;
   }
 
-  get communitySolutionsAreAvailableForCurrentLanguage() {
-    return this.courseStage.hasCommunitySolutionsForLanguage(this.currentLanguage);
-  }
-
-  @action
-  async loadSolutions() {
-    this.isLoading = true;
-
-    this.solutions = await this.store.query('community-course-stage-solution', {
-      course_stage_id: this.courseStage.id,
-      language_id: this.currentLanguage.id,
-      include: 'user,language,comments,comments.user,comments.target,course-stage',
-    });
-
-    this.isLoading = false;
-  }
-
-  get currentLanguage() {
-    return this.requestedLanguage || this.defaultLanguage;
+  get sortedSolutions() {
+    return this.solutions; // For now, the API handles sorting
   }
 
   @action
@@ -51,17 +52,16 @@ export default class CodeExamplesController extends Controller {
     this.loadSolutions();
   }
 
-  get defaultLanguage() {
-    if (this.repository.language) {
-      return this.repository.language;
-    }
+  @action
+  async loadSolutions() {
+    this.isLoading = true;
 
-    const sortedBetaOrLiveLanguages = this.repository.course.betaOrLiveLanguages.sortBy('language.name');
+    this.solutions = await this.store.query('community-course-stage-solution', {
+      course_stage_id: this.courseStage.id,
+      language_id: this.currentLanguage.id,
+      include: 'user,language,comments,comments.user,comments.target,course-stage',
+    });
 
-    return sortedBetaOrLiveLanguages.find((language) => this.courseStage.hasCommunitySolutionsForLanguage(language)) || sortedBetaOrLiveLanguages[0];
-  }
-
-  get sortedSolutions() {
-    return this.solutions; // For now, the API handles sorting
+    this.isLoading = false;
   }
 }

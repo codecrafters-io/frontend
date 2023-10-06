@@ -12,6 +12,15 @@ export default class CourseOverviewRoute extends BaseRoute {
 
   @tracked previousMetaImageUrl;
 
+  async afterModel({ course: { slug } = {} } = {}) {
+    this.previousMetaImageUrl = this.headData.imageUrl;
+    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${slug}.jpg`;
+  }
+
+  deactivate() {
+    this.headData.imageUrl = this.previousMetaImageUrl;
+  }
+
   async model(params) {
     if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
       // Trigger a refresh anyway
@@ -38,14 +47,5 @@ export default class CourseOverviewRoute extends BaseRoute {
 
       return { course };
     }
-  }
-
-  async afterModel({ course: { slug } = {} } = {}) {
-    this.previousMetaImageUrl = this.headData.imageUrl;
-    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${slug}.jpg`;
-  }
-
-  deactivate() {
-    this.headData.imageUrl = this.previousMetaImageUrl;
   }
 }

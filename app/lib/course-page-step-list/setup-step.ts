@@ -38,6 +38,14 @@ export default class SetupStep extends Step {
     }
   }
 
+  get routeParams() {
+    return {
+      route: 'course.setup',
+      // @ts-ignore
+      models: [this.repository.course.slug],
+    };
+  }
+
   get status() {
     // @ts-ignore
     if (this.repository.firstSubmissionCreated) {
@@ -50,14 +58,6 @@ export default class SetupStep extends Step {
     }
 
     return 'in_progress';
-  }
-
-  get routeParams() {
-    return {
-      route: 'course.setup',
-      // @ts-ignore
-      models: [this.repository.course.slug],
-    };
   }
 
   get title() {

@@ -10,16 +10,16 @@ export default class FixGithubAppInstallationPromptComponent extends Component {
   @service store;
 
   @action
+  handleInstallGitHubAppButtonClick() {
+    window.location.href = `${config.x.backendUrl}/github_app_installations/start?repository_id=${this.args.repository.id}`;
+  }
+
+  @action
   async handleRefreshStatusButtonClick() {
     this.isRefreshing = true;
     await this.store.findRecord('github-app-installation', this.args.githubAppInstallation.id, { reload: true });
     this.isRefreshing = false;
 
     this.args.onStatusRefresh();
-  }
-
-  @action
-  handleInstallGitHubAppButtonClick() {
-    window.location.href = `${config.x.backendUrl}/github_app_installations/start?repository_id=${this.args.repository.id}`;
   }
 }

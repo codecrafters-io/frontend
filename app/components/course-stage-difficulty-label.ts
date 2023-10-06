@@ -10,12 +10,12 @@ interface Signature {
 }
 
 export default class CourseStageDifficultyLabel extends Component<Signature> {
-  get numberOfBars() {
+  get barColorClass() {
     return {
-      very_easy: 0,
-      easy: 1,
-      medium: 2,
-      hard: 3,
+      very_easy: 'bg-teal-500',
+      easy: 'bg-teal-500',
+      medium: 'bg-teal-500',
+      hard: 'bg-yellow-500',
     }[this.args.stage.difficulty];
   }
 
@@ -28,21 +28,21 @@ export default class CourseStageDifficultyLabel extends Component<Signature> {
     }[this.args.stage.difficulty];
   }
 
-  get barColorClass() {
-    return {
-      very_easy: 'bg-teal-500',
-      easy: 'bg-teal-500',
-      medium: 'bg-teal-500',
-      hard: 'bg-yellow-500',
-    }[this.args.stage.difficulty];
-  }
-
   get labelColorClass() {
     return {
       very_easy: 'text-teal-500',
       easy: 'text-teal-500',
       medium: 'text-teal-500',
       hard: 'text-yellow-500',
+    }[this.args.stage.difficulty];
+  }
+
+  get numberOfBars() {
+    return {
+      very_easy: 0,
+      easy: 1,
+      medium: 2,
+      hard: 3,
     }[this.args.stage.difficulty];
   }
 

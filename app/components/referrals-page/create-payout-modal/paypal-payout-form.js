@@ -25,6 +25,15 @@ export default class PaypalPayoutFormComponent extends Component {
     return this.emailAddress && this.emailAddress.trim() !== '' && this.amountInDollars;
   }
 
+  get withdrawableEarningsAmountInDollars() {
+    return this.args.withdrawableEarningsAmountInCents / 100;
+  }
+
+  @action
+  async handleDidInsertFormElement(formElement) {
+    this.formElement = formElement;
+  }
+
   @action
   async handleFormSubmit(e) {
     e.preventDefault();
@@ -45,14 +54,5 @@ export default class PaypalPayoutFormComponent extends Component {
       this.isCreatingPayout = false;
       this.args.onSubmit();
     }
-  }
-
-  @action
-  async handleDidInsertFormElement(formElement) {
-    this.formElement = formElement;
-  }
-
-  get withdrawableEarningsAmountInDollars() {
-    return this.args.withdrawableEarningsAmountInCents / 100;
   }
 }

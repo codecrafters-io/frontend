@@ -4,10 +4,6 @@ import image from '/assets/images/logo/logomark-color.svg';
 export default class FooterComponent extends Component {
   image = image;
 
-  get footerLinkGroups() {
-    return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
-  }
-
   get challengeLinkGroup() {
     return {
       heading: 'Challenges',
@@ -36,22 +32,6 @@ export default class FooterComponent extends Component {
     };
   }
 
-  get supportLinkGroup() {
-    return {
-      heading: 'Support',
-      links: [
-        {
-          text: 'Docs',
-          url: 'https://docs.codecrafters.io/',
-        },
-        {
-          text: 'Status',
-          url: 'https://status.codecrafters.io/',
-        },
-      ],
-    };
-  }
-
   get companyLinkGroup() {
     return {
       heading: 'Company',
@@ -68,6 +48,10 @@ export default class FooterComponent extends Component {
     };
   }
 
+  get footerLinkGroups() {
+    return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
+  }
+
   get legalLinkGroup() {
     return {
       heading: 'Legal',
@@ -79,6 +63,22 @@ export default class FooterComponent extends Component {
         {
           text: 'Privacy',
           url: 'https://codecrafters.io/privacy',
+        },
+      ],
+    };
+  }
+
+  get supportLinkGroup() {
+    return {
+      heading: 'Support',
+      links: [
+        {
+          text: 'Docs',
+          url: 'https://docs.codecrafters.io/',
+        },
+        {
+          text: 'Status',
+          url: 'https://status.codecrafters.io/',
         },
       ],
     };

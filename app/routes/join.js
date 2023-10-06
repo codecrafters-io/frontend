@@ -12,6 +12,12 @@ export default class JoinRoute extends BaseRoute {
     scrollToTop();
   }
 
+  afterModel(model) {
+    if (!model.referralLink) {
+      this.transitionTo('not-found');
+    }
+  }
+
   async model(params) {
     const referralLinks = await this.store.query('referral-link', {
       slug: params.referralLinkSlug,
@@ -19,11 +25,5 @@ export default class JoinRoute extends BaseRoute {
     });
 
     return { referralLink: referralLinks.firstObject };
-  }
-
-  afterModel(model) {
-    if (!model.referralLink) {
-      this.transitionTo('not-found');
-    }
   }
 }

@@ -17,6 +17,15 @@ export default class TrackRoute extends BaseRoute {
     scrollToTop();
   }
 
+  async afterModel({ language: { slug } = {} } = {}) {
+    this.previousMetaImageUrl = this.headData.imageUrl;
+    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
+  }
+
+  deactivate() {
+    this.headData.imageUrl = this.previousMetaImageUrl;
+  }
+
   async model(params) {
     let courses = await this.store.findAll('course', {
       include: 'extensions,stages,stages.solutions.language,language-configurations.language,',
@@ -33,14 +42,5 @@ export default class TrackRoute extends BaseRoute {
       courses: courses.filter((course) => course.betaOrLiveLanguages.includes(language)),
       language: language,
     };
-  }
-
-  async afterModel({ language: { slug } = {} } = {}) {
-    this.previousMetaImageUrl = this.headData.imageUrl;
-    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
-  }
-
-  deactivate() {
-    this.headData.imageUrl = this.previousMetaImageUrl;
   }
 }

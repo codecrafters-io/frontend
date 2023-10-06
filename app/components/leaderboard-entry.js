@@ -6,11 +6,11 @@ export default class LeaderboardEntryComponent extends Component {
     return !this.args.user;
   }
 
-  get progressPercentage() {
-    return 100 * (this.args.progressNumerator / this.args.progressDenominator);
-  }
-
   get progressBarWidthStyle() {
     return htmlSafe(`width: ${this.progressPercentage}%;`);
+  }
+
+  get progressPercentage() {
+    return 100 * (this.args.progressNumerator / this.args.progressDenominator);
   }
 }
