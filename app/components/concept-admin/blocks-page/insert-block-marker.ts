@@ -14,7 +14,6 @@ interface Signature {
 export default class InsertBlockMarkerComponent extends Component<Signature> {
   @action
   handleBlockTypeChosen(blockType: Block['type'], closeDropdownFn: () => void) {
-    console.log('InsertBlockMarkerComponent.handleBlockTypeChosen')
     const newBlock = this.newBlockForType(blockType);
 
     this.args.onBlockAdded(newBlock);
