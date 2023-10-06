@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import { Block } from 'codecrafters-frontend/models/concept';
+import { MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: Block;
+    model: MarkdownBlock;
   };
 }
 

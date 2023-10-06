@@ -23,9 +23,9 @@
 
       {{#if this.mutableBlock}}
         {{#if (eq this.mutableBlock.type "markdown")}}
-          <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlock}} />
+          <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlockAsMarkdownBlock}} />
         {{else if (eq this.mutableBlock.type "click_to_continue")}}
-          <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlock}} />
+          <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlockAsClickToContinueBlock}} />
         {{/if}}
       {{/if}}
     </div>

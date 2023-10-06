@@ -3,6 +3,7 @@ import { Block } from 'codecrafters-frontend/models/concept';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
+import { ClickToContinueBlock, MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -27,6 +28,16 @@ export default class EditableBlockComponent extends Component<Signature> {
 
   get isEditing() {
     return !!this.mutableBlock;
+  }
+
+  // Glint can't infer the type, so we add a getter for each block type
+  get mutableBlockAsClickToContinueBlock() {
+    return this.mutableBlock as ClickToContinueBlock;
+  }
+
+  // Glint can't infer the type, so we add a getter for each block type
+  get mutableBlockAsMarkdownBlock() {
+    return this.mutableBlock as MarkdownBlock;
   }
 
   get mutableBlockHasChanges() {
