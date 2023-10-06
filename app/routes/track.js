@@ -9,7 +9,7 @@ export default class TrackRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;
-  @service headData;
+  @service metaData;
 
   @tracked previousMetaImageUrl;
 
@@ -18,12 +18,12 @@ export default class TrackRoute extends BaseRoute {
   }
 
   async afterModel({ language: { slug } = {} } = {}) {
-    this.previousMetaImageUrl = this.headData.imageUrl;
-    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
+    this.previousMetaImageUrl = this.metaData.imageUrl;
+    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
   }
 
   deactivate() {
-    this.headData.imageUrl = this.previousMetaImageUrl;
+    this.metaData.imageUrl = this.previousMetaImageUrl;
   }
 
   async model(params) {

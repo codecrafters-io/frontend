@@ -6,16 +6,16 @@
 
 {{! @glint-nocheck: not typesafe yet }}
 
-<meta name="description" content={{or this.model.description this.model.defaults.description}} />
+<meta name="description" content={{or @metaData.description @defaults.description}} />
 
-<meta property="og:type" content={{or this.model.type this.model.defaults.type}} />
-<meta property="og:site_name" content={{or this.model.siteName this.model.defaults.siteName}} />
-<meta property="og:title" content={{or this.model.title this.model.defaults.title}} />
-<meta property="og:description" content={{or this.model.description this.model.defaults.description}} />
-<meta property="og:image" content={{or this.model.imageUrl this.model.defaults.imageUrl}} />
+<meta property="og:type" content={{or @metaData.type @defaults.type}} />
+<meta property="og:site_name" content={{or @metaData.siteName @defaults.siteName}} />
+<meta property="og:title" content={{or @metaData.title @defaults.title}} />
+<meta property="og:description" content={{or @metaData.description @defaults.description}} />
+<meta property="og:image" content={{or @metaData.imageUrl @defaults.imageUrl}} />
 
-<meta name="twitter:card" content={{or this.model.twitterCard this.model.defaults.twitterCard}} />
-<meta name="twitter:site" content={{or this.model.twitterSite this.model.defaults.twitterSite}} />
-<meta name="twitter:title" content={{or this.model.title this.model.defaults.title}} />
-<meta name="twitter:description" content={{or this.model.description this.model.defaults.description}} />
-<meta name="twitter:image" content={{or this.model.imageUrl this.model.defaults.imageUrl}} />
+<meta name="twitter:card" content={{or @metaData.twitterCard @defaults.twitterCard}} />
+<meta name="twitter:site" content={{or @metaData.twitterSite @defaults.twitterSite}} />
+<meta name="twitter:title" content={{or @metaData.title @defaults.title}} />
+<meta name="twitter:description" content={{or @metaData.description @defaults.description}} />
+<meta name="twitter:image" content={{or @metaData.imageUrl @defaults.imageUrl}} />
