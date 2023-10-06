@@ -11,11 +11,17 @@
       </div>
 
       <div class="flex flex-col items-end gap-2">
-        <PrimaryButtonWithSpinner @size="small" @isDisabled={{or this.isSaving (not this.changesArePresent)}} @shouldShowSpinner={{this.isSaving}}>
+        <PrimaryButtonWithSpinner
+          @size="small"
+          @isDisabled={{or this.isSaving (not this.mutationsArePresent)}}
+          @shouldShowSpinner={{this.isSaving}}
+          {{on "click" this.handlePublishButtonClicked}}
+          data-test-publish-changes-button
+        >
           Publish Changes
         </PrimaryButtonWithSpinner>
 
-        {{#if (not this.changesArePresent)}}
+        {{#if (not this.mutationsArePresent)}}
           <div class="text-xs text-gray-400">
             No changes to save
           </div>

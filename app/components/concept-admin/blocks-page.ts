@@ -89,16 +89,20 @@ export default class BlocksPageComponent extends Component<Signature> {
     this.blockDeletions = { ...this.blockDeletions }; // Force re-render
   }
 
-  get numberOfBlockAdditions(): number {
-    return Object.entries(this.blockAdditions).reduce<number>((sum, [_, addition]) => sum + addition.newBlocks.length, 0);
-  }
+  @action
+  async handlePublishButtonClicked() {
+    this.isSaving = true;
 
-  get numberOfBlockChanges() {
-    return Object.keys(this.blockChanges).length;
-  }
+    await this.args.concept.updateBlocks({
+      'old-blocks': this.args.concept.blocks,
+      'new-blocks': this.rawBlocksAfterMutations,
+    });
 
-  get numberOfBlockDeletions() {
-    return Object.keys(this.blockDeletions).length;
+    this.blockChanges = {};
+    this.blockAdditions = {};
+    this.blockDeletions = {};
+
+    this.isSaving = false;
   }
 
   get blocksWithMetadata() {
@@ -126,8 +130,40 @@ export default class BlocksPageComponent extends Component<Signature> {
     });
   }
 
-  get changesArePresent() {
+  get mutationsArePresent() {
     return this.numberOfBlockAdditions > 0 || this.numberOfBlockChanges > 0 || this.numberOfBlockDeletions > 0;
+  }
+
+  get rawBlocksAfterMutations() {
+    const blocks: Block[] = [];
+
+    this.args.concept.parsedBlocks.forEach((block, index) => {
+      if (this.blockDeletions[index]) {
+        // Skip
+      } else if (this.blockChanges[index]) {
+        blocks.push(this.blockChanges[index]!.newBlock);
+      } else {
+        blocks.push(block);
+      }
+
+      if (this.blockAdditions[index]) {
+        blocks.push(...this.blockAdditions[index]!.newBlocks);
+      }
+    });
+
+    return blocks.map((block) => block.toJSON);
+  }
+
+  get numberOfBlockAdditions(): number {
+    return Object.entries(this.blockAdditions).reduce<number>((sum, [_, addition]) => sum + addition.newBlocks.length, 0);
+  }
+
+  get numberOfBlockChanges() {
+    return Object.keys(this.blockChanges).length;
+  }
+
+  get numberOfBlockDeletions() {
+    return Object.keys(this.blockDeletions).length;
   }
 }
 

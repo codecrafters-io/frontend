@@ -1,6 +1,8 @@
 import { clickable, collection, create, fillable, text, visitable } from 'ember-cli-page-object';
 
 export default create({
+  clickOnPublishChangesButton: clickable('[data-test-publish-changes-button]'),
+
   insertBlockMarkers: collection('[data-test-insert-block-marker]', {
     dropdown: {
       async clickOnItem(title: string) {
@@ -19,6 +21,7 @@ export default create({
       resetScope: true,
     },
   }),
+
   editableBlocks: collection('[data-test-editable-block]', {
     clickOnSaveButton: clickable('[data-test-save-button]'),
     clickOnDeleteButton: clickable('[data-test-delete-button]'),

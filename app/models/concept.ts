@@ -1,10 +1,11 @@
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
 import Model from '@ember-data/model';
 import showdown from 'showdown';
-import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
-import { htmlSafe } from '@ember/template';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 import { SafeString } from '@ember/template/-private/handlebars';
+import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
+import { htmlSafe } from '@ember/template';
+import { memberAction } from 'ember-api-actions';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
@@ -57,4 +58,15 @@ export default class ConceptModel extends Model {
       return new blockClass(blockJSON);
     });
   }
+
+  declare updateBlocks: (this: Model, payload: unknown) => Promise<void>;
 }
+
+ConceptModel.prototype.updateBlocks = memberAction({
+  path: 'update-blocks',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});
