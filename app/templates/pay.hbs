@@ -39,7 +39,7 @@
         @customDiscount={{this.user.availableCustomDiscount}}
         @discountedPrice={{this.discountedYearlyPrice}}
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
-        @footerText="Singly payment of ${{or this.discountedYearlyPrice 360}}."
+        @footerText="Single payment of ${{or this.discountedYearlyPrice 360}}."
         @isRecommended={{false}}
         @pricingFrequency="yearly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
