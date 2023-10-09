@@ -40,43 +40,40 @@
         {{/if}}
       </div>
     </div>
-    {{! @glint-expect-error ts-ifying problem }}
     <div class="flex flex-col" {{sortable-group onChange=this.handleSortableItemsReordered}}>
-      {{! @glint-expect-error ts-ifying problem }}
       <ConceptAdmin::BlocksPage::InsertBlockMarker {{sortable-item model="insert-block-marker"}} @onBlockAdded={{fn this.handleBlockAdded -1 0}} />
 
       {{#each this.blocksWithMetadata key="id" as |item|}}
-        <ConceptAdmin::BlocksPage::EditableBlock
-          @conceptBlock={{item.block}}
-          @wasAdded={{item.wasAdded}}
-          @wasChanged={{item.wasChanged}}
-          @wasDeleted={{item.wasDeleted}}
-          @onBlockChanged={{if
-            item.wasAdded
-            (fn this.handleAddedBlockChanged item.anchorBlockIndex item.addedBlockIndex)
-            (fn this.handleBlockChanged item.anchorBlockIndex)
-          }}
-          @onBlockDeleted={{if
-            item.wasAdded
-            (fn this.handleAddedBlockDeleted item.anchorBlockIndex item.addedBlockIndex)
-            (fn this.handleBlockDeleted item.anchorBlockIndex)
-          }}
-          @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded item.anchorBlockIndex}}
-          @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded item.anchorBlockIndex}}
-          {{! @glint-expect-error ts-ifying problem }}
-          {{sortable-item model=item}}
-        >
-          <:drag-handler>
-            <div class="flex items-center text-gray-300 hover:text-gray-600" {{sortable-handle}}>
-              &varr;
-            </div>
-          </:drag-handler>
-        </ConceptAdmin::BlocksPage::EditableBlock>
+        <div {{sortable-item model=item}}>
+          <ConceptAdmin::BlocksPage::EditableBlock
+            @conceptBlock={{item.block}}
+            @wasAdded={{item.wasAdded}}
+            @wasChanged={{item.wasChanged}}
+            @wasDeleted={{item.wasDeleted}}
+            @onBlockChanged={{if
+              item.wasAdded
+              (fn this.handleAddedBlockChanged item.anchorBlockIndex item.addedBlockIndex)
+              (fn this.handleBlockChanged item.anchorBlockIndex)
+            }}
+            @onBlockDeleted={{if
+              item.wasAdded
+              (fn this.handleAddedBlockDeleted item.anchorBlockIndex item.addedBlockIndex)
+              (fn this.handleBlockDeleted item.anchorBlockIndex)
+            }}
+            @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded item.anchorBlockIndex}}
+            @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded item.anchorBlockIndex}}
+          >
+            <:drag-handler>
+              <div class="flex items-center text-gray-300 hover:text-gray-600" {{sortable-handle}}>
+                &varr;
+              </div>
+            </:drag-handler>
+          </ConceptAdmin::BlocksPage::EditableBlock>
 
-        <ConceptAdmin::BlocksPage::InsertBlockMarker
-          {{sortable-item model="insert-block-marker"}}
-          @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}}
-        />
+          <ConceptAdmin::BlocksPage::InsertBlockMarker
+            @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}}
+          />
+        </div>
       {{/each}}
     </div>
   </div>
