@@ -23,12 +23,17 @@ export default create({
   }),
 
   editableBlocks: collection('[data-test-editable-block]', {
+    click: clickable('[data-test-clickable-area]'),
     clickOnSaveButton: clickable('[data-test-save-button]'),
     clickOnDeleteButton: clickable('[data-test-delete-button]'),
 
     markdownBlockEditor: {
       fillInMarkdown: fillable('textarea'),
       scope: '[data-test-markdown-block-editor]',
+    },
+
+    preview: {
+      scope: '[data-test-editable-block-preview]',
     },
   }),
 

@@ -17,6 +17,10 @@ type Signature = {
     onBlockChangeDiscarded: () => void;
     onBlockDeletionDiscarded: () => void;
   };
+
+  Blocks: {
+    dragHandler: [];
+  };
 };
 
 export default class EditableBlockComponent extends Component<Signature> {
