@@ -72,8 +72,13 @@
     {{/if}}
   </div>
 {{else}}
-  <div role="button" class="group/editable-block-preview relative" data-test-editable-block ...attributes>
-    <div class="border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}" {{on "click" this.handleCollapsedBlockClicked}}>
+  <div class="group/editable-block-preview relative" data-test-editable-block ...attributes>
+    <div
+      role="button"
+      class="border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}"
+      {{on "click" this.handleCollapsedBlockClicked}}
+      data-test-clickable-area
+    >
       {{#if @wasDeleted}}
         <div class="text-gray-400" data-test-editable-block-preview>
           <span class="line-through">Deleted Block</span>

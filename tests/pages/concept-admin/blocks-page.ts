@@ -23,6 +23,7 @@ export default create({
   }),
 
   editableBlocks: collection('[data-test-editable-block]', {
+    click: clickable('[data-test-clickable-area]'),
     clickOnSaveButton: clickable('[data-test-save-button]'),
     clickOnDeleteButton: clickable('[data-test-delete-button]'),
 
