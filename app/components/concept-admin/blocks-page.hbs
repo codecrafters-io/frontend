@@ -40,7 +40,7 @@
         {{/if}}
       </div>
     </div>
-    <div class="flex flex-col">
+    <div class="flex flex-col" {{sortable-group onChange=this.handleItemsReordered}}>
       <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1 0}} />
 
       {{#each this.blocksWithMetadata key="id" as |item|}}
@@ -61,7 +61,13 @@
           }}
           @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded item.anchorBlockIndex}}
           @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded item.anchorBlockIndex}}
-        />
+        >
+          <:drag-handler>
+            <div class="flex items-center text-gray-300 hover:text-gray-600">
+              &varr;
+            </div>
+          </:drag-handler>
+        </ConceptAdmin::BlocksPage::EditableBlock>
 
         <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}} />
       {{/each}}

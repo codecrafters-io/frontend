@@ -185,6 +185,9 @@ export default class BlocksPageComponent extends Component<Signature> {
     this.blockDeletions = { ...this.blockDeletions }; // Force re-render
   }
 
+  // @action
+  // handleItemsReordered(reorderedBlocks: BlockWithMetadata[]) {}
+
   @action
   async handlePublishButtonClicked() {
     this.isSaving = true;
