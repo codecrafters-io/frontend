@@ -64,11 +64,11 @@
             @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded item.anchorBlockIndex}}
             class="highlight-while-dragging"
           >
-            <:drag-handler>
+            <:dragHandler>
               <div class="flex items-center text-gray-300 hover:text-gray-600" {{sortable-handle}} data-test-sortable-item-drag-handle>
                 &varr;
               </div>
-            </:drag-handler>
+            </:dragHandler>
           </ConceptAdmin::BlocksPage::EditableBlock>
 
           <ConceptAdmin::BlocksPage::InsertBlockMarker
