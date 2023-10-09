@@ -60,4 +60,53 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     // TODO: Triggers the recorddata error
     await new Promise((resolve) => setTimeout(resolve, 1000));
   });
+
+  test('it should track when extensions are disabled', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    const repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    course.extensions.models.sortBy('name').forEach((extension) => {
+      this.server.create('course-extension-activation', {
+        extension: extension,
+        repository: repository,
+      });
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is /stages/2');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
+
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is /stages/ext1:1');
+
+    // TODO: Triggers the recorddata error
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
+
+    // TODO: Triggers the recorddata error
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Disable Extension 1
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
+
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    const analyticsEventNames = analyticsEvents.map((event) => event.name);
+
+    assert.ok(analyticsEventNames.includes('deactivated_course_extension'), 'deactivated_course_extension event was tracked');
+  });
 });

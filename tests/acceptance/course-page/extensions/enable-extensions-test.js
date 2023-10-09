@@ -55,4 +55,37 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
   });
+
+  test('it should track when extensions are enabled', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items');
+
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
+
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is enabled');
+
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    const analyticsEventNames = analyticsEvents.map((event) => event.name);
+
+    assert.ok(analyticsEventNames.includes('activated_course_extension'), 'activated_course_extension event was tracked');
+  });
 });
