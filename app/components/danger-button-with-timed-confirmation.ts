@@ -17,10 +17,10 @@ interface Signature {
   };
 }
 
-export default class DangerButtonWithProgressIndicatorComponent extends Component<Signature> {
+export default class DangerButtonWithTimedConfirmation extends Component<Signature> {
   @tracked isHovered: boolean = false;
   @tracked progressWidth: number = 100;
-  @tracked progressInterval: number = 100;
+  @tracked progressInterval: number = 50; // 5000ms / 100 = 50ms
 
   get progressBarWidthStyle() {
     return htmlSafe(`width: ${this.progressWidth}%`);
@@ -69,6 +69,6 @@ export default class DangerButtonWithProgressIndicatorComponent extends Componen
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DangerButtonWithProgressIndicator: typeof DangerButtonWithProgressIndicatorComponent;
+    DangerButtonWithTimedConfirmation: typeof DangerButtonWithTimedConfirmation;
   }
 }
