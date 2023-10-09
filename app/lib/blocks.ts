@@ -1,69 +1,122 @@
-import { camelize } from '@ember/string';
-
-interface BlockJSON {
-  [key: string]: unknown;
-}
+import { tracked } from '@glimmer/tracking';
+import type { BlockJSON } from 'codecrafters-frontend/models/concept';
 
 class Block {
-  static type: string;
+  @tracked type: BlockJSON['type'];
+  @tracked args: Record<string, unknown>;
 
-  static fromJSON(this: new () => Block, json: BlockJSON): Block {
-    const block = new this();
-
-    for (const [key, value] of Object.entries(json)) {
-      (block as any)[camelize(key)] = value; // eslint-disable-line @typescript-eslint/no-explicit-any
-    }
-
-    return block;
+  constructor(json: BlockJSON) {
+    this.type = json.type;
+    this.args = { ...json.args }; // Don't mutate the original JSON
   }
 
-  get type(): string {
-    return (this.constructor as typeof Block).type;
+  get toJSON(): BlockJSON {
+    return {
+      type: this.type,
+      args: { ...this.args },
+    };
+  }
+
+  dup(): this {
+    return new (this.constructor as typeof Block)(this.toJSON) as this;
+  }
+
+  isEqual(other: Block): boolean {
+    return JSON.stringify(this.toJSON) === JSON.stringify(other.toJSON);
+  }
+
+  updateArgs(key: string, value: unknown) {
+    this.args = { ...this.args, [key]: value };
   }
 }
 
 class ClickToContinueBlock extends Block {
   static type = 'click_to_continue';
+  isInteractable = true;
 
-  static fromJSON(json: BlockJSON): ClickToContinueBlock {
-    return super.fromJSON(json) as ClickToContinueBlock;
+  declare args: {
+    button_text?: string;
+  };
+
+  get buttonText(): string | undefined {
+    return this.args.button_text;
   }
 
-  buttonText = 'Continue';
-  isInteractable = true;
+  get buttonTextForDisplay(): string {
+    return this.buttonText || 'Continue';
+  }
+
+  set buttonText(buttonText: string) {
+    this.updateArgs('button_text', buttonText);
+  }
 }
 
 class MarkdownBlock extends Block {
   static type = 'markdown';
+  isInteractable = false;
 
-  static fromJSON(json: BlockJSON): MarkdownBlock {
-    return super.fromJSON(json) as MarkdownBlock;
+  declare args: {
+    markdown: string;
+  };
+
+  get markdown() {
+    return this.args.markdown;
   }
 
-  markdown!: string;
-  isInteractable = false;
+  set markdown(markdown: string) {
+    this.updateArgs('markdown', markdown);
+  }
 }
 
 class ConceptAnimationBlock extends Block {
   static type = 'concept_animation';
-
-  static fromJSON(json: BlockJSON): ConceptAnimationBlock {
-    return super.fromJSON(json) as ConceptAnimationBlock;
-  }
-
-  conceptAnimationSlug!: string;
   isInteractable = false;
+
+  declare args: {
+    concept_animation_slug: string;
+  };
+
+  get conceptAnimationSlug() {
+    return this.args.concept_animation_slug;
+  }
 }
 
 class ConceptQuestionBlock extends Block {
   static type = 'concept_question';
-
-  static fromJSON(json: BlockJSON): ConceptQuestionBlock {
-    return super.fromJSON(json) as ConceptQuestionBlock;
-  }
-
-  conceptQuestionSlug!: string;
   isInteractable = true;
+
+  declare args: {
+    concept_question_slug: string;
+  };
+
+  get conceptQuestionSlug() {
+    return this.args.concept_question_slug;
+  }
 }
 
-export { ClickToContinueBlock, MarkdownBlock, ConceptQuestionBlock, ConceptAnimationBlock };
+function IsClickToContinueBlock(block: Block): block is ClickToContinueBlock {
+  return block.type === ClickToContinueBlock.type;
+}
+
+function IsMarkdownBlock(block: Block): block is MarkdownBlock {
+  return block.type === MarkdownBlock.type;
+}
+
+function IsConceptAnimationBlock(block: Block): block is ConceptAnimationBlock {
+  return block.type === 'concept_animation';
+}
+
+function IsConceptQuestionBlock(block: Block): block is ConceptQuestionBlock {
+  return block.type === 'concept_question';
+}
+
+export {
+  ClickToContinueBlock,
+  MarkdownBlock,
+  ConceptQuestionBlock,
+  ConceptAnimationBlock,
+  IsClickToContinueBlock,
+  IsMarkdownBlock,
+  IsConceptAnimationBlock,
+  IsConceptQuestionBlock,
+};

@@ -8,11 +8,6 @@ export default class SubmissionLogsPreviewComponent extends Component {
     return this.args.submission.evaluations.firstObject;
   }
 
-  @action
-  handleDidInsert(element) {
-    element.scrollTop = element.scrollHeight;
-  }
-
   @cached
   get logLines() {
     return this.evaluation.parsedLogs
@@ -21,5 +16,10 @@ export default class SubmissionLogsPreviewComponent extends Component {
       .map((line) => {
         return new AnsiUp().ansi_to_html(line);
       });
+  }
+
+  @action
+  handleDidInsert(element) {
+    element.scrollTop = element.scrollHeight;
   }
 }

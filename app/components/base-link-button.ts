@@ -19,22 +19,6 @@ export interface BaseLinkButtonSignature {
 }
 
 export default class BaseLinkButtonComponent extends Component<BaseLinkButtonSignature> {
-  get sizeIsSmall(): boolean {
-    return this.args.size === 'small';
-  }
-
-  get sizeIsExtraSmall(): boolean {
-    return this.args.size === 'extra-small';
-  }
-
-  get sizeIsRegular(): boolean {
-    return this.args.size === 'regular' || !this.args.size;
-  }
-
-  get sizeIsLarge(): boolean {
-    return this.args.size === 'large';
-  }
-
   get normalizedModels(): string[] {
     if (this.args.model) {
       return [this.args.model];
@@ -49,6 +33,22 @@ export default class BaseLinkButtonComponent extends Component<BaseLinkButtonSig
 
   get query() {
     return this.args.query || {};
+  }
+
+  get sizeIsExtraSmall(): boolean {
+    return this.args.size === 'extra-small';
+  }
+
+  get sizeIsLarge(): boolean {
+    return this.args.size === 'large';
+  }
+
+  get sizeIsRegular(): boolean {
+    return this.args.size === 'regular' || !this.args.size;
+  }
+
+  get sizeIsSmall(): boolean {
+    return this.args.size === 'small';
   }
 }
 

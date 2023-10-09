@@ -24,15 +24,15 @@ export default class CourseCompletedStep extends Step {
     };
   }
 
-  get status(): 'not_started' {
-    return 'not_started';
-  }
-
   get routeParams() {
     return {
       route: 'course.completed',
       models: [this.repository.course.slug],
     };
+  }
+
+  get status(): 'not_started' {
+    return 'not_started';
   }
 
   get title() {

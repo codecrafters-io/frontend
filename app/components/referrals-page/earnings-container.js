@@ -18,16 +18,6 @@ export default class EarningsContainerComponent extends Component {
     return this.authenticator.currentUser;
   }
 
-  @action
-  handleCreatePayoutModalClose() {
-    this.isCreatingPayout = false;
-  }
-
-  async loadPayouts() {
-    await this.store.findAll('referral-earnings-payout', { include: 'user' });
-    this.isLoadingPayouts = false;
-  }
-
   get lineItems() {
     return [
       {
@@ -48,14 +38,6 @@ export default class EarningsContainerComponent extends Component {
     ];
   }
 
-  get withdrawableEarningsAmountInCents() {
-    return this.currentUser.referralLinks.mapBy('withdrawableEarningsAmountInCents').reduce((a, b) => a + b, 0);
-  }
-
-  get withdrawableEarningsAmountInDollars() {
-    return this.withdrawableEarningsAmountInCents / 100;
-  }
-
   get paidOutEarningsAmountInCents() {
     return this.currentUser.referralEarningsPayouts
       .rejectBy('statusIsFailed')
@@ -73,5 +55,23 @@ export default class EarningsContainerComponent extends Component {
 
   get totalEarningsAmountInDollars() {
     return this.totalEarningsAmountInCents / 100;
+  }
+
+  get withdrawableEarningsAmountInCents() {
+    return this.currentUser.referralLinks.mapBy('withdrawableEarningsAmountInCents').reduce((a, b) => a + b, 0);
+  }
+
+  get withdrawableEarningsAmountInDollars() {
+    return this.withdrawableEarningsAmountInCents / 100;
+  }
+
+  @action
+  handleCreatePayoutModalClose() {
+    this.isCreatingPayout = false;
+  }
+
+  async loadPayouts() {
+    await this.store.findAll('referral-earnings-payout', { include: 'user' });
+    this.isLoadingPayouts = false;
   }
 }

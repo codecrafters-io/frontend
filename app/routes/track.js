@@ -9,12 +9,21 @@ export default class TrackRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;
-  @service headData;
+  @service metaData;
 
   @tracked previousMetaImageUrl;
 
   activate() {
     scrollToTop();
+  }
+
+  async afterModel({ language: { slug } = {} } = {}) {
+    this.previousMetaImageUrl = this.metaData.imageUrl;
+    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
+  }
+
+  deactivate() {
+    this.metaData.imageUrl = this.previousMetaImageUrl;
   }
 
   async model(params) {
@@ -33,14 +42,5 @@ export default class TrackRoute extends BaseRoute {
       courses: courses.filter((course) => course.betaOrLiveLanguages.includes(language)),
       language: language,
     };
-  }
-
-  async afterModel({ language: { slug } = {} } = {}) {
-    this.previousMetaImageUrl = this.headData.imageUrl;
-    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
-  }
-
-  deactivate() {
-    this.headData.imageUrl = this.previousMetaImageUrl;
   }
 }

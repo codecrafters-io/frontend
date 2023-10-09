@@ -1,5 +1,5 @@
 import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
-import { createServer, belongsTo, hasMany, Model } from 'miragejs';
+import { createServer, belongsTo, hasMany, Model, Response } from 'miragejs';
 import config from 'codecrafters-frontend/config/environment';
 import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
 
@@ -57,7 +57,39 @@ function routes() {
   this.post('/analytics-events');
 
   this.get('/badges');
+
   this.get('/concepts');
+  this.patch('/concepts/:id');
+
+  this.post('/concepts/:id/update-blocks', function (schema, request) {
+    const concept = schema.concepts.find(request.params.id);
+    const jsonBody = JSON.parse(request.requestBody);
+
+    const oldBlocksFromRequest = jsonBody['old-blocks'];
+    const oldBlocksFromConcept = concept.blocks;
+
+    const serializedOldBlocksFromRequest = JSON.stringify(oldBlocksFromRequest);
+    const serializedOldBlocksFromConcept = JSON.stringify(oldBlocksFromConcept);
+
+    if (serializedOldBlocksFromRequest !== serializedOldBlocksFromConcept) {
+      return new Response(
+        400,
+        {},
+        {
+          errors: [
+            {
+              detail: `Old blocks from request do not match old blocks from concept. Provided: ${serializedOldBlocksFromRequest}. Expected: ${serializedOldBlocksFromConcept}`,
+            },
+          ],
+        },
+      );
+    }
+
+    concept.update({ blocks: jsonBody['new-blocks'] });
+
+    return concept;
+  });
+
   this.get('/charges');
 
   this.get('/code-walkthroughs');
@@ -258,7 +290,7 @@ function routes() {
     if (regionalDiscount) {
       return regionalDiscount;
     } else {
-      return new Response(200, {}, { data: {} });
+      return new Response(200, {}, { data: null });
     }
   });
 

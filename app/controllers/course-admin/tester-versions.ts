@@ -20,6 +20,10 @@ export default class CourseTesterVersionsController extends Controller {
 
   @tracked isSyncingWithGitHub = false;
 
+  get sortedTesterVersions() {
+    return this.model.course.testerVersions.sortBy('createdAt').reverse();
+  }
+
   @action
   async handleSyncWithGitHubButtonClick() {
     this.isSyncingWithGitHub = true;
@@ -32,9 +36,5 @@ export default class CourseTesterVersionsController extends Controller {
     });
 
     this.isSyncingWithGitHub = false;
-  }
-
-  get sortedTesterVersions() {
-    return this.model.course.testerVersions.sortBy('createdAt').reverse();
   }
 }

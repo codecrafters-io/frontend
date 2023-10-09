@@ -21,8 +21,20 @@ export default class AcceptReferralContainerComponent extends Component {
     return this.authenticator.currentUser;
   }
 
+  get currentUserIsAlreadyEligibleForReferralDiscount() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.isEligibleForReferralDiscount;
+  }
+
   get currentUserIsAnonymous() {
     return this.authenticator.isAnonymous;
+  }
+
+  get currentUserIsReferrer() {
+    if (this.authenticator.isAnonymous) {
+      return false;
+    } else {
+      return this.args.referralLink.user === this.authenticator.currentUser;
+    }
   }
 
   @action
@@ -42,16 +54,5 @@ export default class AcceptReferralContainerComponent extends Component {
 
       this.router.transitionTo('pay');
     }
-  }
-  get currentUserIsReferrer() {
-    if (this.authenticator.isAnonymous) {
-      return false;
-    } else {
-      return this.args.referralLink.user === this.authenticator.currentUser;
-    }
-  }
-
-  get currentUserIsAlreadyEligibleForReferralDiscount() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.isEligibleForReferralDiscount;
   }
 }

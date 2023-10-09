@@ -17,10 +17,6 @@ export default class CourseStageStep extends Step {
     this.stageListItem = stageListItem;
   }
 
-  get courseStage() {
-    return this.stageListItem.stage;
-  }
-
   get completedAt(): Date | null {
     return this.stageListItem.completedAt;
   }
@@ -31,6 +27,26 @@ export default class CourseStageStep extends Step {
 
   get completedAtWasYesterday() {
     return this.completedAt && isYesterday(this.completedAt);
+  }
+
+  get courseStage() {
+    return this.stageListItem.stage;
+  }
+
+  get lastFailedSubmission() {
+    if (this.repository.lastSubmissionHasFailureStatus) {
+      return this.repository.lastSubmission;
+    } else {
+      return null;
+    }
+  }
+
+  get lastFailedSubmissionCreatedAt() {
+    return this.lastFailedSubmission ? this.lastFailedSubmission.createdAt : null;
+  }
+
+  get lastFailedSubmissionWasWithinLast10Minutes() {
+    return this.lastFailedSubmissionCreatedAt && new Date().getTime() - this.lastFailedSubmissionCreatedAt.getTime() <= 600 * 1000; // in last 10 minutes
   }
 
   get progressIndicator(): ProgressIndicator | null {
@@ -70,6 +86,22 @@ export default class CourseStageStep extends Step {
     }
   }
 
+  get routeParams() {
+    return {
+      route: 'course.stage.instructions',
+      models: [this.courseStage.course.slug, this.courseStage.identifierForURL],
+    };
+  }
+
+  // TODO[Extensions]: Can we avoid using CourseStage#position?
+  get shortTitle(): string {
+    if (this.courseStage.isExtensionStage) {
+      return `${this.courseStage.name} (${this.courseStage.primaryExtension!.name})`;
+    } else {
+      return this.courseStage.name;
+    }
+  }
+
   get stageCompletedMessage() {
     if (this.completedAtWasToday) {
       return 'You completed this stage today.';
@@ -90,22 +122,6 @@ export default class CourseStageStep extends Step {
       return 'in_progress';
     } else {
       return 'locked';
-    }
-  }
-
-  get lastFailedSubmissionWasWithinLast10Minutes() {
-    return this.lastFailedSubmissionCreatedAt && new Date().getTime() - this.lastFailedSubmissionCreatedAt.getTime() <= 600 * 1000; // in last 10 minutes
-  }
-
-  get lastFailedSubmissionCreatedAt() {
-    return this.lastFailedSubmission ? this.lastFailedSubmission.createdAt : null;
-  }
-
-  get lastFailedSubmission() {
-    if (this.repository.lastSubmissionHasFailureStatus) {
-      return this.repository.lastSubmission;
-    } else {
-      return null;
     }
   }
 
@@ -133,22 +149,6 @@ export default class CourseStageStep extends Step {
     }
 
     return 'passed_or_not_run';
-  }
-
-  get routeParams() {
-    return {
-      route: 'course.stage.instructions',
-      models: [this.courseStage.course.slug, this.courseStage.identifierForURL],
-    };
-  }
-
-  // TODO[Extensions]: Can we avoid using CourseStage#position?
-  get shortTitle(): string {
-    if (this.courseStage.isExtensionStage) {
-      return `${this.courseStage.name} (${this.courseStage.primaryExtension!.name})`;
-    } else {
-      return this.courseStage.name;
-    }
   }
 
   get title() {

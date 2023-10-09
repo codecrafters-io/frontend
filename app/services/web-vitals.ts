@@ -16,19 +16,6 @@ export default class WebVitalsService extends Service {
       : '';
   }
 
-  setupCallbacks() {
-    if (this.fastboot.isFastBoot) {
-      return;
-    }
-
-    onCLS((metric) => this.reportMetric(metric));
-    onFCP((metric) => this.reportMetric(metric));
-    onLCP((metric) => this.reportMetric(metric));
-    onTTFB((metric) => this.reportMetric(metric));
-    onFID((metric) => this.reportMetric(metric));
-    onINP((metric) => this.reportMetric(metric));
-  }
-
   reportMetric(metric: Metric): void {
     // @ts-ignore
     const vercelAnalyticsId = config.x.vercelAnalyticsId;
@@ -63,5 +50,18 @@ export default class WebVitalsService extends Service {
         keepalive: true,
       });
     }
+  }
+
+  setupCallbacks() {
+    if (this.fastboot.isFastBoot) {
+      return;
+    }
+
+    onCLS((metric) => this.reportMetric(metric));
+    onFCP((metric) => this.reportMetric(metric));
+    onLCP((metric) => this.reportMetric(metric));
+    onTTFB((metric) => this.reportMetric(metric));
+    onFID((metric) => this.reportMetric(metric));
+    onINP((metric) => this.reportMetric(metric));
   }
 }

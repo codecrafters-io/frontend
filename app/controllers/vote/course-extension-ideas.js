@@ -14,12 +14,12 @@ export default class CourseExtensionIdeasController extends Controller {
   @service authenticator;
   @service store;
 
-  get orderedCourses() {
-    return this.model.courseExtensionIdeas.mapBy('course').uniq().sortBy('sortPositionForTrack');
-  }
-
   get orderedCourseExtensionIdeas() {
     return this.model.courseExtensionIdeas.filterBy('course', this.selectedCourse).sortBy('createdAt').reverse();
+  }
+
+  get orderedCourses() {
+    return this.model.courseExtensionIdeas.mapBy('course').uniq().sortBy('sortPositionForTrack');
   }
 
   get selectedCourse() {

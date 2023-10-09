@@ -25,6 +25,20 @@ export default class PricingCardComponent extends Component {
     return ['One time payment', 'No limits on content', 'Community features', 'Access to Perks', 'Priority support'];
   }
 
+  get numberOfMonths() {
+    if (this.args.pricingFrequency === 'quarterly') {
+      return 3;
+    } else if (this.args.pricingFrequency === 'yearly') {
+      return 12;
+    } else {
+      throw new Error(`Unknown pricing frequency: ${this.args.pricingFrequency}`);
+    }
+  }
+
+  get user() {
+    return this.authenticator.currentUser;
+  }
+
   @action
   async handleStartPaymentButtonClicked() {
     this.isCreatingCheckoutSession = true;
@@ -42,19 +56,5 @@ export default class PricingCardComponent extends Component {
 
     await checkoutSession.save();
     window.location.href = checkoutSession.url;
-  }
-
-  get numberOfMonths() {
-    if (this.args.pricingFrequency === 'quarterly') {
-      return 3;
-    } else if (this.args.pricingFrequency === 'yearly') {
-      return 12;
-    } else {
-      throw new Error(`Unknown pricing frequency: ${this.args.pricingFrequency}`);
-    }
-  }
-
-  get user() {
-    return this.authenticator.currentUser;
   }
 }

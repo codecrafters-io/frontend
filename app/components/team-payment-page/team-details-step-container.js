@@ -6,11 +6,6 @@ export default class TeamDetailsFormComponent extends Component {
   formElement;
 
   @action
-  async handleDidInsertFormElement(formElement) {
-    this.formElement = formElement;
-  }
-
-  @action
   async handleDecrementSeatsButtonClick(event) {
     event.preventDefault();
 
@@ -21,8 +16,14 @@ export default class TeamDetailsFormComponent extends Component {
   }
 
   @action
-  async suppressEvent(event) {
-    event.preventDefault();
+  async handleDidInsertFormElement(formElement) {
+    this.formElement = formElement;
+  }
+
+  @action
+  async handleFormSubmit(e) {
+    e.preventDefault();
+    this.formElement.reportValidity();
   }
 
   @action
@@ -31,12 +32,6 @@ export default class TeamDetailsFormComponent extends Component {
 
     this.args.teamPaymentFlow.numberOfSeats++;
     await this.handleValueUpdated();
-  }
-
-  @action
-  async handleFormSubmit(e) {
-    e.preventDefault();
-    this.formElement.reportValidity();
   }
 
   @action
@@ -58,5 +53,10 @@ export default class TeamDetailsFormComponent extends Component {
 
   async saveTeamPaymentFlow() {
     this.args.teamPaymentFlow.save();
+  }
+
+  @action
+  async suppressEvent(event) {
+    event.preventDefault();
   }
 }

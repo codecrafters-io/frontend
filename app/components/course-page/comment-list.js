@@ -22,27 +22,12 @@ export default class CommentListComponent extends Component {
     return this.authenticator.currentUser;
   }
 
-  @action
-  async loadComments() {
-    this.isLoading = true;
-    this.rejectedCommentsAreExpanded = false;
-
-    await this.store.query('course-stage-comment', {
-      target_id: this.args.courseStage.id,
-      include:
-        'user,language,target,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
-      reload: true,
-    });
-
-    this.isLoading = false;
+  get rejectedComments() {
+    return this.topLevelPersistedComments.filter((comment) => comment.isRejected);
   }
 
   get sortedComments() {
     return this.visibleComments.sortBy('score').reverse();
-  }
-
-  get rejectedComments() {
-    return this.topLevelPersistedComments.filter((comment) => comment.isRejected);
   }
 
   get topLevelPersistedComments() {
@@ -56,5 +41,19 @@ export default class CommentListComponent extends Component {
     } else {
       return this.topLevelPersistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
     }
+  }
+  @action
+  async loadComments() {
+    this.isLoading = true;
+    this.rejectedCommentsAreExpanded = false;
+
+    await this.store.query('course-stage-comment', {
+      target_id: this.args.courseStage.id,
+      include:
+        'user,language,target,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
+      reload: true,
+    });
+
+    this.isLoading = false;
   }
 }

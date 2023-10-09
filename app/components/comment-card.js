@@ -33,14 +33,6 @@ export default class CommentCardComponent extends Component {
   @tracked isEditing = false;
   @tracked shouldShowReplyForm = false;
 
-  get currentUser() {
-    return this.authenticator.currentUser;
-  }
-
-  get currentUserIsStaff() {
-    return this.currentUser && this.currentUser.isStaff;
-  }
-
   get bodyHTML() {
     return htmlSafe(
       new showdown.Converter({
@@ -52,37 +44,12 @@ export default class CommentCardComponent extends Component {
     );
   }
 
-  @action
-  handleDidInsertBodyHTML(element) {
-    Prism.highlightAllUnder(element);
+  get currentUser() {
+    return this.authenticator.currentUser;
   }
 
-  @action
-  handleDeleteButtonClick() {
-    if (window.confirm('Are you sure you want to delete this comment?')) {
-      this.args.comment.destroyRecord();
-      this.args.comment.childComments.forEach((childComment) => childComment.unloadRecord());
-    }
-  }
-
-  @action
-  handleCancelReplyButtonClick() {
-    this.shouldShowReplyForm = false;
-  }
-
-  @action
-  handleReplyButtonClick() {
-    this.shouldShowReplyForm = true;
-  }
-
-  @action
-  handleReplySubmitted() {
-    this.shouldShowReplyForm = false;
-  }
-
-  @action
-  handleEditButtonClick() {
-    this.isEditing = true;
+  get currentUserIsStaff() {
+    return this.currentUser && this.currentUser.isStaff;
   }
 
   get sortedChildComments() {
@@ -97,5 +64,38 @@ export default class CommentCardComponent extends Component {
     } else {
       return persistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
     }
+  }
+
+  @action
+  handleCancelReplyButtonClick() {
+    this.shouldShowReplyForm = false;
+  }
+
+  @action
+  handleDeleteButtonClick() {
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      this.args.comment.destroyRecord();
+      this.args.comment.childComments.forEach((childComment) => childComment.unloadRecord());
+    }
+  }
+
+  @action
+  handleDidInsertBodyHTML(element) {
+    Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleEditButtonClick() {
+    this.isEditing = true;
+  }
+
+  @action
+  handleReplyButtonClick() {
+    this.shouldShowReplyForm = true;
+  }
+
+  @action
+  handleReplySubmitted() {
+    this.shouldShowReplyForm = false;
   }
 }

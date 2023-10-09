@@ -58,6 +58,10 @@ export default class TrackLeaderboardComponent extends Component {
     ];
   }
 
+  get sortedEntries() {
+    return this.entries.sortBy('completedStagesCount').reverse();
+  }
+
   @action
   async handleDidInsert() {
     this.entriesFromAPI = await this.store.query('track-leaderboard-entry', {
@@ -81,9 +85,5 @@ export default class TrackLeaderboardComponent extends Component {
     for (let sprite of removedSprites) {
       fadeOut(sprite);
     }
-  }
-
-  get sortedEntries() {
-    return this.entries.sortBy('completedStagesCount').reverse();
   }
 }

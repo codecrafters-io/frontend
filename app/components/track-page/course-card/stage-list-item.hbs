@@ -15,20 +15,8 @@
     {{#if @isComplete}}
       {{svg-jar "check" class="ml-1 w-5 text-teal-500"}}
     {{else}}
-      <div class="items-center text-gray-400 text-xs flex-shrink-0 pl-4 hidden sm:flex">
-        {{#if @stage.isFirst}}
-          &lt; 5 minutes
-        {{else if @stage.difficultyIsVeryEasy}}
-          &lt; 5 minutes
-        {{else if @stage.difficultyIsEasy}}
-          5-10 minutes
-        {{else if @stage.difficultyIsMedium}}
-          30m - 1h
-        {{else if @stage.difficultyIsHard}}
-          1h +
-        {{/if}}
-
-        {{svg-jar "clock" class="fill-current text-gray-300 ml-1 w-4 h-4"}}
+      <div class="pl-4 hidden sm:flex flex-shrink-0">
+        <CourseStageDifficultyLabel @stage={{@stage}} />
       </div>
     {{/if}}
   </div>

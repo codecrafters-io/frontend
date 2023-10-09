@@ -16,6 +16,14 @@ export default class SetupSubscriptionContainerComponent extends Component {
     this.loadFirstInvoicePreview();
   }
 
+  get perUnitAmountInDollarsInFirstInvoicePreview() {
+    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
+  }
+
+  get subscriptionQuantityInFirstInvoicePreview() {
+    return this.firstInvoicePreview.lineItems[0].quantity;
+  }
+
   @action
   async handleAddPaymentMethodButtonClick() {
     this.isCreatingPaymentMethodUpdateRequest = true;
@@ -34,13 +42,5 @@ export default class SetupSubscriptionContainerComponent extends Component {
   async loadFirstInvoicePreview() {
     this.firstInvoicePreview = await this.args.team.fetchFirstInvoicePreview();
     this.isLoadingFirstInvoicePreview = false;
-  }
-
-  get subscriptionQuantityInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].quantity;
-  }
-
-  get perUnitAmountInDollarsInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
   }
 }

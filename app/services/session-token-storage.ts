@@ -6,16 +6,16 @@ export default class SessionTokenStorageService extends Service {
 
   @service declare localStorage: LocalStorageService;
 
-  clear(): void {
-    this.localStorage.removeItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
-  }
-
   get currentToken(): string | null {
     return this.localStorage.getItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
   }
 
   get hasToken(): boolean {
     return !!this.currentToken;
+  }
+
+  clear(): void {
+    this.localStorage.removeItem(SessionTokenStorageService.LOCAL_STORAGE_KEY);
   }
 
   setToken(sessionToken: string): void {

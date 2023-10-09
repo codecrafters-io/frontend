@@ -32,6 +32,14 @@ export default class IntroductionStep extends Step {
     }
   }
 
+  get routeParams() {
+    return {
+      route: 'course.introduction',
+      // @ts-ignore
+      models: [this.repository.course.slug],
+    };
+  }
+
   get status() {
     // @ts-ignore
     if (this.repository.isNew) {
@@ -50,14 +58,6 @@ export default class IntroductionStep extends Step {
     }
 
     return 'in_progress';
-  }
-
-  get routeParams() {
-    return {
-      route: 'course.introduction',
-      // @ts-ignore
-      models: [this.repository.course.slug],
-    };
   }
 
   get title() {

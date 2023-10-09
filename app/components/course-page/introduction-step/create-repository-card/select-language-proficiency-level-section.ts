@@ -17,6 +17,14 @@ type Signature = {
 export default class SelectLanguageProficiencyLevelSectionComponent extends Component<Signature> {
   transition = fade;
 
+  get feedbackAlertHtml() {
+    if (this.feedbackAlertMarkdown) {
+      return htmlSafe(new showdown.Converter().makeHtml(this.feedbackAlertMarkdown));
+    } else {
+      return null;
+    }
+  }
+
   get feedbackAlertMarkdown() {
     const languageDescriptor = this.args.repository.language ? this.args.repository.language.name : 'this language';
 
@@ -30,14 +38,6 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
       return `If you're already familiar with ${languageDescriptor}, CodeCrafters can be a good way to improve. We recommend using our **Code Examples** feature to see code from other users.`;
     } else if (this.args.repository.languageProficiencyLevel === 'advanced') {
       return `If you're already familiar with ${languageDescriptor}, CodeCrafters can be a good way to further your mastery. If you get stuck, you can use our **Code Examples** feature to see code from other users.`;
-    } else {
-      return null;
-    }
-  }
-
-  get feedbackAlertHtml() {
-    if (this.feedbackAlertMarkdown) {
-      return htmlSafe(new showdown.Converter().makeHtml(this.feedbackAlertMarkdown));
     } else {
       return null;
     }

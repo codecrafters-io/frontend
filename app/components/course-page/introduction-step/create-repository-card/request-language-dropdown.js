@@ -22,6 +22,25 @@ export default class RequestLanguageDropdownComponent extends Component {
       .sortBy('name');
   }
 
+  get languageSuggestions() {
+    let allSuggestions = this.availableLanguages.map((language) => {
+      return {
+        isSelected: this.requestedLanguages.includes(language),
+        language: language,
+      };
+    });
+
+    if (this.searchQuery.length > 0) {
+      return new Fuse(allSuggestions, { keys: ['language.name'] }).search(this.searchQuery).mapBy('item');
+    } else {
+      return allSuggestions;
+    }
+  }
+
+  get requestedLanguages() {
+    return this.args.user.courseLanguageRequests.filterBy('course', this.args.course).mapBy('language');
+  }
+
   @action
   handleArrowDown() {
     if (this.selectedSuggestionIndex < this.languageSuggestions.length - 1) {
@@ -47,6 +66,22 @@ export default class RequestLanguageDropdownComponent extends Component {
   }
 
   @action
+  handleInputDidInsert(element) {
+    this.inputElement = element;
+    this.inputElement.focus();
+  }
+
+  @action
+  handleSearchQueryChanged() {
+    this.selectedSuggestionIndex = 0;
+  }
+
+  @action
+  handleSuggestionListDidInsert(element) {
+    this.suggestionListElement = element;
+  }
+
+  @action
   async toggleLanguageSelection(language) {
     if (this.requestedLanguages.includes(language)) {
       this.isSyncing = true;
@@ -64,41 +99,6 @@ export default class RequestLanguageDropdownComponent extends Component {
       this.isSyncing = true;
       await this.store.createRecord('course-language-request', { user: this.args.user, course: this.args.course, language: language }).save();
       this.isSyncing = false;
-    }
-  }
-
-  get requestedLanguages() {
-    return this.args.user.courseLanguageRequests.filterBy('course', this.args.course).mapBy('language');
-  }
-
-  @action
-  handleInputDidInsert(element) {
-    this.inputElement = element;
-    this.inputElement.focus();
-  }
-
-  @action
-  handleSearchQueryChanged() {
-    this.selectedSuggestionIndex = 0;
-  }
-
-  @action
-  handleSuggestionListDidInsert(element) {
-    this.suggestionListElement = element;
-  }
-
-  get languageSuggestions() {
-    let allSuggestions = this.availableLanguages.map((language) => {
-      return {
-        isSelected: this.requestedLanguages.includes(language),
-        language: language,
-      };
-    });
-
-    if (this.searchQuery.length > 0) {
-      return new Fuse(allSuggestions, { keys: ['language.name'] }).search(this.searchQuery).mapBy('item');
-    } else {
-      return allSuggestions;
     }
   }
 }

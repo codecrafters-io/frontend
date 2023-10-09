@@ -8,9 +8,18 @@ export default class CourseOverviewRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;
-  @service headData;
+  @service metaData;
 
   @tracked previousMetaImageUrl;
+
+  async afterModel({ course: { slug } = {} } = {}) {
+    this.previousMetaImageUrl = this.metaData.imageUrl;
+    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${slug}.jpg`;
+  }
+
+  deactivate() {
+    this.metaData.imageUrl = this.previousMetaImageUrl;
+  }
 
   async model(params) {
     if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
@@ -38,14 +47,5 @@ export default class CourseOverviewRoute extends BaseRoute {
 
       return { course };
     }
-  }
-
-  async afterModel({ course: { slug } = {} } = {}) {
-    this.previousMetaImageUrl = this.headData.imageUrl;
-    this.headData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${slug}.jpg`;
-  }
-
-  deactivate() {
-    this.headData.imageUrl = this.previousMetaImageUrl;
   }
 }

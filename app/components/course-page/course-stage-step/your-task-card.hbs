@@ -5,7 +5,12 @@
       <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
     </div>
 
-    <div class="prose" data-test-stage-instructions>
+    <div
+      class="prose has-prism-highlighting"
+      data-test-stage-instructions
+      {{did-insert this.handleDidInsertInstructionsHTML}}
+      {{did-update this.handleDidUpdateInstructionsHTML this.instructionsHTML}}
+    >
       {{html-safe this.instructionsHTML}}
     </div>
 

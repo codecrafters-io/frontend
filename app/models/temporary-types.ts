@@ -38,6 +38,7 @@ export class TemporaryCourseModel {
 
 export class TemporaryCourseStageModel {
   declare id: string;
+  declare difficulty: 'very_easy' | 'easy' | 'medium' | 'hard';
   declare slug: string;
   declare course: TemporaryCourseModel;
   declare descriptionMarkdownTemplate: string;
@@ -89,14 +90,6 @@ export class TemporaryRepositoryModel {
   declare lastSubmissionIsEvaluating: boolean;
   declare lastSubmissionHasFailureStatus: boolean;
 
-  hasClosedCourseStageFeedbackSubmissionFor(_stage: TemporaryCourseStageModel) {
-    return false;
-  }
-
-  get highestCompletedStage(): TemporaryCourseStageModel | null {
-    return null;
-  }
-
   get activatedCourseExtensions(): CourseExtensionModel[] {
     return [];
   }
@@ -113,6 +106,14 @@ export class TemporaryRepositoryModel {
     };
   }
 
+  get highestCompletedStage(): TemporaryCourseStageModel | null {
+    return null;
+  }
+
+  get languageProficiencyLevelHumanized(): string {
+    return 'dummy';
+  }
+
   get languageProficiencyLevelMappings(): Record<TemporaryRepositoryModel['languageProficiencyLevel'], string> {
     return {
       never_tried: 'Never tried',
@@ -122,8 +123,8 @@ export class TemporaryRepositoryModel {
     };
   }
 
-  get languageProficiencyLevelHumanized(): string {
-    return 'dummy';
+  hasClosedCourseStageFeedbackSubmissionFor(_stage: TemporaryCourseStageModel) {
+    return false;
   }
 
   save(): Promise<void> {

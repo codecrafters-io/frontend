@@ -1,6 +1,5 @@
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import config from 'codecrafters-frontend/config/environment';
 
 export default class HeadDataService extends Service {
   @tracked title?: string;
@@ -10,9 +9,6 @@ export default class HeadDataService extends Service {
   @tracked siteName?: string;
   @tracked twitterCard?: string;
   @tracked twitterSite?: string;
-
-  // @ts-ignore
-  defaults: object = config.x.defaultMetaTags;
 }
 
 // Don't remove this declaration: this is what enables TypeScript to resolve

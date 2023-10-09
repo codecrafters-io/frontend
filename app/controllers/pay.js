@@ -22,13 +22,13 @@ export default class PayController extends Controller {
     }
   }
 
+  get user() {
+    return this.authenticator.currentUser;
+  }
+
   @action
   async handleTryNowPayLaterButtonClicked() {
     this.analyticsEventTracker.track('dismissed_payment_prompt');
     this.router.transitionTo('tracks');
-  }
-
-  get user() {
-    return this.authenticator.currentUser;
   }
 }

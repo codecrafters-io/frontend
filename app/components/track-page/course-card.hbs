@@ -16,6 +16,12 @@
         <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} @isComplete={{false}} />
       {{/each}}
 
+      {{#each @course.extensions as |courseExtension|}}
+        {{#each courseExtension.sortedStages as |stage|}}
+          <TrackPage::CourseCard::StageListItem @language={{@language}} @stage={{stage}} @isComplete={{false}} />
+        {{/each}}
+      {{/each}}
+
       <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
         <TrackPage::CourseCard::SignupToPreviewButton @language={{@language}} />
       </div>
@@ -39,7 +45,7 @@
       </div>
     {{/if}}
 
-    <div class="leading-6 prose mb-6">
+    <div class="leading-6 prose mb-6 pr-8 md:pr-12">
       {{this.introductionHtml}}
     </div>
 
@@ -49,6 +55,21 @@
         @stage={{stage}}
         @isComplete={{includes stage @activeRepository.completedStages}}
       />
+    {{/each}}
+
+    {{#each @course.extensions as |courseExtension|}}
+      <h3 class="font-semibold text-gray-400 text-center text-sm relative mb-3">
+        <span class="block h-px w-full bg-gray-200 absolute top-50-percent -mt-px"></span>
+        <span class="relative px-6 bg-white">{{courseExtension.name}}</span>
+      </h3>
+
+      {{#each courseExtension.sortedStages as |stage|}}
+        <TrackPage::CourseCard::StageListItem
+          @language={{@language}}
+          @stage={{stage}}
+          @isComplete={{includes stage @activeRepository.completedStages}}
+        />
+      {{/each}}
     {{/each}}
   </TrackPage::Card>
 {{/if}}

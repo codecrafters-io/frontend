@@ -73,6 +73,14 @@ export default class ConceptAnimationBlockComponent extends Component<Signature>
   }
 
   @action
+  handleDidEnterViewport() {
+    if (!this.isPlayed && this.animation) {
+      this.animation.play();
+      this.isPlayed = true;
+    }
+  }
+
+  @action
   handleDidInsertContainer(element: HTMLDivElement) {
     this.animation = lottie.loadAnimation({
       container: element, // the dom element that will contain the animation
@@ -87,13 +95,5 @@ export default class ConceptAnimationBlockComponent extends Component<Signature>
         this.isLoaded = true;
       });
     });
-  }
-
-  @action
-  handleDidEnterViewport() {
-    if (!this.isPlayed && this.animation) {
-      this.animation.play();
-      this.isPlayed = true;
-    }
   }
 }

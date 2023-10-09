@@ -13,22 +13,12 @@ export default class SelectLanguageSectionComponent extends Component {
   requestedLanguagesPromptTransition = fade;
   @tracked shouldShowNonPreferredLanguages = false;
 
-  get courseDescriptionHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.args.repository.course.descriptionMarkdown));
-  }
-
-  @action
-  handleLanguageButtonClick(language) {
-    this.args.onLanguageSelection(language);
-  }
-
-  @action
-  handleShowOtherLanguagesButtonClick() {
-    this.shouldShowNonPreferredLanguages = true;
-  }
-
   get availableLanguages() {
     return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).mapBy('language');
+  }
+
+  get courseDescriptionHTML() {
+    return htmlSafe(new showdown.Converter().makeHtml(this.args.repository.course.descriptionMarkdown));
   }
 
   get orderedLanguageConfigurations() {
@@ -39,13 +29,23 @@ export default class SelectLanguageSectionComponent extends Component {
     return this.availableLanguages.filterBy('slug', this.args.preferredLanguageSlug);
   }
 
-  get requestedLanguages() {
-    return this.args.repository.user.courseLanguageRequests.filterBy('course', this.args.repository.course).mapBy('language');
-  }
-
   get requestedAndUnsupportedLanguages() {
     return this.requestedLanguages.filter((language) => {
       return !this.availableLanguages.includes(language);
     });
+  }
+
+  get requestedLanguages() {
+    return this.args.repository.user.courseLanguageRequests.filterBy('course', this.args.repository.course).mapBy('language');
+  }
+
+  @action
+  handleLanguageButtonClick(language) {
+    this.args.onLanguageSelection(language);
+  }
+
+  @action
+  handleShowOtherLanguagesButtonClick() {
+    this.shouldShowNonPreferredLanguages = true;
   }
 }

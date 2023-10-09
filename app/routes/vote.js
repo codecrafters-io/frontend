@@ -13,6 +13,12 @@ export default class VoteRoute extends BaseRoute {
     scrollToTop();
   }
 
+  afterModel(model, transition) {
+    if (transition.to.name === 'vote.index') {
+      this.router.transitionTo('vote.course-ideas');
+    }
+  }
+
   async model() {
     await this.authenticator.authenticate();
 
@@ -27,11 +33,5 @@ export default class VoteRoute extends BaseRoute {
     });
 
     return await RSVP.hash(modelPromises);
-  }
-
-  afterModel(model, transition) {
-    if (transition.to.name === 'vote.index') {
-      this.router.transitionTo('vote.course-ideas');
-    }
   }
 }

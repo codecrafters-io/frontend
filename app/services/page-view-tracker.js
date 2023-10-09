@@ -19,10 +19,6 @@ export default class PageViewTracker extends Service {
     this.router.on('routeDidChange', this.handleRouteChange);
   }
 
-  willDestroy() {
-    this.router.off('routeDidChange', this.handleRouteChange);
-  }
-
   #shouldIgnoreEventForTransition(transition) {
     if (transition.to && (transition.to.name === 'course-stage-solution.diff' || transition.to.name === 'course-stage-solution.explanation')) {
       return true; // These are covered by afterModel hooks
@@ -42,5 +38,9 @@ export default class PageViewTracker extends Service {
 
     // Route name & params are the same, only query params differ.
     return true;
+  }
+
+  willDestroy() {
+    this.router.off('routeDidChange', this.handleRouteChange);
   }
 }

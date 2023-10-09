@@ -19,6 +19,47 @@ export default class AuthenticatorService extends Service {
   @tracked isLoadingUser: boolean = false;
   @tracked cacheBuster: number = 0;
 
+  // TODO: Update this when User model is converted to typescript
+  get currentUser() {
+    this.cacheBuster; // Force reload on cacheBuster change
+
+    if (this.currentUserCacheStorage.userId) {
+      return this.store.peekRecord('user', this.currentUserCacheStorage.userId) as TemporaryUserModel;
+    } else {
+      return null;
+    }
+  }
+
+  get currentUserId(): string | null {
+    this.cacheBuster; // Force reload on cacheBuster change
+
+    return this.currentUser ? this.currentUser.id : this.currentUserCacheStorage.userId;
+  }
+
+  get currentUserIsLoaded(): boolean {
+    this.cacheBuster; // Force reload on cacheBuster change
+
+    return !!this.currentUser;
+  }
+
+  get currentUsername(): string | null {
+    this.cacheBuster; // Force reload on cacheBuster change
+
+    return this.currentUser ? this.currentUser.username : this.currentUserCacheStorage.username;
+  }
+
+  get isAnonymous(): boolean {
+    this.cacheBuster; // Force reload on cacheBuster change
+
+    return !this.isAuthenticated;
+  }
+
+  get isAuthenticated(): boolean {
+    this.cacheBuster; // Force reload on cacheBuster change
+
+    return this.sessionTokenStorage.hasToken;
+  }
+
   async authenticate(): Promise<void> {
     if (!this.sessionTokenStorage.hasToken) {
       return;
@@ -60,35 +101,6 @@ export default class AuthenticatorService extends Service {
     this.cacheBuster++;
   }
 
-  // TODO: Update this when User model is converted to typescript
-  get currentUser() {
-    this.cacheBuster; // Force reload on cacheBuster change
-
-    if (this.currentUserCacheStorage.userId) {
-      return this.store.peekRecord('user', this.currentUserCacheStorage.userId) as TemporaryUserModel;
-    } else {
-      return null;
-    }
-  }
-
-  get currentUserIsLoaded(): boolean {
-    this.cacheBuster; // Force reload on cacheBuster change
-
-    return !!this.currentUser;
-  }
-
-  get currentUserId(): string | null {
-    this.cacheBuster; // Force reload on cacheBuster change
-
-    return this.currentUser ? this.currentUser.id : this.currentUserCacheStorage.userId;
-  }
-
-  get currentUsername(): string | null {
-    this.cacheBuster; // Force reload on cacheBuster change
-
-    return this.currentUser ? this.currentUser.username : this.currentUserCacheStorage.username;
-  }
-
   initiateLogin(redirectPath: string | null) {
     if (redirectPath) {
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPath}`);
@@ -103,18 +115,6 @@ export default class AuthenticatorService extends Service {
     this.sessionTokenStorage.clear();
     this.currentUserCacheStorage.clear();
     this.cacheBuster++;
-  }
-
-  get isAnonymous(): boolean {
-    this.cacheBuster; // Force reload on cacheBuster change
-
-    return !this.isAuthenticated;
-  }
-
-  get isAuthenticated(): boolean {
-    this.cacheBuster; // Force reload on cacheBuster change
-
-    return this.sessionTokenStorage.hasToken;
   }
 
   prefillBeaconEmail() {

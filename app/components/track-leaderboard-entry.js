@@ -17,10 +17,6 @@ export default class TrackLeaderboardEntryComponent extends Component {
     return !this.args.entry;
   }
 
-  get progressNumerator() {
-    return this.args.entry.completedStagesCount;
-  }
-
   get progressDenominator() {
     return this.store
       .peekAll('course')
@@ -28,5 +24,9 @@ export default class TrackLeaderboardEntryComponent extends Component {
       .filter((course) => course.betaOrLiveLanguages.includes(this.args.entry.language))
       .mapBy('stages.length')
       .reduce((a, b) => a + b, 0);
+  }
+
+  get progressNumerator() {
+    return this.args.entry.completedStagesCount;
   }
 }

@@ -10,12 +10,12 @@ export default class EarnedBadgeNoticeComponent extends Component {
     this.selectedBadge = badge;
   }
 
+  handleBadgeModalClose() {
+    this.selectedBadge = null;
+  }
+
   @action
   handleViewButtonClicked() {
     this.selectedBadge = this.args.badgeAwards[0].badge;
-  }
-
-  handleBadgeModalClose() {
-    this.selectedBadge = null;
   }
 }

@@ -7,7 +7,7 @@
     Extensions are sets of additional stages that can be added to your repository. You can add &amp; remove extensions at any time.
   </Alert>
 
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     {{#each @repository.course.extensions as |extension|}}
       <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
     {{/each}}

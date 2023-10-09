@@ -25,45 +25,8 @@ export class StepList {
     this.repository = repository;
   }
 
-  get visibleSteps() {
-    return this.steps.filter((step) => !step.isHidden);
-  }
-
   get activeStep() {
     return this.visibleSteps.find((step) => step.status !== 'complete');
-  }
-
-  nextVisibleStepFor(step: Step): Step | null {
-    return this.visibleSteps[this.visibleSteps.indexOf(step) + 1] || null;
-  }
-
-  previousVisibleStepFor(step: Step): Step | null {
-    return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
-  }
-
-  get courseCompletedStepGroup(): StepGroup {
-    return new CourseCompletedStepGroup([new CourseCompletedStep(this.repository)]);
-  }
-
-  @cached
-  get stepGroups(): StepGroup[] {
-    const stepGroups = [this.baseStagesStepGroup, ...this.extensionStepGroups, this.courseCompletedStepGroup];
-
-    let globalPosition = 1;
-
-    stepGroups.forEach((stepGroup) => {
-      let positionInGroup = 1;
-
-      stepGroup.steps.forEach((step) => {
-        step.positionInGroup = positionInGroup;
-        step.globalPosition = globalPosition;
-
-        positionInGroup += 1;
-        globalPosition += 1;
-      });
-    });
-
-    return stepGroups;
   }
 
   get baseStagesStepGroup(): StepGroup {
@@ -87,6 +50,10 @@ export class StepList {
     steps.push(new BaseStagesCompletedStep(this.repository));
 
     return new BaseStagesStepGroup(steps);
+  }
+
+  get courseCompletedStepGroup(): StepGroup {
+    return new CourseCompletedStepGroup([new CourseCompletedStep(this.repository)]);
   }
 
   get extensionStepGroups(): StepGroup[] {
@@ -118,8 +85,41 @@ export class StepList {
     return stepGroups;
   }
 
+  @cached
+  get stepGroups(): StepGroup[] {
+    const stepGroups = [this.baseStagesStepGroup, ...this.extensionStepGroups, this.courseCompletedStepGroup];
+
+    let globalPosition = 1;
+
+    stepGroups.forEach((stepGroup) => {
+      let positionInGroup = 1;
+
+      stepGroup.steps.forEach((step) => {
+        step.positionInGroup = positionInGroup;
+        step.globalPosition = globalPosition;
+
+        positionInGroup += 1;
+        globalPosition += 1;
+      });
+    });
+
+    return stepGroups;
+  }
+
   get steps(): Step[] {
     return this.stepGroups.reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as Step[]);
+  }
+
+  get visibleSteps() {
+    return this.steps.filter((step) => !step.isHidden);
+  }
+
+  nextVisibleStepFor(step: Step): Step | null {
+    return this.visibleSteps[this.visibleSteps.indexOf(step) + 1] || null;
+  }
+
+  previousVisibleStepFor(step: Step): Step | null {
+    return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
   }
 
   visibleStepByType(type: Step['type']): Step | null {

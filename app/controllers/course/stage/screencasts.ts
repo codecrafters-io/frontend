@@ -33,6 +33,14 @@ export default class ScreencastsTabComponent extends Controller {
 
   @service declare store: Store;
 
+  get screencasts() {
+    return this.model.courseStage.screencasts;
+  }
+
+  get screencastsForList() {
+    return this.screencasts.filter((screencast) => screencast !== this.selectedScreencast);
+  }
+
   get selectedScreencast() {
     if (!this.selectedScreencastId) {
       return null;
@@ -48,12 +56,9 @@ export default class ScreencastsTabComponent extends Controller {
     }
   }
 
-  get screencasts() {
-    return this.model.courseStage.screencasts;
-  }
-
-  get screencastsForList() {
-    return this.screencasts.filter((screencast) => screencast !== this.selectedScreencast);
+  @action
+  async handleDidInsertScreencastPlayer(element: HTMLDivElement) {
+    this.screencastPlayerElement = element;
   }
 
   @action
@@ -76,10 +81,5 @@ export default class ScreencastsTabComponent extends Controller {
         course_stage_slug: this.model.courseStage.slug,
       },
     }).toggle();
-  }
-
-  @action
-  async handleDidInsertScreencastPlayer(element: HTMLDivElement) {
-    this.screencastPlayerElement = element;
   }
 }

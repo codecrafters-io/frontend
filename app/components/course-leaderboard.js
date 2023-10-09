@@ -119,11 +119,6 @@ export default class CourseLeaderboardComponent extends Component {
   }
 
   @action
-  async handleWillDestroy() {
-    this.stopLeaderboardPoller();
-  }
-
-  @action
   async handlePoll(entriesFromAPI) {
     this.entriesFromAPI = entriesFromAPI;
   }
@@ -137,6 +132,11 @@ export default class CourseLeaderboardComponent extends Component {
     this.isReloadingEntries = true;
 
     this.handleDidInsert(); // start all over again
+  }
+
+  @action
+  async handleWillDestroy() {
+    this.stopLeaderboardPoller();
   }
 
   // eslint-disable-next-line require-yield

@@ -18,6 +18,17 @@ export default class VersionListItemComponent extends Component<Signature> {
 
   @tracked isActivating = false;
 
+  get activationConfirmationMessage() {
+    // @ts-ignore
+    const latestTesterVersion = this.args.courseTesterVersion.course.latestTesterVersion;
+
+    if (latestTesterVersion) {
+      return `${latestTesterVersion.tagName} is the latest version. Are you sure you want to activate ${this.args.courseTesterVersion.tagName} instead?`;
+    } else {
+      return `${this.args.courseTesterVersion.tagName} is not the latest version. Are you sure you want to activate it?`;
+    }
+  }
+
   async activate() {
     if (!this.isActivating) {
       this.isActivating = true;
@@ -32,17 +43,6 @@ export default class VersionListItemComponent extends Component<Signature> {
       });
 
       this.isActivating = false;
-    }
-  }
-
-  get activationConfirmationMessage() {
-    // @ts-ignore
-    const latestTesterVersion = this.args.courseTesterVersion.course.latestTesterVersion;
-
-    if (latestTesterVersion) {
-      return `${latestTesterVersion.tagName} is the latest version. Are you sure you want to activate ${this.args.courseTesterVersion.tagName} instead?`;
-    } else {
-      return `${this.args.courseTesterVersion.tagName} is not the latest version. Are you sure you want to activate it?`;
     }
   }
 

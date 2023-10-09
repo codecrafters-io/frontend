@@ -21,10 +21,6 @@ export default class LeaderboardEntry extends Model {
     return this.currentCourseStage.course;
   }
 
-  get userId() {
-    return this.user.id;
-  }
-
   get statusIsCompleted() {
     return this.status === 'completed';
   }
@@ -35,5 +31,9 @@ export default class LeaderboardEntry extends Model {
 
   get statusIsIdle() {
     return this.status === 'idle';
+  }
+
+  get userId() {
+    return this.user.id;
   }
 }

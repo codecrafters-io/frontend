@@ -10,6 +10,10 @@ export default class FeaturesListComponent extends Component {
   @service router;
   @service store;
 
+  get createTeamButtonIsDisabled() {
+    return this.newTeamName.trim().length <= 1;
+  }
+
   get currentTeamsHTML() {
     const buildTeamLink = (team) => `<a href="/teams/${team.id}" target="_blank">${escapeExpression(team.name)}</a>`;
 
@@ -30,9 +34,5 @@ export default class FeaturesListComponent extends Component {
     const team = await this.store.createRecord('team', { name: this.newTeamName }).save();
     this.isCreatingTeam = false;
     this.router.transitionTo('team', team.id);
-  }
-
-  get createTeamButtonIsDisabled() {
-    return this.newTeamName.trim().length <= 1;
   }
 }

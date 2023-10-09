@@ -19,6 +19,10 @@ export default class FeedbackComponent extends Component {
     this.feedbackSubmission = this.store.createRecord('site-feedback-submission');
   }
 
+  get sentimentOptions() {
+    return ['😍', '😃', '😕', '😭'];
+  }
+
   @action
   async handleDidInsertFormElement(formElement) {
     this.formElement = formElement;
@@ -64,9 +68,5 @@ export default class FeedbackComponent extends Component {
   @action
   handleSentimentOptionSelected(sentimentOption) {
     this.feedbackSubmission.selectedSentiment = sentimentOption;
-  }
-
-  get sentimentOptions() {
-    return ['😍', '😃', '😕', '😭'];
   }
 }

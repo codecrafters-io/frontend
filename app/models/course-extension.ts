@@ -14,6 +14,10 @@ export default class CourseExtensionModel extends Model {
     return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
   }
 
+  get sortedStages() {
+    return this.stages.sortBy('positionWithinExtension');
+  }
+
   get stages() {
     return this.course.stages.filter((stage) => stage.primaryExtensionSlug === this.slug);
   }

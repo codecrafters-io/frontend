@@ -4,6 +4,10 @@ import RouterService from '@ember/routing/router-service';
 export default class LayoutService extends Service {
   @service declare router: RouterService;
 
+  get shouldShowFooter(): boolean {
+    return this.shouldShowHeader; // Same for now
+  }
+
   get shouldShowHeader(): boolean {
     if (
       this.router.currentRouteName === 'course' ||
@@ -14,9 +18,5 @@ export default class LayoutService extends Service {
     } else {
       return true;
     }
-  }
-
-  get shouldShowFooter(): boolean {
-    return this.shouldShowHeader; // Same for now
   }
 }

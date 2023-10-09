@@ -17,15 +17,15 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
-  handleCreateTeamClick(dropdownActions) {
-    dropdownActions.close();
-    this.router.transitionTo('teams.create');
-  }
-
-  @action
   handleCommunityClick(dropdownActions) {
     window.open('https://discord.gg/DeqUD2P', '_blank');
     dropdownActions.close();
+  }
+
+  @action
+  handleCreateTeamClick(dropdownActions) {
+    dropdownActions.close();
+    this.router.transitionTo('teams.create');
   }
 
   @action
@@ -37,6 +37,18 @@ export default class HeaderAccountDropdownComponent extends Component {
   @action
   handleLogoutClick() {
     this.store.createRecord('session').logout();
+  }
+
+  @action
+  async handleManageSubscriptionClick(dropdownActions) {
+    dropdownActions.close();
+    this.router.transitionTo('membership');
+  }
+
+  @action
+  handleManageTeamClick(dropdownActions, team) {
+    dropdownActions.close();
+    this.router.transitionTo('team', team.id);
   }
 
   @action
@@ -55,18 +67,6 @@ export default class HeaderAccountDropdownComponent extends Component {
   handleStatusPageClick(dropdownActions) {
     window.open('https://status.codecrafters.io/', '_blank');
     dropdownActions.close();
-  }
-
-  @action
-  handleManageTeamClick(dropdownActions, team) {
-    dropdownActions.close();
-    this.router.transitionTo('team', team.id);
-  }
-
-  @action
-  async handleManageSubscriptionClick(dropdownActions) {
-    dropdownActions.close();
-    this.router.transitionTo('membership');
   }
 
   @action
