@@ -18,6 +18,8 @@
   <div class="prose mb-4">
     {{#if @repository.submissionsCount}}
       You have not yet pushed code to this repository.
+    {{else if (eq @repository.submissionsCount 1)}}
+      You have pushed code to this repository once.
     {{else}}
       You have pushed code to this repository
       <span class="font-bold">{{@repository.submissionsCount}}</span>
