@@ -6,6 +6,7 @@ import type { AnimationItem } from 'lottie-web';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { run } from '@ember/runloop';
+import { ConceptAnimationBlock } from 'codecrafters-frontend/lib/blocks';
 
 // @ts-ignore
 import networkingProtocolsLayers from '/assets/concept-animations/network-protocols/layers.lottie.json';
@@ -41,9 +42,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: {
-      conceptAnimationSlug: string;
-    };
+    model: ConceptAnimationBlock;
   };
 }
 
@@ -95,5 +94,11 @@ export default class ConceptAnimationBlockComponent extends Component<Signature>
         this.isLoaded = true;
       });
     });
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'Blocks::ConceptAnimationBlock': typeof ConceptAnimationBlockComponent;
   }
 }
