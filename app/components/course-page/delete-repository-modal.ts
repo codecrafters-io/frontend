@@ -13,12 +13,12 @@ interface Signature {
 
 export default class DeleteRepositoryModalComponent extends Component<Signature> {
   @action
-  deleteRepository() {
+  async deleteRepository() {
     if (!this.args.repository) {
       return;
     }
 
-    this.args.repository.deleteRepository({});
+    await this.args.repository.destroyRecord();
   }
 }
 
