@@ -19,7 +19,7 @@ type Signature = {
   };
 
   Blocks: {
-    'drag-handler': [];
+    dragHandler: [];
   };
 };
 
