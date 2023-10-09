@@ -30,7 +30,7 @@ export default class DangerButtonWithProgressIndicatorComponent extends Componen
   }
 
   @action
-  showProgressBar() {
+  handleMouseEnter() {
     this.isHovered = true;
   }
 

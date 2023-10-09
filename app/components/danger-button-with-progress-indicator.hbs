@@ -1,6 +1,6 @@
 <DangerButton
   class="relative"
-  {{on "mouseenter" this.showProgressBar}}
+  {{on "mouseenter" this.handleMouseEnter}}
   {{on "mouseleave" this.handleMouseLeave}}
   {{! template-lint-disable no-pointer-down-event-binding }}
   {{on "mousedown" this.startProgress}}
