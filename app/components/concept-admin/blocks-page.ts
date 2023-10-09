@@ -11,35 +11,66 @@ type Signature = {
   };
 };
 
+type BlockWithMetadata = {
+  id: string;
+  block: Block;
+  wasAdded: boolean;
+  wasChanged: boolean;
+  wasDeleted: boolean;
+  anchorBlockIndex: number; // -1 if block was added at start
+  addedBlockIndex: number; // Only used for added blocks, relative to anchorBlockIndex. Not using null as a type since we wouldn't get glint checking
+};
+
 export default class BlocksPageComponent extends Component<Signature> {
   @tracked blockChanges: Record<number, { oldBlock: Block; newBlock: Block }> = {};
   @tracked blockAdditions: Record<number, { anchorBlock: Block | null; newBlocks: Block[] }> = {};
   @tracked blockDeletions: Record<number, { oldBlock: Block }> = {};
   @tracked isSaving = false;
 
-  get blocksWithMetadata() {
-    return this.args.concept.parsedBlocks.map((block, index) => {
+  get blocksWithMetadata(): BlockWithMetadata[] {
+    const result: BlockWithMetadata[] = [];
+
+    (this.blockAdditions[-1]?.newBlocks || []).map((block, index) => {
+      result.push({
+        id: `added-at-start-${index}`,
+        block: block,
+        wasAdded: true,
+        wasChanged: false,
+        wasDeleted: false,
+        anchorBlockIndex: -1, // -1 if block was added at start
+        addedBlockIndex: index,
+      });
+    });
+
+    this.args.concept.parsedBlocks.forEach((block, index) => {
       const wasChanged = !!this.blockChanges[index];
       const wasDeleted = !!this.blockDeletions[index];
+      const addedBlocks = this.blockAdditions[index]?.newBlocks || [];
 
-      let changeIsStale = false;
-
-      if (wasChanged) {
-        changeIsStale = !this.blockChanges[index]!.oldBlock.isEqual(block);
-      }
-
-      if (wasDeleted) {
-        changeIsStale = !this.blockDeletions[index]!.oldBlock.isEqual(block);
-      }
-
-      return {
+      result.push({
+        id: `block-${index}`,
         block: this.blockChanges[index]?.newBlock || block,
-        changeIsStale: changeIsStale,
+        wasAdded: false,
         wasChanged: wasChanged,
         wasDeleted: wasDeleted,
-        addedBlocks: this.blockAdditions[index]?.newBlocks || [],
-      };
+        anchorBlockIndex: index,
+        addedBlockIndex: -1, // Isn't an added block
+      });
+
+      addedBlocks.forEach((addedBlock, addedBlockIndex) => {
+        result.push({
+          id: `block-${index}-added-${addedBlockIndex}`,
+          block: addedBlock,
+          wasAdded: true,
+          wasChanged: false,
+          wasDeleted: false,
+          anchorBlockIndex: index,
+          addedBlockIndex: addedBlockIndex,
+        });
+      });
     });
+
+    return result;
   }
 
   get mutationsArePresent() {

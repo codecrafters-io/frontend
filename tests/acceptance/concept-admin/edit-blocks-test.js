@@ -10,7 +10,7 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('can edit markdown blocks', async function (assert) {
+  test('can add/edit/delete markdown blocks', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -67,5 +67,36 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
 
     await blocksPage.clickOnPublishChangesButton();
     assert.strictEqual(blocksPage.editableBlocks.length, 3, 'expected 3 editable blocks to be present');
+  });
+
+  test('can reorder markdown blocks', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the second markdown block.`,
+          },
+        },
+      ],
+    });
+
+    await blocksPage.visit({ concept_slug: 'dummy' });
+    assert.strictEqual(1, 1);
+
+    await percySnapshot('Concept Admin - Blocks');
+
+    const firstMarkdownBlock = blocksPage.editableBlocks[0];
+    const secondMarkdownBlock = blocksPage.editableBlocks[1];
   });
 });

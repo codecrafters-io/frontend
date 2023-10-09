@@ -43,49 +43,27 @@
     <div class="flex flex-col">
       <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1 0}} />
 
-      {{#each (get (get this.blockAdditions -1) "newBlocks") as |addedBlock addedBlockIndex|}}
+      {{#each this.blocksWithMetadata key="id" as |item|}}
         <ConceptAdmin::BlocksPage::EditableBlock
-          @conceptBlock={{addedBlock}}
-          @wasAdded={{true}}
-          @wasChanged={{false}}
-          @wasDeleted={{false}}
-          @onBlockChanged={{fn this.handleAddedBlockChanged -1 addedBlockIndex}}
-          @onBlockDeleted={{fn this.handleAddedBlockDeleted -1 addedBlockIndex}}
-          @onBlockChangeDiscarded={{(noop)}}
-          @onBlockDeletionDiscarded={{(noop)}}
+          @conceptBlock={{item.block}}
+          @wasAdded={{item.wasAdded}}
+          @wasChanged={{item.wasChanged}}
+          @wasDeleted={{item.wasDeleted}}
+          @onBlockChanged={{if
+            item.wasAdded
+            (fn this.handleAddedBlockChanged item.anchorBlockIndex item.addedBlockIndex)
+            (fn this.handleBlockChanged item.anchorBlockIndex)
+          }}
+          @onBlockDeleted={{if
+            item.wasAdded
+            (fn this.handleAddedBlockDeleted item.anchorBlockIndex item.addedBlockIndex)
+            (fn this.handleBlockDeleted item.anchorBlockIndex)
+          }}
+          @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded item.anchorBlockIndex}}
+          @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded item.anchorBlockIndex}}
         />
 
-        <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1 (add addedBlockIndex 1)}} />
-      {{/each}}
-
-      {{#each this.blocksWithMetadata key="index" as |blockWithMetadata index|}}
-        <ConceptAdmin::BlocksPage::EditableBlock
-          @conceptBlock={{blockWithMetadata.block}}
-          @wasAdded={{false}}
-          @wasChanged={{blockWithMetadata.wasChanged}}
-          @wasDeleted={{blockWithMetadata.wasDeleted}}
-          @onBlockChanged={{fn this.handleBlockChanged index}}
-          @onBlockDeleted={{fn this.handleBlockDeleted index}}
-          @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded index}}
-          @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded index}}
-        />
-
-        <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded index 0}} />
-
-        {{#each blockWithMetadata.addedBlocks as |addedBlock addedBlockIndex|}}
-          <ConceptAdmin::BlocksPage::EditableBlock
-            @conceptBlock={{addedBlock}}
-            @wasAdded={{true}}
-            @wasChanged={{false}}
-            @wasDeleted={{false}}
-            @onBlockChanged={{fn this.handleAddedBlockChanged index addedBlockIndex}}
-            @onBlockDeleted={{fn this.handleAddedBlockDeleted index addedBlockIndex}}
-            @onBlockChangeDiscarded={{(noop)}}
-            @onBlockDeletionDiscarded={{(noop)}}
-          />
-
-          <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded index (add addedBlockIndex 1)}} />
-        {{/each}}
+        <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}} />
       {{/each}}
     </div>
   </div>
