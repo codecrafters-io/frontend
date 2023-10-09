@@ -31,7 +31,7 @@
     To proceed, press and hold the button below for <span class="font-bold">5 seconds</span>:
   </div>
 
-  <DangerButtonWithProgressIndicator @deferredFunction={{this.deleteRepository}} @redirectTo="catalog" @size="regular">
+  <DangerButtonWithProgressIndicator @deferredFunction={{this.deleteRepository}} @onConfirm={{this.redirectToCatalog}} @size="regular">
     Delete
   </DangerButtonWithProgressIndicator>
 </ModalBody>

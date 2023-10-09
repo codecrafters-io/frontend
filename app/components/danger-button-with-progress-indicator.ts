@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
-import RouterService from '@ember/routing/router-service';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -10,7 +8,7 @@ interface Signature {
 
   Args: {
     deferredFunction: () => void;
-    redirectTo?: string;
+    onConfirm: () => void;
     size?: string;
   };
 
@@ -20,7 +18,6 @@ interface Signature {
 }
 
 export default class DangerButtonWithProgressIndicatorComponent extends Component<Signature> {
-  @service declare router: RouterService;
   @tracked isHovered: boolean = false;
   @tracked progressWidth: number = 100;
   @tracked progressInterval: number = 100;
@@ -53,12 +50,10 @@ export default class DangerButtonWithProgressIndicatorComponent extends Componen
       if (this.progressWidth > 0) {
         this.progressWidth -= 1;
       } else if (this.progressWidth === 0) {
-        this.args.deferredFunction();
         clearInterval(this.progressInterval);
 
-        if (this.args.redirectTo) {
-          this.router.transitionTo(this.args.redirectTo);
-        }
+        this.args.deferredFunction();
+        this.args.onConfirm();
       } else {
         clearInterval(this.progressInterval);
       }
