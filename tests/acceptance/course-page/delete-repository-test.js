@@ -1,6 +1,7 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -69,6 +70,8 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
+    await percySnapshot('Course Stages - Delete Repository Modal');
+
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.hover();
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
@@ -76,7 +79,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     assert.notOk(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should not be visible');
 
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.press();
-    await new Promise((resolve) => setTimeout(resolve, 6000)); // added an extra second to wait for animation
+    await new Promise((resolve) => setTimeout(resolve, 5200)); // added an extra second to wait for animation
     assert.strictEqual(currentURL(), '/catalog', 'redirected to catalog page');
 
     await catalogPage.clickOnCourse('Build your own Redis');
