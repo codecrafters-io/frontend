@@ -40,8 +40,10 @@
         {{/if}}
       </div>
     </div>
-    <div class="flex flex-col" {{sortable-group onChange=this.handleItemsReordered}}>
-      <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1 0}} />
+    {{! @glint-expect-error ts-ifying problem }}
+    <div class="flex flex-col" {{sortable-group onChange=this.handleSortableItemsReordered}}>
+      {{! @glint-expect-error ts-ifying problem }}
+      <ConceptAdmin::BlocksPage::InsertBlockMarker {{sortable-item model="insert-block-marker"}} @onBlockAdded={{fn this.handleBlockAdded -1 0}} />
 
       {{#each this.blocksWithMetadata key="id" as |item|}}
         <ConceptAdmin::BlocksPage::EditableBlock
@@ -61,15 +63,20 @@
           }}
           @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded item.anchorBlockIndex}}
           @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded item.anchorBlockIndex}}
+          {{! @glint-expect-error ts-ifying problem }}
+          {{sortable-item model=item}}
         >
           <:drag-handler>
-            <div class="flex items-center text-gray-300 hover:text-gray-600">
+            <div class="flex items-center text-gray-300 hover:text-gray-600" {{sortable-handle}}>
               &varr;
             </div>
           </:drag-handler>
         </ConceptAdmin::BlocksPage::EditableBlock>
 
-        <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}} />
+        <ConceptAdmin::BlocksPage::InsertBlockMarker
+          {{sortable-item model="insert-block-marker"}}
+          @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}}
+        />
       {{/each}}
     </div>
   </div>

@@ -73,22 +73,26 @@
   </div>
 {{else}}
   <div
-    {{on "click" this.handleCollapsedBlockClicked}}
     role="button"
-    class="group/editable-block-preview relative border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}"
+    class="group/editable-block-preview relative"
     data-test-editable-block
     ...attributes
   >
-    {{#if @wasDeleted}}
-      <div class="text-gray-400">
-        <span class="line-through">Deleted Block</span>
-        (click to restore)
-      </div>
-    {{else}}
-      <ConceptAdmin::BlocksPage::BlockPreview @model={{@conceptBlock}} />
+    <div class="border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}" {{on "click" this.handleCollapsedBlockClicked}}>
+      {{#if @wasDeleted}}
+        <div class="text-gray-400">
+          <span class="line-through">Deleted Block</span>
+          (click to restore)
+        </div>
+      {{else}}
+        <ConceptAdmin::BlocksPage::BlockPreview @model={{@conceptBlock}} />
+      {{/if}}
+    </div>
+
+    {{#unless @wasDeleted}}
       <div class="absolute top-0 -left-4 w-4 flex items-center opacity-0 group-hover/editable-block-preview:opacity-100">
         {{yield to="drag-handler"}}
       </div>
-    {{/if}}
+    {{/unless}}
   </div>
 {{/if}}

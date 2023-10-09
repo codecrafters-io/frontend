@@ -185,9 +185,6 @@ export default class BlocksPageComponent extends Component<Signature> {
     this.blockDeletions = { ...this.blockDeletions }; // Force re-render
   }
 
-  // @action
-  // handleItemsReordered(reorderedBlocks: BlockWithMetadata[]) {}
-
   @action
   async handlePublishButtonClicked() {
     this.isSaving = true;
@@ -202,6 +199,33 @@ export default class BlocksPageComponent extends Component<Signature> {
     this.blockDeletions = {};
 
     this.isSaving = false;
+  }
+
+  @action
+  handleSortableItemsReordered(sortedItems: (BlockWithMetadata | string)[], movedBlockWithMetadata: BlockWithMetadata) {
+    const sortedBlocksWithMetadata = sortedItems.filter((item) => typeof item !== 'string') as BlockWithMetadata[];
+    const movedBlockIndex = sortedBlocksWithMetadata.findIndex((blockWithMetadata) => blockWithMetadata.id === movedBlockWithMetadata.id);
+    const previousBlockWithMetadata = sortedBlocksWithMetadata[movedBlockIndex - 1];
+
+    if (previousBlockWithMetadata) {
+      if (previousBlockWithMetadata.wasAdded) {
+        this.handleBlockAdded(
+          previousBlockWithMetadata.anchorBlockIndex,
+          previousBlockWithMetadata.addedBlockIndex + 1,
+          movedBlockWithMetadata.block,
+        );
+      } else {
+        this.handleBlockAdded(previousBlockWithMetadata.anchorBlockIndex, 0, movedBlockWithMetadata.block);
+      }
+    } else {
+      this.handleBlockAdded(-1, 0, movedBlockWithMetadata.block);
+    }
+
+    if (movedBlockWithMetadata.wasAdded) {
+      this.handleAddedBlockDeleted(movedBlockWithMetadata.anchorBlockIndex, movedBlockWithMetadata.addedBlockIndex);
+    } else {
+      this.handleBlockDeleted(movedBlockWithMetadata.anchorBlockIndex);
+    }
   }
 }
 

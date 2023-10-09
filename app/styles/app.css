@@ -144,3 +144,18 @@
 .has-prism-highlighting pre[class*='language-'] {
   background-color: #f1f5f9;
 }
+
+.sortable-item {
+  transition: all 0.06s;
+}
+
+.sortable-item.is-dragging {
+  transition-duration: 0s;
+  background: #f8fafc;
+  z-index: 10;
+}
+
+.sortable-item.is-dropping {
+  background: #f1f5f9;
+  z-index: 10;
+}
