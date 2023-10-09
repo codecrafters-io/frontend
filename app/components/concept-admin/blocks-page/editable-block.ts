@@ -3,7 +3,7 @@ import { Block } from 'codecrafters-frontend/models/concept';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
-import { ClickToContinueBlock, MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
+import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -26,6 +26,10 @@ export default class EditableBlockComponent extends Component<Signature> {
     return this.mutableBlock || this.args.conceptBlock;
   }
 
+  get blockOrMutableBlockAsConceptQuestionBlock() {
+    return this.blockOrMutableBlock as ConceptQuestionBlock;
+  }
+
   get isEditing() {
     return !!this.mutableBlock;
   }
@@ -33,6 +37,10 @@ export default class EditableBlockComponent extends Component<Signature> {
   // Glint can't infer the type, so we add a getter for each block type
   get mutableBlockAsClickToContinueBlock() {
     return this.mutableBlock as ClickToContinueBlock;
+  }
+
+  get mutableBlockAsConceptQuestionBlock() {
+    return this.mutableBlock as ConceptQuestionBlock;
   }
 
   // Glint can't infer the type, so we add a getter for each block type
