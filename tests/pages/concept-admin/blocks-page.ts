@@ -30,6 +30,10 @@ export default create({
       fillInMarkdown: fillable('textarea'),
       scope: '[data-test-markdown-block-editor]',
     },
+
+    preview: {
+      scope: '[data-test-editable-block-preview]',
+    },
   }),
 
   visit: visitable('/concepts/:concept_slug/admin/blocks'),

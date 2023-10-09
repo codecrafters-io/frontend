@@ -1,3 +1,4 @@
+import { drag } from 'ember-sortable/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -76,18 +77,12 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     this.server.create('concept', {
       slug: 'dummy',
       blocks: [
-        {
-          type: 'markdown',
-          args: {
-            markdown: `This is the first markdown block.`,
-          },
-        },
-        {
-          type: 'markdown',
-          args: {
-            markdown: `This is the second markdown block.`,
-          },
-        },
+        { type: 'markdown', args: { markdown: `block 1` } },
+        { type: 'markdown', args: { markdown: `block 2` } },
+        { type: 'markdown', args: { markdown: `block 3` } },
+        { type: 'markdown', args: { markdown: `block 4` } },
+        { type: 'markdown', args: { markdown: `block 5` } },
+        { type: 'markdown', args: { markdown: `block 6` } },
       ],
     });
 
@@ -96,7 +91,27 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
 
     await percySnapshot('Concept Admin - Blocks');
 
-    const firstMarkdownBlock = blocksPage.editableBlocks[0];
-    const secondMarkdownBlock = blocksPage.editableBlocks[1];
+    assert.strictEqual(blocksPage.editableBlocks.length, 6, 'expected 6 editable blocks to be present');
+
+    assert.strictEqual(blocksPage.editableBlocks[0].preview.text, 'block 1');
+    assert.strictEqual(blocksPage.editableBlocks[1].preview.text, 'block 2');
+    assert.strictEqual(blocksPage.editableBlocks[2].preview.text, 'block 3');
+    assert.strictEqual(blocksPage.editableBlocks[3].preview.text, 'block 4');
+    assert.strictEqual(blocksPage.editableBlocks[4].preview.text, 'block 5');
+
+    const secondBlockHeight = document.querySelector('[data-test-sortable-item-id="block-1"]').getBoundingClientRect().height;
+    const thirdBlockHeight = document.querySelector('[data-test-sortable-item-id="block-2"]').getBoundingClientRect().height;
+
+    await drag('mouse', '[data-test-sortable-item-id="block-0"] [data-test-sortable-item-drag-handle]', () => {
+      return { dy: secondBlockHeight + thirdBlockHeight + 1, dx: 0 };
+    });
+
+    assert.strictEqual(blocksPage.editableBlocks.length, 7, 'expected 6 editable blocks to be present');
+
+    assert.strictEqual(blocksPage.editableBlocks[0].preview.text, 'Deleted Block (click to restore)');
+    assert.strictEqual(blocksPage.editableBlocks[1].preview.text, 'block 2');
+    assert.strictEqual(blocksPage.editableBlocks[2].preview.text, 'block 3');
+    assert.strictEqual(blocksPage.editableBlocks[3].preview.text, 'block 1');
+    assert.strictEqual(blocksPage.editableBlocks[4].preview.text, 'block 4');
   });
 });

@@ -38,7 +38,7 @@
         </div>
       {{/if}}
 
-      <ConceptAdmin::BlocksPage::BlockPreview @model={{this.blockOrMutableBlock}} />
+      <ConceptAdmin::BlocksPage::BlockPreview @model={{this.blockOrMutableBlock}} data-test-editable-block-preview />
     </div>
 
     {{#if this.isEditing}}
@@ -80,12 +80,12 @@
   >
     <div class="border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}" {{on "click" this.handleCollapsedBlockClicked}}>
       {{#if @wasDeleted}}
-        <div class="text-gray-400">
+        <div class="text-gray-400" data-test-editable-block-preview>
           <span class="line-through">Deleted Block</span>
           (click to restore)
         </div>
       {{else}}
-        <ConceptAdmin::BlocksPage::BlockPreview @model={{@conceptBlock}} />
+        <ConceptAdmin::BlocksPage::BlockPreview @model={{@conceptBlock}} data-test-editable-block-preview />
       {{/if}}
     </div>
 

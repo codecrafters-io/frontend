@@ -151,11 +151,14 @@
 
 .sortable-item.is-dragging {
   transition-duration: 0s;
-  background: #f8fafc;
   z-index: 10;
 }
 
-.sortable-item.is-dropping {
+.sortable-item.is-dragging .highlight-while-dragging {
+  background: #f8fafc;
+}
+
+.sortable-item.is-dropping .highlight-while-dragging {
   background: #f1f5f9;
   z-index: 10;
 }
