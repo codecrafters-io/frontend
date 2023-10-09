@@ -74,7 +74,7 @@
   <div
     {{on "click" this.handleCollapsedBlockClicked}}
     role="button"
-    class="relative border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}"
+    class="group/editable-block-preview relative border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}"
     data-test-editable-block
   >
     {{#if @wasDeleted}}
@@ -85,5 +85,11 @@
     {{else}}
       <ConceptAdmin::BlocksPage::BlockPreview @model={{@conceptBlock}} />
     {{/if}}
+
+    <div
+      class="absolute top-0 -left-4 w-4 flex items-center text-gray-300 opacity-0 group-hover/editable-block-preview:opacity-100 hover:text-gray-600"
+    >
+      &varr;
+    </div>
   </div>
 {{/if}}
