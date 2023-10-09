@@ -3,6 +3,7 @@ next_version_number := $(shell echo $$(($(current_version_number)+1)))
 
 refresh_concept_fixtures:
 	curl https://cc-paul-backend.ngrok.io/api/v1/concepts/network-protocols\?include\=questions > mirage/concept-fixtures/network-protocols.js
+	curl https://cc-paul-backend.ngrok.io/api/v1/concepts/tcp-overview\?include\=questions > mirage/concept-fixtures/tcp-overview.js
 	gsed -i '1s/^/export default /' mirage/concept-fixtures/*.js
 
 refresh_course_fixtures:

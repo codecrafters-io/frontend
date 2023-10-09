@@ -14,6 +14,7 @@ export default createPage({
     selectOption: clickOnText('[data-test-question-card-option]'),
     clickOnSubmitButton: clickable('[data-test-question-card-submit-button]'),
     clickOnContinueButton: clickable('[data-test-question-card-continue-button]'),
+    clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
   }),
 
   visit: visitable('/concept/:slug'),
