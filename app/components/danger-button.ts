@@ -5,7 +5,6 @@ interface Signature {
 
   Args: {
     isDisabled?: boolean;
-    isRelative?: boolean;
     size?: string;
   };
 
