@@ -1,0 +1,19 @@
+<LinkTo class="block p-4 border rounded hover:bg-gray-50 group/question-card" @route="catalog">
+  <div class="text-lg font-semibold text-gray-800 group-hover/question-card:text-teal-600 transition-all">
+    {{@question.queryMarkdown}} <span class="opacity-0 group-hover/question-card:opacity-100">→</span>
+  </div>
+
+  <div class="prose">
+    <ul>
+      {{#each @question.options as |option|}}
+        <li>
+          {{option.markdown}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="text-xs text-gray-400 mt-3">
+    Slug:
+    {{@question.slug}}
+  </div>
+</LinkTo>
