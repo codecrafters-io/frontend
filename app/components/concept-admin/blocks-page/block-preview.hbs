@@ -1,0 +1,22 @@
+<div ...attributes>
+  {{#if (eq @model.type "markdown")}}
+    <Blocks::MarkdownBlock @model={{this.modelAsMarkdownBlock}} />
+  {{else if (eq @model.type "concept_animation")}}
+    <Blocks::ConceptAnimationBlock @model={{this.modelAsConceptAnimationBlock}} />
+  {{else if (eq @model.type "click_to_continue")}}
+    {{! @glint-expect-error: not typecast yet }}
+    <Concept::ContinueOrStepBack
+      @onContinueButtonClick={{(noop)}}
+      @onStepBackButtonClick={{(noop)}}
+      @continueButtonText={{this.modelAsClickToContinueBlock.buttonTextForDisplay}}
+      @shouldShowStepBackButton={{false}}
+    />
+  {{else if (eq @model.type "concept_question")}}
+    <Blocks::ConceptQuestionBlock @model={{this.modelAsConceptQuestionBlock}} @onSubmit={{(noop)}} />
+  {{else}}
+    <div class="text-gray-600 text-sm">
+      Unknown block type:
+      {{@model.type}}.
+    </div>
+  {{/if}}
+</div>

@@ -1,89 +1,89 @@
 {{! template-lint-disable no-invalid-interactive }}
-<div
-  class="border rounded relative {{if this.isEditing 'border-gray-300' 'hover:bg-gray-50 hover:border-gray-300'}} overflow-hidden"
-  {{on "click" (if this.isEditing (noop) this.handleCollapsedBlockClicked)}}
-  role={{if this.isEditing "region" "button"}}
-  data-test-editable-block
->
-  <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
-    {{#if @wasDeleted}}
-      <Pill @color="red">Deleted</Pill>
-    {{else if @wasAdded}}
-      <Pill @color="green">Added</Pill>
-    {{else if (or @wasChanged this.mutableBlockHasChanges)}}
-      <Pill @color="yellow">Changed</Pill>
-    {{/if}}
-  </div>
-
-  {{#if this.isEditing}}
-    <div class="bg-gray-50 p-3 border-b">
-      <div class="font-semibold text-gray-800 text-sm underline mb-4">
-        Editor
-      </div>
-
-      {{#if this.mutableBlock}}
-        {{#if (eq this.mutableBlock.type "markdown")}}
-          <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlockAsMarkdownBlock}} />
-        {{else if (eq this.mutableBlock.type "click_to_continue")}}
-          <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlockAsClickToContinueBlock}} />
-        {{/if}}
+{{#if this.isEditing}}
+  <div
+    class="border rounded relative {{if this.isEditing 'border-gray-300' 'hover:bg-gray-50 hover:border-gray-300'}} overflow-hidden"
+    data-test-editable-block
+  >
+    <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
+      {{#if @wasDeleted}}
+        <Pill @color="red">Deleted</Pill>
+      {{else if @wasAdded}}
+        <Pill @color="green">Added</Pill>
+      {{else if (or @wasChanged this.mutableBlockHasChanges)}}
+        <Pill @color="yellow">Changed</Pill>
       {{/if}}
     </div>
-  {{/if}}
 
-  <div class="p-3">
     {{#if this.isEditing}}
-      <div class="font-semibold text-gray-800 text-sm underline mb-4">
-        Preview
+      <div class="bg-gray-50 p-3 border-b">
+        <div class="font-semibold text-gray-800 text-sm underline mb-4">
+          Editor
+        </div>
+
+        {{#if this.mutableBlock}}
+          {{#if (eq this.mutableBlock.type "markdown")}}
+            <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlockAsMarkdownBlock}} />
+          {{else if (eq this.mutableBlock.type "click_to_continue")}}
+            <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlockAsClickToContinueBlock}} />
+          {{/if}}
+        {{/if}}
       </div>
     {{/if}}
 
-    {{#if (eq this.blockOrMutableBlock.type "markdown")}}
-      {{! @glint-expect-error: not ts-ified yet }}
-      <Blocks::MarkdownBlock @model={{this.blockOrMutableBlock}} />
-    {{else if (eq this.blockOrMutableBlock.type "concept_animation")}}
-      {{! @glint-expect-error: not ts-ified yet }}
-      <Blocks::ConceptAnimationBlock @model={{this.blockOrMutableBlock}} />
-    {{else if (eq this.blockOrMutableBlock.type "click_to_continue")}}
-      {{! @glint-expect-error: not ts-ified yet }}
-      <Concept::ContinueOrStepBack
-        @onContinueButtonClick={{(noop)}}
-        @onStepBackButtonClick={{(noop)}}
-        {{! @glint-expect-error: not typecast yet }}
-        @continueButtonText={{this.blockOrMutableBlock.buttonTextForDisplay}}
-        @shouldShowStepBackButton={{false}}
-      />
-    {{else if (eq this.blockOrMutableBlock.type "concept_question")}}
-      <Blocks::ConceptQuestionBlock @model={{this.blockOrMutableBlockAsConceptQuestionBlock}} @onSubmit={{(noop)}} />
-    {{else}}
-      <div class="text-gray-600 text-sm">
-        Unknown block type:
-        {{this.blockOrMutableBlock.type}}.
+    <div class="p-3">
+      {{#if this.isEditing}}
+        <div class="font-semibold text-gray-800 text-sm underline mb-4">
+          Preview
+        </div>
+      {{/if}}
+
+      <ConceptAdmin::BlocksPage::BlockPreview @model={{this.blockOrMutableBlock}} />
+    </div>
+
+    {{#if this.isEditing}}
+      <div class="bg-gray-50 border-t px-3 py-2 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          {{#if @wasDeleted}}
+            <PrimaryButton @size="small" {{on "click" this.handleUndeleteButtonClicked}} data-test-undelete-button>Restore Block</PrimaryButton>
+          {{else}}
+            <PrimaryButton @size="small" {{on "click" this.handleSaveButtonClicked}} data-test-save-button>Save</PrimaryButton>
+          {{/if}}
+
+          {{#if this.shouldShowDiscardChangesButton}}
+            <span
+              class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+              role="button"
+              {{on "click" this.handleDiscardChangesButtonClicked}}
+            >Discard changes</span>
+          {{else}}
+            <span
+              class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+              role="button"
+              {{on "click" this.handleCancelButtonClicked}}
+            >Cancel</span>
+          {{/if}}
+        </div>
+
+        {{#unless @wasDeleted}}
+          <TertiaryButton @size="small" {{on "click" this.handleDeleteButtonClicked}} data-test-delete-button>Delete Block</TertiaryButton>
+        {{/unless}}
       </div>
     {{/if}}
   </div>
-
-  {{#if this.isEditing}}
-    <div class="bg-gray-50 border-t px-3 py-2 flex items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <PrimaryButton @size="small" {{on "click" this.handleSaveButtonClicked}} data-test-save-button>Save</PrimaryButton>
-
-        {{#if this.shouldShowDiscardChangesButton}}
-          <span
-            class="text-xs text-gray-400 hover:underline hover:text-gray-500"
-            role="button"
-            {{on "click" this.handleDiscardChangesButtonClicked}}
-          >Discard changes</span>
-        {{else}}
-          <span
-            class="text-xs text-gray-400 hover:underline hover:text-gray-500"
-            role="button"
-            {{on "click" this.handleCancelButtonClicked}}
-          >Cancel</span>
-        {{/if}}
+{{else}}
+  <div
+    {{on "click" this.handleCollapsedBlockClicked}}
+    role="button"
+    class="relative border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}"
+    data-test-editable-block
+  >
+    {{#if @wasDeleted}}
+      <div class="text-gray-400">
+        <span class="line-through">Deleted Block</span>
+        (click to restore)
       </div>
-
-      <TertiaryButton @size="small" {{on "click" this.handleDeleteButtonClicked}} data-test-delete-button>Delete Block</TertiaryButton>
-    </div>
-  {{/if}}
-</div>
+    {{else}}
+      <ConceptAdmin::BlocksPage::BlockPreview @model={{@conceptBlock}} />
+    {{/if}}
+  </div>
+{{/if}}

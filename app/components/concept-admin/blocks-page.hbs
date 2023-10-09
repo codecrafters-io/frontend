@@ -52,34 +52,23 @@
           @onBlockChanged={{fn this.handleAddedBlockChanged -1 addedBlockIndex}}
           @onBlockDeleted={{fn this.handleAddedBlockDeleted -1 addedBlockIndex}}
           @onBlockChangeDiscarded={{(noop)}}
+          @onBlockDeletionDiscarded={{(noop)}}
         />
 
         <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded -1 (add addedBlockIndex 1)}} />
       {{/each}}
 
       {{#each this.blocksWithMetadata key="index" as |blockWithMetadata index|}}
-        {{#if blockWithMetadata.wasDeleted}}
-          <div class="border rounded p-3 flex items-center justify-between">
-            <div>
-              <TertiaryButton @size="small" {{on "click" (fn this.handleBlockDeletionDiscarded index)}}>
-                Undo Delete
-              </TertiaryButton>
-            </div>
-            <div>
-              <Pill @color="red">Deleted</Pill>
-            </div>
-          </div>
-        {{else}}
-          <ConceptAdmin::BlocksPage::EditableBlock
-            @conceptBlock={{blockWithMetadata.block}}
-            @wasAdded={{false}}
-            @wasChanged={{blockWithMetadata.wasChanged}}
-            @wasDeleted={{blockWithMetadata.wasDeleted}}
-            @onBlockChanged={{fn this.handleBlockChanged index}}
-            @onBlockDeleted={{fn this.handleBlockDeleted index}}
-            @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded index}}
-          />
-        {{/if}}
+        <ConceptAdmin::BlocksPage::EditableBlock
+          @conceptBlock={{blockWithMetadata.block}}
+          @wasAdded={{false}}
+          @wasChanged={{blockWithMetadata.wasChanged}}
+          @wasDeleted={{blockWithMetadata.wasDeleted}}
+          @onBlockChanged={{fn this.handleBlockChanged index}}
+          @onBlockDeleted={{fn this.handleBlockDeleted index}}
+          @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded index}}
+          @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded index}}
+        />
 
         <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded index 0}} />
 
@@ -92,6 +81,7 @@
             @onBlockChanged={{fn this.handleAddedBlockChanged index addedBlockIndex}}
             @onBlockDeleted={{fn this.handleAddedBlockDeleted index addedBlockIndex}}
             @onBlockChangeDiscarded={{(noop)}}
+            @onBlockDeletionDiscarded={{(noop)}}
           />
 
           <ConceptAdmin::BlocksPage::InsertBlockMarker @onBlockAdded={{fn this.handleBlockAdded index (add addedBlockIndex 1)}} />

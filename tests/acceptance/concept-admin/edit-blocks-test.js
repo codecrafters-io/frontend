@@ -54,10 +54,10 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     await blocksPage.insertBlockMarkers[1].click();
     await blocksPage.insertBlockMarkers[1].dropdown.clickOnItem('Markdown Block');
 
-    assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
-    await blocksPage.editableBlocks[0].click();
-    await blocksPage.editableBlocks[0].markdownBlockEditor.fillInMarkdown('Edited markdown.');
-    await blocksPage.editableBlocks[0].clickOnSaveButton();
+    assert.strictEqual(blocksPage.editableBlocks.length, 3, 'expected 3 editable blocks to be present');
+    await blocksPage.editableBlocks[1].click();
+    await blocksPage.editableBlocks[1].markdownBlockEditor.fillInMarkdown('Edited markdown.');
+    await blocksPage.editableBlocks[1].clickOnSaveButton();
 
     await blocksPage.clickOnPublishChangesButton();
     assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
