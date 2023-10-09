@@ -5,9 +5,9 @@
 
   <div class="prose mb-4">
     Are you sure you want to delete your
-    {{@repository.name}}
+    <span class="font-bold">{{@repository.name}}</span>
     repository on the
-    {{@repository.course.shortName}}
+    <span class="font-bold">{{@repository.course.shortName}}</span>
     challenge?
   </div>
 
@@ -20,13 +20,13 @@
       You have not yet pushed code to this repository.
     {{else}}
       You have pushed code to this repository
-      {{@repository.submissionsCount}}
+      <span class="font-bold">{{@repository.submissionsCount}}</span>
       times.
     {{/if}}
   </div>
 
-  <div class="prose mb-4">
-    To proceed, press and hold the button below for 5 seconds:
+  <div class="prose mb-4 text-red-600">
+    To proceed, press and hold the button below for <span class="font-bold">5 seconds</span>:
   </div>
 
   <DangerButtonWithProgressIndicator @deferredFunction={{this.deleteRepository}} @redirectTo="catalog" @size="regular">
