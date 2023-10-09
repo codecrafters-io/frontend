@@ -1,3 +1,4 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import Store from '@ember-data/store';
@@ -23,8 +24,9 @@ type Signature = {
 };
 
 export default class ExtensionCardComponent extends Component<Signature> {
-  @service store!: Store;
+  @service analyticsEventTracker!: AnalyticsEventTrackerService;
   @service coursePageState!: CoursePageStateService;
+  @service store!: Store;
 
   @tracked unsavedIsActivatedValue: boolean | null = null;
 
@@ -57,6 +59,11 @@ export default class ExtensionCardComponent extends Component<Signature> {
       for (const activation of this.activations) {
         await activation.destroyRecord();
       }
+
+      this.analyticsEventTracker.track('deactivated_course_extension', {
+        course_extension_id: this.args.extension.id,
+        repository_id: this.args.repository.id,
+      });
     } else {
       await this.store
         .createRecord('course-extension-activation', {
@@ -64,6 +71,11 @@ export default class ExtensionCardComponent extends Component<Signature> {
           extension: this.args.extension,
         })
         .save();
+
+      this.analyticsEventTracker.track('activated_course_extension', {
+        course_extension_id: this.args.extension.id,
+        repository_id: this.args.repository.id,
+      });
     }
 
     await this.store.query('repository', {
