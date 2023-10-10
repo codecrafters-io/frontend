@@ -15,8 +15,8 @@
     All code will be deleted, and will NOT be recoverable.
   </div>
 
-  <div class="prose mb-4">
-    {{#if @repository.submissionsCount}}
+  <div class="prose mb-4" data-test-delete-repository-submissions-count-copy>
+    {{#if (or (eq @repository.submissionsCount 0) (eq @repository.submissionsCount null))}}
       You have not yet pushed code to this repository.
     {{else if (eq @repository.submissionsCount 1)}}
       You have pushed code to this repository once.

@@ -95,6 +95,8 @@ export default create({
       scope: '[data-test-delete-repository-button]',
     },
 
+    deleteRepositorySubmissionsCountCopy: text('[data-test-delete-repository-submissions-count-copy]'),
+
     scope: '[data-test-delete-repository-modal]',
   },
 
