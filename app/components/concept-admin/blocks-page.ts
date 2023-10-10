@@ -186,6 +186,13 @@ export default class BlocksPageComponent extends Component<Signature> {
   }
 
   @action
+  async handleDiscardChangesButtonClicked() {
+    this.blockChanges = {};
+    this.blockAdditions = {};
+    this.blockDeletions = {};
+  }
+
+  @action
   async handlePublishButtonClicked() {
     this.isSaving = true;
 
