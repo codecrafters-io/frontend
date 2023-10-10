@@ -47,9 +47,30 @@
     <:content>
       <div class="divide-y divide-gray-100">
         {{#each @question.options as |option optionIndex|}}
-          <div class="py-3 {{if (eq optionIndex 0) 'pt-0'}}">
-            <div class="font-semibold text-gray-800 mb-2 border-b-2 inline-flex">
-              Option #{{add optionIndex 1}}
+          <div class="py-3 {{if (eq optionIndex 0) 'pt-0'}} group/option-form" data-test-option-form>
+            <div class="flex items-center justify-between mb-2">
+              <div class="font-semibold text-gray-800 border-b-2 inline-flex">
+                Option #{{add optionIndex 1}}
+              </div>
+              <div class="flex items-center gap-2 opacity-0 group-hover/option-form:opacity-100 transition-opacity">
+                <TertiaryButton @size="extra-small" class="group/trash-button" @isDisabled={{eq optionIndex 0}} data-test-move-up-button>
+                  {{svg-jar "arrow-up" class="w-4 h-4 text-gray-600 group-hover/trash-button:text-teal-600"}}
+                  <EmberTooltip @text="Move this option up" />
+                </TertiaryButton>
+                <TertiaryButton @size="extra-small" class="group/trash-button" data-test-move-down-button>
+                  {{svg-jar "arrow-down" class="w-4 h-4 text-gray-600 group-hover/trash-button:text-teal-600"}}
+                  <EmberTooltip @text="Move this option down" />
+                </TertiaryButton>
+                <TertiaryButton
+                  @size="extra-small"
+                  class="group/trash-button"
+                  data-test-delete-button
+                  {{on "click" (fn this.handleOptionDeleted optionIndex)}}
+                >
+                  {{svg-jar "trash" class="w-4 h-4 text-gray-600 group-hover/trash-button:text-red-600"}}
+                  <EmberTooltip @text="Delete this option" />
+                </TertiaryButton>
+              </div>
             </div>
             <ConceptAdmin::FormSubsection @title="Value">
               <:description>
@@ -60,7 +81,8 @@
                   @value={{option.markdown}}
                   class="w-full text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
                   placeholder="what-is-the-meaning-of-life"
-                  id="option_value"
+                  id="option_markdown"
+                  {{on "input" this.handleOptionChanged}}
                   required
                 />
               </:content>
@@ -71,24 +93,36 @@
               </:description>
               <:content>
                 <Textarea
-                  @value={{option.markdown}}
+                  @value={{option.explanation_markdown}}
                   class="w-full text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
                   rows="5"
                   placeholder="This is incorrect, because..."
                   id="option_explanation_markdown"
                   required
+                  {{on "input" this.handleOptionChanged}}
                 />
               </:content>
             </ConceptAdmin::FormSubsection>
             <ConceptAdmin::FormSubsection @title="Is Correct?">
               <:content>
                 <div class="flex items-center">
-                  <Toggle @isOn={{option.is_correct}} {{on "click" (fn this.handleCorrectOptionToggled optionIndex)}} class="mt-1" />
+                  <Toggle
+                    @isOn={{option.is_correct}}
+                    {{on "click" (fn this.handleCorrectOptionToggled optionIndex)}}
+                    class="mt-1"
+                    data-test-is-correct-toggle
+                  />
                 </div>
               </:content>
             </ConceptAdmin::FormSubsection>
           </div>
         {{/each}}
+
+        <div class="flex items-center py-6 justify-center">
+          <TertiaryButton @size="small" data-test-add-option-button {{on "click" this.handleOptionAdded}}>
+            Add Option
+          </TertiaryButton>
+        </div>
       </div>
     </:content>
   </ConceptAdmin::FormSection>

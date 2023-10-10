@@ -24,6 +24,21 @@ export default class QuestionFormComponent extends Component<Signature> {
       }
     });
   }
+
+  @action
+  async handleOptionAdded() {
+    this.args.question.options = [...this.args.question.options, { markdown: '', is_correct: false, explanation_markdown: '' }];
+  }
+
+  @action
+  async handleOptionChanged() {
+    this.args.question.set('options', [...this.args.question.options]); // Force dirty-tracking to run
+  }
+
+  @action
+  async handleOptionDeleted(optionIndex: number) {
+    this.args.question.options = this.args.question.options.filter((_, currentOptionIndex) => currentOptionIndex !== optionIndex);
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

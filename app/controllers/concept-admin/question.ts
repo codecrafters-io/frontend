@@ -1,8 +1,12 @@
-import Controller from '@ember/controller';
-import { action } from '@ember/object';
 import ConceptQuestionModel from 'codecrafters-frontend/models/concept-question';
+import Controller from '@ember/controller';
+import RouterService from '@ember/routing/router-service';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 
 export default class QuestionController extends Controller {
+  @service router!: RouterService;
+
   declare model: {
     question: ConceptQuestionModel;
   };
@@ -32,5 +36,6 @@ export default class QuestionController extends Controller {
   @action
   async handlePublishButtonClick() {
     await this.model.question.save();
+    await this.router.transitionTo('concept-admin.question', this.model.question.slug);
   }
 }
