@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import ConceptQuestionModel from 'codecrafters-frontend/models/concept-question';
+import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -9,7 +10,21 @@ interface Signature {
   };
 }
 
-export default class QuestionFormComponent extends Component<Signature> {}
+export default class QuestionFormComponent extends Component<Signature> {
+  @action
+  async handleCorrectOptionToggled(optionIndex: number) {
+    const option = this.args.question.options[optionIndex]!;
+    const optionWasCorrect = option.is_correct;
+
+    this.args.question.options = this.args.question.options.map((option, currentOptionIndex) => {
+      if (optionWasCorrect) {
+        return { ...option, is_correct: false };
+      } else {
+        return { ...option, is_correct: currentOptionIndex === optionIndex ? true : false };
+      }
+    });
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
