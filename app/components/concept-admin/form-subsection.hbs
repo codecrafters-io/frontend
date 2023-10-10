@@ -1,8 +1,11 @@
-<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-3" ...attributes>
+<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2" ...attributes>
   <div>
     <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
       {{@title}}
     </label>
+    <div class="text-gray-400 text-xs mt-0.5">
+      {{yield to="description"}}
+    </div>
   </div>
   <div class="mt-2 sm:col-span-2 sm:mt-0">
     {{yield to="content"}}

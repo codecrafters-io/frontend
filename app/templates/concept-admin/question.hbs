@@ -1,107 +1,58 @@
 <div class="bg-white min-h-screen">
   <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
-    <div class="pt-3 pb-6 border-b flex items-start justify-between">
-      <div>
-        <h3 class="text-lg font-bold text-gray-800 mb-1">
-          {{@model.question.queryMarkdown}}
-        </h3>
-        <div class="text-xs text-gray-400">
-          Slug:
-          {{@model.question.slug}}
+    <div class="pt-3 pb-6">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-gray-800 mb-1">
+            {{@model.question.queryMarkdown}}
+          </h3>
+          <div class="text-xs text-gray-400">
+            Slug:
+            {{@model.question.slug}}
+          </div>
+        </div>
+        <div class="flex flex-col items-end">
+          <div class="flex items-center justify-end gap-3">
+            <TertiaryButton @size="small" {{on "click" this.handleDiscardChangesButtonClick}} @isDisabled={{not this.unsavedChangesArePresent}}>
+              Discard Changes
+            </TertiaryButton>
+
+            <PrimaryButtonWithSpinner
+              @size="small"
+              @isDisabled={{or (not this.unsavedChangesArePresent) @model.question.isSaving}}
+              @shouldShowSpinner={{bool @model.question.isSaving}}
+              {{on "click" this.handlePublishButtonClick}}
+              data-test-publish-changes-button
+            >
+              Publish Changes
+            </PrimaryButtonWithSpinner>
+          </div>
+          <div class="text-xs text-gray-400 mt-1 text-right">
+            {{#if this.unsavedChangesArePresent}}
+              <div class="text-yellow-600 font-semibold">Unsaved changes present!</div>
+            {{else}}
+              No changes to save
+            {{/if}}
+          </div>
         </div>
       </div>
-      <div>
-      </div>
+      <TertiaryLinkButton @route="concept-admin.questions" @size="small" class="pl-1.5 mt-3">
+        <div class="flex items-center">
+          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+          <span>
+            Back to Questions
+          </span>
+        </div>
+      </TertiaryLinkButton>
     </div>
 
-    <div class="divide-y divide-gray-100">
-      <ConceptAdmin::FormSection @title="Query">
-        <:description>
-          <label for="question_query_markdown">
-            Markdown supported.
-          </label>
-        </:description>
-
-        <:content>
-          <Textarea
-            @value={{@model.question.queryMarkdown}}
-            rows="3"
-            cols="80"
-            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
-            placeholder="What is the meaning of life?"
-            id="question_query_markdown"
-            required
-          />
-        </:content>
-      </ConceptAdmin::FormSection>
-
-      <ConceptAdmin::FormSection @title="Slug">
-        <:description>
-          <label for="question_slug">
-            Used in the URL.
-          </label>
-        </:description>
-
-        <:content>
-          <Input
-            @value={{@model.question.slug}}
-            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
-            placeholder="what-is-the-meaning-of-life"
-            id="question_slug"
-            required
-          />
-        </:content>
-      </ConceptAdmin::FormSection>
-
-      <ConceptAdmin::FormSection @title="Options">
-        <:description>
-          <label for="question_options">
-            List of options to choose from.
-          </label>
-        </:description>
-
-        <:content>
-          <div class="divide-y divide-gray-100">
-            {{#each @model.question.options as |option index|}}
-              <div class="py-3 {{if (eq index 0) 'pt-0'}}">
-                <div class="font-semibold text-gray-800 mb-2 border-b-2 inline-flex">
-                  Option #{{add index 1}}
-                </div>
-                <ConceptAdmin::FormSubsection @title="Value">
-                  <:content>
-                    <Input
-                      @value={{option.markdown}}
-                      class="w-full text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
-                      placeholder="what-is-the-meaning-of-life"
-                      id="question_slug"
-                      required
-                    />
-                  </:content>
-                </ConceptAdmin::FormSubsection>
-                <ConceptAdmin::FormSubsection @title="Explanation">
-                  <:content>
-                    <Textarea
-                      @value={{option.markdown}}
-                      class="w-full text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
-                      rows="5"
-                      placeholder="what-is-the-meaning-of-life"
-                      id="question_slug"
-                      required
-                    />
-                  </:content>
-                </ConceptAdmin::FormSubsection>
-                <ConceptAdmin::FormSubsection @title="Is Correct?">
-                  <:content>
-                    <div class="flex items-center">
-                      <Toggle @isOn={{false}} class="mt-1" />
-                    </div>
-                  </:content>
-                </ConceptAdmin::FormSubsection>
-              </div>
-            {{/each}}
-          </div>
-        </:content>
-      </ConceptAdmin::FormSection>
-    </div>
+    <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
+      {{#if (eq activeTabSlug "edit")}}
+        <ConceptAdmin::QuestionsPage::QuestionForm @question={{@model.question}} />
+      {{else if (eq activeTabSlug "preview")}}
+        <ConceptAdmin::BlocksPage::BlockPreview @model={{@model.question.blockForPreview}} />
+      {{/if}}
+    </Tabs>
   </div>
 </div>

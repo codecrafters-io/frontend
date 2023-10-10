@@ -4,12 +4,12 @@
   @model={{@question.slug}}
   data-test-question-card
 >
-  <div class="text-lg font-semibold text-gray-800 group-hover/question-card:text-teal-600 transition-all">
+  <div class="font-semibold text-gray-800 group-hover/question-card:text-teal-600 transition-all mb-2">
     {{@question.queryMarkdown}}
     <span class="opacity-0 group-hover/question-card:opacity-100">→</span>
   </div>
 
-  <div class="prose">
+  <div class="prose prose-sm">
     <ul>
       {{#each @question.options as |option|}}
         <li>

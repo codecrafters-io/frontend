@@ -47,7 +47,7 @@ export default class ConceptAdminHeaderComponent extends Component<Signature> {
         slug: 'questions',
         route: 'concept-admin.questions',
         models: [this.args.concept.slug],
-        isActive: this.router.currentRouteName === 'concept-admin.questions',
+        isActive: this.router.currentRouteName === 'concept-admin.questions' || this.router.currentRouteName === 'concept-admin.question',
       },
     ];
   }

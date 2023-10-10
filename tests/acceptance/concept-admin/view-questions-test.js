@@ -52,6 +52,9 @@ module('Acceptance | concept-admin | view-questions', function (hooks) {
     await questionsPage.visit({ concept_slug: 'dummy' });
     assert.strictEqual(1, 1);
 
-    await percySnapshot('Concept Admin - Questions');
+    await percySnapshot('Concept Admin - Question List');
+
+    await questionsPage.clickOnQuestionCard('question-1');
+    await percySnapshot('Concept Admin - Question Form');
   });
 });
