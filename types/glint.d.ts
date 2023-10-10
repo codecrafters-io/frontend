@@ -27,6 +27,7 @@ declare module '@glint/environment-ember-loose/registry' {
       Yields: { default: [string] };
       Return: string;
     }>;
+    autoresize: ModifierLike<{ Args: { Positional: [string] } }>;
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'date-format': HelperLike<{ Return: string; Args: { Positional: [Date]; Named: { format?: string } } }>;
     'date-from-now': HelperLike<{ Return: string; Args: { Positional: [Date]; Named: { currentDate?: Date } } }>;
