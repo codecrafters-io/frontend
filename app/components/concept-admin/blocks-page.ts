@@ -210,9 +210,14 @@ export default class BlocksPageComponent extends Component<Signature> {
 
   @action
   handleSortableItemsReordered(sortedItems: (BlockWithMetadata | string)[], movedBlockWithMetadata: BlockWithMetadata) {
-    const sortedBlocksWithMetadata = sortedItems.filter((item) => typeof item !== 'string') as BlockWithMetadata[];
-    const movedBlockIndex = sortedBlocksWithMetadata.findIndex((blockWithMetadata) => blockWithMetadata.id === movedBlockWithMetadata.id);
-    const previousBlockWithMetadata = sortedBlocksWithMetadata[movedBlockIndex - 1];
+    const newBlocksWithMetadata = sortedItems.filter((item) => typeof item !== 'string') as BlockWithMetadata[];
+    const oldBlockIndex = this.blocksWithMetadata.findIndex((blockWithMetadata) => blockWithMetadata.id === movedBlockWithMetadata.id);
+    const newBlockIndex = newBlocksWithMetadata.findIndex((blockWithMetadata) => blockWithMetadata.id === movedBlockWithMetadata.id);
+    const previousBlockWithMetadata = newBlocksWithMetadata[newBlockIndex - 1];
+
+    if (oldBlockIndex === newBlockIndex) {
+      return;
+    }
 
     if (previousBlockWithMetadata) {
       if (previousBlockWithMetadata.wasAdded) {
