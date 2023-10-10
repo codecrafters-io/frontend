@@ -8,7 +8,6 @@ interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
-    deferredFunction: () => void;
     onConfirm: () => void;
     size?: string;
   };
@@ -55,7 +54,6 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
       } else if (this.progressWidth === 0) {
         clearInterval(this.progressInterval);
 
-        this.args.deferredFunction();
         this.args.onConfirm();
       } else {
         clearInterval(this.progressInterval);

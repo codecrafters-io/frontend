@@ -9,7 +9,7 @@ interface Signature {
 
   Args: {
     onClose?: () => void;
-    repository?: RepositoryModel;
+    repository: RepositoryModel;
   };
 }
 
@@ -22,12 +22,8 @@ export default class DeleteRepositoryModalComponent extends Component<Signature>
       return;
     }
 
-    await this.args.repository.destroyRecord();
-  }
-
-  @action
-  redirectToCatalog() {
     this.router.transitionTo('catalog');
+    await this.args.repository.destroyRecord();
   }
 }
 
