@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
@@ -20,7 +21,7 @@ interface Signature {
 export default class DangerButtonWithTimedConfirmation extends Component<Signature> {
   @tracked isHovered: boolean = false;
   @tracked progressWidth: number = 100;
-  @tracked progressInterval: number = 50; // 5000ms / 100 = 50ms
+  @tracked progressInterval: number = 1;
 
   get progressBarWidthStyle() {
     return htmlSafe(`width: ${this.progressWidth}%`);
@@ -44,6 +45,8 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
 
   @action
   startProgress() {
+    let intervalDelay;
+    config.environment === 'test' ? (intervalDelay = 5) : (intervalDelay = 50);
     this.progressWidth = 100;
 
     this.progressInterval = setInterval(() => {
@@ -57,7 +60,7 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
       } else {
         clearInterval(this.progressInterval);
       }
-    }, 50);
+    }, intervalDelay);
   }
 
   @action

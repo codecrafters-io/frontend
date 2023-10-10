@@ -79,7 +79,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     assert.notOk(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should not be visible');
 
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.press();
-    await new Promise((resolve) => setTimeout(resolve, 5200)); // added an extra second to wait for animation
+    await new Promise((resolve) => setTimeout(resolve, 700)); // added an extra 200ms to account for redirection
     assert.strictEqual(currentURL(), '/catalog', 'redirected to catalog page');
 
     await catalogPage.clickOnCourse('Build your own Redis');
