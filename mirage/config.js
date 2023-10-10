@@ -90,6 +90,7 @@ function routes() {
     return concept;
   });
 
+  this.post('/concept-questions');
   this.patch('/concept-questions/:id');
 
   this.get('/charges');

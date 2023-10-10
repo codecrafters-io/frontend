@@ -1,15 +1,31 @@
+import questionPage from 'codecrafters-frontend/tests/pages/concept-admin/question-page';
+import questionsPage from 'codecrafters-frontend/tests/pages/concept-admin/questions-page';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { currentURL, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import questionsPage from 'codecrafters-frontend/tests/pages/concept-admin/questions-page';
-import questionPage from 'codecrafters-frontend/tests/pages/concept-admin/question-page';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | concept-admin | edit-questions', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
+  test('can add question', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const concept = this.server.create('concept', { slug: 'dummy', blocks: [] });
+
+    await questionsPage.visit({ concept_slug: 'dummy' });
+    assert.strictEqual(questionsPage.questionCards.length, 0, 'There are no questions');
+
+    await questionsPage.clickOnAddQuestionButton();
+    await waitUntil(() => questionsPage.questionCards.length === 1);
+
+    assert.strictEqual(this.server.schema.conceptQuestions.all().length, 1, 'There is one question');
+    assert.strictEqual(this.server.schema.conceptQuestions.first().conceptId, concept.id, 'Question is linked to concept');
+  });
 
   test('can edit query & slug', async function (assert) {
     testScenario(this.server);
