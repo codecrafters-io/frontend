@@ -1,10 +1,15 @@
-<LinkTo class="block p-4 border rounded hover:bg-gray-50 group/question-card" @route="catalog">
-  <div class="text-lg font-semibold text-gray-800 group-hover/question-card:text-teal-600 transition-all">
+<LinkTo
+  class="block p-4 border rounded hover:bg-gray-50 group/question-card"
+  @route="concept-admin.question"
+  @model={{@question.slug}}
+  data-test-question-card
+>
+  <div class="font-semibold text-gray-800 group-hover/question-card:text-teal-600 transition-all mb-2">
     {{@question.queryMarkdown}}
     <span class="opacity-0 group-hover/question-card:opacity-100">→</span>
   </div>
 
-  <div class="prose">
+  <div class="prose prose-sm">
     <ul>
       {{#each @question.options as |option|}}
         <li>
@@ -14,7 +19,6 @@
     </ul>
   </div>
   <div class="text-xs text-gray-400 mt-3">
-    Slug:
-    {{@question.slug}}
+    Slug:&nbsp;<span data-test-question-slug>{{@question.slug}}</span>
   </div>
 </LinkTo>

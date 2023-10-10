@@ -17,6 +17,12 @@
       {{#each @model.concept.questions as |conceptQuestion|}}
         <ConceptAdmin::QuestionsPage::QuestionCard @question={{conceptQuestion}} />
       {{/each}}
+
+      <div class="flex items-center justify-center">
+        <TertiaryButton {{on "click" this.handleAddQuestionButtonClick}} data-test-add-question-button>
+          Add Question
+        </TertiaryButton>
+      </div>
     </div>
   </div>
 </div>

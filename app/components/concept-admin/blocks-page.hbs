@@ -11,15 +11,26 @@
       </div>
 
       <div class="flex flex-col items-end gap-2">
-        <PrimaryButtonWithSpinner
-          @size="small"
-          @isDisabled={{or this.isSaving (not this.mutationsArePresent)}}
-          @shouldShowSpinner={{this.isSaving}}
-          {{on "click" this.handlePublishButtonClicked}}
-          data-test-publish-changes-button
-        >
-          Publish Changes
-        </PrimaryButtonWithSpinner>
+        <div class="flex items-center gap-3">
+          <TertiaryButton
+            @size="small"
+            @isDisabled={{not this.mutationsArePresent}}
+            {{on "click" this.handleDiscardChangesButtonClicked}}
+            data-test-discard-changes-button
+          >
+            Discard Changes
+          </TertiaryButton>
+
+          <PrimaryButtonWithSpinner
+            @size="small"
+            @isDisabled={{or this.isSaving (not this.mutationsArePresent)}}
+            @shouldShowSpinner={{this.isSaving}}
+            {{on "click" this.handlePublishButtonClicked}}
+            data-test-publish-changes-button
+          >
+            Publish Changes
+          </PrimaryButtonWithSpinner>
+        </div>
 
         {{#if this.mutationsArePresent}}
           <div class="flex items-center gap-3">

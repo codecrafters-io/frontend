@@ -18,6 +18,6 @@ export default class BasicDetailsSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BasicDetailsSection': typeof BasicDetailsSectionComponent;
+    'ConceptAdmin::FormSection': typeof BasicDetailsSectionComponent;
   }
 }

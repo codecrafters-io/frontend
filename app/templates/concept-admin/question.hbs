@@ -1,0 +1,58 @@
+<div class="bg-white min-h-screen">
+  <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-gray-800 mb-1">
+            {{@model.question.queryMarkdown}}
+          </h3>
+          <div class="text-xs text-gray-400">
+            Slug:
+            {{@model.question.slug}}
+          </div>
+        </div>
+        <div class="flex flex-col items-end">
+          <div class="flex items-center justify-end gap-3">
+            <TertiaryButton @size="small" {{on "click" this.handleDiscardChangesButtonClick}} @isDisabled={{not this.unsavedChangesArePresent}}>
+              Discard Changes
+            </TertiaryButton>
+
+            <PrimaryButtonWithSpinner
+              @size="small"
+              @isDisabled={{or (not this.unsavedChangesArePresent) @model.question.isSaving}}
+              @shouldShowSpinner={{bool @model.question.isSaving}}
+              {{on "click" this.handlePublishButtonClick}}
+              data-test-publish-changes-button
+            >
+              Publish Changes
+            </PrimaryButtonWithSpinner>
+          </div>
+          <div class="text-xs text-gray-400 mt-1 text-right">
+            {{#if this.unsavedChangesArePresent}}
+              <div class="text-yellow-600 font-semibold">Unsaved changes present!</div>
+            {{else}}
+              No changes to save
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      <TertiaryLinkButton @route="concept-admin.questions" @size="small" class="pl-1.5 mt-3">
+        <div class="flex items-center">
+          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+          <span>
+            Back to Questions
+          </span>
+        </div>
+      </TertiaryLinkButton>
+    </div>
+
+    <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
+      {{#if (eq activeTabSlug "edit")}}
+        <ConceptAdmin::QuestionsPage::QuestionForm @question={{@model.question}} />
+      {{else if (eq activeTabSlug "preview")}}
+        <ConceptAdmin::BlocksPage::BlockPreview @model={{@model.question.blockForPreview}} />
+      {{/if}}
+    </Tabs>
+  </div>
+</div>
