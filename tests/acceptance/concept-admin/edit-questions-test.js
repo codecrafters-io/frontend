@@ -5,7 +5,6 @@ import { signInAsStaff } from 'codecrafters-frontend/tests/support/authenticatio
 import questionsPage from 'codecrafters-frontend/tests/pages/concept-admin/questions-page';
 import questionPage from 'codecrafters-frontend/tests/pages/concept-admin/question-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import percySnapshot from '@percy/ember';
 import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | concept-admin | edit-questions', function (hooks) {
