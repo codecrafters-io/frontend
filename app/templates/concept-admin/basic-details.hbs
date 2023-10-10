@@ -25,7 +25,7 @@
     </div>
 
     <div class="divide-y divide-gray-100">
-      <ConceptAdmin::BasicDetailsSection @title="Title">
+      <ConceptAdmin::FormSection @title="Title">
         <:description>
           <label for="concept_title">
             Displayed in the header, and in the page's title.
@@ -43,9 +43,9 @@
             required
           />
         </:content>
-      </ConceptAdmin::BasicDetailsSection>
+      </ConceptAdmin::FormSection>
 
-      <ConceptAdmin::BasicDetailsSection @title="Slug">
+      <ConceptAdmin::FormSection @title="Slug">
         <:description>
           <label for="concept_slug">
             Changing this will break all previous links, be careful.
@@ -63,9 +63,9 @@
             required
           />
         </:content>
-      </ConceptAdmin::BasicDetailsSection>
+      </ConceptAdmin::FormSection>
 
-      <ConceptAdmin::BasicDetailsSection @title="Description">
+      <ConceptAdmin::FormSection @title="Description">
         <:description>
           <label for="concept_description">
             Shown in the header. Markdown supported.
@@ -84,7 +84,7 @@
             required
           />
         </:content>
-      </ConceptAdmin::BasicDetailsSection>
+      </ConceptAdmin::FormSection>
     </div>
   </div>
 </div>
