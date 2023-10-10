@@ -28,6 +28,34 @@
             <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlockAsClickToContinueBlock}} />
           {{/if}}
         {{/if}}
+
+        <div class="flex items-center justify-between gap-3 pt-2">
+          <div class="flex items-center gap-3">
+            {{#if @wasDeleted}}
+              <PrimaryButton @size="small" {{on "click" this.handleUndeleteButtonClicked}} data-test-undelete-button>Restore Block</PrimaryButton>
+            {{else}}
+              <PrimaryButton @size="small" {{on "click" this.handleSaveButtonClicked}} data-test-save-button>Save</PrimaryButton>
+            {{/if}}
+
+            {{#if this.shouldShowDiscardChangesButton}}
+              <span
+                class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+                role="button"
+                {{on "click" this.handleDiscardChangesButtonClicked}}
+              >Discard changes</span>
+            {{else}}
+              <span
+                class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+                role="button"
+                {{on "click" this.handleCancelButtonClicked}}
+              >Cancel</span>
+            {{/if}}
+          </div>
+
+          {{#unless @wasDeleted}}
+            <TertiaryButton @size="small" {{on "click" this.handleDeleteButtonClicked}} data-test-delete-button>Delete Block</TertiaryButton>
+          {{/unless}}
+        </div>
       </div>
     {{/if}}
 
@@ -40,36 +68,6 @@
 
       <ConceptAdmin::BlocksPage::BlockPreview @model={{this.blockOrMutableBlock}} data-test-editable-block-preview />
     </div>
-
-    {{#if this.isEditing}}
-      <div class="bg-gray-50 border-t px-3 py-2 flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-          {{#if @wasDeleted}}
-            <PrimaryButton @size="small" {{on "click" this.handleUndeleteButtonClicked}} data-test-undelete-button>Restore Block</PrimaryButton>
-          {{else}}
-            <PrimaryButton @size="small" {{on "click" this.handleSaveButtonClicked}} data-test-save-button>Save</PrimaryButton>
-          {{/if}}
-
-          {{#if this.shouldShowDiscardChangesButton}}
-            <span
-              class="text-xs text-gray-400 hover:underline hover:text-gray-500"
-              role="button"
-              {{on "click" this.handleDiscardChangesButtonClicked}}
-            >Discard changes</span>
-          {{else}}
-            <span
-              class="text-xs text-gray-400 hover:underline hover:text-gray-500"
-              role="button"
-              {{on "click" this.handleCancelButtonClicked}}
-            >Cancel</span>
-          {{/if}}
-        </div>
-
-        {{#unless @wasDeleted}}
-          <TertiaryButton @size="small" {{on "click" this.handleDeleteButtonClicked}} data-test-delete-button>Delete Block</TertiaryButton>
-        {{/unless}}
-      </div>
-    {{/if}}
 
     {{! This needs to be rendered to avoid ember-sortable trying to make the whole block draggable }}
     <div class="absolute top-0 -left-4 w-4 opacity-0">
