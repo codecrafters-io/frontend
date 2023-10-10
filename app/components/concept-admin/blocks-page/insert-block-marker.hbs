@@ -3,7 +3,7 @@
   <dd.Trigger>
     <div
       class="relative flex items-center justify-center group/insert-block-marker
-        {{if dd.isOpen 'opacity-100' 'opacity-0 hover:opacity-100'}}
+        {{if dd.isOpen 'opacity-100' (if @isVisibleWithoutHover 'opacity-100' 'opacity-0 hover:opacity-100')}}
         py-1 transition-opacity duration-200"
       data-test-insert-block-marker
       ...attributes

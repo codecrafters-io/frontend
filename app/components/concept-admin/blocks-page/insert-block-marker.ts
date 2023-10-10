@@ -8,6 +8,7 @@ interface Signature {
 
   Args: {
     onBlockAdded: (block: Block) => void;
+    isVisibleWithoutHover: boolean;
   };
 }
 
