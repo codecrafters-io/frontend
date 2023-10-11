@@ -191,6 +191,8 @@ export default class BlocksPageComponent extends Component<Signature> {
     this.blockChanges = {};
     this.blockAdditions = {};
     this.blockDeletions = {};
+
+    this.args.concept.errors.remove('blocks');
   }
 
   @action
@@ -221,6 +223,7 @@ export default class BlocksPageComponent extends Component<Signature> {
     this.blockChanges = {};
     this.blockAdditions = {};
     this.blockDeletions = {};
+    this.args.concept.errors.remove('blocks');
 
     this.isSaving = false;
   }
