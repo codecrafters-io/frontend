@@ -60,6 +60,10 @@ function routes() {
 
   this.get('/concepts');
 
+  this.post('/concepts', function (schema) {
+    return schema.concepts.create({ title: 'New Concept', slug: 'new-concept' });
+  });
+
   this.patch('/concepts/:id', function (schema, request) {
     const concept = schema.concepts.find(request.params.id);
     const attrs = this.normalizedRequestAttrs();

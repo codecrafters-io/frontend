@@ -5,6 +5,7 @@ import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/netw
 import percySnapshot from '@percy/ember';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -18,6 +19,17 @@ function createConcepts(server) {
 module('Acceptance | concepts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
+  test('can create concept', async function (assert) {
+    testScenario(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+    await conceptsPage.clickOnCreateConceptButton();
+
+    assert.strictEqual(currentURL(), '/concepts/new-concept/admin/basic-details');
+  });
 
   test('can view concepts', async function (assert) {
     testScenario(this.server);

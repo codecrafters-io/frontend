@@ -1,12 +1,30 @@
 {{page-title "Concepts"}}
 
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
-  <div class="border-b pb-2 mb-6">
+  <div class="border-b pb-2 mb-6 flex items-center justify-between">
     <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Concepts</h1>
+    <div>
+      {{#if (current-user-is-staff)}}
+        <TertiaryButtonWithSpinner
+          @size="small"
+          @shouldShowSpinner={{this.isCreatingConcept}}
+          @isDisabled={{this.isCreatingConcept}}
+          class="pl-2"
+          {{on "click" this.handleCreateConceptButtonClicked}}
+          data-test-create-concept-button
+        >
+          <div class="flex items-center">
+            {{svg-jar "plus-circle" class="w-5 h-5 mr-1.5 text-gray-400"}}
+            New concept
+          </div>
+        </TertiaryButtonWithSpinner>
+      {{/if}}
+    </div>
   </div>
 
   <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
     {{#each this.model.concepts as |concept|}}
+      {{! @glint-expect-error: not ts-ified }}
       <ConceptsPage::ConceptCard @concept={{concept}} />
     {{/each}}
   </div>
