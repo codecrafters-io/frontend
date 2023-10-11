@@ -87,22 +87,6 @@
                 />
               </:content>
             </ConceptAdmin::FormSubsection>
-            <ConceptAdmin::FormSubsection @title="Explanation">
-              <:description>
-                Shown when the user selects this option. Markdown supported.
-              </:description>
-              <:content>
-                <Textarea
-                  @value={{option.explanation_markdown}}
-                  class="w-full text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
-                  rows="5"
-                  placeholder="This is incorrect, because..."
-                  id="option_explanation_markdown"
-                  required
-                  {{on "input" this.handleOptionChanged}}
-                />
-              </:content>
-            </ConceptAdmin::FormSubsection>
             <ConceptAdmin::FormSubsection @title="Is Correct?">
               <:content>
                 <div class="flex items-center">
@@ -113,6 +97,22 @@
                     data-test-is-correct-toggle
                   />
                 </div>
+              </:content>
+            </ConceptAdmin::FormSubsection>
+            <ConceptAdmin::FormSubsection @title="Explanation">
+              <:description>
+                Shown when the user selects this option. Markdown supported.
+              </:description>
+              <:content>
+                <Textarea
+                  @value={{option.explanation_markdown}}
+                  class="w-full text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
+                  rows="5"
+                  placeholder={{if option.is_correct "This is correct, because..." "This is incorrect, because..."}}
+                  id="option_explanation_markdown"
+                  required
+                  {{on "input" this.handleOptionChanged}}
+                />
               </:content>
             </ConceptAdmin::FormSubsection>
           </div>

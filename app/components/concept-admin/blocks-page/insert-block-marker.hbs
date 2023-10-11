@@ -3,15 +3,15 @@
   <dd.Trigger>
     <div
       class="relative flex items-center justify-center group/insert-block-marker
-        {{if dd.isOpen 'opacity-100' 'opacity-0 hover:opacity-100'}}
+        {{if dd.isOpen 'opacity-100' (if @isVisibleWithoutHover 'opacity-100' 'opacity-0 hover:opacity-100')}}
         py-1 transition-opacity duration-200"
       data-test-insert-block-marker
       ...attributes
     >
-      <div class="absolute h-px w-full bg-gray-100 top-1/2 left-0 right-0">
+      <div class="absolute h-px w-full bg-gray-100 group-hover/insert-block-marker:bg-gray-200 top-1/2 left-0 right-0 transition-colors">
       </div>
       <div class="relative">
-        <div class="text-xs text-gray-400 bg-white px-4">
+        <div class="text-xs text-gray-400 group-hover/insert-block-marker:text-gray-500 bg-white px-4 transition-colors">
           {{#if dd.isOpen}}
             Choose block
           {{else}}

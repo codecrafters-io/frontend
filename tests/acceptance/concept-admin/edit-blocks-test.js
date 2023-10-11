@@ -114,4 +114,36 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     assert.strictEqual(blocksPage.editableBlocks[3].preview.text, 'block 1');
     assert.strictEqual(blocksPage.editableBlocks[4].preview.text, 'block 4');
   });
+
+  test('dragging block to same position does not cause changes', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        { type: 'markdown', args: { markdown: `block 1` } },
+        { type: 'markdown', args: { markdown: `block 2` } },
+      ],
+    });
+
+    await blocksPage.visit({ concept_slug: 'dummy' });
+    assert.strictEqual(1, 1);
+
+    await percySnapshot('Concept Admin - Blocks');
+
+    assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
+
+    assert.strictEqual(blocksPage.editableBlocks[0].preview.text, 'block 1');
+    assert.strictEqual(blocksPage.editableBlocks[1].preview.text, 'block 2');
+
+    await drag('mouse', '[data-test-sortable-item-id="block-0"] [data-test-sortable-item-drag-handle]', () => {
+      return { dy: 1, dx: 0 };
+    });
+
+    assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
+
+    assert.strictEqual(blocksPage.editableBlocks[0].preview.text, 'block 1');
+    assert.strictEqual(blocksPage.editableBlocks[1].preview.text, 'block 2');
+  });
 });

@@ -52,6 +52,7 @@ export default class YourTaskCardComponent extends Component<Signature> {
   get shouldShowFeedbackPromptIfStageIsComplete() {
     return !this.args.courseStage.isFirst;
   }
+
   @action
   handleDidInsertInstructionsHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);

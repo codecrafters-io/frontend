@@ -52,9 +52,13 @@
       </div>
     </div>
     <div class="flex flex-col" {{sortable-group onChange=this.handleSortableItemsReordered}}>
-      <ConceptAdmin::BlocksPage::InsertBlockMarker {{sortable-item model="insert-block-marker"}} @onBlockAdded={{fn this.handleBlockAdded -1 0}} />
+      <ConceptAdmin::BlocksPage::InsertBlockMarker
+        {{sortable-item model="insert-block-marker"}}
+        @onBlockAdded={{fn this.handleBlockAdded -1 0}}
+        @isVisibleWithoutHover={{eq this.blocksWithMetadata.length 0}}
+      />
 
-      {{#each this.blocksWithMetadata key="id" as |item|}}
+      {{#each this.blocksWithMetadata key="id" as |item itemIndex|}}
         <div {{sortable-item model=item}} data-test-sortable-item data-test-sortable-item-id={{item.id}}>
           <ConceptAdmin::BlocksPage::EditableBlock
             @conceptBlock={{item.block}}
@@ -84,6 +88,7 @@
 
           <ConceptAdmin::BlocksPage::InsertBlockMarker
             @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}}
+            @isVisibleWithoutHover={{eq (add itemIndex 1) this.blocksWithMetadata.length}}
           />
         </div>
       {{/each}}
