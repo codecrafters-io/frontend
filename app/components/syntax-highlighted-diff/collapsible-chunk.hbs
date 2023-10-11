@@ -1,9 +1,16 @@
 {{#if this.isCollapsed}} 
   <div class="flex gap-4 items-center bg-gray-100 cursor-pointer" {{on "click" this.handleClick}}>
     <span class="flex flex-col px-6 py-2 bg-gray-50">
-      {{svg-jar "chevron-up" class="w-4 h-4"}}
-      {{svg-jar "chevron-down" class="w-4 h-4"}}
+      {{#if @chunk.isAtTopOfFile}}
+        {{svg-jar "chevron-up" class="w-4 h-4"}}
+      {{else if @chunk.isAtBottomOfFile}}
+        {{svg-jar "chevron-down" class="w-4 h-4"}}
+      {{else}}
+        {{svg-jar "chevron-up" class="w-4 h-4"}}
+        {{svg-jar "chevron-down" class="w-4 h-4"}}
+      {{/if}}
     </span>
+    <span>Expand {{@chunk.lines.length}} lines</span>
   </div>
 {{else}}
   {{#each @chunk.lines key="number" as |line|}}

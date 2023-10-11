@@ -133,7 +133,15 @@ export default class SyntaxHighlightedDiffComponent extends Component {
           currentChunkLines.push(lines[i]);
         }
 
-        chunks.push({ lines: currentChunkLines, isCollapsed: true });
+        let isAtTopOfFile = false;
+
+        for (const chunkLine of currentChunkLines) {
+          if (chunkLine.number === 1) {
+            isAtTopOfFile = true;
+          }
+        }
+
+        chunks.push({ isAtTopOfFile, isCollapsed: true, lines: currentChunkLines });
         currentChunkLines = [];
         start = end;
       }
@@ -169,7 +177,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
         currentChunkLines.push(lines[i]);
       }
 
-      chunks.push({ lines: currentChunkLines, isCollapsed: true });
+      chunks.push({ isAtBottomOfFile: true, isCollapsed: true, lines: currentChunkLines });
     }
 
     return chunks;
