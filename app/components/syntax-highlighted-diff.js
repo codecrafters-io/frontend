@@ -174,19 +174,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     this.highlightCode();
   }
 
-  @action
-  handleToggleCommentsButtonClick(lineNumber) {
-    if (this.lineNumberWithExpandedComments === lineNumber) {
-      this.lineNumberWithExpandedComments = null;
-    } else {
-      this.lineNumberWithExpandedComments = lineNumber;
-
-      (this.topLevelCommentsGroupedByLine[lineNumber] || []).forEach((comment) => {
-        this.args.onCommentView && this.args.onCommentView(comment);
-      });
-    }
-  }
-
   highlightCode() {
     let highlighterPromise = getOrCreateCachedHighlighterPromise(
       SyntaxHighlightedDiffComponent.highlighterId,
