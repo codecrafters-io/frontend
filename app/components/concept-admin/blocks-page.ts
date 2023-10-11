@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import ConceptModel, { Block } from 'codecrafters-frontend/models/concept';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import Error from '@ember/error';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -196,10 +197,26 @@ export default class BlocksPageComponent extends Component<Signature> {
   async handlePublishButtonClicked() {
     this.isSaving = true;
 
-    await this.args.concept.updateBlocks({
-      'old-blocks': this.args.concept.blocks,
-      'new-blocks': this.rawBlocksAfterMutations,
-    });
+    try {
+      await this.args.concept.updateBlocks({
+        'old-blocks': this.args.concept.blocks,
+        'new-blocks': this.rawBlocksAfterMutations,
+      });
+    } catch (e: unknown) {
+      // @ts-ignore
+      if (e.isAdapterError) {
+        // @ts-ignore
+        e.errors.forEach((error) => {
+          this.args.concept.errors.add('blocks', error.detail);
+        });
+      } else {
+        throw e;
+      }
+
+      this.isSaving = false;
+
+      return;
+    }
 
     this.blockChanges = {};
     this.blockAdditions = {};
