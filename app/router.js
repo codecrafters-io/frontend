@@ -71,6 +71,8 @@ Router.map(function () {
     this.route('course-extension-ideas', { path: '/challenge-extension-ideas' });
   });
 
+  this.route('welcome');
+
   this.route('not-found', { path: '/*path' }); // Catch-all
   this.route('not-found', { path: '/404' }); // Allow redirecting to this route
 });
