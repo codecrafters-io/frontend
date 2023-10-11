@@ -7,7 +7,11 @@
       </div>
 
       <div class="text-sm">
-        <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@submission.repository.language.slug}} />
+        <SyntaxHighlightedDiff 
+          @code={{changedFile.diff}}
+          @language={{@submission.repository.language.slug}}
+          @shouldCollapseUnchangedLines={{true}}
+        />
       </div>
     </div>
   {{/each}}

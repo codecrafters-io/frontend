@@ -141,7 +141,12 @@ export default class SyntaxHighlightedDiffComponent extends Component {
           }
         }
 
-        chunks.push({ isAtTopOfFile, isCollapsed: true, lines: currentChunkLines });
+        chunks.push({
+          isAtTopOfFile,
+          isCollapsed: this.args.shouldCollapseUnchangedLines || false,
+          lines: currentChunkLines,
+        });
+
         currentChunkLines = [];
         start = end;
       }
