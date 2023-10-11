@@ -4,7 +4,7 @@
       <div>
         <LinkTo
           @route="concept"
-          @model={{@concept.slug}}
+          @model={{@concept.lastPersistedSlug}}
           class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-4 text-sm"
         >
           {{svg-jar "arrow-left" class="w-4 mr-1 fill-current"}}
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div>
-        <TertiaryLinkButton @size="small" @route="concept" @model={{@concept.slug}} target="_blank">
+        <TertiaryLinkButton @size="small" @route="concept" @model={{@concept.lastPersistedSlug}} target="_blank">
           <div class="flex items-center">
             <span>View Concept</span>
             {{svg-jar "external-link" class="w-4 ml-1 fill-current"}}

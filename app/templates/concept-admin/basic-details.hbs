@@ -15,14 +15,29 @@
           <div class="flex items-center">
             <span class="text-teal-500 font-semibold text-sm">Saving...</span>
           </div>
-        {{else}}{{#if this.wasSavedRecently}}
+        {{else if this.wasSavedRecently}}
             <div class="flex items-center">
               {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
               <span class="text-sm text-teal-500 font-semibold">Saved</span>
             </div>
-          {{/if}}{{/animated-if}}
+          {{/animated-if}}
       </div>
     </div>
+
+    {{#if (gt @model.concept.errors.length 0)}}
+      <Alert @type="error" class="mt-4">
+        Found
+        {{! @glint-expect-error length isn't seen as a string? }}
+        {{@model.concept.errors.length}}
+        error(s) while saving:
+
+        <ul>
+          {{#each @model.concept.errors as |error|}}
+            <li>{{error.message}}</li>
+          {{/each}}
+        </ul>
+      </Alert>
+    {{/if}}
 
     <div class="divide-y divide-gray-100">
       <ConceptAdmin::FormSection @title="Title">

@@ -23,7 +23,7 @@ declare module '@glint/environment-ember-loose/registry' {
     }>;
     'animated-if': ComponentLike<{
       Args: { Positional: [unknown]; Named: { duration?: number; transition?: unknown } };
-      Blocks: { default: [unknown] };
+      Blocks: { default: [unknown]; inverse: [unknown] };
       Yields: { default: [string] };
       Return: string;
     }>;

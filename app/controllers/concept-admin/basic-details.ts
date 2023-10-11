@@ -22,7 +22,13 @@ export default class BasicDetailsController extends Controller {
   }
 
   updateConceptDetails = task({ keepLatest: true }, async (): Promise<void> => {
-    await this.model.concept.save();
+    try {
+      await this.model.concept.save();
+    } catch (e) {
+      console.error(e);
+
+      return;
+    }
 
     if (
       this.router.currentRouteName === 'concept-admin.basic-details' &&

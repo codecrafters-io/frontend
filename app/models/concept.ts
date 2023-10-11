@@ -39,6 +39,14 @@ export default class ConceptModel extends Model {
     }
   }
 
+  get lastPersistedSlug(): string {
+    if (this.changedAttributes()['slug']) {
+      return this.changedAttributes()['slug']![0];
+    } else {
+      return this.slug;
+    }
+  }
+
   get parsedBlocks(): Block[] {
     const blockClassMapping: Record<string, unknown> = {};
 
