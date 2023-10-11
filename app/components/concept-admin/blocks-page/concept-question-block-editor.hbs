@@ -1,0 +1,22 @@
+<div data-test-concept-question-block-editor>
+  {{#if (gt @concept.questions.length 0)}}
+    <div class="text-gray-600 mb-4">
+      Found
+      {{! @glint-expect-error: length can't be used for some reason }}
+      {{@concept.questions.length}}
+      questions. Select one to use:
+    </div>
+
+    <select class="p-2 border rounded mb-3 block" {{on "change" this.handleConceptQuestionSlugSelected}}>
+      <option disabled selected={{not @model.conceptQuestionSlug}}>Select a question...</option>
+
+      {{#each @concept.questions as |question|}}
+        <option value={{question.slug}} selected={{eq @model.conceptQuestionSlug question.slug}}>{{question.queryMarkdown}}</option>
+      {{/each}}
+    </select>
+  {{else}}
+    <div class="text-gray-700 mb-4">
+      No questions found. <LinkTo class="underline font-semibold" @route="concept-admin.questions">Create one</LinkTo> to use it here.
+    </div>
+  {{/if}}
+</div>

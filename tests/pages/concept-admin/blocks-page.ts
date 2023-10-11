@@ -27,6 +27,11 @@ export default create({
     clickOnSaveButton: clickable('[data-test-save-button]'),
     clickOnDeleteButton: clickable('[data-test-delete-button]'),
 
+    conceptQuestionBlockEditor: {
+      selectQuestion: fillable('select'),
+      scope: '[data-test-concept-question-block-editor]',
+    },
+
     markdownBlockEditor: {
       fillInMarkdown: fillable('textarea'),
       scope: '[data-test-markdown-block-editor]',
