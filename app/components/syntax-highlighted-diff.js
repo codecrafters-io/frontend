@@ -89,16 +89,44 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
   }
 
-  getActualTargetCount(start, end, lines) {
-    let actualTargetCount = 0;
+  getEndIndex(initialStart, lines) {
+    let isTargetInSlice;
+    let start = initialStart;
+    let end = Math.min(start + 3, lines.length);
 
-    for (let i = start; i < end; i++) {
-      if (lines[i].type === 'added' || lines[i].type === 'removed') {
-        actualTargetCount += 1;
+    do {
+      isTargetInSlice = false;
+
+      for (let i = start; i < end; i++) {
+        if (lines[i].type === 'added' || lines[i].type === 'removed') {
+          isTargetInSlice = true;
+          start = end;
+          end = Math.min(i + 3 + 1, lines.length);
+        }
       }
+    } while (isTargetInSlice);
+
+    return end;
+  }
+
+  getExpandedChunks(lines) {
+    let nextTargetInfo = this.getNextTargetInfo(0, lines);
+    let start = Math.max(nextTargetInfo.index - 3, 0);
+    let end = this.getEndIndex(Math.min(nextTargetInfo.index + 1, lines.length - 1), lines);
+    let expandedChunks = [];
+
+    while (nextTargetInfo.isPresent) {
+      expandedChunks.push({
+        isCollapsed: false,
+        lines: lines.slice(start, end),
+      });
+
+      nextTargetInfo = this.getNextTargetInfo(Math.min(end, lines.length), lines);
+      start = Math.max(nextTargetInfo.index - 3, 0);
+      end = this.getEndIndex(Math.min(nextTargetInfo.index + 1, lines.length - 1), lines);
     }
 
-    return actualTargetCount;
+    return expandedChunks;
   }
 
   getNextTargetInfo(start, lines) {
@@ -106,8 +134,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
     for (let i = start; i < lines.length; i++) {
       if (lines[i].type === 'added' || lines[i].type === 'removed') {
-        nextTargetInfo.isPresent = true;
-        nextTargetInfo.index = i;
+        nextTargetInfo = { isPresent: true, index: i };
         break;
       }
     }
@@ -116,76 +143,33 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   groupIntoChunks(lines) {
+    let chunks = [];
+    let expandedChunks = this.getExpandedChunks(lines);
     let start = 0;
     let end;
-    let nextTargetInfo = this.getNextTargetInfo(start, lines);
-    let chunks = [];
-    let currentChunkLines = [];
 
-    while (nextTargetInfo.isPresent) {
-      // First, check if there are no changes three lines before the next target.
-      // A target is the line with 'added' or 'removed' type.
-      // If there are no changes, then get the collapsed chunk.
-      if (nextTargetInfo.index - 3 > start) {
-        end = nextTargetInfo.index - 3;
+    console.log(expandedChunks);
 
-        for (let i = start; i <= end; i++) {
-          currentChunkLines.push(lines[i]);
-        }
-
-        let isAtTopOfFile = false;
-
-        for (const chunkLine of currentChunkLines) {
-          if (chunkLine.number === 1) {
-            isAtTopOfFile = true;
-          }
-        }
-
+    for (const expandedChunk of expandedChunks) {
+      if (expandedChunk.lines[0].number - 1 > start) {
+        end = expandedChunk.lines[0].number - 1;
         chunks.push({
-          isAtTopOfFile,
-          isCollapsed: this.args.shouldCollapseUnchangedLines || false,
-          lines: currentChunkLines,
+          isCollapsed: true,
+          lines: lines.slice(start, end),
         });
 
-        currentChunkLines = [];
-        start = end;
+        chunks.push(expandedChunk);
+        start = expandedChunk.lines[expandedChunk.lines.length - 1].number;
+      } else {
+        chunks.push(expandedChunk);
+        start = expandedChunk.lines[expandedChunk.lines.length - 1].number;
       }
-
-      // Next, get the expanded chunk.
-      if (nextTargetInfo.index - 3 <= start) {
-        end = Math.min(nextTargetInfo.index + 3 + 1, lines.length);
-        let actualTargetCount = this.getActualTargetCount(start, end, lines);
-        let expectedTargetCount = 1;
-
-        // Update the end index while the actual target count is not equal to the expected target count.
-        while (actualTargetCount !== expectedTargetCount) {
-          expectedTargetCount = actualTargetCount;
-          nextTargetInfo = this.getNextTargetInfo(nextTargetInfo.index + 1, lines);
-          actualTargetCount = this.getActualTargetCount(start, end, lines);
-        }
-
-        for (let i = start; i < end; i++) {
-          currentChunkLines.push(lines[i]);
-        }
-
-        chunks.push({ lines: currentChunkLines, isCollapsed: false });
-        currentChunkLines = [];
-        start = end;
-      }
-
-      nextTargetInfo = this.getNextTargetInfo(start, lines);
     }
 
-    // Lastly, if there are still lines left three lines after the last target, get the collapsed chunk.
     if (start !== lines.length) {
-      for (let i = start; i < lines.length; i++) {
-        currentChunkLines.push(lines[i]);
-      }
-
       chunks.push({
-        isAtBottomOfFile: true,
-        isCollapsed: this.args.shouldCollapseUnchangedLines || false,
-        lines: currentChunkLines,
+        isCollapsed: true,
+        lines: lines.slice(start, lines.length),
       });
     }
 
