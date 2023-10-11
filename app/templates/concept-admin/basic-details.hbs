@@ -15,12 +15,12 @@
           <div class="flex items-center">
             <span class="text-teal-500 font-semibold text-sm">Saving...</span>
           </div>
-        {{else if this.wasSavedRecently}}
+        {{else}}{{#if this.wasSavedRecently}}
             <div class="flex items-center">
               {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
               <span class="text-sm text-teal-500 font-semibold">Saved</span>
             </div>
-          {{/animated-if}}
+          {{/if}}{{/animated-if}}
       </div>
     </div>
 
