@@ -3,6 +3,7 @@ import ConceptModel, { Block } from 'codecrafters-frontend/models/concept';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Error from '@ember/error';
+import Transition from '@ember/routing/transition';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -226,6 +227,15 @@ export default class BlocksPageComponent extends Component<Signature> {
     this.args.concept.errors.remove('blocks');
 
     this.isSaving = false;
+  }
+
+  @action
+  handleRouteWillChange(transition: Transition) {
+    if (this.mutationsArePresent) {
+      if (!window.confirm('You have unsaved changes. Are you sure?')) {
+        transition.abort();
+      }
+    }
   }
 
   @action
