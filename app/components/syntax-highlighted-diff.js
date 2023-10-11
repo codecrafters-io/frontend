@@ -11,6 +11,8 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
+  static LINES_AROUND_CHANGED_CHUNK = 3;
+  static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 10;
 
   constructor() {
     super(...arguments);
@@ -92,7 +94,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   getEndIndex(initialStart, lines) {
     let isTargetInSlice;
     let start = initialStart;
-    let end = Math.min(start + 3, lines.length);
+    let end = Math.min(start + SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK, lines.length);
 
     do {
       isTargetInSlice = false;
@@ -101,7 +103,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
         if (lines[i].type === 'added' || lines[i].type === 'removed') {
           isTargetInSlice = true;
           start = end;
-          end = Math.min(i + 3 + 1, lines.length);
+          end = Math.min(i + SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK + 1, lines.length);
         }
       }
     } while (isTargetInSlice);
@@ -111,7 +113,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   getExpandedChunks(lines) {
     let nextTargetInfo = this.getNextTargetInfo(0, lines);
-    let start = Math.max(nextTargetInfo.index - 3, 0);
+    let start = Math.max(nextTargetInfo.index - SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK, 0);
     let end = this.getEndIndex(Math.min(nextTargetInfo.index + 1, lines.length - 1), lines);
     let expandedChunks = [];
 
@@ -122,7 +124,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
       });
 
       nextTargetInfo = this.getNextTargetInfo(Math.min(end, lines.length), lines);
-      start = Math.max(nextTargetInfo.index - 3, 0);
+      start = Math.max(nextTargetInfo.index - SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK, 0);
       end = this.getEndIndex(Math.min(nextTargetInfo.index + 1, lines.length - 1), lines);
     }
 
@@ -148,21 +150,33 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     let start = 0;
     let end;
 
-    for (const expandedChunk of expandedChunks) {
-      if (expandedChunk.lines[0].number - 1 > start) {
-        end = expandedChunk.lines[0].number - 1;
+    for (let i = 0; i < expandedChunks.length; i++) {
+      if (expandedChunks[i].lines[0].number - 1 > start) {
+        let isChunkBetweenExpandedChunksCollapsed = true;
+
+        if (i - 1 >= 0) {
+          const currentExpandedChunkStart = expandedChunks[i].lines[0].number;
+          const previousExpandedChunkEnd = expandedChunks[i - 1].lines[expandedChunks[i - 1].lines.length - 1].number;
+
+          if (currentExpandedChunkStart - previousExpandedChunkEnd <= SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING + 1) {
+            isChunkBetweenExpandedChunksCollapsed = false;
+          }
+        }
+
+        end = expandedChunks[i].lines[0].number - 1;
+
         chunks.push({
           isAtTopOfFile: start === 0,
           isAtBottomOfFile: false,
-          isCollapsed: true,
+          isCollapsed: isChunkBetweenExpandedChunksCollapsed,
           lines: lines.slice(start, end),
         });
 
-        chunks.push(expandedChunk);
-        start = expandedChunk.lines[expandedChunk.lines.length - 1].number;
+        chunks.push(expandedChunks[i]);
+        start = expandedChunks[i].lines[expandedChunks[i].lines.length - 1].number;
       } else {
-        chunks.push(expandedChunk);
-        start = expandedChunk.lines[expandedChunk.lines.length - 1].number;
+        chunks.push(expandedChunks[i]);
+        start = expandedChunks[i].lines[expandedChunks[i].lines.length - 1].number;
       }
     }
 
