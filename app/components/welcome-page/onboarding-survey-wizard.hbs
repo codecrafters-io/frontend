@@ -1,0 +1,11 @@
+<div class="border p-4 sm:p-8 bg-white max-w-screen-md w-full rounded">
+  {{#if (eq this.currentStep 1)}}
+    <WelcomePage::OnboardingSurveyWizard::Step1 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+  {{else if (eq this.currentStep 2)}}
+    <WelcomePage::OnboardingSurveyWizard::Step2 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+  {{else if (eq this.currentStep 3)}}
+    <WelcomePage::OnboardingSurveyWizard::Step3 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+  {{else if (eq this.currentStep 4)}}
+    <WelcomePage::OnboardingSurveyWizard::Step4 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+  {{/if}}
+</div>
