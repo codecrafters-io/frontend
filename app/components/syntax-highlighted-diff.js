@@ -148,12 +148,12 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     let start = 0;
     let end;
 
-    console.log(expandedChunks);
-
     for (const expandedChunk of expandedChunks) {
       if (expandedChunk.lines[0].number - 1 > start) {
         end = expandedChunk.lines[0].number - 1;
         chunks.push({
+          isAtTopOfFile: start === 0,
+          isAtBottomOfFile: false,
           isCollapsed: true,
           lines: lines.slice(start, end),
         });
@@ -168,6 +168,8 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
     if (start !== lines.length) {
       chunks.push({
+        isAtTopOfFile: false,
+        isAtBottomOfFile: true,
         isCollapsed: true,
         lines: lines.slice(start, lines.length),
       });
