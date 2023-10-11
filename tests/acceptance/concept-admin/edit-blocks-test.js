@@ -146,4 +146,41 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     assert.strictEqual(blocksPage.editableBlocks[0].preview.text, 'block 1');
     assert.strictEqual(blocksPage.editableBlocks[1].preview.text, 'block 2');
   });
+
+  test('can add/edit question blocks', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const concept = this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is a markdown block.`,
+          },
+        },
+      ],
+    });
+
+    this.server.create('concept-question', {
+      concept: concept,
+      slug: 'dummy-question',
+      queryMarkdown: 'What is the answer?',
+      options: [],
+    });
+
+    await blocksPage.visit({ concept_slug: 'dummy' });
+    assert.strictEqual(1, 1);
+
+    await blocksPage.insertBlockMarkers[1].click();
+    await blocksPage.insertBlockMarkers[1].dropdown.clickOnItem('Question Block');
+
+    await blocksPage.editableBlocks[1].click();
+    await blocksPage.editableBlocks[1].conceptQuestionBlockEditor.selectQuestion('dummy-question');
+    await blocksPage.editableBlocks[1].clickOnSaveButton();
+
+    await blocksPage.clickOnPublishChangesButton();
+    assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
+  });
 });

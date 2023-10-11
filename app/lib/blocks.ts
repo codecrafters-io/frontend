@@ -92,6 +92,10 @@ class ConceptQuestionBlock extends Block {
   get conceptQuestionSlug() {
     return this.args.concept_question_slug;
   }
+
+  set conceptQuestionSlug(slug: string) {
+    this.updateArgs('concept_question_slug', slug);
+  }
 }
 
 function IsClickToContinueBlock(block: Block): block is ClickToContinueBlock {

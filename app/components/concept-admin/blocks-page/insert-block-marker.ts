@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { Block } from 'codecrafters-frontend/models/concept';
-import { MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
+import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
 import { action } from '@ember/object';
 
 interface Signature {
@@ -22,12 +22,26 @@ export default class InsertBlockMarkerComponent extends Component<Signature> {
   }
 
   newBlockForType(blockType: Block['type']): Block {
-    return new MarkdownBlock({
-      type: blockType,
-      args: {
-        markdown: 'Hello, world!',
-      },
-    });
+    if (blockType === 'markdown') {
+      return new MarkdownBlock({
+        type: blockType,
+        args: {
+          markdown: 'Hello, world!',
+        },
+      });
+    } else if (blockType === 'click_to_continue') {
+      return new ClickToContinueBlock({
+        type: blockType,
+        args: {},
+      });
+    } else if (blockType === 'concept_question') {
+      return new ConceptQuestionBlock({
+        type: blockType,
+        args: {},
+      });
+    } else {
+      throw new Error(`Unknown block type: ${blockType}`);
+    }
   }
 }
 

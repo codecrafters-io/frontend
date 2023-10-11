@@ -36,6 +36,13 @@
         @description="A button to continue to the next group of blocks."
         {{on "click" (fn this.handleBlockTypeChosen "click_to_continue" dd.actions.close)}}
       />
+
+      <ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem
+        @icon="question-mark-circle"
+        @title="Question Block"
+        @description="A question that needs to be answered to continue."
+        {{on "click" (fn this.handleBlockTypeChosen "concept_question" dd.actions.close)}}
+      />
     </div>
   </dd.Content>
 </BasicDropdown>

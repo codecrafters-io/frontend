@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { Block } from 'codecrafters-frontend/models/concept';
+import ConceptModel, { Block } from 'codecrafters-frontend/models/concept';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
@@ -9,6 +9,7 @@ type Signature = {
 
   Args: {
     conceptBlock: Block;
+    concept: ConceptModel;
     wasAdded: boolean;
     wasChanged: boolean;
     wasDeleted: boolean;
