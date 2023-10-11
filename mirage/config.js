@@ -130,8 +130,11 @@ function routes() {
     return concept;
   });
 
-  this.post('/concept-questions', function (schema) {
+  this.post('/concept-questions', function (schema, request) {
+    const attrs = this.normalizedRequestAttrs();
+
     return schema.conceptQuestions.create({
+      conceptId: attrs.conceptId,
       slug: 'new',
       queryMarkdown: 'New Question?',
       options: [
