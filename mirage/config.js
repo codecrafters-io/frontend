@@ -59,7 +59,47 @@ function routes() {
   this.get('/badges');
 
   this.get('/concepts');
-  this.patch('/concepts/:id');
+
+  this.patch('/concepts/:id', function (schema, request) {
+    const concept = schema.concepts.find(request.params.id);
+    const attrs = this.normalizedRequestAttrs();
+
+    if (typeof attrs.title === 'string' && attrs.title.trim() === '') {
+      return new Response(
+        422,
+        {},
+        {
+          errors: [
+            {
+              status: '422',
+              detail: 'Title cannot be empty',
+              source: { pointer: '/data/attributes/title' },
+            },
+          ],
+        },
+      );
+    }
+
+    if (typeof attrs.slug === 'string' && attrs.slug.trim() === '') {
+      return new Response(
+        422,
+        {},
+        {
+          errors: [
+            {
+              status: '422',
+              detail: 'Slug cannot be empty',
+              source: { pointer: '/data/attributes/slug' },
+            },
+          ],
+        },
+      );
+    }
+
+    concept.update(attrs);
+
+    return concept;
+  });
 
   this.post('/concepts/:id/update-blocks', function (schema, request) {
     const concept = schema.concepts.find(request.params.id);

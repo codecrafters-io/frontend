@@ -4,7 +4,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    type?: 'success' | 'info';
+    type?: 'success' | 'info' | 'error';
   };
 
   Blocks: {
@@ -13,7 +13,31 @@ interface Signature {
 }
 
 export default class AlertComponent extends Component<Signature> {
-  get type(): 'success' | 'info' {
+  get containerColorClasses(): string {
+    return {
+      success: 'bg-green-100 border-green-300',
+      info: 'bg-blue-100 border-blue-300',
+      error: 'bg-red-100 border-red-300',
+    }[this.type];
+  }
+
+  get iconColorClasses(): string {
+    return {
+      success: 'text-green-400',
+      info: 'text-blue-400',
+      error: 'text-red-400',
+    }[this.type];
+  }
+
+  get textColorClasses(): string {
+    return {
+      success: 'text-green-800',
+      info: 'text-blue-900 prose-blue',
+      error: 'text-red-800 prose-red',
+    }[this.type];
+  }
+
+  get type(): 'success' | 'info' | 'error' {
     return this.args.type || 'info';
   }
 }

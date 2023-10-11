@@ -97,6 +97,22 @@ module.exports = {
             b: { color: colors.sky[700] },
           },
         },
+        red: {
+          css: {
+            color: colors.red[700],
+            a: { color: colors.red[700] },
+            strong: { color: colors.red[700] },
+            b: { color: colors.red[700] },
+            ul: {
+              listStyleType: 'disc',
+              li: {
+                '&::marker': {
+                  color: colors.red[300],
+                },
+              },
+            },
+          },
+        },
       },
       keyframes: {
         ['infinite-slide']: {
