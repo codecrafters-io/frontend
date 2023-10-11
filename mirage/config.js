@@ -130,7 +130,7 @@ function routes() {
     return concept;
   });
 
-  this.post('/concept-questions', function (schema, request) {
+  this.post('/concept-questions', function (schema) {
     const attrs = this.normalizedRequestAttrs();
 
     return schema.conceptQuestions.create({
