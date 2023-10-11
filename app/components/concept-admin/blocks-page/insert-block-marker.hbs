@@ -8,10 +8,10 @@
       data-test-insert-block-marker
       ...attributes
     >
-      <div class="absolute h-px w-full bg-gray-100 top-1/2 left-0 right-0">
+      <div class="absolute h-px w-full bg-gray-100 group-hover/insert-block-marker:bg-gray-200 top-1/2 left-0 right-0 transition-colors">
       </div>
       <div class="relative">
-        <div class="text-xs text-gray-400 bg-white px-4">
+        <div class="text-xs text-gray-400 group-hover/insert-block-marker:text-gray-500 bg-white px-4 transition-colors">
           {{#if dd.isOpen}}
             Choose block
           {{else}}

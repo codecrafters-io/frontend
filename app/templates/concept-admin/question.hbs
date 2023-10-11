@@ -11,7 +11,7 @@
             {{@model.question.slug}}
           </div>
         </div>
-        <div class="flex flex-col items-end">
+        <div class="flex flex-col items-end flex-shrink-0">
           <div class="flex items-center justify-end gap-3">
             <TertiaryButton @size="small" {{on "click" this.handleDiscardChangesButtonClick}} @isDisabled={{not this.unsavedChangesArePresent}}>
               Discard Changes
