@@ -3,7 +3,7 @@ import Controller from '@ember/controller';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
@@ -36,11 +36,7 @@ export default class BasicDetailsController extends Controller {
 
   flashSavedMessage = task({ keepLatest: true }, async (): Promise<void> => {
     this.wasSavedRecently = true;
-
-    await new Promise((resolve) => {
-      setTimeout(resolve, 1000);
-    });
-
+    await timeout(1000);
     this.wasSavedRecently = false;
   });
 }
