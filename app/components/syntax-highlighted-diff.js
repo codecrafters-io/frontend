@@ -123,6 +123,9 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     let currentChunkLines = [];
 
     while (nextTargetInfo.isPresent) {
+      // First, check if there are no changes three lines before the next target.
+      // A target is the line with 'added' or 'removed' type.
+      // If there are no changes, then get the collapsed chunk.
       if (nextTargetInfo.index - 3 > start) {
         end = nextTargetInfo.index - 3;
 
@@ -135,11 +138,13 @@ export default class SyntaxHighlightedDiffComponent extends Component {
         start = end;
       }
 
+      // Next, get the expanded chunk.
       if (nextTargetInfo.index - 3 <= start) {
         end = Math.min(nextTargetInfo.index + 3 + 1, lines.length);
         let actualTargetCount = this.getActualTargetCount(start, end, lines);
         let expectedTargetCount = 1;
 
+        // Update the end index while the actual target count is not equal to the expected target count.
         while (actualTargetCount !== expectedTargetCount) {
           expectedTargetCount = actualTargetCount;
           nextTargetInfo = this.getNextTargetInfo(nextTargetInfo.index + 1, lines);
@@ -158,6 +163,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
       nextTargetInfo = this.getNextTargetInfo(start, lines);
     }
 
+    // Lastly, if there are still lines left three lines after the last target, get the collapsed chunk.
     if (start !== lines.length) {
       for (let i = start; i < lines.length; i++) {
         currentChunkLines.push(lines[i]);
