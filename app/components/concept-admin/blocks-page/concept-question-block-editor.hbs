@@ -7,6 +7,7 @@
       questions. Select one to use:
     </div>
 
+    {{! template-lint-disable require-input-label }}
     <select class="p-2 border rounded mb-3 block" {{on "change" this.handleConceptQuestionSlugSelected}}>
       <option disabled selected={{not @model.conceptQuestionSlug}}>Select a question...</option>
 
@@ -16,7 +17,9 @@
     </select>
   {{else}}
     <div class="text-gray-700 mb-4">
-      No questions found. <LinkTo class="underline font-semibold" @route="concept-admin.questions">Create one</LinkTo> to use it here.
+      No questions found.
+      <LinkTo class="underline font-semibold" @route="concept-admin.questions">Create one</LinkTo>
+      to use it here.
     </div>
   {{/if}}
 </div>
