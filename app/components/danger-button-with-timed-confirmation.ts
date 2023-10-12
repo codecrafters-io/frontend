@@ -20,7 +20,7 @@ interface Signature {
 export default class DangerButtonWithTimedConfirmation extends Component<Signature> {
   @tracked isHovered: boolean = false;
   @tracked progressWidth: number = 100;
-  @tracked progressInterval: number = 1;
+  @tracked progressInterval: number | undefined = undefined;
 
   get progressBarWidthStyle() {
     return htmlSafe(`width: ${this.progressWidth}%`);
