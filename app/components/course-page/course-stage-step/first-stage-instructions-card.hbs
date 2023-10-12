@@ -7,7 +7,12 @@
 
       <p>
         <b>Step 1:</b>
-        Uncomment the code.
+        {{#if this.solution.changedFiles.firstObject.filename}}
+          Uncomment the code in
+          <code>{{this.solution.changedFiles.firstObject.filename}}</code>.
+        {{else}}
+          Uncomment the code.
+        {{/if}}
       </p>
     </div>
 
