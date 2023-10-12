@@ -170,7 +170,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^2.1.6",
+    "@stripe/stripe-js": "^2.1.7",
     "@tailwindcss/typography": "^0.5.10",
     "@typeform/embed": "^4.0.0",
     "@vimeo/player": "^2.20.1",
