@@ -1,4 +1,4 @@
-<div class="py-4 overflow-x-scroll" {{did-update this.handleDidUpdateCode @code}} ...attributes>
+<div class="overflow-x-scroll" {{did-update this.handleDidUpdateCode @code}} ...attributes>
   <div class="min-w-fit">
     {{#each this.chunksForRender as |chunk|}}
       <SyntaxHighlightedDiff::ExpandableChunk @chunk={{chunk}} @handleToggleCommentsButtonClick={{this.handleToggleCommentsButtonClick}} />
