@@ -8,7 +8,12 @@ export default create({
   clickOnSyncWithGitHubButton: clickable('[data-test-sync-with-github-button]'),
 
   fileContentsDiff: {
-    expandableChunks: collection('[data-test-expandable-chunk]'),
+    expandableChunks: collection('[data-test-expandable-chunk]', {
+      expandableChunkButton: {
+        scope: '[data-test-expandable-chunk-button]',
+      },
+    }),
+
     scope: '[data-test-file-contents-diff]',
   },
 

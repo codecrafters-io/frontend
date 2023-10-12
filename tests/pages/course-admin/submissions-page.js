@@ -2,7 +2,16 @@ import { collection, create, clickOnText, visitable } from 'ember-cli-page-objec
 
 export default create({
   clickOnLink: clickOnText(),
-  expandableChunks: collection('[data-test-expandable-chunk]', {}),
+
+  diffTab: {
+    expandableChunks: collection('[data-test-expandable-chunk]', {
+      expandableChunkButton: {
+        scope: '[data-test-expandable-chunk-button]',
+      },
+    }),
+
+    scope: '[data-test-diff-tab]',
+  },
 
   timelineContainer: {
     entries: collection('[data-test-timeline-entry]', {}),
