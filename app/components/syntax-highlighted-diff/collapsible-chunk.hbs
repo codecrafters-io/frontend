@@ -1,5 +1,5 @@
 {{#if this.isCollapsed}} 
-  <div class="flex gap-4 items-center bg-gray-100 cursor-pointer" {{on "click" this.handleClick}}>
+  <div class="flex gap-4 items-center bg-gray-100 cursor-pointer" {{on "click" this.handleClick}} data-test-expandable-chunk>
     <span class="flex flex-col px-6 py-2 bg-gray-50">
       {{#if @chunk.isAtTopOfFile}}
         {{svg-jar "chevron-up" class="w-4 h-4"}}
