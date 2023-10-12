@@ -163,6 +163,10 @@ export default class SyntaxHighlightedDiffComponent extends Component {
           }
         }
 
+        if (!this.args.shouldCollapseUnchangedLines) {
+          isChunkBetweenExpandedChunksCollapsed = false;
+        }
+
         end = expandedChunks[i].lines[0].number - 1;
 
         chunks.push({
@@ -184,7 +188,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
       chunks.push({
         isAtTopOfFile: false,
         isAtBottomOfFile: true,
-        isCollapsed: true,
+        isCollapsed: this.args.shouldCollapseUnchangedLines || false,
         lines: lines.slice(start, lines.length),
       });
     }
