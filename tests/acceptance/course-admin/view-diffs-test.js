@@ -50,15 +50,20 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
   end`,
       },
     ]);
-    console.log(submission.changedFiles);
 
     await submissionsPage.visit({ course_slug: 'redis' });
     await submissionsPage.timelineContainer.entries.objectAt(1).click();
     await submissionsPage.clickOnLink('Diff');
 
     assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 2, 'There should be two expandable chunks');
-    assert.ok(submissionsPage.diffTab.expandableChunks.objectAt(0).text.includes('Expand 2 lines'), 'The first chunk should have the correct number of lines');
-    assert.ok(submissionsPage.diffTab.expandableChunks.objectAt(1).text.includes('Expand 2 lines'), 'The second chunk should have the correct number of lines');
+    assert.ok(
+      submissionsPage.diffTab.expandableChunks.objectAt(0).text.includes('Expand 2 lines'),
+      'The first chunk should have the correct number of lines',
+    );
+    assert.ok(
+      submissionsPage.diffTab.expandableChunks.objectAt(1).text.includes('Expand 2 lines'),
+      'The second chunk should have the correct number of lines',
+    );
 
     await submissionsPage.diffTab.expandableChunks.objectAt(0).expandableChunkButton.click();
     assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'The first chunk should have been expanded');
