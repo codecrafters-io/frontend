@@ -19,7 +19,7 @@
         <div class="absolute right-2 -top-2 z-10">
           <SyntaxHighlightedDiff::ToggleCommentsButton
             @commentsAreExpanded={{line.commentsAreExpanded}}
-            {{on "click" (fn this.handleToggleCommentsButtonClick line.number)}}
+            {{on "click" (fn @handleToggleCommentsButtonClick line.number)}}
           />
         </div>
       {{/if}}

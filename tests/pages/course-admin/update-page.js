@@ -1,4 +1,4 @@
-import { attribute, clickable, create, visitable } from 'ember-cli-page-object';
+import { attribute, clickable, collection, create, visitable } from 'ember-cli-page-object';
 
 export default create({
   applyUpdateButton: {
@@ -6,6 +6,7 @@ export default create({
   },
 
   clickOnSyncWithGitHubButton: clickable('[data-test-sync-with-github-button]'),
+  expandableChunks: collection('[data-test-expandable-chunk]'),
 
   fileContentsDiff: {
     scope: '[data-test-file-contents-diff]',
