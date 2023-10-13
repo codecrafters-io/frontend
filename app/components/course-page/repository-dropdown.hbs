@@ -83,6 +83,16 @@
               {{@activeRepository.language.name}}
               {{svg-jar "refresh" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
             </div>
+
+            <div
+              class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
+              role="button"
+              {{on "click" (fn this.handleDeleteRepositoryActionClick dd.actions)}}
+              data-test-dropdown-action
+            >
+              Delete Repository
+              {{svg-jar "trash" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+            </div>
           {{/unless}}
         </div>
         {{#if (gt this.nonActiveRepositories.length 0)}}
@@ -111,6 +121,12 @@
       @repository={{@activeRepository}}
       @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
     />
+  </ModalBackdrop>
+{{/if}}
+
+{{#if this.deleteRepositoryModalIsOpen}}
+  <ModalBackdrop>
+    <CoursePage::DeleteRepositoryModal @repository={{@activeRepository}} @onClose={{fn (mut this.deleteRepositoryModalIsOpen) false}} />
   </ModalBackdrop>
 {{/if}}
 

@@ -11,6 +11,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
   @service router;
   @tracked gitRepositoryURLWasCopiedRecently;
   @tracked configureGithubIntegrationModalIsOpen = false;
+  @tracked deleteRepositoryModalIsOpen = false;
   @tracked progressBannerModalIsOpen = false;
 
   get currentUser() {
@@ -47,6 +48,12 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
       },
       1000,
     );
+  }
+
+  @action
+  async handleDeleteRepositoryActionClick(dropdownActions) {
+    this.deleteRepositoryModalIsOpen = true;
+    dropdownActions.close();
   }
 
   @action

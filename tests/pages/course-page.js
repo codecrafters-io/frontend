@@ -1,4 +1,4 @@
-import { collection, clickable, clickOnText, create, isVisible, text, visitable } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
@@ -76,6 +76,30 @@ export default create({
   },
 
   createRepositoryCard: CreateRepositoryCard,
+
+  deleteRepositoryModal: {
+    get isOpen() {
+      return this.isVisible;
+    },
+
+    deleteRepositoryButton: {
+      hover: triggerable('mouseenter'),
+      leave: triggerable('mouseleave'),
+      press: triggerable('mousedown'),
+
+      progressIndicator: {
+        scope: '[data-test-progress-indicator]',
+      },
+
+      release: triggerable('mouseup'),
+      scope: '[data-test-delete-repository-button]',
+    },
+
+    deleteRepositorySubmissionsCountCopy: text('[data-test-delete-repository-submissions-count-copy]'),
+
+    scope: '[data-test-delete-repository-modal]',
+  },
+
   desktopHeader: DesktopHeader,
 
   earnedBadgeNotice: {

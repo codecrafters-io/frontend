@@ -380,6 +380,8 @@ function routes() {
 
   this.patch('/repositories/:id');
 
+  this.delete('/repositories/:id');
+
   this.post('/site-feedback-submissions');
 
   this.delete('/slack-integrations/:id');

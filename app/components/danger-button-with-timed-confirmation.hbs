@@ -1,0 +1,16 @@
+<DangerButton
+  class="relative"
+  {{on "mouseenter" this.handleMouseEnter}}
+  {{on "mouseleave" this.handleMouseLeave}}
+  {{! template-lint-disable no-pointer-down-event-binding }}
+  {{on "mousedown" this.startProgress}}
+  {{on "mouseup" this.stopProgress}}
+  data-test-delete-repository-button
+  ...attributes
+>
+  {{yield}}
+  {{#if this.isHovered}}
+    <div class="absolute bottom-0 left-0 w-full h-1 bg-red-600" data-test-progress-indicator></div>
+    <div class="absolute bottom-0 left-0 h-1 bg-white" style={{this.progressBarWidthStyle}}></div>
+  {{/if}}
+</DangerButton>
