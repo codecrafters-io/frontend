@@ -51,6 +51,12 @@ export default class CoursePageRepositoryDropdownComponent extends Component {
   }
 
   @action
+  async handleDeleteRepositoryActionClick(dropdownActions) {
+    this.deleteRepositoryModalIsOpen = true;
+    dropdownActions.close();
+  }
+
+  @action
   async handlePublishToGithubButtonClick(dropdownActions) {
     if (this.args.activeRepository.isNew) {
       return;

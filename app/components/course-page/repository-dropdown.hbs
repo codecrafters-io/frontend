@@ -87,7 +87,7 @@
             <div
               class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
               role="button"
-              {{on "click" (fn (mut this.deleteRepositoryModalIsOpen) true)}}
+              {{on "click" (fn this.handleDeleteRepositoryActionClick dd.actions)}}
               data-test-dropdown-action
             >
               Delete Repository
