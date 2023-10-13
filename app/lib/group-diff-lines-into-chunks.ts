@@ -42,7 +42,7 @@ function getExpandedChunks(lines: Array<Line>, linesAroundChangedChunk: number):
   let end;
   const expandedChunks = [];
 
-  if (nextTargetInfo.index) {
+  if (nextTargetInfo.isPresent && nextTargetInfo.index !== null) {
     start = Math.max(nextTargetInfo.index - linesAroundChangedChunk, 0);
     end = getEndIndex(Math.min(nextTargetInfo.index + 1, lines.length - 1), lines, linesAroundChangedChunk);
   }
