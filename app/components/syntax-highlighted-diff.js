@@ -1,9 +1,9 @@
-import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
-import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 import { action } from '@ember/object';
+import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
+import { htmlSafe } from '@ember/template';
+import { tracked } from '@glimmer/tracking';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
@@ -12,7 +12,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
   static LINES_AROUND_CHANGED_CHUNK = 3;
-  static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 10;
+  static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
 
   constructor() {
     super(...arguments);
