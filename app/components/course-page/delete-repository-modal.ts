@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RouterService from '@ember/routing/router-service';
+import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
@@ -14,7 +15,8 @@ interface Signature {
 }
 
 export default class DeleteRepositoryModalComponent extends Component<Signature> {
-  @service declare router: RouterService;
+  @service router!: RouterService;
+  @service store!: Store;
 
   @action
   async deleteRepository() {
@@ -24,6 +26,7 @@ export default class DeleteRepositoryModalComponent extends Component<Signature>
 
     this.router.transitionTo('catalog');
     await this.args.repository.destroyRecord();
+    this.store.unloadRecord(this.args.repository);
   }
 }
 
