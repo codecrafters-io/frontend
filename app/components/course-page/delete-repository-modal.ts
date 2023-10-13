@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
+import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
