@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
+import groupDiffLinesIntoChunks from 'codecrafters-frontend/lib/group-diff-lines-into-chunks';
 import { action } from '@ember/object';
 import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 import { htmlSafe } from '@ember/template';
@@ -36,7 +37,12 @@ export default class SyntaxHighlightedDiffComponent extends Component {
       };
     });
 
-    return this.groupIntoChunks(lines);
+    return groupDiffLinesIntoChunks(
+      lines,
+      SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK,
+      SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING,
+      this.args.shouldCollapseUnchangedLines,
+    );
   }
 
   get codeLinesWithTypes() {
@@ -89,111 +95,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   commentTargetsLine(comment, lineNumber) {
     return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
-  }
-
-  getEndIndex(initialStart, lines) {
-    let isTargetInSlice;
-    let start = initialStart;
-    let end = Math.min(start + SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK, lines.length);
-
-    do {
-      isTargetInSlice = false;
-
-      for (let i = start; i < end; i++) {
-        if (lines[i].type === 'added' || lines[i].type === 'removed') {
-          isTargetInSlice = true;
-          start = end;
-          end = Math.min(i + SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK + 1, lines.length);
-        }
-      }
-    } while (isTargetInSlice);
-
-    return end;
-  }
-
-  getExpandedChunks(lines) {
-    let nextTargetInfo = this.getNextTargetInfo(0, lines);
-    let start = Math.max(nextTargetInfo.index - SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK, 0);
-    let end = this.getEndIndex(Math.min(nextTargetInfo.index + 1, lines.length - 1), lines);
-    let expandedChunks = [];
-
-    while (nextTargetInfo.isPresent) {
-      expandedChunks.push({
-        isCollapsed: false,
-        lines: lines.slice(start, end),
-      });
-
-      nextTargetInfo = this.getNextTargetInfo(Math.min(end, lines.length), lines);
-      start = Math.max(nextTargetInfo.index - SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK, 0);
-      end = this.getEndIndex(Math.min(nextTargetInfo.index + 1, lines.length - 1), lines);
-    }
-
-    return expandedChunks;
-  }
-
-  getNextTargetInfo(start, lines) {
-    let nextTargetInfo = { isPresent: false, index: null };
-
-    for (let i = start; i < lines.length; i++) {
-      if (lines[i].type === 'added' || lines[i].type === 'removed') {
-        nextTargetInfo = { isPresent: true, index: i };
-        break;
-      }
-    }
-
-    return nextTargetInfo;
-  }
-
-  groupIntoChunks(lines) {
-    let chunks = [];
-    let expandedChunks = this.getExpandedChunks(lines);
-    let start = 0;
-    let end;
-
-    for (let i = 0; i < expandedChunks.length; i++) {
-      if (expandedChunks[i].lines[0].number - 1 > start) {
-        let isChunkBetweenExpandedChunksCollapsed = true;
-
-        if (i - 1 >= 0) {
-          const currentExpandedChunkStart = expandedChunks[i].lines[0].number;
-          const previousExpandedChunkEnd = expandedChunks[i - 1].lines[expandedChunks[i - 1].lines.length - 1].number;
-
-          if (currentExpandedChunkStart - previousExpandedChunkEnd <= SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING + 1) {
-            isChunkBetweenExpandedChunksCollapsed = false;
-          }
-        }
-
-        if (!this.args.shouldCollapseUnchangedLines) {
-          isChunkBetweenExpandedChunksCollapsed = false;
-        }
-
-        end = expandedChunks[i].lines[0].number - 1;
-
-        chunks.push({
-          isAtTopOfFile: start === 0,
-          isAtBottomOfFile: false,
-          isCollapsed: isChunkBetweenExpandedChunksCollapsed,
-          lines: lines.slice(start, end),
-        });
-
-        chunks.push(expandedChunks[i]);
-        start = expandedChunks[i].lines[expandedChunks[i].lines.length - 1].number;
-      } else {
-        chunks.push(expandedChunks[i]);
-        start = expandedChunks[i].lines[expandedChunks[i].lines.length - 1].number;
-      }
-    }
-
-    if (start !== lines.length) {
-      chunks.push({
-        isAtTopOfFile: false,
-        isAtBottomOfFile: true,
-        isCollapsed: this.args.shouldCollapseUnchangedLines || false,
-        lines: lines.slice(start, lines.length),
-      });
-    }
-
-    return chunks;
   }
 
   @action
