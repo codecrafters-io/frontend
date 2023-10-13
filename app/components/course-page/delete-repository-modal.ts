@@ -26,7 +26,7 @@ export default class DeleteRepositoryModalComponent extends Component<Signature>
 
     this.router.transitionTo('catalog');
     await this.args.repository.destroyRecord();
-    this.store.unloadRecord(this.args.repository);
+    window.location.reload();
   }
 }
 
