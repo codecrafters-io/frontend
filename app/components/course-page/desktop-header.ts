@@ -4,6 +4,7 @@ import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { inject as service } from '@ember/service';
 import { TemporaryCourseModel } from 'codecrafters-frontend/models/temporary-types';
+import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -61,6 +62,10 @@ export default class DesktopHeaderComponent extends Component<Signature> {
         isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
       },
     ];
+  }
+
+  get currentStepAsCourseStageStep() {
+    return this.args.currentStep as CourseStageStep;
   }
 
   get currentUser() {

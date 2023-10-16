@@ -1,4 +1,5 @@
 import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
+import { ProgressIndicatorWithDot } from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 
 export default class Step {
   declare globalPosition: number; // Set soon after construction
@@ -11,8 +12,7 @@ export default class Step {
   get progressIndicator(): ProgressIndicator | null {
     if (this.status === 'complete') {
       return {
-        dotColor: 'green',
-        dotType: 'static',
+        dotType: 'none',
         text: 'Completed',
       };
     } else if (this.status === 'in_progress') {
@@ -34,6 +34,10 @@ export default class Step {
     } else {
       return null;
     }
+  }
+
+  get progressIndicatorAsProgressIndicatorWithDot(): ProgressIndicatorWithDot {
+    return this.progressIndicator as ProgressIndicatorWithDot;
   }
 
   get routeParams(): { route: string; models: string[] } {

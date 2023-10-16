@@ -18,8 +18,7 @@ export default class BaseStagesCompletedStep extends Step {
 
   get progressIndicator(): ProgressIndicator {
     return {
-      dotColor: 'green',
-      dotType: 'static',
+      dotType: 'none',
       text: 'Congratulations!',
     };
   }
