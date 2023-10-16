@@ -110,26 +110,29 @@ function groupDiffLinesIntoChunks(
       end = (expandedChunks?.[i]?.lines?.[0]?.number as number) - 1;
 
       chunks.push({
-        isAtTopOfFile: start === 0,
-        isAtBottomOfFile: false,
+        isCollapsedAtTop: start === 0,
+        isCollapsedAtBottom: false,
         isCollapsed: isChunkBetweenExpandedChunksCollapsed,
+        isFirst: start === 0,
         lines: lines.slice(start, end),
       });
 
       chunks.push(expandedChunks[i]);
       start = expandedChunks?.[i]?.lines?.[(expandedChunks?.[i]?.lines?.length as number) - 1]?.number as number;
     } else {
-      chunks.push(expandedChunks[i]);
+      chunks.push({ ...expandedChunks[i], isFirst: start === 0, isLast: start + 1 === lines.length });
       start = expandedChunks?.[i]?.lines?.[(expandedChunks?.[i]?.lines?.length as number) - 1]?.number as number;
     }
   }
 
   if (start !== lines.length) {
     chunks.push({
-      isAtTopOfFile: false,
-      isAtBottomOfFile: true,
+      isCollapsedAtTop: false,
+      isCollapsedAtBottom: true,
       isCollapsed: shouldCollapseUnchangedLines || false,
+      isLast: true,
       lines: lines.slice(start, lines.length),
+      number: chunks.length + 1,
     });
   }
 
