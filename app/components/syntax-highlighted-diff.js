@@ -26,6 +26,8 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
     const lines = zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
       return {
+        isFirst: index === 0,
+        isLast: index === this.codeLinesWithTypes.length - 1,
         isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
         isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
         html: htmlSafe(`${node.outerHTML}`),
