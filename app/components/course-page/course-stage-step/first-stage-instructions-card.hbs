@@ -7,9 +7,9 @@
 
       <p>
         <b>Step 1:</b>
-        {{#if this.solution.changedFiles.firstObject.filename}}
+        {{#if (get this.solution.changedFiles "0.filename")}}
           Uncomment the code in
-          <code>{{this.solution.changedFiles.firstObject.filename}}</code>.
+          <code>{{get this.solution.changedFiles "0.filename"}}</code>.
         {{else}}
           Uncomment the code.
         {{/if}}
