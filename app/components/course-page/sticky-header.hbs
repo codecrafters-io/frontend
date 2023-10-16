@@ -1,0 +1,20 @@
+<div class="sticky top-0 px-3 md:px-6 py-3 lg:px-10 bg-gray-50 border-b" data-test-sticky-header ...attributes>
+  <div class="flex flex-col items-start">
+    <div class="flex items-center flex-wrap gap-x-3">
+      <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
+        {{#if (eq @currentStep.type "CourseStageStep")}}
+          {{! @glint-expect-error not typesafe }}
+          <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
+        {{else}}
+          <span class="font-bold text-gray-700">{{@currentStep.title}}</span>
+        {{/if}}
+      </div>
+
+      <div class="flex items-center md:h-[2rem] h-[1.75rem] flex-shrink-0">
+        <CoursePage::StepStatusPill @step={{@currentStep}} />
+      </div>
+    </div>
+
+    <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+  </div>
+</div>
