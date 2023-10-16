@@ -113,14 +113,13 @@ function groupDiffLinesIntoChunks(
         isCollapsedAtTop: start === 0,
         isCollapsedAtBottom: false,
         isCollapsed: isChunkBetweenExpandedChunksCollapsed,
-        isFirst: start === 0,
         lines: lines.slice(start, end),
       });
 
       chunks.push(expandedChunks[i]);
       start = expandedChunks?.[i]?.lines?.[(expandedChunks?.[i]?.lines?.length as number) - 1]?.number as number;
     } else {
-      chunks.push({ ...expandedChunks[i], isFirst: start === 0, isLast: start + 1 === lines.length });
+      chunks.push(expandedChunks[i]);
       start = expandedChunks?.[i]?.lines?.[(expandedChunks?.[i]?.lines?.length as number) - 1]?.number as number;
     }
   }
