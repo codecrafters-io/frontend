@@ -1,18 +1,20 @@
 {{! @glint-nocheck: not typesafe yet }}
-{{#if @submission.hasChangedFiles}}
-  {{#each @submission.changedFiles key="filename" as |changedFile index|}}
-    <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300" ...attributes>
-      <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
-        <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
-      </div>
+<div ...attributes>
+  {{#if @submission.hasChangedFiles}}
+    {{#each @submission.changedFiles key="filename" as |changedFile index|}}
+      <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
+        <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
+          <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+        </div>
 
-      <div class="text-sm">
-        <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@submission.repository.language.slug}} @shouldCollapseUnchangedLines={{true}} />
+        <div class="text-sm">
+          <SyntaxHighlightedDiff @code={{changedFile.diff}} @language={{@submission.repository.language.slug}} @shouldCollapseUnchangedLines={{true}} />
+        </div>
       </div>
+    {{/each}}
+  {{else}}
+    <div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded mb-4">
+      This submission doesn't have any changed files.
     </div>
-  {{/each}}
-{{else}}
-  <div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded mb-4">
-    This submission doesn't have any changed files.
-  </div>
-{{/if}}
+  {{/if}}
+</div>
