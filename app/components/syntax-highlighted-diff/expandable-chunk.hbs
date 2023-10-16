@@ -1,4 +1,4 @@
-{{#if (and this.currentUser.isStaff this.isCollapsed)}}
+{{#if (and (current-user-is-staff) this.isCollapsed)}}
   <div
     class="flex gap-4 group items-center bg-sky-100 hover:bg-sky-200 text-slate-600 h-7"
     role="button"

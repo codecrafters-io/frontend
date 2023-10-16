@@ -129,7 +129,6 @@ function groupDiffLinesIntoChunks(
       isCollapsedAtTop: false,
       isCollapsedAtBottom: true,
       isCollapsed: shouldCollapseUnchangedLines || false,
-      isLast: true,
       lines: lines.slice(start, lines.length),
       number: chunks.length + 1,
     });
