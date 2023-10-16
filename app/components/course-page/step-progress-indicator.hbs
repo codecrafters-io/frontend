@@ -5,11 +5,9 @@
         <div></div>
       {{else}}
         {{#if (eq @step.progressIndicator.dotType "blinking")}}
-          {{! @glint-expect-error: not typesafe yet }}
-          <BlinkingDot @class="mr-2" @color={{@step.progressIndicator.dotColor}} />
+          <BlinkingDot class="mr-2" @color={{@step.progressIndicatorAsProgressIndicatorWithDot.dotColor}} />
         {{else}}
-          {{! @glint-expect-error: not typesafe yet }}
-          <StaticDot @class="mr-2" @color={{@step.progressIndicator.dotColor}} />
+          <StaticDot class="mr-2" @color={{@step.progressIndicatorAsProgressIndicatorWithDot.dotColor}} />
         {{/if}}
       {{/if}}
     </AnimatedContainer>
