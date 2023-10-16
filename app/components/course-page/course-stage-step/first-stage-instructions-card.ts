@@ -31,6 +31,10 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
+  get filename() {
+    return this.solution?.changedFiles[0]?.filename;
+  }
+
   get solution() {
     return this.args.repository.course.firstStage.solutions.find((solution) => solution.language === this.args.repository.language);
   }
