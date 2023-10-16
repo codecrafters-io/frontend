@@ -2,7 +2,11 @@
   {{#if @step.progressIndicator}}
     <AnimatedContainer>
       {{#if (eq @step.progressIndicator.dotType "none")}}
-        <div></div>
+        {{#if (eq @step.status "complete")}}
+          {{svg-jar "check-circle" class="mr-1 h-6 w-6 text-teal-500"}}
+        {{else}}
+          <div></div>
+        {{/if}}
       {{else}}
         {{#if (eq @step.progressIndicator.dotType "blinking")}}
           <BlinkingDot class="mr-2" @color={{@step.progressIndicatorAsProgressIndicatorWithDot.dotColor}} />

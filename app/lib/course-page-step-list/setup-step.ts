@@ -13,8 +13,7 @@ export default class SetupStep extends Step {
   get progressIndicator(): ProgressIndicator | null {
     if (this.status === 'complete') {
       return {
-        dotColor: 'green',
-        dotType: 'static',
+        dotType: 'none',
         text: 'Git push received.',
       };
     } else if (this.status === 'in_progress') {

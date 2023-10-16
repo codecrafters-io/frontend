@@ -12,8 +12,7 @@ export default class Step {
   get progressIndicator(): ProgressIndicator | null {
     if (this.status === 'complete') {
       return {
-        dotColor: 'green',
-        dotType: 'static',
+        dotType: 'none',
         text: 'Completed',
       };
     } else if (this.status === 'in_progress') {
