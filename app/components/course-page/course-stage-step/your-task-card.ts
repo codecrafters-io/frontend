@@ -36,7 +36,7 @@ export default class YourTaskCardComponent extends Component<Signature> {
   }
 
   get instructionsHTML() {
-    return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.instructionsMarkdown);
+    return new showdown.Converter({ openLinksInNewWindow: true, tables: true }).makeHtml(this.instructionsMarkdown);
   }
 
   get instructionsMarkdown() {

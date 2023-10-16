@@ -29,7 +29,7 @@ export default class CommentFormComponent extends Component {
 
   get bodyHTML() {
     return htmlSafe(
-      new showdown.Converter({ simplifiedAutoLink: true, openLinksInNewWindow: true, strikethrough: true }).makeHtml(
+      new showdown.Converter({ simplifiedAutoLink: true, openLinksInNewWindow: true, strikethrough: true, tables: true }).makeHtml(
         this.comment.bodyMarkdown || 'Nothing to preview',
       ),
     );
