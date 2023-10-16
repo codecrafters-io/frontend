@@ -67,7 +67,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
       'The second chunk should have the correct number of lines',
     );
 
-    await submissionsPage.diffTab.expandableChunks.objectAt(0).expandableChunkButton.click();
+    await submissionsPage.diffTab.expandableChunks.objectAt(0).click();
     assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'The first chunk should have been expanded');
   });
 
@@ -119,7 +119,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     await submissionsPage.clickOnLink('Diff');
 
     assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 2, 'There should be two expandable chunks');
-    await submissionsPage.diffTab.expandableChunks.objectAt(0).expandableChunkButton.click();
+    await submissionsPage.diffTab.expandableChunks.objectAt(0).click();
     assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'The first chunk should have been expanded');
   });
 
@@ -226,6 +226,6 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     await submissionsPage.timelineContainer.entries.objectAt(1).click();
     await submissionsPage.clickOnLink('Diff');
 
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'There should be no expandable chunk');
+    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'There should be one expandable chunk');
   });
 });

@@ -4,11 +4,7 @@ export default create({
   clickOnLink: clickOnText(),
 
   diffTab: {
-    expandableChunks: collection('[data-test-expandable-chunk]', {
-      expandableChunkButton: {
-        scope: '[data-test-expandable-chunk-button]',
-      },
-    }),
+    expandableChunks: collection('[data-test-expandable-chunk]'),
 
     scope: '[data-test-diff-tab]',
   },
