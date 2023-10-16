@@ -19,7 +19,11 @@
   </div>
 {{else}}
   {{#each @chunk.lines key="number" as |line|}}
-    <div class="relative min-w-fit {{if (and @chunk.isFirst (not this.isCollapsed)) 'pt-4' ''}} {{if (and @chunk.isLast (not this.isCollapsed)) 'pb-4' ''}}">
+    <div
+      class="relative min-w-fit
+        {{if (and @chunk.isFirst (not this.isCollapsed)) 'pt-4' ''}}
+        {{if (and @chunk.isLast (not this.isCollapsed)) 'pb-4' ''}}"
+    >
       {{#if line.hasComments}}
         <div class="absolute right-2 -top-2 z-10">
           <SyntaxHighlightedDiff::ToggleCommentsButton
