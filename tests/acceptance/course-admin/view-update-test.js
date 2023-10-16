@@ -75,10 +75,10 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     await updatesPage.visit({ course_slug: 'redis' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
-    update.update('definitionFileContentsDiff', 'updated diff');
+    update.update('definitionFileContentsDiff', '+ updated diff');
 
     await updatePage.clickOnSyncWithGitHubButton();
-    assert.ok(updatePage.fileContentsDiff.text.includes('updated diff'), 'diff should be updated after syncing with github');
+    assert.ok(updatePage.fileContentsDiff.text.includes('+ updated diff'), 'diff should be updated after syncing with github');
   });
 
   test('it should properly be properly rendered as an html', async function (assert) {
