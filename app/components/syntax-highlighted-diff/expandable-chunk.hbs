@@ -1,8 +1,8 @@
 {{#if (and (current-user-is-staff) this.isCollapsed)}}
   <div
-    class="flex group items-center bg-sky-50 hover:bg-sky-100 text-sky-700 hover:text-sky-800 h-7 px-3 border-sky-100
-      {{if (not @chunk.isCollapsedAtTop) 'border-t' ''}}
-      {{if (not @chunk.isCollapsedAtBottom) 'border-b' ''}}"
+    class="flex group items-center bg-sky-50 hover:bg-sky-100 text-sky-700 hover:text-sky-800 h-7 px-3 border-sky-100 my-1
+      {{if @chunk.isCollapsedAtTop 'mt-0' 'border-t'}}
+      {{if @chunk.isCollapsedAtBottom 'mb-0' 'border-b'}}"
     role="button"
     {{on "click" this.handleClick}}
     data-test-expandable-chunk
