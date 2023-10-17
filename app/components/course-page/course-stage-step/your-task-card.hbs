@@ -1,8 +1,12 @@
 <CoursePage::InstructionsCard data-test-your-task-card ...attributes>
   <:content>
-    <div class="flex items-center gap-x-3 w-full border-b pb-2 mb-5">
-      <h2 class="font-semibold text-lg text-gray-700">Your Task</h2>
-      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+    <div class="flex items-center justify-between border-b pb-2 mb-5 w-full">
+      <div class="flex items-center gap-x-3">
+        <h2 class="font-semibold text-lg text-gray-700">Your Task</h2>
+        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+      </div>
+
+      <CourseStageDifficultyLabel @stage={{@courseStage}} />
     </div>
 
     <div
