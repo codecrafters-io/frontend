@@ -1,10 +1,10 @@
-interface ProgressIndicatorWithoutDot {
+export interface ProgressIndicatorWithoutDot {
   dotType: 'none';
   text: string;
 }
 
-interface ProgressIndicatorWithDot {
-  dotColor?: 'green' | 'yellow' | 'gray' | 'red';
+export interface ProgressIndicatorWithDot {
+  dotColor: 'green' | 'yellow' | 'gray' | 'red';
   dotType: 'static' | 'blinking';
   text: string;
 }

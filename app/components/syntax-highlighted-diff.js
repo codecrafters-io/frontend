@@ -1,9 +1,10 @@
-import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
-import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
+import groupDiffLinesIntoChunks from 'codecrafters-frontend/lib/group-diff-lines-into-chunks';
 import { action } from '@ember/object';
+import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
+import { htmlSafe } from '@ember/template';
+import { tracked } from '@glimmer/tracking';
 
 export default class SyntaxHighlightedDiffComponent extends Component {
   @tracked asyncHighlightedHTML;
@@ -11,11 +12,39 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
+  static LINES_AROUND_CHANGED_CHUNK = 3;
+  static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
 
   constructor() {
     super(...arguments);
 
     this.highlightCode();
+  }
+
+  get chunksForRender() {
+    const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
+
+    const lines = zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
+      return {
+        isFirstLineOfFile: index === 0,
+        isLastLineOfFile: index === this.codeLinesWithTypes.length - 1,
+        isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
+        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
+        html: htmlSafe(`${node.outerHTML}`),
+        type: lineType,
+        number: index + 1,
+        comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
+        hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
+        commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
+      };
+    });
+
+    return groupDiffLinesIntoChunks(
+      lines,
+      SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK,
+      SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING,
+      this.args.shouldCollapseUnchangedLines,
+    );
   }
 
   get codeLinesWithTypes() {
@@ -50,23 +79,6 @@ export default class SyntaxHighlightedDiffComponent extends Component {
 
   get highlightedHtml() {
     return this.asyncHighlightedHTML || this.temporaryHTML;
-  }
-
-  get linesForRender() {
-    const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
-
-    return zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
-      return {
-        isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
-        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
-        html: htmlSafe(`${node.outerHTML}`),
-        type: lineType,
-        number: index + 1,
-        comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
-        hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
-        commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
-      };
-    });
   }
 
   get temporaryHTML() {

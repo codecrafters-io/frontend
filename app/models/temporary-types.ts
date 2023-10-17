@@ -34,6 +34,7 @@ export class TemporaryCourseModel {
   declare primaryExtensionSlug: string | null;
   declare secondaryExtensionSlugs: string[];
   declare stages: TemporaryCourseStageModel[];
+  declare baseStages: TemporaryCourseStageModel[];
 }
 
 export class TemporaryCourseStageModel {

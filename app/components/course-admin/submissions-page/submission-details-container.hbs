@@ -6,7 +6,7 @@
     <div class="border-b pb-4 mb-4"></div>
     <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
       {{#if (eq activeTabSlug "diff")}}
-        <CourseAdmin::SubmissionsPage::SubmissionDetails::DiffContainer @submission={{@submission}} />
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::DiffContainer @submission={{@submission}} data-test-diff-tab />
       {{else if (eq activeTabSlug "logs")}}
         <SubmissionLogsPreview @submission={{@submission}} />
       {{else if (eq activeTabSlug "community_solution")}}

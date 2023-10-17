@@ -11,18 +11,14 @@
       {{#if (and (eq @currentStep.type "CourseStageStep"))}}
         <div class="flex items-center">
           <div class="inline-flex items-center text-xs font-semibold text-gray-500">
-            {{! @glint-expect-error not typesafe }}
-            {{#if @currentStep.courseStage.primaryExtension}}
-              {{! @glint-expect-error not typesafe }}
-              {{@currentStep.courseStage.primaryExtension.name}}
+            {{#if this.currentStepAsCourseStageStep.courseStage.primaryExtension}}
+              {{this.currentStepAsCourseStageStep.courseStage.primaryExtension.name}}
               <span class="text-gray-300 px-2 inline-flex">&gt;</span>
               Stage
-              {{! @glint-expect-error not typesafe }}
-              {{@currentStep.courseStage.positionWithinExtension}}/{{@currentStep.courseStage.primaryExtension.stages.length}}
+              {{this.currentStepAsCourseStageStep.courseStage.positionWithinExtension}}/{{this.currentStepAsCourseStageStep.courseStage.primaryExtension.stages.length}}
             {{else}}
               Stage
-              {{! @glint-expect-error not typesafe }}
-              {{@currentStep.courseStage.positionWithinCourse}}/{{@currentStep.courseStage.course.baseStages.length}}
+              {{this.currentStepAsCourseStageStep.courseStage.positionWithinCourse}}/{{this.currentStepAsCourseStageStep.courseStage.course.baseStages.length}}
             {{/if}}
           </div>
 
@@ -32,7 +28,6 @@
           {{/if}}
         </div>
       {{/if}}
-
     </div>
 
     <div class="flex items-center gap-x-3">

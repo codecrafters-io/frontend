@@ -64,8 +64,7 @@ export default class CourseStageStep extends Step {
       };
     } else if (this.status === 'complete') {
       return {
-        dotColor: 'green',
-        dotType: 'static',
+        dotType: 'none',
         text: this.stageCompletedMessage,
       };
     } else if (this.status === 'in_progress') {
