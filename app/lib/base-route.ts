@@ -37,7 +37,7 @@ export default class BaseRoute extends Route {
     }
 
     // TODO: Handle case where `isAuthenticated` isn't present yet
-    if (!this.fastboot.isFastBoot && window.origin.includes('codecrafters.io')) {
+    if (!this.fastboot.isFastBoot) {
       // @ts-ignore
       if (window.posthog && this.authenticator.currentUserId) {
         // @ts-ignore
