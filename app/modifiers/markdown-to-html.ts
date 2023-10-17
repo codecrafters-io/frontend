@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/template';
 
 type Signature = {
   Args: {
-    Positional: [markdown: string];
+    Positional: [markdown?: string];
   };
 };
 
@@ -19,7 +19,11 @@ export default class MarkdownToHtmlModifier extends Modifier<Signature> {
     }).makeHtml(markdown);
   }
 
-  modify(element: HTMLElement, positional: [markdown: string]) {
+  modify(element: HTMLElement, positional: [markdown?: string]) {
+    if (!positional[0]) {
+      return;
+    }
+
     const htmlContent = this.convertMarkdownToHtml(positional[0]);
     element.innerHTML = htmlSafe(htmlContent).toString();
   }
