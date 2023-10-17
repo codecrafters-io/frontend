@@ -57,3 +57,9 @@ export default class CourseStageDifficultyLabel extends Component<Signature> {
     return `We'd expect a proficient developer to take ${expectedTime} to complete this stage.`;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    CourseStageDifficultyLabel: typeof CourseStageDifficultyLabel;
+  }
+}
