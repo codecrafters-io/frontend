@@ -1,21 +1,22 @@
 {{#if (and (current-user-is-staff) this.isCollapsed)}}
   <div
-    class="flex gap-4 group items-center bg-sky-100 hover:bg-sky-200 text-slate-600 h-7"
+    class="flex group items-center bg-sky-50 hover:bg-sky-100 text-sky-700 hover:text-sky-800 h-7 px-3 border-sky-100 my-1
+      {{if @chunk.isCollapsedAtTop 'mt-0' 'border-t'}}
+      {{if @chunk.isCollapsedAtBottom 'mb-0' 'border-b'}}"
     role="button"
     {{on "click" this.handleClick}}
     data-test-expandable-chunk
   >
-    <span class="flex flex-col justify-center px-6 py-1 bg-sky-200 group-hover:bg-sky-300 h-full">
+    <span class="flex flex-col justify-center h-full pr-2">
       {{#if @chunk.isCollapsedAtTop}}
-        {{svg-jar "arrow-up" class="w-3 h-3"}}
+        {{svg-jar "upload" class="w-3 h-3"}}
       {{else if @chunk.isCollapsedAtBottom}}
-        {{svg-jar "arrow-down" class="w-3 h-3"}}
+        {{svg-jar "download" class="w-3 h-3"}}
       {{else}}
-        {{svg-jar "arrow-up" class="w-3 h-3"}}
-        {{svg-jar "arrow-down" class="w-3 h-3"}}
+        {{svg-jar "selector" class="w-3 h-3"}}
       {{/if}}
     </span>
-    <span>Expand {{@chunk.lines.length}} lines</span>
+    <span class="text-xs">Expand {{@chunk.lines.length}} lines</span>
   </div>
 {{else}}
   {{#each @chunk.lines key="number" as |line|}}
