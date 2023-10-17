@@ -51,7 +51,7 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
     this.progressInterval = setInterval(() => {
       if (this.progressWidth < 100) {
         this.progressWidth += 1;
-      } else if (this.progressWidth === 0) {
+      } else if (this.progressWidth === 100) {
         clearInterval(this.progressInterval);
 
         this.args.onConfirm();
