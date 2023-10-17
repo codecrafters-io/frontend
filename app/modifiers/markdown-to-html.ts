@@ -24,3 +24,9 @@ export default class MarkdownToHtmlModifier extends Modifier<Signature> {
     element.innerHTML = htmlSafe(htmlContent).toString();
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'markdown-to-html': typeof MarkdownToHtmlModifier;
+  }
+}
