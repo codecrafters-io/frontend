@@ -19,7 +19,7 @@ interface Signature {
 
 export default class DangerButtonWithTimedConfirmation extends Component<Signature> {
   @tracked isHovered: boolean = false;
-  @tracked progressWidth: number = 100;
+  @tracked progressWidth: number = 0;
   @tracked progressInterval: number | undefined = undefined;
 
   get progressBarWidthStyle() {
@@ -46,11 +46,11 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
   startProgress() {
     let intervalDelay;
     config.environment === 'test' ? (intervalDelay = 5) : (intervalDelay = 50);
-    this.progressWidth = 100;
+    this.progressWidth = 0;
 
     this.progressInterval = setInterval(() => {
-      if (this.progressWidth > 0) {
-        this.progressWidth -= 1;
+      if (this.progressWidth < 100) {
+        this.progressWidth += 1;
       } else if (this.progressWidth === 0) {
         clearInterval(this.progressInterval);
 
@@ -63,7 +63,7 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
 
   @action
   stopProgress() {
-    this.progressWidth = 100;
+    this.progressWidth = 0;
     clearInterval(this.progressInterval);
   }
 }
