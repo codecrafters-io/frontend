@@ -10,7 +10,13 @@ type Signature = {
 
 export default class MarkdownToHtmlModifier extends Modifier<Signature> {
   convertMarkdownToHtml(markdown: string): string {
-    return new showdown.Converter({}).makeHtml(markdown);
+    return new showdown.Converter({
+      simplifiedAutoLink: true,
+      openLinksInNewWindow: true,
+      strikethrough: true,
+      tables: true,
+      disableForced4SpacesIndentedSublists: true,
+    }).makeHtml(markdown);
   }
 
   modify(element: HTMLElement, positional: [markdown: string]) {
