@@ -20,8 +20,7 @@
   </div>
 
   <div>
-    <div class="leading-relaxed prose mb-4 mr-8">
-      {{this.marketingHTML}}
+    <div class="leading-relaxed prose mb-4 mr-8" {{markdown-to-html @stage.marketingMarkdown}}>
     </div>
 
     {{#if @stage.primaryExtension}}

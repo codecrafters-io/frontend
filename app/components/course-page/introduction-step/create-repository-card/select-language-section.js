@@ -1,10 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
-import showdown from 'showdown';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
 export default class SelectLanguageSectionComponent extends Component {
@@ -15,10 +13,6 @@ export default class SelectLanguageSectionComponent extends Component {
 
   get availableLanguages() {
     return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).mapBy('language');
-  }
-
-  get courseDescriptionHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.args.repository.course.descriptionMarkdown));
   }
 
   get orderedLanguageConfigurations() {

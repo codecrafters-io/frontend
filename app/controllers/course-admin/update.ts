@@ -1,9 +1,7 @@
 import Controller from '@ember/controller';
 import CourseDefinitionUpdateModel from 'codecrafters-frontend/models/course-definition-update';
-import showdown from 'showdown';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
@@ -20,14 +18,6 @@ export default class CourseAdminUpdateController extends Controller {
 
   @tracked isApplyingUpdate = false;
   @tracked isSyncingWithGitHub = false;
-
-  get descriptionHTML() {
-    if (this.model.update.description) {
-      return htmlSafe(new showdown.Converter().makeHtml(this.model.update.description));
-    } else {
-      return null;
-    }
-  }
 
   get viewDiffLink() {
     if (!this.model.update.oldCommitSha) {

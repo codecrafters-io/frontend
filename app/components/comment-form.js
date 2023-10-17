@@ -1,7 +1,5 @@
 import Component from '@glimmer/component';
 import Prism from 'prismjs';
-import showdown from 'showdown';
-import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
@@ -27,12 +25,8 @@ export default class CommentFormComponent extends Component {
     }
   }
 
-  get bodyHTML() {
-    return htmlSafe(
-      new showdown.Converter({ simplifiedAutoLink: true, openLinksInNewWindow: true, strikethrough: true, tables: true }).makeHtml(
-        this.comment.bodyMarkdown || 'Nothing to preview',
-      ),
-    );
+  get commentMarkdown() {
+    return this.comment.bodyMarkdown || 'Nothing to preview';
   }
 
   get currentUser() {

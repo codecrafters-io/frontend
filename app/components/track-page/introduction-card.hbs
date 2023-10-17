@@ -4,8 +4,7 @@
   @number={{@number}}
   @isComplete={{@isComplete}}
 >
-  <div class="leading-6 prose">
-    {{this.introductionHtml}}
+  <div class="leading-6 prose" {{markdown-to-html @language.trackIntroductionMarkdown}}>
   </div>
 
   <div class="mt-6">

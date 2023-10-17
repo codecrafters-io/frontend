@@ -70,9 +70,9 @@
       <div
         class="leading-relaxed prose-sm prose max-w-none break-words has-prism-highlighting"
         {{did-insert this.handleDidInsertBodyHTML}}
+        {{markdown-to-html @comment.bodyMarkdown}}
         data-test-comment-body
       >
-        {{this.bodyHTML}}
       </div>
 
       <div class="mt-2 flex items-center">
