@@ -1,4 +1,4 @@
-{{#if (and (current-user-is-staff) this.isCollapsed)}}
+{{#if this.isCollapsed}}
   <div
     class="flex group items-center bg-sky-50 hover:bg-sky-100 text-sky-700 hover:text-sky-800 h-7 px-3 border-sky-100 my-1
       {{if @chunk.isCollapsedAtTop 'mt-0' 'border-t'}}
