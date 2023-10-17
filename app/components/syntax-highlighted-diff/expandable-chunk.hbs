@@ -1,6 +1,6 @@
 {{#if (and (current-user-is-staff) this.isCollapsed)}}
   <div
-    class="flex group items-center bg-sky-50 hover:bg-sky-100 text-sky-600 h-7 px-3 border-sky-100
+    class="flex group items-center bg-sky-50 hover:bg-sky-100 text-sky-700 hover:text-sky-800 h-7 px-3 border-sky-100
       {{if (not @chunk.isCollapsedAtTop) 'border-t' ''}}
       {{if (not @chunk.isCollapsedAtBottom) 'border-b' ''}}"
     role="button"
@@ -9,12 +9,11 @@
   >
     <span class="flex flex-col justify-center h-full pr-2">
       {{#if @chunk.isCollapsedAtTop}}
-        {{svg-jar "arrow-up" class="w-3 h-3"}}
+        {{svg-jar "upload" class="w-3 h-3"}}
       {{else if @chunk.isCollapsedAtBottom}}
-        {{svg-jar "arrow-down" class="w-3 h-3"}}
+        {{svg-jar "download" class="w-3 h-3"}}
       {{else}}
-        {{svg-jar "arrow-up" class="w-3 h-3"}}
-        {{svg-jar "arrow-down" class="w-3 h-3"}}
+        {{svg-jar "selector" class="w-3 h-3"}}
       {{/if}}
     </span>
     <span class="text-xs">Expand {{@chunk.lines.length}} lines</span>
