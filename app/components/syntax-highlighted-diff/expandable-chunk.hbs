@@ -22,8 +22,8 @@
   {{#each @chunk.lines key="number" as |line|}}
     <div
       class="relative min-w-fit
-        {{if (and (not this.isCollapsed) line.isFirstLineOfFile) 'pt-4' ''}}
-        {{if (and (not this.isCollapsed) line.isLastLineOfFile) 'pb-4' ''}}"
+        {{if (and (not this.isCollapsed) line.isFirstLineOfFile) 'mt-4' ''}}
+        {{if (and (not this.isCollapsed) line.isLastLineOfFile) 'mb-4' ''}}"
     >
       {{#if line.hasComments}}
         <div class="absolute right-2 -top-2 z-10">
