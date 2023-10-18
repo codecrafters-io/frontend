@@ -6,6 +6,7 @@ import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discoun
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { SafeString } from '@ember/template/-private/handlebars';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -24,7 +25,7 @@ export default class UpgradePromptComponent extends Component<Signature> {
     return ['No limits on content', 'Priority support', 'Priority Builds', 'Community features'];
   }
 
-  get secondaryCopy(): string {
+  get secondaryCopy(): SafeString {
     if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
       return this.convertToHTML(
         `Plans start at ~~$30/mo~~ $15/mo (discounted price for ${
@@ -50,10 +51,10 @@ export default class UpgradePromptComponent extends Component<Signature> {
     }
   }
 
-  convertToHTML(markdown: string): string {
+  convertToHTML(markdown: string): SafeString {
     const markdownToHtml = new MarkdownToHtml();
 
-    return markdownToHtml.compute([markdown]) as string;
+    return markdownToHtml.compute([markdown]) as SafeString;
   }
 
   @action
