@@ -1,14 +1,25 @@
-import Modifier from 'ember-modifier';
+import Helper from '@ember/component/helper';
 import showdown from 'showdown';
 import { htmlSafe } from '@ember/template';
 
-type Signature = {
+export interface Signature {
   Args: {
-    Positional: [markdown?: string];
+    Positional: Array<string>;
   };
-};
+  Return: string | undefined;
+}
 
-export default class MarkdownToHtmlModifier extends Modifier<Signature> {
+export default class MarkdownToHtml extends Helper<Signature> {
+  public compute(positional: Array<string>): string | undefined {
+    if (!positional[0]) {
+      return;
+    }
+
+    const htmlContent = this.convertMarkdownToHtml(positional[0]);
+
+    return htmlSafe(htmlContent).toString();
+  }
+
   convertMarkdownToHtml(markdown: string): string {
     return new showdown.Converter({
       simplifiedAutoLink: true,
@@ -18,19 +29,10 @@ export default class MarkdownToHtmlModifier extends Modifier<Signature> {
       disableForced4SpacesIndentedSublists: true,
     }).makeHtml(markdown);
   }
-
-  modify(element: HTMLElement, positional: [markdown?: string]) {
-    if (!positional[0]) {
-      return;
-    }
-
-    const htmlContent = this.convertMarkdownToHtml(positional[0]);
-    element.innerHTML = htmlSafe(htmlContent).toString();
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'markdown-to-html': typeof MarkdownToHtmlModifier;
+    'markdown-to-html': typeof MarkdownToHtml;
   }
 }
