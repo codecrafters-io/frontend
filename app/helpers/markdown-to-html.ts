@@ -4,13 +4,13 @@ import { htmlSafe } from '@ember/template';
 
 export interface Signature {
   Args: {
-    Positional: Array<string>;
+    Positional: Array<string | undefined | null>;
   };
   Return: string | undefined;
 }
 
 export default class MarkdownToHtml extends Helper<Signature> {
-  public compute(positional: Array<string>): string | undefined {
+  public compute(positional: Array<string | undefined | null>): string | undefined {
     if (!positional[0]) {
       return;
     }
