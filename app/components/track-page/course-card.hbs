@@ -6,7 +6,8 @@
     @recentParticipants={{this.recentParticipants}}
     class="mb-4"
   >
-    <div class="leading-6 prose mb-6" {{markdown-to-html this.introductionMarkdown}}>
+    <div class="leading-6 prose mb-6">
+      {{markdown-to-html this.introductionMarkdown}}
     </div>
 
     {{! Contents are masked, hence the fixed height }}
@@ -44,7 +45,8 @@
       </div>
     {{/if}}
 
-    <div class="leading-6 prose mb-6 pr-8 md:pr-12" {{markdown-to-html this.introductionMarkdown}}>
+    <div class="leading-6 prose mb-6 pr-8 md:pr-12">
+      {{markdown-to-html this.introductionMarkdown}}
     </div>
 
     {{#each @course.sortedBaseStages as |stage|}}
