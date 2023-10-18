@@ -2,6 +2,7 @@ import Service, { service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import Store from '@ember-data/store';
+import * as Sentry from '@sentry/ember';
 
 export default class AnalyticsEventTrackerService extends Service {
   @service declare store: Store;
@@ -24,6 +25,12 @@ export default class AnalyticsEventTrackerService extends Service {
     };
 
     const mergedProperties = Object.assign(defaultProperties, eventProperties);
+
+    Sentry.addBreadcrumb({
+      category: 'analytics_events',
+      message: `Event: ${eventName}. Properties: ${JSON.stringify(mergedProperties)}`,
+      level: 'info',
+    });
 
     this.store
       .createRecord('analytics-event', {
