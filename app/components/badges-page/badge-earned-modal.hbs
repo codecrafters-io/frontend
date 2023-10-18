@@ -42,7 +42,7 @@
     <div class="flex w-full md:w-7/12 justify-center items-center">
       <div>
         <div class="prose prose-sm w-full prose-invert text-center badge-earned-modal-prose">
-          {{@badge.descriptionHTML}}
+          {{markdown-to-html @badge.descriptionMarkdown}}
         </div>
         <div class="flex items-center w-full mt-12">
           <div class="bg-gradient-to-r from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">

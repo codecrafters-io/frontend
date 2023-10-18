@@ -1,13 +1,11 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import { formatDistanceStrictWithOptions } from 'date-fns/fp';
+import MarkdownToHtml from 'codecrafters-frontend/helpers/markdown-to-html';
 import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
-import showdown from 'showdown';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
-import { SafeString } from '@ember/template/-private/handlebars';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -26,7 +24,7 @@ export default class UpgradePromptComponent extends Component<Signature> {
     return ['No limits on content', 'Priority support', 'Priority Builds', 'Community features'];
   }
 
-  get secondaryCopy(): SafeString {
+  get secondaryCopy(): string {
     if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
       return this.convertToHTML(
         `Plans start at ~~$30/mo~~ $15/mo (discounted price for ${
@@ -52,8 +50,10 @@ export default class UpgradePromptComponent extends Component<Signature> {
     }
   }
 
-  convertToHTML(markdown: string): SafeString {
-    return htmlSafe(new showdown.Converter({ strikethrough: true }).makeHtml(markdown));
+  convertToHTML(markdown: string): string {
+    const markdownToHtml = new MarkdownToHtml();
+
+    return markdownToHtml.compute([markdown]) as string;
   }
 
   @action

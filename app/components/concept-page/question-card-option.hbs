@@ -24,6 +24,6 @@
     {{/if}}
   </div>
   <div class="prose {{if (and this.isSubmitted this.isCorrect) 'text-gray-800 font-semibold' 'text-gray-800'}}">
-    {{html-safe @option.html}}
+    {{markdown-to-html @option.markdown}}
   </div>
 </div>

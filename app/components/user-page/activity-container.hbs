@@ -15,7 +15,7 @@
               <div class="flex-shrink-0 mr-3 h-2 w-2 {{if profileEvent.isCompletedCourseEvent 'bg-teal-500' 'bg-gray-300'}} rounded shadow-sm"></div>
             </div>
 
-            <span class="prose text-gray-700">{{profileEvent.descriptionHTML}}</span>
+            <span class="prose text-gray-700">{{markdown-to-html profileEvent.descriptionMarkdown}}</span>
           </div>
         </li>
       {{/each}}

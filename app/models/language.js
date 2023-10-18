@@ -1,7 +1,5 @@
 import Model from '@ember-data/model';
-import showdown from 'showdown';
 import { attr, hasMany } from '@ember-data/model';
-import { htmlSafe } from '@ember/template';
 
 import grayLogoC from '/assets/images/language-logos/c-gray-500.svg';
 import grayLogoCpp from '/assets/images/language-logos/cpp-gray-500.svg';
@@ -110,10 +108,6 @@ export default class LanguageModel extends Model {
       swift: tealLogoSwift,
       zig: tealLogoZig,
     }[this.slug];
-  }
-
-  get trackDescriptionHTML() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.trackDescriptionMarkdown));
   }
 
   get trackDescriptionMarkdown() {

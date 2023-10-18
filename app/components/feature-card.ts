@@ -1,11 +1,10 @@
-import { SafeString } from '@ember/template/-private/handlebars';
 import Component from '@glimmer/component';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    content: SafeString;
+    contentMarkdown: string;
     imageUrl: string;
     title: string;
   };

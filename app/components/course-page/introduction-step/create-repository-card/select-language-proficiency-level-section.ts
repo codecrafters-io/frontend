@@ -1,9 +1,7 @@
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
-import showdown from 'showdown';
 import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -16,14 +14,6 @@ type Signature = {
 
 export default class SelectLanguageProficiencyLevelSectionComponent extends Component<Signature> {
   transition = fade;
-
-  get feedbackAlertHtml() {
-    if (this.feedbackAlertMarkdown) {
-      return htmlSafe(new showdown.Converter().makeHtml(this.feedbackAlertMarkdown));
-    } else {
-      return null;
-    }
-  }
 
   get feedbackAlertMarkdown() {
     const languageDescriptor = this.args.repository.language ? this.args.repository.language.name : 'this language';

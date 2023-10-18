@@ -1,7 +1,5 @@
 import Model from '@ember-data/model';
-import showdown from 'showdown';
 import { attr, hasMany } from '@ember-data/model';
-import { htmlSafe } from '@ember/template';
 
 import lockedBadgePreviewImage from '/assets/images/badges/locked-badge-preview.svg';
 import curieBadgeImage from '/assets/images/badges/curie-badge.svg';
@@ -19,10 +17,6 @@ export default class Badge extends Model {
   @attr('string') slug;
 
   @hasMany('badge-award', { async: false, inverse: null }) currentUserAwards;
-
-  get descriptionHTML() {
-    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
-  }
 
   get previewImage() {
     switch (this.slug) {

@@ -20,7 +20,7 @@ export default class MarkdownToHtml extends Helper<Signature> {
     return htmlSafe(htmlContent).toString();
   }
 
-  convertMarkdownToHtml(markdown: string): string {
+  public convertMarkdownToHtml(markdown: string): string {
     return new showdown.Converter({
       simplifiedAutoLink: true,
       openLinksInNewWindow: true,

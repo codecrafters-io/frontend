@@ -1,13 +1,10 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
 import Model from '@ember-data/model';
-import showdown from 'showdown';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
-import { htmlSafe } from '@ember/template';
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
-import { SafeString } from '@ember/template/-private/handlebars';
 
 export default class CourseIdeaModel extends Model {
   @hasMany('course-idea-vote', { async: false }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
@@ -25,10 +22,6 @@ export default class CourseIdeaModel extends Model {
   @equal('developmentStatus', 'released') declare developmentStatusIsReleased: boolean;
 
   @service declare authenticator: AuthenticatorService;
-
-  get descriptionHtml(): SafeString {
-    return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
-  }
 
   get isNewlyCreated(): boolean {
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votesCount < 20;

@@ -1,10 +1,7 @@
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
 import Model from '@ember-data/model';
-import showdown from 'showdown';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
-import { SafeString } from '@ember/template/-private/handlebars';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
-import { htmlSafe } from '@ember/template';
 import { memberAction } from 'ember-api-actions';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
@@ -22,14 +19,6 @@ export default class ConceptModel extends Model {
   @attr('string') declare slug: string;
   @attr('string') declare title: string;
   @attr('date') declare updatedAt: Date;
-
-  get descriptionHTML(): SafeString | null {
-    if (this.descriptionMarkdown) {
-      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.descriptionMarkdown));
-    } else {
-      return null;
-    }
-  }
 
   get estimatedReadingTimeInMinutes(): number {
     if (this.blocks) {

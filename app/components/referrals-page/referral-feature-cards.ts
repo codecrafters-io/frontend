@@ -1,8 +1,4 @@
 import Component from '@glimmer/component';
-import showdown from 'showdown';
-import { htmlSafe } from '@ember/template';
-import { SafeString } from '@ember/template/-private/handlebars';
-
 import freeForFriendImage from '/assets/images/referral-program-features/free-for-friend.jpg';
 import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.jpg';
 import simplePayoutImage from '/assets/images/referral-program-features/simple-payout.jpg';
@@ -21,20 +17,7 @@ type FeatureMarkdown = {
   title: string;
 };
 
-type FeatureHTML = FeatureMarkdown & {
-  body: SafeString;
-};
-
 export default class ReferralFeatureCardsComponent extends Component<Signature> {
-  get featureList(): FeatureHTML[] {
-    return this.featureMarkdownList.map((feature) => {
-      return {
-        ...feature,
-        body: htmlSafe(new showdown.Converter().makeHtml(feature.bodyMarkdown)),
-      };
-    });
-  }
-
   get featureMarkdownList(): FeatureMarkdown[] {
     return [
       {

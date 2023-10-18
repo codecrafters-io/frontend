@@ -1,9 +1,5 @@
 import Model from '@ember-data/model';
-import showdown from 'showdown';
 import { attr } from '@ember-data/model';
-import { htmlSafe } from '@ember/template';
-import { SafeString } from '@ember/template/-private/handlebars';
-
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
@@ -35,22 +31,6 @@ export default class CodeWalkthrough extends Model {
   @attr('string') declare slug: string;
   @attr('string') declare title: string;
   @attr('date') declare updatedAt: Date;
-
-  get conclusionHTML(): SafeString | null {
-    if (this.conclusionMarkdown) {
-      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.conclusionMarkdown));
-    } else {
-      return null;
-    }
-  }
-
-  get introductionHTML(): SafeString | null {
-    if (this.introductionMarkdown) {
-      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.introductionMarkdown));
-    } else {
-      return null;
-    }
-  }
 
   get logoURL(): string {
     if (this.slug.startsWith('redis')) {

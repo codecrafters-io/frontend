@@ -2,9 +2,7 @@ import Component from '@glimmer/component';
 import Prism from 'prismjs';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
-import showdown from 'showdown';
 import { groupBy } from '../../../lib/lodash-utils';
 
 export default class CommunitySolutionCardComponent extends Component {
@@ -43,14 +41,6 @@ export default class CommunitySolutionCardComponent extends Component {
   //     shouldShowComments: this.shouldShowComments,
   //   });
   // }
-
-  get explanationHTML() {
-    if (this.args.solution.explanationMarkdown) {
-      return htmlSafe(new showdown.Converter().makeHtml(this.args.solution.explanationMarkdown));
-    } else {
-      return null;
-    }
-  }
 
   get isCollapsed() {
     return !this.isExpanded;
