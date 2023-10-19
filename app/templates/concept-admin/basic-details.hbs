@@ -39,7 +39,7 @@
       </Alert>
     {{/if}}
 
-    <div class="divide-y divide-gray-100">
+    <div class="divide-y divide-gray-100" data-test-basic-details-form>
       <ConceptAdmin::FormSection @title="Title">
         <:description>
           <label for="concept_title">
@@ -55,6 +55,7 @@
             placeholder="Network Protocols"
             size="40"
             id="concept_title"
+            data-test-basic-details-input-field
             required
           />
         </:content>
@@ -76,6 +77,7 @@
             placeholder="network-protocols"
             id="concept_slug"
             required
+            data-test-basic-details-input-field
           />
         </:content>
       </ConceptAdmin::FormSection>
@@ -96,6 +98,7 @@
             rows="3"
             cols="80"
             id="concept_description"
+            data-test-basic-details-input-field
             required
           />
         </:content>
