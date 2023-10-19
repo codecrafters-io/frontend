@@ -1,9 +1,7 @@
 import Component from '@glimmer/component';
 import Prism from 'prismjs';
-import showdown from 'showdown';
 import window from 'ember-window-mock';
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
@@ -32,17 +30,6 @@ export default class CommentCardComponent extends Component {
   @service store;
   @tracked isEditing = false;
   @tracked shouldShowReplyForm = false;
-
-  get bodyHTML() {
-    return htmlSafe(
-      new showdown.Converter({
-        simplifiedAutoLink: true,
-        openLinksInNewWindow: true,
-        strikethrough: true,
-        disableForced4SpacesIndentedSublists: true,
-      }).makeHtml(this.args.comment.bodyMarkdown),
-    );
-  }
 
   get currentUser() {
     return this.authenticator.currentUser;

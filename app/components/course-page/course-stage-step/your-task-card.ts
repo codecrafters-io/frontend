@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import Mustache from 'mustache';
 import Store from '@ember-data/store';
-import showdown from 'showdown';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -33,10 +32,6 @@ export default class YourTaskCardComponent extends Component<Signature> {
       this.args.repository.highestCompletedStage === this.args.courseStage &&
       !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
     );
-  }
-
-  get instructionsHTML() {
-    return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.instructionsMarkdown);
   }
 
   get instructionsMarkdown() {

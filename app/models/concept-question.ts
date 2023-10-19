@@ -1,9 +1,6 @@
 import Concept from 'codecrafters-frontend/models/concept';
 import Model from '@ember-data/model';
-import showdown from 'showdown';
 import { attr, belongsTo } from '@ember-data/model';
-import { htmlSafe } from '@ember/template';
-import { SafeString } from '@ember/template/-private/handlebars';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 
 type Option = {
@@ -29,13 +26,5 @@ export default class ConceptQuestionModel extends Model {
 
   get correctOptionIndex(): number {
     return this.options.findIndex((option) => option.is_correct);
-  }
-
-  get queryHTML(): SafeString | null {
-    if (this.queryMarkdown) {
-      return htmlSafe(new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.queryMarkdown));
-    } else {
-      return null;
-    }
   }
 }

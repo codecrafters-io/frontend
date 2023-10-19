@@ -17,9 +17,9 @@
       </TertiaryButton>
     {{/each-in}}
 
-    {{#animated-if this.feedbackAlertHtml transition=this.transition duration=300}}
+    {{#animated-if this.feedbackAlertMarkdown transition=this.transition duration=300}}
       <Alert>
-        {{this.feedbackAlertHtml}}
+        {{markdown-to-html this.feedbackAlertMarkdown}}
       </Alert>
     {{/animated-if}}
   </div>

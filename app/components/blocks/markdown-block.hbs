@@ -1,8 +1,8 @@
 <div
   class="leading-7 prose max-w-none has-prism-highlighting"
   {{did-insert this.handleDidInsertHTML}}
-  {{did-update this.handleDidUpdateHTML this.html}}
+  {{did-update this.handleDidUpdateHTML @model.markdown}}
   ...attributes
 >
-  {{this.html}}
+  {{markdown-to-html @model.markdown}}
 </div>

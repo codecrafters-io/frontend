@@ -7,7 +7,7 @@
         challenge!
       </p>
 
-      {{this.courseDescriptionHTML}}
+      {{markdown-to-html @repository.course.descriptionMarkdown}}
     </div>
   </:content>
 </CoursePage::InstructionsCard>

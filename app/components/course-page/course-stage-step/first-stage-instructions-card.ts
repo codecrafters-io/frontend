@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import showdown from 'showdown';
 import Store from '@ember-data/store';
 
 interface Signature {
@@ -37,10 +36,6 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
 
   get solution() {
     return this.args.repository.course.firstStage.solutions.find((solution) => solution.language === this.args.repository.language);
-  }
-
-  get submitChangesInstructionsHTML() {
-    return new showdown.Converter({ openLinksInNewWindow: true }).makeHtml(this.submitChangesInstructionsMarkdown);
   }
 
   get submitChangesInstructionsMarkdown() {

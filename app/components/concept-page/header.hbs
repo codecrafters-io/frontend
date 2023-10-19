@@ -10,7 +10,7 @@
           {{@concept.title}}
         </h1>
         <div class="text-gray-600 max-w-xl leading-relaxed mb-4">
-          {{@concept.descriptionHTML}}
+          {{markdown-to-html @concept.descriptionMarkdown}}
         </div>
         <a href="https://github.com/rohitpaulk" class="inline-flex gap-x-2 items-center" target="_blank" rel="noopener noreferrer">
           <img

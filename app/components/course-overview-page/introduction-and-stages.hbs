@@ -1,7 +1,7 @@
 <div class="bg-white rounded-md shadow-sm border border-gray-200 relative" ...attributes>
   <div class="p-4 md:p-6">
     <div class="leading-7 prose mb-4">
-      {{this.instructionsHTML}}
+      {{markdown-to-html @course.descriptionMarkdown}}
     </div>
 
     <h3 class="font-bold uppercase text-gray-300 text-center text-sm tracking-wider relative mb-3">

@@ -7,7 +7,7 @@
     class="mb-4"
   >
     <div class="leading-6 prose mb-6">
-      {{this.introductionHtml}}
+      {{markdown-to-html this.introductionMarkdown}}
     </div>
 
     {{! Contents are masked, hence the fixed height }}
@@ -46,7 +46,7 @@
     {{/if}}
 
     <div class="leading-6 prose mb-6 pr-8 md:pr-12">
-      {{this.introductionHtml}}
+      {{markdown-to-html this.introductionMarkdown}}
     </div>
 
     {{#each @course.sortedBaseStages as |stage|}}

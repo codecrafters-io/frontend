@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
-import showdown from 'showdown';
 
 export default class TrackPageCourseCardComponent extends Component {
   @service authenticator;
@@ -13,8 +11,8 @@ export default class TrackPageCourseCardComponent extends Component {
     return this.authenticator.isAnonymous;
   }
 
-  get introductionHtml() {
-    return htmlSafe(new showdown.Converter().makeHtml(this.args.course.trackIntroductionMarkdownFor(this.args.language)));
+  get introductionMarkdown() {
+    return this.args.course.trackIntroductionMarkdownFor(this.args.language);
   }
 
   get recentParticipants() {

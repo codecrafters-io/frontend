@@ -18,7 +18,7 @@
           </h3>
 
           <div class="prose prose-sm" data-test-description>
-            {{this.descriptionHTML}}
+            {{markdown-to-html @model.update.description}}
           </div>
           {{#if (eq @model.update.status "pending")}}
             <div class="flex items-center mt-6 gap-x-3">

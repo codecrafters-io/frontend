@@ -13,9 +13,9 @@
       class="prose has-prism-highlighting"
       data-test-stage-instructions
       {{did-insert this.handleDidInsertInstructionsHTML}}
-      {{did-update this.handleDidUpdateInstructionsHTML this.instructionsHTML}}
+      {{did-update this.handleDidUpdateInstructionsHTML this.instructionsMarkdown}}
     >
-      {{html-safe this.instructionsHTML}}
+      {{markdown-to-html this.instructionsMarkdown}}
     </div>
 
     {{! @glint-expect-error not ts-ified yet }}

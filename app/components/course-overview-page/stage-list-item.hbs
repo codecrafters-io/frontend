@@ -21,7 +21,7 @@
 
   <div>
     <div class="leading-relaxed prose mb-4 mr-8">
-      {{this.marketingHTML}}
+      {{markdown-to-html @stage.marketingMarkdown}}
     </div>
 
     {{#if @stage.primaryExtension}}

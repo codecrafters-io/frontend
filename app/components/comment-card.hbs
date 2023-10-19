@@ -72,7 +72,7 @@
         {{did-insert this.handleDidInsertBodyHTML}}
         data-test-comment-body
       >
-        {{this.bodyHTML}}
+        {{markdown-to-html @comment.bodyMarkdown}}
       </div>
 
       <div class="mt-2 flex items-center">

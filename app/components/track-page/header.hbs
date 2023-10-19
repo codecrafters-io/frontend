@@ -3,7 +3,7 @@
     <h1 class="text-3xl md:text-5xl text-gray-700 font-bold tracking-tighter mb-3">{{@language.trackTitle}}</h1>
 
     <p class="text-gray-500 mb-4 max-w-xl">
-      {{@language.trackDescriptionHTML}}
+      {{markdown-to-html @language.trackDescriptionMarkdown}}
     </p>
 
     <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
