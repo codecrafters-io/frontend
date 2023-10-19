@@ -30,7 +30,7 @@ export default class ConceptAdminHeaderComponent extends Component<Signature> {
         name: 'Basic Details',
         slug: 'basic-details',
         route: 'concept-admin.basic-details',
-        models: [this.args.concept.lastPersistedSlug],
+        models: [this.args.concept.slug],
         isActive: this.router.currentRouteName === 'concept-admin.basic-details',
       },
       {
@@ -38,7 +38,7 @@ export default class ConceptAdminHeaderComponent extends Component<Signature> {
         name: 'Blocks',
         slug: 'blocks',
         route: 'concept-admin.blocks',
-        models: [this.args.concept.lastPersistedSlug],
+        models: [this.args.concept.slug],
         isActive: this.router.currentRouteName === 'concept-admin.blocks',
       },
       {
@@ -46,7 +46,7 @@ export default class ConceptAdminHeaderComponent extends Component<Signature> {
         name: 'Questions',
         slug: 'questions',
         route: 'concept-admin.questions',
-        models: [this.args.concept.lastPersistedSlug],
+        models: [this.args.concept.slug],
         isActive: this.router.currentRouteName === 'concept-admin.questions' || this.router.currentRouteName === 'concept-admin.question',
       },
     ];
