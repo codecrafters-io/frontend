@@ -13,6 +13,7 @@ export default class UserModel extends Model {
   @attr('boolean') isAdmin;
   @attr('boolean') isStaff;
   @attr('boolean') isCodecraftersPartner;
+  @attr('boolean') isConceptAuthor;
   @attr('string') name;
   @attr('string') username;
   @attr('') featureFlags;

@@ -28,7 +28,7 @@ export default class CourseAdminRoute extends BaseRoute {
   }
 
   async model(params: { concept_slug: string }) {
-    const allConcepts = (await this.store.findAll('concept', { include: 'questions' })) as unknown as ConceptModel[];
+    const allConcepts = (await this.store.findAll('concept', { include: 'author,questions' })) as unknown as ConceptModel[];
 
     return {
       concept: allConcepts.find((concept) => concept.slug === params.concept_slug),
