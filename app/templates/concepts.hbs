@@ -4,7 +4,7 @@
   <div class="border-b pb-2 mb-6 flex items-center justify-between">
     <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Concepts</h1>
     <div>
-      {{#if (current-user-is-staff)}}
+      {{#if this.shouldShowCreateConceptButton}}
         <TertiaryButtonWithSpinner
           @size="small"
           @shouldShowSpinner={{this.isCreatingConcept}}

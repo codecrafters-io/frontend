@@ -6,7 +6,7 @@ export default class CodeExamplesRoute extends BaseRoute {
 
   async model() {
     return {
-      allConcepts: await this.store.findAll('concept'),
+      allConcepts: await this.store.findAll('concept', { include: 'author,questions' }),
       courseStage: this.modelFor('course.stage').courseStage,
     };
   }

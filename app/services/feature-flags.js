@@ -11,7 +11,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeConceptsIndex() {
-    return this.currentUser && this.currentUser.isStaff;
+    return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
 
   get currentUser() {

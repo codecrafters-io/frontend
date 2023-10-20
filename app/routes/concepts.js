@@ -9,7 +9,7 @@ export default class ConceptsRoute extends BaseRoute {
   async model() {
     return RSVP.hash({
       concepts: this.store.findAll('concept', {
-        include: 'questions',
+        include: 'author,questions',
       }),
     });
   }

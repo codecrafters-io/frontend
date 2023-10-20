@@ -5,6 +5,7 @@ import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export default class ConceptsController extends Controller {
   declare model: {
@@ -15,6 +16,15 @@ export default class ConceptsController extends Controller {
 
   @service declare store: Store;
   @service declare router: RouterService;
+  @service declare authenticator: AuthenticatorService;
+
+  get shouldShowCreateConceptButton(): boolean {
+    if (!this.authenticator.currentUser) {
+      return false;
+    }
+
+    return this.authenticator.currentUser.isConceptAuthor || this.authenticator.currentUser.isStaff;
+  }
 
   @action
   async handleCreateConceptButtonClicked() {

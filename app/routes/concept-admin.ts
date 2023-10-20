@@ -22,13 +22,13 @@ export default class CourseAdminRoute extends BaseRoute {
 
     await this.authenticator.authenticate();
 
-    if (!this.authenticator.currentUser!.isStaff) {
+    if (!this.authenticator.currentUser!.isStaff && !this.authenticator.currentUser!.isConceptAuthor) {
       this.router.transitionTo('catalog');
     }
   }
 
   async model(params: { concept_slug: string }) {
-    const allConcepts = (await this.store.findAll('concept', { include: 'questions' })) as unknown as ConceptModel[];
+    const allConcepts = (await this.store.findAll('concept', { include: 'author,questions' })) as unknown as ConceptModel[];
 
     return {
       concept: allConcepts.find((concept) => concept.slug === params.concept_slug),
