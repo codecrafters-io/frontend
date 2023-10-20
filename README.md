@@ -24,7 +24,7 @@ You can run tests locally without a backend server, but to use the app you'll al
 ## Running / Development
 
 - `npm run start`
-- View your app via https://cc-<username>.ngrok.io
+- View your app via https://<username>.ccdev.dev
 
 ## Running against staging
 

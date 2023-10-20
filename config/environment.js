@@ -19,7 +19,7 @@ module.exports = function (environment) {
       // when it is created
     },
     x: {
-      backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
+      backendUrl: process.env.BACKEND_URL,
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
       defaultMetaTags: {
