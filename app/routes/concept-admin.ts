@@ -22,7 +22,7 @@ export default class CourseAdminRoute extends BaseRoute {
 
     await this.authenticator.authenticate();
 
-    if (!this.authenticator.currentUser!.isStaff) {
+    if (!this.authenticator.currentUser!.isStaff && !this.authenticator.currentUser!.isConceptAuthor) {
       this.router.transitionTo('catalog');
     }
   }
