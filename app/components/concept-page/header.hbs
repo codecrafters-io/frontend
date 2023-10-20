@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    {{#if (current-user-is-concept-author @concept)}}
+    {{#if (or (current-user-is-concept-author @concept) (current-user-is-staff))}}
       <TertiaryLinkButton @size="small" @route="concept-admin" class="mt-4" target="_blank">Edit Concept</TertiaryLinkButton>
     {{/if}}
   </div>
