@@ -1,8 +1,9 @@
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
-import Model from '@ember-data/model';
+import Model, { belongsTo } from '@ember-data/model';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
+import { TemporaryUserModel } from './temporary-types';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
@@ -12,6 +13,8 @@ export type BlockJSON = {
 };
 
 export default class ConceptModel extends Model {
+  @belongsTo('user', { async: false }) declare author: TemporaryUserModel;
+
   @hasMany('concept-question', { async: false }) declare questions: SyncHasMany<ConceptQuestion>;
 
   @attr('string') declare descriptionMarkdown: string;
@@ -29,7 +32,9 @@ export default class ConceptModel extends Model {
   }
 
   get lastPersistedSlug(): string {
-    if (this.changedAttributes()['slug']) {
+    if (this.changedAttributes()['slug'] && !this.hasDirtyAttributes) {
+      return this.changedAttributes()['slug']![1];
+    } else if (this.changedAttributes()['slug']) {
       return this.changedAttributes()['slug']![0];
     } else {
       return this.slug;

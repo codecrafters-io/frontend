@@ -12,18 +12,27 @@
         <div class="text-gray-600 max-w-xl leading-relaxed mb-4">
           {{markdown-to-html @concept.descriptionMarkdown}}
         </div>
-        <a href="https://github.com/rohitpaulk" class="inline-flex gap-x-2 items-center" target="_blank" rel="noopener noreferrer">
+        <a
+          href={{or @concept.author.githubProfileUrl "https://github.com/rohitpaulk"}}
+          class="inline-flex gap-x-2 items-center"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img
             alt="avatar"
-            src="https://github.com/rohitpaulk.png"
+            src={{or @concept.author.avatarUrl "https://github.com/rohitpaulk.png"}}
             class="w-12 h-12 filter drop-shadow-sm ring-1 ring-white rounded-full shadow brightness-110"
           />
           <div>
             <div class="text-gray-700 text-xs font-bold mb-0.5">
-              Paul Kuruvilla
+              {{or @concept.author.username "Paul Kuruvilla"}}
             </div>
             <div class="text-gray-500 text-xs">
-              CTO, CodeCrafters
+              {{#if @concept.author}}
+                Concept Author
+              {{else}}
+                CTO, CodeCrafters
+              {{/if}}
             </div>
           </div>
         </a>
@@ -35,7 +44,7 @@
       </div>
     </div>
 
-    {{#if (current-user-is-staff)}}
+    {{#if (or (current-user-is-concept-author @concept) (current-user-is-staff))}}
       <TertiaryLinkButton @size="small" @route="concept-admin" class="mt-4" target="_blank">Edit Concept</TertiaryLinkButton>
     {{/if}}
   </div>

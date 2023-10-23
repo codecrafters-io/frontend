@@ -10,6 +10,7 @@ export class TemporaryUserModel {
   declare username: string;
   declare badgeAwards: unknown[];
   declare avatarUrl: string;
+  declare isConceptAuthor: boolean;
   declare isStaff: boolean;
   declare primaryEmailAddress: string;
   declare isEligibleForEarlyBirdDiscount: boolean;
