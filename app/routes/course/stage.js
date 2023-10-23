@@ -9,9 +9,16 @@ export default class CourseStageRoute extends BaseRoute {
   constructor() {
     super(...arguments);
 
-    this.router.on('routeDidChange', () => {
+    this.router.on('routeWillChange', (transition) => {
+      const currentStageId = transition?.to?.parent?.params?.stage_identifier;
+      const previousStageId = transition?.from?.parent?.params?.stage_identifier;
       const element = document.querySelector('.course-page-scrollable-area');
-      scrollToTop(element);
+
+      if (currentStageId === previousStageId) {
+        scrollToTop(element, 'smooth');
+      } else {
+        scrollToTop(element);
+      }
     });
   }
 

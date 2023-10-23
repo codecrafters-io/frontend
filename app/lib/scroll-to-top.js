@@ -1,5 +1,5 @@
-export default function scrollToTop(element = window) {
+export default function scrollToTop(element = window, behavior = 'auto') {
   if (element && typeof element.scrollTo === 'function') {
-    element.scrollTo({ top: 0 });
+    element.scrollTo({ top: 0, behavior });
   }
 }
