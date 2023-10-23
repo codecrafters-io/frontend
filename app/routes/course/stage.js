@@ -1,9 +1,19 @@
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 import { inject as service } from '@ember/service';
 
 export default class CourseStageRoute extends BaseRoute {
   @service router;
   @service coursePageState;
+
+  constructor() {
+    super(...arguments);
+
+    this.router.on('routeDidChange', () => {
+      const element = document.querySelector('.course-page-scrollable-area');
+      scrollToTop(element);
+    });
+  }
 
   afterModel(model) {
     if (!model.courseStage) {
