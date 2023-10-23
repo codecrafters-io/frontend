@@ -32,7 +32,9 @@ export default class ConceptModel extends Model {
   }
 
   get lastPersistedSlug(): string {
-    if (this.changedAttributes()['slug']) {
+    if (this.changedAttributes()['slug'] && !this.hasDirtyAttributes) {
+      return this.changedAttributes()['slug']![1];
+    } else if (this.changedAttributes()['slug']) {
       return this.changedAttributes()['slug']![0];
     } else {
       return this.slug;
