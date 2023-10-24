@@ -71,13 +71,32 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
     const persistenceCourseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
     persistenceCourseExtensionIdea.update('developmentStatus', 'released');
 
+    const geospatialCourseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
+    geospatialCourseExtensionIdea.update('developmentStatus', 'in_progress');
+
     await votePage.visitCourseExtensionIdeasTab();
 
-    let courseExtensionIdeaCard = votePage.findCourseExtensionIdeaCard('Persistence');
+    let courseExtensionIdeaCard = votePage.findCourseExtensionIdeaCard('Geospatial commands');
     await courseExtensionIdeaCard.hoverOnTrackBetaLabel();
 
     assertTooltipContent(assert, {
-      contentString: 'This challenge is now available! Visit the catalog to try it out.',
+      contentString: "We're currently building this challenge extension. Upvote this idea to be notified when it launches.",
+    });
+
+    await courseExtensionIdeaCard.clickOnVoteButton();
+    await courseExtensionIdeaCard.hoverOnTrackBetaLabel();
+
+    assertTooltipContent(assert, {
+      contentString: "We're currently building this challenge extension. We'll notify you when it launches.",
+    });
+
+    await courseExtensionIdeaCard.clickOnVoteButton();
+
+    courseExtensionIdeaCard = votePage.findCourseExtensionIdeaCard('Persistence');
+    await courseExtensionIdeaCard.hoverOnTrackBetaLabel();
+
+    assertTooltipContent(assert, {
+      contentString: 'This challenge extension is now available! Visit the catalog to try it out.',
     });
   });
 });
