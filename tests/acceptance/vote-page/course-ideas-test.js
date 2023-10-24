@@ -77,14 +77,14 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     await votePage.visit();
 
     let courseIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
-    await courseIdeaCard.hoverOnTrackBetaLabel();
+    await courseIdeaCard.hoverOnDevelopmentStatusLabel();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge. Upvote this idea to be notified when it launches.",
     });
 
     await courseIdeaCard.clickOnVoteButton();
-    await courseIdeaCard.hoverOnTrackBetaLabel();
+    await courseIdeaCard.hoverOnDevelopmentStatusLabel();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge. We'll notify you when it launches.",
@@ -93,7 +93,7 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     await courseIdeaCard.clickOnVoteButton();
 
     courseIdeaCard = votePage.findCourseIdeaCard('Build your own SQLite');
-    await courseIdeaCard.hoverOnTrackBetaLabel();
+    await courseIdeaCard.hoverOnDevelopmentStatusLabel();
 
     assertTooltipContent(assert, {
       contentString: 'This challenge is now available! Visit the catalog to try it out.',
