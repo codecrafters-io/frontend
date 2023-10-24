@@ -10,9 +10,16 @@
       </div>
 
       {{#if @courseExtensionIdea.developmentStatusIsInProgress}}
-        <div class="text-xs text-white font-semibold bg-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center" data-test-track-beta-label>
-          in progress
-          {{svg-jar "shield-check" class="w-4 ml-1 fill-current"}}
+        <div class="text-xs text-white font-semibold bg-yellow-500 rounded ml-3 flex items-center" data-test-track-beta-label>
+          <LinkTo @route="catalog">
+            {{svg-jar "chevron-up" class="w-6 h-6 fill-current"}}
+          </LinkTo>
+
+          {{#if this.userHasVoted}}
+            <EmberTooltip @text="We're currently building this challenge extension. We'll notify you when it launches." />
+          {{else}}
+            <EmberTooltip @text="We're currently building this challenge extension. Upvote this idea to be notified when it launches." />
+          {{/if}}
         </div>
       {{else if @courseExtensionIdea.developmentStatusIsReleased}}
         <div class="text-xs text-white font-semibold bg-teal-500 rounded ml-3 flex items-center" data-test-track-beta-label>
@@ -20,7 +27,7 @@
             {{svg-jar "chevron-up" class="w-6 h-6 fill-current"}}
           </LinkTo>
 
-          <EmberTooltip @text="This challenge is now available! Visit the catalog to try it out." />
+          <EmberTooltip @text="This challenge extension is now available! Visit the catalog to try it out." />
         </div>
       {{else if this.userHasVoted}}
         <div class="h-7 w-7 bg-teal-500 rounded flex items-center justify-center">
