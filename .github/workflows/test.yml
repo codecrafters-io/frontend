@@ -8,20 +8,20 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ${{ github.actor == 'dependabot[bot]' && 'ubuntu-latest-4-cores' || 'ubuntu-latest-16-cores' }}
+    runs-on: ${{ github.actor == 'dependabot[bot]' && 'buildjet-2vcpu-ubuntu-2204' || 'buildjet-16vcpu-ubuntu-2204' }}
     permissions: write-all
     timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - uses: buildjet/setup-node@v3
         with:
           node-version: '18.17.1' # 18.18.0 causes problems?
           cache: 'npm'
 
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: buildjet/cache@v3
         env:
           cache-name: cache-node-modules-v4
         with:
@@ -33,7 +33,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: buildjet/cache@v3
         with:
           path: ./node_modules
           key: modules-v4-${{ hashFiles('package-lock.json') }}
@@ -108,18 +108,18 @@ jobs:
           files: test-results.xml
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: buildjet-2vcpu-ubuntu-2204
 
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - uses: buildjet/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
 
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: buildjet/cache@v3
         env:
           cache-name: cache-node-modules-v4
         with:
@@ -133,7 +133,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: buildjet/cache@v3
         with:
           path: ./node_modules
           key: modules-v4-${{ hashFiles('package-lock.json') }}
