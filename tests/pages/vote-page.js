@@ -4,14 +4,15 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 export default createPage({
   courseExtensionIdeaCards: collection('[data-test-course-extension-idea-card]', {
     clickOnVoteButton: clickable('[data-test-vote-button]'),
+    hoverOnDevelopmentStatusLabel: triggerable('mouseenter', '[data-test-development-status-label]'),
     name: text('[data-test-course-extension-idea-name]'),
     voteButtonText: text('[data-test-vote-button]'),
   }),
 
   courseIdeaCards: collection('[data-test-course-idea-card]', {
     clickOnVoteButton: clickable('[data-test-vote-button]'),
+    hoverOnDevelopmentStatusLabel: triggerable('mouseenter', '[data-test-development-status-label]'),
     name: text('[data-test-course-idea-name]'),
-    hoverOnTrackBetaLabel: triggerable('mouseenter', '[data-test-track-beta-label]'),
     voteButtonText: text('[data-test-vote-button]'),
   }),
 
