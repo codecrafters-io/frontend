@@ -1,0 +1,7 @@
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+  <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
+    {{#each @concepts as |concept|}}
+      <ConceptGroupPage::ConceptCard @concept={{concept}} />
+    {{/each}}
+  </div>
+</div>
