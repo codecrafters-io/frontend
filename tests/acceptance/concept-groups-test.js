@@ -1,6 +1,7 @@
 import conceptGroupsPage from 'codecrafters-frontend/tests/pages/concept-groups-page';
 import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
 import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
+import percySnapshot from '@percy/ember';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
@@ -31,6 +32,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
     });
 
     await conceptGroupsPage.visit({ id: conceptGroup.id });
+    await percySnapshot('Concept Group');
 
     assert.strictEqual(conceptGroupsPage.header.title, 'Test Concept Group');
     assert.strictEqual(conceptGroupsPage.header.description, 'Dummy description');
