@@ -25,5 +25,5 @@ export default createPage({
     title: text('[data-test-concept-group-title]'),
   },
 
-  visit: visitable('/collections/:concept_group_slug'),
+  visit: visitable('/collections/:id'),
 });

@@ -22,7 +22,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
 
     const user = this.server.schema.users.first();
 
-    this.server.create('concept-group', {
+    const conceptGroup = this.server.create('concept-group', {
       author: user,
       description_markdown: 'Dummy description',
       concept_slugs: ['tcp-overview', 'network-protocols'],
@@ -30,7 +30,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
       title: 'Test Concept Group',
     });
 
-    await conceptGroupsPage.visit({ concept_group_slug: 'test-concept-group' });
+    await conceptGroupsPage.visit({ id: conceptGroup.id });
 
     assert.strictEqual(conceptGroupsPage.header.title, 'Test Concept Group');
     assert.strictEqual(conceptGroupsPage.header.description, 'Dummy description');
@@ -44,7 +44,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
 
     const user = this.server.schema.users.first();
 
-    this.server.create('concept-group', {
+    const conceptGroup = this.server.create('concept-group', {
       author: user,
       description_markdown: 'Dummy description',
       concept_slugs: ['tcp-overview', 'network-protocols'],
@@ -52,7 +52,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
       title: 'Test Concept Group',
     });
 
-    await conceptGroupsPage.visit({ concept_group_slug: 'test-concept-group' });
+    await conceptGroupsPage.visit({ id: conceptGroup.id });
 
     assert.strictEqual(conceptGroupsPage.conceptCards.length, 2);
     assert.strictEqual(conceptGroupsPage.conceptCards[0].title, 'TCP: An Overview');

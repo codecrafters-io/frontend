@@ -11,8 +11,8 @@ Router.map(function () {
   this.route('catalog');
   this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' });
   this.route('concepts');
-  this.route('concept-groups', { path: '/collections/:concept_group_slug' });
   this.route('concept', { path: '/concepts/:concept_slug' });
+  this.route('concept-group', { path: '/collections/:id' });
 
   this.route('concept-admin', { path: '/concepts/:concept_slug/admin' }, function () {
     this.route('basic-details');
