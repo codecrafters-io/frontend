@@ -17,7 +17,7 @@ You can run tests locally without a backend server, but to use the app you'll al
 ## Setup / Installation
 
 - `git clone <repository-url>` this repository
-- `cd codecrafters-frontend`
+- `cd frontend`
 - `npm install`
 - Copy `.env.example` to `.env` and fill in the values
 
