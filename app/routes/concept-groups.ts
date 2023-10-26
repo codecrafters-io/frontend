@@ -5,8 +5,9 @@ import Store from '@ember-data/store';
 export default class ConceptGroupRoute extends BaseRoute {
   @service store!: Store;
 
-  async model(params: { concept_slug: string }) {
-    const conceptGroup = await this.store.findRecord('concept-group', params.concept_slug, { include: 'author' });
+  async model(params: { concept_group_slug: string }) {
+    console.log(params);
+    const conceptGroup = await this.store.findRecord('concept-group', params.concept_group_slug, { include: 'author' });
     const allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
     const concepts = conceptGroup.conceptSlugs.map((slug: string) => allConcepts.find((concept) => concept.slug === slug));
 
