@@ -11,7 +11,7 @@
       </div>
 
       {{#if (and (current-user-is-concept-author @concept) (not (current-user-is-staff)))}}
-        <Pill @color="green" @size="small">Yours</Pill>
+        <Pill @color="green">Yours</Pill>
       {{/if}}
     </div>
 

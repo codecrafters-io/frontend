@@ -16,6 +16,7 @@ export class TemporaryUserModel {
   declare isEligibleForEarlyBirdDiscount: boolean;
   declare earlyBirdDiscountEligibilityExpiresAt: Date;
   declare canAccessPaidContent: boolean;
+  declare githubProfileUrl: string;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
 
