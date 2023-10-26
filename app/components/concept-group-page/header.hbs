@@ -1,14 +1,14 @@
-<div class="py-10 md:py-20 border-b code-walkthrough-header-background">
+<div class="py-10 md:py-20 border-b code-walkthrough-header-background" ...attributes>
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6">
     <div class="flex items-center justify-between">
       <div>
         <div class="text-gray-400 uppercase text-xs font-bold tracking-wider mb-2">
           CONCEPT GROUPS
         </div>
-        <h1 class="text-gray-800 text-2xl md:text-5xl font-bold mb-4">
+        <h1 class="text-gray-800 text-2xl md:text-5xl font-bold mb-4" data-test-concept-group-title>
           {{@conceptGroup.title}}
         </h1>
-        <div class="text-gray-600 max-w-xl leading-relaxed mb-4">
+        <div class="text-gray-600 max-w-xl leading-relaxed mb-4" data-test-concept-group-description>
           {{markdown-to-html @conceptGroup.descriptionMarkdown}}
         </div>
         <a
@@ -16,6 +16,7 @@
           class="inline-flex gap-x-2 items-center"
           target="_blank"
           rel="noopener noreferrer"
+          data-test-concept-group-author
         >
           <img
             alt="avatar"
@@ -23,12 +24,12 @@
             class="w-12 h-12 filter drop-shadow-sm ring-1 ring-white rounded-full shadow brightness-110"
           />
           <div>
-            <div class="text-gray-700 text-xs font-bold mb-0.5">
+            <div class="text-gray-700 text-xs font-bold mb-0.5" data-test-concept-group-author-username>
               {{or @conceptGroup.author.username "Paul Kuruvilla"}}
             </div>
-            <div class="text-gray-500 text-xs">
+            <div class="text-gray-500 text-xs" data-test-concept-group-author-title>
               {{#if @conceptGroup.author}}
-                Concept Author
+                Collection Author
               {{else}}
                 CTO, CodeCrafters
               {{/if}}

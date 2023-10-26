@@ -3,6 +3,8 @@ import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import Store from '@ember-data/store';
 
 export default class ConceptGroupRoute extends BaseRoute {
+  allowsAnonymousAccess = true;
+
   @service store!: Store;
 
   async model(params: { concept_group_slug: string }) {
