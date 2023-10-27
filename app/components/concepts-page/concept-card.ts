@@ -13,6 +13,6 @@ export default class ConceptCardComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptGroupPage::ConceptCard': typeof ConceptCardComponent;
+    'ConceptsPage::ConceptCard': typeof ConceptCardComponent;
   }
 }
