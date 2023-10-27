@@ -12,7 +12,6 @@ Router.map(function () {
   this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' });
   this.route('concepts');
   this.route('concept', { path: '/concepts/:concept_slug' });
-  this.route('concept-group', { path: '/collections/:id' });
 
   this.route('concept-admin', { path: '/concepts/:concept_slug/admin' }, function () {
     this.route('basic-details');
@@ -21,6 +20,7 @@ Router.map(function () {
     this.route('questions');
   });
 
+  this.route('concept-group', { path: '/collections/:id' });
   this.route('courses');
 
   this.route('course', { path: '/courses/:course_slug' }, function () {
