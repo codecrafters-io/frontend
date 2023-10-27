@@ -20,7 +20,7 @@ Router.map(function () {
     this.route('questions');
   });
 
-  this.route('concept-group', { path: '/collections/:id' });
+  this.route('concept-group', { path: '/collections/:concept_group_slug' });
   this.route('courses');
 
   this.route('course', { path: '/courses/:course_slug' }, function () {

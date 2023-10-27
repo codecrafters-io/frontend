@@ -31,7 +31,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
       title: 'Test Concept Group',
     });
 
-    await conceptGroupsPage.visit({ id: conceptGroup.id });
+    await conceptGroupsPage.visit({ concept_group_slug: conceptGroup.slug });
     await percySnapshot('Concept Group');
 
     assert.strictEqual(conceptGroupsPage.header.title, 'Test Concept Group');
@@ -54,7 +54,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
       title: 'Test Concept Group',
     });
 
-    await conceptGroupsPage.visit({ id: conceptGroup.id });
+    await conceptGroupsPage.visit({ concept_group_slug: conceptGroup.slug });
 
     assert.strictEqual(conceptGroupsPage.conceptCards.length, 2);
     assert.strictEqual(conceptGroupsPage.conceptCards[0].title, 'TCP: An Overview');

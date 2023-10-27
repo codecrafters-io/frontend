@@ -9,8 +9,8 @@ export default createPage({
       .click();
   },
 
-  conceptCards: collection('[data-test-concept-group-card]', {
-    title: text('[data-test-concept-group-card-title]'),
+  conceptCards: collection('[data-test-concept-card]', {
+    title: text('[data-test-concept-title]'),
   }),
 
   header: {
@@ -25,5 +25,5 @@ export default createPage({
     title: text('[data-test-concept-group-title]'),
   },
 
-  visit: visitable('/collections/:id'),
+  visit: visitable('/collections/:concept_group_slug'),
 });
