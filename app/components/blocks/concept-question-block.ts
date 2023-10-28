@@ -2,6 +2,10 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import Store from '@ember-data/store';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { action } from '@ember/object';
+
+import Prism from 'prismjs';
+import 'prismjs/components/prism-rust'; // This is the only one we use in concepts at the moment
 
 type Signature = {
   Element: HTMLDivElement;
@@ -17,6 +21,16 @@ export default class ConceptQuestionBlockComponent extends Component<Signature> 
 
   get question() {
     return this.store.peekAll('concept-question').findBy('slug', this.args.model.conceptQuestionSlug);
+  }
+
+  @action
+  handleDidInsertHTML(element: HTMLDivElement) {
+    Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleDidUpdateHTML(element: HTMLDivElement) {
+    Prism.highlightAllUnder(element);
   }
 }
 
