@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-import petoiRobotDogImage from '/assets/images/monthly-challenges/oura-ring-horizon.png';
+import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.png';
 
 interface Signature {
   Element: HTMLAnchorElement;
