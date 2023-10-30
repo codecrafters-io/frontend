@@ -71,6 +71,27 @@ module('Acceptance | concepts-test', function (hooks) {
     await percySnapshot('Concept - Completed');
   });
 
+  test('can use keyboard to navigate through concept', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('TCP: An Overview');
+    assert.strictEqual(conceptPage.blocks.length, 1);
+
+    await conceptPage.pressSpace();
+    assert.strictEqual(conceptPage.blocks.length, 2);
+
+    await conceptPage.pressBackspace();
+    assert.strictEqual(conceptPage.blocks.length, 1);
+
+    await conceptPage.pressEnter();
+    assert.strictEqual(conceptPage.blocks.length, 2);
+  });
+
   test('tracks concepts events', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);

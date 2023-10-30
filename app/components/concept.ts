@@ -141,9 +141,8 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   handleKeydown(event: KeyboardEvent) {
-    console.log(event.key);
-
     if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
       this.advanceToNextBlockGroup();
     } else if (event.key === 'Backspace') {
       this.returnToPreviousBlockGroup();
