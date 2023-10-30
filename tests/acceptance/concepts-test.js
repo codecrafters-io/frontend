@@ -79,17 +79,25 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.visit();
 
-    await conceptsPage.clickOnConceptCard('TCP: An Overview');
+    await conceptsPage.clickOnConceptCard('Network Protocols');
     assert.strictEqual(conceptPage.blocks.length, 1);
 
     await conceptPage.pressSpace();
-    assert.strictEqual(conceptPage.blocks.length, 2);
+    assert.strictEqual(conceptPage.blocks.length, 2, 'can use space to continue');
 
     await conceptPage.pressBackspace();
-    assert.strictEqual(conceptPage.blocks.length, 1);
+    assert.strictEqual(conceptPage.blocks.length, 1, 'can use backspace to go back');
 
-    await conceptPage.pressEnter();
-    assert.strictEqual(conceptPage.blocks.length, 2);
+    await conceptPage.pressEnterToContinue();
+    assert.strictEqual(conceptPage.blocks.length, 2, 'can use enter to continue');
+
+    await conceptPage.pressEnterToContinue();
+    assert.strictEqual(conceptPage.blocks.length, 3, 'can use enter to continue');
+
+    await conceptPage.pressD();
+    await conceptPage.pressEnterToSubmit();
+    await conceptPage.pressEnterToContinue();
+    assert.strictEqual(conceptPage.blocks.length, 4, 'can use keyboard to select option');
   });
 
   test('tracks concepts events', async function (assert) {
