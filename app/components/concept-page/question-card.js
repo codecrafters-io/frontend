@@ -35,11 +35,24 @@ export default class QuestionCardComponent extends Component {
   @action
   handleDidInsertContainer(element) {
     this.containerElement = element;
+    element.focus();
   }
 
   @action
   handleILearnedSomethingButtonClick() {
     this.didLearnSomething = !this.didLearnSomething;
+  }
+
+  @action
+  handleKeydown(event) {
+    // 65 is the keyCode for 'A'
+    if (event.key === ' ' || event.key === 'Enter') {
+      this.submit();
+    } else if (event.keyCode - 65 > this.options.length - 1) {
+      return;
+    } else {
+      this.selectedOptionIndex = event.keyCode - 65;
+    }
   }
 
   @action
@@ -50,6 +63,11 @@ export default class QuestionCardComponent extends Component {
 
   @action
   handleSubmitClick() {
+    this.submit();
+  }
+
+  @action
+  submit() {
     this.hasSubmitted = true;
 
     if (this.args.onSubmit) {
