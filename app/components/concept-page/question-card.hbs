@@ -1,5 +1,12 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="question-card border rounded shadow-sm scroll-mb-10 outline-none" tabindex="0" {{did-insert this.handleDidInsertContainer}} {{on "keydown" this.handleKeydown}} data-test-question-card ...attributes>
+<div
+  class="question-card border rounded shadow-sm scroll-mb-10 outline-none"
+  tabindex="0"
+  {{did-insert this.handleDidInsertContainer}}
+  {{on "keydown" this.handleKeydown}}
+  data-test-question-card
+  ...attributes
+>
   <div class="p-3 sm:p-4">
     <div class="text-gray-800 mr-2 mb-2 border-b pb-2.5 prose">
       {{markdown-to-html @question.queryMarkdown}}
@@ -10,7 +17,7 @@
         <ConceptPage::QuestionCardOption
           class="px-4"
           @option={{option}}
-          @optionIndex = {{optionIndex}}
+          @optionIndex={{optionIndex}}
           @isSubmitted={{this.hasSubmitted}}
           {{on "click" (fn (mut this.selectedOptionIndex) optionIndex)}}
           data-test-question-card-option

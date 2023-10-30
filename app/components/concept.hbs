@@ -12,7 +12,6 @@
           {{! @glint-expect-error: not ts-ified yet }}
           <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" data-test-concept-block />
         {{else if (eq block.type "concept_question")}}
-          {{! @glint-expect-error: not ts-ified yet }}
           <Blocks::ConceptQuestionBlock
             @model={{block}}
             @onSubmit={{fn this.handleQuestionBlockSubmitted block}}

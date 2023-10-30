@@ -98,6 +98,8 @@ class ConceptQuestionBlock extends Block {
   }
 }
 
+type ExtendedBlock = ClickToContinueBlock | MarkdownBlock | ConceptAnimationBlock | ConceptQuestionBlock;
+
 function IsClickToContinueBlock(block: Block): block is ClickToContinueBlock {
   return block.type === ClickToContinueBlock.type;
 }
@@ -119,6 +121,7 @@ export {
   MarkdownBlock,
   ConceptQuestionBlock,
   ConceptAnimationBlock,
+  ExtendedBlock,
   IsClickToContinueBlock,
   IsMarkdownBlock,
   IsConceptAnimationBlock,

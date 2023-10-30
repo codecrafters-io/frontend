@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import Store from '@ember-data/store';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { ConceptQuestionBlock, ExtendedBlock } from 'codecrafters-frontend/lib/blocks';
 import { action } from '@ember/object';
 
 import Prism from 'prismjs';
@@ -11,7 +11,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    model: ConceptQuestionBlock;
+    model: ExtendedBlock;
     onSubmit: () => void;
   };
 };
@@ -19,8 +19,16 @@ type Signature = {
 export default class ConceptQuestionBlockComponent extends Component<Signature> {
   @service declare store: Store;
 
+  get model() {
+    if (this.args.model.type === 'concept_question') {
+      return this.args.model as ConceptQuestionBlock;
+    }
+
+    return;
+  }
+
   get question() {
-    return this.store.peekAll('concept-question').findBy('slug', this.args.model.conceptQuestionSlug);
+    return this.store.peekAll('concept-question').findBy('slug', this.model?.conceptQuestionSlug);
   }
 
   @action

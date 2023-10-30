@@ -10,7 +10,7 @@ import { tracked } from '@glimmer/tracking';
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import type { Block } from 'codecrafters-frontend/models/concept';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { ConceptQuestionBlock, ExtendedBlock } from 'codecrafters-frontend/lib/blocks';
 
 interface Signature {
   Args: {
@@ -150,8 +150,9 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
-    this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
+  handleQuestionBlockSubmitted(block: ExtendedBlock) {
+    const conceptQuestionBlock = block as ConceptQuestionBlock;
+    this.submittedQuestionSlugs.add(conceptQuestionBlock.conceptQuestionSlug);
   }
 
   @action
