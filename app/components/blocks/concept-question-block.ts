@@ -20,15 +20,11 @@ export default class ConceptQuestionBlockComponent extends Component<Signature> 
   @service declare store: Store;
 
   get model() {
-    if (this.args.model.type === 'concept_question') {
-      return this.args.model as ConceptQuestionBlock;
-    }
-
-    return;
+    return this.args.model as ConceptQuestionBlock;
   }
 
   get question() {
-    return this.store.peekAll('concept-question').findBy('slug', this.model?.conceptQuestionSlug);
+    return this.store.peekAll('concept-question').findBy('slug', this.model.conceptQuestionSlug);
   }
 
   @action

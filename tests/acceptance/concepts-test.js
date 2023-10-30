@@ -46,7 +46,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].selectOption('PDF');
-    await conceptPage.questionCards[0].clickOnSubmitButton();
+    await conceptPage.questionCards[0].submitButton.click();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
@@ -93,6 +93,10 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptPage.pressEnterToContinue();
     assert.strictEqual(conceptPage.blocks.length, 3, 'can use enter to continue');
+
+    await conceptPage.pressE();
+    await conceptPage.questionCards[0].submitButton.click();
+    assert.strictEqual(conceptPage.blocks.length, 3, 'pressing a key that is not an option does nothing');
 
     await conceptPage.pressD();
     await conceptPage.pressEnterToSubmit();

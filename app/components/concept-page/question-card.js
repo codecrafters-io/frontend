@@ -45,7 +45,6 @@ export default class QuestionCardComponent extends Component {
 
   @action
   handleKeydown(event) {
-    // 65 is the keyCode for 'A'
     if (event.key === ' ' || event.key === 'Enter') {
       this.submit();
     } else if (event.keyCode - 65 > this.options.length - 1) {
