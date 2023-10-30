@@ -10,6 +10,7 @@
         <ConceptPage::QuestionCardOption
           class="px-4"
           @option={{option}}
+          @optionIndex = {{optionIndex}}
           @isSubmitted={{this.hasSubmitted}}
           {{on "click" (fn (mut this.selectedOptionIndex) optionIndex)}}
           data-test-question-card-option
