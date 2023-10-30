@@ -98,19 +98,7 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
-    if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
-      containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }
-
-  @action
-  handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  @action
-  handleContinueButtonClick() {
+  advanceToNextBlockGroup() {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
@@ -124,8 +112,42 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
+  focusOnInsert(element: HTMLElement) {
+    element.focus();
+  }
+
+  @action
+  handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
+    if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
+      containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  @action
+  handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    this.focusOnInsert(element);
+  }
+
+  @action
+  handleContinueButtonClick() {
+    this.advanceToNextBlockGroup();
+  }
+
+  @action
   handleDidInsertContainer() {
     this.analyticsEventTracker.track('viewed_concept', { concept_id: this.args.concept.id });
+  }
+
+  @action
+  handleKeydown(event: KeyboardEvent) {
+    console.log(event.key);
+
+    if (event.key === ' ' || event.key === 'Enter') {
+      this.advanceToNextBlockGroup();
+    } else if (event.key === 'Backspace') {
+      this.returnToPreviousBlockGroup();
+    }
   }
 
   @action
@@ -135,6 +157,11 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   handleStepBackButtonClick() {
+    this.returnToPreviousBlockGroup();
+  }
+
+  @action
+  returnToPreviousBlockGroup() {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
