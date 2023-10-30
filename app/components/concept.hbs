@@ -13,7 +13,12 @@
           <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" data-test-concept-block />
         {{else if (eq block.type "concept_question")}}
           {{! @glint-expect-error: not ts-ified yet }}
-          <Blocks::ConceptQuestionBlock @model={{block}} @onSubmit={{fn this.handleQuestionBlockSubmitted block}} class="mb-6" data-test-concept-block />
+          <Blocks::ConceptQuestionBlock
+            @model={{block}}
+            @onSubmit={{fn this.handleQuestionBlockSubmitted block}}
+            class="mb-6"
+            data-test-concept-block
+          />
 
           {{! @glint-expect-error: not typecast yet }}
           {{#if (and (eq this.currentBlockGroupIndex blockGroup.index) (set-has this.submittedQuestionSlugs block.conceptQuestionSlug))}}
