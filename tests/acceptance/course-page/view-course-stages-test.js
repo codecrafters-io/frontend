@@ -203,7 +203,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(
       coursePage.upgradePrompt.secondaryCopy,
-      'Plans start at $30/mo $15/mo (discounted price for India). Save an additional 40% by joining within 60 minutes.',
+      'Plans start at $40/mo $15/mo (discounted price for India). Save an additional 40% by joining within 60 minutes.',
     );
   });
 
@@ -241,7 +241,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/mo. Save 40% by joining within 60 minutes.');
+    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $40/mo. Save 40% by joining within 60 minutes.');
   });
 
   test('upgrade prompt should have the correct copy when the user is eligible for a regional discount', async function (assert) {
@@ -278,7 +278,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/mo $15/mo (discounted price for India).');
+    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $40/mo $15/mo (discounted price for India).');
   });
 
   test('upgrade prompt should have the correct copy when there are no discounts', async function (assert) {
@@ -314,7 +314,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/mo.');
+    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $40/mo.');
   });
 
   test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
