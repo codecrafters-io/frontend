@@ -46,7 +46,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].selectOption('PDF');
-    await conceptPage.questionCards[0].submitButton.click();
+    await conceptPage.questionCards[0].clickOnSubmitButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
@@ -92,16 +92,19 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(conceptPage.blocks.length, 2, 'can use enter to continue');
 
     await conceptPage.pressEnterToContinue();
-    assert.strictEqual(conceptPage.blocks.length, 3, 'can use enter to continue');
 
     await conceptPage.pressE();
-    await conceptPage.questionCards[0].submitButton.click();
-    assert.strictEqual(conceptPage.blocks.length, 3, 'pressing a key that is not an option does nothing');
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    assert.strictEqual(conceptPage.blocks.length, 3, 'pressing an invalid key does nothing');
 
-    await conceptPage.pressD();
+    await conceptPage.pressC();
     await conceptPage.pressEnterToSubmit();
+    assert.true(conceptPage.questionCards[0].text.includes('Incorrect'), 'can use keyboard to choose an option');
+
+    await conceptPage.pressBackspace();
     await conceptPage.pressEnterToContinue();
-    assert.strictEqual(conceptPage.blocks.length, 4, 'can use keyboard to select option');
+    await conceptPage.pressEnterToSubmit();
+    assert.true(conceptPage.questionCards[0].text.includes('Correct'), 'submitting without choosing an option shows explanation');
   });
 
   test('tracks concepts events', async function (assert) {

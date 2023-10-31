@@ -45,9 +45,11 @@ export default class QuestionCardComponent extends Component {
 
   @action
   handleKeydown(event) {
-    if (event.key === ' ' || event.key === 'Enter') {
+    if (this.selectedOptionIndex === undefined && (event.key === 'Enter' || event.key === ' ')) {
+      this.showExplanation();
+    } else if (event.key === ' ' || event.key === 'Enter') {
       this.submit();
-    } else if (event.keyCode - 65 > this.options.length - 1) {
+    } else if (event.keyCode - 65 < 0 || event.keyCode - 65 >= this.options.length) {
       return;
     } else {
       this.selectedOptionIndex = event.keyCode - 65;
@@ -56,12 +58,17 @@ export default class QuestionCardComponent extends Component {
 
   @action
   handleShowExplanationClick() {
-    this.selectedOptionIndex = this.args.question.correctOptionIndex;
-    this.handleSubmitClick();
+    this.showExplanation();
   }
 
   @action
   handleSubmitClick() {
+    this.submit();
+  }
+
+  @action
+  showExplanation() {
+    this.selectedOptionIndex = this.args.question.correctOptionIndex;
     this.submit();
   }
 

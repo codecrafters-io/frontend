@@ -25,10 +25,8 @@ export default createPage({
   questionCards: collection('[data-test-question-card]', {
     clickOnContinueButton: clickable('[data-test-question-card-continue-button]'),
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
+    clickOnSubmitButton: clickable('[data-test-question-card-submit-button]'),
     selectOption: clickOnText('[data-test-question-card-option]'),
-    submitButton: {
-      scope: '[data-test-question-card-submit-button]',
-    },
   }),
 
   visit: visitable('/concept/:slug'),

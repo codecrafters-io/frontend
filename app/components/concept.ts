@@ -118,6 +118,10 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
+    console.log('block group', blockGroup);
+    console.log('container element', containerElement);
+    console.log('last revealed block group index', this.lastRevealedBlockGroupIndex);
+
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
