@@ -28,6 +28,14 @@ export default class FooterComponent extends Component {
           text: 'Grep',
           url: 'https://app.codecrafters.io/courses/grep/overview',
         },
+        {
+          text: 'BitTorrent',
+          url: 'https://app.codecrafters.io/courses/bittorrent/overview',
+        },
+        {
+          text: 'HTTP Server',
+          url: 'https://app.codecrafters.io/courses/http-server/overview',
+        },
       ],
     };
   }
