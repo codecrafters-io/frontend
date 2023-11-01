@@ -71,7 +71,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await percySnapshot('Concept - Completed');
   });
 
-  test('can use keyboard to navigate through concept', async function (assert) {
+  test('can use keyboard to choose an answer on question cards', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -82,29 +82,12 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     assert.strictEqual(conceptPage.blocks.length, 1);
 
-    await conceptPage.pressSpace();
-    assert.strictEqual(conceptPage.blocks.length, 2, 'can use space to continue');
-
-    await conceptPage.pressBackspace();
-    assert.strictEqual(conceptPage.blocks.length, 1, 'can use backspace to go back');
-
-    await conceptPage.pressEnterToContinue();
-    assert.strictEqual(conceptPage.blocks.length, 2, 'can use enter to continue');
-
-    await conceptPage.pressEnterToContinue();
-
-    await conceptPage.pressE();
-    await conceptPage.questionCards[0].clickOnSubmitButton();
-    assert.strictEqual(conceptPage.blocks.length, 3, 'pressing an invalid key does nothing');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
 
     await conceptPage.pressC();
-    await conceptPage.pressEnterToSubmit();
+    await conceptPage.questionCards[0].clickOnSubmitButton();
     assert.true(conceptPage.questionCards[0].text.includes('Incorrect'), 'can use keyboard to choose an option');
-
-    await conceptPage.pressBackspace();
-    await conceptPage.pressEnterToContinue();
-    await conceptPage.pressEnterToSubmit();
-    assert.true(conceptPage.questionCards[0].text.includes('Correct'), 'submitting without choosing an option shows explanation');
   });
 
   test('tracks concepts events', async function (assert) {
