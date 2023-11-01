@@ -83,6 +83,8 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(conceptPage.blocks.length, 1);
 
     await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnStepBackButton();
+    await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
     await conceptPage.pressC();

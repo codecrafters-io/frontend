@@ -4,11 +4,17 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
   _clickOnContinueButton: clickable('[data-test-continue-button]'),
+  _clickOnStepBackButton: clickable('[data-test-step-back-button]'),
 
   blocks: collection('[data-test-concept-block]'),
 
   async clickOnContinueButton() {
     this._clickOnContinueButton();
+    await animationsSettled();
+  },
+
+  async clickOnStepBackButton() {
+    this._clickOnStepBackButton();
     await animationsSettled();
   },
 
