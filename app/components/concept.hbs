@@ -23,13 +23,15 @@
           {{#if (and (eq this.currentBlockGroupIndex blockGroup.index) (set-has this.submittedQuestionSlugs block.conceptQuestionSlug))}}
             {{! @glint-expect-error: not ts-ified yet }}
             <Concept::ContinueOrStepBack
+              @onBackspaceKeydown={{this.handleBackspaceKeydown}}
               @onContinueButtonClick={{this.handleContinueButtonClick}}
+              @onEnterOrSpaceKeydown={{this.handleEnterOrSpaceKeydown}}
               @onKeydown={{this.handleKeydown}}
               @onStepBackButtonClick={{this.handleStepBackButtonClick}}
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
-              class="continue-or-step-back-button mb-6 scroll-mb-10 focus:outline-none"
+              class="continue-or-step-back-button mb-6 scroll-mb-10"
               tabindex="0"
               {{did-insert this.handleContinueBlockInsertedAfterQuestion}}
             />
@@ -38,14 +40,14 @@
           {{#if (eq blockGroup.index this.currentBlockGroupIndex)}}
             {{! @glint-expect-error: not ts-ified yet }}
             <Concept::ContinueOrStepBack
+              @onBackspaceKeydown={{this.handleBackspaceKeydown}}
               @onContinueButtonClick={{this.handleContinueButtonClick}}
-              @onKeydown={{this.handleKeydown}}
+              @onEnterOrSpaceKeydown={{this.handleEnterOrSpaceKeydown}}
               @onStepBackButtonClick={{this.handleStepBackButtonClick}}
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
-              class="continue-or-step-back-button mb-6 scroll-mb-10 outline-none"
-              tabindex="0"
+              class="continue-or-step-back-button mb-6 scroll-mb-10"
             />
           {{/if}}
         {{else}}
