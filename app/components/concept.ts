@@ -1,15 +1,15 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
-import { TrackedSet } from 'tracked-built-ins';
+import ConceptModel from 'codecrafters-frontend/models/concept';
 import { action } from '@ember/object';
+import { Block } from 'codecrafters-frontend/lib/blocks';
 
 // @ts-ignore
 import { cached } from '@glimmer/tracking';
 
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import ConceptModel from 'codecrafters-frontend/models/concept';
-import type { Block } from 'codecrafters-frontend/models/concept';
+import { TrackedSet } from 'tracked-built-ins';
 import {
   ConceptQuestionBlock,
   IsClickToContinueBlock,

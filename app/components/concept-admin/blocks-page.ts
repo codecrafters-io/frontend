@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
-import ConceptModel, { Block } from 'codecrafters-frontend/models/concept';
+import ConceptModel from 'codecrafters-frontend/models/concept';
+import { Block } from 'codecrafters-frontend/lib/blocks';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Error from '@ember/error';
