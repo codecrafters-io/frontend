@@ -13,7 +13,9 @@
           <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" data-test-concept-block />
         {{else if (eq block.type "concept_question")}}
           <Blocks::ConceptQuestionBlock
+            {{! @glint-ignore }}
             @model={{block}}
+            {{! @glint-ignore }}
             @onSubmit={{fn this.handleQuestionBlockSubmitted block}}
             class="mb-6"
             data-test-concept-block

@@ -55,7 +55,12 @@
           data-test-question-card-submit-button
         >Submit</PrimaryButton>
 
-        <TertiaryButton class="focus:outline-none focus:ring focus:ring-teal-200" {{did-insert this.handleDidInsertShowExplanationButton}} {{on "click" this.handleShowExplanationClick}} data-test-question-card-show-explanation-button>Show explanation</TertiaryButton>
+        <TertiaryButton
+          class="focus:outline-none focus:ring focus:ring-teal-200"
+          {{did-insert this.handleDidInsertShowExplanationButton}}
+          {{on "click" this.handleShowExplanationClick}}
+          data-test-question-card-show-explanation-button
+        >Show explanation</TertiaryButton>
       </div>
     {{/if}}
   </div>

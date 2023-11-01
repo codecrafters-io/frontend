@@ -8,6 +8,7 @@ interface Signature {
   Args: {
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
+    onStepBackEnterOrSpaceKeydown: () => void;
     shouldShowStepBackButton: boolean;
     continueButtonText: string;
   };
