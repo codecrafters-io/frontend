@@ -10,7 +10,13 @@ import { tracked } from '@glimmer/tracking';
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import type { Block } from 'codecrafters-frontend/models/concept';
-import { ConceptQuestionBlock, ExtendedBlock } from 'codecrafters-frontend/lib/blocks';
+import {
+  ConceptQuestionBlock,
+  IsClickToContinueBlock,
+  IsConceptAnimationBlock,
+  IsConceptQuestionBlock,
+  IsMarkdownBlock,
+} from 'codecrafters-frontend/lib/blocks';
 
 interface Signature {
   Args: {
@@ -52,7 +58,21 @@ export default class ConceptComponent extends Component<Signature> {
         groups.push({ index: 0, blocks: [] });
       }
 
-      (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      if (IsClickToContinueBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
+
+      if (IsConceptAnimationBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
+
+      if (IsConceptQuestionBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
+
+      if (IsMarkdownBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
 
       if (block.isInteractable || groups.length === 0) {
         groups.push({ index: groups.length, blocks: [] });
@@ -150,9 +170,8 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleQuestionBlockSubmitted(block: ExtendedBlock) {
-    const conceptQuestionBlock = block as ConceptQuestionBlock;
-    this.submittedQuestionSlugs.add(conceptQuestionBlock.conceptQuestionSlug);
+  handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
+    this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
 
   @action
@@ -166,8 +185,8 @@ export default class ConceptComponent extends Component<Signature> {
       return;
     } else {
       (this.allBlockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
-        if (block.type === 'concept_question') {
-          this.submittedQuestionSlugs.delete((block as ConceptQuestionBlock).conceptQuestionSlug);
+        if (IsConceptQuestionBlock(block)) {
+          this.submittedQuestionSlugs.delete(block.conceptQuestionSlug);
         }
       });
 

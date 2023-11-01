@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import type { BlockJSON } from 'codecrafters-frontend/models/concept';
 
-class Block {
+class BaseBlock {
   @tracked type: BlockJSON['type'];
   @tracked args: Record<string, unknown>;
 
@@ -18,10 +18,10 @@ class Block {
   }
 
   dup(): this {
-    return new (this.constructor as typeof Block)(this.toJSON) as this;
+    return new (this.constructor as typeof BaseBlock)(this.toJSON) as this;
   }
 
-  isEqual(other: Block): boolean {
+  isEqual(other: BaseBlock): boolean {
     return JSON.stringify(this.toJSON) === JSON.stringify(other.toJSON);
   }
 
@@ -30,7 +30,7 @@ class Block {
   }
 }
 
-class ClickToContinueBlock extends Block {
+class ClickToContinueBlock extends BaseBlock {
   static type = 'click_to_continue';
   isInteractable = true;
 
@@ -51,7 +51,7 @@ class ClickToContinueBlock extends Block {
   }
 }
 
-class MarkdownBlock extends Block {
+class MarkdownBlock extends BaseBlock {
   static type = 'markdown';
   isInteractable = false;
 
@@ -68,7 +68,7 @@ class MarkdownBlock extends Block {
   }
 }
 
-class ConceptAnimationBlock extends Block {
+class ConceptAnimationBlock extends BaseBlock {
   static type = 'concept_animation';
   isInteractable = false;
 
@@ -81,7 +81,7 @@ class ConceptAnimationBlock extends Block {
   }
 }
 
-class ConceptQuestionBlock extends Block {
+class ConceptQuestionBlock extends BaseBlock {
   static type = 'concept_question';
   isInteractable = true;
 
@@ -98,7 +98,7 @@ class ConceptQuestionBlock extends Block {
   }
 }
 
-type ExtendedBlock = ClickToContinueBlock | MarkdownBlock | ConceptAnimationBlock | ConceptQuestionBlock;
+type Block = ClickToContinueBlock | MarkdownBlock | ConceptAnimationBlock | ConceptQuestionBlock;
 
 function IsClickToContinueBlock(block: Block): block is ClickToContinueBlock {
   return block.type === ClickToContinueBlock.type;
@@ -121,7 +121,7 @@ export {
   MarkdownBlock,
   ConceptQuestionBlock,
   ConceptAnimationBlock,
-  ExtendedBlock,
+  Block,
   IsClickToContinueBlock,
   IsMarkdownBlock,
   IsConceptAnimationBlock,
