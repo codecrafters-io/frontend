@@ -1,12 +1,24 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class QuestionCardComponent extends Component {
   @tracked didLearnSomething = false;
   @tracked selectedOptionIndex;
   @tracked hasSubmitted = false;
   @tracked containerElement;
+
+  @service questionCardTracker;
+
+  constructor() {
+    super(...arguments);
+    this.questionCardTracker.registerComponent(this);
+
+    if (this.questionCardTracker.isComponentLatest(this)) {
+      document.addEventListener('keydown', this.handleKeydown);
+    }
+  }
 
   get options() {
     return this.args.question.options.map((option, index) => {
@@ -35,7 +47,6 @@ export default class QuestionCardComponent extends Component {
   @action
   handleDidInsertContainer(element) {
     this.containerElement = element;
-    element.focus();
   }
 
   @action
@@ -45,6 +56,10 @@ export default class QuestionCardComponent extends Component {
 
   @action
   handleKeydown(event) {
+    if (!this.questionCardTracker.isComponentLatest(this)) {
+      return;
+    }
+
     if (this.selectedOptionIndex === undefined && (event.key === 'Enter' || event.key === ' ')) {
       this.showExplanation();
     } else if (event.key === ' ' || event.key === 'Enter') {
@@ -78,6 +93,15 @@ export default class QuestionCardComponent extends Component {
 
     if (this.args.onSubmit) {
       this.args.onSubmit();
+    }
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.questionCardTracker.unregisterComponent(this);
+
+    if (this.questionCardTracker.isComponentLatest(this)) {
+      document.removeEventListener('keydown', this.handleKeydown);
     }
   }
 }
