@@ -1,10 +1,10 @@
 <div class="flex items-center" ...attributes>
   {{! @glint-ignore }}
-  <PrimaryButton {{on "click" @onContinueButtonClick}} data-test-continue-button>
+  <PrimaryButton {{on "click" @onContinueButtonClick}} {{did-insert this.handleDidInsert}} {{on "keydown" @onKeydown}} data-test-continue-button>
     {{or @continueButtonText "Continue"}}
   </PrimaryButton>
   {{#if @shouldShowStepBackButton}}
-    <div class="flex items-center ml-4 group" role="button" data-test-step-back-button {{on "click" @onStepBackButtonClick}}>
+    <div class="flex items-center ml-4 group" role="button" data-test-step-back-button {{on "click" @onStepBackButtonClick}} {{on "keydown" @onKeydown}}>
       <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
       <div class="ml-1 text-gray-500 group-hover:text-gray-800 text-xs hover:underline">
         Step back

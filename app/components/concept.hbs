@@ -24,14 +24,14 @@
             {{! @glint-expect-error: not ts-ified yet }}
             <Concept::ContinueOrStepBack
               @onContinueButtonClick={{this.handleContinueButtonClick}}
+              @onKeydown={{this.handleKeydown}}
               @onStepBackButtonClick={{this.handleStepBackButtonClick}}
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
-              class="continue-or-step-back-button mb-6 scroll-mb-10 outline-none"
+              class="continue-or-step-back-button mb-6 scroll-mb-10 focus:outline-none"
               tabindex="0"
               {{did-insert this.handleContinueBlockInsertedAfterQuestion}}
-              {{on "keydown" this.handleKeydown}}
             />
           {{/if}}
         {{else if (eq block.type "click_to_continue")}}
@@ -39,14 +39,13 @@
             {{! @glint-expect-error: not ts-ified yet }}
             <Concept::ContinueOrStepBack
               @onContinueButtonClick={{this.handleContinueButtonClick}}
+              @onKeydown={{this.handleKeydown}}
               @onStepBackButtonClick={{this.handleStepBackButtonClick}}
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
               class="continue-or-step-back-button mb-6 scroll-mb-10 outline-none"
               tabindex="0"
-              {{did-insert this.focusOnInsert}}
-              {{on "keydown" this.handleKeydown}}
             />
           {{/if}}
         {{else}}

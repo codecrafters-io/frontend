@@ -132,11 +132,6 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  focusOnInsert(element: HTMLElement) {
-    element.focus();
-  }
-
-  @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -146,7 +141,6 @@ export default class ConceptComponent extends Component<Signature> {
   @action
   handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    this.focusOnInsert(element);
   }
 
   @action

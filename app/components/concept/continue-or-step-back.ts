@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
+import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -13,6 +14,11 @@ interface Signature {
 }
 
 export default class ConceptProgressComponent extends Component<Signature> {
+  @action
+  handleDidInsert(element: HTMLElement) {
+    element.focus();
+  }
+
   rules() {
     return fade;
   }
