@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-import ouraRingHorizonImage from '/assets/images/monthly-challenges/oura-ring-horizon.png';
+import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.png';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -18,7 +18,7 @@ interface Signature {
 export default class MonthlyChallengeBannerComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
-  ouraRingHorizonImage = ouraRingHorizonImage;
+  petoiRobotDogImage = petoiRobotDogImage;
 
   @action
   handleClick() {
