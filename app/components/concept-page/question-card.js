@@ -50,6 +50,11 @@ export default class QuestionCardComponent extends Component {
   }
 
   @action
+  handleDidInsertShowExplanationButton(element) {
+    element.focus();
+  }
+
+  @action
   handleILearnedSomethingButtonClick() {
     this.didLearnSomething = !this.didLearnSomething;
   }
@@ -60,14 +65,11 @@ export default class QuestionCardComponent extends Component {
       return;
     }
 
-    if (this.selectedOptionIndex === undefined && (event.key === 'Enter' || event.key === ' ')) {
-      this.showExplanation();
-    } else if (event.key === ' ' || event.key === 'Enter') {
-      this.submit();
-    } else if (event.keyCode - 65 < 0 || event.keyCode - 65 >= this.options.length) {
+    if (event.keyCode - 65 < 0 || event.keyCode - 65 >= this.options.length) {
       return;
     } else {
       this.selectedOptionIndex = event.keyCode - 65;
+      document.querySelector('.submit-button').focus();
     }
   }
 
