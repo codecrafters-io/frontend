@@ -23,11 +23,9 @@
           {{#if (and (eq this.currentBlockGroupIndex blockGroup.index) (set-has this.submittedQuestionSlugs block.conceptQuestionSlug))}}
             {{! @glint-expect-error: not ts-ified yet }}
             <Concept::ContinueOrStepBack
-              @onBackspaceKeydown={{this.handleBackspaceKeydown}}
               @onContinueButtonClick={{this.handleContinueButtonClick}}
-              @onEnterOrSpaceKeydown={{this.handleEnterOrSpaceKeydown}}
-              @onKeydown={{this.handleKeydown}}
               @onStepBackButtonClick={{this.handleStepBackButtonClick}}
+              @onStepBackEnterOrSpaceKeydown={{this.handleStepBackEnterOrSpaceKeydown}}
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
@@ -39,10 +37,9 @@
           {{#if (eq blockGroup.index this.currentBlockGroupIndex)}}
             {{! @glint-expect-error: not ts-ified yet }}
             <Concept::ContinueOrStepBack
-              @onBackspaceKeydown={{this.handleBackspaceKeydown}}
               @onContinueButtonClick={{this.handleContinueButtonClick}}
-              @onEnterOrSpaceKeydown={{this.handleEnterOrSpaceKeydown}}
               @onStepBackButtonClick={{this.handleStepBackButtonClick}}
+              @onStepBackEnterOrSpaceKeydown={{this.handleStepBackEnterOrSpaceKeydown}}
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}

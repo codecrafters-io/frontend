@@ -132,13 +132,6 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleBackspaceKeydown(event: KeyboardEvent) {
-    if (event.key === 'Backspace') {
-      this.returnToPreviousBlockGroup();
-    }
-  }
-
-  @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -161,14 +154,6 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleEnterOrSpaceKeydown(event: KeyboardEvent) {
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
-      this.advanceToNextBlockGroup();
-    }
-  }
-
-  @action
   handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
     this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
@@ -176,6 +161,14 @@ export default class ConceptComponent extends Component<Signature> {
   @action
   handleStepBackButtonClick() {
     this.returnToPreviousBlockGroup();
+  }
+
+  @action
+  handleStepBackEnterOrSpaceKeydown(event: KeyboardEvent) {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      this.returnToPreviousBlockGroup();
+    }
   }
 
   @action
