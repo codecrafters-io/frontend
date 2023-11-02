@@ -263,8 +263,6 @@ function routes() {
     return courseTesterVersion;
   });
 
-  this.get('/custom-discounts');
-
   this.post('/downvotes');
   this.post('/upvotes');
 
