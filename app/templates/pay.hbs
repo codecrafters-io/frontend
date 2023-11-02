@@ -6,9 +6,7 @@
       Choose your CodeCrafters membership
     </h1>
 
-    {{#if this.user.availableCustomDiscount}}
-      <PayPage::CustomDiscountNotice @customDiscount={{this.user.availableCustomDiscount}} class="mt-8" />
-    {{else if this.user.isEligibleForEarlyBirdDiscount}}
+    {{#if this.user.isEligibleForEarlyBirdDiscount}}
       <PayPage::EarlyBirdDiscountNotice @expiresAt={{this.user.earlyBirdDiscountEligibilityExpiresAt}} class="mt-8" />
     {{else if this.user.isEligibleForReferralDiscount}}
       <PayPage::ReferralDiscountNotice @referralActivation={{this.user.currentReferralActivation}} class="mt-8" />
