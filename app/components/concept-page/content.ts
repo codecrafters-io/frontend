@@ -18,6 +18,22 @@ export default class ContentComponent extends Component<Signature> {
     return this.currentProgressPercentage === 100;
   }
 
+  get isUpcomingConceptVisible() {
+    if (!this.args.nextConcept) {
+      return false;
+    }
+
+    if (!this.args.conceptGroup) {
+      return false;
+    }
+
+    if (!this.hasCompletedConcept) {
+      return false;
+    }
+
+    return true;
+  }
+
   @action
   handleCompletionContainerInserted(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
