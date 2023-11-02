@@ -34,7 +34,6 @@
 
       <PayPage::PricingCard
         @actualPrice={{360}}
-        @customDiscount={{this.user.availableCustomDiscount}}
         @discountedPrice={{this.discountedYearlyPrice}}
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
         @footerText="Single payment of ${{or this.discountedYearlyPrice 360}}."
