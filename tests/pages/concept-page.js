@@ -17,5 +17,21 @@ export default createPage({
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
   }),
 
+  upcomingConcept: {
+    card: {
+      title: {
+        scope: '[data-test-concept-title]',
+      },
+
+      scope: '[data-test-concept-card]',
+    },
+
+    title: {
+      scope: '[data-test-upcoming-concept-title]',
+    },
+
+    scope: '[data-test-upcoming-concept]',
+  },
+
   visit: visitable('/concept/:slug'),
 });

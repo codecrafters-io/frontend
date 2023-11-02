@@ -50,8 +50,8 @@
         {{/animated-if}}
 
         {{#animated-if (and this.hasCompletedConcept @conceptGroup @nextConcept)}}
-          <div class="py-16" {{did-insert this.handleUpcomingConceptInserted}}>
-            <div class="text-lg text-center text-gray-800 mb-8">
+          <div class="py-16" {{did-insert this.handleUpcomingConceptInserted}} data-test-upcoming-concept>
+            <div class="text-lg text-center text-gray-800 mb-8" data-test-upcoming-concept-title>
               Next up in {{@conceptGroup.title}}:
             </div>
             <ConceptsPage::ConceptCard @concept={{@nextConcept}} />

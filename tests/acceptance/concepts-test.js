@@ -37,8 +37,14 @@ module('Acceptance | concepts-test', function (hooks) {
 
     signInAsStaff(this.owner, this.server);
 
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
     await conceptsPage.visit();
-    assert.strictEqual(1, 1);
 
     await percySnapshot('Concept - Start');
 
@@ -67,6 +73,9 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+
+    assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
+    assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
 
     await percySnapshot('Concept - Completed');
   });
