@@ -106,4 +106,23 @@ module('Acceptance | concepts-test', function (hooks) {
       ],
     );
   });
+
+  test('submit button does not work when no option is selected for question card', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+    await conceptsPage.visit();
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    assert.notOk(conceptPage.questionCards[0].hasSubmitted, 'The submission result should not be visible without selecting an option.');
+
+    await conceptPage.questionCards[0].selectOption('PDF');
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+
+    assert.ok(conceptPage.questionCards[0].hasSubmitted, 'After selecting an option, the submission result should be visible.');
+  });
 });

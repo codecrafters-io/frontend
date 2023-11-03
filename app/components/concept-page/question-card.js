@@ -50,10 +50,12 @@ export default class QuestionCardComponent extends Component {
 
   @action
   handleSubmitClick() {
-    this.hasSubmitted = true;
+    if (this.selectedOptionIndex !== undefined) {
+      this.hasSubmitted = true;
 
-    if (this.args.onSubmit) {
-      this.args.onSubmit();
+      if (this.args.onSubmit) {
+        this.args.onSubmit();
+      }
     }
   }
 }
