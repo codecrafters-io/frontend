@@ -52,6 +52,7 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            maxWidth: '90ch', // Default is 65ch
             a: {
               color: colors.sky[500],
               fontWeight: '600',
