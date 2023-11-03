@@ -28,4 +28,8 @@ export default class QuestionCardOptionComponent extends Component {
   get isUnselectedAndCorrect() {
     return this.args.isSubmitted && !this.args.option.isSelected && this.args.option.is_correct;
   }
+
+  get optionIdentifier() {
+    return String.fromCharCode(65 + this.args.optionIndex); // 65 is the ASCII code for 'A'
+  }
 }

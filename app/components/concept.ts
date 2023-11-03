@@ -1,16 +1,22 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
-import { TrackedSet } from 'tracked-built-ins';
+import ConceptModel from 'codecrafters-frontend/models/concept';
 import { action } from '@ember/object';
+import { Block } from 'codecrafters-frontend/lib/blocks';
 
 // @ts-ignore
 import { cached } from '@glimmer/tracking';
 
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import ConceptModel from 'codecrafters-frontend/models/concept';
-import type { Block } from 'codecrafters-frontend/models/concept';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { TrackedSet } from 'tracked-built-ins';
+import {
+  ConceptQuestionBlock,
+  IsClickToContinueBlock,
+  IsConceptAnimationBlock,
+  IsConceptQuestionBlock,
+  IsMarkdownBlock,
+} from 'codecrafters-frontend/lib/blocks';
 
 interface Signature {
   Args: {
@@ -52,7 +58,21 @@ export default class ConceptComponent extends Component<Signature> {
         groups.push({ index: 0, blocks: [] });
       }
 
-      (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      if (IsClickToContinueBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
+
+      if (IsConceptAnimationBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
+
+      if (IsConceptQuestionBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
+
+      if (IsMarkdownBlock(block)) {
+        (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+      }
 
       if (block.isInteractable || groups.length === 0) {
         groups.push({ index: groups.length, blocks: [] });
@@ -98,6 +118,20 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
+  advanceToNextBlockGroup() {
+    if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
+      this.hasFinished = true;
+    } else {
+      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
+    }
+
+    this.analyticsEventTracker.track('progressed_through_concept', {
+      concept_id: this.args.concept.id,
+      progress_percentage: this.progressPercentage,
+    });
+  }
+
+  @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -111,16 +145,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   handleContinueButtonClick() {
-    if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
-      this.hasFinished = true;
-    } else {
-      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
-    }
-
-    this.analyticsEventTracker.track('progressed_through_concept', {
-      concept_id: this.args.concept.id,
-      progress_percentage: this.progressPercentage,
-    });
+    this.advanceToNextBlockGroup();
   }
 
   @action
@@ -135,12 +160,25 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   handleStepBackButtonClick() {
+    this.returnToPreviousBlockGroup();
+  }
+
+  @action
+  handleStepBackEnterOrSpaceKeydown(event: KeyboardEvent) {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      this.returnToPreviousBlockGroup();
+    }
+  }
+
+  @action
+  returnToPreviousBlockGroup() {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
       (this.allBlockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
-        if (block.type === 'concept_question') {
-          this.submittedQuestionSlugs.delete((block as ConceptQuestionBlock).conceptQuestionSlug);
+        if (IsConceptQuestionBlock(block)) {
+          this.submittedQuestionSlugs.delete(block.conceptQuestionSlug);
         }
       });
 

@@ -1,11 +1,9 @@
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
 import Model, { belongsTo } from '@ember-data/model';
-import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { Block, MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 import { TemporaryUserModel } from './temporary-types';
-
-export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
 export type BlockJSON = {
   type: 'click_to_continue' | 'markdown' | 'concept_animation' | 'concept_question';

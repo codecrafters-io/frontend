@@ -71,6 +71,27 @@ module('Acceptance | concepts-test', function (hooks) {
     await percySnapshot('Concept - Completed');
   });
 
+  test('can use keyboard to choose an answer on question cards', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    assert.strictEqual(conceptPage.blocks.length, 1);
+
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnStepBackButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    await conceptPage.pressC();
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    assert.true(conceptPage.questionCards[0].text.includes('Incorrect'), 'can use keyboard to choose an option');
+  });
+
   test('tracks concepts events', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);

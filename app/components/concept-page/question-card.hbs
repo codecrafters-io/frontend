@@ -1,5 +1,11 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="border rounded shadow-sm scroll-mb-10" {{did-insert this.handleDidInsertContainer}} data-test-question-card ...attributes>
+<div
+  class="question-card border rounded shadow-sm scroll-mb-10 outline-none"
+  tabindex="0"
+  {{did-insert this.handleDidInsertContainer}}
+  data-test-question-card
+  ...attributes
+>
   <div class="p-3 sm:p-4">
     <div class="text-gray-800 mr-2 mb-2 border-b pb-2.5 prose">
       {{markdown-to-html @question.queryMarkdown}}
@@ -10,6 +16,7 @@
         <ConceptPage::QuestionCardOption
           class="px-4"
           @option={{option}}
+          @optionIndex={{optionIndex}}
           @isSubmitted={{this.hasSubmitted}}
           {{on "click" (fn (mut this.selectedOptionIndex) optionIndex)}}
           data-test-question-card-option
@@ -43,11 +50,17 @@
 
         <PrimaryButton
           @isDisabled={{is-empty this.selectedOptionIndex}}
+          class="submit-button focus:outline-none focus:ring focus:ring-teal-200"
           {{on "click" this.handleSubmitClick}}
           data-test-question-card-submit-button
         >Submit</PrimaryButton>
 
-        <TertiaryButton {{on "click" this.handleShowExplanationClick}} data-test-question-card-show-explanation-button>Show explanation</TertiaryButton>
+        <TertiaryButton
+          class="focus:outline-none focus:ring focus:ring-teal-200"
+          {{did-insert this.handleDidInsertShowExplanationButton}}
+          {{on "click" this.handleShowExplanationClick}}
+          data-test-question-card-show-explanation-button
+        >Show explanation</TertiaryButton>
       </div>
     {{/if}}
   </div>
