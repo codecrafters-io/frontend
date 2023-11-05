@@ -57,7 +57,7 @@
                 </div>
 
                 {{! @glint-expect-error not ts-ified yet}}
-                <ConceptsPage::ConceptCard @concept={{this.nextConcept}} @onClick={{this.handleUpcomingConceptClick}} />
+                <ConceptsPage::ConceptCard @concept={{this.nextConcept}} {{on "click" this.handleUpcomingConceptClick}} />
               </div>
             {{/animated-if}}
           </div>
