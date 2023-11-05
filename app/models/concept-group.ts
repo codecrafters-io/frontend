@@ -12,11 +12,12 @@ export default class ConceptGroupModel extends Model {
 
   nextConceptSlug(conceptSlug: string) {
     const currentSlugIndex = this.conceptSlugs.indexOf(conceptSlug);
+    const nextSlugIndex = currentSlugIndex + 1;
 
-    if (currentSlugIndex > this.conceptSlugs.length - 1) {
+    if (nextSlugIndex > this.conceptSlugs.length - 1) {
       return null;
     }
 
-    return this.conceptSlugs[currentSlugIndex + 1];
+    return this.conceptSlugs[nextSlugIndex];
   }
 }
