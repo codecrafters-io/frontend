@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
+  allConcepts: ConceptModel[];
   concept: ConceptModel;
   conceptGroup: ConceptGroupModel;
   nextConcept: ConceptModel | null;
@@ -32,6 +33,10 @@ export default class ContentComponent extends Component<Signature> {
     }
 
     return true;
+  }
+
+  get nextConcept() {
+    return this.args.allConcepts.find((concept) => concept.slug === this.args.conceptGroup.nextConceptSlug(this.args.concept.slug));
   }
 
   @action

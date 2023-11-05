@@ -14,21 +14,10 @@ export default class ConceptRoute extends BaseRoute {
       .filter((group) => group.conceptSlugs.includes(concept.slug))
       .sort((a, b) => a.slug.localeCompare(b.slug));
 
-    let nextConcept = null;
-
-    if (relatedConceptGroups[0]) {
-      const currentConceptIndex = relatedConceptGroups[0].conceptSlugs.indexOf(concept.slug);
-      const nextConceptSlug = relatedConceptGroups[0].conceptSlugs[currentConceptIndex + 1];
-
-      if (nextConceptSlug) {
-        nextConcept = allConcepts.find((concept) => concept.slug === nextConceptSlug);
-      }
-    }
-
     return {
+      allConcepts,
       concept,
       conceptGroup: relatedConceptGroups[0],
-      nextConcept,
     };
   }
 }
