@@ -25,7 +25,6 @@ export default class UserModel extends Model {
   @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes;
   @hasMany('course-idea-vote', { async: false }) courseIdeaVotes;
   @hasMany('course-participation', { async: false }) courseParticipations;
-  @hasMany('custom-discount', { async: false }) customDiscounts;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
@@ -43,10 +42,6 @@ export default class UserModel extends Model {
 
   get adminProfileUrl() {
     return `${config.x.backendUrl}/admin/users/${this.id}`;
-  }
-
-  get availableCustomDiscount() {
-    return this.customDiscounts.filter((customDiscount) => customDiscount.isAvailable)[0];
   }
 
   get canAccessPaidContent() {
@@ -101,23 +96,15 @@ export default class UserModel extends Model {
     return this.referralLinks.rejectBy('isNew').length > 0;
   }
 
-  get isEligibleForCustomDiscount() {
-    return !!this.availableCustomDiscount;
-  }
-
   get isEligibleForEarlyBirdDiscount() {
-    if (this.isEligibleForReferralDiscount || this.isEligibleForCustomDiscount) {
-      return false; // Prioritize referral & custom discount
+    if (this.isEligibleForReferralDiscount) {
+      return false; // Prioritize referral
     }
 
     return this.earlyBirdDiscountEligibilityExpiresAt > new Date();
   }
 
   get isEligibleForReferralDiscount() {
-    if (this.isEligibleForCustomDiscount) {
-      return false; // Prioritize custom discount
-    }
-
     if (this.currentReferralActivation) {
       return this.currentReferralActivation.isWithinDiscountPeriod;
     } else {

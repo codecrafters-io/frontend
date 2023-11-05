@@ -87,36 +87,6 @@ module('Acceptance | pay-test', function (hooks) {
     assert.true(this.server.schema.individualCheckoutSessions.first().referralDiscountEnabled);
   });
 
-  test('new user sees discounted price if they have a custom discount', async function (assert) {
-    testScenario(this.server);
-
-    let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000));
-
-    this.server.create('referral-activation', {
-      activatedAt: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
-      referrer: user,
-      customer: user,
-    });
-
-    const customDiscount = this.server.create('custom-discount', {
-      user: user,
-      discountedYearlyPriceInCents: 100_00,
-      expiresAt: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
-      status: 'unused',
-    });
-
-    signIn(this.owner, this.server);
-
-    await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$100', 'should show discounted price');
-
-    await percySnapshot('Pay page - with custom discount');
-
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
-    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().customDiscount.id, customDiscount.id);
-  });
-
   test('user can create checkout session with regional discount applied', async function (assert) {
     testScenario(this.server);
 

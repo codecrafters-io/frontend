@@ -11,9 +11,7 @@ export default class PayController extends Controller {
   @tracked shouldApplyRegionalDiscount = false;
 
   get discountedYearlyPrice() {
-    if (this.user.isEligibleForCustomDiscount) {
-      return this.user.availableCustomDiscount.discountedYearlyPriceInDollars;
-    } else if (this.user.isEligibleForReferralDiscount) {
+    if (this.user.isEligibleForReferralDiscount) {
       return 216;
     } else if (this.user.isEligibleForEarlyBirdDiscount) {
       return 216;
