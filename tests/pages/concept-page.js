@@ -1,4 +1,4 @@
-import { collection, clickable, clickOnText, visitable } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, visitable, isPresent } from 'ember-cli-page-object';
 import { animationsSettled } from 'ember-animated/test-support';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
@@ -15,6 +15,7 @@ export default createPage({
     clickOnSubmitButton: clickable('[data-test-question-card-submit-button]'),
     clickOnContinueButton: clickable('[data-test-question-card-continue-button]'),
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
+    hasSubmitted: isPresent('[data-test-question-submitted]'),
   }),
 
   upcomingConcept: {

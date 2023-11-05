@@ -19,7 +19,6 @@ export default class PayRoute extends BaseRoute {
 
     return {
       courses: await this.store.findAll('course'), // For testimonials
-      customDiscounts: await this.store.findAll('custom-discount', { include: 'user' }),
       regionalDiscount: await this.store.createRecord('regional-discount').fetchCurrent(),
     };
   }

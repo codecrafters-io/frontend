@@ -4,7 +4,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsSubscriber, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -95,9 +95,9 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage passed');
   });
 
-  test('passing first stage shows badges for staff users', async function (assert) {
+  test('passing first stage shows badges', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });

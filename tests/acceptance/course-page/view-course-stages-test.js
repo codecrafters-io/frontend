@@ -203,7 +203,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(
       coursePage.upgradePrompt.secondaryCopy,
-      'Plans start at $40/mo $15/mo (discounted price for India). Save an additional 40% by joining within 60 minutes.',
+      'Plans start at $40/mo $20/mo (discounted price for India). Save an additional 40% by joining within 60 minutes.',
     );
   });
 
@@ -278,7 +278,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
 
-    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $40/mo $15/mo (discounted price for India).');
+    assert.strictEqual(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $40/mo $20/mo (discounted price for India).');
   });
 
   test('upgrade prompt should have the correct copy when there are no discounts', async function (assert) {

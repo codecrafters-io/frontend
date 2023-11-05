@@ -23,7 +23,10 @@
     <div class="h-px w-full bg-gray-300 bg-opacity-50 absolute -top-px left-0 right-0"></div>
 
     {{#if this.hasSubmitted}}
-      <div class="p-3 sm:p-4 shadow-sm border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-white'}}">
+      <div
+        data-test-question-submitted
+        class="p-3 sm:p-4 shadow-sm border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-white'}}"
+      >
         <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
           {{#if this.selectedOptionIsCorrect}}
             <span class="mr-1">🎉</span>
