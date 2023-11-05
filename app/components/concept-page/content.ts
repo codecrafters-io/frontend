@@ -19,24 +19,8 @@ export default class ContentComponent extends Component<Signature> {
     return this.currentProgressPercentage === 100;
   }
 
-  get isUpcomingConceptVisible() {
-    if (!this.args.nextConcept) {
-      return false;
-    }
-
-    if (!this.args.conceptGroup) {
-      return false;
-    }
-
-    if (!this.hasCompletedConcept) {
-      return false;
-    }
-
-    return true;
-  }
-
   get nextConcept() {
-    return this.args.allConcepts.find((concept) => concept.slug === this.args.conceptGroup.nextConceptSlug(this.args.concept.slug));
+    return this.args.allConcepts.find((concept) => concept.slug === this.args.conceptGroup?.nextConceptSlug(this.args.concept.slug));
   }
 
   @action
