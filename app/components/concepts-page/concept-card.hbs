@@ -2,6 +2,8 @@
   class="group border p-5 bg-white rounded-md shadow-sm hover:shadow cursor-pointer flex flex-col justify-between"
   @route="concept"
   @model={{@concept.slug}}
+  {{! @glint-expect-error not ts-ified yet}}
+  {{on "click" @onClick}}
   data-test-concept-card
 >
   <div>
