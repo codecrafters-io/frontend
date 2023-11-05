@@ -58,6 +58,10 @@ function routes() {
 
   this.get('/badges');
 
+  this.get('/concept-groups', function (schema) {
+    return schema.conceptGroups.all();
+  });
+
   this.get('/concept-groups/:concept_group_slug', function (schema, request) {
     let result = schema.conceptGroups.where({ slug: request.params.concept_group_slug });
 

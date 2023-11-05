@@ -18,5 +18,21 @@ export default createPage({
     hasSubmitted: isPresent('[data-test-question-submitted]'),
   }),
 
+  upcomingConcept: {
+    card: {
+      title: {
+        scope: '[data-test-concept-title]',
+      },
+
+      scope: '[data-test-concept-card]',
+    },
+
+    title: {
+      scope: '[data-test-upcoming-concept-title]',
+    },
+
+    scope: '[data-test-upcoming-concept]',
+  },
+
   visit: visitable('/concept/:slug'),
 });

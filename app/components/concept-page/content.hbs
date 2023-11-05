@@ -47,6 +47,20 @@
               </div>
             </FeedbackButton>
           </div>
+
+          <div>
+            {{#animated-if this.nextConcept}}
+              <div class="py-16" {{did-insert this.handleUpcomingConceptInserted}} data-test-upcoming-concept>
+                <div class="text-lg text-center text-gray-800 mb-8" data-test-upcoming-concept-title>
+                  Next up in
+                  {{@conceptGroup.title}}:
+                </div>
+
+                {{! @glint-expect-error not ts-ified yet}}
+                <ConceptsPage::ConceptCard @concept={{this.nextConcept}} />
+              </div>
+            {{/animated-if}}
+          </div>
         {{/animated-if}}
       </div>
 

@@ -9,4 +9,15 @@ export default class ConceptGroupModel extends Model {
   @attr('string') descriptionMarkdown!: string;
   @attr('string') slug!: string;
   @attr('string') title!: string;
+
+  nextConceptSlug(conceptSlug: string) {
+    const currentSlugIndex = this.conceptSlugs.indexOf(conceptSlug);
+    const nextSlugIndex = currentSlugIndex + 1;
+
+    if (nextSlugIndex > this.conceptSlugs.length - 1) {
+      return null;
+    }
+
+    return this.conceptSlugs[nextSlugIndex];
+  }
 }
