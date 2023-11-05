@@ -34,6 +34,11 @@ export default class ContentComponent extends Component<Signature> {
   }
 
   @action
+  handleUpcomingConceptClick() {
+    this.currentProgressPercentage = 0;
+  }
+
+  @action
   handleUpcomingConceptInserted(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
