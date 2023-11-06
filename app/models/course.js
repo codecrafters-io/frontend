@@ -4,6 +4,7 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import Model from '@ember-data/model';
 
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
+import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
@@ -86,6 +87,7 @@ export default class CourseModel extends Model {
     return (
       {
         bittorrent: bittorrentLogo,
+        'dns-server': dnsServerLogo,
         docker: dockerLogo,
         git: gitLogo,
         grep: grepLogo,
