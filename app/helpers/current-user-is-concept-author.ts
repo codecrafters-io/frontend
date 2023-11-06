@@ -18,7 +18,7 @@ export default class CurrentUserIsConceptAuthor extends Helper<Signature> {
   public compute(positional: Positional): boolean {
     const concept = positional[0];
 
-    return !!(this.authenticator.currentUser && concept.author == this.authenticator.currentUser);
+    return !!(this.authenticator.currentUser && concept?.author == this.authenticator.currentUser);
   }
 }
 

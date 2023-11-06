@@ -1,4 +1,4 @@
-<div class="bg-white">
+<div class="bg-white" {{did-update this.handleConceptDidUpdate @concept}}>
   {{! Mobile !}}
   {{#unless this.hasCompletedConcept}}
     <div class="block md:hidden px-3 border-b flex-shrink-0 sticky top-0 backdrop-blur-sm bg-white/80 z-20 w-full">
@@ -57,7 +57,7 @@
                 </div>
 
                 {{! @glint-expect-error not ts-ified yet}}
-                <ConceptsPage::ConceptCard @concept={{this.nextConcept}} {{on "click" this.handleUpcomingConceptClick}} />
+                <ConceptsPage::ConceptCard @concept={{this.nextConcept}} />
               </div>
             {{/animated-if}}
           </div>

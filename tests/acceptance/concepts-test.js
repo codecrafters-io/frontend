@@ -9,6 +9,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 function createConcepts(server) {
@@ -19,6 +20,7 @@ function createConcepts(server) {
 module('Acceptance | concepts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+  setupWindowMock(hooks);
 
   test('can create concept', async function (assert) {
     testScenario(this.server);
@@ -78,6 +80,52 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
 
     await percySnapshot('Concept - Completed');
+  });
+
+  test('clicking on the upcoming concept cards works properly', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].selectOption('PDF');
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    await conceptPage.upcomingConcept.card.click();
+    assert.strictEqual(currentURL(), '/concepts/tcp-overview', 'Clicking on the upcoming concept card navigates to the next concept');
+    assert.strictEqual(conceptPage.blocks.length, 1, 'The progress is reset when navigating to a new concept');
+    assert.strictEqual(window.scrollY, 0, 'The page is scrolled to the top when navigating to a new concept');
   });
 
   test('tracks concepts events', async function (assert) {
