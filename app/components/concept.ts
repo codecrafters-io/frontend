@@ -105,6 +105,11 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
+  handleConceptDidUpdate() {
+    this.lastRevealedBlockGroupIndex = null;
+  }
+
+  @action
   handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
