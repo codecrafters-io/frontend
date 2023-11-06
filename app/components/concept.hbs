@@ -7,13 +7,13 @@
       {{#each blockGroup.blocks as |block|}}
         {{#if (eq block.type "markdown")}}
           {{! @glint-expect-error: not ts-ified yet }}
-          <Blocks::MarkdownBlock @model={{block}} class="mb-6" />
+          <Blocks::MarkdownBlock @model={{block}} class="mb-6" data-test-block />
         {{else if (eq block.type "concept_animation")}}
           {{! @glint-expect-error: not ts-ified yet }}
-          <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" />
+          <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" data-test-block />
         {{else if (eq block.type "concept_question")}}
           {{! @glint-expect-error: not ts-ified yet }}
-          <Blocks::ConceptQuestionBlock @model={{block}} @onSubmit={{fn this.handleQuestionBlockSubmitted block}} class="mb-6" />
+          <Blocks::ConceptQuestionBlock @model={{block}} @onSubmit={{fn this.handleQuestionBlockSubmitted block}} class="mb-6" data-test-block />
 
           {{! @glint-expect-error: not typecast yet }}
           {{#if (and (eq this.currentBlockGroupIndex blockGroup.index) (set-has this.submittedQuestionSlugs block.conceptQuestionSlug))}}

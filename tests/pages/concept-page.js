@@ -3,6 +3,7 @@ import { animationsSettled } from 'ember-animated/test-support';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
+  blocks: collection('[data-test-block]'),
   _clickOnContinueButton: clickable('[data-test-continue-button]'),
 
   async clickOnContinueButton() {
