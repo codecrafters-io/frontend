@@ -29,13 +29,13 @@ export default class ContentComponent extends Component<Signature> {
   }
 
   @action
-  handleProgressPercentageChanged(progressPercentage: number) {
-    this.currentProgressPercentage = progressPercentage;
+  handleConceptDidUpdate() {
+    this.currentProgressPercentage = 0;
   }
 
   @action
-  handleUpcomingConceptClick() {
-    this.currentProgressPercentage = 0;
+  handleProgressPercentageChanged(progressPercentage: number) {
+    this.currentProgressPercentage = progressPercentage;
   }
 
   @action
