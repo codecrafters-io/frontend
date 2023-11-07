@@ -29,7 +29,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
-    user.update('isCodecraftersPartner', true);
+    user.update('isVip', true);
 
     signInAsSubscriber(this.owner, this.server, user);
 
@@ -45,7 +45,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
     const user = this.server.schema.users.first();
-    user.update('isCodecraftersPartner', true);
+    user.update('isVip', true);
     user.update('codecraftersPartnerStatusExpiresAt', expiryDate);
 
     signInAsSubscriber(this.owner, this.server, user);

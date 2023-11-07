@@ -12,7 +12,7 @@ export default class UserModel extends Model {
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
   @attr('boolean') isStaff;
-  @attr('boolean') isCodecraftersPartner;
+  @attr('boolean') isVip;
   @attr('boolean') isConceptAuthor;
   @attr('string') name;
   @attr('string') username;
@@ -45,7 +45,7 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
   get codecraftersProfileUrl() {

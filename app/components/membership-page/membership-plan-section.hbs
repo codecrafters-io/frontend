@@ -1,6 +1,6 @@
 {{! @glint-nocheck: not typesafe yet }}
 <MembershipPage::Section @title="Membership Plan" data-test-membership-plan-section>
-  <div class="text-gray-700 {{if @subscription.user.isCodecraftersPartner 'line-through' ''}}" data-test-membership-plan-description>
+  <div class="text-gray-700 {{if @subscription.user.isVip 'line-through' ''}}" data-test-membership-plan-description>
     {{#if @subscription.isTrialing}}
       Your trial for the
       <b class="font-semibold">{{@subscription.pricingPlanName}}</b>
@@ -20,10 +20,10 @@
     {{/if}}
   </div>
   <div class="text-gray-700">
-    {{#if (and @subscription.user.isCodecraftersPartner @subscription.user.codecraftersPartnerStatusExpiresAt)}}
+    {{#if (and @subscription.user.isVip @subscription.user.codecraftersPartnerStatusExpiresAt)}}
       🎉 You have VIP access to all CodeCrafters content, valid until
       <b class="font-semibold">{{date-format @subscription.user.codecraftersPartnerStatusExpiresAt format="PPPp"}}</b>.
-    {{else if @subscription.user.isCodecraftersPartner}}
+    {{else if @subscription.user.isVip}}
       🎉 You have VIP access to all CodeCrafters content.
     {{/if}}
   </div>
