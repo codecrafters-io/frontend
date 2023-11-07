@@ -11,4 +11,4 @@ export interface ProgressIndicatorWithDot {
 
 type ProgressIndicator = ProgressIndicatorWithoutDot | ProgressIndicatorWithDot;
 
-export default ProgressIndicator;
+export { type ProgressIndicator as default };
