@@ -20,9 +20,9 @@
     {{/if}}
   </div>
   <div class="text-gray-700">
-    {{#if (and @subscription.user.isVip @subscription.user.codecraftersPartnerStatusExpiresAt)}}
+    {{#if (and @subscription.user.isVip @subscription.user.codecraftersVipStatusExpiresAt)}}
       🎉 You have VIP access to all CodeCrafters content, valid until
-      <b class="font-semibold">{{date-format @subscription.user.codecraftersPartnerStatusExpiresAt format="PPPp"}}</b>.
+      <b class="font-semibold">{{date-format @subscription.user.codecraftersVipStatusExpiresAt format="PPPp"}}</b>.
     {{else if @subscription.user.isVip}}
       🎉 You have VIP access to all CodeCrafters content.
     {{/if}}

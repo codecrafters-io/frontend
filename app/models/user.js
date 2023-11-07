@@ -18,7 +18,7 @@ export default class UserModel extends Model {
   @attr('string') username;
   @attr('') featureFlags;
   @attr('string') primaryEmailAddress;
-  @attr('date') codecraftersPartnerStatusExpiresAt;
+  @attr('date') codecraftersVipStatusExpiresAt;
 
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
