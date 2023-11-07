@@ -12,14 +12,17 @@ export default class SyntaxHighlightedCodeComponent extends Component {
 
     shiki.setCDN('https://unpkg.com/shiki/');
 
-    let highlighterPromise = getOrCreateCachedHighlighterPromise('code-walkthrough', { theme: 'one-dark-pro', langs: ['c'] });
+    let highlighterPromise = getOrCreateCachedHighlighterPromise(`${this.args.theme}-${this.args.language}`, {
+      theme: this.args.theme,
+      langs: [this.args.language],
+    });
 
     const lineOptions = (this.args.highlightedLines || '')
       .split(',')
       .flatMap((lineOrBlock) => [{ line: parseInt(lineOrBlock), classes: ['highlighted'] }]);
 
     highlighterPromise.then((highlighter) => {
-      this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: 'c', lineOptions: lineOptions }));
+      this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: this.args.language, lineOptions: lineOptions }));
     });
     // .catch((error) => {
     //   if (config.environment === 'test' && error.message.match(/WebAssembly.instantiate/)) {

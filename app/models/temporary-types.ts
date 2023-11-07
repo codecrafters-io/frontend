@@ -4,6 +4,7 @@ import CourseExtensionModel from 'codecrafters-frontend/models/course-extension'
 import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-extension-activation';
 import RepositoryStageListModel from './repository-stage-list';
 import CourseStageScreencastModel from './course-stage-screencast';
+import BuildpackModel from './buildpack';
 
 export class TemporaryUserModel {
   declare id: string;
@@ -26,6 +27,8 @@ export class TemporaryUserModel {
 }
 
 export class TemporaryCourseModel {
+  declare definitionRepositoryLink: string;
+  declare definitionRepositoryFullName: string;
   declare id: string;
   declare name?: string;
   declare slug: string;
@@ -37,6 +40,9 @@ export class TemporaryCourseModel {
   declare secondaryExtensionSlugs: string[];
   declare stages: TemporaryCourseStageModel[];
   declare baseStages: TemporaryCourseStageModel[];
+  declare buildpacks: BuildpackModel[];
+  declare buildpacksLastSyncedAt: Date | null;
+  declare syncBuildpacks: () => Promise<Record<string, string>>;
 }
 
 export class TemporaryCourseStageModel {

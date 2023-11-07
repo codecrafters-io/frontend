@@ -40,6 +40,8 @@ Router.map(function () {
   });
 
   this.route('course-admin', { path: '/courses/:course_slug/admin' }, function () {
+    this.route('buildpacks');
+    this.route('buildpack', { path: '/buildpacks/:buildpack_id' });
     this.route('feedback');
     this.route('insights');
     this.route('submissions');

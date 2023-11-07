@@ -19,7 +19,7 @@
     {{#if this.solution}}
       <div class="mb-5">
         {{#each this.solution.changedFiles as |changedFile|}}
-          <FileContentsCard class="mb-4" @filename={{changedFile.filename}} @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
+          <FileDiffCard class="mb-4" @filename={{changedFile.filename}} @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
         {{/each}}
       </div>
     {{else if (not @repository.language)}}
