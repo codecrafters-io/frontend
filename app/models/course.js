@@ -14,6 +14,7 @@ import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
 export default class CourseModel extends Model {
+  @attr('date') buildpacksLastSyncedAt;
   @attr('number') completionPercentage;
   @attr('') conceptSlugs; // Array of strings
   @attr('string') definitionRepositoryFullName;
@@ -29,6 +30,7 @@ export default class CourseModel extends Model {
   @attr('string') testerRepositoryFullName;
   @attr() testimonials; // free-form JSON
 
+  @hasMany('buildpack', { async: false }) buildpacks;
   @hasMany('course-definition-update', { async: false }) definitionUpdates;
   @hasMany('course-extension-idea', { async: false }) extensionIdeas;
   @hasMany('course-extension', { async: false, inverse: 'course' }) extensions;
@@ -193,4 +195,9 @@ CourseModel.prototype.syncCourseTesterVersions = memberAction({
   after(response) {
     this.store.pushPayload(response);
   },
+});
+
+CourseModel.prototype.syncBuildpacks = memberAction({
+  path: 'sync-buildpacks',
+  type: 'post',
 });

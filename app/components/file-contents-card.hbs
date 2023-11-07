@@ -4,7 +4,12 @@
   </div>
 
   <div class="text-sm">
-    {{! @glint-expect-error: not ts-ified yet }}
-    <SyntaxHighlightedDiff @code={{@code}} @language={{@language}} @shouldCollapseUnchangedLines={{true}} />
+    {{#if (eq @language "diff") }}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <SyntaxHighlightedDiff @code={{@code}} @language={{@language}} @shouldCollapseUnchangedLines={{true}} />
+    {{else}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" @language={{@language}} />
+    {{/if}}
   </div>
 </div>

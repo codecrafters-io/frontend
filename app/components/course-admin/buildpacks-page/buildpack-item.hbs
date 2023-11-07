@@ -1,0 +1,37 @@
+<LinkTo
+  @route="course-admin.buildpack"
+  @models={{array @buildpack.course.slug @buildpack.id}}
+  class="flex items-center justify-between gap-x-6 py-5 hover:bg-gray-50 px-1"
+  data-test-buildpack-item
+  role="button"
+>
+  <div class="min-w-0">
+    <div class="flex items-center gap-x-2">
+      <span class="font-semibold leading-6 text-gray-900">{{@buildpack.language.name}}</span>
+      <span class="font-mono text-xs leading-5 text-gray-400">{{@buildpack.slug}}</span>
+
+      {{#if this.wasUpdatedInLastHour}}
+        <Pill @color="green" class="text-xs">
+          Updated recently
+          <EmberTooltip @text="This buildpack was updated in the last hour" />
+        </Pill>
+      {{/if}}
+    </div>
+    <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+      <p class="whitespace-nowrap">
+        Updated
+        {{date-from-now @buildpack.updatedAt}}
+      </p>
+    </div>
+  </div>
+  <div class="flex flex-none items-center gap-x-4">
+    <TertiaryLinkButton
+      @size="small"
+      @route="course-admin.buildpack"
+      @models={{array @buildpack.course.slug @buildpack.id}}
+      data-test-view-update-button
+    >
+      View buildpack
+    </TertiaryLinkButton>
+  </div>
+</LinkTo>

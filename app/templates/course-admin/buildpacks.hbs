@@ -1,0 +1,53 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Buildpacks
+        </h3>
+        <div class="text-xs text-gray-400 flex items-center">
+          Synced from the dockerfiles in
+
+          <a
+            href={{@model.course.definitionRepositoryLink}}
+            class="text-gray-400 inline-flex items-center hover:text-gray-600 ml-1"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-test-definition-repository-link
+          >
+            {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
+            <span class="text-xs underline font-medium">{{@model.course.definitionRepositoryFullName}}</span>
+          </a>
+        </div>
+      </div>
+      <div class="text-right">
+        <TertiaryButtonWithSpinner
+          @size="small"
+          @shouldShowSpinner={{this.isSyncingWithGitHub}}
+          {{on "click" this.handleSyncWithGitHubButtonClick}}
+          data-test-sync-with-github-button
+        >
+          Sync with GitHub
+        </TertiaryButtonWithSpinner>
+        <div class="text-xs text-gray-400 mt-2">
+          {{#if @model.course.buildpacksLastSyncedAt}}
+            Last synced:
+            {{date-from-now @model.course.buildpacksLastSyncedAt}}
+          {{else}}
+            Last synced: Never
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
+      {{#each this.sortedBuildpacks as |buildpack|}}
+        <CourseAdmin::BuildpacksPage::BuildpackItem @buildpack={{buildpack}} />
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No buildpacks found.
+        </div>
+      {{/each}}
+    </ul>
+  </div>
+</div>
