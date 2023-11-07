@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
-import ConceptModel, { Block } from 'codecrafters-frontend/models/concept';
+import ConceptModel, { type Block } from 'codecrafters-frontend/models/concept';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import Error from '@ember/error';
-import Transition from '@ember/routing/transition';
+import type Transition from '@ember/routing/transition';
 
 type Signature = {
   Element: HTMLDivElement;
