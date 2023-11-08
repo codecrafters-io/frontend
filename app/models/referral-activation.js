@@ -1,8 +1,8 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default class ReferralActivationModel extends Model {
-  @belongsTo('user', { async: false, inverse: 'referralActivationsAsCustomer' }) customer;
-  @belongsTo('user', { async: false, inverse: 'referralActivationsAsReferrer' }) referrer;
+export default class AffiliateReferralModel extends Model {
+  @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsCustomer' }) customer;
+  @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsReferrer' }) referrer;
   @belongsTo('affiliate-link', { async: false }) affiliateLink;
 
   @attr('date') activatedAt;

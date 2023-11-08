@@ -27,8 +27,8 @@ export default class UserModel extends Model {
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
-  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
-  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
+  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
+  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer;
   @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts;
   @hasMany('affiliate-link', { async: false }) affiliateLinks;
   @hasMany('repository', { async: false }) repositories;
@@ -56,8 +56,8 @@ export default class UserModel extends Model {
     return this.courseParticipations.filterBy('isCompleted');
   }
 
-  get currentReferralActivation() {
-    return this.referralActivationsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
+  get currentAffiliateReferral() {
+    return this.affiliateReferralsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
   }
 
   get earlyBirdDiscountEligibilityExpiresAt() {
@@ -105,8 +105,8 @@ export default class UserModel extends Model {
   }
 
   get isEligibleForReferralDiscount() {
-    if (this.currentReferralActivation) {
-      return this.currentReferralActivation.isWithinDiscountPeriod;
+    if (this.currentAffiliateReferral) {
+      return this.currentAffiliateReferral.isWithinDiscountPeriod;
     } else {
       return false;
     }
