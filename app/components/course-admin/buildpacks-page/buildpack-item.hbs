@@ -16,6 +16,13 @@
           <EmberTooltip @text="This buildpack was updated in the last hour" />
         </Pill>
       {{/if}}
+
+      {{#if @buildpack.isOutdated}}
+        <Pill @color="gray" class="text-xs">
+          Outdated
+          <EmberTooltip @text="There is another latest version of this buildpack available" />
+        </Pill>
+      {{/if}}
     </div>
     <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
       <p class="whitespace-nowrap">
