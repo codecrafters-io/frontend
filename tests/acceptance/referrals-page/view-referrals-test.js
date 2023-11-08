@@ -48,7 +48,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       username: 'mrdoob',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -56,7 +56,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       status: 'pending_trial',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -65,7 +65,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       upcomingPaymentAmountInCents: 59000,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer3,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -75,7 +75,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer4,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -131,7 +131,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       username: 'mrdoob',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -139,7 +139,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       status: 'pending_trial',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -148,7 +148,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       upcomingPaymentAmountInCents: 59000,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer3,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -158,7 +158,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer4,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -212,7 +212,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       username: 'mrdoob',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -220,7 +220,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       status: 'pending_trial',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -229,7 +229,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       upcomingPaymentAmountInCents: 59000,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer3,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -239,7 +239,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer4,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,

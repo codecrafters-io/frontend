@@ -332,11 +332,11 @@ function routes() {
     };
   });
 
-  this.post('/referral-activations', function (schema) {
+  this.post('/affiliate-referrals', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.activatedAt = new Date();
 
-    return schema.referralActivations.create(attrs);
+    return schema.affiliateReferrals.create(attrs);
   });
 
   this.get('/referral-earnings-payouts');

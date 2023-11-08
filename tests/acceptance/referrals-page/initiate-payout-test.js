@@ -34,7 +34,7 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
       username: 'gufran',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -44,7 +44,7 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
       spentAmountInCents: 39500,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -109,7 +109,7 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
       username: 'gufran',
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
@@ -119,7 +119,7 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
       spentAmountInCents: 39500,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
