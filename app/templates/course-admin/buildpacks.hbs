@@ -41,7 +41,7 @@
     </div>
 
     <ul role="list" class="divide-y divide-gray-100">
-      {{#each this.sortedBuildpacks as |buildpack|}}
+      {{#each this.sortedLatestBuildpacks as |buildpack|}}
         <CourseAdmin::BuildpacksPage::BuildpackItem @buildpack={{buildpack}} />
       {{else}}
         <div class="text-gray-400 py-32 flex items-center justify-center">
@@ -49,5 +49,22 @@
         </div>
       {{/each}}
     </ul>
+
+    {{#if (gt this.sortedOutdatedBuildpacks.length 0)}}
+      <div class="pt-8 pb-4 border-b mb-8">
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Outdated Buildpacks
+        </h3>
+        <div class="text-xs text-gray-400 flex items-center">
+          These buildpacks are retained to support older repositories. They are not used for new repositories.
+        </div>
+      </div>
+
+      <ul role="list" class="divide-y divide-gray-100">
+        {{#each this.sortedOutdatedBuildpacks as |buildpack|}}
+          <CourseAdmin::BuildpacksPage::BuildpackItem @buildpack={{buildpack}} />
+        {{/each}}
+      </ul>
+    {{/if}}
   </div>
 </div>

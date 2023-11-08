@@ -56,6 +56,22 @@ export default class CourseAdminHeaderComponent extends Component<Signature> {
         models: [this.args.course.slug],
         isActive: this.router.currentRouteName === 'course-admin.feedback',
       },
+      {
+        icon: 'terminal',
+        name: 'Buildpacks',
+        slug: 'buildpacks',
+        route: 'course-admin.buildpacks',
+        models: [this.args.course.slug],
+        isActive: this.router.currentRouteName === 'course-admin.buildpacks' || this.router.currentRouteName === 'course-admin.buildpack',
+      },
+      {
+        icon: 'presentation-chart-line',
+        name: 'Insights',
+        slug: 'insights',
+        route: 'course-admin.insights',
+        models: [this.args.course.slug],
+        isActive: this.router.currentRouteName === 'course-admin.insights',
+      },
     ];
   }
 }

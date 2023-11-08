@@ -15,8 +15,21 @@ export default class BuildpacksController extends Controller {
   @tracked isSyncingWithGitHub = false;
   @tracked errorMessage: string | null = null;
 
-  get sortedBuildpacks() {
-    return this.model.course.buildpacks.sortBy('language.name');
+  get sortedLatestBuildpacks() {
+    return this.model.course.buildpacks.filterBy('isLatest').sortBy('language.name');
+  }
+
+  get sortedOutdatedBuildpacks() {
+    return this.model.course.buildpacks
+      .filterBy('isOutdated')
+      .toArray()
+      .sort((a, b) => {
+        if (a.language.name === b.language.name) {
+          return a.createdAt.getTime() - b.createdAt.getTime();
+        } else {
+          return a.language.name.localeCompare(b.language.name);
+        }
+      });
   }
 
   @action
