@@ -1,5 +1,5 @@
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import referralLinkPage from 'codecrafters-frontend/tests/pages/referral-link-page';
+import affiliateLinkPage from 'codecrafters-frontend/tests/pages/affiliate-link-page';
 import { currentURL } from '@ember/test-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -10,7 +10,7 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 import percySnapshot from '@percy/ember';
 import windowMock from 'ember-window-mock';
 
-module('Acceptance | referral-link-page | accept-referral-offer', function (hooks) {
+module('Acceptance | affiliate-link-page | accept-referral-offer', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -19,10 +19,10 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
   test('accepting referral offer when not logged in redirects to login', async function (assert) {
     testScenario(this.server);
 
-    this.server.create('referral-link', { user: this.server.schema.users.first() });
+    this.server.create('affiliate-link', { user: this.server.schema.users.first() });
 
-    await referralLinkPage.visit({ via: 'referral1' });
-    await referralLinkPage.acceptReferralButton.click();
+    await affiliateLinkPage.visit({ via: 'referral1' });
+    await affiliateLinkPage.acceptReferralButton.click();
 
     assert.strictEqual(
       windowMock.location.href,
@@ -42,10 +42,10 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
       username: 'sarupbanskota',
     });
 
-    this.server.create('referral-link', { user: referrer });
+    this.server.create('affiliate-link', { user: referrer });
 
-    await referralLinkPage.visit({ via: 'referral1' });
-    await referralLinkPage.acceptReferralButton.click();
+    await affiliateLinkPage.visit({ via: 'referral1' });
+    await affiliateLinkPage.acceptReferralButton.click();
 
     assert.strictEqual(currentURL(), '/pay', 'should redirect to pay URL');
     await percySnapshot('Pay Page | With Referral Offer');

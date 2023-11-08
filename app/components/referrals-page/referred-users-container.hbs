@@ -1,7 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <PageSection @title="Referred Users" data-test-referred-users-container ...attributes>
-  {{#each this.paidActivations as |referralActivation|}}
-    <ReferralsPage::ReferredUserItem @referralActivation={{referralActivation}} />
+  {{#each this.paidReferrals as |affiliateReferral|}}
+    <ReferralsPage::ReferredUserItem @affiliateReferral={{affiliateReferral}} />
   {{else}}
     <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
       No paid users found.
@@ -10,10 +10,10 @@
 
   <div class="text-center pb-2">
     <TertiaryButton
-      {{on "click" (fn (mut this.unpaidActivationsAreVisible) (not this.unpaidActivationsAreVisible))}}
+      {{on "click" (fn (mut this.unpaidReferralsAreVisible) (not this.unpaidReferralsAreVisible))}}
       data-test-referred-users-show-all-button
     >
-      {{#if this.unpaidActivationsAreVisible}}
+      {{#if this.unpaidReferralsAreVisible}}
         Hide signups
       {{else}}
         Show all signups
@@ -21,9 +21,9 @@
     </TertiaryButton>
   </div>
 
-  {{#if this.unpaidActivationsAreVisible}}
-    {{#each this.unpaidActivations as |referralActivation|}}
-      <ReferralsPage::ReferredUserItem @referralActivation={{referralActivation}} />
+  {{#if this.unpaidReferralsAreVisible}}
+    {{#each this.unpaidReferrals as |affiliateReferral|}}
+      <ReferralsPage::ReferredUserItem @affiliateReferral={{affiliateReferral}} />
     {{else}}
       <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
         When your refer users, you'll be able to view their details here.

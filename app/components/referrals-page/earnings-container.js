@@ -23,7 +23,7 @@ export default class EarningsContainerComponent extends Component {
       {
         title: 'Pending',
         helpText: 'Earnings that are being withheld for upto 14 days to account for refunds / admin.',
-        amountInDollars: this.currentUser.referralLinks.mapBy('withheldEarningsAmountInCents').reduce((a, b) => a + b, 0) / 100,
+        amountInDollars: this.currentUser.affiliateLinks.mapBy('withheldEarningsAmountInCents').reduce((a, b) => a + b, 0) / 100,
       },
       {
         title: 'Ready to payout',
@@ -50,7 +50,7 @@ export default class EarningsContainerComponent extends Component {
   }
 
   get totalEarningsAmountInCents() {
-    return this.currentUser.referralLinks.mapBy('totalEarningsAmountInCents').reduce((a, b) => a + b, 0);
+    return this.currentUser.affiliateLinks.mapBy('totalEarningsAmountInCents').reduce((a, b) => a + b, 0);
   }
 
   get totalEarningsAmountInDollars() {
@@ -58,7 +58,7 @@ export default class EarningsContainerComponent extends Component {
   }
 
   get withdrawableEarningsAmountInCents() {
-    return this.currentUser.referralLinks.mapBy('withdrawableEarningsAmountInCents').reduce((a, b) => a + b, 0);
+    return this.currentUser.affiliateLinks.mapBy('withdrawableEarningsAmountInCents').reduce((a, b) => a + b, 0);
   }
 
   get withdrawableEarningsAmountInDollars() {

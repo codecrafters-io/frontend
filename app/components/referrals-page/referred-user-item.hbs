@@ -1,52 +1,52 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="flex items-center flex-wrap gap-y-2 justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2" data-test-referred-user-item>
   <a
-    href={{@referralActivation.customer.codecraftersProfileUrl}}
+    href={{@affiliateReferral.customer.codecraftersProfileUrl}}
     class="flex items-center hover:underline pr-3"
     target="_blank"
     rel="noopener noreferrer"
   >
     <AvatarImage
-      @user={{@referralActivation.customer}}
+      @user={{@affiliateReferral.customer}}
       class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
     />
 
     <div>
       <div class="text-gray-700 text-sm">
-        <span class="font-semibold" data-test-username>{{@referralActivation.customer.username}}</span>
+        <span class="font-semibold" data-test-username>{{@affiliateReferral.customer.username}}</span>
       </div>
       <div class="text-gray-700 text-sm block lg:hidden">
-        <span class="text-gray-400 text-xs">{{date-from-now @referralActivation.activatedAt}}</span>
+        <span class="text-gray-400 text-xs">{{date-from-now @affiliateReferral.activatedAt}}</span>
       </div>
     </div>
   </a>
   <div class="flex items-center flex-wrap gap-y-2">
-    {{#if (gt @referralActivation.totalEarningsAmountInDollars 0)}}
+    {{#if (gt @affiliateReferral.totalEarningsAmountInDollars 0)}}
       <div class="flex flex-shrink-0">
         <span
           class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
-        >${{@referralActivation.spentAmountInDollars}} spent</span>
-        <EmberTooltip @text="This is the amount {{@referralActivation.customer.username}} has spent so far." />
+        >${{@affiliateReferral.spentAmountInDollars}} spent</span>
+        <EmberTooltip @text="This is the amount {{@affiliateReferral.customer.username}} has spent so far." />
       </div>
     {{/if}}
-    {{#if (gt @referralActivation.upcomingPaymentAmountInDollars 0)}}
+    {{#if (gt @affiliateReferral.upcomingPaymentAmountInDollars 0)}}
       <div class="flex flex-shrink-0">
         <span
           class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
-        >${{@referralActivation.upcomingPaymentAmountInDollars}} pending</span>
-        <EmberTooltip @text="This is the value of {{@referralActivation.customer.username}}'s upcoming payment." />
+        >${{@affiliateReferral.upcomingPaymentAmountInDollars}} pending</span>
+        <EmberTooltip @text="This is the value of {{@affiliateReferral.customer.username}}'s upcoming payment." />
       </div>
     {{/if}}
     <div class="flex flex-shrink-0">
-      {{#if @referralActivation.statusIsTrialing}}
+      {{#if @affiliateReferral.statusIsTrialing}}
         <span
           class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
         >Trialing</span>
         <EmberTooltip @text="This user has started a trial. We haven't received their first payment yet." />
-      {{else if @referralActivation.statusIsPendingTrial}}
+      {{else if @affiliateReferral.statusIsPendingTrial}}
         <span class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2">Signed up</span>
         <EmberTooltip @text="This user has accepted your referral offer but hasn't started a trial yet." />
-      {{else if @referralActivation.statusIsFirstChargeSuccessful}}
+      {{else if @affiliateReferral.statusIsFirstChargeSuccessful}}
         <span
           class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
         >Paid</span>
@@ -59,6 +59,6 @@
       {{/if}}
     </div>
 
-    <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @referralActivation.activatedAt}}</span>
+    <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @affiliateReferral.activatedAt}}</span>
   </div>
 </div>
