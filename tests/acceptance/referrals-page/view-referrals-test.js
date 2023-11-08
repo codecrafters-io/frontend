@@ -16,11 +16,24 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  test('partner page is visible only to affiliates', async function (assert) {
+  test('partner page is visible to affiliates', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.create('user');
-    user.update('isAffiliate', true);
+    user.update({ isAffiliate: true });
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+
+    assert.true(catalogPage.accountDropdown.hasLink('Partner Dashboard'), 'Expect Partner Dashboard link to be visible');
+  });
+
+  test('partner page is visible to staff', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.create('user');
+    user.update({ isStaff: true });
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();

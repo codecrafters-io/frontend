@@ -13,8 +13,9 @@ export default class PartnerRoute extends BaseRoute {
 
   async beforeModel() {
     await this.authenticator.authenticate();
+    const currentUser = this.authenticator.currentUser;
 
-    if (!this.authenticator.currentUser.isAffiliate) {
+    if (!(currentUser.isStaff || currentUser.isAffiliate)) {
       window.location = 'https://docs.codecrafters.io/community/partner-program';
     }
   }

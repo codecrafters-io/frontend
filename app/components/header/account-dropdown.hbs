@@ -67,7 +67,7 @@
         <Header::AccountDropdownLink @text="Invite Your Team" @icon="users" {{on "click" (fn this.handleCreateTeamClick dd.actions)}} />
       {{/if}}
 
-      {{#if this.currentUser.isAffiliate}}
+      {{#if (or this.currentUser.isAffiliate this.currentUser.isStaff)}}
         <Header::AccountDropdownLink @text="Partner Dashboard" @icon="gift" {{on "click" (fn this.handleReferralsLinkClick dd.actions)}} />
       {{/if}}
 
