@@ -55,7 +55,9 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    signIn(this.owner, this.server);
+    const user = this.server.schema.users.first();
+    user.update({ isAffiliate: true });
+    signIn(this.owner, this.server, user);
 
     await partnerPage.visit();
 
@@ -130,7 +132,9 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    signIn(this.owner, this.server);
+    const user = this.server.schema.users.first();
+    user.update({ isAffiliate: true });
+    signIn(this.owner, this.server, user);
 
     await partnerPage.visit();
 

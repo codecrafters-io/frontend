@@ -77,7 +77,9 @@ module('Acceptance | partner-page | view-payouts', function (hooks) {
       status: 'processing',
     });
 
-    signIn(this.owner, this.server);
+    const user = this.server.schema.users.first();
+    user.update({ isAffiliate: true });
+    signIn(this.owner, this.server, user);
 
     await partnerPage.visit();
 
