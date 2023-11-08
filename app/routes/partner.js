@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 
-export default class ReferRoute extends BaseRoute {
+export default class PartnerRoute extends BaseRoute {
   @service authenticator;
   @service store;
 
