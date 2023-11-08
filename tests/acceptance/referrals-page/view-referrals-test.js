@@ -1,4 +1,3 @@
-import accountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
 import percySnapshot from '@percy/ember';
