@@ -15,7 +15,7 @@ module('Acceptance | partner-page | join-referral-program', function (hooks) {
   test('can view join page when affiliate link is not present', async function (assert) {
     testScenario(this.server);
     const user = this.server.schema.users.first();
-    user.update({ isAffiliate: false });
+    user.update({ isAffiliate: true });
     signIn(this.owner, this.server, user);
 
     await partnerPage.visit();
@@ -27,7 +27,7 @@ module('Acceptance | partner-page | join-referral-program', function (hooks) {
   test('can join referral program', async function (assert) {
     testScenario(this.server);
     const user = this.server.schema.users.first();
-    user.update({ isAffiliate: false });
+    user.update({ isAffiliate: true });
     signIn(this.owner, this.server, user);
 
     await partnerPage.visit();
