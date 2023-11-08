@@ -8,10 +8,6 @@
   ],
   "redirects": [
     {
-      "source": "/",
-      "destination": "/catalog"
-    },
-    {
       "source": "/join_team",
       "destination": "https://backend.codecrafters.io/join_team"
     },
