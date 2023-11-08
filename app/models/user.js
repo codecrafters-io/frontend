@@ -30,7 +30,7 @@ export default class UserModel extends Model {
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
   @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
   @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts;
-  @hasMany('referral-link', { async: false }) referralLinks;
+  @hasMany('affiliate-link', { async: false }) affiliateLinks;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
@@ -93,7 +93,7 @@ export default class UserModel extends Model {
   }
 
   get hasJoinedReferralProgram() {
-    return this.referralLinks.rejectBy('isNew').length > 0;
+    return this.affiliateLinks.rejectBy('isNew').length > 0;
   }
 
   get isEligibleForEarlyBirdDiscount() {
