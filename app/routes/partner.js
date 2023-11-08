@@ -10,6 +10,14 @@ export default class PartnerRoute extends BaseRoute {
     scrollToTop();
   }
 
+  async beforeModel() {
+    await this.authenticator.authenticate();
+
+    if (!this.authenticator.currentUser.isAffiliate) {
+      window.location = 'https://docs.codecrafters.io/community/partner-program';
+    }
+  }
+
   async model() {
     await this.authenticator.authenticate(); // Force loading affiliate links
 
