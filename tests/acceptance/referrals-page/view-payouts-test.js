@@ -15,7 +15,7 @@ module('Acceptance | referrals-page | view-payouts', function (hooks) {
   test('can initiate payout', async function (assert) {
     testScenario(this.server);
 
-    const referralLink = this.server.create('referral-link', {
+    const affiliateLink = this.server.create('affiliate-link', {
       user: this.server.schema.users.first(),
       uniqueViewerCount: 10,
     });
@@ -37,7 +37,7 @@ module('Acceptance | referrals-page | view-payouts', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 23700,
@@ -47,7 +47,7 @@ module('Acceptance | referrals-page | view-payouts', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24), // 1 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 0,

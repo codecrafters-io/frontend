@@ -15,7 +15,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
   test('can view referral stats', async function (assert) {
     testScenario(this.server);
 
-    const referralLink = this.server.create('referral-link', {
+    const affiliateLink = this.server.create('affiliate-link', {
       user: this.server.schema.users.first(),
       uniqueViewerCount: 10,
     });
@@ -51,7 +51,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
       status: 'pending_trial',
     });
@@ -59,7 +59,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
       status: 'trialing',
       upcomingPaymentAmountInCents: 59000,
@@ -68,7 +68,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer3,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 35400,
@@ -78,7 +78,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer4,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24), // 1 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 0,
@@ -98,7 +98,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
   test('should show paid users by default', async function (assert) {
     testScenario(this.server);
 
-    const referralLink = this.server.create('referral-link', {
+    const affiliateLink = this.server.create('affiliate-link', {
       user: this.server.schema.users.first(),
       uniqueViewerCount: 10,
     });
@@ -134,7 +134,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
       status: 'pending_trial',
     });
@@ -142,7 +142,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
       status: 'trialing',
       upcomingPaymentAmountInCents: 59000,
@@ -151,7 +151,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer3,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 35400,
@@ -161,7 +161,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer4,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24), // 1 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 0,
@@ -179,7 +179,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
   test('should show unpaid users after clicking show all button', async function (assert) {
     testScenario(this.server);
 
-    const referralLink = this.server.create('referral-link', {
+    const affiliateLink = this.server.create('affiliate-link', {
       user: this.server.schema.users.first(),
       uniqueViewerCount: 10,
     });
@@ -215,7 +215,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer1,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
       status: 'pending_trial',
     });
@@ -223,7 +223,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer2,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
       status: 'trialing',
       upcomingPaymentAmountInCents: 59000,
@@ -232,7 +232,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer3,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 35400,
@@ -242,7 +242,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     this.server.create('referral-activation', {
       customer: customer4,
       referrer: this.server.schema.users.first(),
-      referralLink: referralLink,
+      affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24), // 1 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 0,
