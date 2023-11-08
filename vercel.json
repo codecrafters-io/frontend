@@ -3,7 +3,7 @@
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
-    { "source": "/", "destination": "/catalog" },
+    { "source": "/", "destination": "/catalog/index.html" },
     { "source": "/:path*", "destination": "/_empty.html" }
   ],
   "redirects": [
