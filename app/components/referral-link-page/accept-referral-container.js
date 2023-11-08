@@ -33,7 +33,7 @@ export default class AcceptReferralContainerComponent extends Component {
     if (this.authenticator.isAnonymous) {
       return false;
     } else {
-      return this.args.referralLink.user === this.authenticator.currentUser;
+      return this.args.affiliateLink.user === this.authenticator.currentUser;
     }
   }
 
@@ -46,9 +46,9 @@ export default class AcceptReferralContainerComponent extends Component {
 
       await this.store
         .createRecord('referral-activation', {
-          referralLink: this.args.referralLink,
+          affiliateLink: this.args.affiliateLink,
           customer: this.authenticator.currentUser,
-          referrer: this.args.referralLink.user,
+          referrer: this.args.affiliateLink.user,
         })
         .save();
 
