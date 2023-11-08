@@ -11,10 +11,10 @@ export default class AcceptReferralContainerComponent extends Component {
   @service store;
   @service router;
 
-  @tracked isCreatingReferralActivation;
+  @tracked isCreatingAffiliateReferral;
 
   get acceptOfferButtonIsEnabled() {
-    return !this.isCreatingReferralActivation && !this.currentUserIsReferrer && !this.currentUserIsAlreadyEligibleForReferralDiscount;
+    return !this.isCreatingAffiliateReferral && !this.currentUserIsReferrer && !this.currentUserIsAlreadyEligibleForReferralDiscount;
   }
 
   get currentUser() {
@@ -42,10 +42,10 @@ export default class AcceptReferralContainerComponent extends Component {
     if (this.currentUserIsAnonymous) {
       this.authenticator.initiateLogin();
     } else if (this.acceptOfferButtonIsEnabled) {
-      this.isCreatingReferralActivation = true;
+      this.isCreatingAffiliateReferral = true;
 
       await this.store
-        .createRecord('referral-activation', {
+        .createRecord('affiliate-referral', {
           affiliateLink: this.args.affiliateLink,
           customer: this.authenticator.currentUser,
           referrer: this.args.affiliateLink.user,

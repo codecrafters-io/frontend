@@ -16,7 +16,7 @@ export default class ReferRoute extends BaseRoute {
     if (this.authenticator.currentUser.hasJoinedReferralProgram) {
       await this.store.query('affiliate-link', {
         user_id: this.authenticator.currentUser.id,
-        include: 'activations,activations.customer,activations.referrer',
+        include: 'referrals,referrals.customer,referrals.referrer',
       });
     } else {
       // Affiliate links themselves are loaded in the /users/current payload

@@ -20,7 +20,7 @@
 
     <div class="inline-flex mt-8">
       <PrimaryButtonWithSpinner
-        @shouldShowSpinner={{this.isCreatingReferralActivation}}
+        @shouldShowSpinner={{this.isCreatingAffiliateReferral}}
         @isDisabled={{not this.acceptOfferButtonIsEnabled}}
         class="px-5 py-3"
         data-test-accept-referral-button
@@ -38,7 +38,7 @@
       {{else if this.currentUserIsReferrer}}
         <EmberTooltip @text="You can't accept your own referral offer." />
       {{else if this.currentUserIsAlreadyEligibleForReferralDiscount}}
-        <EmberTooltip @text="You've already accepted {{this.currentUser.currentReferralActivation.referrer.username}}'s referral offer." />
+        <EmberTooltip @text="You've already accepted {{this.currentUser.currentAffiliateReferral.referrer.username}}'s referral offer." />
       {{/if}}
     </div>
 

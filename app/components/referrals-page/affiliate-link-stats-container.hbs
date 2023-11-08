@@ -6,9 +6,9 @@
       @helpText="The number of users who've accepted your referral offer."
     >
       <div class="flex items-center">
-        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@affiliateLink.activations.length}}</span>
+        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@affiliateLink.referrals.length}}</span>
 
-        {{#if (eq @affiliateLink.activations.length 0)}}
+        {{#if (eq @affiliateLink.referrals.length 0)}}
           <span class="text-gray-300 text-xs ml-1">(no referrals yet)</span>
         {{/if}}
       </div>
