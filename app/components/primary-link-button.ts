@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { BaseLinkButtonSignature } from './base-link-button';
+import { type BaseLinkButtonSignature } from './base-link-button';
 
 interface Signature {
   Element: HTMLAnchorElement;

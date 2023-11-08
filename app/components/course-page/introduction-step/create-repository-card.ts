@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RouterService from '@ember/routing/router-service';
-import { Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
+import { type Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 import { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
 import { action } from '@ember/object';

@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import { isToday, isYesterday } from 'date-fns';
 import { formatDistanceStrictWithOptions } from 'date-fns/fp';
-import ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
+import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
