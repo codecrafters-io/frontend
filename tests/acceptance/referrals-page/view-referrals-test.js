@@ -1,4 +1,4 @@
-import referralsPage from 'codecrafters-frontend/tests/pages/referrals-page';
+import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -7,7 +7,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | referrals-page | view-referrals', function (hooks) {
+module('Acceptance | partner-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -88,11 +88,11 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await referralsPage.visit();
-    assert.ok(referralsPage.referralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
-    assert.notOk(referralsPage.getStartedButton.isVisible, 'Get Started button is not visible');
+    await partnerPage.visit();
+    assert.ok(partnerPage.referralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
+    assert.notOk(partnerPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
-    await percySnapshot('Referrals Page | Referral Stats');
+    await percySnapshot('Partner Page | Referral Stats');
   });
 
   test('should show paid users by default', async function (assert) {
@@ -171,9 +171,9 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await referralsPage.visit();
-    assert.ok(referralsPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
-    assert.notOk(referralsPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
+    await partnerPage.visit();
+    assert.ok(partnerPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.notOk(partnerPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
   });
 
   test('should show unpaid users after clicking show all button', async function (assert) {
@@ -252,9 +252,9 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await referralsPage.visit();
-    await referralsPage.clickShowAllButton();
-    assert.ok(referralsPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
-    assert.ok(referralsPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to be found');
+    await partnerPage.visit();
+    await partnerPage.clickShowAllButton();
+    assert.ok(partnerPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.ok(partnerPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to be found');
   });
 });

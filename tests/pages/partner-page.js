@@ -41,5 +41,5 @@ export default createPage({
 
   payoutHistoryItems: collection('[data-test-payout-history-item]'),
 
-  visit: visitable('/refer'),
+  visit: visitable('/partner'),
 });

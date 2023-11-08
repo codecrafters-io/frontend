@@ -1,4 +1,4 @@
-import referralsPage from 'codecrafters-frontend/tests/pages/referrals-page';
+import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -7,7 +7,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | referrals-page | initiate-payout', function (hooks) {
+module('Acceptance | partner-page | initiate-payout', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -57,34 +57,34 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await referralsPage.visit();
+    await partnerPage.visit();
 
-    assert.strictEqual(referralsPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
+    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
 
-    await referralsPage.initiatePayoutButton.click();
+    await partnerPage.initiatePayoutButton.click();
 
-    await percySnapshot('Referrals Page | Create Payout Modal');
+    await percySnapshot('Partner Page | Create Payout Modal');
 
-    await referralsPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
+    await partnerPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
 
-    await percySnapshot('Referrals Page | Create Payout Modal | Paypal Form');
+    await percySnapshot('Partner Page | Create Payout Modal | Paypal Form');
 
-    await referralsPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
-    await referralsPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
+    await partnerPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
+    await partnerPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
 
-    await percySnapshot('Referrals Page | Create Payout Modal | Paid out');
+    await percySnapshot('Partner Page | Create Payout Modal | Paid out');
 
-    await referralsPage.createPayoutModal.backToReferralsPageButton.click();
+    await partnerPage.createPayoutModal.backToReferralsPageButton.click();
 
-    assert.strictEqual(referralsPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Ready to payout'), '$0', 'ready to payout amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$354', 'paid out amount is correct');
+    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$0', 'ready to payout amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$354', 'paid out amount is correct');
 
-    await percySnapshot('Referrals Page | Payout initiated');
+    await percySnapshot('Partner Page | Payout initiated');
   });
 
   test('can initiate payout for lower amount', async function (assert) {
@@ -132,26 +132,26 @@ module('Acceptance | referrals-page | initiate-payout', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await referralsPage.visit();
+    await partnerPage.visit();
 
-    assert.strictEqual(referralsPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
+    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
 
-    await referralsPage.initiatePayoutButton.click();
-    await referralsPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
+    await partnerPage.initiatePayoutButton.click();
+    await partnerPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
 
-    await referralsPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
-    await referralsPage.createPayoutModal.paypalPayoutForm.amountInput.fillIn('100');
-    await referralsPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
+    await partnerPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
+    await partnerPage.createPayoutModal.paypalPayoutForm.amountInput.fillIn('100');
+    await partnerPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
 
-    await referralsPage.createPayoutModal.backToReferralsPageButton.click();
+    await partnerPage.createPayoutModal.backToReferralsPageButton.click();
 
-    assert.strictEqual(referralsPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Ready to payout'), '$254', 'ready to payout amount is correct');
-    assert.strictEqual(referralsPage.lineItemAmountText('Paid out'), '$100', 'paid out amount is correct');
+    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$254', 'ready to payout amount is correct');
+    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$100', 'paid out amount is correct');
 
     assert.strictEqual(this.server.schema.referralEarningsPayouts.all().models.length, 1, 'payout is created');
   });
