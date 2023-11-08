@@ -9,16 +9,16 @@ export default class UserModel extends Model {
   @attr() authoredCourseSlugs;
   @attr('string') avatarUrl;
   @attr('date') createdAt;
+  @attr('') featureFlags;
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
-  @attr('boolean') isStaff;
-  @attr('boolean') isCodecraftersPartner;
   @attr('boolean') isConceptAuthor;
+  @attr('boolean') isStaff;
+  @attr('boolean') isVip;
   @attr('string') name;
-  @attr('string') username;
-  @attr('') featureFlags;
   @attr('string') primaryEmailAddress;
-  @attr('date') codecraftersPartnerStatusExpiresAt;
+  @attr('string') username;
+  @attr('date') vipStatusExpiresAt;
 
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
@@ -45,7 +45,7 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
   get codecraftersProfileUrl() {
