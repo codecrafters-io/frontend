@@ -2,29 +2,42 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import windowMock from 'ember-window-mock';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { setupWindowMock } from 'ember-window-mock/test-support';
 
 module('Acceptance | partner-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
+  setupWindowMock(hooks);
 
   test('partner page is visible only to affiliates', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.create('user');
     user.update('isAffiliate', true);
-
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
     await catalogPage.accountDropdown.toggle();
 
     assert.true(catalogPage.accountDropdown.hasLink('Partner Dashboard'), 'Expect Partner Dashboard link to be visible');
+  });
+
+  test('users who are not affiliates are redirected to the affiliate program page', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.create('user');
+    signIn(this.owner, this.server, user);
+
+    await partnerPage.visit();
+
+    assert.strictEqual(windowMock.location.href, 'https://docs.codecrafters.io/community/partner-program');
   });
 
   test('can view referral stats', async function (assert) {
