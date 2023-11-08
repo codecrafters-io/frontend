@@ -12,7 +12,7 @@ module('Acceptance | referrals-page | join-referral-program', function (hooks) {
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can view join page when referral link is not present', async function (assert) {
+  test('can view join page when affiliate link is not present', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 

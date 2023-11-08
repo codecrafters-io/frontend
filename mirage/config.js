@@ -332,24 +332,24 @@ function routes() {
     };
   });
 
-  this.post('/referral-activations', function (schema) {
+  this.post('/affiliate-referrals', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.activatedAt = new Date();
 
-    return schema.referralActivations.create(attrs);
+    return schema.affiliateReferrals.create(attrs);
   });
 
   this.get('/referral-earnings-payouts');
   this.post('/referral-earnings-payouts');
 
-  this.get('/referral-links');
+  this.get('/affiliate-links');
 
-  this.post('/referral-links', function (schema) {
+  this.post('/affiliate-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.url = `https://app.codecraters.io/refer?via=${attrs.slug}`;
     attrs.uniqueViewerCount = 0;
 
-    return schema.referralLinks.create(attrs);
+    return schema.affiliateLinks.create(attrs);
   });
 
   this.get('/regional-discounts/current', function (schema) {

@@ -1,20 +1,20 @@
 <PageSection @title="Stats" data-test-referral-stats-container ...attributes>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <ReferralsPage::ReferralLinkStatContainer
+    <ReferralsPage::AffiliateLinkStatContainer
       @title="Referrals"
       @icon="cursor-click"
       @helpText="The number of users who've accepted your referral offer."
     >
       <div class="flex items-center">
-        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.activations.length}}</span>
+        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@affiliateLink.referrals.length}}</span>
 
-        {{#if (eq @referralLink.activations.length 0)}}
+        {{#if (eq @affiliateLink.referrals.length 0)}}
           <span class="text-gray-300 text-xs ml-1">(no referrals yet)</span>
         {{/if}}
       </div>
-    </ReferralsPage::ReferralLinkStatContainer>
+    </ReferralsPage::AffiliateLinkStatContainer>
 
-    <ReferralsPage::ReferralLinkStatContainer
+    <ReferralsPage::AffiliateLinkStatContainer
       @title="Paid Users"
       @icon="gift"
       @helpText="The number of referred users who've converted to paying users."
@@ -28,6 +28,6 @@
           </span>
         {{/if}}
       </div>
-    </ReferralsPage::ReferralLinkStatContainer>
+    </ReferralsPage::AffiliateLinkStatContainer>
   </div>
 </PageSection>

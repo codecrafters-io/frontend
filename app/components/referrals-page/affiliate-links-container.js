@@ -1,7 +1,7 @@
-import Controller from '@ember/controller';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
-export default class ReferController extends Controller {
+export default class AffiliateLinksContainerComponent extends Component {
   @service authenticator;
 
   get affiliateLink() {

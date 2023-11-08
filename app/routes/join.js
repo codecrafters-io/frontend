@@ -13,17 +13,17 @@ export default class JoinRoute extends BaseRoute {
   }
 
   afterModel(model) {
-    if (!model.referralLink) {
+    if (!model.affiliateLink) {
       this.transitionTo('not-found');
     }
   }
 
   async model(params) {
-    const referralLinks = await this.store.query('referral-link', {
-      slug: params.referralLinkSlug,
+    const affiliateLinks = await this.store.query('affiliate-link', {
+      slug: params.affiliateLinksSlug,
       include: 'user',
     });
 
-    return { referralLink: referralLinks.firstObject };
+    return { affiliateLink: affiliateLinks.firstObject };
   }
 }

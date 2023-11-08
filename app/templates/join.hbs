@@ -5,7 +5,7 @@
     Join the best.
   </h1>
 
-  <ReferralLinkPage::AcceptReferralContainer @referralLink={{this.model.referralLink}} class="mt-8" />
+  <AffiliateLinkPage::AcceptReferralContainer @affiliateLink={{this.model.affiliateLink}} class="mt-8" />
 
   <h2 class="text-2xl font-bold text-gray-700 md:text-3xl text-center mt-16">
     Hear it from our members
@@ -19,12 +19,12 @@
     {{#each this.testimonialGroups as |testimonialGroup index|}}
       <div class="flex flex-col space-y-2 {{if (not-eq index 1) 'md:mt-6'}}">
         {{#each testimonialGroup as |testimonial|}}
-          <ReferralLinkPage::TestimonialListItem @testimonial={{testimonial}} />
+          <AffiliateLinkPage::TestimonialListItem @testimonial={{testimonial}} />
         {{/each}}
       </div>
     {{/each}}
   </div>
 
-  {{!  <ReferralLinkPage::LogoCloudContainer />}}
-  {{!  <ReferralLinkPage::TestimonialsContainer />}}
+  {{!  <AffiliateLinkPage::LogoCloudContainer />}}
+  {{!  <AffiliateLinkPage::TestimonialsContainer />}}
 </div>
