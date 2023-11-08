@@ -9,16 +9,16 @@ export default class UserModel extends Model {
   @attr() authoredCourseSlugs;
   @attr('string') avatarUrl;
   @attr('date') createdAt;
+  @attr('') featureFlags;
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
+  @attr('boolean') isConceptAuthor;
   @attr('boolean') isStaff;
   @attr('boolean') isVip;
-  @attr('boolean') isConceptAuthor;
   @attr('string') name;
-  @attr('string') username;
-  @attr('') featureFlags;
   @attr('string') primaryEmailAddress;
-  @attr('date') codecraftersVipStatusExpiresAt;
+  @attr('string') username;
+  @attr('date') vipStatusExpiresAt;
 
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;

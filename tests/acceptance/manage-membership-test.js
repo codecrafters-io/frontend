@@ -46,7 +46,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
     const user = this.server.schema.users.first();
     user.update('isVip', true);
-    user.update('codecraftersVipStatusExpiresAt', expiryDate);
+    user.update('vipStatusExpiresAt', expiryDate);
 
     signInAsSubscriber(this.owner, this.server, user);
 
