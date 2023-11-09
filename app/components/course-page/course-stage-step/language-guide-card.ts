@@ -3,6 +3,8 @@ import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import Store from '@ember-data/store';
 import type { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { task } from 'ember-concurrency';
+import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -13,13 +15,29 @@ interface Signature {
   };
 }
 
-export default class LanguageInstructionsCardComponent extends Component<Signature> {
+export default class LanguageGuideCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
+
+  loadLanguageGuidesTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await this.store.query('course-stage-language-guide', {
+      course_stage_id: this.args.courseStage.id,
+      include: 'course-stage',
+    });
+  });
+
+  get isLoading(): boolean {
+    return this.loadLanguageGuidesTask.isRunning;
+  }
+
+  @action
+  loadLanguageGuides(): void {
+    this.loadLanguageGuidesTask.perform();
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::LanguageInstructionsCard': typeof LanguageInstructionsCardComponent;
+    'CoursePage::CourseStageStep::LanguageGuideCard': typeof LanguageGuideCardComponent;
   }
 }

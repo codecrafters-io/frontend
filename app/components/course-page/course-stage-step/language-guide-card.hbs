@@ -1,4 +1,9 @@
-<CoursePage::InstructionsCard id="language-instructions-card" ...attributes>
+<CoursePage::InstructionsCard
+  id="language-instructions-card"
+  ...attributes
+  {{did-update this.loadLanguageGuides @courseStage}}
+  {{did-insert this.loadLanguageGuides}}
+>
   <:content>
     <div class="flex items-center justify-between border-b pb-2 mb-5 w-full">
       <div class="flex items-center gap-x-3">

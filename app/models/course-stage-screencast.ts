@@ -2,7 +2,6 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { TemporaryCourseStageModel, TemporaryLanguageModel, TemporaryUserModel } from './temporary-types';
 
 export default class CourseStageScreencastModel extends Model {
-  // @ts-ignore: not sure what's up here
   @belongsTo('course-stage', { async: false, inverse: 'screencasts' }) declare courseStage: TemporaryCourseStageModel;
 
   @belongsTo('language', { async: false, inverse: null }) declare language: TemporaryLanguageModel;

@@ -40,8 +40,8 @@
     />
   {{/if}}
 
-  {{#if this.shouldShowLanguageInstructions}}
-    <CoursePage::CourseStageStep::LanguageInstructionsCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
+  {{#if this.shouldShowLanguageGuide}}
+    <CoursePage::CourseStageStep::LanguageGuideCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
   {{/if}}
 
   <div data-percy-hints-section>
