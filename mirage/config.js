@@ -30,6 +30,7 @@ export default function (config) {
     },
     serializers: applyEmberDataSerializers(config.serializers),
     routes,
+    trackRequests: config.environment === 'test',
   };
 
   return createServer(finalConfig);
