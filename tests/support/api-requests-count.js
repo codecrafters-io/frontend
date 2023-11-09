@@ -1,4 +1,11 @@
 export default function apiRequestsCount(server) {
+  const requests = server.pretender.handledRequests;
+
+  // if no calls were made, requests will be an instance of NoopArray { length: 0 } <-- O_o
+  if (!requests.length) {
+    return 0;
+  }
+
   const filteredRequests = server.pretender.handledRequests.filter((request) => {
     const pathname = new URL(request.url).pathname;
 
