@@ -12,7 +12,6 @@
     @isDisabled={{not this.currentUser.isAffiliate}}
     @shouldShowSpinner={{this.isCreatingAffiliateLink}}
     @size="small"
-    class="{{if (not this.currentUser.isAffiliate) "pointer-events-none"}}"
     data-test-get-started-button
     {{on "click" this.handleGetStartedButtonClick}}
   >

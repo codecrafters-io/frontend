@@ -60,6 +60,10 @@ export default class JoinReferralProgramContainerComponent extends Component {
 
   @action
   async handleGetStartedButtonClick() {
+    if (!this.currentUser.isAffiliate) {
+      return;
+    }
+
     const affiliateLink = this.store.createRecord('affiliate-link', {
       user: this.currentUser,
       slug: this.currentUser.username,

@@ -13,7 +13,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('partner page is visible to affiliates', async function (assert) {
+  test('partner dashboard link is visible to affiliates only', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.create('user');
@@ -24,6 +24,31 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
     await catalogPage.accountDropdown.toggle();
 
     assert.true(catalogPage.accountDropdown.hasLink('Partner Dashboard'), 'Expect Partner Dashboard link to be visible');
+  });
+
+  test('generate partner link button is not disabled for affiliates', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.create('user');
+    user.update({ isAffiliate: true });
+    signIn(this.owner, this.server, user);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.click();
+
+    assert.false(partnerPage.getStartedButton.isVisible, 'Expect generate partner link button to not be visible');
+  });
+
+  test('generate partner link button is disabled for non affiliates', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.create('user');
+    signIn(this.owner, this.server, user);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.click();
+
+    assert.true(partnerPage.getStartedButton.isVisible, 'Expect generate partner link button to still be visible');
   });
 
   test('can view referral stats', async function (assert) {
