@@ -4,7 +4,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | partner-page | initiate-payout', function (hooks) {
@@ -55,7 +55,7 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    signIn(this.owner, this.server);
+    signInAsAffiliate(this.owner, this.server);
 
     await partnerPage.visit();
 
@@ -130,7 +130,7 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    signIn(this.owner, this.server);
+    signInAsAffiliate(this.owner, this.server);
 
     await partnerPage.visit();
 

@@ -1,16 +1,70 @@
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import percySnapshot from '@percy/ember';
+import { signIn, signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | partner-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
+
+  test('partner dashboard link is visible to affiliates only', async function (assert) {
+    testScenario(this.server);
+    signInAsAffiliate(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+
+    assert.true(catalogPage.accountDropdown.hasLink('Partner Dashboard'), 'Expect Partner Dashboard link to be visible');
+  });
+
+  test('generate partner link button is not disabled for affiliates', async function (assert) {
+    testScenario(this.server);
+    signInAsAffiliate(this.owner, this.server);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.click();
+
+    assert.false(partnerPage.getStartedButton.isVisible, 'Expect generate partner link button to not be visible');
+  });
+
+  test('generate partner link button is disabled for non affiliates', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.click();
+
+    assert.true(partnerPage.getStartedButton.isVisible, 'Expect generate partner link button to still be visible');
+  });
+
+  test('generate partner link button does not have a tooltip for affiliates', async function (assert) {
+    testScenario(this.server);
+    signInAsAffiliate(this.owner, this.server);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.hover();
+
+    assertTooltipNotRendered(assert);
+  });
+
+  test('generate partner link button has a tooltip for non affiliates', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Contact us at hello@codecrafters.io to apply to be a Partner',
+    });
+  });
 
   test('can view referral stats', async function (assert) {
     testScenario(this.server);

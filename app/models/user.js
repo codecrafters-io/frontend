@@ -12,6 +12,7 @@ export default class UserModel extends Model {
   @attr('') featureFlags;
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
+  @attr('boolean') isAffiliate;
   @attr('boolean') isConceptAuthor;
   @attr('boolean') isStaff;
   @attr('boolean') isVip;
