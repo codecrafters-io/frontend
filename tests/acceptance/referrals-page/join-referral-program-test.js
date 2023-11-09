@@ -4,7 +4,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | partner-page | join-referral-program', function (hooks) {
@@ -14,9 +14,7 @@ module('Acceptance | partner-page | join-referral-program', function (hooks) {
 
   test('can view join page when affiliate link is not present', async function (assert) {
     testScenario(this.server);
-    const user = this.server.schema.users.first();
-    user.update({ isAffiliate: true });
-    signIn(this.owner, this.server, user);
+    signInAsAffiliate(this.owner, this.server);
 
     await partnerPage.visit();
     assert.ok(partnerPage.getStartedButton.isVisible);
@@ -26,9 +24,7 @@ module('Acceptance | partner-page | join-referral-program', function (hooks) {
 
   test('can join referral program', async function (assert) {
     testScenario(this.server);
-    const user = this.server.schema.users.first();
-    user.update({ isAffiliate: true });
-    signIn(this.owner, this.server, user);
+    signInAsAffiliate(this.owner, this.server);
 
     await partnerPage.visit();
     await partnerPage.getStartedButton.click();

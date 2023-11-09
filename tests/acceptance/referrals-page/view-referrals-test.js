@@ -7,7 +7,7 @@ import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | partner-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,10 +16,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
   test('partner dashboard link is visible to affiliates only', async function (assert) {
     testScenario(this.server);
-
-    const user = this.server.create('user');
-    user.update({ isAffiliate: true });
-    signIn(this.owner, this.server, user);
+    signInAsAffiliate(this.owner, this.server);
 
     await catalogPage.visit();
     await catalogPage.accountDropdown.toggle();
@@ -29,10 +26,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
   test('generate partner link button is not disabled for affiliates', async function (assert) {
     testScenario(this.server);
-
-    const user = this.server.create('user');
-    user.update({ isAffiliate: true });
-    signIn(this.owner, this.server, user);
+    signInAsAffiliate(this.owner, this.server);
 
     await partnerPage.visit();
     await partnerPage.getStartedButton.click();
@@ -42,9 +36,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
   test('generate partner link button is disabled for non affiliates', async function (assert) {
     testScenario(this.server);
-
-    const user = this.server.create('user');
-    signIn(this.owner, this.server, user);
+    signIn(this.owner, this.server);
 
     await partnerPage.visit();
     await partnerPage.getStartedButton.click();
@@ -54,10 +46,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
   test('generate partner link button does not have a tooltip for affiliates', async function (assert) {
     testScenario(this.server);
-
-    const user = this.server.create('user');
-    user.update({ isAffiliate: true });
-    signIn(this.owner, this.server, user);
+    signInAsAffiliate(this.owner, this.server);
 
     await partnerPage.visit();
     await partnerPage.getStartedButton.hover();
@@ -67,9 +56,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
   test('generate partner link button has a tooltip for non affiliates', async function (assert) {
     testScenario(this.server);
-
-    const user = this.server.create('user');
-    signIn(this.owner, this.server, user);
+    signIn(this.owner, this.server);
 
     await partnerPage.visit();
     await partnerPage.getStartedButton.hover();
