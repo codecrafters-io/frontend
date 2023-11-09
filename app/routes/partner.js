@@ -1,7 +1,6 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
-import window from 'ember-window-mock';
 
 export default class PartnerRoute extends BaseRoute {
   @service authenticator;
@@ -9,15 +8,6 @@ export default class PartnerRoute extends BaseRoute {
 
   activate() {
     scrollToTop();
-  }
-
-  async beforeModel() {
-    await this.authenticator.authenticate();
-    const currentUser = this.authenticator.currentUser;
-
-    if (!currentUser.isAffiliate) {
-      window.location = 'https://docs.codecrafters.io/community/partner-program';
-    }
   }
 
   async model() {
