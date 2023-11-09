@@ -2,6 +2,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
@@ -49,6 +50,33 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
     await partnerPage.getStartedButton.click();
 
     assert.true(partnerPage.getStartedButton.isVisible, 'Expect generate partner link button to still be visible');
+  });
+
+  test('generate partner link button does not have a tooltip for affiliates', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.create('user');
+    user.update({ isAffiliate: true });
+    signIn(this.owner, this.server, user);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.hover();
+
+    assertTooltipNotRendered(assert);
+  });
+
+  test('generate partner link button has a tooltip for non affiliates', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.create('user');
+    signIn(this.owner, this.server, user);
+
+    await partnerPage.visit();
+    await partnerPage.getStartedButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Contact us at hello@codecrafters.io to apply to be a Partner',
+    });
   });
 
   test('can view referral stats', async function (assert) {
