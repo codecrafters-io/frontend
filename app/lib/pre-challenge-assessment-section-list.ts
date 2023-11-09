@@ -1,5 +1,5 @@
 import { tracked } from '@glimmer/tracking';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export class Section {
   repository: TemporaryRepositoryModel;

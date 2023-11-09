@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type Signature = {
   Element: HTMLDivElement;

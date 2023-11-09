@@ -7,7 +7,7 @@ export default function (config) {
   let finalConfig = {
     ...config,
     models: {
-      ...discoverEmberDataModels(),
+      ...discoverEmberDataModels(config.store),
       ...config.models,
       ...{
         courseStageComment: Model.extend({
@@ -30,6 +30,7 @@ export default function (config) {
     },
     serializers: applyEmberDataSerializers(config.serializers),
     routes,
+    trackRequests: config.environment === 'test',
   };
 
   return createServer(finalConfig);

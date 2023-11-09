@@ -1,5 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { TemporaryCourseModel } from './temporary-types';
+import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import LanguageModel from './language';
 
 export default class BuildpackModel extends Model {

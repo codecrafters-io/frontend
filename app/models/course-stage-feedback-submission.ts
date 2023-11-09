@@ -1,5 +1,10 @@
 import Model from '@ember-data/model';
-import { TemporaryCourseStageModel, TemporaryLanguageModel, TemporaryRepositoryModel, TemporaryUserModel } from './temporary-types';
+import {
+  TemporaryCourseStageModel,
+  TemporaryLanguageModel,
+  TemporaryRepositoryModel,
+  TemporaryUserModel,
+} from 'codecrafters-frontend/lib/temporary-types';
 import { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseStageFeedbackSubmissionModel extends Model {

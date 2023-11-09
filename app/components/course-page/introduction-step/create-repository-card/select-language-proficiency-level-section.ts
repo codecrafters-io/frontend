@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import { action } from '@ember/object';
 
 type Signature = {

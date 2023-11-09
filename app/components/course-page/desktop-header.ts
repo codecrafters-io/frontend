@@ -3,7 +3,7 @@ import RouterService from '@ember/routing/router-service';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { inject as service } from '@ember/service';
-import { TemporaryCourseModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 
 type Signature = {

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { TemporaryCourseStageModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryCourseStageModel } from 'codecrafters-frontend/lib/temporary-types';
 
 interface Signature {
   Element: HTMLDivElement;

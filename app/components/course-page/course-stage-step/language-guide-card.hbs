@@ -38,15 +38,19 @@
       </p>
     </Alert>
 
-    <div class="prose">
-      {{#if this.languageGuide}}
+    {{#if this.languageGuide}}
+      <div class="prose has-prism-highlighting" {{highlight-code-blocks contents=this.languageGuide.markdownForBeginner}}>
         {{markdown-to-html this.languageGuide.markdownForBeginner}}
-      {{else if @repository.language}}
+      </div>
+    {{else if @repository.language}}
+      <div class="prose">
         <p class="text-gray-800">Looks like we don't have a language guide available for {{@repository.language.name}} yet.</p>
-      {{else}}
+      </div>
+    {{else}}
+      <div class="prose">
         <p class="text-gray-800">Once you create a repository, you'll see a language-specific guide to this stage here.</p>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
 
     {{#if this.languageGuide}}
       <div class="flex items-center gap-x-3 mt-5">

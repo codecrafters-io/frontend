@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import { fadeIn } from 'ember-animated/motions/opacity';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryCourseModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type Signature = {
   Args: {

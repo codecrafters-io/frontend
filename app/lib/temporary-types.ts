@@ -2,11 +2,11 @@
 import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-extension-activation';
-import RepositoryStageListModel from './repository-stage-list';
-import CourseStageScreencastModel from './course-stage-screencast';
-import BuildpackModel from './buildpack';
-import type BadgeAwardModel from './badge-award';
-import type CourseStageLanguageGuideModel from './course-stage-language-guide';
+import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
+import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
+import BuildpackModel from 'codecrafters-frontend/models/buildpack';
+import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
+import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 
 export class TemporaryUserModel {
   declare id: string;
