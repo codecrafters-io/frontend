@@ -1,5 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { TemporaryCourseStageModel, TemporaryLanguageModel } from './temporary-types';
+import { TemporaryCourseStageModel, TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class CourseStageLanguageGuideModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'languageGuides' }) declare courseStage: TemporaryCourseStageModel;

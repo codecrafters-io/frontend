@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import type { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import type { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 

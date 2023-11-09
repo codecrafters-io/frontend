@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
 import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
-import type { TemporaryCourseStageModel } from 'codecrafters-frontend/models/temporary-types';
+import type { TemporaryCourseStageModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type ModelType = {
   courseStage: TemporaryCourseStageModel;

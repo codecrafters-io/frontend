@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import Store from '@ember-data/store';
-import type { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import type { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 
