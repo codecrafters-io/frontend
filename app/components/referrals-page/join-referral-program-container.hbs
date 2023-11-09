@@ -9,8 +9,10 @@
 
 <div class="flex flex-col sm:flex-row items-center w-fit mt-8 mx-auto text-center gap-3">
   <PrimaryButtonWithSpinner
+    @isDisabled={{not this.currentUser.isAffiliate}}
     @shouldShowSpinner={{this.isCreatingAffiliateLink}}
     @size="small"
+    class="{{if (not this.currentUser.isAffiliate) "pointer-events-none"}}"
     data-test-get-started-button
     {{on "click" this.handleGetStartedButtonClick}}
   >

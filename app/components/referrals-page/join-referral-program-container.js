@@ -54,11 +54,15 @@ export default class JoinReferralProgramContainerComponent extends Component {
     ];
   }
 
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   @action
   async handleGetStartedButtonClick() {
     const affiliateLink = this.store.createRecord('affiliate-link', {
-      user: this.authenticator.currentUser,
-      slug: this.authenticator.currentUser.username,
+      user: this.currentUser,
+      slug: this.currentUser.username,
     });
 
     this.isCreatingAffiliateLink = true;
