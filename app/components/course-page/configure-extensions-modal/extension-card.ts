@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import Store from '@ember-data/store';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';

@@ -4,7 +4,7 @@ import { formatDistanceStrictWithOptions } from 'date-fns/fp';
 import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class CourseStageStep extends Step {
   @tracked stageListItem;

@@ -7,7 +7,7 @@ import Store from '@ember-data/store';
 import window from 'ember-window-mock';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryUserModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class AuthenticatorService extends Service {
   @service declare router: RouterService;

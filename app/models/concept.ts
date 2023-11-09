@@ -3,7 +3,7 @@ import Model, { belongsTo } from '@ember-data/model';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
-import { TemporaryUserModel } from './temporary-types';
+import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 

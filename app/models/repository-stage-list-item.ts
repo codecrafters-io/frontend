@@ -1,5 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { TemporaryCourseStageModel } from './temporary-types';
+import { TemporaryCourseStageModel } from 'codecrafters-frontend/lib/temporary-types';
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 
 export default class RepositoryStageListItemModel extends Model {
