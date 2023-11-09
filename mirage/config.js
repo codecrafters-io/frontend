@@ -7,7 +7,7 @@ export default function (config) {
   let finalConfig = {
     ...config,
     models: {
-      ...discoverEmberDataModels(),
+      ...discoverEmberDataModels(config.store),
       ...config.models,
       ...{
         courseStageComment: Model.extend({
