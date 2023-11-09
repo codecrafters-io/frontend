@@ -1,6 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Helper from '@ember/component/helper';
-import { TemporaryCourseModel } from 'codecrafters-frontend/models/temporary-types';
+import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import { inject as service } from '@ember/service';
 
 type Positional = [TemporaryCourseModel];

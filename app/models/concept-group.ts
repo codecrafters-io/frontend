@@ -1,6 +1,6 @@
 import Model, { belongsTo } from '@ember-data/model';
 import { attr } from '@ember-data/model';
-import { TemporaryUserModel } from './temporary-types';
+import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class ConceptGroupModel extends Model {
   @belongsTo('user', { async: false }) author!: TemporaryUserModel;
