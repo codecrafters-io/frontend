@@ -18,9 +18,9 @@
     <span class="text-lg">Generate your partner link</span>
     {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
 
-    {{#if (not this.currentUser.isAffiliate)}}
+    {{#unless this.currentUser.isAffiliate}}
       <EmberTooltip @text="Contact us at hello@codecrafters.io to apply to be a Partner" />
-    {{/if}}
+    {{/unless}}
   </PrimaryButtonWithSpinner>
 
   <TertiaryButton>
