@@ -1,24 +1,29 @@
-{{! @glint-nocheck: not typesafe yet !}}
 <div class="pt-8 pb-16">
   {{#if this.shouldShowTestFailureExpectedHint}}
+    {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CourseStageStep::TestFailureExpectedHint class="mb-6" />
   {{/if}}
 
   {{#if this.shouldShowUpgradePrompt}}
+    {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CourseStageStep::UpgradePrompt class="mb-6" />
   {{/if}}
 
   {{#if this.shouldShowCLIUsageInstructions}}
+    {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CourseStageStep::CliUsageInstructions class="mb-6" />
   {{/if}}
 
   {{#if (gt this.badgeAwards.length 0)}}
+    {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
   {{/if}}
 
+  {{! @glint-expect-error: not ts-ified }}
   <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
   {{#if @model.courseStage.isFirst}}
+    {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CourseStageStep::FirstStageInstructionsCard
       @repository={{@model.activeRepository}}
       @courseStage={{@model.courseStage}}
@@ -27,6 +32,7 @@
   {{/if}}
 
   {{#if @model.courseStage.isSecond}}
+    {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CourseStageStep::SecondStageInstructionsCard
       @repository={{@model.activeRepository}}
       @courseStage={{@model.courseStage}}
@@ -34,9 +40,14 @@
     />
   {{/if}}
 
+  {{#if this.shouldShowLanguageInstructions}}
+    <CoursePage::CourseStageStep::LanguageInstructionsCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
+  {{/if}}
+
   <div data-percy-hints-section>
     <h2 class="font-semibold border-b pb-2 mb-6 text-lg mt-8">Hints</h2>
 
+    {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CommentList @courseStage={{@model.courseStage}} @language={{@model.activeRepository.language}} />
   </div>
 </div>

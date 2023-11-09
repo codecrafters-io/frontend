@@ -6,17 +6,10 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
 import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
+import type { TemporaryCourseStageModel } from 'codecrafters-frontend/models/temporary-types';
 
 type ModelType = {
-  courseStage: {
-    slug: string;
-    course: {
-      slug: string;
-    };
-    screencasts: {
-      id: string;
-    }[];
-  };
+  courseStage: TemporaryCourseStageModel;
 };
 
 export default class ScreencastsTabComponent extends Controller {

@@ -1,8 +1,17 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
+import type { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/models/temporary-types';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 export default class CourseStageInstructionsController extends Controller {
-  @service coursePageState;
+  @service declare coursePageState: CoursePageStateService;
+  @service declare authenticator: AuthenticatorService;
+
+  declare model: {
+    courseStage: TemporaryCourseStageModel;
+    activeRepository: TemporaryRepositoryModel;
+  };
 
   get badgeAwards() {
     return this.model.activeRepository.user.badgeAwards.filter((badgeAward) => {
@@ -23,6 +32,10 @@ export default class CourseStageInstructionsController extends Controller {
 
   get shouldShowCLIUsageInstructions() {
     return this.model.courseStage.isThird;
+  }
+
+  get shouldShowLanguageInstructions() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.isStaff;
   }
 
   get shouldShowTestFailureExpectedHint() {

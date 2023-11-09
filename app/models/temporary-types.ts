@@ -5,11 +5,12 @@ import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-
 import RepositoryStageListModel from './repository-stage-list';
 import CourseStageScreencastModel from './course-stage-screencast';
 import BuildpackModel from './buildpack';
+import type BadgeAwardModel from './badge-award';
 
 export class TemporaryUserModel {
   declare id: string;
   declare username: string;
-  declare badgeAwards: unknown[];
+  declare badgeAwards: BadgeAwardModel[];
   declare avatarUrl: string;
   declare isConceptAuthor: boolean;
   declare isStaff: boolean;
@@ -20,6 +21,10 @@ export class TemporaryUserModel {
   declare githubProfileUrl: string;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
+
+  canAttemptCourseStage(_courseStage: TemporaryCourseStageModel): boolean {
+    return false;
+  }
 
   isCourseAuthor(_course: TemporaryCourseModel): boolean {
     return false;
@@ -54,6 +59,8 @@ export class TemporaryCourseStageModel {
   declare identifierForURL: string;
   declare isBaseStage: boolean;
   declare isFirst: boolean;
+  declare isSecond: boolean;
+  declare isThird: boolean;
   declare name: string;
   declare position: number;
   declare positionWithinExtension: number;
@@ -77,6 +84,7 @@ export class TemporarySubmissionModel {
   declare status: 'evaluating' | 'failed' | 'success' | 'internal_error';
   declare courseStage: TemporaryCourseStageModel;
   declare createdAt: Date;
+  declare repository: TemporaryRepositoryModel;
 }
 
 export class TemporaryRepositoryModel {
