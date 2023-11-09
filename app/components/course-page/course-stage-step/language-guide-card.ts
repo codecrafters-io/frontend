@@ -22,12 +22,21 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
   loadLanguageGuidesTask = task({ keepLatest: true }, async (): Promise<void> => {
     await this.store.query('course-stage-language-guide', {
       course_stage_id: this.args.courseStage.id,
-      include: 'course-stage',
+      include: 'course-stage,language',
     });
   });
 
   get isLoading(): boolean {
     return this.loadLanguageGuidesTask.isRunning;
+  }
+
+  // Can return undefined if the language guide hasn't been loaded yet
+  get languageGuide() {
+    if (!this.args.repository.language) {
+      return undefined;
+    }
+
+    return this.args.courseStage.languageGuides.findBy('language', this.args.repository.language);
   }
 
   @action

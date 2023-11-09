@@ -6,6 +6,7 @@ import RepositoryStageListModel from './repository-stage-list';
 import CourseStageScreencastModel from './course-stage-screencast';
 import BuildpackModel from './buildpack';
 import type BadgeAwardModel from './badge-award';
+import type CourseStageLanguageGuideModel from './course-stage-language-guide';
 
 export class TemporaryUserModel {
   declare id: string;
@@ -61,6 +62,7 @@ export class TemporaryCourseStageModel {
   declare isFirst: boolean;
   declare isSecond: boolean;
   declare isThird: boolean;
+  declare languageGuides: CourseStageLanguageGuideModel[];
   declare name: string;
   declare position: number;
   declare positionWithinExtension: number;
@@ -97,7 +99,7 @@ export class TemporaryRepositoryModel {
   declare id: null | string;
   declare isNew: boolean;
   declare isSaving: boolean;
-  declare language: null | TemporaryLanguageModel;
+  declare language: undefined | TemporaryLanguageModel;
   declare languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
   declare stageList: RepositoryStageListModel | null;

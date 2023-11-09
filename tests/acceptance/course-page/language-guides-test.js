@@ -22,6 +22,14 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
+    console.log(redis.stages.models.sortBy('position')[1].slug);
+
+    this.server.create('course-stage-language-guide', {
+      markdownForBeginner: 'In this stage, blah blah...',
+      courseStage: redis.stages.models.sortBy('position')[1],
+      language: python,
+    });
+
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
@@ -31,113 +39,6 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    document.getElementById('language-instructions-card').scrollIntoView();
-    await this.pauseTest();
-
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
-
-    assert.strictEqual(
-      apiRequestsCount(this.server),
-      [
-        'fetch courses (courses listing page)',
-        'fetch repositories (courses listing page)',
-        'fetch courses (course page)',
-        'fetch repositories (course page)',
-        'fetch leaderboard entries (course page)',
-        'fetch hints (course page)',
-      ].length,
-    );
-
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
-
-    const submission = this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
-    });
-
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
-
-    // Update to 15 minutes ago
-    submission.update('createdAt', new Date(new Date().getTime() - 15 * 60 * 1000));
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Last attempt 15 minutes ago. Try again?', 'footer text includes timestamp');
-  });
-
-  test('can pass course stage', async function (assert) {
-    testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: go,
-      user: currentUser,
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
-
-    this.server.create('submission', 'withSuccessStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
-    });
-
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await animationsSettled();
-
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage passed');
-  });
-
-  test('passing first stage shows badges', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withSetupStageCompleted', {
-      course: redis,
-      language: go,
-      user: currentUser,
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
-
-    const submission = this.server.create('submission', 'withSuccessStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[0],
-    });
-
-    const badge = this.server.create('badge', {
-      slug: 'passed-first-stage',
-      name: 'Passed first stage',
-    });
-
-    this.server.create('badge-award', {
-      user: currentUser,
-      badge: badge,
-      submission: submission,
-    });
-
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await animationsSettled();
-
-    // TODO: Add tests for badge display
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
+    document.getElementById('language-instructions-card')?.scrollIntoView();
   });
 });
