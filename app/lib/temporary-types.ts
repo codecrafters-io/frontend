@@ -5,11 +5,13 @@ import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
 import BuildpackModel from 'codecrafters-frontend/models/buildpack';
+import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
+import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 
 export class TemporaryUserModel {
   declare id: string;
   declare username: string;
-  declare badgeAwards: unknown[];
+  declare badgeAwards: BadgeAwardModel[];
   declare avatarUrl: string;
   declare isConceptAuthor: boolean;
   declare isStaff: boolean;
@@ -20,6 +22,10 @@ export class TemporaryUserModel {
   declare githubProfileUrl: string;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
+
+  canAttemptCourseStage(_courseStage: TemporaryCourseStageModel): boolean {
+    return false;
+  }
 
   isCourseAuthor(_course: TemporaryCourseModel): boolean {
     return false;
@@ -54,6 +60,9 @@ export class TemporaryCourseStageModel {
   declare identifierForURL: string;
   declare isBaseStage: boolean;
   declare isFirst: boolean;
+  declare isSecond: boolean;
+  declare isThird: boolean;
+  declare languageGuides: CourseStageLanguageGuideModel[];
   declare name: string;
   declare position: number;
   declare positionWithinExtension: number;
@@ -77,6 +86,7 @@ export class TemporarySubmissionModel {
   declare status: 'evaluating' | 'failed' | 'success' | 'internal_error';
   declare courseStage: TemporaryCourseStageModel;
   declare createdAt: Date;
+  declare repository: TemporaryRepositoryModel;
 }
 
 export class TemporaryRepositoryModel {
@@ -89,7 +99,7 @@ export class TemporaryRepositoryModel {
   declare id: null | string;
   declare isNew: boolean;
   declare isSaving: boolean;
-  declare language: null | TemporaryLanguageModel;
+  declare language: undefined | TemporaryLanguageModel;
   declare languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
   declare stageList: RepositoryStageListModel | null;

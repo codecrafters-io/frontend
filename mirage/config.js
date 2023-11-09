@@ -256,6 +256,8 @@ function routes() {
   this.patch('/course-stage-comments/:id');
   this.post('/course-stage-comments/:id/unvote', () => {});
 
+  this.get('/course-stage-language-guides');
+
   this.get('/course-tester-versions');
 
   this.post('/course-tester-versions/:id/activate', function (schema, request) {
