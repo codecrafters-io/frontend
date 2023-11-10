@@ -52,15 +52,15 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
-  handlePerksLinkClick(dropdownActions) {
-    window.open('https://codecrafters.io/perks', '_blank');
+  handlePartnerDashboardClick(dropdownActions) {
     dropdownActions.close();
+    this.router.transitionTo('partner');
   }
 
   @action
-  handleReferralsLinkClick(dropdownActions) {
+  handlePerksLinkClick(dropdownActions) {
+    window.open('https://codecrafters.io/perks', '_blank');
     dropdownActions.close();
-    this.router.transitionTo('refer');
   }
 
   @action

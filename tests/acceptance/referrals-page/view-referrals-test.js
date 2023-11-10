@@ -3,6 +3,7 @@ import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
@@ -22,6 +23,17 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
     await catalogPage.accountDropdown.toggle();
 
     assert.true(catalogPage.accountDropdown.hasLink('Partner Dashboard'), 'Expect Partner Dashboard link to be visible');
+  });
+
+  test('partner dashboard link redirects to correct page', async function (assert) {
+    testScenario(this.server);
+    signInAsAffiliate(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.accountDropdown.toggle();
+    await catalogPage.accountDropdown.clickOnLink('Partner Dashboard');
+
+    assert.strictEqual(currentURL(), '/partner', 'Expect to be redirected to partner page');
   });
 
   test('generate partner link button is not disabled for affiliates', async function (assert) {
