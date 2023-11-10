@@ -1,4 +1,4 @@
-<BasicDropdown @renderInPlace={{true}} @horizontalPosition="right" @onClose={{this.handleDropdownClosed}} as |dd|>
+<BasicDropdown @renderInPlace={{true}} @horizontalPosition={{or @dropdownPosition "right"}} @onClose={{this.handleDropdownClosed}} as |dd|>
   <dd.Trigger>
     <div ...attributes>
       {{yield dd}}
