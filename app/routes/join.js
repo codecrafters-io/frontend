@@ -20,7 +20,7 @@ export default class JoinRoute extends BaseRoute {
 
   async model(params) {
     const affiliateLinks = await this.store.query('affiliate-link', {
-      slug: params.affiliateLinksSlug,
+      slug: params.affiliateLinkSlug,
       include: 'user',
     });
 
