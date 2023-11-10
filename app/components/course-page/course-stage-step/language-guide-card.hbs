@@ -1,4 +1,6 @@
 <CoursePage::InstructionsCard
+  @isCollapsedByDefault={{true}}
+  @onExpand={{this.handleExpand}}
   id="language-instructions-card"
   ...attributes
   {{did-update this.loadLanguageGuides @courseStage}}

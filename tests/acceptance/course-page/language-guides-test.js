@@ -19,8 +19,6 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    console.log(redis.stages.models.sortBy('position')[1].slug);
-
     this.server.create('course-stage-language-guide', {
       markdownForBeginner: 'In this stage, blah blah...',
       courseStage: redis.stages.models.sortBy('position')[1],

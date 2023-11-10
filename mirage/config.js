@@ -270,11 +270,10 @@ function routes() {
     return courseTesterVersion;
   });
 
-  this.post('/downvotes');
-  this.post('/upvotes');
-
   this.post('/course-stage-feedback-submissions');
   this.patch('/course-stage-feedback-submissions/:id');
+
+  this.post('/downvotes');
 
   this.patch('/feature-suggestions/:id');
 
@@ -477,6 +476,8 @@ function routes() {
     return result;
   });
 
+  this.post('/upvotes');
+
   this.get('/users', function (schema, request) {
     return schema.users.where({ username: request.queryParams.username });
   });
@@ -500,4 +501,6 @@ function routes() {
       lineItems: [{ amount: 7900, amount_after_discounts: 7900, quantity: 1 }],
     });
   });
+
+  this.post('/views');
 }

@@ -40,6 +40,15 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
   }
 
   @action
+  handleExpand(): void {
+    console.log('expand clicked', !!this.languageGuide);
+
+    if (this.languageGuide) {
+      this.languageGuide.createView();
+    }
+  }
+
+  @action
   loadLanguageGuides(): void {
     this.loadLanguageGuidesTask.perform();
   }

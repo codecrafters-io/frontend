@@ -1,11 +1,43 @@
 <div class="bg-gray-50 rounded-md w-full" ...attributes>
-  <div class="bg-white border border-gray-300 {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}">
+  <div class="bg-white border border-gray-300 relative {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}">
     <div class="p-4 pt-3 sm:p-6 sm:pt-5 {{if (has-block 'footer') 'pb-4'}}">
       {{#if @title}}
         <h2 class="font-semibold border-b pb-2 mb-5 text-lg text-gray-700">{{@title}}</h2>
       {{/if}}
 
-      {{yield to="content"}}
+      <div class="{{if this.isCollapsed 'h-72 overflow-hidden'}}">
+        {{yield to="content"}}
+      </div>
+
+      {{#if this.isCollapsed}}
+        <div
+          role="button"
+          class="absolute rounded inset-0 vertical-mask p-4 flex items-end justify-center group z-10"
+          data-test-expand-button
+          {{on "click" this.handleExpandButtonClick}}
+        >
+          <div
+            class="border bg-white group-hover:bg-gray-100 hover:group-border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"
+          >
+            <div class="font-bold flex items-center sm:mb-0">
+              Expand
+              {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
+            </div>
+          </div>
+        </div>
+      {{else if @isCollapsedByDefault}}
+        <button
+          class="mt-4 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"
+          type="button"
+          {{on "click" this.handleCollapseButtonClick}}
+          data-test-collapse-button
+        >
+          <div class="font-bold flex items-center sm:mb-0">
+            Collapse
+            {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
+          </div>
+        </button>
+      {{/if}}
     </div>
   </div>
 
