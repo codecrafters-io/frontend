@@ -16,27 +16,27 @@
         </div>
       </div>
 
-      <div class="text-sm">
+      {{! <div class="text-sm">
         <span class="text-gray-500">Proficiency:</span>
         <span class="text-gray-700 font-semibold">Beginner</span>
-      </div>
+      </div> }}
     </div>
 
     <Alert class="mb-6">
-      <p>
-        This is a beta feature. Let us know if you find this useful or not using the "👍 Helpful" / "👎 Not Helpful" buttons below. You can also send
-        us detailed feedback using the
-        <div class="inline-flex">
-          {{! @glint-expect-error: not ts-ified }}
-          <FeedbackButton class="font-blue-500 hover:font-blue-600 font-semibold underline">share feedback</FeedbackButton>
-        </div>
-        button.
+      <p class="mb-2">
+        This guide is AI-generated, and may be highly inaccurate. We're releasing this early to get feedback.
+        <a href="https://docs.codecrafters.io/experimental/language-guides" target="_blank" rel="noopener noreferrer">Learn more</a>.
       </p>
 
-      <p>
-        Change the
-        <b>Proficiency</b>
-        setting above to see more or less detail.
+      <p class="mt-0">
+        <div class="inline-flex">
+          {{! @glint-expect-error: not ts-ified }}
+          <FeedbackButton class="inline-flex" @dropdownPosition="left">
+            <TertiaryButton @size="small">
+              Share Feedback
+            </TertiaryButton>
+          </FeedbackButton>
+        </div>
       </p>
     </Alert>
 
@@ -54,7 +54,7 @@
       </div>
     {{/if}}
 
-    {{#if this.languageGuide}}
+    {{!-- {{#if this.languageGuide}}
       <div class="flex items-center gap-x-3 mt-5">
         <TertiaryButton @size="small">
           👍 Helpful
@@ -67,6 +67,6 @@
           Share feedback
         </FeedbackButton>
       </div>
-    {{/if}}
+    {{/if}} --}}
   </:content>
 </CoursePage::InstructionsCard>

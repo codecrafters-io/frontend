@@ -35,7 +35,7 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowLanguageGuide() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.isStaff && !this.model.courseStage.isFirst;
+    return !this.model.courseStage.isFirst;
   }
 
   get shouldShowTestFailureExpectedHint() {
