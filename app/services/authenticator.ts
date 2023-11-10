@@ -73,9 +73,9 @@ export default class AuthenticatorService extends Service {
 
     const includedResources = [
       'feature_suggestions',
-      'referral_activations_as_customer.referrer',
-      'referral_links',
-      'referral_links.user',
+      'affiliate_referrals_as_customer.referrer',
+      'affiliate_links',
+      'affiliate_links.user',
       'team_memberships',
       'team_memberships.team.memberships.user',
       'team_memberships.team.subscriptions',

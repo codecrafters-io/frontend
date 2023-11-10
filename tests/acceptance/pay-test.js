@@ -70,7 +70,7 @@ module('Acceptance | pay-test', function (hooks) {
     let user = this.server.schema.users.first();
     user.update('createdAt', new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000));
 
-    this.server.create('referral-activation', {
+    this.server.create('affiliate-referral', {
       activatedAt: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
       referrer: user,
       customer: user,

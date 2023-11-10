@@ -1,4 +1,4 @@
-import { clickOnText, collection, text, visitable, clickable } from 'ember-cli-page-object';
+import { clickOnText, collection, text, visitable, clickable, triggerable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -26,6 +26,7 @@ export default createPage({
   },
 
   getStartedButton: {
+    hover: triggerable('mouseenter'),
     scope: '[data-test-get-started-button]',
   },
 
@@ -41,5 +42,5 @@ export default createPage({
 
   payoutHistoryItems: collection('[data-test-payout-history-item]'),
 
-  visit: visitable('/refer'),
+  visit: visitable('/partner'),
 });

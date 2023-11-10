@@ -9,7 +9,7 @@
     {{#if this.user.isEligibleForEarlyBirdDiscount}}
       <PayPage::EarlyBirdDiscountNotice @expiresAt={{this.user.earlyBirdDiscountEligibilityExpiresAt}} class="mt-8" />
     {{else if this.user.isEligibleForReferralDiscount}}
-      <PayPage::ReferralDiscountNotice @referralActivation={{this.user.currentReferralActivation}} class="mt-8" />
+      <PayPage::ReferralDiscountNotice @affiliateReferral={{this.user.currentAffiliateReferral}} class="mt-8" />
     {{/if}}
 
     {{#if @model.regionalDiscount}}

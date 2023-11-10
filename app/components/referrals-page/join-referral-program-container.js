@@ -15,7 +15,7 @@ import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
 export default class JoinReferralProgramContainerComponent extends Component {
   @service store;
   @service authenticator;
-  @tracked isCreatingReferralLink = false;
+  @tracked isCreatingAffiliateLink = false;
 
   get companies() {
     return [
@@ -54,15 +54,23 @@ export default class JoinReferralProgramContainerComponent extends Component {
     ];
   }
 
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   @action
   async handleGetStartedButtonClick() {
-    const referralLink = this.store.createRecord('referral-link', {
-      user: this.authenticator.currentUser,
-      slug: this.authenticator.currentUser.username,
+    if (!this.currentUser.isAffiliate) {
+      return;
+    }
+
+    const affiliateLink = this.store.createRecord('affiliate-link', {
+      user: this.currentUser,
+      slug: this.currentUser.username,
     });
 
-    this.isCreatingReferralLink = true;
-    await referralLink.save();
-    this.isCreatingReferralLink = false;
+    this.isCreatingAffiliateLink = true;
+    await affiliateLink.save();
+    this.isCreatingAffiliateLink = false;
   }
 }

@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 
-export default class ReferRoute extends BaseRoute {
+export default class PartnerRoute extends BaseRoute {
   @service authenticator;
   @service store;
 
@@ -11,15 +11,15 @@ export default class ReferRoute extends BaseRoute {
   }
 
   async model() {
-    await this.authenticator.authenticate(); // Force loading referral links
+    await this.authenticator.authenticate(); // Force loading affiliate links
 
     if (this.authenticator.currentUser.hasJoinedReferralProgram) {
-      await this.store.query('referral-link', {
+      await this.store.query('affiliate-link', {
         user_id: this.authenticator.currentUser.id,
-        include: 'activations,activations.customer,activations.referrer',
+        include: 'referrals,referrals.customer,referrals.referrer',
       });
     } else {
-      // Referral links themselves are loaded in the /users/current payload
+      // Affiliate links themselves are loaded in the /users/current payload
     }
   }
 }

@@ -6,12 +6,12 @@
 
   <div class="text-blue-700 prose max-w-none prose-blue leading-7">
     <AvatarImage
-      @user={{@referralActivation.referrer}}
+      @user={{@affiliateReferral.referrer}}
       class="inline-block mb-0 w-6 h-6 border border-gray-100 rounded-full transform -translate-y-px"
     />
 
-    <b>{{@referralActivation.referrer.username}}</b>'s referral offer: Subscribe by
-    <span class="font-semibold percy-timestamp">{{date-format @referralActivation.discountPeriodEndsAt format="PPPp"}}</span>
+    <b>{{@affiliateReferral.referrer.username}}</b>'s referral offer: Subscribe by
+    <span class="font-semibold percy-timestamp">{{date-format @affiliateReferral.discountPeriodEndsAt format="PPPp"}}</span>
     to get
     <span class="font-semibold">40% off</span>
     the 1 year plan.

@@ -9,16 +9,17 @@ export default class UserModel extends Model {
   @attr() authoredCourseSlugs;
   @attr('string') avatarUrl;
   @attr('date') createdAt;
+  @attr('') featureFlags;
   @attr('string') githubUsername;
   @attr('boolean') isAdmin;
-  @attr('boolean') isStaff;
-  @attr('boolean') isCodecraftersPartner;
+  @attr('boolean') isAffiliate;
   @attr('boolean') isConceptAuthor;
+  @attr('boolean') isStaff;
+  @attr('boolean') isVip;
   @attr('string') name;
-  @attr('string') username;
-  @attr('') featureFlags;
   @attr('string') primaryEmailAddress;
-  @attr('date') codecraftersPartnerStatusExpiresAt;
+  @attr('string') username;
+  @attr('date') vipStatusExpiresAt;
 
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
@@ -27,10 +28,10 @@ export default class UserModel extends Model {
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
-  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
-  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
+  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
+  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer;
   @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts;
-  @hasMany('referral-link', { async: false }) referralLinks;
+  @hasMany('affiliate-link', { async: false }) affiliateLinks;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
@@ -45,7 +46,7 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    return this.isCodecraftersPartner || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
   get codecraftersProfileUrl() {
@@ -56,8 +57,8 @@ export default class UserModel extends Model {
     return this.courseParticipations.filterBy('isCompleted');
   }
 
-  get currentReferralActivation() {
-    return this.referralActivationsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
+  get currentAffiliateReferral() {
+    return this.affiliateReferralsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
   }
 
   get earlyBirdDiscountEligibilityExpiresAt() {
@@ -93,7 +94,7 @@ export default class UserModel extends Model {
   }
 
   get hasJoinedReferralProgram() {
-    return this.referralLinks.rejectBy('isNew').length > 0;
+    return this.affiliateLinks.rejectBy('isNew').length > 0;
   }
 
   get isEligibleForEarlyBirdDiscount() {
@@ -105,8 +106,8 @@ export default class UserModel extends Model {
   }
 
   get isEligibleForReferralDiscount() {
-    if (this.currentReferralActivation) {
-      return this.currentReferralActivation.isWithinDiscountPeriod;
+    if (this.currentAffiliateReferral) {
+      return this.currentAffiliateReferral.isWithinDiscountPeriod;
     } else {
       return false;
     }

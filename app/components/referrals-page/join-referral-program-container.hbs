@@ -9,13 +9,18 @@
 
 <div class="flex flex-col sm:flex-row items-center w-fit mt-8 mx-auto text-center gap-3">
   <PrimaryButtonWithSpinner
-    @shouldShowSpinner={{this.isCreatingReferralLink}}
+    @isDisabled={{not this.currentUser.isAffiliate}}
+    @shouldShowSpinner={{this.isCreatingAffiliateLink}}
     @size="small"
     data-test-get-started-button
     {{on "click" this.handleGetStartedButtonClick}}
   >
-    <span class="text-lg">Generate your referral link</span>
+    <span class="text-lg">Generate your partner link</span>
     {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
+
+    {{#unless this.currentUser.isAffiliate}}
+      <EmberTooltip @text="Contact us at hello@codecrafters.io to apply to be a Partner" />
+    {{/unless}}
   </PrimaryButtonWithSpinner>
 
   <TertiaryButton>
