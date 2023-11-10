@@ -7,6 +7,7 @@ interface Signature {
 
   Args: {
     title?: string;
+    contentIdentifier?: string; // Use this to reset the collapse state when the content changes
     isCollapsedByDefault?: boolean;
     onExpand?: () => void;
     onCollapse?: () => void;
@@ -25,6 +26,11 @@ export default class InstructionsCardComponent extends Component<Signature> {
   handleCollapseButtonClick() {
     this.isCollapsed = true;
     this.args.onCollapse?.();
+  }
+
+  @action
+  handleContentIdentifierDidUpdate() {
+    this.isCollapsed = this.args.isCollapsedByDefault ?? false;
   }
 
   @action
