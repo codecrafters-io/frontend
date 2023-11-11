@@ -2,6 +2,7 @@ import { drag } from 'ember-sortable/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import blocksPage from 'codecrafters-frontend/tests/pages/concept-admin/blocks-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -61,6 +62,8 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     await blocksPage.editableBlocks[1].clickOnSaveButton();
 
     await blocksPage.clickOnPublishChangesButton();
+    await settled();
+
     assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
 
     await blocksPage.insertBlockMarkers[0].click();

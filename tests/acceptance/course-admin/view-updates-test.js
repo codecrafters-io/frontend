@@ -1,7 +1,7 @@
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import updatesPage from 'codecrafters-frontend/tests/pages/course-admin/updates-page';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -107,6 +107,8 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     });
 
     await updatesPage.clickOnSyncWithGitHubButton();
+    await settled();
+
     assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
   });
 

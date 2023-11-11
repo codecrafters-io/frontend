@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -45,9 +46,13 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
 
     await testerVersionsPage.testerVersionListItem[0].activateButton.click();
+    await settled();
+
     assert.notOk(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
 
     await testerVersionsPage.testerVersionListItem[1].activateButton.click();
+    await settled();
+
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
     assert.notOk(testerVersionsPage.testerVersionListItem[1].activateButton.isPresent);
 

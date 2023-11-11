@@ -1,7 +1,7 @@
 import percySnapshot from '@percy/ember';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -81,6 +81,8 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     });
 
     await testerVersionsPage.clickOnSyncWithGitHubButton();
+    await settled();
+
     assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 tester versions');
   });
 
