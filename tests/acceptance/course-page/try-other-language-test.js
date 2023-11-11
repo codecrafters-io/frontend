@@ -60,6 +60,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
       'fetch languages (course page)',
+      'fetch leaderboard entries (after ember-data upgrade)',
     ].length;
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
@@ -69,7 +70,15 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.createRepositoryCard.clickOnLanguageButton('Go');
     await animationsSettled();
 
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 3, `expected ${expectedRequestsCount + 3} requests`); // fetch languages, requests + Create repository request
+    //prettier-ignore
+    expectedRequestsCount += [
+      'fetch languages',
+      'fetch requests',
+      'create repository',
+      'fetch leaderboard entries',
+    ].length;
+
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=2', 'current URL is course page URL with repo query param');
 
@@ -89,12 +98,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 8, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 5, 'polling should have run');
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 10, 'polling should have run again');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run again');
   });
 
   test('can try other language from repository setup page (regression)', async function (assert) {

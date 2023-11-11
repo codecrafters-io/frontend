@@ -58,6 +58,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
+    baseRequestsCount += 1; // An extra request for leaderboard-entries started happening after ember-data upgrade
+
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'create repository request was executed');
 
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
