@@ -17,6 +17,7 @@
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
         {{! TODO: Fetch this from query params? }}
         @preferredLanguageSlug={{null}}
+        @errorMessage={{this.repositoryCreationErrorMessage}}
         @repository={{@repository}}
         @onLanguageSelection={{this.handleLanguageSelection}}
       />

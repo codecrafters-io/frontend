@@ -1,3 +1,9 @@
+{{#if @errorMessage}}
+  <Alert @type="error" class="mb-5">
+    {{@errorMessage}}
+  </Alert>
+{{/if}}
+
 <div class="text-gray-700 prose mb-5" data-test-select-language-section>
   <p>
     <b>Which language would you like to use?</b>

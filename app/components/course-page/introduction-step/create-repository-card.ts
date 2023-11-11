@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RouterService from '@ember/routing/router-service';
+import * as Sentry from '@sentry/ember';
 import { type Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 import { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
@@ -21,6 +22,7 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   @service declare coursePageState: CoursePageStateService;
 
   @tracked expandedSectionIndex: number | null = null;
+  @tracked repositoryCreationErrorMessage: string | null = null;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -51,9 +53,20 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
 
   @action
   async handleLanguageSelection(language: TemporaryLanguageModel) {
+    this.repositoryCreationErrorMessage = null;
     this.args.repository.language = language;
 
-    await this.args.repository.save(); // TODO: This is kinda slow, investigate ways to make it faster
+    try {
+      await this.args.repository.save(); // TODO: This is kinda slow, investigate ways to make it faster
+    } catch (error) {
+      this.args.repository.language = undefined;
+      this.repositoryCreationErrorMessage =
+        'Failed to create repository, please try again? Contact us at hello@codecrafters.io if this error persists.';
+      Sentry.captureException(error);
+
+      return;
+    }
+
     this.expandNextSection();
 
     this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
