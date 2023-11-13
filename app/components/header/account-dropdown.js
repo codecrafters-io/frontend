@@ -29,6 +29,12 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
+  handleGet1FreeWeekDashboardClick(dropdownActions) {
+    dropdownActions.close();
+    this.router.transitionTo('refer');
+  }
+
+  @action
   handleGetHelpClick(dropdownActions) {
     window.Beacon('open');
     dropdownActions.close();
