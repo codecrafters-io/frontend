@@ -10,6 +10,7 @@ import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/cou
 import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/course-page/repository-setup-card';
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
+import LanguageDropdown from './components/language-dropdown';
 
 export default create({
   adminButton: {
@@ -29,22 +30,7 @@ export default create({
   },
 
   codeExamplesTab: {
-    languageDropdown: {
-      currentLanguageName: text('[data-test-language-dropdown-trigger] [data-test-current-language-name]', { resetScope: true }),
-      toggle: clickable('[data-test-language-dropdown-trigger]', { resetScope: true }),
-      clickOnLink: clickOnText('div[role="button"]'),
-
-      hasLink(text) {
-        return this.links.toArray().some((link) => link.text.includes(text));
-      },
-
-      links: collection('div[role="button"]', {
-        text: text(),
-      }),
-
-      resetScope: true,
-      scope: '[data-test-language-dropdown-content]',
-    },
+    languageDropdown: LanguageDropdown,
 
     solutionCards: collection('[data-test-community-solution-card]', {
       clickOnExpandButton: clickable('[data-test-expand-button]'),
@@ -115,6 +101,18 @@ export default create({
 
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
+
+  languageGuideCard: {
+    backToRepositoryLanguageButton: {
+      scope: '[data-test-back-to-repository-language-button]',
+    },
+
+    clickOnExpandButton: clickable('[data-test-expand-button]'),
+    clickOnCollapseButton: clickable('[data-test-collapse-button]'),
+    languageDropdown: LanguageDropdown,
+    scope: '[data-test-language-guide-card]',
+  },
+
   leaderboard: Leaderboard,
 
   monthlyChallengeBanner: {

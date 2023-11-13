@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | language-guides', function (hooks) {
@@ -34,8 +35,17 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    document.getElementById('language-instructions-card')?.scrollIntoView();
+    document.getElementById('language-guide-card')?.scrollIntoView();
 
-    assert.strictEqual(1, 1);
+    await coursePage.languageGuideCard.clickOnExpandButton();
+    await coursePage.languageGuideCard.clickOnCollapseButton();
+    await coursePage.languageGuideCard.clickOnExpandButton();
+
+    await coursePage.languageGuideCard.languageDropdown.toggle();
+    await coursePage.languageGuideCard.languageDropdown.clickOnLink('Go');
+    assert.strictEqual(coursePage.languageGuideCard.languageDropdown.currentLanguageName, 'Go');
+
+    await coursePage.languageGuideCard.backToRepositoryLanguageButton.click();
+    assert.strictEqual(coursePage.languageGuideCard.languageDropdown.currentLanguageName, 'Python');
   });
 });
