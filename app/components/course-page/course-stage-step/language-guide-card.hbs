@@ -28,8 +28,13 @@
           <EmberTooltip @text="This is a beta feature, please send us feedback!" @side="top" />
         </div>
         {{#if (and @repository.language (not-eq @repository.language this.currentLanguage))}}
-          {{! @glint-expect-error: fn not ts-ified yet? }}
-          <TertiaryButton @size="small" class="pl-1.5" {{on "click" (fn this.handleRequestedLanguageChange @repository.language)}} data-test-back-to-repository-language-button>
+          <TertiaryButton
+            @size="small"
+            class="pl-1.5"
+            {{! @glint-expect-error: fn not ts-ified yet? }}
+            {{on "click" (fn this.handleRequestedLanguageChange @repository.language)}}
+            data-test-back-to-repository-language-button
+          >
             <div class="flex items-center">
               {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
 

@@ -1,4 +1,4 @@
-import { collection, clickable, clickOnText, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
