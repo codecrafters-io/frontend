@@ -21,6 +21,9 @@ export default class UserModel extends Model {
   @attr('string') username;
   @attr('date') vipStatusExpiresAt;
 
+  @hasMany('affiliate-link', { async: false }) affiliateLinks;
+  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
+  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer;
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
   @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes;
@@ -28,10 +31,10 @@ export default class UserModel extends Model {
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
-  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
-  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer;
+  @hasMany('referral-link', { async: false }) referralLinks;
+  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
+  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
   @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts;
-  @hasMany('affiliate-link', { async: false }) affiliateLinks;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
@@ -93,8 +96,12 @@ export default class UserModel extends Model {
     return this.badgeAwards.any((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
   }
 
-  get hasJoinedReferralProgram() {
+  get hasJoinedAffiliateProgram() {
     return this.affiliateLinks.rejectBy('isNew').length > 0;
+  }
+
+  get hasJoinedReferralProgram() {
+    return this.referralLinks.rejectBy('isNew').length > 0;
   }
 
   get isEligibleForEarlyBirdDiscount() {

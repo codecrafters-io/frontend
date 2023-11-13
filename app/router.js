@@ -62,6 +62,7 @@ Router.map(function () {
   });
 
   this.route('partner');
+  this.route('refer');
   this.route('team', { path: '/teams/:team_id' });
   this.route('teams.create', { path: '/teams/create' });
   this.route('teams.pay', { path: '/teams/pay' });

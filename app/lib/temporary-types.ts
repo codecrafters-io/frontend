@@ -27,6 +27,10 @@ export class TemporaryUserModel {
     return false;
   }
 
+  hasJoinedReferralProgram(): boolean {
+    return false;
+  }
+
   isCourseAuthor(_course: TemporaryCourseModel): boolean {
     return false;
   }
