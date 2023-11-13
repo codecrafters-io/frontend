@@ -1,4 +1,3 @@
-{{! @glint-nocheck: not typesafe yet !}}
 <div class="pt-8 pb-16" {{did-update this.loadSolutions this.courseStage}} {{did-insert this.loadSolutions}} data-test-code-examples-tab>
   {{!-- <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-4" ...attributes>
       <div class="mr-3 mt-0.5">
@@ -15,6 +14,7 @@
       <h2 class="font-semibold text-lg">Code Examples using {{this.currentLanguage.name}}</h2>
 
       {{#if (and this.repository.language (not-eq this.repository.language this.currentLanguage))}}
+        {{! @glint-expect-error: fn not ts-ified yet? }}
         <TertiaryButton @size="small" class="pl-1.5" {{on "click" (fn this.handleRequestedLanguageChange this.repository.language)}}>
           <div class="flex items-center">
             {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
@@ -28,9 +28,10 @@
       {{/if}}
     </div>
 
-    <CoursePage::CourseStageStep::CommunitySolutionsLanguageDropdown
-      @courseStage={{this.courseStage}}
-      @requestedLanguage={{this.currentLanguage}}
+    <LanguageDropdown
+      @languages={{this.sortedLanguagesForDropdown}}
+      @requestedLanguage={{this.requestedLanguage}}
+      @selectedLanguage={{this.currentLanguage}}
       @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
       @onDidInsertDropdown={{(noop)}}
       class="flex-shrink-0"
@@ -44,6 +45,7 @@
         <span class="ml-3 text-gray-700">Loading...</span>
       </div>
     {{else if (gt this.sortedSolutions.length 0)}}
+      {{! @glint-expect-error: not ts-ified yet }}
       <CoursePage::CourseStageStep::CommunitySolutionsList @solutions={{this.sortedSolutions}} @repository={{@model.activeRepository}} />
     {{else}}
       <div class="flex py-16 justify-center items-center w-full">
