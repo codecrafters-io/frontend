@@ -1,9 +1,22 @@
-<CoursePage::InstructionsCard data-test-your-task-card ...attributes>
+<CoursePage::InstructionsCard data-test-your-task-card class="group/your-task-card" ...attributes>
   <:content>
     <div class="flex items-center justify-between border-b pb-2 mb-5 w-full">
       <div class="flex items-center gap-x-3">
         <h2 class="font-semibold text-lg text-gray-700">Your Task</h2>
         <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+
+        {{#if (or (current-user-is-course-author @courseStage.course) (current-user-is-staff))}}
+          <a
+            href="{{@courseStage.course.definitionRepositoryLink}}/edit/main/course-definition.yml"
+            class="text-gray-400 hidden group-hover/your-task-card:inline-flex items-center hover:text-gray-600 ml-1 text-xs hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-test-edit-on-github-link
+          >
+            {{svg-jar "pencil-alt" class="inline-flex w-4 mr-1 fill-current"}}
+            Edit on GitHub
+          </a>
+        {{/if}}
       </div>
 
       <CourseStageDifficultyLabel @stage={{@courseStage}} />
