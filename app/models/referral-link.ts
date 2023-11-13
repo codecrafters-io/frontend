@@ -8,4 +8,5 @@ export default class ReferralLinkModel extends Model {
   @hasMany('referral-activations', { async: false }) activations!: ReferralActivationModel[];
 
   @attr('string') slug!: string;
+  @attr('string') url!: string;
 }
