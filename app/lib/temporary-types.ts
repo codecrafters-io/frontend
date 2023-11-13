@@ -49,6 +49,7 @@ export class TemporaryCourseModel {
   declare buildpacks: BuildpackModel[];
   declare buildpacksLastSyncedAt: Date | null;
   declare syncBuildpacks: () => Promise<Record<string, string>>;
+  declare betaOrLiveLanguages: TemporaryLanguageModel[];
 }
 
 export class TemporaryCourseStageModel {
@@ -73,12 +74,15 @@ export class TemporaryCourseStageModel {
   declare secondaryExtensions: CourseExtensionModel[];
   declare screencasts: CourseStageScreencastModel[];
   declare isExtensionStage: boolean;
+  declare hasCommunitySolutionsForLanguage: (language: TemporaryLanguageModel) => boolean;
 }
 
 export class TemporaryLanguageModel {
   declare id: string;
   declare name: string;
   declare slug: string;
+  declare grayLogoUrl: string;
+  declare tealLogoUrl: string;
 }
 
 export class TemporarySubmissionModel {
