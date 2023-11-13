@@ -2,12 +2,12 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import window from 'ember-window-mock';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
+import windowMock from 'ember-window-mock';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
 
@@ -29,8 +29,8 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     }
 
     assert.strictEqual(
-      window.location.href,
-      `${window.location.origin}/login?next=http%3A%2F%2Flocalhost%3A7357%2Fcourses%2Fredis%2Fstages%2F2%2Fscreencasts`,
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcourses%2Fredis%2Fstages%2F2%2Fscreencasts`,
       'should redirect to login URL',
     );
   });
