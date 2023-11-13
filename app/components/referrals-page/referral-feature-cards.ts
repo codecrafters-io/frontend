@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import freeForFriendImage from '/assets/images/referral-program-features/free-for-friend.jpg';
-import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.jpg';
-import simplePayoutImage from '/assets/images/referral-program-features/simple-payout.jpg';
+import generateLinkImage from '/assets/images/referral-program-features/generate-link.png';
+import getOneYearFreeImage from '/assets/images/referral-program-features/get-one-year-free.png';
+import giftOneWeekFreeImage from '/assets/images/referral-program-features/gift-one-week-free.png';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -12,8 +12,8 @@ interface Signature {
 }
 
 type FeatureMarkdown = {
-  bodyMarkdown: string;
   imageUrl: string;
+  bodyMarkdown: string;
   title: string;
 };
 
@@ -21,22 +21,19 @@ export default class ReferralFeatureCardsComponent extends Component<Signature> 
   get featureMarkdownList(): FeatureMarkdown[] {
     return [
       {
-        title: '60% Revenue Share.',
-        bodyMarkdown:
-          'Earn 60% of what we make through your referrals. Example payouts for a single paid referral (before discounting):<br /><br />\n- **$594** (lifetime plan)\n- **$216** (one year plan)\n- **$72** (3-month plan)',
-        imageUrl: lifetimeEarningsImage,
+        title: 'Generate your link in 1 click.',
+        bodyMarkdown: 'Get a unique URL you can use for referring.',
+        imageUrl: generateLinkImage,
       },
       {
-        title: 'No forms to fill. Simple payout.',
-        bodyMarkdown:
-          'Activate your link with one click.<br /><br />Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or any of the 30+ gift cards that we support.',
-        imageUrl: simplePayoutImage,
+        title: '1 week free for your friends.',
+        bodyMarkdown: 'Every friend who uses your link gets 1 week free.',
+        imageUrl: giftOneWeekFreeImage,
       },
       {
-        title: '(Probably) Free for your friend.',
-        bodyMarkdown:
-          'Most developers can get their CodeCrafters fees fully reimbursed through their corporate L&D budget.<br /><br />Remind them about it, help them save money, and help make their decision easier.',
-        imageUrl: freeForFriendImage,
+        title: 'Up to 1 year free for you.',
+        bodyMarkdown: 'Get 1 week free for every referral, up to 52 weeks.',
+        imageUrl: getOneYearFreeImage,
       },
     ];
   }

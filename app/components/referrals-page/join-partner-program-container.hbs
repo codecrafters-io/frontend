@@ -1,24 +1,36 @@
 <h1 class="font-bold text-xl sm:text-4xl text-slate-600 text-center w-fit mb-3 mx-auto flex-shrink-0">
-  Gift one week, get one week.
+  Refer one friend to CodeCrafters.<br />
+  Earn up to $594. Right away.
 </h1>
 
 <div class="prose max-w-lg mx-auto text-center text-sm sm:text-base">
-  <p>Gift your friends & colleagues 1 week of free CodeCrafters. Win 1 extra free week for yourself for each signup. Collect up to 1 year of free access.</p>
+  <p>Introduce your friend or colleague to a high quality resource that they'd use anyway - and get paid for it. Win-win.</p>
 </div>
 
 <div class="flex flex-col sm:flex-row items-center w-fit mt-8 mx-auto text-center gap-3">
   <PrimaryButtonWithSpinner
-    @shouldShowSpinner={{this.isCreatingReferralLink}}
+    @isDisabled={{not this.currentUser.isAffiliate}}
+    @shouldShowSpinner={{this.isCreatingAffiliateLink}}
     @size="small"
     data-test-get-started-button
     {{on "click" this.handleGetStartedButtonClick}}
   >
-    <span class="text-lg">Generate your referral link</span>
+    <span class="text-lg">Generate your partner link</span>
     {{svg-jar "arrow-right" class="w-4 ml-2 fill-current"}}
+
+    {{#unless this.currentUser.isAffiliate}}
+      <EmberTooltip @text="Contact us at hello@codecrafters.io to apply to be a Partner" />
+    {{/unless}}
   </PrimaryButtonWithSpinner>
+
+  <TertiaryButton>
+    <a href="https://docs.codecrafters.io/community/partner-program" target="_blank" role="button" rel="noopener noreferrer">
+      Read the doc
+    </a>
+  </TertiaryButton>
 </div>
 
-<ReferralsPage::ReferralFeatureCards class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 sm:mt-20" />
+<ReferralsPage::PartnerFeatureCards class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 sm:mt-20" />
 
 <div class="my-32 text-center">
   <p class="prose mb-8 text-sm sm:text-base mx-auto">Engineers at the world's best companies use their learning stipend towards CodeCrafters</p>
