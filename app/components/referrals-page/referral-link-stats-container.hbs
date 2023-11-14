@@ -15,16 +15,20 @@
     </ReferralsPage::ReferralLinkStatContainer>
 
     <ReferralsPage::ReferralLinkStatContainer
-      @title="Paid Users"
+      @title="Free weeks left"
       @icon="gift"
       @helpText="The number of referred users who've converted to paying users."
     >
       <div class="flex items-center" data-test-referral-stats-paid-users>
-        {{#if (eq this.paidUsersCount 0)}}
-          <span class="text-gray-300 text-xs ml-1">(no payments yet)</span>
+        {{#if (eq this.currentUser.freeUsageGrantsCount 0)}}
+          <span class="text-gray-300 text-xs ml-1">0 (waiting on first referral)</span>
+        {{else if this.currentUser.hasActiveFreeUsageGrants}}
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold">
+            {{this.currentUser.activeFreeUsageGrantsCount}} (expires on {{this.currentUser.freeUsageGrantExpiresAt}})
+          </span>
         {{else}}
           <span class="text-gray-700 text-lg sm:text-2xl font-bold">
-            {{this.paidUsersCount}}
+            0 (expired on {{this.currentUser.freeUsageGrantExpiresAt}})
           </span>
         {{/if}}
       </div>

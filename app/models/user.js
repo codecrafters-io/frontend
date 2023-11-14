@@ -30,6 +30,7 @@ export default class UserModel extends Model {
   @hasMany('course-idea-vote', { async: false }) courseIdeaVotes;
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
+  @hasMany('free-usage-grant', { async: false }) freeUsageGrants;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
   @hasMany('referral-link', { async: false }) referralLinks;
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
@@ -39,6 +40,10 @@ export default class UserModel extends Model {
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
   @hasMany('user-profile-event', { async: false }) profileEvents;
+
+  get activeFreeUsageGrantsCount() {
+    return this.freeUsageGrants.filterBy('isActive').length;
+  }
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
@@ -76,12 +81,28 @@ export default class UserModel extends Model {
     }
   }
 
+  get freeUsageGrantsCount() {
+    return this.freeUsageGrants.length;
+  }
+
+  get freeUsageGrantsExpiresAt() {
+    return this.freeUsageGrants.sortBy('expiresAt').reverse().firstObject?.expiresAt;
+  }
+
   get githubAppInstallation() {
     return this.githubAppInstallations.firstObject;
   }
 
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;
+  }
+
+  get hasActiveFreeUsageGrants() {
+    const lastActiveFreeUsageGrant = this.freeUsageGrants.filterBy('isActive').sortBy('expiresAt').reverse().firstObject;
+    console.log('lastActiveFreeUsageGrant', lastActiveFreeUsageGrant);
+    console.log('test', !!lastActiveFreeUsageGrant);
+
+    return !!lastActiveFreeUsageGrant;
   }
 
   get hasActiveSubscription() {
