@@ -19,7 +19,7 @@ module('Acceptance | partner-page | join-partner-program', function (hooks) {
     await partnerPage.visit();
     assert.ok(partnerPage.getStartedButton.isVisible);
 
-    await percySnapshot('Partner Page | Join Referral Program');
+    await percySnapshot('Partner Page | Join Partner Program');
   });
 
   test('can join partner program', async function (assert) {

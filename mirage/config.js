@@ -56,6 +56,22 @@ function routes() {
   window.server = this; // Hack! Is there a better way?
 
   this.post('/analytics-events');
+  this.get('/affiliate-links');
+
+  this.post('/affiliate-links', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.url = `https://app.codecraters.io/join?via=${attrs.slug}`;
+    attrs.uniqueViewerCount = 0;
+
+    return schema.affiliateLinks.create(attrs);
+  });
+
+  this.post('/affiliate-referrals', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.activatedAt = new Date();
+
+    return schema.affiliateReferrals.create(attrs);
+  });
 
   this.get('/badges');
 
@@ -334,24 +350,16 @@ function routes() {
     };
   });
 
-  this.post('/affiliate-referrals', function (schema) {
-    const attrs = this.normalizedRequestAttrs();
-    attrs.activatedAt = new Date();
-
-    return schema.affiliateReferrals.create(attrs);
-  });
-
   this.get('/referral-earnings-payouts');
   this.post('/referral-earnings-payouts');
+  this.get('/referral-links');
 
-  this.get('/affiliate-links');
-
-  this.post('/affiliate-links', function (schema) {
+  this.post('/referral-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
-    attrs.url = `https://app.codecraters.io/join?via=${attrs.slug}`;
+    attrs.url = `https://app.codecraters.io/referral-activation/${attrs.slug}`;
     attrs.uniqueViewerCount = 0;
 
-    return schema.affiliateLinks.create(attrs);
+    return schema.referralLinks.create(attrs);
   });
 
   this.get('/regional-discounts/current', function (schema) {
