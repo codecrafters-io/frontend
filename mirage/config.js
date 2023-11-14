@@ -290,7 +290,6 @@ function routes() {
   this.patch('/course-stage-feedback-submissions/:id');
 
   this.post('/downvotes');
-
   this.patch('/feature-suggestions/:id');
 
   this.get('/github-app-installations');
@@ -348,6 +347,29 @@ function routes() {
     return {
       claim_url: 'https://dummy-claim-url.com',
     };
+  });
+
+  this.post('/referral-activations', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    let referralActivation = schema.referralActivations.create(attrs);
+
+    schema.freeUsageGrants.create({
+      userId: attrs.referrerId,
+      referralActivationId: referralActivation.id,
+      activatesAt: new Date(),
+      sourceType: 'referred_other_user',
+      validityInHours: 168,
+    });
+
+    schema.freeUsageGrants.create({
+      userId: attrs.customerId,
+      referralActivationId: referralActivation.id,
+      activatesAt: new Date(),
+      sourceType: 'accepted_referral_offer',
+      validityInHours: 168,
+    });
+
+    return referralActivation;
   });
 
   this.get('/referral-earnings-payouts');

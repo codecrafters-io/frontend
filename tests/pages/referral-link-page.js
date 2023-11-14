@@ -6,5 +6,9 @@ export default createPage({
     scope: '[data-test-accept-referral-button]',
   },
 
+  acceptedReferralNotice: {
+    scope: '[data-test-accepted-referral-notice]',
+  },
+
   visit: visitable('/r/:referral_link_slug'),
 });

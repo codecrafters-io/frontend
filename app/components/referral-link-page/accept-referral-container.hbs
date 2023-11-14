@@ -18,34 +18,54 @@
       of CodeCrafters
     </div>
 
-    <div class="inline-flex mt-8">
-      <PrimaryButtonWithSpinner
-        @shouldShowSpinner={{this.isCreatingReferralActivation}}
-        @isDisabled={{not this.acceptOfferButtonIsEnabled}}
-        class="px-5 py-3"
-        data-test-accept-referral-button
-        {{on "click" this.handleAcceptOfferButtonClick}}
-      >
+    {{#if this.isOfferAccepted}}
+      <div class="py-6 px-5 mt-6 rounded bg-teal-50 border border-teal-600 prose" data-test-accepted-referral-notice>
+        <p>
+          🎉 Offer Accepted! 
+        </p>
+
+        <p>
+          You now have 1 free week of CodeCrafters.
+        </p>
+
+        <p>
+          Visit <LinkTo @route="catalog">catalog</LinkTo> to get started.
+        </p>
+
+        <p>
+          Want more free weeks? Visit <LinkTo @route="refer">/refer</LinkTo>.
+        </p>
+      </div>
+    {{else}}
+      <div class="inline-flex mt-8">
+        <PrimaryButtonWithSpinner
+          @shouldShowSpinner={{this.isCreatingReferralActivation}}
+          @isDisabled={{not this.acceptOfferButtonIsEnabled}}
+          class="px-5 py-3"
+          data-test-accept-referral-button
+          {{on "click" this.handleAcceptOfferButtonClick}}
+        >
+          {{#if this.currentUserIsAnonymous}}
+            {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
+          {{/if}}
+
+          Accept offer →
+        </PrimaryButtonWithSpinner>
+
         {{#if this.currentUserIsAnonymous}}
-          {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
+          <EmberTooltip @text="Click to login via GitHub" />
+        {{else if this.currentUserIsReferrer}}
+          <EmberTooltip @text="You can't accept your own referral offer." />
+        {{else if this.currentUserAlreadyAcceptedReferral}}
+          <EmberTooltip @text="You've already accepted another referral offer. You can refer other users to get more free weeks. Visit /refer to get started." />
+        {{else if this.currentUser.canAccessPaidContent}}
+          <EmberTooltip @text="As a CodeCrafters Member, you already have full access." />
         {{/if}}
+      </div>
 
-        Accept offer →
-      </PrimaryButtonWithSpinner>
-
-      {{#if this.currentUserIsAnonymous}}
-        <EmberTooltip @text="Click to login via GitHub" />
-      {{else if this.currentUserIsReferrer}}
-        <EmberTooltip @text="You can't accept your own referral offer." />
-      {{else if this.currentUserAlreadyAcceptedReferral}}
-        <EmberTooltip @text="You've already accepted another referral offer. You can refer other users to get more free weeks. Visit /refer to get started." />
-      {{else if this.currentUser.canAccessPaidContent}}
-        <EmberTooltip @text="As a CodeCrafters Member, you already have full access." />
-      {{/if}}
-    </div>
-
-    <div class="text-gray-500 text-xs mt-3">
-      No credit card required.
-    </div>
+      <div class="text-gray-500 text-xs mt-3">
+        No credit card required.
+      </div>
+    {{/if}}
   </div>
 </div>

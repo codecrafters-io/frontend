@@ -24,6 +24,7 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
   @service router!: RouterService;
 
   @tracked isCreatingReferralActivation: boolean = false;
+  @tracked isOfferAccepted: boolean = false;
 
   get acceptOfferButtonIsEnabled() {
     return (
@@ -70,7 +71,7 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
         })
         .save();
 
-      this.router.transitionTo('pay');
+      this.isOfferAccepted = true;
     }
   }
 }
