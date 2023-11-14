@@ -21,7 +21,7 @@
     {{#if this.isOfferAccepted}}
       <div class="py-6 px-5 mt-6 rounded bg-teal-50 border border-teal-600 prose" data-test-accepted-referral-notice>
         <p>
-          🎉 Offer Accepted! 
+          🎉 Offer Accepted!
         </p>
 
         <p>
@@ -29,16 +29,20 @@
         </p>
 
         <p>
-          Visit <LinkTo @route="catalog">catalog</LinkTo> to get started.
+          Visit
+          <LinkTo @route="catalog">catalog</LinkTo>
+          to get started.
         </p>
 
         <p>
-          Want more free weeks? Visit <LinkTo @route="refer">/refer</LinkTo>.
+          Want more free weeks? Visit
+          <LinkTo @route="refer">/refer</LinkTo>.
         </p>
       </div>
     {{else}}
       <div class="inline-flex mt-8">
         <PrimaryButtonWithSpinner
+          @size="regular"
           @shouldShowSpinner={{this.isCreatingReferralActivation}}
           @isDisabled={{not this.acceptOfferButtonIsEnabled}}
           class="px-5 py-3"
@@ -57,7 +61,9 @@
         {{else if this.currentUserIsReferrer}}
           <EmberTooltip @text="You can't accept your own referral offer." />
         {{else if this.currentUserAlreadyAcceptedReferral}}
-          <EmberTooltip @text="You've already accepted another referral offer. You can refer other users to get more free weeks. Visit /refer to get started." />
+          <EmberTooltip
+            @text="You've already accepted another referral offer. You can refer other users to get more free weeks. Visit /refer to get started."
+          />
         {{else if this.currentUser.canAccessPaidContent}}
           <EmberTooltip @text="As a CodeCrafters Member, you already have full access." />
         {{/if}}

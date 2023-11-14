@@ -1,6 +1,7 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import { format } from 'date-fns';
 import { inject as service } from '@ember/service';
 
@@ -9,6 +10,7 @@ interface Signature {
 
   Args: {
     freeUsageGrants: FreeUsageGrantModel[];
+    referralLink: ReferralLinkModel;
   };
 }
 
@@ -36,5 +38,11 @@ export default class ReferralLinkStatsContainerComponent extends Component<Signa
 
   get userHasActiveFreeUsageGrants() {
     return this.activeFreeUsageGrantsCount > 0;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralsPage::ReferralLinkStatsContainer': typeof ReferralLinkStatsContainerComponent;
   }
 }

@@ -1,10 +1,19 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import Component from '@glimmer/component';
+import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import { format } from 'date-fns';
 import { inject as service } from '@ember/service';
 
-export default class ReferredUsersContainerComponent extends Component {
+interface Signature {
+  Element: HTMLElement;
+
+  Args: {
+    referralLink: ReferralLinkModel;
+  };
+}
+
+export default class ReferredUsersContainerComponent extends Component<Signature> {
   @service authenticator!: AuthenticatorService;
 
   get activationsWithReferrerFreeUsageGrantDateInfo() {
@@ -36,5 +45,11 @@ export default class ReferredUsersContainerComponent extends Component {
   get currentUserFreeUsageGrants() {
     // @ts-ignore
     return this.currentUser.freeUsageGrants;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralsPage::ReferredUsersContainer': typeof ReferredUsersContainerComponent;
   }
 }

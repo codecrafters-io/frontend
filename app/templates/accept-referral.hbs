@@ -5,6 +5,7 @@
     Join the best.
   </h1>
 
+  {{! @glint-expect-error: not ts-ified yet }}
   <ReferralLinkPage::AcceptReferralContainer @referralLink={{this.model.referralLink}} class="mt-8" />
 
   <h2 class="text-2xl font-bold text-gray-700 md:text-3xl text-center mt-16">
@@ -19,6 +20,7 @@
     {{#each this.testimonialGroups as |testimonialGroup index|}}
       <div class="flex flex-col space-y-2 {{if (not-eq index 1) 'md:mt-6'}}">
         {{#each testimonialGroup as |testimonial|}}
+          {{! @glint-expect-error: not ts-ified yet }}
           <AffiliateLinkPage::TestimonialListItem @testimonial={{testimonial}} />
         {{/each}}
       </div>

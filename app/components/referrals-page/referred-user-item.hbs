@@ -25,7 +25,9 @@
       <span
         class="inline-flex border rounded-full px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
       >{{@activationWithGrant.grant.shortActivatesAt}} - {{@activationWithGrant.grant.shortExpiresAt}}</span>
-      <EmberTooltip @text="This referral grants you free access from {{@activationWithGrant.grant.fullActivatesAt}} to {{@activationWithGrant.grant.fullExpiresAt}}" />
+      <EmberTooltip
+        @text="This referral grants you free access from {{@activationWithGrant.grant.fullActivatesAt}} to {{@activationWithGrant.grant.fullExpiresAt}}"
+      />
     </div>
     <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @activationWithGrant.activation.createdAt}}</span>
   </div>

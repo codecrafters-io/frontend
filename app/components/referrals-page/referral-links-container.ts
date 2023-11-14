@@ -14,3 +14,9 @@ export default class ReferralLinksContainerComponent extends Component {
     return this.currentUser.referralLinks.firstObject;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralsPage::ReferralLinksContainer': typeof ReferralLinksContainerComponent;
+  }
+}

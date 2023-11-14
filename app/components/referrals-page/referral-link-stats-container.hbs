@@ -1,3 +1,4 @@
+{{! @glint-nocheck: not typesafe yet }}
 <PageSection @title="Stats" data-test-referral-stats-container ...attributes>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <ReferralsPage::ReferralLinkStatContainer
@@ -27,14 +28,16 @@
             {{this.activeFreeUsageGrantsCount}}
           </span>
           <span class="text-gray-700 text-xs">
-            (expires on {{this.freeUsageGrantsExpireAt}})
+            (expires on
+            {{this.freeUsageGrantsExpireAt}})
           </span>
         {{else}}
           <span class="text-gray-700 text-lg sm:text-2xl font-bold" data-test-referral-stats-free-weeks-left-count>
             0
           </span>
           <span class="text-gray-700 text-xs">
-            (expired on {{this.freeUsageGrantsExpireAt}})
+            (expired on
+            {{this.freeUsageGrantsExpireAt}})
           </span>
         {{/if}}
       </div>

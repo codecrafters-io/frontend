@@ -53,7 +53,7 @@ export default class JoinReferralProgramContainerComponent extends Component {
         name: 'Linear',
         url: linearImage,
       },
-    ];
+    ] as { name: string; url: string }[];
   }
 
   get currentUser() {
@@ -69,5 +69,11 @@ export default class JoinReferralProgramContainerComponent extends Component {
     this.isCreatingReferralLink = true;
     await referralLink.save();
     this.isCreatingReferralLink = false;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralsPage::JoinReferralProgramContainer': typeof JoinReferralProgramContainerComponent;
   }
 }

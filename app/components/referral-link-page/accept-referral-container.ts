@@ -75,3 +75,9 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     }
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralLinkPage::AcceptReferralContainer': typeof AcceptReferralContainerComponent;
+  }
+}

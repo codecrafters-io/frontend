@@ -38,3 +38,9 @@ export default class ReferralFeatureCardsComponent extends Component<Signature> 
     ];
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralsPage::ReferralFeatureCards': typeof ReferralFeatureCardsComponent;
+  }
+}

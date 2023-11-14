@@ -1,3 +1,4 @@
+{{! @glint-nocheck: not typesafe yet }}
 <PageSection @title="Referred Users" data-test-referred-users-container ...attributes>
   {{#each this.activationsWithReferrerFreeUsageGrantDateInfo as |activationWithGrant|}}
     <ReferralsPage::ReferredUserItem @activationWithGrant={{activationWithGrant}} />
