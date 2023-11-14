@@ -20,8 +20,10 @@ export default class ReferredUsersContainerComponent extends Component {
       return {
         activation,
         grant: {
-          activatesAt: format(grantForActivation.activatesAt, 'dd MMM'),
-          expiresAt: format(grantForActivation.expiresAt, 'dd MMM'),
+          shortActivatesAt: format(grantForActivation.activatesAt, 'dd MMM'),
+          shortExpiresAt: format(grantForActivation.expiresAt, 'dd MMM'),
+          fullActivatesAt: format(grantForActivation.activatesAt, 'dd MMMM yyyy'),
+          fullExpiresAt: format(grantForActivation.expiresAt, 'dd MMMM yyyy'),
         },
       };
     });

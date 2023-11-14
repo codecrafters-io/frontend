@@ -250,6 +250,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await referralPage.visit();
+    await this.pauseTest();
     assert.ok(referralPage.referredUsersContainerText.includes('sarupbanskota'), 'Expect paid user to be found');
     assert.ok(referralPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
   });
