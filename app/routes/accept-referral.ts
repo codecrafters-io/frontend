@@ -27,6 +27,6 @@ export default class AcceptReferralRoute extends BaseRoute {
       include: 'user',
     });
 
-    return { referralLinks: referralLinks.firstObject };
+    return { referralLink: referralLinks.firstObject };
   }
 }
