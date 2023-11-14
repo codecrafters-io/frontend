@@ -7,6 +7,7 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
+  this.route('accept-referral', { path: '/r/:referral_link_slug' });
   this.route('badges');
   this.route('catalog');
   this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' });
