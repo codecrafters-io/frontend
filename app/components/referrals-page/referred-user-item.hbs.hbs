@@ -1,0 +1,32 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div class="flex items-center flex-wrap gap-y-2 justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2" data-test-referred-user-item>
+  <a
+    href={{@activationWithGrant.activation.customer.codecraftersProfileUrl}}
+    class="flex items-center hover:underline pr-3"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <AvatarImage
+      @user={{@activationWithGrant.activation.customer}}
+      class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
+    />
+
+    <div>
+      <div class="text-gray-700 text-sm">
+        <span class="font-semibold" data-test-username>{{@activationWithGrant.activation.customer.username}}</span>
+      </div>
+      <div class="text-gray-700 text-sm block lg:hidden">
+        <span class="text-gray-400 text-xs">{{date-from-now @activationWithGrant.activation.createdAt}}</span>
+      </div>
+    </div>
+  </a>
+  <div class="flex items-center flex-wrap gap-y-2">
+    <div class="flex flex-shrink-0">
+      <span
+        class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
+      >{{@activationWithGrant.grant.activatesAt}} - {{@activationWithGrant.grant.expiresAt}}</span>
+      <EmberTooltip @text="This is the amount {{@activationWithGrant.activation.customer.username}} has spent so far." />
+    </div>
+    <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @activationWithGrant.activation.createdAt}}</span>
+  </div>
+</div>

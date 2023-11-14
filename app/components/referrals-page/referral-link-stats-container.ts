@@ -16,7 +16,7 @@ export default class ReferralLinkStatsContainerComponent extends Component<Signa
   @service authenticator!: AuthenticatorService;
 
   get activeFreeUsageGrantsCount() {
-    return this.args.freeUsageGrants.filter((grant) => grant.isActive).length;
+    return this.args.freeUsageGrants.filter((grant) => !grant.isActive && !grant.isExpired).length;
   }
 
   get currentUser() {

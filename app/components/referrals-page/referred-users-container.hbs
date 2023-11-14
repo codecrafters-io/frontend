@@ -1,0 +1,9 @@
+<PageSection @title="Referred Users" data-test-referred-users-container ...attributes>
+  {{#each this.activationsWithReferrerFreeUsageGrantDateInfo as |activationWithGrant|}}
+    <ReferralsPage::ReferredUserItem @activationWithGrant={{activationWithGrant}} />
+  {{else}}
+    <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
+      No paid users found.
+    </div>
+  {{/each}}
+</PageSection>

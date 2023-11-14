@@ -23,14 +23,14 @@
         {{#if (eq this.freeUsageGrantsCount 0)}}
           <span class="text-gray-300 text-xs ml-1">0 (waiting on first referral)</span>
         {{else if this.userHasActiveFreeUsageGrants}}
-          <span class="text-gray-700 text-lg sm:text-2xl font-bold">
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold" data-test-referral-stats-free-weeks-left-count>
             {{this.activeFreeUsageGrantsCount}}
           </span>
           <span class="text-gray-700 text-xs">
             (expires on {{this.freeUsageGrantsExpireAt}})
           </span>
         {{else}}
-          <span class="text-gray-700 text-lg sm:text-2xl font-bold">
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold" data-test-referral-stats-free-weeks-left-count>
             0
           </span>
           <span class="text-gray-700 text-xs">

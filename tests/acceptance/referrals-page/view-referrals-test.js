@@ -49,7 +49,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
 
     await referralPage.visit();
     assert.true(referralPage.referralStatsReferralsText.includes('0'), 'Expect 0 referrals');
-    assert.true(referralPage.referralStatsFreeWeeksLeftText.includes('0 (waiting on first referral)'), 'Expect 0 free weeks left');
+    assert.true(referralPage.referralStatsFreeWeeksLeft.text.includes('0 (waiting on first referral)'), 'Expect 0 free weeks left');
     assert.notOk(referralPage.getStartedButton.isVisible, 'Get Started button is not visible');
   });
 
@@ -78,27 +78,47 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
       username: 'gufran',
     });
 
-    this.server.create('referral-activation', {
+    const referralActivation1 = this.server.create('referral-activation', {
       customer: customer1,
       referrer: user,
       referralLink,
+      createdAt: new Date(),
     });
 
     this.server.create('free-usage-grant', {
       user,
+      referralActivation: referralActivation1,
       activatesAt: new Date(),
       sourceType: 'referred_other_user',
       validityInHours: 168,
     });
 
-    this.server.create('referral-activation', {
+    this.server.create('free-usage-grant', {
+      user: customer1,
+      referralActivation: referralActivation1,
+      activatesAt: new Date(),
+      sourceType: 'accepted_referral_offer',
+      validityInHours: 168,
+    });
+
+    const referralActivation2 = this.server.create('referral-activation', {
       customer: customer2,
       referrer: user,
       referralLink,
+      createdAt: new Date(),
+    });
+
+    this.server.create('free-usage-grant', {
+      user: customer2,
+      referralActivation: referralActivation2,
+      activatesAt: new Date(),
+      sourceType: 'accepted_referral_offer',
+      validityInHours: 168,
     });
 
     this.server.create('free-usage-grant', {
       user,
+      referralActivation: referralActivation2,
       activatesAt: add(new Date(), { days: 7 }),
       sourceType: 'referred_other_user',
       validityInHours: 168,
@@ -108,7 +128,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
 
     await referralPage.visit();
     assert.true(referralPage.referralStatsReferralsText.includes('2'), 'Expect 2 referrals');
-    assert.true(referralPage.referralStatsFreeWeeksLeftText.includes('2'), 'Expect 2 free weeks left');
+    assert.true(referralPage.referralStatsFreeWeeksLeft.count.includes('1'), 'Expect 1 free week left');
     assert.notOk(referralPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
     await percySnapshot('Referral Page | Referral Stats');
@@ -132,7 +152,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
       username: 'sarupbanskota',
     });
 
-    this.server.create('referral-activation', {
+    const referralActivation = this.server.create('referral-activation', {
       customer: customer1,
       referrer: user,
       referralLink,
@@ -140,6 +160,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
 
     this.server.create('free-usage-grant', {
       user,
+      referralActivation,
       activatesAt: sub(new Date(), { days: 10 }),
       sourceType: 'referred_other_user',
       validityInHours: 168,
@@ -149,7 +170,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
 
     await referralPage.visit();
     assert.true(referralPage.referralStatsReferralsText.includes('1'), 'Expect 1 referrals');
-    assert.true(referralPage.referralStatsFreeWeeksLeftText.includes('0'), 'Expect 0 free weeks left');
+    assert.true(referralPage.referralStatsFreeWeeksLeft.count.includes('0'), 'Expect 0 free weeks left');
     assert.notOk(referralPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
     await percySnapshot('Referral Page | Referral Stats');

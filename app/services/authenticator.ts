@@ -77,6 +77,7 @@ export default class AuthenticatorService extends Service {
       'affiliate_links',
       'affiliate_links.user',
       'free_usage_grants',
+      'free_usage_grants.referral_activation',
       'referral_activations_as_customer.referrer',
       'referral_links',
       'referral_links.user',
