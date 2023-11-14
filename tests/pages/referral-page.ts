@@ -8,8 +8,8 @@ export default createPage({
   },
 
   referredUsersContainerText: text('[data-test-referred-users-container]'),
-  referralStatsReferrals: text('[data-test-referral-stats-referrals]'),
-  referralStatsPaidUsersText: text('[data-test-referral-stats-free-weeks-left]'),
+  referralStatsReferralsText: text('[data-test-referral-stats-referrals]'),
+  referralStatsFreeWeeksLeftText: text('[data-test-referral-stats-free-weeks-left]'),
 
   clickShowAllButton: clickable('[data-test-referred-users-show-all-button]'),
 

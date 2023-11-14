@@ -14,11 +14,15 @@ export default class FreeUsageGrantModel extends Model {
     return new Date(this.activatesAt.getTime() + this.validityInHours * 60 * 60 * 1000);
   }
 
-  get isActive(): boolean {
+  get isActivated(): boolean {
     return this.activatesAt < new Date();
   }
 
+  get isActive(): boolean {
+    return this.isActivated && !this.isExpired;
+  }
+
   get isExpired(): boolean {
-    return !this.isActive;
+    return this.expiresAt < new Date();
   }
 }

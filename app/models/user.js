@@ -41,10 +41,6 @@ export default class UserModel extends Model {
   @hasMany('team-membership', { async: false }) teamMemberships;
   @hasMany('user-profile-event', { async: false }) profileEvents;
 
-  get activeFreeUsageGrantsCount() {
-    return this.freeUsageGrants.filterBy('isActive').length;
-  }
-
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
   }
@@ -81,28 +77,12 @@ export default class UserModel extends Model {
     }
   }
 
-  get freeUsageGrantsCount() {
-    return this.freeUsageGrants.length;
-  }
-
-  get freeUsageGrantsExpiresAt() {
-    return this.freeUsageGrants.sortBy('expiresAt').reverse().firstObject?.expiresAt;
-  }
-
   get githubAppInstallation() {
     return this.githubAppInstallations.firstObject;
   }
 
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;
-  }
-
-  get hasActiveFreeUsageGrants() {
-    const lastActiveFreeUsageGrant = this.freeUsageGrants.filterBy('isActive').sortBy('expiresAt').reverse().firstObject;
-    console.log('lastActiveFreeUsageGrant', lastActiveFreeUsageGrant);
-    console.log('test', !!lastActiveFreeUsageGrant);
-
-    return !!lastActiveFreeUsageGrant;
   }
 
   get hasActiveSubscription() {

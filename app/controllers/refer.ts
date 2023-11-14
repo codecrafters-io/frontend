@@ -9,6 +9,11 @@ export default class PartnerController extends Controller {
     return this.authenticator.currentUser;
   }
 
+  get freeUsageGrants() {
+    // @ts-ignore
+    return this.currentUser.freeUsageGrants;
+  }
+
   get referralLink() {
     // @ts-ignore
     return this.currentUser.referralLinks.firstObject;

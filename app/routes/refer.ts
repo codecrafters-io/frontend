@@ -13,13 +13,17 @@ export default class PartnerRoute extends BaseRoute {
   }
 
   async model() {
-    await this.authenticator.authenticate(); // Force loading affiliate links
+    await this.authenticator.authenticate(); // Force loading referral links and free usage grants
 
     if (this.authenticator.currentUser?.hasJoinedReferralProgram) {
       await this.store.query('referral-link', {
         user_id: this.authenticator.currentUser.id,
         include: 'activations,activations.customer,activations.referrer',
       });
+
+      // await this.store.query('free-usage-grant', {
+      //   user_id: this.authenticator.currentUser.id,
+      // });
     } else {
       // Affiliate links themselves are loaded in the /users/current payload
     }

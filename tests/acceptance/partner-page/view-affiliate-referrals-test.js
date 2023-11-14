@@ -10,7 +10,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | partner-page | view-referrals', function (hooks) {
+module('Acceptance | partner-page | view-affiliate-referrals', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
