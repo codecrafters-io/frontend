@@ -7,7 +7,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | partner-page | join-referral-program', function (hooks) {
+module('Acceptance | partner-page | join-partner-program', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -22,7 +22,7 @@ module('Acceptance | partner-page | join-referral-program', function (hooks) {
     await percySnapshot('Partner Page | Join Referral Program');
   });
 
-  test('can join referral program', async function (assert) {
+  test('can join partner program', async function (assert) {
     testScenario(this.server);
     signInAsAffiliate(this.owner, this.server);
 
