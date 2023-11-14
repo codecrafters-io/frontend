@@ -1,6 +1,4 @@
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -12,13 +10,7 @@ interface Signature {
   };
 }
 
-export default class ReferralLinkStatContainerComponent extends Component<Signature> {
-  @service authenticator!: AuthenticatorService;
-
-  get currentUser() {
-    return this.authenticator.currentUser;
-  }
-}
+export default class ReferralLinkStatContainerComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

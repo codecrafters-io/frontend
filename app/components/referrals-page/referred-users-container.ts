@@ -20,9 +20,6 @@ export default class ReferredUsersContainerComponent extends Component<Signature
     // @ts-ignore
     return this.args.referralLink.activations.map((activation) => {
       const grantForActivation = this.currentUserFreeUsageGrants.find((grant: FreeUsageGrantModel) => {
-        console.log('grant', grant);
-        console.log('activation', activation);
-
         return grant.referralActivation.id === activation.id;
       });
 
