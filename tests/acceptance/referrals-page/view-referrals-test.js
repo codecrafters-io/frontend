@@ -42,7 +42,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
     this.server.create('referral-link', {
       user: this.server.schema.users.first(),
       slug: 'test-slug',
-      url: 'https://app.codecrafters.io/referral-activations/test-slug',
+      url: 'https://app.codecrafters.io/r/test-slug',
     });
 
     signIn(this.owner, this.server);
@@ -61,7 +61,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
     const referralLink = this.server.create('referral-link', {
       user,
       slug: 'test-slug',
-      url: 'https://app.codecrafters.io/referral-activations/test-slug',
+      url: 'https://app.codecrafters.io/r/test-slug',
     });
 
     const customer1 = this.server.create('user', {
@@ -142,7 +142,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
     const referralLink = this.server.create('referral-link', {
       user,
       slug: 'test-slug',
-      url: 'https://app.codecrafters.io/referral-activations/test-slug',
+      url: 'https://app.codecrafters.io/r/test-slug',
     });
 
     const customer1 = this.server.create('user', {
@@ -184,7 +184,7 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
     const referralLink = this.server.create('referral-link', {
       user,
       slug: 'test-slug',
-      url: 'https://app.codecrafters.io/referral-activations/test-slug',
+      url: 'https://app.codecrafters.io/r/test-slug',
     });
 
     const customer1 = this.server.create('user', {
