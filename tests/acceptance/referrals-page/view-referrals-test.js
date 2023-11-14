@@ -175,4 +175,82 @@ module('Acceptance | referral-page | view-referrals', function (hooks) {
 
     await percySnapshot('Referral Page | Referral Stats');
   });
+
+  test('should show referred users', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+
+    const referralLink = this.server.create('referral-link', {
+      user,
+      slug: 'test-slug',
+      url: 'https://app.codecrafters.io/referral-activations/test-slug',
+    });
+
+    const customer1 = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const customer2 = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    const referralActivation1 = this.server.create('referral-activation', {
+      customer: customer1,
+      referrer: user,
+      referralLink,
+      createdAt: new Date(),
+    });
+
+    this.server.create('free-usage-grant', {
+      user,
+      referralActivation: referralActivation1,
+      activatesAt: new Date(),
+      sourceType: 'referred_other_user',
+      validityInHours: 168,
+    });
+
+    this.server.create('free-usage-grant', {
+      user: customer1,
+      referralActivation: referralActivation1,
+      activatesAt: new Date(),
+      sourceType: 'accepted_referral_offer',
+      validityInHours: 168,
+    });
+
+    const referralActivation2 = this.server.create('referral-activation', {
+      customer: customer2,
+      referrer: user,
+      referralLink,
+      createdAt: new Date(),
+    });
+
+    this.server.create('free-usage-grant', {
+      user: customer2,
+      referralActivation: referralActivation2,
+      activatesAt: new Date(),
+      sourceType: 'accepted_referral_offer',
+      validityInHours: 168,
+    });
+
+    this.server.create('free-usage-grant', {
+      user,
+      referralActivation: referralActivation2,
+      activatesAt: add(new Date(), { days: 7 }),
+      sourceType: 'referred_other_user',
+      validityInHours: 168,
+    });
+
+    signIn(this.owner, this.server);
+
+    await referralPage.visit();
+    assert.ok(referralPage.referredUsersContainerText.includes('sarupbanskota'), 'Expect paid user to be found');
+    assert.ok(referralPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
+  });
 });
