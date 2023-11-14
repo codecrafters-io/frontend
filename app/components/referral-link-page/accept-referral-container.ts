@@ -4,9 +4,10 @@ import logoImage from '/assets/images/logo/logomark-color.svg';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
+import { action } from '@ember/object';
+import { add, format } from 'date-fns';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLElement;
@@ -54,6 +55,10 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     } else {
       return this.args.referralLink.user === this.authenticator.currentUser;
     }
+  }
+
+  get freeUsageGrantExpiresAt() {
+    return format(add(new Date(), { days: 7 }), 'dd MMM yyyy');
   }
 
   @action
