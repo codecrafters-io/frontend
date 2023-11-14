@@ -50,7 +50,7 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+    return this.isVip || this.hasActiveFreeUsageGrant || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
 
   get codecraftersProfileUrl() {
@@ -83,6 +83,10 @@ export default class UserModel extends Model {
 
   get githubProfileUrl() {
     return `https://github.com/${this.githubUsername}`;
+  }
+
+  get hasActiveFreeUsageGrant() {
+    return this.freeUsageGrants.isAny('isActive');
   }
 
   get hasActiveSubscription() {
