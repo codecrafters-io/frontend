@@ -155,7 +155,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await partnerPage.visit();
-    assert.ok(partnerPage.referralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
+    assert.ok(partnerPage.affiliateReferralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
     assert.notOk(partnerPage.getStartedButton.isVisible, 'Get Started button is not visible');
 
     await percySnapshot('Partner Page | Referral Stats');
