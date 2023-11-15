@@ -77,7 +77,7 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
 
     await percySnapshot('Partner Page | Create Payout Modal | Paid out');
 
-    await partnerPage.createPayoutModal.backToReferralsPageButton.click();
+    await partnerPage.createPayoutModal.backToAffiliatePageButton.click();
 
     assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
     assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
@@ -146,7 +146,7 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
     await partnerPage.createPayoutModal.paypalPayoutForm.amountInput.fillIn('100');
     await partnerPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
 
-    await partnerPage.createPayoutModal.backToReferralsPageButton.click();
+    await partnerPage.createPayoutModal.backToAffiliatePageButton.click();
 
     assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
     assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
