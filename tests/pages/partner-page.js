@@ -30,7 +30,7 @@ export default createPage({
     scope: '[data-test-get-started-button]',
   },
 
-  referredUsersContainerText: text('[data-test-referred-users-container]'),
+  affiliateReferredUsersContainerText: text('[data-test-referred-users-container]'),
 
   referralStatsPaidUsersText: text('[data-test-referral-stats-paid-users]'),
 

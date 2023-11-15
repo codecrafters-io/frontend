@@ -17,7 +17,7 @@ type FeatureMarkdown = {
   title: string;
 };
 
-export default class ReferralFeatureCardsComponent extends Component<Signature> {
+export default class AffiliateFeatureCardsComponent extends Component<Signature> {
   get featureMarkdownList(): FeatureMarkdown[] {
     return [
       {

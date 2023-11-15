@@ -238,8 +238,8 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server);
 
     await partnerPage.visit();
-    assert.ok(partnerPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
-    assert.notOk(partnerPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
+    assert.ok(partnerPage.affiliateReferredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.notOk(partnerPage.affiliateReferredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
   });
 
   test('should show unpaid users after clicking show all button', async function (assert) {
@@ -320,7 +320,7 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
     await partnerPage.visit();
     await partnerPage.clickShowAllButton();
-    assert.ok(partnerPage.referredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
-    assert.ok(partnerPage.referredUsersContainerText.includes('gufran'), 'Expect unpaid user to be found');
+    assert.ok(partnerPage.affiliateReferredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.ok(partnerPage.affiliateReferredUsersContainerText.includes('gufran'), 'Expect unpaid user to be found');
   });
 });
