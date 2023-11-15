@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import freeForFriendImage from '/assets/images/referral-program-features/free-for-friend.jpg';
-import lifetimeEarningsImage from '/assets/images/referral-program-features/lifetime-earnings.jpg';
-import simplePayoutImage from '/assets/images/referral-program-features/simple-payout.jpg';
+import freeForFriendImage from '/assets/images/affiliate-program-features/free-for-friend.jpg';
+import lifetimeEarningsImage from '/assets/images/affiliate-program-features/lifetime-earnings.jpg';
+import simplePayoutImage from '/assets/images/affiliate-program-features/simple-payout.jpg';
 
 interface Signature {
   Element: HTMLDivElement;
