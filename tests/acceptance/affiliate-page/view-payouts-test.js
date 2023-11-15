@@ -84,6 +84,6 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
     assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
     assert.strictEqual(affiliatePage.payoutHistoryItems.length, 3, 'payout history items are correct');
 
-    await percySnapshot('Partner page | View payouts');
+    await percySnapshot('Affiliate Page | View payouts');
   });
 });
