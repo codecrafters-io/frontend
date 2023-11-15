@@ -17,18 +17,18 @@
     </div>
   {{else}}
     <div class="grid grid-cols-2 gap-2">
-      <ReferralsPage::CreatePayoutModal::PayoutMethodCard
+      <AffiliatePage::CreatePayoutModal::PayoutMethodCard
         @name="PayPal"
         @imageUrl={{this.paypalImage}}
         {{on "click" (fn this.handlePayoutMethodClick "paypal")}}
         @isSelected={{eq this.selectedPayoutMethod "paypal"}}
       />
 
-      <ReferralsPage::CreatePayoutModal::PayoutMethodCard @name="Amazon Gift Card" @isDisabled={{true}} @imageUrl={{this.amazonImage}} />
+      <AffiliatePage::CreatePayoutModal::PayoutMethodCard @name="Amazon Gift Card" @isDisabled={{true}} @imageUrl={{this.amazonImage}} />
     </div>
 
     {{#if (eq this.selectedPayoutMethod "paypal")}}
-      <ReferralsPage::CreatePayoutModal::PaypalPayoutForm
+      <AffiliatePage::CreatePayoutModal::PaypalPayoutForm
         class="mt-8"
         @onSubmit={{this.handlePayoutCreated}}
         @withdrawableEarningsAmountInCents={{@withdrawableEarningsAmountInCents}}

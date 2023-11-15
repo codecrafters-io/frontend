@@ -1,6 +1,6 @@
 <PageSection @title="Stats" data-test-affiliate-referral-stats-container ...attributes>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <ReferralsPage::AffiliateLinkStatContainer
+    <AffiliatePage::AffiliateLinkStatContainer
       @title="Referrals"
       @icon="cursor-click"
       @helpText="The number of users who've accepted your referral offer."
@@ -12,9 +12,9 @@
           <span class="text-gray-300 text-xs ml-1">(no referrals yet)</span>
         {{/if}}
       </div>
-    </ReferralsPage::AffiliateLinkStatContainer>
+    </AffiliatePage::AffiliateLinkStatContainer>
 
-    <ReferralsPage::AffiliateLinkStatContainer
+    <AffiliatePage::AffiliateLinkStatContainer
       @title="Paid Users"
       @icon="gift"
       @helpText="The number of referred users who've converted to paying users."
@@ -28,6 +28,6 @@
           </span>
         {{/if}}
       </div>
-    </ReferralsPage::AffiliateLinkStatContainer>
+    </AffiliatePage::AffiliateLinkStatContainer>
   </div>
 </PageSection>

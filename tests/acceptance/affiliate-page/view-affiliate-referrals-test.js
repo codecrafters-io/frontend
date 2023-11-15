@@ -1,5 +1,5 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
+import affiliatePage from 'codecrafters-frontend/tests/pages/affiliate-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
@@ -10,7 +10,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn, signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | partner-page | view-referrals', function (hooks) {
+module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -40,28 +40,28 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
     testScenario(this.server);
     signInAsAffiliate(this.owner, this.server);
 
-    await partnerPage.visit();
-    await partnerPage.getStartedButton.click();
+    await affiliatePage.visit();
+    await affiliatePage.getStartedButton.click();
 
-    assert.false(partnerPage.getStartedButton.isVisible, 'Expect generate partner link button to not be visible');
+    assert.false(affiliatePage.getStartedButton.isVisible, 'Expect generate partner link button to not be visible');
   });
 
   test('generate partner link button is disabled for non affiliates', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await partnerPage.visit();
-    await partnerPage.getStartedButton.click();
+    await affiliatePage.visit();
+    await affiliatePage.getStartedButton.click();
 
-    assert.true(partnerPage.getStartedButton.isVisible, 'Expect generate partner link button to still be visible');
+    assert.true(affiliatePage.getStartedButton.isVisible, 'Expect generate partner link button to still be visible');
   });
 
   test('generate partner link button does not have a tooltip for affiliates', async function (assert) {
     testScenario(this.server);
     signInAsAffiliate(this.owner, this.server);
 
-    await partnerPage.visit();
-    await partnerPage.getStartedButton.hover();
+    await affiliatePage.visit();
+    await affiliatePage.getStartedButton.hover();
 
     assertTooltipNotRendered(assert);
   });
@@ -70,8 +70,8 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await partnerPage.visit();
-    await partnerPage.getStartedButton.hover();
+    await affiliatePage.visit();
+    await affiliatePage.getStartedButton.hover();
 
     assertTooltipContent(assert, {
       contentString: 'Contact us at hello@codecrafters.io to apply to be a Partner',
@@ -154,9 +154,9 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await partnerPage.visit();
-    assert.ok(partnerPage.affiliateReferralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
-    assert.notOk(partnerPage.getStartedButton.isVisible, 'Get Started button is not visible');
+    await affiliatePage.visit();
+    assert.ok(affiliatePage.affiliateReferralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
+    assert.notOk(affiliatePage.getStartedButton.isVisible, 'Get Started button is not visible');
 
     await percySnapshot('Partner Page | Referral Stats');
   });
@@ -237,9 +237,9 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await partnerPage.visit();
-    assert.ok(partnerPage.affiliateReferredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
-    assert.notOk(partnerPage.affiliateReferredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
+    await affiliatePage.visit();
+    assert.ok(affiliatePage.affiliateReferredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.notOk(affiliatePage.affiliateReferredUsersContainerText.includes('gufran'), 'Expect unpaid user to not be found');
   });
 
   test('should show unpaid users after clicking show all button', async function (assert) {
@@ -318,9 +318,9 @@ module('Acceptance | partner-page | view-referrals', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await partnerPage.visit();
-    await partnerPage.clickShowAllButton();
-    assert.ok(partnerPage.affiliateReferredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
-    assert.ok(partnerPage.affiliateReferredUsersContainerText.includes('gufran'), 'Expect unpaid user to be found');
+    await affiliatePage.visit();
+    await affiliatePage.clickShowAllButton();
+    assert.ok(affiliatePage.affiliateReferredUsersContainerText.includes('mrdoob'), 'Expect paid user to be found');
+    assert.ok(affiliatePage.affiliateReferredUsersContainerText.includes('gufran'), 'Expect unpaid user to be found');
   });
 });

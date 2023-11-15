@@ -1,7 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <PageSection @title="Referred Users" data-test-affiliate-referred-users-container ...attributes>
   {{#each this.paidReferrals as |affiliateReferral|}}
-    <ReferralsPage::AffiliateReferredUserItem @affiliateReferral={{affiliateReferral}} />
+    <AffiliatePage::AffiliateReferredUserItem @affiliateReferral={{affiliateReferral}} />
   {{else}}
     <div class="text-gray-600 text-sm text-center py-10" data-test-affiliate-referred-users-description>
       No paid users found.
@@ -23,7 +23,7 @@
 
   {{#if this.unpaidReferralsAreVisible}}
     {{#each this.unpaidReferrals as |affiliateReferral|}}
-      <ReferralsPage::AffiliateReferredUserItem @affiliateReferral={{affiliateReferral}} />
+      <AffiliatePage::AffiliateReferredUserItem @affiliateReferral={{affiliateReferral}} />
     {{else}}
       <div class="text-gray-600 text-sm text-center py-10" data-test-affiliate-referred-users-description>
         When your refer users, you'll be able to view their details here.
