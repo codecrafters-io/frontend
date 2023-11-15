@@ -17,4 +17,5 @@ export default class CourseStageLanguageGuideModel extends Model.extend(Viewable
   @attr('string') declare markdownForBeginner: string;
   @attr('string') declare markdownForIntermediate: string;
   @attr('string') declare markdownForAdvanced: string;
+  @attr('boolean') declare requiresRegeneration: boolean;
 }

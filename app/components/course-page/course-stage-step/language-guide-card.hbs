@@ -27,6 +27,14 @@
           BETA
           <EmberTooltip @text="This is a beta feature, please send us feedback!" @side="top" />
         </div>
+
+        {{#if (and (current-user-is-staff) this.languageGuide.requiresRegeneration)}}
+          <Pill @color="red" class="text-xs">
+            Outdated
+            <EmberTooltip @text="Pending regeneration (this pill is only visible to staff)" @side="top" />
+          </Pill>
+        {{/if}}
+
         {{#if (and @repository.language (not-eq @repository.language this.currentLanguage))}}
           <TertiaryButton
             @size="small"
