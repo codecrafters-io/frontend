@@ -5,6 +5,7 @@ import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
+import { format } from 'date-fns';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
@@ -53,6 +54,10 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     } else {
       return this.args.referralLink.user === this.authenticator.currentUser;
     }
+  }
+
+  get freeUsageGrantExpiresAt() {
+    return format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'dd MMM yyyy');
   }
 
   @action
