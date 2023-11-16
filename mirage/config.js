@@ -1,5 +1,6 @@
 import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer, belongsTo, hasMany, Model, Response } from 'miragejs';
+import { add } from 'date-fns';
 import config from 'codecrafters-frontend/config/environment';
 import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
 
@@ -293,6 +294,7 @@ function routes() {
   this.post('/downvotes');
 
   this.patch('/feature-suggestions/:id');
+  this.get('/free-usage-grants');
 
   this.get('/github-app-installations');
   this.get('/github-app-installations/:id');
@@ -351,8 +353,34 @@ function routes() {
     };
   });
 
+  this.post('/referral-activations', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    let referralActivation = schema.referralActivations.create(attrs);
+
+    schema.freeUsageGrants.create({
+      userId: attrs.referrerId,
+      referralActivationId: referralActivation.id,
+      activatesAt: new Date(),
+      active: true,
+      expiresAt: add(new Date(), { days: 7 }),
+      sourceType: 'referred_other_user',
+    });
+
+    schema.freeUsageGrants.create({
+      userId: attrs.customerId,
+      referralActivationId: referralActivation.id,
+      activatesAt: new Date(),
+      active: true,
+      expiresAt: add(new Date(), { days: 7 }),
+      sourceType: 'accepted_referral_offer',
+    });
+
+    return referralActivation;
+  });
+
   this.get('/referral-earnings-payouts');
   this.post('/referral-earnings-payouts');
+  this.get('/referral-links');
 
   this.get('/regional-discounts/current', function (schema) {
     const regionalDiscount = schema.regionalDiscounts.find('current-discount-id');
