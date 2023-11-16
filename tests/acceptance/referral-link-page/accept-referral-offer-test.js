@@ -1,3 +1,4 @@
+import percySnapshot from '@percy/ember';
 import referralLinkPage from 'codecrafters-frontend/tests/pages/referral-link-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import windowMock from 'ember-window-mock';
@@ -52,5 +53,8 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
     await referralLinkPage.acceptReferralButton.click();
 
     assert.true(referralLinkPage.acceptedReferralNotice.text.includes('Offer Accepted!'), 'should show accepted referral notice');
+    assert.true(referralLinkPage.acceptedReferralNotice.text.includes('24 Nov 2023'), 'should show accepted referral notice');
+
+    await percySnapshot('Referral Link Page | Accepted Referral Offer');
   });
 });
