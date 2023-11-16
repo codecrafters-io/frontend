@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
-import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
+import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class ReferralLinkModel extends Model {
   @belongsTo('user', { async: false }) user!: TemporaryUserModel;

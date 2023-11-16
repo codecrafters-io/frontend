@@ -1,5 +1,5 @@
-import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import Model, { attr, belongsTo } from '@ember-data/model';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class ReferralActivationModel extends Model {
