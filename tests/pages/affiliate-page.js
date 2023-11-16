@@ -3,7 +3,7 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
   createPayoutModal: {
-    backToReferralsPageButton: { scope: '[data-test-back-to-referrals-page-button]' },
+    backToAffiliatePageButton: { scope: '[data-test-back-to-affiliate-page-button]' },
     clickOnPayoutMethodCard: clickOnText('[data-test-payout-method-card]'),
     paypalPayoutForm: {
       scope: '[data-test-paypal-payout-form]',
@@ -30,11 +30,11 @@ export default createPage({
     scope: '[data-test-get-started-button]',
   },
 
-  referredUsersContainerText: text('[data-test-referred-users-container]'),
+  affiliateReferredUsersContainerText: text('[data-test-affiliate-referred-users-container]'),
 
-  referralStatsPaidUsersText: text('[data-test-referral-stats-paid-users]'),
+  affiliateReferralStatsPaidUsersText: text('[data-test-affiliate-referral-stats-paid-users]'),
 
-  clickShowAllButton: clickable('[data-test-referred-users-show-all-button]'),
+  clickShowAllButton: clickable('[data-test-affiliate-referred-users-show-all-button]'),
 
   initiatePayoutButton: {
     scope: '[data-test-initiate-payout-button]',

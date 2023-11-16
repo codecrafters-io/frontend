@@ -1,9 +1,9 @@
 {{! @glint-nocheck: not typesafe yet }}
-<PageSection @title="Referred Users" data-test-referred-users-container ...attributes>
+<PageSection @title="Referred Users" data-test-affiliate-referred-users-container ...attributes>
   {{#each this.paidReferrals as |affiliateReferral|}}
-    <ReferralsPage::ReferredUserItem @affiliateReferral={{affiliateReferral}} />
+    <AffiliatePage::AffiliateReferredUserItem @affiliateReferral={{affiliateReferral}} />
   {{else}}
-    <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
+    <div class="text-gray-600 text-sm text-center py-10" data-test-affiliate-referred-users-description>
       No paid users found.
     </div>
   {{/each}}
@@ -11,7 +11,7 @@
   <div class="text-center pb-2">
     <TertiaryButton
       {{on "click" (fn (mut this.unpaidReferralsAreVisible) (not this.unpaidReferralsAreVisible))}}
-      data-test-referred-users-show-all-button
+      data-test-affiliate-referred-users-show-all-button
     >
       {{#if this.unpaidReferralsAreVisible}}
         Hide signups
@@ -23,9 +23,9 @@
 
   {{#if this.unpaidReferralsAreVisible}}
     {{#each this.unpaidReferrals as |affiliateReferral|}}
-      <ReferralsPage::ReferredUserItem @affiliateReferral={{affiliateReferral}} />
+      <AffiliatePage::AffiliateReferredUserItem @affiliateReferral={{affiliateReferral}} />
     {{else}}
-      <div class="text-gray-600 text-sm text-center py-10" data-test-referred-users-description>
+      <div class="text-gray-600 text-sm text-center py-10" data-test-affiliate-referred-users-description>
         When your refer users, you'll be able to view their details here.
       </div>
     {{/each}}

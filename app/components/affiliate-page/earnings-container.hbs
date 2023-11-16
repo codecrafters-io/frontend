@@ -7,7 +7,7 @@
           <td class="font-semibold text-gray-700 py-2 text-right w-full" data-test-total-earnings-amount>${{this.totalEarningsAmountInDollars}}</td>
         </tr>
         {{#each this.lineItems as |item|}}
-          <ReferralsPage::EarningsContainer::LineItem
+          <AffiliatePage::EarningsContainer::LineItem
             @title={{item.title}}
             @helpText={{item.helpText}}
             @isLoading={{this.isLoadingPayouts}}
@@ -90,7 +90,7 @@
 
   {{#if this.isCreatingPayout}}
     <ModalBackdrop>
-      <ReferralsPage::CreatePayoutModal
+      <AffiliatePage::CreatePayoutModal
         @onClose={{this.handleCreatePayoutModalClose}}
         @withdrawableEarningsAmountInCents={{this.readyToPayoutEarningsAmountInCents}}
       />

@@ -1,4 +1,4 @@
-import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
+import affiliatePage from 'codecrafters-frontend/tests/pages/affiliate-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -7,7 +7,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | partner-page | join-referral-program', function (hooks) {
+module('Acceptance | affiliate-page | join-affiliate-program', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -16,21 +16,21 @@ module('Acceptance | partner-page | join-referral-program', function (hooks) {
     testScenario(this.server);
     signInAsAffiliate(this.owner, this.server);
 
-    await partnerPage.visit();
-    assert.ok(partnerPage.getStartedButton.isVisible);
+    await affiliatePage.visit();
+    assert.ok(affiliatePage.getStartedButton.isVisible);
 
-    await percySnapshot('Partner Page | Join Referral Program');
+    await percySnapshot('Affiliate Page | Join Affiliate Program');
   });
 
-  test('can join referral program', async function (assert) {
+  test('can join affiliate program', async function (assert) {
     testScenario(this.server);
     signInAsAffiliate(this.owner, this.server);
 
-    await partnerPage.visit();
-    await partnerPage.getStartedButton.click();
+    await affiliatePage.visit();
+    await affiliatePage.getStartedButton.click();
 
-    assert.notOk(partnerPage.getStartedButton.isVisible, 'Get Started button is not visible');
+    assert.notOk(affiliatePage.getStartedButton.isVisible, 'Get Started button is not visible');
 
-    await percySnapshot('Partner Page | Empty Referrals List');
+    await percySnapshot('Affiliate Page | Empty Affiliate Referrals List');
   });
 });
