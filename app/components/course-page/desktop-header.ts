@@ -4,7 +4,6 @@ import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { inject as service } from '@ember/service';
 import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
-import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -29,12 +28,6 @@ type Tab = {
 };
 
 export default class DesktopHeaderComponent extends Component<Signature> {
-  // @ts-ignore
-  @service authenticator;
-
-  // @ts-ignore
-  @service featureFlags;
-
   @service declare router: RouterService;
 
   get allTabs(): Tab[] {
@@ -62,14 +55,6 @@ export default class DesktopHeaderComponent extends Component<Signature> {
         isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
       },
     ];
-  }
-
-  get currentStepAsCourseStageStep() {
-    return this.args.currentStep as CourseStageStep;
-  }
-
-  get currentUser() {
-    return this.authenticator.currentUser;
   }
 
   get introductionTabs() {
@@ -161,13 +146,5 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     }
 
     return true;
-
-    // if (tab === 'verified_solution') {
-    //   return false;
-    // } else if (tab === 'screencasts') {
-    //   return this.featureFlags.canSeeScreencasts && this.courseStage.hasScreencasts;
-    // } else {
-    //   return true;
-    // }
   }
 }
