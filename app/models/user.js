@@ -11,11 +11,13 @@ export default class UserModel extends Model {
   @attr('date') createdAt;
   @attr('') featureFlags;
   @attr('string') githubUsername;
+  @attr('boolean') hasActiveFreeUsageGrants;
   @attr('boolean') isAdmin;
   @attr('boolean') isAffiliate;
   @attr('boolean') isConceptAuthor;
   @attr('boolean') isStaff;
   @attr('boolean') isVip;
+  @attr('date') lastFreeUsageGrantExpiresAt;
   @attr('string') name;
   @attr('string') primaryEmailAddress;
   @attr('string') username;

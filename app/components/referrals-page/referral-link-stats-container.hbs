@@ -1,0 +1,43 @@
+<PageSection @title="Stats" data-test-referral-stats-container ...attributes>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <ReferralsPage::ReferralLinkStatContainer
+      @title="Referrals"
+      @icon="cursor-click"
+      @helpText="The number of users who've accepted your referral offer."
+    >
+      <div class="flex items-center">
+        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.activations.length}}</span>
+
+        {{#if (eq @referralLink.activations.length 0)}}
+          <span class="text-gray-300 text-xs ml-1">(no referrals yet)</span>
+        {{/if}}
+      </div>
+    </ReferralsPage::ReferralLinkStatContainer>
+
+    <ReferralsPage::ReferralLinkStatContainer
+      @title="Free weeks left"
+      @icon="gift"
+      @helpText="The number of weeks of free access you have left from referrals."
+    >
+      <div class="flex items-center" data-test-referral-stats-free-qeeks-left>
+        {{#if (eq this.freeUsageGrants.length 0)}}
+          <span class="text-gray-300 text-xs ml-1">0 (waiting on first referral)</span>
+        {{else if this.currentUser.hasActiveFreeUsageGrants}}
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold">
+            {{this.activeFreeUsageGrantsCount}}
+          </span>
+          <span class="text-gray-700 text-xs">
+            (expires on {{this.currentUser.lastFreeUsageGrantExpiresAt}})
+          </span> 
+        {{else}}
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold">
+            0
+          </span>
+          <span class="text-gray-700 text-xs">
+            (expired on {{this.currentUser.lastFreeUsageGrantExpiresAt}})
+          </span> 
+        {{/if}}
+      </div>
+    </ReferralsPage::ReferralLinkStatContainer>
+  </div>
+</PageSection>

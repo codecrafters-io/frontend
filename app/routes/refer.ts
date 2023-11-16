@@ -1,8 +1,8 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 import Store from '@ember-data/store';
+import { inject as service } from '@ember/service';
 
 export default class ReferRoute extends BaseRoute {
   @service authenticator!: AuthenticatorService;
@@ -20,8 +20,15 @@ export default class ReferRoute extends BaseRoute {
         user_id: this.authenticator.currentUser.id,
         include: 'activations,activations.customer',
       });
+
+      const freeUsageGrants = await this.store.query('free-usage-grant', {
+        user_id: this.authenticator.currentUser.id,
+      });
+
+      return { freeUsageGrants };
     } else {
       // Referral links themselves are loaded in the /users/current payload
+      return;
     }
   }
 }
