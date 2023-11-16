@@ -183,4 +183,89 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     assert.true(referralPage.referralStatsFreeWeeksLeft.countText.includes('0'), 'expect to see 0 free weeks left');
     assert.notOk(referralPage.getStartedButton.isVisible, 'expect get started button to be hidden');
   });
+
+  test('should show referred users', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+
+    const referralLink = this.server.create('referral-link', {
+      user,
+      slug: 'test-slug',
+      url: 'https://app.codecrafters.io/r/test-slug',
+    });
+
+    const customer1 = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const customer2 = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    const referralActivation1 = this.server.create('referral-activation', {
+      customer: customer1,
+      referrer: user,
+      referralLink,
+      createdAt: new Date(),
+    });
+
+    this.server.create('free-usage-grant', {
+      user,
+      referralActivation: referralActivation1,
+      activatesAt: new Date(),
+      active: true,
+      sourceType: 'referred_other_user',
+      expiresAt: add(new Date(), { days: 7 }),
+    });
+
+    this.server.create('free-usage-grant', {
+      user: customer1,
+      referralActivation: referralActivation1,
+      activatesAt: new Date(),
+      active: true,
+      sourceType: 'accepted_referral_offer',
+      expiresAt: add(new Date(), { days: 7 }),
+    });
+
+    const referralActivation2 = this.server.create('referral-activation', {
+      customer: customer2,
+      referrer: user,
+      referralLink,
+      createdAt: new Date(),
+    });
+
+    this.server.create('free-usage-grant', {
+      user,
+      referralActivation: referralActivation2,
+      activatesAt: add(new Date(), { days: 7 }),
+      active: true,
+      sourceType: 'referred_other_user',
+      expiresAt: add(new Date(), { days: 14 }),
+    });
+
+    this.server.create('free-usage-grant', {
+      user: customer2,
+      referralActivation: referralActivation2,
+      activatesAt: new Date(),
+      active: true,
+      sourceType: 'accepted_referral_offer',
+      expiresAt: add(new Date(), { days: 7 }),
+    });
+
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { days: 14 }) });
+
+    signIn(this.owner, this.server, user);
+
+    await referralPage.visit();
+    await this.pauseTest();
+    assert.ok(referralPage.referralReferredUsersContainerText.includes('sarupbanskota'), 'expect user to be found');
+    assert.ok(referralPage.referralReferredUsersContainerText.includes('gufran'), 'expect user to be found');
+  });
 });

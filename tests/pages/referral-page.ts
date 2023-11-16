@@ -8,6 +8,7 @@ export default createPage({
   },
 
   referralStatsReferralsText: text('[data-test-referral-stats-referrals]'),
+  referralReferredUsersContainerText: text('[data-test-referral-referred-users-container]'),
 
   referralStatsFreeWeeksLeft: {
     countText: text('[data-test-referral-stats-free-weeks-left-count]'),

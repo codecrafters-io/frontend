@@ -1,8 +1,8 @@
-<PageSection @title="Referred Users" data-test-affiliate-referred-users-container ...attributes>
+<PageSection @title="Referred Users" data-test-referral-referred-users-container ...attributes>
   {{#each this.userActivationsAndFreeUsageGrants as |activationAndGrant|}}
     <ReferralsPage::ReferralReferredUserItem @activationAndGrant={{activationAndGrant}} />
   {{else}}
-    <div class="text-gray-600 text-sm text-center py-10" data-test-affiliate-referred-users-description>
+    <div class="text-gray-600 text-sm text-center py-10" data-test-referral-referred-users-description>
       No referred users found.
     </div>
   {{/each}}
