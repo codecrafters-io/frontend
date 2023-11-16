@@ -33,7 +33,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
     await catalogPage.accountDropdown.toggle();
     await catalogPage.accountDropdown.clickOnLink('Partner Dashboard');
 
-    assert.strictEqual(currentURL(), '/partner', 'Expect to be redirected to partner page');
+    assert.strictEqual(currentURL(), '/partner', 'Expect to be redirected to Affiliate Page');
   });
 
   test('generate partner link button is not disabled for affiliates', async function (assert) {
@@ -158,7 +158,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
     assert.ok(affiliatePage.affiliateReferralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
     assert.notOk(affiliatePage.getStartedButton.isVisible, 'Get Started button is not visible');
 
-    await percySnapshot('Partner Page | Referral Stats');
+    await percySnapshot('Affiliate Page | Referral Stats');
   });
 
   test('should show paid users by default', async function (assert) {

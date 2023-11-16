@@ -66,16 +66,16 @@ module('Acceptance | affiliate-page | initiate-payout', function (hooks) {
 
     await affiliatePage.initiatePayoutButton.click();
 
-    await percySnapshot('Partner Page | Create Payout Modal');
+    await percySnapshot('Affiliate Page | Create Payout Modal');
 
     await affiliatePage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
 
-    await percySnapshot('Partner Page | Create Payout Modal | Paypal Form');
+    await percySnapshot('Affiliate Page | Create Payout Modal | Paypal Form');
 
     await affiliatePage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
     await affiliatePage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
 
-    await percySnapshot('Partner Page | Create Payout Modal | Paid out');
+    await percySnapshot('Affiliate Page | Create Payout Modal | Paid out');
 
     await affiliatePage.createPayoutModal.backToAffiliatePageButton.click();
 
@@ -84,7 +84,7 @@ module('Acceptance | affiliate-page | initiate-payout', function (hooks) {
     assert.strictEqual(affiliatePage.lineItemAmountText('Ready to payout'), '$0', 'ready to payout amount is correct');
     assert.strictEqual(affiliatePage.lineItemAmountText('Paid out'), '$354', 'paid out amount is correct');
 
-    await percySnapshot('Partner Page | Payout initiated');
+    await percySnapshot('Affiliate Page | Payout initiated');
   });
 
   test('can initiate payout for lower amount', async function (assert) {
