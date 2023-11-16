@@ -1,7 +1,15 @@
-import { text, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, text, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
+  referralReferredUsersContainer: {
+    durationPill: collection('[data-test-duration-pill]', {
+      hover: triggerable('mouseenter'),
+    }),
+
+    scope: '[data-test-referral-referred-users-container]',
+  },
+
   referralStatsReferrals: {
     infoIcon: {
       hover: triggerable('mouseenter'),

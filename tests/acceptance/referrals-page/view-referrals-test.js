@@ -191,4 +191,92 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
       contentString: 'The number of weeks of free access you have left from referrals.',
     });
   });
+
+  test('should show referred users', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    const currentDate = new Date('2023-11-17');
+
+    const referralLink = this.server.create('referral-link', {
+      user,
+      slug: 'test-slug',
+      url: 'https://app.codecrafters.io/r/test-slug',
+    });
+
+    const customer1 = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: currentDate,
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const customer2 = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: currentDate,
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    const referralActivation1 = this.server.create('referral-activation', {
+      customer: customer1,
+      referrer: user,
+      referralLink,
+      createdAt: currentDate,
+    });
+
+    this.server.create('free-usage-grant', {
+      user,
+      referralActivation: referralActivation1,
+      activatesAt: currentDate,
+      sourceType: 'referred_other_user',
+      expiresAt: add(currentDate, { days: 7 }),
+    });
+
+    this.server.create('free-usage-grant', {
+      user: customer1,
+      referralActivation: referralActivation1,
+      activatesAt: currentDate,
+      sourceType: 'accepted_referral_offer',
+      expiresAt: add(currentDate, { days: 7 }),
+    });
+
+    const referralActivation2 = this.server.create('referral-activation', {
+      customer: customer2,
+      referrer: user,
+      referralLink,
+      createdAt: currentDate,
+    });
+
+    this.server.create('free-usage-grant', {
+      user,
+      referralActivation: referralActivation2,
+      activatesAt: add(currentDate, { days: 7 }),
+      sourceType: 'referred_other_user',
+      expiresAt: add(currentDate, { days: 14 }),
+    });
+
+    this.server.create('free-usage-grant', {
+      user: customer2,
+      referralActivation: referralActivation2,
+      activatesAt: currentDate,
+      sourceType: 'accepted_referral_offer',
+      expiresAt: add(currentDate, { days: 7 }),
+    });
+
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(currentDate, { days: 14 }) });
+
+    signIn(this.owner, this.server, user);
+
+    await referralPage.visit();
+    assert.ok(referralPage.referralReferredUsersContainer.text.includes('sarupbanskota'), 'expect user to be found');
+    assert.ok(referralPage.referralReferredUsersContainer.text.includes('gufran'), 'expect user to be found');
+    assert.ok(referralPage.referralReferredUsersContainer.durationPill[0].text.includes('17 Nov - 24 Nov'), 'expect duration pill to show correct duration');
+
+    await referralPage.referralReferredUsersContainer.durationPill[0].hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'This referral grants you free access from 17 November 2023 to 24 November 2023.',
+    });
+  });
 });

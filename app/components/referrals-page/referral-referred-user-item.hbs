@@ -23,12 +23,12 @@
     </div>
   </a>
   <div class="flex items-center flex-wrap gap-y-2">
-    <div class="flex flex-shrink-0">
+    <div class="flex flex-shrink-0" data-test-duration-pill>
       <span
         class="inline-flex border rounded-full px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
       >{{@activationAndGrant.grant.shortActivatesAt}} - {{@activationAndGrant.grant.shortExpiresAt}}</span>
       <EmberTooltip
-        @text="This referral grants you free access from {{@activationAndGrant.grant.fullActivatesAt}} to {{@activationAndGrant.grant.fullExpiresAt}}"
+        @text="This referral grants you free access from {{@activationAndGrant.grant.fullActivatesAt}} to {{@activationAndGrant.grant.fullExpiresAt}}."
       />
     </div>
 
