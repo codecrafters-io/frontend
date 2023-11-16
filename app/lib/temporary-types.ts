@@ -7,6 +7,7 @@ import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stag
 import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 
 export class TemporaryUserModel {
   declare avatarUrl: string;
@@ -21,6 +22,7 @@ export class TemporaryUserModel {
   declare isStaff: boolean;
   declare lastFreeUsageGrantExpiresAt: Date | null;
   declare primaryEmailAddress: string;
+  declare referralLinks: ReferralLinkModel[];
   declare username: string;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
