@@ -5,12 +5,12 @@ import { inject as service } from '@ember/service';
 export default class ReferralLinksContainerComponent extends Component {
   @service authenticator!: AuthenticatorService;
 
-  get affiliateLink() {
-    return this.currentUser?.referralLinks.firstObject;
-  }
-
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  get referralLink() {
+    return this.currentUser?.referralLinks.firstObject;
   }
 }
 
