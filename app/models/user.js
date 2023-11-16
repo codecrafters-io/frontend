@@ -101,6 +101,10 @@ export default class UserModel extends Model {
     return this.affiliateLinks.rejectBy('isNew').length > 0;
   }
 
+  get hasJoinedReferralProgram() {
+    return this.referralLinks.rejectBy('isNew').length > 0;
+  }
+
   get isEligibleForEarlyBirdDiscount() {
     if (this.isEligibleForReferralDiscount) {
       return false; // Prioritize referral

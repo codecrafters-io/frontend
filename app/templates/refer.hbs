@@ -1,0 +1,17 @@
+{{page-title "Refer"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
+  {{#if this.currentUser.hasJoinedReferralProgram}}
+    <div class="flex justify-between items-baseline">
+      <h1 class="font-semibold text-2xl text-gray-700 mb-5 flex-shrink-0">Referrals</h1>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="md:basis-2/3">
+      </div>
+    </div>
+
+    {{! @glint-expect-error: not ts-ified yet }}
+    <TestimonialList />
+  {{/if}}
+</div>
