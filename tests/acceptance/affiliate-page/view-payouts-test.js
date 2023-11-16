@@ -1,4 +1,4 @@
-import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
+import affiliatePage from 'codecrafters-frontend/tests/pages/affiliate-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -7,7 +7,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | partner-page | view-payouts', function (hooks) {
+module('Acceptance | affiliate-page | view-payouts', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -79,11 +79,11 @@ module('Acceptance | partner-page | view-payouts', function (hooks) {
 
     signInAsAffiliate(this.owner, this.server);
 
-    await partnerPage.visit();
+    await affiliatePage.visit();
 
-    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(partnerPage.payoutHistoryItems.length, 3, 'payout history items are correct');
+    assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(affiliatePage.payoutHistoryItems.length, 3, 'payout history items are correct');
 
-    await percySnapshot('Partner page | View payouts');
+    await percySnapshot('Affiliate Page | View payouts');
   });
 });

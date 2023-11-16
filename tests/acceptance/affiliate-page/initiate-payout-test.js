@@ -1,4 +1,4 @@
-import partnerPage from 'codecrafters-frontend/tests/pages/partner-page';
+import affiliatePage from 'codecrafters-frontend/tests/pages/affiliate-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -7,7 +7,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | partner-page | initiate-payout', function (hooks) {
+module('Acceptance | affiliate-page | initiate-payout', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -57,34 +57,34 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
 
     signInAsAffiliate(this.owner, this.server);
 
-    await partnerPage.visit();
+    await affiliatePage.visit();
 
-    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
+    assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
 
-    await partnerPage.initiatePayoutButton.click();
+    await affiliatePage.initiatePayoutButton.click();
 
-    await percySnapshot('Partner Page | Create Payout Modal');
+    await percySnapshot('Affiliate Page | Create Payout Modal');
 
-    await partnerPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
+    await affiliatePage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
 
-    await percySnapshot('Partner Page | Create Payout Modal | Paypal Form');
+    await percySnapshot('Affiliate Page | Create Payout Modal | Paypal Form');
 
-    await partnerPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
-    await partnerPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
+    await affiliatePage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
+    await affiliatePage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
 
-    await percySnapshot('Partner Page | Create Payout Modal | Paid out');
+    await percySnapshot('Affiliate Page | Create Payout Modal | Paid out');
 
-    await partnerPage.createPayoutModal.backToReferralsPageButton.click();
+    await affiliatePage.createPayoutModal.backToAffiliatePageButton.click();
 
-    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$0', 'ready to payout amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$354', 'paid out amount is correct');
+    assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Ready to payout'), '$0', 'ready to payout amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Paid out'), '$354', 'paid out amount is correct');
 
-    await percySnapshot('Partner Page | Payout initiated');
+    await percySnapshot('Affiliate Page | Payout initiated');
   });
 
   test('can initiate payout for lower amount', async function (assert) {
@@ -132,26 +132,26 @@ module('Acceptance | partner-page | initiate-payout', function (hooks) {
 
     signInAsAffiliate(this.owner, this.server);
 
-    await partnerPage.visit();
+    await affiliatePage.visit();
 
-    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
+    assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
 
-    await partnerPage.initiatePayoutButton.click();
-    await partnerPage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
+    await affiliatePage.initiatePayoutButton.click();
+    await affiliatePage.createPayoutModal.clickOnPayoutMethodCard('PayPal');
 
-    await partnerPage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
-    await partnerPage.createPayoutModal.paypalPayoutForm.amountInput.fillIn('100');
-    await partnerPage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
+    await affiliatePage.createPayoutModal.paypalPayoutForm.emailInput.fillIn('abcd@gmail.com');
+    await affiliatePage.createPayoutModal.paypalPayoutForm.amountInput.fillIn('100');
+    await affiliatePage.createPayoutModal.paypalPayoutForm.withdrawButton.click();
 
-    await partnerPage.createPayoutModal.backToReferralsPageButton.click();
+    await affiliatePage.createPayoutModal.backToAffiliatePageButton.click();
 
-    assert.strictEqual(partnerPage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Ready to payout'), '$254', 'ready to payout amount is correct');
-    assert.strictEqual(partnerPage.lineItemAmountText('Paid out'), '$100', 'paid out amount is correct');
+    assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Pending'), '$237', 'pending amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Ready to payout'), '$254', 'ready to payout amount is correct');
+    assert.strictEqual(affiliatePage.lineItemAmountText('Paid out'), '$100', 'paid out amount is correct');
 
     assert.strictEqual(this.server.schema.referralEarningsPayouts.all().models.length, 1, 'payout is created');
   });

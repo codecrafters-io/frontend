@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-export default class ReferredUsersContainerComponent extends Component {
+export default class AffiliateReferredUsersContainerComponent extends Component {
   @tracked unpaidReferralsAreVisible = false;
 
   get affiliateLink() {

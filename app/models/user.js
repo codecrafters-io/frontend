@@ -93,7 +93,7 @@ export default class UserModel extends Model {
     return this.badgeAwards.any((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
   }
 
-  get hasJoinedReferralProgram() {
+  get hasJoinedAffiliateProgram() {
     return this.affiliateLinks.rejectBy('isNew').length > 0;
   }
 
