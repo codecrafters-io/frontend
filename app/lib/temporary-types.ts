@@ -23,6 +23,7 @@ export class TemporaryUserModel {
   declare githubProfileUrl: string;
   declare hasJoinedReferralProgram: boolean;
   declare referralLinks: ReferralLinkModel[];
+  declare lastFreeUsageGrantExpiresAt: Date | null;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
 

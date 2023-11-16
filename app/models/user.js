@@ -33,6 +33,8 @@ export default class UserModel extends Model {
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
+  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
+  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
   @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts;
   @hasMany('referral-link', { async: false }) referralLinks;
   @hasMany('repository', { async: false }) repositories;

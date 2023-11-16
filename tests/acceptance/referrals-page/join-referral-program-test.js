@@ -7,7 +7,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | referrals-page | view-referrals', function (hooks) {
+module('Acceptance | referrals-page | join-referral-program', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
@@ -20,5 +20,17 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     assert.ok(referralPage.getStartedButton.isVisible, 'expect to see get started button');
 
     await percySnapshot('Referral Page | Join Referral Program');
+  });
+
+  test('can join referral program', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await referralPage.visit();
+    await referralPage.getStartedButton.click();
+
+    assert.notOk(referralPage.getStartedButton.isVisible, 'expect get started button to be hidden');
+
+    await percySnapshot('Referral Page | Empty Referrals List');
   });
 });
