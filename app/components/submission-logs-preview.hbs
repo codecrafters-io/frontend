@@ -6,7 +6,7 @@
   {{#if this.evaluation}}
     {{#each this.logLines key="@index" as |logLine index|}}
       <div class="flex items-start">
-        <div class="text-gray-500 w-4 text-right mr-3 flex-shrink-0">{{add index 1}}</div>
+        <div class="text-gray-500 w-4 text-right mr-3 flex-shrink-0 select-none">{{add index 1}}</div>
         <div>{{html-safe logLine}}</div>
       </div>
     {{/each}}
