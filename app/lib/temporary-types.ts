@@ -9,17 +9,18 @@ import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 
 export class TemporaryUserModel {
-  declare id: string;
-  declare username: string;
-  declare badgeAwards: BadgeAwardModel[];
   declare avatarUrl: string;
-  declare isConceptAuthor: boolean;
-  declare isStaff: boolean;
-  declare primaryEmailAddress: string;
-  declare isEligibleForEarlyBirdDiscount: boolean;
-  declare earlyBirdDiscountEligibilityExpiresAt: Date;
+  declare badgeAwards: BadgeAwardModel[];
   declare canAccessPaidContent: boolean;
+  declare earlyBirdDiscountEligibilityExpiresAt: Date;
   declare githubProfileUrl: string;
+  declare id: string;
+  declare isConceptAuthor: boolean;
+  declare isEligibleForEarlyBirdDiscount: boolean;
+  declare isStaff: boolean;
+  declare lastFreeUsageGrantExpiresAt: Date | null;
+  declare primaryEmailAddress: string;
+  declare username: string;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
 

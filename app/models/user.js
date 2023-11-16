@@ -16,6 +16,7 @@ export default class UserModel extends Model {
   @attr('boolean') isConceptAuthor;
   @attr('boolean') isStaff;
   @attr('boolean') isVip;
+  @attr('date') lastFreeUsageGrantExpiresAt;
   @attr('string') name;
   @attr('string') primaryEmailAddress;
   @attr('string') username;
