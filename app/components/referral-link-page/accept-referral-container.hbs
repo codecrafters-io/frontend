@@ -25,20 +25,25 @@
         </p>
 
         <p>
-          You now have 1 free week of CodeCrafters, expiring on {{this.freeUsageGrantExpiresAt}}.
+          You now have 1 free week of CodeCrafters, expiring on
+          {{this.freeUsageGrantExpiresAt}}.
         </p>
 
         <p>
-          Visit <LinkTo @route="catalog">catalog</LinkTo> to get started.
+          Visit
+          <LinkTo @route="catalog">catalog</LinkTo>
+          to get started.
         </p>
 
         <p>
-          Want more free weeks? Visit <LinkTo @route="refer">/refer</LinkTo>.
+          Want more free weeks? Visit
+          <LinkTo @route="refer">/refer</LinkTo>.
         </p>
       </div>
     {{else}}
       <div class="inline-flex mt-8">
         <PrimaryButtonWithSpinner
+          @size="regular"
           @shouldShowSpinner={{this.isCreatingReferralActivation}}
           @isDisabled={{not this.acceptOfferButtonIsEnabled}}
           class="px-5 py-3"
@@ -57,7 +62,9 @@
         {{else if this.currentUserIsReferrer}}
           <EmberTooltip @text="You can't accept your own referral offer." />
         {{else if this.currentUserAlreadyAcceptedReferral}}
-          <EmberTooltip @text="You've already accepted another referral offer. You can refer other users to get more free weeks. Visit /refer to get started." />
+          <EmberTooltip
+            @text="You've already accepted another referral offer. You can refer other users to get more free weeks. Visit /refer to get started."
+          />
         {{else if this.currentUser.canAccessPaidContent}}
           <EmberTooltip @text="As a CodeCrafters member, you already have full access." />
         {{/if}}

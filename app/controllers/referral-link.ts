@@ -1,7 +1,10 @@
 import Controller from '@ember/controller';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import testimonialsData from 'codecrafters-frontend/lib/testimonials-data';
 
-export default class JoinController extends Controller {
+export default class ReferralLinkController extends Controller {
+  declare model: { referralLink: ReferralLinkModel };
+
   get testimonialGroups() {
     const testimonialGroup1 = [
       testimonialsData['djordje-lukic'],

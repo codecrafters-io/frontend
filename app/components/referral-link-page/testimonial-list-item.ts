@@ -6,9 +6,9 @@ interface Signature {
   Args: {
     testimonial: {
       authorAvatarImage: string;
-      authorDescription: string;
+      authorDesignation: string;
       authorName: string;
-      link: string;
+      link?: string;
       text: string;
     };
   };
