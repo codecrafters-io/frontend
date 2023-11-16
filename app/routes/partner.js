@@ -13,7 +13,7 @@ export default class PartnerRoute extends BaseRoute {
   async model() {
     await this.authenticator.authenticate(); // Force loading affiliate links
 
-    if (this.authenticator.currentUser.hasJoinedReferralProgram) {
+    if (this.authenticator.currentUser.hasJoinedAffiliateProgram) {
       await this.store.query('affiliate-link', {
         user_id: this.authenticator.currentUser.id,
         include: 'referrals,referrals.customer,referrals.referrer',
