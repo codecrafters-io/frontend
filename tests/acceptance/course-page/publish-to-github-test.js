@@ -3,7 +3,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
 import { module, test } from 'qunit';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -61,7 +61,12 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await coursePage.repositoryDropdown.click();
+
+    await animationsSettled();
+
     await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
+
+    await animationsSettled();
 
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
     assert.ok(coursePage.configureGithubIntegrationModal.fixGitHubAppInstallationPrompt.isVisible, 'fix github app installation prompt is visible');
@@ -74,6 +79,8 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     });
 
     await coursePage.configureGithubIntegrationModal.fixGitHubAppInstallationPrompt.refreshStatusButton.click();
+
+    await animationsSettled();
 
     assert.notOk(
       coursePage.configureGithubIntegrationModal.fixGitHubAppInstallationPrompt.isVisible,
@@ -102,8 +109,13 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     window.confirm = () => true;
 
+    await animationsSettled();
+
     await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
     await coursePage.configureGithubIntegrationModal.clickOnDisconnectRepositoryButton();
+
+    await animationsSettled();
+
     await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
   });
 });

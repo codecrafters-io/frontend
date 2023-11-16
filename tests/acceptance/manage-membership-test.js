@@ -7,7 +7,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import { formatWithOptions } from 'date-fns/fp';
 import membershipPage from 'codecrafters-frontend/tests/pages/membership-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, settled } from '@ember/test-helpers';
 
 module('Acceptance | manage-membership-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -82,6 +82,8 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(membershipPage.cancelSubscriptionModal.cancelButtonText, 'Cancel Trial');
 
     await membershipPage.cancelSubscriptionModal.clickOnCancelSubscriptionButton();
+    await settled(); // Investigate why clickable() doesn't call settled()
+
     assert.notOk(membershipPage.cancelSubscriptionModal.isVisible);
 
     assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your CodeCrafters membership is currently inactive.');
@@ -112,6 +114,8 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(membershipPage.cancelSubscriptionModal.cancelButtonText, 'Cancel Subscription');
 
     await membershipPage.cancelSubscriptionModal.clickOnCancelSubscriptionButton();
+    await settled(); // Investigate why clickable() doesn't call settled()
+
     assert.notOk(membershipPage.cancelSubscriptionModal.isVisible);
 
     assert.strictEqual(
