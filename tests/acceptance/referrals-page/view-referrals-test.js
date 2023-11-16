@@ -264,7 +264,6 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await referralPage.visit();
-    await this.pauseTest();
     assert.ok(referralPage.referralReferredUsersContainerText.includes('sarupbanskota'), 'expect user to be found');
     assert.ok(referralPage.referralReferredUsersContainerText.includes('gufran'), 'expect user to be found');
   });

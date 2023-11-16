@@ -10,7 +10,7 @@ interface Signature {
 
   Args: {
     freeUsageGrants: FreeUsageGrantModel[];
-    referralLink: ReferralLinkModel;
+    referralLink: ReferralLinkModel | undefined;
   };
 }
 

@@ -27,15 +27,17 @@
             {{this.activeFreeUsageGrantsCount}}
           </span>
           <span class="text-gray-700 text-xs">
-            (expires on {{this.activeFreeUsageGrantsExpireAt}})
-          </span> 
+            (expires on
+            {{this.activeFreeUsageGrantsExpireAt}})
+          </span>
         {{else}}
           <span class="text-gray-700 text-lg sm:text-2xl font-bold" data-test-referral-stats-free-weeks-left-count>
             0
           </span>
           <span class="text-gray-700 text-xs">
-            (expired on {{this.activeFreeUsageGrantsExpireAt}})
-          </span> 
+            (expired on
+            {{this.activeFreeUsageGrantsExpireAt}})
+          </span>
         {{/if}}
       </div>
     </ReferralsPage::ReferralLinkStatContainer>

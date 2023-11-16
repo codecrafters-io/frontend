@@ -24,6 +24,8 @@ export class TemporaryUserModel {
   declare hasJoinedReferralProgram: boolean;
   declare referralLinks: ReferralLinkModel[];
   declare lastFreeUsageGrantExpiresAt: Date | null;
+  declare hasActiveFreeUsageGrants: boolean;
+  declare codecraftersProfileUrl: string;
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
 

@@ -8,13 +8,13 @@ interface Signature {
 
   Args: {
     freeUsageGrants: FreeUsageGrantModel[];
-    referralLink: ReferralLinkModel;
+    referralLink: ReferralLinkModel | undefined;
   };
 }
 
-export default class AffiliateReferredUsersContainerComponent extends Component<Signature> {
+export default class ReferralReferredUsersContainerComponent extends Component<Signature> {
   get userActivationsAndFreeUsageGrants() {
-    return this.args.referralLink.activations.map((activation) => {
+    return this.args.referralLink?.activations.map((activation) => {
       const grantForActivation = this.args.freeUsageGrants.find((grant) => grant.referralActivation.id === activation.id);
 
       return {
@@ -27,5 +27,11 @@ export default class AffiliateReferredUsersContainerComponent extends Component<
         },
       };
     });
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralsPage::ReferralReferredUsersContainer': typeof ReferralReferredUsersContainerComponent;
   }
 }

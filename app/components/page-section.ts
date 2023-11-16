@@ -4,8 +4,6 @@ interface Signature {
   Element: HTMLElement;
 
   Args: {
-    helpText: string;
-    icon: string;
     title: string;
   };
 
@@ -14,10 +12,10 @@ interface Signature {
   };
 }
 
-export default class ReferralLinkStatContainerComponent extends Component<Signature> {}
+export default class PageSectionComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ReferralsPage::ReferralLinkStatContainer': typeof ReferralLinkStatContainerComponent;
+    PageSection: typeof PageSectionComponent;
   }
 }

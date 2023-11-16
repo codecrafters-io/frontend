@@ -2,7 +2,11 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
-export default class ReferralLinksContainerComponent extends Component {
+interface Signature {
+  Element: HTMLElement;
+}
+
+export default class ReferralLinksContainerComponent extends Component<Signature> {
   @service authenticator!: AuthenticatorService;
 
   get currentUser() {

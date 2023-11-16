@@ -1,4 +1,3 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div
   class="flex items-center flex-wrap gap-y-2 justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2"
   data-test-affiliate-referred-user-item
@@ -28,7 +27,9 @@
       <span
         class="inline-flex border rounded-full px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
       >{{@activationAndGrant.grant.shortActivatesAt}} - {{@activationAndGrant.grant.shortExpiresAt}}</span>
-      <EmberTooltip @text="This referral grants you free access from {{@activationAndGrant.grant.fullActivatesAt}} to {{@activationWithGrant.grant.fullExpiresAt}}" />
+      <EmberTooltip
+        @text="This referral grants you free access from {{@activationAndGrant.grant.fullActivatesAt}} to {{@activationAndGrant.grant.fullExpiresAt}}"
+      />
     </div>
 
     <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @activationAndGrant.activation.createdAt}}</span>
