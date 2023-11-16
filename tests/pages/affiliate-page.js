@@ -3,7 +3,7 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
   createPayoutModal: {
-    backToAffiliatePageButton: { scope: '[data-test-back-to-referrals-page-button]' },
+    backToAffiliatePageButton: { scope: '[data-test-back-to-affiliate-page-button]' },
     clickOnPayoutMethodCard: clickOnText('[data-test-payout-method-card]'),
     paypalPayoutForm: {
       scope: '[data-test-paypal-payout-form]',
