@@ -11,6 +11,7 @@ export default class UserModel extends Model {
   @attr('date') createdAt;
   @attr('') featureFlags;
   @attr('string') githubUsername;
+  @attr('boolean') hasActiveFreeUsageGrants;
   @attr('boolean') isAdmin;
   @attr('boolean') isAffiliate;
   @attr('boolean') isConceptAuthor;

@@ -7,7 +7,6 @@ export default class FreeUsageGrantModel extends Model {
   @belongsTo('user', { async: false }) user!: TemporaryUserModel;
 
   @attr('date') activatesAt!: Date;
-  @attr('boolean') active!: boolean;
   @attr('date') expiresAt!: Date;
   @attr('string') sourceType!: string;
 }
