@@ -90,7 +90,7 @@
     </Alert>
 
     {{#if this.languageGuide}}
-      <div class="prose has-prism-highlighting" {{highlight-code-blocks contents=this.languageGuide.markdownForBeginner}}>
+      <div class="prose has-prism-highlighting" {{highlight-code-blocks this.languageGuide.markdownForBeginner}}>
         {{markdown-to-html this.languageGuide.markdownForBeginner}}
       </div>
     {{else if @repository.language}}
