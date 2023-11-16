@@ -384,6 +384,13 @@ function routes() {
   this.post('/referral-earnings-payouts');
   this.get('/referral-links');
 
+  this.post('/referral-links', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.url = `https://app.codecrafters.io/r/${attrs.slug}`;
+
+    return schema.referralLinks.create(attrs);
+  });
+
   this.get('/regional-discounts/current', function (schema) {
     const regionalDiscount = schema.regionalDiscounts.find('current-discount-id');
 
