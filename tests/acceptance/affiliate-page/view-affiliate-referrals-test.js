@@ -78,7 +78,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
     });
   });
 
-  test('can view referral stats', async function (assert) {
+  test('can view affiliate referral stats', async function (assert) {
     testScenario(this.server);
 
     const affiliateLink = this.server.create('affiliate-link', {
@@ -158,7 +158,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
     assert.ok(affiliatePage.affiliateReferralStatsPaidUsersText.includes('2'), 'Expect number of paid users to be correct');
     assert.notOk(affiliatePage.getStartedButton.isVisible, 'Get Started button is not visible');
 
-    await percySnapshot('Affiliate Page | Referral Stats');
+    await percySnapshot('Affiliate Page | Affiliate Referral Stats');
   });
 
   test('should show paid users by default', async function (assert) {

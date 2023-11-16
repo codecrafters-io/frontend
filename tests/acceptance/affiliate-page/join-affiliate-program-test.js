@@ -19,10 +19,10 @@ module('Acceptance | affiliate-page | join-affiliate-program', function (hooks) 
     await affiliatePage.visit();
     assert.ok(affiliatePage.getStartedButton.isVisible);
 
-    await percySnapshot('Affiliate Page | Join Referral Program');
+    await percySnapshot('Affiliate Page | Join Affiliate Program');
   });
 
-  test('can join referral program', async function (assert) {
+  test('can join affiliate program', async function (assert) {
     testScenario(this.server);
     signInAsAffiliate(this.owner, this.server);
 
@@ -31,6 +31,6 @@ module('Acceptance | affiliate-page | join-affiliate-program', function (hooks) 
 
     assert.notOk(affiliatePage.getStartedButton.isVisible, 'Get Started button is not visible');
 
-    await percySnapshot('Affiliate Page | Empty Referrals List');
+    await percySnapshot('Affiliate Page | Empty Affiliate Referrals List');
   });
 });
