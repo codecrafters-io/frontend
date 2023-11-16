@@ -271,7 +271,10 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     await referralPage.visit();
     assert.ok(referralPage.referralReferredUsersContainer.text.includes('sarupbanskota'), 'expect user to be found');
     assert.ok(referralPage.referralReferredUsersContainer.text.includes('gufran'), 'expect user to be found');
-    assert.ok(referralPage.referralReferredUsersContainer.durationPill[0].text.includes('17 Nov - 24 Nov'), 'expect duration pill to show correct duration');
+    assert.ok(
+      referralPage.referralReferredUsersContainer.durationPill[0].text.includes('17 Nov - 24 Nov'),
+      'expect duration pill to show correct duration',
+    );
 
     await referralPage.referralReferredUsersContainer.durationPill[0].hover();
 

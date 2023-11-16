@@ -13,6 +13,7 @@ export class TemporaryUserModel {
   declare avatarUrl: string;
   declare badgeAwards: BadgeAwardModel[];
   declare canAccessPaidContent: boolean;
+  declare codecraftersProfileUrl: string;
   declare earlyBirdDiscountEligibilityExpiresAt: Date;
   declare githubProfileUrl: string;
   declare hasActiveFreeUsageGrants: boolean;
