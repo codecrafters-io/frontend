@@ -79,7 +79,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     update.update('definitionFileContentsDiff', '+ updated diff');
 
     await updatePage.clickOnSyncWithGitHubButton();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.ok(updatePage.fileContentsDiff.text.includes('+ updated diff'), 'diff should be updated after syncing with github');
   });

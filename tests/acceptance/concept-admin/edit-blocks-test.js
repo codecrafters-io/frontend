@@ -62,7 +62,7 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     await blocksPage.editableBlocks[1].clickOnSaveButton();
 
     await blocksPage.clickOnPublishChangesButton();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
 

@@ -81,7 +81,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     });
 
     await testerVersionsPage.clickOnSyncWithGitHubButton();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 tester versions');
   });

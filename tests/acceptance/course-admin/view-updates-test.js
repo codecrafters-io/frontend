@@ -107,7 +107,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     });
 
     await updatesPage.clickOnSyncWithGitHubButton();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
   });

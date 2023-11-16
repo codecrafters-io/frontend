@@ -46,12 +46,12 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
 
     await testerVersionsPage.testerVersionListItem[0].activateButton.click();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.notOk(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
 
     await testerVersionsPage.testerVersionListItem[1].activateButton.click();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
     assert.notOk(testerVersionsPage.testerVersionListItem[1].activateButton.isPresent);

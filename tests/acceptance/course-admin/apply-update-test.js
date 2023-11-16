@@ -35,7 +35,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
 
     assert.ok(updatePage.applyUpdateButton.isPresent);
     await updatePage.applyUpdateButton.click();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.notOk(updatePage.applyUpdateButton.isPresent);
   });

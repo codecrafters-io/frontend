@@ -82,7 +82,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(membershipPage.cancelSubscriptionModal.cancelButtonText, 'Cancel Trial');
 
     await membershipPage.cancelSubscriptionModal.clickOnCancelSubscriptionButton();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.notOk(membershipPage.cancelSubscriptionModal.isVisible);
 
@@ -114,7 +114,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert.strictEqual(membershipPage.cancelSubscriptionModal.cancelButtonText, 'Cancel Subscription');
 
     await membershipPage.cancelSubscriptionModal.clickOnCancelSubscriptionButton();
-    await settled();
+    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.notOk(membershipPage.cancelSubscriptionModal.isVisible);
 
