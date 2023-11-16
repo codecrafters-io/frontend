@@ -294,7 +294,9 @@ function routes() {
   this.post('/downvotes');
 
   this.patch('/feature-suggestions/:id');
-  this.get('/free-usage-grants');
+  this.get('/free-usage-grants', function (schema, request) {
+    return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
+  });
 
   this.get('/github-app-installations');
   this.get('/github-app-installations/:id');

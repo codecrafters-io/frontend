@@ -23,7 +23,10 @@ export default class ReferRoute extends BaseRoute {
       // Referral links themselves are loaded in the /users/current payload
     }
 
-    const freeUsageGrants = await this.store.query('free-usage-grant', { include: 'referral_activation' });
+    const freeUsageGrants = await this.store.query('free-usage-grant', {
+      user_id: this.authenticator.currentUser?.id,
+      include: 'referral_activation',
+    });
 
     return { freeUsageGrants };
   }

@@ -4,8 +4,9 @@
       @title="Referrals"
       @icon="cursor-click"
       @helpText="The number of users who've accepted your referral offer."
+      data-test-referral-stats-referrals
     >
-      <div class="flex items-center" data-test-referral-stats-referrals>
+      <div class="flex items-center">
         <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.activations.length}}</span>
 
         {{#if (eq @referralLink.activations.length 0)}}
@@ -18,8 +19,9 @@
       @title="Free weeks left"
       @icon="gift"
       @helpText="The number of weeks of free access you have left from referrals."
+      data-test-referral-stats-free-weeks-left
     >
-      <div class="flex items-center" data-test-referral-stats-free-weeks-left>
+      <div class="flex items-center">
         {{#if (eq @freeUsageGrants.length 0)}}
           <span class="text-gray-300 text-xs ml-1">0 (waiting on first referral)</span>
         {{else if this.currentUser.hasActiveFreeUsageGrants}}
