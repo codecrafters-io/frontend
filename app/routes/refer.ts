@@ -13,19 +13,15 @@ export default class PartnerRoute extends BaseRoute {
   }
 
   async model() {
-    await this.authenticator.authenticate(); // Force loading affiliate links
+    await this.authenticator.authenticate(); // Force loading referral links
 
-    if (!this.authenticator.currentUser) {
-      return;
-    }
-
-    if (this.authenticator.currentUser.hasJoinedReferralProgram) {
+    if (this.authenticator.currentUser?.hasJoinedReferralProgram) {
       await this.store.query('referral-link', {
         user_id: this.authenticator.currentUser.id,
         include: 'activations,activations.customer',
       });
     } else {
-      // Affiliate links themselves are loaded in the /users/current payload
+      // Referral links themselves are loaded in the /users/current payload
     }
   }
 }
