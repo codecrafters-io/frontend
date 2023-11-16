@@ -14,6 +14,7 @@ export class TemporaryUserModel {
   declare canAccessPaidContent: boolean;
   declare earlyBirdDiscountEligibilityExpiresAt: Date;
   declare githubProfileUrl: string;
+  declare hasJoinedReferralProgram: boolean;
   declare id: string;
   declare isConceptAuthor: boolean;
   declare isEligibleForEarlyBirdDiscount: boolean;
