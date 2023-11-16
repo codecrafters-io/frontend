@@ -7,11 +7,11 @@ const onStickyChange = modifier(function onStickyUpdate(element, [callback]: [(i
     callback(isSticky);
   };
 
-  window.addEventListener('scroll', checkSticky);
+  document.querySelector('.course-page-scrollable-area')!.addEventListener('scroll', checkSticky);
   checkSticky(); // Initial check
 
   return () => {
-    window.removeEventListener('scroll', checkSticky);
+    document.querySelector('.course-page-scrollable-area')!.removeEventListener('scroll', checkSticky);
   };
 });
 
