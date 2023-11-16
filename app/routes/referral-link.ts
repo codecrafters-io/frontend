@@ -16,14 +16,18 @@ export default class ReferralLinkRoute extends BaseRoute {
   }
 
   afterModel(model: { referralLink: ReferralLinkModel }) {
+    console.log(model);
+
     if (!model.referralLink) {
       this.transitionTo('not-found');
     }
   }
 
-  async model(params: { referralLinkSlug: string }) {
+  async model(params: { referral_link_slug: string }) {
+    console.log(params);
+
     const referralLinks = await this.store.query('referral-link', {
-      slug: params.referralLinkSlug,
+      slug: params.referral_link_slug,
       include: 'user',
     });
 

@@ -26,6 +26,7 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
 
   @tracked isAccepted: boolean = false;
   @tracked isCreatingReferralActivation: boolean = false;
+  @tracked freeUsageGrantExpiresAt: string = '';
 
   get acceptOfferButtonIsEnabled() {
     return (
@@ -56,10 +57,6 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     }
   }
 
-  get freeUsageGrantExpiresAt() {
-    return format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'dd MMM yyyy');
-  }
-
   @action
   async handleAcceptOfferButtonClick() {
     if (this.currentUserIsAnonymous) {
@@ -68,13 +65,18 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
       this.isCreatingReferralActivation = true;
 
       await this.store
-        .createRecord('affiliate-referral', {
-          affiliateLink: this.args.referralLink,
+        .createRecord('referral-activation', {
+          referralLink: this.args.referralLink,
           customer: this.authenticator.currentUser,
           referrer: this.args.referralLink.user,
         })
         .save();
 
+      const freeUsageGrant = await this.store.query('free-usage-grant', {
+        user_id: this.currentUser?.id,
+      });
+
+      this.freeUsageGrantExpiresAt = format(freeUsageGrant.firstObject?.expiresAt, 'dd MMM yyyy');
       this.isAccepted = true;
     }
   }
