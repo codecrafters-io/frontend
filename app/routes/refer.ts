@@ -4,7 +4,7 @@ import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
 import Store from '@ember-data/store';
 
-export default class PartnerRoute extends BaseRoute {
+export default class ReferRoute extends BaseRoute {
   @service authenticator!: AuthenticatorService;
   @service store!: Store;
 
