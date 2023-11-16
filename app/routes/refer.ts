@@ -23,6 +23,7 @@ export default class ReferRoute extends BaseRoute {
 
       const freeUsageGrants = await this.store.query('free-usage-grant', {
         user_id: this.authenticator.currentUser.id,
+        include: 'referral_activation',
       });
 
       return { freeUsageGrants };
