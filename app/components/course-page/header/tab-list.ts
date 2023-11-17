@@ -1,11 +1,9 @@
 import Component from '@glimmer/component';
 import RouterService from '@ember/routing/router-service';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
-import { action } from '@ember/object';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { inject as service } from '@ember/service';
 import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
-import { tracked } from '@glimmer/tracking';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -30,7 +28,6 @@ type Tab = {
 
 export default class TabListComponent extends Component<Signature> {
   @service declare router: RouterService;
-  @tracked isSticky = false;
 
   get allTabs(): Tab[] {
     return {
@@ -131,11 +128,6 @@ export default class TabListComponent extends Component<Signature> {
     }
 
     return tabs;
-  }
-
-  @action
-  handleStickyChange(isSticky: boolean) {
-    this.isSticky = isSticky;
   }
 
   tabIsAvailable(tab: Tab) {

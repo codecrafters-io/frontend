@@ -1,5 +1,14 @@
-<div data-test-desktop-header ...attributes>
-  <div>
+<div data-test-course-page-header ...attributes>
+  <CoursePage::Header::NavigationControls
+    @course={{@course}}
+    @stepList={{@stepList}}
+    @currentStep={{@currentStep}}
+    @activeStep={{@activeStep}}
+    @nextStep={{@nextStep}}
+    @onMobileSidebarButtonClick={{@onMobileSidebarButtonClick}}
+  />
+
+  <div class="mt-6">
     <div class="flex flex-col items-start">
       <div class="flex items-center flex-wrap gap-x-3">
         <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
