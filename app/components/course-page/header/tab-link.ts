@@ -23,6 +23,6 @@ export default class InstructionsCardComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::HeaderTabLink': typeof InstructionsCardComponent;
+    'CoursePage::Header::TabLink': typeof InstructionsCardComponent;
   }
 }

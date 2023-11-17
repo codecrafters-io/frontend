@@ -37,12 +37,22 @@
     </div>
   {{/if}}
 
-  <div class="course-page-scrollable-area flex flex-col max-h-screen overflow-y-auto flex-grow relative" data-test-course-page-scrollable-area>
+  <div class="flex flex-col max-h-screen overflow-y-auto flex-grow relative" id="course-page-scrollable-area">
     {{! For collapse/expand on desktop }}
     <CoursePage::ExpandSidebarButton
       class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
       {{on "click" this.handleExpandSidebarButtonClick}}
       data-test-expand-sidebar-button
+    />
+
+    <CoursePage::Header::NavigationControls
+      @course={{@model.course}}
+      @stepList={{this.coursePageState.stepList}}
+      @currentStep={{this.coursePageState.currentStep}}
+      @activeStep={{this.coursePageState.activeStep}}
+      @nextStep={{this.coursePageState.nextStep}}
+      @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
+      class="px-3 md:px-6 lg:pl-10 pt-3 sm:pt-6 bg-gray-50"
     />
 
     <CoursePage::DesktopHeader
@@ -52,15 +62,24 @@
       @activeStep={{this.coursePageState.activeStep}}
       @nextStep={{this.coursePageState.nextStep}}
       @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
-      class="px-3 md:px-6 lg:pl-10 pt-3 sm:pt-6"
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 py-6"
+    />
+
+    <CoursePage::Header::TabList
+      @course={{@model.course}}
+      @stepList={{this.coursePageState.stepList}}
+      @currentStep={{this.coursePageState.currentStep}}
+      @activeStep={{this.coursePageState.activeStep}}
+      @nextStep={{this.coursePageState.nextStep}}
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50"
     />
 
     <div class="flex flex-grow bg-white">
-      <div class="px-3 md:px-6 lg:px-10 flex-grow min-w-0">
+      <div class="px-3 md:px-6 lg:px-10 flex-grow flex-shrink min-w-0">
         {{outlet}}
       </div>
 
-      <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block relative group">
+      <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block group relative">
         {{#if this.leaderboardIsExpanded}}
           <CoursePage::CollapseLeaderboardButton
             class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
