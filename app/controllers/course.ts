@@ -54,7 +54,7 @@ export default class CourseController extends Controller {
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion() {
-    if (!this.currentUser || (this.currentUser && this.currentUser.isTeamMember)) {
+    if (this.authenticator.isAnonymous || (this.currentUser && this.currentUser.isTeamMember)) {
       return null;
     }
 
