@@ -24,7 +24,7 @@ type Tab = {
   name: string;
   slug: string;
   route: string;
-  models: unknown[];
+  models: string[];
   isActive: boolean;
 };
 

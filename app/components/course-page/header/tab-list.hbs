@@ -1,13 +1,12 @@
 <div
-  class="border-b sticky top-0 bg-gray-50 z-20 {{if this.isSticky 'shadow pt-1'}}"
+  class="border-b sticky top-0 bg-gray-50 z-20 {{if this.isSticky 'shadow-sm pt-1 border-gray-300' 'pt-0'}} transition-all"
   data-test-tab-list
   ...attributes
   {{on-sticky-change this.handleStickyChange}}
 >
-  <div class="flex items-center overflow-x-scroll">
+  <div class="flex items-center overflow-x-scroll -mb-px">
     {{#each this.availableTabs key="slug" as |tab|}}
-      {{! @glint-expect-error not typesafe }}
-      <CoursePage::HeaderTabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+      <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
     {{/each}}
   </div>
 </div>

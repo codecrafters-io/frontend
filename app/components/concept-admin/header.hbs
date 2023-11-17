@@ -27,7 +27,7 @@
 
     <div class="flex items-center">
       {{#each this.tabs key="slug" as |tab|}}
-        <CoursePage::HeaderTabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+        <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
       {{/each}}
     </div>
   </div>
