@@ -16,10 +16,10 @@ type Signature = {
   };
 };
 
-export default class HeaderComponent extends Component<Signature> {}
+export default class MainSectionComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::MainSection': typeof HeaderComponent;
+    'CoursePage::Header::MainSection': typeof MainSectionComponent;
   }
 }
