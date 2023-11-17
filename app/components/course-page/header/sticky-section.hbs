@@ -2,7 +2,7 @@
 </div>
 
 <div
-  class="flex items-center justify-between border-b sticky top-0 z-20 {{if this.isSticky 'shadow-sm pt-1 border-gray-300' 'pt-0'}} transition-all"
+  class="flex items-center justify-between border-b sticky top-0 z-20 {{if this.isSticky 'shadow-sm pt-1 border-gray-300' 'pt-0'}} transition-all gap-x-3"
   ...attributes
 >
   <CoursePage::Header::TabList
@@ -15,8 +15,6 @@
   />
 
   {{#if this.isSticky}}
-    <div>
-      Is Sticky
-    </div>
+    <CoursePage::StepStatusPill @step={{@currentStep}} class="flex-shrink-0" />
   {{/if}}
 </div>
