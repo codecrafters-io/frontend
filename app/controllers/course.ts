@@ -33,9 +33,9 @@ export default class CourseController extends Controller {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   // query params
-  @tracked action: string | null = null;
-  @tracked repo: string | null = null;
-  @tracked track: string | null = null;
+  @tracked action: string | undefined = undefined;
+  @tracked repo: string | undefined = undefined;
+  @tracked track: string | undefined = undefined;
 
   @tracked polledRepository: TemporaryRepositoryModel | null = null;
   @tracked configureGithubIntegrationModalIsOpen = false;
