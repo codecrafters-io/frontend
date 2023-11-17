@@ -68,6 +68,15 @@
       class="px-3 md:px-6 lg:pl-10 bg-gray-50"
     />
 
+    <CoursePage::StickyHeader
+      @course={{@model.course}}
+      @stepList={{this.coursePageState.stepListAsStepList}}
+      @currentStep={{this.coursePageState.currentStep}}
+      @activeStep={{this.coursePageState.activeStep}}
+      @nextStep={{this.coursePageState.nextStep}}
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50"
+    />
+
     <div class="flex flex-grow bg-white">
       <div class="px-3 md:px-6 lg:px-10 flex-grow flex-shrink min-w-0">
         {{outlet}}

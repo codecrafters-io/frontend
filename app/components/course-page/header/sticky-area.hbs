@@ -1,4 +1,4 @@
-<div class="border-b z-20 sticky top-0 {{if this.isSticky 'shadow-sm border-gray-300'}}" data-test-header-sticky-area ...attributes>
+<div class="border-b z-20 {{if this.isSticky 'shadow-sm border-gray-300'}}" data-test-header-sticky-area ...attributes>
   <AnimatedContainer>
     {{#if (not this.isSticky)}}
       <div class="flex flex-col gap-y-3 py-6 transition-all">
@@ -64,7 +64,4 @@
     @activeStep={{@activeStep}}
     @nextStep={{@nextStep}}
   />
-</div>
-
-<div {{in-viewport-did-change this.handleScrollMarkerInViewportDidChange}}>
 </div>

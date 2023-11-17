@@ -1,7 +1,5 @@
-<div class="transition-all" data-test-tab-list ...attributes>
-  <div class="flex items-center overflow-x-scroll -mb-px">
-    {{#each this.availableTabs key="slug" as |tab|}}
-      <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
-    {{/each}}
-  </div>
+<div class="flex items-center overflow-x-scroll -mb-px" data-test-tab-list ...attributes>
+  {{#each this.availableTabs key="slug" as |tab|}}
+    <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+  {{/each}}
 </div>
