@@ -28,7 +28,7 @@ type Tab = {
   isActive: boolean;
 };
 
-export default class DesktopHeaderComponent extends Component<Signature> {
+export default class TabListComponent extends Component<Signature> {
   @service declare router: RouterService;
   @tracked isSticky = false;
 
@@ -153,5 +153,11 @@ export default class DesktopHeaderComponent extends Component<Signature> {
     }
 
     return true;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::Header::TabList': typeof TabListComponent;
   }
 }

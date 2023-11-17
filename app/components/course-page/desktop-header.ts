@@ -17,3 +17,9 @@ type Signature = {
 };
 
 export default class DesktopHeaderComponent extends Component<Signature> {}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::DesktopHeader': typeof DesktopHeaderComponent;
+  }
+}
