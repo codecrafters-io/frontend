@@ -59,17 +59,7 @@
       class="px-3 md:px-6 lg:pl-10 pt-3 sm:pt-6 bg-gray-50"
     />
 
-    <CoursePage::DesktopHeader
-      @course={{@model.course}}
-      @stepList={{this.coursePageState.stepListAsStepList}}
-      @currentStep={{this.coursePageState.currentStep}}
-      @activeStep={{this.coursePageState.activeStep}}
-      @nextStep={{this.coursePageState.nextStep}}
-      @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
-      class="px-3 md:px-6 lg:pl-10 bg-gray-50 py-6"
-    />
-
-    <CoursePage::Header::TabList
+    <CoursePage::Header::StickyArea
       @course={{@model.course}}
       @stepList={{this.coursePageState.stepListAsStepList}}
       @currentStep={{this.coursePageState.currentStep}}

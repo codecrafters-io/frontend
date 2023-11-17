@@ -8,8 +8,12 @@ type Signature = {
 
 const onStickyChange = modifier<Signature>(function onStickyUpdate(element, [scrollParentSelector, callback]: [string, (isSticky: boolean) => void]) {
   const checkSticky = () => {
-    const isSticky = window.getComputedStyle(element).position === 'sticky' && element.getBoundingClientRect().top <= 0;
-    callback(isSticky);
+    const scrollParentElement = document.querySelector(scrollParentSelector);
+
+    if (scrollParentElement) {
+      const isSticky = window.getComputedStyle(element).position === 'sticky' && element.getBoundingClientRect().top <= 0;
+      callback(isSticky);
+    }
   };
 
   const scrollParentElement = document.querySelector(scrollParentSelector);

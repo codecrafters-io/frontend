@@ -2,6 +2,8 @@ import Component from '@glimmer/component';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -11,15 +13,21 @@ type Signature = {
     course: TemporaryCourseModel;
     currentStep: Step;
     nextStep: Step | null;
-    onMobileSidebarButtonClick: () => void;
     stepList: StepList;
   };
 };
 
-export default class DesktopHeaderComponent extends Component<Signature> {}
+export default class StickyAreaComponent extends Component<Signature> {
+  @tracked isSticky = false;
+
+  @action
+  handleStickyChange(isSticky: boolean) {
+    this.isSticky = isSticky;
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::DesktopHeader': typeof DesktopHeaderComponent;
+    'CoursePage::Header::StickyArea': typeof StickyAreaComponent;
   }
 }
