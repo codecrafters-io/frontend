@@ -1,12 +1,5 @@
-<div
-  class="border-b sticky top-0 z-20 {{if this.isSticky 'shadow-sm pt-1 border-gray-300' 'pt-0'}} transition-all"
-  data-test-tab-list
-  ...attributes
-  {{on-sticky-change "#course-page-scrollable-area" this.handleStickyChange}}
->
-  <div class="flex items-center overflow-x-scroll -mb-px">
-    {{#each this.availableTabs key="slug" as |tab|}}
-      <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
-    {{/each}}
-  </div>
+<div class="flex items-center overflow-x-scroll" ...attributes>
+  {{#each this.availableTabs key="slug" as |tab|}}
+    <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+  {{/each}}
 </div>

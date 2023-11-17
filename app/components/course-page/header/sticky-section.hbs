@@ -1,0 +1,22 @@
+<div {{in-viewport-did-change this.handleScrollMarkerInViewportDidChange}}>
+</div>
+
+<div
+  class="flex items-center justify-between border-b sticky top-0 z-20 {{if this.isSticky 'shadow-sm pt-1 border-gray-300' 'pt-0'}} transition-all"
+  ...attributes
+>
+  <CoursePage::Header::TabList
+    @course={{@course}}
+    @stepList={{@stepList}}
+    @currentStep={{@currentStep}}
+    @activeStep={{@activeStep}}
+    @nextStep={{@nextStep}}
+    class="-mb-px"
+  />
+
+  {{#if this.isSticky}}
+    <div>
+      Is Sticky
+    </div>
+  {{/if}}
+</div>

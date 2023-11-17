@@ -49,17 +49,7 @@
       data-test-expand-sidebar-button
     />
 
-    <CoursePage::Header::NavigationControls
-      @course={{@model.course}}
-      @stepList={{this.coursePageState.stepListAsStepList}}
-      @currentStep={{this.coursePageState.currentStep}}
-      @activeStep={{this.coursePageState.activeStep}}
-      @nextStep={{this.coursePageState.nextStep}}
-      @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
-      class="px-3 md:px-6 lg:pl-10 pt-3 sm:pt-6 bg-gray-50"
-    />
-
-    <CoursePage::DesktopHeader
+    <CoursePage::Header::MainSection
       @course={{@model.course}}
       @stepList={{this.coursePageState.stepListAsStepList}}
       @currentStep={{this.coursePageState.currentStep}}
@@ -69,7 +59,7 @@
       class="px-3 md:px-6 lg:pl-10 bg-gray-50 py-6"
     />
 
-    <CoursePage::Header::TabList
+    <CoursePage::Header::StickySection
       @course={{@model.course}}
       @stepList={{this.coursePageState.stepListAsStepList}}
       @currentStep={{this.coursePageState.currentStep}}
@@ -126,7 +116,7 @@
     >
       {{! @glint-expect-error: not ts-ified yet }}
       <CoursePage::CollapseSidebarButton
-        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5"
+        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5 z-30"
         {{on "click" this.handleCollapseSidebarButtonClick}}
         data-test-collapse-sidebar-button
       />
