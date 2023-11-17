@@ -75,10 +75,8 @@
     />
 
     <div class="flex flex-grow bg-white">
-      <div class="flex flex-col items-stretch flex-grow flex-shrink">
-        <div class="px-3 md:px-6 lg:px-10 flex-grow min-w-0">
-          {{outlet}}
-        </div>
+      <div class="px-3 md:px-6 lg:px-10 flex-grow flex-shrink min-w-0">
+        {{outlet}}
       </div>
 
       <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block group">
