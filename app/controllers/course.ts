@@ -12,12 +12,14 @@ import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 
+export type ModelType = {
+  course: TemporaryCourseModel;
+  activeRepository: TemporaryRepositoryModel;
+  repositories: TemporaryRepositoryModel[];
+};
+
 export default class CourseController extends Controller {
-  declare model: {
-    course: TemporaryCourseModel;
-    activeRepository: TemporaryRepositoryModel;
-    repositories: TemporaryRepositoryModel[];
-  };
+  declare model: ModelType;
 
   repositoryPoller: RepositoryPoller | null = null;
 
