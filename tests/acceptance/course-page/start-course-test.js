@@ -116,7 +116,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/stages/1?repo=1', 'current URL is course page URL');
 
     await percySnapshot('Start Course - Waiting For Second Push', {
-      percyCss: '[data-test-course-page-scrollable-area] { overflow-y: visible !important; }',
+      percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',
     });
 
     await coursePage.repositoryDropdown.click();

@@ -1,17 +1,22 @@
-// app/modifiers/on-sticky-update.js
 import { modifier } from 'ember-modifier';
 
-const onStickyChange = modifier(function onStickyUpdate(element, [callback]: [(isSticky: boolean) => void]) {
+type Signature = {
+  Args: {
+    Positional: [selector: string, callback: (isSticky: boolean) => void];
+  };
+};
+
+const onStickyChange = modifier<Signature>(function onStickyUpdate(element, [selector, callback]: [string, (isSticky: boolean) => void]) {
   const checkSticky = () => {
     const isSticky = window.getComputedStyle(element).position === 'sticky' && element.getBoundingClientRect().top <= 0;
     callback(isSticky);
   };
 
-  document.querySelector('.course-page-scrollable-area')!.addEventListener('scroll', checkSticky);
+  document.querySelector(selector)!.addEventListener('scroll', checkSticky);
   checkSticky(); // Initial check
 
   return () => {
-    document.querySelector('.course-page-scrollable-area')!.removeEventListener('scroll', checkSticky);
+    document.querySelector(selector)!.removeEventListener('scroll', checkSticky);
   };
 });
 

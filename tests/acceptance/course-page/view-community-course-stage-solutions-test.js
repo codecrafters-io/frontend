@@ -224,17 +224,17 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3);
 
-    await scrollTo('[data-test-course-page-scrollable-area]', 0, 99999);
+    await scrollTo('#course-page-scrollable-area', 0, 99999);
     await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 5);
 
-    await scrollTo('[data-test-course-page-scrollable-area]', 0, 99999);
+    await scrollTo('#course-page-scrollable-area', 0, 99999);
     await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7);
 
-    await scrollTo('[data-test-course-page-scrollable-area]', 0, 99999);
+    await scrollTo('#course-page-scrollable-area', 0, 99999);
     await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7); // No more to load
