@@ -2,21 +2,29 @@ import { modifier } from 'ember-modifier';
 
 type Signature = {
   Args: {
-    Positional: [selector: string, callback: (isSticky: boolean) => void];
+    Positional: [scrollParentSelector: string, callback: (isSticky: boolean) => void];
   };
 };
 
-const onStickyChange = modifier<Signature>(function onStickyUpdate(element, [selector, callback]: [string, (isSticky: boolean) => void]) {
+const onStickyChange = modifier<Signature>(function onStickyUpdate(element, [scrollParentSelector, callback]: [string, (isSticky: boolean) => void]) {
   const checkSticky = () => {
     const isSticky = window.getComputedStyle(element).position === 'sticky' && element.getBoundingClientRect().top <= 0;
     callback(isSticky);
   };
 
-  document.querySelector(selector)!.addEventListener('scroll', checkSticky);
-  checkSticky(); // Initial check
+  const scrollParentElement = document.querySelector(scrollParentSelector);
+
+  if (scrollParentElement) {
+    scrollParentElement.addEventListener('scroll', checkSticky);
+    checkSticky(); // Initial check
+  }
 
   return () => {
-    document.querySelector(selector)!.removeEventListener('scroll', checkSticky);
+    const scrollParentElement = document.querySelector(scrollParentSelector);
+
+    if (scrollParentElement) {
+      scrollParentElement.removeEventListener('scroll', checkSticky);
+    }
   };
 });
 
