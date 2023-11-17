@@ -30,3 +30,9 @@ export default class NavigationControlsComponent extends Component<Signature> {
     return this.authenticator.currentUser;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::Header::NavigationControls': typeof NavigationControlsComponent;
+  }
+}
