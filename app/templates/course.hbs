@@ -44,7 +44,7 @@
     {{! For collapse/expand on desktop }}
     {{! @glint-expect-error: not ts-ified yet }}
     <CoursePage::ExpandSidebarButton
-      class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
+      class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0 z-20"
       {{on "click" this.handleExpandSidebarButtonClick}}
       data-test-expand-sidebar-button
     />
