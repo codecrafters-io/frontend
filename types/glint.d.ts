@@ -6,7 +6,7 @@ import type { ComponentLike } from '@glint/template';
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends RenderModifiersRegistry {
     add: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
-    and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
+    and: HelperLike<{ Args: { Positional: unknown[] }; Return: boolean }>;
     AnimatedContainer: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     AnimatedOrphans: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     'animated-value': ComponentLike<{
@@ -39,7 +39,7 @@ declare module '@glint/environment-ember-loose/registry' {
     'html-safe': HelperLike<{ Return: string; Args: { Positional: [string | undefined] } }>;
     mult: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     'on-click-outside': ModifierLike<{ Args: { Positional: [(event: MouseEvent) => void] } }>;
-    'in-viewport': ModifierLike<{ Args: { Named: { onEnter: () => void } } }>;
+    'in-viewport': ModifierLike<{ Args: { Named: { onEnter?: () => void; onExit?: () => void; scrollableArea?: string } } }>;
     noop: HelperLike<{ Return: () => void }>;
     'not-eq': HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     not: HelperLike<{ Args: { Positional: [unknown] }; Return: boolean }>;

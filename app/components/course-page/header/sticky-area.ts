@@ -4,6 +4,7 @@ import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { fade } from 'ember-animated/motions/opacity';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -18,11 +19,16 @@ type Signature = {
 };
 
 export default class StickyAreaComponent extends Component<Signature> {
-  @tracked isSticky = false;
+  transition = fade;
+  @tracked scrollMarkerIsInViewport = true;
+
+  get isSticky() {
+    return !this.scrollMarkerIsInViewport;
+  }
 
   @action
-  handleStickyChange(isSticky: boolean) {
-    this.isSticky = isSticky;
+  handleScrollMarkerInViewportDidChange(value: boolean) {
+    this.scrollMarkerIsInViewport = value;
   }
 }
 
