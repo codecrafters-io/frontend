@@ -8,6 +8,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | publish-to-github-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -109,11 +110,13 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     window.confirm = () => true;
 
+    await settled();
     await animationsSettled();
 
     await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
     await coursePage.configureGithubIntegrationModal.clickOnDisconnectRepositoryButton();
 
+    await settled();
     await animationsSettled();
 
     await coursePage.configureGithubIntegrationModal.clickOnPublishButton();
