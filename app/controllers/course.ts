@@ -11,6 +11,7 @@ import type CoursePageStateService from 'codecrafters-frontend/services/course-p
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import type VisibilityService from 'codecrafters-frontend/services/visibility';
 
 export type ModelType = {
   course: TemporaryCourseModel;
@@ -29,7 +30,7 @@ export default class CourseController extends Controller {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
   @service declare router: RouterService;
-  @service declare visibility: unknown;
+  @service declare visibility: VisibilityService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   // query params
