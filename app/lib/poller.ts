@@ -81,7 +81,7 @@ export default class Poller {
           this.forcePoll();
         },
         onDisconnect: () => {
-          console.warn('ActionCable disconnected, polling will be paused');
+          console.log('ActionCable disconnected, polling will be paused');
           this.forcePoll();
         },
       });
