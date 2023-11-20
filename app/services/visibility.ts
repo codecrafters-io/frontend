@@ -1,9 +1,10 @@
+import type Store from '@ember-data/store';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class VisibilityService extends Service {
-  @service store;
+  @service declare store: Store;
   @tracked isVisible;
 
   constructor() {

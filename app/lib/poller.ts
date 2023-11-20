@@ -1,17 +1,36 @@
+import type Store from '@ember-data/store';
 import { run } from '@ember/runloop';
 import config from 'codecrafters-frontend/config/environment';
+import type VisibilityService from 'codecrafters-frontend/services/visibility';
+
+declare global {
+  interface Window {
+    pollerInstances: Poller[];
+  }
+}
 
 if (config.environment === 'test') {
   window.pollerInstances = [];
 }
 
 export default class Poller {
-  isActive;
-  model;
-  scheduledPollTimeoutId;
-  store;
+  intervalMilliseconds: number;
+  isActive: boolean;
+  model: unknown;
+  onPoll?: (pollResult: unknown) => void;
+  scheduledPollTimeoutId?: number;
+  store: Store;
+  visibilityService: VisibilityService;
 
-  constructor({ store, visibilityService, intervalMilliseconds }) {
+  constructor({
+    store,
+    visibilityService,
+    intervalMilliseconds,
+  }: {
+    store: Store;
+    visibilityService: VisibilityService;
+    intervalMilliseconds: number;
+  }) {
     this.store = store;
     this.visibilityService = visibilityService;
     this.intervalMilliseconds = intervalMilliseconds;
@@ -29,7 +48,7 @@ export default class Poller {
   }
 
   async doPoll() {
-    console.log('doPoll not implemented');
+    throw new Error('doPoll must be implemented by subclasses');
   }
 
   async forcePoll() {
@@ -46,8 +65,8 @@ export default class Poller {
 
     if (this.isActive && !this.isPaused) {
       await run(async () => {
-        let pollResult = await this.doPoll();
-        this.onPoll(pollResult);
+        const pollResult = await this.doPoll();
+        this.onPoll!(pollResult);
       });
     }
 
@@ -62,10 +81,10 @@ export default class Poller {
     }, this.intervalMilliseconds);
   }
 
-  start(model, onPoll) {
+  start(model: unknown, onPoll: (pollResult: unknown) => void) {
     this.model = model;
     this.isActive = true;
-    this.onPoll = onPoll || (() => {});
+    this.onPoll = onPoll || ((_) => {});
     this.scheduleDelayedPoll();
   }
 
