@@ -156,7 +156,7 @@ export default class CourseController extends Controller {
         actionCableConsumerService: this.actionCableConsumer,
       });
 
-      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'CourseLeaderboardChannel');
+      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'RepositoryChannel');
       this.polledRepository = this.model.activeRepository;
     }
   }
