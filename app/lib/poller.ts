@@ -21,6 +21,7 @@ export default class Poller {
   scheduledPollTimeoutId?: number;
   store: Store;
   visibilityService: VisibilityService;
+  visibilityServiceCallbackId?: string;
 
   constructor({
     store,
@@ -56,6 +57,12 @@ export default class Poller {
     await this.pollFn();
   }
 
+  async onVisibilityChange(isVisible: boolean) {
+    if (isVisible) {
+      this.forcePoll();
+    }
+  }
+
   async pollFn() {
     if (config.environment === 'test' && this.store.isDestroyed) {
       window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
@@ -86,10 +93,15 @@ export default class Poller {
     this.isActive = true;
     this.onPoll = onPoll || ((_) => {});
     this.scheduleDelayedPoll();
+    this.visibilityServiceCallbackId = this.visibilityService.registerCallback(this.onVisibilityChange.bind(this));
   }
 
   stop() {
     this.isActive = false;
     clearTimeout(this.scheduledPollTimeoutId);
+
+    if (this.visibilityServiceCallbackId) {
+      this.visibilityService.deregisterCallback(this.visibilityServiceCallbackId);
+    }
   }
 }
