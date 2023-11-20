@@ -12,6 +12,7 @@ import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
+import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -36,6 +37,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @tracked polledCourse?: TemporaryCourseModel;
   @tracked team?: TeamModel;
 
+  @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare visibility: VisibilityService;
@@ -182,12 +184,12 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     this.leaderboardPoller = new LeaderboardPoller({
       store: this.store,
       visibilityService: this.visibility,
-      intervalMilliseconds: 60000,
+      actionCableConsumerService: this.actionCableConsumer,
     });
 
     this.leaderboardPoller.team = this.team;
     // @ts-expect-error poll handler not typed
-    this.leaderboardPoller.start(this.args.course, this.handlePoll);
+    this.leaderboardPoller.start(this.args.course, this.handlePoll, 'CourseLeaderboardChannel');
     this.polledCourse = this.args.course;
   }
 

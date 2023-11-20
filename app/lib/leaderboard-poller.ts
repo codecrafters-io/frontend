@@ -3,7 +3,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type TeamModel from 'codecrafters-frontend/models/team';
 
 export default class LeaderboardPoller extends Poller {
-  team: TeamModel | null = null;
+  team?: TeamModel;
 
   async doPoll() {
     if (this.team) {

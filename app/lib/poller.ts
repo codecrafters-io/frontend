@@ -1,6 +1,7 @@
 import type Store from '@ember-data/store';
 import { run } from '@ember/runloop';
 import config from 'codecrafters-frontend/config/environment';
+import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
 
 declare global {
@@ -14,11 +15,11 @@ if (config.environment === 'test') {
 }
 
 export default class Poller {
-  intervalMilliseconds: number;
+  actionCableConsumerService: ActionCableConsumerService;
+  actionCableSubscription?: { unsubscribe: () => void };
   isActive: boolean;
   model: unknown;
   onPoll?: (pollResult: unknown) => void;
-  scheduledPollTimeoutId?: number;
   store: Store;
   visibilityService: VisibilityService;
   visibilityServiceCallbackId?: string;
@@ -26,15 +27,15 @@ export default class Poller {
   constructor({
     store,
     visibilityService,
-    intervalMilliseconds,
+    actionCableConsumerService,
   }: {
     store: Store;
     visibilityService: VisibilityService;
-    intervalMilliseconds: number;
+    actionCableConsumerService: ActionCableConsumerService;
   }) {
+    this.actionCableConsumerService = actionCableConsumerService;
     this.store = store;
     this.visibilityService = visibilityService;
-    this.intervalMilliseconds = intervalMilliseconds;
 
     this.isActive = false;
     this.model = null;
@@ -44,17 +45,17 @@ export default class Poller {
     }
   }
 
-  get isPaused() {
-    return this.visibilityService.isHidden;
-  }
-
   async doPoll(): Promise<unknown> {
     throw new Error('doPoll must be implemented by subclasses');
   }
 
   async forcePoll() {
-    clearTimeout(this.scheduledPollTimeoutId);
-    await this.pollFn();
+    if (this.isActive) {
+      await run(async () => {
+        const pollResult = await this.doPoll();
+        this.onPoll!(pollResult);
+      });
+    }
   }
 
   async onVisibilityChange(isVisible: boolean) {
@@ -63,45 +64,39 @@ export default class Poller {
     }
   }
 
-  async pollFn() {
-    if (config.environment === 'test' && this.store.isDestroyed) {
-      window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
-
-      return;
-    }
-
-    if (this.isActive && !this.isPaused) {
-      await run(async () => {
-        const pollResult = await this.doPoll();
-        this.onPoll!(pollResult);
-      });
-    }
-
-    if (this.isActive) {
-      this.scheduleDelayedPoll();
-    }
-  }
-
-  scheduleDelayedPoll() {
-    this.scheduledPollTimeoutId = setTimeout(() => {
-      this.pollFn();
-    }, this.intervalMilliseconds);
-  }
-
-  start(model: unknown, onPoll: (pollResult: unknown) => void) {
+  start(model: unknown, onPoll: (pollResult: unknown) => void, actionCableChannelName?: string, actionCableChannelArgs?: Record<string, string>) {
     this.model = model;
     this.isActive = true;
     this.onPoll = onPoll || ((_) => {});
-    this.scheduleDelayedPoll();
     this.visibilityServiceCallbackId = this.visibilityService.registerCallback(this.onVisibilityChange.bind(this));
+
+    if (actionCableChannelName) {
+      this.actionCableSubscription = this.actionCableConsumerService.subscribe(actionCableChannelName, actionCableChannelArgs, {
+        onConnect: () => {
+          console.log('ActionCable connected');
+          this.forcePoll();
+        },
+        onData: () => {
+          console.log('ActionCable received data, polling will be forced');
+          this.forcePoll();
+        },
+        onDisconnect: () => {
+          console.warn('ActionCable disconnected, polling will be paused');
+          this.forcePoll();
+        },
+      });
+    }
   }
 
   stop() {
     this.isActive = false;
-    clearTimeout(this.scheduledPollTimeoutId);
 
     if (this.visibilityServiceCallbackId) {
       this.visibilityService.deregisterCallback(this.visibilityServiceCallbackId);
+    }
+
+    if (this.actionCableSubscription) {
+      this.actionCableSubscription.unsubscribe();
     }
   }
 }
