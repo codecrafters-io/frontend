@@ -21,7 +21,7 @@ interface Signature {
     course: TemporaryCourseModel;
     isCollapsed: boolean;
     repositories: TemporaryRepositoryModel[];
-    shouldShowLanguageIconsWithoutHover: boolean;
+    shouldShowLanguageIconsWithoutHover?: boolean;
   };
 }
 
@@ -197,5 +197,11 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     }
 
     this.polledCourse = undefined;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    CourseLeaderboard: typeof CourseLeaderboardComponent;
   }
 }
