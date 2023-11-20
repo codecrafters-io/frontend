@@ -11,6 +11,8 @@ import type CoursePageStateService from 'codecrafters-frontend/services/course-p
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import type VisibilityService from 'codecrafters-frontend/services/visibility';
+import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 
 export type ModelType = {
   course: TemporaryCourseModel;
@@ -25,11 +27,12 @@ export default class CourseController extends Controller {
 
   queryParams = ['action', 'track', 'repo'];
 
+  @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
   @service declare router: RouterService;
-  @service declare visibility: unknown;
+  @service declare visibility: VisibilityService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   // query params
@@ -147,8 +150,13 @@ export default class CourseController extends Controller {
     this.stopRepositoryPoller();
 
     if (this.model.activeRepository) {
-      this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility, intervalMilliseconds: 2000 });
-      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll);
+      this.repositoryPoller = new RepositoryPoller({
+        store: this.store,
+        visibilityService: this.visibility,
+        actionCableConsumerService: this.actionCableConsumer,
+      });
+
+      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'RepositoryChannel');
       this.polledRepository = this.model.activeRepository;
     }
   }
