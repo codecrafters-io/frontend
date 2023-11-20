@@ -42,7 +42,6 @@ export default class VisibilityService extends Service {
   registerCallback(callback: (isVisible: boolean) => void) {
     const callbackId = Math.random().toString();
     this.callbacks[callbackId] = callback;
-    callback(this.isVisible);
 
     return callbackId;
   }
