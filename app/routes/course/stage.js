@@ -10,7 +10,7 @@ export default class CourseStageRoute extends BaseRoute {
     super(...arguments);
 
     this.router.on('routeDidChange', () => {
-      const element = document.querySelector('.course-page-scrollable-area');
+      const element = document.querySelector('#course-page-scrollable-area');
       scrollToTop(element);
     });
   }

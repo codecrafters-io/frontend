@@ -5,25 +5,40 @@ import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import config from 'codecrafters-frontend/config/environment';
+import type { TemporaryCourseModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type Store from '@ember-data/store';
+import type RouterService from '@ember/routing/router-service';
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+
+export type ModelType = {
+  course: TemporaryCourseModel;
+  activeRepository: TemporaryRepositoryModel;
+  repositories: TemporaryRepositoryModel[];
+};
 
 export default class CourseController extends Controller {
+  declare model: ModelType;
+
+  repositoryPoller: RepositoryPoller | null = null;
+
   queryParams = ['action', 'track', 'repo'];
 
-  @service authenticator;
-  @service coursePageState;
-  @service store;
-  @service router;
-  @service visibility;
-  @service analyticsEventTracker;
+  @service declare authenticator: AuthenticatorService;
+  @service declare coursePageState: CoursePageStateService;
+  @service declare store: Store;
+  @service declare router: RouterService;
+  @service declare visibility: unknown;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   // query params
-  @tracked action;
-  @tracked repo; // repository id
-  @tracked track;
+  @tracked action: string | undefined = undefined;
+  @tracked repo: string | undefined = undefined;
+  @tracked track: string | undefined = undefined;
 
-  @tracked polledRepository;
+  @tracked polledRepository: TemporaryRepositoryModel | null = null;
   @tracked configureGithubIntegrationModalIsOpen = false;
-  @tracked isViewingProgressBanner = false; // TODO: Still needed?
   @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;
   @tracked leaderboardIsExpanded = true;
@@ -45,6 +60,7 @@ export default class CourseController extends Controller {
       return null;
     }
 
+    // @ts-ignore - featureSuggestions is not typed yet
     return this.currentUser.featureSuggestions.filterBy('featureIsPrivateLeaderboard').rejectBy('isDismissed').firstObject;
   }
 

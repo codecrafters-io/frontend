@@ -45,7 +45,7 @@ function routes() {
 
   this.urlPrefix = config.x.backendUrl;
   this.namespace = '/api/v1';
-  this.timing = 1000;
+  // this.timing = 1000;
 
   this.pretender.prepareHeaders = function (headers) {
     headers['Access-Control-Allow-Origin'] = '*';

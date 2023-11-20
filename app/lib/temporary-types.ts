@@ -13,11 +13,13 @@ export class TemporaryUserModel {
   declare badgeAwards: BadgeAwardModel[];
   declare canAccessPaidContent: boolean;
   declare earlyBirdDiscountEligibilityExpiresAt: Date;
+  declare featureSuggestions: unknown[];
   declare githubProfileUrl: string;
   declare id: string;
   declare isConceptAuthor: boolean;
   declare isEligibleForEarlyBirdDiscount: boolean;
   declare isStaff: boolean;
+  declare isTeamMember: boolean;
   declare lastFreeUsageGrantExpiresAt: Date | null;
   declare primaryEmailAddress: string;
   declare username: string;
