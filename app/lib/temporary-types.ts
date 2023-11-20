@@ -20,6 +20,7 @@ export class TemporaryUserModel {
   declare isEligibleForEarlyBirdDiscount: boolean;
   declare isStaff: boolean;
   declare isTeamMember: boolean;
+  declare lastFreeUsageGrantExpiresAt: Date | null;
   declare primaryEmailAddress: string;
   declare username: string;
 

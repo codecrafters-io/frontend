@@ -16,11 +16,15 @@ export default class UserModel extends Model {
   @attr('boolean') isConceptAuthor;
   @attr('boolean') isStaff;
   @attr('boolean') isVip;
+  @attr('date') lastFreeUsageGrantExpiresAt;
   @attr('string') name;
   @attr('string') primaryEmailAddress;
   @attr('string') username;
   @attr('date') vipStatusExpiresAt;
 
+  @hasMany('affiliate-link', { async: false }) affiliateLinks;
+  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
+  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer;
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
   @hasMany('course-language-request', { async: false }) courseLanguageRequests;
   @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes;
@@ -28,10 +32,10 @@ export default class UserModel extends Model {
   @hasMany('course-participation', { async: false }) courseParticipations;
   @hasMany('feature-suggestion', { async: false }) featureSuggestions;
   @hasMany('github-app-installation', { async: false }) githubAppInstallations;
-  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
-  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer;
+  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
+  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
   @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts;
-  @hasMany('affiliate-link', { async: false }) affiliateLinks;
+  @hasMany('referral-link', { async: false }) referralLinks;
   @hasMany('repository', { async: false }) repositories;
   @hasMany('subscription', { async: false }) subscriptions;
   @hasMany('team-membership', { async: false }) teamMemberships;
