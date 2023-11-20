@@ -181,6 +181,10 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   startLeaderboardPoller() {
     this.stopLeaderboardPoller();
 
+    if (this.authenticator.isAnonymous) {
+      return;
+    }
+
     this.leaderboardPoller = new LeaderboardPoller({
       store: this.store,
       visibilityService: this.visibility,
