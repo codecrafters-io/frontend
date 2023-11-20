@@ -148,7 +148,7 @@ export default class CourseController extends Controller {
     this.stopRepositoryPoller();
 
     if (this.model.activeRepository) {
-      this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility, intervalMilliseconds: 2000 });
+      this.repositoryPoller = new RepositoryPoller({ store: this.store, visibilityService: this.visibility, intervalMilliseconds: 60000 });
       this.repositoryPoller.start(this.model.activeRepository, this.handlePoll);
       this.polledRepository = this.model.activeRepository;
     }

@@ -182,7 +182,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     this.leaderboardPoller = new LeaderboardPoller({
       store: this.store,
       visibilityService: this.visibility,
-      intervalMilliseconds: 5000,
+      intervalMilliseconds: 60000,
     });
 
     this.leaderboardPoller.team = this.team;
