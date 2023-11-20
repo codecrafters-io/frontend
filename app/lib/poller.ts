@@ -48,7 +48,7 @@ export default class Poller {
     return this.visibilityService.isHidden;
   }
 
-  async doPoll() {
+  async doPoll(): Promise<unknown> {
     throw new Error('doPoll must be implemented by subclasses');
   }
 
