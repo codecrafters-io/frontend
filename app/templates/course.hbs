@@ -11,7 +11,7 @@
   class="flex flex-row-reverse h-screen w-full"
   {{did-insert this.handleDidInsertContainer}}
   {{will-destroy this.handleWillDestroyContainer}}
-  {{did-update this.handleDidUpdateActiveRepository @model.activeRepository}}
+  {{did-update this.handleDidUpdateActiveRepositoryId @model.activeRepository.id}}
 >
   {{#if this.sidebarIsExpandedOnMobile}}
     <div class="relative z-30 lg:hidden" role="dialog" aria-modal="true">
