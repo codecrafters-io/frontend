@@ -1,0 +1,5 @@
+<div class="flex items-center overflow-x-scroll" ...attributes>
+  {{#each this.availableTabs key="slug" as |tab|}}
+    <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+  {{/each}}
+</div>
