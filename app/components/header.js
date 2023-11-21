@@ -43,7 +43,7 @@ export default class HeaderComponent extends Component {
   }
 
   get shouldShowSubscribeButton() {
-    return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
+    return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay' && !this.currentUser.hasActiveFreeUsageGrants && !this.currentUser.hasFutureFreeUsageGrants;
   }
 
   @action
