@@ -59,6 +59,10 @@ export default class CoursePageStateService extends Service {
     return this.stepList.nextVisibleStepFor(this.currentStep);
   }
 
+  get stepListAsStepList(): StepList {
+    return this.stepList!;
+  }
+
   navigateToActiveStepIfCurrentStepIsInvalid(): void {
     if (!this.currentStepSansFallback) {
       // @ts-ignore

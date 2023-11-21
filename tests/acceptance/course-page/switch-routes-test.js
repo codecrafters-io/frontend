@@ -35,7 +35,7 @@ module('Acceptance | course-page | switch-routes', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    const scrollableArea = document.querySelector('.course-page-scrollable-area');
+    const scrollableArea = document.querySelector('#course-page-scrollable-area');
     scrollableArea.scrollTop = 100;
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');

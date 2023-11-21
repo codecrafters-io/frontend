@@ -1,0 +1,57 @@
+<div data-test-course-page-header ...attributes>
+  <CoursePage::Header::NavigationControls
+    @course={{@course}}
+    @stepList={{@stepList}}
+    @currentStep={{@currentStep}}
+    @activeStep={{@activeStep}}
+    @nextStep={{@nextStep}}
+    @onMobileSidebarButtonClick={{@onMobileSidebarButtonClick}}
+  />
+
+  <div class="mt-6">
+    <div class="flex flex-col items-start">
+      <div class="flex items-center flex-wrap gap-x-3">
+        <div class="text-lg sm:text-xl md:text-2xl" data-test-step-name>
+          {{#if (eq @currentStep.type "CourseStageStep")}}
+            {{! @glint-expect-error not typesafe }}
+            <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
+          {{else}}
+            <span class="font-bold text-gray-700">{{@currentStep.title}}</span>
+          {{/if}}
+        </div>
+
+        <div class="flex items-center md:h-[2rem] h-[1.75rem] flex-shrink-0">
+          <CoursePage::StepStatusPill @step={{@currentStep}} />
+        </div>
+      </div>
+
+      <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+    </div>
+  </div>
+
+  {{#if (and (not-eq @currentStep @activeStep) (not-eq @activeStep.type "CourseCompletedStep"))}}
+    <div class="mt-6">
+      <PrimaryLinkButton @size="small" @route={{@activeStep.routeParams.route}} @models={{@activeStep.routeParams.models}} data-test-next-step-button>
+        <div class="flex items-center">
+          {{#if (eq @nextStep @activeStep)}}
+            {{#if (eq @nextStep.type "CourseStageStep")}}
+              <span>View next stage</span>
+            {{else}}
+              <span>View next step</span>
+            {{/if}}
+
+            {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+          {{else}}
+            {{#if (gt @currentStep.globalPosition @activeStep.globalPosition)}}
+              {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
+              <span>Back to "{{@activeStep.shortTitle}}"</span>
+            {{else}}
+              <span>Back to "{{@activeStep.shortTitle}}"</span>
+              {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+            {{/if}}
+          {{/if}}
+        </div>
+      </PrimaryLinkButton>
+    </div>
+  {{/if}}
+</div>

@@ -154,7 +154,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     assert.true(referralPage.referralStatsFreeWeeksLeft.countText.includes('0'), 'expect to see 0 free weeks left');
   });
 
-  test('referrals info icon has the correct tolltip', async function (assert) {
+  test('referrals info icon has the correct tooltip', async function (assert) {
     testScenario(this.server);
 
     this.server.create('referral-link', {
@@ -173,7 +173,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     });
   });
 
-  test('free weeks left info icon has the correct tolltip', async function (assert) {
+  test('free weeks left info icon has the correct tooltip', async function (assert) {
     testScenario(this.server);
 
     this.server.create('referral-link', {

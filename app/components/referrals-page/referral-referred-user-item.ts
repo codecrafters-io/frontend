@@ -1,19 +1,14 @@
 import Component from '@glimmer/component';
+import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
+import { format } from 'date-fns';
 
 interface Signature {
   Element: HTMLElement;
 
   Args: {
-    activationAndGrant: {
-      activation: ReferralActivationModel;
-      grant: {
-        shortActivatesAt: string;
-        shortExpiresAt: string;
-        fullActivatesAt: string;
-        fullExpiresAt: string;
-      };
-    };
+    activation: ReferralActivationModel;
+    grant: FreeUsageGrantModel | undefined;
   };
 
   Blocks: {
@@ -21,7 +16,23 @@ interface Signature {
   };
 }
 
-export default class ReferralReferredUserItemComponent extends Component<Signature> {}
+export default class ReferralReferredUserItemComponent extends Component<Signature> {
+  get fullActivatesAt() {
+    return format(this.args.grant?.activatesAt as Date, 'dd MMMM yyyy');
+  }
+
+  get fullExpiresAt() {
+    return format(this.args.grant?.expiresAt as Date, 'dd MMMM yyyy');
+  }
+
+  get shortActivatesAt() {
+    return format(this.args.grant?.activatesAt as Date, 'dd MMM');
+  }
+
+  get shortExpiresAt() {
+    return format(this.args.grant?.expiresAt as Date, 'dd MMM');
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

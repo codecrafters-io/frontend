@@ -49,7 +49,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await percySnapshot('Course Stage Comments', {
       scope: '[data-percy-hints-section]',
-      percyCss: '[data-test-course-page-scrollable-area] { overflow-y: visible !important; }',
+      percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',
     });
   });
 
@@ -73,7 +73,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.commentList.clickOnTabHeader('Preview');
     await percySnapshot('Course Stage Comments - Preview', {
       scope: '[data-percy-hints-section]',
-      percyCss: '[data-test-course-page-scrollable-area] { overflow-y: visible !important; }',
+      percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',
     });
 
     await coursePage.commentList.clickOnTabHeader('Write');
@@ -153,7 +153,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await percySnapshot('Course Stage Comments / Edit Form', {
       scope: '[data-percy-hints-section]',
-      percyCss: '[data-test-course-page-scrollable-area] { overflow-y: visible !important; }',
+      percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',
     });
 
     await commentCard.commentForm.commentInput.fillIn('This is an edited comment');
@@ -263,7 +263,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await percySnapshot('Course Stage Comments / Reply Form', {
       scope: '[data-percy-hints-section]',
-      percyCss: '[data-test-course-page-scrollable-area] { overflow-y: visible !important; }',
+      percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',
     });
 
     await firstCommentCard.commentForm.commentInput.fillIn('This is a reply');

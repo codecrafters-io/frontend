@@ -9,4 +9,8 @@ export default class FreeUsageGrantModel extends Model {
   @attr('date') activatesAt!: Date;
   @attr('date') expiresAt!: Date;
   @attr('string') sourceType!: string;
+
+  get isExpired() {
+    return this.expiresAt < new Date();
+  }
 }

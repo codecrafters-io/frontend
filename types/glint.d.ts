@@ -16,7 +16,7 @@ declare module '@glint/environment-ember-loose/registry' {
       Return: string;
     }>;
     'animated-each': ComponentLike<{
-      Args: { Positional: [unknown]; Named: { use: unknown } };
+      Args: { Positional: [unknown]; Named: { use: unknown; key?: string; duration?: number } };
       Blocks: { default: [unknown] };
       Yields: { default: [string] };
       Return: string;
