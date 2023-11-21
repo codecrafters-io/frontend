@@ -8,7 +8,7 @@ import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
-import type TeamModel from 'codecrafters-frontend/models/team';
+import TeamModel from 'codecrafters-frontend/models/team';
 
 export class TemporaryUserModel {
   declare avatarUrl: string;
