@@ -1,6 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import { formatDistanceToNowStrict } from 'date-fns';
+import { format, formatDistanceToNowStrict } from 'date-fns';
 import { inject as service } from '@ember/service';
 
 interface Signature {
@@ -10,7 +10,7 @@ interface Signature {
 export default class FreeWeeksLeftBadgeComponent extends Component<Signature> {
   @service authenticator!: AuthenticatorService;
 
-  get copy() {
+  get freeWeeksLeftCopy() {
     let timeRemaining;
     const [_value, unit] = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date).split(' ');
 
@@ -23,6 +23,10 @@ export default class FreeWeeksLeftBadgeComponent extends Component<Signature> {
     }
 
     return `${timeRemaining} free`
+  }
+
+  get freeWeeksLeftTooltip() {
+    return `Your free usage expires on ${format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'PPpp')}`
   }
 
   get currentUser() {
