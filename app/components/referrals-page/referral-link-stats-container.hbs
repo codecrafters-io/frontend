@@ -30,7 +30,7 @@
           </span>
           <span class="text-gray-700 text-xs">
             (expires on
-            {{this.activeFreeUsageGrantsExpireAt}})
+            {{this.lastFreeUsageGrantExpiresAt}}
           </span>
         {{else}}
           <span class="text-gray-700 text-lg sm:text-2xl font-bold" data-test-referral-stats-free-weeks-left-count>
@@ -38,7 +38,7 @@
           </span>
           <span class="text-gray-700 text-xs">
             (expired on
-            {{this.activeFreeUsageGrantsExpireAt}})
+            {{this.lastFreeUsageGrantExpiresAt}}
           </span>
         {{/if}}
       </div>

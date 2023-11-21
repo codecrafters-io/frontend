@@ -18,16 +18,17 @@ export default class ReferralLinkStatsContainerComponent extends Component<Signa
   @service authenticator!: AuthenticatorService;
 
   get activeFreeUsageGrantsCount() {
-    return this.args.freeUsageGrants.filter((grant: FreeUsageGrantModel) => grant.expiresAt > new Date()).length;
-  }
-
-  get activeFreeUsageGrantsExpireAt() {
-    return format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'dd MMM yyyy');
+    return this.args.freeUsageGrants.filter((grant: FreeUsageGrantModel) => grant.isExpired).length;
   }
 
   get currentUser() {
     return this.authenticator.currentUser;
   }
+
+  get lastFreeUsageGrantExpiresAt() {
+    return format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'dd MMM yyyy');
+  }
+
 }
 
 declare module '@glint/environment-ember-loose/registry' {
