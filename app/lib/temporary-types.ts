@@ -7,7 +7,8 @@ import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stag
 import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
-import type TeamModel from 'codecrafters-frontend/models/team';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
+import TeamModel from 'codecrafters-frontend/models/team';
 
 export class TemporaryUserModel {
   declare avatarUrl: string;
@@ -16,6 +17,8 @@ export class TemporaryUserModel {
   declare earlyBirdDiscountEligibilityExpiresAt: Date;
   declare featureSuggestions: unknown[];
   declare githubProfileUrl: string;
+  declare hasActiveFreeUsageGrants: boolean;
+  declare hasJoinedReferralProgram: boolean;
   declare id: string;
   declare isConceptAuthor: boolean;
   declare isEligibleForEarlyBirdDiscount: boolean;
@@ -23,6 +26,7 @@ export class TemporaryUserModel {
   declare isTeamMember: boolean;
   declare lastFreeUsageGrantExpiresAt: Date | null;
   declare primaryEmailAddress: string;
+  declare referralLinks: ReferralLinkModel[];
   declare username: string;
   declare teams: TeamModel[];
 

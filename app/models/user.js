@@ -11,6 +11,7 @@ export default class UserModel extends Model {
   @attr('date') createdAt;
   @attr('') featureFlags;
   @attr('string') githubUsername;
+  @attr('boolean') hasActiveFreeUsageGrants;
   @attr('boolean') isAdmin;
   @attr('boolean') isAffiliate;
   @attr('boolean') isConceptAuthor;
@@ -99,6 +100,10 @@ export default class UserModel extends Model {
 
   get hasJoinedAffiliateProgram() {
     return this.affiliateLinks.rejectBy('isNew').length > 0;
+  }
+
+  get hasJoinedReferralProgram() {
+    return this.referralLinks.rejectBy('isNew').length > 0;
   }
 
   get isEligibleForEarlyBirdDiscount() {
