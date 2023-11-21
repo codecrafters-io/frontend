@@ -22,5 +22,9 @@
 
     {{! @glint-expect-error: not ts-ified yet }}
     <TestimonialList />
+  {{else}}
+    <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
+      <ReferralsPage::JoinReferralProgramContainer />
+    </div>
   {{/if}}
 </div>

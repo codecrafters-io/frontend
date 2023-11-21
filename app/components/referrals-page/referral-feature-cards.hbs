@@ -1,5 +1,7 @@
 <div ...attributes>
   {{#each this.featureList as |feature|}}
-    <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.title}} @contentMarkdown={{feature.bodyMarkdown}} />
+    <div class="flex justify-center">
+      <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.title}} @contentMarkdown={{feature.bodyMarkdown}} />
+    </div>
   {{/each}}
 </div>
