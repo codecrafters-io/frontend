@@ -16,11 +16,11 @@ export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
 
   get freeWeeksLeftCopy() {
     let timeRemaining;
-    const [, unit] = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date).split(' ');
+    const freeUsageExpiryDistanceToNow = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date).split(' ');
 
-    if (unit?.includes('second') || unit?.includes('minute')) {
+    if (freeUsageExpiryDistanceToNow?.includes('second') || freeUsageExpiryDistanceToNow?.includes('minute')) {
       timeRemaining = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, { unit: 'minute', roundingMethod: 'ceil' });
-    } else if (unit?.includes('hour')) {
+    } else if (freeUsageExpiryDistanceToNow?.includes('hour')) {
       timeRemaining = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, { unit: 'hour', roundingMethod: 'ceil' });
     } else {
       timeRemaining = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, { unit: 'day', roundingMethod: 'ceil' });
