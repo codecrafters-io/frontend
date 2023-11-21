@@ -1,6 +1,8 @@
-import { clickable, clickOnText, fillable, isVisible } from 'ember-cli-page-object';
+import { clickable, clickOnText, fillable, isVisible, triggerable } from 'ember-cli-page-object';
 
 export default {
+  clickOnHeaderLink: clickOnText('[data-test-header-link]'),
+
   feedbackDropdown: {
     clickOnSendButton: clickable('[data-test-send-button]'),
     fillInExplanation: fillable('textarea'),
@@ -11,6 +13,18 @@ export default {
     toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
   },
 
-  clickOnHeaderLink: clickOnText('[data-test-header-link]'),
+  freeWeeksLeftBadge: {
+    hover: triggerable('mouseenter'),
+    scope: '[data-test-free-weeks-left-badge]',
+  },
+
   scope: '[data-test-header]',
+
+  subscribeButton: {
+    scope: '[data-test-subscribe-button]',
+  },
+
+  vipBadge: {
+    scope: '[data-test-vip-badge]',
+  },
 };

@@ -71,7 +71,7 @@
           {{/if}}
 
           {{#if this.shouldShowSubscribeButton}}
-            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4">
+            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-subscribe-button>
               <span class="flex items-center gap-x-1">
                 <span>Subscribe</span>
                 {{svg-jar "lock-open" class="w-4"}}
@@ -79,8 +79,8 @@
             </PrimaryLinkButton>
           {{/if}}
 
-          {{#if this.currentUser.hasActiveFreeUsageGrants}}
-            <Header::FreeWeeksLeftBadge />
+          {{#if (and (not this.currentUser.isVip) this.currentUser.hasActiveFreeUsageGrants)}}
+            <Header::FreeWeeksLeftBadge class="mr-3" />
           {{/if}}
 
           <Header::AccountDropdown />
