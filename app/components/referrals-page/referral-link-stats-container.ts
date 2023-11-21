@@ -28,7 +28,6 @@ export default class ReferralLinkStatsContainerComponent extends Component<Signa
   get lastFreeUsageGrantExpiresAt() {
     return format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'dd MMM yyyy');
   }
-
 }
 
 declare module '@glint/environment-ember-loose/registry' {
