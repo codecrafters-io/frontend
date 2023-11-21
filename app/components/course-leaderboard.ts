@@ -193,7 +193,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
     this.leaderboardPoller.team = this.team;
     // @ts-expect-error poll handler not typed
-    this.leaderboardPoller.start(this.args.course, this.handlePoll, 'CourseLeaderboardChannel');
+    this.leaderboardPoller.start(this.args.course, this.handlePoll, 'CourseLeaderboardChannel', { course_id: this.args.course.id });
     this.polledCourse = this.args.course;
   }
 
