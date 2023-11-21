@@ -1,5 +1,5 @@
 <PageSection @title="Referred Users" data-test-referral-referred-users-container ...attributes>
-  {{#each this.userActivationsAndFreeUsageGrants as |activationAndGrant|}}
+  {{#each this.activationsAndFreeUsageGrants as |activationAndGrant|}}
     <ReferralsPage::ReferralReferredUserItem @activation={{activationAndGrant.activation}} @grant={{activationAndGrant.grant}} />
   {{else}}
     <div class="text-gray-600 text-sm text-center py-10" data-test-referral-referred-users-description>

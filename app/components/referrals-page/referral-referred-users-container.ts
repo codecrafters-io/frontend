@@ -12,7 +12,7 @@ interface Signature {
 }
 
 export default class ReferralReferredUsersContainerComponent extends Component<Signature> {
-  get userActivationsAndFreeUsageGrants() {
+  get activationsAndFreeUsageGrants() {
     return this.args.referralLink?.activations.map((activation) => {
       const grantForActivation = this.args.freeUsageGrants.find((grant) => grant.referralActivation.id === activation.id);
 
