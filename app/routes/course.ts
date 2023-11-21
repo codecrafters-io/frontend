@@ -4,12 +4,19 @@ import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RSVP from 'rsvp';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { next } from '@ember/runloop';
+import type { TemporaryCourseModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type Transition from '@ember/routing/transition';
+import type RouterService from '@ember/routing/router-service';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Store from '@ember-data/store';
+import type { ModelType } from 'codecrafters-frontend/controllers/course';
 
 export default class CourseRoute extends BaseRoute {
-  @service authenticator;
-  @service coursePageState;
-  @service router;
-  @service store;
+  @service declare authenticator: AuthenticatorService;
+  @service declare coursePageState: CoursePageStateService;
+  @service declare router: RouterService;
+  @service declare store: Store;
 
   queryParams = {
     repo: {
@@ -20,8 +27,10 @@ export default class CourseRoute extends BaseRoute {
     },
   };
 
-  findOrCreateRepository(course, params, transition, repositories) {
+  findOrCreateRepository(course: TemporaryCourseModel, transition: Transition, repositories: TemporaryRepositoryModel[]) {
+    // @ts-ignore
     if (transition.to.queryParams.repo && transition.to.queryParams.repo === 'new') {
+      // @ts-ignore
       const existingNewRepository = this.store.peekAll('repository').find((repository) => repository.isNew);
 
       if (existingNewRepository) {
@@ -32,7 +41,9 @@ export default class CourseRoute extends BaseRoute {
       } else {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
+      // @ts-ignore
     } else if (transition.to.queryParams.repo) {
+      // @ts-ignore
       const selectedRepository = repositories.find((repository) => repository.id === transition.to.queryParams.repo);
 
       if (selectedRepository) {
@@ -40,9 +51,12 @@ export default class CourseRoute extends BaseRoute {
       } else {
         this.router.replaceWith('course', course.slug, { queryParams: { repo: null } });
       }
+      // @ts-ignore
     } else if (transition.to.queryParams.track) {
       const lastPushedRepositoryForTrack = repositories
+        // @ts-ignore
         .filterBy('language.slug', transition.to.queryParams.track)
+        // @ts-ignore
         .filterBy('firstSubmissionCreated')
         .sortBy('lastSubmissionAt').lastObject;
 
@@ -52,6 +66,7 @@ export default class CourseRoute extends BaseRoute {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
     } else {
+      // @ts-ignore
       const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
 
       if (lastPushedRepository) {
@@ -72,41 +87,42 @@ export default class CourseRoute extends BaseRoute {
       'stages.screencasts.user',
     ];
 
-    let coursesPromise = this.store.findAll('course', {
+    const coursesPromise = this.store.findAll('course', {
       include: includedCourseResources.join(','),
-    });
+    }) as unknown as Promise<TemporaryCourseModel[]>;
 
-    let repositoriesPromise = this.store.findAll('repository', {
+    const repositoriesPromise = this.store.findAll('repository', {
       include: RepositoryPoller.defaultIncludedResources,
-    });
+    }) as unknown as Promise<TemporaryRepositoryModel[]>;
 
     const [allCourses, allRepositories] = await RSVP.all([coursesPromise, repositoriesPromise, this.authenticator.authenticate()]);
 
     return [allCourses, allRepositories];
   }
 
-  async model(params, transition) {
-    const [allCourses, allRepositories] = await this.loadResources();
-    const course = allCourses.find((course) => course.slug === params.course_slug);
+  async model(params: { course_slug: string }, transition: Transition): Promise<ModelType> {
+    const [allCourses, allRepositories] = (await this.loadResources()) as [TemporaryCourseModel[], TemporaryRepositoryModel[]];
+    const course = allCourses.find((course) => course.slug === params.course_slug) as TemporaryCourseModel;
 
     const repositories = allRepositories.filter((repository) => {
-      return !repository.isNew && repository.course.id === course.id && repository.user.id === this.authenticator.currentUser.id;
+      return !repository.isNew && repository.course.id === course.id && repository.user.id === this.authenticator.currentUser?.id;
     });
 
-    const activeRepository = this.findOrCreateRepository(course, params, transition, repositories);
+    const activeRepository = this.findOrCreateRepository(course, transition, repositories);
     this.coursePageState.setStepList(new StepList(activeRepository));
 
     return {
-      course: allCourses.find((course) => course.slug === params.course_slug),
+      course: course,
       activeRepository: activeRepository,
       repositories: repositories,
     };
   }
 
-  redirect(model, transition) {
+  redirect(_model: ModelType, transition: Transition) {
     if (transition.to.name === 'course.index') {
-      const activeStep = this.coursePageState.stepList.activeStep;
+      const activeStep = this.coursePageState.stepListAsStepList.activeStep;
 
+      // @ts-ignore not sure if we need to handle nullity here
       this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
     }
 

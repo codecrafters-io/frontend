@@ -4,5 +4,5 @@ export default {
   clickOnNextStepButton: clickable('[data-test-next-step-button]'),
   stepName: text('[data-test-step-name]'),
   progressIndicatorText: text('[data-test-progress-indicator-text]'),
-  scope: '[data-test-desktop-header]',
+  scope: '[data-test-course-page-header]',
 };

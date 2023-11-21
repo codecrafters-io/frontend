@@ -7,21 +7,44 @@ import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import type { TemporaryCourseModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type VisibilityService from 'codecrafters-frontend/services/visibility';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Store from '@ember-data/store';
+import type TeamModel from 'codecrafters-frontend/models/team';
+import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 
-export default class CourseLeaderboardComponent extends Component {
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    activeRepository: TemporaryRepositoryModel;
+    course: TemporaryCourseModel;
+    isCollapsed: boolean;
+    repositories: TemporaryRepositoryModel[];
+    shouldShowLanguageIconsWithoutHover?: boolean;
+  };
+}
+
+export default class CourseLeaderboardComponent extends Component<Signature> {
   transition = fade;
+
+  leaderboardPoller: LeaderboardPoller | null = null;
+
   @tracked isLoadingEntries = true;
   @tracked isReloadingEntries = false;
-  @tracked entriesFromAPI;
-  @tracked polledCourse;
-  @tracked team;
-  @service authenticator;
-  @service store;
-  @service visibility;
+  @tracked entriesFromAPI: LeaderboardEntry[] = [];
+  @tracked polledCourse?: TemporaryCourseModel;
+  @tracked team?: TeamModel;
 
-  constructor() {
-    super(...arguments);
-    this.team = this.currentUserIsTeamMember ? this.currentUserTeams.firstObject : null;
+  @service declare actionCableConsumer: ActionCableConsumerService;
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
+  @service declare visibility: VisibilityService;
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+    this.team = this.currentUserIsTeamMember ? this.currentUserTeams.firstObject : undefined;
   }
 
   get currentUserIsTeamMember() {
@@ -30,7 +53,7 @@ export default class CourseLeaderboardComponent extends Component {
 
   get currentUserTeams() {
     if (this.authenticator.currentUserIsLoaded) {
-      return this.authenticator.currentUser.teams;
+      return this.authenticator.currentUser!.teams;
     } else {
       return [];
     }
@@ -41,7 +64,7 @@ export default class CourseLeaderboardComponent extends Component {
       return [];
     }
 
-    let entries = [];
+    let entries: LeaderboardEntry[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
       entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.authenticator.currentUser));
@@ -57,7 +80,7 @@ export default class CourseLeaderboardComponent extends Component {
       return [];
     }
 
-    let allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
+    const allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
 
     return allRepositories.map((repository) => {
       // TODO: Use "completed stages count" instead?
@@ -72,25 +95,25 @@ export default class CourseLeaderboardComponent extends Component {
   }
 
   get mergedEntries() {
-    let entriesGroupedByUser = {};
+    const entriesGroupedByUser: Record<string, LeaderboardEntry[]> = {};
 
     this.entries.forEach((entry) => {
       entriesGroupedByUser[entry.user.id] ||= [];
-      entriesGroupedByUser[entry.user.id].push(entry);
+      entriesGroupedByUser[entry.user.id]!.push(entry);
     });
 
-    let result = [];
+    const result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      let entryWithHighestCourseStage = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
+      const entryWithHighestCourseStage = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
 
       result.push(
         new LeaderboardEntry({
-          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage.status,
-          currentCourseStage: entryWithHighestCourseStage.currentCourseStage,
-          language: entryWithHighestCourseStage.language,
-          user: entryWithHighestCourseStage.user,
-          lastAttemptAt: entryWithHighestCourseStage.lastAttemptAt,
+          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage!.status,
+          currentCourseStage: entryWithHighestCourseStage!.currentCourseStage,
+          language: entryWithHighestCourseStage!.language,
+          user: entryWithHighestCourseStage!.user,
+          lastAttemptAt: entryWithHighestCourseStage!.lastAttemptAt,
         }),
       );
     }
@@ -101,16 +124,16 @@ export default class CourseLeaderboardComponent extends Component {
   @action
   async handleDidInsert() {
     if (this.team) {
-      this.entriesFromAPI = await this.store.query('leaderboard-entry', {
+      this.entriesFromAPI = (await this.store.query('leaderboard-entry', {
         course_id: this.args.course.id,
         team_id: this.team.id,
         include: 'language,current-course-stage,user',
-      });
+      })) as unknown as LeaderboardEntry[];
     } else {
-      this.entriesFromAPI = await this.store.query('leaderboard-entry', {
+      this.entriesFromAPI = (await this.store.query('leaderboard-entry', {
         course_id: this.args.course.id,
         include: 'language,current-course-stage,user',
-      });
+      })) as unknown as LeaderboardEntry[];
     }
 
     this.isLoadingEntries = false;
@@ -119,15 +142,15 @@ export default class CourseLeaderboardComponent extends Component {
   }
 
   @action
-  async handlePoll(entriesFromAPI) {
+  async handlePoll(entriesFromAPI: LeaderboardEntry[]) {
     this.entriesFromAPI = entriesFromAPI;
   }
 
   @action
-  async handleTeamChange(team) {
+  async handleTeamChange(team: TeamModel | null) {
     this.stopLeaderboardPoller();
 
-    this.team = team;
+    this.team = team || undefined;
     // this.entriesFromAPI = [];
     this.isReloadingEntries = true;
 
@@ -139,17 +162,18 @@ export default class CourseLeaderboardComponent extends Component {
     this.stopLeaderboardPoller();
   }
 
+  // @ts-expect-error ember-animated not typed
   // eslint-disable-next-line require-yield
   *listTransition({ insertedSprites, keptSprites, removedSprites }) {
-    for (let sprite of keptSprites) {
+    for (const sprite of keptSprites) {
       move(sprite);
     }
 
-    for (let sprite of insertedSprites) {
+    for (const sprite of insertedSprites) {
       fadeIn(sprite);
     }
 
-    for (let sprite of removedSprites) {
+    for (const sprite of removedSprites) {
       fadeOut(sprite);
     }
   }
@@ -157,14 +181,19 @@ export default class CourseLeaderboardComponent extends Component {
   startLeaderboardPoller() {
     this.stopLeaderboardPoller();
 
+    if (this.authenticator.isAnonymous) {
+      return;
+    }
+
     this.leaderboardPoller = new LeaderboardPoller({
       store: this.store,
       visibilityService: this.visibility,
-      intervalMilliseconds: 5000,
+      actionCableConsumerService: this.actionCableConsumer,
     });
 
     this.leaderboardPoller.team = this.team;
-    this.leaderboardPoller.start(this.args.course, this.handlePoll);
+    // @ts-expect-error poll handler not typed
+    this.leaderboardPoller.start(this.args.course, this.handlePoll, 'CourseLeaderboardChannel');
     this.polledCourse = this.args.course;
   }
 
@@ -173,6 +202,12 @@ export default class CourseLeaderboardComponent extends Component {
       this.leaderboardPoller.stop();
     }
 
-    this.polledCourse = null;
+    this.polledCourse = undefined;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    CourseLeaderboard: typeof CourseLeaderboardComponent;
   }
 }

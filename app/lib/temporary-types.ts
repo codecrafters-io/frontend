@@ -8,12 +8,14 @@ import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
+import type TeamModel from 'codecrafters-frontend/models/team';
 
 export class TemporaryUserModel {
   declare avatarUrl: string;
   declare badgeAwards: BadgeAwardModel[];
   declare canAccessPaidContent: boolean;
   declare earlyBirdDiscountEligibilityExpiresAt: Date;
+  declare featureSuggestions: unknown[];
   declare githubProfileUrl: string;
   declare hasActiveFreeUsageGrants: boolean;
   declare hasJoinedReferralProgram: boolean;
@@ -21,10 +23,12 @@ export class TemporaryUserModel {
   declare isConceptAuthor: boolean;
   declare isEligibleForEarlyBirdDiscount: boolean;
   declare isStaff: boolean;
+  declare isTeamMember: boolean;
   declare lastFreeUsageGrantExpiresAt: Date | null;
   declare primaryEmailAddress: string;
   declare referralLinks: ReferralLinkModel[];
   declare username: string;
+  declare teams: TeamModel[];
 
   declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
 
@@ -38,23 +42,24 @@ export class TemporaryUserModel {
 }
 
 export class TemporaryCourseModel {
-  declare definitionRepositoryLink: string;
-  declare definitionRepositoryFullName: string;
-  declare id: string;
-  declare name?: string;
-  declare slug: string;
-  declare hasExtensions: boolean;
-  declare extensions: CourseExtensionModel[];
-  declare releaseStatusIsBeta: boolean;
-  declare sortedBaseStages: TemporaryCourseStageModel[];
-  declare primaryExtensionSlug: string | null;
-  declare secondaryExtensionSlugs: string[];
-  declare stages: TemporaryCourseStageModel[];
   declare baseStages: TemporaryCourseStageModel[];
+  declare betaOrLiveLanguages: TemporaryLanguageModel[];
   declare buildpacks: BuildpackModel[];
   declare buildpacksLastSyncedAt: Date | null;
+  declare definitionRepositoryFullName: string;
+  declare definitionRepositoryLink: string;
+  declare extensions: CourseExtensionModel[];
+  declare firstStage: TemporaryCourseStageModel | null;
+  declare hasExtensions: boolean;
+  declare id: string;
+  declare name?: string;
+  declare primaryExtensionSlug: string | null;
+  declare releaseStatusIsBeta: boolean;
+  declare secondaryExtensionSlugs: string[];
+  declare slug: string;
+  declare sortedBaseStages: TemporaryCourseStageModel[];
+  declare stages: TemporaryCourseStageModel[];
   declare syncBuildpacks: () => Promise<Record<string, string>>;
-  declare betaOrLiveLanguages: TemporaryLanguageModel[];
 }
 
 export class TemporaryCourseStageModel {
@@ -104,12 +109,14 @@ export class TemporaryRepositoryModel {
   declare course: TemporaryCourseModel;
   declare courseExtensionActivations: CourseExtensionActivationModel[];
   declare currentStage: TemporaryCourseStageModel | null;
+  declare createdAt: Date | null;
   declare expectedActivityFrequency: 'every_day' | 'once_a_week' | 'multiple_times_a_week';
   declare id: null | string;
   declare isNew: boolean;
   declare isSaving: boolean;
   declare language: undefined | TemporaryLanguageModel;
   declare languageProficiencyLevel: 'never_tried' | 'beginner' | 'intermediate' | 'advanced';
+  declare lastSubmissionAt: Date | null;
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
   declare stageList: RepositoryStageListModel | null;
   declare remindersAreEnabled: boolean | null;
