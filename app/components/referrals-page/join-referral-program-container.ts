@@ -64,7 +64,6 @@ export default class JoinReferralProgramContainerComponent extends Component {
   async handleGetStartedButtonClick() {
     const referralLink = this.store.createRecord('referral-link', {
       user: this.currentUser,
-      slug: this.currentUser?.username,
     });
 
     this.isCreatingReferralLink = true;

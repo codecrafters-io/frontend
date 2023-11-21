@@ -386,7 +386,7 @@ function routes() {
 
   this.post('/referral-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
-    attrs.url = `https://app.codecrafters.io/r/${attrs.slug}`;
+    attrs.url = 'https://app.codecrafters.io/r/dummy';
 
     return schema.referralLinks.create(attrs);
   });
