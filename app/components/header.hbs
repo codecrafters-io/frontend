@@ -80,7 +80,7 @@
           {{/if}}
 
           {{#if (and (not this.currentUser.isVip) this.currentUser.hasActiveFreeUsageGrants)}}
-            <Header::FreeWeeksLeftBadge class="mr-3" />
+            <Header::FreeWeeksLeftButton class="mr-3" />
           {{/if}}
 
           <Header::AccountDropdown />

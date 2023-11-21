@@ -7,7 +7,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class FreeWeeksLeftBadgeComponent extends Component<Signature> {
+export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
   @service authenticator!: AuthenticatorService;
 
   get currentUser() {
@@ -36,6 +36,6 @@ export default class FreeWeeksLeftBadgeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Header::FreeWeeksBadge': typeof FreeWeeksLeftBadgeComponent;
+    'Header::FreeWeeksLeftButton': typeof FreeWeeksLeftButtonComponent;
   }
 }
