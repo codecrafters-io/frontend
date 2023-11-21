@@ -9,6 +9,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | referrals-page | view-referrals', function(hooks) {
   setupApplicationTest(hooks);
@@ -294,7 +295,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.freeWeeksLeftBadge.text.includes('7 days free'), 'expect badge to show correct duration for days');
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('7 days free'), 'expect badge to show correct duration for days');
   });
 
   test('header should have a badge that shows the remaining time in days when expiry is a couple month away', async function(assert) {
@@ -307,7 +308,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.freeWeeksLeftBadge.text.includes('60 days free'), 'expect badge to show correct duration for days when more than a week/month');
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('60 days free'), 'expect badge to show correct duration for days when more than a week/month');
   });
 
   test('header should have a badge that shows the remaining time in hours', async function(assert) {
@@ -320,7 +321,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.freeWeeksLeftBadge.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
   });
 
   test('header should have a badge that shows the remaining time in minutes', async function(assert) {
@@ -333,7 +334,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.freeWeeksLeftBadge.text.includes('15 minutes free'), 'expect badge to show correct duration for minutes');
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('15 minutes free'), 'expect badge to show correct duration for minutes');
   });
 
   test('header should have a badge that shows the remaining time in minutes when less than a minute left', async function(assert) {
@@ -346,7 +347,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.freeWeeksLeftBadge.text.includes('1 minute free'), 'expect badge to show correct duration for minutes when less than a minute left');
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('1 minute free'), 'expect badge to show correct duration for minutes when less than a minute left');
   });
 
   test('header should show vip badge if user has active free usage grant', async function(assert) {
@@ -361,7 +362,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     await catalogPage.visit();
 
     assert.true(catalogPage.header.vipBadge.isVisible, 'expect vip badge to be visible');
-    assert.false(catalogPage.header.freeWeeksLeftBadge.isVisible, 'expect free weeks left badge to be hidden');
+    assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
   });
 
   test('header should show subscribe button when not vip and has expired free usage grants', async function(assert) {
@@ -404,6 +405,20 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     assert.true(catalogPage.header.subscribeButton.isVisible, 'expect subscribe button to be visible');
     assert.false(catalogPage.header.vipBadge.isVisible, 'expect vip badge to be hidden');
-    assert.false(catalogPage.header.freeWeeksLeftBadge.isVisible, 'expect free weeks left badge to be hidden');
+    assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
+  });
+
+  test('free weeks left button redirects to refer', async function(assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { days: 7 }) });
+
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+    await catalogPage.header.freeWeeksLeftButton.click();
+
+    assert.strictEqual(currentURL(), '/refer', 'expect to be redirected to refer page')
   });
 });

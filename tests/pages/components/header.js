@@ -13,9 +13,9 @@ export default {
     toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
   },
 
-  freeWeeksLeftBadge: {
+  freeWeeksLeftButton: {
     hover: triggerable('mouseenter'),
-    scope: '[data-test-free-weeks-left-badge]',
+    scope: '[data-test-free-weeks-left-button]',
   },
 
   scope: '[data-test-header]',
