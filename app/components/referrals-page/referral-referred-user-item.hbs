@@ -1,0 +1,27 @@
+<div class="flex items-center flex-wrap gap-y-2 justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2" data-test-referred-user-item>
+  <a href={{@activation.customer.codecraftersProfileUrl}} class="flex items-center hover:underline pr-3" target="_blank" rel="noopener noreferrer">
+    <AvatarImage
+      @user={{@activation.customer}}
+      class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
+    />
+
+    <div>
+      <div class="text-gray-700 text-sm">
+        <span class="font-semibold" data-test-username>{{@activation.customer.username}}</span>
+      </div>
+      <div class="text-gray-700 text-sm block lg:hidden">
+        <span class="text-gray-400 text-xs">{{date-from-now @activation.createdAt}}</span>
+      </div>
+    </div>
+  </a>
+  <div class="flex items-center flex-wrap gap-y-2">
+    <div class="flex flex-shrink-0" data-test-duration-pill>
+      <span class="inline-flex border rounded-full px-2 text-xs font-semibold leading-5 text-gray-700 mr-2">{{this.shortActivatesAt}}
+        -
+        {{this.shortExpiresAt}}</span>
+      <EmberTooltip @text="This referral grants you free access from {{this.fullActivatesAt}} to {{this.fullExpiresAt}}." />
+    </div>
+
+    <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @activation.createdAt}}</span>
+  </div>
+</div>
