@@ -10,9 +10,13 @@ interface Signature {
 export default class FreeWeeksLeftBadgeComponent extends Component<Signature> {
   @service authenticator!: AuthenticatorService;
 
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   get freeWeeksLeftCopy() {
     let timeRemaining;
-    const [_value, unit] = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date).split(' ');
+    const [, unit] = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date).split(' ');
 
     if (unit?.includes('second') || unit?.includes('minute')) {
       timeRemaining = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, { unit: 'minute', roundingMethod: 'ceil' });
@@ -22,15 +26,11 @@ export default class FreeWeeksLeftBadgeComponent extends Component<Signature> {
       timeRemaining = formatDistanceToNowStrict(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, { unit: 'day', roundingMethod: 'ceil' });
     }
 
-    return `${timeRemaining} free`
+    return `${timeRemaining} free`;
   }
 
   get freeWeeksLeftTooltip() {
-    return `Your free usage expires on ${format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'PPpp')}`
-  }
-
-  get currentUser() {
-    return this.authenticator.currentUser;
+    return `Your free usage expires on ${format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'PPpp')}`;
   }
 }
 

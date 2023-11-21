@@ -11,12 +11,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL } from '@ember/test-helpers';
 
-module('Acceptance | referrals-page | view-referrals', function(hooks) {
+module('Acceptance | referrals-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('tracks correct referral stats when no referrals', async function(assert) {
+  test('tracks correct referral stats when no referrals', async function (assert) {
     testScenario(this.server);
 
     this.server.create('referral-link', {
@@ -32,7 +32,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     assert.true(referralPage.referralStatsFreeWeeksLeft.text.includes('0 (waiting on first referral)'), 'expect to see 0 free weeks left');
   });
 
-  test('tracks correct referral stats when there are referrals and free weeks', async function(assert) {
+  test('tracks correct referral stats when there are referrals and free weeks', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -114,7 +114,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     await percySnapshot('Referral Page | Referral Stats');
   });
 
-  test('tracks correct referral stats when there are referrals and expired free weeks', async function(assert) {
+  test('tracks correct referral stats when there are referrals and expired free weeks', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -156,7 +156,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     assert.true(referralPage.referralStatsFreeWeeksLeft.countText.includes('0'), 'expect to see 0 free weeks left');
   });
 
-  test('referrals info icon has the correct tooltip', async function(assert) {
+  test('referrals info icon has the correct tooltip', async function (assert) {
     testScenario(this.server);
 
     this.server.create('referral-link', {
@@ -175,7 +175,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     });
   });
 
-  test('free weeks left info icon has the correct tooltip', async function(assert) {
+  test('free weeks left info icon has the correct tooltip', async function (assert) {
     testScenario(this.server);
 
     this.server.create('referral-link', {
@@ -194,7 +194,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     });
   });
 
-  test('should show referred users', async function(assert) {
+  test('should show referred users', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -285,7 +285,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     });
   });
 
-  test('header should have a badge that shows the remaining time in days', async function(assert) {
+  test('header should have a badge that shows the remaining time in days', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -298,7 +298,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('7 days free'), 'expect badge to show correct duration for days');
   });
 
-  test('header should have a badge that shows the remaining time in days when expiry is a couple month away', async function(assert) {
+  test('header should have a badge that shows the remaining time in days when expiry is a couple month away', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -308,10 +308,13 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('60 days free'), 'expect badge to show correct duration for days when more than a week/month');
+    assert.true(
+      catalogPage.header.freeWeeksLeftButton.text.includes('60 days free'),
+      'expect badge to show correct duration for days when more than a week/month',
+    );
   });
 
-  test('header should have a badge that shows the remaining time in hours', async function(assert) {
+  test('header should have a badge that shows the remaining time in hours', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -324,7 +327,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
   });
 
-  test('header should have a badge that shows the remaining time in minutes', async function(assert) {
+  test('header should have a badge that shows the remaining time in minutes', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -337,7 +340,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('15 minutes free'), 'expect badge to show correct duration for minutes');
   });
 
-  test('header should have a badge that shows the remaining time in minutes when less than a minute left', async function(assert) {
+  test('header should have a badge that shows the remaining time in minutes when less than a minute left', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -347,10 +350,13 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('1 minute free'), 'expect badge to show correct duration for minutes when less than a minute left');
+    assert.true(
+      catalogPage.header.freeWeeksLeftButton.text.includes('1 minute free'),
+      'expect badge to show correct duration for minutes when less than a minute left',
+    );
   });
 
-  test('header should show vip badge if user has active free usage grant', async function(assert) {
+  test('header should show vip badge if user has active free usage grant', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -365,7 +371,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
   });
 
-  test('header should show subscribe button when not vip and has expired free usage grants', async function(assert) {
+  test('header should show subscribe button when not vip and has expired free usage grants', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -408,7 +414,7 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
   });
 
-  test('free weeks left button redirects to refer', async function(assert) {
+  test('free weeks left button redirects to refer', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -419,6 +425,6 @@ module('Acceptance | referrals-page | view-referrals', function(hooks) {
     await catalogPage.visit();
     await catalogPage.header.freeWeeksLeftButton.click();
 
-    assert.strictEqual(currentURL(), '/refer', 'expect to be redirected to refer page')
+    assert.strictEqual(currentURL(), '/refer', 'expect to be redirected to refer page');
   });
 });
