@@ -100,11 +100,9 @@ export default class CourseController extends Controller {
   }
 
   @action
-  handleDidUpdateActiveRepository() {
-    if (this.model.activeRepository !== this.polledRepository) {
-      this.stopRepositoryPoller();
-      this.startRepositoryPoller();
-    }
+  handleDidUpdateActiveRepositoryId() {
+    this.stopRepositoryPoller();
+    this.startRepositoryPoller();
   }
 
   @action
@@ -149,14 +147,17 @@ export default class CourseController extends Controller {
   startRepositoryPoller() {
     this.stopRepositoryPoller();
 
-    if (this.model.activeRepository) {
+    if (this.model.activeRepository && this.model.activeRepository.id) {
       this.repositoryPoller = new RepositoryPoller({
         store: this.store,
         visibilityService: this.visibility,
         actionCableConsumerService: this.actionCableConsumer,
       });
 
-      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'RepositoryChannel');
+      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'RepositoryChannel', {
+        repository_id: this.model.activeRepository.id,
+      });
+
       this.polledRepository = this.model.activeRepository;
     }
   }
