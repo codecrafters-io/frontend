@@ -79,6 +79,10 @@
             </PrimaryLinkButton>
           {{/if}}
 
+          {{#if this.currentUser.hasActiveFreeUsageGrants}}
+            <Header::FreeWeeksLeftBadge />
+          {{/if}}
+
           <Header::AccountDropdown />
         {{else}}
           <Header::SignInWithGithubButton />
