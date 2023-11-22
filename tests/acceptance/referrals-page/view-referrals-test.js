@@ -296,6 +296,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     await catalogPage.visit();
 
     assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('7 days free'), 'expect badge to show correct duration for days');
+
+    await percySnapshot('Header | Has free usage grants');
   });
 
   test('header should have a badge that shows the remaining time in days when expiry is a couple month away', async function (assert) {
@@ -369,6 +371,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
 
     assert.true(catalogPage.header.vipBadge.isVisible, 'expect vip badge to be visible');
     assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
+
+    await percySnapshot('Header | Has VIP status');
   });
 
   test('header should show subscribe button when not vip and has expired free usage grants', async function (assert) {
@@ -412,6 +416,8 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     assert.true(catalogPage.header.subscribeButton.isVisible, 'expect subscribe button to be visible');
     assert.false(catalogPage.header.vipBadge.isVisible, 'expect vip badge to be hidden');
     assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
+
+    await percySnapshot('Header | Has no VIP status and free usage grants');
   });
 
   test('free weeks left button redirects to refer', async function (assert) {

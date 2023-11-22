@@ -86,6 +86,10 @@ export default class UserModel extends Model {
     return `https://github.com/${this.githubUsername}`;
   }
 
+  get hasActiveFreeUsageGrantsValueIsOutdated() {
+    return this.lastFreeUsageGrantExpiresAt < new Date();
+  }
+
   get hasActiveSubscription() {
     return !!this.activeSubscription;
   }
@@ -96,10 +100,6 @@ export default class UserModel extends Model {
 
   get hasEarnedThreeInADayBadge() {
     return this.badgeAwards.any((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
-  }
-
-  get hasFutureFreeUsageGrants() {
-    return this.lastFreeUsageGrantExpiresAt > new Date();
   }
 
   get hasJoinedAffiliateProgram() {

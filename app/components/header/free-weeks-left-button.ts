@@ -29,7 +29,7 @@ export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
     return `${timeRemaining} free`;
   }
 
-  get freeWeeksLeftTooltip() {
+  get freeWeeksLeftTooltipCopy() {
     return `Your free usage expires on ${format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'PPpp')}`;
   }
 }
