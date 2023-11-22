@@ -1,3 +1,4 @@
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import referralPage from 'codecrafters-frontend/tests/pages/referral-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -8,6 +9,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | referrals-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
@@ -281,5 +283,154 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'This referral grants you free access from 17 November 2023 to 24 November 2023.',
     });
+  });
+
+  test('header should have a badge that shows the remaining time in days', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { days: 7 }) });
+
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('7 days free'), 'expect badge to show correct duration for days');
+
+    await percySnapshot('Header | Has free usage grants');
+  });
+
+  test('header should have a badge that shows the remaining time in days when expiry is a couple month away', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { days: 60 }) });
+
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+
+    assert.true(
+      catalogPage.header.freeWeeksLeftButton.text.includes('60 days free'),
+      'expect badge to show correct duration for days when more than a week/month',
+    );
+  });
+
+  test('header should have a badge that shows the remaining time in hours', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { hours: 7 }) });
+
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
+  });
+
+  test('header should have a badge that shows the remaining time in minutes', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { minutes: 15 }) });
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.freeWeeksLeftButton.text.includes('15 minutes free'), 'expect badge to show correct duration for minutes');
+  });
+
+  test('header should have a badge that shows the remaining time in minutes when less than a minute left', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { seconds: 30 }) });
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+
+    assert.true(
+      catalogPage.header.freeWeeksLeftButton.text.includes('1 minute free'),
+      'expect badge to show correct duration for minutes when less than a minute left',
+    );
+  });
+
+  test('header should show vip badge if user has active free usage grant', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { days: 7 }) });
+    user.update({ isVip: true });
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.vipBadge.isVisible, 'expect vip badge to be visible');
+    assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
+
+    await percySnapshot('Header | Has VIP status');
+  });
+
+  test('header should show subscribe button when not vip and has expired free usage grants', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+
+    const referralLink = this.server.create('referral-link', {
+      user,
+      slug: 'test-slug',
+      url: 'https://app.codecrafters.io/r/test-slug',
+    });
+
+    const customer = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const referralActivation = this.server.create('referral-activation', {
+      customer: customer,
+      referrer: user,
+      referralLink,
+      createdAt: new Date(),
+    });
+
+    this.server.create('free-usage-grant', {
+      user,
+      referralActivation,
+      activatesAt: sub(new Date(), { days: 10 }),
+      sourceType: 'referred_other_user',
+      expiresAt: sub(new Date(), { days: 3 }),
+    });
+
+    user.update({ hasActiveFreeUsageGrants: false, lastFreeUsageGrantExpiresAt: sub(new Date(), { days: 3 }) });
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.subscribeButton.isVisible, 'expect subscribe button to be visible');
+    assert.false(catalogPage.header.vipBadge.isVisible, 'expect vip badge to be hidden');
+    assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
+
+    await percySnapshot('Header | Has no VIP status and free usage grants');
+  });
+
+  test('free weeks left button redirects to refer', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { days: 7 }) });
+
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+    await catalogPage.header.freeWeeksLeftButton.click();
+
+    assert.strictEqual(currentURL(), '/refer', 'expect to be redirected to refer page');
   });
 });

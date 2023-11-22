@@ -42,6 +42,10 @@ export default class HeaderComponent extends Component {
     return links;
   }
 
+  get shouldShowFreeWeeksLeftButton() {
+    return this.currentUser && this.currentUser.hasActiveFreeUsageGrants && !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated;
+  }
+
   get shouldShowSubscribeButton() {
     return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }

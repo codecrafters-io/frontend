@@ -68,10 +68,10 @@
 
           {{#if this.currentUser.isVip}}
             <Header::VipBadge class="mr-3" />
-          {{/if}}
-
-          {{#if this.shouldShowSubscribeButton}}
-            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4">
+          {{else if this.shouldShowFreeWeeksLeftButton}}
+            <Header::FreeWeeksLeftButton class="mr-3" />
+          {{else if this.shouldShowSubscribeButton}}
+            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-subscribe-button>
               <span class="flex items-center gap-x-1">
                 <span>Subscribe</span>
                 {{svg-jar "lock-open" class="w-4"}}

@@ -1,0 +1,8 @@
+<PrimaryLinkButton @size="extra-small" @route="refer" class="mr-4" data-test-free-weeks-left-button>
+  <span class="flex items-center gap-x-1">
+    {{svg-jar "clock" class="w-4 fill-current"}}
+    {{this.freeWeeksLeftCopy}}
+  </span>
+
+  <EmberTooltip @text={{this.freeWeeksLeftTooltipCopy}} />
+</PrimaryLinkButton>
