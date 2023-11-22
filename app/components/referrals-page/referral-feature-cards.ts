@@ -22,17 +22,17 @@ export default class ReferralFeatureCardsComponent extends Component<Signature> 
     return [
       {
         title: 'Generate your link in 1 click.',
-        bodyMarkdown: 'Get a unique URL you can use for referring.',
+        bodyMarkdown: 'Refer friends with a unique URL.',
         imageUrl: generateLinkImage,
       },
       {
         title: '1 week free for your friends.',
-        bodyMarkdown: 'Every friend who uses your link gets 1 week free.',
+        bodyMarkdown: 'Each referral gets 1 week free.',
         imageUrl: getOneYearFreeImage,
       },
       {
         title: 'Up to 1 year free for you.',
-        bodyMarkdown: 'Get 1 week free for every referral, up to 52 weeks.',
+        bodyMarkdown: '1 week free per referral. Up to 52 weeks.',
         imageUrl: giftOneWeekFreeImage,
       },
     ];
