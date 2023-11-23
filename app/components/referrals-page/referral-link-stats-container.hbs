@@ -29,14 +29,16 @@
             {{this.activeFreeUsageGrantsCount}}
           </span>
           <span class="text-gray-300 text-xs ml-1">
-            (expires on {{this.lastFreeUsageGrantExpiresAt}})
+            (expires on
+            {{this.lastFreeUsageGrantExpiresAt}})
           </span>
         {{else}}
           <span class="text-gray-300 text-xs" data-test-referral-stats-free-weeks-left-count>
             0
           </span>
           <span class="text-gray-300 text-xs ml-1">
-            (expired on {{this.lastFreeUsageGrantExpiresAt}})
+            (expired on
+            {{this.lastFreeUsageGrantExpiresAt}})
           </span>
         {{/if}}
       </div>
