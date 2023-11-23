@@ -7,10 +7,10 @@
       data-test-referral-stats-referrals
     >
       <div class="flex items-center">
-        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.activations.length}}</span>
-
         {{#if (eq @referralLink.activations.length 0)}}
-          <span class="text-gray-300 text-xs ml-1">(no referrals yet)</span>
+          <span class="text-gray-300 text-xs ml-1">0 (no referrals yet)</span>
+        {{else}}
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.activations.length}}</span>
         {{/if}}
       </div>
     </ReferralsPage::ReferralLinkStatContainer>
