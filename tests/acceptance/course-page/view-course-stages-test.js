@@ -3,6 +3,7 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { add, sub } from 'date-fns';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -382,6 +383,97 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
 
     assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+  });
+
+  test('stages should not have an upgrade prompt if user has active free usage grants', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update({ hasActiveFreeUsageGrants: true, lastFreeUsageGrantExpiresAt: add(new Date(), { days: 7 }) });
+
+    signIn(this.owner, this.server, user);
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
+
+    assert.notOk(
+      coursePage.hasUpgradePrompt,
+      'course stage item that is not free should not have upgrade prompt if user has active free usage grants',
+    );
+  });
+
+  test('stages should have an upgrade prompt if user has expired free usage grants', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.first();
+    user.update({ hasActiveFreeUsageGrants: false, lastFreeUsageGrantExpiresAt: sub(new Date(), { days: 7 }) });
+
+    signIn(this.owner, this.server, user);
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      name: 'C #1',
+      user,
+    });
+
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('course-stage-completion', {
+        repository: repository,
+        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+      });
+    });
+
+    this.server.create('course-stage-feedback-submission', {
+      repository: repository,
+      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      status: 'closed',
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Docker');
+
+    assert.ok(
+      coursePage.upgradePrompt.isVisible,
+      'course stage item that is not free should have upgrade prompt if user has expired free usage grants',
+    );
+
+    await coursePage.sidebar.clickOnStepListItem('Handle exit codes').click(); // The previous completed stage
+
+    assert.notOk(
+      coursePage.hasUpgradePrompt,
+      'course stage item that is completed should not have upgrade prompt if user has expired free usage grants',
+    );
+
+    await coursePage.sidebar.clickOnStepListItem('Process isolation').click(); // The next pending stage
+
+    assert.notOk(
+      coursePage.hasUpgradePrompt,
+      'course stage item that is pending should not have upgrade prompt if user has expired free usage grants',
+    );
   });
 
   test('first time visit has loading page', async function (assert) {
