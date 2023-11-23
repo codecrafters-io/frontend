@@ -28,12 +28,12 @@ export default class ReferralFeatureCardsComponent extends Component<Signature> 
       {
         title: '1 week free for your friends.',
         bodyMarkdown: 'Each referral gets 1 week free.',
-        imageUrl: getOneYearFreeImage,
+        imageUrl: giftOneWeekFreeImage,
       },
       {
         title: 'Up to 1 year free for you.',
         bodyMarkdown: '1 week free per referral. Up to 52 weeks.',
-        imageUrl: giftOneWeekFreeImage,
+        imageUrl: getOneYearFreeImage,
       },
     ];
   }

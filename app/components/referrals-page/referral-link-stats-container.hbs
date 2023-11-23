@@ -7,10 +7,10 @@
       data-test-referral-stats-referrals
     >
       <div class="flex items-center">
-        <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.activations.length}}</span>
-
         {{#if (eq @referralLink.activations.length 0)}}
-          <span class="text-gray-300 text-xs ml-1">(no referrals yet)</span>
+          <span class="text-gray-300 text-xs ml-1">0 (no referrals yet)</span>
+        {{else}}
+          <span class="text-gray-700 text-lg sm:text-2xl font-bold">{{@referralLink.activations.length}}</span>
         {{/if}}
       </div>
     </ReferralsPage::ReferralLinkStatContainer>
@@ -23,22 +23,22 @@
     >
       <div class="flex items-center">
         {{#if (eq @freeUsageGrants.length 0)}}
-          <span class="text-gray-300 text-xs ml-1">0 (waiting on first referral)</span>
+          <span class="text-gray-300 text-xs">0 (waiting on first referral)</span>
         {{else if this.currentUser.hasActiveFreeUsageGrants}}
           <span class="text-gray-700 text-lg sm:text-2xl font-bold" data-test-referral-stats-free-weeks-left-count>
             {{this.activeFreeUsageGrantsCount}}
           </span>
-          <span class="text-gray-700 text-xs">
+          <span class="text-gray-300 text-xs ml-1">
             (expires on
-            {{this.lastFreeUsageGrantExpiresAt}}
+            {{this.lastFreeUsageGrantExpiresAt}})
           </span>
         {{else}}
-          <span class="text-gray-700 text-lg sm:text-2xl font-bold" data-test-referral-stats-free-weeks-left-count>
+          <span class="text-gray-300 text-xs" data-test-referral-stats-free-weeks-left-count>
             0
           </span>
-          <span class="text-gray-700 text-xs">
+          <span class="text-gray-300 text-xs ml-1">
             (expired on
-            {{this.lastFreeUsageGrantExpiresAt}}
+            {{this.lastFreeUsageGrantExpiresAt}})
           </span>
         {{/if}}
       </div>
