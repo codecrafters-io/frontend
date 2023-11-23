@@ -51,7 +51,7 @@ export default class UserModel extends Model {
   }
 
   get canAccessPaidContent() {
-    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot || this.hasActiveFreeUsageGrants;
   }
 
   get codecraftersProfileUrl() {
