@@ -64,6 +64,12 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
+  handleReferralsLinkClick(dropdownActions) {
+    dropdownActions.close();
+    this.router.transitionTo('refer');
+  }
+
+  @action
   handleStatusPageClick(dropdownActions) {
     window.open('https://status.codecrafters.io/', '_blank');
     dropdownActions.close();
