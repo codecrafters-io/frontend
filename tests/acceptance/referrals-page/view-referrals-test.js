@@ -16,23 +16,23 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('get 1 free week link is visible', async function (assert) {
+  test('referrals link is visible', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
     await catalogPage.accountDropdown.toggle();
 
-    assert.true(catalogPage.accountDropdown.hasLink('Get 1 free week'), 'expect to see Get 1 free week link');
+    assert.true(catalogPage.accountDropdown.hasLink('Referrals'), 'expect to see Get 1 free week link');
   });
 
-  test('get 1 free week link redirects to correct page', async function (assert) {
+  test('referrals link redirects to correct page', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
     await catalogPage.accountDropdown.toggle();
-    await catalogPage.accountDropdown.clickOnLink('Get 1 free week');
+    await catalogPage.accountDropdown.clickOnLink('Referrals');
 
     assert.strictEqual(currentURL(), '/refer', 'expect to be redirected to referrals page');
   });
