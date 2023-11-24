@@ -36,7 +36,7 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     return (
       !this.isCreatingReferralActivation &&
       !this.currentUserIsReferrer &&
-      !this.currentUserAlreadyAcceptedReferral &&
+      !this.currentUserAcceptedReferralOfferIsExpired &&
       !this.currentUser?.canAccessPaidContent
     );
   }
@@ -45,8 +45,12 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     return this.authenticator.currentUser;
   }
 
-  get currentUserAlreadyAcceptedReferral() {
-    return !!this.currentUser?.lastFreeUsageGrantExpiresAt;
+  get currentUserAcceptedReferralOfferIsExpired() {
+    return this.currentUser?.hasActiveFreeUsageGrantsValueIsOutdated;
+  }
+
+  get currentUserAlreadyAcceptedReferralOffer() {
+    return !this.currentUserIsReferrer && this.isAccepted && !this.currentUserAcceptedReferralOfferIsExpired;
   }
 
   get currentUserIsAnonymous() {
@@ -57,6 +61,9 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     if (this.authenticator.isAnonymous) {
       return false;
     } else {
+      console.log(this.args.referralLink.user);
+      console.log(this.authenticator.currentUser);
+
       return this.args.referralLink.user === this.authenticator.currentUser;
     }
   }

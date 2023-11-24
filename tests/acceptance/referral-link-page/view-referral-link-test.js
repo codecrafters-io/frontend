@@ -78,6 +78,66 @@ module('Acceptance | referral-link-page | view-referral-link', function (hooks) 
     assert.strictEqual(currentURL(), '/r/test-slug', 'nothing happens when button is clicked');
   });
 
+  test('button should be disabled if the user is the referrer and has accepted a referral offer', async function (assert) {
+    testScenario(this.server);
+
+    const referralLink = this.server.create('referral-link', {
+      user: this.server.schema.users.first(),
+      slug: 'test-slug',
+    });
+
+    const customer = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    const referralActivation = this.server.create('referral-activation', {
+      customer,
+      referrer: this.server.schema.users.first(),
+      referralLink,
+      createdAt: new Date(),
+    });
+
+    this.server.create('free-usage-grant', {
+      user: this.server.schema.users.first(),
+      referralActivation,
+      activatesAt: new Date(),
+      active: true,
+      expiresAt: add(new Date(), { days: 7 }),
+      sourceType: 'referred_other_user',
+    });
+
+    const customerFreeUsageGrant = this.server.create('free-usage-grant', {
+      user: customer,
+      referralActivation,
+      activatesAt: new Date(),
+      active: true,
+      expiresAt: sub(new Date(), { days: 14 }),
+      sourceType: 'accepted_referral_offer',
+    });
+
+    customer.update({ lastFreeUsageGrantExpiresAt: customerFreeUsageGrant.expiresAt });
+
+    this.server.create('referral-link', {
+      user: customer,
+      slug: 'customer-slug',
+    });
+
+    signIn(this.owner, this.server, customer);
+    await referralLinkPage.visit({ referral_link_slug: 'customer-slug' });
+    await referralLinkPage.acceptReferralButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: "You can't accept your own referral offer.",
+    });
+
+    await referralLinkPage.acceptReferralButton.click();
+
+    assert.strictEqual(currentURL(), '/r/customer-slug', 'nothing happens when button is clicked');
+  });
+
   test('button should be disabled if referral is already accepted and free usage grant is expired', async function (assert) {
     testScenario(this.server);
 
@@ -109,7 +169,7 @@ module('Acceptance | referral-link-page | view-referral-link', function (hooks) 
       sourceType: 'referred_other_user',
     });
 
-    const customer_free_usage_grant = this.server.create('free-usage-grant', {
+    const customerFreeUsageGrant = this.server.create('free-usage-grant', {
       user: customer,
       referralActivation,
       activatesAt: new Date(),
@@ -118,7 +178,7 @@ module('Acceptance | referral-link-page | view-referral-link', function (hooks) 
       sourceType: 'accepted_referral_offer',
     });
 
-    customer.update({ lastFreeUsageGrantExpiresAt: customer_free_usage_grant.expiresAt });
+    customer.update({ lastFreeUsageGrantExpiresAt: customerFreeUsageGrant.expiresAt });
 
     signIn(this.owner, this.server, customer);
     await referralLinkPage.visit({ referral_link_slug: 'test-slug' });
