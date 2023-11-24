@@ -27,6 +27,11 @@ export default class ReferralLinkRoute extends BaseRoute {
       include: 'user',
     });
 
-    return { referralLink: referralLinks.firstObject };
+    const acceptedReferralOfferFreeUsageGrant = await this.store.query('free-usage-grant', {
+      sourceType: 'accepted_referral_offer',
+      user_id: this.authenticator.currentUser?.id,
+    });
+
+    return { referralLink: referralLinks.firstObject, acceptedReferralOfferFreeUsageGrant: acceptedReferralOfferFreeUsageGrant.firstObject };
   }
 }

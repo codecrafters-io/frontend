@@ -1,5 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
+import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RouterService from '@ember/routing/router-service';
@@ -13,6 +14,7 @@ interface Signature {
   Element: HTMLElement;
 
   Args: {
+    acceptedReferralOfferFreeUsageGrant: FreeUsageGrantModel | null;
     referralLink: ReferralLinkModel;
   };
 }
@@ -24,9 +26,11 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
   @service store!: Store;
   @service router!: RouterService;
 
-  @tracked isAccepted: boolean = false;
+  @tracked isAccepted: boolean = this.args.acceptedReferralOfferFreeUsageGrant ? true : false;
   @tracked isCreatingReferralActivation: boolean = false;
-  @tracked freeUsageGrantExpiresAt: string = '';
+  @tracked freeUsageGrantExpiresAt: string = this.args.acceptedReferralOfferFreeUsageGrant
+    ? format(this.args.acceptedReferralOfferFreeUsageGrant.expiresAt, 'dd MMM yyyy')
+    : '';
 
   get acceptOfferButtonIsEnabled() {
     return (

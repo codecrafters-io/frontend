@@ -1,3 +1,4 @@
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import referralLinkPage from 'codecrafters-frontend/tests/pages/referral-link-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -56,5 +57,34 @@ module('Acceptance | referral-link-page | accept-referral-offer', function (hook
     assert.true(referralLinkPage.acceptedReferralNotice.text.includes('24 Nov 2023'), 'should show accepted referral notice');
 
     await percySnapshot('Referral Link Page | Accepted Referral Offer');
+  });
+
+  test('offer accepted notice persists if user visits the link again', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const referrer = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    this.server.create('referral-link', {
+      user: referrer,
+      slug: 'test-slug',
+    });
+
+    await referralLinkPage.visit({ referral_link_slug: 'test-slug' });
+    await referralLinkPage.acceptReferralButton.click();
+
+    assert.true(referralLinkPage.acceptedReferralNotice.text.includes('Offer Accepted!'), 'should show accepted referral notice');
+    assert.true(referralLinkPage.acceptedReferralNotice.text.includes('24 Nov 2023'), 'should show accepted referral notice');
+
+    await catalogPage.visit();
+    await referralLinkPage.visit({ referral_link_slug: 'test-slug' });
+
+    assert.true(referralLinkPage.acceptedReferralNotice.text.includes('Offer Accepted!'), 'should show accepted referral notice');
+    assert.true(referralLinkPage.acceptedReferralNotice.text.includes('24 Nov 2023'), 'should show accepted referral notice');
   });
 });

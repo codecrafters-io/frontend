@@ -1,9 +1,10 @@
 import Controller from '@ember/controller';
+import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import testimonialsData from 'codecrafters-frontend/lib/testimonials-data';
 
 export default class ReferralLinkController extends Controller {
-  declare model: { referralLink: ReferralLinkModel };
+  declare model: { acceptedReferralOfferFreeUsageGrant: FreeUsageGrantModel; referralLink: ReferralLinkModel };
 
   get testimonialGroups() {
     const testimonialGroup1 = [
