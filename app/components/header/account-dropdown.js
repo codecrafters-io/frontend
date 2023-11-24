@@ -29,12 +29,6 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
-  handleGet1FreeWeekLinkClick(dropdownActions) {
-    dropdownActions.close();
-    this.router.transitionTo('refer');
-  }
-
-  @action
   handleGetHelpClick(dropdownActions) {
     window.Beacon('open');
     dropdownActions.close();
@@ -67,6 +61,12 @@ export default class HeaderAccountDropdownComponent extends Component {
   handlePerksLinkClick(dropdownActions) {
     window.open('https://codecrafters.io/perks', '_blank');
     dropdownActions.close();
+  }
+
+  @action
+  handleReferralsLinkClick(dropdownActions) {
+    dropdownActions.close();
+    this.router.transitionTo('refer');
   }
 
   @action
