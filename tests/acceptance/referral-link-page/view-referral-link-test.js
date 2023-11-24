@@ -8,7 +8,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { add } from 'date-fns';
+import { add, sub } from 'date-fns';
 
 module('Acceptance | referral-link-page | view-referral-link', function (hooks) {
   setupApplicationTest(hooks);
@@ -78,7 +78,7 @@ module('Acceptance | referral-link-page | view-referral-link', function (hooks) 
     assert.strictEqual(currentURL(), '/r/test-slug', 'nothing happens when button is clicked');
   });
 
-  test('button should be disabled if referral is already accepted', async function (assert) {
+  test('button should be disabled if referral is already accepted and free usage grant is expired', async function (assert) {
     testScenario(this.server);
 
     const referralLink = this.server.create('referral-link', {
@@ -114,7 +114,7 @@ module('Acceptance | referral-link-page | view-referral-link', function (hooks) 
       referralActivation,
       activatesAt: new Date(),
       active: true,
-      expiresAt: add(new Date(), { days: 7 }),
+      expiresAt: sub(new Date(), { days: 14 }),
       sourceType: 'accepted_referral_offer',
     });
 

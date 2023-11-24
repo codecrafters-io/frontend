@@ -19,6 +19,7 @@ export class TemporaryUserModel {
   declare featureSuggestions: unknown[];
   declare githubProfileUrl: string;
   declare hasActiveFreeUsageGrants: boolean;
+  declare hasActiveFreeUsageGrantsValueIsOutdated: boolean;
   declare hasJoinedReferralProgram: boolean;
   declare id: string;
   declare isConceptAuthor: boolean;

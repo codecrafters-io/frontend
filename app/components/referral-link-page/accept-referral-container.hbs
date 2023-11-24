@@ -18,7 +18,7 @@
       of CodeCrafters
     </div>
 
-    {{#if this.isAccepted}}
+    {{#if (and this.isAccepted (not this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated))}}
       <div class="py-6 px-5 mt-6 rounded bg-teal-50 border border-teal-600 prose" data-test-accepted-referral-notice>
         <p>
           🎉 Offer Accepted!
