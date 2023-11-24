@@ -382,7 +382,13 @@ function routes() {
 
   this.get('/referral-earnings-payouts');
   this.post('/referral-earnings-payouts');
-  this.get('/referral-links');
+  this.get('/referral-links', function (schema, request) {
+    if (request.queryParams.user_id) {
+      return schema.referralLinks.where({ userId: request.queryParams.user_id });
+    } else if (request.queryParams.slug) {
+      return schema.referralLinks.where({ slug: request.queryParams.slug });
+    }
+  });
 
   this.post('/referral-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
