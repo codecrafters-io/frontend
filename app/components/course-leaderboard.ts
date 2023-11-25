@@ -123,19 +123,6 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
   @action
   async handleDidInsert() {
-    if (this.team) {
-      this.entriesFromAPI = (await this.store.query('leaderboard-entry', {
-        course_id: this.args.course.id,
-        team_id: this.team.id,
-        include: 'language,current-course-stage,user',
-      })) as unknown as LeaderboardEntry[];
-    } else {
-      this.entriesFromAPI = (await this.store.query('leaderboard-entry', {
-        course_id: this.args.course.id,
-        include: 'language,current-course-stage,user',
-      })) as unknown as LeaderboardEntry[];
-    }
-
     this.isLoadingEntries = false;
     this.isReloadingEntries = false;
     this.startLeaderboardPoller();
