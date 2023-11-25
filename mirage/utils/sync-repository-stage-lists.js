@@ -1,3 +1,22 @@
+const DEBUG = false;
+
+function debugConsole() {
+  if (DEBUG) {
+    window.console.log.apply(window.console, arguments);
+  } else {
+    return {
+      log: function () {},
+      info: function () {},
+      warn: function () {},
+      error: function () {},
+      debug: function () {},
+      group: function () {},
+      groupCollapsed: function () {},
+      groupEnd: function () {},
+    };
+  }
+}
+
 function syncRepositoryStageList(server, repository) {
   if (!repository.stageList) {
     repository.update({ stageList: server.create('repository-stage-list') });
@@ -6,10 +25,10 @@ function syncRepositoryStageList(server, repository) {
   let currentStageListItemPosition = 1;
   let firstIncompleteStage = null;
 
-  console.groupCollapsed('syncRepositoryStageList');
+  debugConsole().groupCollapsed('syncRepositoryStageList');
 
   repository.course.stages.models.sortBy('position').forEach((stage) => {
-    console.group(`${stage.slug} (${stage.position})`);
+    debugConsole().group(`${stage.slug} (${stage.position})`);
     let stageListItem = repository.stageList.items.models.findBy('stage.id', stage.id);
 
     // If the stage has a primary extension, but the user doesn't have an activation for it, then destroy the stageListItem
@@ -17,24 +36,24 @@ function syncRepositoryStageList(server, repository) {
       const extensionActivation = repository.courseExtensionActivations.models.findBy('extension.slug', stage.primaryExtensionSlug);
 
       if (!extensionActivation) {
-        console.log(`No extension activation found for stage. stageExtensionSlug=${stage.primaryExtensionSlug}`);
+        debugConsole().log(`No extension activation found for stage. stageExtensionSlug=${stage.primaryExtensionSlug}`);
 
         if (stageListItem) {
-          console.log('destroying stageListItem');
+          debugConsole().log('destroying stageListItem');
           stageListItem.destroy();
         }
 
-        console.groupEnd();
+        debugConsole().groupEnd();
 
         return;
       }
     }
 
     if (!stageListItem) {
-      console.log('creating stageListItem');
+      debugConsole().log('creating stageListItem');
       stageListItem = server.create('repository-stage-list-item', { list: repository.stageList, stage: stage });
     } else {
-      console.log('found existing stageListItem');
+      debugConsole().log('found existing stageListItem');
     }
 
     const courseStageCompletion = repository.courseStageCompletions.models.findBy('courseStage.id', stage.id);
@@ -51,10 +70,10 @@ function syncRepositoryStageList(server, repository) {
       isCurrent: firstIncompleteStage && firstIncompleteStage.id === stage.id,
     });
 
-    console.groupEnd();
+    debugConsole().groupEnd();
   });
 
-  console.groupEnd();
+  debugConsole().groupEnd();
 
   if (!repository.stageList.items.models.find((item) => item.isCurrent)) {
     repository.stageList.items.models[repository.stageList.items.models.length - 1].update({ isCurrent: true });
