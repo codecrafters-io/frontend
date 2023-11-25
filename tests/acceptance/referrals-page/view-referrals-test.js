@@ -10,7 +10,6 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | referrals-page | view-referrals', function (hooks) {
   setupApplicationTest(hooks);
