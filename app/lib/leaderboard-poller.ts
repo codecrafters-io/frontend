@@ -6,6 +6,9 @@ export default class LeaderboardPoller extends Poller {
   team?: TeamModel;
 
   async doPoll() {
+    // Avoid thundering herd by waiting for a random amount of time (up to 1 second)
+    await new Promise((resolve) => setTimeout(resolve, Math.floor(Math.random() * 1000)));
+
     if (this.team) {
       return await this.store.query('leaderboard-entry', {
         course_id: (this.model as CourseModel).id,
