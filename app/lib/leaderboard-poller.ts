@@ -1,13 +1,15 @@
 import Poller from 'codecrafters-frontend/lib/poller';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type TeamModel from 'codecrafters-frontend/models/team';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class LeaderboardPoller extends Poller {
   team?: TeamModel;
 
   async doPoll() {
     // Avoid thundering herd by waiting for a random amount of time (up to 1 second)
-    await new Promise((resolve) => setTimeout(resolve, Math.floor(Math.random() * 1000)));
+    const maxJitterMs = config.environment === 'test' ? 10 : 1000;
+    await new Promise((resolve) => setTimeout(resolve, Math.floor(Math.random() * maxJitterMs)));
 
     if (this.team) {
       return await this.store.query('leaderboard-entry', {
