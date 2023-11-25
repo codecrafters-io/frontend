@@ -32,13 +32,22 @@ export default class ActionCableConsumerService extends Service {
       onData?: (data: string) => void;
     },
   ) {
-    return this.#consumer().subscriptions.create(
-      { channel, ...args },
-      {
-        connected: callbacks.onConnect,
-        disconnected: callbacks.onDisconnect,
-        received: callbacks.onData,
-      },
-    );
+    if (config.environment === 'test') {
+      callbacks.onConnect?.();
+
+      return {
+        send: () => {},
+        unsubscribe: () => {},
+      };
+    } else {
+      return this.#consumer().subscriptions.create(
+        { channel, ...args },
+        {
+          connected: callbacks.onConnect,
+          disconnected: callbacks.onDisconnect,
+          received: callbacks.onData,
+        },
+      );
+    }
   }
 }
