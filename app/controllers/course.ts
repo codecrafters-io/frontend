@@ -101,6 +101,10 @@ export default class CourseController extends Controller {
 
   @action
   handleDidUpdateActiveRepositoryId() {
+    if (this.polledRepository && this.polledRepository?.id === this.model.activeRepository?.id) {
+      return;
+    }
+
     this.stopRepositoryPoller();
     this.startRepositoryPoller();
   }
@@ -145,21 +149,23 @@ export default class CourseController extends Controller {
   }
 
   startRepositoryPoller() {
+    if (!this.model.activeRepository || !this.model.activeRepository.id) {
+      return;
+    }
+
     this.stopRepositoryPoller();
 
-    if (this.model.activeRepository && this.model.activeRepository.id) {
-      this.repositoryPoller = new RepositoryPoller({
-        store: this.store,
-        visibilityService: this.visibility,
-        actionCableConsumerService: this.actionCableConsumer,
-      });
+    this.repositoryPoller = new RepositoryPoller({
+      store: this.store,
+      visibilityService: this.visibility,
+      actionCableConsumerService: this.actionCableConsumer,
+    });
 
-      this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'RepositoryChannel', {
-        repository_id: this.model.activeRepository.id,
-      });
+    this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'RepositoryChannel', {
+      repository_id: this.model.activeRepository.id,
+    });
 
-      this.polledRepository = this.model.activeRepository;
-    }
+    this.polledRepository = this.model.activeRepository;
   }
 
   stopRepositoryPoller() {
