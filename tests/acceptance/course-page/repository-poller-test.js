@@ -17,6 +17,8 @@ module('Acceptance | course-page | repository-poller', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    window.pollerInstances = []; // TODO: Do this for ALL tests?
+
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
