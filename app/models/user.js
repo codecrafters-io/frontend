@@ -87,6 +87,10 @@ export default class UserModel extends Model {
   }
 
   get hasActiveFreeUsageGrantsValueIsOutdated() {
+    if (!this.lastFreeUsageGrantExpiresAt) {
+      return false;
+    }
+
     return this.lastFreeUsageGrantExpiresAt < new Date();
   }
 

@@ -61,9 +61,6 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
     if (this.authenticator.isAnonymous) {
       return false;
     } else {
-      console.log(this.args.referralLink.user);
-      console.log(this.authenticator.currentUser);
-
       return this.args.referralLink.user === this.authenticator.currentUser;
     }
   }

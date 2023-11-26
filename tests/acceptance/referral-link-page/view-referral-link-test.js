@@ -35,7 +35,7 @@ module('Acceptance | referral-link-page | view-referral-link', function (hooks) 
     await percySnapshot('Referral Link Page | View Referral Link | Anonymous');
   });
 
-  test('can view affiliate link when logged in', async function (assert) {
+  test('can view referral link when logged in', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
