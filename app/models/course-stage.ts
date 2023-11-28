@@ -4,6 +4,7 @@ import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-s
 import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
 import CourseStageSolutionModel from 'codecrafters-frontend/models/course-stage-solution';
 import CourseModel from 'codecrafters-frontend/models/course';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
@@ -114,12 +115,13 @@ export default class CourseStageModel extends Model {
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
   }
-  hasCommunitySolutionsForLanguage(language) {
+
+  hasCommunitySolutionsForLanguage(language: LanguageModel) {
     return ((this.communitySolutionCounts || {})[language.slug] || 0) > 0;
   }
 
-  hasCommunitySolutionsForLanguagesOtherThan(language) {
-    for (let [languageSlug, solutionsCount] of Object.entries(this.communitySolutionCounts || {})) {
+  hasCommunitySolutionsForLanguagesOtherThan(language: LanguageModel) {
+    for (const [languageSlug, solutionsCount] of Object.entries(this.communitySolutionCounts || {})) {
       if (solutionsCount > 0 && languageSlug !== language.slug) {
         return true;
       }
@@ -128,11 +130,11 @@ export default class CourseStageModel extends Model {
     return false;
   }
 
-  hasSolutionForLanguage(language) {
+  hasSolutionForLanguage(language: LanguageModel) {
     return !!this.solutions.findBy('language', language);
   }
 
-  hasSolutionForLanguagesOtherThan(language) {
+  hasSolutionForLanguagesOtherThan(language: LanguageModel) {
     return this.solutions.any((solution) => solution.language !== language);
   }
 }
