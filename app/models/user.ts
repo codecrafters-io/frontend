@@ -7,6 +7,7 @@ import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
 import CourseLanguageRequestModel from 'codecrafters-frontend/models/course-language-request';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-installation';
@@ -17,7 +18,6 @@ import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubscriptionModel from 'codecrafters-frontend/models/subscription';
 import TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
-import { TemporaryCourseStageModel } from 'codecrafters-frontend/lib/temporary-types';
 import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-event';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
@@ -177,7 +177,7 @@ export default class UserModel extends Model {
     return this.teamMemberships.mapBy('team');
   }
 
-  canAttemptCourseStage(courseStage: TemporaryCourseStageModel) {
+  canAttemptCourseStage(courseStage: CourseStageModel) {
     return courseStage.isFree || this.canAccessPaidContent;
   }
 

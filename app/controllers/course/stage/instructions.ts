@@ -1,15 +1,16 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import type { TemporaryCourseStageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
 export default class CourseStageInstructionsController extends Controller {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
 
   declare model: {
-    courseStage: TemporaryCourseStageModel;
+    courseStage: CourseStageModel;
     activeRepository: TemporaryRepositoryModel;
   };
 

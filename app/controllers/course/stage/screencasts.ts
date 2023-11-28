@@ -1,15 +1,15 @@
 import Controller from '@ember/controller';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { createPopup } from '@typeform/embed';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
-import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
-import type { TemporaryCourseStageModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type ModelType = {
-  courseStage: TemporaryCourseStageModel;
+  courseStage: CourseStageModel;
 };
 
 export default class ScreencastsTabComponent extends Controller {

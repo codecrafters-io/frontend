@@ -1,7 +1,8 @@
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
-import { TemporaryCourseStageModel, TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
+import { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 import { inject as service } from '@ember/service';
 
 /* eslint-disable ember/no-mixins */
@@ -11,7 +12,7 @@ export default class CourseStageLanguageGuideModel extends Model.extend(Viewable
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
 
-  @belongsTo('course-stage', { async: false, inverse: 'languageGuides' }) declare courseStage: TemporaryCourseStageModel;
+  @belongsTo('course-stage', { async: false, inverse: 'languageGuides' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: TemporaryLanguageModel;
 
   @attr('string') declare markdownForBeginner: string;
