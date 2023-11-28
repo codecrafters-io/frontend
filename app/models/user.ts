@@ -35,7 +35,7 @@ export default class UserModel extends Model {
   @attr('boolean') isAffiliate!: boolean;
   @attr('boolean') isConceptAuthor!: boolean;
   @attr('boolean') isStaff!: boolean;
-  @attr('boolean') isVip!: boolean
+  @attr('boolean') isVip!: boolean;
   @attr('date') lastFreeUsageGrantExpiresAt!: Date | null;
   @attr('string') name!: string;
   @attr('string') primaryEmailAddress!: string;
@@ -43,7 +43,7 @@ export default class UserModel extends Model {
   @attr('date') vipStatusExpiresAt!: Date | null;
 
   @hasMany('affiliate-link', { async: false }) affiliateLinks!: AffiliateLinkModel[];
-  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[]
+  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer!: AffiliateReferralModel[];
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards!: BadgeAwardModel[];
   @hasMany('course-language-request', { async: false }) courseLanguageRequests!: CourseLanguageRequestModel[];
