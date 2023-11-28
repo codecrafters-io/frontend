@@ -1,3 +1,8 @@
+import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
+import CourseStageCommentModel from 'codecrafters-frontend/models/course-stage-comment';
+import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
+import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
+import CourseStageSolutionModel from 'codecrafters-frontend/models/course-stage-solution';
 import CourseModel from 'codecrafters-frontend/models/course';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
@@ -5,11 +10,11 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false }) course!: CourseModel;
 
-  @hasMany('course-stage-comments', { async: false }) comments;
-  @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions;
-  @hasMany('course-stage-language-guide', { async: false }) languageGuides;
-  @hasMany('course-stage-solution', { async: false }) solutions;
-  @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) screencasts;
+  @hasMany('course-stage-comments', { async: false }) comments!: CourseStageCommentModel[];
+  @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions!: CommunityCourseStageSolutionModel[];
+  @hasMany('course-stage-language-guide', { async: false }) languageGuides!: CourseStageLanguageGuideModel[];
+  @hasMany('course-stage-solution', { async: false }) solutions!: CourseStageSolutionModel[];
+  @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) screencasts!: CourseStageScreencastModel[];
 
   @attr() conceptSlugs!: string[]; // Array of strings
   @attr('string') difficulty!: string;
@@ -28,10 +33,10 @@ export default class CourseStageModel extends Model {
   @attr() secondaryExtensionSlugs!: string[];
   @attr('string') testerSourceCodeUrl!: string;
 
-  @equal('difficulty', 'very_easy') difficultyIsVeryEasy;
-  @equal('difficulty', 'easy') difficultyIsEasy;
-  @equal('difficulty', 'hard') difficultyIsHard;
-  @equal('difficulty', 'medium') difficultyIsMedium;
+  @equal('difficulty', 'very_easy') difficultyIsVeryEasy!: boolean;
+  @equal('difficulty', 'easy') difficultyIsEasy!: boolean;
+  @equal('difficulty', 'hard') difficultyIsHard!: boolean;
+  @equal('difficulty', 'medium') difficultyIsMedium!: boolean;
 
   get concepts() {
     return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
