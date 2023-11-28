@@ -18,6 +18,7 @@ import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubscriptionModel from 'codecrafters-frontend/models/subscription';
 import TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
+import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-event';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
@@ -190,13 +191,13 @@ export default class UserModel extends Model {
     return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
   }
 
-  isCourseAuthor(course: CourseModel) {
+  isCourseAuthor(course: TemporaryCourseModel) {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 
-  fetchCurrent!: (this: Model, payload: unknown) => Promise<void>;
-  fetchNextInvoicePreview!: (this: Model, payload: unknown) => Promise<void>;
-  syncFeatureFlags!: (this: Model, payload: unknown) => Promise<void>;
+  declare fetchCurrent: (this: Model, payload: unknown) => Promise<Model | null>;
+  declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<void>;
+  declare syncFeatureFlags: (this: Model, payload: unknown) => Promise<void>;
 }
 
 UserModel.prototype.syncFeatureFlags = memberAction({
