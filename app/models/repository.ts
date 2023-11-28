@@ -1,4 +1,12 @@
+import CourseExtensionActivation from 'codecrafters-frontend/models/course-extension-activation';
+import CourseModel from 'codecrafters-frontend/models/course';
+import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
+import GithubRepositorySyncConfiguration from 'codecrafters-frontend/models/github-repository-sync-configuration';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
+import SubmissionModel from 'codecrafters-frontend/models/submission';
+import UserModel from 'codecrafters-frontend/models/user';
 import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
 
 //@ts-ignore
@@ -22,16 +30,16 @@ export default class RepositoryModel extends Model {
     advanced: 'Advanced',
   };
 
-  @belongsTo('course', { async: false }) course;
-  @hasMany('course-extension-activation', { async: false }) courseExtensionActivations;
-  @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
-  @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;
-  @hasMany('github-repository-sync-configuration', { async: false }) githubRepositorySyncConfigurations;
-  @belongsTo('user', { async: false }) user;
-  @belongsTo('language', { async: false }) language;
-  @belongsTo('submission', { async: false, inverse: null }) lastSubmission;
-  @belongsTo('repository-stage-list', { async: false }) stageList;
-  @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
+  @belongsTo('course', { async: false }) course!: CourseModel;
+  @hasMany('course-extension-activation', { async: false }) courseExtensionActivations!: CourseExtensionActivation[];
+  @hasMany('course-stage-completion', { async: false }) courseStageCompletions!: CourseStageCompletionModel[];
+  @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions!: CourseStageCompletionModel[];
+  @hasMany('github-repository-sync-configuration', { async: false }) githubRepositorySyncConfigurations!: GithubRepositorySyncConfiguration[];
+  @belongsTo('user', { async: false }) user!: UserModel;
+  @belongsTo('language', { async: false }) language!: LanguageModel;
+  @belongsTo('submission', { async: false, inverse: null }) lastSubmission!: SubmissionModel;
+  @belongsTo('repository-stage-list', { async: false }) stageList!: RepositoryStageListModel;
+  @hasMany('submission', { async: false, inverse: 'repository' }) submissions!: SubmissionModel[];
 
   @attr('string') cloneUrl!: string;
   @attr('date') createdAt!: Date;
