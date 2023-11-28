@@ -1,8 +1,9 @@
+import CourseModel from 'codecrafters-frontend/models/course';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
 export default class CourseStageModel extends Model {
-  @belongsTo('course', { async: false }) course;
+  @belongsTo('course', { async: false }) course!: CourseModel;
 
   @hasMany('course-stage-comments', { async: false }) comments;
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions;
@@ -10,22 +11,22 @@ export default class CourseStageModel extends Model {
   @hasMany('course-stage-solution', { async: false }) solutions;
   @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) screencasts;
 
-  @attr('') conceptSlugs; // Array of strings
-  @attr('string') difficulty;
-  @attr('boolean') isPaid;
-  @attr('string') name;
-  @attr('string') descriptionMarkdownTemplate;
-  @attr('string') marketingMarkdown;
-  @attr('number') position; // TODO: Remove usages of this
-  @attr('number') positionWithinCourse;
-  @attr('number') positionWithinExtension;
-  @attr('number') approvedCommentsCount;
-  @attr('') communitySolutionCounts; // JSON: { <language_slug>: count }
-  @attr('string') shortName;
-  @attr('string') slug;
-  @attr('string') primaryExtensionSlug;
-  @attr('') secondaryExtensionSlugs; // Array of strings
-  @attr('string') testerSourceCodeUrl;
+  @attr() conceptSlugs!: string[]; // Array of strings
+  @attr('string') difficulty!: string;
+  @attr('boolean') isPaid!: boolean;
+  @attr('string') name!: string;
+  @attr('string') descriptionMarkdownTemplate!: string;
+  @attr('string') marketingMarkdown!: string;
+  @attr('number') position!: number; // TODO: Remove usages of this
+  @attr('number') positionWithinCourse!: number;
+  @attr('number') positionWithinExtension!: number;
+  @attr('number') approvedCommentsCount!: number;
+  @attr() communitySolutionCounts!: { [key: string]: number }; // JSON: { <language_slug>: count }
+  @attr('string') shortName!: string;
+  @attr('string') slug!: string;
+  @attr('string') primaryExtensionSlug!: string;
+  @attr() secondaryExtensionSlugs!: string[];
+  @attr('string') testerSourceCodeUrl!: string;
 
   @equal('difficulty', 'very_easy') difficultyIsVeryEasy;
   @equal('difficulty', 'easy') difficultyIsEasy;
