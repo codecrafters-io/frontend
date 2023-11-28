@@ -5,7 +5,9 @@ import CourseExtensionModel from 'codecrafters-frontend/models/course-extension'
 import CourseLanguageConfigurationModel from 'codecrafters-frontend/models/course-language-configuration';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import Model from '@ember-data/model';
+import UserModel from 'codecrafters-frontend/models/user';
 import { attr, hasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
@@ -144,11 +146,11 @@ export default class CourseModel extends Model {
     return `https://github.com/${this.testerRepositoryFullName}`;
   }
 
-  availableLanguageConfigurationsForUser(user) {
+  availableLanguageConfigurationsForUser(user: UserModel) {
     return this.languageConfigurations.filter((languageConfiguration) => languageConfiguration.isAvailableForUser(user));
   }
 
-  trackIntroductionMarkdownFor(language) {
+  trackIntroductionMarkdownFor(language: LanguageModel) {
     if (this.isRedis) {
       if (language.isGo) {
         return `
@@ -183,8 +185,14 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
     } else if (this.slug === 'bittorrent') {
       return `
 Learn about .torrent files and the famous BitTorrent protocol. Implement your own BitTorrent client in ${language.name}.`;
+    } else {
+      return;
     }
   }
+
+  declare syncBuildpacks: (this: Model, payload: unknown) => Promise<void>;
+  declare syncCourseDefinitionUpdates: (this: Model, payload: unknown) => Promise<void>;
+  declare syncCourseTesterVersions: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({
