@@ -5,7 +5,9 @@ import config from 'codecrafters-frontend/config/environment';
 import CourseExtensionIdeaVoteModel from 'codecrafters-frontend/models/course-extension-idea-vote';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
 import CourseLanguageRequestModel from 'codecrafters-frontend/models/course-language-request';
+import CourseModel from 'codecrafters-frontend/models/course';
 import CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-installation';
@@ -147,10 +149,6 @@ export default class UserModel extends Model {
     }
   }
 
-  get isFree() {
-    return !this.isPaid;
-  }
-
   get isTeamAdmin() {
     return !!this.managedTeams.firstObject;
   }
@@ -179,7 +177,7 @@ export default class UserModel extends Model {
     return this.teamMemberships.mapBy('team');
   }
 
-  canAttemptCourseStage(courseStage) {
+  canAttemptCourseStage(courseStage: CourseStageModel) {
     return courseStage.isFree || this.canAccessPaidContent;
   }
 
@@ -188,11 +186,11 @@ export default class UserModel extends Model {
     return true;
   }
 
-  hasStartedCourse(course) {
+  hasStartedCourse(course: CourseModel) {
     return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
   }
 
-  isCourseAuthor(course) {
+  isCourseAuthor(course: CourseModel) {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 }
