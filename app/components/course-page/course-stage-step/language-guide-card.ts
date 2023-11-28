@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import Store from '@ember-data/store';
 import fade from 'ember-animated/transitions/fade';
-import type { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
+import Store from '@ember-data/store';
+import type { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -13,7 +14,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    repository: TemporaryRepositoryModel;
+    repository: RepositoryModel;
     courseStage: CourseStageModel;
   };
 }

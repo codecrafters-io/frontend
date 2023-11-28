@@ -8,21 +8,21 @@ import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import type { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeRepository: TemporaryRepositoryModel;
+    activeRepository: RepositoryModel;
     course: CourseModel;
     isCollapsed: boolean;
-    repositories: TemporaryRepositoryModel[];
+    repositories: RepositoryModel[];
     shouldShowLanguageIconsWithoutHover?: boolean;
   };
 }
@@ -77,6 +77,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   }
 
   get entriesFromCurrentUser() {
+    // @ts-ignore
     if (this.args.repositories.length === 0 || this.args.activeRepository.isNew) {
       return [];
     }

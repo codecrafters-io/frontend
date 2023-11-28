@@ -23,6 +23,7 @@
       <div class="flex justify-center mt-3 px-3">
         <TertiaryButton
           @size="extra-small"
+          {{! @glint-expect-error: not typesafe yet}}
           @isDisabled={{@activeRepository.isNew}}
           {{on "click" this.handleConfigureExtensionsButtonClick}}
           data-test-configure-extensions-button
@@ -32,6 +33,7 @@
             Extensions
           </div>
 
+          {{! @glint-expect-error: not typesafe yet}}
           {{#if @activeRepository.isNew}}
             <EmberTooltip @text="Complete repository setup to configure extensions" />
           {{/if}}

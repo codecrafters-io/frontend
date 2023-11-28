@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    repository: TemporaryRepositoryModel;
+    repository: RepositoryModel;
     onClose: () => void;
   };
 };

@@ -5,7 +5,6 @@ import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
 import config from 'codecrafters-frontend/config/environment';
-import type { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
@@ -14,11 +13,12 @@ import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 export type ModelType = {
   course: CourseModel;
-  activeRepository: TemporaryRepositoryModel;
-  repositories: TemporaryRepositoryModel[];
+  activeRepository: RepositoryModel;
+  repositories: RepositoryModel[];
 };
 
 export default class CourseController extends Controller {
@@ -41,7 +41,7 @@ export default class CourseController extends Controller {
   @tracked repo: string | undefined = undefined;
   @tracked track: string | undefined = undefined;
 
-  @tracked polledRepository: TemporaryRepositoryModel | null = null;
+  @tracked polledRepository: RepositoryModel | null = null;
   @tracked configureGithubIntegrationModalIsOpen = false;
   @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;

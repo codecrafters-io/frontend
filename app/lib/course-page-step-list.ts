@@ -2,11 +2,11 @@ import { tracked } from '@glimmer/tracking';
 import CourseCompletedStep from 'codecrafters-frontend/lib/course-page-step-list/course-completed-step';
 import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 import IntroductionStep from 'codecrafters-frontend/lib/course-page-step-list/introduction-step';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
+import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 import SetupStep from 'codecrafters-frontend/lib/course-page-step-list/setup-step';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import StepGroup from 'codecrafters-frontend/lib/course-page-step-list/step-group';
-import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 
 // @ts-ignore: No types?
 import { cached } from '@glimmer/tracking';
@@ -19,9 +19,9 @@ import BaseStagesCompletedStep from './course-page-step-list/base-stages-complet
 export { Step };
 
 export class StepList {
-  @tracked declare repository: TemporaryRepositoryModel;
+  @tracked declare repository: RepositoryModel;
 
-  constructor(repository: TemporaryRepositoryModel) {
+  constructor(repository: RepositoryModel) {
     this.repository = repository;
   }
 

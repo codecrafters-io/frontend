@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
 
 type Signature = {
@@ -8,7 +8,7 @@ type Signature = {
 
   Args: {
     isDisabled: boolean;
-    repository: TemporaryRepositoryModel;
+    repository: RepositoryModel;
   };
 };
 
@@ -34,7 +34,7 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
   }
 
   @action
-  async handleSelect(proficiencyLevel: TemporaryRepositoryModel['languageProficiencyLevel']) {
+  async handleSelect(proficiencyLevel: RepositoryModel['languageProficiencyLevel']) {
     if (!this.args.repository.isSaving) {
       this.args.repository.languageProficiencyLevel = proficiencyLevel;
 

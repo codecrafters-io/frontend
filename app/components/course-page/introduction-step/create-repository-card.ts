@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RouterService from '@ember/routing/router-service';
 import * as Sentry from '@sentry/ember';
 import { type Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
-import { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -13,7 +14,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    repository: TemporaryRepositoryModel;
+    repository: RepositoryModel;
   };
 };
 
