@@ -14,21 +14,21 @@ import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
 export default class CourseModel extends Model {
-  @attr('date') buildpacksLastSyncedAt;
-  @attr('number') completionPercentage;
-  @attr('') conceptSlugs; // Array of strings
-  @attr('string') definitionRepositoryFullName;
-  @attr('string') descriptionMarkdown;
-  @attr('string') difficulty;
-  @attr('string') name;
-  @attr('string') releaseStatus;
-  @attr('string') sampleExtensionIdeaTitle;
-  @attr('string') sampleExtensionIdeaDescription;
-  @attr('string') shortDescriptionMarkdown;
-  @attr('string') shortName;
-  @attr('string') slug;
-  @attr('string') testerRepositoryFullName;
-  @attr() testimonials; // free-form JSON
+  @attr('date') buildpacksLastSyncedAt!: Date;
+  @attr('number') completionPercentage!: number;
+  @attr() conceptSlugs!: string[];
+  @attr('string') definitionRepositoryFullName!: string;
+  @attr('string') descriptionMarkdown!: string;
+  @attr('string') difficulty!: string;
+  @attr('string') name!: string;
+  @attr('string') releaseStatus!: string;
+  @attr('string') sampleExtensionIdeaTitle!: string;
+  @attr('string') sampleExtensionIdeaDescription!: string;
+  @attr('string') shortDescriptionMarkdown!: string;
+  @attr('string') shortName!: string;
+  @attr('string') slug!: string;
+  @attr('string') testerRepositoryFullName!: string;
+  @attr() testimonials!: { [key: string]: string }; // free-form JSON
 
   @hasMany('buildpack', { async: false }) buildpacks;
   @hasMany('course-definition-update', { async: false }) definitionUpdates;
