@@ -1,27 +1,28 @@
 import config from 'codecrafters-frontend/config/environment';
+import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import Model, { attr, hasMany } from '@ember-data/model';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
 export default class UserModel extends Model {
-  @service('feature-flags') featureFlagsService;
+  @service('feature-flags') featureFlagsService!: FeatureFlagsService;
 
-  @attr() authoredCourseSlugs;
-  @attr('string') avatarUrl;
-  @attr('date') createdAt;
-  @attr('') featureFlags;
-  @attr('string') githubUsername;
-  @attr('boolean') hasActiveFreeUsageGrants;
-  @attr('boolean') isAdmin;
-  @attr('boolean') isAffiliate;
-  @attr('boolean') isConceptAuthor;
-  @attr('boolean') isStaff;
-  @attr('boolean') isVip;
-  @attr('date') lastFreeUsageGrantExpiresAt;
-  @attr('string') name;
-  @attr('string') primaryEmailAddress;
-  @attr('string') username;
-  @attr('date') vipStatusExpiresAt;
+  @attr() authoredCourseSlugs!: string[];
+  @attr('string') avatarUrl!: string;
+  @attr('date') createdAt!: Date;
+  @attr() featureFlags!: { [key: string]: string };
+  @attr('string') githubUsername!: string;
+  @attr('boolean') hasActiveFreeUsageGrants!: boolean;
+  @attr('boolean') isAdmin!: boolean;
+  @attr('boolean') isAffiliate!: boolean;
+  @attr('boolean') isConceptAuthor!: boolean;
+  @attr('boolean') isStaff!: boolean;
+  @attr('boolean') isVip!: boolean
+  @attr('date') lastFreeUsageGrantExpiresAt!: Date | null;
+  @attr('string') name!: string;
+  @attr('string') primaryEmailAddress!: string;
+  @attr('string') username!: string;
+  @attr('date') vipStatusExpiresAt!: Date | null;
 
   @hasMany('affiliate-link', { async: false }) affiliateLinks;
   @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
