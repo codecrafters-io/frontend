@@ -1,9 +1,9 @@
+import CourseModel from 'codecrafters-frontend/models/course';
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import LanguageModel from './language';
 
 export default class BuildpackModel extends Model {
-  @belongsTo('course', { async: false }) declare course: TemporaryCourseModel;
+  @belongsTo('course', { async: false }) declare course: CourseModel;
   @belongsTo('language', { async: false }) declare language: LanguageModel;
 
   @attr('date') declare createdAt: Date;

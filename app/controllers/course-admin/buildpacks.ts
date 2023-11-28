@@ -1,13 +1,13 @@
 import Controller from '@ember/controller';
+import CourseModel from 'codecrafters-frontend/models/course';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class BuildpacksController extends Controller {
   declare model: {
-    course: TemporaryCourseModel;
+    course: CourseModel;
   };
 
   @service declare store: Store;
@@ -37,9 +37,11 @@ export default class BuildpacksController extends Controller {
     this.isSyncingWithGitHub = true;
 
     this.errorMessage = null;
-    const syncResult = await this.model.course.syncBuildpacks();
+    const syncResult = await this.model.course.syncBuildpacks(null);
 
+    // @ts-ignore
     if (syncResult['error']) {
+      // @ts-ignore
       this.errorMessage = syncResult['error'];
     }
 

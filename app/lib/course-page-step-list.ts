@@ -38,7 +38,7 @@ export class StepList {
     if (!this.repository.stageList) {
       this.repository.course.sortedBaseStages.forEach((stage) => {
         // TODO: Find better way around this?
-        const fakeStageListItem = { stage: stage, isDisabled: false } as RepositoryStageListItemModel;
+        const fakeStageListItem = { stage: stage, isDisabled: false } as unknown as RepositoryStageListItemModel;
         steps.push(new CourseStageStep(this.repository, fakeStageListItem));
       });
     } else {

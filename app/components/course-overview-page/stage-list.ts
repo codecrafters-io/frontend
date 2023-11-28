@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
+import CourseModel from 'codecrafters-frontend/models/course';
 import fade from 'ember-animated/transitions/fade';
 import { fadeIn } from 'ember-animated/motions/opacity';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type Signature = {
   Args: {
-    course: TemporaryCourseModel;
+    course: CourseModel;
   };
 };
 

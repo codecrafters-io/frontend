@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import CourseModel from 'codecrafters-frontend/models/course';
 import LeaderboardEntry from '../lib/leaderboard-entry';
 import LeaderboardPoller from 'codecrafters-frontend/lib/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
@@ -7,7 +8,7 @@ import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import type { TemporaryCourseModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
@@ -19,7 +20,7 @@ interface Signature {
 
   Args: {
     activeRepository: TemporaryRepositoryModel;
-    course: TemporaryCourseModel;
+    course: CourseModel;
     isCollapsed: boolean;
     repositories: TemporaryRepositoryModel[];
     shouldShowLanguageIconsWithoutHover?: boolean;
@@ -34,7 +35,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @tracked isLoadingEntries = true;
   @tracked isReloadingEntries = false;
   @tracked entriesFromAPI: LeaderboardEntry[] = [];
-  @tracked polledCourse?: TemporaryCourseModel;
+  @tracked polledCourse?: CourseModel;
   @tracked team?: TeamModel;
 
   @service declare actionCableConsumer: ActionCableConsumerService;

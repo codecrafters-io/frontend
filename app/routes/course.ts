@@ -4,7 +4,8 @@ import BaseRoute from 'codecrafters-frontend/lib/base-route';
 import RSVP from 'rsvp';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { next } from '@ember/runloop';
-import type { TemporaryCourseModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type CourseModel from 'codecrafters-frontend/models/course';
+import type { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import type Transition from '@ember/routing/transition';
 import type RouterService from '@ember/routing/router-service';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
@@ -27,7 +28,7 @@ export default class CourseRoute extends BaseRoute {
     },
   };
 
-  findOrCreateRepository(course: TemporaryCourseModel, transition: Transition, repositories: TemporaryRepositoryModel[]) {
+  findOrCreateRepository(course: CourseModel, transition: Transition, repositories: TemporaryRepositoryModel[]) {
     // @ts-ignore
     if (transition.to.queryParams.repo && transition.to.queryParams.repo === 'new') {
       // @ts-ignore
@@ -89,7 +90,7 @@ export default class CourseRoute extends BaseRoute {
 
     const coursesPromise = this.store.findAll('course', {
       include: includedCourseResources.join(','),
-    }) as unknown as Promise<TemporaryCourseModel[]>;
+    }) as unknown as Promise<CourseModel[]>;
 
     const repositoriesPromise = this.store.findAll('repository', {
       include: RepositoryPoller.defaultIncludedResources,
@@ -101,8 +102,8 @@ export default class CourseRoute extends BaseRoute {
   }
 
   async model(params: { course_slug: string }, transition: Transition): Promise<ModelType> {
-    const [allCourses, allRepositories] = (await this.loadResources()) as [TemporaryCourseModel[], TemporaryRepositoryModel[]];
-    const course = allCourses.find((course) => course.slug === params.course_slug) as TemporaryCourseModel;
+    const [allCourses, allRepositories] = (await this.loadResources()) as [CourseModel[], TemporaryRepositoryModel[]];
+    const course = allCourses.find((course) => course.slug === params.course_slug) as CourseModel;
 
     const repositories = allRepositories.filter((repository) => {
       return !repository.isNew && repository.course.id === course.id && repository.user.id === this.authenticator.currentUser?.id;

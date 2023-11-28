@@ -1,8 +1,8 @@
+import CourseModel from 'codecrafters-frontend/models/course';
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class CourseExtensionModel extends Model {
-  @belongsTo('course', { async: false, inverse: 'extensions' }) declare course: TemporaryCourseModel;
+  @belongsTo('course', { async: false, inverse: 'extensions' }) declare course: CourseModel;
 
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare name: string;

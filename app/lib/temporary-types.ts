@@ -4,36 +4,15 @@ import CourseExtensionModel from 'codecrafters-frontend/models/course-extension'
 import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-extension-activation';
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
-import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import UserModel from 'codecrafters-frontend/models/user';
-
-export class TemporaryCourseModel {
-  declare baseStages: TemporaryCourseStageModel[];
-  declare betaOrLiveLanguages: TemporaryLanguageModel[];
-  declare buildpacks: BuildpackModel[];
-  declare buildpacksLastSyncedAt: Date | null;
-  declare definitionRepositoryFullName: string;
-  declare definitionRepositoryLink: string;
-  declare extensions: CourseExtensionModel[];
-  declare firstStage: TemporaryCourseStageModel | null;
-  declare hasExtensions: boolean;
-  declare id: string;
-  declare name?: string;
-  declare primaryExtensionSlug: string | null;
-  declare releaseStatusIsBeta: boolean;
-  declare secondaryExtensionSlugs: string[];
-  declare slug: string;
-  declare sortedBaseStages: TemporaryCourseStageModel[];
-  declare stages: TemporaryCourseStageModel[];
-  declare syncBuildpacks: () => Promise<Record<string, string>>;
-}
+import CourseModel from 'codecrafters-frontend/models/course';
 
 export class TemporaryCourseStageModel {
   declare id: string;
   declare difficulty: 'very_easy' | 'easy' | 'medium' | 'hard';
   declare slug: string;
-  declare course: TemporaryCourseModel;
+  declare course: CourseModel;
   declare descriptionMarkdownTemplate: string;
   declare identifierForURL: string;
   declare isBaseStage: boolean;
@@ -74,7 +53,7 @@ export class TemporarySubmissionModel {
 export class TemporaryRepositoryModel {
   declare allStagesAreComplete: boolean;
   declare baseStagesAreComplete: boolean;
-  declare course: TemporaryCourseModel;
+  declare course: CourseModel;
   declare courseExtensionActivations: CourseExtensionActivationModel[];
   declare currentStage: TemporaryCourseStageModel | null;
   declare createdAt: Date | null;
