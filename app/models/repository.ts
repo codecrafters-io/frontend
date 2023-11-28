@@ -1,6 +1,9 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
+
+//@ts-ignore
 import { cached } from '@glimmer/tracking';
+
 import { memberAction } from 'ember-api-actions';
 
 export default class RepositoryModel extends Model {
@@ -30,14 +33,14 @@ export default class RepositoryModel extends Model {
   @belongsTo('repository-stage-list', { async: false }) stageList;
   @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
 
-  @attr('string') cloneUrl;
-  @attr('date') createdAt;
-  @attr('string') expectedActivityFrequency;
-  @attr('string') name;
-  @attr('string') languageProficiencyLevel;
-  @attr('string') progressBannerUrl;
-  @attr('boolean', { allowNull: true }) remindersAreEnabled;
-  @attr('number') submissionsCount;
+  @attr('string') cloneUrl!: string;
+  @attr('date') createdAt!: Date;
+  @attr('string') expectedActivityFrequency!: string;
+  @attr('string') name!: string;
+  @attr('string') languageProficiencyLevel!: string;
+  @attr('string') progressBannerUrl!: string;
+  @attr('boolean', { allowNull: true }) remindersAreEnabled!: boolean | null;
+  @attr('number') submissionsCount!: number;
 
   get activatedCourseExtensions() {
     return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
