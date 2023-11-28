@@ -1,7 +1,14 @@
+import BuildpackModel from 'codecrafters-frontend/models/buildpack';
+import CourseDefinitionUpdateModel from 'codecrafters-frontend/models/course-definition-update';
+import CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
+import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import CourseLanguageConfigurationModel from 'codecrafters-frontend/models/course-language-configuration';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
+import Model from '@ember-data/model';
 import { attr, hasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
-import Model from '@ember-data/model';
 
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
@@ -30,28 +37,28 @@ export default class CourseModel extends Model {
   @attr('string') testerRepositoryFullName!: string;
   @attr() testimonials!: { [key: string]: string }; // free-form JSON
 
-  @hasMany('buildpack', { async: false }) buildpacks;
-  @hasMany('course-definition-update', { async: false }) definitionUpdates;
-  @hasMany('course-extension-idea', { async: false }) extensionIdeas;
-  @hasMany('course-extension', { async: false, inverse: 'course' }) extensions;
-  @hasMany('course-language-configuration', { async: false }) languageConfigurations;
-  @hasMany('course-stage', { async: false }) stages;
-  @hasMany('course-tester-version', { async: false }) testerVersions;
+  @hasMany('buildpack', { async: false }) buildpacks!: BuildpackModel[];
+  @hasMany('course-definition-update', { async: false }) definitionUpdates!: CourseDefinitionUpdateModel[];
+  @hasMany('course-extension-idea', { async: false }) extensionIdeas!: CourseExtensionIdeaModel[];
+  @hasMany('course-extension', { async: false, inverse: 'course' }) extensions!: CourseExtensionModel[];
+  @hasMany('course-language-configuration', { async: false }) languageConfigurations!: CourseLanguageConfigurationModel[];
+  @hasMany('course-stage', { async: false }) stages!: CourseStageModel[];
+  @hasMany('course-tester-version', { async: false }) testerVersions!: CourseTesterVersionModel[];
 
-  @equal('difficulty', 'easy') difficultyIsEasy;
-  @equal('difficulty', 'hard') difficultyIsHard;
-  @equal('difficulty', 'medium') difficultyIsMedium;
+  @equal('difficulty', 'easy') difficultyIsEasy!: boolean;
+  @equal('difficulty', 'hard') difficultyIsHard!: boolean;
+  @equal('difficulty', 'medium') difficultyIsMedium!: boolean;
 
-  @equal('slug', 'docker') isDocker;
-  @equal('slug', 'git') isGit;
-  @equal('slug', 'grep') isGrep;
-  @equal('slug', 'react') isReact;
-  @equal('slug', 'redis') isRedis;
-  @equal('slug', 'sqlite') isSQLite;
+  @equal('slug', 'docker') isDocker!: boolean;
+  @equal('slug', 'git') isGit!: boolean;
+  @equal('slug', 'grep') isGrep!: boolean;
+  @equal('slug', 'react') isReact!: boolean;
+  @equal('slug', 'redis') isRedis!: boolean;
+  @equal('slug', 'sqlite') isSQLite!: boolean;
 
-  @equal('releaseStatus', 'alpha') releaseStatusIsAlpha;
-  @equal('releaseStatus', 'beta') releaseStatusIsBeta;
-  @equal('releaseStatus', 'live') releaseStatusIsLive;
+  @equal('releaseStatus', 'alpha') releaseStatusIsAlpha!: boolean;
+  @equal('releaseStatus', 'beta') releaseStatusIsBeta!: boolean;
+  @equal('releaseStatus', 'live') releaseStatusIsLive!: boolean;
 
   get baseStages() {
     return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
