@@ -36,6 +36,10 @@ export default class FooterComponent extends Component {
           text: 'HTTP Server',
           url: 'https://app.codecrafters.io/courses/http-server/overview',
         },
+        {
+          text: 'DNS Server',
+          url: 'https://app.codecrafters.io/courses/dns-server/overview',
+        },
       ],
     };
   }
