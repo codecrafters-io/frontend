@@ -1,6 +1,22 @@
+import AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
+import AffiliateReferralModel from 'codecrafters-frontend/models/affiliate-referral';
+import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import config from 'codecrafters-frontend/config/environment';
+import CourseExtensionIdeaVoteModel from 'codecrafters-frontend/models/course-extension-idea-vote';
+import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
+import CourseLanguageRequestModel from 'codecrafters-frontend/models/course-language-request';
+import CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
+import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-installation';
 import Model, { attr, hasMany } from '@ember-data/model';
+import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
+import ReferralEarningsPayoutModel from 'codecrafters-frontend/models/referral-earnings-payout';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
+import SubscriptionModel from 'codecrafters-frontend/models/subscription';
+import TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
+import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-event';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
@@ -24,24 +40,24 @@ export default class UserModel extends Model {
   @attr('string') username!: string;
   @attr('date') vipStatusExpiresAt!: Date | null;
 
-  @hasMany('affiliate-link', { async: false }) affiliateLinks;
-  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer;
-  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer;
-  @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards;
-  @hasMany('course-language-request', { async: false }) courseLanguageRequests;
-  @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes;
-  @hasMany('course-idea-vote', { async: false }) courseIdeaVotes;
-  @hasMany('course-participation', { async: false }) courseParticipations;
-  @hasMany('feature-suggestion', { async: false }) featureSuggestions;
-  @hasMany('github-app-installation', { async: false }) githubAppInstallations;
-  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer;
-  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer;
-  @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts;
-  @hasMany('referral-link', { async: false }) referralLinks;
-  @hasMany('repository', { async: false }) repositories;
-  @hasMany('subscription', { async: false }) subscriptions;
-  @hasMany('team-membership', { async: false }) teamMemberships;
-  @hasMany('user-profile-event', { async: false }) profileEvents;
+  @hasMany('affiliate-link', { async: false }) affiliateLinks!: AffiliateLinkModel[];
+  @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[]
+  @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer!: AffiliateReferralModel[];
+  @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards!: BadgeAwardModel[];
+  @hasMany('course-language-request', { async: false }) courseLanguageRequests!: CourseLanguageRequestModel[];
+  @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes!: CourseExtensionIdeaVoteModel[];
+  @hasMany('course-idea-vote', { async: false }) courseIdeaVotes!: CourseIdeaVoteModel[];
+  @hasMany('course-participation', { async: false }) courseParticipations!: CourseParticipationModel[];
+  @hasMany('feature-suggestion', { async: false }) featureSuggestions!: FeatureSuggestionModel[];
+  @hasMany('github-app-installation', { async: false }) githubAppInstallations!: GitHubAppInstallationModel[];
+  @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer!: ReferralActivationModel[];
+  @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer!: ReferralActivationModel[];
+  @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts!: ReferralEarningsPayoutModel[];
+  @hasMany('referral-link', { async: false }) referralLinks!: ReferralLinkModel[];
+  @hasMany('repository', { async: false }) repositories!: RepositoryModel[];
+  @hasMany('subscription', { async: false }) subscriptions!: SubscriptionModel[];
+  @hasMany('team-membership', { async: false }) teamMemberships!: TeamMembershipModel[];
+  @hasMany('user-profile-event', { async: false }) profileEvents!: UserProfileEventModel[];
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
