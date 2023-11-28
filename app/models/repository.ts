@@ -1,6 +1,7 @@
 import CourseExtensionActivation from 'codecrafters-frontend/models/course-extension-activation';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import GithubRepositorySyncConfiguration from 'codecrafters-frontend/models/github-repository-sync-configuration';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
@@ -13,6 +14,9 @@ import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'code
 import { cached } from '@glimmer/tracking';
 
 import { memberAction } from 'ember-api-actions';
+
+type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
+type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
 
 export default class RepositoryModel extends Model {
   static expectedActivityFrequencyMappings = {
@@ -43,9 +47,9 @@ export default class RepositoryModel extends Model {
 
   @attr('string') cloneUrl!: string;
   @attr('date') createdAt!: Date;
-  @attr('string') expectedActivityFrequency!: string;
+  @attr('string') expectedActivityFrequency!: ExpectedActivityFrequency;
   @attr('string') name!: string;
-  @attr('string') languageProficiencyLevel!: string;
+  @attr('string') languageProficiencyLevel!: LanguageProficiencyLevel;
   @attr('string') progressBannerUrl!: string;
   @attr('boolean', { allowNull: true }) remindersAreEnabled!: boolean | null;
   @attr('number') submissionsCount!: number;
@@ -81,7 +85,7 @@ export default class RepositoryModel extends Model {
     }
 
     if (this.stageList) {
-      return this.stageList.items.find((item) => item.isCurrent).stage;
+      return this.stageList.items.find((item) => item.isCurrent)?.stage;
     } else {
       return null; // We haven't loaded the stage list yet
     }
@@ -109,11 +113,14 @@ export default class RepositoryModel extends Model {
       return null;
     }
 
-    return this.courseStageCompletions.sortBy('courseStage.position').lastObject.courseStage;
+    return this.courseStageCompletions.sortBy('courseStage.position').lastObject?.courseStage;
   }
 
   get isRecentlyCreated() {
-    return new Date() - this.createdAt <= 1800 * 1000; // 30min
+    const now = new Date().getTime();
+    const createdAt = this.createdAt.getTime();
+
+    return now - createdAt <= 1800 * 1000; // 30min
   }
 
   get languageProficiencyLevelHumanized() {
@@ -146,19 +153,20 @@ export default class RepositoryModel extends Model {
     return buildPreChallengeAssessmentSectionList(this);
   }
 
-  courseStageCompletionFor(courseStage) {
+  courseStageCompletionFor(courseStage: CourseStageModel) {
     return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
   }
 
-  courseStageFeedbackSubmissionFor(courseStage) {
+  courseStageFeedbackSubmissionFor(courseStage: CourseExtensionActivation) {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
   }
 
-  hasClosedCourseStageFeedbackSubmissionFor(courseStage) {
+  hasClosedCourseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
+    // @ts-ignore
     return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
-  stageCompletedAt(courseStage) {
+  stageCompletedAt(courseStage: CourseStageModel) {
     if (!this.stageList) {
       return null;
     }
@@ -168,9 +176,12 @@ export default class RepositoryModel extends Model {
     return stageListItem ? stageListItem.completedAt : null;
   }
 
-  stageIsComplete(courseStage) {
+  stageIsComplete(courseStage: CourseStageModel) {
     return !!this.courseStageCompletionFor(courseStage);
   }
+
+  declare fork: (this: Model, payload: unknown) => Promise<void>;
+  declare updateTesterVersion: (this: Model, payload: unknown) => Promise<void>;
 }
 
 RepositoryModel.prototype.updateTesterVersion = memberAction({

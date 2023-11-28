@@ -1,10 +1,10 @@
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export class Section {
-  repository: TemporaryRepositoryModel;
+  repository: RepositoryModel;
 
-  constructor(repository: TemporaryRepositoryModel) {
+  constructor(repository: RepositoryModel) {
     this.repository = repository;
   }
 
@@ -137,7 +137,7 @@ export class SectionList {
   }
 }
 
-export function buildSectionList(repository: TemporaryRepositoryModel) {
+export function buildSectionList(repository: RepositoryModel) {
   return new SectionList([
     new SelectLanguageSection(repository),
     new SelectLanguageProficiencyLevelSection(repository),
