@@ -195,7 +195,7 @@ export default class UserModel extends Model {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 
-  declare fetchCurrent: (this: Model, payload: unknown) => Promise<Model | null>;
+  declare fetchCurrent: (this: Model, payload: unknown) => Promise<void>;
   declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<void>;
   declare syncFeatureFlags: (this: Model, payload: unknown) => Promise<void>;
 }
