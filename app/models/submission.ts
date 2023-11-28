@@ -1,14 +1,20 @@
+import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
+import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Model, { hasMany } from '@ember-data/model';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
+import SubmissionEvaluationModel from 'codecrafters-frontend/models/submission-evaluation';
 import { attr, belongsTo } from '@ember-data/model';
 
 export default class SubmissionModel extends Model {
-  @belongsTo('course-stage', { async: false }) courseStage;
-  @belongsTo('community-course-stage-solution', { async: false }) communityCourseStageSolution;
-  @belongsTo('course-tester-version', { async: false, inverse: null }) testerVersion;
-  @belongsTo('repository', { async: false, inverse: 'submissions' }) repository;
+  @belongsTo('course-stage', { async: false }) courseStage!: CourseStageModel;
+  @belongsTo('community-course-stage-solution', { async: false }) communityCourseStageSolution!: CommunityCourseStageSolutionModel;
+  @belongsTo('course-tester-version', { async: false, inverse: null }) testerVersion!: CourseTesterVersionModel;
+  @belongsTo('repository', { async: false, inverse: 'submissions' }) repository!: RepositoryModel;
 
-  @hasMany('badge-award', { async: false }) badgeAwards;
-  @hasMany('submission-evaluation', { async: false }) evaluations;
+  @hasMany('badge-award', { async: false }) badgeAwards!: BadgeAwardModel[];
+  @hasMany('submission-evaluation', { async: false }) evaluations!: SubmissionEvaluationModel[];
 
   @attr() changedFiles!: { [key: string]: string }[]; // free-form JSON
   @attr('date') createdAt!: Date;
