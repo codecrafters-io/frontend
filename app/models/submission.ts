@@ -10,18 +10,21 @@ export default class SubmissionModel extends Model {
   @hasMany('badge-award', { async: false }) badgeAwards;
   @hasMany('submission-evaluation', { async: false }) evaluations;
 
-  @attr('') changedFiles; // free-form JSON
-  @attr('date') createdAt;
-  @attr('string') githubStorageHtmlUrl;
-  @attr('boolean') wasSubmittedViaCli;
-  @attr('string') status;
+  @attr() changedFiles!: { [key: string]: string }[]; // free-form JSON
+  @attr('date') createdAt!: Date;
+  @attr('string') githubStorageHtmlUrl!: string;
+  @attr('boolean') wasSubmittedViaCli!: boolean;
+  @attr('string') status!: string;
 
   get hasChangedFiles() {
     return this.changedFiles && this.changedFiles.length > 0;
   }
 
   get isRecent() {
-    return new Date() - this.createdAt <= 300 * 1000; // in last 5 minutes
+    const now = new Date().getTime();
+    const createdAt = this.createdAt.getTime();
+
+    return now - createdAt <= 300 * 1000; // in last 5 minutes
   }
 
   get isSubmittedViaGit() {
