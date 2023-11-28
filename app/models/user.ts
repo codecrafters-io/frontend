@@ -193,6 +193,10 @@ export default class UserModel extends Model {
   isCourseAuthor(course: CourseModel) {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
+
+  fetchCurrent!: (this: Model, payload: unknown) => Promise<void>;
+  fetchNextInvoicePreview!: (this: Model, payload: unknown) => Promise<void>;
+  syncFeatureFlags!: (this: Model, payload: unknown) => Promise<void>;
 }
 
 UserModel.prototype.syncFeatureFlags = memberAction({
