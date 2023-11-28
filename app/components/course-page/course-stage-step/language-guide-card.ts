@@ -2,9 +2,9 @@ import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import fade from 'ember-animated/transitions/fade';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import type { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -23,7 +23,7 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
-  @tracked requestedLanguage: TemporaryLanguageModel | null = null;
+  @tracked requestedLanguage: LanguageModel | null = null;
 
   loadLanguageGuidesTask = task({ keepLatest: true }, async (): Promise<void> => {
     await this.store.query('course-stage-language-guide', {
@@ -32,11 +32,11 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
     });
   });
 
-  get currentLanguage(): TemporaryLanguageModel | null {
+  get currentLanguage(): LanguageModel | null {
     return this.requestedLanguage || this.defaultLanguage;
   }
 
-  get defaultLanguage(): TemporaryLanguageModel | null {
+  get defaultLanguage(): LanguageModel | null {
     if (this.args.repository.language) {
       return this.args.repository.language;
     }
@@ -57,7 +57,7 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
     return this.args.courseStage.languageGuides.findBy('language', this.currentLanguage);
   }
 
-  get sortedLanguagesForDropdown(): TemporaryLanguageModel[] {
+  get sortedLanguagesForDropdown(): LanguageModel[] {
     return this.args.courseStage.course.betaOrLiveLanguages.sortBy('name');
   }
 
@@ -69,7 +69,7 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
   }
 
   @action
-  handleRequestedLanguageChange(language: TemporaryLanguageModel): void {
+  handleRequestedLanguageChange(language: LanguageModel): void {
     this.requestedLanguage = language;
   }
 

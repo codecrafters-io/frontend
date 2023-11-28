@@ -1,11 +1,11 @@
 import Controller from '@ember/controller';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import type { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 import type Store from '@ember-data/store';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 
@@ -20,7 +20,7 @@ export default class CodeExamplesController extends Controller {
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked isLoading = true;
   @tracked solutions: CommunityCourseStageSolutionModel[] = [];
-  @tracked requestedLanguage: TemporaryLanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
+  @tracked requestedLanguage: LanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
 
   get communitySolutionsAreAvailableForCurrentLanguage() {
     return this.currentLanguage && this.courseStage.hasCommunitySolutionsForLanguage(this.currentLanguage);
@@ -61,7 +61,7 @@ export default class CodeExamplesController extends Controller {
   }
 
   @action
-  handleRequestedLanguageChange(language: TemporaryLanguageModel) {
+  handleRequestedLanguageChange(language: LanguageModel) {
     if (language === this.repository.language) {
       this.requestedLanguage = null;
     } else {

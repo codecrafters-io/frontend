@@ -1,6 +1,6 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import type { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
+import LanguageModel from 'codecrafters-frontend/models/language';
 
 interface DDActions {
   close: () => void;
@@ -10,17 +10,17 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    languages: TemporaryLanguageModel[];
-    requestedLanguage: TemporaryLanguageModel | null; // This is highlighted with an exclamation mark if it's not the selected one
-    selectedLanguage: TemporaryLanguageModel | null;
+    languages: LanguageModel[];
+    requestedLanguage: LanguageModel | null; // This is highlighted with an exclamation mark if it's not the selected one
+    selectedLanguage: LanguageModel | null;
     onDidInsertDropdown?: (dropdown: DDActions) => void;
-    onRequestedLanguageChange: (language: TemporaryLanguageModel) => void;
+    onRequestedLanguageChange: (language: LanguageModel) => void;
   };
 }
 
 export default class LanguageDropdownComponent extends Component<Signature> {
   @action
-  handleLanguageDropdownLinkClick(language: TemporaryLanguageModel, closeDropdownFn: () => void) {
+  handleLanguageDropdownLinkClick(language: LanguageModel, closeDropdownFn: () => void) {
     closeDropdownFn();
     this.args.onRequestedLanguageChange(language);
   }

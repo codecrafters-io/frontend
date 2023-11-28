@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import type { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
+import LanguageModel from 'codecrafters-frontend/models/language';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    language: TemporaryLanguageModel;
+    language: LanguageModel;
     onClick: () => void;
     isSelected: boolean;
     isEnabled: boolean;
