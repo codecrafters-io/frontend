@@ -17,7 +17,7 @@ export default class CourseStageModel extends Model {
   @hasMany('course-stage-solution', { async: false }) solutions!: CourseStageSolutionModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) screencasts!: CourseStageScreencastModel[];
 
-  @attr() conceptSlugs!: string[]; // Array of strings
+  @attr() conceptSlugs!: string[];
   @attr('string') difficulty!: string;
   @attr('boolean') isPaid!: boolean;
   @attr('string') name!: string;
