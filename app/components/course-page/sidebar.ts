@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -13,7 +13,7 @@ interface Signature {
   Args: {
     course: CourseModel;
     repositories: unknown[];
-    activeRepository: TemporaryRepositoryModel;
+    activeRepository: RepositoryModel;
   };
 
   Blocks: {

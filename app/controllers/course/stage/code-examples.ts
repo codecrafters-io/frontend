@@ -1,17 +1,18 @@
 import Controller from '@ember/controller';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import type { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 import type Store from '@ember-data/store';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 
 export default class CodeExamplesController extends Controller {
   declare model: {
     courseStage: CourseStageModel;
-    activeRepository: TemporaryRepositoryModel;
+    activeRepository: RepositoryModel;
   };
 
   @service declare store: Store;
@@ -60,7 +61,11 @@ export default class CodeExamplesController extends Controller {
   }
 
   @action
-  handleRequestedLanguageChange(language: TemporaryLanguageModel) {
+  handleRequestedLanguageChange(language: TemporaryLanguageModel | undefined) {
+    if (!language) {
+      return;
+    }
+
     if (language === this.repository.language) {
       this.requestedLanguage = null;
     } else {

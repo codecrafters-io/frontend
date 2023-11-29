@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import { TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -17,7 +17,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    repository: TemporaryRepositoryModel;
+    repository: RepositoryModel;
     extension: CourseExtensionModel;
   };
 };

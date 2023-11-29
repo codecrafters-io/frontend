@@ -14,7 +14,6 @@
       <h2 class="font-semibold text-lg">Code Examples using {{this.currentLanguage.name}}</h2>
 
       {{#if (and this.repository.language (not-eq this.repository.language this.currentLanguage))}}
-        {{! @glint-expect-error: fn not ts-ified yet? }}
         <TertiaryButton @size="small" class="pl-1.5" {{on "click" (fn this.handleRequestedLanguageChange this.repository.language)}}>
           <div class="flex items-center">
             {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
