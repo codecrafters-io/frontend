@@ -1,7 +1,23 @@
+import CourseExtensionActivation from 'codecrafters-frontend/models/course-extension-activation';
+import CourseModel from 'codecrafters-frontend/models/course';
+import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
+import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/course-stage-feedback-submission';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import GithubRepositorySyncConfiguration from 'codecrafters-frontend/models/github-repository-sync-configuration';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
+import SubmissionModel from 'codecrafters-frontend/models/submission';
+import UserModel from 'codecrafters-frontend/models/user';
 import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
+
+//@ts-ignore
 import { cached } from '@glimmer/tracking';
+
 import { memberAction } from 'ember-api-actions';
+
+type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
+type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
 
 export default class RepositoryModel extends Model {
   static expectedActivityFrequencyMappings = {
@@ -19,25 +35,25 @@ export default class RepositoryModel extends Model {
     advanced: 'Advanced',
   };
 
-  @belongsTo('course', { async: false }) course;
-  @hasMany('course-extension-activation', { async: false }) courseExtensionActivations;
-  @hasMany('course-stage-completion', { async: false }) courseStageCompletions;
-  @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions;
-  @hasMany('github-repository-sync-configuration', { async: false }) githubRepositorySyncConfigurations;
-  @belongsTo('user', { async: false }) user;
-  @belongsTo('language', { async: false }) language;
-  @belongsTo('submission', { async: false, inverse: null }) lastSubmission;
-  @belongsTo('repository-stage-list', { async: false }) stageList;
-  @hasMany('submission', { async: false, inverse: 'repository' }) submissions;
+  @belongsTo('course', { async: false }) declare course: CourseModel;
+  @hasMany('course-extension-activation', { async: false }) declare courseExtensionActivations: CourseExtensionActivation[];
+  @hasMany('course-stage-completion', { async: false }) declare courseStageCompletions: CourseStageCompletionModel[];
+  @hasMany('course-stage-feedback-submission', { async: false }) declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
+  @hasMany('github-repository-sync-configuration', { async: false }) declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
+  @belongsTo('user', { async: false }) declare user: UserModel;
+  @belongsTo('language', { async: false }) declare language: LanguageModel;
+  @belongsTo('submission', { async: false, inverse: null }) declare lastSubmission: SubmissionModel;
+  @belongsTo('repository-stage-list', { async: false }) declare stageList: RepositoryStageListModel;
+  @hasMany('submission', { async: false, inverse: 'repository' }) declare submissions: SubmissionModel[];
 
-  @attr('string') cloneUrl;
-  @attr('date') createdAt;
-  @attr('string') expectedActivityFrequency;
-  @attr('string') name;
-  @attr('string') languageProficiencyLevel;
-  @attr('string') progressBannerUrl;
-  @attr('boolean', { allowNull: true }) remindersAreEnabled;
-  @attr('number') submissionsCount;
+  @attr('string') declare cloneUrl: string;
+  @attr('date') declare createdAt: Date;
+  @attr('string') declare expectedActivityFrequency: ExpectedActivityFrequency;
+  @attr('string') declare name: string;
+  @attr('string') declare languageProficiencyLevel: LanguageProficiencyLevel;
+  @attr('string') declare progressBannerUrl: string;
+  @attr('boolean', { allowNull: true }) declare remindersAreEnabled: boolean | null;
+  @attr('number') declare submissionsCount: number;
 
   get activatedCourseExtensions() {
     return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
@@ -70,7 +86,7 @@ export default class RepositoryModel extends Model {
     }
 
     if (this.stageList) {
-      return this.stageList.items.find((item) => item.isCurrent).stage;
+      return this.stageList.items.find((item) => item.isCurrent)?.stage;
     } else {
       return null; // We haven't loaded the stage list yet
     }
@@ -98,11 +114,14 @@ export default class RepositoryModel extends Model {
       return null;
     }
 
-    return this.courseStageCompletions.sortBy('courseStage.position').lastObject.courseStage;
+    return this.courseStageCompletions.sortBy('courseStage.position').lastObject?.courseStage;
   }
 
   get isRecentlyCreated() {
-    return new Date() - this.createdAt <= 1800 * 1000; // 30min
+    const now = new Date().getTime();
+    const createdAt = this.createdAt.getTime();
+
+    return now - createdAt <= 1800 * 1000; // 30min
   }
 
   get languageProficiencyLevelHumanized() {
@@ -135,19 +154,19 @@ export default class RepositoryModel extends Model {
     return buildPreChallengeAssessmentSectionList(this);
   }
 
-  courseStageCompletionFor(courseStage) {
+  courseStageCompletionFor(courseStage: CourseStageModel) {
     return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
   }
 
-  courseStageFeedbackSubmissionFor(courseStage) {
+  courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
   }
 
-  hasClosedCourseStageFeedbackSubmissionFor(courseStage) {
+  hasClosedCourseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
     return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
-  stageCompletedAt(courseStage) {
+  stageCompletedAt(courseStage: CourseStageModel) {
     if (!this.stageList) {
       return null;
     }
@@ -157,9 +176,12 @@ export default class RepositoryModel extends Model {
     return stageListItem ? stageListItem.completedAt : null;
   }
 
-  stageIsComplete(courseStage) {
+  stageIsComplete(courseStage: CourseStageModel) {
     return !!this.courseStageCompletionFor(courseStage);
   }
+
+  declare fork: (this: Model, payload: unknown) => Promise<void>;
+  declare updateTesterVersion: (this: Model, payload: unknown) => Promise<void>;
 }
 
 RepositoryModel.prototype.updateTesterVersion = memberAction({
