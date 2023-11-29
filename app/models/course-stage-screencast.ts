@@ -1,11 +1,12 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { TemporaryCourseStageModel, TemporaryLanguageModel, TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
+import UserModel from 'codecrafters-frontend/models/user';
+import { TemporaryCourseStageModel, TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class CourseStageScreencastModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'screencasts' }) declare courseStage: TemporaryCourseStageModel;
 
   @belongsTo('language', { async: false, inverse: null }) declare language: TemporaryLanguageModel;
-  @belongsTo('user', { async: false, inverse: null }) declare user: TemporaryUserModel;
+  @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   @attr('string') declare authorName: string;
   @attr('string') declare canonicalUrl: string;

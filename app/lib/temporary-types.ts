@@ -5,43 +5,8 @@ import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
 import BuildpackModel from 'codecrafters-frontend/models/buildpack';
-import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
-import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
-import TeamModel from 'codecrafters-frontend/models/team';
-
-export class TemporaryUserModel {
-  declare avatarUrl: string;
-  declare badgeAwards: BadgeAwardModel[];
-  declare canAccessPaidContent: boolean;
-  declare codecraftersProfileUrl: string;
-  declare earlyBirdDiscountEligibilityExpiresAt: Date;
-  declare featureSuggestions: unknown[];
-  declare githubProfileUrl: string;
-  declare hasActiveFreeUsageGrants: boolean;
-  declare hasActiveFreeUsageGrantsValueIsOutdated: boolean;
-  declare hasJoinedReferralProgram: boolean;
-  declare id: string;
-  declare isConceptAuthor: boolean;
-  declare isEligibleForEarlyBirdDiscount: boolean;
-  declare isStaff: boolean;
-  declare isTeamMember: boolean;
-  declare lastFreeUsageGrantExpiresAt: Date | null;
-  declare primaryEmailAddress: string;
-  declare referralLinks: ReferralLinkModel[];
-  declare username: string;
-  declare teams: TeamModel[];
-
-  declare fetchCurrent: (this: TemporaryUserModel, payload: unknown) => Promise<TemporaryUserModel | null>;
-
-  canAttemptCourseStage(_courseStage: TemporaryCourseStageModel): boolean {
-    return false;
-  }
-
-  isCourseAuthor(_course: TemporaryCourseModel): boolean {
-    return false;
-  }
-}
+import UserModel from 'codecrafters-frontend/models/user';
 
 export class TemporaryCourseModel {
   declare baseStages: TemporaryCourseStageModel[];
@@ -73,6 +38,7 @@ export class TemporaryCourseStageModel {
   declare identifierForURL: string;
   declare isBaseStage: boolean;
   declare isFirst: boolean;
+  declare isFree: boolean;
   declare isSecond: boolean;
   declare isThird: boolean;
   declare languageGuides: CourseStageLanguageGuideModel[];
@@ -122,7 +88,7 @@ export class TemporaryRepositoryModel {
   declare preChallengeAssessmentSectionList: PreChallengeAssessmentSectionList;
   declare stageList: RepositoryStageListModel | null;
   declare remindersAreEnabled: boolean | null;
-  declare user: TemporaryUserModel;
+  declare user: UserModel;
   declare lastSubmission: TemporarySubmissionModel | null;
   declare lastSubmissionIsEvaluating: boolean;
   declare lastSubmissionHasFailureStatus: boolean;

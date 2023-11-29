@@ -1,9 +1,9 @@
 import Model, { belongsTo } from '@ember-data/model';
+import UserModel from 'codecrafters-frontend/models/user';
 import { attr } from '@ember-data/model';
-import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class ConceptGroupModel extends Model {
-  @belongsTo('user', { async: false }) author!: TemporaryUserModel;
+  @belongsTo('user', { async: false }) author!: UserModel;
 
   @attr() conceptSlugs!: Array<string>;
   @attr('string') descriptionMarkdown!: string;
