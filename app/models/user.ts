@@ -11,6 +11,7 @@ import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-installation';
+import InvoiceModel from 'codecrafters-frontend/models/invoice';
 import Model, { attr, hasMany } from '@ember-data/model';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
 import ReferralEarningsPayoutModel from 'codecrafters-frontend/models/referral-earnings-payout';
@@ -195,8 +196,8 @@ export default class UserModel extends Model {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 
-  declare fetchCurrent: (this: Model, payload: unknown) => Promise<void>;
-  declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<void>;
+  declare fetchCurrent: (this: Model, payload: unknown) => Promise<UserModel | null>;
+  declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel | null>;
   declare syncFeatureFlags: (this: Model, payload: unknown) => Promise<void>;
 }
 
