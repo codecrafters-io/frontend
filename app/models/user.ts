@@ -11,6 +11,7 @@ import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-installation';
+import InvoiceModel from 'codecrafters-frontend/models/invoice';
 import Model, { attr, hasMany } from '@ember-data/model';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
 import ReferralEarningsPayoutModel from 'codecrafters-frontend/models/referral-earnings-payout';
@@ -25,22 +26,22 @@ import { inject as service } from '@ember/service';
 export default class UserModel extends Model {
   @service('feature-flags') featureFlagsService!: FeatureFlagsService;
 
-  @attr() authoredCourseSlugs!: string[];
-  @attr('string') avatarUrl!: string;
-  @attr('date') createdAt!: Date;
-  @attr() featureFlags!: { [key: string]: string };
-  @attr('string') githubUsername!: string;
-  @attr('boolean') hasActiveFreeUsageGrants!: boolean;
-  @attr('boolean') isAdmin!: boolean;
-  @attr('boolean') isAffiliate!: boolean;
-  @attr('boolean') isConceptAuthor!: boolean;
-  @attr('boolean') isStaff!: boolean;
-  @attr('boolean') isVip!: boolean;
-  @attr('date') lastFreeUsageGrantExpiresAt!: Date | null;
-  @attr('string') name!: string;
-  @attr('string') primaryEmailAddress!: string;
-  @attr('string') username!: string;
-  @attr('date') vipStatusExpiresAt!: Date | null;
+  @attr() declare authoredCourseSlugs: string[];
+  @attr('string') declare avatarUrl: string;
+  @attr('date') declare createdAt: Date;
+  @attr() declare featureFlags: { [key: string]: string };
+  @attr('string') declare githubUsername: string;
+  @attr('boolean') declare hasActiveFreeUsageGrants: boolean;
+  @attr('boolean') declare isAdmin: boolean;
+  @attr('boolean') declare isAffiliate: boolean;
+  @attr('boolean') declare isConceptAuthor: boolean;
+  @attr('boolean') declare isStaff: boolean;
+  @attr('boolean') declare isVip: boolean;
+  @attr('date') declare lastFreeUsageGrantExpiresAt: Date | null;
+  @attr('string') declare name: string;
+  @attr('string') declare primaryEmailAddress: string;
+  @attr('string') declare username: string;
+  @attr('date') declare vipStatusExpiresAt: Date | null;
 
   @hasMany('affiliate-link', { async: false }) affiliateLinks!: AffiliateLinkModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[];
@@ -194,8 +195,8 @@ export default class UserModel extends Model {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 
-  declare fetchCurrent: (this: Model, payload: unknown) => Promise<Model | null>;
-  declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<void>;
+  declare fetchCurrent: (this: Model, payload: unknown) => Promise<UserModel | null>;
+  declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel | null>;
   declare syncFeatureFlags: (this: Model, payload: unknown) => Promise<void>;
 }
 
