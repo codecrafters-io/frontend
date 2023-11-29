@@ -3,36 +3,9 @@ import { SectionList as PreChallengeAssessmentSectionList } from 'codecrafters-f
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import CourseExtensionActivationModel from 'codecrafters-frontend/models/course-extension-activation';
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
-import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
-import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import UserModel from 'codecrafters-frontend/models/user';
 import CourseModel from 'codecrafters-frontend/models/course';
-
-export class TemporaryCourseStageModel {
-  declare id: string;
-  declare difficulty: 'very_easy' | 'easy' | 'medium' | 'hard';
-  declare slug: string;
-  declare course: CourseModel;
-  declare descriptionMarkdownTemplate: string;
-  declare identifierForURL: string;
-  declare isBaseStage: boolean;
-  declare isFirst: boolean;
-  declare isFree: boolean;
-  declare isSecond: boolean;
-  declare isThird: boolean;
-  declare languageGuides: CourseStageLanguageGuideModel[];
-  declare name: string;
-  declare position: number;
-  declare positionWithinExtension: number;
-  declare positionWithinCourse: number;
-  declare primaryExtensionSlug: string | null;
-  declare secondaryExtensionSlugs: string[];
-  declare primaryExtension: CourseExtensionModel | null;
-  declare secondaryExtensions: CourseExtensionModel[];
-  declare screencasts: CourseStageScreencastModel[];
-  declare isExtensionStage: boolean;
-  declare hasCommunitySolutionsForLanguage: (language: TemporaryLanguageModel) => boolean;
-}
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
 export class TemporaryLanguageModel {
   declare id: string;
@@ -45,7 +18,7 @@ export class TemporaryLanguageModel {
 export class TemporarySubmissionModel {
   declare id: string;
   declare status: 'evaluating' | 'failed' | 'success' | 'internal_error';
-  declare courseStage: TemporaryCourseStageModel;
+  declare courseStage: CourseStageModel;
   declare createdAt: Date;
   declare repository: TemporaryRepositoryModel;
 }
@@ -55,7 +28,7 @@ export class TemporaryRepositoryModel {
   declare baseStagesAreComplete: boolean;
   declare course: CourseModel;
   declare courseExtensionActivations: CourseExtensionActivationModel[];
-  declare currentStage: TemporaryCourseStageModel | null;
+  declare currentStage: CourseStageModel | null;
   declare createdAt: Date | null;
   declare expectedActivityFrequency: 'every_day' | 'once_a_week' | 'multiple_times_a_week';
   declare id: null | string;
@@ -88,7 +61,7 @@ export class TemporaryRepositoryModel {
     };
   }
 
-  get highestCompletedStage(): TemporaryCourseStageModel | null {
+  get highestCompletedStage(): CourseStageModel | null {
     return null;
   }
 
@@ -105,7 +78,7 @@ export class TemporaryRepositoryModel {
     };
   }
 
-  hasClosedCourseStageFeedbackSubmissionFor(_stage: TemporaryCourseStageModel) {
+  hasClosedCourseStageFeedbackSubmissionFor(_stage: CourseStageModel) {
     return false;
   }
 

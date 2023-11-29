@@ -1,15 +1,16 @@
 import Controller from '@ember/controller';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import type { TemporaryCourseStageModel, TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import type { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import type Store from '@ember-data/store';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 
 export default class CodeExamplesController extends Controller {
   declare model: {
-    courseStage: TemporaryCourseStageModel;
+    courseStage: CourseStageModel;
     activeRepository: TemporaryRepositoryModel;
   };
 

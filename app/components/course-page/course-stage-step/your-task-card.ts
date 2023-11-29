@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import Mustache from 'mustache';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryCourseStageModel, TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import Prism from 'prismjs';
 
 import 'prismjs';
@@ -16,7 +17,7 @@ interface Signature {
 
   Args: {
     title?: string;
-    courseStage: TemporaryCourseStageModel;
+    courseStage: CourseStageModel;
     repository: TemporaryRepositoryModel;
   };
 }

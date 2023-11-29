@@ -1,10 +1,11 @@
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import Model from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
-import { TemporaryCourseStageModel, TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
+import { TemporaryLanguageModel, TemporaryRepositoryModel } from 'codecrafters-frontend/lib/temporary-types';
 import { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseStageFeedbackSubmissionModel extends Model {
-  @belongsTo('course-stage', { async: false }) declare courseStage: TemporaryCourseStageModel;
+  @belongsTo('course-stage', { async: false }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false }) declare language: TemporaryLanguageModel;
   @belongsTo('repository', { async: false }) declare repository: TemporaryRepositoryModel;
   @belongsTo('user', { async: false }) declare user: UserModel;
