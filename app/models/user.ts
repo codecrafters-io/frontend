@@ -26,22 +26,22 @@ import { inject as service } from '@ember/service';
 export default class UserModel extends Model {
   @service('feature-flags') featureFlagsService!: FeatureFlagsService;
 
-  @attr() authoredCourseSlugs!: string[];
-  @attr('string') avatarUrl!: string;
-  @attr('date') createdAt!: Date;
-  @attr() featureFlags!: { [key: string]: string };
-  @attr('string') githubUsername!: string;
-  @attr('boolean') hasActiveFreeUsageGrants!: boolean;
-  @attr('boolean') isAdmin!: boolean;
-  @attr('boolean') isAffiliate!: boolean;
-  @attr('boolean') isConceptAuthor!: boolean;
-  @attr('boolean') isStaff!: boolean;
-  @attr('boolean') isVip!: boolean;
-  @attr('date') lastFreeUsageGrantExpiresAt!: Date | null;
-  @attr('string') name!: string;
-  @attr('string') primaryEmailAddress!: string;
-  @attr('string') username!: string;
-  @attr('date') vipStatusExpiresAt!: Date | null;
+  @attr() declare authoredCourseSlugs: string[];
+  @attr('string') declare avatarUrl: string;
+  @attr('date') declare createdAt: Date;
+  @attr() declare featureFlags: { [key: string]: string };
+  @attr('string') declare githubUsername: string;
+  @attr('boolean') declare hasActiveFreeUsageGrants: boolean;
+  @attr('boolean') declare isAdmin: boolean;
+  @attr('boolean') declare isAffiliate: boolean;
+  @attr('boolean') declare isConceptAuthor: boolean;
+  @attr('boolean') declare isStaff: boolean;
+  @attr('boolean') declare isVip: boolean;
+  @attr('date') declare lastFreeUsageGrantExpiresAt: Date | null;
+  @attr('string') declare name: string;
+  @attr('string') declare primaryEmailAddress: string;
+  @attr('string') declare username: string;
+  @attr('date') declare vipStatusExpiresAt: Date | null;
 
   @hasMany('affiliate-link', { async: false }) affiliateLinks!: AffiliateLinkModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[];
