@@ -4,10 +4,10 @@ import RouterService from '@ember/routing/router-service';
 import Service from '@ember/service';
 import SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import Store from '@ember-data/store';
+import UserModel from 'codecrafters-frontend/models/user';
 import window from 'ember-window-mock';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class AuthenticatorService extends Service {
   @service declare router: RouterService;
@@ -24,7 +24,7 @@ export default class AuthenticatorService extends Service {
     this.cacheBuster; // Force reload on cacheBuster change
 
     if (this.currentUserCacheStorage.userId) {
-      return this.store.peekRecord('user', this.currentUserCacheStorage.userId) as TemporaryUserModel;
+      return this.store.peekRecord('user', this.currentUserCacheStorage.userId) as UserModel;
     } else {
       return null;
     }
@@ -89,7 +89,7 @@ export default class AuthenticatorService extends Service {
     ];
 
     this.isLoadingUser = true;
-    const user = await (this.store.createRecord('user') as TemporaryUserModel).fetchCurrent({ include: includedResources.join(',') });
+    const user = await this.store.createRecord('user').fetchCurrent({ include: includedResources.join(',') });
     this.isLoadingUser = false;
 
     if (!user) {

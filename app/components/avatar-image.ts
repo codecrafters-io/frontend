@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
+import UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type Signature = {
   Args: {
-    user: TemporaryUserModel;
+    user: UserModel;
   };
 
   Element: HTMLImageElement;

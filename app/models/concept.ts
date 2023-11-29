@@ -1,9 +1,9 @@
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
 import Model, { belongsTo } from '@ember-data/model';
+import UserModel from 'codecrafters-frontend/models/user';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
-import { TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
@@ -13,7 +13,7 @@ export type BlockJSON = {
 };
 
 export default class ConceptModel extends Model {
-  @belongsTo('user', { async: false }) declare author: TemporaryUserModel;
+  @belongsTo('user', { async: false }) declare author: UserModel;
 
   @hasMany('concept-question', { async: false }) declare questions: SyncHasMany<ConceptQuestion>;
 
