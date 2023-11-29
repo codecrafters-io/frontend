@@ -23,44 +23,44 @@ import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
 export default class CourseModel extends Model {
-  @attr('date') buildpacksLastSyncedAt!: Date;
-  @attr('number') completionPercentage!: number;
-  @attr() conceptSlugs!: string[];
-  @attr('string') definitionRepositoryFullName!: string;
-  @attr('string') descriptionMarkdown!: string;
-  @attr('string') difficulty!: string;
-  @attr('string') name!: string;
-  @attr('string') releaseStatus!: string;
-  @attr('string') sampleExtensionIdeaTitle!: string;
-  @attr('string') sampleExtensionIdeaDescription!: string;
-  @attr('string') shortDescriptionMarkdown!: string;
-  @attr('string') shortName!: string;
-  @attr('string') slug!: string;
-  @attr('string') testerRepositoryFullName!: string;
-  @attr() testimonials!: { [key: string]: string }; // free-form JSON
+  @attr('date') declare buildpacksLastSyncedAt: Date;
+  @attr('number') declare completionPercentage: number;
+  @attr() declare conceptSlugs: string[];
+  @attr('string') declare definitionRepositoryFullName: string;
+  @attr('string') declare descriptionMarkdown: string;
+  @attr('string') declare difficulty: string;
+  @attr('string') declare name: string;
+  @attr('string') declare releaseStatus: string;
+  @attr('string') declare sampleExtensionIdeaTitle: string;
+  @attr('string') declare sampleExtensionIdeaDescription: string;
+  @attr('string') declare shortDescriptionMarkdown: string;
+  @attr('string') declare shortName: string;
+  @attr('string') declare slug: string;
+  @attr('string') declare testerRepositoryFullName: string;
+  @attr() declare testimonials: { [key: string]: string }; // free-form JSON
 
-  @hasMany('buildpack', { async: false }) buildpacks!: BuildpackModel[];
-  @hasMany('course-definition-update', { async: false }) definitionUpdates!: CourseDefinitionUpdateModel[];
-  @hasMany('course-extension-idea', { async: false }) extensionIdeas!: CourseExtensionIdeaModel[];
-  @hasMany('course-extension', { async: false, inverse: 'course' }) extensions!: CourseExtensionModel[];
-  @hasMany('course-language-configuration', { async: false }) languageConfigurations!: CourseLanguageConfigurationModel[];
-  @hasMany('course-stage', { async: false }) stages!: CourseStageModel[];
-  @hasMany('course-tester-version', { async: false }) testerVersions!: CourseTesterVersionModel[];
+  @hasMany('buildpack', { async: false }) declare buildpacks: BuildpackModel[];
+  @hasMany('course-definition-update', { async: false }) declare definitionUpdates: CourseDefinitionUpdateModel[];
+  @hasMany('course-extension-idea', { async: false }) declare extensionIdeas: CourseExtensionIdeaModel[];
+  @hasMany('course-extension', { async: false, inverse: 'course' }) declare extensions: CourseExtensionModel[];
+  @hasMany('course-language-configuration', { async: false }) declare languageConfigurations: CourseLanguageConfigurationModel[];
+  @hasMany('course-stage', { async: false }) declare stages: CourseStageModel[];
+  @hasMany('course-tester-version', { async: false }) declare testerVersions: CourseTesterVersionModel[];
 
-  @equal('difficulty', 'easy') difficultyIsEasy!: boolean;
-  @equal('difficulty', 'hard') difficultyIsHard!: boolean;
-  @equal('difficulty', 'medium') difficultyIsMedium!: boolean;
+  @equal('difficulty', 'easy') declare difficultyIsEasy: boolean;
+  @equal('difficulty', 'hard') declare difficultyIsHard: boolean;
+  @equal('difficulty', 'medium') declare difficultyIsMedium: boolean;
 
-  @equal('slug', 'docker') isDocker!: boolean;
-  @equal('slug', 'git') isGit!: boolean;
-  @equal('slug', 'grep') isGrep!: boolean;
-  @equal('slug', 'react') isReact!: boolean;
-  @equal('slug', 'redis') isRedis!: boolean;
-  @equal('slug', 'sqlite') isSQLite!: boolean;
+  @equal('slug', 'docker') declare isDocker: boolean;
+  @equal('slug', 'git') declare isGit: boolean;
+  @equal('slug', 'grep') declare isGrep: boolean;
+  @equal('slug', 'react') declare isReact: boolean;
+  @equal('slug', 'redis') declare isRedis: boolean;
+  @equal('slug', 'sqlite') declare isSQLite: boolean;
 
-  @equal('releaseStatus', 'alpha') releaseStatusIsAlpha!: boolean;
-  @equal('releaseStatus', 'beta') releaseStatusIsBeta!: boolean;
-  @equal('releaseStatus', 'live') releaseStatusIsLive!: boolean;
+  @equal('releaseStatus', 'alpha') declare releaseStatusIsAlpha: boolean;
+  @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
+  @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
 
   get baseStages() {
     return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
