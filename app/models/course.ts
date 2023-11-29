@@ -22,7 +22,7 @@ import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
-type SyncBuildpacksResponse = { error: string } | { success: boolean }
+type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
 export default class CourseModel extends Model {
   @attr('date') declare buildpacksLastSyncedAt: Date;
