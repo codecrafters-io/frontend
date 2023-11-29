@@ -6,6 +6,7 @@ import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import { get } from '@ember/object'
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
@@ -77,8 +78,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   }
 
   get entriesFromCurrentUser() {
-    // @ts-ignore
-    if (this.args.repositories.length === 0 || this.args.activeRepository.isNew) {
+    if (this.args.repositories.length === 0 || get(this.args.activeRepository, 'isNew')) {
       return [];
     }
 
