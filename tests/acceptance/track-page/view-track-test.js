@@ -27,6 +27,27 @@ module('Acceptance | view-track', function (hooks) {
     await percySnapshot('Track (Generic) - Anonymous User');
   });
 
+  test('it renders the correct description if the track is Go', async function (assert) {
+    testScenario(this.server);
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
+
+    await visit('/tracks/go');
+
+    assert.strictEqual(
+      trackPage.header.descriptionText,
+      'Achieve mastery in advanced Go, by building real-world projects. Featuring goroutines, systems programming, file I/O, and more.',
+    );
+  });
+
+  test('it renders the correct description if the track is not Go', async function (assert) {
+    testScenario(this.server);
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
+
+    await visit('/tracks/python');
+
+    assert.strictEqual(trackPage.header.descriptionText, "Python mastery exercises. Become your team's resident Python expert.");
+  });
+
   test('it renders for logged-in user', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);

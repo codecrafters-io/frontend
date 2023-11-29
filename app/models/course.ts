@@ -1,7 +1,16 @@
+import BuildpackModel from 'codecrafters-frontend/models/buildpack';
+import CourseDefinitionUpdateModel from 'codecrafters-frontend/models/course-definition-update';
+import CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
+import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import CourseLanguageConfigurationModel from 'codecrafters-frontend/models/course-language-configuration';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
+import LanguageModel from 'codecrafters-frontend/models/language';
+import Model from '@ember-data/model';
+import UserModel from 'codecrafters-frontend/models/user';
 import { attr, hasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
-import Model from '@ember-data/model';
 
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
@@ -14,44 +23,44 @@ import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
 export default class CourseModel extends Model {
-  @attr('date') buildpacksLastSyncedAt;
-  @attr('number') completionPercentage;
-  @attr('') conceptSlugs; // Array of strings
-  @attr('string') definitionRepositoryFullName;
-  @attr('string') descriptionMarkdown;
-  @attr('string') difficulty;
-  @attr('string') name;
-  @attr('string') releaseStatus;
-  @attr('string') sampleExtensionIdeaTitle;
-  @attr('string') sampleExtensionIdeaDescription;
-  @attr('string') shortDescriptionMarkdown;
-  @attr('string') shortName;
-  @attr('string') slug;
-  @attr('string') testerRepositoryFullName;
-  @attr() testimonials; // free-form JSON
+  @attr('date') declare buildpacksLastSyncedAt: Date;
+  @attr('number') declare completionPercentage: number;
+  @attr() declare conceptSlugs: string[];
+  @attr('string') declare definitionRepositoryFullName: string;
+  @attr('string') declare descriptionMarkdown: string;
+  @attr('string') declare difficulty: string;
+  @attr('string') declare name: string;
+  @attr('string') declare releaseStatus: string;
+  @attr('string') declare sampleExtensionIdeaTitle: string;
+  @attr('string') declare sampleExtensionIdeaDescription: string;
+  @attr('string') declare shortDescriptionMarkdown: string;
+  @attr('string') declare shortName: string;
+  @attr('string') declare slug: string;
+  @attr('string') declare testerRepositoryFullName: string;
+  @attr() declare testimonials: { [key: string]: string }; // free-form JSON
 
-  @hasMany('buildpack', { async: false }) buildpacks;
-  @hasMany('course-definition-update', { async: false }) definitionUpdates;
-  @hasMany('course-extension-idea', { async: false }) extensionIdeas;
-  @hasMany('course-extension', { async: false, inverse: 'course' }) extensions;
-  @hasMany('course-language-configuration', { async: false }) languageConfigurations;
-  @hasMany('course-stage', { async: false }) stages;
-  @hasMany('course-tester-version', { async: false }) testerVersions;
+  @hasMany('buildpack', { async: false }) declare buildpacks: BuildpackModel[];
+  @hasMany('course-definition-update', { async: false }) declare definitionUpdates: CourseDefinitionUpdateModel[];
+  @hasMany('course-extension-idea', { async: false }) declare extensionIdeas: CourseExtensionIdeaModel[];
+  @hasMany('course-extension', { async: false, inverse: 'course' }) declare extensions: CourseExtensionModel[];
+  @hasMany('course-language-configuration', { async: false }) declare languageConfigurations: CourseLanguageConfigurationModel[];
+  @hasMany('course-stage', { async: false }) declare stages: CourseStageModel[];
+  @hasMany('course-tester-version', { async: false }) declare testerVersions: CourseTesterVersionModel[];
 
-  @equal('difficulty', 'easy') difficultyIsEasy;
-  @equal('difficulty', 'hard') difficultyIsHard;
-  @equal('difficulty', 'medium') difficultyIsMedium;
+  @equal('difficulty', 'easy') declare difficultyIsEasy: boolean;
+  @equal('difficulty', 'hard') declare difficultyIsHard: boolean;
+  @equal('difficulty', 'medium') declare difficultyIsMedium: boolean;
 
-  @equal('slug', 'docker') isDocker;
-  @equal('slug', 'git') isGit;
-  @equal('slug', 'grep') isGrep;
-  @equal('slug', 'react') isReact;
-  @equal('slug', 'redis') isRedis;
-  @equal('slug', 'sqlite') isSQLite;
+  @equal('slug', 'docker') declare isDocker: boolean;
+  @equal('slug', 'git') declare isGit: boolean;
+  @equal('slug', 'grep') declare isGrep: boolean;
+  @equal('slug', 'react') declare isReact: boolean;
+  @equal('slug', 'redis') declare isRedis: boolean;
+  @equal('slug', 'sqlite') declare isSQLite: boolean;
 
-  @equal('releaseStatus', 'alpha') releaseStatusIsAlpha;
-  @equal('releaseStatus', 'beta') releaseStatusIsBeta;
-  @equal('releaseStatus', 'live') releaseStatusIsLive;
+  @equal('releaseStatus', 'alpha') declare releaseStatusIsAlpha: boolean;
+  @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
+  @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
 
   get baseStages() {
     return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
@@ -137,11 +146,11 @@ export default class CourseModel extends Model {
     return `https://github.com/${this.testerRepositoryFullName}`;
   }
 
-  availableLanguageConfigurationsForUser(user) {
+  availableLanguageConfigurationsForUser(user: UserModel) {
     return this.languageConfigurations.filter((languageConfiguration) => languageConfiguration.isAvailableForUser(user));
   }
 
-  trackIntroductionMarkdownFor(language) {
+  trackIntroductionMarkdownFor(language: LanguageModel) {
     if (this.isRedis) {
       if (language.isGo) {
         return `
@@ -176,8 +185,14 @@ Learn about regular expressions and how they're evaluated. Implement your own ve
     } else if (this.slug === 'bittorrent') {
       return `
 Learn about .torrent files and the famous BitTorrent protocol. Implement your own BitTorrent client in ${language.name}.`;
+    } else {
+      return;
     }
   }
+
+  declare syncBuildpacks: (this: Model, payload: unknown) => Promise<void>;
+  declare syncCourseDefinitionUpdates: (this: Model, payload: unknown) => Promise<void>;
+  declare syncCourseTesterVersions: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CourseModel.prototype.syncCourseDefinitionUpdates = memberAction({

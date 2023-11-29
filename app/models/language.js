@@ -69,6 +69,10 @@ export default class LanguageModel extends Model {
     }[this.slug];
   }
 
+  get isGo() {
+    return this.slug === 'go';
+  }
+
   get sortPositionForTrack() {
     return (
       {
