@@ -61,7 +61,11 @@ export default class CodeExamplesController extends Controller {
   }
 
   @action
-  handleRequestedLanguageChange(language: TemporaryLanguageModel) {
+  handleRequestedLanguageChange(language: TemporaryLanguageModel | undefined) {
+    if (!language) {
+      return;
+    }
+
     if (language === this.repository.language) {
       this.requestedLanguage = null;
     } else {
