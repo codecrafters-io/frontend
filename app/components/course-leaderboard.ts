@@ -78,6 +78,8 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   }
 
   get entriesFromCurrentUser() {
+    // We're using the get helper instead of model.isNew because of a typescript error.
+    // An issue is opened here: https://github.com/emberjs/data/issues/9146.
     // eslint-disable-next-line ember/no-get
     if (this.args.repositories.length === 0 || get(this.args.activeRepository, 'isNew')) {
       return [];

@@ -23,6 +23,8 @@
       <div class="flex justify-center mt-3 px-3">
         <TertiaryButton
           @size="extra-small"
+          {{! We're using the get helper instead of model.isNew because of a typescript error. }}
+          {{! An issue is opened here: https://github.com/emberjs/data/issues/9146. }}
           @isDisabled={{get @activeRepository "isNew"}}
           {{on "click" this.handleConfigureExtensionsButtonClick}}
           data-test-configure-extensions-button
@@ -32,6 +34,8 @@
             Extensions
           </div>
 
+          {{! We're using the get helper instead of model.isNew because of a typescript error. }}
+          {{! An issue is opened here: https://github.com/emberjs/data/issues/9146. }}
           {{#if (get @activeRepository "isNew")}}
             <EmberTooltip @text="Complete repository setup to configure extensions" />
           {{/if}}
