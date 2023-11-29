@@ -9,35 +9,35 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
 export default class CourseStageModel extends Model {
-  @belongsTo('course', { async: false }) course!: CourseModel;
+  @belongsTo('course', { async: false }) declare course: CourseModel;
 
-  @hasMany('course-stage-comments', { async: false }) comments!: CourseStageCommentModel[];
-  @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) communitySolutions!: CommunityCourseStageSolutionModel[];
-  @hasMany('course-stage-language-guide', { async: false }) languageGuides!: CourseStageLanguageGuideModel[];
-  @hasMany('course-stage-solution', { async: false }) solutions!: CourseStageSolutionModel[];
-  @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) screencasts!: CourseStageScreencastModel[];
+  @hasMany('course-stage-comments', { async: false }) declare comments: CourseStageCommentModel[];
+  @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' }) declare communitySolutions: CommunityCourseStageSolutionModel[];
+  @hasMany('course-stage-language-guide', { async: false }) declare languageGuides: CourseStageLanguageGuideModel[];
+  @hasMany('course-stage-solution', { async: false }) declare solutions: CourseStageSolutionModel[];
+  @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) declare screencasts: CourseStageScreencastModel[];
 
-  @attr() conceptSlugs!: string[];
-  @attr('string') difficulty!: string;
-  @attr('boolean') isPaid!: boolean;
-  @attr('string') name!: string;
-  @attr('string') descriptionMarkdownTemplate!: string;
-  @attr('string') marketingMarkdown!: string;
-  @attr('number') position!: number; // TODO: Remove usages of this
-  @attr('number') positionWithinCourse!: number;
-  @attr('number') positionWithinExtension!: number;
-  @attr('number') approvedCommentsCount!: number;
-  @attr() communitySolutionCounts!: { [key: string]: number }; // JSON: { <language_slug>: count }
-  @attr('string') shortName!: string;
-  @attr('string') slug!: string;
-  @attr('string') primaryExtensionSlug!: string;
-  @attr() secondaryExtensionSlugs!: string[];
-  @attr('string') testerSourceCodeUrl!: string;
+  @attr() declare conceptSlugs: string[];
+  @attr('string') declare difficulty: string;
+  @attr('boolean') declare isPaid: boolean;
+  @attr('string') declare name: string;
+  @attr('string') declare descriptionMarkdownTemplate: string;
+  @attr('string') declare marketingMarkdown: string;
+  @attr('number') declare position: number; // TODO: Remove usages of this
+  @attr('number') declare positionWithinCourse: number;
+  @attr('number') declare positionWithinExtension: number;
+  @attr('number') declare approvedCommentsCount: number;
+  @attr() declare communitySolutionCounts: { [key: string]: number }; // JSON: { <language_slug>: count }
+  @attr('string') declare shortName: string;
+  @attr('string') declare slug: string;
+  @attr('string') declare primaryExtensionSlug: string;
+  @attr() declare secondaryExtensionSlugs: string[];
+  @attr('string') declare testerSourceCodeUrl: string;
 
-  @equal('difficulty', 'very_easy') difficultyIsVeryEasy!: boolean;
-  @equal('difficulty', 'easy') difficultyIsEasy!: boolean;
-  @equal('difficulty', 'hard') difficultyIsHard!: boolean;
-  @equal('difficulty', 'medium') difficultyIsMedium!: boolean;
+  @equal('difficulty', 'very_easy') declare difficultyIsVeryEasy: boolean;
+  @equal('difficulty', 'easy') declare difficultyIsEasy: boolean;
+  @equal('difficulty', 'hard') declare difficultyIsHard: boolean;
+  @equal('difficulty', 'medium') declare difficultyIsMedium: boolean;
 
   get concepts() {
     return this.store.peekAll('concept').filter((concept) => this.conceptSlugs.includes(concept.slug));
