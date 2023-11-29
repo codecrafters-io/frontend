@@ -1,3 +1,4 @@
+import CourseLanguageConfigurationModel from './course-language-configuration';
 import Model from '@ember-data/model';
 import { attr, hasMany } from '@ember-data/model';
 
@@ -40,11 +41,11 @@ import tealLogoSwift from '/assets/images/language-logos/swift-teal-500.svg';
 import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
 
 export default class LanguageModel extends Model {
-  @hasMany('course-language-configuration', { async: false }) courseConfigurations;
+  @hasMany('course-language-configuration', { async: false }) declare courseConfigurations: CourseLanguageConfigurationModel[];
 
-  @attr('string') name;
-  @attr('string') slug;
-  @attr('string') trackStatus;
+  @attr('string') declare name: string;
+  @attr('string') declare slug: string;
+  @attr('string') declare trackStatus: string;
 
   get grayLogoUrl() {
     return {
