@@ -16,7 +16,7 @@ export default class SubmissionModel extends Model {
   @hasMany('badge-award', { async: false }) declare badgeAwards: BadgeAwardModel[];
   @hasMany('submission-evaluation', { async: false }) declare evaluations: SubmissionEvaluationModel[];
 
-  @attr() declare changedFiles: { [key: string]: string }[]; // free-form JSON
+  @attr() declare changedFiles: { diff: string, filename: string }[]; // free-form JSON
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
   @attr('boolean') declare wasSubmittedViaCli: boolean;
