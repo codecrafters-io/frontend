@@ -89,8 +89,6 @@ export default class AuthenticatorService extends Service {
     ];
 
     this.isLoadingUser = true;
-    const test = (await this.store.createRecord('user')) as UserModel;
-    console.log('test', test);
     const user = await this.store.createRecord('user').fetchCurrent({ include: includedResources.join(',') });
     this.isLoadingUser = false;
 
