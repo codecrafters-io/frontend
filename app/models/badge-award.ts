@@ -1,6 +1,6 @@
-import { attr, belongsTo } from '@ember-data/model';
 import BadgeModel from 'codecrafters-frontend/models/badge';
 import Model from '@ember-data/model';
+import { attr, belongsTo } from '@ember-data/model';
 import type { TemporarySubmissionModel, TemporaryUserModel } from 'codecrafters-frontend/lib/temporary-types';
 
 export default class BadgeAwardModel extends Model {
