@@ -69,7 +69,11 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
   }
 
   @action
-  handleRequestedLanguageChange(language: LanguageModel): void {
+  handleRequestedLanguageChange(language: LanguageModel | undefined): void {
+    if (!language) {
+      return;
+    }
+
     this.requestedLanguage = language;
   }
 
