@@ -1,6 +1,7 @@
 import CourseExtensionActivation from 'codecrafters-frontend/models/course-extension-activation';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
+import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/course-stage-feedback-submission';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import GithubRepositorySyncConfiguration from 'codecrafters-frontend/models/github-repository-sync-configuration';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
@@ -34,25 +35,25 @@ export default class RepositoryModel extends Model {
     advanced: 'Advanced',
   };
 
-  @belongsTo('course', { async: false }) course!: CourseModel;
-  @hasMany('course-extension-activation', { async: false }) courseExtensionActivations!: CourseExtensionActivation[];
-  @hasMany('course-stage-completion', { async: false }) courseStageCompletions!: CourseStageCompletionModel[];
-  @hasMany('course-stage-feedback-submission', { async: false }) courseStageFeedbackSubmissions!: CourseStageCompletionModel[];
-  @hasMany('github-repository-sync-configuration', { async: false }) githubRepositorySyncConfigurations!: GithubRepositorySyncConfiguration[];
-  @belongsTo('user', { async: false }) user!: UserModel;
-  @belongsTo('language', { async: false }) language!: TemporaryLanguageModel | undefined;
-  @belongsTo('submission', { async: false, inverse: null }) lastSubmission!: SubmissionModel;
-  @belongsTo('repository-stage-list', { async: false }) stageList!: RepositoryStageListModel;
-  @hasMany('submission', { async: false, inverse: 'repository' }) submissions!: SubmissionModel[];
+  @belongsTo('course', { async: false }) declare course: CourseModel;
+  @hasMany('course-extension-activation', { async: false }) declare courseExtensionActivations: CourseExtensionActivation[];
+  @hasMany('course-stage-completion', { async: false }) declare courseStageCompletions: CourseStageCompletionModel[];
+  @hasMany('course-stage-feedback-submission', { async: false }) declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
+  @hasMany('github-repository-sync-configuration', { async: false }) declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
+  @belongsTo('user', { async: false }) declare user: UserModel;
+  @belongsTo('language', { async: false }) declare language: TemporaryLanguageModel | undefined;
+  @belongsTo('submission', { async: false, inverse: null }) declare lastSubmission: SubmissionModel;
+  @belongsTo('repository-stage-list', { async: false }) declare stageList: RepositoryStageListModel;
+  @hasMany('submission', { async: false, inverse: 'repository' }) declare submissions: SubmissionModel[];
 
-  @attr('string') cloneUrl!: string;
-  @attr('date') createdAt!: Date;
-  @attr('string') expectedActivityFrequency!: ExpectedActivityFrequency;
-  @attr('string') name!: string;
-  @attr('string') languageProficiencyLevel!: LanguageProficiencyLevel;
-  @attr('string') progressBannerUrl!: string;
-  @attr('boolean', { allowNull: true }) remindersAreEnabled!: boolean | null;
-  @attr('number') submissionsCount!: number;
+  @attr('string') declare cloneUrl: string;
+  @attr('date') declare createdAt: Date;
+  @attr('string') declare expectedActivityFrequency: ExpectedActivityFrequency;
+  @attr('string') declare name: string;
+  @attr('string') declare languageProficiencyLevel: LanguageProficiencyLevel;
+  @attr('string') declare progressBannerUrl: string;
+  @attr('boolean', { allowNull: true }) declare remindersAreEnabled: boolean | null;
+  @attr('number') declare submissionsCount: number;
 
   get activatedCourseExtensions() {
     return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
@@ -157,12 +158,11 @@ export default class RepositoryModel extends Model {
     return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
   }
 
-  courseStageFeedbackSubmissionFor(courseStage: CourseExtensionActivation) {
+  courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
   }
 
   hasClosedCourseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
-    // @ts-ignore
     return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 

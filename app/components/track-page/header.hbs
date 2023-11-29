@@ -1,8 +1,8 @@
-<div class="flex items-center justify-between" ...attributes>
+<div class="flex items-center justify-between" ...attributes data-test-track-header>
   <div>
     <h1 class="text-3xl md:text-5xl text-gray-700 font-bold tracking-tighter mb-3">{{@language.trackTitle}}</h1>
 
-    <p class="text-gray-500 mb-4 max-w-xl">
+    <p class="text-gray-500 mb-4 max-w-xl" data-test-track-header-description>
       {{markdown-to-html @language.trackDescriptionMarkdown}}
     </p>
 
