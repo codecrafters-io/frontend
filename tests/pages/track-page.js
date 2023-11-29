@@ -13,5 +13,10 @@ export default createPage({
     await finishRender(); // Page has poller
   },
 
+  header: {
+    descriptionText: text('[data-test-track-header-description]'),
+    scope: '[data-test-track-header]',
+  },
+
   visit: visitable('/tracks/:track_slug'),
 });

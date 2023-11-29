@@ -6,6 +6,7 @@ import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
@@ -77,8 +78,10 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   }
 
   get entriesFromCurrentUser() {
-    // @ts-ignore
-    if (this.args.repositories.length === 0 || this.args.activeRepository.isNew) {
+    // We're using the get helper instead of model.isNew because of a typescript error.
+    // An issue is opened here: https://github.com/emberjs/data/issues/9146.
+    // eslint-disable-next-line ember/no-get
+    if (this.args.repositories.length === 0 || get(this.args.activeRepository, 'isNew')) {
       return [];
     }
 

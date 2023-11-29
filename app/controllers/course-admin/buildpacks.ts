@@ -39,9 +39,7 @@ export default class BuildpacksController extends Controller {
     this.errorMessage = null;
     const syncResult = await this.model.course.syncBuildpacks(null);
 
-    // @ts-ignore
-    if (syncResult['error']) {
-      // @ts-ignore
+    if ('error' in syncResult) {
       this.errorMessage = syncResult['error'];
     }
 
