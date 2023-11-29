@@ -1,6 +1,7 @@
 import CourseExtensionActivation from 'codecrafters-frontend/models/course-extension-activation';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
+import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/course-stage-feedback-submission';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import GithubRepositorySyncConfiguration from 'codecrafters-frontend/models/github-repository-sync-configuration';
 import LanguageModel from 'codecrafters-frontend/models/language';
@@ -37,7 +38,7 @@ export default class RepositoryModel extends Model {
   @belongsTo('course', { async: false }) declare course: CourseModel;
   @hasMany('course-extension-activation', { async: false }) declare courseExtensionActivations: CourseExtensionActivation[];
   @hasMany('course-stage-completion', { async: false }) declare courseStageCompletions: CourseStageCompletionModel[];
-  @hasMany('course-stage-feedback-submission', { async: false }) declare courseStageFeedbackSubmissions: CourseStageCompletionModel[];
+  @hasMany('course-stage-feedback-submission', { async: false }) declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
   @hasMany('github-repository-sync-configuration', { async: false }) declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
   @belongsTo('user', { async: false }) declare user: UserModel;
   @belongsTo('language', { async: false }) declare language: LanguageModel;
@@ -157,12 +158,11 @@ export default class RepositoryModel extends Model {
     return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
   }
 
-  courseStageFeedbackSubmissionFor(courseStage: CourseExtensionActivation) {
+  courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
   }
 
   hasClosedCourseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
-    // @ts-ignore
     return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
