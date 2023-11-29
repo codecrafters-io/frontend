@@ -4,6 +4,7 @@ import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stag
 import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/course-stage-feedback-submission';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import GithubRepositorySyncConfiguration from 'codecrafters-frontend/models/github-repository-sync-configuration';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 import SubmissionModel from 'codecrafters-frontend/models/submission';
@@ -14,7 +15,6 @@ import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'code
 import { cached } from '@glimmer/tracking';
 
 import { memberAction } from 'ember-api-actions';
-import { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
@@ -41,7 +41,7 @@ export default class RepositoryModel extends Model {
   @hasMany('course-stage-feedback-submission', { async: false }) declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
   @hasMany('github-repository-sync-configuration', { async: false }) declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
   @belongsTo('user', { async: false }) declare user: UserModel;
-  @belongsTo('language', { async: false }) declare language: TemporaryLanguageModel | undefined;
+  @belongsTo('language', { async: false }) declare language: LanguageModel | undefined;
   @belongsTo('submission', { async: false, inverse: null }) declare lastSubmission: SubmissionModel;
   @belongsTo('repository-stage-list', { async: false }) declare stageList: RepositoryStageListModel;
   @hasMany('submission', { async: false, inverse: 'repository' }) declare submissions: SubmissionModel[];

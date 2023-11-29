@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import LanguageModel from 'codecrafters-frontend/models/language';
 import Mustache from 'mustache';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { TemporaryLanguageModel } from 'codecrafters-frontend/lib/temporary-types';
 import Prism from 'prismjs';
 
 import 'prismjs';
@@ -40,7 +40,7 @@ export default class YourTaskCardComponent extends Component<Signature> {
     const variables: Record<string, unknown> = {};
 
     this.store.peekAll('language').forEach((language) => {
-      variables[`lang_is_${(language as TemporaryLanguageModel).slug}`] = this.args.repository.language === language;
+      variables[`lang_is_${(language as LanguageModel).slug}`] = this.args.repository.language === language;
     });
 
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
