@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
+import CourseModel from 'codecrafters-frontend/models/course';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
-import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
     activeStep: Step;
-    course: TemporaryCourseModel;
+    course: CourseModel;
     currentStep: Step;
     nextStep: Step | null;
     onMobileSidebarButtonClick: () => void;

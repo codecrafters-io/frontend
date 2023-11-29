@@ -22,6 +22,8 @@ import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
+type SyncBuildpacksResponse = { error: string } | { success: boolean };
+
 export default class CourseModel extends Model {
   @attr('date') declare buildpacksLastSyncedAt: Date;
   @attr('number') declare completionPercentage: number;
@@ -190,7 +192,7 @@ Learn about .torrent files and the famous BitTorrent protocol. Implement your ow
     }
   }
 
-  declare syncBuildpacks: (this: Model, payload: unknown) => Promise<void>;
+  declare syncBuildpacks: (this: Model, payload: unknown) => Promise<SyncBuildpacksResponse>;
   declare syncCourseDefinitionUpdates: (this: Model, payload: unknown) => Promise<void>;
   declare syncCourseTesterVersions: (this: Model, payload: unknown) => Promise<void>;
 }

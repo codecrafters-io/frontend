@@ -1,9 +1,9 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import CourseModel from 'codecrafters-frontend/models/course';
 import Helper from '@ember/component/helper';
-import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import { inject as service } from '@ember/service';
 
-type Positional = [TemporaryCourseModel];
+type Positional = [CourseModel];
 
 export interface Signature {
   Args: {

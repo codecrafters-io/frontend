@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
+import CourseModel from 'codecrafters-frontend/models/course';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { action } from '@ember/object';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
-import { TemporaryCourseModel } from 'codecrafters-frontend/lib/temporary-types';
 import { tracked } from '@glimmer/tracking';
 import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 
@@ -11,7 +11,7 @@ type Signature = {
 
   Args: {
     activeStep: Step;
-    course: TemporaryCourseModel;
+    course: CourseModel;
     currentStep: Step;
     nextStep: Step | null;
     stepList: StepList;

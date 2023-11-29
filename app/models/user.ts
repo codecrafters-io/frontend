@@ -18,7 +18,7 @@ import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubscriptionModel from 'codecrafters-frontend/models/subscription';
 import TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
-import { TemporaryCourseModel, TemporaryCourseStageModel } from 'codecrafters-frontend/lib/temporary-types';
+import { TemporaryCourseStageModel } from 'codecrafters-frontend/lib/temporary-types';
 import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-event';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
@@ -191,7 +191,7 @@ export default class UserModel extends Model {
     return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
   }
 
-  isCourseAuthor(course: TemporaryCourseModel) {
+  isCourseAuthor(course: CourseModel) {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 
