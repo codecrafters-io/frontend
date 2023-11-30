@@ -8,11 +8,26 @@
 {{/if}}
 
 <div
-  class="flex flex-row-reverse h-screen w-full"
+  class="flex h-screen w-full"
   {{did-insert this.handleDidInsertContainer}}
   {{will-destroy this.handleWillDestroyContainer}}
   {{did-update this.handleDidUpdateActiveRepositoryId @model.activeRepository.id}}
 >
+  {{#if this.sidebarIsExpandedOnDesktop}}
+    <CoursePage::Sidebar
+      @course={{@model.course}}
+      @repositories={{@model.repositories}}
+      @activeRepository={{@model.activeRepository}}
+      class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
+    >
+      <CoursePage::CollapseSidebarButton
+        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5 z-30"
+        {{on "click" this.handleCollapseSidebarButtonClick}}
+        data-test-collapse-sidebar-button
+      />
+    </CoursePage::Sidebar>
+  {{/if}}
+
   {{#if this.sidebarIsExpandedOnMobile}}
     <CoursePage::Sidebar::MobileBackdrop>
       <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
@@ -90,21 +105,6 @@
       </div>
     </div>
   </div>
-
-  {{#if this.sidebarIsExpandedOnDesktop}}
-    <CoursePage::Sidebar
-      @course={{@model.course}}
-      @repositories={{@model.repositories}}
-      @activeRepository={{@model.activeRepository}}
-      class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
-    >
-      <CoursePage::CollapseSidebarButton
-        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5 z-30"
-        {{on "click" this.handleCollapseSidebarButtonClick}}
-        data-test-collapse-sidebar-button
-      />
-    </CoursePage::Sidebar>
-  {{/if}}
 </div>
 
 {{#if this.configureGithubIntegrationModalIsOpen}}
