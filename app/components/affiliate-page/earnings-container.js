@@ -71,7 +71,7 @@ export default class EarningsContainerComponent extends Component {
   }
 
   async loadPayouts() {
-    await this.store.findAll('referral-earnings-payout', { include: 'user' });
+    await this.store.findAll('affiliate-earnings-payout', { include: 'user' });
     this.isLoadingPayouts = false;
   }
 }

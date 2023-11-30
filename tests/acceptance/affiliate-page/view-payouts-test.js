@@ -7,12 +7,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | affiliate-page | view-payouts', function (hooks) {
+module('Acceptance | affiliate-page | view-payouts', function(hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can initiate payout', async function (assert) {
+  test('can initiate payout', async function(assert) {
     testScenario(this.server);
 
     const affiliateLink = this.server.create('affiliate-link', {
@@ -55,7 +55,7 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
       spentAmountInCents: 59000,
     });
 
-    this.server.create('referral-earnings-payout', {
+    this.server.create('affiliate-earnings-payout', {
       user: this.server.schema.users.first(),
       amountInCents: 100_00,
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 3 days ago
@@ -63,14 +63,14 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
       lastFailureReason: 'Unable to find a paypal account for abcd@gmail.com',
     });
 
-    this.server.create('referral-earnings-payout', {
+    this.server.create('affiliate-earnings-payout', {
       user: this.server.schema.users.first(),
       amountInCents: 100_00,
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
       status: 'completed',
     });
 
-    this.server.create('referral-earnings-payout', {
+    this.server.create('affiliate-earnings-payout', {
       user: this.server.schema.users.first(),
       amountInCents: 50_00,
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2), // 1 days ago
