@@ -7,12 +7,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | affiliate-page | view-payouts', function(hooks) {
+module('Acceptance | affiliate-page | view-payouts', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can initiate payout', async function(assert) {
+  test('can initiate payout', async function (assert) {
     testScenario(this.server);
 
     const affiliateLink = this.server.create('affiliate-link', {
