@@ -7,12 +7,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | affiliate-page | initiate-payout', function (hooks) {
+module('Acceptance | affiliate-page | initiate-payout', function(hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can initiate payout', async function (assert) {
+  test('can initiate payout', async function(assert) {
     testScenario(this.server);
 
     const affiliateLink = this.server.create('affiliate-link', {
@@ -87,7 +87,7 @@ module('Acceptance | affiliate-page | initiate-payout', function (hooks) {
     await percySnapshot('Affiliate Page | Payout initiated');
   });
 
-  test('can initiate payout for lower amount', async function (assert) {
+  test('can initiate payout for lower amount', async function(assert) {
     testScenario(this.server);
 
     const affiliateLink = this.server.create('affiliate-link', {
@@ -153,6 +153,6 @@ module('Acceptance | affiliate-page | initiate-payout', function (hooks) {
     assert.strictEqual(affiliatePage.lineItemAmountText('Ready to payout'), '$254', 'ready to payout amount is correct');
     assert.strictEqual(affiliatePage.lineItemAmountText('Paid out'), '$100', 'paid out amount is correct');
 
-    assert.strictEqual(this.server.schema.referralEarningsPayouts.all().models.length, 1, 'payout is created');
+    assert.strictEqual(this.server.schema.affiliateEarningsPayouts.all().models.length, 1, 'payout is created');
   });
 });

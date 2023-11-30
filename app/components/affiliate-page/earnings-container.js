@@ -39,7 +39,7 @@ export default class EarningsContainerComponent extends Component {
   }
 
   get paidOutEarningsAmountInCents() {
-    return this.currentUser.referralEarningsPayouts
+    return this.currentUser.affiliateEarningsPayouts
       .rejectBy('statusIsFailed')
       .mapBy('amountInCents')
       .reduce((a, b) => a + b, 0);
