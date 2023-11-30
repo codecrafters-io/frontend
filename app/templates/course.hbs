@@ -14,30 +14,19 @@
   {{did-update this.handleDidUpdateActiveRepositoryId @model.activeRepository.id}}
 >
   {{#if this.sidebarIsExpandedOnMobile}}
-    <div class="relative z-30 lg:hidden" role="dialog" aria-modal="true">
-      <div class="fixed inset-0 bg-gray-900/90"></div>
-      <div class="fixed inset-0 flex">
-        <div class="relative mr-8 flex w-full max-w-xs flex-1">
-          <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
-            {{! @glint-expect-error: mut isn't ts-ified properly yet }}
-            <button type="button" class="-m-2.5 p-2.5" {{on "click" (fn (mut this.sidebarIsExpandedOnMobile) false)}}>
-              <span class="sr-only">Close sidebar</span>
-              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {{! @glint-expect-error: not ts-ified yet }}
-          <CoursePage::Sidebar
-            @course={{@model.course}}
-            @repositories={{@model.repositories}}
-            @activeRepository={{@model.activeRepository}}
-            class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
-          />
-        </div>
+    <CoursePage::Sidebar::MobileBackdrop>
+      <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
+        {{! @glint-expect-error: fn/mut not ts-ified yet}}
+        <CoursePage::Sidebar::MobileCloseButton {{on "click" (fn (mut this.sidebarIsExpandedOnMobile) false)}} />
       </div>
-    </div>
+
+      <CoursePage::Sidebar
+        @course={{@model.course}}
+        @repositories={{@model.repositories}}
+        @activeRepository={{@model.activeRepository}}
+        class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
+      />
+    </CoursePage::Sidebar::MobileBackdrop>
   {{/if}}
 
   <div class="flex flex-col max-h-screen overflow-y-auto flex-grow relative" id="course-page-scrollable-area">

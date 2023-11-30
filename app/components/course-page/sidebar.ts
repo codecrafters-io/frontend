@@ -53,3 +53,9 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
     this.configureExtensionsModalIsOpen = true;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::Sidebar': typeof CoursePageSidebarComponent;
+  }
+}
