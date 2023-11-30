@@ -8,7 +8,7 @@
     {{#if this.isExpanded}}
       <div class="flex items-center justify-end">
         <div class="flex items-center justify-center text-gray-500 hover:text-gray-400" {{on "click" this.handleCollapseButtonClick}} role="button">
-          {{svg-jar "x-circle" class="w-5 h-5 fill-current"}}
+          {{svg-jar "x" class="w-5 h-5 fill-current"}}
         </div>
       </div>
 
@@ -19,7 +19,7 @@
       </div>
 
       <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">
-        <div class="w-20 h-1 rounded-full bg-gray-600"></div>
+        <div class="w-20 h-1 rounded-full bg-gray-700 cursor-ns-resize hover:bg-gray-600"></div>
       </div>
     {{/if}}
 
