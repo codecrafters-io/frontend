@@ -2,17 +2,7 @@
   <div class="fixed inset-0 bg-gray-900/90"></div>
   <div class="fixed inset-0 flex">
     <div class="relative mr-8 flex w-full max-w-xs flex-1">
-      <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
-        <CoursePage::Sidebar::MobileCloseButton {{on "click" (fn (mut this.sidebarIsExpandedOnMobile) false)}} />
-      </div>
-
-      {{! @glint-expect-error: not ts-ified yet }}
-      <CoursePage::Sidebar
-        @course={{@model.course}}
-        @repositories={{@model.repositories}}
-        @activeRepository={{@model.activeRepository}}
-        class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
-      />
+      {{yield}}
     </div>
   </div>
 </div>
