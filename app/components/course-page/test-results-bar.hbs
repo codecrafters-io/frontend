@@ -1,0 +1,24 @@
+<div
+  class="group/test-results-bar bg-gray-900 border-t border-gray-800 dark"
+  {{on "click" (if this.isCollapsed this.handleCollapsedBarClick (noop))}}
+  role={{if this.isCollapsed "button"}}
+  ...attributes
+>
+  <div class="relative py-3 gap-3 flex flex-col">
+    {{#if this.isExpanded}}
+      <CoursePage::TestResultsBar::TopSection @onCollapseButtonClick={{this.handleCollapseButtonClick}} />
+
+      <div class="py-16 border-b border-gray-800 flex items-center justify-center">
+        <div class="text-gray-500 text-sm">
+          When you run tests on your code, you'll see logs here.
+        </div>
+      </div>
+
+      <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">
+        <div class="w-20 h-1 rounded-full bg-gray-700 cursor-ns-resize hover:bg-gray-600"></div>
+      </div>
+    {{/if}}
+
+    <CoursePage::TestResultsBar::BottomSection @activeStep={{@activeStep}} @barIsExpanded={{this.isExpanded}} />
+  </div>
+</div>
