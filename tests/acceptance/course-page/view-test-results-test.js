@@ -1,13 +1,12 @@
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
-import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
-import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { module, test } from 'qunit';
+import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupApplicationTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-test-results', function (hooks) {
   setupApplicationTest(hooks);
@@ -28,7 +27,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
       user: currentUser,
     });
 
-    const submission = this.server.create('submission', 'withFailureStatus', {
+    this.server.create('submission', 'withFailureStatus', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
     });
@@ -37,7 +36,8 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.click();
+    assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
 
-    await this.pauseTest();
+    await percySnapshot('Course Page - View test results - Failure');
   });
 });

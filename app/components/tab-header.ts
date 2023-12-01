@@ -8,6 +8,7 @@ type Signature = {
     iconUrl?: string;
     text: string;
     isActive: boolean;
+    size?: 'small' | 'medium';
   };
 };
 

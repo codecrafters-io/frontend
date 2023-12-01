@@ -1,13 +1,14 @@
 <div
-  class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded max-h-[400px] overflow-y-auto"
+  class="bg-gray-800 dark:bg-gray-900 border border-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded max-h-[400px] overflow-y-auto"
   {{did-insert this.handleDidInsert}}
+  data-test-submission-logs-preview
   ...attributes
 >
   {{#if this.evaluation}}
     {{#each this.logLines key="@index" as |logLine index|}}
       <div class="flex items-start">
-        <div class="text-gray-500 w-4 text-right mr-3 flex-shrink-0 select-none">{{add index 1}}</div>
-        <div>{{html-safe logLine}}</div>
+        <div class="text-gray-500 dark:text-gray-600 w-4 text-right mr-3 flex-shrink-0 select-none">{{add index 1}}</div>
+        <div data-test-log-line>{{html-safe logLine}}</div>
       </div>
     {{/each}}
   {{else}}
