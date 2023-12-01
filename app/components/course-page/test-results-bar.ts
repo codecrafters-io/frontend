@@ -1,5 +1,4 @@
 import { action } from '@ember/object';
-import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
@@ -24,17 +23,12 @@ export default class TestResultsBarComponent extends Component<Signature> {
 
   @action
   handleCollapseButtonClick() {
-    // Avoid conflict with handleCollapsedBarClick
-    next(() => {
-      this.isExpanded = false;
-    });
+    this.isExpanded = false;
   }
 
   @action
   handleExpandButtonClick() {
-    if (this.isCollapsed) {
-      this.isExpanded = true;
-    }
+    this.isExpanded = true;
   }
 }
 
