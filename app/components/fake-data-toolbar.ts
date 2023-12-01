@@ -86,3 +86,9 @@ export default class FakeDataToolbarComponent extends Component<Signature> {
     this.doPoll();
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    FakeDataToolbar: typeof FakeDataToolbarComponent;
+  }
+}
