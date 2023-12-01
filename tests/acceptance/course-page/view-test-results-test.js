@@ -18,17 +18,12 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    // let currentUser = this.server.schema.users.first();
-    // let python = this.server.schema.languages.findBy({ name: 'Python' });
-    // let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    await this.pauseTest();
-    // assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
+    assert.notOk(coursePage.testResultsBar.logsPreview.isPresent);
 
     await percySnapshot('Course Page - View test results - No repository');
   });
@@ -55,7 +50,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    await coursePage.testResultsBar.click();
+    await coursePage.testResultsBar.clickOnBottomSection();
     assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
 
     await percySnapshot('Course Page - View test results - Failure');
