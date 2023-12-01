@@ -26,7 +26,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.testResultsBar.click();
+    await coursePage.testResultsBar.clickOnBottomSection();
     // await this.pauseTest();
     // assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
 

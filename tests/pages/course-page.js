@@ -136,6 +136,7 @@ export default create({
 
   testResultsBar: {
     logsPreview: SubmissionLogsPreview,
+    clickOnBottomSection: clickable('[data-test-bottom-section]'),
     scope: '[data-test-test-results-bar]',
   },
 
