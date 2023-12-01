@@ -6,10 +6,13 @@
 >
   {{#if @submission.statusIsEvaluating}}
     <div class="flex items-center">
-      <div class="w-4 h-4 mr-2">
-        {{svg-jar "spinner" class="w-full h-full animate-spin fill-current text-gray-500"}}
-      </div>
-      <div>Running tests...</div>
+      <BlinkingDot class="mr-2" @color="yellow" />
+
+      {{#if @submission.wasSubmittedViaCli}}
+        Running tests... (view `codecrafters test` output for live logs)
+      {{else}}
+        Running tests... (view `git push` output for live logs)
+      {{/if}}
     </div>
   {{else if this.evaluation}}
     {{#each this.logLines key="@index" as |logLine index|}}

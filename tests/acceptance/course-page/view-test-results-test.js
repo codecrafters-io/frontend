@@ -50,10 +50,9 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    // await coursePage.testResultsBar.clickOnBottomSection();
-    // assert.ok(coursePage.testResultsBar.logsPreview.isPresent);
-
-    await this.pauseTest();
+    await coursePage.testResultsBar.clickOnBottomSection();
+    assert.ok(coursePage.testResultsBar.logsPreview.isPresent);
+    assert.strictEqual(coursePage.testResultsBar.logsPreview.text, 'Running tests... (view `git push` output for live logs)');
 
     await percySnapshot('Course Page - View test results - Tests running');
   });

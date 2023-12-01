@@ -3,10 +3,16 @@
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection @onCollapseButtonClick={{this.handleCollapseButtonClick}} class="my-3" />
 
-      <CoursePage::TestResultsBar::LogsSection @activeStep={{@activeStep}} @repository={{@repository}} class="flex-grow border-b border-gray-800" />
+      <CoursePage::TestResultsBar::LogsSection
+        @activeStep={{@activeStep}}
+        @currentStep={{@currentStep}}
+        @repository={{@repository}}
+        class="flex-grow border-b border-gray-800"
+      />
 
       <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">
-        <div class="w-20 h-1 rounded-full bg-gray-700 cursor-ns-resize hover:bg-gray-600"></div>
+        {{! TODO: Add this back when we have a way to resize the logs section. }}
+        {{! <div class="w-20 h-1 rounded-full bg-gray-700 cursor-ns-resize hover:bg-gray-600"></div> }}
       </div>
     {{/if}}
 

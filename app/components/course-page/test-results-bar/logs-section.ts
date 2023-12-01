@@ -8,6 +8,7 @@ type Signature = {
 
   Args: {
     activeStep: Step;
+    currentStep: Step;
     repository: RepositoryModel;
   };
 };

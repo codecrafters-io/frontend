@@ -11,7 +11,17 @@
     <div class="py-16 flex items-center justify-center flex-grow">
       <div class="text-gray-500 text-sm">
         {{#if (eq @activeStep.type "CourseStageStep")}}
-          When you run tests for this stage, you'll see logs here.
+          {{#if (eq @activeStep @currentStep)}}
+            When you run tests for this stage, you'll see logs here.
+          {{else}}
+            When you run tests for the
+            <LinkTo
+              class="font-semibold text-gray-400 underline hover:text-gray-300"
+              @route={{@activeStep.routeParams.route}}
+              @models={{@activeStep.routeParams.models}}
+            >{{@activeStep.title}}</LinkTo>
+            stage, you'll see logs here.
+          {{/if}}
         {{else}}
           When you run tests on your code, you'll see logs here.
         {{/if}}

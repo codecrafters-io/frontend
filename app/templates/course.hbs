@@ -8,7 +8,7 @@
 >
   {{#if this.isDevelopmentOrTest}}
     {{! @glint-expect-error: not ts-ified yet }}
-    <FakeDataToolbar @repository={{@model.activeRepository}} class="absolute top-4 left-4" />
+    <FakeDataToolbar @repository={{@model.activeRepository}} class="absolute top-4 left-4 hidden" />
   {{/if}}
 
   {{#if this.sidebarIsExpandedOnDesktop}}
@@ -106,6 +106,7 @@
 
   <CoursePage::TestResultsBar
     @activeStep={{this.coursePageState.activeStep}}
+    @currentStep={{this.coursePageState.currentStep}}
     @repository={{@model.activeRepository}}
     class="absolute bottom-0 left-0 right-0 px-6 z-20"
   />
