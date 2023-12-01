@@ -23,10 +23,6 @@
   <CoursePage::StepProgressIndicator @step={{@activeStep}} />
 
   <div class="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center">
-    {{#if this.barIsCollapsed}}
-      <CoursePage::TestResultsBar::BottomSection::ExpandButton />
-    {{else}}
-      <CoursePage::TestResultsBar::BottomSection::CollapseButton />
-    {{/if}}
+    <CoursePage::TestResultsBar::BottomSection::ExpandOrCollapseButton @barIsExpanded={{@barIsExpanded}} />
   </div>
 </div>

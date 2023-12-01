@@ -27,7 +27,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    // await this.pauseTest();
+    await this.pauseTest();
     // assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
 
     await percySnapshot('Course Page - View test results - No repository');
