@@ -17,11 +17,6 @@ export default class TopSectionComponent extends Component<Signature> {
         title: 'Logs',
         icon: 'terminal',
       },
-      {
-        slug: 'diff',
-        title: 'Diff',
-        icon: 'code',
-      },
     ];
   }
 
