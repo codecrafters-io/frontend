@@ -28,7 +28,37 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await percySnapshot('Course Page - View test results - No repository');
   });
 
-  test('can view test results for failed submission', async function (assert) {
+  test('can view test results bar when tests are running', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withEvaluatingStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[0],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    // await coursePage.testResultsBar.clickOnBottomSection();
+    // assert.ok(coursePage.testResultsBar.logsPreview.isPresent);
+
+    await this.pauseTest();
+
+    await percySnapshot('Course Page - View test results - Tests running');
+  });
+
+  test('can view test results when last submission failed', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 

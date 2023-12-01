@@ -1,29 +1,9 @@
-<div
-  class="bg-gray-900 border-t border-gray-800 dark {{if this.isExpanded 'h-[50vh]'}} flex flex-col"
-  data-test-test-results-bar
-  ...attributes
->
+<div class="bg-gray-900 border-t border-gray-800 dark {{if this.isExpanded 'h-[50vh]'}} flex flex-col" data-test-test-results-bar ...attributes>
   <div class="relative flex flex-col flex-grow">
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection @onCollapseButtonClick={{this.handleCollapseButtonClick}} class="my-3" />
 
-      {{#if this.lastFailedSubmission}}
-        <div class="border-b border-gray-800 pb-3 flex-grow flex flex-col">
-          <SubmissionLogsPreview @submission={{this.lastFailedSubmission}} />
-
-          <div class="text-gray-500 text-xs mt-2">
-            Read our article on
-            <a href={{this.debuggingArticleLink}} class="font-semibold underline text-gray-400" target="_blank" rel="noopener noreferrer">debugging
-              test failures</a>.
-          </div>
-        </div>
-      {{else}}
-        <div class="py-16 border-b border-gray-800 flex items-center justify-center flex-grow">
-          <div class="text-gray-500 text-sm">
-            When you run tests on your code, you'll see logs here.
-          </div>
-        </div>
-      {{/if}}
+      <CoursePage::TestResultsBar::LogsSection @activeStep={{@activeStep}} @repository={{@repository}} class="flex-grow border-b border-gray-800" />
 
       <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">
         <div class="w-20 h-1 rounded-full bg-gray-700 cursor-ns-resize hover:bg-gray-600"></div>

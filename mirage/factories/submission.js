@@ -68,6 +68,10 @@ export default Factory.extend({
     },
   }),
 
+  withEvaluatingStatus: trait({
+    status: 'evaluating',
+  }),
+
   afterCreate(submission) {
     submission.repository.update('lastSubmission', submission);
   },

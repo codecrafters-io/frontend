@@ -4,7 +4,14 @@
   data-test-submission-logs-preview
   ...attributes
 >
-  {{#if this.evaluation}}
+  {{#if @submission.statusIsEvaluating}}
+    <div class="flex items-center">
+      <div class="w-4 h-4 mr-2">
+        {{svg-jar "spinner" class="w-full h-full animate-spin fill-current text-gray-500"}}
+      </div>
+      <div>Running tests...</div>
+    </div>
+  {{else if this.evaluation}}
     {{#each this.logLines key="@index" as |logLine index|}}
       <div class="flex items-start">
         <div class="text-gray-500 dark:text-gray-600 w-4 text-right mr-3 flex-shrink-0 select-none">{{add index 1}}</div>

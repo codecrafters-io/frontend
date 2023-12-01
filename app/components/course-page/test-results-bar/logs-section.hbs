@@ -1,0 +1,21 @@
+<div class="pb-3 flex flex-col" ...attributes>
+  {{#if this.lastSubmission}}
+    <SubmissionLogsPreview @submission={{this.lastSubmission}} />
+
+    <div class="text-gray-500 text-xs mt-2">
+      Read our article on
+      <a href={{this.debuggingArticleLink}} class="font-semibold underline text-gray-400" target="_blank" rel="noopener noreferrer">debugging test
+        failures</a>.
+    </div>
+  {{else}}
+    <div class="py-16 flex items-center justify-center flex-grow">
+      <div class="text-gray-500 text-sm">
+        {{#if (eq @activeStep.type "CourseStageStep")}}
+          When you run tests for this stage, you'll see logs here.
+        {{else}}
+          When you run tests on your code, you'll see logs here.
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</div>
