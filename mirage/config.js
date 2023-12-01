@@ -56,6 +56,8 @@ function routes() {
 
   window.server = this; // Hack! Is there a better way?
 
+  this.get('/affiliate-earnings-payouts');
+  this.post('/affiliate-earnings-payouts');
   this.get('/affiliate-links');
 
   this.post('/affiliate-links', function (schema) {
@@ -380,8 +382,6 @@ function routes() {
     return referralActivation;
   });
 
-  this.get('/referral-earnings-payouts');
-  this.post('/referral-earnings-payouts');
   this.get('/referral-links', function (schema, request) {
     if (request.queryParams.user_id) {
       return schema.referralLinks.where({ userId: request.queryParams.user_id });

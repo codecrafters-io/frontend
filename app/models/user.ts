@@ -14,7 +14,7 @@ import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-
 import InvoiceModel from 'codecrafters-frontend/models/invoice';
 import Model, { attr, hasMany } from '@ember-data/model';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
-import ReferralEarningsPayoutModel from 'codecrafters-frontend/models/referral-earnings-payout';
+import AffiliateEarningsPayoutModel from 'codecrafters-frontend/models/affiliate-earnings-payout';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubscriptionModel from 'codecrafters-frontend/models/subscription';
@@ -55,7 +55,7 @@ export default class UserModel extends Model {
   @hasMany('github-app-installation', { async: false }) githubAppInstallations!: GitHubAppInstallationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer!: ReferralActivationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer!: ReferralActivationModel[];
-  @hasMany('referral-earnings-payout', { async: false }) referralEarningsPayouts!: ReferralEarningsPayoutModel[];
+  @hasMany('affiliate-earnings-payout', { async: false }) affiliateEarningsPayouts!: AffiliateEarningsPayoutModel[];
   @hasMany('referral-link', { async: false }) referralLinks!: ReferralLinkModel[];
   @hasMany('repository', { async: false }) repositories!: RepositoryModel[];
   @hasMany('subscription', { async: false }) subscriptions!: SubscriptionModel[];

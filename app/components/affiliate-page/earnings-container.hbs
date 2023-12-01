@@ -43,7 +43,7 @@
     </div>
   {{/if}}
 
-  {{#if (gt this.currentUser.referralEarningsPayouts.length 0)}}
+  {{#if (gt this.currentUser.affiliateEarningsPayouts.length 0)}}
     <div class="mt-6">
       <div class="mb-3">
         <div class="inline-flex border-b border-teal-500 uppercase text-teal-500 font-bold text-sm">
@@ -52,7 +52,7 @@
       </div>
       <table class="max-w-xs">
         <tbody>
-          {{#each this.currentUser.referralEarningsPayouts as |payout|}}
+          {{#each this.currentUser.affiliateEarningsPayouts as |payout|}}
             <tr class="border-b" data-test-payout-history-item>
               <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
                 {{date-format (or payout.completedAt payout.createdAt) format="PPP"}}

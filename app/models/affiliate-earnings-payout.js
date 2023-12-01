@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default class ReferralEarningsPayoutModel extends Model {
+export default class AffiliateEarningsPayoutModel extends Model {
   @belongsTo('user', { async: false }) user;
 
   @attr('date') initiatedAt;
