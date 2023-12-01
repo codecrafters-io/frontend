@@ -133,6 +133,10 @@ export default create({
   repositorySetupCard: RepositorySetupCard,
   sidebar: Sidebar,
 
+  testResultsBar: {
+    scope: '[data-test-test-results-bar]',
+  },
+
   upgradePrompt: {
     scope: '[data-test-upgrade-prompt]',
     secondaryCopy: text('[data-test-upgrade-prompt-secondary-copy]'),

@@ -2,6 +2,7 @@
   class="group/test-results-bar bg-gray-900 border-t border-gray-800 dark"
   {{on "click" (if this.isCollapsed this.handleCollapsedBarClick (noop))}}
   role={{if this.isCollapsed "button"}}
+  data-test-test-results-bar
   ...attributes
 >
   <div class="relative py-3 gap-3 flex flex-col">
