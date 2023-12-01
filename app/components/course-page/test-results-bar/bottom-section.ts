@@ -8,6 +8,8 @@ type Signature = {
   Args: {
     activeStep: Step;
     barIsExpanded: boolean;
+    onCollapseButtonClick: () => void;
+    onExpandButtonClick: () => void;
   };
 };
 

@@ -59,7 +59,7 @@ export default class TestResultsBarComponent extends Component<Signature> {
   }
 
   @action
-  handleCollapsedBarClick() {
+  handleExpandButtonClick() {
     if (this.isCollapsed) {
       this.isExpanded = true;
     }
