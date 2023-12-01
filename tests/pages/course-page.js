@@ -1,16 +1,17 @@
-import { collection, clickable, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
+import LanguageDropdown from './components/language-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/course-page/repository-setup-card';
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
+import SubmissionLogsPreview from 'codecrafters-frontend/tests/pages/components/submission-logs-preview';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
-import LanguageDropdown from './components/language-dropdown';
+import { collection, clickable, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -132,6 +133,12 @@ export default create({
 
   repositorySetupCard: RepositorySetupCard,
   sidebar: Sidebar,
+
+  testResultsBar: {
+    logsPreview: SubmissionLogsPreview,
+    clickOnBottomSection: clickable('[data-test-bottom-section]'),
+    scope: '[data-test-test-results-bar]',
+  },
 
   upgradePrompt: {
     scope: '[data-test-upgrade-prompt]',

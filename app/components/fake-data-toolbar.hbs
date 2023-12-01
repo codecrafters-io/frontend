@@ -1,25 +1,21 @@
-<div class="p-4 bg-gray-50 shadow max-w-sm absolute top-4 left-4" ...attributes>
+<div class="p-4 bg-gray-50 shadow max-w-sm z-20" ...attributes>
   <div class="pb-3 text-sm font-bold underline text-gray-700">
     Fake Data
   </div>
 
   <div class="flex flex-col items-start">
-    <button
-      type="button"
-      {{on "click" this.handleCreateSubmissionButtonClick}}
-      class="text-xs bg-teal-500 text-white rounded p-2 mb-2 {{unless @repository.id 'opacity-50'}}"
-    >
+    <PrimaryButton @isDisabled={{not @repository.id}} {{on "click" this.handleCreateSubmissionButtonClick}} @size="small">
       Create Submission
-    </button>
+    </PrimaryButton>
 
     {{#if @repository.lastSubmission.statusIsEvaluating}}
-      <button type="button" {{on "click" this.handleFailTestsButtonClick}} class="text-xs bg-teal-500 text-white rounded p-2 mb-2">
+      <DangerButton {{on "click" this.handleFailTestsButtonClick}} @size="small">
         Fail Tests
-      </button>
+      </DangerButton>
 
-      <button type="button" {{on "click" this.handlePassTestsButtonClick}} class="text-xs bg-teal-500 text-white rounded p-2">
+      <PrimaryButton type="button" {{on "click" this.handlePassTestsButtonClick}} @size="small">
         Pass Tests
-      </button>
+      </PrimaryButton>
     {{/if}}
   </div>
 </div>

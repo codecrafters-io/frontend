@@ -1,18 +1,15 @@
 {{page-title "Courses"}}
 
-{{#if this.isDevelopmentOrTest}}
-  <div class="relative">
-    {{! @glint-expect-error: not ts-ified yet }}
-    <FakeDataToolbar @repository={{this.activeRepository}} class="hidden" />
-  </div>
-{{/if}}
-
 <div
-  class="flex h-screen w-full"
+  class="flex h-screen w-full relative"
   {{did-insert this.handleDidInsertContainer}}
   {{will-destroy this.handleWillDestroyContainer}}
   {{did-update this.handleDidUpdateActiveRepositoryId @model.activeRepository.id}}
 >
+  {{#if this.isDevelopmentOrTest}}
+    <FakeDataToolbar @repository={{@model.activeRepository}} class="absolute top-4 left-4 hidden" />
+  {{/if}}
+
   {{#if this.sidebarIsExpandedOnDesktop}}
     <CoursePage::Sidebar
       @course={{@model.course}}
@@ -105,6 +102,13 @@
       </div>
     </div>
   </div>
+
+  <CoursePage::TestResultsBar
+    @activeStep={{this.coursePageState.activeStep}}
+    @currentStep={{this.coursePageState.currentStep}}
+    @repository={{@model.activeRepository}}
+    class="absolute bottom-0 left-0 right-0 px-6 z-20"
+  />
 </div>
 
 {{#if this.configureGithubIntegrationModalIsOpen}}

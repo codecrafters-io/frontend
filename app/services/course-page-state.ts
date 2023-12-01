@@ -18,6 +18,10 @@ export default class CoursePageStateService extends Service {
     return this.stepList!.activeStep as Step;
   }
 
+  get activeStepAsCourseStageStep(): CourseStageStep {
+    return this.activeStep as CourseStageStep;
+  }
+
   // Since the currentStep might be empty during a route transition, we return `activeStep` as a fallback to prevent errors.
   // All operations that might require a route change are expected to call `navigateToActiveStepIfCurrentStepIsInvalid` if needed.
   get currentStep(): Step {

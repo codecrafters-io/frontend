@@ -8,7 +8,7 @@
         {{#if (or (current-user-is-course-author @courseStage.course) (current-user-is-staff))}}
           <a
             href="{{@courseStage.course.definitionRepositoryLink}}/edit/main/course-definition.yml"
-            class="text-gray-400 hidden group-hover/your-task-card:inline-flex items-center hover:text-gray-600 ml-1 text-xs hover:underline"
+            class="text-gray-400 opacity-0 group-hover/your-task-card:opacity-100 items-center hover:text-gray-600 ml-1 text-xs hover:underline"
             target="_blank"
             rel="noopener noreferrer"
             data-test-edit-on-github-link
