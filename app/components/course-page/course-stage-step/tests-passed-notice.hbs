@@ -1,21 +1,3 @@
-{{!--
-<div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm" ...attributes>
-  <div class="mr-3 mt-0.5 w-6 h-6 relative">
-    {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
-  </div>
-  <div class="text-blue-800 prose prose-blue leading-7 text-sm max-w-none">
-    <p>
-      CodeCrafters runs tests when you do a git push. Your first push should have streamed back a
-      <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Test failed</code>
-      error — that's expected. Once you implement this stage, you'll pass the test!
-    </p>
-    <p>
-      Check the
-      <a href="#first-stage-instructions-card" class="font-bold">How to pass this stage</a>
-      section below for instructions on how to pass this stage.
-    </p>
-  </div>
-</div> --}}
 <Alert @type="success" @icon="check-circle" class="mb-4 has-prism-highlighting" ...attributes {{highlight-code-blocks this.instructionsMarkdown}}>
   {{markdown-to-html this.instructionsMarkdown}}
 </Alert>

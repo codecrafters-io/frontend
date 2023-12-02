@@ -28,6 +28,11 @@ export default class CardFooterComponent extends Component<Signature> {
   }
 
   get shouldShowLogsButton() {
+    // Only show when the user is on the active stage
+    if (this.coursePageState.currentStep !== this.coursePageState.activeStep) {
+      return false;
+    }
+
     const lastSubmission = this.args.repository.lastSubmission;
 
     return (

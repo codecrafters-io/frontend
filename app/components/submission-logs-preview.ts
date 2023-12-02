@@ -37,6 +37,10 @@ export default class SubmissionLogsPreviewComponent extends Component<Signature>
   handleDidInsert(element: HTMLElement) {
     element.scrollTop = element.scrollHeight;
   }
+
+  handleDidUpdateLogs(element: HTMLElement) {
+    element.scrollTop = element.scrollHeight;
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
