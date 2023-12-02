@@ -2,10 +2,14 @@
   {{#if this.lastSubmission}}
     <SubmissionLogsPreview @submission={{this.lastSubmission}} />
 
-    <div class="text-gray-500 text-xs mt-2">
+    <div class="text-gray-400 text-xs mt-2">
       Read our article on
-      <a href={{this.debuggingArticleLink}} class="font-semibold underline text-gray-400" target="_blank" rel="noopener noreferrer">debugging test
-        failures</a>.
+      <a
+        href={{this.debuggingArticleLink}}
+        class="font-semibold underline text-sky-500 hover:text-sky-400"
+        target="_blank"
+        rel="noopener noreferrer"
+      >debugging test failures</a>.
     </div>
   {{else}}
     <div class="py-16 flex items-center justify-center flex-grow">

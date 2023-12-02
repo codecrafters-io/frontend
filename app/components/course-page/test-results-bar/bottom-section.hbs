@@ -1,5 +1,5 @@
 <div
-  class="flex items-center justify-between relative py-3 group/test-results-bar-bottom-section"
+  class="flex items-center justify-between relative py-3 group/test-results-bar-bottom-section {{if @barIsExpanded 'bg-black'}}"
   {{on "click" (if this.barIsCollapsed @onExpandButtonClick @onCollapseButtonClick)}}
   role="button"
   data-test-bottom-section

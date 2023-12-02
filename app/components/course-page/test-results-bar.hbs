@@ -1,13 +1,13 @@
 <div class="bg-gray-900 border-t border-gray-800 dark flex flex-col" data-test-test-results-bar ...attributes>
   <div class="relative flex flex-col flex-grow {{if this.isExpanded 'h-[50vh]'}}">
     {{#if this.isExpanded}}
-      <CoursePage::TestResultsBar::TopSection @onCollapseButtonClick={{this.handleCollapseButtonClick}} class="my-3" />
+      <CoursePage::TestResultsBar::TopSection @onCollapseButtonClick={{this.handleCollapseButtonClick}} class="my-3 px-6" />
 
       <CoursePage::TestResultsBar::LogsSection
         @activeStep={{@activeStep}}
         @currentStep={{@currentStep}}
         @repository={{@repository}}
-        class="flex-grow border-b border-gray-800 overflow-y-auto"
+        class="flex-grow border-b border-gray-800 overflow-y-auto px-6"
       />
 
       <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">
@@ -21,6 +21,7 @@
       @barIsExpanded={{this.isExpanded}}
       @onCollapseButtonClick={{this.handleCollapseButtonClick}}
       @onExpandButtonClick={{this.handleExpandButtonClick}}
+      class="px-6"
     />
   </div>
 </div>
