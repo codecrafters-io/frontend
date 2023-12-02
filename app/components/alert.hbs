@@ -1,8 +1,8 @@
 <div class="flex p-3 border rounded shadow-sm {{this.containerColorClasses}}" ...attributes>
   <div class="mr-3 mt-0.5">
-    {{svg-jar "information-circle" class=(concat "w-6 fill-current " this.iconColorClasses)}}
+    {{svg-jar this.icon class=(concat "w-6 fill-current " this.iconColorClasses)}}
   </div>
-  <div class="prose leading-6 text-sm max-w-none {{this.textColorClasses}}">
+  <div class="prose prose-compact leading-6 text-sm max-w-none {{this.textColorClasses}}">
     {{yield}}
   </div>
 </div>

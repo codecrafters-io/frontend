@@ -99,6 +99,23 @@ module.exports = {
             b: { color: colors.sky[700] },
           },
         },
+        green: {
+          css: {
+            color: colors.green[800],
+            a: { color: colors.green[800] },
+            strong: { color: colors.green[800] },
+            b: { color: colors.green[800] },
+            pre: {
+              color: colors.green[800],
+              backgroundColor: colors.green[200],
+              borderWidth: '1px',
+              borderColor: colors.green[300],
+            },
+            h3: {
+              color: colors.green[800],
+            },
+          },
+        },
         red: {
           css: {
             color: colors.red[700],
@@ -112,6 +129,21 @@ module.exports = {
                   color: colors.red[300],
                 },
               },
+            },
+          },
+        },
+        compact: {
+          css: {
+            ':where(p):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
+              marginTop: '0.5em',
+              marginBottom: '0.5em',
+            },
+            ':where(.prose > :first-child):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
+              marginTop: '0',
+            },
+            pre: {
+              marginTop: '0.5em',
+              marginBottom: '0.5em',
             },
           },
         },
