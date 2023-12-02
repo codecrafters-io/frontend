@@ -1,5 +1,5 @@
-<div class="bg-gray-900 border-t border-gray-800 dark {{if this.isExpanded 'h-[50vh]'}} flex flex-col" data-test-test-results-bar ...attributes>
-  <div class="relative flex flex-col flex-grow">
+<div class="bg-gray-900 border-t border-gray-800 dark flex flex-col" data-test-test-results-bar ...attributes>
+  <div class="relative flex flex-col flex-grow {{if this.isExpanded 'h-[50vh]'}}">
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection @onCollapseButtonClick={{this.handleCollapseButtonClick}} class="my-3" />
 
