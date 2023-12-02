@@ -1,6 +1,5 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="p-6" ...attributes>
-
   {{#if @submission}}
     <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainer @submission={{@submission}} />
     <div class="border-b pb-4 mb-4"></div>
@@ -8,7 +7,7 @@
       {{#if (eq activeTabSlug "diff")}}
         <CourseAdmin::SubmissionsPage::SubmissionDetails::DiffContainer @submission={{@submission}} data-test-diff-tab />
       {{else if (eq activeTabSlug "logs")}}
-        <SubmissionLogsPreview @submission={{@submission}} />
+        <SubmissionLogsPreview @submission={{@submission}} class="max-h-[400px]" />
       {{else if (eq activeTabSlug "community_solution")}}
         <CourseAdmin::SubmissionsPage::SubmissionDetails::CommunitySolutionContainer @submission={{@submission}} />
       {{/if}}
