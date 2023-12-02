@@ -12,7 +12,7 @@
 
 {{#if (and this.lastFailedSubmission this.logsAreExpanded)}}
   <div class="pb-3">
-    <SubmissionLogsPreview @submission={{this.lastFailedSubmission}} />
+    <SubmissionLogsPreview @submission={{this.lastFailedSubmission}} class="max-h-[400px]" />
 
     <div class="mt-3 prose prose-sm text-xs">
       Read our article on

@@ -1,5 +1,5 @@
-<div class="bg-gray-900 border-t border-gray-800 dark {{if this.isExpanded 'h-[50vh]'}} flex flex-col" data-test-test-results-bar ...attributes>
-  <div class="relative flex flex-col flex-grow">
+<div class="bg-gray-900 border-t border-gray-800 dark flex flex-col" data-test-test-results-bar ...attributes>
+  <div class="relative flex flex-col flex-grow {{if this.isExpanded 'h-[50vh]'}}">
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection @onCollapseButtonClick={{this.handleCollapseButtonClick}} class="my-3" />
 
@@ -7,7 +7,7 @@
         @activeStep={{@activeStep}}
         @currentStep={{@currentStep}}
         @repository={{@repository}}
-        class="flex-grow border-b border-gray-800"
+        class="flex-grow border-b border-gray-800 overflow-y-auto"
       />
 
       <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">
