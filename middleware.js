@@ -4,8 +4,7 @@
  * - extracts `username` from the URL
  * - generates a proper Profile OG Image URL
  * - reads the contents of `dist/_empty.html`
- * - replaces `<meta proprerty="og:image" ...` with Profile OG Image URL
- * - replaces `<meta name="twitter:image" ...` with Profile OG Image URL
+ * - replaces default meta Image URL with Profile OG Image URL
  * - serves the result as an HTML response
  *
  * Related Docs:
@@ -35,17 +34,8 @@ export default async function middleware(request) {
   // Read contents of `/dist/_empty.html`
   const indexFileText = await fetch(indexFileURL).then((res) => res.text());
 
-  // Replace content of OG & Twitter meta tags to use Profile Image URL
-  // prettier-ignore
-  const responseText = indexFileText
-    .replace(
-      /<meta\s+property=(["'])(og:image)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta property=$1$2$1 content=$3${profileImageUrl}$3$5`
-    )
-    .replace(
-      /<meta\s+name=(["'])(twitter:image)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta name=$1$2$1 content=$3${profileImageUrl}$3$5`
-    );
+  // Replace the default image URL with a Profile image URL
+  const responseText = indexFileText.replace(/https:\/\/codecrafters\.io\/images\/og-index\.jpg/g, profileImageUrl);
 
   // Serve the result as HTML
   return new Response(responseText, { headers: { 'Content-Type': 'text/html' } });
