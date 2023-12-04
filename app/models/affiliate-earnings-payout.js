@@ -5,6 +5,7 @@ export default class AffiliateEarningsPayoutModel extends Model {
 
   @attr('number') amountInCents;
   @attr('date') completedAt;
+  @attr('date') createdAt;
   @attr('date') initiatedAt;
   @attr('string') lastFailureReason;
   @attr('') payoutMethodArgs;
