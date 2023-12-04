@@ -1,28 +1,44 @@
 import { action } from '@ember/object';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    activeTabSlug: string;
     onCollapseButtonClick: () => void;
+    onActiveTabSlugChange: (slug: string) => void;
   };
 };
 
 export default class TopSectionComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+
   get tabs() {
-    return [
+    const tabs = [
       {
         slug: 'logs',
         title: 'Logs',
         icon: 'terminal',
       },
     ];
+
+    if (this.authenticator.currentUser!.isStaff) {
+      tabs.push({
+        slug: 'autofix',
+        title: 'Autofix',
+        icon: 'sparkles',
+      });
+    }
+
+    return tabs;
   }
 
   @action
   handleTabClick(tab: { slug: string }) {
-    console.log(tab.slug);
+    this.args.onActiveTabSlugChange(tab.slug);
   }
 }
 
