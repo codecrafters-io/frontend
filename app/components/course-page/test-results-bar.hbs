@@ -16,9 +16,12 @@
           class="flex-grow border-b border-gray-800 overflow-y-auto px-6"
         />
       {{else if (eq this.activeTabSlug "autofix")}}
-        <div class="flex-grow border-b border-gray-800 overflow-y-auto px-6 text-white">
-          Autofix tab
-        </div>
+        <CoursePage::TestResultsBar::AutofixSection
+          @activeStep={{@activeStep}}
+          @currentStep={{@currentStep}}
+          @repository={{@repository}}
+          class="flex-grow border-b border-gray-800 overflow-y-auto px-6"
+        />
       {{/if}}
 
       <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">

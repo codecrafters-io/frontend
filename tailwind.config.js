@@ -52,9 +52,9 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            '--tw-prose-links': colors.sky[500],
             maxWidth: '90ch', // Default is 65ch
             a: {
-              color: colors.sky[500],
               fontWeight: '600',
             },
             'a:hover': {
@@ -93,10 +93,41 @@ module.exports = {
         },
         blue: {
           css: {
-            color: colors.sky[700],
-            a: { color: colors.sky[700] },
-            strong: { color: colors.sky[700] },
-            b: { color: colors.sky[700] },
+            '--tw-prose-body': colors.sky[700],
+            '--tw-prose-headings': colors.sky[700],
+            '--tw-prose-lead': colors.sky[700],
+            '--tw-prose-links': colors.sky[800],
+            '--tw-prose-bold': colors.sky[700],
+            '--tw-prose-counters': colors.sky[700],
+            '--tw-prose-bullets': colors.sky[700],
+            '--tw-prose-hr': colors.sky[700],
+            '--tw-prose-quotes': colors.sky[700],
+            '--tw-prose-quote-borders': colors.sky[700],
+            '--tw-prose-captions': colors.sky[700],
+            '--tw-prose-code': colors.sky[700],
+            '--tw-prose-pre-code': colors.sky[700],
+            '--tw-prose-pre-bg': colors.sky[700],
+            '--tw-prose-th-borders': colors.sky[700],
+            '--tw-prose-td-borders': colors.sky[700],
+            '--tw-prose-invert-body': colors.sky[500],
+            '--tw-prose-invert-headings': colors.sky[500],
+            '--tw-prose-invert-lead': colors.sky[500],
+            '--tw-prose-invert-links': colors.sky[500],
+            '--tw-prose-invert-bold': colors.sky[500],
+            '--tw-prose-invert-counters': colors.sky[500],
+            '--tw-prose-invert-bullets': colors.sky[500],
+            '--tw-prose-invert-hr': colors.sky[500],
+            '--tw-prose-invert-quotes': colors.sky[500],
+            '--tw-prose-invert-quote-borders': colors.sky[500],
+            '--tw-prose-invert-captions': colors.sky[500],
+            '--tw-prose-invert-code': colors.sky[500],
+            '--tw-prose-invert-pre-code': colors.sky[500],
+            '--tw-prose-invert-pre-bg': colors.sky[500],
+            '--tw-prose-invert-th-borders': colors.sky[500],
+            '--tw-prose-invert-td-borders': colors.sky[500],
+            'a:hover': {
+              color: colors.sky[400],
+            },
           },
         },
         green: {
@@ -140,6 +171,9 @@ module.exports = {
             },
             ':where(.prose > :first-child):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
               marginTop: '0',
+            },
+            '.prose :where(.prose > :last-child):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
+              marginBottom: '0',
             },
             pre: {
               marginTop: '0.5em',
