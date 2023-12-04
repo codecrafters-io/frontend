@@ -38,7 +38,7 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
       customer: customer1,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
-      activatedAt: new Date("December 02, 2023"), // 2 days ago
+      activatedAt: new Date('December 02, 2023'), // 2 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 23700,
       spentAmountInCents: 39500,
@@ -48,7 +48,7 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
       customer: customer2,
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
-      activatedAt: new Date("December 03, 2023"), // 1 days ago
+      activatedAt: new Date('December 03, 2023'), // 1 days ago
       status: 'first_charge_successful',
       withheldEarningsAmountInCents: 0,
       withdrawableEarningsAmountInCents: 35400,
@@ -58,8 +58,8 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
     this.server.create('affiliate-earnings-payout', {
       user: this.server.schema.users.first(),
       amountInCents: 100_00,
-      createdAt: new Date("December 01, 2023"), // 3 days ago
-      completedAt: new Date("December 02, 2023"),
+      createdAt: new Date('December 01, 2023'), // 3 days ago
+      completedAt: new Date('December 02, 2023'),
       status: 'failed',
       lastFailureReason: 'Unable to find a paypal account for abcd@gmail.com',
     });
@@ -67,15 +67,15 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
     this.server.create('affiliate-earnings-payout', {
       user: this.server.schema.users.first(),
       amountInCents: 100_00,
-      createdAt: new Date("December 02, 2023"), // 2 days ago
-      completedAt: new Date("December 03, 2023"),
+      createdAt: new Date('December 02, 2023'), // 2 days ago
+      completedAt: new Date('December 03, 2023'),
       status: 'completed',
     });
 
     this.server.create('affiliate-earnings-payout', {
       user: this.server.schema.users.first(),
       amountInCents: 50_00,
-      createdAt: new Date("December 03, 2023"), // 1 days ago
+      createdAt: new Date('December 03, 2023'), // 1 days ago
       status: 'processing',
     });
 
@@ -85,9 +85,9 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
 
     assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
     assert.strictEqual(affiliatePage.payoutHistoryItems.length, 3, 'payout history items are correct');
-    assert.true(affiliatePage.payoutHistoryItems.objectAt(0).text.includes("December 2nd, 2023"), 'failed payout shows correct date');
-    assert.true(affiliatePage.payoutHistoryItems.objectAt(1).text.includes("December 3rd, 2023"), 'completed payout shows correct date');
-    assert.true(affiliatePage.payoutHistoryItems.objectAt(2).text.includes("December 3rd, 2023"), 'processing payout shows correct date');
+    assert.true(affiliatePage.payoutHistoryItems.objectAt(0).text.includes('December 2nd, 2023'), 'failed payout shows correct date');
+    assert.true(affiliatePage.payoutHistoryItems.objectAt(1).text.includes('December 3rd, 2023'), 'completed payout shows correct date');
+    assert.true(affiliatePage.payoutHistoryItems.objectAt(2).text.includes('December 3rd, 2023'), 'processing payout shows correct date');
 
     await percySnapshot('Affiliate Page | View payouts');
   });
