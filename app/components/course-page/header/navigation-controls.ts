@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
+import RouterService from '@ember/routing/router-service';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { inject as service } from '@ember/service';
@@ -21,6 +22,7 @@ type Signature = {
 
 export default class NavigationControlsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+  @service declare router: RouterService;
 
   get currentStepAsCourseStageStep() {
     return this.args.currentStep as CourseStageStep;
@@ -28,6 +30,14 @@ export default class NavigationControlsComponent extends Component<Signature> {
 
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  get shouldShowFreeWeeksLeftButton() {
+    return this.currentUser && this.currentUser.hasActiveFreeUsageGrants && !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated;
+  }
+
+  get shouldShowSubscribeButton() {
+    return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }
 }
 

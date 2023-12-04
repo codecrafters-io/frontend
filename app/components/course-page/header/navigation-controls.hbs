@@ -36,14 +36,18 @@
         </LinkTo>
       {{/if}}
 
-      {{#unless this.currentUser.canAccessPaidContent}}
-        <PrimaryLinkButton @size="small" @route="pay">
+      {{#if this.currentUser.isVip}}
+        <Header::VipBadge class="mr-3" />
+      {{else if this.shouldShowFreeWeeksLeftButton}}
+        <Header::FreeWeeksLeftButton class="mr-3" />
+      {{else if this.shouldShowSubscribeButton}}
+        <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-subscribe-button>
           <span class="flex items-center gap-x-1">
             <span>Subscribe</span>
             {{svg-jar "lock-open" class="w-4"}}
           </span>
         </PrimaryLinkButton>
-      {{/unless}}
+      {{/if}}
 
       <LinkTo
         @route="catalog"
