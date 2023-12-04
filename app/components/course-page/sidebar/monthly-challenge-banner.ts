@@ -20,6 +20,10 @@ export default class MonthlyChallengeBannerComponent extends Component<Signature
 
   petoiRobotDogImage = petoiRobotDogImage;
 
+  get shouldShowBanner(): boolean {
+    return new Date("November 30, 2023") > new Date();
+  }
+
   @action
   handleClick() {
     this.analyticsEventTracker.track('clicked_monthly_challenge_banner', {

@@ -1,5 +1,5 @@
 <a
-  class="relative px-2 py-4 rounded border border-gray-200 hover:border-gray-300 bg-white overflow-hidden group/monthly-challenge-banner transition-all"
+  class="{{if this.shouldShowBanner 'block' 'hidden'}} relative px-2 py-4 rounded border border-gray-200 hover:border-gray-300 bg-white overflow-hidden group/monthly-challenge-banner transition-all"
   href="https://codecrafters.io/november"
   target="_blank"
   rel="noopener noreferrer"

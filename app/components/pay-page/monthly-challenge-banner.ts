@@ -8,4 +8,8 @@ interface Signature {
 
 export default class MonthlyChallengeBannerComponent extends Component<Signature> {
   petoiRobotDogImage = petoiRobotDogImage;
+
+  get shouldShowBanner(): boolean {
+    return new Date("November 30, 2023") > new Date();
+  }
 }
