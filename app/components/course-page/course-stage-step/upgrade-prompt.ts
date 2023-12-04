@@ -64,3 +64,9 @@ export default class UpgradePromptComponent extends Component<Signature> {
     }
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::UpgradePrompt': typeof UpgradePromptComponent;
+  }
+}

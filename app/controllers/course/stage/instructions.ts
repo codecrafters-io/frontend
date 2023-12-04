@@ -4,6 +4,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 
 export default class CourseStageInstructionsController extends Controller {
   @service declare coursePageState: CoursePageStateService;
@@ -23,8 +24,8 @@ export default class CourseStageInstructionsController extends Controller {
     });
   }
 
-  get currentStep() {
-    return this.coursePageState.currentStep;
+  get currentStep(): CourseStageStep {
+    return this.coursePageState.currentStep as CourseStageStep;
   }
 
   get isCurrentStage() {
@@ -41,6 +42,10 @@ export default class CourseStageInstructionsController extends Controller {
 
   get shouldShowTestFailureExpectedHint() {
     return this.model.courseStage.isFirst && this.currentStep.status !== 'complete';
+  }
+
+  get shouldShowTestsPassedNotice() {
+    return this.isCurrentStage && this.currentStep.testsStatus === 'passed';
   }
 
   get shouldShowUpgradePrompt() {

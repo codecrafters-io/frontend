@@ -5,6 +5,7 @@ interface Signature {
 
   Args: {
     type?: 'success' | 'info' | 'error';
+    icon?: string;
   };
 
   Blocks: {
@@ -21,6 +22,10 @@ export default class AlertComponent extends Component<Signature> {
     }[this.type];
   }
 
+  get icon(): string {
+    return this.args.icon || 'information-circle';
+  }
+
   get iconColorClasses(): string {
     return {
       success: 'text-green-400',
@@ -31,7 +36,7 @@ export default class AlertComponent extends Component<Signature> {
 
   get textColorClasses(): string {
     return {
-      success: 'text-green-800',
+      success: 'text-green-800 prose-green',
       info: 'text-blue-900 prose-blue',
       error: 'text-red-800 prose-red',
     }[this.type];

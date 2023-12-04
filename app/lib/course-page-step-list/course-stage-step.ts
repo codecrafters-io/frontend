@@ -67,16 +67,22 @@ export default class CourseStageStep extends Step {
         dotType: 'blinking',
         text: 'Running tests...',
       };
+    } else if (this.status === 'complete') {
+      return {
+        dotType: 'none',
+        text: this.stageCompletedMessage,
+      };
     } else if (this.testsStatus === 'failed') {
       return {
         dotColor: 'red',
         dotType: 'static',
         text: this.testFailureMessage,
       };
-    } else if (this.status === 'complete') {
+    } else if (this.testsStatus === 'passed') {
       return {
-        dotType: 'none',
-        text: this.stageCompletedMessage,
+        dotColor: 'green',
+        dotType: 'static',
+        text: 'Tests passed!',
       };
     } else if (this.status === 'in_progress') {
       return {
@@ -149,7 +155,7 @@ export default class CourseStageStep extends Step {
     }
   }
 
-  get testsStatus(): 'evaluating' | 'failed' | 'passed_or_not_run' {
+  get testsStatus(): 'evaluating' | 'failed' | 'passed' | 'error_or_not_run' {
     if (this.repository.lastSubmissionIsEvaluating && this.repository.lastSubmission!.courseStage === this.courseStage) {
       return 'evaluating';
     }
@@ -158,7 +164,11 @@ export default class CourseStageStep extends Step {
       return 'failed';
     }
 
-    return 'passed_or_not_run';
+    if (this.repository.lastSubmissionHasSuccessStatus && this.repository.lastSubmission!.courseStage === this.courseStage) {
+      return 'passed';
+    }
+
+    return 'error_or_not_run';
   }
 
   get title() {
