@@ -59,6 +59,7 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
       user: this.server.schema.users.first(),
       amountInCents: 100_00,
       createdAt: new Date("December 01, 2023"), // 3 days ago
+      completedAt: new Date("December 02, 2023"),
       status: 'failed',
       lastFailureReason: 'Unable to find a paypal account for abcd@gmail.com',
     });
@@ -84,6 +85,9 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
 
     assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
     assert.strictEqual(affiliatePage.payoutHistoryItems.length, 3, 'payout history items are correct');
+    assert.true(affiliatePage.payoutHistoryItems.objectAt(0).text.includes("December 2nd, 2023"), 'failed payout shows correct date');
+    assert.true(affiliatePage.payoutHistoryItems.objectAt(1).text.includes("December 3rd, 2023"), 'completed payout shows correct date');
+    assert.true(affiliatePage.payoutHistoryItems.objectAt(2).text.includes("December 3rd, 2023"), 'processing payout shows correct date');
 
     await percySnapshot('Affiliate Page | View payouts');
   });
