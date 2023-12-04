@@ -751,7 +751,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-
     assert.true(coursePage.desktopHeader.freeWeeksLeftButton.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
   });
 
