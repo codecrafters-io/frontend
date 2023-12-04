@@ -80,6 +80,7 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
     signInAsAffiliate(this.owner, this.server);
 
     await affiliatePage.visit();
+    await this.pauseTest();
 
     assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
     assert.strictEqual(affiliatePage.payoutHistoryItems.length, 3, 'payout history items are correct');
