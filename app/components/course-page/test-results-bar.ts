@@ -31,6 +31,11 @@ export default class TestResultsBarComponent extends Component<Signature> {
   }
 
   @action
+  handleAutofixRequestCreated(autofixRequest: AutofixRequestModel) {
+    this.lastAutofixRequest = autofixRequest;
+  }
+
+  @action
   handleCollapseButtonClick() {
     this.coursePageState.testResultsBarIsExpanded = false;
   }

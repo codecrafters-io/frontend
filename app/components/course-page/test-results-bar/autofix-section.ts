@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {
@@ -9,6 +10,8 @@ type Signature = {
   Args: {
     activeStep: Step;
     currentStep: Step;
+    lastAutofixRequest: AutofixRequestModel | null;
+    onAutofixRequestCreated: (autofixRequest: AutofixRequestModel) => void;
     repository: RepositoryModel;
   };
 };
