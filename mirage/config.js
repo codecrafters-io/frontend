@@ -77,6 +77,8 @@ function routes() {
 
   this.post('/analytics-events');
 
+  this.post('/autofix-requests');
+
   this.get('/badges');
 
   this.get('/concept-groups', function (schema) {

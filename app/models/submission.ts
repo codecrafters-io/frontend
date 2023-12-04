@@ -6,8 +6,10 @@ import Model, { hasMany } from '@ember-data/model';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubmissionEvaluationModel from 'codecrafters-frontend/models/submission-evaluation';
 import { attr, belongsTo } from '@ember-data/model';
+import type AutofixRequestModel from './autofix-request';
 
 export default class SubmissionModel extends Model {
+  @hasMany('autofix-request', { async: false }) declare autofixRequests: AutofixRequestModel[];
   @belongsTo('course-stage', { async: false }) declare courseStage: CourseStageModel;
   @belongsTo('community-course-stage-solution', { async: false }) declare communityCourseStageSolution: CommunityCourseStageSolutionModel;
   @belongsTo('course-tester-version', { async: false, inverse: null }) declare testerVersion: CourseTesterVersionModel;

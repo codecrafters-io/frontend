@@ -7,32 +7,54 @@
       </p>
     </Alert>
 
-    <div>
-      <div class="prose prose-sm dark:prose-invert mb-6">
-        <p>
-          <strong>Autofix</strong>
-          is a new feature that helps you automatically fix issues in your code. Here's how it works:
-        </p>
-        <ul>
-          <li>
-            We'll analyze your code, generate a fix and run tests on it.
-          </li>
-          <li>
-            This
-            <b>might take upto a minute</b>, but you'll see logs streamed here.
-          </li>
-          <li>
-            This is a new feature, so it might contain bugs.
-          </li>
-          <li>
-            Click the "Start Autofix" button below to get started!
-          </li>
-        </ul>
+    {{#if (not this.lastAutofixRequestForSubmission)}}
+      <div>
+        <div class="prose prose-sm dark:prose-invert mb-6">
+          <p>
+            <strong>Autofix</strong>
+            is a new feature that helps you automatically fix issues in your code. Here's how it works:
+          </p>
+          <ul>
+            <li>
+              We'll analyze your code, generate a fix and run tests on it.
+            </li>
+            <li>
+              This
+              <b>might take upto a minute</b>, but you'll see logs streamed here.
+            </li>
+            <li>
+              This is a new feature, so it might contain bugs.
+            </li>
+            <li>
+              Click the "Start Autofix" button below to get started!
+            </li>
+          </ul>
+        </div>
+        <PrimaryButtonWithSpinner
+          @shouldShowSpinner={{this.createAutofixRequestTask.isRunning}}
+          @size="regular"
+          {{on "click" this.handleAutofixButtonClick}}
+        >
+          Start Autofix
+        </PrimaryButtonWithSpinner>
+
+        {{#if this.autofixCreationError}}
+          <Alert @type="error" class="mt-3">
+            <p>
+              Autofix failed to start. Try again? Contact us at hello@codecrafters.io if this persists.
+            </p>
+          </Alert>
+        {{/if}}
       </div>
-      <PrimaryButton>
-        Start Autofix
-      </PrimaryButton>
-    </div>
+    {{else}}
+      <div>
+        <div class="prose prose-sm dark:prose-invert mb-6">
+          <p>
+            Autofix!
+          </p>
+        </div>
+      </div>
+    {{/if}}
   {{else}}
     {{! TODO: Review copy here }}
     <div class="py-16 flex items-center justify-center flex-grow">

@@ -1,4 +1,5 @@
 import type Store from '@ember-data/store';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
@@ -6,6 +7,7 @@ import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-lis
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -21,6 +23,7 @@ type Signature = {
 
 export default class AutofixSectionComponent extends Component<Signature> {
   @service declare store: Store;
+  @tracked autofixCreationError: string | null = null;
 
   get activeCourseStage() {
     if (this.args.activeStep.type === 'CourseStageStep') {
@@ -32,6 +35,14 @@ export default class AutofixSectionComponent extends Component<Signature> {
 
   get activeStepAsCourseStageStep() {
     return this.args.activeStep as CourseStageStep;
+  }
+
+  get lastAutofixRequestForSubmission() {
+    if (this.args.lastAutofixRequest && this.args.lastAutofixRequest.submission === this.lastSubmission) {
+      return this.args.lastAutofixRequest;
+    } else {
+      return null;
+    }
   }
 
   get lastSubmission() {
@@ -47,6 +58,8 @@ export default class AutofixSectionComponent extends Component<Signature> {
   }
 
   createAutofixRequestTask = task({ drop: true }, async (): Promise<void> => {
+    this.autofixCreationError = null;
+
     if (!this.lastSubmission) {
       return;
     }
@@ -55,10 +68,20 @@ export default class AutofixSectionComponent extends Component<Signature> {
       submission: this.lastSubmission,
     });
 
-    await autofixRequest.save();
+    try {
+      await autofixRequest.save();
+    } catch (error) {
+      this.autofixCreationError = 'Something went wrong. Please try again later.'; // We aren't actually using this yet.
+      throw error;
+    }
 
     this.args.onAutofixRequestCreated(autofixRequest);
   });
+
+  @action
+  handleAutofixButtonClick() {
+    this.createAutofixRequestTask.perform();
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
