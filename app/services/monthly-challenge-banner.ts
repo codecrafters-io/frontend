@@ -1,3 +1,4 @@
+import config from 'ember-get-config';
 import Service from '@ember/service';
 import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.png';
 
@@ -7,7 +8,7 @@ export default class MonthlyChallengeBannerService extends Service {
   }
 
   get isOutdated(): boolean {
-    return new Date('December 01, 2023') >= new Date();
+    return new Date() >= new Date('December 01, 2023') && config.environment !== 'test';
   }
 
   get largeImage() {

@@ -38,10 +38,6 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
     return this.authenticator.currentUser;
   }
 
-  get shouldShowMonthlyChallengeBanner() {
-    return this.monthlyChallengeBanner.isOutdated;
-  }
-
   get stepList() {
     return this.coursePageState.stepList as StepList;
   }

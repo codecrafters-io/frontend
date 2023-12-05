@@ -58,7 +58,9 @@
       />
     </div>
 
-    <PayPage::MonthlyChallengeBanner @shouldShowMonthlyChallengeBanner={{this.shouldShowMonthlyChallengeBanner}} class="max-w-[972.53px]" />
+    {{#unless this.monthlyChallengeBanner.isOutdated}}
+      <PayPage::MonthlyChallengeBanner class="max-w-[972.53px]" />
+    {{/unless}}
 
     <div role="button" class="font-medium mt-16 text-sm text-gray-700 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>
       I'm still exploring →

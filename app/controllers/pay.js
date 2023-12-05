@@ -21,10 +21,6 @@ export default class PayController extends Controller {
     }
   }
 
-  get shouldShowMonthlyChallengeBanner() {
-    return this.monthlyChallengeBanner.isOutdated;
-  }
-
   get user() {
     return this.authenticator.currentUser;
   }
