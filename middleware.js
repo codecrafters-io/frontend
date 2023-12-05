@@ -18,15 +18,15 @@ export const config = {
 
 export default async function middleware(request) {
   // Parse the username from the request URL
-  const userName = request.url.match(/\/users\/([^/?]+)/)[1];
+  const username = request.url.match(/\/users\/([^/?]+)/)[1];
 
   // Throw an error if username is missing
-  if (!userName) {
+  if (!username) {
     throw new Error('Invalid arguments');
   }
 
   // Generate a proper OG Image URL for the username's Profile
-  const profileImageUrl = `https://og.codecrafters.io/api/user_profile/${userName}.png`;
+  const profileImageUrl = `https://og.codecrafters.io/api/user_profile/${username}.png`;
 
   // Determine URL for reading local `/dist/_empty.html`
   const indexFileURL = new URL('./dist/_empty.html', import.meta.url);
