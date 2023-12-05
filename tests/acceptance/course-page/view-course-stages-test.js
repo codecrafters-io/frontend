@@ -711,6 +711,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    const currentUser = this.server.schema.users.first();
+    currentUser.update('featureFlags', { 'cli-suggestion-on-stage-two': 'test' })
+
     await visit('/courses/redis/stages/2');
     await coursePage.clickOnInstallCliLink();
 

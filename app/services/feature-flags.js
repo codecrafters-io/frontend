@@ -19,7 +19,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get cliSuggestionOnStageTwo() {
-    return this.getFeatureFlagValue('cli_suggestion_on_stage_two') === 'test';
+    return this.getFeatureFlagValue('cli-suggestion-on-stage-two') === 'test';
   }
 
   getFeatureFlagValue(flagName) {
