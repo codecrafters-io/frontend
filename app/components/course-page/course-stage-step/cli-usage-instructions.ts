@@ -9,7 +9,7 @@ type Signature = {
 
   Args: {
     courseStage: CourseStageModel;
-  }
+  };
 };
 
 export default class CliUsageInstructionsComponent extends Component<Signature> {
@@ -18,8 +18,8 @@ export default class CliUsageInstructionsComponent extends Component<Signature> 
   @action
   handleClick() {
     this.analyticsEventTracker.track('clicked_install_cli', {
-      course_stage_id: this.args.courseStage.id
-    })
+      course_stage_id: this.args.courseStage.id,
+    });
   }
 }
 
