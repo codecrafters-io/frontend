@@ -55,7 +55,7 @@
           {{#each this.currentUser.affiliateEarningsPayouts as |payout|}}
             <tr class="border-b" data-test-payout-history-item>
               <td class="text-gray-500 whitespace-nowrap py-2 text-sm">
-                {{date-format (or payout.completedAt payout.createdAt) format="PPP"}}
+                {{date-format (or payout.completedAt payout.initiatedAt) format="PPP"}}
 
                 {{#if payout.statusIsProcessing}}
                   <div class="inline-flex flex-shrink-0 ml-1">
