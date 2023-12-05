@@ -1,3 +1,4 @@
+import BillingStatusDisplayService from 'codecrafters-frontend/services/billing-status-display';
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import RouterService from '@ember/routing/router-service';
@@ -22,6 +23,7 @@ type Signature = {
 
 export default class NavigationControlsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+  @service declare billingStatusDisplay: BillingStatusDisplayService;
   @service declare router: RouterService;
 
   get currentStepAsCourseStageStep() {
@@ -30,14 +32,6 @@ export default class NavigationControlsComponent extends Component<Signature> {
 
   get currentUser() {
     return this.authenticator.currentUser;
-  }
-
-  get shouldShowFreeWeeksLeftButton() {
-    return this.currentUser && this.currentUser.hasActiveFreeUsageGrants && !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated;
-  }
-
-  get shouldShowSubscribeButton() {
-    return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }
 }
 
