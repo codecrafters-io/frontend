@@ -33,7 +33,7 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowCLIUsageInstructions() {
-    return this.model.courseStage.isThird;
+    return this.model.courseStage.isSecond;
   }
 
   get shouldShowLanguageGuide() {

@@ -23,6 +23,7 @@ export default create({
   clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
   clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
+  clickOnInstallCliLink: clickable('[data-test-install-cli-link]'),
 
   courseCompletedCard: {
     clickOnPublishToGithubLink: clickable('span:contains("Click here")'),
