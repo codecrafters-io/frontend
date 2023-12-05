@@ -3,11 +3,11 @@ import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.
 
 export default class MonthlyChallengeBannerService extends Service {
   get imageAltText() {
-    return "Petoi Robot Dog";
+    return 'Petoi Robot Dog';
   }
 
   get isOutdated(): boolean {
-    return new Date("December 01, 2023") >= new Date();
+    return new Date('December 01, 2023') >= new Date();
   }
 
   get largeImage() {
@@ -19,6 +19,6 @@ export default class MonthlyChallengeBannerService extends Service {
   }
 
   get url() {
-    return "https://codecrafters.io/november"
+    return 'https://codecrafters.io/november';
   }
 }
