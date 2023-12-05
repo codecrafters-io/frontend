@@ -1,9 +1,8 @@
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
+import MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-
-import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.png';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -18,8 +17,7 @@ interface Signature {
 
 export default class MonthlyChallengeBannerComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-
-  petoiRobotDogImage = petoiRobotDogImage;
+  @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
 
   @action
   handleClick() {

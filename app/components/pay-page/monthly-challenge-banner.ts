@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-
-import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.png';
+import MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
+import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -11,5 +11,5 @@ interface Signature {
 }
 
 export default class MonthlyChallengeBannerComponent extends Component<Signature> {
-  petoiRobotDogImage = petoiRobotDogImage;
+  @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
 }

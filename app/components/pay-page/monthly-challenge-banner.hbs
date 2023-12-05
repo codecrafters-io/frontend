@@ -1,7 +1,7 @@
 {{#if @shouldShowMonthlyChallengeBanner}}
   <a
     class="flex flex-col lg:flex-row justify-between items-center mt-16 w-full rounded-lg border border-gray-100 hover:border-gray-200 bg-white lg:h-80 overflow-hidden group/monthly-challenge-banner transition-all"
-    href="https://codecrafters.io/november"
+    href={{this.monthlyChallengeBanner.url}}
     target="_blank"
     rel="noopener noreferrer"
     data-test-monthly-challenge-banner
@@ -21,7 +21,7 @@
     </div>
 
     <div class="scale-90 group-hover/monthly-challenge-banner:scale-100 transition-transform px-6 lg:px-16 mb-9 lg:mb-0">
-      <img alt="petoi robot dog" src={{this.petoiRobotDogImage}} />
+      <img alt={{this.monthlyChallengeBanner.imageAltText}} src={{this.monthlyChallengeBanner.smallImage}} />
     </div>
   </a>
 {{/if}}
