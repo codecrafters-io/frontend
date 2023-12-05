@@ -31,8 +31,10 @@ module('Acceptance | Meta tags', function (hooks) {
   });
 
   test('it has custome meta image when visiting a collection', async function (assert) {
-    await visit('/collections/rust-primer')
+    await visit('/collections/rust-primer');
     assert.strictEqual(currentURL(), '/collections/rust-primer');
-    assert.dom('meta[property="og:image"]', document.head).hasAttribute('content', 'https://codecrafters.io/images/app_og/collection-rust-primer.png');
+    assert
+      .dom('meta[property="og:image"]', document.head)
+      .hasAttribute('content', 'https://codecrafters.io/images/app_og/collection-rust-primer.png');
   });
 });
