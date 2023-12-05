@@ -1,6 +1,6 @@
 import config from 'ember-get-config';
-import Service from '@ember/service';
 import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.png';
+import Service from '@ember/service';
 
 export default class MonthlyChallengeBannerService extends Service {
   get imageAltText() {

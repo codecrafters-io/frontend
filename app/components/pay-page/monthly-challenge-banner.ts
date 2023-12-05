@@ -4,10 +4,6 @@ import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLAnchorElement;
-
-  Args: {
-    shouldShowMonthlyChallengeBanner: boolean;
-  };
 }
 
 export default class MonthlyChallengeBannerComponent extends Component<Signature> {
