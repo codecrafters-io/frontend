@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 export default class PayController extends Controller {
   @service analyticsEventTracker;
   @service authenticator;
+  @service monthlyChallengeBanner;
   @service router;
   @tracked isCreatingCheckoutSession = false;
   @tracked shouldApplyRegionalDiscount = false;
@@ -18,6 +19,10 @@ export default class PayController extends Controller {
     } else {
       return null;
     }
+  }
+
+  get shouldShowMonthlyChallengeBanner() {
+    return this.monthlyChallengeBanner.isOutdated;
   }
 
   get user() {

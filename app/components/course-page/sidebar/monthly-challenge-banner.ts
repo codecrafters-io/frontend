@@ -12,6 +12,7 @@ interface Signature {
     course: {
       id: number;
     };
+    shouldShowMonthlyChallengeBanner: boolean;
   };
 }
 
@@ -19,10 +20,6 @@ export default class MonthlyChallengeBannerComponent extends Component<Signature
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   petoiRobotDogImage = petoiRobotDogImage;
-
-  get shouldShowBanner(): boolean {
-    return new Date('November 30, 2023') > new Date();
-  }
 
   @action
   handleClick() {
