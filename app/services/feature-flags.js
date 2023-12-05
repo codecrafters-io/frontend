@@ -14,12 +14,12 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
 
-  get currentUser() {
-    return this.authenticator.currentUser;
-  }
-
   get cliSuggestionOnStageTwo() {
     return this.getFeatureFlagValue('cli-suggestion-on-stage-two') === 'test';
+  }
+
+  get currentUser() {
+    return this.authenticator.currentUser;
   }
 
   getFeatureFlagValue(flagName) {
