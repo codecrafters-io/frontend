@@ -7,12 +7,12 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | affiliate-page | view-payouts', function (hooks) {
+module('Acceptance | affiliate-page | view-payouts', function(hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can initiate payout', async function (assert) {
+  test('can initiate payout', async function(assert) {
     testScenario(this.server);
 
     const affiliateLink = this.server.create('affiliate-link', {
@@ -85,9 +85,9 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
 
     assert.strictEqual(affiliatePage.totalEarningsAmountText, '$591', 'total earnings amount is correct');
     assert.strictEqual(affiliatePage.payoutHistoryItems.length, 3, 'payout history items are correct');
-    assert.true(affiliatePage.payoutHistoryItems.objectAt(0).text.includes('December 2nd, 2023'), 'failed payout shows correct date');
-    assert.true(affiliatePage.payoutHistoryItems.objectAt(1).text.includes('December 3rd, 2023'), 'completed payout shows correct date');
-    assert.true(affiliatePage.payoutHistoryItems.objectAt(2).text.includes('December 3rd, 2023'), 'processing payout shows correct date');
+    assert.contains(affiliatePage.payoutHistoryItems.objectAt(0).text, 'December 2nd, 2023', 'failed payout shows correct date');
+    assert.contains(affiliatePage.payoutHistoryItems.objectAt(1).text, 'December 3rd, 2023', 'completed payout shows correct date');
+    assert.contains(affiliatePage.payoutHistoryItems.objectAt(2).text, 'December 3rd, 2023', 'processing payout shows correct date');
 
     await percySnapshot('Affiliate Page | View payouts');
   });
