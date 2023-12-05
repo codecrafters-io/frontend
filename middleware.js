@@ -12,11 +12,14 @@
  * - https://vercel.com/docs/functions/edge-middleware
  * - https://nodejs.org/api/esm.html#importmeta
  * - https://vercel.com/docs/functions/edge-functions/vercel-edge-package#next
+ * - https://github.com/pillarjs/path-to-regexp
  */
 
 import { next } from '@vercel/edge';
 
 export const config = {
+  // Limit the middleware to run only for user profile routes
+  // RegExp syntax uses rules from pillarjs/path-to-regexp
   matcher: '/users/:path*',
 };
 
