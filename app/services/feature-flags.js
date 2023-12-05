@@ -18,6 +18,10 @@ export default class FeatureFlagsService extends Service {
     return this.authenticator.currentUser;
   }
 
+  get cliSuggestionOnStageTwo() {
+    return this.getFeatureFlagValue('cli_suggestion_on_stage_two') === 'test';
+  }
+
   getFeatureFlagValue(flagName) {
     const value = this.currentUser && this.currentUser.featureFlags && this.currentUser.featureFlags[flagName];
 
