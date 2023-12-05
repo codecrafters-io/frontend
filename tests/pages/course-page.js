@@ -23,7 +23,6 @@ export default create({
   clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
   clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
-  clickOnInstallCliLink: clickable('[data-test-install-cli-link]'),
 
   courseCompletedCard: {
     clickOnPublishToGithubLink: clickable('span:contains("Click here")'),
@@ -103,6 +102,10 @@ export default create({
 
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
+
+  installCliLink: {
+    scope: '[data-test-install-cli-link]',
+  },
 
   languageGuideCard: {
     backToRepositoryLanguageButton: {
