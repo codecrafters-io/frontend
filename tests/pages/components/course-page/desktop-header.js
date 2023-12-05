@@ -9,13 +9,12 @@ export default {
   },
 
   progressIndicatorText: text('[data-test-progress-indicator-text]'),
+  scope: '[data-test-course-page-header]',
   stepName: text('[data-test-step-name]'),
 
   subscribeButton: {
     scope: '[data-test-subscribe-button]',
   },
-
-  scope: '[data-test-course-page-header]',
 
   vipBadge: {
     scope: '[data-test-vip-badge]',
