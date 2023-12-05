@@ -2,14 +2,23 @@ import { module, test } from 'qunit';
 import { visit, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
+import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
+import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | Meta tags', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
+  function createConcepts(server) {
+    createConceptFromFixture(server, tcpOverview);
+    createConceptFromFixture(server, networkProtocols);
+  }
+
   hooks.beforeEach(function () {
     testScenario(this.server);
+    createConcepts(this.server);
   });
 
   test('it has default meta image when visiting /catalog', async function (assert) {
@@ -31,10 +40,20 @@ module('Acceptance | Meta tags', function (hooks) {
   });
 
   test('it has custom meta image when visiting a collection', async function (assert) {
-    await visit('/collections/rust-primer');
-    assert.strictEqual(currentURL(), '/collections/rust-primer');
+    const user = this.server.schema.users.first();
+
+    this.server.create('concept-group', {
+      author: user,
+      description_markdown: 'Dummy description',
+      concept_slugs: ['tcp-overview', 'network-protocols'],
+      slug: 'test-concept-group',
+      title: 'Test Concept Group',
+    });
+
+    await visit('/collections/test-concept-group');
+    assert.strictEqual(currentURL(), '/collections/test-concept-group');
     assert
       .dom('meta[property="og:image"]', document.head)
-      .hasAttribute('content', 'https://codecrafters.io/images/app_og/collection-rust-primer.png');
+      .hasAttribute('content', 'https://codecrafters.io/images/app_og/collection-test-concept-group.png');
   });
 });
