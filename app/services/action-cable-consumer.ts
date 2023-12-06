@@ -8,6 +8,11 @@ import type SessionTokenStorageService from './session-token-storage';
 // Toggle this for debug logs
 logger.enabled = false;
 
+export type ActionCableSubscription = {
+  send: (data: object) => void;
+  unsubscribe: () => void;
+};
+
 export default class ActionCableConsumerService extends Service {
   _cachedConsumer: Consumer | null = null;
 
@@ -31,7 +36,7 @@ export default class ActionCableConsumerService extends Service {
       onDisconnect?: () => void;
       onData?: (data: string) => void;
     },
-  ) {
+  ): ActionCableSubscription {
     return this.#consumer().subscriptions.create(
       { channel, ...args },
       {
