@@ -66,6 +66,8 @@ module.exports = function (defaults) {
         // Add routes for all Languages
         urls.push(...models.filter(({ type }) => type === 'languages').map(({ attributes: { slug } }) => `/tracks/${slug}`));
 
+        urls.push('/collections/rust-primer'); // will update if we get more collections
+
         // Return the full list of routes
         return urls;
       },

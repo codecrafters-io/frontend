@@ -1,5 +1,7 @@
+import BillingStatusDisplayService from 'codecrafters-frontend/services/billing-status-display';
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
+import RouterService from '@ember/routing/router-service';
 import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
 import { inject as service } from '@ember/service';
@@ -21,6 +23,8 @@ type Signature = {
 
 export default class NavigationControlsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+  @service declare billingStatusDisplay: BillingStatusDisplayService;
+  @service declare router: RouterService;
 
   get currentStepAsCourseStageStep() {
     return this.args.currentStep as CourseStageStep;
