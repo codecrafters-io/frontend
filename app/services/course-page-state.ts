@@ -7,6 +7,7 @@ import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/cou
 export default class CoursePageStateService extends Service {
   @service declare router: RouterService;
   @tracked stepList?: StepList;
+  @tracked testResultsBarIsExpanded = false;
 
   get activeStep(): Step {
     if (!this.stepList) {

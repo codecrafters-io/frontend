@@ -57,14 +57,16 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 4219), // 4.219s
-        logsBase64: btoa('\x1b[92m[stage-1] passed\x1b[0m\n[stage-2] passed'),
+        logsBase64: btoa('\x1b[92m[stage-1] passed\x1b[0m\n\x1b[92m[stage-2] passed\x1b[0m'),
       });
 
-      server.create('course-stage-completion', {
-        repository: submission.repository,
-        courseStage: submission.courseStage,
-        completedAt: submission.createdAt,
-      });
+      if (!submission.wasSubmittedViaCli) {
+        server.create('course-stage-completion', {
+          repository: submission.repository,
+          courseStage: submission.courseStage,
+          completedAt: submission.createdAt,
+        });
+      }
     },
   }),
 

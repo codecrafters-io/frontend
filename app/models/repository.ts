@@ -141,6 +141,10 @@ export default class RepositoryModel extends Model {
     return this.lastSubmission && this.lastSubmission.statusIsFailure;
   }
 
+  get lastSubmissionHasSuccessStatus() {
+    return this.lastSubmission && this.lastSubmission.statusIsSuccess;
+  }
+
   get lastSubmissionIsEvaluating() {
     return this.lastSubmission && this.lastSubmission.statusIsEvaluating;
   }

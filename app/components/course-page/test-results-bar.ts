@@ -1,8 +1,9 @@
 import { action } from '@ember/object';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -15,20 +16,24 @@ type Signature = {
 };
 
 export default class TestResultsBarComponent extends Component<Signature> {
-  @tracked isExpanded = false;
+  @service declare coursePageState: CoursePageStateService;
 
   get isCollapsed() {
     return !this.isExpanded;
   }
 
+  get isExpanded() {
+    return this.coursePageState.testResultsBarIsExpanded;
+  }
+
   @action
   handleCollapseButtonClick() {
-    this.isExpanded = false;
+    this.coursePageState.testResultsBarIsExpanded = false;
   }
 
   @action
   handleExpandButtonClick() {
-    this.isExpanded = true;
+    this.coursePageState.testResultsBarIsExpanded = true;
   }
 }
 

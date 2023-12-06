@@ -3,13 +3,13 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 export default class AffiliateEarningsPayoutModel extends Model {
   @belongsTo('user', { async: false }) user;
 
-  @attr('date') initiatedAt;
-  @attr('date') completedAt;
-  @attr('string') status; // 'processing', 'completed', 'failed'
-  @attr('string') lastFailureReason;
   @attr('number') amountInCents;
-  @attr('string') payoutMethodType; // 'paypal'
+  @attr('date') completedAt;
+  @attr('date') initiatedAt;
+  @attr('string') lastFailureReason;
   @attr('') payoutMethodArgs;
+  @attr('string') payoutMethodType; // 'paypal'
+  @attr('string') status; // 'processing', 'completed', 'failed'
 
   get amountInDollars() {
     return this.amountInCents / 100;
