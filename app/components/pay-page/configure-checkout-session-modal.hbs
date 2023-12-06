@@ -1,0 +1,47 @@
+<ModalBody @allowManualClose={{true}} @onClose={{(noop)}} class="w-full">
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
+    Invoice Details
+  </div>
+
+  <div class="prose prose-sm mb-4">
+    <p>
+      If you need extra details on your invoice, choose the "I need extra details on my invoice" option below.
+    </p>
+  </div>
+
+  <div class="flex items-center justify-between gap-8 border rounded p-4 mb-4">
+    <span class="flex flex-grow flex-col">
+      <span class="text-sm font-semibold leading-6 text-teal-600">No extra details on invoice</span>
+      <span class="text-xs text-gray-400">Choose this option if you don't need extra details like tax ID, business address etc. on your invoice.</span>
+    </span>
+
+    <Toggle @isOn={{true}} />
+  </div>
+
+  <div class="flex items-center justify-between gap-8 border rounded p-4 mb-6">
+    <span class="flex flex-grow flex-col">
+      <span class="text-sm font-medium leading-6 text-gray-900" id="availability-label">I need extra details on my invoice</span>
+      <span class="text-xs text-gray-400" id="availability-description">Choose this option if you need extra details like tax ID, business address
+        etc. on your invoice.</span>
+    </span>
+
+    <Toggle @isOn={{false}} />
+  </div>
+
+  <div class="prose prose-sm mb-6">
+    <p>
+      You can always email us at
+      <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>
+      if you need to change your invoice details later.
+    </p>
+  </div>
+
+  <div class="flex justify-between items-center">
+    <span class="text-gray-400 text-sm" role="button">
+      ← Back
+    </span>
+    <PrimaryButton>
+      Proceed to Checkout →
+    </PrimaryButton>
+  </div>
+</ModalBody>
