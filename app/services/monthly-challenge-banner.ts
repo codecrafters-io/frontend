@@ -1,7 +1,7 @@
 import config from 'ember-get-config';
+import Service from '@ember/service';
 import ZSAMoonlanderLargeImage from '/assets/images/monthly-challenges/zsa-moonlander-large.png';
 import ZSAMoonlanderSmallImage from '/assets/images/monthly-challenges/zsa-moonlander-small.png';
-import Service from '@ember/service';
 
 export default class MonthlyChallengeBannerService extends Service {
   get imageAltText() {
