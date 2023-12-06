@@ -10,6 +10,10 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
+  get canSeeCliSuggestionOnStageTwo() {
+    return this.getFeatureFlagValue('can-see-cli-suggestion-on-stage-two') === 'test';
+  }
+
   get canSeeConceptsIndex() {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }

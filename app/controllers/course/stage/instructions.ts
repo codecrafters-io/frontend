@@ -3,12 +3,14 @@ import { inject as service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 
 export default class CourseStageInstructionsController extends Controller {
-  @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
+  @service declare coursePageState: CoursePageStateService;
+  @service declare featureFlags: FeatureFlagsService;
 
   declare model: {
     courseStage: CourseStageModel;
@@ -33,6 +35,10 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowCLIUsageInstructions() {
+    if (this.featureFlags.canSeeCliSuggestionOnStageTwo) {
+      return this.model.courseStage.isSecond;
+    }
+
     return this.model.courseStage.isThird;
   }
 
