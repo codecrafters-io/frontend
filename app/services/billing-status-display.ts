@@ -18,4 +18,8 @@ export default class BillingStatusDisplayService extends Service {
   get shouldShowSubscribeButton(): boolean {
     return !!this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }
+
+  get shouldShowVipBadge(): boolean {
+    return !!this.currentUser && this.currentUser.isVip;
+  }
 }

@@ -36,7 +36,7 @@
         </LinkTo>
       {{/if}}
 
-      {{#if this.currentUser.isVip}}
+      {{#if this.billingStatusDisplay.shouldShowVipBadge}}
         <Header::VipBadge class="mr-3" />
       {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
         <Header::FreeWeeksLeftButton class="mr-3" />
