@@ -7,17 +7,19 @@
   data-test-monthly-challenge-banner
   ...attributes
 >
-  <div class="relative z-10 pb-2">
-    <div class="font-medium text-center text-xs mb-1 text-gray-700">
-      Complete 1 challenge in Dec '23.
+  <div class="flex items-center justify-center">
+    <div class="flex transform scale-100 group-hover/monthly-challenge-banner:scale-105 transition-transform w-12 mr-3">
+      <img alt={{this.monthlyChallengeBanner.imageAltText}} src={{this.monthlyChallengeBanner.largeImage}} />
     </div>
-    <div
-      class="font-semibold text-center text-xs text-gray-600 group-hover/monthly-challenge-banner:underline group-hover/monthly-challenge-banner:text-gray-700"
-    >
-      Win a ZSA Moonlander →
+    <div class="relative z-10">
+      <div class="font-medium text-xs mb-1 text-gray-700">
+        Complete 1 challenge in Dec '23.
+      </div>
+      <div
+        class="font-semibold text-xs text-gray-600 group-hover/monthly-challenge-banner:underline group-hover/monthly-challenge-banner:text-gray-700"
+      >
+        Win a ZSA Moonlander →
+      </div>
     </div>
-  </div>
-  <div class="px-2 py-2 vertical-mask transform scale-90 group-hover/monthly-challenge-banner:scale-95 transition-transform">
-    <img alt={{this.monthlyChallengeBanner.imageAltText}} src={{this.monthlyChallengeBanner.largeImage}} />
   </div>
 </a>
