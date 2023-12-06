@@ -35,7 +35,7 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowCLIUsageInstructions() {
-    if (this.featureFlags.cliSuggestionOnStageTwo) {
+    if (this.featureFlags.canSeeCliSuggestionOnStageTwo) {
       return this.model.courseStage.isSecond;
     }
 

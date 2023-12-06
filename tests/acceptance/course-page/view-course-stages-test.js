@@ -721,7 +721,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
     const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
 
-    assert.ok(analyticsEventNames.includes('clicked_install_cli'), 'clicked_install_cli event should be tracked');
+    assert.ok(analyticsEventNames.includes('clicked_cli_installation_link'), 'clicked_cli_installation_link event should be tracked');
   });
 
   test('cli suggestion shows up in stage 2 if feature flag is set', async function (assert) {
@@ -729,7 +729,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
-    currentUser.update('featureFlags', { 'cli-suggestion-on-stage-two': 'test' });
+    currentUser.update('featureFlags', { 'can-see-cli-suggestion-on-stage-two': 'test' });
 
     await visit('/courses/redis/stages/2');
     assert.ok(coursePage.installCliLink.isVisible, 'cli suggestion should be visible');

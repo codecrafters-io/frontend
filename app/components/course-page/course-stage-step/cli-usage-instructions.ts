@@ -17,7 +17,7 @@ export default class CliUsageInstructionsComponent extends Component<Signature> 
 
   @action
   handleClick() {
-    this.analyticsEventTracker.track('clicked_install_cli', {
+    this.analyticsEventTracker.track('clicked_cli_installation_link', {
       course_stage_id: this.args.courseStage.id,
     });
   }

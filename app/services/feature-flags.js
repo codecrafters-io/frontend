@@ -10,12 +10,12 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
-  get canSeeConceptsIndex() {
-    return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
+  get canSeeCliSuggestionOnStageTwo() {
+    return this.getFeatureFlagValue('can-see-cli-suggestion-on-stage-two') === 'test';
   }
 
-  get cliSuggestionOnStageTwo() {
-    return this.getFeatureFlagValue('cli-suggestion-on-stage-two') === 'test';
+  get canSeeConceptsIndex() {
+    return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
 
   get currentUser() {
