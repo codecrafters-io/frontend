@@ -20,6 +20,7 @@ export default class AutofixResultComponent extends Component<Signature> {
   @service declare actionCableConsumer: ActionCableConsumerService;
 
   @tracked logstream: Logstream | null = null;
+  @tracked shouldShowFullLog = false;
 
   @action
   handleDidUpdateAutofixRequestLogstreamId() {
@@ -30,8 +31,13 @@ export default class AutofixResultComponent extends Component<Signature> {
   }
 
   @action
+  handleLogstreamDidPoll(): void {
+    this.args.autofixRequest.reload();
+  }
+
+  @action
   handleMarkdownStreamElementInserted() {
-    this.logstream = new Logstream(this.args.autofixRequest.logstreamId, this.actionCableConsumer, this.store);
+    this.logstream = new Logstream(this.args.autofixRequest.logstreamId, this.actionCableConsumer, this.store, this.handleLogstreamDidPoll);
     this.logstream.subscribe();
   }
 

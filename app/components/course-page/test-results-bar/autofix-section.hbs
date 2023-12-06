@@ -1,15 +1,15 @@
 <div class="pb-3 flex flex-col" ...attributes data-test-autofix-section>
-  <Alert class="mb-3">
-    <p>
-      We're testing out a new feature called "Autofix". This is currently only available on stage 2.
-      <a href="https://docs.codecrafters.io/experimental/language-guides" target="_blank" rel="noopener noreferrer">Learn more</a>.
-    </p>
-  </Alert>
-
   {{#if this.lastSubmission}}
     {{#if this.lastAutofixRequest}}
-      <CoursePage::TestResultsBar::AutofixSection::AutofixResult @autofixRequest={{this.lastAutofixRequest}} />
+      <CoursePage::TestResultsBar::AutofixSection::AutofixResult @autofixRequest={{this.lastAutofixRequest}} class="overflow-y-auto flex-grow" />
     {{else}}
+      <Alert class="mb-3">
+        <p>
+          We're testing out a new feature called "Autofix". This is currently only available on stage 2.
+          <a href="https://docs.codecrafters.io/experimental/language-guides" target="_blank" rel="noopener noreferrer">Learn more</a>.
+        </p>
+      </Alert>
+
       <CoursePage::TestResultsBar::AutofixSection::CreateAutofixPrompt @submission={{this.lastSubmission}} />
     {{/if}}
   {{else}}

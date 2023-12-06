@@ -1,26 +1,47 @@
-<div ...attributes>
-  {{#if (eq @autofixRequest.status "in_progress")}}
-    <div class="bg-gray-900 border border-gray-700 px-3 py-2 text-white font-mono text-xs leading-relaxed rounded inline-flex items-center mb-3">
-      <BlinkingDot class="mr-2" @color="yellow" />
-      Autofix in progress... (logs will appear below)
-    </div>
-
-    <div
-      {{did-insert this.handleMarkdownStreamElementInserted}}
-      {{did-update this.handleDidUpdateAutofixRequestLogstreamId @autofixRequest.logstreamId}}
-      {{will-destroy this.handleWillDestroyMarkdownStreamElement}}
-    >
-      {{#if this.logstream}}
-        <MarkdownStream @markdown={{this.logstream.content}} />
+<div class="flex flex-col gap-3" ...attributes>
+  <div class="bg-gray-900 border border-gray-700 rounded relative flex-shrink-0 flex items-center justify-between">
+    <div class="flex items-center px-3 py-2 gap-2">
+      {{#if (eq @autofixRequest.status "in_progress")}}
+        <BlinkingDot @color="yellow" />
+        <span class="font-mono text-xs text-white">Autofix in progress... (logs will appear below)</span>
+      {{else}}
+        <StaticDot @color="green" />
+        <span class="font-mono text-xs text-white">Autofix success</span>
       {{/if}}
     </div>
+    <div class="text-gray-400 underline text-xs px-3 py-2 inline-flex hover:text-gray-300" {{on "click" (fn (mut this.shouldShowFullLog) (not this.shouldShowFullLog))}} role="button">
+      {{#if this.shouldShowFullLog}}
+        Show summary
+      {{else}}
+        Show Full Log
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if (eq @autofixRequest.status "in_progress")}}
+    <div class="bg-gray-900 border border-gray-700 rounded overflow-y-auto relative flex-grow">
+      <div
+        class="px-3 py-2"
+        {{did-insert this.handleMarkdownStreamElementInserted}}
+        {{did-update this.handleDidUpdateAutofixRequestLogstreamId @autofixRequest.logstreamId}}
+        {{will-destroy this.handleWillDestroyMarkdownStreamElement}}
+      >
+        {{#if this.logstream}}
+          <MarkdownStream @markdown={{this.logstream.content}} />
+        {{/if}}
+      </div>
+    </div>
   {{else}}
-    <div class="prose prose-sm dark:prose-invert mb-6">
-      {{#each (repeat 12)}}
-        <p>
-          Autofix!
-        </p>
-      {{/each}}
+    <div class="flex-grow overflow-y-auto">
+      {{#if this.shouldShowFullLog}}
+        <div class="prose prose-sm dark:prose-invert">
+          {{markdown-to-html @autofixRequest.logs}}
+        </div>
+      {{else}}
+        <div class="prose prose-sm dark:prose-invert">
+          {{markdown-to-html @autofixRequest.explanationMarkdown}}
+        </div>
+      {{/if}}
     </div>
   {{/if}}
 </div>

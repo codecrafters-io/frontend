@@ -40,7 +40,7 @@ export default class AutofixSectionComponent extends Component<Signature> {
       return null;
     }
 
-    return this.lastSubmission.autofixRequests.sortBy('createdAt').lastObject || null;
+    return this.lastSubmission.autofixRequests.rejectBy('isNew').sortBy('createdAt').lastObject || null;
   }
 
   get lastSubmission() {

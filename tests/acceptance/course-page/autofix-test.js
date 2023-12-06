@@ -46,17 +46,33 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
 
+    const autofixRequest = this.server.schema.autofixRequests.first();
     const logstream = this.server.schema.fakeLogstreams.first();
+    assert.ok(autofixRequest, 'autofix request was created');
     assert.ok(logstream, 'fake logstream was created');
 
-    logstream.update({ chunks: ['line 1\n'] });
+    logstream.update({ chunks: ['# Autofix\n\n'] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
-    logstream.update({ chunks: ['line 1\n', 'line 2\n'] });
+    await percySnapshot('Autofix - Short logs', { scope: '[data-test-test-results-bar]' });
+
+    const chunks = Array.from({ length: 100 }, (_, i) => `line ${i}\n\n`);
+    logstream.update({ chunks: ['# Autofix\n\n', ...chunks] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
-    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+    await percySnapshot('Autofix - Long logs', { scope: '[data-test-test-results-bar]' });
 
-    await this.pauseTest();
+    autofixRequest.update({
+      status: 'success',
+      logsBase64: btoa(logstream.chunks.join('')),
+      explanationMarkdown: '## Autofix succeeded!\n\n - [x] Fix 1\n - [x] Fix 2\n - [ ] Fix 3\n\n',
+      changedFiles: [],
+    });
+
+    logstream.update({ isTerminated: true });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+    await waitUntil(() => !fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+
+    await percySnapshot('Autofix - Success', { scope: '[data-test-test-results-bar]' });
   });
 });

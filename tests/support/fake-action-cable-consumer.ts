@@ -30,7 +30,9 @@ export default class FakeActionCableConsumer {
 
     return {
       send: () => {},
-      unsubscribe: () => {},
+      unsubscribe: () => {
+        delete this.#subscriptions[channel];
+      },
     };
   }
 }

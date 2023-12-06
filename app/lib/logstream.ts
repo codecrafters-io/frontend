@@ -15,11 +15,13 @@ export default class Logstream {
   store!: Store;
   logstreamId!: string;
   nextCursor: string | null = null;
+  onPoll!: () => void;
 
-  constructor(logstreamId: string, actionCableConsumerService: ActionCableConsumerService, store: Store) {
+  constructor(logstreamId: string, actionCableConsumerService: ActionCableConsumerService, store: Store, onPoll: () => void) {
     this.actionCableConsumerService = actionCableConsumerService;
     this.logstreamId = logstreamId;
     this.store = store;
+    this.onPoll = onPoll;
   }
 
   subscribe(): void {
@@ -80,5 +82,7 @@ export default class Logstream {
       this.actionCableSubscription!.unsubscribe();
       this.isSubscribed = false;
     }
+
+    this.onPoll();
   });
 }
