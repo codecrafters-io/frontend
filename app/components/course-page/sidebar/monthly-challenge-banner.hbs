@@ -1,6 +1,6 @@
 <a
   class="relative px-2 py-4 rounded border border-gray-200 hover:border-gray-300 bg-white overflow-hidden group/monthly-challenge-banner transition-all"
-  href="https://codecrafters.io/november"
+  href={{this.monthlyChallengeBanner.url}}
   target="_blank"
   rel="noopener noreferrer"
   {{on "click" this.handleClick}}
@@ -18,6 +18,6 @@
     </div>
   </div>
   <div class="px-2 py-2 vertical-mask transform scale-90 group-hover/monthly-challenge-banner:scale-95 transition-transform">
-    <img alt="petoi robot dog" src={{this.petoiRobotDogImage}} />
+    <img alt={{this.monthlyChallengeBanner.imageAltText}} src={{this.monthlyChallengeBanner.largeImage}} />
   </div>
 </a>
