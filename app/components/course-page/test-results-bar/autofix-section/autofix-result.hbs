@@ -1,0 +1,16 @@
+<div ...attributes>
+  {{#if (eq @autofixRequest.status "in_progress")}}
+    <div class="bg-gray-900 border border-gray-700 px-3 py-2 text-white font-mono text-xs leading-relaxed rounded inline-flex items-center">
+      <BlinkingDot class="mr-2" @color="yellow" />
+      Autofix in progress... (logs will appear below)
+    </div>
+  {{else}}
+    <div class="prose prose-sm dark:prose-invert mb-6">
+      {{#each (repeat 12)}}
+        <p>
+          Autofix!
+        </p>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

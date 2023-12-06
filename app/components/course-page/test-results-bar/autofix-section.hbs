@@ -7,18 +7,10 @@
   </Alert>
 
   {{#if this.lastSubmission}}
-    {{#if (not this.lastAutofixRequest)}}
-      <CoursePage::TestResultsBar::AutofixSection::CreateAutofixPrompt @submission={{this.lastSubmission}} />
+    {{#if this.lastAutofixRequest}}
+      <CoursePage::TestResultsBar::AutofixSection::AutofixResult @autofixRequest={{this.lastAutofixRequest}} />
     {{else}}
-      <div>
-        <div class="prose prose-sm dark:prose-invert mb-6">
-          {{#each (repeat 12)}}
-            <p>
-              Autofix!
-            </p>
-          {{/each}}
-        </div>
-      </div>
+      <CoursePage::TestResultsBar::AutofixSection::CreateAutofixPrompt @submission={{this.lastSubmission}} />
     {{/if}}
   {{else}}
     {{! TODO: Review copy here }}
