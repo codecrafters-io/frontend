@@ -746,7 +746,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await visit('/courses/redis/stages/3');
     assert.ok(coursePage.installCliLink.isVisible, 'cli suggestion should be visible');
   });
-  
+
   test('header should have a badge that shows the remaining time in days', async function (assert) {
     testScenario(this.server);
 
