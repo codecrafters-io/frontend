@@ -77,7 +77,17 @@ function routes() {
 
   this.post('/analytics-events');
 
-  this.post('/autofix-requests');
+  this.get('/autofix-requests/:id');
+
+  this.post('/autofix-requests', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+
+    attrs.createdAt = new Date();
+    attrs.status = 'in_progress';
+    attrs.logstream_id = 'dummy-logstream-id';
+
+    return schema.autofixRequests.create(attrs);
+  });
 
   this.get('/badges');
 

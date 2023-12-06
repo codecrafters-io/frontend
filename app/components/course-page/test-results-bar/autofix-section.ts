@@ -15,8 +15,6 @@ type Signature = {
   Args: {
     activeStep: Step;
     currentStep: Step;
-    lastAutofixRequest: AutofixRequestModel | null;
-    onAutofixRequestCreated: (autofixRequest: AutofixRequestModel) => void;
     repository: RepositoryModel;
   };
 };
@@ -37,12 +35,12 @@ export default class AutofixSectionComponent extends Component<Signature> {
     return this.args.activeStep as CourseStageStep;
   }
 
-  get lastAutofixRequestForSubmission() {
-    if (this.args.lastAutofixRequest && this.args.lastAutofixRequest.submission === this.lastSubmission) {
-      return this.args.lastAutofixRequest;
-    } else {
+  get lastAutofixRequest(): AutofixRequestModel | null {
+    if (!this.lastSubmission) {
       return null;
     }
+
+    return this.lastSubmission.autofixRequests.sortBy('createdAt').lastObject || null;
   }
 
   get lastSubmission() {
@@ -74,8 +72,6 @@ export default class AutofixSectionComponent extends Component<Signature> {
       this.autofixCreationError = 'Something went wrong. Please try again later.'; // We aren't actually using this yet.
       throw error;
     }
-
-    this.args.onAutofixRequestCreated(autofixRequest);
   });
 
   @action

@@ -4,7 +4,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 type Signature = {
@@ -20,7 +19,6 @@ type Signature = {
 export default class TestResultsBarComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
-  @tracked lastAutofixRequest: AutofixRequestModel | null = null;
 
   get isCollapsed() {
     return !this.isExpanded;
@@ -28,11 +26,6 @@ export default class TestResultsBarComponent extends Component<Signature> {
 
   get isExpanded() {
     return this.coursePageState.testResultsBarIsExpanded;
-  }
-
-  @action
-  handleAutofixRequestCreated(autofixRequest: AutofixRequestModel) {
-    this.lastAutofixRequest = autofixRequest;
   }
 
   @action

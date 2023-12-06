@@ -21,6 +21,7 @@ export default class RepositoryPoller extends Poller {
     'course-stage-feedback-submissions.course-stage',
     'github-repository-sync-configurations',
     'last-submission',
+    'last-submission.autofix-requests',
     'last-submission.course-stage',
     'last-submission.evaluations',
     'stage-list',
