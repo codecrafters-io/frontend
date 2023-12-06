@@ -1,6 +1,6 @@
 import config from 'ember-get-config';
-import ZSAMoonlanderLargeImage from '/assets/images/monthly-challenges/zsa-moonlander-large.png'
-import ZSAMoonlanderSmallImage from '/assets/images/monthly-challenges/zsa-moonlander-small.png'
+import ZSAMoonlanderLargeImage from '/assets/images/monthly-challenges/zsa-moonlander-large.png';
+import ZSAMoonlanderSmallImage from '/assets/images/monthly-challenges/zsa-moonlander-small.png';
 import Service from '@ember/service';
 
 export default class MonthlyChallengeBannerService extends Service {
@@ -13,11 +13,11 @@ export default class MonthlyChallengeBannerService extends Service {
   }
 
   get largeImage() {
-    return ZSAMoonlanderLargeImage
+    return ZSAMoonlanderLargeImage;
   }
 
   get smallImage() {
-    return ZSAMoonlanderSmallImage
+    return ZSAMoonlanderSmallImage;
   }
 
   get url() {
