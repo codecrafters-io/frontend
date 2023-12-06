@@ -11,7 +11,7 @@ const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
 const fetch = require('node-fetch');
 const config = require('./config/environment')(EmberApp.env());
 
-module.exports = function (defaults) {
+module.exports = function(defaults) {
   const appOptions = {
     babel: {
       plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
@@ -65,6 +65,8 @@ module.exports = function (defaults) {
 
         // Add routes for all Languages
         urls.push(...models.filter(({ type }) => type === 'languages').map(({ attributes: { slug } }) => `/tracks/${slug}`));
+
+        urls.push("/collections/rust-primer") // will update if we get more collections
 
         // Return the full list of routes
         return urls;
