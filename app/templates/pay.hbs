@@ -58,13 +58,13 @@
       />
     </div>
 
-    {{#unless this.monthlyChallengeBanner.isOutdated}}
-      <PayPage::MonthlyChallengeBanner class="max-w-[972.53px]" />
-    {{/unless}}
+    <LinkTo @route="refer" class="font-medium mt-16 text-sm text-gray-700 hover:underline">
+      🎁&nbsp;&nbsp;Refer friends to get free weeks →
+    </LinkTo>
 
-    <div role="button" class="font-medium mt-16 text-sm text-gray-700 hover:underline" {{on "click" this.handleTryNowPayLaterButtonClicked}}>
-      I'm still exploring →
-    </div>
+    {{#unless this.monthlyChallengeBanner.isOutdated}}
+      <PayPage::MonthlyChallengeBanner class="max-w-[972.53px] mt-12" />
+    {{/unless}}
 
     <TestimonialList />
 
