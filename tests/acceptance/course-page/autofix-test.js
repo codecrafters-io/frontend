@@ -7,6 +7,8 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import { waitUntil } from '@ember/test-helpers';
 
 module('Acceptance | course-page | autofix', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,6 +18,9 @@ module('Acceptance | course-page | autofix', function (hooks) {
   test('can trigger autofix when last submission failed', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -37,6 +42,20 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await coursePage.testResultsBar.clickOnTab('Autofix');
+    await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
+
+    await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+
+    const logstream = this.server.schema.fakeLogstreams.first();
+    assert.ok(logstream, 'fake logstream was created');
+
+    logstream.update({ chunks: ['line 1\n'] });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+
+    logstream.update({ chunks: ['line 1\n', 'line 2\n'] });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     await this.pauseTest();
   });

@@ -24,6 +24,7 @@
     @shouldShowSpinner={{this.createAutofixRequestTask.isRunning}}
     @size="regular"
     {{on "click" this.handleAutofixButtonClick}}
+    data-test-start-autofix-button
   >
     Start Autofix
   </PrimaryButtonWithSpinner>

@@ -27,6 +27,7 @@ export default function (config) {
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),
         }),
+        fakeLogstream: Model.extend({}),
       },
     },
     serializers: applyEmberDataSerializers(config.serializers),
@@ -81,10 +82,11 @@ function routes() {
 
   this.post('/autofix-requests', function (schema) {
     const attrs = this.normalizedRequestAttrs();
+    const fakeLogstream = schema.fakeLogstreams.create({ chunks: [], isTerminated: false });
 
     attrs.createdAt = new Date();
     attrs.status = 'in_progress';
-    attrs.logstream_id = 'dummy-logstream-id';
+    attrs.logstream_id = fakeLogstream.id;
 
     return schema.autofixRequests.create(attrs);
   });
@@ -355,6 +357,26 @@ function routes() {
     }
 
     return result;
+  });
+
+  this.get('/logstreams/:id/poll', function (schema, request) {
+    const logstream = schema.fakeLogstreams.find(request.params.id);
+
+    if (!request.queryParams.cursor) {
+      return {
+        content: logstream.chunks.join(''),
+        next_cursor: logstream.isTerminated ? null : `cursor_${logstream.chunks.length}`,
+      };
+    } else if (request.queryParams.cursor.startsWith('cursor_')) {
+      const index = parseInt(request.queryParams.cursor.replace('cursor_', ''), 10);
+
+      return {
+        content: logstream.chunks.slice(index).join(''),
+        next_cursor: logstream.isTerminated ? null : `cursor_${logstream.chunks.length}`,
+      };
+    } else {
+      throw new Error(`Unknown cursor: ${request.queryParams.cursor}`);
+    }
   });
 
   this.get('/perks', function (schema, request) {

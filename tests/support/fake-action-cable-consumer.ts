@@ -9,6 +9,10 @@ type SubscriptionCallbacks = {
 export default class FakeActionCableConsumer {
   #subscriptions: Record<string, SubscriptionCallbacks> = {};
 
+  hasSubscriptionForChannel(channel: string): boolean {
+    return !!this.#subscriptions[channel];
+  }
+
   sendData(channel: string, data: string): void {
     if (!this.#subscriptions[channel]) {
       throw new Error(`No subscription for channel ${channel}`);

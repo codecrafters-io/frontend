@@ -72,10 +72,8 @@ export default class Logstream {
       },
     });
 
-    const responseJson = await response.json();
-
-    this.content += responseJson.content;
-    this.nextCursor = responseJson.next_cursor;
+    this.content += response.content;
+    this.nextCursor = response.next_cursor;
 
     if (this.nextCursor === null) {
       this.isTerminated = true;
