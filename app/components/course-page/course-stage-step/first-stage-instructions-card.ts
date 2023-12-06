@@ -2,27 +2,15 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import Store from '@ember-data/store';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    repository: {
-      course: {
-        firstStage: {
-          solutions: {
-            changedFiles: {
-              filename: string;
-              diff: string;
-            }[];
-            language: {
-              slug: string;
-            };
-          }[];
-        };
-      };
-      language: unknown;
-    };
+    repository: RepositoryModel;
+    courseStage: CourseStageModel;
   };
 }
 
@@ -35,7 +23,7 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   }
 
   get solution() {
-    return this.args.repository.course.firstStage.solutions.find((solution) => solution.language === this.args.repository.language);
+    return this.args.repository.course.firstStage!.solutions.find((solution) => solution.language === this.args.repository.language);
   }
 
   get submitChangesInstructionsMarkdown() {
@@ -44,5 +32,11 @@ git add .
 git commit -m "pass 1st stage" # any msg
 git push origin master
 \`\`\``;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::FirstStageInstructionsCard': typeof FirstStageInstructionsCardComponent;
   }
 }
