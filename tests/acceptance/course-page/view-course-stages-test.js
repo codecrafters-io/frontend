@@ -707,12 +707,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(coursePage.betaLabelText, 'FREE DURING BETA', 'beta label should be present');
   });
 
-  test('tracks when the install cli link is clicked', async function (assert) {
+  test('tracks when the cli installation link is clicked', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
-    currentUser.update('featureFlags', { 'cli-suggestion-on-stage-two': 'test' });
+    currentUser.update('featureFlags', { 'can-see-cli-suggestion-on-stage-two': 'test' });
 
     await visit('/courses/redis/stages/2');
     await coursePage.installCliLink.click();
