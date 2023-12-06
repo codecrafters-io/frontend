@@ -1,25 +1,26 @@
 import config from 'ember-get-config';
-import petoiRobotDogImage from '/assets/images/monthly-challenges/petoirobotdog.png';
 import Service from '@ember/service';
+import ZSAMoonlanderLargeImage from '/assets/images/monthly-challenges/zsa-moonlander-large.png';
+import ZSAMoonlanderSmallImage from '/assets/images/monthly-challenges/zsa-moonlander-small.png';
 
 export default class MonthlyChallengeBannerService extends Service {
   get imageAltText() {
-    return 'Petoi Robot Dog';
+    return 'ZSA Moonlander';
   }
 
   get isOutdated(): boolean {
-    return new Date() >= new Date('December 01, 2023') && config.environment !== 'test';
+    return new Date() >= new Date('January 01, 2024') && config.environment !== 'test';
   }
 
   get largeImage() {
-    return petoiRobotDogImage;
+    return ZSAMoonlanderLargeImage;
   }
 
   get smallImage() {
-    return petoiRobotDogImage;
+    return ZSAMoonlanderSmallImage;
   }
 
   get url() {
-    return 'https://codecrafters.io/november';
+    return 'https://codecrafters.io/december';
   }
 }
