@@ -8,11 +8,12 @@ import config from 'codecrafters-frontend/config/environment';
 export default class HeaderComponent extends Component {
   logoImage = logoImage;
 
-  @service containerWidth;
   @service authenticator;
+  @service billingStatusDisplay;
+  @service colorScheme;
+  @service containerWidth;
   @service featureFlags;
   @service router;
-  @service colorScheme;
 
   @tracked mobileMenuIsExpanded = false;
 
@@ -40,14 +41,6 @@ export default class HeaderComponent extends Component {
     }
 
     return links;
-  }
-
-  get shouldShowFreeWeeksLeftButton() {
-    return this.currentUser && this.currentUser.hasActiveFreeUsageGrants && !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated;
-  }
-
-  get shouldShowSubscribeButton() {
-    return this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }
 
   @action
