@@ -29,11 +29,11 @@ export default class MonthlyChallengeBannerService extends Service {
   }
 
   get payPageCopy() {
-    return 'Win a ZSA Moonlander →';
+    return 'Win a ZSA Moonlander.';
   }
 
   get sidebarCopy() {
-    return 'Win a ZSA Moonlander.';
+    return 'Win a ZSA Moonlander →';
   }
 
   get smallImage() {
