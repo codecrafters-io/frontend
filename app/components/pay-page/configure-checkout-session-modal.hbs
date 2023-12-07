@@ -10,14 +10,18 @@
   </div>
 
   <div
-    class="flex items-center justify-between gap-8 border {{if this.isExtraInvoiceDetailsRequested 'border-teal-400 bg-teal-50' 'border-gray-200'}} rounded p-4 mb-6"
+    class="flex items-center justify-between gap-8 border
+      {{if this.isExtraInvoiceDetailsRequested 'border-teal-400 bg-teal-50' 'border-gray-200'}}
+      rounded p-4 mb-6"
     {{on "click" (fn (mut this.isExtraInvoiceDetailsRequested) (not this.isExtraInvoiceDetailsRequested))}}
     role="button"
     data-test-extra-invoice-details-toggle
   >
     <span class="flex flex-grow flex-col">
-      <span class="text-sm font-semibold leading-6 {{if this.isExtraInvoiceDetailsRequested 'text-teal-600' 'text-gray-900'}}" id="availability-label">I need extra details on
-        my invoice</span>
+      <span
+        class="text-sm font-semibold leading-6 {{if this.isExtraInvoiceDetailsRequested 'text-teal-600' 'text-gray-900'}}"
+        id="availability-label"
+      >I need extra details on my invoice</span>
       <span class="text-xs text-gray-400" id="availability-description">Choose this option if you need extra details like tax ID, business address
         etc. on your invoice.</span>
     </span>
