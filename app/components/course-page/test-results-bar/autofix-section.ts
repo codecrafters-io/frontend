@@ -1,13 +1,12 @@
 import type Store from '@ember-data/store';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -53,30 +52,6 @@ export default class AutofixSectionComponent extends Component<Signature> {
     } else {
       return null;
     }
-  }
-
-  createAutofixRequestTask = task({ drop: true }, async (): Promise<void> => {
-    this.autofixCreationError = null;
-
-    if (!this.lastSubmission) {
-      return;
-    }
-
-    const autofixRequest = this.store.createRecord('autofix-request', {
-      submission: this.lastSubmission,
-    });
-
-    try {
-      await autofixRequest.save();
-    } catch (error) {
-      this.autofixCreationError = 'Something went wrong. Please try again later.'; // We aren't actually using this yet.
-      throw error;
-    }
-  });
-
-  @action
-  handleAutofixButtonClick() {
-    this.createAutofixRequestTask.perform();
   }
 }
 

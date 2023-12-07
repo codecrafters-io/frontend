@@ -55,7 +55,6 @@ module('Acceptance | course-page | autofix', function (hooks) {
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     await percySnapshot('Autofix - Short logs', { scope: '[data-test-test-results-bar]' });
-    await this.pauseTest();
 
     const chunks = Array.from({ length: 100 }, (_, i) => `\x1b[92m[stage-${i}] passed\x1b[0m\n`);
     logstream.update({ chunks: ['Running tests...\n\n', ...chunks] });
@@ -75,5 +74,6 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await waitUntil(() => !fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
 
     await percySnapshot('Autofix - Success', { scope: '[data-test-test-results-bar]' });
+    // await this.pauseTest();
   });
 });

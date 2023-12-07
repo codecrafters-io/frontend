@@ -183,13 +183,19 @@ module.exports = {
         },
       },
       keyframes: {
-        ['infinite-slide']: {
+        'infinite-slide': {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(0%)' },
         },
+        blink: {
+          '0%': { opacity: '1' },
+          '50%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
-        ['infinite-slide']: 'infinite-slide 30s linear infinite',
+        'infinite-slide': 'infinite-slide 30s linear infinite',
+        'blink-fast': 'blink 1s step-start infinite',
       },
     },
   },
