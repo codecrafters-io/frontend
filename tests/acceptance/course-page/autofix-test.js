@@ -51,13 +51,14 @@ module('Acceptance | course-page | autofix', function (hooks) {
     assert.ok(autofixRequest, 'autofix request was created');
     assert.ok(logstream, 'fake logstream was created');
 
-    logstream.update({ chunks: ['# Autofix\n\n'] });
+    logstream.update({ chunks: ['Running tests...\n\n'] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     await percySnapshot('Autofix - Short logs', { scope: '[data-test-test-results-bar]' });
+    await this.pauseTest();
 
-    const chunks = Array.from({ length: 100 }, (_, i) => `line ${i}\n\n`);
-    logstream.update({ chunks: ['# Autofix\n\n', ...chunks] });
+    const chunks = Array.from({ length: 100 }, (_, i) => `\x1b[92m[stage-${i}] passed\x1b[0m\n`);
+    logstream.update({ chunks: ['Running tests...\n\n', ...chunks] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     await percySnapshot('Autofix - Long logs', { scope: '[data-test-test-results-bar]' });

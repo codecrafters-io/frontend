@@ -9,7 +9,11 @@
         <span class="font-mono text-xs text-white">Autofix success</span>
       {{/if}}
     </div>
-    <div class="text-gray-400 underline text-xs px-3 py-2 inline-flex hover:text-gray-300" {{on "click" (fn (mut this.shouldShowFullLog) (not this.shouldShowFullLog))}} role="button">
+    <div
+      class="text-gray-400 underline text-xs px-3 py-2 inline-flex hover:text-gray-300"
+      {{on "click" (fn (mut this.shouldShowFullLog) (not this.shouldShowFullLog))}}
+      role="button"
+    >
       {{#if this.shouldShowFullLog}}
         Show summary
       {{else}}
@@ -27,21 +31,23 @@
         {{will-destroy this.handleWillDestroyMarkdownStreamElement}}
       >
         {{#if this.logstream}}
-          <MarkdownStream @markdown={{this.logstream.content}} />
+          <AnsiStream @content={{this.logstream.content}} />
         {{/if}}
       </div>
     </div>
   {{else}}
-    <div class="flex-grow overflow-y-auto">
-      {{#if this.shouldShowFullLog}}
-        <div class="prose prose-sm dark:prose-invert">
-          {{markdown-to-html @autofixRequest.logs}}
+    {{#if this.shouldShowFullLog}}
+      <div class="bg-gray-900 border border-gray-700 rounded flex-grow overflow-y-auto">
+        <div class="px-3 py-2">
+          <pre class="font-mono text-sm text-white"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
         </div>
-      {{else}}
+      </div>
+    {{else}}
+      <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
         </div>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
   {{/if}}
 </div>

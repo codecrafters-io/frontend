@@ -42,17 +42,14 @@ export default class Logstream {
     this.isTerminated = false;
     this.isSubscribed = false;
 
-    console.log('subscribing to logstream');
     this.actionCableSubscription = this.actionCableConsumerService.subscribe(
       'LogstreamChannel',
       { logstream_id: this.logstreamId },
       {
         onConnect: () => {
-          console.log('logstream connected');
           this.pollTask.perform();
         },
         onData: () => {
-          console.log('logstream data');
           this.pollTask.perform();
         },
         onDisconnect: () => {
