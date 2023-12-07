@@ -10,24 +10,14 @@ export default class PayController extends Controller {
   @service router;
   @tracked configureCheckoutSessionModalIsOpen = false;
   @tracked isCreatingCheckoutSession = false;
-  @tracked pricingFrequencyClicked = "";
+  @tracked pricingFrequencyClicked = '';
   @tracked shouldApplyRegionalDiscount = false;
-
-  get discountedYearlyPrice() {
-    if (this.user.isEligibleForReferralDiscount) {
-      return 216;
-    } else if (this.user.isEligibleForEarlyBirdDiscount) {
-      return 216;
-    } else {
-      return null;
-    }
-  }
 
   get additionalCheckoutSessionProperties() {
     const additionalCheckoutSessionProperties = {
       pricingFrequency: this.pricingFrequencyClicked,
       regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
-    }
+    };
 
     if (this.pricingFrequencyClicked === 'yearly') {
       additionalCheckoutSessionProperties.earlyBirdDiscountEnabled = this.model.earlyBirdDiscountEnabled;
@@ -36,6 +26,16 @@ export default class PayController extends Controller {
       return additionalCheckoutSessionProperties;
     } else {
       return additionalCheckoutSessionProperties;
+    }
+  }
+
+  get discountedYearlyPrice() {
+    if (this.user.isEligibleForReferralDiscount) {
+      return 216;
+    } else if (this.user.isEligibleForEarlyBirdDiscount) {
+      return 216;
+    } else {
+      return null;
     }
   }
 

@@ -30,7 +30,7 @@ export default class ConfigureCheckoutSessionModal extends Component<Signature> 
     this.isCreatingCheckoutSession = true;
 
     console.log(this.args.additionalCheckoutSessionProperties);
-    let checkoutSession = this.store.createRecord('individual-checkout-session', {
+    const checkoutSession = this.store.createRecord('individual-checkout-session', {
       autoRenewSubscription: false, // None of our plans are subscriptions at the moment
       regionalDiscount: this.args.additionalCheckoutSessionProperties.regionalDiscount,
       earlyBirdDiscountEnabled: this.args.additionalCheckoutSessionProperties.earlyBirdDiscountEnabled,

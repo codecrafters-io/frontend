@@ -76,6 +76,9 @@
 
 {{#if this.configureCheckoutSessionModalIsOpen}}
   <ModalBackdrop>
-    <PayPage::ConfigureCheckoutSessionModal @additionalCheckoutSessionProperties={{this.additionalCheckoutSessionProperties}} @onClose={{fn (mut this.configureCheckoutSessionModalIsOpen) false}} />
+    <PayPage::ConfigureCheckoutSessionModal
+      @additionalCheckoutSessionProperties={{this.additionalCheckoutSessionProperties}}
+      @onClose={{fn (mut this.configureCheckoutSessionModalIsOpen) false}}
+    />
   </ModalBackdrop>
 {{/if}}

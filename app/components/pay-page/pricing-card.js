@@ -1,7 +1,4 @@
 import Component from '@glimmer/component';
-import window from 'ember-window-mock';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class PricingCardComponent extends Component {
