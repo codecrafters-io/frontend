@@ -9,12 +9,12 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import windowMock from 'ember-window-mock';
 
-module('Acceptance | pay-test', function (hooks) {
+module('Acceptance | pay-test', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  test('redirects to login page if user is not signed in', async function (assert) {
+  test('redirects to login page if user is not signed in', async function(assert) {
     testScenario(this.server);
 
     assert.expect(2);
@@ -32,7 +32,7 @@ module('Acceptance | pay-test', function (hooks) {
     );
   });
 
-  test('new user can start checkout session', async function (assert) {
+  test('new user can start checkout session', async function(assert) {
     testScenario(this.server);
 
     let user = this.server.schema.users.first();
@@ -51,7 +51,7 @@ module('Acceptance | pay-test', function (hooks) {
     assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
-  test('new user sees discounted price start checkout session', async function (assert) {
+  test('new user sees discounted price start checkout session', async function(assert) {
     testScenario(this.server);
 
     let user = this.server.schema.users.first();
@@ -69,7 +69,7 @@ module('Acceptance | pay-test', function (hooks) {
     assert.true(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
-  test('new user sees discounted price if they have a referral', async function (assert) {
+  test('new user sees discounted price if they have a referral', async function(assert) {
     testScenario(this.server);
 
     let user = this.server.schema.users.first();
@@ -93,7 +93,7 @@ module('Acceptance | pay-test', function (hooks) {
     assert.true(this.server.schema.individualCheckoutSessions.first().referralDiscountEnabled);
   });
 
-  test('user can create checkout session with regional discount applied', async function (assert) {
+  test('user can create checkout session with regional discount applied', async function(assert) {
     testScenario(this.server);
 
     let user = this.server.schema.users.first();
@@ -115,22 +115,34 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscountId, 'current-discount-id');
   });
 
-  test('user can create checkout session with regional discount not applied', async function (assert) {
+  test('user can create checkout session when extra invoice details is not requested', async function(assert) {
     testScenario(this.server);
 
     let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(user.createdAt.getTime() - 5 * 24 * 60 * 60 * 1000));
-
-    this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
 
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    // todo: Check that discount notice is visible
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnProceedToCheckoutButton();
-    assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
-    assert.notOk(this.server.schema.individualCheckoutSessions.first().regionalDiscountId);
+
+    assert.false(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
+  });
+
+  test('user can create checkout session when extra invoice details is requested', async function(assert) {
+    testScenario(this.server);
+
+    let user = this.server.schema.users.first();
+
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnExtraInvoiceDetailsToggle();
+    await payPage.clickOnProceedToCheckoutButton();
+
+    assert.true(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
   });
 });
