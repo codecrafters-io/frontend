@@ -45,7 +45,12 @@
       ← Back
     </span>
 
-    <PrimaryButton class="flex items-center justify-center" @size="large" {{on "click" this.handleProceedToCheckoutButtonClick}} data-test-proceed-to-checkout-button>
+    <PrimaryButton
+      class="flex items-center justify-center"
+      @size="large"
+      {{on "click" this.handleProceedToCheckoutButtonClick}}
+      data-test-proceed-to-checkout-button
+    >
       Proceed to Checkout
 
       {{#if this.isCreatingCheckoutSession}}
