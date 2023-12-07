@@ -8,6 +8,10 @@ export default class MonthlyChallengeBannerService extends Service {
     return 'ZSA Moonlander';
   }
 
+  get largeImageWidth() {
+    return "max-w-xl"
+  }
+
   get isOutdated(): boolean {
     return new Date() >= new Date('January 01, 2024') && config.environment !== 'test';
   }
@@ -16,11 +20,35 @@ export default class MonthlyChallengeBannerService extends Service {
     return ZSAMoonlanderLargeImage;
   }
 
+  get monthShorthand() {
+    return "Dec"
+  }
+
+  get monthShorthandUppercase() {
+    return this.monthShorthand.toUpperCase();
+  }
+
+  get payPageCopy() {
+    return "Win a ZSA Moonlander →"
+  }
+
+  get sidebarCopy() {
+    return "Win a ZSA Moonlander."
+  }
+
   get smallImage() {
     return ZSAMoonlanderSmallImage;
   }
 
   get url() {
     return 'https://codecrafters.io/december';
+  }
+
+  get year() {
+    return "2023"
+  }
+
+  get yearShorthand() {
+    return this.year.slice(-2);
   }
 }
