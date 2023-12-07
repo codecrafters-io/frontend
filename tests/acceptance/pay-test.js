@@ -45,6 +45,9 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnProceedToCheckoutButton();
+
+    await percySnapshot('Pay page - configure checkout session modal');
+
     assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
