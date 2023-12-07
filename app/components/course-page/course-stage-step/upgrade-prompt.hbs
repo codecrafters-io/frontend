@@ -11,12 +11,20 @@
         This stage requires a CodeCrafters Membership.
       </div>
 
-      <div class="pt-3 pb-6 text-slate-700 {{if this.isLarge 'text-base' 'text-sm'}}" data-test-upgrade-prompt-secondary-copy>
+      <div class="prose prose-compact py-3 {{if this.isLarge '' 'prose-sm'}}" data-test-upgrade-prompt-secondary-copy>
         {{#if this.isLoadingRegionalDiscount}}
-          Plans start at $40/mo.
+          <p>
+            Plans start at $40/mo.
+          </p>
         {{else}}
           {{markdown-to-html this.secondaryCopyMarkdown}}
         {{/if}}
+
+        <p>
+          Not ready for a membership? You can 🎁
+          <LinkTo @route="refer">refer friends</LinkTo>
+          to get free access.
+        </p>
       </div>
 
       <PrimaryButton class="{{if this.isLarge 'w-fit' 'w-full'}}">
