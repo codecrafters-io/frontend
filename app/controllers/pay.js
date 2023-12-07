@@ -8,6 +8,7 @@ export default class PayController extends Controller {
   @service authenticator;
   @service monthlyChallengeBanner;
   @service router;
+  @tracked configureCheckoutSessionModalIsOpen = false;
   @tracked isCreatingCheckoutSession = false;
   @tracked shouldApplyRegionalDiscount = false;
 
@@ -23,6 +24,11 @@ export default class PayController extends Controller {
 
   get user() {
     return this.authenticator.currentUser;
+  }
+
+  @action
+  handleStartMembershipButtonClick() {
+    this.configureCheckoutSessionModalIsOpen = true;
   }
 
   @action

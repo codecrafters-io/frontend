@@ -1,4 +1,4 @@
-<ModalBody @allowManualClose={{true}} @onClose={{(noop)}} class="w-full">
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full">
   <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
     Invoice Details
   </div>
@@ -41,7 +41,7 @@
   </div>
 
   <div class="flex justify-between items-center">
-    <span class="text-gray-400 text-sm" role="button">
+    <span class="text-gray-400 text-sm" role="button" {{on "click" @onClose}}>
       ← Back
     </span>
     <PrimaryButton @size="large">

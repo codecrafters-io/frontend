@@ -24,6 +24,7 @@
       <PayPage::PricingCard
         @actualPrice={{120}}
         @footerText="Single payment of $120."
+        @handleStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{true}}
         @pricingFrequency="quarterly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
@@ -37,6 +38,7 @@
         @discountedPrice={{this.discountedYearlyPrice}}
         @earlyBirdDiscountEnabled={{this.user.isEligibleForEarlyBirdDiscount}}
         @footerText="Single payment of ${{or this.discountedYearlyPrice 360}}."
+        @handleStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{false}}
         @pricingFrequency="yearly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
@@ -49,6 +51,7 @@
       <PayPage::PricingCard
         @actualPrice={{990}}
         @footerText="Pay once, access for life."
+        @handleStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{false}}
         @pricingFrequency="lifetime"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
@@ -73,7 +76,8 @@
   </div>
 </div>
 
-{{! TODO: Only show this conditionally when checking out }}
-<ModalBackdrop>
-  <PayPage::ConfigureCheckoutSessionModal />
-</ModalBackdrop>
+{{#if this.configureCheckoutSessionModalIsOpen}}
+  <ModalBackdrop>
+    <PayPage::ConfigureCheckoutSessionModal @onClose={{fn (mut this.configureCheckoutSessionModalIsOpen) false}} />
+  </ModalBackdrop>
+{{/if}}
