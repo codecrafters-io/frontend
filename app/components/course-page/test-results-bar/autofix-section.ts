@@ -6,7 +6,6 @@ import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-lis
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 
 type Signature = {
   Element: HTMLDivElement;
