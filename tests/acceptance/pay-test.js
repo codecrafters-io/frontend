@@ -44,6 +44,7 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
@@ -61,6 +62,7 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page - with early bird discount');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.true(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
@@ -84,6 +86,7 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page - with referral discount');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.true(this.server.schema.individualCheckoutSessions.first().referralDiscountEnabled);
   });
 
@@ -104,6 +107,7 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page - with regional discount (applied)');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscountId, 'current-discount-id');
   });
@@ -122,6 +126,7 @@ module('Acceptance | pay-test', function (hooks) {
     // todo: Check that discount notice is visible
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
     assert.notOk(this.server.schema.individualCheckoutSessions.first().regionalDiscountId);
   });

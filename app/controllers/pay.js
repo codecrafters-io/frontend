@@ -20,8 +20,8 @@ export default class PayController extends Controller {
     };
 
     if (this.pricingFrequencyClicked === 'yearly') {
-      additionalCheckoutSessionProperties.earlyBirdDiscountEnabled = this.model.earlyBirdDiscountEnabled;
-      additionalCheckoutSessionProperties.referralDiscountEnabled = this.model.referralDiscountEnabled;
+      additionalCheckoutSessionProperties.earlyBirdDiscountEnabled = this.user.isEligibleForEarlyBirdDiscount;
+      additionalCheckoutSessionProperties.referralDiscountEnabled = this.user.isEligibleForReferralDiscount;
 
       return additionalCheckoutSessionProperties;
     } else {

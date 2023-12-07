@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import Store from '@ember-data/store';
+import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -29,7 +30,6 @@ export default class ConfigureCheckoutSessionModal extends Component<Signature> 
   async handleProceedToCheckoutButtonClick() {
     this.isCreatingCheckoutSession = true;
 
-    console.log(this.args.additionalCheckoutSessionProperties);
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
       autoRenewSubscription: false, // None of our plans are subscriptions at the moment
       regionalDiscount: this.args.additionalCheckoutSessionProperties.regionalDiscount,
