@@ -53,7 +53,7 @@
             class="mt-4"
             @filename={{changedFile.filename}}
             @code={{changedFile.diff}}
-            {{!-- @glint-expect-error language.slug can be null? --}}
+            {{! @glint-expect-error language.slug can be null? }}
             @language={{@autofixRequest.submission.repository.language.slug}}
           />
         {{/each}}
