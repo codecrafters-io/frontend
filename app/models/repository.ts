@@ -15,6 +15,7 @@ import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'code
 import { cached } from '@glimmer/tracking';
 
 import { memberAction } from 'ember-api-actions';
+import type AutofixRequestModel from './autofix-request';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
@@ -35,6 +36,7 @@ export default class RepositoryModel extends Model {
     advanced: 'Advanced',
   };
 
+  @hasMany('autofix-request', { async: false }) declare autofixRequests: AutofixRequestModel[];
   @belongsTo('course', { async: false }) declare course: CourseModel;
   @hasMany('course-extension-activation', { async: false }) declare courseExtensionActivations: CourseExtensionActivation[];
   @hasMany('course-stage-completion', { async: false }) declare courseStageCompletions: CourseStageCompletionModel[];

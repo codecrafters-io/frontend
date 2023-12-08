@@ -1,7 +1,13 @@
 <div class="flex items-center justify-between" ...attributes>
   <ul class="flex items-center overflow-x-scroll">
     {{#each this.tabs as |tab|}}
-      <TabHeader @size="small" @icon={{tab.icon}} @text={{tab.title}} @isActive={{eq tab.slug "logs"}} {{on "click" (fn this.handleTabClick tab)}} />
+      <TabHeader
+        @size="small"
+        @icon={{tab.icon}}
+        @text={{tab.title}}
+        @isActive={{eq tab.slug @activeTabSlug}}
+        {{on "click" (fn this.handleTabClick tab)}}
+      />
     {{/each}}
   </ul>
   <div class="flex items-center justify-center text-gray-500 hover:text-gray-400" {{on "click" @onCollapseButtonClick}} role="button">

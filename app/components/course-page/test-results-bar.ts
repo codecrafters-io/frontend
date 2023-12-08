@@ -1,6 +1,7 @@
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
@@ -17,6 +18,7 @@ type Signature = {
 
 export default class TestResultsBarComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
+  @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
 
   get isCollapsed() {
     return !this.isExpanded;
