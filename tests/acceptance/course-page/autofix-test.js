@@ -61,6 +61,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     await percySnapshot('Autofix - Long logs', { scope: '[data-test-test-results-bar]' });
+    // await this.pauseTest();
 
     autofixRequest.update({
       status: 'success',

@@ -3,7 +3,7 @@
     <div class="flex items-center px-3 py-2 gap-2">
       {{#if (eq @autofixRequest.status "in_progress")}}
         <BlinkingDot @color="yellow" />
-        <span class="font-mono text-xs text-white">Autofix in progress... (logs will appear below)</span>
+        <span class="font-mono text-xs text-white">Autofix in progress... (the logs below will be verbose, we'll summarize them once completed)</span>
       {{else}}
         <StaticDot @color="green" />
         <span class="font-mono text-xs text-white">Autofix success</span>
@@ -31,7 +31,7 @@
         {{will-destroy this.handleWillDestroyMarkdownStreamElement}}
       >
         {{#if this.logstream}}
-          <AnsiStream @content={{this.logstream.content}} />
+          <AnsiStream @content={{this.logstream.content}} class="text-xs" />
         {{/if}}
       </div>
     </div>
@@ -39,7 +39,7 @@
     {{#if this.shouldShowFullLog}}
       <div class="bg-gray-900 border border-gray-700 rounded flex-grow overflow-y-auto">
         <div class="p-3">
-          <pre class="font-mono text-sm text-white"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
+          <pre class="font-mono text-xs text-white"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
         </div>
       </div>
     {{else}}
@@ -47,6 +47,16 @@
         <div class="prose prose-sm dark:prose-invert">
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
         </div>
+
+        {{#each @autofixRequest.changedFiles as |changedFile|}}
+          <FileDiffCard
+            class="mt-4"
+            @filename={{changedFile.filename}}
+            @code={{changedFile.diff}}
+            {{!-- @glint-expect-error language.slug can be null? --}}
+            @language={{@autofixRequest.submission.repository.language.slug}}
+          />
+        {{/each}}
       </div>
     {{/if}}
   {{/if}}
