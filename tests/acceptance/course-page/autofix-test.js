@@ -56,12 +56,15 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await percySnapshot('Autofix - Short logs', { scope: '[data-test-test-results-bar]' });
 
-    const chunks = Array.from({ length: 100 }, (_, i) => `\x1b[92m[stage-${i}] passed\x1b[0m\n`);
+    const chunks = Array.from(
+      { length: 100 },
+      (_, i) => `\x1b[92m[stage-${i}] passed blah blah blh alakjsd laskj daslk jdaslk jdaslk jdaslk jdasl kjdsalkjad\x1b[0m\n`,
+    );
+
     logstream.update({ chunks: ['Running tests...\n\n', ...chunks] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     await percySnapshot('Autofix - Long logs', { scope: '[data-test-test-results-bar]' });
-    // await this.pauseTest();
 
     autofixRequest.update({
       status: 'success',
