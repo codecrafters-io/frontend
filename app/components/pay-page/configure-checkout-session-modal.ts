@@ -47,8 +47,6 @@ export default class ConfigureCheckoutSessionModal extends Component<Signature> 
 
   @action
   handleToggleClick() {
-    console.log(this.isExtraInvoiceDetailsRequested);
     this.isExtraInvoiceDetailsRequested = !this.isExtraInvoiceDetailsRequested;
-    console.log(this.isExtraInvoiceDetailsRequested);
   }
 }
