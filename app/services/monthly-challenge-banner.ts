@@ -1,7 +1,7 @@
 import config from 'ember-get-config';
 import Service from '@ember/service';
-import ZSAMoonlanderLargeImage from '/assets/images/monthly-challenges/zsa-moonlander-large.png';
-import ZSAMoonlanderSmallImage from '/assets/images/monthly-challenges/zsa-moonlander-small.png';
+import LargeImage from '/assets/images/monthly-challenges/large.png';
+import SmallImage from '/assets/images/monthly-challenges/small.png';
 
 export default class MonthlyChallengeBannerService extends Service {
   get imageAltText() {
@@ -13,42 +13,30 @@ export default class MonthlyChallengeBannerService extends Service {
   }
 
   get largeImage() {
-    return ZSAMoonlanderLargeImage;
+    return LargeImage;
   }
 
-  get largeImageWidth() {
-    return 'max-w-xl';
+  get payPageBannerTitle() {
+    return 'DEC 2023 CHALLENGE';
   }
 
-  get monthShorthand() {
-    return 'Dec';
-  }
-
-  get monthShorthandUppercase() {
-    return this.monthShorthand.toUpperCase();
-  }
-
-  get payPageCopy() {
+  get payPageCta() {
     return 'Win a ZSA Moonlander.';
   }
 
-  get sidebarCopy() {
+  get sidebarBannerTitle() {
+    return "Complete 1 challenge in Dec '23";
+  }
+
+  get sidebarCta() {
     return 'Win a ZSA Moonlander →';
   }
 
   get smallImage() {
-    return ZSAMoonlanderSmallImage;
+    return SmallImage;
   }
 
   get url() {
     return 'https://codecrafters.io/december';
-  }
-
-  get year() {
-    return '2023';
-  }
-
-  get yearShorthand() {
-    return this.year.slice(-2);
   }
 }
