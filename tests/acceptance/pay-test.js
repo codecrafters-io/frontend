@@ -136,6 +136,9 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnExtraInvoiceDetailsToggle();
+
+    await percySnapshot('Pay page - configure checkout session modal (toggled)');
+
     await payPage.clickOnProceedToCheckoutButton();
 
     assert.true(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
