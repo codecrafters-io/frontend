@@ -23,7 +23,7 @@ interface Signature {
 
 export default class ConfigureCheckoutSessionModal extends Component<Signature> {
   @service declare store: Store;
-  @tracked isExtraInvoiceDetailsRequested = false;
+  @tracked extraInvoiceDetailsRequested = false;
   @tracked isCreatingCheckoutSession = false;
 
   @action
@@ -35,7 +35,7 @@ export default class ConfigureCheckoutSessionModal extends Component<Signature> 
       regionalDiscount: this.args.additionalCheckoutSessionProperties.regionalDiscount,
       earlyBirdDiscountEnabled: this.args.additionalCheckoutSessionProperties.earlyBirdDiscountEnabled,
       referralDiscountEnabled: this.args.additionalCheckoutSessionProperties.referralDiscountEnabled,
-      extraInvoiceDetailsRequested: this.isExtraInvoiceDetailsRequested,
+      extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
       successUrl: `${window.location.origin}/tracks`,
       cancelUrl: `${window.location.origin}/pay`,
       pricingFrequency: this.args.additionalCheckoutSessionProperties.pricingFrequency,

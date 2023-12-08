@@ -24,7 +24,7 @@
       <PayPage::PricingCard
         @actualPrice={{120}}
         @footerText="Single payment of $120."
-        @handleStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
+        @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{true}}
         @pricingFrequency="quarterly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
@@ -37,7 +37,7 @@
         @actualPrice={{360}}
         @discountedPrice={{this.discountedYearlyPrice}}
         @footerText="Single payment of ${{or this.discountedYearlyPrice 360}}."
-        @handleStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
+        @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{false}}
         @pricingFrequency="yearly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
@@ -49,7 +49,7 @@
       <PayPage::PricingCard
         @actualPrice={{990}}
         @footerText="Pay once, access for life."
-        @handleStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
+        @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{false}}
         @pricingFrequency="lifetime"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}

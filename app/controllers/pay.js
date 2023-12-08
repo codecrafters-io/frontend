@@ -8,25 +8,19 @@ export default class PayController extends Controller {
   @service authenticator;
   @service monthlyChallengeBanner;
   @service router;
+
   @tracked configureCheckoutSessionModalIsOpen = false;
   @tracked isCreatingCheckoutSession = false;
-  @tracked pricingFrequencyClicked = '';
+  @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;
 
   get additionalCheckoutSessionProperties() {
-    const additionalCheckoutSessionProperties = {
-      pricingFrequency: this.pricingFrequencyClicked,
+    return {
+      pricingFrequency: this.selectedPricingFrequency,
       regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
+      earlyBirdDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user.isEligibleForEarlyBirdDiscount,
+      referralDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user.isEligibleForReferralDiscount,
     };
-
-    if (this.pricingFrequencyClicked === 'yearly') {
-      additionalCheckoutSessionProperties.earlyBirdDiscountEnabled = this.user.isEligibleForEarlyBirdDiscount;
-      additionalCheckoutSessionProperties.referralDiscountEnabled = this.user.isEligibleForReferralDiscount;
-
-      return additionalCheckoutSessionProperties;
-    } else {
-      return additionalCheckoutSessionProperties;
-    }
   }
 
   get discountedYearlyPrice() {
@@ -46,7 +40,7 @@ export default class PayController extends Controller {
   @action
   handleStartMembershipButtonClick(pricingFrequency) {
     this.configureCheckoutSessionModalIsOpen = true;
-    this.pricingFrequencyClicked = pricingFrequency;
+    this.selectedPricingFrequency = pricingFrequency;
   }
 
   @action
