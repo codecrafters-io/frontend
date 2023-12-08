@@ -44,9 +44,4 @@ export default class ConfigureCheckoutSessionModal extends Component<Signature> 
     await checkoutSession.save();
     window.location.href = checkoutSession.url;
   }
-
-  @action
-  handleToggleClick() {
-    this.isExtraInvoiceDetailsRequested = !this.isExtraInvoiceDetailsRequested;
-  }
 }
