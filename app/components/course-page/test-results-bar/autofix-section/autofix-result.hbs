@@ -1,0 +1,63 @@
+<div class="flex flex-col gap-3" ...attributes>
+  <div class="bg-gray-900 border border-gray-700 rounded relative flex-shrink-0 flex items-center justify-between">
+    <div class="flex items-center px-3 py-2 gap-2">
+      {{#if (eq @autofixRequest.status "in_progress")}}
+        <BlinkingDot @color="yellow" />
+        <span class="font-mono text-xs text-white">Autofix in progress... (the logs below will be verbose, we'll summarize them once completed)</span>
+      {{else}}
+        <StaticDot @color="green" />
+        <span class="font-mono text-xs text-white">Autofix success</span>
+      {{/if}}
+    </div>
+    <div
+      class="text-gray-400 underline text-xs px-3 py-2 inline-flex hover:text-gray-300"
+      {{on "click" (fn (mut this.shouldShowFullLog) (not this.shouldShowFullLog))}}
+      role="button"
+    >
+      {{#if this.shouldShowFullLog}}
+        Show summary
+      {{else}}
+        Show Full Log
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if (eq @autofixRequest.status "in_progress")}}
+    <div class="bg-gray-900 border border-gray-700 rounded overflow-y-auto relative flex-grow">
+      <div
+        class="p-3"
+        {{did-insert this.handleMarkdownStreamElementInserted}}
+        {{did-update this.handleDidUpdateAutofixRequestLogstreamId @autofixRequest.logstreamId}}
+        {{will-destroy this.handleWillDestroyMarkdownStreamElement}}
+      >
+        {{#if this.logstream}}
+          <AnsiStream @content={{this.logstream.content}} class="text-xs" />
+        {{/if}}
+      </div>
+    </div>
+  {{else}}
+    {{#if this.shouldShowFullLog}}
+      <div class="bg-gray-900 border border-gray-700 rounded flex-grow overflow-y-auto">
+        <div class="p-3">
+          <pre class="font-mono text-xs text-white"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
+        </div>
+      </div>
+    {{else}}
+      <div class="flex-grow overflow-y-auto">
+        <div class="prose prose-sm dark:prose-invert">
+          {{markdown-to-html @autofixRequest.explanationMarkdown}}
+        </div>
+
+        {{#each @autofixRequest.changedFiles as |changedFile|}}
+          <FileDiffCard
+            class="mt-4"
+            @filename={{changedFile.filename}}
+            @code={{changedFile.diff}}
+            {{! @glint-expect-error language.slug can be null? }}
+            @language={{@autofixRequest.submission.repository.language.slug}}
+          />
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/if}}
+</div>
