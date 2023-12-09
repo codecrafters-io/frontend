@@ -1,7 +1,7 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { AnsiUp } from 'ansi_up';
-import { task, rawTimeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { tracked } from 'tracked-built-ins';
 
 interface Signature {
@@ -49,35 +49,7 @@ export default class AnsiStreamComponent extends Component<Signature> {
     }
 
     const newContentDelta = this.args.content.slice(this.displayContent.length);
-    const newContentDeltaChunks = newContentDelta.split(/(\s+)/);
-
-    let counter = 11;
-
-    const chunksCount = Math.max(1, Math.floor(newContentDeltaChunks.length / 10));
-
-    while (newContentDeltaChunks.length > 0 && counter > 0) {
-      console.time('splice');
-      const chunksToFlush = newContentDeltaChunks.splice(0, chunksCount);
-      console.timeEnd('splice');
-
-      this.debugLog('Flushing', `${chunksToFlush.length}/${newContentDeltaChunks.length}`, 'chunks');
-
-      console.time('append');
-      this.appendDisplayContent(chunksToFlush.join(''));
-      console.timeEnd('append');
-
-      console.time('wait');
-      await rawTimeout(100);
-      console.timeEnd('wait');
-
-      counter--;
-    }
-
-    // In case our math didn't work out, just flush the rest
-    if (newContentDeltaChunks.length > 0) {
-      this.debugLog('Flushing', newContentDeltaChunks.length, 'leftover chunks');
-      this.appendDisplayContent(newContentDeltaChunks.join(''));
-    }
+    this.appendDisplayContent(newContentDelta);
 
     if (this.args.content !== this.displayContent) {
       this.consumeContentDeltasTask.perform();
