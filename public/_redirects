@@ -1,2 +1,62 @@
-/_empty.html /_empty.html 200
-* /_empty.html 200
+/badges /_empty.html 200
+/catalog /_empty.html 200
+/walkthroughs/:code_walkthrough_slug /_empty.html 200
+/concepts /_empty.html 200
+/concepts/:concept_slug /_empty.html 200
+
+/concepts/:concept_slug/admin /_empty.html 200
+/concepts/:concept_slug/admin/basic-details /_empty.html 200
+/concepts/:concept_slug/admin/blocks /_empty.html 200
+/concepts/:concept_slug/admin/questions/:question_slug /_empty.html 200
+/concepts/:concept_slug/admin/questions /_empty.html 200
+
+/collections/:concept_group_slug /_empty.html 200
+/courses /_empty.html 200
+
+/courses/:course_slug /_empty.html 200
+/courses/:course_slug/introduction /_empty.html 200
+/courses/:course_slug/setup /_empty.html 200
+/courses/:course_slug/stages/:stage_identifier /_empty.html 200
+/courses/:course_slug/stages/:stage_identifier/code-examples /_empty.html 200
+/courses/:course_slug/stages/:stage_identifier/concepts /_empty.html 200
+/courses/:course_slug/stages/:stage_identifier/instructions /_empty.html 200
+/courses/:course_slug/stages/:stage_identifier/screencasts /_empty.html 200
+/courses/:course_slug/base-stages-completed /_empty.html 200
+/courses/:course_slug/completed /_empty.html 200
+
+/courses/:course_slug/admin /_empty.html 200
+/courses/:course_slug/admin/buildpacks /_empty.html 200
+/courses/:course_slug/admin/buildpacks/:buildpack_id /_empty.html 200
+/courses/:course_slug/admin/feedback /_empty.html 200
+/courses/:course_slug/admin/insights /_empty.html 200
+/courses/:course_slug/admin/submissions /_empty.html 200
+/courses/:course_slug/admin/tester-versions /_empty.html 200
+/courses/:course_slug/admin/updates/:update_id /_empty.html 200
+/courses/:course_slug/admin/updates /_empty.html 200
+
+/courses/:course_slug/overview /_empty.html 200
+/join /_empty.html 200
+/login /_empty.html 200
+/logged-in /_empty.html 200
+/membership /_empty.html 200
+/pay /_empty.html 200
+
+/perks/:slug /_empty.html 200
+/perks/:slug/claim /_empty.html 200
+
+/partner /_empty.html 200
+/refer /_empty.html 200
+/r/:referral_link_slug /_empty.html 200
+/teams/:team_id /_empty.html 200
+/teams/create /_empty.html 200
+/teams/pay /_empty.html 200
+/tracks/:track_slug /_empty.html 200
+/tracks /_empty.html 200
+/users/:username /_empty.html 200
+
+/challenge-ideas /_empty.html 200
+/challenge-extension-ideas /_empty.html 200
+
+/welcome /_empty.html 200
+
+/404 /_empty.html 200
