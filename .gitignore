@@ -31,3 +31,4 @@
 
 # broccoli-debug
 /DEBUG/
+.vercel
