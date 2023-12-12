@@ -44,6 +44,15 @@ export default class CourseStageStep extends Step {
     return this.stageListItem.stage;
   }
 
+  get firstStageTestFailureExplanationMarkdown() {
+    return `
+This failure is expected!
+
+CodeCrafters runs tests when you do a git push. Once you implement the stage, you'll pass the test!
+
+Check the [How to pass this stage](#first-stage-instructions-card) section for instructions.`.trim();
+  }
+
   get lastFailedSubmission() {
     if (this.repository.lastSubmissionHasFailureStatus) {
       return this.repository.lastSubmission;
@@ -77,6 +86,7 @@ export default class CourseStageStep extends Step {
         dotColor: 'red',
         dotType: 'static',
         text: this.testFailureMessage,
+        explanationMarkdown: this.courseStage.isFirst ? this.firstStageTestFailureExplanationMarkdown : undefined,
       };
     } else if (this.testsStatus === 'passed') {
       return {

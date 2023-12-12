@@ -1,4 +1,5 @@
-<div class="bg-gray-50 rounded-md w-full" ...attributes {{did-update this.handleContentIdentifierDidUpdate @contentIdentifier}}>
+{{!-- scroll-mt-12 accounts for the height of the sticky header --}}
+<div class="bg-gray-50 rounded-md w-full scroll-mt-12" ...attributes {{did-update this.handleContentIdentifierDidUpdate @contentIdentifier}}>
   <div class="bg-white border border-gray-300 relative {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}">
     <div class="p-4 pt-3 sm:p-6 sm:pt-5 {{if (has-block 'footer') 'pb-4'}}">
       {{#if @title}}
