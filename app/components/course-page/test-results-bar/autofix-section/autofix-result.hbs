@@ -31,7 +31,7 @@
         {{will-destroy this.handleWillDestroyMarkdownStreamElement}}
       >
         {{#if this.logstream}}
-          <AnsiStream @content={{this.logstream.content}} class="text-xs" />
+          <AnsiStream @content={{this.logstream.content}} class="text-xs whitespace-pre-wrap" />
         {{/if}}
       </div>
     </div>
@@ -39,7 +39,7 @@
     {{#if this.shouldShowFullLog}}
       <div class="bg-gray-900 border border-gray-700 rounded flex-grow overflow-y-auto">
         <div class="p-3">
-          <pre class="font-mono text-xs text-white"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
+          <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
         </div>
       </div>
     {{else}}
