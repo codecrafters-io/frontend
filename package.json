@@ -198,5 +198,6 @@
     "paths": [
       "lib/default-meta-tags"
     ]
-  }
+  },
+  "packageManager": "npm@8.19.4"
 }
