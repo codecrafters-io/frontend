@@ -23,7 +23,7 @@
         {{svg-jar "question-mark-circle" class="w-4 h-4 fill-current text-gray-300 dark:text-gray-500 group-hover/tooltip-trigger:text-gray-400"}}
 
         {{! @glint-ignore }}
-        <EmberPopover>
+        <EmberPopover @popperContainer="body">
           <div class="prose prose-sm prose-invert text-white">
             {{markdown-to-html @step.progressIndicator.explanationMarkdown}}
           </div>
