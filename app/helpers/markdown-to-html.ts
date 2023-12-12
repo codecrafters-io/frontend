@@ -2,6 +2,7 @@ import Helper from '@ember/component/helper';
 import showdown from 'showdown';
 import { htmlSafe } from '@ember/template';
 import { SafeString } from '@ember/template/-private/handlebars';
+import config from 'codecrafters-frontend/config/environment';
 
 export interface Signature {
   Args: {
@@ -12,6 +13,17 @@ export interface Signature {
 
 export default class MarkdownToHtml extends Helper<Signature> {
   public compute(positional: [string]): SafeString {
+    // Older usages of this helper may not pass in a markdown string
+    if (!positional[0]) {
+      if (config.environment === 'test') {
+        throw new Error('MarkdownToHtml helper called with no markdown');
+      } else {
+        console.warn('MarkdownToHtml helper called with no markdown');
+      }
+
+      positional[0] = '';
+    }
+
     const htmlContent = this.convertMarkdownToHtml(positional[0]);
 
     return htmlSafe(htmlContent);
