@@ -142,17 +142,7 @@ export default class CourseStageStep extends Step {
   }
 
   get testFailureMessage(): string {
-    if (this.lastFailedSubmissionWasWithinLast10Minutes) {
-      return 'Tests failed.';
-    } else if (this.lastFailedSubmissionCreatedAt) {
-      return `Last attempt ${formatDistanceStrictWithOptions(
-        { addSuffix: true },
-        new Date(),
-        this.lastFailedSubmissionCreatedAt || new Date(),
-      )}. Try again?`;
-    } else {
-      return 'Last attempt failed. Try again?';
-    }
+    return 'Tests failed.';
   }
 
   get testsStatus(): 'evaluating' | 'failed' | 'passed' | 'error_or_not_run' {

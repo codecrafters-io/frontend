@@ -49,20 +49,13 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
 
-    const submission = this.server.create('submission', 'withFailureStatus', {
+    this.server.create('submission', 'withFailureStatus', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
-
-    // Update to 15 minutes ago
-    submission.update('createdAt', new Date(new Date().getTime() - 15 * 60 * 1000));
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Last attempt 15 minutes ago. Try again?', 'footer text includes timestamp');
   });
 
   test('can pass course stage', async function (assert) {
