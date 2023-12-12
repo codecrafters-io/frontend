@@ -199,5 +199,5 @@
       "lib/default-meta-tags"
     ]
   },
-  "packageManager": "npm@8.19.4"
+  "packageManager": "npm@8.19.4+sha256.2667a1b8300f315d223e43c307fbe946eb8b97792af399424ef67ea9cb0a72f6"
 }
