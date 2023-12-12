@@ -1,11 +1,11 @@
 <div
-  class="flex items-center justify-between relative py-3 group/test-results-bar-bottom-section {{if @barIsExpanded 'bg-black'}}"
+  class="flex items-center justify-center gap-2 relative py-2 group/test-results-bar-bottom-section {{if @barIsExpanded 'bg-black'}}"
   {{on "click" (if this.barIsCollapsed @onExpandButtonClick @onCollapseButtonClick)}}
   role="button"
   data-test-bottom-section
   ...attributes
 >
-  <div class="inline-flex items-center text-xs text-gray-400">
+  {{!-- <div class="inline-flex items-center text-xs text-gray-400">
     {{#if (eq @activeStep.type "CourseStageStep")}}
       <span class="text-gray-400 font-semibold">{{@activeStep.title}}</span>
       <span>&nbsp;(</span>
@@ -21,11 +21,13 @@
     {{else}}
       <span class="text-gray-400 font-semibold">{{@activeStep.title}}</span>
     {{/if}}
-  </div>
+  </div> --}}
 
   <CoursePage::StepProgressIndicator @step={{@activeStep}} />
 
-  <div class="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center">
-    <CoursePage::TestResultsBar::BottomSection::ExpandOrCollapseIndicator @barIsExpanded={{@barIsExpanded}} />
-  </div>
+  {{#if (eq @activeStep.type "CourseStageStep")}}
+    <span
+      class="text-xs inline-block border border-gray-700 rounded px-1.5 py-0.5 font-medium text-gray-400 group-hover/test-results-bar-bottom-section:text-white group-hover/test-results-bar-bottom-section:bg-teal-500 group-hover/test-results-bar-bottom-section:border-teal-500"
+    >{{if @barIsExpanded "Hide logs" "Show logs"}}</span>
+  {{/if}}
 </div>

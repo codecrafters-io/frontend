@@ -1,12 +1,15 @@
-export interface ProgressIndicatorWithoutDot {
-  dotType: 'none';
+export interface ProgressIndicatorBase {
   text: string;
+  explanationMarkdown?: string;
 }
 
-export interface ProgressIndicatorWithDot {
+export interface ProgressIndicatorWithoutDot extends ProgressIndicatorBase {
+  dotType: 'none';
+}
+
+export interface ProgressIndicatorWithDot extends ProgressIndicatorBase {
   dotColor: 'green' | 'yellow' | 'gray' | 'red';
   dotType: 'static' | 'blinking';
-  text: string;
 }
 
 type ProgressIndicator = ProgressIndicatorWithoutDot | ProgressIndicatorWithDot;

@@ -19,7 +19,10 @@
 
     {{#animated-if this.feedbackAlertMarkdown transition=this.transition duration=300}}
       <Alert>
-        {{markdown-to-html this.feedbackAlertMarkdown}}
+        {{! The extra #if convinces glint that the value isn't null }}
+        {{#if this.feedbackAlertMarkdown}}
+          {{markdown-to-html this.feedbackAlertMarkdown}}
+        {{/if}}
       </Alert>
     {{/animated-if}}
   </div>

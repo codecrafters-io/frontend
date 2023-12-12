@@ -162,3 +162,32 @@
   background: #f1f5f9;
   z-index: 10;
 }
+
+.ember-tooltip,
+.ember-popover {
+  z-index: 1000;
+}
+
+.ember-popover {
+  background: #3a3c47;
+  color: #fff;
+  padding: 6px 10px;
+  border: none;
+  max-width: 200px; /* match tooltip for now */
+}
+
+.ember-popover[x-placement^='top'] .ember-popover-arrow {
+  border-top-color: #3a3c47;
+}
+
+.ember-popover[x-placement^='right'] .ember-popover-arrow {
+  border-right-color: #3a3c47;
+}
+
+.ember-popover[x-placement^='bottom'] .ember-popover-arrow {
+  border-bottom-color: #3a3c47;
+}
+
+.ember-popover[x-placement^='left'] .ember-popover-arrow {
+  border-left-color: #3a3c47;
+}
