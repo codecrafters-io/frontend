@@ -70,7 +70,25 @@ module('Acceptance | course-page | autofix', function (hooks) {
       changedFiles: [
         {
           filename: 'test.py',
-          diff: 'def test_1():\n-    assert 1 == 2\n+    assert 1 == 1\n',
+          diff: [
+            ' def test_0():',
+            '      assert 0 == 0',
+            '      assert 0 == 0',
+            '      assert 0 == 0',
+            '      assert 0 == 0',
+            '      assert 0 == 0',
+            ' ',
+            ' def test_1():',
+            '-    assert 1 == 2',
+            '+    assert 1 == 1',
+            ' ',
+            ' def test_2():',
+            '      assert 2 == 2',
+            '      assert 2 == 2',
+            '      assert 2 == 2',
+            '      assert 2 == 2',
+            '      assert 2 == 2',
+          ].join('\n'),
         },
       ],
     });
