@@ -123,9 +123,9 @@ export default class CourseModel extends Model {
   get sortPositionForTrack() {
     return (
       {
+        'http-server': 1,
         'dns-server': 2,
-        'http-server': 3,
-        bittorrent: 1,
+        bittorrent: 3,
         docker: 6,
         git: 7,
         grep: 4,
