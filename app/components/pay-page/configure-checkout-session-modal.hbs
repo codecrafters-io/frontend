@@ -1,0 +1,73 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full">
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
+    Invoice Details
+  </div>
+
+  <div class="prose prose-sm mb-4">
+    <p>
+      If you need to include your employer's details on your invoice, select the option below.
+    </p>
+  </div>
+
+  <div
+    class="flex items-center justify-between gap-8 border
+      {{if this.extraInvoiceDetailsRequested 'border-teal-400 bg-teal-50' 'border-gray-200'}}
+      rounded p-4 mb-6"
+    {{on "click" (fn (mut this.extraInvoiceDetailsRequested) (not this.extraInvoiceDetailsRequested))}}
+    role="button"
+    data-test-extra-invoice-details-toggle
+  >
+    <span class="flex flex-grow flex-col">
+      <span class="text-sm font-semibold leading-6 {{if this.extraInvoiceDetailsRequested 'text-teal-600' 'text-gray-900'}}" id="availability-label">I
+        need extra details on my invoice</span>
+      <span class="text-xs text-gray-400" id="availability-description">Choose this option if you need extra details like tax ID, business address
+        etc. on your invoice.</span>
+    </span>
+
+    <Toggle @isOn={{this.extraInvoiceDetailsRequested}} />
+  </div>
+
+  {{#if this.extraInvoiceDetailsRequested}}
+    <Alert @type="success" @icon="check-circle" class="mb-4">
+      <p class="mb-0">
+        During checkout you'll be able to enter extra details like tax ID, business address etc. that'll be included on your invoice.
+      </p>
+    </Alert>
+  {{/if}}
+
+  <div class="prose prose-sm mb-6">
+    <p>
+      You can always email us at
+      <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>
+      if you need to change your invoice details later.
+    </p>
+  </div>
+
+  <div class="flex justify-between items-center">
+    <span class="text-gray-400 text-sm" role="button" {{on "click" @onClose}}>
+      ← Back
+    </span>
+
+    <PrimaryButton
+      class="flex items-center justify-center"
+      @size="large"
+      {{on "click" this.handleProceedToCheckoutButtonClick}}
+      data-test-proceed-to-checkout-button
+    >
+      Proceed to Checkout
+
+      {{#if this.isCreatingCheckoutSession}}
+        <svg class="animate-spin ml-2 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      {{else}}
+        →
+      {{/if}}
+    </PrimaryButton>
+  </div>
+</ModalBody>

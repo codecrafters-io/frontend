@@ -1,13 +1,9 @@
 import Component from '@glimmer/component';
-import window from 'ember-window-mock';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class PricingCardComponent extends Component {
   @service authenticator;
   @service store;
-  @tracked isCreatingCheckoutSession = false;
 
   get actualAmortizedMonthlyPrice() {
     return Math.round((this.args.actualPrice / this.numberOfMonths) * 100) / 100;
@@ -37,23 +33,5 @@ export default class PricingCardComponent extends Component {
 
   get user() {
     return this.authenticator.currentUser;
-  }
-
-  @action
-  async handleStartPaymentButtonClicked() {
-    this.isCreatingCheckoutSession = true;
-
-    let checkoutSession = this.store.createRecord('individual-checkout-session', {
-      autoRenewSubscription: false, // None of our plans are subscriptions at the moment
-      regionalDiscount: this.args.regionalDiscount,
-      earlyBirdDiscountEnabled: this.args.earlyBirdDiscountEnabled,
-      referralDiscountEnabled: this.args.referralDiscountEnabled,
-      successUrl: `${window.location.origin}/tracks`,
-      cancelUrl: `${window.location.origin}/pay`,
-      pricingFrequency: this.args.pricingFrequency,
-    });
-
-    await checkoutSession.save();
-    window.location.href = checkoutSession.url;
   }
 }

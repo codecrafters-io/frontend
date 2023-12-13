@@ -5,10 +5,11 @@ export default class IndividualCheckoutSessionModel extends Model {
 
   @attr('boolean') autoRenewSubscription;
   @attr('boolean') earlyBirdDiscountEnabled;
+  @attr('boolean') extraInvoiceDetailsRequested;
+  @attr('string') pricingFrequency;
   @attr('string') promotionCode;
   @attr('boolean') referralDiscountEnabled;
   @attr('string') successUrl;
   @attr('string') cancelUrl;
   @attr('string') url;
-  @attr('string') pricingFrequency;
 }

@@ -44,6 +44,11 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+
+    await percySnapshot('Pay page - configure checkout session modal');
+
+    await payPage.clickOnProceedToCheckoutButton();
+
     assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
@@ -61,6 +66,7 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page - with early bird discount');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.true(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
   });
 
@@ -84,6 +90,7 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page - with referral discount');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.true(this.server.schema.individualCheckoutSessions.first().referralDiscountEnabled);
   });
 
@@ -104,25 +111,36 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page - with regional discount (applied)');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
     assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscountId, 'current-discount-id');
   });
 
-  test('user can create checkout session with regional discount not applied', async function (assert) {
+  test('user can create checkout session when extra invoice details is not requested', async function (assert) {
     testScenario(this.server);
-
-    let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(user.createdAt.getTime() - 5 * 24 * 60 * 60 * 1000));
-
-    this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
-
     signIn(this.owner, this.server);
 
     await payPage.visit();
-    // todo: Check that discount notice is visible
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
-    assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
-    assert.notOk(this.server.schema.individualCheckoutSessions.first().regionalDiscountId);
+    await payPage.clickOnProceedToCheckoutButton();
+
+    assert.false(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
+  });
+
+  test('user can create checkout session when extra invoice details is requested', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnExtraInvoiceDetailsToggle();
+
+    await percySnapshot('Pay page - configure checkout session modal (toggled)');
+
+    await payPage.clickOnProceedToCheckoutButton();
+
+    assert.true(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
   });
 });

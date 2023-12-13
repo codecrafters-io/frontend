@@ -62,29 +62,12 @@
           'border-2 border-teal-500 bg-teal-500 text-white hover:bg-teal-600 hover:border-teal-600'
           'border-2 border-teal-500 text-teal-500 hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50'
         }}
-        {{if (and @isRecommended this.isCreatingCheckoutSession) 'bg-teal-600 cursor-wait'}}
-        {{if (and (not @isRecommended) this.isCreatingCheckoutSession) 'border-teal-600 cursor-wait'}}
         "
       data-test-start-payment-button
       type="button"
-      {{on "click" this.handleStartPaymentButtonClicked}}
+      {{on "click" (fn @onStartMembershipButtonClick @pricingFrequency)}}
     >
-      Start membership
-
-      {{#if this.isCreatingCheckoutSession}}
-        <svg class="animate-spin ml-2 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          ></path>
-        </svg>
-      {{else}}
-        <div class="ml-2 w-4 text-center">
-          →
-        </div>
-      {{/if}}
+      Start membership →
     </button>
 
     {{#if @regionalDiscount}}
