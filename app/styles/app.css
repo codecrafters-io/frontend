@@ -97,15 +97,15 @@
 }
 
 .diff-highlight .removed-line {
-  background-color: rgba(255, 12, 73, 0.1);
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
 .dark .diff-highlight .removed-line {
-  background-color: rgba(255, 12, 73, 0.15);
+  background-color: rgba(255, 0, 0, 0.15);
 }
 
 .diff-highlight .added-line {
-  background-color: rgba(0, 255, 47, 0.15);
+  background-color: rgba(0, 255, 0, 0.15);
 }
 
 /* purgecss end ignore */
