@@ -67,7 +67,12 @@ module('Acceptance | course-page | autofix', function (hooks) {
       status: 'success',
       logsBase64: btoa(logstream.chunks.join('')),
       explanationMarkdown: '## Autofix succeeded!\n\n - [x] Fix 1\n - [x] Fix 2\n - [ ] Fix 3\n\n',
-      changedFiles: [],
+      changedFiles: [
+        {
+          filename: 'test.py',
+          diff: 'def test_1():\n-    assert 1 == 2\n+    assert 1 == 1\n',
+        },
+      ],
     });
 
     logstream.update({ isTerminated: true });

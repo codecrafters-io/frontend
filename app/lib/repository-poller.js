@@ -24,6 +24,7 @@ export default class RepositoryPoller extends Poller {
     'last-submission.autofix-requests',
     'last-submission.course-stage',
     'last-submission.evaluations',
+    'last-submission.repository',
     'stage-list',
     'stage-list.items',
     'stage-list.items.stage',
