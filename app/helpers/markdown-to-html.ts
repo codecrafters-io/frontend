@@ -5,18 +5,15 @@ import { SafeString } from '@ember/template/-private/handlebars';
 
 export interface Signature {
   Args: {
-    Positional: Array<string | undefined | null>;
+    Positional: [string];
   };
-  Return: SafeString | undefined;
+  Return: SafeString;
 }
 
 export default class MarkdownToHtml extends Helper<Signature> {
-  public compute(positional: Array<string | undefined | null>): SafeString | undefined {
-    if (!positional[0]) {
-      return;
-    }
-
-    const htmlContent = this.convertMarkdownToHtml(positional[0]);
+  public compute(positional: [string]): SafeString {
+    // Older usages of this helper may not pass in a markdown string, hence the default '' value
+    const htmlContent = this.convertMarkdownToHtml(positional[0] || '');
 
     return htmlSafe(htmlContent);
   }

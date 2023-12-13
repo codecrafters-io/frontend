@@ -1,5 +1,5 @@
-<div class="bg-gray-900 border-t border-gray-800 dark flex flex-col" data-test-test-results-bar ...attributes>
-  <div class="relative flex flex-col flex-grow {{if this.isExpanded 'h-[50vh]'}}">
+<div class="bg-gray-900 border-t border-gray-800 dark flex flex-col items-center" data-test-test-results-bar ...attributes>
+  <div class="relative w-full max-w-screen-lg xl:max-w-screen-xl flex flex-col flex-grow {{if this.isExpanded 'h-[50vh]'}}">
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection
         @onCollapseButtonClick={{this.handleCollapseButtonClick}}
@@ -29,13 +29,13 @@
         {{! <div class="w-20 h-1 rounded-full bg-gray-700 cursor-ns-resize hover:bg-gray-600"></div> }}
       </div>
     {{/if}}
-
-    <CoursePage::TestResultsBar::BottomSection
-      @activeStep={{@activeStep}}
-      @barIsExpanded={{this.isExpanded}}
-      @onCollapseButtonClick={{this.handleCollapseButtonClick}}
-      @onExpandButtonClick={{this.handleExpandButtonClick}}
-      class="px-6"
-    />
   </div>
+
+  <CoursePage::TestResultsBar::BottomSection
+    @activeStep={{@activeStep}}
+    @barIsExpanded={{this.isExpanded}}
+    @onCollapseButtonClick={{this.handleCollapseButtonClick}}
+    @onExpandButtonClick={{this.handleExpandButtonClick}}
+    class="px-6 w-full"
+  />
 </div>
