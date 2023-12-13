@@ -48,7 +48,7 @@
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
         </div>
 
-        {{#each @autofixRequest.changedFiles as |changedFile|}}
+        {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
           <FileDiffCard
             class="mt-4"
             @filename={{changedFile.filename}}

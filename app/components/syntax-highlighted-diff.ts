@@ -7,6 +7,7 @@ import { action } from '@ember/object';
 import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
+import { next } from '@ember/runloop';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -23,9 +24,12 @@ type Signature = {
 export default class SyntaxHighlightedDiffComponent extends Component<Signature> {
   @tracked asyncHighlightedHTML: string | null = null;
   @tracked lineNumberWithExpandedComments: number | null = null;
+  @tracked isDarkMode: boolean | undefined = undefined;
 
-  static highlighterId = 'syntax-highlighted-diff';
-  static highlighterOptions = { theme: 'github-light', langs: [] };
+  static highlighterIdForDarkMode = 'syntax-highlighted-diff-dark';
+  static highlighterIdForLightMode = 'syntax-highlighted-diff-light';
+  static highlighterOptionsForDarkMode = { theme: 'github-dark', langs: [] };
+  static highlighterOptionsForLightMode = { theme: 'github-light', langs: [] };
   static LINES_AROUND_CHANGED_CHUNK = 3;
   static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
 
@@ -121,6 +125,17 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   @action
+  handleIsDarkModeUpdate(isDarkMode: boolean) {
+    if (isDarkMode !== this.isDarkMode) {
+      // Avoid re-use in same computation bug
+      next(() => {
+        this.isDarkMode = isDarkMode;
+        this.highlightCode();
+      });
+    }
+  }
+
+  @action
   handleToggleCommentsButtonClick(lineNumber: number) {
     if (this.lineNumberWithExpandedComments === lineNumber) {
       this.lineNumberWithExpandedComments = null;
@@ -134,9 +149,13 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   highlightCode() {
+    if (this.isDarkMode === undefined) {
+      return; // Not ready to highlight yet
+    }
+
     const highlighterPromise = getOrCreateCachedHighlighterPromise(
-      SyntaxHighlightedDiffComponent.highlighterId,
-      SyntaxHighlightedDiffComponent.highlighterOptions,
+      this.isDarkMode ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
+      this.isDarkMode ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
     );
 
     highlighterPromise.then((highlighter) => {
@@ -147,7 +166,8 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   static preloadHighlighter() {
-    preloadHighlighter(this.highlighterId, this.highlighterOptions);
+    preloadHighlighter(this.highlighterIdForDarkMode, this.highlighterOptionsForDarkMode);
+    preloadHighlighter(this.highlighterIdForLightMode, this.highlighterOptionsForLightMode);
   }
 
   targetingCommentsForLine(lineNumber: number) {
