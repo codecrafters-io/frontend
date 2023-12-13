@@ -2,7 +2,7 @@
 // Usage: <div {{is-dark-mode this.handleDarkModeUpdated}}></div>
 import { registerDestructor } from '@ember/destroyable';
 import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import Modifier from 'ember-modifier';
 
 type Signature = {
@@ -29,14 +29,14 @@ export default class IsDarkModeModifier extends Modifier<Signature> {
   }
 
   eventHandlerTask = task({ keepLatest: true }, async () => {
-    console.log('darkMode Update');
     const isDarkMode = !!this.element!.closest('.dark');
 
     if (this.callback) {
       this.callback(isDarkMode);
     }
 
-    await timeout(1000); // Ensure we aren't performing this check too often
+    // When we support updates, we should ensures we aren't performing this check too often
+    // await timeout(1000);
   });
 
   modify(element: HTMLElement, [callback]: [(isDarkMode: boolean) => void]) {
