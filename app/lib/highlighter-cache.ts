@@ -8,17 +8,17 @@ import * as shiki from 'shiki';
  */
 const highlighterCacheAsync = new Map();
 
-export default function getOrCreateCachedHighlighterPromise(cacheId, options) {
+export default function getOrCreateCachedHighlighterPromise(cacheId: string, options: shiki.HighlighterOptions): Promise<shiki.Highlighter> {
   shiki.setCDN('https://unpkg.com/shiki/');
 
   if (!highlighterCacheAsync.has(cacheId)) {
-    let highlighterPromise;
+    let highlighterPromise: Promise<shiki.Highlighter>;
 
     if (config.environment === 'test' || !window.fetch || !window.XMLHttpRequest) {
       // Ignore error for now!
       highlighterPromise = new Promise((resolve) => {
         resolve({
-          codeToHtml: (code) => {
+          codeToHtml: (code: string) => {
             const lineSpans = code
               .split('\n')
               .map((line) => `<span>${line}</span>`)
@@ -26,12 +26,12 @@ export default function getOrCreateCachedHighlighterPromise(cacheId, options) {
 
             return `<pre><code>${lineSpans}</code></pre>`;
           },
-          loadLanguage: () => {
+          loadLanguage: (_language: string) => {
             return new Promise((resolve) => {
               resolve();
-            });
+            }) as Promise<void>;
           },
-        });
+        } as unknown as shiki.Highlighter);
       });
     } else {
       highlighterPromise = shiki.getHighlighter(options);
@@ -43,12 +43,12 @@ export default function getOrCreateCachedHighlighterPromise(cacheId, options) {
   return highlighterCacheAsync.get(cacheId);
 }
 
-export async function preloadHighlighter(cacheId, options, languages) {
+export async function preloadHighlighter(cacheId: string, options: shiki.HighlighterOptions, languages?: string[]) {
   const highlighter = await getOrCreateCachedHighlighterPromise(cacheId, options);
 
   await Promise.all(
     (languages || []).map((language) => {
-      highlighter.loadLanguage(language);
+      highlighter.loadLanguage(language as shiki.Lang);
     }),
   );
 }

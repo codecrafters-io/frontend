@@ -1,28 +1,44 @@
+import * as shiki from 'shiki';
 import Component from '@glimmer/component';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
 import groupDiffLinesIntoChunks from 'codecrafters-frontend/lib/group-diff-lines-into-chunks';
+import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
 import { action } from '@ember/object';
 import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 
-export default class SyntaxHighlightedDiffComponent extends Component {
-  @tracked asyncHighlightedHTML;
-  @tracked lineNumberWithExpandedComments = null;
+type Signature = {
+  Element: HTMLDivElement;
+
+  Args: {
+    code: string;
+    comments: CommunityCourseStageSolutionCommentModel[];
+    language: string;
+    shouldCollapseUnchangedLines: boolean;
+    onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
+  };
+};
+
+export default class SyntaxHighlightedDiffComponent extends Component<Signature> {
+  @tracked asyncHighlightedHTML: string | null = null;
+  @tracked lineNumberWithExpandedComments: number | null = null;
 
   static highlighterId = 'syntax-highlighted-diff';
   static highlighterOptions = { theme: 'github-light', langs: [] };
   static LINES_AROUND_CHANGED_CHUNK = 3;
   static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
 
     this.highlightCode();
   }
 
   get chunksForRender() {
-    const highlightedLineNodes = Array.from(new DOMParser().parseFromString(this.highlightedHtml, 'text/html').querySelector('pre code').children);
+    const parsedHtml = new DOMParser().parseFromString(this.highlightedHtml, 'text/html');
+    const preCodeElement = parsedHtml.querySelector('pre code');
+    const highlightedLineNodes = preCodeElement ? Array.from(preCodeElement.children) : [];
 
     const lines = zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
       return {
@@ -69,7 +85,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     return this.codeLinesWithTypes.map((array) => array[0]).join('\n');
   }
 
-  get expandedComments() {
+  get expandedComments(): CommunityCourseStageSolutionCommentModel[] {
     if (this.lineNumberWithExpandedComments === null) {
       return [];
     } else {
@@ -92,10 +108,10 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   get topLevelCommentsGroupedByLine() {
-    return groupBy(this.args.comments || [], (comment) => comment.subtargetEndLine || 0);
+    return groupBy(this.args.comments || [], (comment: CommunityCourseStageSolutionCommentModel) => comment.subtargetEndLine || 0);
   }
 
-  commentTargetsLine(comment, lineNumber) {
+  commentTargetsLine(comment: CommunityCourseStageSolutionCommentModel, lineNumber: number) {
     return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
   }
 
@@ -105,26 +121,26 @@ export default class SyntaxHighlightedDiffComponent extends Component {
   }
 
   @action
-  handleToggleCommentsButtonClick(lineNumber) {
+  handleToggleCommentsButtonClick(lineNumber: number) {
     if (this.lineNumberWithExpandedComments === lineNumber) {
       this.lineNumberWithExpandedComments = null;
     } else {
       this.lineNumberWithExpandedComments = lineNumber;
 
-      (this.topLevelCommentsGroupedByLine[lineNumber] || []).forEach((comment) => {
+      (this.topLevelCommentsGroupedByLine[lineNumber] || []).forEach((comment: CommunityCourseStageSolutionCommentModel) => {
         this.args.onCommentView && this.args.onCommentView(comment);
       });
     }
   }
 
   highlightCode() {
-    let highlighterPromise = getOrCreateCachedHighlighterPromise(
+    const highlighterPromise = getOrCreateCachedHighlighterPromise(
       SyntaxHighlightedDiffComponent.highlighterId,
       SyntaxHighlightedDiffComponent.highlighterOptions,
     );
 
     highlighterPromise.then((highlighter) => {
-      highlighter.loadLanguage(this.args.language).then(() => {
+      highlighter.loadLanguage(this.args.language as shiki.Lang).then(() => {
         this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
       });
     });
@@ -134,7 +150,7 @@ export default class SyntaxHighlightedDiffComponent extends Component {
     preloadHighlighter(this.highlighterId, this.highlighterOptions);
   }
 
-  targetingCommentsForLine(lineNumber) {
+  targetingCommentsForLine(lineNumber: number) {
     return (this.args.comments || []).filter((comment) => this.commentTargetsLine(comment, lineNumber));
   }
 }
