@@ -89,7 +89,7 @@
 }
 
 .diff-highlight .removed-marker {
-  color: #905;
+  color: rgb(186, 0, 103);
 }
 
 .diff-highlight .inserted-marker {
@@ -97,12 +97,17 @@
 }
 
 .diff-highlight .removed-line {
-  background-color: rgb(255, 235, 233);
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.dark .diff-highlight .removed-line {
+  background-color: rgba(255, 0, 0, 0.15);
 }
 
 .diff-highlight .added-line {
-  background-color: rgb(230, 255, 236);
+  background-color: rgba(0, 255, 0, 0.15);
 }
+
 /* purgecss end ignore */
 
 .number-input-with-no-controls::-webkit-outer-spin-button,

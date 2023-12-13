@@ -1,6 +1,7 @@
-<div class="overflow-x-scroll" {{did-update this.handleDidUpdateCode @code}} ...attributes>
+<div class="overflow-x-scroll" {{did-update this.handleDidUpdateCode @code}} {{is-dark-mode this.handleIsDarkModeUpdate}} ...attributes>
   <div class="min-w-fit">
     {{#each this.chunksForRender as |chunk|}}
+      {{! @glint-expect-error not ts-ified yet }}
       <SyntaxHighlightedDiff::ExpandableChunk @chunk={{chunk}} @handleToggleCommentsButtonClick={{this.handleToggleCommentsButtonClick}} />
     {{/each}}
   </div>

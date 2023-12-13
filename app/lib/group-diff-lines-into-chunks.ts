@@ -1,3 +1,5 @@
+import { SafeString } from 'handlebars';
+
 type Chunk = {
   isAtTopOfFile?: boolean;
   isAtBottomOfFile?: boolean;
@@ -8,7 +10,7 @@ type Chunk = {
 type Line = {
   isTargetedByComments: boolean;
   isTargetedByExpandedComments: boolean;
-  html: string;
+  html: SafeString;
   type: string;
   number: number;
   comments: Array<Comment>;

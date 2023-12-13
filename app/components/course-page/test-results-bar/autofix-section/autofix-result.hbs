@@ -45,10 +45,14 @@
     {{else}}
       <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
-          {{markdown-to-html @autofixRequest.explanationMarkdown}}
+          {{!-- {{markdown-to-html @autofixRequest.explanationMarkdown}} --}}
+
+          <p>
+            Here's a diff you can apply to pass this stage:
+          </p>
         </div>
 
-        {{#each @autofixRequest.changedFiles as |changedFile|}}
+        {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
           <FileDiffCard
             class="mt-4"
             @filename={{changedFile.filename}}
