@@ -148,4 +148,41 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await percySnapshot('Autofix - Failure', { scope: '[data-test-test-results-bar]' });
     assert.strictEqual(1, 1); // Add at least one assertion
   });
+
+  test('is not visible for stage 3 and beyond', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.testResultsBar.clickOnBottomSection();
+    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs', 'Autofix']);
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs']);
+  });
 });
