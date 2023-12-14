@@ -100,4 +100,52 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await percySnapshot('Autofix - Success', { scope: '[data-test-test-results-bar]' });
     // await this.pauseTest();
   });
+
+  test('renders failed autofix', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.testResultsBar.clickOnBottomSection();
+    await coursePage.testResultsBar.clickOnTab('Autofix');
+    await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
+
+    await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+
+    const autofixRequest = this.server.schema.autofixRequests.first();
+    const logstream = this.server.schema.fakeLogstreams.first();
+
+    autofixRequest.update({
+      status: 'failure',
+      logsBase64: btoa('Failure reason: xxx.'),
+    });
+
+    logstream.update({ isTerminated: true });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+
+    await waitUntil(() => !fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+
+    await percySnapshot('Autofix - Failure', { scope: '[data-test-test-results-bar]' });
+    assert.strictEqual(1, 1); // Add at least one assertion
+  });
 });

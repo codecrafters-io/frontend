@@ -4,22 +4,33 @@
       {{#if (eq @autofixRequest.status "in_progress")}}
         <BlinkingDot @color="yellow" />
         <span class="font-mono text-xs text-white">Autofix in progress... (the logs below will be verbose, we'll summarize them once completed)</span>
-      {{else}}
+      {{else if (eq @autofixRequest.status "failure")}}
+        <StaticDot @color="red" />
+        <span class="font-mono text-xs text-white">Autofix failed</span>
+      {{else if (eq @autofixRequest.status "error")}}
+        <StaticDot @color="red" />
+        <span class="font-mono text-xs text-white">Internal error (Our engineers have been notified of this!)</span>
+      {{else if (eq @autofixRequest.status "cancelled")}}
+        <StaticDot @color="gray" />
+        <span class="font-mono text-xs text-white">Autofix cancelled</span>
+      {{else if (eq @autofixRequest.status "success")}}
         <StaticDot @color="green" />
         <span class="font-mono text-xs text-white">Autofix success</span>
       {{/if}}
     </div>
-    <div
-      class="text-gray-400 underline text-xs px-3 py-2 inline-flex hover:text-gray-300"
-      {{on "click" (fn (mut this.shouldShowFullLog) (not this.shouldShowFullLog))}}
-      role="button"
-    >
-      {{#if this.shouldShowFullLog}}
-        Show summary
-      {{else}}
-        Show Full Log
-      {{/if}}
-    </div>
+    {{#unless (eq @autofixRequest.status "in_progress")}}
+      <div
+        class="text-gray-400 underline text-xs px-3 py-2 inline-flex hover:text-gray-300"
+        {{on "click" (fn (mut this.shouldShowFullLog) (not this.shouldShowFullLog))}}
+        role="button"
+      >
+        {{#if this.shouldShowFullLog}}
+          Show summary
+        {{else}}
+          Show Full Log
+        {{/if}}
+      </div>
+    {{/unless}}
   </div>
 
   {{#if (eq @autofixRequest.status "in_progress")}}
@@ -42,7 +53,7 @@
           <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
         </div>
       </div>
-    {{else}}
+    {{else if (eq @autofixRequest.status "success")}}
       <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           {{!-- {{markdown-to-html @autofixRequest.explanationMarkdown}} --}}
@@ -61,6 +72,30 @@
             @language={{@autofixRequest.submission.repository.language.slug}}
           />
         {{/each}}
+      </div>
+    {{else if (eq @autofixRequest.status "failure")}}
+      <div class="flex-grow overflow-y-auto">
+        <div class="prose prose-sm dark:prose-invert">
+          <p>
+            We failed to generate an autofix for your submission. You can click on "Show Full Log" to see what we tried.
+          </p>
+        </div>
+      </div>
+    {{else if (eq @autofixRequest.status "error")}}
+      <div class="flex-grow overflow-y-auto">
+        <div class="prose prose-sm dark:prose-invert">
+          <p>
+            We encountered an internal error while generating an autofix for your submission. Our engineers have been notified of this!
+          </p>
+        </div>
+      </div>
+    {{else if (eq @autofixRequest.status "cancelled")}}
+      <div class="flex-grow overflow-y-auto">
+        <div class="prose prose-sm dark:prose-invert">
+          <p>
+            This autofix was cancelled.
+          </p>
+        </div>
       </div>
     {{/if}}
   {{/if}}
