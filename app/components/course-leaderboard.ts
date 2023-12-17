@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
-import LeaderboardEntry from '../lib/leaderboard-entry';
+import LeaderboardEntry from 'codecrafters-frontend/lib/leaderboard-entry';
 import LeaderboardPoller from 'codecrafters-frontend/lib/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';

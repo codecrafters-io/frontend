@@ -1,10 +1,10 @@
 import * as shiki from 'shiki';
 import Component from '@glimmer/component';
-import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from '../lib/highlighter-cache';
+import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from 'codecrafters-frontend/lib/highlighter-cache';
 import groupDiffLinesIntoChunks from 'codecrafters-frontend/lib/group-diff-lines-into-chunks';
 import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
 import { action } from '@ember/object';
-import { escapeHtml, groupBy, zip } from '../lib/lodash-utils';
+import { escapeHtml, groupBy, zip } from 'codecrafters-frontend/lib/lodash-utils';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';

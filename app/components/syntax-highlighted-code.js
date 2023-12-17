@@ -2,7 +2,7 @@ import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 import * as shiki from 'shiki';
 import { tracked } from '@glimmer/tracking';
-import getOrCreateCachedHighlighterPromise from '../lib/highlighter-cache';
+import getOrCreateCachedHighlighterPromise from 'codecrafters-frontend/lib/highlighter-cache';
 
 export default class SyntaxHighlightedCodeComponent extends Component {
   @tracked asyncHighlightedHTML;

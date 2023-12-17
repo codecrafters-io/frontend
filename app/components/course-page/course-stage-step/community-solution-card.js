@@ -3,7 +3,7 @@ import Prism from 'prismjs';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { groupBy } from '../../../lib/lodash-utils';
+import { groupBy } from 'codecrafters-frontend/lib/lodash-utils';
 
 export default class CommunitySolutionCardComponent extends Component {
   @tracked isExpanded = false;
