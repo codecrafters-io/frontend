@@ -4,13 +4,7 @@
  * - extracts `username` from the URL
  * - generates a proper Profile OG Image URL
  * - reads the contents of `dist/_empty.html`
- * - replaces `<meta name="description" ...` with proper page description
- * - replaces `<meta property="og:title" ...` with proper page title
- * - replaces `<meta property="og:description" ...` with proper page description
- * - replaces `<meta property="og:image" ...` with Profile OG Image URL
- * - replaces `<meta name="twitter:title" ...` with proper page title
- * - replaces `<meta name="twitter:description" ...` with proper page description
- * - replaces `<meta name="twitter:image" ...` with Profile OG Image URL
+ * - replaces OG meta tags with user-profile specific ones: <meta property="og:image" content="...">
  * - serves the result as an HTML response
  * - passes request down the stack and returns if unable to extract `username`
  *
@@ -22,6 +16,7 @@
  */
 
 import { next } from '@vercel/edge';
+import replaceMetaTag from './app/utils/replace-meta-tag';
 
 export const config = {
   // Limit the middleware to run only for user profile routes
@@ -53,43 +48,18 @@ export default async function middleware(request) {
   // Read contents of `/dist/_empty.html`
   const indexFileText = await fetch(indexFileURL).then((res) => res.text());
 
-  // Replace content of meta tags to use Profile Image URL & proper Page Titles
-  const responseText = indexFileText
-    .replace(
-      // Change Description
-      /<meta\s+name=(["'])(description)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta name=$1$2$1 content=$3${pageDescription}$3$5`,
-    )
-    .replace(
-      // Change OG Image to Profile Image URL
-      /<meta\s+property=(["'])(og:image)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta property=$1$2$1 content=$3${profileImageUrl}$3$5`,
-    )
-    .replace(
-      // Change OG Title
-      /<meta\s+property=(["'])(og:title)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta property=$1$2$1 content=$3${pageTitle}$3$5`,
-    )
-    .replace(
-      // Change OG Description
-      /<meta\s+property=(["'])(og:description)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta property=$1$2$1 content=$3${pageDescription}$3$5`,
-    )
-    .replace(
-      // Change Twitter Image to Profile Image URL
-      /<meta\s+name=(["'])(twitter:image)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta name=$1$2$1 content=$3${profileImageUrl}$3$5`,
-    )
-    .replace(
-      // Change Twitter Title
-      /<meta\s+name=(["'])(twitter:title)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta name=$1$2$1 content=$3${pageTitle}$3$5`,
-    )
-    .replace(
-      // Change Twitter Description
-      /<meta\s+name=(["'])(twitter:description)\1\s+content=(["'])([^"']*)\3(.*?>)/g,
-      `<meta name=$1$2$1 content=$3${pageDescription}$3$5`,
-    );
+  // Overwrite content of required meta tags with user-profile specific ones,
+  // by sequentially calling `replaceMetaTag` against `indexFileText`,
+  // and passing it arguments from the following list:
+  const responseText = [
+    ['name', 'description', pageDescription], // <meta name="description" content="...">
+    ['property', 'og:title', pageTitle],
+    ['property', 'og:description', pageDescription],
+    ['property', 'og:image', profileImageUrl],
+    ['name', 'twitter:title', pageTitle],
+    ['name', 'twitter:description', pageDescription],
+    ['name', 'twitter:image', profileImageUrl],
+  ].reduce((text, args) => replaceMetaTag(text, ...args), indexFileText);
 
   // Serve the result as HTML
   return new Response(responseText, { headers: { 'Content-Type': 'text/html' } });
