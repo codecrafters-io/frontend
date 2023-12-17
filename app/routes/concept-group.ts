@@ -1,4 +1,4 @@
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import config from 'codecrafters-frontend/config/environment';

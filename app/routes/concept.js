@@ -1,5 +1,5 @@
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
-import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 

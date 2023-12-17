@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { groupBy } from 'codecrafters-frontend/lib/lodash-utils';
+import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 
 export default class ActivityContainerComponent extends Component {
   get profileEventGroups() {

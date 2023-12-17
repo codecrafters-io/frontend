@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
-import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
-import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
+import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
 

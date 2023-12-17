@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
-import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';

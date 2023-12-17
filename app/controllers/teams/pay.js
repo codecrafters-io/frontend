@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import scrollToTop from 'codecrafters-frontend/lib/scroll-to-top';
+import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 export default class TeamsPayController extends Controller {
   @service store;

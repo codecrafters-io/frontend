@@ -1,4 +1,4 @@
-import StepGroup from 'codecrafters-frontend/lib/course-page-step-list/step-group';
+import StepGroup from 'codecrafters-frontend/utils/course-page-step-list/step-group';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import { Step } from '../course-page-step-list';
 

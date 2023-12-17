@@ -6,7 +6,7 @@ import type { AnimationItem } from 'lottie-web';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { run } from '@ember/runloop';
-import { ConceptAnimationBlock } from 'codecrafters-frontend/lib/blocks';
+import { ConceptAnimationBlock } from 'codecrafters-frontend/utils/blocks';
 
 // @ts-ignore
 import networkingProtocolsLayers from '/assets/concept-animations/network-protocols/layers.lottie.json';

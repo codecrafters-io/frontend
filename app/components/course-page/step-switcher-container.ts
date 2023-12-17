@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { Step, StepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import { Step, StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 
 type Signature = {
   Element: HTMLDivElement;

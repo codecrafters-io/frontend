@@ -1,5 +1,5 @@
-import type ProgressIndicator from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
-import { type ProgressIndicatorWithDot } from 'codecrafters-frontend/lib/course-page-step-list/progress-indicator';
+import type ProgressIndicator from 'codecrafters-frontend/utils/course-page-step-list/progress-indicator';
+import { type ProgressIndicatorWithDot } from 'codecrafters-frontend/utils/course-page-step-list/progress-indicator';
 
 export default class Step {
   declare globalPosition: number; // Set soon after construction

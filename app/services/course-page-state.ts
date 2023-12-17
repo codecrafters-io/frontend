@@ -1,8 +1,8 @@
 import Service, { service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
-import { StepList, Step } from 'codecrafters-frontend/lib/course-page-step-list';
+import { StepList, Step } from 'codecrafters-frontend/utils/course-page-step-list';
 import { tracked } from '@glimmer/tracking';
-import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 export default class CoursePageStateService extends Service {
   @service declare router: RouterService;

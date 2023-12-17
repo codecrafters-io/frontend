@@ -1,5 +1,5 @@
 import { Factory } from 'miragejs';
-import { groupBy } from 'codecrafters-frontend/lib/lodash-utils';
+import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 
 export default Factory.extend({
   afterCreate(communitySolution) {

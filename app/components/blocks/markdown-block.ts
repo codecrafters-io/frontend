@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
+import { MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
 import { action } from '@ember/object';
 
 import Prism from 'prismjs';

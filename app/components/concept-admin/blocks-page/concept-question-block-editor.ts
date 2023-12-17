@@ -1,6 +1,6 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 
 interface Signature {

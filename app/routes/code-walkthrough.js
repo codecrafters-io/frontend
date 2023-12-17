@@ -1,4 +1,4 @@
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import { inject as service } from '@ember/service';
 
 export default class CodeWalkthroughRoute extends BaseRoute {

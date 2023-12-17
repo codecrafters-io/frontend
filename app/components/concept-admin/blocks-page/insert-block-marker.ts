@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { type Block } from 'codecrafters-frontend/models/concept';
-import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
+import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
 import { action } from '@ember/object';
 
 interface Signature {

@@ -1,5 +1,5 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import PerkModel from 'codecrafters-frontend/models/perk';
 import RouterService from '@ember/routing/router-service';
 import window from 'ember-window-mock';

@@ -1,4 +1,4 @@
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouterService from '@ember/routing/router-service';
 import { service } from '@ember/service';
 import ConceptModel from 'codecrafters-frontend/models/concept';

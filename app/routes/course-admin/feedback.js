@@ -1,5 +1,5 @@
 import { inject as service } from '@ember/service';
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 
 export default class CourseFeedbackRoute extends BaseRoute {
   @service authenticator;

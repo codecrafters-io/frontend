@@ -1,7 +1,7 @@
 import Concept from 'codecrafters-frontend/models/concept';
 import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 
 type Option = {
   markdown: string;

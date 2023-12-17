@@ -2,10 +2,10 @@ import BillingStatusDisplayService from 'codecrafters-frontend/services/billing-
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import RouterService from '@ember/routing/router-service';
-import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
-import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
-import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 type Signature = {

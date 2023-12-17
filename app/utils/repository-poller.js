@@ -1,4 +1,4 @@
-import Poller from 'codecrafters-frontend/lib/poller';
+import Poller from 'codecrafters-frontend/utils/poller';
 
 export default class RepositoryPoller extends Poller {
   static defaultIncludedResources = [

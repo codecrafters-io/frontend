@@ -1,12 +1,12 @@
 import { tracked } from '@glimmer/tracking';
-import CourseCompletedStep from 'codecrafters-frontend/lib/course-page-step-list/course-completed-step';
-import CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
-import IntroductionStep from 'codecrafters-frontend/lib/course-page-step-list/introduction-step';
+import CourseCompletedStep from 'codecrafters-frontend/utils/course-page-step-list/course-completed-step';
+import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import IntroductionStep from 'codecrafters-frontend/utils/course-page-step-list/introduction-step';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
-import SetupStep from 'codecrafters-frontend/lib/course-page-step-list/setup-step';
-import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
-import StepGroup from 'codecrafters-frontend/lib/course-page-step-list/step-group';
+import SetupStep from 'codecrafters-frontend/utils/course-page-step-list/setup-step';
+import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import StepGroup from 'codecrafters-frontend/utils/course-page-step-list/step-group';
 
 // @ts-ignore: No types?
 import { cached } from '@glimmer/tracking';

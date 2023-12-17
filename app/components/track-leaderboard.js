@@ -5,7 +5,7 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
-import TrackLeaderboardEntry from 'codecrafters-frontend/lib/track-leaderboard-entry';
+import TrackLeaderboardEntry from 'codecrafters-frontend/utils/track-leaderboard-entry';
 
 export default class TrackLeaderboardComponent extends Component {
   transition = fade;

@@ -1,4 +1,4 @@
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 
 export default class CourseExtensionIdeasRoute extends BaseRoute {
   allowsAnonymousAccess = true;

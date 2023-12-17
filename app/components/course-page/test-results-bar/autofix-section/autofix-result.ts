@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import Logstream from 'codecrafters-frontend/lib/logstream';
+import Logstream from 'codecrafters-frontend/utils/logstream';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 
