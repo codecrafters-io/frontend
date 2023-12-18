@@ -22,6 +22,7 @@ export default class RepositoryPoller extends Poller {
     'github-repository-sync-configurations',
     'last-submission',
     'last-submission.autofix-requests',
+    // 'last-submission.autofix-requests.submission', // Hardcoded on backend to be included, doesn't seem to make a difference?
     'last-submission.course-stage',
     'last-submission.evaluations',
     'last-submission.repository',
