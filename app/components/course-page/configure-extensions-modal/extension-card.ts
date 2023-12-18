@@ -9,7 +9,7 @@ import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
 
 // @ts-ignore
-import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 

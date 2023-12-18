@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import testimonialsData from 'codecrafters-frontend/lib/testimonials-data';
+import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
 
 export default class TestimonialListComponent extends Component {
   get testimonialGroups() {

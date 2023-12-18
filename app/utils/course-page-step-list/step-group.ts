@@ -1,4 +1,4 @@
-import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
+import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 export default class StepGroup {
   declare steps: Step[];

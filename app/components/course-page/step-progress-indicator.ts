@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import Step from 'codecrafters-frontend/lib/course-page-step-list/step';
+import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 // Signature
 interface Signature {

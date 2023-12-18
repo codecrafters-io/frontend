@@ -6,7 +6,7 @@ import type CoursePageStateService from 'codecrafters-frontend/services/course-p
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 interface Signature {
   Element: HTMLDivElement;

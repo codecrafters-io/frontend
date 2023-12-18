@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 
 interface Signature {

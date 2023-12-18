@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import Store from '@ember-data/store';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 

@@ -5,7 +5,7 @@ import type CoursePageStateService from 'codecrafters-frontend/services/course-p
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 export default class CourseStageInstructionsController extends Controller {
   @service declare authenticator: AuthenticatorService;

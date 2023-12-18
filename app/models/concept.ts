@@ -1,7 +1,7 @@
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
 import Model, { belongsTo } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
-import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 

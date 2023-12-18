@@ -1,4 +1,4 @@
-import Poller from 'codecrafters-frontend/lib/poller';
+import Poller from 'codecrafters-frontend/utils/poller';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type TeamModel from 'codecrafters-frontend/models/team';
 import config from 'codecrafters-frontend/config/environment';

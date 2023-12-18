@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { ClickToContinueBlock } from 'codecrafters-frontend/lib/blocks';
+import { ClickToContinueBlock } from 'codecrafters-frontend/utils/blocks';
 
 interface Signature {
   Element: HTMLDivElement;

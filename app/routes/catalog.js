@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
-import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import RSVP from 'rsvp';
 
 export default class CatalogRoute extends BaseRoute {

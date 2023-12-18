@@ -10,7 +10,7 @@ import { tracked } from '@glimmer/tracking';
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import type { Block } from 'codecrafters-frontend/models/concept';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 
 interface Signature {
   Args: {

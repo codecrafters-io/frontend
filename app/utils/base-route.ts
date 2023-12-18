@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import window from 'ember-window-mock';
 import RouterService from '@ember/routing/router-service';
-import paramsFromRouteInfo from 'codecrafters-frontend/lib/params-from-route-info';
+import paramsFromRouteInfo from 'codecrafters-frontend/utils/params-from-route-info';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 

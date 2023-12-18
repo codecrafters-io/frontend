@@ -9,7 +9,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 import SubmissionModel from 'codecrafters-frontend/models/submission';
 import UserModel from 'codecrafters-frontend/models/user';
-import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/lib/pre-challenge-assessment-section-list';
+import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/utils/pre-challenge-assessment-section-list';
 
 //@ts-ignore
 import { cached } from '@glimmer/tracking';

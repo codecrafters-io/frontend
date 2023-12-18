@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import Store from '@ember-data/store';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/lib/blocks';
+import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 import { action } from '@ember/object';
 
 import Prism from 'prismjs';

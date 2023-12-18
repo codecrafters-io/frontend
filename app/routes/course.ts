@@ -1,8 +1,8 @@
 import { inject as service } from '@ember/service';
-import RepositoryPoller from 'codecrafters-frontend/lib/repository-poller';
-import BaseRoute from 'codecrafters-frontend/lib/base-route';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RSVP from 'rsvp';
-import { StepList } from 'codecrafters-frontend/lib/course-page-step-list';
+import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { next } from '@ember/runloop';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type Transition from '@ember/routing/transition';

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import { Step } from 'codecrafters-frontend/lib/course-page-step-list';
-import type CourseStageStep from 'codecrafters-frontend/lib/course-page-step-list/course-stage-step';
+import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {

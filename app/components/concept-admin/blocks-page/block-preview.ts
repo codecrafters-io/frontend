@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { ClickToContinueBlock, ConceptAnimationBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/lib/blocks';
+import { ClickToContinueBlock, ConceptAnimationBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
 import { type Block } from 'codecrafters-frontend/models/concept';
 
 interface Signature {
