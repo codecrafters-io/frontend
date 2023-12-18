@@ -30,7 +30,7 @@ module.exports = function (environment) {
           'Real-world proficiency projects designed for experienced engineers.',
           'Develop software craftsmanship by recreating popular devtools from scratch.',
         ].join(' '),
-        imageUrl: 'https://codecrafters.io/images/og-index.jpg', // Remember to update middleware.js after changing this URL
+        imageUrl: 'https://codecrafters.io/images/og-index.jpg',
         twitterCard: 'summary_large_image',
         twitterSite: '@codecraftersio',
       },

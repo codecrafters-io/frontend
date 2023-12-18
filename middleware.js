@@ -4,7 +4,7 @@
  * - extracts `username` from the URL
  * - generates a proper Profile OG Image URL
  * - reads the contents of `dist/_empty.html`
- * - replaces default meta Image URL with Profile OG Image URL
+ * - replaces OG meta tags with user-profile specific ones: <meta property="og:image" content="...">
  * - serves the result as an HTML response
  * - passes request down the stack and returns if unable to extract `username`
  *
@@ -16,6 +16,7 @@
  */
 
 import { next } from '@vercel/edge';
+import replaceMetaTag from './app/utils/replace-meta-tag';
 
 export const config = {
   // Limit the middleware to run only for user profile routes
@@ -38,6 +39,8 @@ export default async function middleware(request) {
 
   // Generate a proper OG Image URL for the username's Profile
   const profileImageUrl = `https://og.codecrafters.io/api/user_profile/${username}.png`;
+  const pageTitle = `${username}'s CodeCrafters Profile`;
+  const pageDescription = `View ${username}'s profile on CodeCrafters`;
 
   // Determine URL for reading local `/dist/_empty.html`
   const indexFileURL = new URL('./dist/_empty.html', import.meta.url);
@@ -45,8 +48,18 @@ export default async function middleware(request) {
   // Read contents of `/dist/_empty.html`
   const indexFileText = await fetch(indexFileURL).then((res) => res.text());
 
-  // Replace the default image URL with a Profile image URL
-  const responseText = indexFileText.replace(/https:\/\/codecrafters\.io\/images\/og-index\.jpg/g, profileImageUrl);
+  // Overwrite content of required meta tags with user-profile specific ones,
+  // by sequentially calling `replaceMetaTag` against `indexFileText`,
+  // and passing it arguments from the following list:
+  const responseText = [
+    ['name', 'description', pageDescription], // <meta name="description" content="...">
+    ['property', 'og:title', pageTitle],
+    ['property', 'og:description', pageDescription],
+    ['property', 'og:image', profileImageUrl],
+    ['name', 'twitter:title', pageTitle],
+    ['name', 'twitter:description', pageDescription],
+    ['name', 'twitter:image', profileImageUrl],
+  ].reduce((text, args) => replaceMetaTag(text, ...args), indexFileText);
 
   // Serve the result as HTML
   return new Response(responseText, { headers: { 'Content-Type': 'text/html' } });
