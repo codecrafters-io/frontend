@@ -29,9 +29,9 @@ export default class ReferRoute extends BaseRoute {
         include: 'referral_activation',
       });
 
-      return { freeUsageGrants }
+      return { freeUsageGrants };
     } else {
-      return { freeUsageGrants: [] }
+      return { freeUsageGrants: [] };
     }
   }
 }
