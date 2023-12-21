@@ -130,8 +130,8 @@ jobs:
       - name: "Persist deps sha"
         run: |
           echo "Removing files:"
-          (ls . | grep -E "^.deps-sha-*") || true # This prints the files that will be removed, || true to not fail if no files are found
-          ls . | grep -E "^.deps-sha-*" | xargs -n1 rm -rf
+          (ls -A . | grep -E "^.deps-sha-*") || true # This prints the files that will be removed, || true to not fail if no files are found
+          ls -A . | grep -E "^.deps-sha-*" | xargs -n1 rm -rf
           echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
           mkdir -p ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
           echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
