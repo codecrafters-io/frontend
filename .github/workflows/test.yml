@@ -20,14 +20,31 @@ jobs:
           node-version: '18.17.1' # 18.18.0 causes problems?
           cache: '' # We're caching manually below
 
+      - name: Compute shasum of package-lock.json
+        id: deps-sha
+        run: echo "sha=$(shasum -a 256 package-lock.json | awk '{print $1}')" >> $GITHUB_OUTPUT
+
+      # This step only returns cache-hit=true if **all** paths are cached.
+      # Since the paths include the shasum of package-lock.json, this'll force a npm ci run if deps change.
       - name: Setup npm cache
+        id: cache-npm
         uses: namespacelabs/nscloud-cache-action@v1
         with:
           path: |
             ~/.npm
             ./node_modules
+            ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
 
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+      - name: Install dependencies
+        run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+
+      # If we had to re-install deps due to a cache hit, we delete the old shasum file and create a new one.
+      - name: "Persist deps sha"
+        run: |
+          echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
+          echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
+        if: steps.cache-npm.outputs.cache-hit != 'true'
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
@@ -105,15 +122,33 @@ jobs:
           node-version: '18'
           cache: '' # We're caching manually below
 
+      - name: Compute shasum of package-lock.json
+        id: deps-sha
+        run: echo "sha=$(shasum -a 256 package-lock.json | awk '{print $1}')" >> $GITHUB_OUTPUT
+
+      # This step only returns cache-hit=true if **all** paths are cached.
+      # Since the paths include the shasum of package-lock.json, this'll force a npm ci run if deps change.
       - name: Setup npm cache
+        id: cache-npm
         uses: namespacelabs/nscloud-cache-action@v1
         with:
           path: |
             ~/.npm
             ./node_modules
+            ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
 
       - name: Install dependencies
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+
+      # If we had to re-install deps due to a cache hit, we delete the old shasum file and create a new one.
+      - name: "Persist deps sha"
+        run: |
+          echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
+          echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
+        if: steps.cache-npm.outputs.cache-hit != 'true'
 
       - run: npm run tailwind:build
       - run: npm run lint
+
+
