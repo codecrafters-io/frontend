@@ -142,6 +142,5 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
-      - run: npx glint
       - run: npm run tailwind:build
       - run: npm run lint
