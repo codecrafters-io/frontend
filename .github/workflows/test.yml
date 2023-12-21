@@ -116,7 +116,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: '' # We're caching manually below
 
       - name: Cache node modules
         uses: actions/cache@v3
