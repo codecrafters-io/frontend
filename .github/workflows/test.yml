@@ -122,11 +122,6 @@ jobs:
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
-      - run: "ls -la node_modules/.bin"
-
-      - run: npm run tailwind:build
-      - run: npm run lint
-
       - name: "Persist deps sha"
         run: |
           echo "Removing files:"
@@ -135,5 +130,9 @@ jobs:
           echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
           mkdir -p ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
           echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+
+      - run: npm run tailwind:build
+      - run: npm run lint
 
 
