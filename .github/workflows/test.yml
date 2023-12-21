@@ -109,6 +109,8 @@ jobs:
         id: deps-sha
         run: echo "sha=$(shasum -a 256 package-lock.json | awk '{print $1}')" >> $GITHUB_OUTPUT
 
+      # This step only returns cache-hit=true if **all** paths are cached.
+      # Since the paths include the shasum of package-lock.json, this'll force a npm ci run if deps change.
       - name: Setup npm cache
         id: cache-npm
         uses: namespacelabs/nscloud-cache-action@v1
@@ -122,6 +124,7 @@ jobs:
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
+      # If we had to re-install deps due to a cache hit, we delete the old shasum file and create a new one.
       - name: "Persist deps sha"
         run: |
           echo "Removing files:"
