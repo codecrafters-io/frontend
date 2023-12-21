@@ -77,7 +77,7 @@ jobs:
 
       - run: npm run tailwind:build
 
-      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance | tee test-results.xml
+      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
@@ -91,9 +91,6 @@ jobs:
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Remove ember exam from test results
-        run: sed -i 's/Exam Partition [0-9]\+ - //g' test-results.xml
 
       - name: Remove percy logs
         run: sed -i '/^\[percy\]/d' test-results.xml
