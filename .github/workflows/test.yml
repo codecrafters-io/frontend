@@ -130,8 +130,8 @@ jobs:
       - name: "Persist deps sha"
         run: |
           echo "Removing files:"
-          ls -lA ./.deps-sha-*
-          ls -lA ./.deps-sha-* | xargs -n1 rm -rf
+          ls ./.deps-sha-*
+          ls ./.deps-sha-* | xargs -n1 rm -rf
           echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
           mkdir -p ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
           echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
