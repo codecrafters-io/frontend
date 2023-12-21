@@ -105,6 +105,10 @@ jobs:
           node-version: '18'
           cache: '' # We're caching manually below
 
+      - name: Compute shasum of package-lock.json
+        id: deps-sha
+        run: echo "::set-output name=sha::$(shasum -a 256 package-lock.json)"
+
       - name: Setup npm cache
         id: cache-npm
         uses: namespacelabs/nscloud-cache-action@v1
@@ -113,10 +117,10 @@ jobs:
             ~/.npm
             ./node_modules
 
-      - run: echo "cache hit"
+      - run: echo "cache hit, ${{ steps.deps-sha.outputs.sha }}"
         if: steps.cache-npm.outputs.cache-hit == 'true'
 
-      - run: echo "cache miss"
+      - run: echo "cache miss, ${{ steps.deps-sha.outputs.sha }}"
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
       - name: Install dependencies
