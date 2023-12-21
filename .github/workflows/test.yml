@@ -107,7 +107,7 @@ jobs:
 
       - name: Compute shasum of package-lock.json
         id: deps-sha
-        run: echo "sha=$(shasum -a 256 package-lock.json)" >> $GITHUB_OUTPUT
+        run: echo "sha=$(shasum -a 256 package-lock.json | awk '{print $1}')" >> $GITHUB_OUTPUT
 
       - name: Setup npm cache
         id: cache-npm
