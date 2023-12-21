@@ -129,7 +129,7 @@ jobs:
 
       - name: "Persist deps sha"
         run: |
-          rm -rf ./.deps-sha-*
+          ls -la ./.deps-sha-* | xargs -n1 rm -rf
           mkdir -p ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
           echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
 
