@@ -147,6 +147,8 @@ jobs:
       - name: "Persist deps sha"
         run: |
           # First, we remove any old deps-sha folders from the cache
+          ls -A /cache | grep -E "^\.deps-sha-"
+          ls -A /cache | grep -E "^\.deps-sha-" | grep -v ${{ steps.deps-sha.outputs.sha }}
           ls -A /cache | grep -E "^\.deps-sha-" | grep -v ${{ steps.deps-sha.outputs.sha }} | xargs rm -rf
 
           # Then, we create a new file in the deps-sha folder so that it's persisted in the cache
