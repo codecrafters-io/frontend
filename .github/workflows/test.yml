@@ -118,14 +118,9 @@ jobs:
             ./node_modules
             ~/.deps-sha-${{ steps.deps-sha.outputs.sha }}
 
-      - run: echo "cache hit, ${{ steps.deps-sha.outputs.sha }}"
-        if: steps.cache-npm.outputs.cache-hit == 'true'
-
-      - run: echo "cache miss, ${{ steps.deps-sha.outputs.sha }}"
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-
       - name: Install dependencies
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+        if: steps.cache-npm.outputs.cache-hit != 'true'
 
       - run: npm run tailwind:build
       - run: npm run lint
