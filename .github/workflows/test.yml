@@ -116,6 +116,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
+            ~/.deps-sha-${{ steps.deps-sha.outputs.sha }}
 
       - run: echo "cache hit, ${{ steps.deps-sha.outputs.sha }}"
         if: steps.cache-npm.outputs.cache-hit == 'true'
