@@ -116,7 +116,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
-            ~/.deps-sha-${{ steps.deps-sha.outputs.sha }}
+            ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
 
       - name: Install dependencies
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
@@ -129,8 +129,8 @@ jobs:
 
       - name: "Persist deps sha"
         run: |
-          rm -rf ~/.deps-sha-*
-          mkdir -p ~/.deps-sha-${{ steps.deps-sha.outputs.sha }}
-          echo "cached" > ~/.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
+          rm -rf ./.deps-sha-*
+          mkdir -p ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
+          echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
 
 
