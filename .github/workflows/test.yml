@@ -137,6 +137,8 @@ jobs:
             ./node_modules
             ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
 
+      - run: ls -lah /cache
+
       - name: Install dependencies
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
         if: steps.cache-npm.outputs.cache-hit != 'true'
