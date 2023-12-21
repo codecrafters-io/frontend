@@ -39,7 +39,7 @@ jobs:
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
-      # If we had to re-install deps due to a cache hit, we delete the old shasum file and create a new one.
+      # If we had to re-install deps due to a cache miss, we write a new file to the dir so that it's persisted in the cache.
       - name: "Persist deps sha"
         run: |
           echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
@@ -141,7 +141,7 @@ jobs:
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
-      # If we had to re-install deps due to a cache hit, we delete the old shasum file and create a new one.
+      # If we had to re-install deps due to a cache miss, we write a new file to the dir so that it's persisted in the cache.
       - name: "Persist deps sha"
         run: |
           echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
