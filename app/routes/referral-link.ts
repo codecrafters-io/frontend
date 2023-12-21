@@ -1,5 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import Store from '@ember-data/store';
@@ -27,14 +28,20 @@ export default class ReferralLinkRoute extends BaseRoute {
       include: 'user',
     });
 
-    const acceptedReferralOfferFreeUsageGrant = await this.store.query('free-usage-grant', {
-      sourceType: 'accepted_referral_offer',
-      user_id: this.authenticator.currentUser?.id,
-    });
+    let acceptedReferralOfferFreeUsageGrant: FreeUsageGrantModel | null = null;
+
+    if (this.authenticator.isAuthenticated) {
+      const acceptedReferralOfferFreeUsageGrants = await this.store.query('free-usage-grant', {
+        sourceType: 'accepted_referral_offer',
+        user_id: this.authenticator.currentUser?.id,
+      });
+
+      acceptedReferralOfferFreeUsageGrant = acceptedReferralOfferFreeUsageGrants.firstObject;
+    }
 
     return {
       referralLink: referralLinks.firstObject,
-      acceptedReferralOfferFreeUsageGrant: acceptedReferralOfferFreeUsageGrant.firstObject,
+      acceptedReferralOfferFreeUsageGrant: acceptedReferralOfferFreeUsageGrant,
     };
   }
 }
