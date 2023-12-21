@@ -146,9 +146,15 @@ jobs:
       # If we had to re-install deps due to a cache miss, we write a new file to the dir so that it's persisted in the cache.
       - name: "Persist deps sha"
         run: |
+          # First, we remove any old deps-sha folders from the cache
+          ls -A /cache | grep -E "^\.deps-sha-" | grep -v ${{ steps.deps-sha.outputs.sha }} | xargs rm -rf
+
+          # Then, we create a new file in the deps-sha folder so that it's persisted in the cache
           echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
           echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
         if: steps.cache-npm.outputs.cache-hit != 'true'
+
+      - run: ls -lah /cache
 
       - run: npm run tailwind:build
       - run: npm run lint
