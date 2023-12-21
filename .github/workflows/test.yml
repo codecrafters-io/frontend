@@ -106,11 +106,18 @@ jobs:
           cache: '' # We're caching manually below
 
       - name: Setup npm cache
+        id: cache-npm
         uses: namespacelabs/nscloud-cache-action@v1
         with:
           path: |
             ~/.npm
             ./node_modules
+
+      - run: echo "cache hit"
+        if: steps.cache-npm.outputs.cache-hit == 'true'
+
+      - run: echo "cache miss"
+        if: steps.cache-npm.outputs.cache-hit != 'true'
 
       - name: Install dependencies
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
