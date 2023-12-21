@@ -120,6 +120,8 @@ jobs:
         if: always()
         with:
           files: test-results.xml
+          seconds_between_github_writes: 0
+          seconds_between_github_reads: 0
 
   lint:
     runs-on: 'namespace-profile-frontend-light'
