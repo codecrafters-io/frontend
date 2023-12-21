@@ -129,3 +129,10 @@ jobs:
 
       - run: npm run tailwind:build
       - run: npm run lint
+
+      - name: "Persist deps sha"
+        run: |
+          rm -f ~/.deps-sha-*
+          echo "cached" > ~/.deps-sha-${{ steps.deps-sha.outputs.sha }}
+
+
