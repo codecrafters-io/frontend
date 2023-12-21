@@ -20,6 +20,6 @@ module.exports = {
       ].filter(Boolean),
     },
   },
-  parallel: process.env.EMBER_EXAM_SPLIT_COUNT,
+  parallel: -1,
   src_files: ['tests/**/*.js', 'app/**/*.js', 'app/**/*.hbs', 'mirage/**/*.js'],
 };
