@@ -129,8 +129,8 @@ jobs:
 
       - name: "Persist deps sha"
         run: |
-          ls -la ./.deps-sha-*
-          ls -la ./.deps-sha-* | xargs -n1 rm -rf
+          ls -lA ./.deps-sha-*
+          ls -lA ./.deps-sha-* | xargs -n1 rm -rf
           mkdir -p ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
           echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
 
