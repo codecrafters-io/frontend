@@ -117,7 +117,7 @@ jobs:
           files: test-results.xml
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: 'namespace-profile-frontend-light'
 
     steps:
       - uses: actions/checkout@v3
