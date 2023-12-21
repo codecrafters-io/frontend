@@ -20,27 +20,36 @@ jobs:
           node-version: '18.17.1' # 18.18.0 causes problems?
           cache: '' # We're caching manually below
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules-v4
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |-
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+      # - name: Cache node modules
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-node-modules-v4
+      #   with:
+      #     # npm cache files are stored in `~/.npm` on Linux/macOS
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |-
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
 
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: modules-v4-${{ hashFiles('package-lock.json') }}
+      # - name: Cache dependencies
+      #   id: cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ./node_modules
+      #     key: modules-v4-${{ hashFiles('package-lock.json') }}
 
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+      # - name: Install dependencies
+      #   if: steps.cache.outputs.cache-hit != 'true'
+      #   run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+
+      - name: Setup npm cache
+        uses: namespacelabs/nscloud-cache-action@v1
+        with:
+          path: |
+            ~/.npm
+            ./node_modules
+
+      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
@@ -118,28 +127,38 @@ jobs:
           node-version: '18'
           cache: '' # We're caching manually below
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules-v4
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |-
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      # - name: Cache node modules
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-node-modules-v4
+      #   with:
+      #     # npm cache files are stored in `~/.npm` on Linux/macOS
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |-
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
+      #       ${{ runner.os }}-build-
+      #       ${{ runner.os }}-
 
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
+      # - name: Cache dependencies
+      #   id: cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ./node_modules
+      #     key: modules-v4-${{ hashFiles('package-lock.json') }}
+
+      # - name: Install dependencies
+      #   if: steps.cache.outputs.cache-hit != 'true'
+      #   run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+
+      - name: Setup npm cache
+        uses: namespacelabs/nscloud-cache-action@v1
         with:
-          path: ./node_modules
-          key: modules-v4-${{ hashFiles('package-lock.json') }}
+          path: |
+            ~/.npm
+            ./node_modules
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - run: npm run tailwind:build
