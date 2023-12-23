@@ -16,11 +16,11 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   }
 
   get currentLanguage() {
-    return this.args.filteredLanguages.firstObject || this.defaultLanguageDropdownSelection
+    return this.args.filteredLanguages.firstObject || this.defaultLanguageDropdownSelection;
   }
 
   get defaultLanguageDropdownSelection() {
-    return { name: 'All Languages', slug: 'all' }
+    return { name: 'All Languages', slug: 'all' };
   }
 
   get filteringDescription() {
@@ -41,6 +41,7 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
 
   get sortedLanguagesForDropdown() {
     const languagesForDropdown = [this.defaultLanguageDropdownSelection, ...this.args.course.betaOrLiveLanguages];
+
     return languagesForDropdown.sortBy('name');
   }
 

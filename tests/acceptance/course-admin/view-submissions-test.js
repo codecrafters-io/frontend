@@ -103,7 +103,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
     this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: javascript, user: user3 });
 
-    await submissionsPage.visit({ course_slug: 'redis'});
+    await submissionsPage.visit({ course_slug: 'redis' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 6); // 3 users, 2 submissions each
     assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'All Languages');
 
@@ -111,7 +111,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     await submissionsPage.languageDropdown.clickOnLanguageLink('Python');
     assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'Python');
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 2); // 1 user, 2 submissions
-  })
+  });
 
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
     testScenario(this.server);

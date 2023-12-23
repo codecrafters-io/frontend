@@ -15,9 +15,9 @@ export default {
 
   content: {
     clickOnLanguageLink: clickOnText('[data-test-language-link]'),
-    scope: '[data-test-language-dropdown-content]'
+    scope: '[data-test-language-dropdown-content]',
   },
 
   currentLanguageName: text('[data-test-current-language-name]'),
-  scope: '[data-test-language-dropdown]'
-}
+  scope: '[data-test-language-dropdown]',
+};
