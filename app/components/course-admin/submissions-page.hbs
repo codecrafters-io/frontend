@@ -11,7 +11,7 @@
   <LanguageDropdown
     @languages={{this.sortedLanguagesForDropdown}}
     @requestedLanguage={{this.requestedLanguage}}
-    @selectedLanguage={{get @filteredLanguages 0}}
+    @selectedLanguage={{this.currentLanguage}}
     @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
     @onDidInsertDropdown={{(noop)}}
   />

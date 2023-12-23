@@ -22,7 +22,7 @@
           <LanguageDropdownLink
             @language={{language}}
             @isEnabled={{true}}
-            @isSelected={{eq language @selectedLanguage}}
+            @isSelected={{eq language.slug @selectedLanguage.slug}}
             @isRequested={{eq language @requestedLanguage}}
             @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
           />
