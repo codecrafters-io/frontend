@@ -1,7 +1,12 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class AdminCourseSubmissionsPageComponent extends Component {
+  @service router;
+
+  @tracked requestedLanguage = this.router.currentRoute.queryParams.languages;
   @tracked selectedSubmission = null;
 
   constructor() {
@@ -24,5 +29,18 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
     } else {
       return `All Languages`;
     }
+  }
+
+  get sortedLanguagesForDropdown() {
+    return this.args.course.betaOrLiveLanguages.sortBy('name');
+  }
+
+  @action
+  handleRequestedLanguageChange(language) {
+    if (!language) {
+      return;
+    }
+
+    this.router.transitionTo({ queryParams: { languages: language.slug } });
   }
 }

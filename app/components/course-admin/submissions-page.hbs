@@ -1,10 +1,20 @@
-<div class="py-3">
-  <h3 class="text-lg font-bold text-gray-800">
-    {{this.filteringTitle}}
-  </h3>
-  <div class="text-xs text-gray-400">
-    {{this.filteringDescription}}
+<div class="flex justify-between">
+  <div class="py-3">
+    <h3 class="text-lg font-bold text-gray-800">
+      {{this.filteringTitle}}
+    </h3>
+    <div class="text-xs text-gray-400">
+      {{this.filteringDescription}}
+    </div>
   </div>
+
+  <LanguageDropdown
+    @languages={{this.sortedLanguagesForDropdown}}
+    @requestedLanguage={{this.requestedLanguage}}
+    @selectedLanguage={{get @filteredLanguages 0}}
+    @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+    @onDidInsertDropdown={{(noop)}}
+  />
 </div>
 
 <div class="border-t pb-4">
