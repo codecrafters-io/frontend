@@ -1,4 +1,5 @@
 import { collection, create, clickOnText, visitable } from 'ember-cli-page-object';
+import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/language-dropdown';
 
 export default create({
   clickOnLink: clickOnText(),
@@ -8,6 +9,8 @@ export default create({
 
     scope: '[data-test-diff-tab]',
   },
+
+  languageDropdown: LanguageDropdown,
 
   timelineContainer: {
     entries: collection('[data-test-timeline-entry]', {}),
