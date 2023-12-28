@@ -12,7 +12,8 @@ You will need the following things properly installed on your computer.
 - [Google Chrome](https://google.com/chrome/)
 
 You can run tests locally without a backend server, but to use the app you'll also need an instance of
-[codecrafters-io/core](https://github.com/codecrafters-io/core) running locally. Visit that repo for setup instructions.
+[codecrafters-io/core](https://github.com/codecrafters-io/core) running. You can either run this against staging,
+or against a local instance of `core`. Visit the `core` repo for setup instructions.
 
 ## Setup / Installation
 
