@@ -1,9 +1,12 @@
 name: Test
 
 on:
+  pull_request:
   push:
     branches:
-      - "*"
+      - master
+  schedule:
+    - cron: '0 0 * * 0'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -46,7 +49,7 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
       # If we had to re-install deps due to a cache miss, we write a new file to the dir so that it's persisted in the cache.
-      - name: "Persist deps sha"
+      - name: 'Persist deps sha'
         run: |
           cd /cache
 
@@ -160,7 +163,7 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
       # If we had to re-install deps due to a cache miss, we write a new file to the dir so that it's persisted in the cache.
-      - name: "Persist deps sha"
+      - name: 'Persist deps sha'
         run: |
           cd /cache
 
@@ -178,5 +181,3 @@ jobs:
 
       - run: npm run tailwind:build
       - run: npm run lint
-
-
