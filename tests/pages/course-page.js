@@ -103,10 +103,6 @@ export default create({
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
 
-  installCliLink: {
-    scope: '[data-test-install-cli-link]',
-  },
-
   languageGuideCard: {
     backToRepositoryLanguageButton: {
       scope: '[data-test-back-to-repository-language-button]',
