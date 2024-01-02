@@ -11,7 +11,7 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   @service authenticator; // used by UpvotableMixin and DownvotableMixin
 
   @belongsTo('course-stage', { async: false }) target;
-  @belongsTo('language', { async: false }) language;
+  @belongsTo('language', { async: false, inverse: null }) language;
   @belongsTo('user', { async: false, inverse: null }) user;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
 

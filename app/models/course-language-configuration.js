@@ -7,7 +7,7 @@ export default class CourseLanguageConfigurationModel extends Model {
   @attr('string') releaseStatus;
 
   @belongsTo('course', { async: false, inverse: 'languageConfigurations' }) course;
-  @belongsTo('language', { async: false }) language;
+  @belongsTo('language', { async: false, inverse: 'courseConfigurations' }) language;
 
   @equal('releaseStatus', 'alpha') releaseStatusIsAlpha;
   @equal('releaseStatus', 'beta') releaseStatusIsBeta;

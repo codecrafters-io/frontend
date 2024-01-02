@@ -7,7 +7,7 @@ import { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseStageFeedbackSubmissionModel extends Model {
   @belongsTo('course-stage', { async: false }) declare courseStage: CourseStageModel;
-  @belongsTo('language', { async: false }) declare language: LanguageModel;
+  @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
   @belongsTo('repository', { async: false }) declare repository: RepositoryModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 

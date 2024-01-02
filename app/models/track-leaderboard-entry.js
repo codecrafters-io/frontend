@@ -3,7 +3,7 @@ import Model from '@ember-data/model';
 
 export default class TrackLeaderboardEntryModel extends Model {
   @attr('number') completedStagesCount;
-  @belongsTo('language', { async: false }) language;
+  @belongsTo('language', { async: false, inverse: null }) language;
   @belongsTo('user', { async: false, inverse: null }) user;
 
   get userId() {

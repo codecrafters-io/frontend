@@ -43,7 +43,7 @@ export default class RepositoryModel extends Model {
   @hasMany('course-stage-feedback-submission', { async: false }) declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
   @hasMany('github-repository-sync-configuration', { async: false }) declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
   @belongsTo('user', { async: false, inverse: 'repositories' }) declare user: UserModel;
-  @belongsTo('language', { async: false }) declare language: LanguageModel | undefined;
+  @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel | undefined;
   @belongsTo('submission', { async: false, inverse: null }) declare lastSubmission: SubmissionModel;
   @belongsTo('repository-stage-list', { async: false }) declare stageList: RepositoryStageListModel;
   @hasMany('submission', { async: false, inverse: 'repository' }) declare submissions: SubmissionModel[];

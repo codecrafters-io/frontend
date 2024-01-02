@@ -41,7 +41,7 @@ import tealLogoSwift from '/assets/images/language-logos/swift-teal-500.svg';
 import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
 
 export default class LanguageModel extends Model {
-  @hasMany('course-language-configuration', { async: false }) declare courseConfigurations: CourseLanguageConfigurationModel[];
+  @hasMany('course-language-configuration', { async: false, inverse: 'language' }) declare courseConfigurations: CourseLanguageConfigurationModel[];
 
   @attr('string') declare name: string;
   @attr('string') declare slug: string;

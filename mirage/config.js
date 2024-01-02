@@ -14,7 +14,7 @@ export default function (config) {
         courseStageComment: Model.extend({
           user: belongsTo('user', { inverse: null }),
           target: belongsTo('course-stage'),
-          language: belongsTo('language'),
+          language: belongsTo('language', { inverse: null }),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('course-stage-comment', { inverse: null }),
@@ -22,7 +22,7 @@ export default function (config) {
         communityCourseStageSolutionComment: Model.extend({
           user: belongsTo('user', { inverse: null }),
           target: belongsTo('community-course-stage-solution'),
-          language: belongsTo('language'),
+          language: belongsTo('language', { inverse: null }),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),

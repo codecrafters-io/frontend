@@ -5,7 +5,7 @@ import Model from '@ember-data/model';
 export default class LeaderboardEntry extends Model {
   @attr('string') status;
   @belongsTo('course-stage', { async: false }) currentCourseStage;
-  @belongsTo('language', { async: false }) language;
+  @belongsTo('language', { async: false, inverse: null }) language;
   @belongsTo('user', { async: false, inverse: null }) user;
   @attr('date') lastAttemptAt;
 
