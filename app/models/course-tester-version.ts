@@ -2,7 +2,7 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 
 export default class CourseTesterVersionModel extends Model {
-  @belongsTo('course', { async: false }) declare course: { slug: string };
+  @belongsTo('course', { async: false, inverse: 'testerVersions' }) declare course: { slug: string };
   @belongsTo('user', { async: false, inverse: null }) declare activator: unknown;
 
   @attr('string') declare commitSha: string;
