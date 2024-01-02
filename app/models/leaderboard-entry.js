@@ -6,7 +6,7 @@ export default class LeaderboardEntry extends Model {
   @attr('string') status;
   @belongsTo('course-stage', { async: false }) currentCourseStage;
   @belongsTo('language', { async: false }) language;
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: null }) user;
   @attr('date') lastAttemptAt;
 
   get completedStagesCount() {

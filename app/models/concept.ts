@@ -13,7 +13,7 @@ export type BlockJSON = {
 };
 
 export default class ConceptModel extends Model {
-  @belongsTo('user', { async: false }) declare author: UserModel;
+  @belongsTo('user', { async: false, inverse: null }) declare author: UserModel;
 
   @hasMany('concept-question', { async: false }) declare questions: SyncHasMany<ConceptQuestion>;
 

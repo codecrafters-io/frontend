@@ -43,24 +43,24 @@ export default class UserModel extends Model {
   @attr('string') declare username: string;
   @attr('date') declare vipStatusExpiresAt: Date | null;
 
-  @hasMany('affiliate-link', { async: false }) affiliateLinks!: AffiliateLinkModel[];
+  @hasMany('affiliate-link', { async: false, inverse: 'user' }) affiliateLinks!: AffiliateLinkModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer!: AffiliateReferralModel[];
   @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards!: BadgeAwardModel[];
-  @hasMany('course-language-request', { async: false }) courseLanguageRequests!: CourseLanguageRequestModel[];
-  @hasMany('course-extension-idea-vote', { async: false }) courseExtensionIdeaVotes!: CourseExtensionIdeaVoteModel[];
-  @hasMany('course-idea-vote', { async: false }) courseIdeaVotes!: CourseIdeaVoteModel[];
-  @hasMany('course-participation', { async: false }) courseParticipations!: CourseParticipationModel[];
-  @hasMany('feature-suggestion', { async: false }) featureSuggestions!: FeatureSuggestionModel[];
-  @hasMany('github-app-installation', { async: false }) githubAppInstallations!: GitHubAppInstallationModel[];
+  @hasMany('course-language-request', { async: false, inverse: 'user' }) courseLanguageRequests!: CourseLanguageRequestModel[];
+  @hasMany('course-extension-idea-vote', { async: false, inverse: 'user' }) courseExtensionIdeaVotes!: CourseExtensionIdeaVoteModel[];
+  @hasMany('course-idea-vote', { async: false, inverse: 'user' }) courseIdeaVotes!: CourseIdeaVoteModel[];
+  @hasMany('course-participation', { async: false, inverse: 'user' }) courseParticipations!: CourseParticipationModel[];
+  @hasMany('feature-suggestion', { async: false, inverse: 'user' }) featureSuggestions!: FeatureSuggestionModel[];
+  @hasMany('github-app-installation', { async: false, inverse: 'user' }) githubAppInstallations!: GitHubAppInstallationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer!: ReferralActivationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer!: ReferralActivationModel[];
-  @hasMany('affiliate-earnings-payout', { async: false }) affiliateEarningsPayouts!: AffiliateEarningsPayoutModel[];
-  @hasMany('referral-link', { async: false }) referralLinks!: ReferralLinkModel[];
-  @hasMany('repository', { async: false }) repositories!: RepositoryModel[];
-  @hasMany('subscription', { async: false }) subscriptions!: SubscriptionModel[];
-  @hasMany('team-membership', { async: false }) teamMemberships!: TeamMembershipModel[];
-  @hasMany('user-profile-event', { async: false }) profileEvents!: UserProfileEventModel[];
+  @hasMany('affiliate-earnings-payout', { async: false, inverse: 'user' }) affiliateEarningsPayouts!: AffiliateEarningsPayoutModel[];
+  @hasMany('referral-link', { async: false, inverse: 'user' }) referralLinks!: ReferralLinkModel[];
+  @hasMany('repository', { async: false, inverse: 'user' }) repositories!: RepositoryModel[];
+  @hasMany('subscription', { async: false, inverse: 'user' }) subscriptions!: SubscriptionModel[];
+  @hasMany('team-membership', { async: false, inverse: 'user' }) teamMemberships!: TeamMembershipModel[];
+  @hasMany('user-profile-event', { async: false, inverse: 'user' }) profileEvents!: UserProfileEventModel[];
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');

@@ -3,7 +3,7 @@ import ReferralActivationModel from 'codecrafters-frontend/models/referral-activ
 import UserModel from 'codecrafters-frontend/models/user';
 
 export default class ReferralLinkModel extends Model {
-  @belongsTo('user', { async: false }) user!: UserModel;
+  @belongsTo('user', { async: false, inverse: 'referralLinks' }) user!: UserModel;
 
   @hasMany('referral-activations', { async: false }) activations!: ReferralActivationModel[];
 

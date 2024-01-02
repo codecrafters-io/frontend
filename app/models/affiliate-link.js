@@ -2,7 +2,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 
 export default class AffiliateLinkModel extends Model {
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: 'affiliateLinks' }) user;
 
   @hasMany('affiliate-referrals', { async: false }) referrals;
 

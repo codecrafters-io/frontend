@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class AffiliateEarningsPayoutModel extends Model {
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: 'affiliateEarningsPayouts' }) user;
 
   @attr('number') amountInCents;
   @attr('date') completedAt;

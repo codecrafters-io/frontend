@@ -6,7 +6,7 @@ import Model from '@ember-data/model';
 export default class SessionModel extends Model {
   @service authenticator;
   @attr('date') expiresAt;
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: null }) user;
 }
 
 SessionModel.prototype.logout = collectionAction({

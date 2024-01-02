@@ -12,7 +12,7 @@ export default function (config) {
       ...config.models,
       ...{
         courseStageComment: Model.extend({
-          user: belongsTo('user'),
+          user: belongsTo('user', { inverse: null }),
           target: belongsTo('course-stage'),
           language: belongsTo('language'),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
@@ -20,7 +20,7 @@ export default function (config) {
           parentComment: belongsTo('course-stage-comment', { inverse: null }),
         }),
         communityCourseStageSolutionComment: Model.extend({
-          user: belongsTo('user'),
+          user: belongsTo('user', { inverse: null }),
           target: belongsTo('community-course-stage-solution'),
           language: belongsTo('language'),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),

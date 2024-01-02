@@ -3,7 +3,7 @@ import UserModel from 'codecrafters-frontend/models/user';
 import { attr } from '@ember-data/model';
 
 export default class ConceptGroupModel extends Model {
-  @belongsTo('user', { async: false }) author!: UserModel;
+  @belongsTo('user', { async: false, inverse: null }) author!: UserModel;
 
   @attr() conceptSlugs!: Array<string>;
   @attr('string') descriptionMarkdown!: string;

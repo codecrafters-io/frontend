@@ -6,5 +6,5 @@ export default class CourseIdeaVoteModel extends Model {
   @attr('date') declare createdAt: Date;
 
   @belongsTo('course-idea', { async: false, inverse: null }) declare courseIdea: CourseIdeaModel;
-  @belongsTo('user', { async: false }) declare user: unknown;
+  @belongsTo('user', { async: false, inverse: 'courseIdeaVotes' }) declare user: unknown;
 }

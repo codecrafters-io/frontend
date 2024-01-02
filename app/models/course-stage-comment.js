@@ -12,7 +12,7 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
 
   @belongsTo('course-stage', { async: false }) target;
   @belongsTo('language', { async: false }) language;
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: null }) user;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
 
   @attr('date') createdAt;
