@@ -3,7 +3,7 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 export default class AffiliateReferralModel extends Model {
   @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsCustomer' }) customer;
   @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsReferrer' }) referrer;
-  @belongsTo('affiliate-link', { async: false }) affiliateLink;
+  @belongsTo('affiliate-link', { async: false, inverse: 'referrals' }) affiliateLink;
 
   @attr('date') activatedAt;
   @attr('string') status; // 'pending_trial', 'trialing', 'first_charge_successful', 'trial_cancelled', 'inactive'
