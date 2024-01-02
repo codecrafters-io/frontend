@@ -7,11 +7,11 @@ export default {
     await settled();
   },
 
-  clickRaw: clickable('button'),
-
   clickOnLanguageLink(languageName) {
     return this.content.clickOnLanguageLink(languageName);
   },
+
+  clickRaw: clickable('button'),
 
   content: {
     clickOnLanguageLink: clickOnText('[data-test-language-link]'),
