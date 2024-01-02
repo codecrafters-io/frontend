@@ -111,6 +111,11 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     await submissionsPage.languageDropdown.clickOnLanguageLink('Python');
     assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'Python');
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 2); // 1 user, 2 submissions
+
+    await submissionsPage.languageDropdown.click();
+    await submissionsPage.languageDropdown.clickOnLanguageLink('All Languages');
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 6); // 3 users, 2 submissions each
+    assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'All Languages');
   });
 
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
