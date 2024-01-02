@@ -10,7 +10,7 @@ type Option = {
 };
 
 export default class ConceptQuestionModel extends Model {
-  @belongsTo('concept', { async: false }) declare concept: Concept;
+  @belongsTo('concept', { async: false, inverse: 'questions' }) declare concept: Concept;
   @attr('string') declare queryMarkdown: string;
   @attr('string') declare slug: string;
   @attr() declare options: Array<Option>;
