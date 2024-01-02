@@ -99,6 +99,7 @@ export default class CourseIdeaCardComponent extends Component {
       {{else if @courseIdea.isNewlyCreated}}
         <div class='text-xs text-teal-500 font-semibold border border-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5' data-test-development-status-label>
           new
+          <EmberTooltip @text='This is a recently added idea! Vote to help us decide which ideas to prioritize.' />
         </div>
       {{/if}}
     </div>
