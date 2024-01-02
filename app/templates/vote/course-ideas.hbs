@@ -4,10 +4,12 @@
 
 <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
   {{#each this.orderedCourseIdeas as |courseIdea|}}
+    {{! @glint-expect-error .gts components aren't compatible yet: https://github.com/typed-ember/glint/issues/665 }}
     <VotePage::CourseIdeaCard @courseIdea={{courseIdea}} />
   {{/each}}
 
   {{#if this.authenticator.isAuthenticated}}
+    {{! @glint-expect-error .gts components aren't compatible yet: https://github.com/typed-ember/glint/issues/665 }}
     <VotePage::SubmitCourseIdeaCard />
   {{/if}}
 </div>
