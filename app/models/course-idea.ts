@@ -7,7 +7,7 @@ import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
 export default class CourseIdeaModel extends Model {
-  @hasMany('course-idea-vote', { async: false }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
+  @hasMany('course-idea-vote', { async: false, inverse: 'courseIdea' }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
 
   @attr('date') declare createdAt: Date;
   @attr('string') declare descriptionMarkdown: string;
