@@ -14,9 +14,6 @@
       {{svg-jar "check-circle" class="w-4 fill-current text-teal-500"}}
     {{else if (and @isRequested (not @isSelected))}}
       {{svg-jar "exclamation" class="w-4 fill-current text-yellow-500"}}
-    {{else if (eq @language.slug "all")}}
-      {{svg-jar "code" class="w-4 fill-current text-gray-500 block group-hover:hidden"}}
-      {{svg-jar "code" class="w-4 fill-current text-teal-500 hidden group-hover:block"}}
     {{else}}
       <img src={{@language.grayLogoUrl}} alt={{@language.name}} class="w-4 h-4 block group-hover:hidden" />
       <img src={{@language.tealLogoUrl}} alt={{@language.name}} class="w-4 h-4 hidden group-hover:block" />
