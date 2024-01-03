@@ -12,7 +12,7 @@
   {{/if}}
 
   {{#if this.shouldShowCLIUsageInstructions}}
-    <CoursePage::CourseStageStep::CliUsageInstructions class="mb-6" />
+    <CoursePage::CourseStageStep::CliUsageInstructions @courseStage={{@model.courseStage}} class="mb-6" />
   {{/if}}
 
   {{#if (gt this.badgeAwards.length 0)}}

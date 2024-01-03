@@ -705,6 +705,23 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(coursePage.betaLabelText, 'FREE DURING BETA', 'beta label should be present');
   });
 
+  test('tracks when the cli installation link is clicked', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    currentUser.update('featureFlags', { 'can-see-cli-suggestion-on-stage-two': 'test' });
+
+    await visit('/courses/redis/stages/2');
+    await coursePage.installCliLink.click();
+
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
+
+    assert.ok(analyticsEventNames.includes('clicked_cli_installation_link'), 'clicked_cli_installation_link event should be tracked');
+  });
+
   test('header should have a badge that shows the remaining time in days', async function (assert) {
     testScenario(this.server);
 
