@@ -57,7 +57,7 @@ export default class FakeDataToolbarComponent extends Component<Signature> {
     const submission = window.server.schema.submissions.find(this.args.repository.lastSubmission.id);
 
     // @ts-expect-error
-    const leaderboardEntry = window.server.schema.leaderboardEntries.findBy({
+    const leaderboardEntry = window.server.schema.courseLeaderboardEntries.findBy({
       userId: submission.repository.user.id,
       languageId: submission.repository.language.id,
     });

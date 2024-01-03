@@ -7,7 +7,7 @@ export default class CourseOverviewPageStageListItemComponent extends Component 
 
   get recentlyAttemptedUsers() {
     return this.store
-      .peekAll('leaderboard-entry')
+      .peekAll('course-leaderboard-entry')
       .filter((entry) => entry.currentCourseStage.position >= this.args.stage.position)
       .sortBy('currentCourseStage.position')
       .uniqBy('user')

@@ -92,7 +92,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       username: 'Gufran',
     });
 
-    this.server.create('leaderboard-entry', {
+    this.server.create('course-leaderboard-entry', {
       status: 'idle',
       currentCourseStage: redis.stages.models.find((x) => x.position === 2),
       language: python,
@@ -265,7 +265,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       username: 'Gufran',
     });
 
-    this.server.create('leaderboard-entry', {
+    this.server.create('course-leaderboard-entry', {
       status: 'idle',
       currentCourseStage: redis.stages.models.find((x) => x.position === 2),
       language: python,

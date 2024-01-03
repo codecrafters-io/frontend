@@ -27,7 +27,7 @@ export default function createLeaderboardEntries(server, languageSlug, courseSlu
   });
 
   [user1, user2, user3].forEach((user) => {
-    server.create('leaderboard-entry', {
+    server.create('course-leaderboard-entry', {
       status: 'idle',
       currentCourseStage: course.stages.models.find((x) => x.position === 2),
       language: language,

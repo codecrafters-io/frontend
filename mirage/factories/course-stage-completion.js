@@ -5,7 +5,7 @@ export default Factory.extend({
   completedAt: () => new Date(),
 
   afterCreate(courseStageCompletion, server) {
-    let leaderboardEntry = server.schema.leaderboardEntries.findOrCreateBy({
+    let leaderboardEntry = server.schema.courseLeaderboardEntries.findOrCreateBy({
       userId: courseStageCompletion.repository.user.id,
       languageId: courseStageCompletion.repository.language.id,
     });

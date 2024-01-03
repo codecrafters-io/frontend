@@ -341,8 +341,8 @@ function routes() {
 
   this.get('/languages');
 
-  this.get('/leaderboard-entries', function (schema, request) {
-    let result = schema.leaderboardEntries.all();
+  this.get('/course-leaderboard-entries', function (schema, request) {
+    let result = schema.courseLeaderboardEntries.all();
 
     if (request.queryParams.team_id) {
       const team = schema.teams.find(request.queryParams.team_id);
