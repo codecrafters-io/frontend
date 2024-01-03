@@ -4,9 +4,9 @@ import Model from '@ember-data/model';
 // Same as the ember model, to avoid creating fake models
 export default class LeaderboardEntry extends Model {
   @attr('string') status;
-  @belongsTo('course-stage', { async: false }) currentCourseStage;
-  @belongsTo('language', { async: false }) language;
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('course-stage', { async: false, inverse: null }) currentCourseStage;
+  @belongsTo('language', { async: false, inverse: null }) language;
+  @belongsTo('user', { async: false, inverse: null }) user;
   @attr('date') lastAttemptAt;
 
   get completedStagesCount() {

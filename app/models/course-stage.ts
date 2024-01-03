@@ -9,13 +9,13 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
 export default class CourseStageModel extends Model {
-  @belongsTo('course', { async: false }) declare course: CourseModel;
+  @belongsTo('course', { async: false, inverse: 'stages' }) declare course: CourseModel;
 
-  @hasMany('course-stage-comments', { async: false }) declare comments: CourseStageCommentModel[];
+  @hasMany('course-stage-comments', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' })
   declare communitySolutions: CommunityCourseStageSolutionModel[];
-  @hasMany('course-stage-language-guide', { async: false }) declare languageGuides: CourseStageLanguageGuideModel[];
-  @hasMany('course-stage-solution', { async: false }) declare solutions: CourseStageSolutionModel[];
+  @hasMany('course-stage-language-guide', { async: false, inverse: 'courseStage' }) declare languageGuides: CourseStageLanguageGuideModel[];
+  @hasMany('course-stage-solution', { async: false, inverse: 'courseStage' }) declare solutions: CourseStageSolutionModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) declare screencasts: CourseStageScreencastModel[];
 
   @attr() declare conceptSlugs: string[];

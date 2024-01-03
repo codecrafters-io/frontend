@@ -2,7 +2,7 @@ import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
 
 export default class TeamSubscriptionModel extends Model {
-  @belongsTo('team', { async: false }) team;
+  @belongsTo('team', { async: false, inverse: 'subscriptions' }) team;
   @attr('date') endedAt;
   @attr('date') startDate;
 

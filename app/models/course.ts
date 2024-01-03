@@ -41,13 +41,13 @@ export default class CourseModel extends Model {
   @attr('string') declare testerRepositoryFullName: string;
   @attr() declare testimonials: { [key: string]: string }; // free-form JSON
 
-  @hasMany('buildpack', { async: false }) declare buildpacks: BuildpackModel[];
-  @hasMany('course-definition-update', { async: false }) declare definitionUpdates: CourseDefinitionUpdateModel[];
-  @hasMany('course-extension-idea', { async: false }) declare extensionIdeas: CourseExtensionIdeaModel[];
+  @hasMany('buildpack', { async: false, inverse: 'course' }) declare buildpacks: BuildpackModel[];
+  @hasMany('course-definition-update', { async: false, inverse: 'course' }) declare definitionUpdates: CourseDefinitionUpdateModel[];
+  @hasMany('course-extension-idea', { async: false, inverse: 'course' }) declare extensionIdeas: CourseExtensionIdeaModel[];
   @hasMany('course-extension', { async: false, inverse: 'course' }) declare extensions: CourseExtensionModel[];
-  @hasMany('course-language-configuration', { async: false }) declare languageConfigurations: CourseLanguageConfigurationModel[];
-  @hasMany('course-stage', { async: false }) declare stages: CourseStageModel[];
-  @hasMany('course-tester-version', { async: false }) declare testerVersions: CourseTesterVersionModel[];
+  @hasMany('course-language-configuration', { async: false, inverse: 'course' }) declare languageConfigurations: CourseLanguageConfigurationModel[];
+  @hasMany('course-stage', { async: false, inverse: 'course' }) declare stages: CourseStageModel[];
+  @hasMany('course-tester-version', { async: false, inverse: 'course' }) declare testerVersions: CourseTesterVersionModel[];
 
   @equal('difficulty', 'easy') declare difficultyIsEasy: boolean;
   @equal('difficulty', 'hard') declare difficultyIsHard: boolean;

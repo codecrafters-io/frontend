@@ -5,7 +5,7 @@ export default class FeatureSuggestionModel extends Model {
   @attr('string') featureSlug;
   @attr('date') createdAt;
   @attr('date') dismissedAt;
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: 'featureSuggestions' }) user;
 
   get featureIsPrivateLeaderboard() {
     return this.featureSlug === 'private-leaderboard';

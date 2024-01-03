@@ -4,7 +4,7 @@ import Model from '@ember-data/model';
 export default class TeamPilotModel extends Model {
   @attr('date') endDate;
   @attr('boolean') requiresPaymentMethod;
-  @belongsTo('team', { async: false }) team;
+  @belongsTo('team', { async: false, inverse: 'pilots' }) team;
 
   get isActive() {
     return new Date() < this.endDate;

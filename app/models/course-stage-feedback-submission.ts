@@ -6,10 +6,10 @@ import UserModel from 'codecrafters-frontend/models/user';
 import { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseStageFeedbackSubmissionModel extends Model {
-  @belongsTo('course-stage', { async: false }) declare courseStage: CourseStageModel;
-  @belongsTo('language', { async: false }) declare language: LanguageModel;
-  @belongsTo('repository', { async: false }) declare repository: RepositoryModel;
-  @belongsTo('user', { async: false }) declare user: UserModel;
+  @belongsTo('course-stage', { async: false, inverse: null }) declare courseStage: CourseStageModel;
+  @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
+  @belongsTo('repository', { async: false, inverse: 'courseStageFeedbackSubmissions' }) declare repository: RepositoryModel;
+  @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   @attr('date') declare createdAt: Date;
   @attr('boolean') declare isAcknowledgedByStaff: boolean;

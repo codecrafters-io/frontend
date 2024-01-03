@@ -3,7 +3,7 @@ import { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 
 export default class SubscriptionModel extends Model {
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: 'subscriptions' }) user;
   @attr('date') cancelAt;
   @attr('date') currentPeriodEnd;
   @attr('date') endedAt;

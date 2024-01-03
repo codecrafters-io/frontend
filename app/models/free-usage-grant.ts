@@ -3,8 +3,8 @@ import ReferralActivationModel from 'codecrafters-frontend/models/referral-activ
 import UserModel from 'codecrafters-frontend/models/user';
 
 export default class FreeUsageGrantModel extends Model {
-  @belongsTo('referral-activation', { async: false }) referralActivation!: ReferralActivationModel;
-  @belongsTo('user', { async: false }) user!: UserModel;
+  @belongsTo('referral-activation', { async: false, inverse: null }) referralActivation!: ReferralActivationModel;
+  @belongsTo('user', { async: false, inverse: null }) user!: UserModel;
 
   @attr('date') activatesAt!: Date;
   @attr('date') expiresAt!: Date;

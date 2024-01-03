@@ -7,7 +7,7 @@ export default class UserProfileEvent extends Model {
   @attr('string') descriptionMarkdown;
   @attr('date') occurredAt;
 
-  @belongsTo('user', { async: false }) user;
+  @belongsTo('user', { async: false, inverse: 'profileEvents' }) user;
 
   @equal('type', 'CreatedAccountEvent') isCreatedAccountEvent;
   @equal('type', 'StartedCourseEvent') isStartedCourseEvent;

@@ -7,7 +7,7 @@ import { memberAction } from 'ember-api-actions';
 export default class CourseExtensionIdeaModel extends Model {
   @belongsTo('course', { async: false, inverse: 'extensionIdeas' }) course;
 
-  @hasMany('course-extension-idea-vote', { async: false }) currentUserVotes;
+  @hasMany('course-extension-idea-vote', { async: false, inverse: 'courseExtensionIdea' }) currentUserVotes;
 
   @attr('date') createdAt;
   @attr('string') descriptionMarkdown;

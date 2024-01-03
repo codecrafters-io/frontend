@@ -36,16 +36,18 @@ export default class RepositoryModel extends Model {
     advanced: 'Advanced',
   };
 
-  @hasMany('autofix-request', { async: false }) declare autofixRequests: AutofixRequestModel[];
-  @belongsTo('course', { async: false }) declare course: CourseModel;
-  @hasMany('course-extension-activation', { async: false }) declare courseExtensionActivations: CourseExtensionActivation[];
-  @hasMany('course-stage-completion', { async: false }) declare courseStageCompletions: CourseStageCompletionModel[];
-  @hasMany('course-stage-feedback-submission', { async: false }) declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
-  @hasMany('github-repository-sync-configuration', { async: false }) declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
-  @belongsTo('user', { async: false }) declare user: UserModel;
-  @belongsTo('language', { async: false }) declare language: LanguageModel | undefined;
+  @hasMany('autofix-request', { async: false, inverse: 'repository' }) declare autofixRequests: AutofixRequestModel[];
+  @belongsTo('course', { async: false, inverse: null }) declare course: CourseModel;
+  @hasMany('course-extension-activation', { async: false, inverse: 'repository' }) declare courseExtensionActivations: CourseExtensionActivation[];
+  @hasMany('course-stage-completion', { async: false, inverse: 'repository' }) declare courseStageCompletions: CourseStageCompletionModel[];
+  @hasMany('course-stage-feedback-submission', { async: false, inverse: 'repository' })
+  declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
+  @hasMany('github-repository-sync-configuration', { async: false, inverse: 'repository' })
+  declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
+  @belongsTo('user', { async: false, inverse: 'repositories' }) declare user: UserModel;
+  @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel | undefined;
   @belongsTo('submission', { async: false, inverse: null }) declare lastSubmission: SubmissionModel;
-  @belongsTo('repository-stage-list', { async: false }) declare stageList: RepositoryStageListModel;
+  @belongsTo('repository-stage-list', { async: false, inverse: 'repository' }) declare stageList: RepositoryStageListModel;
   @hasMany('submission', { async: false, inverse: 'repository' }) declare submissions: SubmissionModel[];
 
   @attr('string') declare cloneUrl: string;

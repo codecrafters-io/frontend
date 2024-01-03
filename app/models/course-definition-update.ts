@@ -2,8 +2,8 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 
 export default class CourseDefinitionUpdateModel extends Model {
-  @belongsTo('course', { async: false }) declare course: { slug: string };
-  @belongsTo('user', { async: false }) declare applier: unknown;
+  @belongsTo('course', { async: false, inverse: 'definitionUpdates' }) declare course: { slug: string };
+  @belongsTo('user', { async: false, inverse: null }) declare applier: unknown;
 
   @attr('date') declare appliedAt?: Date;
   @attr('string') declare definitionFileContentsDiff: string;

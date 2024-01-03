@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class IndividualCheckoutSessionModel extends Model {
-  @belongsTo('regional-discount', { async: false }) regionalDiscount;
+  @belongsTo('regional-discount', { async: false, inverse: null }) regionalDiscount;
 
   @attr('boolean') autoRenewSubscription;
   @attr('boolean') earlyBirdDiscountEnabled;

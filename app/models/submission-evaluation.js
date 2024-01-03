@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class SubmissionEvaluationModel extends Model {
-  @belongsTo('submission', { async: false }) submission;
+  @belongsTo('submission', { async: false, inverse: 'evaluations' }) submission;
   @attr('date') createdAt;
   @attr('string') logsBase64;
 

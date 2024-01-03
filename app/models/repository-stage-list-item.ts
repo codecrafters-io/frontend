@@ -4,7 +4,7 @@ import RepositoryStageListModel from 'codecrafters-frontend/models/repository-st
 
 export default class RepositoryStageListItemModel extends Model {
   @belongsTo('repository-stage-list', { async: false, inverse: 'items' }) declare list: RepositoryStageListModel;
-  @belongsTo('course-stage', { async: false }) declare stage: CourseStageModel;
+  @belongsTo('course-stage', { async: false, inverse: null }) declare stage: CourseStageModel;
 
   @attr('date') declare completedAt: Date | null; // If the user completed the stage, when they did
   @attr('boolean') declare isCurrent: boolean; // Whether this is the current stage
