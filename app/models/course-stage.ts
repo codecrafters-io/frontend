@@ -14,7 +14,7 @@ export default class CourseStageModel extends Model {
   @hasMany('course-stage-comments', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' })
   declare communitySolutions: CommunityCourseStageSolutionModel[];
-  @hasMany('course-stage-language-guide', { async: false }) declare languageGuides: CourseStageLanguageGuideModel[];
+  @hasMany('course-stage-language-guide', { async: false, inverse: 'courseStage' }) declare languageGuides: CourseStageLanguageGuideModel[];
   @hasMany('course-stage-solution', { async: false }) declare solutions: CourseStageSolutionModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) declare screencasts: CourseStageScreencastModel[];
 
