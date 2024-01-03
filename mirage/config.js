@@ -13,7 +13,7 @@ export default function (config) {
       ...{
         courseStageComment: Model.extend({
           user: belongsTo('user', { inverse: null }),
-          target: belongsTo('course-stage'),
+          target: belongsTo('course-stage', { inverse: 'comments' }),
           language: belongsTo('language', { inverse: null }),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),

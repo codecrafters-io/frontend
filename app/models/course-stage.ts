@@ -11,7 +11,7 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false, inverse: 'stages' }) declare course: CourseModel;
 
-  @hasMany('course-stage-comments', { async: false }) declare comments: CourseStageCommentModel[];
+  @hasMany('course-stage-comments', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' })
   declare communitySolutions: CommunityCourseStageSolutionModel[];
   @hasMany('course-stage-language-guide', { async: false }) declare languageGuides: CourseStageLanguageGuideModel[];

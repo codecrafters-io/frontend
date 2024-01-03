@@ -3,7 +3,7 @@ import Model from '@ember-data/model';
 
 export default class CourseParticipationModel extends Model {
   @belongsTo('course', { async: false, inverse: null }) course;
-  @belongsTo('course-stage', { async: false }) currentStage;
+  @belongsTo('course-stage', { async: false, inverse: null }) currentStage;
   @belongsTo('user', { async: false, inverse: 'courseParticipations' }) user;
   @belongsTo('language', { async: false, inverse: null }) language;
 

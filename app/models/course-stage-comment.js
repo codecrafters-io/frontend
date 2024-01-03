@@ -10,7 +10,7 @@ import IsCommentMixin from '../mixins/is-comment';
 export default class CourseStageCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin, IsCommentMixin) {
   @service authenticator; // used by UpvotableMixin and DownvotableMixin
 
-  @belongsTo('course-stage', { async: false }) target;
+  @belongsTo('course-stage', { async: false, inverse: 'comments' }) target;
   @belongsTo('language', { async: false, inverse: null }) language;
   @belongsTo('user', { async: false, inverse: null }) user;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) parentComment;
