@@ -86,6 +86,38 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
+  test('it should be able to filter by language(s) through a dropdown menu', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let user1 = this.server.create('user', { username: 'user1' });
+    let user2 = this.server.create('user', { username: 'user2' });
+    let user3 = this.server.create('user', { username: 'user3' });
+
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+    let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
+    let javascript = this.server.schema.languages.findBy({ slug: 'javascript' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: javascript, user: user3 });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 6); // 3 users, 2 submissions each
+    assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'All Languages');
+
+    await submissionsPage.languageDropdown.click();
+    await submissionsPage.languageDropdown.clickOnLanguageLink('Python');
+    assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'Python');
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 2); // 1 user, 2 submissions
+
+    await submissionsPage.languageDropdown.click();
+    await submissionsPage.languageDropdown.clickOnLanguageLink('All Languages');
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 6); // 3 users, 2 submissions each
+    assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'All Languages');
+  });
+
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
     testScenario(this.server);
     const course = this.server.schema.courses.findBy({ slug: 'redis' });

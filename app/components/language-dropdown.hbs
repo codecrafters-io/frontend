@@ -10,7 +10,11 @@
         data-test-language-dropdown-trigger
       >
         <span class="mr-1" data-test-current-language-name>
-          {{@selectedLanguage.name}}
+          {{#if this.isAllLanguagesOptionSelected}}
+            All Languages
+          {{else}}
+            {{@selectedLanguage.name}}
+          {{/if}}
         </span>
 
         {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
@@ -18,11 +22,18 @@
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-language-dropdown-content>
+        {{#if @shouldShowAllLanguagesOption}}
+          <AllLanguagesDropdownLink
+            @isSelected={{this.isAllLanguagesOptionSelected}}
+            @onClick={{fn this.handleAllLanguagesDropdownLinkClick dd.actions.close}}
+          />
+        {{/if}}
+
         {{#each @languages as |language|}}
           <LanguageDropdownLink
             @language={{language}}
             @isEnabled={{true}}
-            @isSelected={{eq language @selectedLanguage}}
+            @isSelected={{eq language.slug @selectedLanguage.slug}}
             @isRequested={{eq language @requestedLanguage}}
             @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
           />
