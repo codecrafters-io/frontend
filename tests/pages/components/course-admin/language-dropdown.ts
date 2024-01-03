@@ -7,7 +7,7 @@ export default {
     await settled();
   },
 
-  clickOnLanguageLink(languageName) {
+  clickOnLanguageLink(languageName: string) {
     return this.content.clickOnLanguageLink(languageName);
   },
 
