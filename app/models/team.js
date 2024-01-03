@@ -6,14 +6,14 @@ import { memberAction } from 'ember-api-actions';
 export default class TeamModel extends Model {
   @attr('number') committedSeats;
   @attr('string') inviteCode;
-  @hasMany('team-membership', { async: false }) memberships;
+  @hasMany('team-membership', { async: false, inverse: 'team' }) memberships;
   @attr('string') name;
-  @hasMany('team-payment-method', { async: false }) paymentMethods;
-  @hasMany('team-pilot', { async: false }) pilots;
+  @hasMany('team-payment-method', { async: false, inverse: 'team' }) paymentMethods;
+  @hasMany('team-pilot', { async: false, inverse: 'team' }) pilots;
   @attr('string') pricingPlanType;
   @attr('string') slackAppInstallationUrl;
-  @hasMany('slack-integration', { async: false }) slackIntegrations;
-  @hasMany('team-subscription', { async: false }) subscriptions;
+  @hasMany('slack-integration', { async: false, inverse: 'team' }) slackIntegrations;
+  @hasMany('team-subscription', { async: false, inverse: 'team' }) subscriptions;
 
   @equal('pricingPlanType', 'monthly') pricingPlanTypeIsMonthly;
   @equal('pricingPlanType', 'yearly') pricingPlanTypeIsYearly;

@@ -3,5 +3,5 @@ import Model from '@ember-data/model';
 
 export default class SlackIntegration extends Model {
   @attr('string') slackChannelName;
-  @belongsTo('team', { async: false }) team;
+  @belongsTo('team', { async: false, inverse: 'slackIntegrations' }) team;
 }
