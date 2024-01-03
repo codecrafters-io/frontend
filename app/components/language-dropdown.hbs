@@ -18,6 +18,13 @@
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-language-dropdown-content>
+        {{#if @shouldShowAllLanguagesOption}}
+          <AllLanguagesDropdownLink
+            @isSelected={{this.isAllLanguagesOptionSelected}}
+            @onClick={{fn this.handleAllLanguagesDropdownLinkClick dd.actions.close}}
+          />
+        {{/if}}
+
         {{#each @languages as |language|}}
           <LanguageDropdownLink
             @language={{language}}

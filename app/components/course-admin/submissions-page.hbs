@@ -12,6 +12,8 @@
     @languages={{this.sortedLanguagesForDropdown}}
     @requestedLanguage={{this.requestedLanguage}}
     @selectedLanguage={{this.currentLanguage}}
+    @shouldShowAllLanguagesOption={{true}}
+    @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
     @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
     @onDidInsertDropdown={{(noop)}}
     class="py-3"

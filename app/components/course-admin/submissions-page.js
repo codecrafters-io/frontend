@@ -16,11 +16,7 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   }
 
   get currentLanguage() {
-    return this.args.filteredLanguages.firstObject || this.defaultLanguageDropdownSelection;
-  }
-
-  get defaultLanguageDropdownSelection() {
-    return { name: 'All Languages', slug: 'all' };
+    return this.args.filteredLanguages.firstObject;
   }
 
   get filteringDescription() {
@@ -40,9 +36,12 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   }
 
   get sortedLanguagesForDropdown() {
-    const languagesForDropdown = [this.defaultLanguageDropdownSelection, ...this.args.course.betaOrLiveLanguages];
+    return this.args.course.betaOrLiveLanguages.sortBy('name');
+  }
 
-    return languagesForDropdown.sortBy('name');
+  @action
+  handleAllLanguagesDropdownLinkClick() {
+    this.router.transitionTo({ queryParams: { languages: [] } });
   }
 
   @action
@@ -51,10 +50,6 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
       return;
     }
 
-    if (language.slug === 'all') {
-      this.router.transitionTo({ queryParams: { languages: [] } });
-    } else {
-      this.router.transitionTo({ queryParams: { languages: language.slug } });
-    }
+    this.router.transitionTo({ queryParams: { languages: language.slug } });
   }
 }
