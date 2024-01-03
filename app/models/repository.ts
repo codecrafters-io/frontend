@@ -46,7 +46,7 @@ export default class RepositoryModel extends Model {
   declare githubRepositorySyncConfigurations: GithubRepositorySyncConfiguration[];
   @belongsTo('user', { async: false, inverse: 'repositories' }) declare user: UserModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel | undefined;
-  @belongsTo('submission', { async: false, inverse: 'repository' }) declare lastSubmission: SubmissionModel;
+  @belongsTo('submission', { async: false, inverse: null }) declare lastSubmission: SubmissionModel;
   @belongsTo('repository-stage-list', { async: false, inverse: 'repository' }) declare stageList: RepositoryStageListModel;
   @hasMany('submission', { async: false, inverse: 'repository' }) declare submissions: SubmissionModel[];
 
