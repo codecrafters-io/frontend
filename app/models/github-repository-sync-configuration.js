@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class GithubRepositorySyncConfiguration extends Model {
-  @belongsTo('repository', { async: false }) repository;
+  @belongsTo('repository', { async: false, inverse: 'githubRepositorySyncConfigurations' }) repository;
 
   @attr('string') githubRepositoryId;
   @attr('string') githubRepositoryName;
