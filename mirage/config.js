@@ -195,6 +195,12 @@ function routes() {
 
   this.patch('/concept-questions/:id');
 
+  this.get('/contests');
+
+  this.get('/contests/:slug', function (schema, request) {
+    return schema.contests.where({ slug: request.params.slug }).models[0];
+  });
+
   this.get('/charges');
 
   this.get('/code-walkthroughs');

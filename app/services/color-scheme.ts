@@ -5,7 +5,7 @@ export default class ColorScheme extends Service {
   @service declare router: RouterService;
 
   get isDark(): boolean {
-    if (this.router.currentRouteName === 'badges') {
+    if (['badges', 'contests', 'contest'].includes(this.router.currentRouteName)) {
       return true;
     } else {
       return false;
