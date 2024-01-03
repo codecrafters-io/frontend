@@ -19,7 +19,9 @@ export default class ContestRoute extends BaseRoute {
     const allContests = (await this.store.findAll('contest')) as unknown as ContestModel[];
 
     // TODO: Handle case where contest is not found
-    const contest = allContests.find((contest) => contest.slug === params.contest_slug) as ContestModel;
+    const contest = await this.store.findRecord('contest', params.contest_slug, {
+      include: 'leaderboard,leaderboard.entries,leaderboard.entries.user',
+    });
 
     return {
       contest,

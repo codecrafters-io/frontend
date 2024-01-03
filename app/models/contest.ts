@@ -1,7 +1,8 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
+import type LeaderboardModel from './leaderboard';
 
 export default class ContestModel extends Model {
-  // @belongsTo('leaderboard', { async: false }) declare leaderboard: LeaderboardModel;
+  @belongsTo('leaderboard', { async: false, inverse: 'contest' }) declare leaderboard: LeaderboardModel;
 
   @attr('string') declare name: string;
   @attr('string') declare slug: string;
