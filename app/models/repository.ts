@@ -38,7 +38,7 @@ export default class RepositoryModel extends Model {
 
   @hasMany('autofix-request', { async: false, inverse: 'repository' }) declare autofixRequests: AutofixRequestModel[];
   @belongsTo('course', { async: false, inverse: null }) declare course: CourseModel;
-  @hasMany('course-extension-activation', { async: false }) declare courseExtensionActivations: CourseExtensionActivation[];
+  @hasMany('course-extension-activation', { async: false, inverse: 'repository' }) declare courseExtensionActivations: CourseExtensionActivation[];
   @hasMany('course-stage-completion', { async: false, inverse: 'repository' }) declare courseStageCompletions: CourseStageCompletionModel[];
   @hasMany('course-stage-feedback-submission', { async: false, inverse: 'repository' })
   declare courseStageFeedbackSubmissions: CourseStageFeedbackSubmissionModel[];
