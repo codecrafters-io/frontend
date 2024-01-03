@@ -17,7 +17,9 @@ export default class ContestRoute extends BaseRoute {
 
   async model(params: { contest_slug: string }) {
     const allContests = (await this.store.findAll('contest')) as unknown as ContestModel[];
-    const contest = allContests.find((contest) => contest.slug === params.contest_slug);
+
+    // TODO: Handle case where contest is not found
+    const contest = allContests.find((contest) => contest.slug === params.contest_slug) as ContestModel;
 
     return {
       contest,
