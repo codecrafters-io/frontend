@@ -10,7 +10,11 @@
         data-test-language-dropdown-trigger
       >
         <span class="mr-1" data-test-current-language-name>
-          {{@selectedLanguage.name}}
+          {{#if this.isAllLanguagesOptionSelected}}
+            All Languages
+          {{else}}
+            {{@selectedLanguage.name}}
+          {{/if}}
         </span>
 
         {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
