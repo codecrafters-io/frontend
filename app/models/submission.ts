@@ -11,7 +11,8 @@ import type AutofixRequestModel from './autofix-request';
 export default class SubmissionModel extends Model {
   @hasMany('autofix-request', { async: false, inverse: 'submission' }) declare autofixRequests: AutofixRequestModel[];
   @belongsTo('course-stage', { async: false, inverse: null }) declare courseStage: CourseStageModel;
-  @belongsTo('community-course-stage-solution', { async: false }) declare communityCourseStageSolution: CommunityCourseStageSolutionModel;
+  @belongsTo('community-course-stage-solution', { async: false, inverse: null })
+  declare communityCourseStageSolution: CommunityCourseStageSolutionModel;
   @belongsTo('course-tester-version', { async: false, inverse: null }) declare testerVersion: CourseTesterVersionModel;
   @belongsTo('repository', { async: false, inverse: 'submissions' }) declare repository: RepositoryModel;
 

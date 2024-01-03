@@ -6,7 +6,7 @@ export default class CommunityCourseStageSolutionModel extends Model {
   @belongsTo('language', { async: false, inverse: null }) language;
   @belongsTo('user', { async: false, inverse: null }) user;
 
-  @hasMany('community-course-stage-solution-comment', { async: false }) comments;
+  @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) comments;
 
   @attr('') changedFiles; // free-form JSON
   @attr('string') explanationMarkdown;

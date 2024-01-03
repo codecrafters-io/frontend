@@ -21,7 +21,7 @@ export default function (config) {
         }),
         communityCourseStageSolutionComment: Model.extend({
           user: belongsTo('user', { inverse: null }),
-          target: belongsTo('community-course-stage-solution'),
+          target: belongsTo('community-course-stage-solution', { inverse: 'comments' }),
           language: belongsTo('language', { inverse: null }),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
