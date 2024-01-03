@@ -3,6 +3,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
+import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 
@@ -11,6 +12,7 @@ export default class ReferralLinkRoute extends BaseRoute {
 
   @service authenticator!: AuthenticatorService;
   @service store!: Store;
+  @service declare router: RouterService;
 
   activate() {
     scrollToTop();
@@ -18,7 +20,7 @@ export default class ReferralLinkRoute extends BaseRoute {
 
   afterModel(model: { referralLink: ReferralLinkModel }) {
     if (!model.referralLink) {
-      this.transitionTo('not-found');
+      this.router.transitionTo('not-found');
     }
   }
 

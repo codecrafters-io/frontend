@@ -7,6 +7,7 @@ export default class JoinRoute extends BaseRoute {
 
   @service authenticator;
   @service store;
+  @service router;
 
   activate() {
     scrollToTop();
@@ -14,7 +15,7 @@ export default class JoinRoute extends BaseRoute {
 
   afterModel(model) {
     if (!model.affiliateLink) {
-      this.transitionTo('not-found');
+      this.router.transitionTo('not-found');
     }
   }
 
