@@ -21,6 +21,8 @@ Router.map(function () {
   });
 
   this.route('concept-group', { path: '/collections/:concept_group_slug' });
+  this.route('contests');
+  this.route('contest', { path: '/contests/:contest_slug' });
   this.route('courses');
 
   this.route('course', { path: '/courses/:course_slug' }, function () {
