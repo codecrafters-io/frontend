@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
-import LeaderboardEntry from 'codecrafters-frontend/utils/leaderboard-entry';
+import CourseLeaderboardEntry from 'codecrafters-frontend/utils/course-leaderboard-entry';
 import LeaderboardPoller from 'codecrafters-frontend/utils/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
@@ -35,7 +35,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
   @tracked isLoadingEntries = true;
   @tracked isReloadingEntries = false;
-  @tracked entriesFromAPI: LeaderboardEntry[] = [];
+  @tracked entriesFromAPI: CourseLeaderboardEntry[] = [];
   @tracked polledCourse?: CourseModel;
   @tracked team?: TeamModel;
 
@@ -66,7 +66,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
       return [];
     }
 
-    let entries: LeaderboardEntry[] = [];
+    let entries: CourseLeaderboardEntry[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
       entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.authenticator.currentUser));
@@ -89,7 +89,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
     return allRepositories.map((repository) => {
       // TODO: Use "completed stages count" instead?
-      return new LeaderboardEntry({
+      return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         currentCourseStage: repository.currentStage || repository.course.firstStage,
         language: repository.language,
@@ -100,7 +100,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   }
 
   get mergedEntries() {
-    const entriesGroupedByUser: Record<string, LeaderboardEntry[]> = {};
+    const entriesGroupedByUser: Record<string, CourseLeaderboardEntry[]> = {};
 
     this.entries.forEach((entry) => {
       entriesGroupedByUser[entry.user.id] ||= [];
@@ -113,7 +113,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
       const entryWithHighestCourseStage = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
 
       result.push(
-        new LeaderboardEntry({
+        new CourseLeaderboardEntry({
           status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage!.status,
           currentCourseStage: entryWithHighestCourseStage!.currentCourseStage,
           language: entryWithHighestCourseStage!.language,
@@ -129,16 +129,16 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @action
   async handleDidInsert() {
     if (this.team) {
-      this.entriesFromAPI = (await this.store.query('leaderboard-entry', {
+      this.entriesFromAPI = (await this.store.query('course-leaderboard-entry', {
         course_id: this.args.course.id,
         team_id: this.team.id,
         include: 'language,current-course-stage,user',
-      })) as unknown as LeaderboardEntry[];
+      })) as unknown as CourseLeaderboardEntry[];
     } else {
-      this.entriesFromAPI = (await this.store.query('leaderboard-entry', {
+      this.entriesFromAPI = (await this.store.query('course-leaderboard-entry', {
         course_id: this.args.course.id,
         include: 'language,current-course-stage,user',
-      })) as unknown as LeaderboardEntry[];
+      })) as unknown as CourseLeaderboardEntry[];
     }
 
     this.isLoadingEntries = false;
@@ -147,7 +147,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   }
 
   @action
-  async handlePoll(entriesFromAPI: LeaderboardEntry[]) {
+  async handlePoll(entriesFromAPI: CourseLeaderboardEntry[]) {
     this.entriesFromAPI = entriesFromAPI;
   }
 

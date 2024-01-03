@@ -1,17 +1,12 @@
-export default class LeaderboardEntry {
-  status;
-  currentCourseStage;
-  language;
-  user;
-  lastAttemptAt;
+import { attr, belongsTo } from '@ember-data/model';
+import Model from '@ember-data/model';
 
-  constructor({ status, currentCourseStage, language, user, lastAttemptAt }) {
-    this.status = status;
-    this.currentCourseStage = currentCourseStage;
-    this.language = language;
-    this.user = user;
-    this.lastAttemptAt = lastAttemptAt;
-  }
+export default class CourseLeaderboardEntry extends Model {
+  @attr('string') status;
+  @belongsTo('course-stage', { async: false, inverse: null }) currentCourseStage;
+  @belongsTo('language', { async: false, inverse: null }) language;
+  @belongsTo('user', { async: false, inverse: null }) user;
+  @attr('date') lastAttemptAt;
 
   get completedStagesCount() {
     if (this.statusIsCompleted) {
