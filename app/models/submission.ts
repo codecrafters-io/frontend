@@ -16,8 +16,8 @@ export default class SubmissionModel extends Model {
   @belongsTo('course-tester-version', { async: false, inverse: null }) declare testerVersion: CourseTesterVersionModel;
   @belongsTo('repository', { async: false, inverse: 'submissions' }) declare repository: RepositoryModel;
 
-  @hasMany('badge-award', { async: false }) declare badgeAwards: BadgeAwardModel[];
-  @hasMany('submission-evaluation', { async: false }) declare evaluations: SubmissionEvaluationModel[];
+  @hasMany('badge-award', { async: false, inverse: 'submission' }) declare badgeAwards: BadgeAwardModel[];
+  @hasMany('submission-evaluation', { async: false, inverse: 'submission' }) declare evaluations: SubmissionEvaluationModel[];
 
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('date') declare createdAt: Date;

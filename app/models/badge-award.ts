@@ -7,7 +7,7 @@ import { attr, belongsTo } from '@ember-data/model';
 export default class BadgeAwardModel extends Model {
   @belongsTo('badge', { async: false, inverse: null }) declare badge: BadgeModel;
   @belongsTo('user', { async: false, inverse: 'badgeAwards' }) declare user: UserModel;
-  @belongsTo('submission', { async: false, inverse: null }) declare submission: SubmissionModel; // This is actually polymorphic
+  @belongsTo('submission', { async: false, inverse: 'badgeAwards' }) declare submission: SubmissionModel; // This is actually polymorphic
 
   @attr('date') declare awardedAt: Date;
 }
