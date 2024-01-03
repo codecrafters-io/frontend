@@ -31,4 +31,12 @@ win the prize for the ongoing CodeCrafters Contest. There is no separate registr
 7. CodeCrafters has rigorous checks in place for detecting plagiarism and other malicious tactics. Any such activity will result in a 1 year ban from Contests.
     `;
   }
+
+  get prizeDetailsMarkdown(): string {
+    return `
+**This week's prize: ZSA Moonlander**.
+
+Beyond a keyboard: a commitment to efficiency and well-being.
+    `;
+  }
 }
