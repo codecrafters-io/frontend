@@ -29,11 +29,15 @@ export default class ContestRoute extends BaseRoute {
       include: 'user,leaderboard',
     })) as unknown as LeaderboardEntryModel[];
 
-    const surroundingLeaderboardEntries = (await this.store.query('leaderboard-entry', {
-      leaderboard_id: contest.leaderboard.id,
-      include: 'leaderboard,user',
-      filter_type: 'around_me',
-    })) as unknown as LeaderboardEntryModel[];
+    let surroundingLeaderboardEntries: LeaderboardEntryModel[] = [];
+
+    if (this.authenticator.isAuthenticated) {
+      surroundingLeaderboardEntries = (await this.store.query('leaderboard-entry', {
+        leaderboard_id: contest.leaderboard.id,
+        include: 'leaderboard,user',
+        filter_type: 'around_me',
+      })) as unknown as LeaderboardEntryModel[];
+    }
 
     return {
       contest,
