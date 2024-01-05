@@ -36,9 +36,9 @@ win the prize for the ongoing contest. There is no separate registration require
 
   get prizeDetailsMarkdown(): string {
     return `
-**This week's prize: [ZSA Moonlander](https://www.zsa.io/moonlander/)**.
+**This week's prize: [Oura Ring Horizon Black](https://ouraring.com/product/rings/horizon/black)**.
 
-Beyond a keyboard: a commitment to efficiency and well-being.
+You can't improve what you don't measure. Sleep is no exception. 
     `;
   }
 }
