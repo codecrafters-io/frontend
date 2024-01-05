@@ -8,7 +8,6 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { setupWindowMock } from 'ember-window-mock/test-support';
 import {
   signIn,
   signInAsCourseAuthor,
@@ -21,7 +20,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
-  setupWindowMock(hooks);
 
   test('can view stages before starting course', async function (assert) {
     testScenario(this.server);
@@ -711,9 +709,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const currentUser = this.server.schema.users.first();
-    currentUser.update('featureFlags', { 'can-see-cli-suggestion-on-stage-two': 'test' });
-
     await visit('/courses/redis/stages/2');
     await coursePage.installCliLink.click();
 
@@ -722,29 +717,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
 
     assert.ok(analyticsEventNames.includes('clicked_cli_installation_link'), 'clicked_cli_installation_link event should be tracked');
-  });
-
-  test('cli suggestion shows up in stage 2 if feature flag is set', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    const currentUser = this.server.schema.users.first();
-    currentUser.update('featureFlags', { 'can-see-cli-suggestion-on-stage-two': 'test' });
-
-    await visit('/courses/redis/stages/2');
-    assert.ok(coursePage.installCliLink.isVisible, 'cli suggestion should be visible');
-    await visit('/courses/redis/stages/3');
-    assert.notOk(coursePage.installCliLink.isVisible, 'cli suggestion should be visible');
-  });
-
-  test('cli suggestion shows up in stage 3 if feature flag is not set', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    await visit('/courses/redis/stages/2');
-    assert.notOk(coursePage.installCliLink.isVisible, 'cli suggestion should be visible');
-    await visit('/courses/redis/stages/3');
-    assert.ok(coursePage.installCliLink.isVisible, 'cli suggestion should be visible');
   });
 
   test('header should have a badge that shows the remaining time in days', async function (assert) {
