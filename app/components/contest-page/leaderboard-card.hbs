@@ -3,9 +3,20 @@
     <h2 class="font-semibold border-b dark:border-gray-800 pb-2 mb-5 text-lg dark:text-teal-400">Leaderboard</h2>
 
     <div class="flex flex-col gap-2.5">
-      {{#each @contest.leaderboard.entries as |leaderboardEntry|}}
+      {{#each this.orderedTopEntries as |leaderboardEntry|}}
         <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} />
       {{/each}}
     </div>
+
+    {{#if this.shouldShowSurroundingEntries}}
+      <div class="h-px w-full bg-gray-800 my-6">
+      </div>
+
+      <div class="flex flex-col gap-2.5 mt-5">
+        {{#each this.orderedSurroundingEntries as |leaderboardEntry|}}
+          <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} />
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
 </div>

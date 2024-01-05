@@ -5,7 +5,12 @@
     <ContestPage::Header @contest={{@model.contest}} class="mb-6" />
     <div class="flex gap-3 md:gap-6 items-start">
       <div class="flex-grow flex-shrink min-w-0 flex flex-col items-stretch gap-6">
-        <ContestPage::LeaderboardCard @contest={{@model.contest}} />
+        <ContestPage::LeaderboardCard
+          @contest={{@model.contest}}
+          @topEntries={{@model.topLeaderboardEntries}}
+          @surroundingEntries={{@model.surroundingLeaderboardEntries}}
+        />
+
         <ContestPage::HowItWorksCard @contest={{@model.contest}} />
       </div>
 

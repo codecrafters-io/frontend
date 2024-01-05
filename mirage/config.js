@@ -368,11 +368,11 @@ function routes() {
   this.get('/leaderboard-entries', function (schema, request) {
     let result = schema.leaderboardEntries.all();
 
-    if (request.queryParams.contest_id) {
-      result = result.filter((leaderboardEntry) => leaderboardEntry.contest.id === request.queryParams.contest_id);
-    } else {
-      throw new Error('Unknown leaderboard type');
+    if (!request.queryParams.leaderboard_id) {
+      throw new Error('No leaderboard ID provided');
     }
+
+    result = result.filter((leaderboardEntry) => leaderboardEntry.leaderboard.id === request.queryParams.leaderboard_id);
 
     return result;
   });

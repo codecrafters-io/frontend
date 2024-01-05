@@ -1,7 +1,9 @@
 <a
   href="/users/{{@entry.user.username}}"
   target="_blank"
-  class="rounded-md w-full border dark:border-gray-800 dark:hover:border-gray-700 dark:hover:bg-gray-900 p-2.5 flex items-center justify-between group/leaderboard-entry"
+  class="rounded-md w-full border
+    {{if this.isCurrentUserEntry 'dark:border-green-500' 'dark:border-gray-800 dark:hover:border-gray-700'}}
+    dark:hover:bg-gray-900 p-2.5 flex items-center justify-between group/leaderboard-entry"
   ...attributes
   rel="noopener noreferrer"
 >
