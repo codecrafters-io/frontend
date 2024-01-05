@@ -3,7 +3,7 @@
 <div class="bg-black dark">
   <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
     <ContestPage::Header @contest={{@model.contest}} class="mb-6" />
-    <div class="flex gap-3 md:gap-6 items-start">
+    <div class="flex flex-col-reverse gap-3 md:gap-6 items-start md:flex-row">
       <div class="flex-grow flex-shrink min-w-0 flex flex-col items-stretch gap-6">
         <ContestPage::LeaderboardCard
           @contest={{@model.contest}}
@@ -14,7 +14,7 @@
         <ContestPage::HowItWorksCard @contest={{@model.contest}} />
       </div>
 
-      <ContestPage::PrizeDetailsCard @contest={{@model.contest}} class="w-64 xl:w-80 flex-shrink-0" />
+      <ContestPage::PrizeDetailsCard @contest={{@model.contest}} class="w-full md:w-64 xl:w-80 flex-shrink-0" />
     </div>
   </div>
 </div>
