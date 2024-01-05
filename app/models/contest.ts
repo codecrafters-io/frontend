@@ -1,7 +1,8 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
+import type LeaderboardModel from './leaderboard';
 
 export default class ContestModel extends Model {
-  // @belongsTo('leaderboard', { async: false }) declare leaderboard: LeaderboardModel;
+  @belongsTo('leaderboard', { async: false, inverse: 'contest' }) declare leaderboard: LeaderboardModel;
 
   @attr('string') declare name: string;
   @attr('string') declare slug: string;
@@ -13,14 +14,15 @@ export default class ContestModel extends Model {
     // TODO: We'll need to change this for non-weekly contests in the future
     return `
 1. When you pass any stage in a CodeCrafters challenge, you automatically become eligible to
-win the prize for the ongoing CodeCrafters Contest. There is no separate registration required.
+win the prize for the ongoing contest. There is no separate registration required.
 
 2. Passing each new stage automatically adds points to your score. The number of points awarded depends on the difficulty of the stage:
+  - Very Easy: 5 points
   - Easy: 15 points
-  - Medium: 25 points
-  - Difficult: 45 points
+  - Medium: 30 points
+  - Hard: 50 points
 
-3. Points can only be awarded once per unique stage, regardless of language. If you have passed the same stage before, you won’t accrue points.
+3. Points are only awarded once per unique stage, regardless of language. If you have passed the same stage before, you won't accrue points.
 
 4. Points reset once the ongoing contest ends.
 
@@ -34,7 +36,7 @@ win the prize for the ongoing CodeCrafters Contest. There is no separate registr
 
   get prizeDetailsMarkdown(): string {
     return `
-**This week's prize: ZSA Moonlander**.
+**This week's prize: [ZSA Moonlander](https://www.zsa.io/moonlander/)**.
 
 Beyond a keyboard: a commitment to efficiency and well-being.
     `;

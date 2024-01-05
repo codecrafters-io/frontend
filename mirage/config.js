@@ -267,10 +267,6 @@ function routes() {
   this.post('/course-extension-activations');
   this.delete('/course-extension-activations/:id');
 
-  this.get('/course-language-requests');
-  this.post('/course-language-requests');
-  this.delete('/course-language-requests/:id');
-
   this.get('/course-extension-ideas');
   this.post('/course-extension-ideas/:id/unvote', () => {});
   this.post('/course-extension-idea-votes');
@@ -278,6 +274,28 @@ function routes() {
   this.get('/course-ideas');
   this.post('/course-ideas/:id/unvote', () => {});
   this.post('/course-idea-votes');
+
+  this.get('/course-language-requests');
+  this.post('/course-language-requests');
+  this.delete('/course-language-requests/:id');
+
+  this.get('/course-leaderboard-entries', function (schema, request) {
+    let result = schema.courseLeaderboardEntries.all();
+
+    if (request.queryParams.team_id) {
+      const team = schema.teams.find(request.queryParams.team_id);
+      const teamMemberships = schema.teamMemberships.where({ teamId: team.id }).models;
+      const userIds = teamMemberships.map((teamMembership) => teamMembership.user.id);
+
+      result = result.filter((leaderboardEntry) => userIds.includes(leaderboardEntry.user.id));
+    }
+
+    if (request.queryParams.course_id) {
+      result = result.filter((leaderboardEntry) => leaderboardEntry.currentCourseStage.course.id === request.queryParams.course_id);
+    }
+
+    return result;
+  });
 
   this.get('/course-stage-comments', function (schema, request) {
     let result = schema.courseStageComments.all().filter((comment) => comment.targetId.toString() === request.queryParams.target_id);
@@ -347,20 +365,14 @@ function routes() {
 
   this.get('/languages');
 
-  this.get('/course-leaderboard-entries', function (schema, request) {
-    let result = schema.courseLeaderboardEntries.all();
+  this.get('/leaderboard-entries', function (schema, request) {
+    let result = schema.leaderboardEntries.all();
 
-    if (request.queryParams.team_id) {
-      const team = schema.teams.find(request.queryParams.team_id);
-      const teamMemberships = schema.teamMemberships.where({ teamId: team.id }).models;
-      const userIds = teamMemberships.map((teamMembership) => teamMembership.user.id);
-
-      result = result.filter((leaderboardEntry) => userIds.includes(leaderboardEntry.user.id));
+    if (!request.queryParams.leaderboard_id) {
+      throw new Error('No leaderboard ID provided');
     }
 
-    if (request.queryParams.course_id) {
-      result = result.filter((leaderboardEntry) => leaderboardEntry.currentCourseStage.course.id === request.queryParams.course_id);
-    }
+    result = result.filter((leaderboardEntry) => leaderboardEntry.leaderboard.id === request.queryParams.leaderboard_id);
 
     return result;
   });

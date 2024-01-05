@@ -1,5 +1,22 @@
 <div class="dark:bg-gray-950 rounded-md w-full border dark:border-gray-800" ...attributes>
   <div class="p-4 pt-3 sm:p-6 sm:pt-5">
     <h2 class="font-semibold border-b dark:border-gray-800 pb-2 mb-5 text-lg dark:text-teal-400">Leaderboard</h2>
+
+    <div class="flex flex-col gap-2.5">
+      {{#each this.orderedTopEntries as |leaderboardEntry|}}
+        <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} />
+      {{/each}}
+    </div>
+
+    {{#if this.shouldShowSurroundingEntries}}
+      <div class="h-px w-full bg-gray-800 my-6">
+      </div>
+
+      <div class="flex flex-col gap-2.5 mt-5">
+        {{#each this.orderedSurroundingEntries as |leaderboardEntry|}}
+          <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} />
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
 </div>

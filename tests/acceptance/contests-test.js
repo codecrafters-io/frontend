@@ -10,7 +10,15 @@ import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 function createContests(server) {
-  server.schema.contests.create({
+  const user1 = server.create('user', {
+    id: 'user-1',
+    avatarUrl: 'https://github.com/Gufran.png',
+    createdAt: new Date(),
+    githubUsername: 'Gufran',
+    username: 'Gufran',
+  });
+
+  const contest = server.create('contest', {
     slug: 'weekly-1',
     name: 'Weekly Contest #1',
     startsAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
@@ -18,7 +26,13 @@ function createContests(server) {
     type: 'WeeklyContest',
   });
 
-  server.schema.contests.create({
+  server.schema.leaderboardEntries.create({
+    leaderboard: contest.leaderboard,
+    user: user1,
+    score: 100,
+  });
+
+  server.create('contest', {
     slug: 'weekly-2',
     name: 'Weekly Contest #2',
     startsAt: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now

@@ -1,0 +1,20 @@
+<a
+  href="/users/{{@entry.user.username}}"
+  target="_blank"
+  class="rounded-md w-full border
+    {{if this.isCurrentUserEntry 'dark:border-green-500' 'dark:border-gray-800 dark:hover:border-gray-700'}}
+    dark:hover:bg-gray-900 p-2.5 flex items-center justify-between group/leaderboard-entry"
+  ...attributes
+  rel="noopener noreferrer"
+>
+  <div class="flex items-center gap-3">
+    <AvatarImage @user={{@entry.user}} class="w-8 h-8 border border-gray-300 rounded" />
+    <span class="text-white font-semibold">
+      {{@entry.user.username}}
+    </span>
+  </div>
+  <div class="text-green-500 px-2 py-0.5 text-sm">
+    <span class="font-semibold font-mono">{{@entry.score}}</span>
+    pts
+  </div>
+</a>
