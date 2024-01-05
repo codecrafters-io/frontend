@@ -709,8 +709,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const currentUser = this.server.schema.users.first();
-
     await visit('/courses/redis/stages/2');
     await coursePage.installCliLink.click();
 
