@@ -35,10 +35,20 @@ win the prize for the ongoing contest. There is no separate registration require
   }
 
   get prizeDetailsMarkdown(): string {
-    return `
+    if (this.slug == 'weekly-1') {
+      return `
 **This week's prize: [Oura Ring Horizon Black](https://ouraring.com/product/rings/horizon/black)**.
 
-You can't improve what you don't measure. Sleep is no exception. 
-    `;
+You can't improve what you don't measure. Sleep is no exception.
+      `;
+    } else if (this.slug == 'weekly-2') {
+      return `
+**This week's prize: [AirPods Pro (2nd gen USB-C)](https://www.apple.com/uk/shop/product/MTJV3ZM/A/airpods-pro)**.
+
+An incredible wireless headphone experience.
+      `;
+    } else {
+      return `The prize for this week hasn't been revealed yet. Watch this space!`;
+    }
   }
 }
