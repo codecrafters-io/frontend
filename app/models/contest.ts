@@ -10,6 +10,14 @@ export default class ContestModel extends Model {
   @attr('date') declare endsAt: Date;
   @attr('string') declare type: string;
 
+  get hasNotStarted(): boolean {
+    return !this.hasStarted;
+  }
+
+  get hasStarted(): boolean {
+    return new Date() > this.startsAt;
+  }
+
   get instructionsMarkdown(): string {
     // TODO: We'll need to change this for non-weekly contests in the future
     return `
@@ -32,6 +40,14 @@ win the prize for the ongoing contest. There is no separate registration require
 
 7. CodeCrafters has rigorous checks in place for detecting plagiarism and other malicious tactics. Any such activity will result in a 1 year ban from Contests.
     `;
+  }
+
+  get leaderboardEntriesAreNotRevealed(): boolean {
+    return new Date() < this.leaderboardEntriesRevealedAt;
+  }
+
+  get leaderboardEntriesRevealedAt(): Date {
+    return new Date(this.startsAt.getTime() + 1000 * 60 * 60 * 24); // 24 hours after contest starts
   }
 
   get prizeDetailsMarkdown(): string {
