@@ -3,7 +3,9 @@
     <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">{{@contest.name}}</h1>
 
     <span class="text-gray-200 font-semibold">
-      Jan 1 - Jan 8
+      {{date-format @contest.startsAt format="MMM d"}}
+      -
+      {{date-format @contest.endsAt format="MMM d"}}
     </span>
   </div>
 </div>
