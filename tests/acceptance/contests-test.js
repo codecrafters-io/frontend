@@ -19,8 +19,8 @@ function createContests(server) {
   });
 
   const contest = server.create('contest', {
-    slug: 'weekly-1',
-    name: 'Weekly Contest #1',
+    slug: 'weekly-2',
+    name: 'Weekly Contest #3',
     startsAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
     endsAt: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
     type: 'WeeklyContest',
@@ -33,8 +33,8 @@ function createContests(server) {
   });
 
   server.create('contest', {
-    slug: 'weekly-2',
-    name: 'Weekly Contest #2',
+    slug: 'weekly-3',
+    name: 'Weekly Contest #3',
     startsAt: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
     endsAt: new Date(Date.now() + 11 * 24 * 60 * 60 * 1000), // 11 days from now
     type: 'WeeklyContest',
@@ -54,7 +54,7 @@ module('Acceptance | contests-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await contestsPage.visit();
-    assert.strictEqual(currentURL(), '/contests/weekly-1');
+    assert.strictEqual(currentURL(), '/contests/weekly-2');
     // await this.pauseTest();
 
     await percySnapshot('Active Contest');
