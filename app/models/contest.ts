@@ -10,6 +10,14 @@ export default class ContestModel extends Model {
   @attr('date') declare endsAt: Date;
   @attr('string') declare type: string;
 
+  get hasNotStarted(): boolean {
+    return !this.hasStarted;
+  }
+
+  get hasStarted(): boolean {
+    return new Date() > this.startsAt;
+  }
+
   get instructionsMarkdown(): string {
     // TODO: We'll need to change this for non-weekly contests in the future
     return `
@@ -34,11 +42,29 @@ win the prize for the ongoing contest. There is no separate registration require
     `;
   }
 
+  get leaderboardEntriesAreNotRevealed(): boolean {
+    return new Date() < this.leaderboardEntriesRevealedAt;
+  }
+
+  get leaderboardEntriesRevealedAt(): Date {
+    return new Date(this.startsAt.getTime() + 1000 * 60 * 60 * 24); // 24 hours after contest starts
+  }
+
   get prizeDetailsMarkdown(): string {
-    return `
+    if (this.slug == 'weekly-1') {
+      return `
 **This week's prize: [Oura Ring Horizon Black](https://ouraring.com/product/rings/horizon/black)**.
 
-You can't improve what you don't measure. Sleep is no exception. 
-    `;
+You can't improve what you don't measure. Sleep is no exception.
+      `;
+    } else if (this.slug == 'weekly-2') {
+      return `
+**This week's prize: [AirPods Pro (2nd gen USB-C)](https://www.apple.com/uk/shop/product/MTJV3ZM/A/airpods-pro)**.
+
+An incredible wireless headphone experience.
+      `;
+    } else {
+      return `The prize for this week hasn't been revealed yet. Watch this space!`;
+    }
   }
 }
