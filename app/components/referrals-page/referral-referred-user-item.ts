@@ -18,18 +18,38 @@ interface Signature {
 
 export default class ReferralReferredUserItemComponent extends Component<Signature> {
   get fullActivatesAt() {
+    // TODO: Temporary, prevents rendering errors
+    if (!this.args.grant?.activatesAt) {
+      return 'Invalid';
+    }
+
     return format(this.args.grant?.activatesAt as Date, 'dd MMMM yyyy');
   }
 
   get fullExpiresAt() {
+    // TODO: Temporary, prevents rendering errors
+    if (!this.args.grant?.expiresAt) {
+      return 'Invalid';
+    }
+
     return format(this.args.grant?.expiresAt as Date, 'dd MMMM yyyy');
   }
 
   get shortActivatesAt() {
+    // TODO: Temporary, prevents rendering errors
+    if (!this.args.grant?.activatesAt) {
+      return 'Invalid';
+    }
+
     return format(this.args.grant?.activatesAt as Date, 'dd MMM');
   }
 
   get shortExpiresAt() {
+    // TODO: Temporary, prevents rendering errors
+    if (!this.args.grant?.expiresAt) {
+      return 'Invalid';
+    }
+
     return format(this.args.grant?.expiresAt as Date, 'dd MMM');
   }
 }

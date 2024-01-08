@@ -6,6 +6,19 @@
       <h1 class="font-semibold text-2xl text-gray-700 mb-5 flex-shrink-0">Referrals</h1>
     </div>
 
+    {{#if this.currentUser.isAffiliate}}
+      <Alert @type="error" class="mb-4">
+        <p class="text-sm">
+          This is the referral program page, which is intended for regular users to share with their friends. Referrals made through this link are not
+          eligible for earnings.
+        </p>
+        <p>
+          Your partner link can be found
+          <LinkTo @route="partner">here</LinkTo>.
+        </p>
+      </Alert>
+    {{/if}}
+
     <div class="flex flex-col md:flex-row gap-4">
       <div class="md:basis-2/3">
         <ReferralsPage::ReferralLinksContainer />
