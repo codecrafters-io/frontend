@@ -11,10 +11,6 @@
       "destination": "/join?via=gnomezgrave"
     },
     {
-      "source": "/r/comfortable-goose-710186",
-      "destination": "/join?via=gusgad"
-    },
-    {
       "source": "/",
       "destination": "/catalog"
     },
