@@ -13,9 +13,9 @@
       {{@entry.user.username}}
     </span>
   </div>
-  <div class="text-green-500 px-2 py-0.5 text-sm">
+  <div class="text-green-500 px-2 py-0.5 text-sm flex gap-4 items-center">
     {{#if (gt @entry.user.completedCourseParticipations.length 0)}}
-      <div class="mb-4 flex items-center space-x-1.5">
+      <div class="flex items-center space-x-1.5">
         {{#each @entry.user.languagesFromCompletedCourseParticipations as |language|}}
           <LanguageLogo @language={{language}} @variant="teal" class="h-6" />
         {{/each}}
