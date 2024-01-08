@@ -10,12 +10,23 @@ import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 function createContests(server) {
+  let python = server.schema.languages.findBy({ slug: 'python' });
+  let redis = server.schema.courses.findBy({ slug: 'redis' });
+
   const user1 = server.create('user', {
     id: 'user-1',
     avatarUrl: 'https://github.com/Gufran.png',
     createdAt: new Date(),
     githubUsername: 'Gufran',
     username: 'Gufran',
+  });
+
+  server.create('course-participation', {
+    course: redis,
+    language: python,
+    user: user1,
+    currentStage: redis.stages.models.sortBy('position')[7],
+    completedAt: new Date(),
   });
 
   const contest = server.create('contest', {
@@ -55,7 +66,6 @@ module('Acceptance | contests-test', function (hooks) {
 
     await contestsPage.visit();
     assert.strictEqual(currentURL(), '/contests/weekly-2');
-    // await this.pauseTest();
 
     await percySnapshot('Active Contest');
   });
