@@ -28,6 +28,7 @@ export default class HeaderComponent extends Component {
   get links() {
     const links = [
       { text: 'Catalog', route: 'catalog', type: 'route' },
+      { text: 'Contests', route: 'contests', type: 'route' },
       { text: 'Badges', route: 'badges', type: 'route' },
       { text: 'Vote', route: 'vote', type: 'route' },
     ];
