@@ -19,6 +19,7 @@ import grayLogoPython from '/assets/images/language-logos/python-gray-500.svg';
 import grayLogoRuby from '/assets/images/language-logos/ruby-gray-500.svg';
 import grayLogoRust from '/assets/images/language-logos/rust-gray-500.svg';
 import grayLogoSwift from '/assets/images/language-logos/swift-gray-500.svg';
+import grayLogoZig from '/assets/images/language-logos/zig-gray-500.svg';
 
 import tealLogoC from '/assets/images/language-logos/c-teal-500.svg';
 import tealLogoCpp from '/assets/images/language-logos/cpp-teal-500.svg';
@@ -37,6 +38,7 @@ import tealLogoPython from '/assets/images/language-logos/python-teal-500.svg';
 import tealLogoRuby from '/assets/images/language-logos/ruby-teal-500.svg';
 import tealLogoRust from '/assets/images/language-logos/rust-teal-500.svg';
 import tealLogoSwift from '/assets/images/language-logos/swift-teal-500.svg';
+import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
 
 export default class LanguageModel extends Model {
   @hasMany('course-language-configuration', { async: false, inverse: 'language' }) declare courseConfigurations: CourseLanguageConfigurationModel[];
@@ -64,6 +66,7 @@ export default class LanguageModel extends Model {
       ruby: grayLogoRuby,
       rust: grayLogoRust,
       swift: grayLogoSwift,
+      zig: grayLogoZig,
     }[this.slug];
   }
 
@@ -108,6 +111,7 @@ export default class LanguageModel extends Model {
       ruby: tealLogoRuby,
       rust: tealLogoRust,
       swift: tealLogoSwift,
+      zig: tealLogoZig,
     }[this.slug];
   }
 
