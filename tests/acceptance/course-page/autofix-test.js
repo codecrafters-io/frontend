@@ -41,7 +41,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    await coursePage.testResultsBar.clickOnTab('Autofix');
+    await coursePage.testResultsBar.clickOnTab('AI Hints');
     await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
 
     await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
@@ -127,7 +127,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    await coursePage.testResultsBar.clickOnTab('Autofix');
+    await coursePage.testResultsBar.clickOnTab('AI Hints');
     await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
 
     await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
@@ -175,7 +175,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs', 'Autofix']);
+    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs', 'AI Hints']);
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
