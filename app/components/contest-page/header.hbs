@@ -3,10 +3,10 @@
     <div class="flex items-center gap-6">
       <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">{{@contest.name}}</h1>
       <ContestPage::ContestStatusPill
-        @color={{this.statusPillColor}}
-        @tooltipCopy={{this.statusPillTooltipCopy}}
+        @color={{this.contestStatusPillColor}}
+        @tooltipCopy={{this.contestStatusPillTooltipCopy}}
         data-test-time-remaining-status-pill
-      >{{this.statusPillCopy}}</ContestPage::ContestStatusPill>
+      >{{this.contestStatusPillCopy}}</ContestPage::ContestStatusPill>
     </div>
 
     <span class="text-gray-200 font-semibold">

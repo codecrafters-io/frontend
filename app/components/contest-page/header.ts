@@ -11,7 +11,7 @@ type Signature = {
 };
 
 export default class ContestPageHeaderComponent extends Component<Signature> {
-  get statusPillColor(): 'gray' | 'green' {
+  get contestStatusPillColor(): 'gray' | 'green' {
     if (new Date() < this.args.contest.startsAt || new Date() > this.args.contest.endsAt) {
       return 'gray';
     } else {
@@ -19,7 +19,7 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
     }
   }
 
-  get statusPillCopy(): string {
+  get contestStatusPillCopy(): string {
     if (new Date() < this.args.contest.startsAt) {
       return 'Not started';
     } else if (new Date() > this.args.contest.endsAt) {
@@ -29,7 +29,7 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
     }
   }
 
-  get statusPillTooltipCopy(): string {
+  get contestStatusPillTooltipCopy(): string {
     if (new Date() < this.args.contest.startsAt) {
       return `This contest will start at 12:00 AM UTC on ${format(this.args.contest.startsAt, 'd MMMM yyyy')}`;
     } else if (new Date() > this.args.contest.endsAt) {
