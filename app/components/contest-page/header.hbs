@@ -2,7 +2,11 @@
   <div class="flex items-center gap-3 justify-between flex-col sm:flex-row">
     <div class="flex items-center gap-6">
       <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">{{@contest.name}}</h1>
-      <ContestPage::ContestStatusPill @color={{this.statusPillColor}} @tooltipCopy={{this.statusPillTooltipCopy}} data-test-time-remaining-status-pill>{{this.statusPillCopy}}</ContestPage::ContestStatusPill>
+      <ContestPage::ContestStatusPill
+        @color={{this.statusPillColor}}
+        @tooltipCopy={{this.statusPillTooltipCopy}}
+        data-test-time-remaining-status-pill
+      >{{this.statusPillCopy}}</ContestPage::ContestStatusPill>
     </div>
 
     <span class="text-gray-200 font-semibold">
