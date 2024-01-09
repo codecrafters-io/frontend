@@ -25,10 +25,18 @@ export default class TestResultsBarComponent extends Component<Signature> {
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
-      if (this.authenticator.currentUser?.isStaff && (this.args.activeStep as CourseStageStep).courseStage.isSecond) {
+      const courseStageStep = this.args.activeStep as CourseStageStep;
+
+      if (courseStageStep.courseStage.isFirst) {
+        return ['logs'];
+      } else if (courseStageStep.courseStage.isSecond) {
         return ['logs', 'autofix'];
       } else {
-        return ['logs'];
+        if (this.authenticator.currentUser?.isStaff) {
+          return ['logs', 'autofix'];
+        } else {
+          return ['logs'];
+        }
       }
     } else {
       return ['logs'];
