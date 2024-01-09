@@ -5,8 +5,8 @@
     {{else}}
       <Alert class="mb-3">
         <p>
-          We're testing out a new feature called "Autofix". This is currently only available on stage 2.
-          <a href="https://docs.codecrafters.io/experimental/autofix" target="_blank" rel="noopener noreferrer">Learn more</a>.
+          We're testing out a new feature called "AI Hints". This is currently only available on stage 2.
+          <a href="https://docs.codecrafters.io/experimental/ai-hints" target="_blank" rel="noopener noreferrer">Learn more</a>.
         </p>
       </Alert>
 
@@ -18,7 +18,7 @@
       <div class="text-gray-500 text-sm">
         {{#if (eq @activeStep.type "CourseStageStep")}}
           {{#if (eq @activeStep @currentStep)}}
-            After you've run tests for this stage once, you'll be able to use the "Autofix" feature here to help automatically fix any issues.
+            After you've run tests for this stage once, you'll be able to use the "AI Hints" feature here to help automatically fix any issues.
           {{else}}
             After you've run tests for the
             <LinkTo
@@ -26,10 +26,10 @@
               @route={{@activeStep.routeParams.route}}
               @models={{@activeStep.routeParams.models}}
             >{{@activeStep.title}}</LinkTo>
-            stage, you'll be able to use the "Autofix" feature here to help automatically fix any issues.
+            stage, you'll be able to use the "AI Hints" feature here to help automatically fix any issues.
           {{/if}}
         {{else}}
-          After you've run tests on your code, you'll be able to use the "Autofix" feature here to help automatically fix any issues.
+          After you've run tests on your code, you'll be able to use the "AI Hints" feature here to help automatically fix any issues.
         {{/if}}
       </div>
     </div>

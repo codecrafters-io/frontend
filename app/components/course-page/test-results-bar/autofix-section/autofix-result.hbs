@@ -3,19 +3,19 @@
     <div class="flex items-center px-3 py-2 gap-2">
       {{#if (eq @autofixRequest.status "in_progress")}}
         <BlinkingDot @color="yellow" />
-        <span class="font-mono text-xs text-white">Autofix in progress... (the logs below will be verbose, we'll summarize them once completed)</span>
+        <span class="font-mono text-xs text-white">Generating hints... (the logs below will be verbose, we'll summarize them once completed)</span>
       {{else if (eq @autofixRequest.status "failure")}}
         <StaticDot @color="red" />
-        <span class="font-mono text-xs text-white">Autofix failed</span>
+        <span class="font-mono text-xs text-white">Failed to generate hints</span>
       {{else if (eq @autofixRequest.status "error")}}
         <StaticDot @color="red" />
         <span class="font-mono text-xs text-white">Internal error (Our engineers have been notified of this!)</span>
       {{else if (eq @autofixRequest.status "cancelled")}}
         <StaticDot @color="gray" />
-        <span class="font-mono text-xs text-white">Autofix cancelled</span>
+        <span class="font-mono text-xs text-white">Cancelled</span>
       {{else if (eq @autofixRequest.status "success")}}
         <StaticDot @color="green" />
-        <span class="font-mono text-xs text-white">Autofix success</span>
+        <span class="font-mono text-xs text-white">Hints generated</span>
       {{/if}}
     </div>
     {{#unless (eq @autofixRequest.status "in_progress")}}
@@ -56,7 +56,7 @@
     {{else if (eq @autofixRequest.status "success")}}
       <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
-          {{!-- {{markdown-to-html @autofixRequest.explanationMarkdown}} --}}
+          {{markdown-to-html @autofixRequest.explanationMarkdown}}
 
           <p>
             Here's a diff you can apply to pass this stage:
@@ -77,7 +77,7 @@
       <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           <p>
-            We failed to generate an autofix for your submission. You can click on "Show Full Log" to see what we tried.
+            We failed to generate hints for your submission. You can click on "Show Full Log" to see what we tried.
           </p>
         </div>
       </div>
@@ -85,7 +85,7 @@
       <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           <p>
-            We encountered an internal error while generating an autofix for your submission. Our engineers have been notified of this!
+            We encountered an internal error while generating hints for your submission. Our engineers have been notified of this!
           </p>
         </div>
       </div>
@@ -93,7 +93,7 @@
       <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           <p>
-            This autofix was cancelled.
+            This hint generation request was cancelled.
           </p>
         </div>
       </div>

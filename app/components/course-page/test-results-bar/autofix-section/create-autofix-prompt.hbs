@@ -1,22 +1,25 @@
 <div>
   <div class="prose prose-sm dark:prose-invert mb-6">
     <p>
-      <strong>Autofix</strong>
-      is a new feature that helps you automatically fix issues in your code. Here's how it works:
+      <strong>AI Hints</strong>
+      is a new feature that generates hints based on your code. Here's how it works:
     </p>
     <ul>
       <li>
-        We'll analyze your code, generate a fix and run tests on it.
+        We'll analyze your code, generate a fix and validate it by running tests on it.
       </li>
       <li>
-        This
-        <b>might take upto a minute</b>, but you'll see logs streamed here.
+        Once we're confident that the fix is correct, we'll convert it into a hint. You can also choose to view the full diff.
+      </li>
+      <li>
+        Generating hints is usually
+        <b>instant</b>, but if your submission was created recently it might take upto a minute. You'll see logs streamed here.
       </li>
       <li>
         This is a new feature, so it might contain bugs.
       </li>
       <li>
-        Click the "Start Autofix" button below to get started!
+        Click the "Generate Hints" button below to get started!
       </li>
     </ul>
   </div>
@@ -26,13 +29,13 @@
     {{on "click" this.handleAutofixButtonClick}}
     data-test-start-autofix-button
   >
-    Start Autofix
+    Generate Hints
   </PrimaryButtonWithSpinner>
 
   {{#if this.autofixCreationError}}
     <Alert @type="error" class="mt-3">
       <p>
-        Autofix failed to start. Try again? Contact us at hello@codecrafters.io if this persists.
+        Failed to generate hints. Try again? Contact us at hello@codecrafters.io if this persists.
       </p>
     </Alert>
   {{/if}}
