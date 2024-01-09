@@ -55,7 +55,7 @@
       </div>
     {{else if (eq @autofixRequest.status "success")}}
       <div class="flex-grow overflow-y-auto">
-        <div class="prose prose-sm dark:prose-invert">
+        <div class="prose prose-sm dark:prose-invert has-prism-highlighting" {{highlight-code-blocks @autofixRequest.explanationMarkdown}}>
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
 
           <p>
