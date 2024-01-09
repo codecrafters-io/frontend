@@ -17,7 +17,7 @@
     {{else}}
       <div class="flex flex-col gap-2.5">
         {{#each this.orderedTopEntries as |leaderboardEntry|}}
-          <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} />
+          <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} @languages={{@languages}} />
         {{/each}}
       </div>
 
@@ -27,7 +27,7 @@
 
         <div class="flex flex-col gap-2.5 mt-5">
           {{#each this.orderedSurroundingEntries as |leaderboardEntry|}}
-            <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} />
+            <ContestPage::LeaderboardEntry @entry={{leaderboardEntry}} @languages={{@languages}} />
           {{/each}}
         </div>
       {{/if}}

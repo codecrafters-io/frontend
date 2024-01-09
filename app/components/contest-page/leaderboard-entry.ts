@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
-import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type LanguageModel from 'codecrafters-frontend/models/language';
+import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import { inject as service } from '@ember/service';
 
 type Signature = {
@@ -8,6 +9,7 @@ type Signature = {
 
   Args: {
     entry: LeaderboardEntryModel;
+    languages: LanguageModel[];
   };
 };
 
@@ -20,6 +22,10 @@ export default class ContestPageLeaderboardEntryComponent extends Component<Sign
     }
 
     return this.args.entry.user.id === this.authenticator.currentUser.id;
+  }
+
+  get languagesForEntry(): LanguageModel[] {
+    return this.args.languages.filter(language => this.args.entry.relatedLanguageSlugs.includes(language.slug))
   }
 }
 
