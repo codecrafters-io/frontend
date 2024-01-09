@@ -28,7 +28,7 @@ export default class ContestRoute extends BaseRoute {
 
     const topLeaderboardEntries = (await this.store.query('leaderboard-entry', {
       leaderboard_id: contest.leaderboard.id,
-      include: 'user,user.course-participations,user.course-participations.language,leaderboard',
+      include: 'user,leaderboard',
     })) as unknown as LeaderboardEntryModel[];
 
     let surroundingLeaderboardEntries: LeaderboardEntryModel[] = [];
@@ -36,7 +36,7 @@ export default class ContestRoute extends BaseRoute {
     if (this.authenticator.isAuthenticated) {
       surroundingLeaderboardEntries = (await this.store.query('leaderboard-entry', {
         leaderboard_id: contest.leaderboard.id,
-        include: 'leaderboard,user,user.course-participations,user.course-participations.language',
+        include: 'leaderboard,user',
         filter_type: 'around_me',
       })) as unknown as LeaderboardEntryModel[];
     }
