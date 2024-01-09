@@ -59,12 +59,21 @@
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
         </div>
 
-        {{! @glint-expect-error: not ts-ified }}
-        <FeedbackButton class="mt-4" @dropdownPosition="left">
-          <TertiaryButton @size="small">
-            Share Feedback
-          </TertiaryButton>
-        </FeedbackButton>
+        <div class="mt-4 flex items-center gap-4">
+          {{! @glint-expect-error: not ts-ified }}
+          <FeedbackButton @dropdownPosition="left">
+            <TertiaryButton @size="small">
+              Share Feedback
+            </TertiaryButton>
+          </FeedbackButton>
+
+          <a
+            href="https://docs.codecrafters.io/experimental/ai-hints"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-gray-400 underline"
+          >Learn more</a>.
+        </div>
 
         <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @onUnblur={{fn (mut this.diffIsBlurred) false}}>
           {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}

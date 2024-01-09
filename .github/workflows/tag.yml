@@ -6,7 +6,7 @@ on:
 
 jobs:
   create-tag:
-    runs-on: ubuntu-latest
+    runs-on: 'namespace-profile-frontend' # Change this to namespace-profile-frontend-light if we're low on namespace credits
     timeout-minutes: 10
 
     steps:

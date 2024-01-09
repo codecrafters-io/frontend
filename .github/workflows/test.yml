@@ -14,7 +14,9 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
+    runs-on: 'namespace-profile-frontend' # Change this to namespace-profile-frontend-light if we're low on namespace credits
+    # Change to this if we're low on namespace credits:
+    # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
     permissions: write-all
     timeout-minutes: 10
 
@@ -130,7 +132,7 @@ jobs:
           seconds_between_github_reads: 0.01
 
   lint:
-    runs-on: 'namespace-profile-frontend-light'
+    runs-on: 'namespace-profile-frontend' # Change this to namespace-profile-frontend-light if we're low on namespace credits
 
     steps:
       - uses: actions/checkout@v3
