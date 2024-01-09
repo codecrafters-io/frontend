@@ -59,10 +59,17 @@
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
         </div>
 
+        {{! @glint-expect-error: not ts-ified }}
+        <FeedbackButton class="mt-4" @dropdownPosition="left">
+          <TertiaryButton @size="small">
+            Share Feedback
+          </TertiaryButton>
+        </FeedbackButton>
+
         <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @onUnblur={{fn (mut this.diffIsBlurred) false}}>
           {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
             <FileDiffCard
-              class="mt-4"
+              class="mt-6"
               @filename={{changedFile.filename}}
               @code={{changedFile.diff}}
               {{! @glint-expect-error language.slug can be null? }}
