@@ -20,7 +20,7 @@ function createContests(server) {
 
   const contest = server.create('contest', {
     slug: 'weekly-2',
-    name: 'Weekly Contest #3',
+    name: 'Weekly Contest #2',
     startsAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
     endsAt: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
     type: 'WeeklyContest',
@@ -39,6 +39,14 @@ function createContests(server) {
     endsAt: new Date(Date.now() + 11 * 24 * 60 * 60 * 1000), // 11 days from now
     type: 'WeeklyContest',
   });
+
+  server.create('contest', {
+    slug: 'weekly-4',
+    name: 'Weekly Contest #4',
+    startsAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000), // 9 days ago
+    endsAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    type: 'WeeklyContest',
+  });
 }
 
 module('Acceptance | contests-test', function (hooks) {
@@ -53,10 +61,26 @@ module('Acceptance | contests-test', function (hooks) {
 
     signIn(this.owner, this.server);
 
-    await contestsPage.visit();
+    await contestsPage.visit({ contest_slug: 'weekly-2' });
     assert.strictEqual(currentURL(), '/contests/weekly-2');
     // await this.pauseTest();
 
     await percySnapshot('Active Contest');
+  });
+
+  test('time remaining status pill shows correct copy', async function (assert) {
+    testScenario(this.server);
+    createContests(this.server);
+
+    signIn(this.owner, this.server);
+
+    await contestsPage.visit({ contest_slug: 'weekly-2' });
+    assert.strictEqual(contestsPage.timeRemainingStatusPill.text, '3 days left');
+
+    await contestsPage.visit({ contest_slug: 'weekly-3' });
+    assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Not started');
+
+    await contestsPage.visit({ contest_slug: 'weekly-4' });
+    assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Ended');
   });
 });
