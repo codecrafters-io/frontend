@@ -1,3 +1,7 @@
 <div class="inline-flex border rounded-full bg-transparent py-0.5 px-3 text-sm font-semibold {{this.statusPillColorClasses}}" ...attributes>
   {{yield}}
+
+  {{#if @tooltipCopy}}
+    <EmberTooltip @text={{@tooltipCopy}} />
+  {{/if}}
 </div>

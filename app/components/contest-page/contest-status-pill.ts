@@ -5,6 +5,7 @@ interface Signature {
 
   Args: {
     color: 'gray' | 'green';
+    tooltipCopy?: string;
   }
 
   Blocks: {
