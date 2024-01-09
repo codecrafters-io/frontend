@@ -63,7 +63,6 @@ module('Acceptance | contests-test', function (hooks) {
 
     await contestsPage.visit({ contest_slug: 'weekly-2' });
     assert.strictEqual(currentURL(), '/contests/weekly-2');
-    // await this.pauseTest();
 
     await percySnapshot('Active Contest');
   });
