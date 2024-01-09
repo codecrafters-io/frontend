@@ -21,6 +21,7 @@ export default class AutofixResultComponent extends Component<Signature> {
 
   @tracked logstream: Logstream | null = null;
   @tracked shouldShowFullLog = false;
+  @tracked diffIsBlurred = true;
 
   @action
   handleDidUpdateAutofixRequestLogstreamId() {

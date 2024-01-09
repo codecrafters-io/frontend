@@ -57,21 +57,26 @@
       <div class="flex-grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert has-prism-highlighting" {{highlight-code-blocks @autofixRequest.explanationMarkdown}}>
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
-
-          <p>
-            Here's a diff you can apply to pass this stage:
-          </p>
         </div>
 
-        {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
-          <FileDiffCard
-            class="mt-4"
-            @filename={{changedFile.filename}}
-            @code={{changedFile.diff}}
-            {{! @glint-expect-error language.slug can be null? }}
-            @language={{@autofixRequest.submission.repository.language.slug}}
-          />
-        {{/each}}
+        {{! @glint-expect-error: not ts-ified }}
+        <FeedbackButton class="mt-4" @dropdownPosition="left">
+          <TertiaryButton @size="small">
+            Share Feedback
+          </TertiaryButton>
+        </FeedbackButton>
+
+        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @onUnblur={{fn (mut this.diffIsBlurred) false}}>
+          {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
+            <FileDiffCard
+              class="mt-6"
+              @filename={{changedFile.filename}}
+              @code={{changedFile.diff}}
+              {{! @glint-expect-error language.slug can be null? }}
+              @language={{@autofixRequest.submission.repository.language.slug}}
+            />
+          {{/each}}
+        </BlurredOverlay>
       </div>
     {{else if (eq @autofixRequest.status "failure")}}
       <div class="flex-grow overflow-y-auto">

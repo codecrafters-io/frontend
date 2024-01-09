@@ -21,8 +21,8 @@
       {{if (gt @badgeAwards.length 1) "badges" "Badge"}}.
     </div>
   </div>
-  <div>
-    <TertiaryButton @size="small" @isDark={{true}} {{on "click" this.handleViewButtonClicked}} data-test-view-button>
+  <div class="dark">
+    <TertiaryButton @size="small" {{on "click" this.handleViewButtonClicked}} data-test-view-button>
       View →
     </TertiaryButton>
   </div>
