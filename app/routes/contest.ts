@@ -48,7 +48,7 @@ export default class ContestRoute extends BaseRoute {
       allContests,
       topLeaderboardEntries,
       surroundingLeaderboardEntries,
-      languages
+      languages,
     } as ModelType;
   }
 }

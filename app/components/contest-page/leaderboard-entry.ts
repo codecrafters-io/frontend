@@ -25,7 +25,7 @@ export default class ContestPageLeaderboardEntryComponent extends Component<Sign
   }
 
   get languagesForEntry(): LanguageModel[] {
-    return this.args.languages.filter(language => this.args.entry.relatedLanguageSlugs.includes(language.slug))
+    return this.args.languages.filter((language) => this.args.entry.relatedLanguageSlugs.includes(language.slug));
   }
 }
 
