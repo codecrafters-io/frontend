@@ -40,9 +40,11 @@
           <div class="text-xs text-gray-500">
             {{#if @solution.ratingEstimate}}
               Rating:
-              {{@solution.ratingEstimate}}
+              {{@solution.ratingEstimateRounded}}
+              <EmberTooltip @text="{{@solution.ratingMeanRounded}} ± {{@solution.ratingStandardDeviationRounded}}" />
             {{else}}
               Unrated
+              <EmberTooltip @text="Once ratings are computed, they will be shown here." />
             {{/if}}
           </div>
         </div>

@@ -37,6 +37,30 @@ export default class CommunityCourseStageSolutionModel extends Model {
     return this.isPublishedToGithub && !this.githubRepositoryIsPrivate;
   }
 
+  get ratingEstimateRounded() {
+    if (this.ratingEstimate === null) {
+      return null;
+    }
+
+    return Math.round(this.ratingEstimate * 100) / 100;
+  }
+
+  get ratingMeanRounded() {
+    if (this.ratingMean === null) {
+      return null;
+    }
+
+    return Math.round(this.ratingMean * 100) / 100;
+  }
+
+  get ratingStandardDeviationRounded() {
+    if (this.ratingStandardDeviation === null) {
+      return null;
+    }
+
+    return Math.round(this.ratingStandardDeviation * 100) / 100;
+  }
+
   @action
   githubUrlForFile(filename: string) {
     return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
