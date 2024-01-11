@@ -102,6 +102,7 @@
           <div>
             {{#if @solution.isPublishedToPublicGithubRepository}}
               <a
+                {{! @glint-expect-error call not ts-ified yet }}
                 href={{call (fn @solution.githubUrlForFile changedFile.filename)}}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -113,6 +114,7 @@
                 {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600"}}
               </a>
             {{else if this.shouldShowPublishToGithubButton}}
+              {{! @glint-expect-error onPublishToGithubButton is not null }}
               <button type="button" {{on "click" @onPublishToGithubButtonClick}} class="flex gap-x-1 items-center group">
                 <span class="text-[10px] text-gray-700 group-hover:underline">
                   Publish to GitHub
@@ -124,6 +126,7 @@
         </div>
 
         <div class="text-sm">
+          {{! @glint-expect-error not ts-ified yet }}
           <SyntaxHighlightedDiff
             @code={{changedFile.diff}}
             @language={{@solution.language.slug}}
