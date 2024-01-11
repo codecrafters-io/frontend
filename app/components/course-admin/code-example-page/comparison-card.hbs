@@ -1,4 +1,9 @@
-<div class="border rounded-md p-4 mb-4">
+<div
+  class="border rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
+  role={{if this.isCollapsed "button" "presentation"}}
+  {{! template-lint-disable no-invalid-interactive }}
+  {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+>
   <div class="flex items-center justify-between">
     <div class="flex items-center">
       <div>
@@ -30,27 +35,44 @@
         {{this.secondUser.username}}
       </span>
     </div>
-  </div>
-
-  <div class="flex items-start gap-6 mt-4">
-    <CoursePage::CourseStageStep::CommunitySolutionCard
-      @solution={{@comparison.secondSolution}}
-      @isCollapsedByDefault={{true}}
-      class="w-full flex-shrink"
-    />
-  </div>
-
-  <div class="mt-2">
-    <div class="prose prose-sm">
-      <p>
-        <b>Solution A</b>:
-        {{@comparison.firstSolution.user.username}}'s solution
-      </p>
-      <p>
-        <b>Solution B</b>:
-        {{@comparison.secondSolution.user.username}}'s solution
-      </p>
-      {{markdown-to-html @comparison.explanation}}
+    <div>
+      {{#if this.isExpanded}}
+        <button
+          class="border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 text-xs rounded flex flex-col items-center w-full"
+          type="button"
+          {{on "click" this.handleCollapseButtonClick}}
+        >
+          <div class="font-bold flex items-center sm:mb-0">
+            {{svg-jar "x" class="w-3 mr-1 fill-current"}}
+            Collapse example
+          </div>
+        </button>
+      {{/if}}
     </div>
   </div>
+
+  {{#if this.isExpanded}}
+    <div class="flex items-start gap-6 mt-4">
+      <div>
+        <div class="prose prose-sm">
+          <p>
+            <b>Solution A</b>:
+            {{@comparison.firstSolution.user.username}}'s solution
+          </p>
+          <p>
+            <b>Solution B</b>:
+            {{@comparison.secondSolution.user.username}}'s solution
+          </p>
+          {{markdown-to-html @comparison.explanation}}
+        </div>
+      </div>
+
+      <CoursePage::CourseStageStep::CommunitySolutionCard
+        @solution={{@comparison.secondSolution}}
+        @isCollapsedByDefault={{true}}
+        class="w-full flex-shrink"
+      />
+    </div>
+
+  {{/if}}
 </div>

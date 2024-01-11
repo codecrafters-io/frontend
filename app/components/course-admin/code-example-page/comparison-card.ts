@@ -1,4 +1,7 @@
+import { action } from '@ember/object';
+import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
 import type UserModel from 'codecrafters-frontend/models/user';
 
@@ -12,8 +15,14 @@ export type Signature = {
 };
 
 export default class ComparisonCard extends Component<Signature> {
+  @tracked isExpanded = false;
+
   get firstUser() {
     return this.args.firstUser;
+  }
+
+  get isCollapsed() {
+    return !this.isExpanded;
   }
 
   get result() {
@@ -30,6 +39,20 @@ export default class ComparisonCard extends Component<Signature> {
     } else {
       return this.args.comparison.firstSolution.user;
     }
+  }
+
+  @action
+  handleCollapseButtonClick() {
+    next(() => {
+      this.isExpanded = false;
+    });
+  }
+
+  @action
+  handleExpandButtonClick() {
+    next(() => {
+      this.isExpanded = true;
+    });
   }
 }
 
