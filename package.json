@@ -139,7 +139,7 @@
     "ember-tooltips": "^3.6.0",
     "ember-truth-helpers": "^4.0.3",
     "ember-window-mock": "^0.9.0",
-    "eslint": "^8.51.0",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ember": "^11.11.1",
     "eslint-plugin-n": "^16.6.2",
