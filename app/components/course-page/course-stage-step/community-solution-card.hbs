@@ -37,7 +37,7 @@
         <div class="flex items-center">
           {{svg-jar "chart-bar" class="w-4 text-gray-500 mr-1"}}
 
-          <div class="text-xs text-gray-500">
+          <LinkTo @route="course-admin.code-example" @model={{@solution.id}} target="_blank" class="text-xs text-gray-500 hover:underline">
             {{#if @solution.ratingEstimate}}
               Rating:
               {{@solution.ratingEstimateRounded}}
@@ -46,7 +46,7 @@
               Unrated
               <EmberTooltip @text="Once ratings are computed, they will be shown here." />
             {{/if}}
-          </div>
+          </LinkTo>
         </div>
         <div class="w-px h-3 bg-gray-200 mx-2"></div>
       {{/if}}

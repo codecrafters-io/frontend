@@ -130,3 +130,9 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     this.isLoadingComments = false;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::CommunitySolutionCard': typeof CommunitySolutionCardComponent;
+  }
+}
