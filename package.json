@@ -89,7 +89,7 @@
     "autoprefixer": "^10.4.16",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.1",
-    "date-fns": "^3.0.6",
+    "date-fns": "^3.2.0",
     "dotenv": "^16.3.1",
     "ember-animated": "~2.0.0",
     "ember-api-actions": "^0.2.9",
