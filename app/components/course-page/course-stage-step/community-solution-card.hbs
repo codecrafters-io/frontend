@@ -33,6 +33,23 @@
     </div>
 
     <div class="flex items-center shrink-0">
+      {{#if (or (current-user-is-staff) (current-user-is-course-author @solution.courseStage.course))}}
+        <div class="flex items-center">
+          {{svg-jar "chart-bar" class="w-4 text-gray-500 mr-1"}}
+
+          <div class="text-xs text-gray-500">
+            {{#if @solution.ratingEstimate}}
+              Rating:
+              {{@solution.ratingEstimateRounded}}
+              <EmberTooltip @text="{{@solution.ratingMeanRounded}} ± {{@solution.ratingStandardDeviationRounded}}" />
+            {{else}}
+              Unrated
+              <EmberTooltip @text="Once ratings are computed, they will be shown here." />
+            {{/if}}
+          </div>
+        </div>
+        <div class="w-px h-3 bg-gray-200 mx-2"></div>
+      {{/if}}
       {{#if (not-eq @solution.comments.length 0)}}
         <div class="flex items-center">
           {{svg-jar "chat-alt" class="w-4 text-gray-500 mr-1"}}
@@ -85,6 +102,7 @@
           <div>
             {{#if @solution.isPublishedToPublicGithubRepository}}
               <a
+                {{! @glint-expect-error call not ts-ified yet }}
                 href={{call (fn @solution.githubUrlForFile changedFile.filename)}}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -96,6 +114,7 @@
                 {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600"}}
               </a>
             {{else if this.shouldShowPublishToGithubButton}}
+              {{! @glint-expect-error onPublishToGithubButton is not null }}
               <button type="button" {{on "click" @onPublishToGithubButtonClick}} class="flex gap-x-1 items-center group">
                 <span class="text-[10px] text-gray-700 group-hover:underline">
                   Publish to GitHub
@@ -107,6 +126,7 @@
         </div>
 
         <div class="text-sm">
+          {{! @glint-expect-error not ts-ified yet }}
           <SyntaxHighlightedDiff
             @code={{changedFile.diff}}
             @language={{@solution.language.slug}}
