@@ -175,7 +175,7 @@
   },
   "dependencies": {
     "@rails/actioncable": "^7.1.2",
-    "@stripe/stripe-js": "^2.2.2",
+    "@stripe/stripe-js": "^2.3.0",
     "@tailwindcss/typography": "^0.5.10",
     "@typeform/embed": "^4.4.1",
     "@vimeo/player": "^2.21.0",
