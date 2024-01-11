@@ -178,7 +178,7 @@
     "@stripe/stripe-js": "^2.2.2",
     "@tailwindcss/typography": "^0.5.10",
     "@typeform/embed": "^4.4.1",
-    "@vimeo/player": "^2.20.1",
+    "@vimeo/player": "^2.21.0",
     "ansi_up": "^6.0.2",
     "array-to-sentence": "^2.0.0",
     "fuse.js": "^7.0.0",
