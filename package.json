@@ -93,7 +93,7 @@
     "dotenv": "^16.3.1",
     "ember-animated": "~2.0.0",
     "ember-api-actions": "^0.2.9",
-    "ember-auto-import": "^2.6.3",
+    "ember-auto-import": "^2.7.2",
     "ember-autoresize-modifier": "^0.7.0",
     "ember-basic-dropdown": "^7.2.2",
     "ember-cli": "~4.12.1",
