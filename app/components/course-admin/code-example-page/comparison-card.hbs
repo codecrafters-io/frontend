@@ -1,0 +1,56 @@
+<div class="border rounded-md p-4 mb-4">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <div>
+        {{#if (eq this.result "first_wins")}}
+          <Pill @color="green" class="text-xs">
+            Won
+          </Pill>
+        {{else if (eq this.result "second_wins")}}
+          <Pill @color="red" class="text-xs">
+            Lost
+          </Pill>
+        {{else if (eq this.result "tie")}}
+          <Pill @color="gray" class="text-xs">
+            Tied
+          </Pill>
+        {{else}}
+          <div class="text-red-500 font-bold">
+            Unknown ({{this.result}})
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="text-sm text-gray-600 mx-1">
+        against
+      </div>
+
+      <AvatarImage @user={{this.secondUser}} class="w-6 h-6 rounded-full mr-1.5" />
+      <span class="text-sm text-gray-600">
+        {{this.secondUser.username}}
+      </span>
+    </div>
+  </div>
+
+  <div class="flex items-start gap-6 mt-4">
+    <CoursePage::CourseStageStep::CommunitySolutionCard
+      @solution={{@comparison.secondSolution}}
+      @isCollapsedByDefault={{true}}
+      class="w-full flex-shrink"
+    />
+  </div>
+
+  <div class="mt-2">
+    <div class="prose prose-sm">
+      <p>
+        <b>Solution A</b>:
+        {{@comparison.firstSolution.user.username}}'s solution
+      </p>
+      <p>
+        <b>Solution B</b>:
+        {{@comparison.secondSolution.user.username}}'s solution
+      </p>
+      {{markdown-to-html @comparison.explanation}}
+    </div>
+  </div>
+</div>

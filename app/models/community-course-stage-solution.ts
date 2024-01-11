@@ -6,6 +6,8 @@ import type LanguageModel from './language';
 import type CourseStageCommentModel from './course-stage-comment';
 
 export default class CommunityCourseStageSolutionModel extends Model {
+  static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
+
   @belongsTo('course-stage', { async: false, inverse: 'communitySolutions' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;

@@ -37,7 +37,8 @@
         <div class="flex items-center">
           {{svg-jar "chart-bar" class="w-4 text-gray-500 mr-1"}}
 
-          <LinkTo @route="course-admin.code-example" @model={{@solution.id}} target="_blank" class="text-xs text-gray-500 hover:underline">
+          {{! Investigate why this doesn't work without target=blank }}
+          <LinkTo @route="course-admin.code-example" @model={{@solution.id}} class="text-xs text-gray-500 hover:underline" target="_blank">
             {{#if @solution.ratingEstimate}}
               Rating:
               {{@solution.ratingEstimateRounded}}
