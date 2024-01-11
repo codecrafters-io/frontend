@@ -117,7 +117,7 @@
     "ember-click-outside": "^6.1.0",
     "ember-composable-helpers": "^5.0.0",
     "ember-concurrency": "^3.1.1",
-    "ember-cookies": "^1.0.0",
+    "ember-cookies": "^1.1.2",
     "ember-data": "~4.12.4",
     "ember-exam": "ember-cli/ember-exam#master",
     "ember-fetch": "^8.1.2",
