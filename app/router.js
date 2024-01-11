@@ -25,6 +25,18 @@ Router.map(function () {
   this.route('contest', { path: '/contests/:contest_slug' });
   this.route('courses');
 
+  this.route('course-admin', { path: '/courses/:course_slug/admin' }, function () {
+    this.route('buildpacks');
+    this.route('buildpack', { path: '/buildpacks/:buildpack_id' });
+    this.route('code-example', { path: '/code-examples/:code_example_id' });
+    this.route('feedback');
+    this.route('insights');
+    this.route('submissions');
+    this.route('tester-versions');
+    this.route('update', { path: '/updates/:update_id' });
+    this.route('updates');
+  });
+
   this.route('course', { path: '/courses/:course_slug' }, function () {
     this.route('introduction');
     this.route('setup');
@@ -39,17 +51,6 @@ Router.map(function () {
 
     this.route('base-stages-completed');
     this.route('completed');
-  });
-
-  this.route('course-admin', { path: '/courses/:course_slug/admin' }, function () {
-    this.route('buildpacks');
-    this.route('buildpack', { path: '/buildpacks/:buildpack_id' });
-    this.route('feedback');
-    this.route('insights');
-    this.route('submissions');
-    this.route('tester-versions');
-    this.route('update', { path: '/updates/:update_id' });
-    this.route('updates');
   });
 
   this.route('course-overview', { path: '/courses/:course_slug/overview' });

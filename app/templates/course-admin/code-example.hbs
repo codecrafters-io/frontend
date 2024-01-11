@@ -1,0 +1,43 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="py-3 border-b mb-6">
+      <TertiaryLinkButton
+        @route="course.stage.code-examples"
+        @models={{array @model.solution.courseStage.identifierForURL}}
+        @size="small"
+        class="pl-1.5 mb-3"
+      >
+        <div class="flex items-center">
+          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+          <span>
+            Back
+          </span>
+        </div>
+      </TertiaryLinkButton>
+
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-gray-800">
+            {{@model.solution.user.username}}'s
+            {{@model.solution.language.name}}
+            code example for
+            {{@model.solution.courseStage.name}}
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{@model.solution}} @isCollapsedByDefault={{true}} class="mb-8" />
+
+    <div class="border-b mb-4 pb-2">
+      <h3 class="text-lg font-bold text-gray-800">
+        Comparisons ({{@model.comparisons.length}})
+      </h3>
+    </div>
+
+    {{#each @model.comparisons as |comparison|}}
+      <CourseAdmin::CodeExamplePage::ComparisonCard @comparison={{comparison}} @firstUser={{@model.solution.user}} class="mb-4" />
+    {{/each}}
+  </div>
+</div>
