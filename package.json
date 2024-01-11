@@ -148,7 +148,7 @@
     "html-entities": "^2.4.0",
     "loader.js": "^4.7.0",
     "node-fetch": "^2.6.12",
-    "postcss": "^8.4.31",
+    "postcss": "^8.4.33",
     "postcss-import": "^15.1.0",
     "prember": "^2.0.0",
     "prettier": "^3.0.3",
