@@ -1,15 +1,17 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import ContestModel from 'codecrafters-frontend/models/contest';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type UserModel from 'codecrafters-frontend/models/user';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
     contest: ContestModel;
+    languages: LanguageModel[];
     topEntries: LeaderboardEntryModel[];
     surroundingEntries: LeaderboardEntryModel[];
   };

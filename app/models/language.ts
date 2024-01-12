@@ -16,9 +16,11 @@ import grayLogoKotlin from '/assets/images/language-logos/kotlin-gray-500.svg';
 import grayLogoNim from '/assets/images/language-logos/nim-gray-500.svg';
 import grayLogoPhp from '/assets/images/language-logos/php-gray-500.svg';
 import grayLogoPython from '/assets/images/language-logos/python-gray-500.svg';
+import grayLogoReasonml from '/assets/images/language-logos/reasonml-gray-500.svg';
 import grayLogoRuby from '/assets/images/language-logos/ruby-gray-500.svg';
 import grayLogoRust from '/assets/images/language-logos/rust-gray-500.svg';
 import grayLogoSwift from '/assets/images/language-logos/swift-gray-500.svg';
+import grayLogoTypescript from '/assets/images/language-logos/typescript-gray-500.svg';
 import grayLogoZig from '/assets/images/language-logos/zig-gray-500.svg';
 
 import tealLogoC from '/assets/images/language-logos/c-teal-500.svg';
@@ -35,9 +37,11 @@ import tealLogoKotlin from '/assets/images/language-logos/kotlin-teal-500.svg';
 import tealLogoNim from '/assets/images/language-logos/nim-teal-500.svg';
 import tealLogoPhp from '/assets/images/language-logos/php-teal-500.svg';
 import tealLogoPython from '/assets/images/language-logos/python-teal-500.svg';
+import tealLogoReasonml from '/assets/images/language-logos/reasonml-teal-500.svg';
 import tealLogoRuby from '/assets/images/language-logos/ruby-teal-500.svg';
 import tealLogoRust from '/assets/images/language-logos/rust-teal-500.svg';
 import tealLogoSwift from '/assets/images/language-logos/swift-teal-500.svg';
+import tealLogoTypescript from '/assets/images/language-logos/typescript-teal-500.svg';
 import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
 
 export default class LanguageModel extends Model {
@@ -63,9 +67,11 @@ export default class LanguageModel extends Model {
       nim: grayLogoNim,
       php: grayLogoPhp,
       python: grayLogoPython,
+      reasonml: grayLogoReasonml,
       ruby: grayLogoRuby,
       rust: grayLogoRust,
       swift: grayLogoSwift,
+      typescript: grayLogoTypescript,
       zig: grayLogoZig,
     }[this.slug];
   }
@@ -108,9 +114,11 @@ export default class LanguageModel extends Model {
       nim: tealLogoNim,
       php: tealLogoPhp,
       python: tealLogoPython,
+      reasonml: tealLogoReasonml,
       ruby: tealLogoRuby,
       rust: tealLogoRust,
       swift: tealLogoSwift,
+      typescript: tealLogoTypescript,
       zig: tealLogoZig,
     }[this.slug];
   }

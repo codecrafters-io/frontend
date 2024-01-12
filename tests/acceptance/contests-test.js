@@ -30,6 +30,7 @@ function createContests(server) {
     leaderboard: contest.leaderboard,
     user: user1,
     score: 100,
+    relatedLanguageSlugs: ['go', 'python'],
   });
 
   server.create('contest', {
@@ -55,7 +56,6 @@ module('Acceptance | contests-test', function (hooks) {
 
     await contestsPage.visit();
     assert.strictEqual(currentURL(), '/contests/weekly-2');
-    // await this.pauseTest();
 
     await percySnapshot('Active Contest');
   });
