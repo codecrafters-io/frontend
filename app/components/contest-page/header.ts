@@ -25,7 +25,7 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
     } else if (this.args.contest.hasEnded) {
       return 'Ended';
     } else {
-      return `${formatDistanceStrict(new Date(), this.args.contest.startsAt)} left`;
+      return `${formatDistanceStrict(new Date(), this.args.contest.endsAt)} left`;
     }
   }
 
