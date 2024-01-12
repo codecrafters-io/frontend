@@ -16,8 +16,8 @@ interface Signature {
 export default class ContestStatusPillComponent extends Component<Signature> {
   get contestStatusPillColorClasses(): string {
     return {
-      green: 'border-green-300 text-green-700',
-      gray: 'border-gray-300 text-gray-700',
+      green: 'border-green-500 text-green-500',
+      gray: 'border-gray-600 text-gray-600',
     }[this.args.color];
   }
 }
