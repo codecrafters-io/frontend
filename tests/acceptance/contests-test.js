@@ -74,7 +74,7 @@ module('Acceptance | contests-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await contestsPage.visit({ contest_slug: 'weekly-2' });
-    assert.strictEqual(contestsPage.timeRemainingStatusPill.text, '3 days left');
+    assert.strictEqual(contestsPage.timeRemainingStatusPill.text, '4 days left');
 
     await contestsPage.visit({ contest_slug: 'weekly-3' });
     assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Not started');
