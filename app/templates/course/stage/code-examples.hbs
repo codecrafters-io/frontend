@@ -1,15 +1,5 @@
 <div class="pt-8 pb-16" {{did-update this.loadSolutions this.courseStage}} {{did-insert this.loadSolutions}} data-test-code-examples-tab>
-  {{!-- <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-4" ...attributes>
-      <div class="mr-3 mt-0.5">
-        {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
-      </div>
-      <div class="text-blue-900 prose prose-blue leading-7 text-sm">
-        Code Examples are experimental, please send us
-        <div class="inline-flex"><FeedbackButton class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton></div>.
-      </div>
-    </div> --}}
-
-  <div class="flex items-center justify-between mb-6 pb-2 border-b">
+  <div class="flex items-center justify-between mb-4 pb-2 border-b">
     <div class="flex items-center gap-x-3 gap-y-2 flex-wrap">
       <h2 class="font-semibold text-lg">Code Examples using {{this.currentLanguage.name}}</h2>
 
@@ -27,15 +17,38 @@
       {{/if}}
     </div>
 
-    <LanguageDropdown
-      @languages={{this.sortedLanguagesForDropdown}}
-      @requestedLanguage={{this.requestedLanguage}}
-      @selectedLanguage={{this.currentLanguage}}
-      @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
-      @onDidInsertDropdown={{(noop)}}
-      class="flex-shrink-0"
-    />
+    <div class="flex-shrink-0 flex items-center gap-3">
+      {{#if (or (current-user-is-staff) (current-user-is-course-author @model.courseStage.course))}}
+        <div class="flex items-center gap-2">
+          <div class="text-xs text-gray-400">
+            Use rankings
+          </div>
+
+          <Toggle @isOn={{eq this.order "recommended"}} {{on "click" this.handleOrderToggle}} class="flex-shrink-0" />
+
+          <EmberTooltip @text="Only visible to staff & challenge authors. Toggle to sort by rankings." />
+        </div>
+      {{/if}}
+
+      <LanguageDropdown
+        @languages={{this.sortedLanguagesForDropdown}}
+        @requestedLanguage={{this.requestedLanguage}}
+        @selectedLanguage={{this.currentLanguage}}
+        @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+        @onDidInsertDropdown={{(noop)}}
+        class="flex-shrink-0"
+      />
+    </div>
   </div>
+
+  {{!-- <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm mb-4">
+    <div class="mr-3 mt-0.5">
+      {{svg-jar "information-circle" class="w-6 fill-current text-blue-400"}}
+    </div>
+    <div class="text-blue-900 prose prose-blue leading-7 text-sm">
+      These code examples are from other users who've completed this stage. Most examples include AI-generated comments that explain the changes.
+    </div>
+  </div> --}}
 
   <div>
     {{#if this.isLoading}}
