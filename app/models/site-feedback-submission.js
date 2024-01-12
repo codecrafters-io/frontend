@@ -7,4 +7,6 @@ export default class SiteFeedbackSubmissionModel extends Model {
   @attr('string') explanation;
   @attr('string') pageUrl;
   @attr('string') selectedSentiment;
+  @attr('string') source;
+  @attr() source_metadata;
 }

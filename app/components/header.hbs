@@ -48,7 +48,7 @@
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center ml-6">
         {{#if this.authenticator.isAuthenticated}}
-          <FeedbackButton class="mr-4" as |dd|>
+          <FeedbackButton @source="header" @source_metadata={{hash}} class="mr-4" as |dd|>
             <div
               role="button"
               class="rounded border
