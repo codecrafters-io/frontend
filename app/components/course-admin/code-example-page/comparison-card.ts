@@ -29,7 +29,11 @@ export default class ComparisonCard extends Component<Signature> {
     if (this.args.comparison.firstSolution.user.id === this.args.firstUser.id) {
       return this.args.comparison.result;
     } else {
-      return this.args.comparison.result === 'first_wins' ? 'second_wins' : 'first_wins';
+      return {
+        first_wins: 'second_wins',
+        second_wins: 'first_wins',
+        tie: 'tie',
+      }[this.args.comparison.result];
     }
   }
 
@@ -41,11 +45,32 @@ export default class ComparisonCard extends Component<Signature> {
     }
   }
 
+  get solutionForFirstUser() {
+    if (this.args.comparison.firstSolution.user.id === this.firstUser.id) {
+      return this.args.comparison.firstSolution;
+    } else {
+      return this.args.comparison.secondSolution;
+    }
+  }
+
+  get solutionForSecondUser() {
+    if (this.args.comparison.firstSolution.user.id === this.secondUser.id) {
+      return this.args.comparison.firstSolution;
+    } else {
+      return this.args.comparison.secondSolution;
+    }
+  }
+
   @action
   handleCollapseButtonClick() {
     next(() => {
       this.isExpanded = false;
     });
+  }
+
+  @action
+  handleCopyIdToClipbardButtonClick() {
+    navigator.clipboard.writeText(this.args.comparison.id);
   }
 
   @action

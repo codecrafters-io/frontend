@@ -35,17 +35,23 @@
         {{this.secondUser.username}}
       </span>
     </div>
-    <div>
+    <div class="flex items-center gap-3">
       {{#if this.isExpanded}}
         <button
-          class="border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 text-xs rounded flex flex-col items-center w-full"
+          class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
+          type="button"
+          {{on "click" this.handleCopyIdToClipbardButtonClick}}
+        >
+          {{svg-jar "clipboard-check" class="w-3 mr-1 fill-current"}}
+          Copy ID
+        </button>
+        <button
+          class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
           type="button"
           {{on "click" this.handleCollapseButtonClick}}
         >
-          <div class="font-bold flex items-center sm:mb-0">
-            {{svg-jar "x" class="w-3 mr-1 fill-current"}}
-            Collapse example
-          </div>
+          {{svg-jar "x" class="w-3 mr-1 fill-current"}}
+          Collapse example
         </button>
       {{/if}}
     </div>
@@ -68,7 +74,7 @@
       </div>
 
       <CoursePage::CourseStageStep::CommunitySolutionCard
-        @solution={{@comparison.secondSolution}}
+        @solution={{this.solutionForSecondUser}}
         @isCollapsedByDefault={{true}}
         class="w-full flex-shrink"
       />
