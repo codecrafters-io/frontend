@@ -10,6 +10,10 @@ export default class ContestModel extends Model {
   @attr('date') declare endsAt: Date;
   @attr('string') declare type: string;
 
+  get hasEnded(): boolean {
+    return new Date() > this.endsAt;
+  }
+
   get hasNotStarted(): boolean {
     return !this.hasStarted;
   }

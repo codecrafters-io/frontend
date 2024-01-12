@@ -12,7 +12,7 @@ type Signature = {
 
 export default class ContestPageHeaderComponent extends Component<Signature> {
   get contestStatusPillColor(): 'gray' | 'green' {
-    if (new Date() < this.args.contest.startsAt || new Date() > this.args.contest.endsAt) {
+    if (this.args.contest.hasNotStarted || this.args.contest.hasEnded) {
       return 'gray';
     } else {
       return 'green';
@@ -20,9 +20,9 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
   }
 
   get contestStatusPillCopy(): string {
-    if (new Date() < this.args.contest.startsAt) {
+    if (this.args.contest.hasNotStarted) {
       return 'Not started';
-    } else if (new Date() > this.args.contest.endsAt) {
+    } else if (this.args.contest.hasEnded) {
       return 'Ended';
     } else {
       return `${formatDistanceStrict(new Date(), this.args.contest.startsAt)} left`;
@@ -30,9 +30,9 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
   }
 
   get contestStatusPillTooltipCopy(): string {
-    if (new Date() < this.args.contest.startsAt) {
+    if (this.args.contest.hasNotStarted) {
       return `This contest will start at 12:00 AM UTC on ${format(this.args.contest.startsAt, 'd MMMM yyyy')}`;
-    } else if (new Date() > this.args.contest.endsAt) {
+    } else if (this.args.contest.hasEnded) {
       return `This contest ended at 12:00 AM UTC on ${format(this.args.contest.endsAt, 'd MMMM yyyy')}`;
     } else {
       return `This contest will end at 12:00 AM UTC on ${format(this.args.contest.endsAt, 'd MMMM yyyy')}`;
