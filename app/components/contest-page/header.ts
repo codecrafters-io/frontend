@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import ContestModel from 'codecrafters-frontend/models/contest';
-import { format, formatDistanceStrict } from 'date-fns';
+import { formatDistanceStrict } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -31,11 +32,11 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
 
   get contestStatusPillTooltipCopy(): string {
     if (this.args.contest.hasNotStarted) {
-      return `This contest will start at 12:00 AM UTC on ${format(this.args.contest.startsAt, 'd MMMM yyyy')}`;
+      return `This contest will start at 12:00 AM UTC on ${formatInTimeZone(this.args.contest.startsAt, 'UTC', 'd MMMM yyyy')}`;
     } else if (this.args.contest.hasEnded) {
-      return `This contest ended at 12:00 AM UTC on ${format(this.args.contest.endsAt, 'd MMMM yyyy')}`;
+      return `This contest ended at 12:00 AM UTC on ${formatInTimeZone(this.args.contest.endsAt, 'UTC', 'd MMMM yyyy')}`;
     } else {
-      return `This contest will end at 12:00 AM UTC on ${format(this.args.contest.endsAt, 'd MMMM yyyy')}`;
+      return `This contest will end at 12:00 AM UTC on ${formatInTimeZone(this.args.contest.endsAt, 'UTC', 'd MMMM yyyy')}`;
     }
   }
 }

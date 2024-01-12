@@ -181,6 +181,7 @@
     "@vimeo/player": "^2.20.1",
     "ansi_up": "^6.0.2",
     "array-to-sentence": "^2.0.0",
+    "date-fns-tz": "^2.0.0",
     "fuse.js": "^7.0.0",
     "lottie-web": "^5.12.2",
     "mustache": "^4.2.0",
