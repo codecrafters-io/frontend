@@ -18,7 +18,7 @@ export default class CodeExamplesController extends Controller {
   @service declare store: Store;
 
   rippleSpinnerImage = rippleSpinnerImage;
-  @tracked orderType: 'recommended' | 'recent' | 'affiliated' = 'recent';
+  @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recent';
   @tracked isLoading = true;
   @tracked solutions: CommunityCourseStageSolutionModel[] = [];
   @tracked requestedLanguage: LanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
@@ -62,12 +62,12 @@ export default class CodeExamplesController extends Controller {
   }
 
   @action
-  handleOrderTypeToggle() {
+  handleOrderToggle() {
     // For now we only support toggling between these two
-    if (this.orderType === 'recommended') {
-      this.orderType = 'recent';
+    if (this.order === 'recommended') {
+      this.order = 'recent';
     } else {
-      this.orderType = 'recommended';
+      this.order = 'recommended';
     }
 
     this.loadSolutions();
@@ -100,7 +100,7 @@ export default class CodeExamplesController extends Controller {
       course_stage_id: this.courseStage.id,
       language_id: this.currentLanguage.id,
       include: 'user,language,comments,comments.user,comments.target,course-stage',
-      order: this.orderType,
+      order: this.order,
     })) as unknown as CommunityCourseStageSolutionModel[]; // TODO: Doesn't store.query support model type inference?
 
     this.isLoading = false;

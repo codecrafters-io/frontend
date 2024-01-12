@@ -24,7 +24,7 @@
             Use rankings
           </div>
 
-          <Toggle @isOn={{eq this.orderType "recommended"}} {{on "click" this.handleOrderTypeToggle}} class="flex-shrink-0" />
+          <Toggle @isOn={{eq this.order "recommended"}} {{on "click" this.handleOrderToggle}} class="flex-shrink-0" />
 
           <EmberTooltip @text="Only visible to staff & challenge authors. Toggle to sort by rankings." />
         </div>
