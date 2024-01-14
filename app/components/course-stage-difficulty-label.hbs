@@ -6,7 +6,7 @@
       {{! template-lint-disable no-inline-styles }}
       <div
         class="{{if (gte this.numberOfBars currentBarNumber) this.barColorClass 'bg-gray-300'}}"
-        style="width: 4px; height: {{add 0.5 (mult 0.2 currentBarNumber)}}em; margin-right: 2px; border-radius: 1px;"
+        style={{html-safe (concat "width: 4px; margin-right: 2px; border-radius: 1px; height: " (add 0.5 (mult 0.2 currentBarNumber)) "em;")}}
       ></div>
     {{/each}}
   </div>
