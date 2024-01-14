@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 import ContestModel from 'codecrafters-frontend/models/contest';
+import DateService from 'codecrafters-frontend/services/date';
 import { formatDistanceStrict } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
+import { inject as service } from '@ember/service';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -12,6 +14,8 @@ type Signature = {
 };
 
 export default class ContestPageHeaderComponent extends Component<Signature> {
+  @service declare date: DateService;
+
   get contestStatusPillColor(): 'gray' | 'green' {
     if (this.args.contest.hasNotStarted || this.args.contest.hasEnded) {
       return 'gray';
@@ -26,7 +30,7 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
     } else if (this.args.contest.hasEnded) {
       return 'Ended';
     } else {
-      return `${formatDistanceStrict(new Date(Date.now()), this.args.contest.endsAt)} left`;
+      return `${formatDistanceStrict(new Date(this.date.now()), this.args.contest.endsAt)} left`;
     }
   }
 

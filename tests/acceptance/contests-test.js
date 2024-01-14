@@ -1,4 +1,5 @@
 import contestsPage from 'codecrafters-frontend/tests/pages/contests-page';
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
@@ -10,9 +11,10 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-function createContests(server) {
-  console.log(new Date(Date.now()));
-  console.log(new Date(Date.now() + 4 * 24 * 60 * 60 * 1000));
+function createContests(owner, server) {
+  let dateService = owner.lookup('service:date');
+  let now = dateService.now();
+
   const user1 = server.create('user', {
     id: 'user-1',
     avatarUrl: 'https://github.com/Gufran.png',
@@ -24,8 +26,8 @@ function createContests(server) {
   const contest = server.create('contest', {
     slug: 'weekly-2',
     name: 'Weekly Contest #2',
-    startsAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-    endsAt: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
+    startsAt: new Date(now - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+    endsAt: new Date(now + 4 * 24 * 60 * 60 * 1000), // 4 days from now
     type: 'WeeklyContest',
   });
 
@@ -38,16 +40,16 @@ function createContests(server) {
   server.create('contest', {
     slug: 'weekly-3',
     name: 'Weekly Contest #3',
-    startsAt: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
-    endsAt: new Date(Date.now() + 11 * 24 * 60 * 60 * 1000), // 11 days from now
+    startsAt: new Date(now + 4 * 24 * 60 * 60 * 1000), // 4 days from now
+    endsAt: new Date(now + 11 * 24 * 60 * 60 * 1000), // 11 days from now
     type: 'WeeklyContest',
   });
 
   server.create('contest', {
     slug: 'weekly-4',
     name: 'Weekly Contest #4',
-    startsAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000), // 9 days ago
-    endsAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    startsAt: new Date(now - 9 * 24 * 60 * 60 * 1000), // 9 days ago
+    endsAt: new Date(now - 2 * 24 * 60 * 60 * 1000), // 2 days ago
     type: 'WeeklyContest',
   });
 }
@@ -58,34 +60,19 @@ module('Acceptance | contests-test', function (hooks) {
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  let originalDate = Date;
-  let originalDateNow = Date.now;
+  hooks.beforeEach(function () {
+    this.owner.register('service:date', FakeDateService);
 
-  hooks.before(function () {
-    const fixedTimestamp = new Date('2024-01-13T00:00:00.000Z').getTime();
+    let dateService = this.owner.lookup('service:date');
+    let now = new Date('2024-01-13T00:00:00.000Z').getTime();
 
-    Date = class extends Date {
-      constructor(...args) {
-        if (args.length) {
-          super(...args);
-        } else {
-          super(fixedTimestamp);
-          return this;
-        }
-      }
-    }
-
-    Date.now = () => fixedTimestamp;
+    dateService.setNow(now);
   });
 
-  hooks.after(function () {
-    Date = originalDate;
-    Date.now = originalDateNow;
-  });
 
   test('can view active contest', async function (assert) {
     testScenario(this.server);
-    createContests(this.server);
+    createContests(this.owner, this.server);
 
     signIn(this.owner, this.server);
 
@@ -97,7 +84,7 @@ module('Acceptance | contests-test', function (hooks) {
 
   test('time remaining status pill shows correct copy', async function (assert) {
     testScenario(this.server);
-    createContests(this.server);
+    createContests(this.owner, this.server);
 
     signIn(this.owner, this.server);
 
@@ -113,7 +100,7 @@ module('Acceptance | contests-test', function (hooks) {
 
   test('time remaining status pill tooltip shows correct copy', async function (assert) {
     testScenario(this.server);
-    createContests(this.server);
+    createContests(this.owner, this.server);
 
     signIn(this.owner, this.server);
 
