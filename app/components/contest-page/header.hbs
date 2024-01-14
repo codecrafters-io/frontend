@@ -1,6 +1,13 @@
 <div class="border-b border-gray-800 pb-2" ...attributes>
   <div class="flex items-center gap-3 justify-between flex-col sm:flex-row">
-    <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">{{@contest.name}}</h1>
+    <div class="flex items-center gap-6">
+      <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">{{@contest.name}}</h1>
+      <ContestPage::ContestStatusPill
+        @color={{this.contestStatusPillColor}}
+        @tooltipCopy={{this.contestStatusPillTooltipCopy}}
+        data-test-time-remaining-status-pill
+      >{{this.contestStatusPillCopy}}</ContestPage::ContestStatusPill>
+    </div>
 
     <span class="text-gray-200 font-semibold">
       {{date-format @contest.startsAt format="MMM d"}}

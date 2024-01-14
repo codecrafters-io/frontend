@@ -1,5 +1,7 @@
+import DateService from 'codecrafters-frontend/services/date';
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type LeaderboardModel from './leaderboard';
+import { inject as service } from '@ember/service';
 
 export default class ContestModel extends Model {
   @belongsTo('leaderboard', { async: false, inverse: 'contest' }) declare leaderboard: LeaderboardModel;
@@ -12,16 +14,22 @@ export default class ContestModel extends Model {
   @attr('date') declare endsAt: Date;
   @attr('string') declare type: string;
 
+  @service declare date: DateService;
+
+  get hasEnded(): boolean {
+    return new Date(this.date.now()) > this.endsAt;
+  }
+
   get hasNotStarted(): boolean {
     return !this.hasStarted;
   }
 
   get hasStarted(): boolean {
-    return new Date() > this.startsAt;
+    return new Date(this.date.now()) > this.startsAt;
   }
 
   get leaderboardEntriesAreNotRevealed(): boolean {
-    return new Date() < this.leaderboardEntriesRevealedAt;
+    return new Date(this.date.now()) < this.leaderboardEntriesRevealedAt;
   }
 
   get leaderboardEntriesRevealedAt(): Date {
