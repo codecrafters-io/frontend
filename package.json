@@ -120,6 +120,7 @@
     "ember-concurrency": "^3.1.1",
     "ember-cookies": "^1.0.0",
     "ember-data": "~4.12.4",
+    "ember-date-service": "^3.0.1",
     "ember-exam": "ember-cli/ember-exam#master",
     "ember-fetch": "^8.1.2",
     "ember-in-viewport": "^4.1.0",
