@@ -160,6 +160,7 @@
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^3.0.0",
     "shiki": "^0.14.7",
+    "sinon": "^17.0.1",
     "stylelint": "^15.10.3",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.1.0",
