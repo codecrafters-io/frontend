@@ -24,8 +24,10 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ## Running / Development
 
-- `npm run start`
-- View your app via https://<username>.ccdev.dev
+* `npm run start`
+* Visit your app at [https://<username>.ccdev.dev](https://<username>.ccdev.dev).
+* Visit your app at [http://localhost:4200](http://localhost:4200).
+* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
 ## Running against staging
 
@@ -46,7 +48,8 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ## Running tests
 
-- `ember test --server` (will launch a Chrome instance that'll run your tests)
+* `npm run test`
+* `npm run test:ember -- --server` (will launch a Chrome instance that'll run your tests)
 
 ### Linting
 
@@ -56,6 +59,11 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 ### Analyzing bundle size
 
 - Run `ANALYZE_BUNDLE=true ember server --environment=production`
+
+### Building
+
+* `npm exec ember build` (development)
+* `npm run build` (production)
 
 ### Deploying
 
