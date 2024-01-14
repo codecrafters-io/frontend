@@ -141,7 +141,7 @@
     "ember-template-lint-plugin-prettier": "^5.0.0",
     "ember-tooltips": "^3.6.0",
     "ember-truth-helpers": "^4.0.3",
-    "ember-window-mock": "^0.9.0",
+    "ember-window-mock": "github:simonihmig/ember-window-mock#renovate/ember-source-5.x",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ember": "^11.12.0",
