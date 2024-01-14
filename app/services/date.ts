@@ -8,6 +8,6 @@ export default class DateService extends Service {
 
 declare module '@ember/service' {
   interface Registry {
-    'date': DateService;
+    date: DateService;
   }
 }

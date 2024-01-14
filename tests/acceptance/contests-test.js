@@ -69,7 +69,6 @@ module('Acceptance | contests-test', function (hooks) {
     dateService.setNow(now);
   });
 
-
   test('can view active contest', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);

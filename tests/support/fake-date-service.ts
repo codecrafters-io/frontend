@@ -17,13 +17,13 @@ export default class FakeDateService extends DateService {
     return super.now();
   }
 
+  reset(): void {
+    this._now = null;
+  }
+
   setNow(date: Date | number = Date.now()) {
     this._now = date instanceof Date ? date.getTime() : date;
 
     return this._now;
-  }
-
-  reset(): void {
-    this._now = null;
   }
 }
