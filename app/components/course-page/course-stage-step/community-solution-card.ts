@@ -4,14 +4,31 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
+import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import type Store from '@ember-data/store';
+import type UserModel from 'codecrafters-frontend/models/user';
+import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
 
-export default class CommunitySolutionCardComponent extends Component {
+type Signature = {
+  Element: HTMLDivElement;
+
+  Args: {
+    solution: CommunityCourseStageSolutionModel;
+    onPublishToGithubButtonClick?: () => void;
+    isCollapsedByDefault?: boolean;
+    positionInList?: number;
+  };
+};
+
+export default class CommunitySolutionCardComponent extends Component<Signature> {
   @tracked isExpanded = false;
   @tracked isLoadingComments = false;
-  @tracked containerElement;
-  @service store;
-  @service authenticator;
-  @service analyticsEventTracker;
+  @tracked containerElement: HTMLDivElement | null = null;
+  @service declare store: Store;
+  @service declare authenticator: AuthenticatorService;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   get changedFilesForRender() {
     return this.args.solution.changedFiles.map((changedFile) => {
@@ -31,16 +48,8 @@ export default class CommunitySolutionCardComponent extends Component {
   }
 
   get currentUser() {
-    return this.authenticator.currentUser;
+    return this.authenticator.currentUser as UserModel; // For now, this is only rendered in contexts where the current user is logged in
   }
-
-  // get debug() {
-  //   return JSON.stringify({
-  //     all: this.store.peekAll('community-course-stage-solution-comment').length,
-  //     solutionComments: this.args.solution.comments.length,
-  //     shouldShowComments: this.shouldShowComments,
-  //   });
-  // }
 
   get isCollapsed() {
     return !this.isExpanded;
@@ -58,8 +67,10 @@ export default class CommunitySolutionCardComponent extends Component {
     return this.comments.length > 0;
   }
 
+  // We don't support explanations as of now
   get shouldShowExplanation() {
-    return this.isExpanded && this.explanationHTML && this.authenticator.currentUser.isStaff;
+    // return this.isExpanded && hasExplanation && this.currentUser.isStaff;
+    return false;
   }
 
   get shouldShowPublishToGithubButton() {
@@ -69,28 +80,28 @@ export default class CommunitySolutionCardComponent extends Component {
   @action
   handleCollapseButtonClick() {
     this.isExpanded = false;
-    this.containerElement.scrollIntoView({ behavior: 'smooth' });
+    this.containerElement!.scrollIntoView({ behavior: 'smooth' });
   }
 
   @action
-  handleCommentView(comment) {
+  handleCommentView(comment: CommunityCourseStageSolutionCommentModel) {
     this.analyticsEventTracker.track('viewed_comment', {
       comment_id: comment.id,
     });
   }
 
   @action
-  handleDidInsert(element) {
+  handleDidInsert(element: HTMLDivElement) {
     this.containerElement = element;
   }
 
   @action
-  handleDidInsertExplanationHTML(element) {
+  handleDidInsertExplanationHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
   }
 
   @action
-  handleDidUpdateExplanationHTML(element) {
+  handleDidUpdateExplanationHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
   }
 
@@ -117,5 +128,11 @@ export default class CommunitySolutionCardComponent extends Component {
     });
 
     this.isLoadingComments = false;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::CommunitySolutionCard': typeof CommunitySolutionCardComponent;
   }
 }

@@ -35,6 +35,7 @@ function createContests(owner, server) {
     leaderboard: contest.leaderboard,
     user: user1,
     score: 100,
+    relatedLanguageSlugs: ['go', 'python'],
   });
 
   server.create('contest', {

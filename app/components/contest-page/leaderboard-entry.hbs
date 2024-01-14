@@ -12,7 +12,16 @@
     <span class="text-white font-semibold">
       {{@entry.user.username}}
     </span>
+
+    {{#if (gt this.languagesForEntry.length 0)}}
+      <div class="flex items-center space-x-1.5">
+        {{#each this.languagesForEntry as |language|}}
+          <LanguageLogo @language={{language}} @variant="teal" class="h-6" />
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
+
   <div class="text-green-500 px-2 py-0.5 text-sm">
     <span class="font-semibold font-mono">{{@entry.score}}</span>
     pts

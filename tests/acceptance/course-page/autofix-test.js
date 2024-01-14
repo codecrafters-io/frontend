@@ -6,7 +6,7 @@ import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 import { waitUntil } from '@ember/test-helpers';
 
@@ -17,7 +17,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
   test('can trigger autofix when last submission failed', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
@@ -41,7 +41,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    await coursePage.testResultsBar.clickOnTab('Autofix');
+    await coursePage.testResultsBar.clickOnTab('AI Hints');
     await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
 
     await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
@@ -103,7 +103,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
   test('renders failed autofix', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
@@ -127,7 +127,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    await coursePage.testResultsBar.clickOnTab('Autofix');
+    await coursePage.testResultsBar.clickOnTab('AI Hints');
     await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
 
     await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
@@ -151,7 +151,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
   test('is not visible for stage 3 and beyond', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
@@ -175,7 +175,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs', 'Autofix']);
+    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs', 'AI Hints']);
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,

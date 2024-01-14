@@ -2,6 +2,7 @@ import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 import type ContestModel from 'codecrafters-frontend/models/contest';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 
@@ -10,6 +11,7 @@ export type ModelType = {
   allContests: ContestModel[];
   topLeaderboardEntries: LeaderboardEntryModel[];
   surroundingLeaderboardEntries: LeaderboardEntryModel[];
+  languages: LanguageModel[];
 };
 
 export default class ContestRoute extends BaseRoute {
@@ -39,11 +41,14 @@ export default class ContestRoute extends BaseRoute {
       })) as unknown as LeaderboardEntryModel[];
     }
 
+    const languages = (await this.store.findAll('language')) as unknown as LanguageModel[];
+
     return {
       contest,
       allContests,
       topLeaderboardEntries,
       surroundingLeaderboardEntries,
+      languages,
     } as ModelType;
   }
 }

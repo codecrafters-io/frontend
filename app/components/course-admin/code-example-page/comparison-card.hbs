@@ -1,0 +1,84 @@
+<div
+  class="border rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
+  role={{if this.isCollapsed "button" "presentation"}}
+  {{! template-lint-disable no-invalid-interactive }}
+  {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+>
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <div>
+        {{#if (eq this.result "first_wins")}}
+          <Pill @color="green" class="text-xs">
+            Won
+          </Pill>
+        {{else if (eq this.result "second_wins")}}
+          <Pill @color="red" class="text-xs">
+            Lost
+          </Pill>
+        {{else if (eq this.result "tie")}}
+          <Pill @color="gray" class="text-xs">
+            Tied
+          </Pill>
+        {{else}}
+          <div class="text-red-500 font-bold">
+            Unknown ({{this.result}})
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="text-sm text-gray-600 mx-1.5">
+        against
+      </div>
+
+      <AvatarImage @user={{this.secondUser}} class="w-6 h-6 border border-gray-300 shadow-sm mr-1.5 rounded-full" />
+      <span class="text-sm text-gray-600">
+        {{this.secondUser.username}}
+      </span>
+    </div>
+    <div class="flex items-center gap-3">
+      {{#if this.isExpanded}}
+        <button
+          class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
+          type="button"
+          {{on "click" this.handleCopyIdToClipbardButtonClick}}
+        >
+          {{svg-jar "clipboard-check" class="w-3 mr-1 fill-current"}}
+          Copy ID
+        </button>
+        <button
+          class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
+          type="button"
+          {{on "click" this.handleCollapseButtonClick}}
+        >
+          {{svg-jar "x" class="w-3 mr-1 fill-current"}}
+          Collapse example
+        </button>
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if this.isExpanded}}
+    <div class="flex items-start gap-6 mt-4">
+      <div>
+        <div class="prose prose-sm">
+          <p>
+            <b>Solution A</b>:
+            {{@comparison.firstSolution.user.username}}'s solution
+          </p>
+          <p>
+            <b>Solution B</b>:
+            {{@comparison.secondSolution.user.username}}'s solution
+          </p>
+          {{markdown-to-html @comparison.explanation}}
+        </div>
+      </div>
+
+      <CoursePage::CourseStageStep::CommunitySolutionCard
+        @solution={{this.solutionForSecondUser}}
+        @isCollapsedByDefault={{true}}
+        class="w-full flex-shrink"
+      />
+    </div>
+
+  {{/if}}
+</div>

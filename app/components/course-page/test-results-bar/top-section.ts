@@ -22,7 +22,7 @@ export default class TopSectionComponent extends Component<Signature> {
       },
       {
         slug: 'autofix',
-        title: 'Autofix',
+        title: 'AI Hints',
         icon: 'sparkles',
       },
     ];
