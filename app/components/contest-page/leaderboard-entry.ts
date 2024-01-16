@@ -19,7 +19,7 @@ export default class ContestPageLeaderboardEntryComponent extends Component<Sign
   get colorClasses(): string {
     if (this.isCurrentUserEntry) {
       if (this.args.entry.isBanned) {
-        return 'dark:border-gray-500 opacity-25';
+        return 'dark:border-gray-500 opacity-25 grayscale';
       } else {
         return 'dark:border-green-500';
       }
