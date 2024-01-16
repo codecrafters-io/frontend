@@ -25,7 +25,10 @@ export default class ContestPageLeaderboardCardComponent extends Component<Signa
   }
 
   get orderedTopEntries(): LeaderboardEntryModel[] {
-    return this.args.topEntries.toArray().sort((a, b) => b.score - a.score);
+    return this.args.topEntries
+      .toArray()
+      .sort((a, b) => b.score - a.score)
+      .filter((entry) => !entry.isBanned || (this.authenticator.currentUser && entry.user.id === this.authenticator.currentUser.id));
   }
 
   get shouldShowSurroundingEntries(): boolean {

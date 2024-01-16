@@ -16,6 +16,18 @@ type Signature = {
 export default class ContestPageLeaderboardEntryComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
+  get colorClasses(): string {
+    if (this.isCurrentUserEntry) {
+      if (this.args.entry.isBanned) {
+        return 'dark:border-gray-500 opacity-25';
+      } else {
+        return 'dark:border-green-500';
+      }
+    } else {
+      return 'dark:border-gray-800 dark:hover:border-gray-700';
+    }
+  }
+
   get isCurrentUserEntry(): boolean {
     if (!this.authenticator.currentUser) {
       return false;
