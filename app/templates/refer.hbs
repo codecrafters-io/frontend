@@ -8,13 +8,13 @@
 
     {{#if this.currentUser.isAffiliate}}
       <Alert @type="error" class="mb-4">
-        <p class="text-sm">
-          This is the referral program page, which is intended for regular users to share with their friends. Referrals made through this link are not
-          eligible for earnings.
+        <p>
+          Looking for the Partner Dashboard? Please use
+          <LinkTo @route="partner">this link</LinkTo>.
         </p>
         <p>
-          Your partner link can be found
-          <LinkTo @route="partner">here</LinkTo>.
+          This is the Referral Dashboard, intended for regular users to refer their friends. Referrals made through this link are not eligible for
+          earnings.
         </p>
       </Alert>
     {{/if}}
