@@ -52,7 +52,13 @@ export default class FeedbackComponent extends Component {
       this.feedbackSubmission.pageUrl = window.location.href;
       // source will be passed as an argument to the component.
       this.feedbackSubmission.source = this.args.source;
-      this.feedbackSubmission.source_metadata = this.args.source_metadata;
+
+      if (!this.feedbackSubmission.sourceMetadata) {
+        this.feedbackSubmission.sourceMetadata = {};
+      } else {
+        this.feedbackSubmission.sourceMetadata = this.args.sourceMetadata;
+      }
+
       await this.feedbackSubmission.save();
       this.isSaving = false;
       this.wasSaved = true;
