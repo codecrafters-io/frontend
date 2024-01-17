@@ -85,4 +85,17 @@ export default class CommentCardComponent extends Component {
   handleReplySubmitted() {
     this.shouldShowReplyForm = false;
   }
+
+  @action
+  updateCommentStatus(comment, status, dropdownActions) {
+    dropdownActions.close();
+
+    if (status === 1) {
+      comment.approvalStatus = 'approved';
+    } else if (status === -1) {
+      comment.approvalStatus = 'rejected';
+    }
+
+    comment.save();
+  }
 }
