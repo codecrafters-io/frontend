@@ -18,7 +18,7 @@ export default class FeaturesListComponent extends Component {
     const buildTeamLink = (team) => `<a href="/teams/${team.id}" target="_blank">${escapeExpression(team.name)}</a>`;
 
     if (this.args.currentTeams.length === 1) {
-      return `You're currently in the ${buildTeamLink(this.args.currentTeams.firstObject)} team.`;
+      return `You're currently in the ${buildTeamLink(this.args.currentTeams[0])} team.`;
     } else {
       return `You're currently in the following teams: ${this.args.currentTeams.map(buildTeamLink).join(', ')}.`;
     }

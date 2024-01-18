@@ -9,11 +9,11 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
   @service router;
 
   get durationInMilliseconds() {
-    return this.args.submission.evaluations.firstObject.createdAt.getTime() - this.args.submission.createdAt.getTime();
+    return this.args.submission.evaluations[0].createdAt.getTime() - this.args.submission.createdAt.getTime();
   }
 
   get formattedDuration() {
-    if (this.args.submission.evaluations.firstObject) {
+    if (this.args.submission.evaluations[0]) {
       return `${this.durationInMilliseconds / 1000} seconds`;
     } else {
       return '-';

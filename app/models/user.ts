@@ -83,7 +83,7 @@ export default class UserModel extends Model {
   }
 
   get currentAffiliateReferral() {
-    return this.affiliateReferralsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse().firstObject;
+    return this.affiliateReferralsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse()[0];
   }
 
   get earlyBirdDiscountEligibilityExpiresAt() {
@@ -99,7 +99,7 @@ export default class UserModel extends Model {
   }
 
   get githubAppInstallation() {
-    return this.githubAppInstallations.firstObject;
+    return this.githubAppInstallations[0];
   }
 
   get githubProfileUrl() {
@@ -151,11 +151,11 @@ export default class UserModel extends Model {
   }
 
   get isTeamAdmin() {
-    return !!this.managedTeams.firstObject;
+    return !!this.managedTeams[0];
   }
 
   get isTeamMember() {
-    return !!this.teams.firstObject;
+    return !!this.teams[0];
   }
 
   get languagesFromCompletedCourseParticipations() {

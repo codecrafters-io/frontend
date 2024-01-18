@@ -73,7 +73,7 @@ export default class CourseStageModel extends Model {
   }
 
   get isFirst() {
-    return this === this.course.sortedBaseStages.firstObject;
+    return this === this.course.sortedBaseStages[0];
   }
 
   get isFree() {

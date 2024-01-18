@@ -7,7 +7,7 @@ export default class CourseProgressListItemComponent extends Component {
   @service router;
 
   get completedAt() {
-    return this.hasCompletedCourseUsingAnyLanguage ? this.completedCourseParticipations.firstObject.completedAt : null;
+    return this.hasCompletedCourseUsingAnyLanguage ? this.completedCourseParticipations[0].completedAt : null;
   }
 
   get completedCourseParticipations() {
@@ -19,11 +19,11 @@ export default class CourseProgressListItemComponent extends Component {
   }
 
   get course() {
-    return this.args.courseParticipations.firstObject.course;
+    return this.args.courseParticipations[0].course;
   }
 
   get hasCompletedCourseUsingAnyLanguage() {
-    return this.completedCourseParticipations.firstObject;
+    return this.completedCourseParticipations[0];
   }
 
   get languagesText() {

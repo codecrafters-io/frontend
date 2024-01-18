@@ -16,7 +16,7 @@ interface Signature {
 
 export default class SubmissionLogsPreviewComponent extends Component<Signature> {
   get evaluation() {
-    return this.args.submission.evaluations.firstObject;
+    return this.args.submission.evaluations[0];
   }
 
   @cached

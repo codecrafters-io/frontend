@@ -65,7 +65,7 @@ export default class CourseController extends Controller {
     }
 
     // @ts-ignore - featureSuggestions is not typed yet
-    return this.currentUser.featureSuggestions.filterBy('featureIsPrivateLeaderboard').rejectBy('isDismissed').firstObject;
+    return this.currentUser.featureSuggestions.filterBy('featureIsPrivateLeaderboard').rejectBy('isDismissed')[0];
   }
 
   @action

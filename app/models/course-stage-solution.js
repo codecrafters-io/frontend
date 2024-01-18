@@ -9,7 +9,7 @@ export default class CourseStageSolutionModel extends Model {
   @attr('') reviewersDetails; // free-form JSON
 
   get hasContributorDetails() {
-    return this.authorDetails || (this.reviewersDetails && this.reviewersDetails.firstObject);
+    return this.authorDetails || (this.reviewersDetails && this.reviewersDetails[0]);
   }
 
   get hasExplanation() {

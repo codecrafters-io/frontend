@@ -5,7 +5,7 @@ export default class PartnerController extends Controller {
   @service authenticator;
 
   get affiliateLink() {
-    return this.currentUser.affiliateLinks.firstObject;
+    return this.currentUser.affiliateLinks[0];
   }
 
   get currentUser() {
