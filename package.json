@@ -175,7 +175,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@rails/actioncable": "^7.1.2",
+    "@rails/actioncable": "^7.1.3",
     "@stripe/stripe-js": "^2.3.0",
     "@tailwindcss/typography": "^0.5.10",
     "@typeform/embed": "^4.4.1",
