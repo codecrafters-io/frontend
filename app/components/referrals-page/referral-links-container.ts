@@ -14,7 +14,7 @@ export default class ReferralLinksContainerComponent extends Component<Signature
   }
 
   get referralLink() {
-    return this.currentUser?.referralLinks.firstObject;
+    return this.currentUser?.referralLinks[0];
   }
 }
 

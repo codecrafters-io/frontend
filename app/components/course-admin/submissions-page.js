@@ -12,15 +12,15 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.selectedSubmission = this.args.submissions.sortBy('createdAt').lastObject;
+    this.selectedSubmission = this.args.submissions.sortBy('createdAt').at(-1);
   }
 
   get currentLanguage() {
-    return this.args.filteredLanguages.firstObject;
+    return this.args.filteredLanguages[0];
   }
 
   get filteringDescription() {
-    if (this.args.filteredLanguages.firstObject) {
+    if (this.args.filteredLanguages[0]) {
       return `Showing submissions in ${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
     } else {
       return `Showing submissions in all languages`;
@@ -28,7 +28,7 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   }
 
   get filteringTitle() {
-    if (this.args.filteredLanguages.firstObject) {
+    if (this.args.filteredLanguages[0]) {
       return `${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
     } else {
       return `All Languages`;

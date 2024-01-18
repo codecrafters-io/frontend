@@ -6,7 +6,7 @@ export default class TrackPageHeaderComponent extends Component {
   @service store;
 
   get currentUserHasStartedTrack() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('language', this.args.language).firstObject;
+    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('language', this.args.language)[0];
   }
 
   get topParticipants() {

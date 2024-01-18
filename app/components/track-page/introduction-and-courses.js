@@ -29,7 +29,7 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component 
   get userHasStartedTrack() {
     return (
       this.authenticator.currentUser &&
-      this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('lastSubmissionAt').firstObject
+      this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('lastSubmissionAt')[0]
     );
   }
 }

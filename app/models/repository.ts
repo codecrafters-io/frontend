@@ -110,7 +110,7 @@ export default class RepositoryModel extends Model {
   }
 
   get githubRepositorySyncConfiguration() {
-    return this.githubRepositorySyncConfigurations.firstObject;
+    return this.githubRepositorySyncConfigurations[0];
   }
 
   get highestCompletedStage() {

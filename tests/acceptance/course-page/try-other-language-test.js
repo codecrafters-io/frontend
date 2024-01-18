@@ -31,7 +31,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').firstObject,
+      courseStage: redis.stages.models.sortBy('position')[0],
     });
 
     let expectedRequestsCount = [

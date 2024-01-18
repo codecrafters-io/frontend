@@ -31,7 +31,7 @@ export default class TeamModel extends Model {
   }
 
   get canStartSelfServeBillingFlow() {
-    return this.pilots.firstObject || this.committedSeats;
+    return this.pilots[0] || this.committedSeats;
   }
 
   get expiredPilot() {
@@ -51,7 +51,7 @@ export default class TeamModel extends Model {
   }
 
   get hasPaymentMethod() {
-    return !!this.paymentMethods.firstObject;
+    return !!this.paymentMethods[0];
   }
 
   get hasSlackIntegration() {
@@ -71,7 +71,7 @@ export default class TeamModel extends Model {
   }
 
   get slackIntegration() {
-    return this.slackIntegrations.firstObject;
+    return this.slackIntegrations[0];
   }
 }
 

@@ -68,7 +68,7 @@ export default class CourseRoute extends BaseRoute {
       }
     } else {
       // @ts-ignore
-      const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').lastObject;
+      const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').at(-1);
 
       if (lastPushedRepository) {
         return lastPushedRepository;

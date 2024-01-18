@@ -1,5 +1,5 @@
 export default function createCourseStageComment(server, course, stagePosition) {
-  let stage = course.stages.models.filter((stage) => stage.position === stagePosition).firstObject;
+  let stage = course.stages.models.filter((stage) => stage.position === stagePosition)[0];
 
   server.create('course-stage-comment', {
     user: server.schema.users.first(),

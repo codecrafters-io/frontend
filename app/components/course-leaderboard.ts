@@ -46,11 +46,11 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
-    this.team = this.currentUserIsTeamMember ? this.currentUserTeams.firstObject : undefined;
+    this.team = this.currentUserIsTeamMember ? this.currentUserTeams[0] : undefined;
   }
 
   get currentUserIsTeamMember() {
-    return this.authenticator.currentUserIsLoaded && !!this.currentUserTeams.firstObject;
+    return this.authenticator.currentUserIsLoaded && !!this.currentUserTeams[0];
   }
 
   get currentUserTeams() {

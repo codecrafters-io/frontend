@@ -21,7 +21,7 @@ export default class TrackCardComponent extends Component {
 
   get currentUserHasStartedTrack() {
     if (this.authenticator.currentUser) {
-      return !!this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated').firstObject;
+      return !!this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated')[0];
     } else {
       return false;
     }

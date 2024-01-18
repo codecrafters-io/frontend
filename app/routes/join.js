@@ -25,6 +25,6 @@ export default class JoinRoute extends BaseRoute {
       include: 'user',
     });
 
-    return { affiliateLink: affiliateLinks.firstObject };
+    return { affiliateLink: affiliateLinks[0] };
   }
 }
