@@ -9,7 +9,8 @@ export default class CourseOverviewController extends Controller {
       return this.authenticator.currentUser.repositories
         .filterBy('course', this.model.course)
         .filterBy('firstSubmissionCreated')
-        .sortBy('lastSubmissionAt').lastObject;
+        .sortBy('lastSubmissionAt')
+        .at(-1);
     } else {
       return null;
     }

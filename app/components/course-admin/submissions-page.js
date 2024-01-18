@@ -12,7 +12,7 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.selectedSubmission = this.args.submissions.sortBy('createdAt').lastObject;
+    this.selectedSubmission = this.args.submissions.sortBy('createdAt').at(-1);
   }
 
   get currentLanguage() {

@@ -36,9 +36,9 @@ export default class TracksController extends Controller {
         let repositoriesForCourse2 = this.authenticator.currentUser.repositories.filterBy('course', course2).filterBy('firstSubmissionCreated');
 
         let lastSubmissionForCourse1At =
-          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt.getTime() : null;
+          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt.getTime() : null;
         let lastSubmissionForCourse2At =
-          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt.getTime() : null;
+          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt.getTime() : null;
 
         if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At > lastSubmissionForCourse2At) {
           return -1;
@@ -64,8 +64,8 @@ export default class TracksController extends Controller {
         let repositoriesForLanguage2 = this.authenticator.currentUser.repositories.filterBy('language', language2).filterBy('firstSubmissionCreated');
 
         if (repositoriesForLanguage1.length > 0 && repositoriesForLanguage2.length > 0) {
-          let lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt;
-          let lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').lastObject.lastSubmissionAt;
+          let lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
+          let lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
 
           return lastSubmissionForLanguage1 > lastSubmissionForLanguage2 ? 1 : -1;
         } else if (repositoriesForLanguage1.length > 0) {
