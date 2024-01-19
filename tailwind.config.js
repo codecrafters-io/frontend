@@ -182,22 +182,20 @@ module.exports = {
           },
         },
         dark: {
-          css: {
-            code: {
-              color: '#ffb6c1',
-              fontWeight: 'normal',
-              padding: '0.2em 0.4em',
-              borderRadius: '5px',
-              backgroundColor: '#212121',
-              whiteSpace: 'nowrap',
+          css: [
+            {
+              code: {
+                color: '#ffb6c1',
+                fontWeight: 'normal',
+                padding: '0.2em 0.4em',
+                borderRadius: '5px',
+                backgroundColor: '#212121',
+                whiteSpace: 'nowrap',
+              },
+              'code::before': { content: 'none' },
+              'code::after': { content: 'none' },
             },
-            'code::before': { content: 'none' },
-            'code::after': { content: 'none' },
-            pre: {
-              color: colors.slate[700],
-              backgroundColor: colors.slate[100],
-            },
-          },
+          ],
         },
       },
       keyframes: {
