@@ -76,10 +76,10 @@ module.exports = {
               content: 'none',
             },
             code: {
-              color: colors.slate[700],
+              color: '#ffb6c1',
               fontWeight: 'normal',
               padding: '0.2em 0.4em',
-              backgroundColor: colors.slate[100],
+              backgroundColor: '#212121',
               borderRadius: '5px',
               whiteSpace: 'nowrap',
             },
