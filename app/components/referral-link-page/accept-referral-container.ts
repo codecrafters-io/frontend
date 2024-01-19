@@ -84,7 +84,7 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
         user_id: this.currentUser?.id,
       });
 
-      this.freeUsageGrantExpiresAt = format(freeUsageGrant.firstObject?.expiresAt, 'dd MMM yyyy');
+      this.freeUsageGrantExpiresAt = format(freeUsageGrant.objectAt(0)?.expiresAt, 'dd MMM yyyy');
       this.isAccepted = true;
     }
   }

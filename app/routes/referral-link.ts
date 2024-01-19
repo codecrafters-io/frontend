@@ -38,11 +38,11 @@ export default class ReferralLinkRoute extends BaseRoute {
         user_id: this.authenticator.currentUser?.id,
       });
 
-      acceptedReferralOfferFreeUsageGrant = acceptedReferralOfferFreeUsageGrants.firstObject;
+      acceptedReferralOfferFreeUsageGrant = acceptedReferralOfferFreeUsageGrants.objectAt(0);
     }
 
     return {
-      referralLink: referralLinks.firstObject,
+      referralLink: referralLinks.objectAt(0),
       acceptedReferralOfferFreeUsageGrant: acceptedReferralOfferFreeUsageGrant,
     };
   }
