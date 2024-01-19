@@ -50,10 +50,9 @@ export default class FeedbackComponent extends Component {
     if (this.formElement.checkValidity()) {
       this.isSaving = true;
       this.feedbackSubmission.pageUrl = window.location.href;
-      // source will be passed as an argument to the component.
       this.feedbackSubmission.source = this.args.source;
 
-      if (!this.feedbackSubmission.sourceMetadata) {
+      if (!this.args.sourceMetadata) {
         this.feedbackSubmission.sourceMetadata = {};
       } else {
         this.feedbackSubmission.sourceMetadata = this.args.sourceMetadata;
