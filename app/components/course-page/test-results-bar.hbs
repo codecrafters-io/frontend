@@ -1,5 +1,7 @@
 <div class="bg-gray-900 border-t border-gray-800 dark flex flex-col items-center" data-test-test-results-bar ...attributes>
-  <div class="relative w-full max-w-screen-lg xl:max-w-screen-xl flex flex-col flex-grow {{if this.isExpanded 'h-[50vh]'}}">
+  <div class="cursor-ns-resize h-2 w-8 bg-gray-700" role="button" {{on "mousedown" this.startResize}}></div>
+
+  <div class="relative w-full max-w-screen-lg xl:max-w-screen-xl flex flex-col flex-grow" style={{if this.isExpanded (concat "height: " this.customHeight)}}>
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection
         @onCollapseButtonClick={{this.handleCollapseButtonClick}}
