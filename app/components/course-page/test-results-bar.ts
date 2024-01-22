@@ -1,4 +1,5 @@
 import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -22,7 +23,7 @@ export default class TestResultsBarComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
-  @tracked customHeight = '50vh'
+  @tracked customHeight = htmlSafe('height: 50vh')
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
@@ -64,12 +65,8 @@ export default class TestResultsBarComponent extends Component<Signature> {
 
   @action
   handleResize(event: MouseEvent) {
-    console.log('inner height: ', window.innerHeight)
-    console.log('event client y: ', event.clientY)
     let newHeight = window.innerHeight - event.clientY - 38;
-    console.log('new height', newHeight)
-    this.customHeight = `${newHeight}px`;
-    console.log('custom height', this.customHeight)
+    this.customHeight = htmlSafe(`height: ${newHeight}px`);
   }
 
   @action
