@@ -77,8 +77,8 @@ module.exports = {
             },
             code: {
               color: colors.slate[700],
-              fontWeight: 'normal',
-              padding: '0.2em 0.4em',
+              fontWeight: 'bold',
+              padding: '0.25em 0.45em',
               backgroundColor: colors.slate[100],
               borderRadius: '5px',
               whiteSpace: 'nowrap',
@@ -87,6 +87,7 @@ module.exports = {
             'code::after': { content: 'none' },
             pre: {
               color: colors.slate[700],
+              fontWeight: 'bold',
               backgroundColor: colors.slate[100],
             },
           },
@@ -181,6 +182,14 @@ module.exports = {
             },
           },
         },
+        invert: {
+          css: {
+            code: {
+              color: colors.slate[300],
+              backgroundColor: colors.slate[800],
+            },
+          },
+        },
       },
       keyframes: {
         'infinite-slide': {
@@ -217,16 +226,5 @@ module.exports = {
       width: ['group-hover'],
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    ({ addComponents }) => {
-      const darkModeCodeStyles = {
-        '.dark code': {
-          color: colors.slate[300],
-          backgroundColor: colors.slate[900],
-        },
-      };
-      addComponents(darkModeCodeStyles);
-    },
-  ],
+  plugins: [require('@tailwindcss/typography')],
 };
