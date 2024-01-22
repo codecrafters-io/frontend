@@ -124,12 +124,12 @@ export default class CourseModel extends Model {
     return (
       {
         'http-server': 3,
-        'dns-server': 2,
+        'dns-server': 4,
         bittorrent: 1,
         docker: 6,
         git: 7,
-        grep: 4,
-        redis: 5,
+        grep: 5,
+        redis: 2,
         sqlite: 8,
       }[this.slug] || 9
     );
