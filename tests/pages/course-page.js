@@ -114,6 +114,17 @@ export default create({
 
     clickOnExpandButton: clickable('[data-test-expand-button]'),
     clickOnCollapseButton: clickable('[data-test-collapse-button]'),
+
+    feedbackDropdown: {
+      clickOnSendButton: clickable('[data-test-send-button]'),
+      fillInExplanation: fillable('textarea'),
+      isOpen: isVisible('[data-test-feedback-dropdown-content]', { resetScope: true }),
+      resetScope: true,
+      sendButtonIsVisible: isVisible('[data-test-send-button]'),
+      scope: '[data-test-feedback-dropdown-content]',
+      toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
+    },
+
     languageDropdown: LanguageDropdown,
     scope: '[data-test-language-guide-card]',
   },
