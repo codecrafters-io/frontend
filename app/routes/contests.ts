@@ -22,7 +22,7 @@ export default class ContestsRoute extends BaseRoute {
   }
 
   async redirect() {
-    // TODO: Redirect to the currently active contest instead of hardcoding weekly-2
-    await this.router.transitionTo('contest', 'weekly-3');
+    // TODO: Redirect to the currently active contest instead of hardcoding weekly-3
+    await this.router.transitionTo('contest', 'weekly-4');
   }
 }
