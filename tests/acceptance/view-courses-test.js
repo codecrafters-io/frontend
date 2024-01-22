@@ -23,8 +23,8 @@ module('Acceptance | view-courses', function (hooks) {
 
     await percySnapshot('Catalog Page');
 
-    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own grep');
-    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Redis');
+    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
+    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own grep');
     assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Docker');
     assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Git');
     assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
@@ -146,8 +146,8 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
 
-    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own grep');
-    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Redis');
+    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
+    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own grep');
     assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Docker');
     assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Git');
     assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
