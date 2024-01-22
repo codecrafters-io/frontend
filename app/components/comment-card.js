@@ -90,10 +90,8 @@ export default class CommentCardComponent extends Component {
   updateCommentStatus(comment, status, dropdownActions) {
     dropdownActions.close();
 
-    if (status === 1) {
-      comment.approvalStatus = 'approved';
-    } else if (status === -1) {
-      comment.approvalStatus = 'rejected';
+    if (['approved', 'awaiting_approval', 'rejected'].includes(status)) {
+      comment.approvalStatus = status;
     }
 
     comment.save();
