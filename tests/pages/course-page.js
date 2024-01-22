@@ -11,7 +11,7 @@ import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/co
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
-import { collection, clickable, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, create, fillable, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {

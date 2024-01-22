@@ -89,6 +89,6 @@ module('Acceptance | course-page | language-guides', function (hooks) {
 
     const feedbackSubmission = this.server.schema.siteFeedbackSubmissions.first();
     assert.strictEqual(feedbackSubmission.source, 'course_stage_language_guide')
-    assert.strictEqual(Object.keys(feedbackSubmission.sourceMetadata).length, 1)
+    assert.strictEqual(JSON.stringify(feedbackSubmission.sourceMetadata), JSON.stringify({ language_slug: 'go' }))
   });
 });
