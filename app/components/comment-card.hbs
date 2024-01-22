@@ -40,10 +40,7 @@
               <button type="button" class="bg-yellow-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}</button>
             </dd.Trigger>
             <dd.Content>
-              <div class="bg-yellow-500 rounded-lg shadow-lg text-white px-2 py-1 rounded font-semibold text-xs">
-                <div role="button" {{on "click" (fn this.updateCommentStatus @comment 0 dd.actions)}}>
-                  Pending
-                </div>
+              <div class="bg-yellow-400 rounded-lg shadow-lg text-white px-2 py-1 font-semibold text-xs">
                 <div role="button" {{on "click" (fn this.updateCommentStatus @comment 1 dd.actions)}}>
                   Approved
                 </div>
