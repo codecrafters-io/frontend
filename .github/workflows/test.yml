@@ -41,7 +41,7 @@ jobs:
           path: |
             ~/.npm
             ./node_modules
-            ./.deps-sha-${{ steps.deps-sha.outputs.sha }}
+            ./.deps-sha-v2-${{ steps.deps-sha.outputs.sha }}
 
       # Debugging
       - run: ls -lah /cache
@@ -60,8 +60,8 @@ jobs:
           ls -A . | grep -E "^\.deps-sha-" | grep -v ${{ steps.deps-sha.outputs.sha }} | xargs -n1 rm -rf
 
           # Then, we create a new file in the deps-sha folder so that it's persisted in the cache
-          echo "Creating file ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file"
-          echo "cached" > ./.deps-sha-${{ steps.deps-sha.outputs.sha }}/dummy-file
+          echo "Creating file ./.deps-sha-v2-${{ steps.deps-sha.outputs.sha }}/dummy-file"
+          echo "cached" > ./.deps-sha-v2-${{ steps.deps-sha.outputs.sha }}/dummy-file
         if: steps.cache-npm.outputs.cache-hit != 'true'
 
       # Debugging
