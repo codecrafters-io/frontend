@@ -38,6 +38,10 @@ module('Acceptance | submit-site-feedback', function (hooks) {
     assert.notOk(feedbackDropdown.sendButtonIsVisible, 'Send button is not visible');
     assert.ok(feedbackDropdown.isOpen, 'Feedback dropdown is still open (has completed message)');
 
+    const feedbackSubmission = this.server.schema.siteFeedbackSubmissions.first();
+    assert.strictEqual(feedbackSubmission.source, 'header');
+    assert.strictEqual(JSON.stringify(feedbackSubmission.sourceMetadata), '{}');
+
     await percySnapshot('Feedback widget - after submission');
   });
 });

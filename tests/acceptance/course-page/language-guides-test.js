@@ -48,4 +48,42 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     await coursePage.languageGuideCard.backToRepositoryLanguageButton.click();
     assert.strictEqual(coursePage.languageGuideCard.languageDropdown.currentLanguageName, 'Python');
   });
+
+  test('can submit feedback for language guides', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ name: 'Go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('course-stage-language-guide', {
+      markdownForBeginner: 'In this stage, blah blah...',
+      courseStage: redis.stages.models.sortBy('position')[1],
+      language: go,
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    document.getElementById('language-guide-card')?.scrollIntoView();
+
+    await coursePage.languageGuideCard.clickOnExpandButton();
+    assert.strictEqual(coursePage.languageGuideCard.languageDropdown.currentLanguageName, 'Go');
+
+    const feedbackDropdown = coursePage.languageGuideCard.feedbackDropdown;
+    await feedbackDropdown.toggle();
+    await feedbackDropdown.fillInExplanation('This is test feedback for language guides');
+    await feedbackDropdown.clickOnSendButton();
+
+    const feedbackSubmission = this.server.schema.siteFeedbackSubmissions.first();
+    assert.strictEqual(feedbackSubmission.source, 'course_stage_language_guide');
+    assert.strictEqual(JSON.stringify(feedbackSubmission.sourceMetadata), JSON.stringify({ language_slug: 'go' }));
+  });
 });

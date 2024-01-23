@@ -81,9 +81,10 @@
           {{! @glint-expect-error: not ts-ified }}
           <FeedbackButton
             @source="course_stage_language_guide"
-            @sourceMetadata={{hash language_slug=this.currentLanguage}}
+            @sourceMetadata={{hash language_slug=this.currentLanguage.slug}}
             class="inline-flex"
             @dropdownPosition="left"
+            data-test-feedback-button
           >
             <TertiaryButton @size="small">
               Share Feedback

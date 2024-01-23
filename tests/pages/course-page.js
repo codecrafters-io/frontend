@@ -11,7 +11,7 @@ import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/co
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
-import { collection, clickable, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, create, fillable, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -114,6 +114,17 @@ export default create({
 
     clickOnExpandButton: clickable('[data-test-expand-button]'),
     clickOnCollapseButton: clickable('[data-test-collapse-button]'),
+
+    feedbackDropdown: {
+      clickOnSendButton: clickable('[data-test-send-button]'),
+      fillInExplanation: fillable('textarea'),
+      isOpen: isVisible('[data-test-feedback-dropdown-content]', { resetScope: true }),
+      resetScope: true,
+      sendButtonIsVisible: isVisible('[data-test-send-button]'),
+      scope: '[data-test-feedback-dropdown-content]',
+      toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
+    },
+
     languageDropdown: LanguageDropdown,
     scope: '[data-test-language-guide-card]',
   },
