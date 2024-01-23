@@ -15,6 +15,7 @@ export default {
   resizeHandler: {
     mouseDown: triggerable('mousedown'),
     mouseMove: triggerable('mousemove'),
+    mouseUp: triggerable('mouseup'),
     scope: '[data-test-resize-handler]',
   },
 
@@ -22,8 +23,9 @@ export default {
   tabs: collection('[data-test-tab-header]'),
 
   get height() {
-    const element = find('[data-test-test-results-bar]');
-    return element?.getBoundingClientRect().height;
+    const element = find('[data-test-test-results-bar]') as HTMLElement;
+
+    return element?.offsetHeight;
   },
 
   get tabNames() {

@@ -2,6 +2,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import window from 'ember-window-mock';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'ember-qunit';
@@ -186,5 +187,42 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs']);
+  });
+
+  test('can resize test results bar', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.testResultsBar.clickOnBottomSection();
+    await coursePage.testResultsBar.resizeHandler.mouseDown();
+
+    const desiredHeight = 500;
+
+    await coursePage.testResultsBar.resizeHandler.mouseMove({ clientY: window.innerHeight - desiredHeight });
+    await coursePage.testResultsBar.resizeHandler.mouseUp();
+
+    const testResultsBarHeight = coursePage.testResultsBar.height;
+    assert.strictEqual(testResultsBarHeight, desiredHeight);
   });
 });
