@@ -37,21 +37,30 @@
         {{#if this.currentUserIsStaff}}
           <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" as |dd|>
             <dd.Trigger>
-              <button type="button" class="bg-yellow-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}</button>
+              {{#if (eq @comment.approvalStatus "approved")}}
+                <button type="button" class="bg-green-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}
+                </button>
+              {{else if (eq @comment.approvalStatus "rejected")}}
+                <button type="button" class="bg-gray-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}
+                </button>
+              {{else if (eq @comment.approvalStatus "awaiting_approval")}}
+                <button type="button" class="bg-yellow-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}
+                </button>
+              {{/if}}
             </dd.Trigger>
             <dd.Content>
-              <div class="bg-yellow-500 hover:bg-yellow-300 shadow-lg text-white px-2 py-1 font-semibold text-xs">
-                <div role="button" {{on "click" (fn this.updateCommentStatus @comment "approved" dd.actions)}}>
+              <div class="py-1 text-sm text-gray-600 max-w-xl bg-white hover:bg-gray-50">
+                <div role="button" {{on "click" (fn this.updateCommentStatus "approved" dd.actions)}}>
                   Approved
                 </div>
               </div>
-              <div class="bg-yellow-500 hover:bg-yellow-300 shadow-lg text-white px-2 py-1 font-semibold text-xs">
-                <div role="button" {{on "click" (fn this.updateCommentStatus @comment "rejected" dd.actions)}}>
+              <div class="py-1 text-sm text-gray-600 max-w-xl bg-white hover:bg-gray-50">
+                <div role="button" {{on "click" (fn this.updateCommentStatus "rejected" dd.actions)}}>
                   Rejected
                 </div>
               </div>
-              <div class="bg-yellow-500 hover:bg-yellow-300 shadow-lg text-white px-2 py-1 font-semibold text-xs">
-                <div role="button" {{on "click" (fn this.updateCommentStatus @comment "awaiting_approval" dd.actions)}}>
+              <div class="py-1 text-sm text-gray-600 max-w-xl bg-white hover:bg-gray-50">
+                <div role="button" {{on "click" (fn this.updateCommentStatus "awaiting_approval" dd.actions)}}>
                   Awaiting Approval
                 </div>
               </div>
