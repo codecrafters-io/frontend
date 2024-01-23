@@ -181,6 +181,14 @@ module.exports = {
             },
           },
         },
+        invert: {
+          css: {
+            code: {
+              color: colors.slate[300],
+              backgroundColor: colors.slate[800],
+            },
+          },
+        },
       },
       keyframes: {
         'infinite-slide': {
