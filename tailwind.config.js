@@ -77,8 +77,8 @@ module.exports = {
             },
             code: {
               color: colors.slate[700],
-              fontWeight: 'bold',
-              padding: '0.25em 0.45em',
+              fontWeight: 'normal',
+              padding: '0.2em 0.4em',
               backgroundColor: colors.slate[100],
               borderRadius: '5px',
               whiteSpace: 'nowrap',
@@ -87,7 +87,6 @@ module.exports = {
             'code::after': { content: 'none' },
             pre: {
               color: colors.slate[700],
-              fontWeight: 'bold',
               backgroundColor: colors.slate[100],
             },
           },
