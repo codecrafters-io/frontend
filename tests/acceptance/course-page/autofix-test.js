@@ -222,7 +222,13 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await coursePage.testResultsBar.resizeHandler.mouseMove({ clientY: window.innerHeight - desiredHeight });
     await coursePage.testResultsBar.resizeHandler.mouseUp();
 
-    const testResultsBarHeight = coursePage.testResultsBar.height;
-    assert.strictEqual(testResultsBarHeight, desiredHeight);
+    let testResultsBarHeight = coursePage.testResultsBar.height;
+    assert.strictEqual(testResultsBarHeight, desiredHeight, 'test results bar can be resized');
+
+    await coursePage.testResultsBar.clickOnBottomSection();
+    await coursePage.testResultsBar.clickOnBottomSection();
+
+    testResultsBarHeight = coursePage.testResultsBar.height;
+    assert.strictEqual(testResultsBarHeight, desiredHeight, 'test results bar maintains the height after closing and expanding again');
   });
 });
