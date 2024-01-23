@@ -1,13 +1,14 @@
+import Component from '@glimmer/component';
+import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { service } from '@ember/service';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
-import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {
   Element: HTMLDivElement;
