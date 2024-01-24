@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
+import DateService from 'codecrafters-frontend/services/date';
+import { inject as service } from '@ember/service';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -15,11 +17,14 @@ export interface Signature {
 }
 
 export default class FreeCourseLabelComponent extends Component<Signature> {
+  @service declare date: DateService;
+
   get labelCopy(): string {
-    const today = new Date();
+    const now = this.date.now();
+    const today = new Date(now);
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
-    if (today.getTime() < firstDayOfMonth.getTime() + 24 * 60 * 60 * 1000) {
+    if (now < firstDayOfMonth.getTime() + 24 * 60 * 60 * 1000) {
       return 'FREE THIS MONTH';
     } else {
       return 'FREE'
