@@ -31,6 +31,7 @@ export default class CourseModel extends Model {
   @attr('string') declare definitionRepositoryFullName: string;
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare difficulty: string;
+  @attr('date') declare isFreeUntil: Date | null;
   @attr('string') declare name: string;
   @attr('string') declare releaseStatus: string;
   @attr('string') declare sampleExtensionIdeaTitle: string;
