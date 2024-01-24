@@ -168,7 +168,7 @@
     "tailwindcss": "^3.4.1",
     "tracked-built-ins": "^3.3.0",
     "typescript": "^5.2.2",
-    "webpack": "^5.89.0",
+    "webpack": "^5.90.0",
     "webpack-bundle-analyzer": "^4.9.1"
   },
   "engines": {
