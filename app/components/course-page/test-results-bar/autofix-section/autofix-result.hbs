@@ -75,7 +75,7 @@
           >Learn more</a>.
         </div>
 
-        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @onUnblur={{fn (mut this.diffIsBlurred) false}}>
+        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @onUnblur={{this.toggleBlur}}>
           {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
             <FileDiffCard
               class="mt-6"

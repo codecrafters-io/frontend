@@ -1,3 +1,4 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
@@ -18,6 +19,7 @@ type Signature = {
 export default class AutofixResultComponent extends Component<Signature> {
   @service declare store: Store;
   @service declare actionCableConsumer: ActionCableConsumerService;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   @tracked logstream: Logstream | null = null;
   @tracked shouldShowFullLog = false;
@@ -47,6 +49,15 @@ export default class AutofixResultComponent extends Component<Signature> {
     if (this.logstream) {
       this.logstream.unsubscribe();
     }
+  }
+
+  @action
+  toggleBlur() {
+    if (this.diffIsBlurred) {
+      this.analyticsEventTracker.track('revealed_autofix_request_diff', { autofix_request_id: this.args.autofixRequest.id });
+    }
+
+    this.diffIsBlurred = !this.diffIsBlurred;
   }
 }
 
