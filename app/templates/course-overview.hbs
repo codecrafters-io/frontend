@@ -9,6 +9,10 @@
         <Alert @type="success" class="mb-4">
           This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
         </Alert>
+      {{else if this.model.course.isFreeUntil}}
+        <Alert @type="success" class="mb-4">
+          We're keeping this course free until {{this.formattedCourseIsFreeExpirationDate}} to gather feedback
+        </Alert>
       {{/if}}
 
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
