@@ -53,10 +53,14 @@
           <CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{this.lastPushedRepository}} class="flex-shrink-0" />
         {{else}}
           {{#if @course.releaseStatusIsLive}}
-            <div class="flex items-center">
-              {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300"}}
-              <span class="text-xs text-gray-400">{{@course.stages.length}} stages</span>
-            </div>
+            {{#if @course.isFree}}
+              <FreeCourseLabel @course={{@course}} />
+            {{else}}
+              <div class="flex items-center">
+                {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300"}}
+                <span class="text-xs text-gray-400">{{@course.stages.length}} stages</span>
+              </div>
+            {{/if}}
           {{else if @course.releaseStatusIsBeta}}
             <BetaCourseLabel class="mr-3" />
           {{else if @course.releaseStatusIsAlpha}}
