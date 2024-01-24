@@ -79,7 +79,13 @@
       <p class="mt-0">
         <div class="inline-flex">
           {{! @glint-expect-error: not ts-ified }}
-          <FeedbackButton class="inline-flex" @dropdownPosition="left">
+          <FeedbackButton
+            @source="course_stage_language_guide"
+            @sourceMetadata={{hash language_slug=this.currentLanguage.slug}}
+            class="inline-flex"
+            @dropdownPosition="left"
+            data-test-feedback-button
+          >
             <TertiaryButton @size="small">
               Share Feedback
             </TertiaryButton>
