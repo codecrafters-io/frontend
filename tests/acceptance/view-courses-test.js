@@ -1,4 +1,5 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
@@ -140,11 +141,23 @@ module('Acceptance | view-courses', function (hooks) {
   test('it renders if user is not signed in', async function (assert) {
     testScenario(this.server);
 
-    const course = this.server.schema.courses.findBy({ slug: 'grep' });
-    course.update({ releaseStatus: 'beta' });
+    this.owner.register('service:date', FakeDateService)
+
+    let dateService = this.owner.lookup('service:date');
+    let now = new Date('2024-01-01').getTime();
+    dateService.setNow(now);
+
+    let isFreeExpirationDate = new Date(dateService.now() + 20 * 24 * 60 * 60 * 1000);
+
+    const grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    grep.update({ releaseStatus: 'beta' });
+
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    redis.update({ isFreeUntil: isFreeExpirationDate });
+
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
     assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own grep');
@@ -153,7 +166,7 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
 
     assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
-    assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasBetaLabel, 'live challenges should not have beta label');
+    assert.ok(catalogPage.courseCardByName('Build your own Redis').hasFreeLabel, 'free challenges should have free label');
     assert.notOk(catalogPage.courseCardByName('Build your own Docker').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own Git').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
