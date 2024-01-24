@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import DateService from 'codecrafters-frontend/services/date';
+import { format } from 'date-fns';
 import { inject as service } from '@ember/service';
 
 export interface Signature {
@@ -32,7 +33,7 @@ export default class FreeCourseLabelComponent extends Component<Signature> {
   }
 
   get tooltipCopy(): string {
-    return `We're keeping this course free until ${this.args.course.isFreeUntil} to gather feedback`
+    return `We're keeping this course free until ${format(this.args.course.isFreeUntil as Date, 'd MMMM yyyy')} to gather feedback`
   }
 
   get tooltipSide(): 'top' | 'bottom' | 'left' | 'right' {
