@@ -49,19 +49,21 @@
               {{/if}}
             </dd.Trigger>
             <dd.Content>
-              <div class="py-1 text-sm text-gray-600 max-w-xl bg-white hover:bg-gray-50">
-                <div role="button" {{on "click" (fn this.updateCommentStatus "approved" dd.actions)}}>
-                  Approved
+              <div class="py-2 border rounded shadow text-sm text-gray-600 min-w-[150px] max-w-xl bg-white" data-test-more-dropdown-content>
+                <div class="px-3 py-1 hover:bg-gray-50 flex items-center justify-between group">
+                  <div role="button" {{on "click" (fn this.updateCommentStatus "approved" dd.actions)}}>
+                    Approved
+                  </div>
                 </div>
-              </div>
-              <div class="py-1 text-sm text-gray-600 max-w-xl bg-white hover:bg-gray-50">
-                <div role="button" {{on "click" (fn this.updateCommentStatus "rejected" dd.actions)}}>
-                  Rejected
+                <div class="px-3 py-1 hover:bg-gray-50 flex items-center justify-between group">
+                  <div role="button" {{on "click" (fn this.updateCommentStatus "rejected" dd.actions)}}>
+                    Rejected
+                  </div>
                 </div>
-              </div>
-              <div class="py-1 text-sm text-gray-600 max-w-xl bg-white hover:bg-gray-50">
-                <div role="button" {{on "click" (fn this.updateCommentStatus "awaiting_approval" dd.actions)}}>
-                  Awaiting Approval
+                <div class="px-3 py-1 hover:bg-gray-50 flex items-center justify-between group">
+                  <div role="button" {{on "click" (fn this.updateCommentStatus "awaiting_approval" dd.actions)}}>
+                    Awaiting Approval
+                  </div>
                 </div>
               </div>
             </dd.Content>
