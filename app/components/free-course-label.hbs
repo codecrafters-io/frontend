@@ -3,9 +3,6 @@
   data-test-course-free-label
   ...attributes
 >
-  FREE
-  <EmberTooltip
-    @text="This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback."
-    @side={{this.tooltipSide}}
-  />
+  {{this.labelCopy}}
+  <EmberTooltip @text={{this.tooltipCopy}} @side={{this.tooltipSide}} />
 </div>

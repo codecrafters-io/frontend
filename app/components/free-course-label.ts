@@ -5,7 +5,7 @@ export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    course?: CourseModel;
+    course: CourseModel;
     tooltipSide?: 'top' | 'bottom' | 'left' | 'right';
   };
 
@@ -15,6 +15,21 @@ export interface Signature {
 }
 
 export default class FreeCourseLabelComponent extends Component<Signature> {
+  get labelCopy(): string {
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    if (today.getTime() < firstDayOfMonth.getTime() + 24 * 60 * 60 * 1000) {
+      return 'FREE THIS MONTH';
+    } else {
+      return 'FREE'
+    }
+  }
+
+  get tooltipCopy(): string {
+    return `We're keeping this course free until ${this.args.course.isFreeUntil} to gather feedback`
+  }
+
   get tooltipSide(): 'top' | 'bottom' | 'left' | 'right' {
     return this.args.tooltipSide || 'top';
   }
