@@ -86,7 +86,7 @@
     "@types/rsvp": "^4.0.9",
     "@types/showdown": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
-    "@typescript-eslint/parser": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.1",
     "@vercel/edge": "^1.1.1",
     "autoprefixer": "^10.4.17",
     "broccoli-asset-rev": "^3.0.0",
