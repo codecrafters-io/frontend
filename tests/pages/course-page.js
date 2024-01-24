@@ -102,7 +102,7 @@ export default create({
 
   freeCourseLabel: {
     hover: triggerable('mouseenter'),
-    scope: '[data-test-course-free-label]'
+    scope: '[data-test-course-free-label]',
   },
 
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),

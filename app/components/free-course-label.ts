@@ -28,12 +28,12 @@ export default class FreeCourseLabelComponent extends Component<Signature> {
     if (now < firstDayOfMonth.getTime() + 24 * 60 * 60 * 1000) {
       return 'FREE THIS MONTH';
     } else {
-      return 'FREE'
+      return 'FREE';
     }
   }
 
   get tooltipCopy(): string {
-    return `We're keeping this course free until ${format(this.args.course.isFreeUntil as Date, 'd MMMM yyyy')} to gather feedback`
+    return `We're keeping this course free until ${format(this.args.course.isFreeUntil as Date, 'd MMMM yyyy')} to gather feedback`;
   }
 
   get tooltipSide(): 'top' | 'bottom' | 'left' | 'right' {

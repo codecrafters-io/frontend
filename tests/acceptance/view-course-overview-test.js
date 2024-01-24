@@ -74,14 +74,17 @@ module('Acceptance | view-course-overview', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(courseOverviewPage.betaNoticeText, "This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.");
+    assert.strictEqual(
+      courseOverviewPage.betaNoticeText,
+      "This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.",
+    );
   });
 
   test('it has the notice for when a course is free', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    this.owner.register('service:date', FakeDateService)
+    this.owner.register('service:date', FakeDateService);
 
     let dateService = this.owner.lookup('service:date');
     let now = new Date('2024-01-01').getTime();

@@ -11,7 +11,9 @@
         </Alert>
       {{else if this.model.course.isFreeUntil}}
         <Alert @type="success" class="mb-4" data-test-course-free-notice>
-          We're keeping this course free until {{this.formattedCourseIsFreeExpirationDate}} to gather feedback.
+          We're keeping this course free until
+          {{this.formattedCourseIsFreeExpirationDate}}
+          to gather feedback.
         </Alert>
       {{/if}}
 

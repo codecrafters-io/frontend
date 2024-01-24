@@ -707,11 +707,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(coursePage.betaLabelText, 'FREE DURING BETA', 'beta label should be present');
   });
 
-  test ('free label renders properly', async function (assert) {
+  test('free label renders properly', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    this.owner.register('service:date', FakeDateService)
+    this.owner.register('service:date', FakeDateService);
 
     let dateService = this.owner.lookup('service:date');
     let now = new Date('2024-01-01').getTime();
@@ -728,7 +728,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE THIS MONTH', 'free label should be present and have correct copy');
 
-    now = new Date ('2024-01-05').getTime();
+    now = new Date('2024-01-05').getTime();
     dateService.setNow(now);
 
     await catalogPage.visit();
@@ -740,7 +740,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.freeCourseLabel.hover();
 
     assertTooltipContent(assert, {
-      contentString: "We're keeping this course free until 21 January 2024 to gather feedback"
+      contentString: "We're keeping this course free until 21 January 2024 to gather feedback",
     });
   });
 
