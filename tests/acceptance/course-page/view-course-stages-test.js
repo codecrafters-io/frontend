@@ -726,7 +726,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await percySnapshot('Course Stages - Free Status');
 
-    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE THIS MONTH', 'free label should be present and have correct copy when expiration is first day of next month');
+    assert.strictEqual(
+      coursePage.freeCourseLabel.text,
+      'FREE THIS MONTH',
+      'free label should be present and have correct copy when expiration is first day of next month',
+    );
 
     isFreeExpirationDate = new Date('2024-01-31');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
@@ -735,7 +739,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE THIS MONTH', 'free label should be present and have correct copy when expiration is last day of this month');
+    assert.strictEqual(
+      coursePage.freeCourseLabel.text,
+      'FREE THIS MONTH',
+      'free label should be present and have correct copy when expiration is last day of this month',
+    );
 
     isFreeExpirationDate = new Date('2024-01-16');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
