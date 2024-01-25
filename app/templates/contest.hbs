@@ -15,7 +15,7 @@
         <ContestPage::HowItWorksCard @contest={{@model.contest}} />
       </div>
 
-      <ContestPage::PrizeDetailsCard @contest={{@model.contest}} class="w-full md:w-64 xl:w-80 flex-shrink-0" />
+      <ContestPage::PrizeDetailsCard @allContests={{@model.allContests}} @contest={{@model.contest}} class="w-full md:w-64 xl:w-80 flex-shrink-0" />
     </div>
   </div>
 </div>

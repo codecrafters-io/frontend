@@ -147,27 +147,52 @@ module('Acceptance | contests-test', function (hooks) {
     });
   });
 
-  test('navigation buttons work', async function (assert) {
+  test('header navigation buttons work', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
 
     signIn(this.owner, this.server);
 
     await contestsPage.visit({ contest_slug: 'weekly-2' });
-    await contestsPage.clickOnPreviousContestButton();
+    await contestsPage.clickOnHeaderPreviousContestButton();
 
     assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button works');
 
-    await contestsPage.clickOnPreviousContestButton();
+    await contestsPage.clickOnHeaderPreviousContestButton();
 
     assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button is disabled when there are no more previous contests');
 
-    await contestsPage.clickOnNextContestButton();
-    await contestsPage.clickOnNextContestButton();
+    await contestsPage.clickOnHeaderNextContestButton();
+    await contestsPage.clickOnHeaderNextContestButton();
 
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button works');
 
-    await contestsPage.clickOnNextContestButton();
+    await contestsPage.clickOnHeaderNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
+  })
+
+  test('prize navigation buttons work', async function (assert) {
+    testScenario(this.server);
+    createContests(this.owner, this.server);
+
+    signIn(this.owner, this.server);
+
+    await contestsPage.visit({ contest_slug: 'weekly-2' });
+    await contestsPage.clickOnPrizePreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button works');
+
+    await contestsPage.clickOnPrizePreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button is disabled when there are no more previous contests');
+
+    await contestsPage.clickOnPrizeNextContestButton();
+    await contestsPage.clickOnPrizeNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button works');
+
+    await contestsPage.clickOnPrizeNextContestButton();
 
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
   })
