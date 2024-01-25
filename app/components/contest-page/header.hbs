@@ -9,10 +9,24 @@
       >{{this.contestStatusPillCopy}}</ContestPage::ContestStatusPill>
     </div>
 
-    <span class="text-gray-200 font-semibold">
-      {{date-format @contest.startsAt format="MMM d"}}
-      -
-      {{date-format @contest.endsAt format="MMM d"}}
-    </span>
+    <div class="flex items-center gap-3">
+      <span class="text-gray-200 font-semibold">
+        {{date-format @contest.startsAt format="MMM d"}}
+        -
+        {{date-format @contest.endsAt format="MMM d"}}
+      </span>
+
+      <div class="flex text-gray-200">
+        <LinkTo @route="contest" class="flex items-center rounded-l-md border border-r-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pl-2 pr-2 py-1">
+          {{svg-jar "chevron-left" class="w-4 fill-current"}}
+          Previous
+        </LinkTo>
+
+        <LinkTo @route="contest" class="flex items-center rounded-r-md border border-l-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pr-2 pl-2 py-1">
+          Next
+          {{svg-jar "chevron-right" class="w-4 fill-current"}}
+        </LinkTo>
+      </div>
+    </div>
   </div>
 </div>
