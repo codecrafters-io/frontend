@@ -44,6 +44,31 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
       return `This contest will end at 12:00 AM UTC on ${formatInTimeZone(this.args.contest.endsAt, 'UTC', 'd MMMM yyyy')}`;
     }
   }
+
+  get currentContestIndex(): number {
+    console.log(this.sortedContests)
+    return this.sortedContests.indexOf(this.args.contest);
+  }
+
+  get nextContest(): ContestModel | null {
+    if (this.currentContestIndex < this.sortedContests.length - 1) {
+      return this.sortedContests[this.currentContestIndex + 1] as ContestModel;
+    } else {
+      return null
+    }
+  }
+
+  get previousContest(): ContestModel | null {
+    if (this.currentContestIndex > 0) {
+      return this.sortedContests[this.currentContestIndex - 1] as ContestModel;
+    } else {
+      return null
+    }
+  }
+
+  get sortedContests(): ContestModel[] {
+    return this.args.allContests.sortBy('startsAt');
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
