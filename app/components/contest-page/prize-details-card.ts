@@ -20,11 +20,11 @@ export default class ContestPagePrizeDetailsCardComponent extends Component<Sign
   }
 
   get isNextContestDisabled(): boolean {
-    return !this.nextContest
+    return !this.nextContest;
   }
 
   get isPreviousContestDisabled(): boolean {
-    return !this.previousContest
+    return !this.previousContest;
   }
 
   get nextContest(): ContestModel | null {
@@ -34,12 +34,12 @@ export default class ContestPagePrizeDetailsCardComponent extends Component<Sign
       const twoWeeksFromNow = new Date(this.date.now() + 14 * 24 * 60 * 60 * 1000);
 
       if (oneWeekFromNow < nextContest.startsAt && twoWeeksFromNow > nextContest.startsAt) {
-        return null
+        return null;
       } else {
-        return nextContest
+        return nextContest;
       }
     } else {
-      return null
+      return null;
     }
   }
 
@@ -47,7 +47,7 @@ export default class ContestPagePrizeDetailsCardComponent extends Component<Sign
     if (this.currentContestIndex > 0) {
       return this.sortedContests[this.currentContestIndex - 1] as ContestModel;
     } else {
-      return null
+      return null;
     }
   }
 

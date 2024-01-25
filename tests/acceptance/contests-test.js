@@ -170,7 +170,7 @@ module('Acceptance | contests-test', function (hooks) {
     await contestsPage.clickOnHeaderNextContestButton();
 
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
-  })
+  });
 
   test('prize navigation buttons work', async function (assert) {
     testScenario(this.server);
@@ -195,5 +195,5 @@ module('Acceptance | contests-test', function (hooks) {
     await contestsPage.clickOnPrizeNextContestButton();
 
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
-  })
+  });
 });

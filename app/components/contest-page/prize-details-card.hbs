@@ -10,7 +10,8 @@
       <LinkTo
         @route="contest"
         @model={{this.previousContest.slug}}
-        class="flex items-center rounded-l-md border border-r-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pl-2 pr-2 py-1 {{if this.isPreviousContestDisabled 'cursor-not-allowed pointer-events-none opacity-50'}}"
+        class="flex items-center rounded-l-md border border-r-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pl-2 pr-2 py-1
+          {{if this.isPreviousContestDisabled 'cursor-not-allowed pointer-events-none opacity-50'}}"
         data-test-prize-previous-contest-button
       >
         Prev. contest
@@ -19,7 +20,8 @@
       <LinkTo
         @route="contest"
         @model={{this.nextContest.slug}}
-        class="flex items-center rounded-r-md border border-l-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pr-2 pl-2 py-1 {{if this.isNextContestDisabled 'cursor-not-allowed pointer-events-none opacity-50'}}"
+        class="flex items-center rounded-r-md border border-l-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pr-2 pl-2 py-1
+          {{if this.isNextContestDisabled 'cursor-not-allowed pointer-events-none opacity-50'}}"
         data-test-prize-next-contest-button
       >
         Next contest
