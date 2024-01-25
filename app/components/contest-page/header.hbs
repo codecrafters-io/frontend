@@ -17,12 +17,12 @@
       </span>
 
       <div class="flex text-gray-200">
-        <LinkTo @route="contest" @model={{this.previousContest.slug}} class="flex items-center rounded-l-md border border-r-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pl-2 pr-2 py-1">
+        <LinkTo @route="contest" @model={{this.previousContest.slug}} class="flex items-center rounded-l-md border border-r-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pl-2 pr-2 py-1 {{if this.isPreviousContestDisabled 'cursor-not-allowed opacity-50'}}">
           {{svg-jar "chevron-left" class="w-4 fill-current"}}
           Previous
         </LinkTo>
 
-        <LinkTo @route="contest" @model={{this.nextContest.slug}} class="flex items-center rounded-r-md border border-l-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pr-2 pl-2 py-1">
+        <LinkTo @route="contest" @model={{this.nextContest.slug}} class="flex items-center rounded-r-md border border-l-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pr-2 pl-2 py-1 {{if this.isNextContestDisabled 'cursor-not-allowed opacity-50'}}">
           Next
           {{svg-jar "chevron-right" class="w-4 fill-current"}}
         </LinkTo>

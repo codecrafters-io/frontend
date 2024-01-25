@@ -49,6 +49,14 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
     return this.sortedContests.indexOf(this.args.contest);
   }
 
+  get isNextContestDisabled(): boolean {
+    return !this.nextContest
+  }
+
+  get isPreviousContestDisabled(): boolean {
+    return !this.previousContest
+  }
+
   get nextContest(): ContestModel | null {
     if (this.currentContestIndex < this.sortedContests.length - 1) {
       return this.sortedContests[this.currentContestIndex + 1] as ContestModel;
