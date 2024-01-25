@@ -717,7 +717,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     let now = new Date('2024-01-01').getTime();
     dateService.setNow(now);
 
-    let isFreeExpirationDate = new Date(dateService.now() + 20 * 24 * 60 * 60 * 1000);
+    let isFreeExpirationDate = new Date('2024-02-01');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
@@ -726,21 +726,30 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await percySnapshot('Course Stages - Free Status');
 
-    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE THIS MONTH', 'free label should be present and have correct copy');
+    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE THIS MONTH', 'free label should be present and have correct copy when expiration is first day of next month');
 
-    now = new Date('2024-01-05').getTime();
-    dateService.setNow(now);
+    isFreeExpirationDate = new Date('2024-01-31');
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE', 'free label should have correct copy beyond 24 hours of the first day of the month');
+    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE THIS MONTH', 'free label should be present and have correct copy when expiration is last day of this month');
+
+    isFreeExpirationDate = new Date('2024-01-16');
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE', 'free label should have correct copy otherwise');
 
     await coursePage.freeCourseLabel.hover();
 
     assertTooltipContent(assert, {
-      contentString: "We're keeping this course free until 21 January 2024 to gather feedback",
+      contentString: "We're keeping this course free until 16 January 2024 to gather feedback",
     });
   });
 
