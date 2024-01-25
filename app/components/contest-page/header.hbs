@@ -1,7 +1,7 @@
 <div class="border-b border-gray-800 pb-2" ...attributes>
   <div class="flex items-center gap-3 justify-between flex-col sm:flex-row">
     <div class="flex items-center gap-6">
-      <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">{{@contest.name}}</h1>
+      <h1 class="text-3xl text-gray-200 font-bold tracking-tighter" data-test-contest-name>{{@contest.name}}</h1>
       <ContestPage::ContestStatusPill
         @color={{this.contestStatusPillColor}}
         @tooltipCopy={{this.contestStatusPillTooltipCopy}}
@@ -17,12 +17,22 @@
       </span>
 
       <div class="flex text-gray-200">
-        <LinkTo @route="contest" @model={{this.previousContest.slug}} class="flex items-center rounded-l-md border border-r-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pl-2 pr-2 py-1 {{if this.isPreviousContestDisabled 'cursor-not-allowed opacity-50'}}">
+        <LinkTo
+          @route="contest"
+          @model={{this.previousContest.slug}}
+          class="flex items-center rounded-l-md border border-r-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pl-2 pr-2 py-1 {{if this.isPreviousContestDisabled 'cursor-not-allowed pointer-events-none opacity-50'}}"
+          data-test-previous-contest-button
+        >
           {{svg-jar "chevron-left" class="w-4 fill-current"}}
           Previous
         </LinkTo>
 
-        <LinkTo @route="contest" @model={{this.nextContest.slug}} class="flex items-center rounded-r-md border border-l-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pr-2 pl-2 py-1 {{if this.isNextContestDisabled 'cursor-not-allowed opacity-50'}}">
+        <LinkTo
+          @route="contest"
+          @model={{this.nextContest.slug}}
+          class="flex items-center rounded-r-md border border-l-[0.5px] border-gray-800 hover:border-gray-700 hover:bg-gray-900 pr-2 pl-2 py-1 {{if this.isNextContestDisabled 'cursor-not-allowed pointer-events-none opacity-50'}}"
+          data-test-next-contest-button
+        >
           Next
           {{svg-jar "chevron-right" class="w-4 fill-current"}}
         </LinkTo>

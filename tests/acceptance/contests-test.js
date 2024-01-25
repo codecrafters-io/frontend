@@ -23,6 +23,14 @@ function createContests(owner, server) {
     username: 'Gufran',
   });
 
+  server.create('contest', {
+    slug: 'weekly-1',
+    name: 'Weekly Contest #1',
+    startsAt: new Date(now - 9 * 24 * 60 * 60 * 1000), // 9 days ago
+    endsAt: new Date(now - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    type: 'WeeklyContest',
+  });
+
   const contest = server.create('contest', {
     slug: 'weekly-2',
     name: 'Weekly Contest #2',
@@ -43,14 +51,6 @@ function createContests(owner, server) {
     name: 'Weekly Contest #3',
     startsAt: new Date(now + 4 * 24 * 60 * 60 * 1000), // 4 days from now
     endsAt: new Date(now + 11 * 24 * 60 * 60 * 1000), // 11 days from now
-    type: 'WeeklyContest',
-  });
-
-  server.create('contest', {
-    slug: 'weekly-4',
-    name: 'Weekly Contest #4',
-    startsAt: new Date(now - 9 * 24 * 60 * 60 * 1000), // 9 days ago
-    endsAt: new Date(now - 2 * 24 * 60 * 60 * 1000), // 2 days ago
     type: 'WeeklyContest',
   });
 }
@@ -99,7 +99,7 @@ module('Acceptance | contests-test', function (hooks) {
     await contestsPage.visit({ contest_slug: 'weekly-3' });
     assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Not started');
 
-    await contestsPage.visit({ contest_slug: 'weekly-4' });
+    await contestsPage.visit({ contest_slug: 'weekly-1' });
     assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Ended');
   });
 
@@ -123,11 +123,36 @@ module('Acceptance | contests-test', function (hooks) {
       contentString: 'This contest will start at 12:00 AM UTC on 17 January 2024',
     });
 
-    await contestsPage.visit({ contest_slug: 'weekly-4' });
+    await contestsPage.visit({ contest_slug: 'weekly-1' });
     await contestsPage.timeRemainingStatusPill.hover();
 
     assertTooltipContent(assert, {
       contentString: 'This contest ended at 12:00 AM UTC on 11 January 2024',
     });
   });
+
+  test('navigation buttons work', async function (assert) {
+    testScenario(this.server);
+    createContests(this.owner, this.server);
+
+    signIn(this.owner, this.server);
+
+    await contestsPage.visit({ contest_slug: 'weekly-2' });
+    await contestsPage.clickOnPreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1');
+
+    await contestsPage.clickOnPreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1');
+
+    await contestsPage.clickOnNextContestButton();
+    await contestsPage.clickOnNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3');
+
+    await contestsPage.clickOnNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3');
+  })
 });
