@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
@@ -14,6 +15,10 @@ export default class CourseOverviewController extends Controller {
     } else {
       return null;
     }
+  }
+
+  get formattedCourseIsFreeExpirationDate() {
+    return format(this.model.course.isFreeUntil, 'd MMMM yyyy');
   }
 
   get userRepositories() {

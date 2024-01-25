@@ -1,10 +1,12 @@
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { add, sub } from 'date-fns';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -703,6 +705,60 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await percySnapshot('Course Stages - Beta Release Status');
 
     assert.strictEqual(coursePage.betaLabelText, 'FREE DURING BETA', 'beta label should be present');
+  });
+
+  test('free label renders properly', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.owner.register('service:date', FakeDateService);
+
+    let dateService = this.owner.lookup('service:date');
+    let now = new Date('2024-01-01').getTime();
+    dateService.setNow(now);
+
+    let isFreeExpirationDate = new Date('2024-02-01');
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await percySnapshot('Course Stages - Free Status');
+
+    assert.strictEqual(
+      coursePage.freeCourseLabel.text,
+      'FREE THIS MONTH',
+      'free label should be present and have correct copy when expiration is first day of next month',
+    );
+
+    isFreeExpirationDate = new Date('2024-01-31');
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(
+      coursePage.freeCourseLabel.text,
+      'FREE THIS MONTH',
+      'free label should be present and have correct copy when expiration is last day of this month',
+    );
+
+    isFreeExpirationDate = new Date('2024-01-16');
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE', 'free label should have correct copy otherwise');
+
+    await coursePage.freeCourseLabel.hover();
+
+    assertTooltipContent(assert, {
+      contentString: "We're keeping this course free until 16 January 2024 to gather feedback",
+    });
   });
 
   test('tracks when the cli installation link is clicked', async function (assert) {

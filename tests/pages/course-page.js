@@ -100,6 +100,11 @@ export default create({
     scope: '[data-test-earned-badge-notice]',
   },
 
+  freeCourseLabel: {
+    hover: triggerable('mouseenter'),
+    scope: '[data-test-course-free-label]',
+  },
+
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
 

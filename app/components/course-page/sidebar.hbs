@@ -12,6 +12,8 @@
 
   {{#if @course.releaseStatusIsBeta}}
     <BetaCourseLabel class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
+  {{else if @course.isFree}}
+    <FreeCourseLabel @course={{@course}} class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
   {{/if}}
 
   {{! @glint-expect-error: not typesafe yet}}

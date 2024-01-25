@@ -6,8 +6,14 @@
   <div class="flex items-start flex-col lg:flex-row">
     <div class="flex-grow">
       {{#if this.model.course.releaseStatusIsBeta}}
-        <Alert @type="success" class="mb-4">
+        <Alert @type="success" class="mb-4" data-test-course-beta-notice>
           This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
+        </Alert>
+      {{else if this.model.course.isFreeUntil}}
+        <Alert @type="success" class="mb-4" data-test-course-free-notice>
+          We're keeping this course free until
+          {{this.formattedCourseIsFreeExpirationDate}}
+          to gather feedback.
         </Alert>
       {{/if}}
 

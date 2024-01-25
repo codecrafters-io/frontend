@@ -5,10 +5,12 @@ import CourseExtensionModel from 'codecrafters-frontend/models/course-extension'
 import CourseLanguageConfigurationModel from 'codecrafters-frontend/models/course-language-configuration';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
+import DateService from 'codecrafters-frontend/services/date';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import Model from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
 import { attr, hasMany } from '@ember-data/model';
+import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
@@ -31,6 +33,7 @@ export default class CourseModel extends Model {
   @attr('string') declare definitionRepositoryFullName: string;
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare difficulty: string;
+  @attr('date') declare isFreeUntil: Date | null;
   @attr('string') declare name: string;
   @attr('string') declare releaseStatus: string;
   @attr('string') declare sampleExtensionIdeaTitle: string;
@@ -64,6 +67,8 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
   @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
 
+  @service declare date: DateService;
+
   get baseStages() {
     return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
   }
@@ -90,6 +95,10 @@ export default class CourseModel extends Model {
 
   get hasExtensions() {
     return this.extensions.length > 0;
+  }
+
+  get isFree() {
+    return this.isFreeUntil && this.isFreeUntil > new Date(this.date.now());
   }
 
   get latestTesterVersion() {
