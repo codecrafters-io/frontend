@@ -46,7 +46,6 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
   }
 
   get currentContestIndex(): number {
-    console.log(this.sortedContests)
     return this.sortedContests.indexOf(this.args.contest);
   }
 
