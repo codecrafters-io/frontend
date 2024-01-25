@@ -53,6 +53,22 @@ function createContests(owner, server) {
     endsAt: new Date(now + 11 * 24 * 60 * 60 * 1000), // 11 days from now
     type: 'WeeklyContest',
   });
+
+  server.create('contest', {
+    slug: 'weekly-4',
+    name: 'Weekly Contest #4',
+    startsAt: new Date(now + 12 * 24 * 60 * 60 * 1000), // 12 days from now
+    endsAt: new Date(now + 19 * 24 * 60 * 60 * 1000), // 19 days from now
+    type: 'WeeklyContest',
+  });
+
+  server.create('contest', {
+    slug: 'weekly-5',
+    name: 'Weekly Contest #5',
+    startsAt: new Date(now + 20 * 24 * 60 * 60 * 1000), // 20 days from now
+    endsAt: new Date(now + 27 * 24 * 60 * 60 * 1000), // 27 days from now
+    type: 'WeeklyContest',
+  });
 }
 
 module('Acceptance | contests-test', function (hooks) {
@@ -140,19 +156,19 @@ module('Acceptance | contests-test', function (hooks) {
     await contestsPage.visit({ contest_slug: 'weekly-2' });
     await contestsPage.clickOnPreviousContestButton();
 
-    assert.strictEqual(currentURL(), '/contests/weekly-1');
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button works');
 
     await contestsPage.clickOnPreviousContestButton();
 
-    assert.strictEqual(currentURL(), '/contests/weekly-1');
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button is disabled when there are no more previous contests');
 
     await contestsPage.clickOnNextContestButton();
     await contestsPage.clickOnNextContestButton();
 
-    assert.strictEqual(currentURL(), '/contests/weekly-3');
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button works');
 
     await contestsPage.clickOnNextContestButton();
 
-    assert.strictEqual(currentURL(), '/contests/weekly-3');
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
   })
 });
