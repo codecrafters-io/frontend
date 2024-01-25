@@ -98,7 +98,7 @@ export default class CourseModel extends Model {
   }
 
   get isFree() {
-    return this.isFreeUntil && this.isFreeUntil.getTime() > this.date.now();
+    return this.isFreeUntil && this.isFreeUntil > new Date(this.date.now());
   }
 
   get latestTesterVersion() {
