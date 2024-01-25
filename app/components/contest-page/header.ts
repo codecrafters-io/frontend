@@ -59,7 +59,15 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
 
   get nextContest(): ContestModel | null {
     if (this.currentContestIndex < this.sortedContests.length - 1) {
-      return this.sortedContests[this.currentContestIndex + 1] as ContestModel;
+      const nextContest = this.sortedContests[this.currentContestIndex + 1] as ContestModel;
+      const oneWeekFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+      const twoWeeksFromNow = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+
+      if (oneWeekFromNow < nextContest.startsAt && twoWeeksFromNow > nextContest.startsAt) {
+        return null
+      } else {
+        return nextContest
+      }
     } else {
       return null
     }
