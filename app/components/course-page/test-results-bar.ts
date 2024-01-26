@@ -74,8 +74,11 @@ export default class TestResultsBarComponent extends Component<Signature> {
   startResize(event: MouseEvent) {
     event.preventDefault();
 
-    document.addEventListener('mousemove', this.handleResize);
-    document.addEventListener('mouseup', this.stopResize);
+    // Trigger resize on left click only
+    if (event.button === 0) {
+      document.addEventListener('mousemove', this.handleResize);
+      document.addEventListener('mouseup', this.stopResize);
+    }
   }
 
   @action
