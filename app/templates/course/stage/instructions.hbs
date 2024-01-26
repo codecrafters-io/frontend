@@ -20,6 +20,10 @@
     <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
   {{/if}}
 
+  {{#if this.shouldShowPrerequisites}}
+    <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
+  {{/if}}
+
   <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
   {{#if @model.courseStage.isFirst}}
