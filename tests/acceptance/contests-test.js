@@ -172,7 +172,7 @@ module('Acceptance | contests-test', function (hooks) {
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
   });
 
-  test('prize navigation buttons work', async function (assert) {
+  test('prize details navigation buttons work', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
 

@@ -12,7 +12,7 @@
     </LinkTo>
   </div>
 
-  <div class="{{if this.isPreviousContestDisabled 'cursor-not-allowed'}}">
+  <div class="{{if this.isNextContestDisabled 'cursor-not-allowed'}}">
     <LinkTo
       @route="contest"
       @model={{this.nextContest.slug}}
