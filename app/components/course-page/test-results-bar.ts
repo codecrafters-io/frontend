@@ -65,26 +65,42 @@ export default class TestResultsBarComponent extends Component<Signature> {
   }
 
   @action
-  handleResize(event: MouseEvent) {
+  handleMouseResize(event: MouseEvent) {
     const newHeight = window.innerHeight - event.clientY;
     this.customHeight = htmlSafe(`height: ${newHeight}px`);
   }
 
   @action
-  startResize(event: MouseEvent) {
+  handleTouchResize(event: TouchEvent) {
+    const touch = event.touches[0] as Touch;
+    const newHeight = window.innerHeight - touch.clientY;
+    this.customHeight = htmlSafe(`height: ${newHeight}px`);
+  }
+
+  @action
+  startResize(event: MouseEvent | TouchEvent) {
     event.preventDefault();
 
-    // Trigger resize on left click only
-    if (event.button === 0) {
-      document.addEventListener('mousemove', this.handleResize);
-      document.addEventListener('mouseup', this.stopResize);
+    // Trigger mouse resize on left click only
+    if (event instanceof MouseEvent && event.button === 0) {
+      document.addEventListener('mousemove', this.handleMouseResize);
+      document.addEventListener('mouseup', this.stopMouseResize);
+    } else {
+      document.addEventListener('touchmove', this.handleTouchResize);
+      document.addEventListener('touchend', this.stopTouchResize);
     }
   }
 
   @action
-  stopResize() {
-    document.removeEventListener('mousemove', this.handleResize);
-    document.removeEventListener('mouseup', this.stopResize);
+  stopMouseResize() {
+    document.removeEventListener('mousemove', this.handleMouseResize);
+    document.removeEventListener('mouseup', this.stopMouseResize);
+  }
+
+  @action
+  stopTouchResize() {
+    document.removeEventListener('touchmove', this.handleTouchResize);
+    document.removeEventListener('touchend', this.stopTouchResize);
   }
 }
 
