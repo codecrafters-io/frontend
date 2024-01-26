@@ -12,13 +12,13 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 import { waitUntil } from '@ember/test-helpers';
 
-module('Acceptance | course-page | autofix', function(hooks) {
+module('Acceptance | course-page | autofix', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  test('can trigger autofix when last submission failed', async function(assert) {
+  test('can trigger autofix when last submission failed', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -104,7 +104,7 @@ module('Acceptance | course-page | autofix', function(hooks) {
     // await this.pauseTest();
   });
 
-  test('renders failed autofix', async function(assert) {
+  test('renders failed autofix', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -152,7 +152,7 @@ module('Acceptance | course-page | autofix', function(hooks) {
     assert.strictEqual(1, 1); // Add at least one assertion
   });
 
-  test('is not visible for stage 3 and beyond', async function(assert) {
+  test('is not visible for stage 3 and beyond', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -189,7 +189,7 @@ module('Acceptance | course-page | autofix', function(hooks) {
     assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs']);
   });
 
-  test('can resize test results bar using mouse', async function(assert) {
+  test('can resize test results bar using mouse', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -239,7 +239,7 @@ module('Acceptance | course-page | autofix', function(hooks) {
     assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar maintains the height after closing and expanding again');
   });
 
-  test('can resize test results bar using touch', async function(assert) {
+  test('can resize test results bar using touch', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
