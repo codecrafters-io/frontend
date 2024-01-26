@@ -9,6 +9,14 @@
       >{{this.contestStatusPillCopy}}</ContestPage::ContestStatusPill>
     </div>
 
-    <ContestPage::Navigation @allContests={{@allContests}} @contest={{@contest}} data-test-header-navigation />
+    <div class="flex items-center gap-3">
+      <span class="text-gray-200 font-semibold">
+        {{date-format @contest.startsAt format="MMM d"}}
+        -
+        {{date-format @contest.endsAt format="MMM d"}}
+      </span>
+
+      <ContestPage::Navigation @allContests={{@allContests}} @contest={{@contest}} data-test-header-navigation />
+    </div>
   </div>
 </div>

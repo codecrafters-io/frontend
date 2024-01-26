@@ -31,12 +31,11 @@ export default class ContestPageNavigationComponent extends Component<Signature>
     if (this.currentContestIndex < this.sortedContests.length - 1) {
       const nextContest = this.sortedContests[this.currentContestIndex + 1] as ContestModel;
       const oneWeekFromNow = new Date(this.date.now() + 7 * 24 * 60 * 60 * 1000);
-      const twoWeeksFromNow = new Date(this.date.now() + 14 * 24 * 60 * 60 * 1000);
 
-      if (oneWeekFromNow < nextContest.startsAt && twoWeeksFromNow > nextContest.startsAt) {
-        return null;
-      } else {
+      if (nextContest.startsAt < oneWeekFromNow) {
         return nextContest;
+      } else {
+        return null
       }
     } else {
       return null;
