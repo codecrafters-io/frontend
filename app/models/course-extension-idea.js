@@ -33,8 +33,6 @@ export default class CourseExtensionIdeaModel extends Model {
 
     await vote.save();
 
-    this.currentUserVotes = [...this.currentUserVotes, vote];
-
     return vote;
   }
 }
