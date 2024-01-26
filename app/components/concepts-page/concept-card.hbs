@@ -10,7 +10,7 @@
         {{@concept.title}}
       </div>
 
-      {{#if (and (current-user-is-concept-author @concept) (not (current-user-is-staff)))}}
+      {{#if (current-user-is-concept-author @concept)}}
         <Pill @color="green">Yours</Pill>
       {{/if}}
     </div>
