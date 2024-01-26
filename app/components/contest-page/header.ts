@@ -44,46 +44,6 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
       return `This contest will end at 12:00 AM UTC on ${formatInTimeZone(this.args.contest.endsAt, 'UTC', 'd MMMM yyyy')}`;
     }
   }
-
-  get currentContestIndex(): number {
-    return this.sortedContests.indexOf(this.args.contest);
-  }
-
-  get isNextContestDisabled(): boolean {
-    return !this.nextContest;
-  }
-
-  get isPreviousContestDisabled(): boolean {
-    return !this.previousContest;
-  }
-
-  get nextContest(): ContestModel | null {
-    if (this.currentContestIndex < this.sortedContests.length - 1) {
-      const nextContest = this.sortedContests[this.currentContestIndex + 1] as ContestModel;
-      const oneWeekFromNow = new Date(this.date.now() + 7 * 24 * 60 * 60 * 1000);
-      const twoWeeksFromNow = new Date(this.date.now() + 14 * 24 * 60 * 60 * 1000);
-
-      if (oneWeekFromNow < nextContest.startsAt && twoWeeksFromNow > nextContest.startsAt) {
-        return null;
-      } else {
-        return nextContest;
-      }
-    } else {
-      return null;
-    }
-  }
-
-  get previousContest(): ContestModel | null {
-    if (this.currentContestIndex > 0) {
-      return this.sortedContests[this.currentContestIndex - 1] as ContestModel;
-    } else {
-      return null;
-    }
-  }
-
-  get sortedContests(): ContestModel[] {
-    return this.args.allContests.sortBy('startsAt');
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
