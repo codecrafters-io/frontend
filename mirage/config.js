@@ -328,6 +328,12 @@ function routes() {
     return courseTesterVersion;
   });
 
+  this.get('/course-stage-feedback-submissions', function (schema, request) {
+    return schema.courseStageFeedbackSubmissions
+      .all()
+      .filter((submission) => submission.courseStage.course.id === request.queryParams.course_id);
+  });
+
   this.post('/course-stage-feedback-submissions');
   this.patch('/course-stage-feedback-submissions/:id');
 

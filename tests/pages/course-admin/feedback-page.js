@@ -1,4 +1,4 @@
-import { visitable } from 'ember-cli-page-object';
+import { collection, create, visitable } from 'ember-cli-page-object';
 
 export default create({
   feedbackListItems: collection('[data-test-feedback-list-item]'),
