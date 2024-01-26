@@ -71,13 +71,13 @@ function createContests(owner, server) {
   });
 }
 
-module('Acceptance | contests-test', function(hooks) {
+module('Acceptance | contests-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
   setupWindowMock(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('service:date', FakeDateService);
 
     let dateService = this.owner.lookup('service:date');
@@ -86,12 +86,12 @@ module('Acceptance | contests-test', function(hooks) {
     dateService.setNow(now);
   });
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     let dateService = this.owner.lookup('service:date');
     dateService.reset();
   });
 
-  test('can view active contest', async function(assert) {
+  test('can view active contest', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
 
@@ -103,7 +103,7 @@ module('Acceptance | contests-test', function(hooks) {
     await percySnapshot('Active Contest');
   });
 
-  test('time remaining status pill shows correct copy', async function(assert) {
+  test('time remaining status pill shows correct copy', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
 
@@ -119,7 +119,7 @@ module('Acceptance | contests-test', function(hooks) {
     assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Ended');
   });
 
-  test('time remaining status pill tooltip shows correct copy', async function(assert) {
+  test('time remaining status pill tooltip shows correct copy', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
 
@@ -147,7 +147,7 @@ module('Acceptance | contests-test', function(hooks) {
     });
   });
 
-  test('header navigation buttons work', async function(assert) {
+  test('header navigation buttons work', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
 
@@ -172,7 +172,7 @@ module('Acceptance | contests-test', function(hooks) {
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
   });
 
-  test('prize navigation buttons work', async function(assert) {
+  test('prize navigation buttons work', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
 

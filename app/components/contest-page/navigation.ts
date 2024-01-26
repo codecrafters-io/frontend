@@ -35,7 +35,7 @@ export default class ContestPageNavigationComponent extends Component<Signature>
       if (nextContest.startsAt < oneWeekFromNow) {
         return nextContest;
       } else {
-        return null
+        return null;
       }
     } else {
       return null;
