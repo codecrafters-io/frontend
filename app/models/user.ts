@@ -46,7 +46,7 @@ export default class UserModel extends Model {
   @hasMany('affiliate-link', { async: false, inverse: 'user' }) affiliateLinks!: AffiliateLinkModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer!: AffiliateReferralModel[];
-  @hasMany('badge-awards', { async: false, inverse: 'user' }) badgeAwards!: BadgeAwardModel[];
+  @hasMany('badge-award', { async: false, inverse: 'user' }) badgeAwards!: BadgeAwardModel[];
   @hasMany('course-language-request', { async: false, inverse: 'user' }) courseLanguageRequests!: CourseLanguageRequestModel[];
   @hasMany('course-extension-idea-vote', { async: false, inverse: 'user' }) courseExtensionIdeaVotes!: CourseExtensionIdeaVoteModel[];
   @hasMany('course-idea-vote', { async: false, inverse: 'user' }) courseIdeaVotes!: CourseIdeaVoteModel[];

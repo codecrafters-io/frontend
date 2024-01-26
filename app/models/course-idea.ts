@@ -44,8 +44,6 @@ export default class CourseIdeaModel extends Model {
 
     await vote.save();
 
-    this.currentUserVotes = [...this.currentUserVotes.toArray(), vote] as unknown as SyncHasMany<CourseIdeaVoteModel>;
-
     return vote;
   }
 
