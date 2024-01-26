@@ -2,11 +2,19 @@ import { clickable, text, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
-  clickOnHeaderNextContestButton: clickable('[data-test-header-next-contest-button]'),
-  clickOnHeaderPreviousContestButton: clickable('[data-test-header-previous-contest-button]'),
-  clickOnPrizeNextContestButton: clickable('[data-test-prize-next-contest-button]'),
-  clickOnPrizePreviousContestButton: clickable('[data-test-prize-previous-contest-button]'),
+  headerNavigation: {
+    clickOnNextContestButton: clickable('[data-test-next-contest-button]'),
+    clickOnPreviousContestButton: clickable('[data-test-previous-contest-button]'),
+    scope: '[data-test-header-navigation]',
+  },
+
   nameText: text('[data-test-contest-name]'),
+
+  prizeDetailsNavigation: {
+    clickOnNextContestButton: clickable('[data-test-next-contest-button]'),
+    clickOnPreviousContestButton: clickable('[data-test-previous-contest-button]'),
+    scope: '[data-test-prize-details-navigation]',
+  },
 
   timeRemainingStatusPill: {
     hover: triggerable('mouseenter'),
