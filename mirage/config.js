@@ -329,9 +329,7 @@ function routes() {
   });
 
   this.get('/course-stage-feedback-submissions', function (schema, request) {
-    return schema.courseStageFeedbackSubmissions
-      .all()
-      .filter((submission) => submission.courseStage.course.id === request.queryParams.course_id);
+    return schema.courseStageFeedbackSubmissions.all().filter((submission) => submission.courseStage.course.id === request.queryParams.course_id);
   });
 
   this.post('/course-stage-feedback-submissions');

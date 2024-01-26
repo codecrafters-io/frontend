@@ -31,8 +31,8 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     const repository = this.server.schema.repositories.create({
       course,
       language,
-      user
-    })
+      user,
+    });
 
     const other_user = this.server.schema.users.create({ username: 'other_user' });
 
@@ -40,7 +40,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
       course,
       language,
       user: other_user,
-    })
+    });
 
     this.server.create('course-stage-feedback-submission', {
       courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, slug: 'init' }),
@@ -48,8 +48,8 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
       repository,
       user,
       isAcknowledgedByStaff: false,
-      selectedAnswer: "😊",
-      status: "closed"
+      selectedAnswer: '😊',
+      status: 'closed',
     });
 
     this.server.create('course-stage-feedback-submission', {
@@ -58,9 +58,9 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
       repository: other_repository,
       user: other_user,
       isAcknowledgedByStaff: false,
-      selectedAnswer: "😊",
-      explanation: "This is a dummy explanation.",
-      status: "closed"
+      selectedAnswer: '😊',
+      explanation: 'This is a dummy explanation.',
+      status: 'closed',
     });
 
     await feedbackPage.visit({ course_slug: 'redis' });
@@ -79,8 +79,8 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     const repository = this.server.schema.repositories.create({
       course,
       language,
-      user
-    })
+      user,
+    });
 
     this.server.create('course-stage-feedback-submission', {
       courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, slug: 'init' }),
@@ -88,12 +88,11 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
       repository,
       user,
       isAcknowledgedByStaff: false,
-      selectedAnswer: "😊",
-      status: "open"
+      selectedAnswer: '😊',
+      status: 'open',
     });
 
     await feedbackPage.visit({ course_slug: 'redis' });
     assert.strictEqual(feedbackPage.feedbackListItems.length, 0, 'should have 0 feedback');
   });
 });
-
