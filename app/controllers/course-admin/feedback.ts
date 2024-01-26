@@ -18,6 +18,8 @@ export default class CourseAdminFeedbackController extends Controller {
       submissions = submissions.filter((feedbackSubmission) => !feedbackSubmission.isAcknowledgedByStaff);
     }
 
+    submissions = submissions.filter((feedbackSubmission) => feedbackSubmission.status !== 'open');
+
     return submissions.sortBy('createdAt').reverse();
   }
 

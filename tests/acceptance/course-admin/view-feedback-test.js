@@ -67,5 +67,33 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     assert.strictEqual(feedbackPage.feedbackListItems.length, 2, 'should have 2 feedback');
     await percySnapshot('Admin - Stage Feedback - With Feedback');
   });
+
+  test('it does not render feedback where the status is open', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const language = this.server.schema.languages.findBy({ slug: 'ruby' });
+    const user = this.server.schema.users.first();
+
+    const repository = this.server.schema.repositories.create({
+      course,
+      language,
+      user
+    })
+
+    this.server.create('course-stage-feedback-submission', {
+      courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, slug: 'init' }),
+      language,
+      repository,
+      user,
+      isAcknowledgedByStaff: false,
+      selectedAnswer: "😊",
+      status: "open"
+    });
+
+    await feedbackPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(feedbackPage.feedbackListItems.length, 0, 'should have 0 feedback');
+  });
 });
 
