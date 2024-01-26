@@ -1,7 +1,8 @@
 <div {{did-insert this.handleDidInsertContainer}} {{did-update this.handleConceptDidUpdate @concept}} ...attributes>
   {{#each this.visibleBlockGroups as |blockGroup|}}
     <div
-      class="scroll-mb-10 md:scroll-mb-[20vh] scroll-mt-20 md:scroll-mt-10 {{if (not-eq blockGroup.index this.currentBlockGroupIndex) 'opacity-50'}}"
+      class="scroll-mb-10 md:scroll-mb-[20vh] scroll-mt-20 md:scroll-mt-10
+        {{if (not-eq blockGroup.index this.currentBlockGroupIndex) 'opacity-50 hover:opacity-100'}}"
       {{did-insert (fn this.handleBlockGroupContainerInserted blockGroup)}}
     >
       {{#each blockGroup.blocks as |block|}}
