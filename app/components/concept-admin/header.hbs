@@ -16,7 +16,7 @@
         </div>
       </div>
       <div>
-        <TertiaryLinkButton @size="small" @route="concept" @model={{@concept.lastPersistedSlug}} target="_blank">
+        <TertiaryLinkButton @size="small" @route="concept" @model={{@concept.lastPersistedSlug}} @query={{hash bgi="0"}} target="_blank">
           <div class="flex items-center">
             <span>View Concept</span>
             {{svg-jar "external-link" class="w-4 ml-1 fill-current"}}
