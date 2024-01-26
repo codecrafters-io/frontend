@@ -7,6 +7,8 @@ import CourseModel from 'codecrafters-frontend/models/course';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
+import type RepositoryModel from './repository';
+import Mustache from 'mustache';
 
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false, inverse: 'stages' }) declare course: CourseModel;
@@ -105,6 +107,26 @@ export default class CourseStageModel extends Model {
     return this.isBaseStage ? this.positionWithinCourse : this.positionWithinExtension;
   }
 
+  get prerequisiteInstructionsMarkdownTemplate() {
+    if (this.course.isRedis && this.isSecond) {
+      return `
+Before attempting this stage, we recommend familiarizing yourself with:
+
+- The [TCP protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+{{#language_name}}- How to write TCP servers in {{language_name}}{{/language_name}}
+{{#lang_is_go}}- Go's [\`net\`](https://golang.org/pkg/net/) package{{/lang_is_go}}
+
+Our interactive concepts can help with this:
+
+- [Network Protocols](https://app.codecrafters.io/concepts/network-protocols) — Learn about various network protocols and the TCP/IP model.
+- [TCP: An Overview](https://app.codecrafters.io/concepts/tcp-overview) — Learn about the TCP protocol and how it works
+{{#lang_is_go}}- [TCP Servers in Go](https://app.codecrafters.io/concepts/go-tcp-server) — Learn how to write TCP servers using Go's net package{{/lang_is_go}}
+      `;
+    } else {
+      return null;
+    }
+  }
+
   get primaryExtension() {
     return this.course.extensions.find((extension) => extension.slug === this.primaryExtensionSlug);
   }
@@ -137,5 +159,23 @@ export default class CourseStageModel extends Model {
 
   hasSolutionForLanguagesOtherThan(language: LanguageModel) {
     return this.solutions.any((solution) => solution.language !== language);
+  }
+
+  prerequisiteInstructionsMarkdownFor(repository: RepositoryModel) {
+    if (!this.prerequisiteInstructionsMarkdownTemplate) {
+      return null;
+    }
+
+    const variables: Record<string, unknown> = {};
+
+    this.store.peekAll('language').forEach((language) => {
+      variables[`lang_is_${(language as LanguageModel).slug}`] = repository.language === language;
+    });
+
+    if (repository.language) {
+      variables[`language_name`] = repository.language.name;
+    }
+
+    return Mustache.render(this.prerequisiteInstructionsMarkdownTemplate, variables);
   }
 }

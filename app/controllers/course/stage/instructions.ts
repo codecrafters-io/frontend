@@ -32,12 +32,20 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.activeRepository.currentStage === this.model.courseStage;
   }
 
+  get prerequisiteInstructionsMarkdown() {
+    return this.model.courseStage.prerequisiteInstructionsMarkdownFor(this.model.activeRepository);
+  }
+
   get shouldShowCLIUsageInstructions() {
     return this.model.courseStage.isSecond;
   }
 
   get shouldShowLanguageGuide() {
     return !this.model.courseStage.isFirst;
+  }
+
+  get shouldShowPrerequisites() {
+    return !!this.prerequisiteInstructionsMarkdown;
   }
 
   get shouldShowTestFailureExpectedHint() {
