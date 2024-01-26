@@ -7,7 +7,7 @@
   {{#if this.isExpanded}}
     {{! template-lint-disable no-pointer-down-event-binding }}
     <div
-      class="absolute bg-gray-700 cursor-ns-resize h-1 rounded top-1 w-12 z-10"
+      class="absolute bg-gray-700 hover:bg-gray-500 cursor-ns-resize h-1 rounded top-1 w-12 z-10"
       role="button"
       {{on "mousedown" this.startResize}}
       {{on "touchstart" this.startResize}}
