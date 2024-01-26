@@ -17,6 +17,9 @@ export default {
     mouseMove: triggerable('mousemove'),
     mouseUp: triggerable('mouseup'),
     scope: '[data-test-resize-handler]',
+    touchStart: triggerable('touchstart'),
+    touchMove: triggerable('touchmove'),
+    touchEnd: triggerable('touchend'),
   },
 
   scope: '[data-test-test-results-bar]',
