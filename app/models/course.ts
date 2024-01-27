@@ -134,11 +134,11 @@ export default class CourseModel extends Model {
       {
         'http-server': 3,
         'dns-server': 4,
-        bittorrent: 1,
+        bittorrent: 2,
         docker: 6,
         git: 7,
         grep: 5,
-        redis: 2,
+        redis: 1,
         sqlite: 8,
       }[this.slug] || 9
     );
