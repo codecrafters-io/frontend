@@ -179,7 +179,7 @@ export default class UserModel extends Model {
   }
 
   canAttemptCourseStage(courseStage: CourseStageModel) {
-    return courseStage.isFree || this.canAccessPaidContent;
+    return courseStage.isFree || courseStage.course.isFree || this.canAccessPaidContent;
   }
 
   canCreateRepository(/* _course, _language */) {
