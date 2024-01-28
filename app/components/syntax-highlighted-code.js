@@ -1,16 +1,14 @@
-import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
-import * as shiki from 'shiki';
-import { tracked } from '@glimmer/tracking';
+import config from 'codecrafters-frontend/config/environment';
 import getOrCreateCachedHighlighterPromise from 'codecrafters-frontend/utils/highlighter-cache';
+import { htmlSafe } from '@ember/template';
+import { tracked } from '@glimmer/tracking';
 
 export default class SyntaxHighlightedCodeComponent extends Component {
   @tracked asyncHighlightedHTML;
 
   constructor() {
     super(...arguments);
-
-    shiki.setCDN('https://unpkg.com/shiki/');
 
     let highlighterPromise = getOrCreateCachedHighlighterPromise(`${this.args.theme}-${this.args.language}`, {
       theme: this.args.theme,
@@ -21,16 +19,17 @@ export default class SyntaxHighlightedCodeComponent extends Component {
       .split(',')
       .flatMap((lineOrBlock) => [{ line: parseInt(lineOrBlock), classes: ['highlighted'] }]);
 
-    highlighterPromise.then((highlighter) => {
-      this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: this.args.language, lineOptions: lineOptions }));
-    });
-    // .catch((error) => {
-    //   if (config.environment === 'test' && error.message.match(/WebAssembly.instantiate/)) {
-    //     console.log('ignoring WebAssembly error only present in tests');
-    //   } else {
-    //     throw error;
-    //   }
-    // });
+    highlighterPromise
+      .then((highlighter) => {
+        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: this.args.language, lineOptions: lineOptions }));
+      })
+      .catch((error) => {
+        if (config.environment === 'test' && error.message.match(/WebAssembly.instantiate/)) {
+          console.log('ignoring WebAssembly error only present in tests');
+        } else {
+          throw error;
+        }
+      });
   }
 
   get highlightedHtml() {
