@@ -62,6 +62,9 @@ export default class CourseModel extends Model {
   @equal('slug', 'react') declare isReact: boolean;
   @equal('slug', 'redis') declare isRedis: boolean;
   @equal('slug', 'sqlite') declare isSQLite: boolean;
+  @equal('slug', 'bittorrent') declare isBittorrent: boolean;
+  @equal('slug', 'dns-server') declare isDnsServer: boolean;
+  @equal('slug', 'http-server') declare isHttpServer: boolean;
 
   @equal('releaseStatus', 'alpha') declare releaseStatusIsAlpha: boolean;
   @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
@@ -193,11 +196,11 @@ files, and handling custom file formats.`;
     } else if (this.isGrep) {
       return `
 Learn about regular expressions and how they're evaluated. Implement your own version of \`grep\` in ${language.name}.`;
-    } else if (this.slug === 'bittorrent') {
+    } else if (this.isBittorrent) {
       return `
 Learn about .torrent files and the famous BitTorrent protocol. Implement your own BitTorrent client in ${language.name}.`;
     } else {
-      return;
+      return this.descriptionMarkdown;
     }
   }
 
