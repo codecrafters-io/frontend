@@ -9,8 +9,6 @@ import * as shiki from 'shiki';
 const highlighterCacheAsync = new Map();
 
 export default function getOrCreateCachedHighlighterPromise(cacheId: string, options: shiki.HighlighterOptions): Promise<shiki.Highlighter> {
-  shiki.setCDN('https://unpkg.com/shiki/');
-
   if (!highlighterCacheAsync.has(cacheId)) {
     let highlighterPromise: Promise<shiki.Highlighter>;
 

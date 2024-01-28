@@ -10,8 +10,6 @@ export default class SyntaxHighlightedCodeComponent extends Component {
   constructor() {
     super(...arguments);
 
-    shiki.setCDN('https://unpkg.com/shiki/');
-
     let highlighterPromise = getOrCreateCachedHighlighterPromise(`${this.args.theme}-${this.args.language}`, {
       theme: this.args.theme,
       langs: [this.args.language],

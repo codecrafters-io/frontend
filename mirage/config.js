@@ -42,7 +42,6 @@ function routes() {
   this.passthrough('/write-coverage'); // used by ember-cli-code-coverage
   this.passthrough('/assets/**'); // 3d models?
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
-  this.passthrough('https://unpkg.com/**'); // Shiki
 
   this.urlPrefix = config.x.backendUrl;
   this.namespace = '/api/v1';
