@@ -1,4 +1,4 @@
-import { collection, create, clickOnText, visitable } from 'ember-cli-page-object';
+import { collection, create, clickOnText, triggerable, visitable } from 'ember-cli-page-object';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/language-dropdown';
 
 export default create({
@@ -11,6 +11,15 @@ export default create({
   },
 
   languageDropdown: LanguageDropdown,
+
+  submissionDetails: {
+    userProficiencyInfoIcon: {
+      hover: triggerable('mouseenter'),
+      scope: '[data-test-user-proficiency-info-icon]'
+    },
+
+    scope: '[data-test-submission-details]',
+  },
 
   timelineContainer: {
     entries: collection('[data-test-timeline-entry]', {}),

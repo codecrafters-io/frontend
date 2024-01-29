@@ -37,7 +37,7 @@
             <div class="flex items-center">
               {{this.formattedLanguageProficiencyLevel}}
 
-              <div>
+              <div data-test-user-proficiency-info-icon>
                 {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
                 <EmberTooltip @text="The user selected this value when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced." />
               </div>

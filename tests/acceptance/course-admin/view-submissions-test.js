@@ -1,3 +1,4 @@
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
@@ -44,6 +45,36 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 3);
 
     await percySnapshot('Admin - Course Submissions - With Submissions');
+  });
+
+  test('it renders the user proficiency level', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      languageProficiencyLevel: 'beginner',
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+    assert.true(submissionsPage.submissionDetails.text.includes('Beginner'), true);
+
+    await submissionsPage.submissionDetails.userProficiencyInfoIcon.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'The user selected this value when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced.',
+    });
   });
 
   test('it filters by username(s) if given', async function (assert) {
