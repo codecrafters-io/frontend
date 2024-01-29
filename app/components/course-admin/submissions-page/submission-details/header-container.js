@@ -20,6 +20,12 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     }
   }
 
+  get formattedLanguageProficiencyLevel() {
+    const proficiencyLevel = this.args.submission.repository.languageProficiencyLevel;
+    console.log(proficiencyLevel);
+    return proficiencyLevel[0].toUpperCase() + proficiencyLevel.slice(1);
+  }
+
   @action
   async handleCopyRepositoryURLButtonClick() {
     await navigator.clipboard.writeText(this.args.submission.repository.cloneUrl);
