@@ -1,7 +1,7 @@
 <div class="border-b border-gray-800 pb-2" ...attributes>
   <div class="flex items-center gap-3 justify-between flex-col sm:flex-row">
     <div class="flex items-center gap-6">
-      <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">{{@contest.name}}</h1>
+      <h1 class="text-3xl text-gray-200 font-bold tracking-tighter" data-test-contest-name>{{@contest.name}}</h1>
       <ContestPage::ContestStatusPill
         @color={{this.contestStatusPillColor}}
         @tooltipCopy={{this.contestStatusPillTooltipCopy}}
@@ -9,10 +9,14 @@
       >{{this.contestStatusPillCopy}}</ContestPage::ContestStatusPill>
     </div>
 
-    <span class="text-gray-200 font-semibold">
-      {{date-format @contest.startsAt format="MMM d"}}
-      -
-      {{date-format @contest.endsAt format="MMM d"}}
-    </span>
+    <div class="flex items-center gap-3">
+      <span class="text-gray-200 font-semibold">
+        {{date-format @contest.startsAt format="MMM d"}}
+        -
+        {{date-format @contest.endsAt format="MMM d"}}
+      </span>
+
+      <ContestPage::Navigation @allContests={{@allContests}} @contest={{@contest}} data-test-header-navigation />
+    </div>
   </div>
 </div>

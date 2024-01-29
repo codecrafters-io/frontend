@@ -23,6 +23,14 @@ function createContests(owner, server) {
     username: 'Gufran',
   });
 
+  server.create('contest', {
+    slug: 'weekly-1',
+    name: 'Weekly Contest #1',
+    startsAt: new Date(now - 9 * 24 * 60 * 60 * 1000), // 9 days ago
+    endsAt: new Date(now - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    type: 'WeeklyContest',
+  });
+
   const contest = server.create('contest', {
     slug: 'weekly-2',
     name: 'Weekly Contest #2',
@@ -49,8 +57,16 @@ function createContests(owner, server) {
   server.create('contest', {
     slug: 'weekly-4',
     name: 'Weekly Contest #4',
-    startsAt: new Date(now - 9 * 24 * 60 * 60 * 1000), // 9 days ago
-    endsAt: new Date(now - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    startsAt: new Date(now + 12 * 24 * 60 * 60 * 1000), // 12 days from now
+    endsAt: new Date(now + 19 * 24 * 60 * 60 * 1000), // 19 days from now
+    type: 'WeeklyContest',
+  });
+
+  server.create('contest', {
+    slug: 'weekly-5',
+    name: 'Weekly Contest #5',
+    startsAt: new Date(now + 20 * 24 * 60 * 60 * 1000), // 20 days from now
+    endsAt: new Date(now + 27 * 24 * 60 * 60 * 1000), // 27 days from now
     type: 'WeeklyContest',
   });
 }
@@ -99,7 +115,7 @@ module('Acceptance | contests-test', function (hooks) {
     await contestsPage.visit({ contest_slug: 'weekly-3' });
     assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Not started');
 
-    await contestsPage.visit({ contest_slug: 'weekly-4' });
+    await contestsPage.visit({ contest_slug: 'weekly-1' });
     assert.strictEqual(contestsPage.timeRemainingStatusPill.text, 'Ended');
   });
 
@@ -123,11 +139,61 @@ module('Acceptance | contests-test', function (hooks) {
       contentString: 'This contest will start at 12:00 AM UTC on 17 January 2024',
     });
 
-    await contestsPage.visit({ contest_slug: 'weekly-4' });
+    await contestsPage.visit({ contest_slug: 'weekly-1' });
     await contestsPage.timeRemainingStatusPill.hover();
 
     assertTooltipContent(assert, {
       contentString: 'This contest ended at 12:00 AM UTC on 11 January 2024',
     });
+  });
+
+  test('header navigation buttons work', async function (assert) {
+    testScenario(this.server);
+    createContests(this.owner, this.server);
+
+    signIn(this.owner, this.server);
+
+    await contestsPage.visit({ contest_slug: 'weekly-2' });
+    await contestsPage.headerNavigation.clickOnPreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button works');
+
+    await contestsPage.headerNavigation.clickOnPreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button is disabled when there are no more previous contests');
+
+    await contestsPage.headerNavigation.clickOnNextContestButton();
+    await contestsPage.headerNavigation.clickOnNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button works');
+
+    await contestsPage.headerNavigation.clickOnNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
+  });
+
+  test('prize details navigation buttons work', async function (assert) {
+    testScenario(this.server);
+    createContests(this.owner, this.server);
+
+    signIn(this.owner, this.server);
+
+    await contestsPage.visit({ contest_slug: 'weekly-2' });
+    await contestsPage.prizeDetailsNavigation.clickOnPreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button works');
+
+    await contestsPage.prizeDetailsNavigation.clickOnPreviousContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button is disabled when there are no more previous contests');
+
+    await contestsPage.prizeDetailsNavigation.clickOnNextContestButton();
+    await contestsPage.prizeDetailsNavigation.clickOnNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button works');
+
+    await contestsPage.prizeDetailsNavigation.clickOnNextContestButton();
+
+    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
   });
 });

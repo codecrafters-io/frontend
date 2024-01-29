@@ -5,5 +5,12 @@
     <div class="prose prose-sm dark:prose-invert max-w-none">
       {{markdown-to-html @contest.prizeDetailsMarkdown}}
     </div>
+
+    <ContestPage::Navigation
+      @allContests={{@allContests}}
+      @contest={{@contest}}
+      class="flex justify-center mt-4"
+      data-test-prize-details-navigation
+    />
   </div>
 </div>

@@ -5,6 +5,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    allContests: ContestModel[];
     contest: ContestModel;
   };
 };
