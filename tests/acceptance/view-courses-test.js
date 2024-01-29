@@ -75,7 +75,7 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:8%');
   });
 
-  test('it renders with progress if user has started a course', async function (assert) {
+  test('it renders with progress if user has created a repository', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 

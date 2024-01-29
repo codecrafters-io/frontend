@@ -21,12 +21,9 @@ export default class CourseCardComponent extends Component {
         .sortBy('lastSubmissionAt')
         .at(-1);
 
-      const lastCreatedRepository = this.authenticator.currentUser.repositories
-        .filterBy('course', this.args.course)
-        .sortBy('createdAt')
-        .at(-1);
+      const lastCreatedRepository = this.authenticator.currentUser.repositories.filterBy('course', this.args.course).sortBy('createdAt').at(-1);
 
-      return !!lastPushedRepository ? lastPushedRepository : lastCreatedRepository;
+      return lastPushedRepository ? lastPushedRepository : lastCreatedRepository;
     } else {
       return null;
     }
