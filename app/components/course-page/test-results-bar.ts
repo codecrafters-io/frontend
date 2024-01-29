@@ -1,12 +1,14 @@
-import { action } from '@ember/object';
-import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import window from 'ember-window-mock';
+import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
+import { service } from '@ember/service';
 import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
-import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -22,6 +24,7 @@ export default class TestResultsBarComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
+  @tracked customHeight = htmlSafe('height: 50vh');
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
@@ -59,6 +62,45 @@ export default class TestResultsBarComponent extends Component<Signature> {
   @action
   handleExpandButtonClick() {
     this.coursePageState.testResultsBarIsExpanded = true;
+  }
+
+  @action
+  handleMouseResize(event: MouseEvent) {
+    const newHeight = window.innerHeight - event.clientY;
+    this.customHeight = htmlSafe(`height: ${newHeight}px`);
+  }
+
+  @action
+  handleTouchResize(event: TouchEvent) {
+    const touch = event.touches[0] as Touch;
+    const newHeight = window.innerHeight - touch.clientY;
+    this.customHeight = htmlSafe(`height: ${newHeight}px`);
+  }
+
+  @action
+  startResize(event: MouseEvent | TouchEvent) {
+    event.preventDefault();
+
+    // Trigger mouse resize on left click only
+    if (event instanceof MouseEvent && event.button === 0) {
+      document.addEventListener('mousemove', this.handleMouseResize);
+      document.addEventListener('mouseup', this.stopMouseResize);
+    } else {
+      document.addEventListener('touchmove', this.handleTouchResize);
+      document.addEventListener('touchend', this.stopTouchResize);
+    }
+  }
+
+  @action
+  stopMouseResize() {
+    document.removeEventListener('mousemove', this.handleMouseResize);
+    document.removeEventListener('mouseup', this.stopMouseResize);
+  }
+
+  @action
+  stopTouchResize() {
+    document.removeEventListener('touchmove', this.handleTouchResize);
+    document.removeEventListener('touchend', this.stopTouchResize);
   }
 }
 
