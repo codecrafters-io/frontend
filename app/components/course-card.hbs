@@ -72,9 +72,9 @@
 
     <div class="flex items-center">
       <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
-        {{#if this.lastPushedRepository.allStagesAreComplete}}
+        {{#if this.lastRepository.allStagesAreComplete}}
           Start Again
-        {{else if this.lastPushedRepository}}
+        {{else if this.lastRepository}}
           Resume
         {{else}}
           Start
