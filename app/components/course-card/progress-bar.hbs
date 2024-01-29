@@ -1,21 +1,21 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="flex items-center" data-test-course-progress ...attributes>
   <div class="rounded overflow-hidden mr-2">
-    <div class="{{if @lastPushedRepository.allStagesAreComplete 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
-      {{#if (eq @lastPushedRepository.completedStages.length 0)}}
+    <div class="{{if @lastRepository.allStagesAreComplete 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
+      {{#if (eq @lastRepository.completedStages.length 0)}}
         <div class="bg-blue-500 w-1/12"></div>
       {{else}}
         <div
           data-test-course-progress-bar
-          class={{if @lastPushedRepository.allStagesAreComplete "bg-teal-500" "bg-blue-500"}}
-          style={{html-safe (concat "width:" (round (mult 100 (div @lastPushedRepository.completedStages.length @course.stages.length))) "%")}}
+          class={{if @lastRepository.allStagesAreComplete "bg-teal-500" "bg-blue-500"}}
+          style={{html-safe (concat "width:" (round (mult 100 (div @lastRepository.completedStages.length @course.stages.length))) "%")}}
         ></div>
       {{/if}}
     </div>
   </div>
 
-  <div class="text-xs {{if @lastPushedRepository.allStagesAreComplete 'text-teal-500' 'text-blue-500'}} mr-3" data-test-course-progress-text>
-    <b class="font-bold">{{@lastPushedRepository.completedStages.length}}/{{@course.stages.length}}</b>
+  <div class="text-xs {{if @lastRepository.allStagesAreComplete 'text-teal-500' 'text-blue-500'}} mr-3" data-test-course-progress-text>
+    <b class="font-bold">{{@lastRepository.completedStages.length}}/{{@course.stages.length}}</b>
     stages
   </div>
 </div>
