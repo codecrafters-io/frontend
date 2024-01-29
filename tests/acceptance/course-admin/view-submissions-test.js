@@ -102,7 +102,8 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     await submissionsPage.submissionDetails.userProficiencyInfoIcon.hover();
 
     assertTooltipContent(assert, {
-      contentString: 'The user did not select their proficiency level when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced.',
+      contentString:
+        'The user did not select their proficiency level when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced.',
     });
   });
 
