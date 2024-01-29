@@ -15,7 +15,7 @@ export default create({
   submissionDetails: {
     userProficiencyInfoIcon: {
       hover: triggerable('mouseenter'),
-      scope: '[data-test-user-proficiency-info-icon]'
+      scope: '[data-test-user-proficiency-info-icon]',
     },
 
     scope: '[data-test-submission-details]',
