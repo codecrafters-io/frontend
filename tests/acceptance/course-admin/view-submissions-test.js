@@ -47,7 +47,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     await percySnapshot('Admin - Course Submissions - With Submissions');
   });
 
-  test('it renders the user proficiency level', async function (assert) {
+  test('it renders the user proficiency level if proficiency is set', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -74,6 +74,35 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     assertTooltipContent(assert, {
       contentString: 'The user selected this value when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced.',
+    });
+  });
+
+  test('it renders the user proficiency level if proficiency is not set', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+    assert.true(submissionsPage.submissionDetails.text.includes('Unknown'), true);
+
+    await submissionsPage.submissionDetails.userProficiencyInfoIcon.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'The user did not select their proficiency level when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced.',
     });
   });
 
