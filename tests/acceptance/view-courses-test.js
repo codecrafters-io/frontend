@@ -75,6 +75,27 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:8%');
   });
 
+  test('it renders with progress if user has started a course', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+
+    assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
+    assert.true(catalogPage.courseCards[0].hasProgressBar);
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/13 stages');
+  });
+
   test('it sorts course cards based on last push', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);

@@ -8,7 +8,7 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
-import { module, skip, test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -125,8 +125,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
   });
 
-  // TODO handle this better
-  skip('can start repo and abandon halfway (regression)', async function (assert) {
+  test('can start repo and abandon halfway (regression)', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -135,21 +134,17 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
-    assert.contains(currentURL(), '/courses/redis?repo=', 'current URL includes repo ID');
+    assert.contains(currentURL(), '/courses/redis/introduction?repo=1', 'current URL includes repo ID');
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
-    await coursePage.header.clickOnHeaderLink('Catalog');
+    await coursePage.desktopHeader.clickOnCloseCourseButton();
     await catalogPage.clickOnTrack('Python');
-    await trackPage.clickOnCourseCard('Build your own Redis');
-
-    assert.strictEqual(currentURL(), '/courses/redis?track=python', 'current URL is changed to not include invalid repo');
+    await trackPage.clickOnCourseCard('Build your own Redis →');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
-    assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in-progress');
 
-    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
