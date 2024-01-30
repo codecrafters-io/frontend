@@ -156,11 +156,11 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
         handle_client(client)
       end
     end
-
+ 
     def handle_client(client)
       loop do
         client.gets
-
+ 
         # TODO: Handle commands other than PING
 +       client.write("+PONG\\r\\n")
       end
@@ -209,11 +209,11 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
         handle_client(client)
       end
     end
-
+ 
     def handle_client(client)
       loop do
         client.gets
-
+ 
         # TODO: Handle commands other than PING
         client.write("+PONG\\r\\n")
 +     end

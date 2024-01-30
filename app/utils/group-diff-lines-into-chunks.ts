@@ -27,16 +27,7 @@ function getEndIndex(initialStart: number, lines: Array<Line>, linesAroundChange
     isTargetInSlice = false;
 
     for (let i = start; i < end; i++) {
-      let areChangesPresentInLinesAroundChangedChunk = false;
-
-      for (let j = i; j < end + linesAroundChangedChunk; j++) {
-        if (lines[j]?.type === 'added' || lines[j]?.type === 'removed') {
-          areChangesPresentInLinesAroundChangedChunk = true;
-          break;
-        }
-      }
-
-      if (areChangesPresentInLinesAroundChangedChunk) {
+      if (lines[i]?.type === 'added' || lines[i]?.type === 'removed') {
         isTargetInSlice = true;
         start = end;
         end = Math.min(i + linesAroundChangedChunk + 1, lines.length);
