@@ -32,6 +32,31 @@
             {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="User Proficiency">
+          {{#if @submission.repository.languageProficiencyLevel}}
+            <div class="flex items-center">
+              {{this.formattedLanguageProficiencyLevel}}
+
+              <div data-test-user-proficiency-info-icon>
+                {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
+                <EmberTooltip
+                  @text="The user selected this value when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced."
+                />
+              </div>
+            </div>
+          {{else}}
+            <div class="flex items-center">
+              Unknown
+
+              <div data-test-user-proficiency-info-icon>
+                {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
+                <EmberTooltip
+                  @text="The user did not select their proficiency level when creating their repository. Options: Never tried, Beginner, Intermediate, Advanced."
+                />
+              </div>
+            </div>
+          {{/if}}
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
         <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Language">
           <div class="flex items-center">
             <span class="mr-2 text-gray-600">

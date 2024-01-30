@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { capitalize } from '@ember/string';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
@@ -18,6 +19,10 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     } else {
       return '-';
     }
+  }
+
+  get formattedLanguageProficiencyLevel() {
+    return capitalize(this.args.submission.repository.languageProficiencyLevel);
   }
 
   @action
