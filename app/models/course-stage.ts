@@ -112,15 +112,15 @@ export default class CourseStageModel extends Model {
       return `
 Before attempting this stage, we recommend familiarizing yourself with:
 
-- The [TCP protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+- The TCP protocol
+{{#lang_is_go}}- Go's \`net\` package{{/lang_is_go}}{{#lang_is_rust}}- Rust's \`std::net\` module{{/lang_is_rust}}
 {{#language_name}}- How to write TCP servers in {{language_name}}{{/language_name}}
-{{#lang_is_go}}- Go's [\`net\`](https://golang.org/pkg/net/) package{{/lang_is_go}}
 
 Our interactive concepts can help with this:
 
 - [Network Protocols](https://app.codecrafters.io/concepts/network-protocols) — Learn about various network protocols and the TCP/IP model.
 - [TCP: An Overview](https://app.codecrafters.io/concepts/tcp-overview) — Learn about the TCP protocol and how it works
-{{#lang_is_go}}- [TCP Servers in Go](https://app.codecrafters.io/concepts/go-tcp-server) — Learn how to write TCP servers using Go's net package{{/lang_is_go}}
+{{#lang_is_go}}- [TCP Servers in Go](https://app.codecrafters.io/concepts/go-tcp-server) — Learn how to write TCP servers using Go's net package{{/lang_is_go}}{{#lang_is_rust}}- [TCP Servers in Rust](https://app.codecrafters.io/concepts/rust-tcp-server) — Learn how to write TCP servers using Rust's std::net module{{/lang_is_rust}}
       `;
     } else {
       return null;
