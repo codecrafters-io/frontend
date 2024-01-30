@@ -306,7 +306,6 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
@@ -322,7 +321,6 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
@@ -333,7 +331,6 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
@@ -353,7 +350,6 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
