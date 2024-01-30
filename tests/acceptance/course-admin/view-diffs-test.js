@@ -279,6 +279,6 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     await submissionsPage.timelineContainer.entries.objectAt(1).click();
     await submissionsPage.clickOnLink('Diff');
 
-    assert.ok(submissionsPage.diffTab.text.includes('+ end end def handle_client(client) + loop do'), 'There are no repeating lines between changes')
+    assert.ok(submissionsPage.diffTab.text.includes('+ end end def handle_client(client) + loop do'), 'There are no repeating lines between changes');
   });
 });
