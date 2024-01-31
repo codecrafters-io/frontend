@@ -69,13 +69,9 @@ export default class CourseRoute extends BaseRoute {
     } else {
       // @ts-ignore
       const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').at(-1);
-      // @ts-ignore
-      const lastCreatedRepository = repositories.sortBy('createdAt').at(-1);
 
       if (lastPushedRepository) {
         return lastPushedRepository;
-      } else if (lastCreatedRepository) {
-        return lastCreatedRepository;
       } else {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
