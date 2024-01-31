@@ -737,7 +737,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(
       coursePage.freeCourseLabel.text,
@@ -750,7 +749,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE', 'free label should have correct copy otherwise');
 

@@ -1,6 +1,7 @@
 import { clickable, text, triggerable } from 'ember-cli-page-object';
 
 export default {
+  clickOnCloseCourseButton: clickable('[data-test-close-course-button]'),
   clickOnNextStepButton: clickable('[data-test-next-step-button]'),
 
   freeWeeksLeftButton: {
