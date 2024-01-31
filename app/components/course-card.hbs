@@ -49,8 +49,8 @@
       {{#if this.isSkeleton}}
         <div class="bg-gray-100 rounded h-4 w-24"></div>
       {{else}}
-        {{#if this.lastRepository}}
-          <CourseCard::ProgressBar @course={{@course}} @lastRepository={{this.lastRepository}} class="flex-shrink-0" />
+        {{#if this.lastUsedRepository}}
+          <CourseCard::ProgressBar @course={{@course}} @lastUsedRepository={{this.lastUsedRepository}} class="flex-shrink-0" />
         {{else}}
           {{#if @course.releaseStatusIsAlpha}}
             <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.25 mr-3" data-test-course-alpha-label>
@@ -72,9 +72,9 @@
 
     <div class="flex items-center">
       <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
-        {{#if this.lastRepository.allStagesAreComplete}}
+        {{#if this.lastUsedRepository.allStagesAreComplete}}
           Start Again
-        {{else if this.lastRepository}}
+        {{else if this.lastUsedRepository}}
           Resume
         {{else}}
           Start

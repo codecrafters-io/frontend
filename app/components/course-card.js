@@ -9,7 +9,7 @@ export default class CourseCardComponent extends Component {
     return !this.args.course;
   }
 
-  get lastRepository() {
+  get lastUsedRepository() {
     if (this.isSkeleton) {
       return null;
     }
@@ -38,7 +38,7 @@ export default class CourseCardComponent extends Component {
       };
     }
 
-    if (this.lastRepository) {
+    if (this.lastUsedRepository) {
       return {
         name: 'course',
         model: this.args.course.slug,
