@@ -156,11 +156,11 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
         handle_client(client)
       end
     end
- 
+
     def handle_client(client)
       loop do
         client.gets
- 
+
         # TODO: Handle commands other than PING
 +       client.write("+PONG\\r\\n")
       end
@@ -209,11 +209,11 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
         handle_client(client)
       end
     end
- 
+
     def handle_client(client)
       loop do
         client.gets
- 
+
         # TODO: Handle commands other than PING
         client.write("+PONG\\r\\n")
 +     end
@@ -227,5 +227,58 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     await submissionsPage.clickOnLink('Diff');
 
     assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'There should be one expandable chunk');
+  });
+
+  test('expandable chunks have no repeating lines when lines around changed chunks overlap', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    let submission = this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK = 3;
+    SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
+
+    submission.update('changedFiles', [
+      {
+        filename: 'server.rb',
+        diff: `    end
+
+    def listen
+     loop do
+        client = @server.accept
+        handle_client(client)
++      end
+    end
+
+    def handle_client(client)
++      loop do
+        client.gets
+
+        # TODO: Handle commands other than PING
+        client.write("+PONG\\r\\n")
+     end
+    end
+  end`,
+      },
+    ]);
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.timelineContainer.entries.objectAt(1).click();
+    await submissionsPage.clickOnLink('Diff');
+
+    assert.ok(submissionsPage.diffTab.text.includes('+ end end def handle_client(client) + loop do'), 'There are no repeating lines between changes');
   });
 });
