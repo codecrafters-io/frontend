@@ -158,7 +158,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
     const python = this.server.schema.languages.findBy({ slug: 'python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    const repository = this.server.create('repository', { user, language: python, course: redis });
+    this.server.create('repository', { user, language: python, course: redis });
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
@@ -168,5 +168,5 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
-  })
+  });
 });
