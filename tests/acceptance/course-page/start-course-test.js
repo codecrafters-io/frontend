@@ -150,4 +150,23 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await animationsSettled();
   });
+
+  test('started and abandoned repo course card redirects correctly', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+    const python = this.server.schema.languages.findBy({ slug: 'python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const repository = this.server.create('repository', { user, language: python, course: redis });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.contains(currentURL(), '/courses/redis/introduction', 'has correct URL');
+
+    await coursePage.repositoryDropdown.click();
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
+  })
 });
