@@ -153,7 +153,7 @@ export default class CourseModel extends Model {
   }
 
   get sortedExtensionStages() {
-    return this.sortedExtensions.mapBy('stages').flat().sortBy('position');
+    return this.sortedExtensions.mapBy('sortedStages').flat();
   }
 
   get sortedExtensions() {
