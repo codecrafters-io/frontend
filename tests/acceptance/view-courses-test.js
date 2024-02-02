@@ -71,8 +71,8 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.true(catalogPage.courseCards[0].hasProgressBar);
     assert.false(catalogPage.courseCards[0].hasDifficultyLabel);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/13 stages');
-    assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:8%');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/26 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:4%');
   });
 
   test('it renders with progress if user has created a repository', async function (assert) {
@@ -93,7 +93,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.true(catalogPage.courseCards[0].hasProgressBar);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/13 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/26 stages');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
