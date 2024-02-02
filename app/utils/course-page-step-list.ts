@@ -57,29 +57,38 @@ export class StepList {
   }
 
   get extensionStepGroups(): StepGroup[] {
-    if (!this.repository.stageList) {
-      return [];
-    }
-
     const stepGroups: ExtensionStepGroup[] = [];
 
-    let stepsInNextGroup: Step[] = [];
+    if (!this.repository.stageList) {
+      this.repository.course.sortedExtensions.forEach((extension) => {
+        const steps: Step[] = [];
 
-    this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
-      const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
+        extension.sortedStages.forEach((stage) => {
+          const fakeStageListItem = { stage, isDisabled: false } as RepositoryStageListItemModel;
+          steps.push(new CourseStageStep(this.repository, fakeStageListItem));
+        })
 
-      if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
-        stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
-        stepsInNextGroup = [];
+        stepGroups.push(new ExtensionStepGroup(extension, steps));
+      })
+    } else {
+      let stepsInNextGroup: Step[] = [];
+
+      this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
+        const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
+
+        if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
+          stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
+          stepsInNextGroup = [];
+        }
+
+        stepsInNextGroup.push(new CourseStageStep(this.repository, item));
+      });
+
+      if (stepsInNextGroup.length > 0) {
+        stepGroups.push(
+          new ExtensionStepGroup((stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension as CourseExtensionModel, stepsInNextGroup),
+        );
       }
-
-      stepsInNextGroup.push(new CourseStageStep(this.repository, item));
-    });
-
-    if (stepsInNextGroup.length > 0) {
-      stepGroups.push(
-        new ExtensionStepGroup((stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension as CourseExtensionModel, stepsInNextGroup),
-      );
     }
 
     return stepGroups;
