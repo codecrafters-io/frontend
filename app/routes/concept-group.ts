@@ -4,6 +4,7 @@ import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import config from 'codecrafters-frontend/config/environment';
 import HeadDataService from 'codecrafters-frontend/services/meta-data';
 import Store from '@ember-data/store';
+import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
@@ -12,6 +13,7 @@ export default class ConceptGroupRoute extends BaseRoute {
 
   @service declare metaData: HeadDataService;
   @service declare store: Store;
+  @service declare router: RouterService;
   @tracked previousMetaImageUrl: string | undefined = undefined;
 
   async afterModel(model: { conceptGroup: ConceptGroupModel }) {
@@ -28,7 +30,8 @@ export default class ConceptGroupRoute extends BaseRoute {
     const conceptGroup = await this.store.queryRecord('concept-group', { slug: params.concept_group_slug, include: 'author' });
 
     if (!conceptGroup) {
-      throw new Error(`Failed to fetch concept group: ${params.concept_group_slug}`);
+      console.error(`Unable to find concept-group "${params.concept_group_slug}", redirecting to /`);
+      this.router.transitionTo('/');
     }
 
     const allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
