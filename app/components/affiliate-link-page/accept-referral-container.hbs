@@ -1,10 +1,15 @@
 <div class="flex justify-center items-center" ...attributes>
   <div class="flex flex-col items-center max-w-xs bg-white px-4 py-12 border rounded-lg shadow-lg">
     <div class="flex items-center justify-center">
-      <AvatarImage
-        @user={{@affiliateLink.user}}
-        class="w-16 h-16 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
-      />
+      {{#if @affiliateLink.overriddenAffiliateAvatarUrl}}
+        {{! No border for overridden avatars, we'll expect them to include a border in the image itself if needed }}
+        <img alt="avatar" src={{@affiliateLink.overriddenAffiliateAvatarUrl}} class="w-16 h-16 mr-2" />
+      {{else}}
+        <AvatarImage
+          @user={{@affiliateLink.user}}
+          class="w-16 h-16 border border-gray-300 shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
+        />
+      {{/if}}
 
       {{svg-jar "plus" class="w-10 h-10 text-gray-600 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
 
@@ -12,7 +17,7 @@
     </div>
 
     <div class="prose text-center max-w-sm mt-10 text-gry-600">
-      <b>@{{@affiliateLink.user.username}}</b>
+      <b>@{{@affiliateLink.usernameForDisplay}}</b>
       wants you to try CodeCrafters with
       <b>40%</b>
       waived.
@@ -20,6 +25,7 @@
 
     <div class="inline-flex mt-8">
       <PrimaryButtonWithSpinner
+        @size="regular"
         @shouldShowSpinner={{this.isCreatingAffiliateReferral}}
         @isDisabled={{not this.acceptOfferButtonIsEnabled}}
         class="px-5 py-3"
@@ -38,7 +44,9 @@
       {{else if this.currentUserIsReferrer}}
         <EmberTooltip @text="You can't accept your own referral offer." />
       {{else if this.currentUserIsAlreadyEligibleForReferralDiscount}}
-        <EmberTooltip @text="You've already accepted {{this.currentUser.currentAffiliateReferral.referrer.username}}'s referral offer." />
+        <EmberTooltip
+          @text="You've already accepted {{this.currentUser.currentAffiliateReferral.affiliateLink.usernameForDisplay}}'s referral offer."
+        />
       {{/if}}
     </div>
 
