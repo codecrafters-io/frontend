@@ -14,6 +14,9 @@ export default {
       "slug": "go"
     },
     {
+      "slug": "haskell"
+    },
+    {
       "slug": "javascript"
     },
     {
@@ -26,7 +29,8 @@ export default {
       "slug": "rust"
     },
     {
-      "slug": "haskell"
+      "slug": "java",
+      "release_status": "beta"
     }
   ],
   "marketing": {
@@ -63,7 +67,7 @@ export default {
       "slug": "read_blob",
       "name": "Read a blob object",
       "difficulty": "medium",
-      "description_md": "In this challenge, we'll deal with three [Git\nobjects](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects):\n\n  - blobs\n  - trees\n  - commits\n\nLet's start with blobs, which represent files (binary data, to be\nprecise).\n\nIn this stage, you'll read a blob from your git repository by fetching its\ncontents from the `.git/objects` directory.\n\nYou'll do this using the first of multiple [\"plumbing\"\ncommands](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain)\nwe'll encounter in this challenge: [`git\ncat-file`](https://git-scm.com/docs/git-cat-file).\n\nYour program will be called like so:\n\n```\n./your_git.sh cat-file -p <blob_sha>\n```\n\nIt is expected to print out the binary data that the blob contains. \n\nIn many programming languages the default print function (like [`fmt.Println`](https://pkg.go.dev/fmt#example-Println)) \nwill append a newline to the output. The output of `cat-file` must not contain a \nnewline at the end, so you might need to use a different function to print the output.\n\n{{#lang_is_python}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use Python's built-in\n[zlib](https://docs.python.org/3/library/zlib.html) library to read these\ncompressed files.\n{{/lang_is_python}}\n\n{{#lang_is_ruby}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use Ruby's built-in\n[Zlib](https://ruby-doc.org/stdlib-2.7.0/libdoc/zlib/rdoc/Zlib.html)\nlibrary to read these compressed files.\n{{/lang_is_ruby}}\n\n{{#lang_is_go}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use Go's built-in\n[compress/zlib](https://golang.org/pkg/compress/zlib/) package to read\nthese compressed files.\n{{/lang_is_go}}\n\n{{#lang_is_rust}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use the\n[flate2](https://crates.io/crates/flate2) crate to read these compressed\nfiles, we've included it in the `Cargo.toml` file.\n{{/lang_is_rust}}",
+      "description_md": "In this challenge, we'll deal with three [Git\nobjects](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects):\n\n  - blobs\n  - trees\n  - commits\n\nLet's start with blobs, which represent files (binary data, to be\nprecise).\n\nIn this stage, you'll read a blob from your git repository by fetching its\ncontents from the `.git/objects` directory.\n\nYou'll do this using the first of multiple [\"plumbing\"\ncommands](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain)\nwe'll encounter in this challenge: [`git\ncat-file`](https://git-scm.com/docs/git-cat-file).\n\nYour program will be called like so:\n\n```\n./your_git.sh cat-file -p <blob_sha>\n```\n\nIt is expected to print out the binary data that the blob contains.\n\nIn many programming languages the default print function (like [`fmt.Println`](https://pkg.go.dev/fmt#example-Println))\nwill append a newline to the output. The output of `cat-file` must not contain a\nnewline at the end, so you might need to use a different function to print the output.\n\n{{#lang_is_python}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use Python's built-in\n[zlib](https://docs.python.org/3/library/zlib.html) library to read these\ncompressed files.\n{{/lang_is_python}}\n\n{{#lang_is_ruby}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use Ruby's built-in\n[Zlib](https://ruby-doc.org/stdlib-2.7.0/libdoc/zlib/rdoc/Zlib.html)\nlibrary to read these compressed files.\n{{/lang_is_ruby}}\n\n{{#lang_is_go}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use Go's built-in\n[compress/zlib](https://golang.org/pkg/compress/zlib/) package to read\nthese compressed files.\n{{/lang_is_go}}\n\n{{#lang_is_rust}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. You can use the\n[flate2](https://crates.io/crates/flate2) crate to read these compressed\nfiles, we've included it in the `Cargo.toml` file.\n{{/lang_is_rust}}\n\n{{^lang_is_python}}\n{{^lang_is_ruby}}\n{{^lang_is_go}}\n{{^lang_is_rust}}\nKeep in mind that Git uses [Zlib](https://en.wikipedia.org/wiki/Zlib) to\ncompress objects. Many languages have utils for dealing with zlib data in their standard library. If not,\nyou might need to use a third-party library to read these compressed files.\n{{/lang_is_rust}}\n{{/lang_is_go}}\n{{/lang_is_ruby}}\n{{/lang_is_python}}",
       "marketing_md": "In this stage, you'll read a blob from your git repository by fetching its\ncontents from the `.git/objects` directory.\n\nYou'll do this using the first of multiple [\"plumbing\"\ncommands](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain)\nwe'll encounter in this challenge: [`git\ncat-file`](https://git-scm.com/docs/git-cat-file).",
       "tester_source_code_url": "https://github.com/codecrafters-io/git-tester/blob/03984478122959f23a866a0df102413a5ac08e67/internal/stage_read_blob.go#L18"
     },
