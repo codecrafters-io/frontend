@@ -98,4 +98,13 @@ module('Acceptance | view-course-overview', function (hooks) {
 
     assert.strictEqual(courseOverviewPage.freeNoticeText, "We're keeping this course free until 21 January 2024 to gather feedback.");
   });
+
+  test('stages for extensions are ordered properly', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await courseOverviewPage.visit({ course_slug: 'grep' });
+    await courseOverviewPage.clickOnShowAllButton();
+    await this.pauseTest();
+  })
 });
