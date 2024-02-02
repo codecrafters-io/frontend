@@ -4,6 +4,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -12,6 +13,20 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
+
+  test('extension stages are enabled by default', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 15, 'step list has 15 items when one extension is enabled');
+
+    await coursePage.sidebar.clickOnStepListItem('RDB file config');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/persistence-rdb:1', 'current URL is stage page URL');
+  });
 
   test('can view extension stages after enabling them', async function (assert) {
     testScenario(this.server);
