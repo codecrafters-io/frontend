@@ -9,11 +9,11 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | view-course-overview', function (hooks) {
+module('Acceptance | view-course-overview', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('it renders when user is not logged in', async function (assert) {
+  test('it renders when user is not logged in', async function(assert) {
     testScenario(this.server);
 
     await catalogPage.visit();
@@ -22,7 +22,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
 
-  test('it renders when user is logged in', async function (assert) {
+  test('it renders when user is logged in', async function(assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -32,7 +32,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
 
-  test('it renders when user accesses URL directly', async function (assert) {
+  test('it renders when user accesses URL directly', async function(assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -40,14 +40,14 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
 
-  test('it renders when anonymous user views alpha course', async function (assert) {
+  test('it renders when anonymous user views alpha course', async function(assert) {
     testScenario(this.server);
 
     await courseOverviewPage.visit({ course_slug: 'grep' });
     assert.strictEqual(currentURL(), '/courses/grep/overview');
   });
 
-  test('it renders for course with extensions', async function (assert) {
+  test('it renders for course with extensions', async function(assert) {
     testScenario(this.server);
 
     await courseOverviewPage.visit({ course_slug: 'redis' });
@@ -56,7 +56,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/overview');
   });
 
-  test('it renders for course without extensions', async function (assert) {
+  test('it renders for course without extensions', async function(assert) {
     testScenario(this.server);
 
     await courseOverviewPage.visit({ course_slug: 'docker' });
@@ -65,7 +65,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/docker/overview');
   });
 
-  test('it has the notice for when a course is in beta status', async function (assert) {
+  test('it has the notice for when a course is in beta status', async function(assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -80,7 +80,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     );
   });
 
-  test('it has the notice for when a course is free', async function (assert) {
+  test('it has the notice for when a course is free', async function(assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -99,12 +99,18 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.strictEqual(courseOverviewPage.freeNoticeText, "We're keeping this course free until 21 January 2024 to gather feedback.");
   });
 
-  test('stages for extensions are ordered properly', async function (assert) {
+  test('stages for extensions are ordered properly', async function(assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     await courseOverviewPage.visit({ course_slug: 'grep' });
     await courseOverviewPage.clickOnShowAllButton();
-    await this.pauseTest();
+
+    const grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    const grepLastBaseStageIndex = grep.stages.models.rejectBy('primaryExtensionSlug').length - 1
+
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 1].text.includes('Single Backreference'));
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 2].text.includes('Multiple Backreferences'));
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 3].text.includes('Nested Backreferences'));
   })
 });
