@@ -13,7 +13,7 @@
       </div>
 
       {{! @glint-expect-error animated-each's yield not supported }}
-      <CourseOverviewPage::StageListItem @stage={{baseStage}} />
+      <CourseOverviewPage::StageListItem @stage={{baseStage}} data-test-stage-list-item />
     </div>
   {{/animated-each}}
 </AnimatedContainer>
@@ -28,7 +28,12 @@
     </div>
 
     <div class="flex items-center mt-0.5">
-      <div role="button" class="flex items-center text-teal-500 text-sm font-bold underline" {{on "click" (fn (mut this.shouldShowAllStages) true)}}>
+      <div
+        role="button"
+        class="flex items-center text-teal-500 text-sm font-bold underline"
+        {{on "click" (fn (mut this.shouldShowAllStages) true)}}
+        data-test-show-all-button
+      >
         show all...
       </div>
     </div>
