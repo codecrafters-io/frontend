@@ -66,10 +66,10 @@ export class StepList {
         extension.sortedStages.forEach((stage) => {
           const fakeStageListItem = { stage, isDisabled: false } as RepositoryStageListItemModel;
           steps.push(new CourseStageStep(this.repository, fakeStageListItem));
-        })
+        });
 
         stepGroups.push(new ExtensionStepGroup(extension, steps));
-      })
+      });
     } else {
       let stepsInNextGroup: Step[] = [];
 
