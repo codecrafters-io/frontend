@@ -11,9 +11,19 @@ export default class AffiliateLinkModel extends Model {
   @attr('string') declare slug: string;
   @attr('string') declare url: string;
   @attr('number') declare uniqueViewerCount: number;
+  @attr('string') declare overriddenAffiliateUsername: string | null;
+  @attr('string') declare overriddenAffiliateAvatarUrl: string | null;
+
+  get avatarUrlForDisplay() {
+    return this.overriddenAffiliateAvatarUrl || this.user.avatarUrl;
+  }
 
   get totalEarningsAmountInCents() {
     return this.referrals.reduce((sum, referral) => sum + referral.totalEarningsAmountInCents, 0);
+  }
+
+  get usernameForDisplay() {
+    return this.overriddenAffiliateUsername || this.user.username;
   }
 
   get visibleReferrals(): AffiliateReferralModel[] {
