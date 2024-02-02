@@ -10,7 +10,6 @@ export default class AffiliateLinkModel extends Model {
 
   @attr('string') declare slug: string;
   @attr('string') declare url: string;
-  @attr('number') declare uniqueViewerCount: number;
   @attr('string') declare overriddenAffiliateUsername: string | null;
   @attr('string') declare overriddenAffiliateAvatarUrl: string | null;
 
