@@ -15,7 +15,7 @@ export default class CourseOverviewPageStageListItemComponent extends Component<
   transition = fade;
 
   get allStages() {
-    return [...this.args.course.sortedBaseStages, ...this.args.course.extensions.sortBy('slug').map((extension) => extension.stages)].flat();
+    return [...this.args.course.sortedBaseStages, ...this.args.course.sortedExtensionStages];
   }
 
   get visibleStages() {
