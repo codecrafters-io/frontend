@@ -152,12 +152,12 @@ export default class CourseModel extends Model {
     return this.baseStages.sortBy('position');
   }
 
-  get sortedExtensions() {
-    return this.extensions.sortBy('name');
-  }
-
   get sortedExtensionStages() {
     return this.sortedExtensions.mapBy('stages').flat().sortBy('position');
+  }
+
+  get sortedExtensions() {
+    return this.extensions.sortBy('name');
   }
 
   get testerRepositoryLink() {

@@ -28,7 +28,12 @@
     </div>
 
     <div class="flex items-center mt-0.5">
-      <div role="button" class="flex items-center text-teal-500 text-sm font-bold underline" {{on "click" (fn (mut this.shouldShowAllStages) true)}} data-test-show-all-button>
+      <div
+        role="button"
+        class="flex items-center text-teal-500 text-sm font-bold underline"
+        {{on "click" (fn (mut this.shouldShowAllStages) true)}}
+        data-test-show-all-button
+      >
         show all...
       </div>
     </div>
