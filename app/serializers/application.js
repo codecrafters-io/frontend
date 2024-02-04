@@ -20,4 +20,16 @@ export default class ApplicationSerializer extends JSONAPISerializer {
 
     return super.normalize(...args);
   }
+
+  normalizeQueryRecordResponse(store, primaryModelClass, payload, id, requestType) {
+    if (payload.data instanceof Array) {
+      if (payload.data.length > 0) {
+        payload.data = payload.data[0];
+      } else {
+        payload.data = null;
+      }
+    }
+
+    return super.normalizeQueryRecordResponse(store, primaryModelClass, payload, id, requestType);
+  }
 }
