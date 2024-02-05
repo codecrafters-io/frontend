@@ -490,7 +490,7 @@ function routes() {
       schema.courseExtensionActivations.create({ extension, repository });
     });
 
-    return repository
+    return repository;
   });
 
   this.patch('/repositories/:id');

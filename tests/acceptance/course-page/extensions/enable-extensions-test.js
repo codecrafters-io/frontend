@@ -29,7 +29,6 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
-    await this.pauseTest();
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
