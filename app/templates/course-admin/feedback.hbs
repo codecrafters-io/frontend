@@ -26,9 +26,7 @@
     </div>
 
     <ul role="list" class="divide-y divide-gray-100">
-      {{! @glint-expect-error }}
       {{#animated-each this.sortedFeedbackSubmissions key="id" duration=100 use=this.listTransition as |feedbackSubmission|}}
-        {{! @glint-expect-error }}
         <CourseAdmin::FeedbackPage::FeedbackSubmissionListItem @feedbackSubmission={{feedbackSubmission}} />
       {{else}}
         <div class="text-gray-400 py-32 flex items-center justify-center">

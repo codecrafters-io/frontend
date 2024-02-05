@@ -1,5 +1,4 @@
 <AnimatedContainer>
-  {{! @glint-expect-error animated-each's yield not supported }}
   {{#animated-each this.visibleStages use=this.listTransition duration=200 as |baseStage index|}}
     <div class="flex items-stretch pb-1 group">
       <div class="w-3 pt-2 flex flex-col items-center mr-3">
@@ -18,7 +17,6 @@
   {{/animated-each}}
 </AnimatedContainer>
 
-{{! @glint-expect-error animated-if's else condition not supported }}
 {{#animated-if (not this.shouldShowAllStages) use=this.transition}}
   <div class="flex items-stretch pb-1 group">
     <div class="w-3 pt-1.5 flex flex-col items-center mr-3">

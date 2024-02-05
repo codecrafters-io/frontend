@@ -7,7 +7,6 @@
     <div class="divide-y divide-gray-200">
       {{#each @sections as |section|}}
         <AnimatedContainer>
-          {{! @glint-expect-error not ts-ified yet }}
           {{#animated-if (eq @expandedSection section) use=this.transition duration=300}}
             <div class="px-4 sm:px-6 pt-3 pb-5">
               <div class="flex items-center justify-between mb-3">

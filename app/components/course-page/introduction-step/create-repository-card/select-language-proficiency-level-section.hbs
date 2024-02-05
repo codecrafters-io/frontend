@@ -17,13 +17,15 @@
       </TertiaryButton>
     {{/each-in}}
 
-    {{#animated-if this.feedbackAlertMarkdown transition=this.transition duration=300}}
-      <Alert>
-        {{! The extra #if convinces glint that the value isn't null }}
-        {{#if this.feedbackAlertMarkdown}}
-          {{markdown-to-html this.feedbackAlertMarkdown}}
-        {{/if}}
-      </Alert>
-    {{/animated-if}}
+    <AnimatedContainer class="w-full">
+      {{#animated-if this.feedbackAlertMarkdown use=this.transition duration=300}}
+        <Alert>
+          {{! The extra #if convinces glint that the value isn't null }}
+          {{#if this.feedbackAlertMarkdown}}
+            {{markdown-to-html this.feedbackAlertMarkdown}}
+          {{/if}}
+        </Alert>
+      {{/animated-if}}
+    </AnimatedContainer>
   </div>
 </div>

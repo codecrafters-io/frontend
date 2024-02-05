@@ -1,11 +1,9 @@
-// Types for compiled templates
-// This doesn't work?
-// declare module 'codecrafters-frontend/templates/*' {
-//   import { TemplateFactory } from 'ember-cli-htmlbars';
-
-//   const tmpl: TemplateFactory;
-//   export default tmpl;
-// }
-
-// Not sure if this is supposed to go here...
 import '@glint/environment-ember-loose';
+
+import type EmberAnimatedRegistry from 'ember-animated/template-registry';
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry extends EmberAnimatedRegistry /* other addon registries */ {
+    // local entries
+  }
+}
