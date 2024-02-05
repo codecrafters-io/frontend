@@ -16,9 +16,14 @@ export default class Step2Component extends Component<Signature> {
   options = ['Friend/Colleague', 'YouTube', 'Reddit', 'Hacker News', 'Twitter', 'GitHub', 'Google', 'Conference', "Don't remember"];
 
   @action
+  handleFreeFormInputBlur() {
+    // We don't trigger the onSurveyUpdated action on every keystroke, only when the user leaves the input field.
+    this.args.onSurveyUpdated();
+  }
+
+  @action
   handleFreeFormInputChange(freeFormInput: string) {
     this.args.onboardingSurvey.freeFormAnswerForReferralSource = freeFormInput;
-    this.args.onSurveyUpdated();
   }
 
   @action
