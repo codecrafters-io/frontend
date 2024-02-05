@@ -1,4 +1,5 @@
 import { Factory, trait } from 'miragejs';
+import createCourseExtensionActivations from '../utils/create-course-extension-activations';
 import syncRepositoryStageLists from '../utils/sync-repository-stage-lists';
 
 export default Factory.extend({
@@ -7,6 +8,7 @@ export default Factory.extend({
   name: 'Dummy name',
 
   afterCreate(repository, server) {
+    createCourseExtensionActivations(server, repository);
     syncRepositoryStageLists(server, repository);
   },
 

@@ -484,7 +484,13 @@ function routes() {
     attrs.cloneUrl = 'https://git.codecraters.io/a-long-test-string.git';
     attrs.name = `${language.name}`;
 
-    return schema.repositories.create(attrs);
+    const repository = schema.repositories.create(attrs);
+
+    repository.course.extensions.models.forEach((extension) => {
+      schema.courseExtensionActivations.create({ extension, repository });
+    });
+
+    return repository
   });
 
   this.patch('/repositories/:id');
