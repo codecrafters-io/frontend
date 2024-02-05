@@ -1,16 +1,18 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import type AffiliateLinkModel from './affiliate-link';
+import type UserModel from './user';
 
 export default class AffiliateReferralModel extends Model {
-  @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsCustomer' }) customer;
-  @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsReferrer' }) referrer;
-  @belongsTo('affiliate-link', { async: false, inverse: 'referrals' }) affiliateLink;
+  @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsCustomer' }) declare customer: UserModel;
+  @belongsTo('user', { async: false, inverse: 'affiliateReferralsAsReferrer' }) declare referrer: UserModel;
+  @belongsTo('affiliate-link', { async: false, inverse: 'referrals' }) declare affiliateLink: AffiliateLinkModel;
 
-  @attr('date') activatedAt;
-  @attr('string') status; // 'pending_trial', 'trialing', 'first_charge_successful', 'trial_cancelled', 'inactive'
-  @attr('number') spentAmountInCents;
-  @attr('number') upcomingPaymentAmountInCents;
-  @attr('number') withdrawableEarningsAmountInCents;
-  @attr('number') withheldEarningsAmountInCents;
+  @attr('date') declare activatedAt: Date;
+  @attr('string') declare status: 'pending_trial' | 'trialing' | 'first_charge_successful' | 'trial_cancelled' | 'inactive';
+  @attr('number') declare spentAmountInCents: number;
+  @attr('number') declare upcomingPaymentAmountInCents: number;
+  @attr('number') declare withdrawableEarningsAmountInCents: number;
+  @attr('number') declare withheldEarningsAmountInCents: number;
 
   get discountPeriodEndsAt() {
     return new Date(this.activatedAt.getTime() + 3 * 24 * 60 * 60 * 1000);

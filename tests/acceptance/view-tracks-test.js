@@ -49,7 +49,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start', 'expected fourth track to have start action');
 
     assert.true(catalogPage.trackCards[0].hasProgressBar, 'expected first track to have progress bar');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/47 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/63 stages');
     assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:2%');
   });
 
@@ -119,7 +119,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[1].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '47/47 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '63/63 stages');
     assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:100%');
   });
 

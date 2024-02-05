@@ -96,6 +96,21 @@ module('Acceptance | view-course-overview', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(courseOverviewPage.freeNoticeText, "We're keeping this course free until 21 January 2024 to gather feedback.");
+    assert.strictEqual(courseOverviewPage.freeNoticeText, 'This challenge is free until 21 January 2024!');
+  });
+
+  test('stages for extensions are ordered properly', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await courseOverviewPage.visit({ course_slug: 'grep' });
+    await courseOverviewPage.clickOnShowAllButton();
+
+    const grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    const grepLastBaseStageIndex = grep.stages.models.rejectBy('primaryExtensionSlug').length - 1;
+
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 1].text.includes('Single Backreference'));
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 2].text.includes('Multiple Backreferences'));
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 3].text.includes('Nested Backreferences'));
   });
 });

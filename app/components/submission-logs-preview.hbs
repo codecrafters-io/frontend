@@ -19,7 +19,7 @@
     {{#each this.logLines key="@index" as |logLine index|}}
       <div class="flex items-start">
         <div class="text-gray-500 dark:text-gray-600 w-4 text-right mr-3 flex-shrink-0 select-none">{{add index 1}}</div>
-        <div data-test-log-line>{{html-safe logLine}}</div>
+        <div data-test-log-line class="whitespace-pre">{{html-safe logLine}}</div>
       </div>
     {{/each}}
   {{else}}

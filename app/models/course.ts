@@ -152,6 +152,10 @@ export default class CourseModel extends Model {
     return this.baseStages.sortBy('position');
   }
 
+  get sortedExtensionStages() {
+    return this.sortedExtensions.mapBy('sortedStages').flat();
+  }
+
   get sortedExtensions() {
     return this.extensions.sortBy('name');
   }

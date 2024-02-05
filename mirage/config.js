@@ -64,7 +64,6 @@ function routes() {
   this.post('/affiliate-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.url = `https://app.codecraters.io/join?via=${attrs.slug}`;
-    attrs.uniqueViewerCount = 0;
 
     return schema.affiliateLinks.create(attrs);
   });

@@ -17,7 +17,6 @@ module('Acceptance | affiliate-page | view-payouts', function (hooks) {
 
     const affiliateLink = this.server.create('affiliate-link', {
       user: this.server.schema.users.first(),
-      uniqueViewerCount: 10,
     });
 
     const customer1 = this.server.create('user', {

@@ -1,16 +1,23 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="flex p-3 bg-blue-100 border border-blue-300 rounded shadow-sm relative" data-test-private-leaderboard-feature-suggestion ...attributes>
   <div class="mr-3 mt-0.5">
     {{svg-jar "clock" class="w-6 fill-current text-blue-400 animate-pulse"}}
   </div>
 
   <div class="text-blue-700 prose max-w-none prose-blue leading-7">
-    <AvatarImage
-      @user={{@affiliateReferral.referrer}}
-      class="inline-block mb-0 w-6 h-6 border border-gray-100 rounded-full transform -translate-y-px"
-    />
+    {{#if @affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
+      <img
+        alt="avatar"
+        src={{@affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
+        class="inline-block mb-0 w-6 h-6 transform -translate-y-px"
+      />
+    {{else}}
+      <AvatarImage
+        @user={{@affiliateReferral.referrer}}
+        class="inline-block mb-0 w-6 h-6 border border-gray-100 rounded-full transform -translate-y-px"
+      />
+    {{/if}}
 
-    <b>{{@affiliateReferral.referrer.username}}</b>'s referral offer: Subscribe by
+    <b>{{@affiliateReferral.affiliateLink.usernameForDisplay}}</b>'s referral offer: Subscribe by
     <span class="font-semibold percy-timestamp">{{date-format @affiliateReferral.discountPeriodEndsAt format="PPPp"}}</span>
     to get
     <span class="font-semibold">40% off</span>
