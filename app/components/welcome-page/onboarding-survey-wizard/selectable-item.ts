@@ -20,7 +20,7 @@ export default class SelectableItemComponent extends Component<Signature> {
   toRight = toRight;
   toLeft = toLeft;
 
-  rules({ newItems }: { newItems: boolean[] }) {
+  rules({ newItems }: { newItems: unknown[] }) {
     if (newItems[0]) {
       return toRight;
     } else {
