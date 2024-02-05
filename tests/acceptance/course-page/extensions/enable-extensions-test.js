@@ -32,7 +32,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 4 items');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
 

@@ -25,11 +25,11 @@ module('Unit | Utility | sync-repository-stage-list', function (hooks) {
 
     assert.strictEqual(repository.stageList.items.models.length, 6, 'repository has 6 stage list items');
     assert.strictEqual(repository.stageList.items.models[0].position, 1, 'first stage list item position is 1');
-    assert.strictEqual(repository.stageList.items.models[1].position, 2, 'first stage list item position is 1');
+    assert.strictEqual(repository.stageList.items.models[1].position, 2, 'second stage list item position is 1');
     assert.strictEqual(repository.stageList.items.models[2].position, 3, 'third stage list item position is 3');
     assert.strictEqual(repository.stageList.items.models[3].position, 4, 'fourth stage list item position is 4');
-    assert.strictEqual(repository.stageList.items.models[4].position, 5, 'third stage list item position is 5');
-    assert.strictEqual(repository.stageList.items.models[5].position, 6, 'fourth stage list item position is 6');
+    assert.strictEqual(repository.stageList.items.models[4].position, 5, 'fifth stage list item position is 5');
+    assert.strictEqual(repository.stageList.items.models[5].position, 6, 'sixth stage list item position is 6');
 
     syncRepositoryStageLists(this.server);
 
@@ -39,8 +39,8 @@ module('Unit | Utility | sync-repository-stage-list', function (hooks) {
     assert.strictEqual(repository.stageList.items.models[1].position, 2, 'second stage list item position is 2');
     assert.strictEqual(repository.stageList.items.models[2].position, 3, 'third stage list item position is 3');
     assert.strictEqual(repository.stageList.items.models[3].position, 4, 'fourth stage list item position is 4');
-    assert.strictEqual(repository.stageList.items.models[4].position, 5, 'third stage list item position is 5');
-    assert.strictEqual(repository.stageList.items.models[5].position, 6, 'fourth stage list item position is 6');
+    assert.strictEqual(repository.stageList.items.models[4].position, 5, 'fifth stage list item position is 5');
+    assert.strictEqual(repository.stageList.items.models[5].position, 6, 'sixth stage list item position is 6');
 
     const firstExtension = this.server.schema.courseExtensions.findBy({ slug: 'ext1' });
     const secondExtension = this.server.schema.courseExtensions.findBy({ slug: 'ext2' });
