@@ -38,6 +38,10 @@ export default {
     },
     {
       "slug": "zig"
+    },
+    {
+      "slug": "java",
+      "release_status": "beta"
     }
   ],
   "marketing": {
