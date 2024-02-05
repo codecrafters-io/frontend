@@ -33,14 +33,7 @@
 
   <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" class="mb-5" />
 
-  {{#if @repository.firstSubmissionCreated}}
-    <p>
-      <span class="text-lg mr-2">🎉</span>
-      Git push received! The first stage is now activated.
-    </p>
-  {{else}}
-    <p>
-      When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
-    </p>
-  {{/if}}
+  <p class={{if @isComplete "line-through"}}>
+    When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
+  </p>
 </div>
