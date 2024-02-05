@@ -113,10 +113,12 @@ export default class BlocksPageComponent extends Component<Signature> {
     });
 
     if (blocks[blocks.length - 1]?.type !== 'click_to_continue') {
-      blocks.push(new ClickToContinueBlock({
-        type: 'click_to_continue',
-        args: {}
-      }));
+      blocks.push(
+        new ClickToContinueBlock({
+          type: 'click_to_continue',
+          args: {},
+        }),
+      );
     }
 
     return blocks.map((block) => block.toJSON);
