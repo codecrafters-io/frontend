@@ -35,7 +35,7 @@ export default class FreeCourseLabelComponent extends Component<Signature> {
   }
 
   get tooltipCopy(): string {
-    return `We're keeping this course free until ${format(this.args.course.isFreeUntil as Date, 'd MMMM yyyy')} to gather feedback`;
+    return `This challenge is free until ${format(this.args.course.isFreeUntil as Date, 'd MMMM yyyy')}!`;
   }
 
   get tooltipSide(): 'top' | 'bottom' | 'left' | 'right' {

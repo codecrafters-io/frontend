@@ -96,7 +96,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(courseOverviewPage.freeNoticeText, "We're keeping this course free until 21 January 2024 to gather feedback.");
+    assert.strictEqual(courseOverviewPage.freeNoticeText, 'This challenge is free until 21 January 2024!');
   });
 
   test('stages for extensions are ordered properly', async function (assert) {
