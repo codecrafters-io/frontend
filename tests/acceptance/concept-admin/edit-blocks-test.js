@@ -8,11 +8,11 @@ import blocksPage from 'codecrafters-frontend/tests/pages/concept-admin/blocks-p
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | concept-admin | edit-blocks', function (hooks) {
+module('Acceptance | concept-admin | edit-blocks', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('can add/edit/delete markdown blocks', async function (assert) {
+  test('can add/edit/delete markdown blocks', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -64,16 +64,16 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     await blocksPage.clickOnPublishChangesButton();
     await settled(); // Investigate why clickable() doesn't call settled()
 
-    assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
+    assert.strictEqual(blocksPage.editableBlocks.length, 3, 'expected 3 editable blocks to be present');
 
     await blocksPage.insertBlockMarkers[0].click();
     await blocksPage.insertBlockMarkers[0].dropdown.clickOnItem('Markdown Block');
 
     await blocksPage.clickOnPublishChangesButton();
-    assert.strictEqual(blocksPage.editableBlocks.length, 3, 'expected 3 editable blocks to be present');
+    assert.strictEqual(blocksPage.editableBlocks.length, 4, 'expected 4 editable blocks to be present');
   });
 
-  test('can reorder markdown blocks', async function (assert) {
+  test('can reorder markdown blocks', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -118,7 +118,7 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     assert.strictEqual(blocksPage.editableBlocks[4].preview.text, 'block 4');
   });
 
-  test('dragging block to same position does not cause changes', async function (assert) {
+  test('dragging block to same position does not cause changes', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -150,7 +150,7 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     assert.strictEqual(blocksPage.editableBlocks[1].preview.text, 'block 2');
   });
 
-  test('can add/edit question blocks', async function (assert) {
+  test('can add/edit question blocks', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -185,5 +185,39 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
 
     await blocksPage.clickOnPublishChangesButton();
     assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
+  });
+
+  test('click to continue block is automatically added when changes are published', async function(assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the second markdown block.`,
+          },
+        },
+      ],
+    });
+
+    await blocksPage.visit({ concept_slug: 'dummy' });
+
+    await blocksPage.insertBlockMarkers[1].click();
+    await blocksPage.insertBlockMarkers[1].dropdown.clickOnItem('Markdown Block');
+
+    await blocksPage.clickOnPublishChangesButton();
+    await settled(); // Investigate why clickable() doesn't call settled()
+
+    assert.strictEqual(blocksPage.editableBlocks.length, 4, 'expected 4 editable blocks to be present');
+    assert.ok(blocksPage.editableBlocks[3].text.includes('Continue'), 'expected the last block to be a click to continue block')
   });
 });
