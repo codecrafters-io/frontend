@@ -33,7 +33,7 @@ export default class RepositorySetupCardComponent extends Component<Signature> {
   @action
   handleDidInsertStepCompletedMessage(_element: HTMLParagraphElement) {
     if (this.isComplete && !this.isCompleteOriginallyWas) {
-      this.confetti.fire({
+      this.confetti.fireOnFocus({
         particleCount: 200,
         spread: 120,
       });
