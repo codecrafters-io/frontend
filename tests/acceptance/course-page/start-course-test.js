@@ -15,7 +15,7 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 
 module('Acceptance | course-page | start-course', function (hooks) {
   setupApplicationTest(hooks);
-  // setupAnimationTest(hooks);
+  setupAnimationTest(hooks);
   setupMirage(hooks);
 
   test('can start course', async function (assert) {
@@ -62,7 +62,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'create repository request was executed');
 
-    await this.pauseTest();
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
 
