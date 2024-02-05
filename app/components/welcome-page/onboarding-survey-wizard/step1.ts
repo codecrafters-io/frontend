@@ -16,9 +16,14 @@ export default class Step1Component extends Component<Signature> {
   options = ['Pick up a new language', 'Master a language', 'Build portfolio projects', 'Interview prep', 'Not sure yet'];
 
   @action
+  handleFreeFormInputBlur() {
+    // We don't trigger the onSurveyUpdated action on every keystroke, only when the user leaves the input field.
+    this.args.onSurveyUpdated();
+  }
+
+  @action
   handleFreeFormInputChange(freeFormInput: string) {
     this.args.onboardingSurvey.freeFormAnswerForUsagePurpose = freeFormInput;
-    this.args.onSurveyUpdated();
   }
 
   @action

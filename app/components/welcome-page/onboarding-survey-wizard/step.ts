@@ -7,6 +7,7 @@ type Signature = {
   Args: {
     freeFormInput: string;
     onContinueButtonClick: () => void;
+    onFreeFormInputBlur: () => void;
     onFreeFormInputChange: (value: string) => void;
     onSelectedOptionsChange: (selectedOptions: string[]) => void;
     options: string[];
