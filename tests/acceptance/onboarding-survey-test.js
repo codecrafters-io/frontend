@@ -7,7 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn } from 'codecrafters-frontend/tests/helpers/sign-in';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | onboarding-survey-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,6 +15,7 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
   setupWindowMock(hooks);
 
   test('can answer questions in onboarding survey', async function (assert) {
+    testScenario(this.server);
     const user = await signIn(this.owner, this.server);
 
     const onboardingSurvey = this.server.create('onboarding-survey', {
@@ -31,12 +32,14 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Master a language');
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Interview prep');
+    await welcomePage.onboardingSurveyWizard.fillInFreeFormInput('Dummy');
     await welcomePage.onboardingSurveyWizard.clickOnContinueButton();
     await animationsSettled();
 
     assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose.length, 2, 'Two usage purpose options should be selected');
     assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose[0], 'Master a language', 'First usage purpose option should be selected');
     assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose[1], 'Interview prep', 'Second usage purpose option should be selected');
+    assert.strictEqual(onboardingSurvey.freeFormAnswerForUsagePurpose, 'Dummy', 'Free form input should be saved');
 
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('YouTube');
     await welcomePage.onboardingSurveyWizard.clickOnContinueButton();
