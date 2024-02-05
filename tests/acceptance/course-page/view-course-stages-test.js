@@ -755,7 +755,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.freeCourseLabel.hover();
 
     assertTooltipContent(assert, {
-      contentString: "We're keeping this course free until 16 January 2024 to gather feedback",
+      contentString: 'This course is free until 16 January 2024!',
     });
   });
 
