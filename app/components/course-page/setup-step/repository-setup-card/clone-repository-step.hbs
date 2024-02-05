@@ -7,7 +7,12 @@
   </p>
 
   <p class="mb-4">
-    <b class="text-teal-600">Step 1:</b>
+    {{#if @isComplete}}
+      {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+    {{else}}
+      <b class="text-teal-600">Step 1:</b>
+    {{/if}}
+
     Clone the repository.
   </p>
 
@@ -27,20 +32,17 @@
   {{/if}}
 
   <p class="mb-4">
-    <b class="text-teal-600">Step 2:</b>
+    {{#if @isComplete}}
+      {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+    {{else}}
+      <b class="text-teal-600">Step 2:</b>
+    {{/if}}
     Push an empty commit.
   </p>
 
   <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" class="mb-5" />
 
-  {{#if @repository.firstSubmissionCreated}}
-    <p>
-      <span class="text-lg mr-2">🎉</span>
-      Git push received! The first stage is now activated.
-    </p>
-  {{else}}
-    <p>
-      When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
-    </p>
-  {{/if}}
+  <p class={{if @isComplete "line-through"}}>
+    When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
+  </p>
 </div>
