@@ -7,8 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { visit } from '@ember/test-helpers';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { signIn } from 'codecrafters-frontend/tests/helpers/sign-in';
 
 module('Acceptance | onboarding-survey-test', function (hooks) {
   setupApplicationTest(hooks);
