@@ -9,6 +9,8 @@ export async function signIn(owner, server, user) {
 
   const sessionTokenStorageService = owner.lookup('service:session-token-storage');
   sessionTokenStorageService.setToken(session.token);
+
+  return user;
 }
 
 export async function signInAsAdmin(owner, server, user) {

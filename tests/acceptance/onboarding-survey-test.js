@@ -1,4 +1,7 @@
-/* eslint-disable qunit/require-expect */
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import welcomePage from 'codecrafters-frontend/tests/pages/welcome-page';
+import { animationsSettled } from 'ember-animated/test-support';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -13,8 +16,57 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
   test('can answer questions in onboarding survey', async function (assert) {
     testScenario(this.server);
+    const user = await signIn(this.owner, this.server);
 
-    await visit('/welcome');
-    assert.strictEqual(1, 1);
+    const onboardingSurvey = this.server.create('onboarding-survey', {
+      id: 'dummy-survey-id',
+      user: user,
+      status: 'incomplete',
+    });
+
+    assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose.length, 0, 'No usage purpose options should be selected initially');
+    assert.strictEqual(onboardingSurvey.selectedOptionsForReferralSource.length, 0, 'No referral source options should be selected initially');
+
+    await welcomePage.visit();
+    assert.strictEqual(currentURL(), '/welcome', 'current URL should be /welcome');
+
+    await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Master a language');
+    await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Interview prep');
+    await welcomePage.onboardingSurveyWizard.clickOnContinueButton();
+    await animationsSettled();
+
+    assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose.length, 2, 'Two usage purpose options should be selected');
+    assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose[0], 'Master a language', 'First usage purpose option should be selected');
+    assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose[1], 'Interview prep', 'Second usage purpose option should be selected');
+
+    await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('YouTube');
+    await welcomePage.onboardingSurveyWizard.clickOnContinueButton();
+    await animationsSettled();
+
+    assert.strictEqual(onboardingSurvey.selectedOptionsForReferralSource.length, 1, 'One referral source option should be selected');
+    assert.strictEqual(onboardingSurvey.selectedOptionsForReferralSource[0], 'YouTube', 'Referral source option should be selected');
+    assert.strictEqual(currentURL(), '/catalog');
+  });
+
+  test('redirects to catalog if no survey is found', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await welcomePage.visit();
+    assert.strictEqual(currentURL(), '/catalog');
+  });
+
+  test('redirects to catalog if survey is already complete', async function (assert) {
+    testScenario(this.server);
+    const user = await signIn(this.owner, this.server);
+
+    this.server.create('onboarding-survey', {
+      id: 'dummy-survey-id',
+      user: user,
+      status: 'complete',
+    });
+
+    await welcomePage.visit();
+    assert.strictEqual(currentURL(), '/catalog');
   });
 });

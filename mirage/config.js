@@ -400,6 +400,12 @@ function routes() {
     }
   });
 
+  this.get('/onboarding-surveys', function (schema, request) {
+    return schema.onboardingSurveys.where({ userId: request.queryParams.user_id });
+  });
+
+  this.patch('/onboarding-surveys/:id');
+
   this.get('/perks', function (schema, request) {
     const slug = request.queryParams.slug;
 

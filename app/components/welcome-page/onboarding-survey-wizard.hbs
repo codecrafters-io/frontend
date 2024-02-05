@@ -1,10 +1,18 @@
-<div class="border p-4 sm:p-8 bg-white max-w-screen-md w-full rounded">
+<div class="border p-4 sm:p-8 bg-white max-w-screen-md w-full rounded" data-test-onboarding-survey-wizard>
   <AnimatedContainer>
     {{! @glint-expect-error }}
     {{#animated-if (eq this.currentStep 1) use=this.fade}}
-      <WelcomePage::OnboardingSurveyWizard::Step1 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+      <WelcomePage::OnboardingSurveyWizard::Step1
+        @onContinueButtonClick={{this.handleContinueButtonClick}}
+        @onSurveyUpdated={{this.handleSurveyUpdated}}
+        @onboardingSurvey={{@onboardingSurvey}}
+      />
     {{else}}{{#if (eq this.currentStep 2)}}
-        <WelcomePage::OnboardingSurveyWizard::Step2 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+        <WelcomePage::OnboardingSurveyWizard::Step2
+          @onboardingSurvey={{@onboardingSurvey}}
+          @onContinueButtonClick={{this.handleContinueButtonClick}}
+          @onSurveyUpdated={{this.handleSurveyUpdated}}
+        />
       {{/if}}{{/animated-if}}
   </AnimatedContainer>
 </div>
