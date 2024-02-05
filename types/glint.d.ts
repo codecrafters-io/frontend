@@ -7,26 +7,6 @@ declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends RenderModifiersRegistry {
     add: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
-    AnimatedContainer: ComponentLike<{ Blocks: { default: [string, ...unknown[]] }; Args: { Named: { class?: string } } }>;
-    AnimatedOrphans: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
-    'animated-value': ComponentLike<{
-      Args: { Positional: [unknown]; Named: { duration: number; rules: unknown } };
-      Blocks: { default: [unknown] };
-      Yields: { default: [string] };
-      Return: string;
-    }>;
-    'animated-each': ComponentLike<{
-      Args: { Positional: [unknown]; Named: { use: unknown; key?: string; duration?: number } };
-      Blocks: { default: [unknown] };
-      Yields: { default: [string] };
-      Return: string;
-    }>;
-    'animated-if': ComponentLike<{
-      Args: { Positional: [unknown]; Named: { duration?: number; use?: unknown } };
-      Blocks: { default: [unknown]; inverse: [unknown] };
-      Yields: { default: [string] };
-      Return: string;
-    }>;
     autoresize: ModifierLike<{ Args: { Positional: [string] } }>;
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'date-format': HelperLike<{ Return: string; Args: { Positional: [Date]; Named: { format?: string } } }>;
