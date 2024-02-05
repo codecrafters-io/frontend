@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import fade from 'ember-animated/transitions/fade';
 
 type Signature = {
   Args: {
@@ -16,6 +17,8 @@ type Signature = {
 };
 
 export default class StepComponent extends Component<Signature> {
+  fade = fade;
+
   get isContinueButtonDisabled() {
     return this.args.selectedOptions.length === 0 && this.args.freeFormInput.trim() === '';
   }

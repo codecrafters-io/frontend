@@ -29,7 +29,16 @@
 
   </div>
 
-  <PrimaryButton {{on "click" @onContinueButtonClick}} class={{if this.isContinueButtonDisabled "opacity-50" ""}}>
-    Continue
-  </PrimaryButton>
+  <div class="flex items-center gap-3">
+    {{#animated-if (not this.isContinueButtonDisabled) use=this.fade}}
+      <div class="text-gray-400 text-sm flex items-center">
+        {{svg-jar "information-circle" class="w-5 h-5 mr-1.5 text-gray-400 flex-shrink-0"}}
+        Click "Continue" to proceed →
+      </div>
+    {{/animated-if}}
+
+    <PrimaryButton {{on "click" @onContinueButtonClick}} class={{if this.isContinueButtonDisabled "opacity-50" ""}}>
+      Continue
+    </PrimaryButton>
+  </div>
 </div>
