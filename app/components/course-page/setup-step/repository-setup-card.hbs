@@ -8,8 +8,8 @@
     <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} @isComplete={{this.isComplete}} />
 
     {{#if this.isComplete}}
-      <p class="text-gray-600 mt-4">
-        <span class="text-lg mr-2">🎉</span>
+      <p class="text-gray-600 mt-4" {{did-insert this.handleDidInsertStepCompletedMessage}}>
+        <span class="text-xl mr-1">🎉</span>
         Git push received! The first stage is now activated.
       </p>
 
