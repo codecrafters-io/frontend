@@ -22,7 +22,7 @@ export default class WelcomeController extends Controller {
     // We don't want a long URL visible in the address bar while the user is filling out the survey.
     if (this.next) {
       this.stashedNext = this.next;
-      this.router.transitionTo({ queryParams: { next: null } }); // reset param
+      this.router.transitionTo({ queryParams: { next: undefined } }); // reset param
     }
   }
 
