@@ -7,10 +7,14 @@ import type OnboardingSurveyModel from 'codecrafters-frontend/models/onboarding-
 import type RouterService from '@ember/routing/router-service';
 
 export type ModelType = {
-  onboardingSurvey: OnboardingSurveyModel | null;
+  onboardingSurvey: OnboardingSurveyModel;
 };
 
 export default class WelcomeRoute extends BaseRoute {
+  queryParams = {
+    next: {},
+  };
+
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare router: RouterService;
@@ -19,7 +23,7 @@ export default class WelcomeRoute extends BaseRoute {
     scrollToTop();
   }
 
-  async afterModel(model: ModelType) {
+  async afterModel(model: { onboardingSurvey: OnboardingSurveyModel | null }) {
     // User must've been created before we started onboarding surveys.
     if (!model.onboardingSurvey) {
       this.router.transitionTo('catalog');
@@ -36,7 +40,9 @@ export default class WelcomeRoute extends BaseRoute {
     await this.authenticator.authenticate(); // Force auth
 
     return {
-      onboardingSurvey: await this.store.queryRecord('onboarding-survey', { user_id: this.authenticator.currentUserId }),
+      onboardingSurvey: (await this.store.queryRecord('onboarding-survey', {
+        user_id: this.authenticator.currentUserId,
+      })) as OnboardingSurveyModel | null,
     };
   }
 }

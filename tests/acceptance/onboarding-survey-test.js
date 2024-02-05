@@ -1,5 +1,6 @@
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import welcomePage from 'codecrafters-frontend/tests/pages/welcome-page';
+import windowMock from 'ember-window-mock';
 import { animationsSettled } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -15,7 +16,6 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
   setupWindowMock(hooks);
 
   test('can answer questions in onboarding survey', async function (assert) {
-    testScenario(this.server);
     const user = await signIn(this.owner, this.server);
 
     const onboardingSurvey = this.server.create('onboarding-survey', {
@@ -45,6 +45,7 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
     assert.strictEqual(onboardingSurvey.selectedOptionsForReferralSource.length, 1, 'One referral source option should be selected');
     assert.strictEqual(onboardingSurvey.selectedOptionsForReferralSource[0], 'YouTube', 'Referral source option should be selected');
+    assert.strictEqual(onboardingSurvey.status, 'complete', 'Survey should be marked as complete');
     assert.strictEqual(currentURL(), '/catalog');
   });
 
@@ -68,5 +69,30 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
     await welcomePage.visit();
     assert.strictEqual(currentURL(), '/catalog');
+  });
+
+  test('stores ?next query param and redirects to it after survey completion', async function (assert) {
+    testScenario(this.server);
+    const user = await signIn(this.owner, this.server);
+
+    this.server.create('onboarding-survey', {
+      id: 'dummy-survey-id',
+      user: user,
+      status: 'incomplete',
+    });
+
+    await welcomePage.visit({ next: 'https://localhost:1234/refer' });
+    assert.strictEqual(currentURL(), '/welcome', 'current URL should be /welcome');
+
+    await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Master a language');
+    await welcomePage.onboardingSurveyWizard.clickOnContinueButton();
+    await animationsSettled();
+
+    await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('YouTube');
+    await welcomePage.onboardingSurveyWizard.clickOnContinueButton();
+    await animationsSettled();
+    testScenario(this.server);
+
+    assert.strictEqual(windowMock.location.href, `https://localhost:1234/refer`, 'should redirect to login URL');
   });
 });

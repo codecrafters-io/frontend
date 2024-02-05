@@ -31,7 +31,7 @@
   </div>
 
   <div class="flex items-center gap-3">
-    {{#animated-if (not this.isContinueButtonDisabled) use=this.fade}}
+    {{#animated-if (not this.continueButtonIsDisabled) use=this.fade}}
       <div class="text-gray-400 text-xs sm:text-sm flex items-center gap-1.5">
         {{svg-jar "information-circle" class="w-5 h-5 text-gray-400 flex-shrink-0 hidden sm:flex"}}
         <span>
@@ -43,8 +43,12 @@
       </div>
     {{/animated-if}}
 
-    <PrimaryButton {{on "click" @onContinueButtonClick}} class={{if this.isContinueButtonDisabled "opacity-50" ""}} data-test-continue-button>
-      Continue
+    <PrimaryButton {{on "click" this.handleContinueButtonClick}} class={{if this.continueButtonIsDisabled "opacity-50" ""}} data-test-continue-button>
+      {{#if this.continueButtonWasPressed}}
+        Saving..
+      {{else}}
+        Continue
+      {{/if}}
     </PrimaryButton>
   </div>
 </div>

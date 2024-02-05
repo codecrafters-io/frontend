@@ -10,6 +10,7 @@ import { tracked } from '@glimmer/tracking';
 type Signature = {
   Args: {
     onboardingSurvey: OnboardingSurveyModel;
+    onSurveyComplete: () => void;
   };
 
   Element: HTMLDivElement;
@@ -24,9 +25,8 @@ export default class OnboardingSurveyWizardComponent extends Component<Signature
   async handleContinueButtonClick() {
     if (this.currentStep === 2) {
       this.args.onboardingSurvey.status = 'complete';
-      await this.updateSurvey.perform();
       await this.args.onboardingSurvey.save();
-      this.router.transitionTo('catalog');
+      this.args.onSurveyComplete();
     } else {
       this.currentStep++;
     }
