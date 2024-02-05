@@ -35,7 +35,7 @@ export default class RepositorySetupCardComponent extends Component<Signature> {
     if (this.isComplete && !this.isCompleteOriginallyWas) {
       this.confetti.fire({
         particleCount: 200,
-        spread: 100,
+        spread: 120,
       });
     }
   }
