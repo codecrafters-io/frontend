@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import fade from 'ember-animated/transitions/fade';
 
 type Signature = {
   // Args: {};
@@ -9,6 +10,7 @@ type Signature = {
 };
 
 export default class OnboardingSurveyWizardComponent extends Component<Signature> {
+  fade = fade;
   @tracked currentStep = 1;
 
   @action

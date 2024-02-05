@@ -1,7 +1,10 @@
 <div class="border p-4 sm:p-8 bg-white max-w-screen-md w-full rounded">
-  {{#if (eq this.currentStep 1)}}
-    <WelcomePage::OnboardingSurveyWizard::Step1 @onContinueButtonClick={{this.handleContinueButtonClick}} />
-  {{else if (eq this.currentStep 2)}}
-    <WelcomePage::OnboardingSurveyWizard::Step2 @onContinueButtonClick={{this.handleContinueButtonClick}} />
-  {{/if}}
+  <AnimatedContainer>
+    {{! @glint-expect-error }}
+    {{#animated-if (eq this.currentStep 1) use=this.fade}}
+      <WelcomePage::OnboardingSurveyWizard::Step1 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+    {{else}}{{#if (eq this.currentStep 2)}}
+        <WelcomePage::OnboardingSurveyWizard::Step2 @onContinueButtonClick={{this.handleContinueButtonClick}} />
+      {{/if}}{{/animated-if}}
+  </AnimatedContainer>
 </div>

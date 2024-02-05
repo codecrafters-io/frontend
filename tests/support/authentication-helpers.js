@@ -1,5 +1,10 @@
 export async function signIn(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+
+  if (!user) {
+    throw new Error('signIn expects a user to be present. Are you sure you are calling signIn after testScenario?');
+  }
+
   const session = server.schema.sessions.create({ user: user, id: 'current-session-id', token: crypto.randomUUID() });
 
   const sessionTokenStorageService = owner.lookup('service:session-token-storage');
