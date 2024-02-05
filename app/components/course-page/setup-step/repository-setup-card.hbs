@@ -7,31 +7,25 @@
 
     <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} @isComplete={{this.isComplete}} />
 
-    <div class="px-4 py-3 bg-gray-50 mt-4 inline-flex rounded border shadow-sm">
-      {{#if this.isComplete}}
-        <p class="text-gray-600">
-          <span class="text-lg mr-2">🎉</span>
-          Git push received! The first stage is now activated.
-        </p>
-      {{else}}
-        <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
-      {{/if}}
-    </div>
-
     {{#if this.isComplete}}
-      <div class="mt-4 flex">
-        <PrimaryLinkButton
-          @route={{this.coursePageState.activeStep.routeParams.route}}
-          @models={{this.coursePageState.activeStep.routeParams.models}}
-          data-test-continue-button
-        >
-          Continue →
-        </PrimaryLinkButton>
+      <p class="text-gray-600 mt-4">
+        <span class="text-lg mr-2">🎉</span>
+        Git push received! The first stage is now activated.
+      </p>
+
+      <PrimaryLinkButton
+        class="mt-4"
+        @size="large"
+        @route={{this.coursePageState.activeStep.routeParams.route}}
+        @models={{this.coursePageState.activeStep.routeParams.models}}
+        data-test-continue-button
+      >
+        Continue →
+      </PrimaryLinkButton>
+    {{else}}
+      <div class="px-4 py-3 bg-gray-50 inline-flex rounded border shadow-sm mt-4">
+        <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
       </div>
     {{/if}}
   </:content>
-  {{!--
-  <:footer>
-    <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} />
-  </:footer> --}}
 </CoursePage::InstructionsCard>

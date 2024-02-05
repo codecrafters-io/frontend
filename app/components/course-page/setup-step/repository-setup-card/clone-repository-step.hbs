@@ -7,7 +7,12 @@
   </p>
 
   <p class="mb-4">
-    <b class="text-teal-600">Step 1:</b>
+    {{#if @isComplete}}
+      {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+    {{else}}
+      <b class="text-teal-600">Step 1:</b>
+    {{/if}}
+
     Clone the repository.
   </p>
 
@@ -27,7 +32,11 @@
   {{/if}}
 
   <p class="mb-4">
-    <b class="text-teal-600">Step 2:</b>
+    {{#if @isComplete}}
+      {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+    {{else}}
+      <b class="text-teal-600">Step 2:</b>
+    {{/if}}
     Push an empty commit.
   </p>
 
