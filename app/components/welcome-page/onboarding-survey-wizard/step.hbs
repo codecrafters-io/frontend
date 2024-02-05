@@ -31,9 +31,14 @@
 
   <div class="flex items-center gap-3">
     {{#animated-if (not this.isContinueButtonDisabled) use=this.fade}}
-      <div class="text-gray-400 text-sm flex items-center">
-        {{svg-jar "information-circle" class="w-5 h-5 mr-1.5 text-gray-400 flex-shrink-0"}}
-        Click "Continue" to proceed →
+      <div class="text-gray-400 text-xs sm:text-sm flex items-center gap-1.5">
+        {{svg-jar "information-circle" class="w-5 h-5 text-gray-400 flex-shrink-0 hidden sm:flex"}}
+        <span>
+          Click "Continue" to proceed
+        </span>
+        <span>
+          →
+        </span>
       </div>
     {{/animated-if}}
 
