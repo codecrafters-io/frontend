@@ -47,7 +47,10 @@ module('Unit | Utility | sync-repository-stage-list', function (hooks) {
     assert.ok(firstExtension, 'extension exists');
     assert.ok(secondExtension, 'extension exists');
 
-    const firstExtensionActivation = this.server.schema.courseExtensionActivations.findBy({ extensionId: firstExtension.id, repositoryId: repository.id })
+    const firstExtensionActivation = this.server.schema.courseExtensionActivations.findBy({
+      extensionId: firstExtension.id,
+      repositoryId: repository.id,
+    });
     firstExtensionActivation.destroy();
 
     syncRepositoryStageLists(this.server);
@@ -57,7 +60,10 @@ module('Unit | Utility | sync-repository-stage-list', function (hooks) {
     assert.strictEqual(repository.stageList.items.models[2].position, 3, 'third stage list item position is 3');
     assert.strictEqual(repository.stageList.items.models[3].position, 4, 'fourth stage list item position is 4');
 
-    const secondExtensionActivation = this.server.schema.courseExtensionActivations.findBy({ extensionId: secondExtension.id, repositoryId: repository.id })
+    const secondExtensionActivation = this.server.schema.courseExtensionActivations.findBy({
+      extensionId: secondExtension.id,
+      repositoryId: repository.id,
+    });
     secondExtensionActivation.destroy();
 
     syncRepositoryStageLists(this.server);
