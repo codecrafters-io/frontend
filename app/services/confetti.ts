@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 
 export default class ConfettiService extends Service {
   @service declare fastboot: FastBootService;
-  running = false;
 
   async fire(options: confetti.Options = {}) {
     // canvas-confetti makes use of the document, doesn't make sense to run it in fastboot
