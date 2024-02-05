@@ -20,7 +20,7 @@
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
 
       {{#if (or (current-user-is-course-author this.model.course) (current-user-is-staff))}}
-        <PageSection @title="Admin Options" class="mb-6">
+        <PageSection @title="Admin Options" class="mb-6" data-test-admin-panel>
           <div class="mb-4">
             <TertiaryLinkButton @size="small" @route="course-admin.submissions" @model={{this.model.course.slug}}>
               Admin Panel

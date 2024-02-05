@@ -32,17 +32,9 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 4 items');
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
-
-    // Enable Extension 1
-    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is enabled');
-
-    // Enable Extension 2
-    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items when both extensions are enabled');
 
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
@@ -54,5 +46,13 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     // Disable Extension 2
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
+
+    // Enable Extension 1
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is enabled');
+
+    // Enable Extension 2
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items when both extensions are enabled');
   });
 });

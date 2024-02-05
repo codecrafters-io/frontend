@@ -27,13 +27,6 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
       user: currentUser,
     });
 
-    course.extensions.models.sortBy('name').forEach((extension) => {
-      this.server.create('course-extension-activation', {
-        extension: extension,
-        repository: repository,
-      });
-    });
-
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
