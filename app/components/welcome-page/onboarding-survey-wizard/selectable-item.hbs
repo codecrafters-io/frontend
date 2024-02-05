@@ -1,0 +1,21 @@
+<TertiaryButton class="pl-2 {{if @isSelected 'border-teal-500 hover:bg-white'}}" ...attributes>
+  <div class="flex items-center text-sm sm:text-base {{if @isSelected 'text-teal-500' 'text-gray-600'}}">
+    {{! @glint-expect-error class isn't accepted?}}
+    <AnimatedContainer class="overflow-hidden">
+      {{! @glint-expect-error else doesn't work with animated-if}}
+      {{#animated-if @isSelected rules=this.rules duration=100}}
+        {{! wrapping div is required for animations to work }}
+        <div class="flex">
+          {{svg-jar "check-circle" class="w-4 h-4 mr-1.5 text-teal-500 flex-shrink-0"}}
+        </div>
+      {{else}}
+        {{! wrapping div is required for animations to work }}
+        <div class="flex">
+          {{svg-jar "check" class="w-4 h-4 mr-1.5 text-gray-400 flex-shrink-0"}}
+        </div>
+      {{/animated-if}}
+    </AnimatedContainer>
+
+    {{yield}}
+  </div>
+</TertiaryButton>

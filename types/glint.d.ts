@@ -7,7 +7,7 @@ declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends RenderModifiersRegistry {
     add: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
-    AnimatedContainer: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
+    AnimatedContainer: ComponentLike<{ Blocks: { default: [string, ...unknown[]] }; Args: { Named: { class?: string } } }>;
     AnimatedOrphans: ComponentLike<{ Blocks: { default: [string, ...unknown[]] } }>;
     'animated-value': ComponentLike<{
       Args: { Positional: [unknown]; Named: { duration: number; rules: unknown } };
@@ -34,6 +34,7 @@ declare module '@glint/environment-ember-loose/registry' {
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
     EmberTooltip: ComponentLike<{ Args: { Named: { text: string; side?: 'top' | 'bottom' | 'left' | 'right' } } }>;
     eq: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
+    includes: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     gt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     gte: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'html-safe': HelperLike<{ Return: string; Args: { Positional: [string | undefined] } }>;

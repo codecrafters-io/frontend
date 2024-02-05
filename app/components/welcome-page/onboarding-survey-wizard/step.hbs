@@ -1,0 +1,35 @@
+<h2 class="font-bold text-gray-800 text-lg sm:text-xl mb-8 border-b-2 inline-flex">
+  {{@title}}
+</h2>
+
+<div class="flex items-center flex-wrap gap-3 mb-6">
+  {{#each @options as |option|}}
+    <WelcomePage::OnboardingSurveyWizard::SelectableItem
+      @isSelected={{includes option @selectedOptions}}
+      {{on "click" (fn this.handleOptionClick option)}}
+    >
+      {{option}}
+    </WelcomePage::OnboardingSurveyWizard::SelectableItem>
+  {{/each}}
+</div>
+
+<Textarea
+  @value={{@freeFormInput}}
+  {{on "input" this.handleFreeFormInputChange}}
+  class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm mb-4 w-full"
+  placeholder="Something else?"
+  rows="3"
+  id="concept_description"
+  required
+  {{autoresize "abcd"}}
+/>
+
+<div class="flex items-center justify-between">
+  <div>
+
+  </div>
+
+  <PrimaryButton {{on "click" @onContinueButtonClick}} class={{if this.isContinueButtonDisabled "opacity-50" ""}}>
+    Continue
+  </PrimaryButton>
+</div>
