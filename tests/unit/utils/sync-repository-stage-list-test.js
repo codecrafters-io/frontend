@@ -23,7 +23,7 @@ module('Unit | Utility | sync-repository-stage-list', function (hooks) {
       user: currentUser,
     });
 
-    assert.strictEqual(repository.stageList.items.models.length, 6, 'repository has 2 stage list items');
+    assert.strictEqual(repository.stageList.items.models.length, 6, 'repository has 6 stage list items');
     assert.strictEqual(repository.stageList.items.models[0].position, 1, 'first stage list item position is 1');
     assert.strictEqual(repository.stageList.items.models[1].position, 2, 'first stage list item position is 1');
     assert.strictEqual(repository.stageList.items.models[2].position, 3, 'third stage list item position is 3');
@@ -34,7 +34,7 @@ module('Unit | Utility | sync-repository-stage-list', function (hooks) {
     syncRepositoryStageLists(this.server);
 
     // No changes if repository state is the same
-    assert.strictEqual(repository.stageList.items.models.length, 6, 'repository has 2 stage list items');
+    assert.strictEqual(repository.stageList.items.models.length, 6, 'repository has 6 stage list items');
     assert.strictEqual(repository.stageList.items.models[0].position, 1, 'first stage list item position is 1');
     assert.strictEqual(repository.stageList.items.models[1].position, 2, 'second stage list item position is 2');
     assert.strictEqual(repository.stageList.items.models[2].position, 3, 'third stage list item position is 3');
