@@ -32,10 +32,6 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
-
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
