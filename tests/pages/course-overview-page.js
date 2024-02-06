@@ -7,7 +7,6 @@ export default create({
   },
 
   betaNoticeText: text('[data-test-course-beta-notice]'),
-  clickOnShowAllButton: clickable('[data-test-show-all-button]'),
   clickOnStartCourse: clickable('[data-test-course-overview-header] [data-test-start-course-button]'),
   freeNoticeText: text('[data-test-course-free-notice]'),
   stageListItems: collection('[data-test-stage-list-item]'),
