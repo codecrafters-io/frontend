@@ -9,6 +9,8 @@ type Signature = {
 function handlePaste(event: ClipboardEvent) {
   const pastedData = event.clipboardData?.getData('text');
   const textarea = event.target as HTMLTextAreaElement;
+
+  // Regex to check if pasted data is a valid URL from here: https://www.freecodecamp.org/news/check-if-a-javascript-string-is-a-url/
   const isPastedDataValidUrl = pastedData ? /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(pastedData) : false;
 
   const selectionStart = textarea.selectionStart;
