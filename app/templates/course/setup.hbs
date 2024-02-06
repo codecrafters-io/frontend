@@ -1,7 +1,3 @@
 <div class="w-full pt-8 pb-16">
-  {{#if this.coursePageState.currentStep.completionNoticeMessage}}
-    <CoursePage::CompletedStepNotice @step={{this.coursePageState.currentStep}} class="mb-6" />
-  {{/if}}
-
   <CoursePage::SetupStep::RepositorySetupCard @repository={{@model.activeRepository}} />
 </div>
