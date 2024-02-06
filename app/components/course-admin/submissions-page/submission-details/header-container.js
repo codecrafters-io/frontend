@@ -1,12 +1,15 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { capitalize } from '@ember/string';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerComponent extends Component {
   @tracked isUpdatingTesterVersion = false;
   @tracked isForking = false;
+
+  @service authenticator;
   @service router;
 
   get durationInMilliseconds() {
@@ -23,6 +26,10 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
 
   get formattedLanguageProficiencyLevel() {
     return capitalize(this.args.submission.repository.languageProficiencyLevel);
+  }
+
+  get shouldShowTesterVersion() {
+    return this.authenticator.currentUser.isStaff;
   }
 
   @action
