@@ -104,7 +104,6 @@ module('Acceptance | view-course-overview', function (hooks) {
     signIn(this.owner, this.server);
 
     await courseOverviewPage.visit({ course_slug: 'grep' });
-    await courseOverviewPage.clickOnShowAllButton();
 
     const grep = this.server.schema.courses.findBy({ slug: 'grep' });
     const grepLastBaseStageIndex = grep.stages.models.rejectBy('primaryExtensionSlug').length - 1;
