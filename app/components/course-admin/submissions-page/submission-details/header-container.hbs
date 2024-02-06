@@ -93,7 +93,7 @@
         {{#if this.shouldShowTesterVersion}}
           <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Tester version" class="group/tester-version-row">
             <div class="flex items-center">
-              {{@submission.testerVersion.tagName}}
+              {{this.testerVersionTagName}}
 
               {{#if @submission.testerVersion.isActive}}
                 <span class="ml-1 text-gray-400 text-sm">(active)</span>

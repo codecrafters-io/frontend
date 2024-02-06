@@ -32,6 +32,14 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     return this.authenticator.currentUser.isStaff;
   }
 
+  get testerVersionTagName() {
+    if (this.args.submission.testerVersion) {
+      return this.args.submission.testerVersion.tagName;
+    } else {
+      return 'Unknown'
+    }
+  }
+
   @action
   async handleCopyRepositoryURLButtonClick() {
     await navigator.clipboard.writeText(this.args.submission.repository.cloneUrl);
