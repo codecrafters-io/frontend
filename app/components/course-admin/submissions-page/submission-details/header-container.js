@@ -3,7 +3,6 @@ import { action } from '@ember/object';
 import { capitalize } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
 
 export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerComponent extends Component {
   @tracked isUpdatingTesterVersion = false;
