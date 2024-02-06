@@ -24,6 +24,11 @@ export default create({
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
   clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
 
+  completedStepNotice: {
+    clickOnNextStepButton: clickable('[data-test-next-step-button]'),
+    scope: '[data-test-completed-step-notice]',
+  },
+
   courseCompletedCard: {
     clickOnPublishToGithubLink: clickable('span:contains("Click here")'),
     instructionsText: text('[data-test-instructions-text]'),

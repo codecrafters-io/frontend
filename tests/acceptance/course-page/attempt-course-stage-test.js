@@ -130,5 +130,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     // TODO: Add tests for badge display
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
+
+    await coursePage.completedStepNotice.clickOnNextStepButton();
+    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is stage 2');
   });
 });
