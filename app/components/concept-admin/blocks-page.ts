@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import ConceptModel, { type Block } from 'codecrafters-frontend/models/concept';
+import { ClickToContinueBlock } from 'codecrafters-frontend/utils/blocks';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type Transition from '@ember/routing/transition';
@@ -110,6 +111,15 @@ export default class BlocksPageComponent extends Component<Signature> {
         blocks.push(...this.blockAdditions[index]!.newBlocks);
       }
     });
+
+    if (blocks[blocks.length - 1]?.type !== 'click_to_continue') {
+      blocks.push(
+        new ClickToContinueBlock({
+          type: 'click_to_continue',
+          args: {},
+        }),
+      );
+    }
 
     return blocks.map((block) => block.toJSON);
   }
