@@ -8,6 +8,7 @@ export default create({
       blur: triggerable('blur'),
       fillInInput: fillable('input'),
     }),
+
     scope: '[data-test-basic-details-form]',
   },
 
