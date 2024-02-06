@@ -9,12 +9,12 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | extensions | enable-extensions-after-completion', function(hooks) {
+module('Acceptance | course-page | extensions | enable-extensions-after-completion', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
 
-  test('can enable extensions after completing base stages', async function(assert) {
+  test('can enable extensions after completing base stages', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
