@@ -56,7 +56,7 @@
       @activeStep={{this.coursePageState.activeStep}}
       @nextStep={{this.coursePageState.nextStep}}
       @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
-      class="px-3 md:px-6 lg:pl-10 bg-gray-50 py-6"
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 pt-6 pb-5"
     />
 
     <CoursePage::Header::StickySection
@@ -69,8 +69,15 @@
     />
 
     <div class="flex flex-grow bg-white">
-      <div class="px-3 md:px-6 lg:px-10 flex-grow flex-shrink min-w-0">
-        {{outlet}}
+
+      <div class="flex-grow flex-shrink min-w-0">
+        {{#if this.coursePageState.currentStep.completionNoticeMessage}}
+          <CoursePage::CompletedStepNotice @step={{this.coursePageState.currentStep}} class="px-3 md:px-6 lg:px-10 w-full" />
+        {{/if}}
+
+        <div class="px-3 md:px-6 lg:px-10">
+          {{outlet}}
+        </div>
       </div>
 
       <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block group relative">

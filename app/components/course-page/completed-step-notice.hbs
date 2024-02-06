@@ -1,0 +1,43 @@
+<div
+  class="py-3.5 border-b border-green-200 bg-gradient-to-b from-0% to-100% from-green-50 to-green-100"
+  data-test-completed-step-notice
+  ...attributes
+>
+  <div class="flex items-center flex-wrap gap-4">
+    <div class="text-2xl pl-1">
+      🎉
+    </div>
+    <div class="prose prose-sm prose-green">
+      {{markdown-to-html this.instructionsMarkdown}}
+    </div>
+
+    {{#if (and (not-eq @step this.activeStep) (not-eq this.activeStep.type "CourseCompletedStep"))}}
+      <PrimaryLinkButton
+        @size="small"
+        @route={{this.activeStep.routeParams.route}}
+        @models={{this.activeStep.routeParams.models}}
+        data-test-next-step-button
+      >
+        <div class="flex items-center">
+          {{#if (eq this.nextStep this.activeStep)}}
+            {{#if (eq this.nextStep.type "CourseStageStep")}}
+              <span>View next stage</span>
+            {{else}}
+              <span>View next step</span>
+            {{/if}}
+
+            {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+          {{else}}
+            {{#if (gt @step.globalPosition this.activeStep.globalPosition)}}
+              {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
+              <span>Back to "{{this.activeStep.shortTitle}}"</span>
+            {{else}}
+              <span>Back to "{{this.activeStep.shortTitle}}"</span>
+              {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
+            {{/if}}
+          {{/if}}
+        </div>
+      </PrimaryLinkButton>
+    {{/if}}
+  </div>
+</div>

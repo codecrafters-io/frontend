@@ -5,6 +5,14 @@ export default class Step {
   declare globalPosition: number; // Set soon after construction
   declare positionInGroup: number; // Set soon after construction
 
+  get completionNoticeMessage(): string | null {
+    if (this.status !== 'complete') {
+      return null;
+    }
+
+    return "You've completed this step.";
+  }
+
   get isHidden(): boolean {
     return false; // All steps are visible by default
   }

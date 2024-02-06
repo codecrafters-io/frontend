@@ -6,7 +6,6 @@ import Controller from '@ember/controller';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type CourseModel from 'codecrafters-frontend/models/course';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
@@ -14,12 +13,7 @@ import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/an
 import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-
-export type ModelType = {
-  course: CourseModel;
-  activeRepository: RepositoryModel;
-  repositories: RepositoryModel[];
-};
+import type { ModelType } from 'codecrafters-frontend/routes/course';
 
 export default class CourseController extends Controller {
   declare model: ModelType;

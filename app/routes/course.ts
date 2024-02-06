@@ -1,17 +1,22 @@
-import { inject as service } from '@ember/service';
-import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RSVP from 'rsvp';
-import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
-import { next } from '@ember/runloop';
-import type CourseModel from 'codecrafters-frontend/models/course';
-import type Transition from '@ember/routing/transition';
-import type RouterService from '@ember/routing/router-service';
-import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseModel from 'codecrafters-frontend/models/course';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
-import type { ModelType } from 'codecrafters-frontend/controllers/course';
+import type Transition from '@ember/routing/transition';
+import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
+import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
+
+export type ModelType = {
+  course: CourseModel;
+  activeRepository: RepositoryModel;
+  repositories: RepositoryModel[];
+};
 
 export default class CourseRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;

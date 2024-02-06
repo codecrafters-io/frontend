@@ -9,6 +9,8 @@ export default class CoursePageStateService extends Service {
   @tracked stepList?: StepList;
   @tracked testResultsBarIsExpanded = false;
 
+  // The active step is the step that the user is currently working on.
+  // It might not be the same as the "current" step, which is the step that the user is currently viewing.
   get activeStep(): Step {
     if (!this.stepList) {
       // This triggers as a global failure in tests for some reason
