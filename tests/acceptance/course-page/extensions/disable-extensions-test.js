@@ -21,17 +21,10 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     const python = this.server.schema.languages.findBy({ name: 'Python' });
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
 
-    const repository = this.server.create('repository', 'withFirstStageCompleted', {
+    this.server.create('repository', 'withFirstStageCompleted', {
       course: course,
       language: python,
       user: currentUser,
-    });
-
-    course.extensions.models.sortBy('name').forEach((extension) => {
-      this.server.create('course-extension-activation', {
-        extension: extension,
-        repository: repository,
-      });
     });
 
     await catalogPage.visit();

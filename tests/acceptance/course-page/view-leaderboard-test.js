@@ -236,7 +236,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '12 / 15', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '15 / 15', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 15', 'progress text must be shown');
 

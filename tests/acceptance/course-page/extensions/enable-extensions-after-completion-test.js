@@ -33,6 +33,16 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
+
+    // Disable Extension 1
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
+
+    // Disable Extension 2
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
+
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
       courseStage: course.stages.models.find((stage) => stage.position === 2),
