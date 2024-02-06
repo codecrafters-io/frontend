@@ -1,5 +1,11 @@
-<div class="w-full" ...attributes data-test-stage-list-item>
-  <div class="flex items-center justify-between mb-3">
+<LinkTo
+  @route="course.stage.instructions"
+  @models={{array @stage.course.slug @stage.identifierForURL}}
+  class="block hover:bg-gray-50 py-1.5 -mx-1.5 px-1.5 rounded"
+  data-test-stage-list-item
+  ...attributes
+>
+  <div class="flex items-center justify-between">
     <div class="flex items-center">
       <div class="w-2 h-2 {{if @isComplete 'bg-teal-500' 'bg-gray-200'}} rounded-full mr-2"></div>
 
@@ -19,4 +25,8 @@
       </div>
     {{/if}}
   </div>
-</div>
+
+  {{#if this.authenticator.isAnonymous}}
+    <EmberTooltip @text="Login via GitHub to view this stage" />
+  {{/if}}
+</LinkTo>
