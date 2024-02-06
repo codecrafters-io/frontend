@@ -35,7 +35,7 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     if (this.args.submission.testerVersion) {
       return this.args.submission.testerVersion.tagName;
     } else {
-      return 'Unknown'
+      return 'Unknown';
     }
   }
 

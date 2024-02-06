@@ -22,7 +22,7 @@ export default create({
 
     testerVersion: {
       scope: '[data-test-tester-version]',
-    }
+    },
   },
 
   timelineContainer: {

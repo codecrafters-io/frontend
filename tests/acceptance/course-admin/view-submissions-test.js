@@ -8,11 +8,11 @@ import submissionsPage from 'codecrafters-frontend/tests/pages/course-admin/subm
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | course-admin | view-submissions', function(hooks) {
+module('Acceptance | course-admin | view-submissions', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('it renders when no submissions are present', async function(assert) {
+  test('it renders when no submissions are present', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -22,7 +22,7 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     await percySnapshot('Admin - Course Submissions - No Submissions');
   });
 
-  test('it renders when submissions are present', async function(assert) {
+  test('it renders when submissions are present', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -47,7 +47,7 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     await percySnapshot('Admin - Course Submissions - With Submissions');
   });
 
-  test('it renders the user proficiency level if proficiency is set', async function(assert) {
+  test('it renders the user proficiency level if proficiency is set', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -77,7 +77,7 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     });
   });
 
-  test('it renders the user proficiency level if proficiency is not set', async function(assert) {
+  test('it renders the user proficiency level if proficiency is not set', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -107,17 +107,17 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     });
   });
 
-  test('it does not render the tester version if the user is not staff', async function(assert) {
+  test('it does not render the tester version if the user is not staff', async function (assert) {
     testScenario(this.server);
     const course = this.server.schema.courses.findBy({ slug: 'redis' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await submissionsPage.visit({ course_slug: 'redis' });
 
-    assert.false(submissionsPage.submissionDetails.text.includes('Tester version'))
+    assert.false(submissionsPage.submissionDetails.text.includes('Tester version'));
   });
 
-  test('it renders the correct tester version tag name if the tester version exists', async function(assert) {
+  test('it renders the correct tester version tag name if the tester version exists', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -138,17 +138,17 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
 
     let testerVersion = this.server.create('course-tester-version', {
       course: redis,
-      tagName: 'v1'
+      tagName: 'v1',
     });
 
-    repository.submissions.models.forEach(submission => submission.update({ testerVersion }));
+    repository.submissions.models.forEach((submission) => submission.update({ testerVersion }));
 
     await submissionsPage.visit({ course_slug: 'redis' });
 
-    assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('v1'))
-  })
+    assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('v1'));
+  });
 
-  test('it renders unknown for the tester version tag name if the tester version does not exist', async function(assert) {
+  test('it renders unknown for the tester version tag name if the tester version does not exist', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -169,11 +169,10 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
 
     await submissionsPage.visit({ course_slug: 'redis' });
 
-    assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('Unknown'))
-  })
+    assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('Unknown'));
+  });
 
-
-  test('it filters by username(s) if given', async function(assert) {
+  test('it filters by username(s) if given', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -192,7 +191,7 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
-  test('it filters by languages(s) if given', async function(assert) {
+  test('it filters by languages(s) if given', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -213,7 +212,7 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
-  test('it should be able to filter by language(s) through a dropdown menu', async function(assert) {
+  test('it should be able to filter by language(s) through a dropdown menu', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -245,7 +244,7 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'All Languages');
   });
 
-  test('it should not be accessible if user is course author and did not author current course', async function(assert) {
+  test('it should not be accessible if user is course author and did not author current course', async function (assert) {
     testScenario(this.server);
     const course = this.server.schema.courses.findBy({ slug: 'redis' });
     signInAsCourseAuthor(this.owner, this.server, course);
@@ -254,7 +253,7 @@ module('Acceptance | course-admin | view-submissions', function(hooks) {
     assert.strictEqual(currentURL(), '/catalog', 'should redirect to catalog page');
   });
 
-  test('it should be accessible if user is course author and authored current course', async function(assert) {
+  test('it should be accessible if user is course author and authored current course', async function (assert) {
     testScenario(this.server);
     const course = this.server.schema.courses.findBy({ slug: 'redis' });
     signInAsCourseAuthor(this.owner, this.server, course);

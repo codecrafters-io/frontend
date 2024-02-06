@@ -91,7 +91,11 @@
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 
         {{#if this.shouldShowTesterVersion}}
-          <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Tester version" class="group/tester-version-row" data-test-tester-version>
+          <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow
+            @title="Tester version"
+            class="group/tester-version-row"
+            data-test-tester-version
+          >
             <div class="flex items-center">
               {{this.testerVersionTagName}}
 
