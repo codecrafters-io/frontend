@@ -40,6 +40,22 @@ export default class CourseStageStep extends Step {
     return this.completedAt && isYesterday(this.completedAt);
   }
 
+  get completionNoticeMessage() {
+    if (this.status !== 'complete') {
+      return null;
+    }
+
+    if (this.completedAtWasToday) {
+      return 'You completed this stage today.';
+    } else if (this.completedAtWasYesterday) {
+      return 'You completed this stage yesterday.';
+    } else if (this.completedAt) {
+      return `You completed this stage ${formatDistanceStrictWithOptions({ addSuffix: true }, new Date(), this.completedAt || new Date())}.`;
+    } else {
+      return `You've completed this stage.`;
+    }
+  }
+
   get courseStage() {
     return this.stageListItem.stage;
   }
@@ -79,7 +95,7 @@ Check the [How to pass this stage](#first-stage-instructions-card) section for i
     } else if (this.status === 'complete') {
       return {
         dotType: 'none',
-        text: this.stageCompletedMessage,
+        text: this.completionNoticeMessage!,
       };
     } else if (this.testsStatus === 'failed') {
       return {
@@ -125,18 +141,6 @@ Check the [How to pass this stage](#first-stage-instructions-card) section for i
       return `${this.courseStage.name} (${this.courseStage.primaryExtension!.name})`;
     } else {
       return this.courseStage.name;
-    }
-  }
-
-  get stageCompletedMessage() {
-    if (this.completedAtWasToday) {
-      return 'You completed this stage today.';
-    } else if (this.completedAtWasYesterday) {
-      return 'You completed this stage yesterday.';
-    } else if (this.completedAt) {
-      return `You completed this stage ${formatDistanceStrictWithOptions({ addSuffix: true }, new Date(), this.completedAt || new Date())}.`;
-    } else {
-      return `You've completed this stage.`;
     }
   }
 

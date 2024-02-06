@@ -1,4 +1,8 @@
 <div class="pt-8 pb-16">
+  {{#if this.coursePageState.currentStep.completionNoticeMessage}}
+    <CoursePage::CompletedStepNotice @step={{this.coursePageState.currentStep}} class="mb-6" />
+  {{/if}}
+
   {{#if this.shouldShowTestsPassedNotice}}
     <CoursePage::CourseStageStep::TestsPassedNotice class="mb-6" />
   {{/if}}
