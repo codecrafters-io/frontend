@@ -7,7 +7,7 @@ export default class Step {
 
   get completionNoticeMessage(): string | null {
     if (this.status !== 'complete') {
-      null;
+      return null;
     }
 
     return "You've completed this step.";
