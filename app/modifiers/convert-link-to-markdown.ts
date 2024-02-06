@@ -9,8 +9,7 @@ type Signature = {
 function handlePaste(event: ClipboardEvent) {
   event.preventDefault();
 
-  const clipboardData = event.clipboardData;
-  const pastedData = clipboardData?.getData('text');
+  const pastedData = event.clipboardData?.getData('text');
   const textarea = event.target as HTMLTextAreaElement;
   const isPastedDataValidUrl = pastedData ? /(?:https?:\/\/)?(?:www\.)?[\w.-]+(?:\.[\w\.-]+)+/.test(pastedData) : false;
 
@@ -20,21 +19,16 @@ function handlePaste(event: ClipboardEvent) {
     const selectedText = textarea.value.substring(selectionStart, selectionEnd);
 
     if (selectedText) {
-      event.preventDefault();
-
-      const newText = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
-      textarea.value = newText;
+      textarea.value = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
     }
   }
 }
 
 const convertLinkToMarkdown = modifier<Signature>((element) => {
-  // @ts-ignore
-  element.addEventListener('paste', handlePaste);
+  element.addEventListener('paste', handlePaste as EventListener);
 
   return () => {
-    // @ts-ignore
-    element.removeEventListener('paste', handlePaste);
+    element.removeEventListener('paste', handlePaste as EventListener);
   }
 });
 
