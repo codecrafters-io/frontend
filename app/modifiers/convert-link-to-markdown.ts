@@ -17,14 +17,12 @@ function handlePaste(event: ClipboardEvent) {
   const selectionEnd = textarea.selectionEnd;
   const selectedText = textarea.value.substring(selectionStart, selectionEnd);
 
-  if (!textarea || !isPastedDataValidUrl) {
+  if (!textarea || !isPastedDataValidUrl || !selectedText) {
     return;
   }
 
-  if (selectedText) {
-    event.preventDefault();
-    textarea.value = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
-  }
+  event.preventDefault();
+  textarea.value = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
 }
 
 const convertLinkToMarkdown = modifier<Signature>((element) => {
