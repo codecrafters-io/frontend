@@ -25,7 +25,7 @@ function handlePaste(event: ClipboardEvent) {
   textarea.value = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
 }
 
-const convertLinkToMarkdown = modifier<Signature>((element) => {
+const markdownInput = modifier<Signature>((element) => {
   element.addEventListener('paste', handlePaste as EventListener);
 
   return () => {
@@ -33,10 +33,10 @@ const convertLinkToMarkdown = modifier<Signature>((element) => {
   };
 });
 
-export default convertLinkToMarkdown;
+export default markdownInput;
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'convert-link-to-markdown': typeof convertLinkToMarkdown;
+    'markdown-input': typeof markdownInput;
   }
 }
