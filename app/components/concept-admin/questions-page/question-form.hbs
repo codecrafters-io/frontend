@@ -15,6 +15,7 @@
         placeholder="What is the meaning of life?"
         id="question_query_markdown"
         required
+        {{markdown-input}}
       />
     </:content>
   </ConceptAdmin::FormSection>
@@ -112,6 +113,7 @@
                   id="option_explanation_markdown"
                   required
                   {{on "input" this.handleOptionChanged}}
+                  {{markdown-input}}
                 />
               </:content>
             </ConceptAdmin::FormSubsection>
