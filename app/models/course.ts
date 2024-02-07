@@ -38,7 +38,7 @@ export default class CourseModel extends Model {
   @attr('string') declare releaseStatus: string;
   @attr('string') declare sampleExtensionIdeaTitle: string;
   @attr('string') declare sampleExtensionIdeaDescription: string;
-  @attr('string') declare shortDescriptionMarkdown: string;
+  @attr('string') declare shortDescription: string;
   @attr('string') declare shortName: string;
   @attr('string') declare slug: string;
   @attr('string') declare testerRepositoryFullName: string;
