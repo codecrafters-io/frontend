@@ -22,11 +22,12 @@ function handlePaste(event: ClipboardEvent) {
 
   event.preventDefault();
 
-  if (!isSelectedTextValidUrl) {
-    textarea.value = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
-  } else {
-    textarea.value = textarea.value.replace(selectedText, pastedData as string);
-  }
+  const newText = !isSelectedTextValidUrl ? `[${selectedText}](${pastedData})` : pastedData as string;
+  textarea.value = textarea.value.replace(selectedText, newText);
+
+  const newCursorPosition = selectionStart + newText.length;
+  textarea.selectionStart = newCursorPosition;
+  textarea.selectionEnd = newCursorPosition;
 }
 
 function validateUrl(url: string): boolean {
