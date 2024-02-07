@@ -10,7 +10,7 @@ export default function createCourseFromData(server, courseData) {
     sampleExtensionIdeaTitle: courseData.marketing.sample_extension_idea_title,
     sampleExtensionIdeaDescription: courseData.marketing.sample_extension_idea_description,
     shortName: courseData.name.replace(/Build your own /i, ''),
-    shortDescriptionMarkdown: courseData.short_description_md,
+    shortDescription: courseData.short_description_md,
     slug: courseData.slug,
     testimonials: courseData.marketing.testimonials,
   });
