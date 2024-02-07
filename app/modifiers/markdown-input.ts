@@ -32,6 +32,7 @@ function handlePaste(event: ClipboardEvent) {
 function validateUrl(url: string): boolean {
   try {
     new URL(url);
+
     return true;
   } catch (_) {
     return false;
