@@ -6,6 +6,7 @@ module.exports = function (environment) {
     environment,
     rootURL: '/',
     locationType: 'history',
+
     EmberENV: {
       EXTEND_PROTOTYPES: true, // Haven't migrated yet
       FEATURES: {
@@ -18,6 +19,11 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
+    '@sentry/ember': {
+      disableInstrumentComponents: true,
+    },
+
     x: {
       backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,

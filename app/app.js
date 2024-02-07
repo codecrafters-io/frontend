@@ -12,7 +12,6 @@ if (config.environment === 'development' || config.environment === 'production')
     dsn: config.environment === 'production' ? sentryDSN : '',
     environment: config.environment,
     tracesSampleRate: 0.01,
-    disableInstrumentComponents: true, // Will disable automatic instrumentation for components.
   });
 }
 
