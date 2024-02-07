@@ -22,7 +22,7 @@ function handlePaste(event: ClipboardEvent) {
 
   event.preventDefault();
 
-  const newText = !isSelectedTextValidUrl ? `[${selectedText}](${pastedData})` : pastedData as string;
+  const newText = !isSelectedTextValidUrl ? `[${selectedText}](${pastedData})` : (pastedData as string);
   textarea.value = textarea.value.replace(selectedText, newText);
 
   const newCursorPosition = selectionStart + newText.length;
