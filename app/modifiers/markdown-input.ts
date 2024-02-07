@@ -16,13 +16,13 @@ function handlePaste(event: ClipboardEvent) {
   const selectedText = textarea.value.substring(selectionStart, selectionEnd);
   const isSelectedTextValidUrl = validateUrl(selectedText);
 
-  if (!textarea || !isPastedDataValidUrl || !selectedText) {
+  if (!textarea || !isPastedDataValidUrl || !selectedText || isSelectedTextValidUrl) {
     return;
   }
 
   event.preventDefault();
 
-  const newText = !isSelectedTextValidUrl ? `[${selectedText}](${pastedData})` : (pastedData as string);
+  const newText = `[${selectedText}](${pastedData})`;
   textarea.value = textarea.value.replace(selectedText, newText);
 
   const newCursorPosition = selectionStart + newText.length;
