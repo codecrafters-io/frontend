@@ -2,8 +2,9 @@ import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type { ModelType } from 'codecrafters-frontend/routes/catalog';
+import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 
-export default class TracksController extends Controller {
+export default class CatalogController extends Controller {
   declare model: ModelType;
 
   @service declare authenticator: AuthenticatorService;
@@ -89,5 +90,15 @@ export default class TracksController extends Controller {
         }
       });
     }
+  }
+
+  get productWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
+    if (!this.authenticator.currentUser) {
+      return null;
+    }
+
+    return this.authenticator.currentUser.featureSuggestions
+      .filterBy('featureIsProductWalkthrough')
+      .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
   }
 }

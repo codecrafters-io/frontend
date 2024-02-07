@@ -1,0 +1,11 @@
+<Alert @type="info" class="mr-3 mt-0.5 relative" ...attributes>
+  <div class="text-blue-900 prose prose-blue leading-7 text-sm">
+    <span role="button" class="font-bold underline text-blue-700" {{on "click" this.handleViewWalkthroughButtonClick}}>Learn how CodeCrafters works.</span>
+  </div>
+
+  <div class="absolute right-3 top-0 bottom-0 flex items-center justify-center">
+    <button class="opacity-60 hover:opacity-100" type="button" {{on "click" this.handleDismissButtonClick}} data-test-dismiss-button>
+      {{svg-jar "x" class="w-5 h-5 text-blue-500"}}
+    </button>
+  </div>
+</Alert>
