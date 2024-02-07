@@ -65,6 +65,8 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
     await basicDetailsPage.form.inputFields[2].blur();
 
     assert.strictEqual(basicDetailsPage.form.inputFields[2].value, 'this [url](https://test.url.com) should be changed');
+    assert.strictEqual(basicDetailsPageTextarea.selectionStart, 32);
+    assert.strictEqual(basicDetailsPageTextarea.selectionStart, basicDetailsPageTextarea.selectionEnd);
   });
 
   test('pasting a link over a selection that is already a link replaces selection', async function (assert) {
@@ -98,5 +100,7 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
     await basicDetailsPage.form.inputFields[2].blur();
 
     assert.strictEqual(basicDetailsPage.form.inputFields[2].value, 'the link https://updated.link.com should be replaced');
+    assert.strictEqual(basicDetailsPageTextarea.selectionStart, 33);
+    assert.strictEqual(basicDetailsPageTextarea.selectionStart, basicDetailsPageTextarea.selectionEnd);
   });
 });
