@@ -19,6 +19,10 @@ export default create({
     },
 
     scope: '[data-test-submission-details]',
+
+    testerVersion: {
+      scope: '[data-test-tester-version]',
+    },
   },
 
   timelineContainer: {

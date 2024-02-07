@@ -26,12 +26,14 @@
             {{/if}}
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+
         <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Time taken">
           <div class="flex items-center">
             {{this.formattedDuration}}
             {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+
         <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="User Proficiency">
           {{#if @submission.repository.languageProficiencyLevel}}
             <div class="flex items-center">
@@ -57,6 +59,7 @@
             </div>
           {{/if}}
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+
         <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Language">
           <div class="flex items-center">
             <span class="mr-2 text-gray-600">
@@ -86,24 +89,31 @@
             {{/if}}
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
-        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Tester version" class="group/tester-version-row">
-          <div class="flex items-center">
-            {{@submission.testerVersion.tagName}}
 
-            {{#if @submission.testerVersion.isActive}}
-              <span class="ml-1 text-gray-400 text-sm">(active)</span>
-            {{else}}
-              <TertiaryButtonWithSpinner
-                @shouldShowSpinner={{this.isUpdatingTesterVersion}}
-                @size="extra-small"
-                class="ml-2"
-                {{on "click" this.handleTesterVersionUpdateButtonClick}}
-              >
-                Update to active version
-              </TertiaryButtonWithSpinner>
-            {{/if}}
-          </div>
-        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+        {{#if this.shouldShowTesterVersion}}
+          <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow
+            @title="Tester version"
+            class="group/tester-version-row"
+            data-test-tester-version
+          >
+            <div class="flex items-center">
+              {{this.testerVersionTagName}}
+
+              {{#if @submission.testerVersion.isActive}}
+                <span class="ml-1 text-gray-400 text-sm">(active)</span>
+              {{else}}
+                <TertiaryButtonWithSpinner
+                  @shouldShowSpinner={{this.isUpdatingTesterVersion}}
+                  @size="extra-small"
+                  class="ml-2"
+                  {{on "click" this.handleTesterVersionUpdateButtonClick}}
+                >
+                  Update to active version
+                </TertiaryButtonWithSpinner>
+              {{/if}}
+            </div>
+          </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+        {{/if}}
       </tbody>
     </table>
   </div>

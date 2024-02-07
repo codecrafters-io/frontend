@@ -107,6 +107,71 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     });
   });
 
+  test('it does not render the tester version if the user is not staff', async function (assert) {
+    testScenario(this.server);
+    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    signInAsCourseAuthor(this.owner, this.server, course);
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+
+    assert.false(submissionsPage.submissionDetails.text.includes('Tester version'));
+  });
+
+  test('it renders the correct tester version tag name if the tester version exists', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    let testerVersion = this.server.create('course-tester-version', {
+      course: redis,
+      tagName: 'v1',
+    });
+
+    repository.submissions.models.forEach((submission) => submission.update({ testerVersion }));
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+
+    assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('v1'));
+  });
+
+  test('it renders unknown for the tester version tag name if the tester version does not exist', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+
+    assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('Unknown'));
+  });
+
   test('it filters by username(s) if given', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
