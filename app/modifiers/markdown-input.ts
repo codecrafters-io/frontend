@@ -6,15 +6,6 @@ type Signature = {
   };
 };
 
-function validateUrl(url: string): boolean {
-  try {
-    new URL(url);
-    return true;
-  } catch (_) {
-    return false;
-  }
-}
-
 function handlePaste(event: ClipboardEvent) {
   const pastedData = event.clipboardData?.getData('text');
   const textarea = event.target as HTMLTextAreaElement;
@@ -25,12 +16,26 @@ function handlePaste(event: ClipboardEvent) {
   const selectedText = textarea.value.substring(selectionStart, selectionEnd);
   const isSelectedTextValidUrl = validateUrl(selectedText);
 
-  if (!textarea || !isPastedDataValidUrl || !selectedText || !isSelectedTextValidUrl) {
+  if (!textarea || !isPastedDataValidUrl || !selectedText) {
     return;
   }
 
   event.preventDefault();
-  textarea.value = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
+
+  if (!isSelectedTextValidUrl) {
+    textarea.value = textarea.value.replace(selectedText, `[${selectedText}](${pastedData})`);
+  } else {
+    textarea.value = textarea.value.replace(selectedText, pastedData as string);
+  }
+}
+
+function validateUrl(url: string): boolean {
+  try {
+    new URL(url);
+    return true;
+  } catch (_) {
+    return false;
+  }
 }
 
 const markdownInput = modifier<Signature>((element) => {

@@ -6,11 +6,11 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
+module('Acceptance | concept-admin | edit-basic-details', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('editing the slug updates the url of other tab links', async function (assert) {
+  test('editing the slug updates the url of other tab links', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -34,7 +34,7 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
     assert.strictEqual(currentURL(), '/concepts/new-slug/admin/blocks');
   });
 
-  test('pasting a link automatically converts the link to markdown format', async function (assert) {
+  test('pasting a link automatically converts the link to markdown format', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -66,4 +66,37 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
 
     assert.strictEqual(basicDetailsPage.form.inputFields[2].value, 'this [url](https://test.url.com) should be changed');
   });
+
+  test('pasting a link over a selection that is already a link replaces selection', async function(assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+    });
+
+    await basicDetailsPage.visit({ concept_slug: 'dummy' });
+    await basicDetailsPage.form.inputFields[2].fillIn('the link https://valid.link.com should be replaced');
+
+    const basicDetailsPageTextarea = document.querySelectorAll('[data-test-basic-details-input-field]')[2];
+    basicDetailsPageTextarea.setSelectionRange(9, 31);
+
+    triggerEvent(basicDetailsPageTextarea, 'paste', {
+      clipboardData: {
+        getData: () => 'https://updated.link.com',
+      },
+    });
+
+    await basicDetailsPage.form.inputFields[2].blur();
+
+    assert.strictEqual(basicDetailsPage.form.inputFields[2].value, 'the link https://updated.link.com should be replaced');
+  })
 });
