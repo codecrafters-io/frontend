@@ -6,25 +6,26 @@ type Signature = {
   };
 };
 
+function validateUrl(url: string): boolean {
+  try {
+    new URL(url);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 function handlePaste(event: ClipboardEvent) {
   const pastedData = event.clipboardData?.getData('text');
   const textarea = event.target as HTMLTextAreaElement;
-  let isPastedDataValidUrl;
-
-  if (pastedData) {
-    try {
-      new URL(pastedData);
-      isPastedDataValidUrl = true;
-    } catch (_) {
-      isPastedDataValidUrl = false;
-    }
-  }
+  const isPastedDataValidUrl = validateUrl(pastedData as string);
 
   const selectionStart = textarea.selectionStart;
   const selectionEnd = textarea.selectionEnd;
   const selectedText = textarea.value.substring(selectionStart, selectionEnd);
+  const isSelectedTextValidUrl = validateUrl(selectedText);
 
-  if (!textarea || !isPastedDataValidUrl || !selectedText) {
+  if (!textarea || !isPastedDataValidUrl || !selectedText || !isSelectedTextValidUrl) {
     return;
   }
 
