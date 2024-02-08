@@ -21,7 +21,7 @@ module.exports = function (environment) {
     },
 
     '@sentry/ember': {
-      disablePerformance: true, // Temporary, looks like there are errors?
+      disablePerformance: true, // Temporary, https://github.com/getsentry/sentry-javascript/issues/10566
       disableInstrumentComponents: true,
     },
 
