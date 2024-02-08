@@ -1,7 +1,10 @@
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import ConceptModel from 'codecrafters-frontend/models/concept';
+import Store from '@ember-data/store';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -13,6 +16,8 @@ interface Signature {
 }
 
 export default class ContentComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
   @tracked currentProgressPercentage = 0;
 
   get hasCompletedConcept() {
@@ -35,6 +40,12 @@ export default class ContentComponent extends Component<Signature> {
 
   @action
   handleProgressPercentageChanged(progressPercentage: number) {
+    if (this.currentProgressPercentage === 0) {
+      const conceptEngagement = this.store.createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser })
+      conceptEngagement.currentProgressPercentage = progressPercentage;
+      conceptEngagement.save();
+    }
+
     this.currentProgressPercentage = progressPercentage;
   }
 

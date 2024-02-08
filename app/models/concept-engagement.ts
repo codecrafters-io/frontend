@@ -7,7 +7,7 @@ export default class ConceptEngagementModel extends Model {
   @belongsTo('concept', { async: false, inverse: 'conceptEngagements' }) declare concept: ConceptModel;
   @belongsTo('user', { async: false, inverse: 'conceptEngagements' }) declare user: UserModel;
   @attr('date') declare completedAt?: Date;
-  @attr('number') declare currentProgressPercentage?: number;
+  @attr('number') declare currentProgressPercentage: number;
   @attr('date') declare lastActivityAt: Date;
   @attr('date') declare startedAt: Date;
 }
