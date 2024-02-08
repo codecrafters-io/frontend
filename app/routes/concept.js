@@ -5,6 +5,7 @@ import { scheduleOnce } from '@ember/runloop';
 
 export default class ConceptRoute extends BaseRoute {
   allowsAnonymousAccess = true;
+  @service authenticator;
   @service router;
   @service store;
 
@@ -25,8 +26,13 @@ export default class ConceptRoute extends BaseRoute {
       .filter((group) => group.conceptSlugs.includes(concept.slug))
       .sort((a, b) => a.slug.localeCompare(b.slug));
 
+    const allConceptEngagementsForUser = await this.store.findAll('concept-engagement', {
+      user: this.authenticator.currentUser,
+    })
+
     return {
       allConcepts,
+      allConceptEngagementsForUser,
       concept,
       conceptGroup: relatedConceptGroups[0],
     };
