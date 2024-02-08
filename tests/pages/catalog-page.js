@@ -1,4 +1,4 @@
-import { collection, create, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, visitable } from 'ember-cli-page-object';
 import { waitUntil } from '@ember/test-helpers';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import CourseCard from 'codecrafters-frontend/tests/pages/components/course-card';
@@ -22,6 +22,12 @@ export default create({
 
   courseCardByName(name) {
     return this.courseCards.toArray().find((courseCard) => courseCard.name === name);
+  },
+
+  productWalkthroughFeatureSuggestion: {
+    clickOnDismissButton: clickable('[data-test-dismiss-button]'),
+    clickOnStartHereButton: clickable('[data-test-start-here-button]'),
+    scope: '[data-test-product-walkthrough-feature-suggestion]',
   },
 
   trackCards: collection('[data-test-track-card]', TrackCard),
