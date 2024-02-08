@@ -12,7 +12,7 @@ interface Signature {
   allConcepts: ConceptModel[];
   concept: ConceptModel;
   conceptGroup: ConceptGroupModel;
-  latestConceptEngagementForUser: ConceptEngagementModel;
+  latestConceptEngagementForUser?: ConceptEngagementModel;
   nextConcept: ConceptModel | null;
   onProgressPercentageChange: (percentage: number) => void;
 }
@@ -20,7 +20,7 @@ interface Signature {
 export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @tracked currentProgressPercentage = this.args.latestConceptEngagementForUser.currentProgressPercentage;
+  @tracked currentProgressPercentage = this.args.latestConceptEngagementForUser?.currentProgressPercentage || 0;
 
   get hasCompletedConcept() {
     return this.currentProgressPercentage === 100;
@@ -43,12 +43,12 @@ export default class ContentComponent extends Component<Signature> {
   @action
   handleProgressPercentageChanged(progressPercentage: number) {
     if (this.currentProgressPercentage === 0) {
-      const conceptEngagement = this.store.createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser })
-      conceptEngagement.currentProgressPercentage = progressPercentage;
-      conceptEngagement.save();
+      this.store.createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser, currentProgressPercentage: progressPercentage }).save()
     } else {
-      this.args.latestConceptEngagementForUser.currentProgressPercentage = progressPercentage;
-      this.args.latestConceptEngagementForUser.save();
+      if (this.args.latestConceptEngagementForUser) {
+        this.args.latestConceptEngagementForUser.currentProgressPercentage = progressPercentage
+        this.args.latestConceptEngagementForUser.save();
+      }
     }
 
     this.currentProgressPercentage = progressPercentage;
