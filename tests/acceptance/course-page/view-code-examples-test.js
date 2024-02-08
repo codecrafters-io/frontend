@@ -9,13 +9,11 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { settled, scrollTo } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   // Scroll tests don't work with the container docked to the side
   // TODO: Extract this into a common setupApplicationTest function

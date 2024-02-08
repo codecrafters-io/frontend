@@ -3,12 +3,10 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | switch-routes', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('moving between stages resets scroll position to the top of the page', async function (assert) {
     testScenario(this.server);

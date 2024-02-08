@@ -8,13 +8,11 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | community-solution-comments', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can view community solution comments', async function (assert) {
     testScenario(this.server);

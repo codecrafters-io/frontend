@@ -3,14 +3,12 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsAffiliate } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | affiliate-page | join-affiliate-program', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can view join page when affiliate link is not present', async function (assert) {
     testScenario(this.server);

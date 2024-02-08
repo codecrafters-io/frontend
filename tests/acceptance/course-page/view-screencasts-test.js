@@ -5,7 +5,6 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import windowMock from 'ember-window-mock';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -14,7 +13,6 @@ import { visit } from '@ember/test-helpers';
 module('Acceptance | course-page | view-screencasts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('redirects to login page if user is not signed in', async function (assert) {

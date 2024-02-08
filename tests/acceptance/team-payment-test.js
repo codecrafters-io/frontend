@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import teamPaymentPage from 'codecrafters-frontend/tests/pages/team-payment-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -8,7 +7,6 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | team-payment-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('user can setup team', async function (assert) {

@@ -3,12 +3,10 @@ import SyntaxHighlightedDiffComponent from 'codecrafters-frontend/components/syn
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-admin | view-diffs', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('expandable chunks has the correct number of lines', async function (assert) {
     testScenario(this.server);

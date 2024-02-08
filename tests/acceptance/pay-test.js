@@ -1,7 +1,6 @@
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
@@ -11,7 +10,6 @@ import windowMock from 'ember-window-mock';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('redirects to login page if user is not signed in', async function (assert) {

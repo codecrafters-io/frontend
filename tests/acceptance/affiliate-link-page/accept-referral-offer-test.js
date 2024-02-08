@@ -4,7 +4,6 @@ import { currentURL } from '@ember/test-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import percySnapshot from '@percy/ember';
@@ -13,7 +12,6 @@ import windowMock from 'ember-window-mock';
 module('Acceptance | affiliate-link-page | accept-referral-offer', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('accepting referral offer when not logged in redirects to login', async function (assert) {

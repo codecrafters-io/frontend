@@ -1,7 +1,6 @@
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL, settled } from '@ember/test-helpers';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
@@ -12,7 +11,6 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 module('Acceptance | course-page | extensions | enable-extensions-after-completion', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can enable extensions after completing base stages', async function (assert) {
     testScenario(this.server);

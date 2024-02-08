@@ -6,7 +6,6 @@ import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overv
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { currentURL } from '@ember/test-helpers';
 
 function createConcepts(server) {
@@ -16,7 +15,6 @@ function createConcepts(server) {
 
 module('Acceptance | concept-groups-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('displays concept-group page when visiting a valid concept-group', async function (assert) {
     testScenario(this.server);

@@ -2,7 +2,6 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
@@ -12,7 +11,6 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 module('Acceptance | course-page | extensions | view-extension-stages', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can view extension stages before creating repository', async function (assert) {
     testScenario(this.server);

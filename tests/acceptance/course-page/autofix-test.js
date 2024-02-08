@@ -6,7 +6,6 @@ import window from 'ember-window-mock';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
@@ -15,7 +14,6 @@ import { waitUntil } from '@ember/test-helpers';
 module('Acceptance | course-page | autofix', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('can trigger autofix when last submission failed', async function (assert) {

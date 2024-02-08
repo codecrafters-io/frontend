@@ -3,12 +3,10 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('editing the slug updates the url of other tab links', async function (assert) {
     testScenario(this.server);

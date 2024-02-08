@@ -5,12 +5,10 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | vote-page | course-ideas', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('it renders for anonymous user', async function (assert) {
     testScenario(this.server);
