@@ -8,6 +8,7 @@ import { cached } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import type { Block } from 'codecrafters-frontend/models/concept';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
@@ -28,6 +29,7 @@ interface BlockGroup {
 
 export default class ConceptComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+  @service declare authenticator: AuthenticatorService;
 
   @tracked lastRevealedBlockGroupIndex: number | null = null;
   @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
@@ -42,6 +44,11 @@ export default class ConceptComponent extends Component<Signature> {
 
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
+    } else {
+      const progressPercentage = this.latestConceptEngagement?.currentProgressPercentage;
+      // console.log('progress percentage', progressPercentage);
+      // console.log('index', Math.floor((progressPercentage! / 100) * this.allBlocks.length))
+      this.lastRevealedBlockGroupIndex = progressPercentage ? Math.floor((progressPercentage / 100) * this.allBlocks.length) : null;
     }
   }
 
@@ -79,6 +86,14 @@ export default class ConceptComponent extends Component<Signature> {
 
   get currentBlockGroupIndex() {
     return this.lastRevealedBlockGroupIndex || 0;
+  }
+
+  get latestConceptEngagement() {
+    const conceptEngagements = this.authenticator.currentUser?.conceptEngagements.filter((engagement) => engagement.concept.slug === this.args.concept.slug);
+    const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
+    // return conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
+    console.log('latestConceptEngagement', latestConceptEngagement);
+    return latestConceptEngagement;
   }
 
   get progressPercentage() {
