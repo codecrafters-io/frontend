@@ -118,6 +118,10 @@ export default class BlocksPageComponent extends Component<Signature> {
     console.log('last block type', blocks[blocks.length - 1]?.type);
     console.log('is last block type not click to continue', blocks[blocks.length - 1]?.type !== 'click_to_continue');
 
+    console.log('last block in json', blocks[blocks.length - 1]?.toJSON);
+    console.log('last block in json type ', blocks[blocks.length - 1]?.toJSON.type);
+    console.log('is last block in json type not click to continue', blocks[blocks.length - 1]?.toJSON.type !== 'click_to_continue');
+
     if (blocks[blocks.length - 1]?.type !== 'click_to_continue') {
       blocks.push(
         new ClickToContinueBlock({
