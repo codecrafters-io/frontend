@@ -30,11 +30,17 @@ export default class ConceptRoute extends BaseRoute {
       user: this.authenticator.currentUser,
     })
 
+    const latestConceptEngagementForUser = allConceptEngagementsForUser
+      .filterBy('conceptSlug', concept.slug)
+      .sortBy('createdAt')
+      .at(-1);
+
     return {
       allConcepts,
       allConceptEngagementsForUser,
       concept,
       conceptGroup: relatedConceptGroups[0],
+      latestConceptEngagementForUser,
     };
   }
 }

@@ -1,5 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
+import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import Store from '@ember-data/store';
@@ -11,6 +12,7 @@ interface Signature {
   allConcepts: ConceptModel[];
   concept: ConceptModel;
   conceptGroup: ConceptGroupModel;
+  latestConceptEngagementForUser: ConceptEngagementModel;
   nextConcept: ConceptModel | null;
   onProgressPercentageChange: (percentage: number) => void;
 }
@@ -18,7 +20,7 @@ interface Signature {
 export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @tracked currentProgressPercentage = 0;
+  @tracked currentProgressPercentage = this.args.latestConceptEngagementForUser.currentProgressPercentage;
 
   get hasCompletedConcept() {
     return this.currentProgressPercentage === 100;
@@ -44,6 +46,9 @@ export default class ContentComponent extends Component<Signature> {
       const conceptEngagement = this.store.createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser })
       conceptEngagement.currentProgressPercentage = progressPercentage;
       conceptEngagement.save();
+    } else {
+      this.args.latestConceptEngagementForUser.currentProgressPercentage = progressPercentage;
+      this.args.latestConceptEngagementForUser.save();
     }
 
     this.currentProgressPercentage = progressPercentage;
