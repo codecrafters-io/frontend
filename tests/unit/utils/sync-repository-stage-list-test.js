@@ -3,9 +3,11 @@ import { signInAsStaff } from 'codecrafters-frontend/tests/support/authenticatio
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import syncRepositoryStageLists from 'codecrafters-frontend/mirage/utils/sync-repository-stage-lists';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Unit | Utility | sync-repository-stage-list', function (hooks) {
   setupTest(hooks);
+  setupMirage(hooks);
 
   test('it exists', function (assert) {
     testScenario(this.server);
