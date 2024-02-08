@@ -11,20 +11,6 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.beforeEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.add('ember-testing-container-full-screen');
-  });
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.afterEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.remove('ember-testing-container-full-screen');
-  });
-
   test('passing first stage shows badges for staff users', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);

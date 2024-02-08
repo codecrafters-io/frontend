@@ -15,20 +15,6 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.beforeEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.add('ember-testing-container-full-screen');
-  });
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.afterEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.remove('ember-testing-container-full-screen');
-  });
-
   test('can view solutions before starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
