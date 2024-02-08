@@ -3,7 +3,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsAdmin } from 'codecrafters-frontend/tests/support/authentication-helpers';

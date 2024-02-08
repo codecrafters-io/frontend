@@ -3,7 +3,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import createCodeWalkthrough from 'codecrafters-frontend/mirage/utils/create-code-walkthrough';
 import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | view-code-walkthrough', function (hooks) {

@@ -1,6 +1,6 @@
 import { drag } from 'ember-sortable/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
