@@ -39,7 +39,7 @@ export default class ProductWalkthroughFeatureSuggestion extends Component<Signa
       feature_suggestion_id: this.currentOrPreviouslyShownFeatureSuggestion.id,
     });
 
-    this.router.transitionTo('concept', 'tcp-overview');
+    this.router.transitionTo('concept', 'overview');
   }
 }
 
