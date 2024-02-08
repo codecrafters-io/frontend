@@ -17,6 +17,7 @@ export default class CommunityCourseStageSolutionModel extends Model {
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
 
+  @attr('number') declare approvedCommentsCount: number;
   @attr('string') declare explanationMarkdown: string;
   @attr('string') declare commitSha: string;
   @attr('string') declare githubRepositoryName: string;
