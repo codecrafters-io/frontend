@@ -12,7 +12,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | course-page | view-community-course-stage-solutions', function (hooks) {
+module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupMirage(hooks);
