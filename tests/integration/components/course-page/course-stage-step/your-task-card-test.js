@@ -3,9 +3,11 @@ import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | course-page/course-stage-step/your-task-card', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('opens all links in new tab', async function (assert) {
     const store = this.owner.lookup('service:store');

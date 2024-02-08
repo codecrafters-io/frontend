@@ -1,8 +1,10 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Unit | Model | concept', function (hooks) {
   setupTest(hooks);
+  setupMirage(hooks);
 
   // Replace this with your real tests.
   test('changedAttributes works', async function (assert) {
