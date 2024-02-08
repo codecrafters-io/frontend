@@ -3,13 +3,11 @@ import questionsPage from 'codecrafters-frontend/tests/pages/concept-admin/quest
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | concept-admin | edit-questions', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('can add question', async function (assert) {
     testScenario(this.server);

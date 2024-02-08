@@ -5,15 +5,13 @@ import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { add, sub } from 'date-fns';
 
 module('Acceptance | referral-link-page | view-referral-link', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can view referral link when not logged in', async function (assert) {
     testScenario(this.server);

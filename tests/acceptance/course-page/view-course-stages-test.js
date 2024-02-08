@@ -8,8 +8,7 @@ import { add, sub } from 'date-fns';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import {
   signIn,
   signInAsCourseAuthor,
@@ -21,7 +20,6 @@ import { currentURL, waitFor, waitUntil, find, isSettled, settled, visit } from 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can view stages before starting course', async function (assert) {
     testScenario(this.server);

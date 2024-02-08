@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { visit, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
 import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
@@ -9,7 +8,6 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | Meta tags', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   function createConcepts(server) {
     createConceptFromFixture(server, tcpOverview);

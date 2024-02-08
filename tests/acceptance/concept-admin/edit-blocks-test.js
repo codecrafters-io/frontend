@@ -1,7 +1,6 @@
 import { drag } from 'ember-sortable/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import blocksPage from 'codecrafters-frontend/tests/pages/concept-admin/blocks-page';
@@ -10,7 +9,6 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | concept-admin | edit-blocks', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('can add/edit/delete markdown blocks', async function (assert) {
     testScenario(this.server);

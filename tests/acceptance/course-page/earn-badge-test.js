@@ -1,7 +1,6 @@
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
@@ -11,21 +10,6 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 module('Acceptance | course-page | earn-badge', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.beforeEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.add('ember-testing-container-full-screen');
-  });
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.afterEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.remove('ember-testing-container-full-screen');
-  });
 
   test('passing first stage shows badges for staff users', async function (assert) {
     testScenario(this.server);

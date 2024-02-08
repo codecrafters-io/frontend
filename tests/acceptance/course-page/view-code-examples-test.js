@@ -8,28 +8,12 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { settled, scrollTo } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | course-page | view-community-course-stage-solutions', function (hooks) {
+module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.beforeEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.add('ember-testing-container-full-screen');
-  });
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.afterEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.remove('ember-testing-container-full-screen');
-  });
 
   test('can view solutions before starting course', async function (assert) {
     testScenario(this.server);

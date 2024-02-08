@@ -2,13 +2,11 @@ import { currentURL } from '@ember/test-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { module, test } from 'qunit';
 
 module('Acceptance | view-product-walkthrough-suggestion', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('it renders suggestion if user has it', async function (assert) {
     testScenario(this.server);

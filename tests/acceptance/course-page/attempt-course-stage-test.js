@@ -2,8 +2,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
@@ -12,7 +11,6 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can fail course stage', async function (assert) {
     testScenario(this.server);

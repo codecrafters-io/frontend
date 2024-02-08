@@ -1,7 +1,6 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createTeamPage from 'codecrafters-frontend/tests/pages/create-team-page';
@@ -10,7 +9,6 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | create-team-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('can create a new team', async function (assert) {

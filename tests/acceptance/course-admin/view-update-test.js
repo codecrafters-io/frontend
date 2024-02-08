@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import updatesPage from 'codecrafters-frontend/tests/pages/course-admin/updates-page';
@@ -9,7 +8,6 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-admin | view-update', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('it has the correct link for viewing diffs', async function (assert) {
     testScenario(this.server);

@@ -6,15 +6,13 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | delete-repository-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('can not open delete repository modal if repository is new', async function (assert) {

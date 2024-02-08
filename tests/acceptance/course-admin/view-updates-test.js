@@ -3,14 +3,12 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import updatesPage from 'codecrafters-frontend/tests/pages/course-admin/updates-page';
 import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsStaff, signInAsCourseAuthor } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-admin | view-updates', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('it renders when no updates are present', async function (assert) {

@@ -6,14 +6,12 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
 
   test('can view leaderboard when no recent players are present', async function (assert) {
     testScenario(this.server);

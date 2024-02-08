@@ -2,14 +2,12 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | perks-page | claim-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('it is redirected to the correct claim url', async function (assert) {

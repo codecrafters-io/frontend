@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -10,7 +9,6 @@ import window from 'ember-window-mock';
 
 module('Acceptance | team-page | manage-team-billing-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('team with active pilot sees pilot details', async function (assert) {
