@@ -112,16 +112,6 @@ export default class BlocksPageComponent extends Component<Signature> {
       }
     });
 
-    console.log('blocks', blocks);
-    console.log('length of blocks', blocks.length);
-    console.log('last block', blocks[blocks.length - 1]);
-    console.log('last block type', blocks[blocks.length - 1]?.type);
-    console.log('is last block type not click to continue', blocks[blocks.length - 1]?.type !== 'click_to_continue');
-
-    console.log('last block in json', blocks[blocks.length - 1]?.toJSON);
-    console.log('last block in json type ', blocks[blocks.length - 1]?.toJSON.type);
-    console.log('is last block in json type not click to continue', blocks[blocks.length - 1]?.toJSON.type !== 'click_to_continue');
-
     if (blocks[blocks.length - 1]?.type !== 'click_to_continue') {
       blocks.push(
         new ClickToContinueBlock({
@@ -132,12 +122,6 @@ export default class BlocksPageComponent extends Component<Signature> {
     }
 
     const blocksJSON = blocks.map((block) => block.toJSON);
-
-    console.log('blocks json', blocksJSON);
-    console.log('blocks json length', blocksJSON.length);
-    console.log('last json block', blocksJSON[blocksJSON.length - 1]);
-    console.log('last json block type', blocksJSON[blocksJSON.length - 1]?.type);
-    console.log('is last json block type not click to continue', blocksJSON[blocksJSON.length - 1]?.type !== 'click_to_continue');
 
     return blocks.map((block) => block.toJSON);
   }
