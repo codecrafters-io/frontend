@@ -220,4 +220,41 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     assert.strictEqual(blocksPage.editableBlocks.length, 4, 'expected 4 editable blocks to be present');
     assert.ok(blocksPage.editableBlocks[3].text.includes('Continue'), 'expected the last block to be a click to continue block');
   });
+
+  test('click to continue block is not added if last block is already a click to continue block', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the second markdown block.`,
+          },
+        },
+      ],
+    });
+
+    await blocksPage.visit({ concept_slug: 'dummy' });
+
+    await blocksPage.insertBlockMarkers[1].click();
+    await blocksPage.insertBlockMarkers[1].dropdown.clickOnItem('Markdown Block');
+
+    await blocksPage.insertBlockMarkers[3].click();
+    await blocksPage.insertBlockMarkers[3].dropdown.clickOnItem('Click to Continue Block');
+
+    await blocksPage.clickOnPublishChangesButton();
+    await settled(); // Investigate why clickable() doesn't call settled()
+
+    assert.strictEqual(blocksPage.editableBlocks.length, 4, 'expected 4 editable blocks to be present');
+    assert.ok(blocksPage.editableBlocks[3].text.includes('Continue'), 'expected the last block to be a click to continue block');
+  });
 });
