@@ -66,7 +66,6 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 0, 'expected no C solutions to be present');
   });
 
-  // eslint-disable-next-line qunit/require-expect
   test('can view solutions after starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
