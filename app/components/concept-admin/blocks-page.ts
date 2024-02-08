@@ -112,18 +112,18 @@ export default class BlocksPageComponent extends Component<Signature> {
       }
     });
 
-    if (blocks[blocks.length - 1]?.type !== 'click_to_continue') {
-      blocks.push(
+    const blocksAsJSON = blocks.map((block) => block.toJSON);
+
+    if (blocksAsJSON[blocksAsJSON.length - 1]?.type !== 'click_to_continue') {
+      blocksAsJSON.push(
         new ClickToContinueBlock({
           type: 'click_to_continue',
           args: {},
-        }),
+        }).toJSON,
       );
     }
 
-    const blocksJSON = blocks.map((block) => block.toJSON);
-
-    return blocks.map((block) => block.toJSON);
+    return blocksAsJSON;
   }
 
   @action
