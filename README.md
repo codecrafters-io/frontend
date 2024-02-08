@@ -24,10 +24,10 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ## Running / Development
 
-* `npm run start`
-* Visit your app at [https://<username>.ccdev.dev](https://<username>.ccdev.dev).
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+- `make serve`
+- Visit your app at [https://<username>.ccdev.dev](https://<username>.ccdev.dev).
+- Visit your app at [http://localhost:4200](http://localhost:4200).
+- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
 ## Running against staging
 
@@ -39,7 +39,7 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 - FastBoot is **enabled** when running `ember build --environment=production`
   - Pre-rendering is done only for routes configured under `prember` section in `ember-cli-build.js`
 - FastBoot is **enabled for all routes** when running `ember server`
-  - To disable it, run `FASTBOOT_DISABLED=true ember server` 
+  - To disable it, run `FASTBOOT_DISABLED=true ember server`
   - Alternatively, append `?fastboot=false` query parameter to each request URL
 - Add `FASTBOOT_DISABLED=true` to your local `.env` file to disable FastBoot completely
   - You can override it by passing `FASTBOOT_DISABLED=""` in the command line
@@ -48,8 +48,10 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ## Running tests
 
-* `npm run test`
-* `npm run test:ember -- --server` (will launch a Chrome instance that'll run your tests)
+- Run `make serve`, ensure your server is running
+- View your tests at [http://localhost:4200/tests/index/html?moduleId=abcd](http://localhost:4200/tests/index.html?moduleId=abcd).
+- Select the module(s) you want to run from the dropdown at the top right of the page & click "Apply" to run tests.
+- To run all tests, remove the `?moduleId=abcd` query parameter from the URL.
 
 ### Linting
 
@@ -62,8 +64,8 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ### Building
 
-* `npm exec ember build` (development)
-* `npm run build` (production)
+- `npm exec ember build` (development)
+- `npm run build` (production)
 
 ### Deploying
 
