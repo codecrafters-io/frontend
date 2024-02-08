@@ -26,21 +26,29 @@ export default class ConceptRoute extends BaseRoute {
       .filter((group) => group.conceptSlugs.includes(concept.slug))
       .sort((a, b) => a.slug.localeCompare(b.slug));
 
-    const allConceptEngagementsForUser = await this.store.findAll('concept-engagement', {
-      user: this.authenticator.currentUser,
-    })
+    // const allConceptEngagementsForUser = await this.store.findAll('concept-engagement', {
+    //   user: this.authenticator.currentUser,
+    //   include: 'concept',
+    // })
 
-    const latestConceptEngagementForUser = allConceptEngagementsForUser
-      .filterBy('conceptSlug', concept.slug)
-      .sortBy('createdAt')
-      .at(-1);
+    // console.log('user concept engagements', allConceptEngagementsForUser)
+
+    // const latestConceptEngagementForUser = allConceptEngagementsForUser
+    //   .filter((engagement) => engagement.concept.slug === concept.slug)
+    //   .sortBy('createdAt')
+    //   .at(-1)
+
+    if (this.authenticator.isAuthenticated) {
+      await this.store.findAll('concept-engagement', {
+        user: this.authenticator.currentUser,
+        include: 'concept,user'
+      });
+    }
 
     return {
       allConcepts,
-      allConceptEngagementsForUser,
       concept,
       conceptGroup: relatedConceptGroups[0],
-      latestConceptEngagementForUser,
     };
   }
 }
