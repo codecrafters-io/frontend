@@ -112,6 +112,12 @@ export default class BlocksPageComponent extends Component<Signature> {
       }
     });
 
+    console.log('blocks', blocks)
+    console.log('length of blocks', blocks.length)
+    console.log('last block', blocks[blocks.length - 1])
+    console.log('last block type', blocks[blocks.length - 1]?.type)
+    console.log('is last block type not click to continue', blocks[blocks.length - 1]?.type !== 'click_to_continue')
+
     if (blocks[blocks.length - 1]?.type !== 'click_to_continue') {
       blocks.push(
         new ClickToContinueBlock({
