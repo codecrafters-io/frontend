@@ -131,7 +131,7 @@ export default class BlocksPageComponent extends Component<Signature> {
       );
     }
 
-    const blocksJSON = blocks.map((block) => block.toJSON)
+    const blocksJSON = blocks.map((block) => block.toJSON);
 
     console.log('blocks json', blocksJSON);
     console.log('blocks json length', blocksJSON.length);
