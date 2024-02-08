@@ -3,7 +3,7 @@ import affiliateLinkPage from 'codecrafters-frontend/tests/pages/affiliate-link-
 import { currentURL } from '@ember/test-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
