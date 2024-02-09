@@ -36,7 +36,7 @@
     <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" class="text-sm" />
 
     {{#if @isCollapsible}}
-      <div class="flex items-center justify-center my-3">
+      <div class="flex items-center justify-center mb-3">
         {{! @glint-expect-error onCollapse is not null }}
         <TertiaryButton @size="small" {{on "click" @onCollapse}}>
           Collapse File
