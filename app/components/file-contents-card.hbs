@@ -38,7 +38,6 @@
 
     {{#if @isCollapsible}}
       <div class="flex items-center justify-center mb-3">
-        {{! @glint-expect-error onCollapse is not null }}
         <TertiaryButton @size="small" {{on "click" this.handleCollapseButtonClick}}>
           Collapse File
         </TertiaryButton>
