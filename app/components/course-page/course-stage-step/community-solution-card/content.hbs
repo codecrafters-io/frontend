@@ -1,0 +1,65 @@
+{{#if this.shouldShowExplanation}}
+  <div class="pb-8 pt-4">
+    <div
+      class="leading-7 prose solution-explanation max-w-none"
+      {{did-insert this.handleDidInsertExplanationHTML}}
+      {{did-update this.handleDidUpdateExplanationHTML @solution.explanationMarkdown}}
+    >
+      {{markdown-to-html @solution.explanationMarkdown}}
+    </div>
+  </div>
+{{/if}}
+
+{{#each this.changedFilesForRender key="filename" as |changedFile index|}}
+  <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300 overflow-y-hidden">
+    <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center justify-between">
+      <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
+      <div>
+        {{#if @solution.isPublishedToPublicGithubRepository}}
+          <a
+            {{! @glint-expect-error call not ts-ified yet }}
+            href={{call (fn @solution.githubUrlForFile changedFile.filename)}}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex gap-x-1 items-center group"
+          >
+            <span class="text-[10px] text-gray-700 group-hover:underline">
+              View on GitHub
+            </span>
+            {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600"}}
+          </a>
+        {{else if this.shouldShowPublishToGithubButton}}
+          {{! @glint-expect-error onPublishToGithubButton is not null }}
+          <button type="button" {{on "click" @onPublishToGithubButtonClick}} class="flex gap-x-1 items-center group">
+            <span class="text-[10px] text-gray-700 group-hover:underline">
+              Publish to GitHub
+            </span>
+            {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600"}}
+          </button>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="text-sm">
+      {{! @glint-expect-error not ts-ified yet }}
+      <SyntaxHighlightedDiff
+        @code={{changedFile.diff}}
+        @language={{@solution.language.slug}}
+        @comments={{changedFile.comments}}
+        @onCommentView={{this.handleCommentView}}
+        @shouldCollapseUnchangedLines={{true}}
+        class="ph-no-capture"
+      />
+    </div>
+  </div>
+{{/each}}
+
+{{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
+  <FileContentsCard
+    class="mt-4"
+    @filename={{unchangedFileComparison.path}}
+    @code={{unchangedFileComparison.content}}
+    @language="dockerfile"
+    data-test-dockerfile-contents-card
+  />
+{{/each}}

@@ -30,6 +30,7 @@ export default class CommunityCourseStageSolutionModel extends Model {
   @attr('date') declare submittedAt: Date;
   @attr('boolean') declare isRestrictedToTeam: boolean; // if true, only fellow team members can see this solution
 
+  // We don't render explanations at the moment
   get hasExplanation() {
     return !!this.explanationMarkdown;
   }
