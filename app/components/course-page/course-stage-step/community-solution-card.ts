@@ -10,6 +10,7 @@ import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/an
 import type Store from '@ember-data/store';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
+import { IsUnchangedFileComparison, type FileComparison, type UnchangedFileComparison } from 'codecrafters-frontend/utils/file-comparison';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -23,9 +24,11 @@ type Signature = {
 };
 
 export default class CommunitySolutionCardComponent extends Component<Signature> {
+  @tracked containerElement: HTMLDivElement | null = null;
+  @tracked fileComparisons: FileComparison[] = [];
   @tracked isExpanded = false;
   @tracked isLoadingComments = false;
-  @tracked containerElement: HTMLDivElement | null = null;
+  @tracked isLoadingFileComparisons = false;
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
@@ -77,6 +80,10 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     return this.isCurrentUserSolution && !this.args.solution.isPublishedToGithub;
   }
 
+  get unchangedFileComparisons(): UnchangedFileComparison[] {
+    return this.fileComparisons.filter((fileComparison): fileComparison is UnchangedFileComparison => IsUnchangedFileComparison(fileComparison));
+  }
+
   @action
   handleCollapseButtonClick() {
     this.isExpanded = false;
@@ -109,6 +116,7 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   handleExpandButtonClick() {
     this.isExpanded = true;
     this.loadComments();
+    this.loadFileComparisons();
 
     this.analyticsEventTracker.track('viewed_community_course_stage_solution', {
       community_course_stage_solution_id: this.args.solution.id,
@@ -128,6 +136,18 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     });
 
     this.isLoadingComments = false;
+  }
+
+  @action
+  async loadFileComparisons() {
+    // Already loaded
+    if (this.fileComparisons.length > 0) {
+      return;
+    }
+
+    this.isLoadingFileComparisons = true;
+    this.fileComparisons = await this.args.solution.fetchFileComparisons({});
+    this.isLoadingFileComparisons = false;
   }
 }
 
