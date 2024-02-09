@@ -1,9 +1,11 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
-import { action } from '@ember/object';
-import type CourseStageModel from './course-stage';
-import type UserModel from './user';
-import type LanguageModel from './language';
 import type CourseStageCommentModel from './course-stage-comment';
+import type CourseStageModel from './course-stage';
+import type LanguageModel from './language';
+import type UserModel from './user';
+import { action } from '@ember/object';
+import { memberAction } from 'ember-api-actions';
+import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
 
 export default class CommunityCourseStageSolutionModel extends Model {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
@@ -68,4 +70,15 @@ export default class CommunityCourseStageSolutionModel extends Model {
   githubUrlForFile(filename: string) {
     return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
   }
+
+  declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
 }
+
+CommunityCourseStageSolutionModel.prototype.fetchFileComparisons = memberAction({
+  path: 'file-comparisons',
+  type: 'get',
+
+  after(response) {
+    return response.map((json: Record<string, unknown>) => FileComparisonFromJSON(json));
+  },
+});

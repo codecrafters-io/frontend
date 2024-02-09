@@ -55,6 +55,10 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2, 'expected 2 Go solutions to be present'); // Go is picked by default
 
+    // Trigger logic that runs on expand
+    await coursePage.codeExamplesTab.solutionCards[0].clickOnExpandButton();
+    await coursePage.codeExamplesTab.solutionCards[0].clickOnCollapseButton();
+
     await coursePage.codeExamplesTab.languageDropdown.toggle();
     await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 

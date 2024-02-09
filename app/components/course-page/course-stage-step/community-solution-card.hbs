@@ -141,6 +141,16 @@
       </div>
     {{/each}}
 
+    {{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
+      <FileContentsCard
+        class="mt-4"
+        @filename={{unchangedFileComparison.path}}
+        @code={{unchangedFileComparison.content}}
+        @language="dockerfile"
+        data-test-dockerfile-contents-card
+      />
+    {{/each}}
+
     {{#if this.isCollapsed}}
       <div
         role="button"
