@@ -1,4 +1,6 @@
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -20,8 +22,19 @@ interface Signature {
 }
 
 export default class FileContentsCardComponent extends Component<Signature> {
-  get isCollapsed() {
-    return !!this.args.isCollapsed;
+  @tracked containerElement: HTMLDivElement | null = null;
+
+  @action
+  handleCollapseButtonClick() {
+    if (this.args.onCollapse) {
+      this.args.onCollapse();
+      this.containerElement!.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  @action
+  handleDidInsertContainer(element: HTMLDivElement) {
+    this.containerElement = element;
   }
 }
 

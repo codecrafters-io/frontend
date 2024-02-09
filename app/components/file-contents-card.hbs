@@ -1,13 +1,14 @@
-<div class="bg-white shadow-sm rounded border border-gray-300 overflow-y-hidden" ...attributes>
+<div class="bg-white shadow-sm rounded border border-gray-300" ...attributes {{did-insert this.handleDidInsertContainer}}>
   {{! template-lint-disable no-invalid-interactive }}
   <div
-    class="flex items-center bg-gray-100 rounded-t h-8 px-4 shadow-sm relative group/file-contents-card-header
+    class="flex items-center bg-gray-100 h-8 px-4 shadow-sm relative group/file-contents-card-header
+      {{if @isCollapsed 'rounded' 'rounded-t'}}
       {{if @isCollapsible 'hover:bg-gray-50' ''}}
       {{if @isCollapsible 'cursor-pointer' 'cursor-default'}}
       {{if @isCollapsed 'border-b-0' 'border-b border-gray-200'}}"
     role={{if @isCollapsible "button"}}
     {{! @glint-expect-error doesn't allow mouse event since it has args }}
-    {{on "click" (if @isCollapsed @onExpand @onCollapse)}}
+    {{on "click" (if @isCollapsed @onExpand this.handleCollapseButtonClick)}}
   >
     {{#if (has-block "header")}}
       {{yield to="header"}}
@@ -38,7 +39,7 @@
     {{#if @isCollapsible}}
       <div class="flex items-center justify-center mb-3">
         {{! @glint-expect-error onCollapse is not null }}
-        <TertiaryButton @size="small" {{on "click" @onCollapse}}>
+        <TertiaryButton @size="small" {{on "click" this.handleCollapseButtonClick}}>
           Collapse File
         </TertiaryButton>
       </div>

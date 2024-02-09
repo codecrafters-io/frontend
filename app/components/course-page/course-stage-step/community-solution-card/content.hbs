@@ -53,7 +53,6 @@
 
 {{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
   <FileContentsCard
-    class="mt-4 text-sm"
     @headerTooltipText="This file was added in previous stages."
     @isCollapsible={{true}}
     @isCollapsed={{not (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
@@ -63,6 +62,8 @@
     @code={{unchangedFileComparison.content}}
     @language={{@solution.language.slug}}
     data-test-unchanged-file-contents-card
+    {{! scroll-mt-16 accounts for the sticky menu bar}}
+    class="mt-4 text-sm scroll-mt-16"
   >
     <:header>
       <div class="flex items-center justify-between w-full gap-3">
