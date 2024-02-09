@@ -1,10 +1,15 @@
 <div class="bg-white shadow-sm rounded border border-gray-300 overflow-y-hidden" ...attributes>
-  <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
-    <span class="font-mono text-xs text-gray-600 bold">{{@filename}}</span>
+  <div class="bg-gray-100 rounded-t py-2 px-4 border-gray-200 shadow-sm {{if @isCollapsed 'border-b-0' 'border-b'}}">
+    {{#if (has-block "header")}}
+      {{yield to="header"}}
+    {{else}}
+      <span class="font-mono text-xs text-gray-600 bold flex">{{@filename}}</span>
+    {{/if}}
   </div>
 
-  <div class="text-sm">
-    {{! @glint-expect-error: not ts-ified yet }}
-    <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" />
-  </div>
+  {{#unless @isCollapsed}}
+    <div class="text-sm">
+      <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" />
+    </div>
+  {{/unless}}
 </div>

@@ -57,9 +57,16 @@
 {{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
   <FileContentsCard
     class="mt-4"
+    @isCollapsed={{true}}
     @filename={{unchangedFileComparison.path}}
     @code={{unchangedFileComparison.content}}
     @language="dockerfile"
     data-test-dockerfile-contents-card
-  />
+  >
+    <:header>
+      <div class="flex items-center">
+        <span class="font-mono text-xs text-gray-600 bold">{{unchangedFileComparison.path}}</span>
+      </div>
+    </:header>
+  </FileContentsCard>
 {{/each}}

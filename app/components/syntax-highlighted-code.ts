@@ -3,15 +3,28 @@ import config from 'codecrafters-frontend/config/environment';
 import getOrCreateCachedHighlighterPromise from 'codecrafters-frontend/utils/highlighter-cache';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
+import type { SafeString } from '@ember/template/-private/handlebars';
 
-export default class SyntaxHighlightedCodeComponent extends Component {
-  @tracked asyncHighlightedHTML;
+export type Signature = {
+  Element: HTMLDivElement;
 
-  constructor() {
-    super(...arguments);
+  Args: {
+    code: string;
+    language: string;
+    theme: string;
+    highlightedLines?: string;
+  };
+};
 
-    let highlighterPromise = getOrCreateCachedHighlighterPromise(`${this.args.theme}-${this.args.language}`, {
+export default class SyntaxHighlightedCodeComponent extends Component<Signature> {
+  @tracked asyncHighlightedHTML?: SafeString;
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    const highlighterPromise = getOrCreateCachedHighlighterPromise(`${this.args.theme}-${this.args.language}`, {
       theme: this.args.theme,
+      // @ts-expect-error - shiki types are not up to date
       langs: [this.args.language],
     });
 
@@ -43,5 +56,11 @@ export default class SyntaxHighlightedCodeComponent extends Component {
       .join('');
 
     return htmlSafe(`<pre><code>${linesHTML}</code></pre>`);
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    SyntaxHighlightedCode: typeof SyntaxHighlightedCodeComponent;
   }
 }
