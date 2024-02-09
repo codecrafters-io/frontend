@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import Prism from 'prismjs';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
@@ -22,8 +21,6 @@ type Signature = {
 };
 
 export default class CommunitySolutionCardContentComponent extends Component<Signature> {
-  @tracked fileComparisons: FileComparison[] = [];
-  @tracked isExpanded = false;
   @service declare authenticator: AuthenticatorService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
@@ -67,7 +64,7 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
   }
 
   get unchangedFileComparisons(): UnchangedFileComparison[] {
-    return this.fileComparisons.filter((fileComparison): fileComparison is UnchangedFileComparison => IsUnchangedFileComparison(fileComparison));
+    return this.args.fileComparisons.filter((fileComparison): fileComparison is UnchangedFileComparison => IsUnchangedFileComparison(fileComparison));
   }
 
   @action
