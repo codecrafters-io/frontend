@@ -34,7 +34,8 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
 
     highlighterPromise
       .then((highlighter) => {
-        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.args.code, { lang: this.args.language, lineOptions: lineOptions }));
+        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.trimmedCode, { lang: this.args.language, lineOptions: lineOptions }));
+        // this.asyncHighlightedHTML = this.temporaryHTML;
       })
       .catch((error) => {
         if (config.environment === 'test' && error.message.match(/WebAssembly.instantiate/)) {
@@ -50,12 +51,16 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
   }
 
   get temporaryHTML() {
-    const linesHTML = this.args.code
+    const linesHTML = this.trimmedCode
       .split('\n')
-      .map((line) => `<div class="line">${line}</div>`)
+      .map((line) => `<div class="line">${line}&nbsp;</div>`) // &nbsp; is used to ensure that empty lines are still rendered
       .join('');
 
     return htmlSafe(`<pre><code>${linesHTML}</code></pre>`);
+  }
+
+  get trimmedCode() {
+    return this.args.code.trim();
   }
 }
 

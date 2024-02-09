@@ -174,3 +174,9 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     return (this.args.comments || []).filter((comment) => this.commentTargetsLine(comment, lineNumber));
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    SyntaxHighlightedDiff: typeof SyntaxHighlightedDiffComponent;
+  }
+}

@@ -9,7 +9,7 @@
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
         </div>
 
-        <div class="text-sm">
+        <div class="text-sm leading-6">
           <SyntaxHighlightedDiff
             @code={{changedFile.diff}}
             @language={{@submission.repository.language.slug}}

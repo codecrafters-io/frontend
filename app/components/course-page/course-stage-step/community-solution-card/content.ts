@@ -9,6 +9,7 @@ import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/an
 import type UserModel from 'codecrafters-frontend/models/user';
 import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
 import { IsUnchangedFileComparison, type FileComparison, type UnchangedFileComparison } from 'codecrafters-frontend/utils/file-comparison';
+import { tracked } from '@glimmer/tracking';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -21,6 +22,7 @@ type Signature = {
 };
 
 export default class CommunitySolutionCardContentComponent extends Component<Signature> {
+  @tracked expandedUnchangedFilePaths: string[] = [];
   @service declare authenticator: AuthenticatorService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
@@ -68,6 +70,13 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
   }
 
   @action
+  handleCollapseUnchangedFile(filePath: string) {
+    if (this.expandedUnchangedFilePaths.includes(filePath)) {
+      this.expandedUnchangedFilePaths = this.expandedUnchangedFilePaths.filter((expandedFilePath) => expandedFilePath !== filePath);
+    }
+  }
+
+  @action
   handleCommentView(comment: CommunityCourseStageSolutionCommentModel) {
     this.analyticsEventTracker.track('viewed_comment', {
       comment_id: comment.id,
@@ -82,6 +91,13 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
   @action
   handleDidUpdateExplanationHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleExpandUnchangedFile(filePath: string) {
+    if (!this.expandedUnchangedFilePaths.includes(filePath)) {
+      this.expandedUnchangedFilePaths = [...this.expandedUnchangedFilePaths, filePath];
+    }
   }
 }
 

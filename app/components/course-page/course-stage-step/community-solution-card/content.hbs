@@ -40,32 +40,41 @@
       </div>
     </div>
 
-    <div class="text-sm">
-      {{! @glint-expect-error not ts-ified yet }}
-      <SyntaxHighlightedDiff
-        @code={{changedFile.diff}}
-        @language={{@solution.language.slug}}
-        @comments={{changedFile.comments}}
-        @onCommentView={{this.handleCommentView}}
-        @shouldCollapseUnchangedLines={{true}}
-        class="ph-no-capture"
-      />
-    </div>
+    <SyntaxHighlightedDiff
+      @code={{changedFile.diff}}
+      @language={{@solution.language.slug}}
+      @comments={{changedFile.comments}}
+      @onCommentView={{this.handleCommentView}}
+      @shouldCollapseUnchangedLines={{true}}
+      class="ph-no-capture text-sm leading-6"
+    />
   </div>
 {{/each}}
 
 {{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
   <FileContentsCard
-    class="mt-4"
-    @isCollapsed={{true}}
+    class="mt-4 text-sm"
+    @headerTooltipText="This file was added in previous stages."
+    @isCollapsible={{true}}
+    @isCollapsed={{not (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
+    @onExpand={{fn this.handleExpandUnchangedFile unchangedFileComparison.path}}
+    @onCollapse={{fn this.handleCollapseUnchangedFile unchangedFileComparison.path}}
     @filename={{unchangedFileComparison.path}}
     @code={{unchangedFileComparison.content}}
-    @language="dockerfile"
-    data-test-dockerfile-contents-card
+    @language={{@solution.language.slug}}
+    data-test-unchanged-file-contents-card
   >
     <:header>
-      <div class="flex items-center">
+      <div class="flex items-center justify-between w-full gap-3">
         <span class="font-mono text-xs text-gray-600 bold">{{unchangedFileComparison.path}}</span>
+
+        <Pill @color="white">
+          Unchanged
+        </Pill>
+
+        {{#unless (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
+          <EmberTooltip @text="This file was added in previous stages." @side="top" />
+        {{/unless}}
       </div>
     </:header>
   </FileContentsCard>

@@ -275,6 +275,14 @@ function routes() {
         new_content: null,
         diff: null,
       },
+      {
+        change_type: 'unchanged',
+        old_path: 'unchanged_file_2.txt',
+        new_path: 'unchanged_file_2.txt',
+        old_content: 'Unchanged file content 2',
+        new_content: null,
+        diff: null,
+      },
     ];
   });
 

@@ -61,21 +61,33 @@
 }
 
 .syntax-highlighted-code pre {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   overflow-x: scroll;
+  white-space: pre;
 }
 
 .syntax-highlighted-code pre code {
-  white-space: normal;
-  display: inline-block;
   min-width: 100%;
 }
 
+.syntax-highlighted-code pre code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+.syntax-highlighted-code pre code .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1rem;
+  margin-right: 1.5rem;
+  display: inline-block;
+  text-align: right;
+  color: #94a3b8;
+  font-size: 0.875em;
+}
+
 .syntax-highlighted-code pre code .line {
-  display: block;
-  white-space: pre;
-  line-height: 2em;
   padding-left: 1rem;
   padding-right: 1rem;
 }

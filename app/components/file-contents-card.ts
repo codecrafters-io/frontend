@@ -7,7 +7,11 @@ interface Signature {
     code: string;
     language: string;
     filename: string;
+    headerTooltipText?: string; // If collapsible, use this to provide a tooltip for the header
+    isCollapsible?: boolean;
     isCollapsed?: boolean;
+    onExpand?: () => void;
+    onCollapse?: () => void;
   };
 
   Blocks: {
