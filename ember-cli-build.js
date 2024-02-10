@@ -6,6 +6,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
 const { Webpack } = require('@embroider/webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
 
 const fetch = require('node-fetch');
@@ -89,7 +90,15 @@ module.exports = function (defaults) {
     packagerOptions: {
       publicAssetURL: '/',
       webpackConfig: {
-        plugins: shouldSpawnBundleAnalyzer ? [new BundleAnalyzerPlugin()] : [],
+        plugins: [
+          sentryWebpackPlugin({
+            org: process.env.SENTRY_ORG,
+            project: process.env.SENTRY_PROJECT,
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+          }),
+
+          ...[shouldSpawnBundleAnalyzer ? [new BundleAnalyzerPlugin()] : []],
+        ],
         devtool: EmberApp.env() === 'development' ? 'eval-source-map' : 'source-map',
         module: {
           rules: [
