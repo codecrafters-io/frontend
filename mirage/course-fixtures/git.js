@@ -3,7 +3,7 @@ export default {
   "name": "Build your own Git",
   "short_name": "Git",
   "release_status": "live",
-  "description_md": "In this challenge, you'll build a Git implementation that can initialize a\nrepository, create commits and clone a public repository from GitHub. Along the\nway, you'll learn about the `.git` directory, Git objects (blobs, commits,\ntrees etc.), packfiles, Git's transfer protocols and much more.",
+  "description_md": "Git is a version control system used to track changes in source code. In this challenge, you'll build your own Git implementation that\nis capable of cloning a public repository from GitHub.\n\nAlong the way, you'll learn about the .git directory, Git objects, plumbing commands and more.",
   "short_description_md": "Learn about git objects, plumbing commands and more",
   "completion_percentage": 10,
   "languages": [
