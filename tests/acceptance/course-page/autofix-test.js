@@ -62,7 +62,6 @@ module('Acceptance | course-page | autofix', function (hooks) {
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     await percySnapshot('Autofix - Long logs', { scope: '[data-test-test-results-bar]' });
-    // await this.pauseTest();
 
     autofixRequest.update({
       status: 'success',
@@ -263,6 +262,24 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
+    await coursePage.testResultsBar.clickOnTab('AI Hints');
+    await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
+
+    await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+
+    const autofixRequest = this.server.schema.autofixRequests.first();
+    const logstream = this.server.schema.fakeLogstreams.first();
+    assert.ok(autofixRequest, 'autofix request was created');
+    assert.ok(logstream, 'fake logstream was created');
+
+    logstream.update({ chunks: ['Running tests...\n\n'] });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+
+    await percySnapshot('Autofix - Short logs', { scope: '[data-test-test-results-bar]' });
+
+    const chunks = Array.from({ length: 100 }, (_, i) => `\x1b[92m[stage-${i}] passed\x1b[0m\n`);
+    logstream.update({ chunks: ['Running tests...\n\n', ...chunks] });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
     const desiredHeight = 500;
 
@@ -278,5 +295,8 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     testResultsBarHeight = coursePage.testResultsBar.height;
     assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar maintains the height after closing and expanding again');
+
+    const contentsHeight = coursePage.testResultsBar.contents.height;
+    assert.ok(contentsHeight < testResultsBarHeight, 'Test results bar contents should be smaller than the bar')
   });
 });
