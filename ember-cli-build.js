@@ -14,7 +14,10 @@ const config = require('./config/environment')(EmberApp.env());
 module.exports = function (defaults) {
   const appOptions = {
     babel: {
-      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
+      plugins: [
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+        ...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true }),
+      ],
     },
 
     '@embroider/macros': {
