@@ -297,6 +297,6 @@ module('Acceptance | course-page | autofix', function (hooks) {
     assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar maintains the height after closing and expanding again');
 
     const contentsHeight = coursePage.testResultsBar.contents.height;
-    assert.ok(contentsHeight < testResultsBarHeight, 'Test results bar contents should be smaller than the bar')
+    assert.ok(contentsHeight < testResultsBarHeight, 'Test results bar contents should be smaller than the bar');
   });
 });
