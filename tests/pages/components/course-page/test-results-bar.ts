@@ -10,6 +10,17 @@ export default {
 
   clickOnBottomSection: clickable('[data-test-bottom-section]'),
   clickOnTab: clickOnText('[data-test-tab-header]'),
+
+  contents: {
+    scope: '[data-test-contents]',
+
+    get height() {
+      const element = find('[data-test-contents]') as HTMLElement;
+
+      return element?.offsetHeight;
+    },
+  },
+
   logsPreview: SubmissionLogsPreview,
 
   resizeHandler: {
