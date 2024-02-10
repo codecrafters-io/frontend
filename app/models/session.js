@@ -5,6 +5,7 @@ import Model from '@ember-data/model';
 
 export default class SessionModel extends Model {
   @service authenticator;
+  @service router;
   @attr('date') expiresAt;
   @belongsTo('user', { async: false, inverse: null }) user;
 }
@@ -14,13 +15,9 @@ SessionModel.prototype.logout = collectionAction({
   type: 'post',
   // urlType: 'findRecord',
 
-  after(response) {
+  async after(response) {
     this.authenticator.logout();
 
-    if (response.redirect_url) {
-      window.location.href = response.redirect_url;
-    } else {
-      window.location.href = '/';
-    }
+    return response;
   },
 });
