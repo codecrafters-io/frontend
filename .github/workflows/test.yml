@@ -103,6 +103,9 @@ jobs:
       - name: Remove percy logs
         run: sed -i '/^\[percy\]/d' test-results.xml
 
+      - name: Remove sentry-webpack-plugin logs
+        run: sed -i '/^\[sentry-webpack-plugin\]/d' test-results.xml
+
       - run: cat test-results.xml
 
       - name: Publish Buildkite analytics
