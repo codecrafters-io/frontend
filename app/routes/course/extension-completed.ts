@@ -4,12 +4,9 @@ import type { ModelType as CourseRouteModelType } from 'codecrafters-frontend/ro
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import type RouterService from '@ember/routing/router-service';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type CourseModel from 'codecrafters-frontend/models/course';
+import type { ModelType as CourseModelType } from 'codecrafters-frontend/routes/course';
 
-export type ModelType = {
-  course: CourseModel;
-  activeRepository: RepositoryModel;
+export type ModelType = CourseModelType & {
   extension: CourseExtensionModel;
 };
 
