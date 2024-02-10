@@ -20,7 +20,7 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 28, 'step list has 28 items');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 33, 'step list has 33 items');
 
     await coursePage.sidebar.clickOnStepListItem('RDB file config');
     assert.strictEqual(currentURL(), '/courses/redis/stages/persistence-rdb:1', 'current URL is stage page URL');
