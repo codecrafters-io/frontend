@@ -84,7 +84,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 7, 'step list has 7 items when first extension is removed');
   });
 
-  test('can enable more extensions after completing an extension', async function (assert) {
+  test('can enable more extensions after completing an extension (regression)', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -101,58 +101,36 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
-
-    await coursePage.sidebar.clickOnConfigureExtensionsButton();
-
-    // Disable Extension 1
-    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is first extension stage URL');
 
     // Disable Extension 2
+    await coursePage.sidebar.clickOnConfigureExtensionsButton();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
 
-    this.server.create('submission', 'withSuccessStatus', {
-      repository: repository,
-      courseStage: course.stages.models.find((stage) => stage.position === 2),
+    // Complete all stages for extension 1
+    course.stages.models.forEach((stage) => {
+      if (stage.primaryExtensionSlug === 'ext1') {
+        this.server.create('submission', 'withSuccessStatus', {
+          repository,
+          courseStage: stage,
+          createdAt: repository.createdAt, // 1s
+        });
+      }
     });
 
-    // await new Promise((resolve) => setTimeout(resolve, 1000)); // Temp
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await settled();
 
-    // URL should still be stage 2
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+    // Now go back to catalog page and click on the course again
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
-    await coursePage.completedStepNotice.clickOnNextStepButton();
-    assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'current URL is /base-stages-complete');
+    assert.strictEqual(currentURL(), '/courses/dummy/extension-completed/ext1', 'current URL is extension completed page');
 
-    await percySnapshot('Base Stages Completed Page');
-
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 5, 'step list has 6 items before first extension is enabled');
-
-    await coursePage.sidebar.clickOnConfigureExtensionsButton();
-    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    await coursePage.configureExtensionsModal.clickOnCloseButton();
-
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 7, 'step list has 6 items when first extension is enabled');
-
-    await coursePage.completedStepNotice.clickOnNextStepButton();
-    await percySnapshot('Extension - First Stage Page');
-
-    // Enable Extension 2
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 9, 'step list has 9 items when both extensions are enabled');
-
-    // Disable Extension 1
-    await coursePage.sidebar.clickOnConfigureExtensionsButton();
-    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    await coursePage.configureExtensionsModal.clickOnCloseButton();
-
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 7, 'step list has 7 items when first extension is removed');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext2:1', 'current URL is next extension stage');
   });
 });

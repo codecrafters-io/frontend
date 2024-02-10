@@ -32,6 +32,10 @@
     <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-teal-500 border-teal-500">
       {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
     </div>
+  {{else if (eq @step.type "ExtensionCompletedStep")}}
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-teal-500 border-teal-500">
+      {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
+    </div>
   {{/if}}
 
   <span class="text-sm {{if @isActive 'text-teal-500' 'text-gray-600'}} mt-0.5 font-semibold truncate">
