@@ -61,6 +61,10 @@ module('Acceptance | course-page | autofix', function (hooks) {
     logstream.update({ chunks: ['Running tests...\n\n', ...chunks] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
+    const testResultsBarHeight = coursePage.testResultsBar.height;
+    const testResultsBarContentsHeight = coursePage.testResultsBar.contents.height;
+    assert.ok(testResultsBarContentsHeight < testResultsBarHeight, 'Test results bar contents should be smaller than the bar');
+
     await percySnapshot('Autofix - Long logs', { scope: '[data-test-test-results-bar]' });
 
     autofixRequest.update({
@@ -288,15 +292,12 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await coursePage.testResultsBar.resizeHandler.touchEnd();
 
     let testResultsBarHeight = coursePage.testResultsBar.height;
-    assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test reults bar should be resized using touch');
+    assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar should be resized using touch');
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await coursePage.testResultsBar.clickOnBottomSection();
 
     testResultsBarHeight = coursePage.testResultsBar.height;
     assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar maintains the height after closing and expanding again');
-
-    const contentsHeight = coursePage.testResultsBar.contents.height;
-    assert.ok(contentsHeight < testResultsBarHeight, 'Test results bar contents should be smaller than the bar');
   });
 });
