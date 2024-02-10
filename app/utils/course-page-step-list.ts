@@ -15,6 +15,7 @@ import ExtensionStepGroup from './course-page-step-list/extension-step-group';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import CourseCompletedStepGroup from './course-page-step-list/course-completed-step-group';
 import BaseStagesCompletedStep from './course-page-step-list/base-stages-completed-step';
+import ExtensionCompletedStep from './course-page-step-list/extension-completed-step';
 
 export { Step };
 
@@ -68,6 +69,7 @@ export class StepList {
           steps.push(new CourseStageStep(this.repository, fakeStageListItem));
         });
 
+        steps.push(new ExtensionCompletedStep(this.repository, extension));
         stepGroups.push(new ExtensionStepGroup(extension, steps));
       });
     } else {
@@ -77,6 +79,7 @@ export class StepList {
         const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
 
         if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
+          stepsInNextGroup.push(new ExtensionCompletedStep(this.repository, extensionInNextGroup));
           stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
           stepsInNextGroup = [];
         }
@@ -85,9 +88,9 @@ export class StepList {
       });
 
       if (stepsInNextGroup.length > 0) {
-        stepGroups.push(
-          new ExtensionStepGroup((stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension as CourseExtensionModel, stepsInNextGroup),
-        );
+        const extensionInLastGroup = (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension as CourseExtensionModel;
+        stepsInNextGroup.push(new ExtensionCompletedStep(this.repository, extensionInLastGroup));
+        stepGroups.push(new ExtensionStepGroup(extensionInLastGroup, stepsInNextGroup));
       }
     }
 

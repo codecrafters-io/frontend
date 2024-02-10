@@ -3,7 +3,7 @@ export default {
   "name": "Build your own grep",
   "short_name": "grep",
   "release_status": "live",
-  "description_md": "[Regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (Regexes, for short) are patterns used to\nmatch character combinations in strings. [`grep`](https://en.wikipedia.org/wiki/Grep) is a CLI tool for searching\nusing Regexes.\n\nIn this challenge you'll build your own implementation of `grep`. Along the way we'll learn about Regex syntax and\nhow Regexes are evaluated.",
+  "description_md": "Regular expressions (Regexes, for short) are patterns used to match character combinations in strings. In this\nchallenge you'll build your own implementation of grep, a CLI tool for searching using Regexes.\n\nAlong the way you'll learn about Regex syntax, character classes, quantifiers and more.",
   "short_description_md": "Learn about regex syntax: character classes, quantifiers and more",
   "completion_percentage": 30,
   "languages": [
@@ -162,7 +162,7 @@ export default {
       "name": "Multiple Backreferences",
       "difficulty": "medium",
       "description_md": "In this stage, we'll add support for multiple backreferences.\n\nMultiple backreferences allow you to refer to several different captured groups within the same regex pattern.\n\n**Example:** `(\\d+) (\\w+) squares and \\1 \\2 circles` should match \"3 red squares and 3 red circles\" but should not match \"3 red squares and 4 red circles\".\n\nYour program will be executed like this:\n\n```\n$ echo \"<input>\" | ./your_grep.sh -E \"<pattern>\"\n```\n\nYour program must exit with 0 if the input matches the given pattern, and 1 if not.\n",
-      "marketing_md": "In this stage, you'll add support for multiple backreferences (`\\1`, `\\2` etc.) in the same pattern.\n\n**Example:** \n- `(\\d+) (\\w+) squares and \\1 \\2 circles` should match \"3 red squares and 3 red circles\" but should not match \"3 red squares and 4 red circles\".\n"
+      "marketing_md": "In this stage, you'll add support for multiple backreferences (`\\1`, `\\2` etc.) in the same pattern.\n\n**Example:**\n- `(\\d+) (\\w+) squares and \\1 \\2 circles` should match \"3 red squares and 3 red circles\" but should not match \"3 red squares and 4 red circles\".\n"
     },
     {
       "slug": "backreferences-nested",
@@ -170,7 +170,7 @@ export default {
       "name": "Nested Backreferences",
       "difficulty": "hard",
       "description_md": "In this stage, we'll add support for nested backreferences. This means that a backreference is part of a larger capturing group, which itself is referenced again.\n\n**Example:** `('(cat) and \\2') is the same as \\1` should match \"'cat and cat' is the same as 'cat and cat'\".\n\nYour program will be executed like this:\n\n```\n$ echo \"<input>\" | ./your_grep.sh -E \"<pattern>\"\n```\n\nYour program must exit with 0 if the input matches the given pattern, and 1 if not.\n",
-      "marketing_md": "In this stage, you'll add support for nested backreferences.\n\n**Example:** \n- `('(cat) and \\2') is the same as \\1` should match \"'cat and cat' is the same as 'cat and cat'\".\n"
+      "marketing_md": "In this stage, you'll add support for nested backreferences.\n\n**Example:**\n- `('(cat) and \\2') is the same as \\1` should match \"'cat and cat' is the same as 'cat and cat'\".\n"
     }
   ]
 }

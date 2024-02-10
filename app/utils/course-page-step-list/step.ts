@@ -71,7 +71,7 @@ export default class Step {
     throw new Error('Subclasses of Step must implement a title getter');
   }
 
-  get type(): 'IntroductionStep' | 'SetupStep' | 'CourseStageStep' | 'BaseStagesCompletedStep' | 'CourseCompletedStep' {
+  get type(): 'IntroductionStep' | 'SetupStep' | 'CourseStageStep' | 'BaseStagesCompletedStep' | 'ExtensionCompletedStep' | 'CourseCompletedStep' {
     throw new Error('Subclasses of Step must implement a routeParams getter');
   }
 }

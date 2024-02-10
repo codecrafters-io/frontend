@@ -49,6 +49,7 @@ Router.map(function () {
       this.route('screencasts');
     });
 
+    this.route('extension-completed', { path: '/extension-completed/:extension_slug' });
     this.route('base-stages-completed');
     this.route('completed');
   });

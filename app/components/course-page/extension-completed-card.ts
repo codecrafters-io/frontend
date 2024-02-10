@@ -2,16 +2,18 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import congratulationsImage from '/assets/images/icons/congratulations.png';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
+    extension: CourseExtensionModel;
   };
 };
 
-export default class BaseStagesCompletedCardComponent extends Component<Signature> {
+export default class ExtensionCompletedCardComponent extends Component<Signature> {
   congratulationsImage = congratulationsImage;
 
   @tracked configureExtensionsModalIsOpen = false;
@@ -19,6 +21,6 @@ export default class BaseStagesCompletedCardComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::BaseStagesCompletedCard': typeof BaseStagesCompletedCardComponent;
+    'CoursePage::ExtensionCompletedCard': typeof ExtensionCompletedCardComponent;
   }
 }

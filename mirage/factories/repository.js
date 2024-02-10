@@ -29,6 +29,22 @@ export default Factory.extend({
     },
   }),
 
+  withBaseStagesCompleted: trait({
+    afterCreate(repository, server) {
+      repository.course.stages.models.forEach((stage) => {
+        if (stage.primaryExtensionSlug) {
+          return; // Not a base stage
+        }
+
+        server.create('submission', 'withSuccessStatus', {
+          repository,
+          courseStage: stage,
+          createdAt: repository.createdAt, // 1s
+        });
+      });
+    },
+  }),
+
   withAllStagesCompleted: trait({
     afterCreate(repository, server) {
       repository.course.stages.models.forEach((stage) => {

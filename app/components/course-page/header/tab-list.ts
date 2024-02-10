@@ -36,6 +36,7 @@ export default class TabListComponent extends Component<Signature> {
       CourseStageStep: this.stageTabs,
       IntroductionStep: this.introductionTabs,
       BaseStagesCompletedStep: this.courseCompletedTabs, // Can be the same as CourseCompletedStep for now
+      ExtensionCompletedStep: this.courseCompletedTabs, // Can be the same as CourseCompletedStep for now
     }[this.args.currentStep.type];
   }
 
