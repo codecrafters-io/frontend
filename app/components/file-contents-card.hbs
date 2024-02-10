@@ -1,10 +1,47 @@
-<div class="bg-white shadow-sm rounded border border-gray-300 overflow-y-hidden" ...attributes>
-  <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
-    <span class="font-mono text-xs text-gray-600 bold">{{@filename}}</span>
+<div class="bg-white shadow-sm rounded border border-gray-300" ...attributes {{did-insert this.handleDidInsertContainer}}>
+  {{! template-lint-disable no-invalid-interactive }}
+  <div
+    class="flex items-center bg-gray-100 h-8 px-4 shadow-sm relative group/file-contents-card-header
+      {{if @isCollapsed 'rounded' 'rounded-t'}}
+      {{if @isCollapsible 'hover:bg-gray-50' ''}}
+      {{if @isCollapsible 'cursor-pointer' 'cursor-default'}}
+      {{if @isCollapsed 'border-b-0' 'border-b border-gray-200'}}"
+    role={{if @isCollapsible "button"}}
+    {{! @glint-expect-error doesn't allow mouse event since it has args }}
+    {{on "click" (if @isCollapsed @onExpand this.handleCollapseButtonClick)}}
+  >
+    {{#if (has-block "header")}}
+      {{yield to="header"}}
+    {{else}}
+      <span class="font-mono text-xs text-gray-600 bold flex">
+        {{@filename}}
+      </span>
+    {{/if}}
+
+    {{#if @isCollapsible}}
+      <div class="absolute inset-0 flex items-center justify-center group-hover/file-contents-card-header:opacity-100 opacity-0 transition-opacity">
+        {{#if @isCollapsed}}
+          <Pill @color="white">Click to expand</Pill>
+        {{else}}
+          <Pill @color="white">Click to collapse</Pill>
+        {{/if}}
+      </div>
+
+      {{#if @headerTooltipText}}
+        <EmberTooltip @text={{@headerTooltipText}} @side="top" />
+      {{/if}}
+    {{/if}}
   </div>
 
-  <div class="text-sm">
-    {{! @glint-expect-error: not ts-ified yet }}
-    <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" />
-  </div>
+  {{#unless @isCollapsed}}
+    <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" class="text-sm" />
+
+    {{#if @isCollapsible}}
+      <div class="flex items-center justify-center mb-3">
+        <TertiaryButton @size="small" {{on "click" this.handleCollapseButtonClick}}>
+          Collapse File
+        </TertiaryButton>
+      </div>
+    {{/if}}
+  {{/unless}}
 </div>
