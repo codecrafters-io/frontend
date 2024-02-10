@@ -14,7 +14,7 @@ interface Signature {
 
     additionalCheckoutSessionProperties: {
       pricingFrequency: string;
-      regionalDiscount?: RegionalDiscountModel;
+      regionalDiscount: RegionalDiscountModel | null;
       earlyBirdDiscountEnabled?: boolean;
       referralDiscountEnabled?: boolean;
     };
@@ -43,5 +43,11 @@ export default class ConfigureCheckoutSessionModal extends Component<Signature> 
 
     await checkoutSession.save();
     window.location.href = checkoutSession.url;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'PayPage::ConfigureCheckoutSessionModal': typeof ConfigureCheckoutSessionModal;
   }
 }
