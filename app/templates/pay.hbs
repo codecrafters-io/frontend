@@ -7,8 +7,10 @@
     </h1>
 
     {{#if this.user.isEligibleForEarlyBirdDiscount}}
+      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::EarlyBirdDiscountNotice @expiresAt={{this.user.earlyBirdDiscountEligibilityExpiresAt}} class="mt-8" />
     {{else if this.user.isEligibleForReferralDiscount}}
+      {{! @glint-expect-error affiliateReferral is guaranteed to exist }}
       <PayPage::ReferralDiscountNotice @affiliateReferral={{this.user.currentAffiliateReferral}} class="mt-8" />
     {{/if}}
 
@@ -21,6 +23,7 @@
     {{/if}}
 
     <div class="flex flex-col lg:flex-row gap-x-8 gap-y-8 items-start mt-12">
+      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::PricingCard
         @actualPrice={{120}}
         @footerText="Single payment of $120."
@@ -33,6 +36,7 @@
         data-test-quarterly-pricing-card
       />
 
+      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::PricingCard
         @actualPrice={{360}}
         @discountedPrice={{this.discountedYearlyPrice}}
@@ -46,6 +50,7 @@
         data-test-yearly-pricing-card
       />
 
+      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::PricingCard
         @actualPrice={{990}}
         @footerText="Pay once, access for life."
@@ -65,11 +70,14 @@
     </LinkTo>
 
     {{#unless this.monthlyChallengeBanner.isOutdated}}
+      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::MonthlyChallengeBanner class="max-w-[972.53px] mt-12" />
     {{/unless}}
 
+    {{! @glint-expect-error not ts-ified yet }}
     <TestimonialList />
 
+    {{! @glint-expect-error not ts-ified yet }}
     <FaqList class="mt-16" />
   </div>
 </div>
@@ -78,6 +86,7 @@
   <ModalBackdrop>
     <PayPage::ConfigureCheckoutSessionModal
       @additionalCheckoutSessionProperties={{this.additionalCheckoutSessionProperties}}
+      {{! @glint-expect-error mut not ts-ified yet }}
       @onClose={{fn (mut this.configureCheckoutSessionModalIsOpen) false}}
     />
   </ModalBackdrop>

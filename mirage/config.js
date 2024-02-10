@@ -587,6 +587,10 @@ function routes() {
     return schema.subscriptions.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
   });
 
+  this.post('/sessions/logout', function () {
+    return new Response(200, {}, {});
+  });
+
   this.post('/subscriptions/:id/cancel-trial', function (schema, request) {
     const subscription = schema.subscriptions.find(request.params.id);
     subscription.update({ endedAt: new Date() });
