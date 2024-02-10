@@ -97,7 +97,7 @@ module.exports = function (defaults) {
             authToken: process.env.SENTRY_AUTH_TOKEN,
           }),
 
-          ...[shouldSpawnBundleAnalyzer ? [new BundleAnalyzerPlugin()] : []],
+          shouldSpawnBundleAnalyzer ? new BundleAnalyzerPlugin() : null,
         ],
         devtool: EmberApp.env() === 'development' ? 'eval-source-map' : 'source-map',
         module: {
