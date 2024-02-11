@@ -15,13 +15,11 @@ export default class ConceptCardComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get latestConceptEngagement() {
-    const conceptEngagements = this.authenticator.currentUser?.conceptEngagements.filter(
-      (engagement) => engagement.concept.slug === this.args.concept.slug,
-    );
-
-    const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
-
-    return latestConceptEngagement;
+    return this.authenticator.currentUser?.conceptEngagements
+      .filter((engagement) => engagement.concept.slug === this.args.concept.slug)
+      .sortBy('createdAt')
+      .reverse()
+      .get('firstObject');
   }
 }
 

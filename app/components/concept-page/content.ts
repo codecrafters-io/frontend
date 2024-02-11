@@ -27,11 +27,11 @@ export default class ContentComponent extends Component<Signature> {
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
 
-    const conceptEngagements = this.authenticator.currentUser?.conceptEngagements.filter(
-      (engagement) => engagement.concept.slug === this.args.concept.slug,
-    );
-
-    const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
+    const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
+      .filter((engagement) => engagement.concept.slug === this.args.concept.slug)
+      .sortBy('createdAt')
+      .reverse()
+      .get('firstObject');
 
     if (latestConceptEngagement) {
       this.latestConceptEngagement = latestConceptEngagement;
