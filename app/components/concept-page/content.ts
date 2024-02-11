@@ -22,7 +22,7 @@ export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @tracked currentProgressPercentage = 0;
-  @tracked latestConceptEngagement: ConceptEngagementModel | undefined | null = null;
+  @tracked latestConceptEngagement: ConceptEngagementModel | null = null;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -30,11 +30,12 @@ export default class ContentComponent extends Component<Signature> {
     const conceptEngagements = this.authenticator.currentUser?.conceptEngagements.filter(
       (engagement) => engagement.concept.slug === this.args.concept.slug,
     );
-    const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
-    this.latestConceptEngagement = latestConceptEngagement;
 
-    if (this.latestConceptEngagement) {
-      this.currentProgressPercentage = this.latestConceptEngagement.currentProgressPercentage;
+    const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
+
+    if (latestConceptEngagement) {
+      this.latestConceptEngagement = latestConceptEngagement;
+      this.currentProgressPercentage = latestConceptEngagement.currentProgressPercentage;
     }
   }
 
