@@ -46,9 +46,10 @@ export default class ConceptComponent extends Component<Signature> {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
     } else {
       const progressPercentage = this.latestConceptEngagement?.currentProgressPercentage;
-      // console.log('progress percentage', progressPercentage);
-      // console.log('index', Math.floor((progressPercentage! / 100) * this.allBlocks.length))
-      this.lastRevealedBlockGroupIndex = progressPercentage ? Math.floor((progressPercentage / 100) * this.allBlocks.length) : null;
+      const completedBlocksCount = progressPercentage ? Math.round((progressPercentage / 100) * this.allBlocks.length) : null;
+      const blockGroupIndex = completedBlocksCount ? this.findCurrentBlockGroupIndex(completedBlocksCount) : null;
+      this.lastRevealedBlockGroupIndex = blockGroupIndex;
+
     }
   }
 
@@ -112,6 +113,28 @@ export default class ConceptComponent extends Component<Signature> {
 
   get visibleBlockGroups() {
     return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
+  }
+
+  findCurrentBlockGroupIndex(completedBlocksCount: number) {
+    let sum = 0;
+    let currentBlockGroupIndex = 0;
+
+    for (let i = 0; i < this.allBlockGroups.length; i++) {
+      const blockGroup = this.allBlockGroups[i];
+      const nextSum = sum + blockGroup!.blocks.length;
+
+      if (nextSum > completedBlocksCount) {
+        currentBlockGroupIndex = i;
+        break;
+      } else if (nextSum === completedBlocksCount) {
+        currentBlockGroupIndex = i + 1;
+        break;
+      }
+
+      sum = nextSum
+    }
+
+    return currentBlockGroupIndex;
   }
 
   @action
