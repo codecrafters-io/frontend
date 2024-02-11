@@ -1,3 +1,4 @@
+// eslint-disable-next-line ember/no-at-ember-render-modifiers
 import type RenderModifiersRegistry from '@ember/render-modifiers/template-registry';
 import type { ModifierLike } from '@glint/template';
 import type { HelperLike } from '@glint/template';
