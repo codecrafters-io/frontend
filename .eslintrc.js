@@ -81,5 +81,12 @@ module.exports = {
         'no-constant-condition': ['error', { checkLoops: false }],
       },
     },
+    // GTS files
+    {
+      files: ['**/*.gts'],
+      parser: 'ember-eslint-parser',
+      plugins: ['ember'],
+      extends: ['plugin:@typescript-eslint/recommended', 'plugin:ember/recommended-gts'],
+    },
   ],
 };
