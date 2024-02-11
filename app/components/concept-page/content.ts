@@ -49,7 +49,7 @@ export default class ContentComponent extends Component<Signature> {
   @action
   async handleProgressPercentageChanged(progressPercentage: number) {
     if (!this.latestConceptEngagement && this.currentProgressPercentage === 0) {
-      this.store.createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser, currentProgressPercentage: progressPercentage }).save()
+      this.store.createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser }).save()
     }
 
     if (progressPercentage > this.currentProgressPercentage) {
