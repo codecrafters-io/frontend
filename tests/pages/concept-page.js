@@ -11,6 +11,10 @@ export default createPage({
     await animationsSettled();
   },
 
+  progress: {
+    scope: '[data-test-concept-progress]',
+  },
+
   questionCards: collection('[data-test-question-card]', {
     selectOption: clickOnText('[data-test-question-card-option]'),
     clickOnSubmitButton: clickable('[data-test-question-card-submit-button]'),

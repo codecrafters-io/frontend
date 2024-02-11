@@ -13,6 +13,10 @@ export default createPage({
 
   conceptCards: collection('[data-test-concept-card]', {
     title: text('[data-test-concept-title]'),
+
+    progress: {
+      scope: '[data-test-concept-card-progress]',
+    }
   }),
 
   visit: visitable('/concepts'),

@@ -10,7 +10,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 
 function createConcepts(server) {
@@ -183,5 +183,25 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.questionCards[0].clickOnSubmitButton();
 
     assert.ok(conceptPage.questionCards[0].hasSubmitted, 'After selecting an option, the submission result should be visible.');
+  });
+
+  test('progress is tracked', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    const user = this.server.schema.users.first()
+    signIn(this.owner, this.server, user);
+
+    await conceptsPage.visit();
+    assert.notOk(conceptsPage.conceptCards[0].progress.isPresent)
+
+    await conceptsPage.clickOnConceptCard('TCP: An Overview');
+    assert.notOk(conceptPage.progress.isPresent)
+
+    await conceptPage.clickOnContinueButton();
+    assert.ok(conceptPage.progress.text.includes("4%"))
+
+    await conceptsPage.visit();
+    assert.notOk(conceptsPage.conceptCards[0].progress.text.includes("4%"))
   });
 });
