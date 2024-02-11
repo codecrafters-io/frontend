@@ -195,6 +195,9 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.visit();
     assert.notOk(conceptsPage.conceptCards[0].progress.isPresent)
 
+    await conceptsPage.conceptCards[0].hover();
+    assert.strictEqual(conceptsPage.conceptCards[0].actionText, 'View')
+
     await conceptsPage.clickOnConceptCard('TCP: An Overview');
     assert.notOk(conceptPage.progress.isPresent)
 
@@ -203,5 +206,8 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.visit();
     assert.notOk(conceptsPage.conceptCards[0].progress.text.includes("4%"))
+
+    await conceptsPage.conceptCards[0].hover();
+    assert.strictEqual(conceptsPage.conceptCards[0].actionText, 'Resume')
   });
 });
