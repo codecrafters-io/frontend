@@ -252,4 +252,35 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.conceptCards[1].hover();
     assert.strictEqual(conceptsPage.conceptCards[1].actionText, 'View', 'Concept card action text should be view for completed concept');
   });
+
+  test('progress is tracked and is rendered properly on page visit', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    const user = this.server.schema.users.first();
+    const networkProtocolsConcept = this.server.schema.concepts.findBy({ slug: 'network-protocols' });
+
+    const engagement = this.server.create('concept-engagement', {
+      concept: networkProtocolsConcept,
+      user,
+      currentProgressPercentage: 5,
+      lastActivityAt: new Date(),
+      startedAt: new Date(),
+    })
+
+    signIn(this.owner, this.server, user);
+
+    await conceptsPage.visit();
+    assert.ok(conceptsPage.conceptCards[0].progress.text.includes('5 % complete'), 'Progress should be tracked');
+
+    await conceptsPage.conceptCards[0].hover();
+    assert.strictEqual(
+      conceptsPage.conceptCards[0].actionText,
+      'Resume',
+      'Concept card action text should be resume for concept that is in progress',
+    );
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    assert.ok(conceptPage.progress.text.includes('5%'), 'Progress bar should reflect changes');
+  });
 });

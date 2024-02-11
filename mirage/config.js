@@ -93,12 +93,9 @@ function routes() {
   this.get('/badges');
 
   this.get('/concept-engagements', function (schema, request) {
-    const queryParams = request.queryParams;
-
     return schema.conceptEngagements
       .all()
-      .filter((engagement) => engagement.concept.id === queryParams.concept_id)
-      .filter((engagement) => engagement.user.id === queryParams.user_id);
+      .filter((engagement) => engagement.user.id === '63c51e91-e448-4ea9-821b-a80415f266d3');
   });
 
   this.patch('/concept-engagements/:concept_engagement_id', function (schema, request) {
