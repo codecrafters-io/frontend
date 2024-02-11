@@ -1,5 +1,7 @@
 'use strict';
 
+require('eslint-plugin-ember-template-lint/lib/ember-teplate-lint/config').registerPlugin('ember-template-lint-plugin-prettier');
+
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -87,6 +89,15 @@ module.exports = {
       parser: 'ember-eslint-parser',
       plugins: ['ember'],
       extends: ['plugin:@typescript-eslint/recommended', 'plugin:ember/recommended-gts'],
+    },
+    // HBS files
+    {
+      files: ['**/*.hbs'],
+      plugins: ['ember-template-lint'],
+      extends: ['plugin:ember-template-lint/recommended', 'plugin:ember-template-lint/ember-template-lint-plugin-prettier:recommended'],
+      rules: {
+        'ember-template-lint/require-presentational-children': 'off',
+      },
     },
   ],
 };
