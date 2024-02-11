@@ -41,7 +41,7 @@ export default class ConceptRoute extends BaseRoute {
     if (this.authenticator.isAuthenticated) {
       await this.store.findAll('concept-engagement', {
         user: this.authenticator.currentUser,
-        include: 'concept,user'
+        include: 'concept,user',
       });
     }
 

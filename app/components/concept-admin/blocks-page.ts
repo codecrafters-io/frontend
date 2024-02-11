@@ -112,7 +112,6 @@ export default class BlocksPageComponent extends Component<Signature> {
       }
     });
 
-    console.log(blocks[blocks.length - 1]?.type)
     const blocksAsJSON = blocks.map((block) => block.toJSON);
 
     if (blocksAsJSON[blocksAsJSON.length - 1]?.type !== 'click_to_continue') {

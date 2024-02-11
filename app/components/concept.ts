@@ -89,10 +89,12 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   get latestConceptEngagement() {
-    const conceptEngagements = this.authenticator.currentUser?.conceptEngagements.filter((engagement) => engagement.concept.slug === this.args.concept.slug);
+    const conceptEngagements = this.authenticator.currentUser?.conceptEngagements.filter(
+      (engagement) => engagement.concept.slug === this.args.concept.slug,
+    );
     const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
+
     // return conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
-    console.log('latestConceptEngagement', latestConceptEngagement);
     return latestConceptEngagement;
   }
 

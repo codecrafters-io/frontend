@@ -92,6 +92,47 @@ function routes() {
 
   this.get('/badges');
 
+  this.get('/concept-engagements', function (schema, request) {
+    console.log('get req made');
+    const queryParams = request.queryParams;
+
+    return schema.conceptEngagements
+      .all()
+      .filter((engagement) => engagement.concept.id === queryParams.concept_id)
+      .filter((engagement) => engagement.user.id === queryParams.user_id);
+  });
+
+  this.patch('/concept-engagements/:concept_engagement_id', function (schema, request) {
+    console.log('patch req made');
+    const conceptEngagement = schema.conceptEngagements.find(request.params.concept_engagement_id);
+    const attrs = this.normalizedRequestAttrs();
+    conceptEngagement.update(attrs);
+
+    return conceptEngagement;
+  });
+
+  this.post('/concept-engagements', function (schema, request) {
+    console.log('post req made');
+    const jsonBody = JSON.parse(request.requestBody);
+    const userId = jsonBody.data.relationships.user.data.id;
+    const conceptId = jsonBody.data.relationships.concept.data.id;
+
+    const user = schema.users.find(userId);
+    const concept = schema.concepts.find(conceptId);
+
+    console.log('json body', jsonBody);
+    console.log('user', user);
+    console.log('concept', concept);
+
+    return schema.conceptEngagements.create({
+      concept,
+      user,
+      currentProgressPercentage: 0,
+      lastActivityAt: new Date(),
+      startedAt: new Date(),
+    });
+  });
+
   this.get('/concept-groups', function (schema) {
     return schema.conceptGroups.all();
   });
