@@ -2,14 +2,12 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | view-tracks', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('it renders', async function (assert) {
     testScenario(this.server);
@@ -49,8 +47,8 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start', 'expected fourth track to have start action');
 
     assert.true(catalogPage.trackCards[0].hasProgressBar, 'expected first track to have progress bar');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/63 stages');
-    assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:2%');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/68 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:1%');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -119,7 +117,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[1].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '63/63 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '68/68 stages');
     assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:100%');
   });
 

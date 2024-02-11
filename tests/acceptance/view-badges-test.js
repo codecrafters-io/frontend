@@ -1,8 +1,7 @@
 import badgesPage from 'codecrafters-frontend/tests/pages/badges-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 function createBadges(server) {
@@ -27,7 +26,6 @@ mobile radiography units to aid the war effort, continuing her research under ch
 
 module('Acceptance | view-badges', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('it renders when all badges are unearned', async function (assert) {
     testScenario(this.server);

@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsTeamAdmin } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitUntil } from '@ember/test-helpers';
@@ -11,7 +10,6 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | team-page | manage-team-members-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('team admin can view team members & invite link when they are the only member', async function (assert) {

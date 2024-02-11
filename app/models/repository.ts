@@ -16,6 +16,7 @@ import { cached } from '@glimmer/tracking';
 
 import { memberAction } from 'ember-api-actions';
 import type AutofixRequestModel from './autofix-request';
+import type CourseExtensionModel from './course-extension';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
@@ -60,7 +61,10 @@ export default class RepositoryModel extends Model {
   @attr('number') declare submissionsCount: number;
 
   get activatedCourseExtensions() {
-    return this.courseExtensionActivations.map((activation) => activation.extension).uniq();
+    return this.courseExtensionActivations
+      .sortBy('activatedAt')
+      .map((activation) => activation.extension)
+      .uniq();
   }
 
   // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
@@ -168,6 +172,10 @@ export default class RepositoryModel extends Model {
 
   courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
     return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
+  }
+
+  extensionStagesAreComplete(extension: CourseExtensionModel) {
+    return extension.stages.every((stage) => this.stageIsComplete(stage));
   }
 
   hasClosedCourseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {

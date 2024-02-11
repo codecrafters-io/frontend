@@ -1,9 +1,11 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
-import { action } from '@ember/object';
-import type CourseStageModel from './course-stage';
-import type UserModel from './user';
-import type LanguageModel from './language';
 import type CourseStageCommentModel from './course-stage-comment';
+import type CourseStageModel from './course-stage';
+import type LanguageModel from './language';
+import type UserModel from './user';
+import { action } from '@ember/object';
+import { memberAction } from 'ember-api-actions';
+import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
 
 export default class CommunityCourseStageSolutionModel extends Model {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
@@ -17,6 +19,7 @@ export default class CommunityCourseStageSolutionModel extends Model {
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
 
+  @attr('number') declare approvedCommentsCount: number;
   @attr('string') declare explanationMarkdown: string;
   @attr('string') declare commitSha: string;
   @attr('string') declare githubRepositoryName: string;
@@ -27,6 +30,7 @@ export default class CommunityCourseStageSolutionModel extends Model {
   @attr('date') declare submittedAt: Date;
   @attr('boolean') declare isRestrictedToTeam: boolean; // if true, only fellow team members can see this solution
 
+  // We don't render explanations at the moment
   get hasExplanation() {
     return !!this.explanationMarkdown;
   }
@@ -67,4 +71,15 @@ export default class CommunityCourseStageSolutionModel extends Model {
   githubUrlForFile(filename: string) {
     return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
   }
+
+  declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
 }
+
+CommunityCourseStageSolutionModel.prototype.fetchFileComparisons = memberAction({
+  path: 'file-comparisons',
+  type: 'get',
+
+  after(response) {
+    return response.map((json: Record<string, unknown>) => FileComparisonFromJSON(json));
+  },
+});

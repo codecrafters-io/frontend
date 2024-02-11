@@ -1,8 +1,13 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type { ModelType } from 'codecrafters-frontend/routes/catalog';
+import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 
-export default class TracksController extends Controller {
-  @service authenticator;
+export default class CatalogController extends Controller {
+  declare model: ModelType;
+
+  @service declare authenticator: AuthenticatorService;
 
   get courses() {
     if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {
@@ -32,12 +37,14 @@ export default class TracksController extends Controller {
       });
     } else {
       return this.courses.toArray().sort((course1, course2) => {
-        let repositoriesForCourse1 = this.authenticator.currentUser.repositories.filterBy('course', course1).filterBy('firstSubmissionCreated');
-        let repositoriesForCourse2 = this.authenticator.currentUser.repositories.filterBy('course', course2).filterBy('firstSubmissionCreated');
+        const repositoriesForCourse1 = this.authenticator.currentUser!.repositories.filterBy('course', course1).filterBy('firstSubmissionCreated');
+        const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('firstSubmissionCreated');
 
-        let lastSubmissionForCourse1At =
+        const lastSubmissionForCourse1At =
+          // @ts-expect-error at(-1) is not defined on Array
           repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt.getTime() : null;
-        let lastSubmissionForCourse2At =
+        const lastSubmissionForCourse2At =
+          // @ts-expect-error at(-1) is not defined on Array
           repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt.getTime() : null;
 
         if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At > lastSubmissionForCourse2At) {
@@ -60,12 +67,18 @@ export default class TracksController extends Controller {
       return this.languages.sortBy('sortPositionForTrack');
     } else {
       return this.languages.toArray().sort((language1, language2) => {
-        let repositoriesForLanguage1 = this.authenticator.currentUser.repositories.filterBy('language', language1).filterBy('firstSubmissionCreated');
-        let repositoriesForLanguage2 = this.authenticator.currentUser.repositories.filterBy('language', language2).filterBy('firstSubmissionCreated');
+        const repositoriesForLanguage1 = this.authenticator
+          .currentUser!.repositories.filterBy('language', language1)
+          .filterBy('firstSubmissionCreated');
+        const repositoriesForLanguage2 = this.authenticator
+          .currentUser!.repositories.filterBy('language', language2)
+          .filterBy('firstSubmissionCreated');
 
         if (repositoriesForLanguage1.length > 0 && repositoriesForLanguage2.length > 0) {
-          let lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
-          let lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
+          // @ts-expect-error at(-1) is not defined on Array
+          const lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
+          // @ts-expect-error at(-1) is not defined on Array
+          const lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
 
           return lastSubmissionForLanguage1 > lastSubmissionForLanguage2 ? 1 : -1;
         } else if (repositoriesForLanguage1.length > 0) {
@@ -77,5 +90,15 @@ export default class TracksController extends Controller {
         }
       });
     }
+  }
+
+  get productWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
+    if (!this.authenticator.currentUser) {
+      return null;
+    }
+
+    return this.authenticator.currentUser.featureSuggestions
+      .filterBy('featureIsProductWalkthrough')
+      .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
   }
 }

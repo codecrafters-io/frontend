@@ -3,14 +3,12 @@ import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-servi
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | view-courses', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('it renders', async function (assert) {
     testScenario(this.server);
@@ -71,8 +69,8 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.true(catalogPage.courseCards[0].hasProgressBar);
     assert.false(catalogPage.courseCards[0].hasDifficultyLabel);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/26 stages');
-    assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:4%');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/31 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:3%');
   });
 
   test('it renders with progress if user has created a repository', async function (assert) {
@@ -93,7 +91,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.true(catalogPage.courseCards[0].hasProgressBar);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/26 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/31 stages');
   });
 
   test('it sorts course cards based on last push', async function (assert) {

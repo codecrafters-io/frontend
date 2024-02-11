@@ -1,15 +1,13 @@
-import Component from '@glimmer/component';
-import Prism from 'prismjs';
-import { tracked } from '@glimmer/tracking';
+import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import type Store from '@ember-data/store';
 import type UserModel from 'codecrafters-frontend/models/user';
-import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import { type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -23,29 +21,14 @@ type Signature = {
 };
 
 export default class CommunitySolutionCardComponent extends Component<Signature> {
+  @tracked containerElement: HTMLDivElement | null = null;
+  @tracked fileComparisons: FileComparison[] = [];
   @tracked isExpanded = false;
   @tracked isLoadingComments = false;
-  @tracked containerElement: HTMLDivElement | null = null;
+  @tracked isLoadingFileComparisons = false;
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-
-  get changedFilesForRender() {
-    return this.args.solution.changedFiles.map((changedFile) => {
-      return {
-        ...changedFile,
-        comments: this.shouldShowComments ? this.commentsGroupedByFilename[changedFile.filename] || [] : [],
-      };
-    });
-  }
-
-  get comments() {
-    return this.args.solution.comments.filter((comment) => comment.isTopLevelComment && !comment.isNew);
-  }
-
-  get commentsGroupedByFilename() {
-    return groupBy(this.comments, 'filename');
-  }
 
   get currentUser() {
     return this.authenticator.currentUser as UserModel; // For now, this is only rendered in contexts where the current user is logged in
@@ -59,35 +42,10 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     return this.args.isCollapsedByDefault; // TODO: Compute based on lines of code
   }
 
-  get isCurrentUserSolution() {
-    return this.currentUser.id === this.args.solution.user.id;
-  }
-
-  get shouldShowComments() {
-    return this.comments.length > 0;
-  }
-
-  // We don't support explanations as of now
-  get shouldShowExplanation() {
-    // return this.isExpanded && hasExplanation && this.currentUser.isStaff;
-    return false;
-  }
-
-  get shouldShowPublishToGithubButton() {
-    return this.isCurrentUserSolution && !this.args.solution.isPublishedToGithub;
-  }
-
   @action
   handleCollapseButtonClick() {
     this.isExpanded = false;
     this.containerElement!.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  @action
-  handleCommentView(comment: CommunityCourseStageSolutionCommentModel) {
-    this.analyticsEventTracker.track('viewed_comment', {
-      comment_id: comment.id,
-    });
   }
 
   @action
@@ -96,19 +54,10 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   }
 
   @action
-  handleDidInsertExplanationHTML(element: HTMLDivElement) {
-    Prism.highlightAllUnder(element);
-  }
-
-  @action
-  handleDidUpdateExplanationHTML(element: HTMLDivElement) {
-    Prism.highlightAllUnder(element);
-  }
-
-  @action
   handleExpandButtonClick() {
     this.isExpanded = true;
     this.loadComments();
+    this.loadFileComparisons();
 
     this.analyticsEventTracker.track('viewed_community_course_stage_solution', {
       community_course_stage_solution_id: this.args.solution.id,
@@ -128,6 +77,18 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     });
 
     this.isLoadingComments = false;
+  }
+
+  @action
+  async loadFileComparisons() {
+    // Already loaded
+    if (this.fileComparisons.length > 0) {
+      return;
+    }
+
+    this.isLoadingFileComparisons = true;
+    this.fileComparisons = await this.args.solution.fetchFileComparisons({});
+    this.isLoadingFileComparisons = false;
   }
 }
 

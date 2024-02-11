@@ -1,8 +1,7 @@
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import submissionsPage from 'codecrafters-frontend/tests/pages/course-admin/submissions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -10,7 +9,6 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | course-admin | view-submissions', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('it renders when no submissions are present', async function (assert) {
     testScenario(this.server);

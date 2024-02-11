@@ -4,7 +4,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    color: 'green' | 'yellow' | 'red' | 'blue' | 'gray';
+    color: 'green' | 'yellow' | 'red' | 'blue' | 'gray' | 'dark-gray' | 'white';
   };
 
   Blocks: {
@@ -20,6 +20,8 @@ export default class PillComponent extends Component<Signature> {
       red: 'bg-red-50 text-red-700 ring-red-600/20',
       blue: 'bg-blue-50 text-blue-700 ring-blue-600/20',
       gray: 'bg-gray-50 text-gray-700 ring-gray-600/20',
+      'dark-gray': 'bg-gray-200 text-gray-700 ring-gray-600/20',
+      white: 'bg-white text-gray-600 ring-gray-600/20',
     }[this.args.color];
   }
 }

@@ -35,8 +35,13 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
-  handleLogoutClick() {
-    this.store.createRecord('session').logout();
+  async handleLogoutClick() {
+    await this.router.transitionTo('catalog'); // Isn't safe to logout on any page that assumes "User" is not-null
+    const logoutResponse = await this.store.createRecord('session').logout();
+
+    if (logoutResponse.redirect_url) {
+      window.location.href = logoutResponse.redirect_url;
+    }
   }
 
   @action

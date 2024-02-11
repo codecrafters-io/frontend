@@ -54,11 +54,10 @@ export default class CourseController extends Controller {
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion() {
-    if (this.authenticator.isAnonymous || (this.currentUser && this.currentUser.isTeamMember)) {
+    if (!this.currentUser || this.currentUser.isTeamMember) {
       return null;
     }
 
-    // @ts-ignore - featureSuggestions is not typed yet
     return this.currentUser.featureSuggestions.filterBy('featureIsPrivateLeaderboard').rejectBy('isDismissed')[0];
   }
 

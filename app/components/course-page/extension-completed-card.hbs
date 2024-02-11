@@ -1,0 +1,29 @@
+<CoursePage::InstructionsCard ...attributes data-test-extension-completed-card>
+  <:content>
+    <div class="flex items-center mb-6 border-b pb-2">
+      <img src={{this.congratulationsImage}} alt="Congratulations!" class="mr-3 w-10 h-10" />
+      <span class="font-semibold text-lg text-gray-700">Extension Complete!</span>
+    </div>
+
+    <div class="text-gray-700 leading-7 prose" data-test-instructions-text>
+      <p>
+        Nice work! You&apos;ve completed all the stages for this extension.
+      </p>
+
+      <p>
+        You can now choose which other extensions you want to enable.
+      </p>
+    </div>
+
+    <PrimaryButton data-test-configure-extensions-button class="mt-4" {{on "click" (fn (mut this.configureExtensionsModalIsOpen) true)}}>
+      Choose Extensions
+    </PrimaryButton>
+  </:content>
+</CoursePage::InstructionsCard>
+
+{{#if this.configureExtensionsModalIsOpen}}
+  <ModalBackdrop>
+    {{! @glint-expect-error mut signature doesn't agree? }}
+    <CoursePage::ConfigureExtensionsModal @repository={{@repository}} @onClose={{fn (mut this.configureExtensionsModalIsOpen) false}} />
+  </ModalBackdrop>
+{{/if}}

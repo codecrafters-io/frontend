@@ -1,17 +1,16 @@
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import windowMock from 'ember-window-mock';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('redirects to login page if user is not signed in', async function (assert) {
@@ -142,5 +141,16 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.clickOnProceedToCheckoutButton();
 
     assert.true(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
+  });
+
+  test('user can logout from pay page (regression)', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+    await payPage.accountDropdown.toggle();
+    await payPage.accountDropdown.clickOnLink('Logout');
+
+    assert.strictEqual(currentURL(), '/catalog');
   });
 });

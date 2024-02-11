@@ -7,8 +7,7 @@ import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overv
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
@@ -21,7 +20,6 @@ function createConcepts(server) {
 module('Acceptance | concepts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('can create concept', async function (assert) {

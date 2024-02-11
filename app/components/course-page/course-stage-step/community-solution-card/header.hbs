@@ -1,0 +1,78 @@
+<div class="flex justify-between items-center gap-x-4 gap-y-4 flex-wrap" ...attributes>
+  <div class="flex items-center">
+    <a href={{@solution.user.codecraftersProfileUrl}} class="flex items-center" target="_blank" rel="noopener noreferrer">
+      <AvatarImage @user={{@solution.user}} class="w-6 h-6 mr-1.5 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+      <span class="text-gray-700 text-xs">{{@solution.user.username}}</span>
+    </a>
+
+    {{#if @solution.isRestrictedToTeam}}
+      <div class="inline-flex items-center ml-2 border border-gray-300 rounded pl-1 pr-2">
+        {{svg-jar "lock-closed" class="w-3 h-3 text-gray-400 mr-1"}}
+        <span class="text-xs font-semibold leading-5 text-gray-700">Private</span>
+        <EmberTooltip @text="This solution is only visible to users within your team." />
+      </div>
+    {{/if}}
+  </div>
+
+  <div class={{if @isExpanded "visible" "hidden"}}>
+    <button
+      class="border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 text-xs rounded flex flex-col items-center w-full"
+      type="button"
+      {{on "click" @onCollapseButtonClick}}
+    >
+      <div class="font-bold flex items-center sm:mb-0">
+        Collapse example
+        {{svg-jar "arrow-up" class="w-3 ml-1 fill-current"}}
+      </div>
+    </button>
+  </div>
+
+  <div class="flex items-center shrink-0">
+    {{#if (or (current-user-is-staff) (current-user-is-course-author @solution.courseStage.course))}}
+      <div class="flex items-center">
+        {{svg-jar "chart-bar" class="w-4 text-gray-500 mr-1"}}
+
+        {{! Investigate why this doesn't work without target=blank }}
+        <LinkTo @route="course-admin.code-example" @model={{@solution.id}} class="text-xs text-gray-500 hover:underline" target="_blank">
+          {{#if @solution.ratingEstimate}}
+            Rating:
+            {{@solution.ratingEstimateRounded}}
+            <EmberTooltip @text="{{@solution.ratingMeanRounded}} ± {{@solution.ratingStandardDeviationRounded}}" />
+          {{else}}
+            Unrated
+            <EmberTooltip @text="Once ratings are computed, they will be shown here." />
+          {{/if}}
+        </LinkTo>
+      </div>
+      <div class="w-px h-3 bg-gray-200 mx-2"></div>
+    {{/if}}
+    {{#if (gt @solution.approvedCommentsCount 0)}}
+      <div class="flex items-center">
+        {{svg-jar "chat-alt" class="w-4 text-gray-500 mr-1"}}
+        <div class="text-xs text-gray-500">
+          {{@solution.approvedCommentsCount}}
+          comments
+        </div>
+      </div>
+      <div class="w-px h-3 bg-gray-200 mx-2"></div>
+    {{/if}}
+    <div class="flex items-center">
+      {{svg-jar "clock" class="w-4 text-gray-500 mr-1"}}
+      <div class="text-xs text-gray-500">
+        {{date-from-now @solution.submittedAt}}
+      </div>
+    </div>
+    {{!      <div class="flex items-center">}}
+    {{!--        {{svg-jar "plus" class="w-4 text-green-600"}}--}}
+    {{!        <div class="text-xs text-gray-500">}}
+    {{!          <span class="text-green-600">20 lines</span>}}
+    {{!        </div>}}
+    {{!      </div>}}
+    {{!      <div class="ml-2 flex items-center">}}
+    {{!--        {{svg-jar "minus" class="w-4 text-red-600"}}--}}
+    {{!        <div class="text-xs text-gray-500">}}
+    {{!          <span class="text-red-600">2 lines</span>}}
+    {{!        </div>}}
+    {{!      </div>}}
+  </div>
+</div>

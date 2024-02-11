@@ -16,3 +16,9 @@ export default class BaseStagesCompletedCardComponent extends Component<Signatur
 
   @tracked configureExtensionsModalIsOpen = false;
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::BaseStagesCompletedCard': typeof BaseStagesCompletedCardComponent;
+  }
+}

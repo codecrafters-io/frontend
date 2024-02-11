@@ -4,8 +4,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
 import { module, test } from 'qunit';
 import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { settled } from '@ember/test-helpers';
@@ -13,7 +12,6 @@ import { settled } from '@ember/test-helpers';
 module('Acceptance | course-page | publish-to-github-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('can initiate GitHub integration setup', async function (assert) {

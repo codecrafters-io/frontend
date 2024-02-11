@@ -2,12 +2,20 @@ import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
+import type RouterService from '@ember/routing/router-service';
+import type { ModelType } from 'codecrafters-frontend/routes/pay';
+import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class PayController extends Controller {
-  @service analyticsEventTracker;
-  @service authenticator;
-  @service monthlyChallengeBanner;
-  @service router;
+  declare model: ModelType;
+
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+  @service declare authenticator: AuthenticatorService;
+  @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
+  @service declare router: RouterService;
 
   @tracked configureCheckoutSessionModalIsOpen = false;
   @tracked isCreatingCheckoutSession = false;
@@ -34,18 +42,18 @@ export default class PayController extends Controller {
   }
 
   get user() {
-    return this.authenticator.currentUser;
+    return this.authenticator.currentUser as UserModel; // pay route is protected by auth, so currentUser is guaranteed to be a UserModel
   }
 
   @action
-  handleStartMembershipButtonClick(pricingFrequency) {
+  handleStartMembershipButtonClick(pricingFrequency: string) {
     this.configureCheckoutSessionModalIsOpen = true;
     this.selectedPricingFrequency = pricingFrequency;
   }
 
   @action
   async handleTryNowPayLaterButtonClicked() {
-    this.analyticsEventTracker.track('dismissed_payment_prompt');
+    this.analyticsEventTracker.track('dismissed_payment_prompt', {});
     this.router.transitionTo('tracks');
   }
 }

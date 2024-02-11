@@ -8,28 +8,12 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { settled, scrollTo } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | course-page | view-community-course-stage-solutions', function (hooks) {
+module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
-  setupMirage(hooks);
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.beforeEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.add('ember-testing-container-full-screen');
-  });
-
-  // Scroll tests don't work with the container docked to the side
-  // TODO: Extract this into a common setupApplicationTest function
-  hooks.afterEach(() => {
-    const testContainer = document.getElementById('ember-testing-container');
-    testContainer.classList.remove('ember-testing-container-full-screen');
-  });
 
   test('can view solutions before starting course', async function (assert) {
     testScenario(this.server);
@@ -71,6 +55,10 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2, 'expected 2 Go solutions to be present'); // Go is picked by default
 
+    // Trigger logic that runs on expand
+    await coursePage.codeExamplesTab.solutionCards[0].clickOnExpandButton();
+    await coursePage.codeExamplesTab.solutionCards[0].clickOnCollapseButton();
+
     await coursePage.codeExamplesTab.languageDropdown.toggle();
     await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
@@ -82,7 +70,6 @@ module('Acceptance | course-page | view-community-course-stage-solutions', funct
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 0, 'expected no C solutions to be present');
   });
 
-  // eslint-disable-next-line qunit/require-expect
   test('can view solutions after starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
