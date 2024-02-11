@@ -1,7 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div class="flex items-center" data-test-concept-card-progress ...attributes>
   <div class="rounded overflow-hidden mr-2">
-    <div class="{{if (eq @latestConceptEngagement.currentProgressPercentage) 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
+    <div class="{{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
       {{#if (eq @latestConceptEngagement.currentProgressPercentage 0)}}
         <div class="bg-blue-500 w-1/12"></div>
       {{else}}
