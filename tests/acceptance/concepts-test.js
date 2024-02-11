@@ -260,13 +260,13 @@ module('Acceptance | concepts-test', function (hooks) {
     const user = this.server.schema.users.first();
     const networkProtocolsConcept = this.server.schema.concepts.findBy({ slug: 'network-protocols' });
 
-    const engagement = this.server.create('concept-engagement', {
+    this.server.create('concept-engagement', {
       concept: networkProtocolsConcept,
       user,
       currentProgressPercentage: 5,
       lastActivityAt: new Date(),
       startedAt: new Date(),
-    })
+    });
 
     signIn(this.owner, this.server, user);
 

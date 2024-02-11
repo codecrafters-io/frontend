@@ -8,7 +8,7 @@ export default class ConceptsRoute extends BaseRoute {
 
   async model() {
     if (this.authenticator.isAuthenticated) {
-      console.log('is this called')
+      console.log('is this called');
       await this.store.findAll('concept-engagement', {
         user: this.authenticator.currentUser,
         include: 'concept,user',
