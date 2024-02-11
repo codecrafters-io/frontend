@@ -94,7 +94,6 @@ export default class ConceptComponent extends Component<Signature> {
     );
     const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
 
-    // return conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
     return latestConceptEngagement;
   }
 

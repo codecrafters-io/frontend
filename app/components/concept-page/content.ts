@@ -43,13 +43,6 @@ export default class ContentComponent extends Component<Signature> {
     return this.currentProgressPercentage === 100;
   }
 
-  // get latestConceptEngagement() {
-  //   const conceptEngagements = this.authenticator.currentUser?.conceptEngagements.filter((engagement) => engagement.concept.slug === this.args.concept.slug);
-  //   const latestConceptEngagement = conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
-  //   // return conceptEngagements?.sortBy('createdAt').reverse().get('firstObject');
-  //   return latestConceptEngagement;
-  // }
-
   get nextConcept() {
     return this.args.allConcepts.find((concept) => concept.slug === this.args.conceptGroup?.nextConceptSlug(this.args.concept.slug));
   }
