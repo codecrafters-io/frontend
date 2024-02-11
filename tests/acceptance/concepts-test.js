@@ -189,26 +189,30 @@ module('Acceptance | concepts-test', function (hooks) {
     testScenario(this.server);
     createConcepts(this.server);
 
-    const user = this.server.schema.users.first()
+    const user = this.server.schema.users.first();
     signIn(this.owner, this.server, user);
 
     await conceptsPage.visit();
-    assert.notOk(conceptsPage.conceptCards[1].progress.isPresent, 'Progress bar should not be present in concept card before starting concept')
+    assert.notOk(conceptsPage.conceptCards[1].progress.isPresent, 'Progress bar should not be present in concept card before starting concept');
 
     await conceptsPage.conceptCards[1].hover();
-    assert.strictEqual(conceptsPage.conceptCards[1].actionText, 'View', 'Concept card action text should be view')
+    assert.strictEqual(conceptsPage.conceptCards[1].actionText, 'View', 'Concept card action text should be view');
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
-    assert.notOk(conceptPage.progress.isPresent, 'Progress bar should not be present in concept before starting')
+    assert.notOk(conceptPage.progress.isPresent, 'Progress bar should not be present in concept before starting');
 
     await conceptPage.clickOnContinueButton();
-    assert.ok(conceptPage.progress.text.includes("5%"), 'Progress bar should reflect changes')
+    assert.ok(conceptPage.progress.text.includes('5%'), 'Progress bar should reflect changes');
 
     await conceptsPage.visit();
-    assert.ok(conceptsPage.conceptCards[1].progress.text.includes("5 % complete"), 'Progress should be tracked')
+    assert.ok(conceptsPage.conceptCards[1].progress.text.includes('5 % complete'), 'Progress should be tracked');
 
     await conceptsPage.conceptCards[1].hover();
-    assert.strictEqual(conceptsPage.conceptCards[1].actionText, 'Resume', 'Concept card action text should be resume for concept that is in progress')
+    assert.strictEqual(
+      conceptsPage.conceptCards[1].actionText,
+      'Resume',
+      'Concept card action text should be resume for concept that is in progress',
+    );
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
 
@@ -236,13 +240,16 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.ok(conceptPage.progress.text.includes('100%'), 'Progress bar should reflect concept completion')
+    assert.ok(conceptPage.progress.text.includes('100%'), 'Progress bar should reflect concept completion');
 
     await conceptsPage.visit();
-    assert.notOk(conceptsPage.conceptCards[1].progress.isPresent, 'Concept card should not show progress')
-    assert.ok(conceptsPage.conceptCards[1].text.includes('completed'), 'Concept card should show completed instead of progress percentage on completion')
+    assert.notOk(conceptsPage.conceptCards[1].progress.isPresent, 'Concept card should not show progress');
+    assert.ok(
+      conceptsPage.conceptCards[1].text.includes('completed'),
+      'Concept card should show completed instead of progress percentage on completion',
+    );
 
     await conceptsPage.conceptCards[1].hover();
-    assert.strictEqual(conceptsPage.conceptCards[1].actionText, 'View', 'Concept card action text should be view for completed concept')
+    assert.strictEqual(conceptsPage.conceptCards[1].actionText, 'View', 'Concept card action text should be view for completed concept');
   });
 });

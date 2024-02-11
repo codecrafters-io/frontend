@@ -49,7 +49,6 @@ export default class ConceptComponent extends Component<Signature> {
       const completedBlocksCount = progressPercentage ? Math.round((progressPercentage / 100) * this.allBlocks.length) : null;
       const blockGroupIndex = completedBlocksCount ? this.findCurrentBlockGroupIndex(completedBlocksCount) : null;
       this.lastRevealedBlockGroupIndex = blockGroupIndex;
-
     }
   }
 
@@ -131,7 +130,7 @@ export default class ConceptComponent extends Component<Signature> {
         break;
       }
 
-      sum = nextSum
+      sum = nextSum;
     }
 
     return currentBlockGroupIndex;

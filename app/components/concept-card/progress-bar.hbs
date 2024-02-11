@@ -14,7 +14,10 @@
     </div>
   </div>
 
-  <div class="text-xs {{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'text-teal-500' 'text-blue-500'}} mr-3" data-test-concept-progress-text>
+  <div
+    class="text-xs {{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'text-teal-500' 'text-blue-500'}} mr-3"
+    data-test-concept-progress-text
+  >
     <b class="font-bold">{{@latestConceptEngagement.currentProgressPercentage}}</b>
     % complete
   </div>

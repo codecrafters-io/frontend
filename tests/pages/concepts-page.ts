@@ -18,7 +18,7 @@ export default createPage({
 
     progress: {
       scope: '[data-test-concept-card-progress]',
-    }
+    },
   }),
 
   visit: visitable('/concepts'),
