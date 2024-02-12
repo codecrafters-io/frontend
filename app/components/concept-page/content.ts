@@ -23,6 +23,7 @@ export default class ContentComponent extends Component<Signature> {
   @service declare store: Store;
   @tracked currentProgressPercentage = 0;
   @tracked latestConceptEngagement: ConceptEngagementModel | null = null;
+  @tracked remainingBlocksCount = 0;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -36,6 +37,10 @@ export default class ContentComponent extends Component<Signature> {
     if (latestConceptEngagement) {
       this.latestConceptEngagement = latestConceptEngagement;
       this.currentProgressPercentage = latestConceptEngagement.currentProgressPercentage;
+
+      const allBlocks = this.args.concept.parsedBlocks;
+      const completedBlocksCount = Math.round((latestConceptEngagement.currentProgressPercentage/ 100) * allBlocks.length);
+      this.remainingBlocksCount = allBlocks.length - completedBlocksCount;
     }
   }
 
@@ -58,7 +63,7 @@ export default class ContentComponent extends Component<Signature> {
   }
 
   @action
-  async handleProgressPercentageChanged(progressPercentage: number) {
+  async handleProgressPercentageChanged(progressPercentage: number, remainingBlocksCount: number) {
     if (!this.latestConceptEngagement && this.currentProgressPercentage === 0) {
       const newConceptEngagement = await this.store
         .createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser })
@@ -73,6 +78,7 @@ export default class ContentComponent extends Component<Signature> {
     }
 
     this.currentProgressPercentage = progressPercentage;
+    this.remainingBlocksCount = remainingBlocksCount;
   }
 
   @action
