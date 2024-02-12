@@ -242,8 +242,8 @@ module('Acceptance | concepts-test', function (hooks) {
     );
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
-    assert.strictEqual(conceptPage.progressBar.style, 'width: 5%', 'Progress bar should reflect changes');
     assert.strictEqual(conceptPage.blocks.length, 2, 'Completed blocks are automatically shown');
+    assert.strictEqual(conceptPage.progressBar.style, 'width: 5%', 'Progress bar should reflect changes');
   });
 
   test('progress for completed concepts is rendered properly', async function (assert) {
