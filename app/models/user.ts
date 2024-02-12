@@ -166,6 +166,10 @@ export default class UserModel extends Model {
     return this.teamMemberships.filterBy('isAdmin').mapBy('team');
   }
 
+  get pendingProductWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
+    return this.featureSuggestions.filterBy('featureIsProductWalkthrough').rejectBy('isDismissed')[0] || null;
+  }
+
   get teamHasActivePilot() {
     return this.teams.isAny('hasActivePilot');
   }
