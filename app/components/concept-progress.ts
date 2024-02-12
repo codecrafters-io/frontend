@@ -6,6 +6,7 @@ interface Signature {
 
   Args: {
     progressPercentage: number;
+    remainingBlocksCount: number;
   };
 }
 

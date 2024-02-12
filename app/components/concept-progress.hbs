@@ -11,5 +11,14 @@
         </div>
       {{/animated-value}}
     </AnimatedContainer>
+
+    <AnimatedContainer>
+      {{#animated-value @remainingBlocksCount rules=this.rules duration=200 as |v|}}
+        <div>
+          {{! @glint-ignore }}
+          {{v}}%
+        </div>
+      {{/animated-value}}
+    </AnimatedContainer>
   </div>
 </div>
