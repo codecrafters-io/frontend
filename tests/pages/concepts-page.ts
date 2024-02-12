@@ -1,4 +1,4 @@
-import { clickable, collection, text, triggerable, visitable } from 'ember-cli-page-object';
+import { attribute, clickable, collection, isPresent, text, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -13,12 +13,11 @@ export default createPage({
 
   conceptCards: collection('[data-test-concept-card]', {
     actionText: text('[data-test-action-text]'),
+    hasProgressBar: isPresent('[data-test-concept-card-progress]'),
     hover: triggerable('mouseenter'),
+    progressText: text('[data-test-concept-card-progress-text]'),
+    progressBarStyle: attribute('style', '[data-test-concept-card-progress-bar]'),
     title: text('[data-test-concept-title]'),
-
-    progress: {
-      scope: '[data-test-concept-card-progress]',
-    },
   }),
 
   visit: visitable('/concepts'),
