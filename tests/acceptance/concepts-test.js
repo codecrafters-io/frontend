@@ -204,7 +204,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.visit();
     assert.ok(conceptsPage.conceptCards[1].progressText.includes('5 % complete'), 'Progress text should reflect tracked progress');
-    assert.strictEqual(conceptsPage.conceptCards[1].progressBarStyle, 'width:5%', 'Progress bar reflects tracked progress');
+    assert.strictEqual(conceptsPage.conceptCards[1].progressBarStyle, 'width: 5%', 'Progress bar reflects tracked progress');
 
     await conceptsPage.conceptCards[1].hover();
     assert.strictEqual(
@@ -243,6 +243,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
     assert.strictEqual(conceptPage.progressBar.style, 'width: 5%', 'Progress bar should reflect changes');
+    assert.strictEqual(conceptPage.blocks.length, 2, 'Completed blocks are automatically shown');
   });
 
   test('progress for completed concepts is rendered properly', async function (assert) {
