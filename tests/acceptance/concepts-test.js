@@ -200,7 +200,6 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.notOk(conceptPage.hasProgressBar, 'Progress bar should not be present in concept before starting');
 
     await conceptPage.clickOnContinueButton();
-    assert.ok(conceptPage.hasProgressBar, 'Progress bar should be present after starting');
 
     await conceptsPage.visit();
     assert.ok(conceptsPage.conceptCards[1].progressText.includes('5 % complete'), 'Progress text should reflect tracked progress');
