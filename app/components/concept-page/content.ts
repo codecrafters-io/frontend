@@ -63,6 +63,7 @@ export default class ContentComponent extends Component<Signature> {
       const newConceptEngagement = await this.store
         .createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser })
         .save();
+
       this.latestConceptEngagement = newConceptEngagement;
     }
 
