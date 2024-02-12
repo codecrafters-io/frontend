@@ -11,8 +11,10 @@ export default createPage({
     await animationsSettled();
   },
 
-  hasProgressBar: isPresent('[data-test-concept-progress]'),
-  progressBarStyle: attribute('style', '[data-test-concept-progress-bar]'),
+  progressBar: {
+    style: attribute('style', '[data-test-concept-progress-bar]'),
+    scope: '[data-test-concept-progress]',
+  },
 
   questionCards: collection('[data-test-question-card]', {
     selectOption: clickOnText('[data-test-question-card-option]'),

@@ -197,14 +197,14 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(conceptsPage.conceptCards[1].actionText, 'View', 'Concept card action text should be view');
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
-    assert.notOk(conceptPage.hasProgressBar, 'Progress bar should not be present in concept before starting');
+    assert.notOk(conceptPage.progressBar.isPresent, 'Progress bar should not be present in concept before starting');
 
     await conceptPage.clickOnContinueButton();
-    assert.strictEqual(conceptPage.progressBarStyle, 'width: 5%;', 'Progress bar should reflect changes');
+    assert.strictEqual(conceptPage.progressBar.style, 'width: 5%', 'Progress bar should reflect changes');
 
     await conceptsPage.visit();
     assert.ok(conceptsPage.conceptCards[1].progressText.includes('5 % complete'), 'Progress text should reflect tracked progress');
-    assert.strictEqual(conceptsPage.conceptCards[1].progressBarStyle, 'width: 5%;', 'Progress bar reflects tracked progress');
+    assert.strictEqual(conceptsPage.conceptCards[1].progressBarStyle, 'width:5%', 'Progress bar reflects tracked progress');
 
     await conceptsPage.conceptCards[1].hover();
     assert.strictEqual(
@@ -242,7 +242,7 @@ module('Acceptance | concepts-test', function (hooks) {
     );
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
-    assert.ok(conceptPage.progressText.includes('5%'), 'Progress bar should reflect changes');
+    assert.strictEqual(conceptPage.progressBar.style, 'width: 5%', 'Progress bar should reflect changes');
   });
 
   test('progress for completed concepts is rendered properly', async function (assert) {
