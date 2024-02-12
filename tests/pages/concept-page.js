@@ -9,7 +9,7 @@ export default createPage({
   async clickOnContinueButton() {
     this._clickOnContinueButton();
     await animationsSettled();
-    sleep(500);
+    setTimeout(() => {}, 500);
   },
 
   hasProgressBar: isPresent('[data-test-concept-progress]'),
