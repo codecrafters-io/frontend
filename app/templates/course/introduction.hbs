@@ -1,4 +1,11 @@
 <div class="w-full pt-8 pb-16">
+  {{#if this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+    <ProductWalkthroughFeatureSuggestion
+      @featureSuggestion={{this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+      class="mb-6"
+    />
+  {{/if}}
+
   {{! @glint-expect-error not ts-ified yet }}
   <CoursePage::IntroductionStep::WelcomeCard @repository={{@model.activeRepository}} class="mb-6" />
 
