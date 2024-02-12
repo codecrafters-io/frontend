@@ -5,7 +5,7 @@
   <div class="flex-shrink-0 ml-3 text-gray-600 text-sm font-medium">
     <AnimatedContainer>
       {{#animated-value @progressPercentage rules=this.rules duration=200 as |v|}}
-        <div data-test-concept-progress-text>
+        <div>
           {{! @glint-ignore }}
           {{v}}%
         </div>

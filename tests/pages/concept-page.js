@@ -12,7 +12,6 @@ export default createPage({
   },
 
   hasProgressBar: isPresent('[data-test-concept-progress]'),
-  progressText: text('[data-test-concept-progress-text]'),
   progressBarStyle: attribute('style', '[data-test-concept-progress-bar]'),
 
   questionCards: collection('[data-test-question-card]', {
