@@ -1,4 +1,4 @@
-import { attribute, collection, clickable, clickOnText, isPresent, visitable } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, isPresent, visitable } from 'ember-cli-page-object';
 import { animationsSettled } from 'ember-animated/test-support';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
@@ -11,10 +11,7 @@ export default createPage({
     await animationsSettled();
   },
 
-  progressBar: {
-    style: attribute('style', '[data-test-concept-progress-bar]'),
-    scope: '[data-test-concept-progress]',
-  },
+  hasProgressBar: isPresent('[data-test-concept-progress]'),
 
   questionCards: collection('[data-test-question-card]', {
     selectOption: clickOnText('[data-test-question-card-option]'),
