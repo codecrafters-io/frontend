@@ -39,7 +39,7 @@ export default class ContentComponent extends Component<Signature> {
       this.currentProgressPercentage = latestConceptEngagement.currentProgressPercentage;
 
       const allBlocks = this.args.concept.parsedBlocks;
-      const completedBlocksCount = Math.round((latestConceptEngagement.currentProgressPercentage/ 100) * allBlocks.length);
+      const completedBlocksCount = Math.round((latestConceptEngagement.currentProgressPercentage / 100) * allBlocks.length);
       this.remainingBlocksCount = allBlocks.length - completedBlocksCount;
     }
   }

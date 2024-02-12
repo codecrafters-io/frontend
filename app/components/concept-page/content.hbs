@@ -73,7 +73,11 @@
         {{#if (gt this.currentProgressPercentage 0)}}
           <div class="sticky py-9 top-0 bg-white">
             {{! @glint-expect-error not ts-ified yet}}
-            <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} @remainingBlocksCount={{this.remainingBlocksCount}} data-test-concept-progress />
+            <ConceptProgress
+              @progressPercentage={{this.currentProgressPercentage}}
+              @remainingBlocksCount={{this.remainingBlocksCount}}
+              data-test-concept-progress
+            />
           </div>
         {{else}}
           <div class="py-9">
