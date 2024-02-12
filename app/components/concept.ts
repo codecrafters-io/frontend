@@ -18,7 +18,7 @@ interface Signature {
   Args: {
     concept: ConceptModel;
     latestConceptEngagement: ConceptEngagementModel | null;
-    onProgressPercentageChange: (percentage: number) => void;
+    onProgressPercentageChange: (percentage: number, remainingBlocksCount: number) => void;
   };
 
   Element: HTMLElement;
@@ -100,6 +100,10 @@ export default class ConceptComponent extends Component<Signature> {
     } else {
       return Math.round(100 * (this.completedBlocksCount / this.allBlocks.length));
     }
+  }
+
+  get remainingBlocksCount() {
+    return this.allBlocks.length - this.completedBlocksCount;
   }
 
   get visibleBlockGroups() {
@@ -188,7 +192,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
-    this.args.onProgressPercentageChange(this.progressPercentage);
+    this.args.onProgressPercentageChange(this.progressPercentage, this.remainingBlocksCount);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);
