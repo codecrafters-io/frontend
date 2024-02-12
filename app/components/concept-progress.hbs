@@ -1,22 +1,28 @@
-<div class="flex items-center w-full" ...attributes>
-  <div class="w-full h-5 rounded-lg bg-gray-100 overflow-hidden">
-    <div class="h-5 bg-teal-500 transition-[width]" style={{html-safe this.widthStyle}} data-test-concept-progress-bar></div>
-  </div>
-  <div class="flex-shrink-0 ml-3 text-gray-600 text-sm font-medium">
-    <AnimatedContainer>
-      {{#animated-value @progressPercentage rules=this.rules duration=200 as |v|}}
-        <div>
-          {{! @glint-ignore }}
-          {{v}}%
-        </div>
-      {{/animated-value}}
-    </AnimatedContainer>
+<div class="flex flex-col w-full" ...attributes>
+  <div class="flex items-center">
+    <div class="w-full h-5 rounded-lg bg-gray-100 overflow-hidden">
+      <div class="h-5 bg-teal-500 transition-[width]" style={{html-safe this.widthStyle}} data-test-concept-progress-bar></div>
+    </div>
 
+    <div class="flex-shrink-0 ml-3 text-gray-600 text-sm font-medium">
+      <AnimatedContainer>
+        {{#animated-value @progressPercentage rules=this.rules duration=200 as |v|}}
+          <div>
+            {{! @glint-ignore }}
+            {{v}}%
+          </div>
+        {{/animated-value}}
+      </AnimatedContainer>
+    </div>
+  </div>
+
+  <div class="flex-shrink-0 mt-1 text-gray-600 text-sm font-medium">
     <AnimatedContainer>
       {{#animated-value @remainingBlocksCount rules=this.rules duration=200 as |v|}}
         <div>
           {{! @glint-ignore }}
-          {{v}}%
+          {{v}}
+          blocks left
         </div>
       {{/animated-value}}
     </AnimatedContainer>
