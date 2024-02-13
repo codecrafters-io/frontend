@@ -46,7 +46,6 @@
               </div>
 
               <PrimaryButtonWithSpinner
-                @isDisabled={{this.sendButtonIsDisabled}}
                 @size="small"
                 @shouldShowSpinner={{this.isSaving}}
                 {{on "click" (fn this.handleSendButtonClick dd)}}

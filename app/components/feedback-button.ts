@@ -37,10 +37,6 @@ export default class FeedbackButtonComponent extends Component<Signature> {
     this.feedbackSubmission = this.store.createRecord('site-feedback-submission');
   }
 
-  get sendButtonIsDisabled() {
-    return !this.feedbackSubmission.explanation || this.feedbackSubmission.explanation.trim() == '' || this.isSaving;
-  }
-
   get sentimentOptions() {
     return ['😍', '😃', '😕', '😭'];
   }
