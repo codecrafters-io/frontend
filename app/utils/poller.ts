@@ -99,6 +99,8 @@ export default class Poller {
       this.actionCableSubscription.unsubscribe();
     }
 
-    window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
+    if (config.environment === 'test') {
+      window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
+    }
   }
 }
