@@ -1,9 +1,9 @@
 <CoursePage::InstructionsCard data-test-your-task-card class="group/your-task-card" ...attributes>
   <:content>
-    <div class="flex items-center justify-between border-b pb-2 mb-5 w-full">
-      <div class="flex items-center gap-x-3">
-        <h2 class="font-semibold text-lg text-gray-700">Your Task</h2>
-        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+    <div class="flex items-center justify-between flex-wrap gap-3 border-b pb-2 mb-5 w-full">
+      <div class="flex items-center gap-x-3 gap-y-1.5 flex-wrap">
+        <h2 class="font-semibold text-lg text-gray-700 flex-shrink-0">Your Task</h2>
+        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} class="flex-shrink-0" />
 
         {{#if (or (current-user-is-course-author @courseStage.course) (current-user-is-staff))}}
           <a
