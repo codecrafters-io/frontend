@@ -98,5 +98,7 @@ export default class Poller {
     if (this.actionCableSubscription) {
       this.actionCableSubscription.unsubscribe();
     }
+
+    window.pollerInstances = window.pollerInstances.filter((poller) => poller !== this);
   }
 }
