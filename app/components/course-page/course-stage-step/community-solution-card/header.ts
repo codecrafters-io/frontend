@@ -8,6 +8,7 @@ type Signature = {
     solution: CommunityCourseStageSolutionModel;
     isExpanded: boolean;
     onCollapseButtonClick: () => void;
+    positionInList: number; // TEMP FOR DEMO
   };
 };
 

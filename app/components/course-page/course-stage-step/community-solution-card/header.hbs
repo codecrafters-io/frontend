@@ -12,6 +12,22 @@
         <EmberTooltip @text="This solution is only visible to users within your team." />
       </div>
     {{/if}}
+
+    {{#if (and (eq @positionInList 2) @isExpanded)}}
+      <TertiaryButton @size="extra-small" class="ml-2" {{on "click" (noop)}}>
+        {{svg-jar "bookmark" class="w-4 h-4 text-gray-400"}}
+
+        <EmberTooltip @text="Bookmark this code example to keep it at the top of your list" />
+      </TertiaryButton>
+    {{/if}}
+
+    {{#if (eq @positionInList 1)}}
+      <TertiaryButton @size="extra-small" class="ml-2" {{on "click" (noop)}}>
+        {{svg-jar "bookmark" class="w-4 h-4 text-teal-600"}}
+
+        <EmberTooltip @text="You've bookmarked this code example. It'll be visible at the top of your list." />
+      </TertiaryButton>
+    {{/if}}
   </div>
 
   <div class={{if @isExpanded "visible" "hidden"}}>
