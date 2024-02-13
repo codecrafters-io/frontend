@@ -147,11 +147,6 @@ export default class CourseController extends Controller {
   }
 
   @action
-  setupRouteChangeListeners() {
-    this.router.on('routeDidChange', this.handleRouteChanged);
-  }
-
-  @action
   setOrUpdateCurrentStepValues(_: HTMLDivElement, [step, _id, _status, _type]: [Step, string, string, string]) {
     const stepIsCompleteButNotPreviouslyComplete =
       step.status === 'complete' && this.stepStatusPreviouslyWas && this.stepStatusPreviouslyWas !== 'complete';
@@ -169,6 +164,11 @@ export default class CourseController extends Controller {
     this.stepStatusPreviouslyWas = step.status;
     this.stepIdPreviouslyWas = step.id;
     this.stepTypePreviouslyWas = step.type;
+  }
+
+  @action
+  setupRouteChangeListeners() {
+    this.router.on('routeDidChange', this.handleRouteChanged);
   }
 
   startRepositoryPoller() {
