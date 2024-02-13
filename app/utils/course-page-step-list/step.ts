@@ -1,6 +1,22 @@
 import type ProgressIndicator from 'codecrafters-frontend/utils/course-page-step-list/progress-indicator';
 import { type ProgressIndicatorWithDot } from 'codecrafters-frontend/utils/course-page-step-list/progress-indicator';
 
+export type StepType =
+  | 'IntroductionStep'
+  | 'SetupStep'
+  | 'CourseStageStep'
+  | 'BaseStagesCompletedStep'
+  | 'ExtensionCompletedStep'
+  | 'CourseCompletedStep';
+
+// Status definitions:
+//
+// - complete: the step has been completed
+// - not_started: the step hasn't been started yet
+// - in_progress: the step is in progress
+// - locked: the step isn't ready to be worked on (it might depend on other steps)
+export type StepStatus = 'complete' | 'not_started' | 'in_progress' | 'locked';
+
 export default class Step {
   declare globalPosition: number; // Set soon after construction
   declare positionInGroup: number; // Set soon after construction
@@ -11,6 +27,10 @@ export default class Step {
     }
 
     return "You've completed this step.";
+  }
+
+  get id(): string {
+    return `${this.routeParams.route}-${this.routeParams.models.join('-')}`;
   }
 
   get isHidden(): boolean {
@@ -57,13 +77,7 @@ export default class Step {
     return this.title;
   }
 
-  // Status definitions:
-  //
-  // - complete: the step has been completed
-  // - not_started: the step hasn't been started yet
-  // - in_progress: the step is in progress
-  // - locked: the step isn't ready to be worked on (it might depend on other steps)
-  get status(): 'complete' | 'not_started' | 'in_progress' | 'locked' {
+  get status(): StepStatus {
     throw new Error('Subclasses of Step must implement a status getter');
   }
 
@@ -71,7 +85,7 @@ export default class Step {
     throw new Error('Subclasses of Step must implement a title getter');
   }
 
-  get type(): 'IntroductionStep' | 'SetupStep' | 'CourseStageStep' | 'BaseStagesCompletedStep' | 'ExtensionCompletedStep' | 'CourseCompletedStep' {
+  get type(): StepType {
     throw new Error('Subclasses of Step must implement a routeParams getter');
   }
 }

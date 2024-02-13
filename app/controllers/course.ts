@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
+import type ConfettiService from 'codecrafters-frontend/services/confetti';
 import Controller from '@ember/controller';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import config from 'codecrafters-frontend/config/environment';
@@ -14,6 +15,8 @@ import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { ModelType } from 'codecrafters-frontend/routes/course';
+import type { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import type { StepStatus, StepType } from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 export default class CourseController extends Controller {
   declare model: ModelType;
@@ -24,6 +27,7 @@ export default class CourseController extends Controller {
 
   @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare authenticator: AuthenticatorService;
+  @service declare confetti: ConfettiService;
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
   @service declare router: RouterService;
@@ -40,6 +44,11 @@ export default class CourseController extends Controller {
   @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;
   @tracked leaderboardIsExpanded = true;
+
+  // Used for deciding when to fire confetti
+  @tracked stepStatusPreviouslyWas: StepStatus | null = null;
+  @tracked stepIdPreviouslyWas: string | null = null;
+  @tracked stepTypePreviouslyWas: StepType | null = null;
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -140,6 +149,26 @@ export default class CourseController extends Controller {
   @action
   setupRouteChangeListeners() {
     this.router.on('routeDidChange', this.handleRouteChanged);
+  }
+
+  @action
+  setOrUpdateCurrentStepValues(_: HTMLDivElement, [step, _id, _status, _type]: [Step, string, string, string]) {
+    const stepIsCompleteButNotPreviouslyComplete =
+      step.status === 'complete' && this.stepStatusPreviouslyWas && this.stepStatusPreviouslyWas !== 'complete';
+
+    const stepHasNotChanged = this.stepIdPreviouslyWas === step.id && this.stepTypePreviouslyWas === step.type;
+    const stepIsSetupOrCourseStageStep = step.type === 'CourseStageStep' || step.type === 'SetupStep';
+
+    if (stepIsSetupOrCourseStageStep && stepIsCompleteButNotPreviouslyComplete && stepHasNotChanged) {
+      this.confetti.fireOnFocus({
+        particleCount: 200,
+        spread: 120,
+      });
+    }
+
+    this.stepStatusPreviouslyWas = step.status;
+    this.stepIdPreviouslyWas = step.id;
+    this.stepTypePreviouslyWas = step.type;
   }
 
   startRepositoryPoller() {
