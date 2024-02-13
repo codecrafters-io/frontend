@@ -38,7 +38,7 @@ export default class FeedbackButtonComponent extends Component<Signature> {
   }
 
   get sendButtonIsDisabled() {
-    return !this.feedbackSubmission.selectedSentiment || this.isSaving;
+    return !this.feedbackSubmission.explanation || this.feedbackSubmission.explanation.trim() == '' || this.isSaving;
   }
 
   get sentimentOptions() {
