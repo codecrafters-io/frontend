@@ -17,16 +17,18 @@ export default class SubmitCourseIdeaCardComponent extends Component {
     }).toggle();
   }
 
-  <template><div
-  class='group border-2 border-dashed hover:border-gray-400 px-5 py-10 lg:py-20 rounded-md flex flex-col items-center justify-center text-gray-400 hover:text-gray-600'
-  data-test-submit-course-idea-card
-  role='button'
-  {{on 'click' this.handleClick}}
->
-  {{svgJar 'plus' class='w-12 h-12 fill-current'}}
+  <template>
+    <div
+      class='group border-2 border-dashed hover:border-gray-400 px-5 py-10 lg:py-20 rounded-md flex flex-col items-center justify-center text-gray-400 hover:text-gray-600'
+      data-test-submit-course-idea-card
+      role='button'
+      {{on 'click' this.handleClick}}
+    >
+      {{svgJar 'plus' class='w-12 h-12 fill-current'}}
 
-  <div class='mt-1 font-bold text-xl tracking-tight'>
-    Submit Idea
-  </div>
-</div></template>
+      <div class='mt-1 font-bold text-xl tracking-tight'>
+        Submit Idea
+      </div>
+    </div>
+  </template>
 }

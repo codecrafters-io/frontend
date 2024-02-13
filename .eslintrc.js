@@ -1,5 +1,7 @@
 'use strict';
 
+require('eslint-plugin-ember-template-lint/lib/ember-teplate-lint/config').registerPlugin('ember-template-lint-plugin-prettier');
+
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -25,6 +27,7 @@ module.exports = {
     ],
     'ember/no-array-prototype-extensions': 'off', // Get to this later
     'ember/no-empty-glimmer-component-classes': 'off', // It's useful to have empty components since the names are shown in devtools
+    'ember/no-runloop': 'off', // Run-loop isn't deprecated yet. Switching to ember-concurrency would require a lot of effort. We can use ember-lifeline as a drop-in replacement whenever run-loop becomes deprecated.
     '@typescript-eslint/member-ordering': [
       'error',
       {
@@ -78,6 +81,22 @@ module.exports = {
         'no-unused-vars': 'off', // We use @typescript-eslint/no-unused-vars instead
         '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
         'no-constant-condition': ['error', { checkLoops: false }],
+      },
+    },
+    // GTS files
+    {
+      files: ['**/*.gts'],
+      parser: 'ember-eslint-parser',
+      plugins: ['ember'],
+      extends: ['plugin:@typescript-eslint/recommended', 'plugin:ember/recommended-gts'],
+    },
+    // HBS files
+    {
+      files: ['**/*.hbs'],
+      plugins: ['ember-template-lint'],
+      extends: ['plugin:ember-template-lint/recommended', 'plugin:ember-template-lint/ember-template-lint-plugin-prettier:recommended'],
+      rules: {
+        'ember-template-lint/require-presentational-children': 'off',
       },
     },
   ],
