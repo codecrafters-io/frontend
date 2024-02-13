@@ -1,5 +1,5 @@
 {{! @glint-expect-error: BasicDropdown doesn't have types yet }}
-<BasicDropdown @renderInPlace={{true}} @horizontalPosition={{or @dropdownPosition "right"}} @onClose={{this.handleDropdownClosed}} @registerAPI={{@onDidInsertDropdown}} as |dd|>
+<BasicDropdown @renderInPlace={{true}} @horizontalPosition={{or @dropdownPosition "right"}} @onClose={{this.handleDropdownClosed}} as |dd|>
   <dd.Trigger>
     <div ...attributes>
       {{yield dd}}

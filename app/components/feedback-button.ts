@@ -5,7 +5,7 @@ import { later } from '@ember/runloop';
 import config from 'codecrafters-frontend/config/environment';
 import Component from '@glimmer/component';
 import type RouterService from '@ember/routing/router-service';
-import Store from 'ember-data/store';
+import Store from '@ember-data/store';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -37,6 +37,10 @@ export default class FeedbackButtonComponent extends Component<Signature> {
     this.feedbackSubmission = this.store.createRecord('site-feedback-submission');
   }
 
+  get sendButtonIsDisabled() {
+    return !this.feedbackSubmission.selectedSentiment || this.isSaving;
+  }
+
   get sentimentOptions() {
     return ['😍', '😃', '😕', '😭'];
   }
@@ -59,10 +63,6 @@ export default class FeedbackButtonComponent extends Component<Signature> {
   async handleFormSubmit(event: SubmitEvent) {
     event.preventDefault();
     this.formElement!.reportValidity();
-  }
-
-  get sendButtonIsDisabled() {
-    return !this.feedbackSubmission.selectedSentiment || this.isSaving;
   }
 
   @action
