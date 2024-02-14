@@ -12,7 +12,7 @@ import { tracked } from '@glimmer/tracking';
 export default class ConceptGroupRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
-  @service declare authenticator: AuthenticatorService
+  @service declare authenticator: AuthenticatorService;
   @service declare metaData: HeadDataService;
   @service declare store: Store;
   @service declare router: RouterService;
