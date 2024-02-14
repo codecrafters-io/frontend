@@ -12,7 +12,7 @@ interface Signature {
   Args: {
     allConcepts: ConceptModel[];
     concept: ConceptModel;
-    conceptGroup: ConceptGroupModel;
+    conceptGroup?: ConceptGroupModel;
     nextConcept: ConceptModel | null;
     onProgressPercentageChange: (percentage: number) => void;
   };
