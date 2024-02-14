@@ -14,7 +14,6 @@ interface Signature {
     concept: ConceptModel;
     conceptGroup?: ConceptGroupModel;
     nextConcept: ConceptModel | null;
-    onProgressPercentageChange: (percentage: number) => void;
   };
 }
 
