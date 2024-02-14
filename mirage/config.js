@@ -96,30 +96,8 @@ function routes() {
     return schema.conceptEngagements.all().filter((engagement) => engagement.user.id === '63c51e91-e448-4ea9-821b-a80415f266d3');
   });
 
-  this.patch('/concept-engagements/:concept_engagement_id', function (schema, request) {
-    const conceptEngagement = schema.conceptEngagements.find(request.params.concept_engagement_id);
-    const attrs = this.normalizedRequestAttrs();
-    conceptEngagement.update(attrs);
-
-    return conceptEngagement;
-  });
-
-  this.post('/concept-engagements', function (schema, request) {
-    const jsonBody = JSON.parse(request.requestBody);
-    const userId = jsonBody.data.relationships.user.data.id;
-    const conceptId = jsonBody.data.relationships.concept.data.id;
-
-    const user = schema.users.find(userId);
-    const concept = schema.concepts.find(conceptId);
-
-    return schema.conceptEngagements.create({
-      concept,
-      user,
-      currentProgressPercentage: 0,
-      lastActivityAt: new Date(),
-      startedAt: new Date(),
-    });
-  });
+  this.patch('/concept-engagements/:id');
+  this.post('/concept-engagements');
 
   this.get('/concept-groups', function (schema) {
     return schema.conceptGroups.all();
