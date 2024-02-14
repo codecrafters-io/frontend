@@ -17,8 +17,7 @@ import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 interface Signature {
   Args: {
     concept: ConceptModel;
-    latestConceptEngagement: ConceptEngagementModel | null;
-    onProgressPercentageChange: (percentage: number) => void;
+    latestConceptEngagement: ConceptEngagementModel;
   };
 
   Element: HTMLElement;
@@ -47,9 +46,9 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
     } else {
-      const progressPercentage = this.args.latestConceptEngagement?.currentProgressPercentage;
-      const completedBlocksCount = progressPercentage ? Math.round((progressPercentage / 100) * this.allBlocks.length) : 0;
-      const blockGroupIndex = completedBlocksCount ? this.findCurrentBlockGroupIndex(completedBlocksCount) : 0;
+      const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
+      const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
+      const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
       this.lastRevealedBlockGroupIndex = blockGroupIndex;
     }
   }
@@ -186,7 +185,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
-    this.args.onProgressPercentageChange(this.progressPercentage);
+    this.updateProgressPercentage(this.progressPercentage);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);
@@ -195,6 +194,13 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       urlParams.set('bgi', newBlockGroupIndex.toString());
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+    }
+  }
+
+  updateProgressPercentage(progressPercentage: number) {
+    if (progressPercentage > this.args.latestConceptEngagement.currentProgressPercentage) {
+      this.args.latestConceptEngagement.currentProgressPercentage = progressPercentage;
+      this.args.latestConceptEngagement.save();
     }
   }
 }

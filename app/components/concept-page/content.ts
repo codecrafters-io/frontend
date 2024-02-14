@@ -12,6 +12,7 @@ interface Signature {
   Args: {
     allConcepts: ConceptModel[];
     concept: ConceptModel;
+    conceptEngagement: ConceptEngagementModel;
     conceptGroup?: ConceptGroupModel;
     nextConcept: ConceptModel | null;
   };
@@ -20,21 +21,7 @@ interface Signature {
 export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @tracked latestConceptEngagement: ConceptEngagementModel | null = null;
-
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-
-    const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
-      .filter((engagement) => engagement.concept.slug === this.args.concept.slug)
-      .sortBy('createdAt')
-      .reverse()
-      .get('firstObject');
-
-    if (latestConceptEngagement) {
-      this.latestConceptEngagement = latestConceptEngagement;
-    }
-  }
+  @tracked latestConceptEngagement: ConceptEngagementModel = this.args.conceptEngagement;
 
   get currentProgressPercentage() {
     return this.latestConceptEngagement?.currentProgressPercentage ?? 0;
@@ -56,22 +43,6 @@ export default class ContentComponent extends Component<Signature> {
   @action
   handleConceptDidUpdate() {
     // this.currentProgressPercentage = 0;
-  }
-
-  @action
-  async handleProgressPercentageChanged(progressPercentage: number) {
-    if (!this.latestConceptEngagement && this.currentProgressPercentage === 0) {
-      const newConceptEngagement = await this.store
-        .createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser })
-        .save();
-
-      this.latestConceptEngagement = newConceptEngagement;
-    }
-
-    if (progressPercentage > this.currentProgressPercentage) {
-      this.latestConceptEngagement!.currentProgressPercentage = progressPercentage;
-      await this.latestConceptEngagement!.save();
-    }
   }
 
   @action
