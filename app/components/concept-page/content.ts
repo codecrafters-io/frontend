@@ -6,42 +6,23 @@ import ConceptModel from 'codecrafters-frontend/models/concept';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Args: {
     allConcepts: ConceptModel[];
     concept: ConceptModel;
-    conceptGroup: ConceptGroupModel;
+    conceptGroup?: ConceptGroupModel;
+    latestConceptEngagement: ConceptEngagementModel;
     nextConcept: ConceptModel | null;
-    onProgressPercentageChange: (percentage: number) => void;
   };
 }
 
 export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @tracked currentProgressPercentage = 0;
-  @tracked latestConceptEngagement: ConceptEngagementModel | null = null;
-  @tracked remainingBlocksCount = 0;
 
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-
-    const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
-      .filter((engagement) => engagement.concept.slug === this.args.concept.slug)
-      .sortBy('createdAt')
-      .reverse()
-      .get('firstObject');
-
-    if (latestConceptEngagement) {
-      this.latestConceptEngagement = latestConceptEngagement;
-      this.currentProgressPercentage = latestConceptEngagement.currentProgressPercentage;
-
-      const allBlocks = this.args.concept.parsedBlocks;
-      const completedBlocksCount = Math.round((latestConceptEngagement.currentProgressPercentage / 100) * allBlocks.length);
-      this.remainingBlocksCount = allBlocks.length - completedBlocksCount;
-    }
+  get currentProgressPercentage() {
+    return this.args.latestConceptEngagement.currentProgressPercentage;
   }
 
   get hasCompletedConcept() {
@@ -52,33 +33,16 @@ export default class ContentComponent extends Component<Signature> {
     return this.args.allConcepts.find((concept) => concept.slug === this.args.conceptGroup?.nextConceptSlug(this.args.concept.slug));
   }
 
+  get remainingBlocksCount() {
+    const allBlocks = this.args.concept.parsedBlocks;
+    const completedBlocksCount = Math.round((this.currentProgressPercentage / 100) * allBlocks.length);
+
+    return allBlocks.length - completedBlocksCount;
+  }
+
   @action
   handleCompletionContainerInserted(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  @action
-  handleConceptDidUpdate() {
-    this.currentProgressPercentage = 0;
-  }
-
-  @action
-  async handleProgressPercentageChanged(progressPercentage: number, remainingBlocksCount: number) {
-    if (!this.latestConceptEngagement && this.currentProgressPercentage === 0) {
-      const newConceptEngagement = await this.store
-        .createRecord('concept-engagement', { concept: this.args.concept, user: this.authenticator.currentUser })
-        .save();
-
-      this.latestConceptEngagement = newConceptEngagement;
-    }
-
-    if (progressPercentage > this.currentProgressPercentage) {
-      this.latestConceptEngagement!.currentProgressPercentage = progressPercentage;
-      await this.latestConceptEngagement!.save();
-    }
-
-    this.currentProgressPercentage = progressPercentage;
-    this.remainingBlocksCount = remainingBlocksCount;
   }
 
   @action

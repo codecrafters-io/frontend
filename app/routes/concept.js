@@ -17,6 +17,24 @@ export default class ConceptRoute extends BaseRoute {
     });
   }
 
+  async findOrCreateConceptEngagement(concept) {
+    const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
+      .filter((engagement) => engagement.concept.slug === concept.slug)
+      .sortBy('createdAt')
+      .reverse()[0];
+
+    if (!latestConceptEngagement) {
+      return await this.store
+        .createRecord('concept-engagement', {
+          concept,
+          user: this.authenticator.currentUser,
+        })
+        .save();
+    }
+
+    return latestConceptEngagement;
+  }
+
   async model(params) {
     const allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
     const concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
@@ -28,15 +46,17 @@ export default class ConceptRoute extends BaseRoute {
 
     if (this.authenticator.isAuthenticated) {
       await this.store.findAll('concept-engagement', {
-        user: this.authenticator.currentUser,
         include: 'concept,user',
       });
     }
+
+    const latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
 
     return {
       allConcepts,
       concept,
       conceptGroup: relatedConceptGroups[0],
+      latestConceptEngagement,
     };
   }
 }

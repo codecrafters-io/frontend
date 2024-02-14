@@ -18,8 +18,7 @@ export default class ConceptCardComponent extends Component<Signature> {
     return this.authenticator.currentUser?.conceptEngagements
       .filter((engagement) => engagement.concept.slug === this.args.concept.slug)
       .sortBy('createdAt')
-      .reverse()
-      .get('firstObject');
+      .reverse()[0];
   }
 }
 

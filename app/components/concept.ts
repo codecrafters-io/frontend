@@ -17,8 +17,7 @@ import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 interface Signature {
   Args: {
     concept: ConceptModel;
-    latestConceptEngagement: ConceptEngagementModel | null;
-    onProgressPercentageChange: (percentage: number, remainingBlocksCount: number) => void;
+    latestConceptEngagement: ConceptEngagementModel;
   };
 
   Element: HTMLElement;
@@ -47,9 +46,9 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
     } else {
-      const progressPercentage = this.args.latestConceptEngagement?.currentProgressPercentage;
-      const completedBlocksCount = progressPercentage ? Math.round((progressPercentage / 100) * this.allBlocks.length) : null;
-      const blockGroupIndex = completedBlocksCount ? this.findCurrentBlockGroupIndex(completedBlocksCount) : null;
+      const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
+      const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
+      const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
       this.lastRevealedBlockGroupIndex = blockGroupIndex;
     }
   }
@@ -111,22 +110,20 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   findCurrentBlockGroupIndex(completedBlocksCount: number) {
-    let sum = 0;
+    let traversedBlocksCount = 0;
     let currentBlockGroupIndex = 0;
 
     for (let i = 0; i < this.allBlockGroups.length; i++) {
       const blockGroup = this.allBlockGroups[i];
-      const nextSum = sum + blockGroup!.blocks.length;
+      traversedBlocksCount = traversedBlocksCount + blockGroup!.blocks.length;
 
-      if (nextSum > completedBlocksCount) {
+      if (traversedBlocksCount > completedBlocksCount) {
         currentBlockGroupIndex = i;
         break;
-      } else if (nextSum === completedBlocksCount) {
+      } else if (traversedBlocksCount === completedBlocksCount) {
         currentBlockGroupIndex = i + 1;
         break;
       }
-
-      sum = nextSum;
     }
 
     return currentBlockGroupIndex;
@@ -137,11 +134,6 @@ export default class ConceptComponent extends Component<Signature> {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-  }
-
-  @action
-  handleConceptDidUpdate() {
-    this.lastRevealedBlockGroupIndex = null;
   }
 
   @action
@@ -192,7 +184,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
-    this.args.onProgressPercentageChange(this.progressPercentage, this.remainingBlocksCount);
+    this.updateProgressPercentage(this.progressPercentage);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);
@@ -201,6 +193,13 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       urlParams.set('bgi', newBlockGroupIndex.toString());
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+    }
+  }
+
+  updateProgressPercentage(progressPercentage: number) {
+    if (progressPercentage > this.args.latestConceptEngagement.currentProgressPercentage) {
+      this.args.latestConceptEngagement.currentProgressPercentage = progressPercentage;
+      this.args.latestConceptEngagement.save();
     }
   }
 }
