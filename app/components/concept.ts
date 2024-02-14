@@ -112,17 +112,15 @@ export default class ConceptComponent extends Component<Signature> {
 
     for (let i = 0; i < this.allBlockGroups.length; i++) {
       const blockGroup = this.allBlockGroups[i];
-      const nextSum = sum + blockGroup!.blocks.length;
+      sum = sum + blockGroup!.blocks.length;
 
-      if (nextSum > completedBlocksCount) {
+      if (sum > completedBlocksCount) {
         currentBlockGroupIndex = i;
         break;
-      } else if (nextSum === completedBlocksCount) {
+      } else if (sum === completedBlocksCount) {
         currentBlockGroupIndex = i + 1;
         break;
       }
-
-      sum = nextSum;
     }
 
     return currentBlockGroupIndex;
