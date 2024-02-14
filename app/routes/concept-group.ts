@@ -1,3 +1,4 @@
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
@@ -11,6 +12,7 @@ import { tracked } from '@glimmer/tracking';
 export default class ConceptGroupRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
+  @service declare authenticator: AuthenticatorService
   @service declare metaData: HeadDataService;
   @service declare store: Store;
   @service declare router: RouterService;
@@ -45,6 +47,12 @@ export default class ConceptGroupRoute extends BaseRoute {
 
       return acc;
     }, []);
+
+    if (this.authenticator.isAuthenticated) {
+      await this.store.findAll('concept-engagement', {
+        include: 'concept,user',
+      });
+    }
 
     return {
       conceptGroup,
