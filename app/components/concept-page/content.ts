@@ -20,7 +20,6 @@ interface Signature {
 export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @tracked currentProgressPercentage = 0;
   @tracked latestConceptEngagement: ConceptEngagementModel | null = null;
 
   constructor(owner: unknown, args: Signature['Args']) {
@@ -34,8 +33,11 @@ export default class ContentComponent extends Component<Signature> {
 
     if (latestConceptEngagement) {
       this.latestConceptEngagement = latestConceptEngagement;
-      this.currentProgressPercentage = latestConceptEngagement.currentProgressPercentage;
     }
+  }
+
+  get currentProgressPercentage() {
+    return this.latestConceptEngagement?.currentProgressPercentage ?? 0;
   }
 
   get hasCompletedConcept() {
@@ -53,7 +55,7 @@ export default class ContentComponent extends Component<Signature> {
 
   @action
   handleConceptDidUpdate() {
-    this.currentProgressPercentage = 0;
+    // this.currentProgressPercentage = 0;
   }
 
   @action
@@ -70,8 +72,6 @@ export default class ContentComponent extends Component<Signature> {
       this.latestConceptEngagement!.currentProgressPercentage = progressPercentage;
       await this.latestConceptEngagement!.save();
     }
-
-    this.currentProgressPercentage = progressPercentage;
   }
 
   @action
