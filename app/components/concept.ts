@@ -107,17 +107,17 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   findCurrentBlockGroupIndex(completedBlocksCount: number) {
-    let sum = 0;
+    let traversedBlocksCount = 0;
     let currentBlockGroupIndex = 0;
 
     for (let i = 0; i < this.allBlockGroups.length; i++) {
       const blockGroup = this.allBlockGroups[i];
-      sum = sum + blockGroup!.blocks.length;
+      traversedBlocksCount = traversedBlocksCount + blockGroup!.blocks.length;
 
-      if (sum > completedBlocksCount) {
+      if (traversedBlocksCount > completedBlocksCount) {
         currentBlockGroupIndex = i;
         break;
-      } else if (sum === completedBlocksCount) {
+      } else if (traversedBlocksCount === completedBlocksCount) {
         currentBlockGroupIndex = i + 1;
         break;
       }
