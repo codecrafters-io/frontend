@@ -16,12 +16,12 @@
     </div>
   </div>
 
-  <div class="flex-shrink-0 mt-1 text-gray-600 text-sm font-medium">
+  <div class="flex-shrink-0 mt-2 text-gray-600 text-xs">
     <AnimatedContainer>
       {{#animated-value @remainingBlocksCount rules=this.rules duration=200 as |v|}}
         <div>
           {{! @glint-ignore }}
-          {{v}}
+          <span class="font-medium">{{v}}</span>
           blocks left
         </div>
       {{/animated-value}}
