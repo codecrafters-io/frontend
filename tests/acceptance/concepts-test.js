@@ -17,16 +17,16 @@ function createConcepts(server) {
   createConceptFromFixture(server, networkProtocols);
 }
 
-module('Acceptance | concepts-test', function(hooks) {
+module('Acceptance | concepts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     time.runAtSpeed(100);
   });
 
-  test('can create concept', async function(assert) {
+  test('can create concept', async function (assert) {
     testScenario(this.server);
 
     signInAsStaff(this.owner, this.server);
@@ -37,7 +37,7 @@ module('Acceptance | concepts-test', function(hooks) {
     assert.strictEqual(currentURL(), '/concepts/new-concept/admin/basic-details');
   });
 
-  test('can view concepts', async function(assert) {
+  test('can view concepts', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -86,7 +86,7 @@ module('Acceptance | concepts-test', function(hooks) {
     await percySnapshot('Concept - Completed');
   });
 
-  test('clicking on the upcoming concept cards works properly', async function(assert) {
+  test('clicking on the upcoming concept cards works properly', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -132,7 +132,7 @@ module('Acceptance | concepts-test', function(hooks) {
     assert.strictEqual(window.scrollY, 0, 'The page is scrolled to the top when navigating to a new concept');
   });
 
-  test('tracks concepts events', async function(assert) {
+  test('tracks concepts events', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -168,7 +168,7 @@ module('Acceptance | concepts-test', function(hooks) {
     );
   });
 
-  test('submit button does not work when no option is selected for question card', async function(assert) {
+  test('submit button does not work when no option is selected for question card', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -187,7 +187,7 @@ module('Acceptance | concepts-test', function(hooks) {
     assert.ok(conceptPage.questionCards[0].hasSubmitted, 'After selecting an option, the submission result should be visible.');
   });
 
-  test('progress is tracked', async function(assert) {
+  test('progress is tracked', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -219,7 +219,7 @@ module('Acceptance | concepts-test', function(hooks) {
     );
   });
 
-  test('tracked progress is rendered properly on page visit', async function(assert) {
+  test('tracked progress is rendered properly on page visit', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -251,7 +251,7 @@ module('Acceptance | concepts-test', function(hooks) {
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present');
   });
 
-  test('progress for completed concepts is rendered properly', async function(assert) {
+  test('progress for completed concepts is rendered properly', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 

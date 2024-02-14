@@ -23,10 +23,7 @@
     <div class="flex flex-col-reverse items-stretch md:flex-row">
       <div class="md:pr-8 pt-10 pb-60 min-w-0 flex-grow">
         {{! @glint-expect-error not ts-ified yet}}
-        <Concept
-          @concept={{@concept}}
-          @latestConceptEngagement={{@latestConceptEngagement}}
-        />
+        <Concept @concept={{@concept}} @latestConceptEngagement={{@latestConceptEngagement}} />
 
         {{#animated-if this.hasCompletedConcept}}
           <div class="flex flex-col items-center justify-center py-16 border-t" {{did-insert this.handleCompletionContainerInserted}}>

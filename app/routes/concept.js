@@ -21,13 +21,15 @@ export default class ConceptRoute extends BaseRoute {
     const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
       .filter((engagement) => engagement.concept.slug === concept.slug)
       .sortBy('createdAt')
-      .reverse()[0]
+      .reverse()[0];
 
     if (!latestConceptEngagement) {
-      return await this.store.createRecord('concept-engagement', {
-        concept,
-        user: this.authenticator.currentUser,
-      }).save();
+      return await this.store
+        .createRecord('concept-engagement', {
+          concept,
+          user: this.authenticator.currentUser,
+        })
+        .save();
     }
 
     return latestConceptEngagement;
@@ -54,7 +56,7 @@ export default class ConceptRoute extends BaseRoute {
       allConcepts,
       concept,
       conceptGroup: relatedConceptGroups[0],
-      latestConceptEngagement
+      latestConceptEngagement,
     };
   }
 }
