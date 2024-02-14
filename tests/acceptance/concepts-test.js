@@ -17,16 +17,16 @@ function createConcepts(server) {
   createConceptFromFixture(server, networkProtocols);
 }
 
-module('Acceptance | concepts-test', function (hooks) {
+module('Acceptance | concepts-test', function(hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(function() {
     time.runAtSpeed(100);
   });
 
-  test('can create concept', async function (assert) {
+  test('can create concept', async function(assert) {
     testScenario(this.server);
 
     signInAsStaff(this.owner, this.server);
@@ -37,7 +37,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(currentURL(), '/concepts/new-concept/admin/basic-details');
   });
 
-  test('can view concepts', async function (assert) {
+  test('can view concepts', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -86,7 +86,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await percySnapshot('Concept - Completed');
   });
 
-  test('clicking on the upcoming concept cards works properly', async function (assert) {
+  test('clicking on the upcoming concept cards works properly', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -132,7 +132,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(window.scrollY, 0, 'The page is scrolled to the top when navigating to a new concept');
   });
 
-  test('tracks concepts events', async function (assert) {
+  test('tracks concepts events', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -168,7 +168,7 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
-  test('submit button does not work when no option is selected for question card', async function (assert) {
+  test('submit button does not work when no option is selected for question card', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -187,7 +187,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.ok(conceptPage.questionCards[0].hasSubmitted, 'After selecting an option, the submission result should be visible.');
   });
 
-  test('progress is tracked', async function (assert) {
+  test('progress is tracked', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -207,6 +207,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present after starting concept');
     assert.ok(conceptPage.progress.text.includes('5%'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly')
 
     await conceptsPage.visit();
     assert.ok(conceptsPage.conceptCards[1].progressText.includes('5 % complete'), 'Progress text should reflect tracked progress in concept card');
@@ -219,7 +220,7 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
-  test('tracked progress is rendered properly on page visit', async function (assert) {
+  test('tracked progress is rendered properly on page visit', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -249,9 +250,12 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     assert.strictEqual(conceptPage.blocks.length, 2, 'Completed blocks are automatically shown');
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present');
+    assert.ok(conceptPage.progress.text.includes('5%'), 'Progress text should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly')
   });
 
-  test('progress for completed concepts is rendered properly', async function (assert) {
+  test('progress for completed concepts is rendered properly', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -278,5 +282,23 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.conceptCards[0].hover();
     assert.strictEqual(conceptsPage.conceptCards[0].actionText, 'View', 'Concept card action text should be view for completed concept');
+  });
+
+  test('remaining blocks left is rendered properly', async function(assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    const user = this.server.schema.users.first();
+    signIn(this.owner, this.server, user);
+
+    await conceptsPage.visit();
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    assert.notOk(conceptPage.progress.isPresent, 'Remaining blocks left should not be shown if no progress is made')
+
+    await conceptPage.clickOnContinueButton();
+    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly')
+
+    await conceptPage.clickOnContinueButton();
+    assert.ok(conceptPage.progress.text.includes('37 blocks left'), 'Remaining blocks left should be reflected properly')
   });
 });
