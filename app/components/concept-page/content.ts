@@ -6,7 +6,7 @@ import ConceptModel from 'codecrafters-frontend/models/concept';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+// import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Args: {
@@ -21,10 +21,9 @@ interface Signature {
 export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @tracked latestConceptEngagement: ConceptEngagementModel = this.args.conceptEngagement;
 
   get currentProgressPercentage() {
-    return this.latestConceptEngagement?.currentProgressPercentage ?? 0;
+    return this.args.conceptEngagement.currentProgressPercentage;
   }
 
   get hasCompletedConcept() {
