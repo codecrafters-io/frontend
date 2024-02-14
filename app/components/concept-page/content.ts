@@ -6,14 +6,13 @@ import ConceptModel from 'codecrafters-frontend/models/concept';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-// import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Args: {
     allConcepts: ConceptModel[];
     concept: ConceptModel;
-    conceptEngagement: ConceptEngagementModel;
     conceptGroup?: ConceptGroupModel;
+    latestConceptEngagement: ConceptEngagementModel;
     nextConcept: ConceptModel | null;
   };
 }
@@ -23,7 +22,7 @@ export default class ContentComponent extends Component<Signature> {
   @service declare store: Store;
 
   get currentProgressPercentage() {
-    return this.args.conceptEngagement.currentProgressPercentage;
+    return this.args.latestConceptEngagement.currentProgressPercentage;
   }
 
   get hasCompletedConcept() {

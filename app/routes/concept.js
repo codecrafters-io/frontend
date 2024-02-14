@@ -48,13 +48,13 @@ export default class ConceptRoute extends BaseRoute {
       });
     }
 
-    const conceptEngagement = await this.findOrCreateConceptEngagement(concept);
+    const latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
 
     return {
       allConcepts,
       concept,
-      conceptEngagement,
       conceptGroup: relatedConceptGroups[0],
+      latestConceptEngagement
     };
   }
 }
