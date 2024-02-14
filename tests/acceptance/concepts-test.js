@@ -10,7 +10,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest, time } from 'ember-animated/test-support';
 
 function createConcepts(server) {
   createConceptFromFixture(server, tcpOverview);
@@ -21,6 +21,10 @@ module('Acceptance | concepts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
+
+  hooks.beforeEach(function () {
+    time.runAtSpeed(100);
+  });
 
   test('can create concept', async function (assert) {
     testScenario(this.server);
@@ -200,6 +204,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.notOk(conceptPage.hasProgressBar, 'Progress bar should not be present in concept before starting');
 
     await conceptPage.clickOnContinueButton();
+    assert.ok(conceptPage.hasProgressBar, 'Progress bar should be present after starting concept');
 
     await conceptsPage.visit();
     assert.ok(conceptsPage.conceptCards[1].progressText.includes('5 % complete'), 'Progress text should reflect tracked progress');
