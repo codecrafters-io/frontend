@@ -39,6 +39,30 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
     return this.args.course.betaOrLiveLanguages.sortBy('name');
   }
 
+  get sortedStagesByExtensionForDropdown() {
+    const stageAndBorders = [];
+
+    var prev = 0;
+
+    this.args.course.stages.sortBy('position').forEach((stage) => {
+      if (stage.positionWithinExtension == null) {
+        var extension = 0;
+      } else {
+        extension = stage.positionWithinCourse - stage.positionWithinExtension;
+      }
+
+      if (prev == extension) {
+        stageAndBorders.push({ stage: stage, addBorder: false });
+      } else {
+        stageAndBorders.push({ stage: stage, addBorder: true });
+      }
+
+      prev = extension;
+    });
+
+    return stageAndBorders;
+  }
+
   get sortedStagesForDropdown() {
     return this.args.course.stages.sortBy('position');
   }

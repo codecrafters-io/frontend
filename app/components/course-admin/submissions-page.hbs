@@ -10,7 +10,7 @@
 
   <div class="flex-grow"></div>
 
-  <CourseStageDropdown @stages={{this.sortedStagesForDropdown}} @onRequestedStageChange={{this.handleRequestedStageChange}} class="py-3 mr-4" />
+  <CourseStageDropdown @stages={{this.sortedStagesByExtensionForDropdown}} @onRequestedStageChange={{this.handleRequestedStageChange}} class="py-3 mr-4" />
 
   <LanguageDropdown
     @languages={{this.sortedLanguagesForDropdown}}
