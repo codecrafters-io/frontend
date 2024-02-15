@@ -78,6 +78,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
     assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
+    assert.true(conceptPage.shareConceptContainer.text.includes('https://app.codecrafters.io/concepts/network-protocols'));
 
     await percySnapshot('Concept - Completed');
   });

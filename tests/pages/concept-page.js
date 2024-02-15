@@ -19,6 +19,10 @@ export default createPage({
     hasSubmitted: isPresent('[data-test-question-submitted]'),
   }),
 
+  shareConceptContainer: {
+    scope: '[data-test-share-concept-container]',
+  },
+
   upcomingConcept: {
     card: {
       title: {

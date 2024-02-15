@@ -16,7 +16,7 @@ export default class ContentComponent extends Component<Signature> {
   @tracked currentProgressPercentage = 0;
 
   get conceptUrl() {
-    return `https://app.codecrafters.io/concepts/${this.args.concept.slug}`
+    return `https://app.codecrafters.io/concepts/${this.args.concept.slug}`;
   }
 
   get hasCompletedConcept() {

@@ -8,7 +8,7 @@ interface Signature {
 
   Args: {
     code: string;
-  }
+  };
 }
 
 export default class CopyableCodeComponent extends Component<Signature> {
