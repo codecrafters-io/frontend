@@ -29,7 +29,6 @@ export default class ConceptRoute extends BaseRoute {
           concept,
           user: this.authenticator.currentUser,
         })
-        .save();
     }
 
     return latestConceptEngagement;

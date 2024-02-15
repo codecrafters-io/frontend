@@ -138,11 +138,11 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleContinueButtonClick() {
+  async handleContinueButtonClick() {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
-      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
+      await this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
     }
 
     this.analyticsEventTracker.track('progressed_through_concept', {
@@ -162,7 +162,7 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleStepBackButtonClick() {
+  async handleStepBackButtonClick() {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
@@ -172,15 +172,15 @@ export default class ConceptComponent extends Component<Signature> {
         }
       });
 
-      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
+      await this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
     }
 
     // TODO: Add analytics event?
   }
 
-  updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
+  async updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
-    this.updateProgressPercentage(this.progressPercentage);
+    await this.updateProgressPercentage(this.progressPercentage);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);
@@ -192,10 +192,8 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
-  updateProgressPercentage(progressPercentage: number) {
-    if (progressPercentage > this.args.latestConceptEngagement.currentProgressPercentage) {
-      this.args.latestConceptEngagement.currentProgressPercentage = progressPercentage;
-      this.args.latestConceptEngagement.save();
-    }
+  async updateProgressPercentage(progressPercentage: number) {
+    this.args.latestConceptEngagement.currentProgressPercentage = progressPercentage;
+    await this.args.latestConceptEngagement.save();
   }
 }
