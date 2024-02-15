@@ -89,7 +89,7 @@ export default class ConceptComponent extends Component<Signature> {
     return this.lastRevealedBlockGroupIndex || 0;
   }
 
-  get progressPercentage() {
+  get computedProgressPercentage() {
     if (!this.lastRevealedBlockGroupIndex) {
       return 0; // The user hasn't interacted with any blocks yet
     }
@@ -143,11 +143,12 @@ export default class ConceptComponent extends Component<Signature> {
       this.hasFinished = true;
     } else {
       await this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
+      await this.updateConceptEngagement();
     }
 
     this.analyticsEventTracker.track('progressed_through_concept', {
       concept_id: this.args.concept.id,
-      progress_percentage: this.progressPercentage,
+      progress_percentage: this.computedProgressPercentage,
     });
   }
 
@@ -173,6 +174,7 @@ export default class ConceptComponent extends Component<Signature> {
       });
 
       await this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
+      await this.updateConceptEngagement();
     }
 
     // TODO: Add analytics event?
@@ -180,7 +182,6 @@ export default class ConceptComponent extends Component<Signature> {
 
   async updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
-    await this.updateProgressPercentage(this.progressPercentage);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);
@@ -192,8 +193,8 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
-  async updateProgressPercentage(progressPercentage: number) {
-    this.args.latestConceptEngagement.currentProgressPercentage = progressPercentage;
+  async updateConceptEngagement() {
+    this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
     await this.args.latestConceptEngagement.save();
   }
 }
