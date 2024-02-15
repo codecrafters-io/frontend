@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import window from 'ember-window-mock';
+import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
@@ -18,7 +18,9 @@ export default class CopyableCodeComponent extends Component<Signature> {
 
   @action
   handleCopyButtonClick() {
-    window.navigator.clipboard.writeText(this.args.code);
+    if (config.environment !== 'test') {
+      navigator.clipboard.writeText(this.args.code);
+    }
 
     this.codeWasCopiedRecently = true;
 
