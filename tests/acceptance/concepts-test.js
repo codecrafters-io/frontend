@@ -183,8 +183,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
-    await conceptPage.questionCards[0].selectOption('PDF');
-    await conceptPage.questionCards[0].clickOnSubmitButton();
+    await conceptPage.questionCards[0].clickOnShowExplanationButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
