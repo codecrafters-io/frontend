@@ -1,4 +1,4 @@
-<div class="flex justify-between">
+<div class="flex">
   <div class="py-3">
     <h3 class="text-lg font-bold text-gray-800">
       {{this.filteringTitle}}
@@ -7,6 +7,10 @@
       {{this.filteringDescription}}
     </div>
   </div>
+
+  <div class="flex-grow"></div>
+
+  <CourseStageDropdown @stages={{this.sortedStagesForDropdown}} @onRequestedStageChange={{this.handleRequestedStageChange}} class="py-3 mr-4" />
 
   <LanguageDropdown
     @languages={{this.sortedLanguagesForDropdown}}

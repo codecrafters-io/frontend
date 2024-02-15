@@ -39,6 +39,10 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
     return this.args.course.betaOrLiveLanguages.sortBy('name');
   }
 
+  get sortedStagesForDropdown() {
+    return this.args.course.stages.sortBy('position');
+  }
+
   @action
   handleAllLanguagesDropdownLinkClick() {
     this.router.transitionTo({ queryParams: { languages: [] } });
@@ -51,5 +55,14 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
     }
 
     this.router.transitionTo({ queryParams: { languages: language.slug } });
+  }
+
+  @action
+  handleRequestedStageChange(stage) {
+    if (!stage) {
+      return;
+    }
+
+    this.router.transitionTo({ queryParams: { course_stages: stage.slug } });
   }
 }

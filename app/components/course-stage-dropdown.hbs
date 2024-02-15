@@ -1,0 +1,35 @@
+<div ...attributes>
+  {{! @glint-expect-error: not ts-ified yet }}
+  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" as |dd|>
+    <dd.Trigger>
+      <button
+        type="button"
+        class="inline-flex justify-center w-full rounded-md border border-gray-300
+          {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
+          shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
+      >
+        <span class="mr-1">
+          All Stages
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56">
+        {{#each @stages as |stage|}}
+          <div
+            class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
+            role="button"
+            {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
+          >
+            <span class="text-gray-600 text-sm">
+              {{stage.position}}.
+              {{stage.name}}
+            </span>
+          </div>
+        {{/each}}
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>
