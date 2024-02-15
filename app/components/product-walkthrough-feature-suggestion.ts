@@ -11,6 +11,7 @@ export type Signature = {
 
   Args: {
     featureSuggestion: FeatureSuggestionModel;
+    isDismissable: boolean;
   };
 };
 
@@ -29,8 +30,10 @@ export default class ProductWalkthroughFeatureSuggestion extends Component<Signa
 
   @action
   async handleDismissButtonClick() {
-    this.currentOrPreviouslyShownFeatureSuggestion.dismissedAt = new Date();
-    await this.currentOrPreviouslyShownFeatureSuggestion.save();
+    if (this.args.isDismissable) {
+      this.currentOrPreviouslyShownFeatureSuggestion.dismissedAt = new Date();
+      await this.currentOrPreviouslyShownFeatureSuggestion.save();
+    }
   }
 
   @action
