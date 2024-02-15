@@ -15,6 +15,10 @@ interface Signature {
 export default class ContentComponent extends Component<Signature> {
   @tracked currentProgressPercentage = 0;
 
+  get conceptUrl() {
+    return `https://app.codecrafters.io/concepts/${this.args.concept.slug}`
+  }
+
   get hasCompletedConcept() {
     return this.currentProgressPercentage === 100;
   }
@@ -36,6 +40,11 @@ export default class ContentComponent extends Component<Signature> {
   @action
   handleProgressPercentageChanged(progressPercentage: number) {
     this.currentProgressPercentage = progressPercentage;
+  }
+
+  @action
+  handleShareConceptContainerInserted(element: HTMLElement) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   @action
