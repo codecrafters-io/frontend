@@ -2,7 +2,7 @@
   {{! Mobile !}}
   {{#unless this.hasCompletedConcept}}
     <div class="block md:hidden px-3 border-b flex-shrink-0 sticky top-0 backdrop-blur-sm bg-white/80 z-20 w-full">
-      {{#if (gt this.currentProgressPercentage 0)}}
+      {{#if (and this.authenticator.isAuthenticated (gt this.currentProgressPercentage 0))}}
         <div class="py-5">
           {{! @glint-expect-error not ts-ified yet}}
           <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} />
@@ -66,7 +66,7 @@
 
       {{! Desktop !}}
       <div class="hidden md:block border-l pl-8 flex-shrink-0 py-2 w-64">
-        {{#if (gt this.currentProgressPercentage 0)}}
+        {{#if (and this.authenticator.isAuthenticated (gt this.currentProgressPercentage 0))}}
           <div class="sticky py-9 top-0 bg-white">
             {{! @glint-expect-error not ts-ified yet}}
             <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} data-test-concept-progress />
