@@ -64,6 +64,22 @@
             {{/if}}
           </div>
         {{/animated-if}}
+
+        <div class="flex pl-4 py-1 items-center border-l-2 border-transparent group/invite-entry" role="button">
+          <div
+            class="flex w-8 h-8 p-1 items-center justify-center shadow-sm border rounded border-gray-300 group-hover/invite-entry:border-teal-500 group-hover/invite-entry:bg-teal-500 group-hover/invite-entry:shadow"
+          >
+            {{svg-jar "plus" class="text-gray-400 group-hover/invite-entry:text-white"}}
+          </div>
+
+          {{#unless @isCollapsed}}
+            <div class="text-xs text-gray-600 ml-2 group-hover/invite-entry:underline group-hover/invite-entry:text-teal-600">
+              Invite a friend
+            </div>
+          {{/unless}}
+
+          <EmberTooltip @text="Get upto a year free by inviting your friends" @side="left" />
+        </div>
       </div>
     {{/if}}
   </AnimatedContainer>
