@@ -8,6 +8,7 @@ interface Signature {
 
   Args: {
     code: string;
+    onCopyButtonClick?: () => void;
   };
 }
 
@@ -27,6 +28,10 @@ export default class CopyableCodeComponent extends Component<Signature> {
       },
       1000,
     );
+
+    if (this.args.onCopyButtonClick) {
+      this.args.onCopyButtonClick();
+    }
   }
 }
 

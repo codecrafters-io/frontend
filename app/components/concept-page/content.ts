@@ -1,7 +1,9 @@
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -13,6 +15,8 @@ interface Signature {
 }
 
 export default class ContentComponent extends Component<Signature> {
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+
   @tracked currentProgressPercentage = 0;
 
   get conceptUrl() {
@@ -35,6 +39,13 @@ export default class ContentComponent extends Component<Signature> {
   @action
   handleConceptDidUpdate() {
     this.currentProgressPercentage = 0;
+  }
+
+  @action
+  handleCopyButtonClick() {
+    this.analyticsEventTracker.track('clicked_on_share_concept_button', {
+      concept_id: this.args.concept.id
+    });
   }
 
   @action
