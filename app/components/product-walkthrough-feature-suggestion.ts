@@ -10,7 +10,7 @@ export type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    featureSuggestion: FeatureSuggestionModel;
+    featureSuggestion?: FeatureSuggestionModel;
     isDismissable: boolean;
   };
 };
@@ -19,7 +19,7 @@ export default class ProductWalkthroughFeatureSuggestion extends Component<Signa
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare router: RouterService;
 
-  @tracked currentOrPreviouslyShownFeatureSuggestion: FeatureSuggestionModel;
+  @tracked currentOrPreviouslyShownFeatureSuggestion: FeatureSuggestionModel | undefined;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -30,7 +30,7 @@ export default class ProductWalkthroughFeatureSuggestion extends Component<Signa
 
   @action
   async handleDismissButtonClick() {
-    if (this.args.isDismissable) {
+    if (this.args.isDismissable && this.currentOrPreviouslyShownFeatureSuggestion) {
       this.currentOrPreviouslyShownFeatureSuggestion.dismissedAt = new Date();
       await this.currentOrPreviouslyShownFeatureSuggestion.save();
     }
@@ -38,9 +38,11 @@ export default class ProductWalkthroughFeatureSuggestion extends Component<Signa
 
   @action
   async handleViewWalkthroughButtonClick() {
-    this.analyticsEventTracker.track('clicked_feature_suggestion', {
-      feature_suggestion_id: this.currentOrPreviouslyShownFeatureSuggestion.id,
-    });
+    if (this.currentOrPreviouslyShownFeatureSuggestion) {
+      this.analyticsEventTracker.track('clicked_feature_suggestion', {
+        feature_suggestion_id: this.currentOrPreviouslyShownFeatureSuggestion.id,
+      });
+    }
 
     this.router.transitionTo('concept', 'overview');
   }

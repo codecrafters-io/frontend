@@ -8,6 +8,12 @@
   {{#if this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
     <ProductWalkthroughFeatureSuggestion
       @featureSuggestion={{this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+      @isDismissable={{true}}
+      class="mb-6"
+    />
+  {{else if (not this.authenticator.isAuthenticated)}}
+    <ProductWalkthroughFeatureSuggestion
+      @isDismissable={{false}}
       class="mb-6"
     />
   {{/if}}
