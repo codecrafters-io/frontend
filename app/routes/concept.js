@@ -24,11 +24,10 @@ export default class ConceptRoute extends BaseRoute {
       .reverse()[0];
 
     if (!latestConceptEngagement) {
-      return await this.store
-        .createRecord('concept-engagement', {
-          concept,
-          user: this.authenticator.currentUser,
-        })
+      return await this.store.createRecord('concept-engagement', {
+        concept,
+        user: this.authenticator.currentUser,
+      });
     }
 
     return latestConceptEngagement;

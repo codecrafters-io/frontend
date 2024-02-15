@@ -85,10 +85,6 @@ export default class ConceptComponent extends Component<Signature> {
     }, 0);
   }
 
-  get currentBlockGroupIndex() {
-    return this.lastRevealedBlockGroupIndex || 0;
-  }
-
   get computedProgressPercentage() {
     if (!this.lastRevealedBlockGroupIndex) {
       return 0; // The user hasn't interacted with any blocks yet
@@ -99,6 +95,10 @@ export default class ConceptComponent extends Component<Signature> {
     } else {
       return Math.round(100 * (this.completedBlocksCount / this.allBlocks.length));
     }
+  }
+
+  get currentBlockGroupIndex() {
+    return this.lastRevealedBlockGroupIndex || 0;
   }
 
   get visibleBlockGroups() {
@@ -180,6 +180,13 @@ export default class ConceptComponent extends Component<Signature> {
     // TODO: Add analytics event?
   }
 
+  async updateConceptEngagement() {
+    if (this.authenticator.isAuthenticated && this.args.latestConceptEngagement) {
+      this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+      await this.args.latestConceptEngagement.save();
+    }
+  }
+
   async updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
 
@@ -190,13 +197,6 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       urlParams.set('bgi', newBlockGroupIndex.toString());
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-    }
-  }
-
-  async updateConceptEngagement() {
-    if (this.authenticator.isAuthenticated && this.args.latestConceptEngagement) {
-      this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
-      await this.args.latestConceptEngagement.save();
     }
   }
 }
