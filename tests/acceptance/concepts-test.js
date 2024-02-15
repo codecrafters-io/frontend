@@ -165,6 +165,56 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
+  test('tracks when share concept button is clicked', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].selectOption('PDF');
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    await conceptPage.shareConceptContainer.clickOnCopyButton();
+
+    const store = this.owner.lookup('service:store');
+    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
+    const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
+
+    assert.ok(analyticsEventNames.includes('clicked_on_share_concept_button'), 'clicked_on_share_concept_button event should be tracked');
+  });
+
   test('submit button does not work when no option is selected for question card', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);

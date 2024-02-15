@@ -20,6 +20,7 @@ export default createPage({
   }),
 
   shareConceptContainer: {
+    clickOnCopyButton: clickable('[data-test-copy-button]'),
     scope: '[data-test-share-concept-container]',
   },
 
