@@ -6,10 +6,7 @@
       class="mb-6"
     />
   {{else if (not this.authenticator.isAuthenticated)}}
-    <ProductWalkthroughFeatureSuggestion
-      @isDismissable={{false}}
-      class="mb-6"
-    />
+    <ProductWalkthroughFeatureSuggestion @isDismissable={{false}} class="mb-6" />
   {{/if}}
 
   {{! @glint-expect-error not ts-ified yet }}

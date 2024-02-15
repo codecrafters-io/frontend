@@ -12,10 +12,7 @@
       class="mb-6"
     />
   {{else if (not this.authenticator.isAuthenticated)}}
-    <ProductWalkthroughFeatureSuggestion
-      @isDismissable={{false}}
-      class="mb-6"
-    />
+    <ProductWalkthroughFeatureSuggestion @isDismissable={{false}} class="mb-6" />
   {{/if}}
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2 mb-8">

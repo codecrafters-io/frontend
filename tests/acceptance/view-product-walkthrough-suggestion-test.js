@@ -5,10 +5,10 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { module, test } from 'qunit';
 
-module('Acceptance | view-product-walkthrough-suggestion', function(hooks) {
+module('Acceptance | view-product-walkthrough-suggestion', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('it renders suggestion if user has it', async function(assert) {
+  test('it renders suggestion if user has it', async function (assert) {
     testScenario(this.server);
     const user = await signIn(this.owner, this.server);
 
@@ -20,7 +20,7 @@ module('Acceptance | view-product-walkthrough-suggestion', function(hooks) {
     assert.strictEqual(currentURL(), '/concepts/overview');
   });
 
-  test('it renders for anonymous users', async function(assert) {
+  test('it renders for anonymous users', async function (assert) {
     testScenario(this.server);
 
     this.server.create('concept', { slug: 'overview', blocks: [] });
@@ -32,7 +32,7 @@ module('Acceptance | view-product-walkthrough-suggestion', function(hooks) {
     assert.strictEqual(currentURL(), '/concepts/overview');
   });
 
-  test('it can be dismissed', async function(assert) {
+  test('it can be dismissed', async function (assert) {
     testScenario(this.server);
     const user = await signIn(this.owner, this.server);
 
