@@ -36,7 +36,20 @@ export default class PageViewTracker extends Service {
       return false;
     }
 
-    // Route name & params are the same, only query params differ.
+    // Routes and params are the same, let's check if any of the parent routes has a different param.
+    let currentFromParent = transition.from.parent;
+    let currentToParent = transition.to.parent;
+
+    while (currentFromParent && currentToParent) {
+      if (!isEqual(currentFromParent.params, currentToParent.params)) {
+        return false;
+      }
+
+      currentFromParent = currentFromParent.parent;
+      currentToParent = currentToParent.parent;
+    }
+
+    // Route name & params are the same, parent params are same too, only query params must differ. Safe to ignore.
     return true;
   }
 
