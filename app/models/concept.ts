@@ -61,6 +61,10 @@ export default class ConceptModel extends Model {
     });
   }
 
+  get url(): string {
+    return `https://app.codecrafters.io/concepts/${this.slug}`;
+  }
+
   declare updateBlocks: (this: Model, payload: unknown) => Promise<void>;
 }
 
