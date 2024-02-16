@@ -200,4 +200,11 @@ export default class ConceptComponent extends Component<Signature> {
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
     }
   }
+
+  @action
+  willDestroy() {
+    if (!this.authenticator.isAuthenticated) {
+      this.args.latestConceptEngagement.deleteRecord();
+    }
+  }
 }
