@@ -207,11 +207,11 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptPage.shareConceptContainer.clickOnCopyButton();
 
-    const store = this.owner.lookup('service:store');
-    const analyticsEvents = await store.findAll('analytics-event', { backgroundReload: false });
-    const analyticsEventNames = analyticsEvents.map((analyticsEvent) => analyticsEvent.name);
+    const analyticsEvents = this.server.schema.analyticsEvents.all().models;
+    const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
+    const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    assert.ok(analyticsEventNames.includes('clicked_on_share_concept_button'), 'clicked_on_share_concept_button event should be tracked');
+    assert.ok(filteredAnalyticsEventsNames.includes('clicked_on_share_concept_button'), 'clicked_on_share_concept_button event should be tracked');
   });
 
   test('submit button does not work when no option is selected for question card', async function (assert) {
