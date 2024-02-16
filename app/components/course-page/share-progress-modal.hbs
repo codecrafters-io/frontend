@@ -1,0 +1,40 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-progress-banner-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-6">
+    Share your progress with friends
+  </div>
+
+  <Textarea
+    @value={{this.copyableText}}
+    class="border border-gray-200 rounded w-full p-4 placeholder-gray-300 mb-3"
+    rows="5"
+    placeholder="Just completed Stage 2 of the @codecraftersio Build your own Redis challenge in Rust. \n\n https://app.codecrafters.io/courses/redis/overview"
+  />
+
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="border-b-2 border-teal-500 opacity-100 pb-2 px-1" role="button">
+        {{svg-jar "github" class="w-5 h-5"}}
+      </div>
+      <div class="border-b-2 border-transparent opacity-25 pb-2 px-1 hover:opacity-100 hover:border-gray-300" role="button">
+        {{svg-jar "github" class="w-5 h-5"}}
+      </div>
+      <div class="border-b-2 border-transparent opacity-25 pb-2 px-1 hover:opacity-100 hover:border-gray-300" role="button">
+        {{svg-jar "github" class="w-5 h-5"}}
+      </div>
+    </div>
+
+    <PrimaryButton {{on "click" this.handleCopyButtonClick}}>
+      <AnimatedContainer>
+        {{#animated-if this.wasCopiedRecently use=this.fade duration=100}}
+          <span>
+            Copied!
+          </span>
+        {{else}}
+          <span>
+            Copy to clipboard
+          </span>
+        {{/animated-if}}
+      </AnimatedContainer>
+    </PrimaryButton>
+  </div>
+</ModalBody>
