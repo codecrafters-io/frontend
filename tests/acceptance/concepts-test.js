@@ -86,6 +86,49 @@ module('Acceptance | concepts-test', function(hooks) {
     await percySnapshot('Concept - Completed');
   });
 
+  test('anonymous users can also view concepts', async function(assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].selectOption('PDF');
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
+    assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
+  });
+
   test('clicking on the upcoming concept cards works properly', async function(assert) {
     testScenario(this.server);
     createConcepts(this.server);
