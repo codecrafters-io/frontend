@@ -52,14 +52,4 @@ export default class ContentComponent extends Component<Signature> {
   handleProgressPercentageChanged(progressPercentage: number) {
     this.currentProgressPercentage = progressPercentage;
   }
-
-  @action
-  handleShareConceptContainerInserted(element: HTMLElement) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  @action
-  handleUpcomingConceptInserted(element: HTMLElement) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
 }
