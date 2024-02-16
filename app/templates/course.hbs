@@ -5,6 +5,20 @@
   {{did-insert this.handleDidInsertContainer}}
   {{will-destroy this.handleWillDestroyContainer}}
   {{did-update this.handleDidUpdateActiveRepositoryId @model.activeRepository.id}}
+  {{did-insert
+    this.setOrUpdateCurrentStepValues
+    this.coursePageState.currentStep
+    this.coursePageState.currentStep.id
+    this.coursePageState.currentStep.status
+    this.coursePageState.currentStep.type
+  }}
+  {{did-update
+    this.setOrUpdateCurrentStepValues
+    this.coursePageState.currentStep
+    this.coursePageState.currentStep.id
+    this.coursePageState.currentStep.status
+    this.coursePageState.currentStep.type
+  }}
 >
   {{#if this.isDevelopmentOrTest}}
     <FakeDataToolbar @repository={{@model.activeRepository}} class="absolute top-4 left-4 hidden" />
@@ -67,7 +81,6 @@
       @nextStep={{this.coursePageState.nextStep}}
       class="px-3 md:px-6 lg:pl-10 bg-gray-50"
     />
-
     <div class="flex flex-grow bg-white">
 
       <div class="flex-grow flex-shrink min-w-0">

@@ -30,6 +30,11 @@ export default createPage({
     hasSubmitted: isPresent('[data-test-question-submitted]'),
   }),
 
+  shareConceptContainer: {
+    clickOnCopyButton: clickable('[data-test-copy-button]'),
+    scope: '[data-test-share-concept-container]',
+  },
+
   upcomingConcept: {
     card: {
       title: {

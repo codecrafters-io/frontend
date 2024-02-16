@@ -1,3 +1,4 @@
+{{! @glint-expect-error: BasicDropdown doesn't have types yet }}
 <BasicDropdown @renderInPlace={{true}} @horizontalPosition={{or @dropdownPosition "right"}} @onClose={{this.handleDropdownClosed}} as |dd|>
   <dd.Trigger>
     <div ...attributes>
@@ -26,7 +27,7 @@
               class="border border-gray-200 rounded w-full p-3 placeholder-gray-300 outline-teal-500 mb-1"
               cols="40"
               rows="5"
-              placeholder="Your feedback..."
+              placeholder={{or @placeholderText "Your feedback..."}}
               required
               {{markdown-input}}
             />
@@ -34,6 +35,7 @@
             <div class="flex justify-between items-center">
               <div class="flex items-center mr-8">
                 {{#each this.sentimentOptions as |sentimentOption|}}
+                  {{! @glint-expect-error: SentimentOption isn't ts-ified yet }}
                   <FeedbackButton::SentimentOption
                     @emoji={{sentimentOption}}
                     @isSelected={{eq this.feedbackSubmission.selectedSentiment sentimentOption}}
@@ -43,9 +45,7 @@
                 {{/each}}
               </div>
 
-              {{! Add click handler }}
               <PrimaryButtonWithSpinner
-                @isDisabled={{this.sendButtonIsDisabled}}
                 @size="small"
                 @shouldShowSpinner={{this.isSaving}}
                 {{on "click" (fn this.handleSendButtonClick dd)}}
