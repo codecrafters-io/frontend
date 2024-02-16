@@ -5,9 +5,15 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 export default createPage({
   blocks: collection('[data-test-block]'),
   _clickOnContinueButton: clickable('[data-test-continue-button]'),
+  _clickOnStepBackButton: clickable('[data-test-step-back-button]'),
 
   async clickOnContinueButton() {
     this._clickOnContinueButton();
+    await animationsSettled();
+  },
+
+  async clickOnStepBackButton() {
+    this._clickOnStepBackButton();
     await animationsSettled();
   },
 
