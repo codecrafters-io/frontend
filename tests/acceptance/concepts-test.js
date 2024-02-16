@@ -211,7 +211,7 @@ module('Acceptance | concepts-test', function (hooks) {
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
     const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    assert.ok(filteredAnalyticsEventsNames.includes('clicked_on_share_concept_button'), 'clicked_on_share_concept_button event should be tracked');
+    assert.ok(filteredAnalyticsEventsNames.includes('clicked_share_concept_button'), 'clicked_on_share_concept_button event should be tracked');
   });
 
   test('submit button does not work when no option is selected for question card', async function (assert) {
