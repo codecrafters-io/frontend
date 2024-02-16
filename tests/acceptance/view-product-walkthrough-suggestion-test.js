@@ -26,9 +26,9 @@ module('Acceptance | view-product-walkthrough-suggestion', function (hooks) {
     this.server.create('concept', { slug: 'overview', blocks: [] });
 
     await catalogPage.visit();
-    await catalogPage.productWalkthroughFeatureSuggestion.clickOnStartHereButton();
-
     assert.notOk(catalogPage.productWalkthroughFeatureSuggestion.hasDismissButton);
+
+    await catalogPage.productWalkthroughFeatureSuggestion.clickOnStartHereButton();
     assert.strictEqual(currentURL(), '/concepts/overview');
   });
 
