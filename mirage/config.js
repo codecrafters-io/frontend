@@ -63,7 +63,7 @@ function routes() {
 
   this.post('/affiliate-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
-    attrs.url = `https://app.codecraters.io/join?via=${attrs.slug}`;
+    attrs.url = `https://app.codecrafters.io/join?via=${attrs.slug}`;
 
     return schema.affiliateLinks.create(attrs);
   });
@@ -553,7 +553,7 @@ function routes() {
     const attrs = this.normalizedRequestAttrs();
     const language = schema.languages.find(attrs.languageId);
 
-    attrs.cloneUrl = 'https://git.codecraters.io/a-long-test-string.git';
+    attrs.cloneUrl = 'https://git.codecrafters.io/a-long-test-string.git';
     attrs.name = `${language.name}`;
 
     const repository = schema.repositories.create(attrs);
