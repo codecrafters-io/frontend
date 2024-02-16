@@ -203,6 +203,8 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   willDestroy() {
+    super.willDestroy();
+
     if (!this.authenticator.isAuthenticated) {
       this.args.latestConceptEngagement.deleteRecord();
     }
