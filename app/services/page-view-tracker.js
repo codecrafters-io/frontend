@@ -8,9 +8,6 @@ export default class PageViewTracker extends Service {
 
   @action
   handleRouteChange(transition) {
-    const shouldIgnore = this.#shouldIgnoreEventForTransition(transition);
-    debugger;
-
     if (this.#shouldIgnoreEventForTransition(transition)) {
       return;
     }
@@ -23,6 +20,10 @@ export default class PageViewTracker extends Service {
   }
 
   #shouldIgnoreEventForTransition(transition) {
+    if (transition.to && (transition.to.name === 'course-stage-solution.diff' || transition.to.name === 'course-stage-solution.explanation')) {
+      return true; // These are covered by afterModel hooks
+    }
+
     if (!transition.from || !transition.to) {
       return false; // First page load, not reason to ignore
     }
