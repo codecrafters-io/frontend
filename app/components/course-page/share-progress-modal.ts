@@ -39,7 +39,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
     await navigator.clipboard.writeText('dummy');
 
     this.wasCopiedRecently = true;
-    await timeout(3000);
+    await timeout(1000);
     this.wasCopiedRecently = false;
   });
 }

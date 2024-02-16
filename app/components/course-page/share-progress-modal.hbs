@@ -26,9 +26,12 @@
     <PrimaryButton {{on "click" this.handleCopyButtonClick}}>
       <AnimatedContainer>
         {{#animated-if this.wasCopiedRecently use=this.fade duration=100}}
-          <span>
-            Copied!
-          </span>
+          <div class="flex items-center gap-1.5">
+            {{svg-jar "check-circle" class="w-5 h-5"}}
+            <span>
+              Copied!
+            </span>
+          </div>
         {{else}}
           <span>
             Copy to clipboard
