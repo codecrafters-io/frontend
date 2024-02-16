@@ -17,7 +17,7 @@ import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 interface Signature {
   Args: {
     concept: ConceptModel;
-    latestConceptEngagement?: ConceptEngagementModel;
+    latestConceptEngagement: ConceptEngagementModel;
   };
 
   Element: HTMLElement;
@@ -46,7 +46,7 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
     } else {
-      const progressPercentage = this.args.latestConceptEngagement?.currentProgressPercentage ?? 0;
+      const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
       const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
       const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
       this.lastRevealedBlockGroupIndex = blockGroupIndex;
@@ -181,8 +181,9 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   async updateConceptEngagement() {
-    if (this.authenticator.isAuthenticated && this.args.latestConceptEngagement) {
-      this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+    this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+
+    if (this.authenticator.isAuthenticated) {
       await this.args.latestConceptEngagement.save();
     }
   }
