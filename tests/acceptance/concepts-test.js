@@ -399,4 +399,47 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     assert.ok(conceptPage.progress.text.includes('37 blocks left'), 'Remaining blocks left should be reflected properly');
   });
+
+  test('remaining blocks left is not present if user completed concept', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.notOk(conceptPage.progress.text.includes('blocks left'), 'Remaining blocks left should not be present');
+  })
 });

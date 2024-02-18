@@ -19,6 +19,7 @@ declare module '@glint/environment-ember-loose/registry' {
     gt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     gte: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'html-safe': HelperLike<{ Return: string; Args: { Positional: [string | undefined] } }>;
+    lt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     mult: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     'on-click-outside': ModifierLike<{ Args: { Positional: [(event: MouseEvent) => void] } }>;
     'in-viewport': ModifierLike<{ Args: { Named: { onEnter: () => void } } }>;

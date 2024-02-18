@@ -16,15 +16,17 @@
     </div>
   </div>
 
-  <div class="flex-shrink-0 mt-2 text-gray-600 text-xs">
-    <AnimatedContainer>
-      {{#animated-value @latestConceptEngagement.remainingBlocksCount rules=this.rules duration=200 as |v|}}
-        <div>
-          {{! @glint-ignore }}
-          <span class="font-medium">{{v}}</span>
-          blocks left
-        </div>
-      {{/animated-value}}
-    </AnimatedContainer>
-  </div>
+  {{#if (lt @latestConceptEngagement.currentProgressPercentage 100)}}
+    <div class="flex-shrink-0 mt-2 text-gray-600 text-xs">
+      <AnimatedContainer>
+        {{#animated-value @latestConceptEngagement.remainingBlocksCount rules=this.rules duration=200 as |v|}}
+          <div>
+            {{! @glint-ignore }}
+            <span class="font-medium">{{v}}</span>
+            blocks left
+          </div>
+        {{/animated-value}}
+      </AnimatedContainer>
+    </div>
+  {{/if}}
 </div>
