@@ -441,5 +441,5 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
 
     assert.notOk(conceptPage.progress.text.includes('blocks left'), 'Remaining blocks left should not be present');
-  })
+  });
 });
