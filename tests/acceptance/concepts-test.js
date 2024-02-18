@@ -22,9 +22,9 @@ module('Acceptance | concepts-test', function (hooks) {
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
 
-  hooks.beforeEach(function () {
-    time.runAtSpeed(100);
-  });
+  // hooks.beforeEach(function () {
+  //   time.runAtSpeed(100);
+  // });
 
   test('can create concept', async function (assert) {
     testScenario(this.server);
