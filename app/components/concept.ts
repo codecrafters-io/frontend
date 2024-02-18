@@ -172,6 +172,13 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
+  handleWillDestroyContainer() {
+    if (!this.authenticator.isAuthenticated) {
+      this.args.latestConceptEngagement.deleteRecord();
+    }
+  }
+
+  @action
   async handleStepBackButtonClick() {
     if (this.currentBlockGroupIndex === 0) {
       return;
