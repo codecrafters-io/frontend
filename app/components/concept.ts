@@ -1,18 +1,19 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import { TrackedSet } from 'tracked-built-ins';
+import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
+import ConceptModel from 'codecrafters-frontend/models/concept';
 import { action } from '@ember/object';
+import type { Block } from 'codecrafters-frontend/models/concept';
 
 // @ts-ignore
 import { cached } from '@glimmer/tracking';
 
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
-import ConceptModel from 'codecrafters-frontend/models/concept';
-import type { Block } from 'codecrafters-frontend/models/concept';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { TrackedSet } from 'tracked-built-ins';
 
 interface Signature {
   Args: {
@@ -125,6 +126,14 @@ export default class ConceptComponent extends Component<Signature> {
     return currentBlockGroupIndex;
   }
 
+  enqueueConceptEngagementUpdate = task({ enqueue: true }, async () => {
+    this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+
+    if (this.authenticator.isAuthenticated) {
+      await this.args.latestConceptEngagement.save();
+    }
+  });
+
   @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
@@ -143,7 +152,7 @@ export default class ConceptComponent extends Component<Signature> {
       this.hasFinished = true;
     } else {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
-      await this.updateConceptEngagement();
+      this.enqueueConceptEngagementUpdate.perform();
     }
 
     this.analyticsEventTracker.track('progressed_through_concept', {
@@ -174,18 +183,10 @@ export default class ConceptComponent extends Component<Signature> {
       });
 
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
-      await this.updateConceptEngagement();
+      this.enqueueConceptEngagementUpdate.perform();
     }
 
     // TODO: Add analytics event?
-  }
-
-  async updateConceptEngagement() {
-    this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
-
-    if (this.authenticator.isAuthenticated) {
-      await this.args.latestConceptEngagement.save();
-    }
   }
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
