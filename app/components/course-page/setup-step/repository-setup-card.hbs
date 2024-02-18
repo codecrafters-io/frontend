@@ -26,6 +26,11 @@
       <div class="px-4 py-3 bg-gray-50 inline-flex rounded border shadow-sm mt-4">
         <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
       </div>
+
+      <p class="prose mt-4 prose-sm">
+        Running into issues with the git clone step?
+        <a href="https://docs.codecrafters.io/challenges/fix-clone-errors" target="_blank" rel="noopener noreferrer">Read this</a>.
+      </p>
     {{/if}}
   </:content>
 </CoursePage::InstructionsCard>
