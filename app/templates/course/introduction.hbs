@@ -4,8 +4,6 @@
       @featureSuggestion={{this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
       class="mb-6"
     />
-  {{else if (not this.authenticator.isAuthenticated)}}
-    <ProductWalkthroughFeatureSuggestion class="mb-6" />
   {{/if}}
 
   {{! @glint-expect-error not ts-ified yet }}
