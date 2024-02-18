@@ -10,7 +10,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { setupAnimationTest, time } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'ember-animated/test-support';
 
 function createConcepts(server) {
   createConceptFromFixture(server, tcpOverview);
@@ -21,10 +21,6 @@ module('Acceptance | concepts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
-
-  hooks.beforeEach(function () {
-    time.runAtSpeed(100);
-  });
 
   test('can create concept', async function (assert) {
     testScenario(this.server);
@@ -82,8 +78,52 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
     assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
+    assert.true(conceptPage.shareConceptContainer.text.includes('https://app.codecrafters.io/concepts/network-protocols'));
 
     await percySnapshot('Concept - Completed');
+  });
+
+  test('anonymous users can also view concepts', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].selectOption('PDF');
+    await conceptPage.questionCards[0].clickOnSubmitButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
+    assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
   });
 
   test('clicking on the upcoming concept cards works properly', async function (assert) {
@@ -168,6 +208,55 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
+  test('tracks when share concept button is clicked', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    await conceptPage.shareConceptContainer.clickOnCopyButton();
+
+    const analyticsEvents = this.server.schema.analyticsEvents.all().models;
+    const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
+    const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
+
+    assert.ok(filteredAnalyticsEventsNames.includes('clicked_share_concept_button'), 'clicked_on_share_concept_button event should be tracked');
+  });
+
   test('submit button does not work when no option is selected for question card', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
@@ -209,8 +298,17 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly');
 
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].clickOnShowExplanationButton();
+    assert.ok(conceptPage.progress.text.includes('10%'));
+    assert.ok(conceptPage.progress.barStyle.includes('width: 10%'));
+
+    await conceptPage.clickOnStepBackButton();
+    assert.ok(conceptPage.progress.text.includes('5%'));
+    assert.ok(conceptPage.progress.barStyle.includes('width: 5%'));
+
     await conceptsPage.visit();
-    assert.ok(conceptsPage.conceptCards[1].progressText.includes('5 % complete'), 'Progress text should reflect tracked progress in concept card');
+    assert.ok(conceptsPage.conceptCards[1].progressText.includes('5% complete'), 'Progress text should reflect tracked progress in concept card');
 
     await conceptsPage.conceptCards[1].hover();
     assert.strictEqual(
@@ -238,7 +336,7 @@ module('Acceptance | concepts-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await conceptsPage.visit();
-    assert.ok(conceptsPage.conceptCards[0].progressText.includes('5 % complete'), 'Progress should be tracked');
+    assert.ok(conceptsPage.conceptCards[0].progressText.includes('5% complete'), 'Progress should be tracked');
 
     await conceptsPage.conceptCards[0].hover();
     assert.strictEqual(

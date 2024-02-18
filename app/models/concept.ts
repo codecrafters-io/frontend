@@ -14,7 +14,7 @@ export type BlockJSON = {
 };
 
 export default class ConceptModel extends Model {
-  @belongsTo('user', { async: false, inverse: null }) declare author: UserModel;
+  @belongsTo('user', { async: true, inverse: null }) declare author: UserModel;
 
   @hasMany('concept-engagement', { async: false, inverse: 'concept' }) declare engagements: ConceptEngagementModel[];
   @hasMany('concept-question', { async: false, inverse: 'concept' }) declare questions: SyncHasMany<ConceptQuestion>;
@@ -61,6 +61,10 @@ export default class ConceptModel extends Model {
 
       return new blockClass(blockJSON);
     });
+  }
+
+  get url(): string {
+    return `https://app.codecrafters.io/concepts/${this.slug}`;
   }
 
   declare updateBlocks: (this: Model, payload: unknown) => Promise<void>;

@@ -4,17 +4,35 @@ import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import config from 'codecrafters-frontend/config/environment';
 import Component from '@glimmer/component';
+import type RouterService from '@ember/routing/router-service';
+import Store from '@ember-data/store';
 
-export default class FeedbackComponent extends Component {
-  @service router;
-  @service store;
+type Signature = {
+  Element: HTMLDivElement;
+
+  Args: {
+    dropdownPosition?: string;
+    placeholderText?: string;
+    source: string;
+    sourceMetadata?: Record<string, unknown>;
+  };
+
+  Blocks: {
+    default: [{ isOpen: boolean; actions: { close: () => void } }];
+  };
+};
+
+export default class FeedbackButtonComponent extends Component<Signature> {
+  @service declare router: RouterService;
+  @service declare store: Store;
+
   @tracked feedbackSubmission;
   @tracked isSaving = false;
   @tracked wasSaved = false;
-  @tracked formElement;
+  @tracked formElement: HTMLFormElement | null = null;
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
 
     this.feedbackSubmission = this.store.createRecord('site-feedback-submission');
   }
@@ -24,7 +42,7 @@ export default class FeedbackComponent extends Component {
   }
 
   @action
-  async handleDidInsertFormElement(formElement) {
+  async handleDidInsertFormElement(formElement: HTMLFormElement | null) {
     this.formElement = formElement;
   }
 
@@ -38,16 +56,16 @@ export default class FeedbackComponent extends Component {
   }
 
   @action
-  async handleFormSubmit(e) {
-    e.preventDefault();
-    this.formElement.reportValidity();
+  async handleFormSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    this.formElement!.reportValidity();
   }
 
   @action
-  async handleSendButtonClick(dd) {
-    this.formElement.reportValidity();
+  async handleSendButtonClick(dd: { isOpen: boolean; actions: { close: () => void } }) {
+    this.formElement!.reportValidity();
 
-    if (this.formElement.checkValidity()) {
+    if (this.formElement!.checkValidity()) {
       this.isSaving = true;
       this.feedbackSubmission.pageUrl = window.location.href;
       this.feedbackSubmission.source = this.args.source;
@@ -69,7 +87,13 @@ export default class FeedbackComponent extends Component {
   }
 
   @action
-  handleSentimentOptionSelected(sentimentOption) {
+  handleSentimentOptionSelected(sentimentOption: string) {
     this.feedbackSubmission.selectedSentiment = sentimentOption;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    FeedbackButton: typeof FeedbackButtonComponent;
   }
 }

@@ -31,4 +31,13 @@ module('Acceptance | perks-page | claim-test', function (hooks) {
 
     assert.strictEqual(currentURL(), '/pay');
   });
+
+  test('it is redirected to /404 if perk slug is invalid', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await visit('/perks/invalid-slug/claim');
+
+    assert.strictEqual(currentURL(), '/404');
+  });
 });

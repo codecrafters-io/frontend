@@ -5,7 +5,7 @@
         <div class="bg-blue-500 w-1/12"></div>
       {{else}}
         <div
-          class={{if (eq @latestConceptEngagement.currentProgressPercentage 100) "bg-teal-500" "bg-blue-500"}}
+          class="bg-blue-500"
           style={{html-safe (concat "width: " @latestConceptEngagement.currentProgressPercentage "%")}}
           data-test-concept-card-progress-bar
         ></div>
@@ -13,11 +13,8 @@
     </div>
   </div>
 
-  <div
-    class="text-xs {{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'text-teal-500' 'text-blue-500'}} mr-3"
-    data-test-concept-card-progress-text
-  >
-    <b class="font-bold">{{@latestConceptEngagement.currentProgressPercentage}}</b>
-    % complete
+  <div class="text-xs text-blue-500 mr-3" data-test-concept-card-progress-text>
+    <b class="font-bold">{{@latestConceptEngagement.currentProgressPercentage}}%</b>
+    complete
   </div>
 </div>

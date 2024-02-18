@@ -24,12 +24,10 @@ export default class ConceptRoute extends BaseRoute {
       .reverse()[0];
 
     if (!latestConceptEngagement) {
-      return await this.store
-        .createRecord('concept-engagement', {
-          concept,
-          user: this.authenticator.currentUser,
-        })
-        .save();
+      return await this.store.createRecord('concept-engagement', {
+        concept,
+        user: this.authenticator.currentUser,
+      });
     }
 
     return latestConceptEngagement;
@@ -50,7 +48,8 @@ export default class ConceptRoute extends BaseRoute {
       });
     }
 
-    const latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
+    let latestConceptEngagement;
+    latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
 
     return {
       allConcepts,

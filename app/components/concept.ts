@@ -1,18 +1,20 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import { TrackedSet } from 'tracked-built-ins';
+import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
+import ConceptModel from 'codecrafters-frontend/models/concept';
+import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
+import type { Block } from 'codecrafters-frontend/models/concept';
 
 // @ts-ignore
 import { cached } from '@glimmer/tracking';
 
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
-import ConceptModel from 'codecrafters-frontend/models/concept';
-import type { Block } from 'codecrafters-frontend/models/concept';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { TrackedSet } from 'tracked-built-ins';
 
 interface Signature {
   Args: {
@@ -85,11 +87,7 @@ export default class ConceptComponent extends Component<Signature> {
     }, 0);
   }
 
-  get currentBlockGroupIndex() {
-    return this.lastRevealedBlockGroupIndex || 0;
-  }
-
-  get progressPercentage() {
+  get computedProgressPercentage() {
     if (!this.lastRevealedBlockGroupIndex) {
       return 0; // The user hasn't interacted with any blocks yet
     }
@@ -101,8 +99,8 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
-  get remainingBlocksCount() {
-    return this.allBlocks.length - this.completedBlocksCount;
+  get currentBlockGroupIndex() {
+    return this.lastRevealedBlockGroupIndex || 0;
   }
 
   get visibleBlockGroups() {
@@ -129,6 +127,14 @@ export default class ConceptComponent extends Component<Signature> {
     return currentBlockGroupIndex;
   }
 
+  enqueueConceptEngagementUpdate = task({ enqueue: true }, async () => {
+    this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+
+    if (this.authenticator.isAuthenticated) {
+      await this.args.latestConceptEngagement.save();
+    }
+  });
+
   @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
     if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
@@ -142,16 +148,17 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleContinueButtonClick() {
+  async handleContinueButtonClick() {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
+      this.enqueueConceptEngagementUpdate.perform();
     }
 
     this.analyticsEventTracker.track('progressed_through_concept', {
       concept_id: this.args.concept.id,
-      progress_percentage: this.progressPercentage,
+      progress_percentage: this.computedProgressPercentage,
     });
   }
 
@@ -166,7 +173,7 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleStepBackButtonClick() {
+  async handleStepBackButtonClick() {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
@@ -177,14 +184,21 @@ export default class ConceptComponent extends Component<Signature> {
       });
 
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
+      this.enqueueConceptEngagementUpdate.perform();
     }
 
     // TODO: Add analytics event?
   }
 
+  @action
+  handleWillDestroyContainer() {
+    if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
+      this.args.latestConceptEngagement.deleteRecord();
+    }
+  }
+
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
-    this.updateProgressPercentage(this.progressPercentage);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);
@@ -193,13 +207,6 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       urlParams.set('bgi', newBlockGroupIndex.toString());
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-    }
-  }
-
-  updateProgressPercentage(progressPercentage: number) {
-    if (progressPercentage > this.args.latestConceptEngagement.currentProgressPercentage) {
-      this.args.latestConceptEngagement.currentProgressPercentage = progressPercentage;
-      this.args.latestConceptEngagement.save();
     }
   }
 }

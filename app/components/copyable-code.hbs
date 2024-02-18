@@ -10,6 +10,7 @@
       type="button"
       class="bg-teal-600 px-3 py-1 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
       {{on "click" this.handleCopyButtonClick}}
+      data-test-copy-button
     >
       {{if this.codeWasCopiedRecently "COPIED" "COPY"}}
     </button>

@@ -5,8 +5,11 @@
     <h1 class="text-3xl text-gray-700 font-bold tracking-tighter">Challenges</h1>
   </div>
 
-  {{#if this.productWalkthroughFeatureSuggestion}}
-    <ProductWalkthroughFeatureSuggestion @featureSuggestion={{this.productWalkthroughFeatureSuggestion}} class="mb-6" />
+  {{#if this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+    <ProductWalkthroughFeatureSuggestion
+      @featureSuggestion={{this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+      class="mb-6"
+    />
   {{/if}}
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2 mb-8">

@@ -1,9 +1,22 @@
 <CoursePage::InstructionsCard data-test-your-task-card class="group/your-task-card" ...attributes>
   <:content>
-    <div class="flex items-center justify-between border-b pb-2 mb-5 w-full">
-      <div class="flex items-center gap-x-3">
-        <h2 class="font-semibold text-lg text-gray-700">Your Task</h2>
-        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} />
+    <div class="flex items-center justify-between flex-wrap gap-3 border-b pb-2 mb-5 w-full">
+      <div class="flex items-center gap-x-3 gap-y-1.5 flex-wrap">
+        <h2 class="font-semibold text-lg text-gray-700 flex-shrink-0">Your Task</h2>
+        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} class="flex-shrink-0" />
+
+        <FeedbackButton
+          @source="stage_instructions_card"
+          @sourceMetadata={{hash language_slug=(or @repository.language.slug "unknown") stage_slug=@courseStage.slug}}
+          @dropdownPosition="bottom"
+          @placeholderText={{"Got any feedback on this stage's instructions? Please let us know!"}}
+          class="flex-shrink-0"
+          as |dd|
+        >
+          <TertiaryButton @size="extra-small" class={{if dd.isOpen "opacity-100" "sm:opacity-0 sm:group-hover/your-task-card:opacity-100"}}>
+            Share Feedback
+          </TertiaryButton>
+        </FeedbackButton>
 
         {{#if (or (current-user-is-course-author @courseStage.course) (current-user-is-staff))}}
           <a
@@ -14,12 +27,12 @@
             data-test-edit-on-github-link
           >
             {{svg-jar "pencil-alt" class="inline-flex w-4 mr-1 fill-current"}}
-            Edit on GitHub
+            Edit
           </a>
         {{/if}}
       </div>
 
-      <CourseStageDifficultyLabel @stage={{@courseStage}} />
+      <CourseStageDifficultyLabel @stage={{@courseStage}} class="flex-shrink-0" />
     </div>
 
     <div

@@ -1,4 +1,5 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
@@ -19,6 +20,7 @@ interface Signature {
 
 export default class ContentComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare store: Store;
 
   get currentProgressPercentage() {
@@ -46,7 +48,9 @@ export default class ContentComponent extends Component<Signature> {
   }
 
   @action
-  handleUpcomingConceptInserted(element: HTMLElement) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  handleCopyButtonClick() {
+    this.analyticsEventTracker.track('clicked_share_concept_button', {
+      concept_id: this.args.concept.id,
+    });
   }
 }
