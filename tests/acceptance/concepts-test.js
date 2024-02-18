@@ -10,7 +10,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { setupAnimationTest, time } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'ember-animated/test-support';
 
 function createConcepts(server) {
   createConceptFromFixture(server, tcpOverview);
@@ -21,10 +21,6 @@ module('Acceptance | concepts-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
-
-  // hooks.beforeEach(function () {
-  //   time.runAtSpeed(100);
-  // });
 
   test('can create concept', async function (assert) {
     testScenario(this.server);
