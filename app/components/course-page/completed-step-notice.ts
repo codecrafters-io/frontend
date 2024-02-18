@@ -16,7 +16,7 @@ type Signature = {
 
 export default class CompletedStepNoticeComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
-  @tracked x = true; // TEMP for preview
+  @tracked shareProgressModalIsOpen = false;
 
   get activeStep() {
     return this.coursePageState.activeStep;
