@@ -3,6 +3,7 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptModel from 'codecrafters-frontend/models/concept';
+import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
 import type { Block } from 'codecrafters-frontend/models/concept';
 
@@ -173,7 +174,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   handleWillDestroyContainer() {
-    if (!this.authenticator.isAuthenticated) {
+    if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
       this.args.latestConceptEngagement.deleteRecord();
     }
   }
