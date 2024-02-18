@@ -1,10 +1,11 @@
-<div ...attributes>
+<div data-test-stage-dropdown ...attributes>
   {{! @glint-expect-error: not ts-ified yet }}
   <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" as |dd|>
     <dd.Trigger>
       <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300
           {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
-          shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none">
+          shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
+        data-test-stage-dropdown-trigger>
         <span class="mr-1">
           All Stages
         </span>
@@ -14,10 +15,10 @@
       </button>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56">
+      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-stage-dropdown-content>
         {{#each @stages as |item|}}
         <div class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer" role="button"
-          {{on "click" (fn this.handleStageDropdownLinkClick item.stage dd.actions.close)}}>
+          data-test-stage-link {{on "click" (fn this.handleStageDropdownLinkClick item.stage dd.actions.close)}}>
           <span class="text-gray-600 text-sm">
             {{item.stage.position}}.
             {{item.stage.name}}
