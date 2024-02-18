@@ -173,13 +173,6 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleWillDestroyContainer() {
-    if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
-      this.args.latestConceptEngagement.deleteRecord();
-    }
-  }
-
-  @action
   async handleStepBackButtonClick() {
     if (this.currentBlockGroupIndex === 0) {
       return;
@@ -195,6 +188,13 @@ export default class ConceptComponent extends Component<Signature> {
     }
 
     // TODO: Add analytics event?
+  }
+
+  @action
+  handleWillDestroyContainer() {
+    if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
+      this.args.latestConceptEngagement.deleteRecord();
+    }
   }
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
