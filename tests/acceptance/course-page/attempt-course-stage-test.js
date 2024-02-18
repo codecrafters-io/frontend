@@ -128,8 +128,37 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     // TODO: Add tests for badge display
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
+    assert.notOk(coursePage.completedStepNotice.shareProgressButton.isVisible, 'completed step notice is not fisible after finishing the first stage');
 
     await coursePage.completedStepNotice.clickOnNextStepButton();
     assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is stage 2');
   });
+
+  test('share progress button is visible after completing the second stage', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await animationsSettled();
+
+    assert.ok(coursePage.completedStepNotice.shareProgressButton.isVisible, 'completed step notice is visible if completed stage is not first stage');
+  })
 });

@@ -27,6 +27,10 @@ export default create({
   completedStepNotice: {
     clickOnNextStepButton: clickable('[data-test-next-step-button]'),
     scope: '[data-test-completed-step-notice]',
+
+    shareProgressButton: {
+      scope: '[data-test-share-progress-button]',
+    }
   },
 
   courseCompletedCard: {
