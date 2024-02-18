@@ -142,7 +142,7 @@ export default class ConceptComponent extends Component<Signature> {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
-      await this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
+      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
       await this.updateConceptEngagement();
     }
 
@@ -173,7 +173,7 @@ export default class ConceptComponent extends Component<Signature> {
         }
       });
 
-      await this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
+      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
       await this.updateConceptEngagement();
     }
 
@@ -188,7 +188,7 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
-  async updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
+  updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
@@ -198,15 +198,6 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       urlParams.set('bgi', newBlockGroupIndex.toString());
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-    }
-  }
-
-  @action
-  willDestroy() {
-    super.willDestroy();
-
-    if (!this.authenticator.isAuthenticated) {
-      this.args.latestConceptEngagement.deleteRecord();
     }
   }
 }
