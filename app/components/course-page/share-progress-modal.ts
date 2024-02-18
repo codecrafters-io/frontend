@@ -1,9 +1,15 @@
-import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import RepositoryModel from 'codecrafters-frontend/models/repository';
-import { task, timeout } from 'ember-concurrency';
 import fade from 'ember-animated/transitions/fade';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
+import { action } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+
+import discordIcon from 'codecrafters-frontend/images/social-icons/discord.svg';
+import linkedinIcon from 'codecrafters-frontend/images/social-icons/linkedin.svg';
+import slackIcon from 'codecrafters-frontend/images/social-icons/slack.svg';
+import twitterIcon from 'codecrafters-frontend/images/social-icons/twitter.svg';
+
 
 interface Signature {
   Element: HTMLDivElement;
@@ -20,6 +26,11 @@ interface Signature {
 
 export default class ShareProgressModalComponent extends Component<Signature> {
   fade = fade;
+
+  discordIcon = discordIcon;
+  linkedinIcon = linkedinIcon;
+  slackIcon = slackIcon;
+  twitterIcon = twitterIcon;
 
   @tracked wasCopiedRecently = false;
   @tracked copyableText = 'I just completed...';
