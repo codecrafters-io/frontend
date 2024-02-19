@@ -23,15 +23,15 @@ interface Signature {
 export default class ShareProgressModalComponent extends Component<Signature> {
   fade = fade;
 
-  socialPlatforms = ["twitter", "slack", "discord", "linkedin"];
+  socialPlatforms = ['twitter', 'slack', 'discord', 'linkedin'];
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
-  @tracked selectedSocialPlatform = "twitter";
+  @tracked selectedSocialPlatform = 'twitter';
   @tracked wasCopiedRecently = false;
 
   get copyableText() {
-    if (this.selectedSocialPlatform === "twitter") {
+    if (this.selectedSocialPlatform === 'twitter') {
       return `Just completed Stage #2 of the @codecraftersio ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
     } else {
       return `Just completed Stage #2 of the CodeCrafters ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
@@ -42,7 +42,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   handleCopyButtonClick() {
     this.analyticsEventTracker.track('copied_share_progress_text', {
       repository_id: this.args.repository.id,
-    })
+    });
 
     this.copyToClipboardAndFlashMessage.perform();
   }

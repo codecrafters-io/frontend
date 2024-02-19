@@ -42,7 +42,12 @@
   </div>
 
   {{#if (gt this.nextStep.globalPosition 4)}}
-    <div class="flex items-center gap-1.5 group/share-progress-button" role="button" {{on "click" this.handleShareProgressButtonClick}} data-test-share-progress-button>
+    <div
+      class="flex items-center gap-1.5 group/share-progress-button"
+      role="button"
+      {{on "click" this.handleShareProgressButtonClick}}
+      data-test-share-progress-button
+    >
       <span class="text-sm text-green-800 group-hover/share-progress-button:underline group-hover/share-progress-button:text-green-700">Tell your
         friends</span>
       {{svg-jar "external-link" class="w-4 fill-current text-green-800 group-hover/share-progress-button:text-green-700"}}

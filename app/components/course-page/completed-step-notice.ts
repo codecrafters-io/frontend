@@ -38,7 +38,7 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
   handleShareProgressButtonClick() {
     this.analyticsEventTracker.track('initiated_share_progress_flow', {
       repository_id: this.args.repository.id,
-    })
+    });
 
     this.shareProgressModalIsOpen = true;
   }

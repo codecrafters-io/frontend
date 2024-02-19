@@ -128,7 +128,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     // TODO: Add tests for badge display
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
-    assert.notOk(coursePage.completedStepNotice.shareProgressButton.isVisible, 'completed step notice is not fisible after finishing the first stage');
+    assert.notOk(
+      coursePage.completedStepNotice.shareProgressButton.isVisible,
+      'completed step notice is not fisible after finishing the first stage',
+    );
 
     await coursePage.completedStepNotice.clickOnNextStepButton();
     assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is stage 2');
@@ -187,16 +190,27 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.notOk(coursePage.progressBannerModal.isVisible, 'progress banner modal is not visible')
+    assert.notOk(coursePage.progressBannerModal.isVisible, 'progress banner modal is not visible');
 
     await coursePage.completedStepNotice.shareProgressButton.click();
-    assert.ok(coursePage.progressBannerModal.isVisible, 'progress banner modal is visible')
-    assert.true(coursePage.progressBannerModal.copyableText.value.includes('Just completed Stage #2 of the @codecraftersio Build your own Redis challenge in Go.'), 'correct copyable text is shown')
-    assert.true(coursePage.progressBannerModal.copyableText.value.includes('https://app.codecrafters.io/courses/redis/overview'), 'correct link in copyable text is shown')
+    assert.ok(coursePage.progressBannerModal.isVisible, 'progress banner modal is visible');
+    assert.true(
+      coursePage.progressBannerModal.copyableText.value.includes(
+        'Just completed Stage #2 of the @codecraftersio Build your own Redis challenge in Go.',
+      ),
+      'correct copyable text is shown',
+    );
+    assert.true(
+      coursePage.progressBannerModal.copyableText.value.includes('https://app.codecrafters.io/courses/redis/overview'),
+      'correct link in copyable text is shown',
+    );
 
     await coursePage.progressBannerModal.socialPlatformIcons[1].click();
-    assert.true(coursePage.progressBannerModal.copyableText.value.includes('Just completed Stage #2 of the CodeCrafters Build your own Redis challenge in Go.'), 'correct copyable text is shown')
-  })
+    assert.true(
+      coursePage.progressBannerModal.copyableText.value.includes('Just completed Stage #2 of the CodeCrafters Build your own Redis challenge in Go.'),
+      'correct copyable text is shown',
+    );
+  });
 
   test('progress banner and share progress modal analytics events are tracked', async function (assert) {
     testScenario(this.server);
@@ -232,5 +246,5 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     assert.ok(filteredAnalyticsEventsNames.includes('copied_share_progress_text'), 'copied_share_progress_text event should be tracked');
     assert.ok(filteredAnalyticsEventsNames.includes('initiated_share_progress_flow'), 'initiated_share_progress_flow event should be tracked');
-  })
+  });
 });

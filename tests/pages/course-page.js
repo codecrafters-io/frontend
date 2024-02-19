@@ -30,7 +30,7 @@ export default create({
 
     shareProgressButton: {
       scope: '[data-test-share-progress-button]',
-    }
+    },
   },
 
   courseCompletedCard: {
@@ -160,7 +160,7 @@ export default create({
     },
 
     scope: '[data-test-progress-banner-modal]',
-    socialPlatformIcons: collection('[data-test-social-platform-icon]')
+    socialPlatformIcons: collection('[data-test-social-platform-icon]'),
   },
 
   secondStageInstructionsCard: {
