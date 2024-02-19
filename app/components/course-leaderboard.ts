@@ -163,13 +163,13 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     if (this.team) {
       this.analyticsEventTracker.track('clicked_invite_button', {
         source: 'team_course_leaderboard',
-      })
+      });
 
       this.router.transitionTo('team', this.team.id);
     } else {
       this.analyticsEventTracker.track('clicked_invite_button', {
         source: 'course_leaderboard',
-      })
+      });
 
       this.router.transitionTo('refer');
     }
