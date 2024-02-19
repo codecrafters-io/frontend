@@ -580,7 +580,8 @@ function routes() {
       .all()
       .filter((submission) => submission.repository.course.id === queryParams.course_id)
       .filter((submission) => !queryParams.usernames || queryParams.usernames.includes(submission.repository.user.username))
-      .filter((submission) => !queryParams.language_slugs || queryParams.language_slugs.includes(submission.repository.language.slug));
+      .filter((submission) => !queryParams.language_slugs || queryParams.language_slugs.includes(submission.repository.language.slug))
+      .filter((submission) => !queryParams.course_stages || queryParams.course_stages.includes(submission.courseStage.slug));
   });
 
   this.get('/subscriptions', function (schema) {
