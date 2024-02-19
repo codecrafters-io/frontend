@@ -153,7 +153,12 @@ export default create({
   privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
 
   progressBannerModal: {
+    copyableText: {
+      scope: '[data-test-copyable-text]',
+    },
+
     scope: '[data-test-progress-banner-modal]',
+    socialPlatformIcons: collection('[data-test-social-platform-icon]')
   },
 
   secondStageInstructionsCard: {
