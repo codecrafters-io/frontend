@@ -153,6 +153,8 @@ export default create({
   privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
 
   progressBannerModal: {
+    clickOnCopyButton: clickable('[data-test-copy-button]'),
+
     copyableText: {
       scope: '[data-test-copyable-text]',
     },

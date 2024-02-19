@@ -23,7 +23,7 @@
       {{/each}}
     </div>
 
-    <PrimaryButton {{on "click" this.handleCopyButtonClick}}>
+    <PrimaryButton {{on "click" this.handleCopyButtonClick}} data-test-copy-button>
       <AnimatedContainer>
         {{#animated-if this.wasCopiedRecently use=this.fade duration=100}}
           <div class="flex items-center gap-1.5">

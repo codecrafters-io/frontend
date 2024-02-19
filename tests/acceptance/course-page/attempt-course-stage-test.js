@@ -197,4 +197,40 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await coursePage.progressBannerModal.socialPlatformIcons[1].click();
     assert.true(coursePage.progressBannerModal.copyableText.value.includes('Just completed Stage #2 of the CodeCrafters Build your own Redis challenge in Go.'), 'correct copyable text is shown')
   })
+
+  test('progress banner and share progress modal analytics events are tracked', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await animationsSettled();
+
+    await coursePage.completedStepNotice.shareProgressButton.click();
+    await coursePage.progressBannerModal.clickOnCopyButton();
+
+    const analyticsEvents = this.server.schema.analyticsEvents.all().models;
+    const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
+    const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
+
+    assert.ok(filteredAnalyticsEventsNames.includes('copied_share_progress_text'), 'copied_share_progress_text event should be tracked');
+    assert.ok(filteredAnalyticsEventsNames.includes('initiated_share_progress_flow'), 'initiated_share_progress_flow event should be tracked');
+  })
 });
