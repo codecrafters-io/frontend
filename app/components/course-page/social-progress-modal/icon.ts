@@ -17,8 +17,6 @@ type Signature = {
 
 export default class CoursePageSocialProgressModalIconComponent extends Component<Signature> {
   get isSelected(): boolean {
-    console.log(this.args.selectedSocialPlatform);
-    console.log(this.args.platform);
     return this.args.selectedSocialPlatform === this.args.platform;
   }
 

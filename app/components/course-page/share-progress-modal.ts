@@ -23,14 +23,15 @@ export default class ShareProgressModalComponent extends Component<Signature> {
 
   socialPlatforms = ["twitter", "slack", "discord", "linkedin"];
 
-  @tracked copyableText = 'I just completed...';
   @tracked selectedSocialPlatform = "twitter";
   @tracked wasCopiedRecently = false;
 
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-    this.copyableText =
-      'Just completed Stage #2 of the @codecraftersio Build your own Redis challenge in Rust.\n\nhttps://app.codecrafters.io/courses/redis/overview';
+  get copyableText() {
+    if (this.selectedSocialPlatform === "twitter") {
+      return `Just completed Stage #2 of the @codecraftersio ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
+    } else {
+      return `Just completed Stage #2 of the CodeCrafters ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
+    }
   }
 
   @action
