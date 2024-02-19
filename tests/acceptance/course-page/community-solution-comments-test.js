@@ -9,6 +9,7 @@ import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | course-page | community-solution-comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -303,51 +304,16 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     signIn(this.owner, this.server); // Move off of staff
 
     const codeExamplesTab = coursePage.codeExamplesTab;
-
-    const python = this.server.schema.languages.findBy({ slug: 'python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
     const user = this.server.schema.users.first();
 
-    const solution = createCommunityCourseStageSolution(this.server, redis, 2, python);
+    await createComment(this.server, user);
 
-    this.server.create('community-course-stage-solution-comment', {
-      createdAt: new Date('2022-01-02'),
-      bodyMarkdown: 'This is the **first** comment',
-      target: solution,
-      subtargetLocator: 'README.md:3-4',
-      user: user,
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await animationsSettled();
-
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
-
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
-
+    await navigateToComment();
     assert.false(codeExamplesTab.solutionCards[0].commentCards[0].userLabel.isPresent, 'should have no label if not staff or current course author');
 
     user.update({ isStaff: true });
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await animationsSettled();
-
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
-
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
-
+    await navigateToComment();
     assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
 
     await codeExamplesTab.solutionCards[0].commentCards[0].userLabel.hover();
@@ -357,18 +323,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     user.update({ authoredCourseSlugs: ['redis'] });
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await animationsSettled();
-
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
-
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
+    await navigateToComment();
 
     assert.strictEqual(
       codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text,
@@ -378,18 +333,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     user.update({ isStaff: false });
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await animationsSettled();
-
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
-
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
+    await navigateToComment();
 
     assert.strictEqual(
       codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text,
@@ -404,18 +348,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     user.update({ authoredCourseSlugs: ['git'] });
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await animationsSettled();
-
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
-
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
+    await navigateToComment();
 
     assert.false(
       codeExamplesTab.solutionCards[0].commentCards[0].userLabel.isPresent,
@@ -423,3 +356,37 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     );
   });
 });
+
+async function createComment(server, user) {
+  const python = server.schema.languages.findBy({ slug: 'python' });
+  const redis = server.schema.courses.findBy({ slug: 'redis' });
+
+  const solution = createCommunityCourseStageSolution(server, redis, 2, python);
+
+  server.create('community-course-stage-solution-comment', {
+    createdAt: new Date('2022-01-02'),
+    bodyMarkdown: 'This is the **first** comment',
+    target: solution,
+    subtargetLocator: 'README.md:3-4',
+    user: user,
+  });
+}
+
+async function navigateToComment() {
+  await catalogPage.visit();
+  await catalogPage.clickOnCourse('Build your own Redis');
+
+  if (currentURL().endsWith('overview')) {
+    await courseOverviewPage.clickOnStartCourse();
+  }
+
+  await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+  await animationsSettled();
+
+  await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+  await coursePage.codeExamplesTab.languageDropdown.toggle();
+  await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
+
+  await coursePage.codeExamplesTab.solutionCards[0].clickOnExpandButton();
+  await coursePage.codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
+}
