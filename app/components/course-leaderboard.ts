@@ -103,9 +103,9 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
   get inviteButtonText() {
     if (this.team) {
-      return "Invite a teammate";
+      return 'Invite a teammate';
     } else {
-      return "Invite a friend";
+      return 'Invite a friend';
     }
   }
 
