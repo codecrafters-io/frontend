@@ -299,7 +299,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
   // // TODO: Can delete comment with replies
 
-  test('comment has correct user label', async function (assert) {
+  test('comment has no label for regular user', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
 
@@ -310,8 +310,17 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     await navigateToComment();
     assert.false(codeExamplesTab.solutionCards[0].commentCards[0].userLabel.isPresent, 'should have no label if not staff or current course author');
+  });
 
+  test('comment has staff label for staff user', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server); // Move off of staff
+
+    const codeExamplesTab = coursePage.codeExamplesTab;
+    const user = this.server.schema.users.first();
     user.update({ isStaff: true });
+
+    await createComment(this.server, user);
 
     await navigateToComment();
     assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
@@ -320,19 +329,17 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     assertTooltipContent(assert, {
       contentString: 'This user works at CodeCrafters',
     });
+  });
 
+  test('comment has challenge author label for course author', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server); // Move off of staff
+
+    const codeExamplesTab = coursePage.codeExamplesTab;
+    const user = this.server.schema.users.first();
     user.update({ authoredCourseSlugs: ['redis'] });
 
-    await navigateToComment();
-
-    assert.strictEqual(
-      codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text,
-      'staff',
-      'should have staff label if staff and course author',
-    );
-
-    user.update({ isStaff: false });
-
+    await createComment(this.server, user);
     await navigateToComment();
 
     assert.strictEqual(
@@ -345,14 +352,23 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     assertTooltipContent(assert, {
       contentString: 'This user is the author of this challenge',
     });
+  });
 
-    user.update({ authoredCourseSlugs: ['git'] });
+  test('comment has staff label for staff and course author', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server); // Move off of staff
+
+    const codeExamplesTab = coursePage.codeExamplesTab;
+    const user = this.server.schema.users.first();
+    user.update({ isStaff: true, authoredCourseSlugs: ['redis'] });
+
+    await createComment(this.server, user);
 
     await navigateToComment();
-
-    assert.false(
-      codeExamplesTab.solutionCards[0].commentCards[0].userLabel.isPresent,
-      'should not have challenge author label if comment is not on authored course',
+    assert.strictEqual(
+      codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text,
+      'staff',
+      'should have staff label if staff and course author',
     );
   });
 });
