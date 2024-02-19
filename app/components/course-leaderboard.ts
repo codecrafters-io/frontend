@@ -10,6 +10,7 @@ import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type RouterService from '@ember/routing/router-service';
@@ -41,6 +42,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @tracked team?: TeamModel;
 
   @service declare actionCableConsumer: ActionCableConsumerService;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare store: Store;
@@ -159,8 +161,16 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @action
   handleInviteButtonClick() {
     if (this.team) {
+      this.analyticsEventTracker.track('clicked_invite_button', {
+        source: 'team_course_leaderboard',
+      })
+
       this.router.transitionTo('team', this.team.id);
     } else {
+      this.analyticsEventTracker.track('clicked_invite_button', {
+        source: 'course_leaderboard',
+      })
+
       this.router.transitionTo('refer');
     }
   }

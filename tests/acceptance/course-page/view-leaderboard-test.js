@@ -351,6 +351,12 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     await coursePage.leaderboard.inviteButton.click();
     assert.strictEqual(currentURL(), '/teams/dummy-team-id', 'invite button redirects to correct route');
+
+    const analyticsEvents = this.server.schema.analyticsEvents.all().models;
+    const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
+    const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
+
+    assert.ok(filteredAnalyticsEventsNames.includes('clicked_invite_button'), 'clicked_invite_button event should be tracked');
   });
 
   test('invite button redirects to the refer page on public leaderboard', async function (assert) {
@@ -371,6 +377,12 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     await coursePage.leaderboard.inviteButton.click();
     assert.strictEqual(currentURL(), '/refer', 'invite button redirects to correct route');
+
+    const analyticsEvents = this.server.schema.analyticsEvents.all().models;
+    const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
+    const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
+
+    assert.ok(filteredAnalyticsEventsNames.includes('clicked_invite_button'), 'clicked_invite_button event should be tracked');
   });
 
   test('invite button has no tooltip for user with paid content access', async function (assert) {
