@@ -9,11 +9,11 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | course-page | view-leaderboard', function (hooks) {
+module('Acceptance | course-page | view-leaderboard', function(hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('can view leaderboard when no recent players are present', async function (assert) {
+  test('can view leaderboard when no recent players are present', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -74,7 +74,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must still be 0 if first stage is not completed');
   });
 
-  test('can view leaderboard on overview page when other recent players are present', async function (assert) {
+  test('can view leaderboard on overview page when other recent players are present', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -150,7 +150,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
   });
 
-  test('can view leaderboard when current user has leaderboard entry', async function (assert) {
+  test('can view leaderboard when current user has leaderboard entry', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -199,7 +199,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
   });
 
-  test('can view leaderboard when current user has completed all stages', async function (assert) {
+  test('can view leaderboard when current user has completed all stages', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -248,7 +248,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 15', 'progress text must be shown');
   });
 
-  test('team member can view leaderboard when no recent players in organization are present', async function (assert) {
+  test('team member can view leaderboard when no recent players in organization are present', async function(assert) {
     testScenario(this.server);
     signInAsTeamMember(this.owner, this.server);
 
@@ -274,6 +274,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
+    await this.pauseTest();
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
 
     await percySnapshot('Leaderboard for teams - Team has no submissions');
@@ -288,7 +289,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await percySnapshot('Leaderboard for teams - Viewing World');
   });
 
-  test('private leaderboard feature suggestion is shown to non-team members with a prompt', async function (assert) {
+  test('private leaderboard feature suggestion is shown to non-team members with a prompt', async function(assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -307,7 +308,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should not have feature suggestion');
   });
 
-  test('private leaderboard feature suggestion is not shown to team members', async function (assert) {
+  test('private leaderboard feature suggestion is not shown to team members', async function(assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -322,7 +323,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
   });
 
-  test('private leaderboard feature suggestion is not shown to users who do not have a prompt', async function (assert) {
+  test('private leaderboard feature suggestion is not shown to users who do not have a prompt', async function(assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();

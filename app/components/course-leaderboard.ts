@@ -1,20 +1,21 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseLeaderboardEntry from 'codecrafters-frontend/utils/course-leaderboard-entry';
-import LeaderboardPoller from 'codecrafters-frontend/utils/leaderboard-poller';
 import fade from 'ember-animated/transitions/fade';
+import LeaderboardPoller from 'codecrafters-frontend/utils/leaderboard-poller';
 import move from 'ember-animated/motions/move';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import type VisibilityService from 'codecrafters-frontend/services/visibility';
+import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
-import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type VisibilityService from 'codecrafters-frontend/services/visibility';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -41,6 +42,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
   @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare authenticator: AuthenticatorService;
+  @service declare router: RouterService;
   @service declare store: Store;
   @service declare visibility: VisibilityService;
 
@@ -99,6 +101,14 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     });
   }
 
+  get inviteButtonText() {
+    if (this.team) {
+      return "Invite a teammate";
+    } else {
+      return "Invite a friend";
+    }
+  }
+
   get mergedEntries() {
     const entriesGroupedByUser: Record<string, CourseLeaderboardEntry[]> = {};
 
@@ -144,6 +154,15 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     this.isLoadingEntries = false;
     this.isReloadingEntries = false;
     this.startLeaderboardPoller();
+  }
+
+  @action
+  handleInviteButtonClick() {
+    if (this.team) {
+      this.router.transitionTo('teams', this.team.id);
+    } else {
+      this.router.transitionTo('refer');
+    }
   }
 
   @action
