@@ -12,19 +12,19 @@
 
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <div class="border-b-2 border-teal-500 opacity-100 pb-2 px-1" role="button">
+      <div class="border-b-2 {{if (eq this.selectedSocialIcon 'twitter') 'border-teal-500 opacity-100' 'border-transparent opacity-25 hover:opacity-100 hover:border-gray-300'}} pb-2 px-1" role="button" {{on 'click' (fn (mut this.selectedSocialIcon) 'twitter')}}>
         <img src={{this.twitterIcon}} class="w-5 h-5" alt="Twitter Icon" />
       </div>
 
-      <div class="border-b-2 border-transparent opacity-25 pb-2 px-1 hover:opacity-100 hover:border-gray-300" role="button">
+      <div class="border-b-2 {{if (eq this.selectedSocialIcon 'slack') 'border-teal-500 opacity-100' 'border-transparent opacity-25 hover:opacity-100 hover:border-gray-300'}} pb-2 px-1" role="button" {{on 'click' (fn (mut this.selectedSocialIcon) 'slack')}}>
         <img src={{this.slackIcon}} class="w-5 h-5" alt="Slack Icon" />
       </div>
 
-      <div class="border-b-2 border-transparent opacity-25 pb-2 px-1 hover:opacity-100 hover:border-gray-300" role="button">
+      <div class="border-b-2 {{if (eq this.selectedSocialIcon 'discord') 'border-teal-500 opacity-100' 'border-transparent opacity-25 hover:opacity-100 hover:border-gray-300'}} pb-2 px-1" role="button" {{on 'click' (fn (mut this.selectedSocialIcon) 'discord')}}>
         <img src={{this.discordIcon}} class="w-5 h-5" alt="Discord Icon" />
       </div>
 
-      <div class="border-b-2 border-transparent opacity-25 pb-2 px-1 hover:opacity-100 hover:border-gray-300" role="button">
+      <div class="border-b-2 {{if (eq this.selectedSocialIcon 'linkedin') 'border-teal-500 opacity-100' 'border-transparent opacity-25 hover:opacity-100 hover:border-gray-300'}} pb-2 px-1" role="button" {{on 'click' (fn (mut this.selectedSocialIcon) 'linkedin')}}>
         <img src={{this.linkedinIcon}} class="w-5 h-5" alt="Linkedin Icon" />
       </div>
     </div>

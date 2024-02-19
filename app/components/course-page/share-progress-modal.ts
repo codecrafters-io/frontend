@@ -32,6 +32,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   slackIcon = slackIcon;
   twitterIcon = twitterIcon;
 
+  @tracked selectedSocialIcon = "twitter";
   @tracked wasCopiedRecently = false;
   @tracked copyableText = 'I just completed...';
 
