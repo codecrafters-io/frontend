@@ -159,7 +159,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @action
   handleInviteButtonClick() {
     if (this.team) {
-      this.router.transitionTo('teams', this.team.id);
+      this.router.transitionTo('team', this.team.id);
     } else {
       this.router.transitionTo('refer');
     }

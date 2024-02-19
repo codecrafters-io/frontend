@@ -4,6 +4,8 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -274,7 +276,6 @@ module('Acceptance | course-page | view-leaderboard', function(hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    await this.pauseTest();
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
 
     await percySnapshot('Leaderboard for teams - Team has no submissions');
@@ -336,5 +337,59 @@ module('Acceptance | course-page | view-leaderboard', function(hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
+  });
+
+  test('invite button redirects to the teams page on team leaderboard', async function(assert) {
+    testScenario(this.server);
+    signInAsTeamMember(this.owner, this.server);
+
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present')
+
+    await coursePage.leaderboard.inviteButton.click();
+    assert.strictEqual(currentURL(), '/teams/dummy-team-id', 'invite button redirects to correct route')
+  });
+
+  test('invite button redirects to the refer page on public leaderboard', async function(assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present')
+
+    await coursePage.leaderboard.inviteButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Get 7 days free by inviting a friend',
+    });
+
+    await coursePage.leaderboard.inviteButton.click();
+    assert.strictEqual(currentURL(), '/refer', 'invite button redirects to correct route')
+  });
+
+  test('invite button has no tooltip for user with paid content access', async function(assert) {
+    testScenario(this.server);
+    const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+    user.update('isVip', true);
+    user.save();
+    signIn(this.owner, this.server, user);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present')
+
+    await coursePage.leaderboard.inviteButton.hover();
+    assertTooltipNotRendered(assert)
   });
 });
