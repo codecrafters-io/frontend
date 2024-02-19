@@ -23,6 +23,14 @@
         >{{question.queryMarkdown}}</option>
       {{/each}}
     </select>
+    <TertiaryLinkButton @route="concept-admin.questions" @size="small" class="pl-1.5 mt-0">
+      <div class="flex items-center">
+        {{svg-jar "question-mark-circle" class="w-4 h-4 mr-1.5 text-gray-500"}}
+        <span>
+          Create a new question.
+        </span>
+      </div>
+    </TertiaryLinkButton>
   {{else}}
     <div class="text-gray-700 mb-4">
       No questions found.
