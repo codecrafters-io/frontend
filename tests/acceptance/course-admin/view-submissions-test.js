@@ -253,10 +253,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let stage1 = redis.stages.models.sortBy('position')[0].slug;
-    let stage2 = redis.stages.models.sortBy('position')[6].slug;
+    let stage2 = redis.stages.models.sortBy('position')[1].slug;
 
-    this.server.create('repository', 'withAllStagesCompleted', { course: redis, language: python, user: user1 });
-    this.server.create('repository', 'withAllStagesCompleted', { course: redis, language: ruby, user: user2 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
 
     await submissionsPage.visit({ course_slug: 'redis', course_stages: stage1 + ',' + stage2 });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 stages each
@@ -273,13 +273,13 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let stage1 = redis.stages.models.sortBy('position')[0].name;
-    let stage2 = redis.stages.models.sortBy('position')[6].name;
+    let stage2 = redis.stages.models.sortBy('position')[1].name;
 
-    this.server.create('repository', 'withAllStagesCompleted', { course: redis, language: python, user: user1 });
-    this.server.create('repository', 'withAllStagesCompleted', { course: redis, language: ruby, user: user2 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
 
     await submissionsPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 62); // 2 users, 31 stages each
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 14); // 2 users, 7 stages each
 
     await submissionsPage.stageDropdown.click();
     await submissionsPage.stageDropdown.clickOnStageLink(stage1);

@@ -6,9 +6,14 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    stages: StageModel[];
+    stages: stageWithBorderInfo[];
     onRequestedStageChange: (stage: StageModel) => void;
   };
+}
+
+interface stageWithBorderInfo {
+  stage: StageModel;
+  addBorder: boolean;
 }
 
 export default class CourseStageDropdownComponent extends Component<Signature> {
