@@ -1,7 +1,9 @@
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
@@ -23,6 +25,8 @@ export default class ShareProgressModalComponent extends Component<Signature> {
 
   socialPlatforms = ["twitter", "slack", "discord", "linkedin"];
 
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+
   @tracked selectedSocialPlatform = "twitter";
   @tracked wasCopiedRecently = false;
 
@@ -36,6 +40,10 @@ export default class ShareProgressModalComponent extends Component<Signature> {
 
   @action
   handleCopyButtonClick() {
+    this.analyticsEventTracker.track('copied_share_progress_text', {
+      repository_id: this.args.repository.id,
+    })
+
     this.copyToClipboardAndFlashMessage.perform();
   }
 
