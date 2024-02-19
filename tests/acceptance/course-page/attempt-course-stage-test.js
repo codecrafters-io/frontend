@@ -130,7 +130,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
     assert.notOk(
       coursePage.completedStepNotice.shareProgressButton.isVisible,
-      'completed step notice is not fisible after finishing the first stage',
+      'completed step notice is not visible after finishing the first stage',
     );
 
     await coursePage.completedStepNotice.clickOnNextStepButton();
