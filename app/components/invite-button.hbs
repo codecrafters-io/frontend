@@ -11,5 +11,7 @@
     </div>
   {{/unless}}
 
-  <EmberTooltip @text="Get upto a year free by inviting your friends" @side="left" />
+  {{#if this.authenticator.currentUser.canAccessPaidContent}}
+    <EmberTooltip @text="Get 7 days free by inviting a friend" @side="left" />
+  {{/if}}
 </div>
