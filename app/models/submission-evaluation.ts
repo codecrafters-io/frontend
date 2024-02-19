@@ -16,6 +16,10 @@ export default class SubmissionEvaluationModel extends Model {
       return;
     }
 
+    if (!this.logsFileUrl) {
+      return;
+    }
+
     try {
       const response = await fetch(this.logsFileUrl);
       this.logsFileContents = (await response.text()) as string;
