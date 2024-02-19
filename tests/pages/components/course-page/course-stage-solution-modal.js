@@ -20,7 +20,7 @@ export default {
     scope: '[data-test-comments-tab]',
   },
 
-  // communitySolutionsTab: CommunitySolutionsTab,
+  // codeExamplesTab: codeExamplesTab,
 
   // languageDropdown: {
   //   currentLanguageName: text('[data-test-language-dropdown-trigger] [data-test-current-language-name]', { resetScope: true }),
