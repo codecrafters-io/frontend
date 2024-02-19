@@ -1,9 +1,8 @@
 <div data-test-concept-question-block-editor>
-  {{#if (gt @concept.questions.length 0)}}
+  {{#if (gt this.remainingQuestionCount 0)}}
     <div class="text-gray-600 mb-4">
       Found
-      {{! @glint-expect-error: length can't be used for some reason }}
-      {{@concept.questions.length}}
+      {{this.remainingQuestionCount}}
       questions. Select one to use:
     </div>
 
@@ -11,8 +10,17 @@
     <select class="p-2 border rounded mb-3 block" {{on "change" this.handleConceptQuestionSlugSelected}}>
       <option disabled selected={{not @model.conceptQuestionSlug}}>Select a question...</option>
 
-      {{#each @concept.questions as |question|}}
+      {{#each this.enabledQuestions as |question|}}
         <option value={{question.slug}} selected={{eq @model.conceptQuestionSlug question.slug}}>{{question.queryMarkdown}}</option>
+      {{/each}}
+
+      {{#each this.disabledQuestions as |question|}}
+        <option
+          value={{question.slug}}
+          selected={{eq @model.conceptQuestionSlug question.slug}}
+          disabled="true"
+          class="text-gray-1200"
+        >{{question.queryMarkdown}}</option>
       {{/each}}
     </select>
   {{else}}
