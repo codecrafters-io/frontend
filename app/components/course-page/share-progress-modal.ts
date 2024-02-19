@@ -5,12 +5,6 @@ import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
-import discordIcon from 'codecrafters-frontend/images/social-icons/discord.svg';
-import linkedinIcon from 'codecrafters-frontend/images/social-icons/linkedin.svg';
-import slackIcon from 'codecrafters-frontend/images/social-icons/slack.svg';
-import twitterIcon from 'codecrafters-frontend/images/social-icons/twitter.svg';
-
-
 interface Signature {
   Element: HTMLDivElement;
 
@@ -27,14 +21,11 @@ interface Signature {
 export default class ShareProgressModalComponent extends Component<Signature> {
   fade = fade;
 
-  discordIcon = discordIcon;
-  linkedinIcon = linkedinIcon;
-  slackIcon = slackIcon;
-  twitterIcon = twitterIcon;
+  socialPlatforms = ["twitter", "slack", "discord", "linkedin"];
 
-  @tracked selectedSocialIcon = "twitter";
-  @tracked wasCopiedRecently = false;
   @tracked copyableText = 'I just completed...';
+  @tracked selectedSocialPlatform = "twitter";
+  @tracked wasCopiedRecently = false;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -45,6 +36,11 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   @action
   handleCopyButtonClick() {
     this.copyToClipboardAndFlashMessage.perform();
+  }
+
+  @action
+  handleSocialPlatformClick(platform: string) {
+    this.selectedSocialPlatform = platform;
   }
 
   copyToClipboardAndFlashMessage = task({ keepLatest: true }, async (): Promise<void> => {
