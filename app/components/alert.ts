@@ -10,6 +10,7 @@ interface Signature {
 
   Blocks: {
     default: [];
+    icon?: [];
   };
 }
 
