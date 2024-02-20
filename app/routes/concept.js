@@ -48,8 +48,7 @@ export default class ConceptRoute extends BaseRoute {
       });
     }
 
-    let latestConceptEngagement;
-    latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
+    const latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
 
     return {
       allConcepts,
