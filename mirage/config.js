@@ -403,6 +403,14 @@ function routes() {
 
   this.post('/downvotes');
 
+  this.get('/fake-submission-logs', function (schema, request) {
+    if (request.queryParams.type === 'success') {
+      return new Response(200, {}, '\x1b[92m[stage-1] passed\x1b[0m\n\x1b[92m[stage-2] passed\x1b[0m');
+    } else {
+      return new Response(200, {}, '\x1b[91m[stage-1] failure\x1b[0m\n\x1b[91m[stage-2] failure\x1b[0m');
+    }
+  });
+
   this.patch('/feature-suggestions/:id');
   this.get('/free-usage-grants', function (schema, request) {
     return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
