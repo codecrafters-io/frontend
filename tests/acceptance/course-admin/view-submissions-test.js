@@ -258,7 +258,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
 
-    await submissionsPage.visit({ course_slug: 'redis', course_stages: stage1 + ',' + stage2 });
+    await submissionsPage.visit({ course_slug: 'redis', course_stage_slugs: stage1 + ',' + stage2 });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 stages each
   });
 

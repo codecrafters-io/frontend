@@ -12,7 +12,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
     languages: {
       refreshModel: true,
     },
-    course_stages: {
+    course_stage_slugs: {
       refreshModel: true,
     },
   };
@@ -30,8 +30,8 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
       filters.language_slugs = params.languages.split(',');
     }
 
-    if (params.course_stages.length > 0) {
-      filters.course_stages = params.course_stages.split(',');
+    if (params.course_stage_slugs.length > 0) {
+      filters.course_stage_slugs = params.course_stage_slugs.split(',');
     }
 
     let submissions = await this.store.query('submission', {

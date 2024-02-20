@@ -18,7 +18,7 @@
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-stage-dropdown-content>
-        {{#each @stages as |item|}}
+        {{#each this.sortedStagesByExtensionForDropdown as |item|}}
           {{#if item.addBorder}}
             <div class="border-b h-px w-full mt-3 mb-3"></div>
           {{/if}}
