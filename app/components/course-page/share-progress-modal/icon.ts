@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { capitalize } from '@ember/string';
 
 import discordLogoImage from 'codecrafters-frontend/images/social-icons/discord.svg';
 import linkedinLogoImage from 'codecrafters-frontend/images/social-icons/linkedin.svg';
@@ -33,6 +34,10 @@ export default class CoursePageShareProgressModalIconComponent extends Component
       default:
         return '';
     }
+  }
+
+  get platformLogoAltText(): string {
+    return `${capitalize(this.args.platform)} Icon`
   }
 }
 
