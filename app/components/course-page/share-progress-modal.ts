@@ -28,10 +28,17 @@ export default class ShareProgressModalComponent extends Component<Signature> {
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
+  @tracked copyableText = "";
   @tracked selectedSocialPlatform = 'twitter';
   @tracked wasCopiedRecently = false;
 
-  get copyableText() {
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    this.copyableText = this.defaultCopyableText;
+  }
+
+  get defaultCopyableText() {
     if (this.selectedSocialPlatform === 'twitter') {
       return `Just completed Stage #2 of the @codecraftersio ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
     } else {
@@ -51,6 +58,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   @action
   handleSocialPlatformClick(platform: string) {
     this.selectedSocialPlatform = platform;
+    this.copyableText = this.defaultCopyableText;
   }
 
   copyToClipboardAndFlashMessage = task({ keepLatest: true }, async (): Promise<void> => {
