@@ -15,7 +15,7 @@ type Signature = {
   };
 };
 
-export default class CoursePageSocialProgressModalIconComponent extends Component<Signature> {
+export default class CoursePageShareProgressModalIconComponent extends Component<Signature> {
   get isSelected(): boolean {
     return this.args.selectedSocialPlatform === this.args.platform;
   }
@@ -38,6 +38,6 @@ export default class CoursePageSocialProgressModalIconComponent extends Componen
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::SocialProgressModal::Icon': typeof CoursePageSocialProgressModalIconComponent;
+    'CoursePage::ShareProgressModal::Icon': typeof CoursePageShareProgressModalIconComponent;
   }
 }

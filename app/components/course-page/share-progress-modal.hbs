@@ -15,7 +15,7 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-2">
       {{#each this.socialPlatforms as |platform|}}
-        <CoursePage::SocialProgressModal::Icon
+        <CoursePage::ShareProgressModal::Icon
           @onClick={{this.handleSocialPlatformClick}}
           @platform={{platform}}
           @selectedSocialPlatform={{this.selectedSocialPlatform}}
