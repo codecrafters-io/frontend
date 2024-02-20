@@ -273,21 +273,23 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let stage1 = redis.stages.models.sortBy('position')[0].name;
-    let stage2 = redis.stages.models.sortBy('position')[1].name;
 
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
 
     await submissionsPage.visit({ course_slug: 'redis' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 14); // 2 users, 7 stages each
+    assert.strictEqual(submissionsPage.stageDropdown.currentStageName, 'All Stages');
 
     await submissionsPage.stageDropdown.click();
     await submissionsPage.stageDropdown.clickOnStageLink(stage1);
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 2); // 2 user, 1 stages each
+    assert.strictEqual(submissionsPage.stageDropdown.currentStageName, stage1);
 
     await submissionsPage.stageDropdown.click();
-    await submissionsPage.stageDropdown.clickOnStageLink(stage2);
-    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 2); // 2 users, 1 stages each
+    await submissionsPage.stageDropdown.clickOnStageLink('All Stages');
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 14); // 2 users, 7 stages each
+    assert.strictEqual(submissionsPage.stageDropdown.currentStageName, 'All Stages');
   });
 
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
