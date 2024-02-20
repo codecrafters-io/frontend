@@ -8,11 +8,11 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-page | attempt-course-stage', function(hooks) {
+module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('can fail course stage', async function(assert) {
+  test('can fail course stage', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -56,7 +56,7 @@ module('Acceptance | course-page | attempt-course-stage', function(hooks) {
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
   });
 
-  test('can pass course stage', async function(assert) {
+  test('can pass course stage', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -87,7 +87,7 @@ module('Acceptance | course-page | attempt-course-stage', function(hooks) {
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage passed');
   });
 
-  test('passing first stage shows badges', async function(assert) {
+  test('passing first stage shows badges', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -137,7 +137,7 @@ module('Acceptance | course-page | attempt-course-stage', function(hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is stage 2');
   });
 
-  test('share progress button is visible after completing the second stage', async function(assert) {
+  test('share progress button is visible after completing the second stage', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -165,7 +165,7 @@ module('Acceptance | course-page | attempt-course-stage', function(hooks) {
     assert.ok(coursePage.completedStepNotice.shareProgressButton.isVisible, 'completed step notice is visible if completed stage is not first stage');
   });
 
-  test('share progress modal has the correct rendered content', async function(assert) {
+  test('share progress modal has the correct rendered content', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -212,7 +212,7 @@ module('Acceptance | course-page | attempt-course-stage', function(hooks) {
     );
   });
 
-  test('progress banner and share progress modal analytics events are tracked', async function(assert) {
+  test('progress banner and share progress modal analytics events are tracked', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
