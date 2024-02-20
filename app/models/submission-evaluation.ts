@@ -21,7 +21,14 @@ export default class SubmissionEvaluationModel extends Model {
 
     try {
       const response = await fetch(this.logsFileUrl);
-      this.logsFileContents = (await response.text()) as string;
+
+      if (response.status === 200) {
+        this.logsFileContents = (await response.text()) as string;
+      } else {
+        Sentry.captureMessage(`Failed to fetch logs file for submission evaluation`, {
+          extra: { response_status: response.status, response_body: await response.text(), submission_evaluation_id: this.id },
+        });
+      }
     } catch (error) {
       Sentry.captureException(error);
     }
