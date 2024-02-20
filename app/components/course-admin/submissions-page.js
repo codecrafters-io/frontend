@@ -44,6 +44,11 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   }
 
   @action
+  handleAllCourseStagesDropdownLinkClick() {
+    this.router.transitionTo({ queryParams: { course_stage_slugs: [] } });
+  }
+
+  @action
   handleAllLanguagesDropdownLinkClick() {
     this.router.transitionTo({ queryParams: { languages: [] } });
   }

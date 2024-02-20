@@ -12,6 +12,7 @@
 
   <CourseStageDropdown
     @stages={{this.sortedStagesForDropdown}}
+    @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
     @onRequestedStageChange={{this.handleRequestedStageChange}}
     class="py-3 mr-4"
   />

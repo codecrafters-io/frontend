@@ -18,6 +18,16 @@
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-course-stage-dropdown-content>
+        <div
+          class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
+          role="button"
+          data-test-stage-link
+          {{on "click" (fn this.handleAllCourseStagesDropdownLinkClick dd.actions.close)}}
+        >
+          <span class="text-gray-600 text-sm">
+            All stages
+          </span>
+        </div>
         {{#each this.sortedStagesByExtensionForDropdown as |item|}}
           {{#if item.addBorder}}
             <div class="border-b h-px w-full mt-3 mb-3"></div>

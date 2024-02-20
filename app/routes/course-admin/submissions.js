@@ -55,6 +55,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
       course: course,
       languages: await this.store.findAll('language'),
       filteredLanguageSlugs: filters.language_slugs || [],
+      filteredCourseStageSlugs: filters.course_stage_slugs || [],
       submissions: submissions,
     };
   }
