@@ -65,7 +65,11 @@
           </div>
         {{/animated-if}}
 
-        <InviteButton @isCollapsed={{@isCollapsed}} @onClick={{this.handleInviteButtonClick}} @text={{this.inviteButtonText}} />
+        <CourseLeaderboard::InviteButtonEntry
+          @isCollapsed={{@isCollapsed}}
+          @text={{this.inviteButtonText}}
+          {{on "click" this.handleInviteButtonClick}}
+        />
       </div>
     {{/if}}
   </AnimatedContainer>

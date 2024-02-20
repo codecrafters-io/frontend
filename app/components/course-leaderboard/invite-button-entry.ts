@@ -7,17 +7,16 @@ export interface Signature {
 
   Args: {
     isCollapsed: boolean;
-    onClick: () => void;
     text: string;
   };
 }
 
-export default class InviteButtonComponent extends Component<Signature> {
+export default class CourseLeaderboardInviteButtonEntryComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    InviteButton: typeof InviteButtonComponent;
+    'CourseLeaderboard::InviteButtonEntry': typeof CourseLeaderboardInviteButtonEntryComponent;
   }
 }
