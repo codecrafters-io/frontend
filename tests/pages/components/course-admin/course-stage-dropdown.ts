@@ -15,7 +15,7 @@ export default {
 
   content: {
     clickOnStageLink: clickOnText('[data-test-stage-link]'),
-    scope: '[data-test-stage-dropdown-content]',
+    scope: '[data-test-course-stage-dropdown-content]',
   },
-  scope: '[data-test-stage-dropdown]',
+  scope: '[data-test-course-stage-dropdown]',
 };
