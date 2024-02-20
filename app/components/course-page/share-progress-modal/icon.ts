@@ -21,19 +21,24 @@ export default class CoursePageShareProgressModalIconComponent extends Component
     return this.args.selectedSocialPlatform === this.args.platform;
   }
 
-  get platformLogoImage(): string {
-    switch (this.args.platform) {
-      case 'discord':
-        return discordLogoImage;
-      case 'linkedin':
-        return linkedinLogoImage;
-      case 'slack':
-        return slackLogoImage;
-      case 'twitter':
-        return twitterLogoImage;
-      default:
-        return '';
+  get platformLogoImage(): 'twitter' | 'discord' | 'linkedin' | 'slack' {
+    if (this.args.platform === 'discord') {
+      return discordLogoImage;
     }
+
+    if (this.args.platform === 'linkedin') {
+      return linkedinLogoImage;
+    }
+
+    if (this.args.platform === 'slack') {
+      return slackLogoImage;
+    }
+
+    if (this.args.platform === 'twitter') {
+      return twitterLogoImage;
+    }
+
+    throw new Error(`Unknown platform: ${this.args.platform}`);
   }
 
   get platformLogoAltText(): string {
