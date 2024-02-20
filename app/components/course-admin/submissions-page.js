@@ -66,10 +66,6 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
     return this.args.course.betaOrLiveLanguages.sortBy('name');
   }
 
-  get sortedStagesForDropdown() {
-    return this.args.course.stages.sortBy('position');
-  }
-
   @action
   handleAllCourseStagesDropdownLinkClick() {
     this.router.transitionTo({ queryParams: { course_stage_slugs: [] } });

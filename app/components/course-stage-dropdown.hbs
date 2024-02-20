@@ -25,29 +25,44 @@
         <div
           class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
           role="button"
-          data-test-stage-link
+          data-test-course-stage-link
           {{on "click" (fn this.handleAllCourseStagesDropdownLinkClick dd.actions.close)}}
         >
           <span class="text-gray-600 text-sm">
             All stages
           </span>
         </div>
-        {{#each this.sortedStagesByExtensionForDropdown as |item|}}
-          {{#if item.addBorder}}
-            <div class="border-b h-px w-full mt-3 mb-3"></div>
-          {{/if}}
+        {{#each @course.sortedBaseStages as |stage|}}
           <div
             class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
             role="button"
-            data-test-stage-link
-            {{on "click" (fn this.handleStageDropdownLinkClick item.stage dd.actions.close)}}
+            data-test-course-stage-link
+            {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
           >
             <span class="text-gray-600 text-sm">
-              {{item.stage.position}}.
-              {{item.stage.name}}
+              {{!-- {{stage.position}}. --}}
+              {{stage.name}}
             </span>
           </div>
         {{/each}}
+
+        {{#each @course.sortedExtensions as |extension|}}
+          <div class="border-b h-px w-full mt-3 mb-3"></div>
+          {{#each extension.sortedStages as |stage|}}
+            <div
+              class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
+              role="button"
+              data-test-course-stage-link
+              {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
+            >
+              <span class="text-gray-600 text-sm">
+                {{!-- {{stage.position}}. --}}
+                {{stage.name}}
+              </span>
+            </div>
+          {{/each}}
+        {{/each}}
+
       </div>
     </dd.Content>
   </BasicDropdown>

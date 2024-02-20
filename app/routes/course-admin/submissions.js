@@ -42,6 +42,8 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
           'repository.language',
           'repository.user',
           'course-stage',
+          'course-stage.course',
+          'course-stage.course.extensions',
           'community-course-stage-solution',
           'community-course-stage-solution.comments',
           'community-course-stage-solution.comments.user',
@@ -54,6 +56,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
     return {
       course: course,
       languages: await this.store.findAll('language'),
+      course_stages: course.stages,
       filteredLanguageSlugs: filters.language_slugs || [],
       filteredCourseStageSlugs: filters.course_stage_slugs || [],
       submissions: submissions,

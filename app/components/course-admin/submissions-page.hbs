@@ -11,7 +11,7 @@
   <div class="flex-grow"></div>
 
   <CourseStageDropdown
-    @stages={{this.sortedStagesForDropdown}}
+    @course={{@course}}
     @selectedCourseStage={{this.currentCourseStage}}
     @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
     @onRequestedStageChange={{this.handleRequestedStageChange}}
