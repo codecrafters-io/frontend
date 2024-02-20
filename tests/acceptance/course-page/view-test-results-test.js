@@ -6,6 +6,7 @@ import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { waitUntil } from '@ember/test-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 
 module('Acceptance | course-page | view-test-results', function (hooks) {
@@ -78,6 +79,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
+    await waitUntil(() => coursePage.testResultsBar.logsPreview.logs !== ''); // Logs are fetched on-demand
     assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
 
     await percySnapshot('Course Page - View test results - Failure');
@@ -107,6 +109,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.testResultsBar.clickOnBottomSection();
+    await waitUntil(() => coursePage.testResultsBar.logsPreview.logs !== ''); // Logs are fetched on-demand
     assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] passed\n[stage-2] passed');
 
     await percySnapshot('Course Page - View test results - Success');

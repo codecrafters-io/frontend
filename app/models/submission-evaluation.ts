@@ -6,7 +6,6 @@ import { tracked } from '@glimmer/tracking';
 export default class SubmissionEvaluationModel extends Model {
   @belongsTo('submission', { async: false, inverse: 'evaluations' }) declare submission: SubmissionModel;
   @attr('date') declare createdAt: Date;
-  @attr('string') declare logsBase64: string; // TODO: Remove, replaced by logsFileUrl
   @attr('string') declare logsFileUrl: string;
 
   @tracked logsFileContents: string | null = null;
