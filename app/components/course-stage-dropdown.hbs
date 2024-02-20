@@ -9,8 +9,12 @@
           shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
         data-test-course-stage-dropdown-trigger
       >
-        <span class="mr-1">
-          All Stages
+        <span class="mr-1" data-test-current-course-stage-name>
+          {{#if this.isAllCourseStagesOptionSelected}}
+            All Stages
+          {{else}}
+            {{@selectedCourseStage.name}}
+          {{/if}}
         </span>
 
         {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}

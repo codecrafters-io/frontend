@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import StageModel from 'codecrafters-frontend/models/course-stage';
 
 interface Signature {
@@ -7,6 +8,7 @@ interface Signature {
 
   Args: {
     stages: StageModel[];
+    selectedCourseStage: CourseStageModel | null;
     onAllCourseStagesDropdownLinkClick?: () => void;
     onRequestedStageChange: (stage: StageModel) => void;
   };
@@ -18,6 +20,10 @@ interface stageWithBorderInfo {
 }
 
 export default class CourseStageDropdownComponent extends Component<Signature> {
+  get isAllCourseStagesOptionSelected() {
+    return !this.args.selectedCourseStage;
+  }
+
   get sortedStagesByExtensionForDropdown() {
     const stageAndBorders: stageWithBorderInfo[] = [];
 
