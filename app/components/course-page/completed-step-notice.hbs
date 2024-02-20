@@ -41,7 +41,7 @@
     {{/if}}
   </div>
 
-  {{#if (gt this.nextStep.globalPosition 4)}}
+  {{#if this.shouldShowShareProgressButton}}
     <div
       class="flex items-center gap-1.5 group/share-progress-button"
       role="button"

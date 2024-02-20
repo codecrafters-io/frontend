@@ -26,12 +26,20 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
     return this.coursePageState.activeStep;
   }
 
+  get activeStepAsCourseStageStep() {
+    return this.coursePageState.activeStepAsCourseStageStep;
+  }
+
   get instructionsMarkdown() {
     return this.args.step.completionNoticeMessage!;
   }
 
   get nextStep() {
     return this.coursePageState.nextStep;
+  }
+
+  get shouldShowShareProgressButton() {
+    return this.activeStep.type === 'CourseStageStep' && !this.activeStepAsCourseStageStep.stageListItem.stage.isFirst;
   }
 
   @action
