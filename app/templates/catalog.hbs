@@ -10,6 +10,8 @@
       @featureSuggestion={{this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
       class="mb-6"
     />
+  {{else if (not this.authenticator.isAuthenticated)}}
+    <ProductWalkthroughFeatureSuggestion class="mb-6" />
   {{/if}}
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2 mb-8">

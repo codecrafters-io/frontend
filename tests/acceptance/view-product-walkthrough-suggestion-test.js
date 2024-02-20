@@ -20,6 +20,18 @@ module('Acceptance | view-product-walkthrough-suggestion', function (hooks) {
     assert.strictEqual(currentURL(), '/concepts/overview');
   });
 
+  test('it renders for anonymous users', async function (assert) {
+    testScenario(this.server);
+
+    this.server.create('concept', { slug: 'overview', blocks: [] });
+
+    await catalogPage.visit();
+    assert.notOk(catalogPage.productWalkthroughFeatureSuggestion.hasDismissButton);
+
+    await catalogPage.productWalkthroughFeatureSuggestion.clickOnStartHereButton();
+    assert.strictEqual(currentURL(), '/concepts/overview');
+  });
+
   test('it can be dismissed', async function (assert) {
     testScenario(this.server);
     const user = await signIn(this.owner, this.server);

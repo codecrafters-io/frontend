@@ -4,7 +4,7 @@ import syncRepositoryStageLists from '../utils/sync-repository-stage-lists';
 
 export default Factory.extend({
   createdAt: () => new Date(),
-  cloneUrl: 'https://git.codecraters.io/a-long-test-string.git',
+  cloneUrl: 'https://git.codecrafters.io/a-long-test-string.git',
   name: 'Dummy name',
 
   afterCreate(repository, server) {
