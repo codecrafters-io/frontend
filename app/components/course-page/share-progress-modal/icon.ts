@@ -21,6 +21,10 @@ export default class CoursePageShareProgressModalIconComponent extends Component
     return this.args.selectedSocialPlatform === this.args.platform;
   }
 
+  get platformLogoAltText(): string {
+    return `${capitalize(this.args.platform)} Icon`;
+  }
+
   get platformLogoImage(): 'twitter' | 'discord' | 'linkedin' | 'slack' {
     if (this.args.platform === 'discord') {
       return discordLogoImage;
@@ -39,10 +43,6 @@ export default class CoursePageShareProgressModalIconComponent extends Component
     }
 
     throw new Error(`Unknown platform: ${this.args.platform}`);
-  }
-
-  get platformLogoAltText(): string {
-    return `${capitalize(this.args.platform)} Icon`
   }
 }
 

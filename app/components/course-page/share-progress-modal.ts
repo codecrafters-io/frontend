@@ -28,7 +28,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
-  @tracked copyableText = "";
+  @tracked copyableText = '';
   @tracked selectedSocialPlatform = 'twitter';
   @tracked wasCopiedRecently = false;
 
