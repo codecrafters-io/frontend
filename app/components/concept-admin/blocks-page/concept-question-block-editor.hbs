@@ -8,22 +8,30 @@
 
     {{! template-lint-disable require-input-label }}
     <select class="p-2 border rounded mb-3 block" {{on "change" this.handleConceptQuestionSlugSelected}}>
-      <option disabled selected={{not @model.conceptQuestionSlug}}>Select a question...</option>
-
+      <option disabled selected={{not @model.conceptQuestionSlug}} data-test-concept-question-block-editor-dropdown-button>Select a question...</option>
       {{#each this.enabledQuestions as |question|}}
-        <option value={{question.slug}} selected={{eq @model.conceptQuestionSlug question.slug}}>{{question.queryMarkdown}}</option>
+        <option
+          value={{question.slug}}
+          selected={{eq @model.conceptQuestionSlug question.slug}}
+          data-test-concept-question-block-editor-dropdown-button
+        >{{question.queryMarkdown}}</option>
       {{/each}}
-
       {{#each this.disabledQuestions as |question|}}
         <option
           value={{question.slug}}
           selected={{eq @model.conceptQuestionSlug question.slug}}
-          disabled="true"
+          disabled
           class="text-gray-1200"
+          data-test-concept-question-block-editor-dropdown-button
         >{{question.queryMarkdown}}</option>
       {{/each}}
     </select>
-    <TertiaryLinkButton @route="concept-admin.questions" @size="small" class="pl-1.5 mt-0">
+    <TertiaryLinkButton
+      @route="concept-admin.questions"
+      @size="small"
+      class="pl-1.5 mt-0"
+      data-test-concept-question-block-editor-new-question-button
+    >
       <div class="flex items-center">
         {{svg-jar "question-mark-circle" class="w-4 h-4 mr-1.5 text-gray-500"}}
         <span>
