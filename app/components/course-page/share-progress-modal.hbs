@@ -1,0 +1,44 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-share-progress-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-6">
+    Share your progress with friends
+  </div>
+
+  {{! template-lint-disable require-input-label }}
+  <Textarea
+    @value={{this.copyableText}}
+    class="border border-gray-200 rounded w-full p-4 placeholder-gray-300 mb-3"
+    rows="5"
+    placeholder={{this.copyableText}}
+    data-test-copyable-text
+  />
+
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      {{#each this.socialPlatforms as |platform|}}
+        <CoursePage::ShareProgressModal::Icon
+          @onClick={{this.handleSocialPlatformClick}}
+          @platform={{platform}}
+          @selectedSocialPlatform={{this.selectedSocialPlatform}}
+          data-test-social-platform-icon
+        />
+      {{/each}}
+    </div>
+
+    <PrimaryButton {{on "click" this.handleCopyButtonClick}} data-test-copy-button>
+      <AnimatedContainer>
+        {{#animated-if this.wasCopiedRecently use=this.fade duration=100}}
+          <div class="flex items-center gap-1.5">
+            {{svg-jar "check-circle" class="w-5 h-5"}}
+            <span>
+              Copied!
+            </span>
+          </div>
+        {{else}}
+          <span>
+            Copy to clipboard
+          </span>
+        {{/animated-if}}
+      </AnimatedContainer>
+    </PrimaryButton>
+  </div>
+</ModalBody>
