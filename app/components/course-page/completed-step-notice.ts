@@ -39,7 +39,7 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
   }
 
   get shouldShowShareProgressButton() {
-    return this.activeStep?.type === 'CourseStageStep' && !this.currentStepAsCourseStageStep?.stageListItem?.stage?.isFirst;
+    return this.currentStep?.type === 'CourseStageStep' && !this.currentStepAsCourseStageStep?.stageListItem?.stage?.isFirst;
   }
 
   @action
