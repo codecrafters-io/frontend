@@ -25,6 +25,7 @@ export default class BadgeEarnedModalComponent extends Component {
   get userHasBadgeAward() {
     return this.args.badge && this.currentUserBadgeAwards.length > 0;
   }
+
   @action
   handleDidInsert() {
     this.analyticsEventTracker.track('viewed_badge', {
