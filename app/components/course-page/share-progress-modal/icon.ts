@@ -10,11 +10,13 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    onClick: (platform: string) => void;
+    onClick: (platform: SocialPlatform) => void;
     platform: 'twitter' | 'discord' | 'linkedin' | 'slack';
     selectedSocialPlatform: string;
   };
 };
+
+type SocialPlatform = 'twitter' | 'slack' | 'discord' | 'linkedin';
 
 export default class CoursePageShareProgressModalIconComponent extends Component<Signature> {
   get isSelected(): boolean {

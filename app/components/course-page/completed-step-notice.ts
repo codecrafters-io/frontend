@@ -26,6 +26,10 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
     return this.coursePageState.activeStep;
   }
 
+  get currentStep() {
+    return this.coursePageState.currentStep;
+  }
+
   get currentStepAsCourseStageStep() {
     return this.coursePageState.currentStepAsCourseStageStep;
   }

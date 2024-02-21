@@ -21,16 +21,18 @@ interface Signature {
   };
 }
 
+type SocialPlatform = 'twitter' | 'slack' | 'discord' | 'linkedin';
+
 export default class ShareProgressModalComponent extends Component<Signature> {
   fade = fade;
 
-  socialPlatforms = ['twitter', 'slack', 'discord', 'linkedin'];
+  socialPlatforms: SocialPlatform[] = ['twitter', 'slack', 'discord', 'linkedin'];
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
-  @tracked copyableText = '';
-  @tracked selectedSocialPlatform = 'twitter';
-  @tracked wasCopiedRecently = false;
+  @tracked copyableText: string = '';
+  @tracked selectedSocialPlatform: SocialPlatform = 'twitter';
+  @tracked wasCopiedRecently: boolean = false;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -56,7 +58,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   }
 
   @action
-  handleSocialPlatformClick(platform: string) {
+  handleSocialPlatformClick(platform: SocialPlatform) {
     this.selectedSocialPlatform = platform;
     this.copyableText = this.defaultCopyableText;
   }
