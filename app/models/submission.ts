@@ -13,6 +13,7 @@ export default class SubmissionModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: null }) declare courseStage: CourseStageModel;
   @belongsTo('community-course-stage-solution', { async: false, inverse: null })
   declare communityCourseStageSolution: CommunityCourseStageSolutionModel;
+
   @belongsTo('course-tester-version', { async: false, inverse: null }) declare testerVersion: CourseTesterVersionModel;
   @belongsTo('repository', { async: false, inverse: 'submissions' }) declare repository: RepositoryModel;
 

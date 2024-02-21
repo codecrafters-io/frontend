@@ -27,8 +27,9 @@ module.exports = {
     ],
     'lines-between-class-members': [
       'error',
+      'always',
       {
-        enforce: [{ blankLine: 'always', prev: 'method', next: 'method' }],
+        exceptAfterSingleLine: true,
       },
     ],
 
