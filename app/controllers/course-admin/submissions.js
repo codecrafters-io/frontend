@@ -7,7 +7,7 @@ export default class CourseAdminSubmissionsController extends Controller {
   course_stage_slugs = '';
 
   get filteredCourseStages() {
-    return this.model.course_stages.filter((course_stage) => this.model.filteredCourseStageSlugs.includes(course_stage.slug));
+    return this.model.course.stages.filter((course_stage) => this.model.filteredCourseStageSlugs.includes(course_stage.slug));
   }
 
   get filteredLanguages() {

@@ -18,6 +18,7 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   get currentCourseStage() {
     return this.args.filteredCourseStages[0];
   }
+
   get currentLanguage() {
     return this.args.filteredLanguages[0];
   }

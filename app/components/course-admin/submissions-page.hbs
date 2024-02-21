@@ -8,26 +8,26 @@
     </div>
   </div>
 
-  <div class="flex-grow"></div>
+  <div class="flex items-center">
+    <CourseStageDropdown
+      @course={{@course}}
+      @selectedCourseStage={{this.currentCourseStage}}
+      @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
+      @onRequestedStageChange={{this.handleRequestedStageChange}}
+      class="py-3 mr-4"
+    />
 
-  <CourseStageDropdown
-    @course={{@course}}
-    @selectedCourseStage={{this.currentCourseStage}}
-    @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
-    @onRequestedStageChange={{this.handleRequestedStageChange}}
-    class="py-3 mr-4"
-  />
-
-  <LanguageDropdown
-    @languages={{this.sortedLanguagesForDropdown}}
-    @requestedLanguage={{this.requestedLanguage}}
-    @selectedLanguage={{this.currentLanguage}}
-    @shouldShowAllLanguagesOption={{true}}
-    @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
-    @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
-    @onDidInsertDropdown={{(noop)}}
-    class="py-3"
-  />
+    <LanguageDropdown
+      @languages={{this.sortedLanguagesForDropdown}}
+      @requestedLanguage={{this.requestedLanguage}}
+      @selectedLanguage={{this.currentLanguage}}
+      @shouldShowAllLanguagesOption={{true}}
+      @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
+      @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+      @onDidInsertDropdown={{(noop)}}
+      class="py-3"
+    />
+  </div>
 </div>
 
 <div class="border-t pb-4">

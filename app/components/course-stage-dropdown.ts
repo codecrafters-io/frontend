@@ -2,7 +2,6 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import StageModel from 'codecrafters-frontend/models/course-stage';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -11,7 +10,7 @@ interface Signature {
     course: CourseModel;
     selectedCourseStage: CourseStageModel | null;
     onAllCourseStagesDropdownLinkClick?: () => void;
-    onRequestedStageChange: (stage: StageModel) => void;
+    onRequestedStageChange: (stage: CourseStageModel) => void;
   };
 }
 
@@ -30,7 +29,7 @@ export default class CourseStageDropdownComponent extends Component<Signature> {
   }
 
   @action
-  handleStageDropdownLinkClick(stage: StageModel, closeDropdownFn: () => void) {
+  handleStageDropdownLinkClick(stage: CourseStageModel, closeDropdownFn: () => void) {
     closeDropdownFn();
     this.args.onRequestedStageChange(stage);
   }

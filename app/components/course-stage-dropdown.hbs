@@ -21,7 +21,7 @@
       </button>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 w-56" data-test-course-stage-dropdown-content>
+      <div class="bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto border py-2 my-1 w-56" data-test-course-stage-dropdown-content>
         <div
           class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
           role="button"
@@ -40,29 +40,28 @@
             {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
           >
             <span class="text-gray-600 text-sm">
-              {{!-- {{stage.position}}. --}}
+              {{stage.position}}.
               {{stage.name}}
             </span>
           </div>
         {{/each}}
 
         {{#each @course.sortedExtensions as |extension|}}
-          <div class="border-b h-px w-full mt-3 mb-3"></div>
+          <div class="border-b h-px w-full my-3"></div>
           {{#each extension.sortedStages as |stage|}}
             <div
-              class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
+              class="flex items-center py-2 px-4 hover:bg-gray-50 cursor-pointer"
               role="button"
               data-test-course-stage-link
               {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
             >
               <span class="text-gray-600 text-sm">
-                {{!-- {{stage.position}}. --}}
+                {{stage.position}}.
                 {{stage.name}}
               </span>
             </div>
           {{/each}}
         {{/each}}
-
       </div>
     </dd.Content>
   </BasicDropdown>
