@@ -11,6 +11,7 @@ export default class ReferController extends Controller {
   get currentUser() {
     return this.authenticator.currentUser;
   }
+
   get referralLink() {
     return this.currentUser?.referralLinks[0];
   }

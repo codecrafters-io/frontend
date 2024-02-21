@@ -11,6 +11,7 @@ export default class ReferRoute extends BaseRoute {
   activate() {
     scrollToTop();
   }
+
   async model() {
     await this.authenticator.authenticate(); // Force loading referral links
 
