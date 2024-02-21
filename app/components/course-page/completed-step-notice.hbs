@@ -1,5 +1,5 @@
 <div
-  class="py-3.5 border-b border-green-200 bg-gradient-to-b from-0% to-100% from-green-50 to-green-100"
+  class="py-3.5 border-b border-green-200 bg-gradient-to-b from-0% to-100% from-green-50 to-green-100 flex items-center justify-between gap-4 flex-wrap"
   data-test-completed-step-notice
   ...attributes
 >
@@ -40,4 +40,24 @@
       </PrimaryLinkButton>
     {{/if}}
   </div>
+
+  {{#if this.shouldShowShareProgressButton}}
+    <div
+      class="flex items-center gap-1.5 group/share-progress-button"
+      role="button"
+      {{on "click" this.handleShareProgressButtonClick}}
+      data-test-share-progress-button
+    >
+      <span class="text-sm text-green-800 group-hover/share-progress-button:underline group-hover/share-progress-button:text-green-700">Tell your
+        friends</span>
+      {{svg-jar "external-link" class="w-4 fill-current text-green-800 group-hover/share-progress-button:text-green-700"}}
+    </div>
+  {{/if}}
+
+  {{#if this.shareProgressModalIsOpen}}
+    <ModalBackdrop>
+      {{! @glint-expect-error mut signature doesn't agree? }}
+      <CoursePage::ShareProgressModal @onClose={{fn (mut this.shareProgressModalIsOpen) false}} @repository={{@repository}} />
+    </ModalBackdrop>
+  {{/if}}
 </div>

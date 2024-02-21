@@ -3,7 +3,7 @@ import { AnsiUp } from 'ansi_up';
 import { action } from '@ember/object';
 
 // @ts-ignore
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
 interface Signature {
@@ -15,16 +15,18 @@ interface Signature {
 }
 
 export default class SubmissionLogsPreviewComponent extends Component<Signature> {
+  @tracked isLoadingLogs = false;
+
   get evaluation() {
     return this.args.submission.evaluations[0];
   }
 
   @cached
   get logLines() {
-    if (!this.evaluation) {
+    if (!this.evaluation || !this.evaluation.logsFileContents) {
       return ['Logs for this submission are not available.', 'Think this is a CodeCrafters error? Let us know at hello@codecrafters.io.'];
     } else {
-      return this.evaluation.parsedLogs
+      return this.evaluation.logsFileContents
         .trim()
         .split('\n')
         .map((line: string) => {
@@ -34,8 +36,19 @@ export default class SubmissionLogsPreviewComponent extends Component<Signature>
   }
 
   @action
-  handleDidInsert(element: HTMLElement) {
+  async handleDidInsert(element: HTMLElement) {
     element.scrollTop = element.scrollHeight;
+
+    this.handleDidUpdateEvaluation();
+  }
+
+  @action
+  async handleDidUpdateEvaluation() {
+    if (this.evaluation) {
+      this.isLoadingLogs = true;
+      await this.evaluation.fetchLogsFileContentsIfNeeded();
+      this.isLoadingLogs = false;
+    }
   }
 
   handleDidUpdateLogs(element: HTMLElement) {

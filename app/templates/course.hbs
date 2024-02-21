@@ -85,7 +85,11 @@
 
       <div class="flex-grow flex-shrink min-w-0">
         {{#if this.coursePageState.currentStep.completionNoticeMessage}}
-          <CoursePage::CompletedStepNotice @step={{this.coursePageState.currentStep}} class="px-3 md:px-6 lg:px-10 w-full" />
+          <CoursePage::CompletedStepNotice
+            @step={{this.coursePageState.currentStep}}
+            @repository={{@model.activeRepository}}
+            class="px-3 md:px-6 lg:px-10 w-full"
+          />
         {{/if}}
 
         <div class="px-3 md:px-6 lg:px-10">

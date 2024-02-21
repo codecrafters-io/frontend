@@ -198,6 +198,7 @@ export default class CourseController extends Controller {
 
     this.polledRepository = null;
   }
+
   @action
   teardownRouteChangeListeners() {
     this.router.off('routeDidChange', this.handleRouteChanged);

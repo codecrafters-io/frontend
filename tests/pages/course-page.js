@@ -27,6 +27,10 @@ export default create({
   completedStepNotice: {
     clickOnNextStepButton: clickable('[data-test-next-step-button]'),
     scope: '[data-test-completed-step-notice]',
+
+    shareProgressButton: {
+      scope: '[data-test-share-progress-button]',
+    },
   },
 
   courseCompletedCard: {
@@ -154,6 +158,17 @@ export default create({
 
   secondStageInstructionsCard: {
     hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
+  },
+
+  shareProgressModal: {
+    clickOnCopyButton: clickable('[data-test-copy-button]'),
+
+    copyableText: {
+      scope: '[data-test-copyable-text]',
+    },
+
+    scope: '[data-test-share-progress-modal]',
+    socialPlatformIcons: collection('[data-test-social-platform-icon]'),
   },
 
   repositorySetupCard: RepositorySetupCard,

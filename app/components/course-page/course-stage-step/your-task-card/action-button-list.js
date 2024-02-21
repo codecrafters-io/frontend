@@ -65,6 +65,7 @@ export default class ActionButtonListComponent extends Component {
   handleViewScreencastsButtonClicked() {
     this.router.transitionTo('course.stage.screencasts', this.args.courseStage.position);
   }
+
   @action
   handleViewTestCasesButtonClicked() {
     window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();

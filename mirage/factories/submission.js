@@ -1,4 +1,5 @@
 import { Factory, trait } from 'miragejs';
+import config from 'codecrafters-frontend/config/environment';
 
 export default Factory.extend({
   changedFiles: () => {
@@ -45,7 +46,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 11290), // 11.29s
-        logsBase64: btoa('\x1b[91m[stage-1] failure\x1b[0m\n\x1b[91m[stage-2] failure\x1b[0m'),
+        logsFileUrl: `${config.x.backendUrl}/api/v1/fake-submission-logs?type=failure`,
       });
     },
   }),
@@ -57,7 +58,7 @@ export default Factory.extend({
       server.create('submission-evaluation', {
         submission,
         createdAt: new Date(submission.createdAt.getTime() + 4219), // 4.219s
-        logsBase64: btoa('\x1b[92m[stage-1] passed\x1b[0m\n\x1b[92m[stage-2] passed\x1b[0m'),
+        logsFileUrl: `${config.x.backendUrl}/api/v1/fake-submission-logs?type=success`,
       });
 
       if (!submission.wasSubmittedViaCli) {

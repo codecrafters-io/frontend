@@ -63,7 +63,7 @@ function routes() {
 
   this.post('/affiliate-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
-    attrs.url = `https://app.codecraters.io/join?via=${attrs.slug}`;
+    attrs.url = `https://app.codecrafters.io/join?via=${attrs.slug}`;
 
     return schema.affiliateLinks.create(attrs);
   });
@@ -410,6 +410,14 @@ function routes() {
 
   this.post('/downvotes');
 
+  this.get('/fake-submission-logs', function (schema, request) {
+    if (request.queryParams.type === 'success') {
+      return new Response(200, {}, '\x1b[92m[stage-1] passed\x1b[0m\n\x1b[92m[stage-2] passed\x1b[0m');
+    } else {
+      return new Response(200, {}, '\x1b[91m[stage-1] failure\x1b[0m\n\x1b[91m[stage-2] failure\x1b[0m');
+    }
+  });
+
   this.patch('/feature-suggestions/:id');
   this.get('/free-usage-grants', function (schema, request) {
     return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
@@ -560,7 +568,7 @@ function routes() {
     const attrs = this.normalizedRequestAttrs();
     const language = schema.languages.find(attrs.languageId);
 
-    attrs.cloneUrl = 'https://git.codecraters.io/a-long-test-string.git';
+    attrs.cloneUrl = 'https://git.codecrafters.io/a-long-test-string.git';
     attrs.name = `${language.name}`;
 
     const repository = schema.repositories.create(attrs);

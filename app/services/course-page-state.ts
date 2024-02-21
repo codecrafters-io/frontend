@@ -31,6 +31,10 @@ export default class CoursePageStateService extends Service {
     return this.currentStepSansFallback || this.activeStep;
   }
 
+  get currentStepAsCourseStageStep(): CourseStageStep {
+    return this.currentStep as CourseStageStep;
+  }
+
   // The "true" current step, without any fallbacks.
   get currentStepSansFallback(): Step | null {
     if (this.router.currentRouteName === 'course.introduction') {

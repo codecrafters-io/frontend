@@ -14,6 +14,7 @@ export default class CourseAdminUpdateController extends Controller {
       syncCourseDefinitionUpdates: () => Promise<void>;
     };
   };
+
   @service declare store: Store;
 
   @tracked isApplyingUpdate = false;

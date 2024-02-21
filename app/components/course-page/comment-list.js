@@ -42,6 +42,7 @@ export default class CommentListComponent extends Component {
       return this.topLevelPersistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
     }
   }
+
   @action
   async loadComments() {
     this.isLoading = true;

@@ -1,4 +1,4 @@
-import { clickable, collection, create, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, isPresent, visitable } from 'ember-cli-page-object';
 import { waitUntil } from '@ember/test-helpers';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import CourseCard from 'codecrafters-frontend/tests/pages/components/course-card';
@@ -27,6 +27,7 @@ export default create({
   productWalkthroughFeatureSuggestion: {
     clickOnDismissButton: clickable('[data-test-dismiss-button]'),
     clickOnStartHereButton: clickable('[data-test-start-here-button]'),
+    hasDismissButton: isPresent('[data-test-dismiss-button]'),
     scope: '[data-test-product-walkthrough-feature-suggestion]',
   },
 
