@@ -11,7 +11,7 @@ type Signature = {
 
   Args: {
     onClick: (platform: string) => void;
-    platform: string;
+    platform: 'twitter' | 'discord' | 'linkedin' | 'slack';
     selectedSocialPlatform: string;
   };
 };
@@ -25,7 +25,7 @@ export default class CoursePageShareProgressModalIconComponent extends Component
     return `${capitalize(this.args.platform)} Icon`;
   }
 
-  get platformLogoImage(): 'twitter' | 'discord' | 'linkedin' | 'slack' {
+  get platformLogoImage(): string {
     if (this.args.platform === 'discord') {
       return discordLogoImage;
     }

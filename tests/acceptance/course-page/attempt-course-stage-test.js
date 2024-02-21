@@ -190,24 +190,24 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.notOk(coursePage.progressBannerModal.isVisible, 'progress banner modal is not visible');
+    assert.notOk(coursePage.shareProgressModal.isVisible, 'progress banner modal is not visible');
 
     await coursePage.completedStepNotice.shareProgressButton.click();
-    assert.ok(coursePage.progressBannerModal.isVisible, 'progress banner modal is visible');
+    assert.ok(coursePage.shareProgressModal.isVisible, 'progress banner modal is visible');
     assert.true(
-      coursePage.progressBannerModal.copyableText.value.includes(
+      coursePage.shareProgressModal.copyableText.value.includes(
         'Just completed Stage #2 of the @codecraftersio Build your own Redis challenge in Go.',
       ),
       'correct copyable text is shown',
     );
     assert.true(
-      coursePage.progressBannerModal.copyableText.value.includes('https://app.codecrafters.io/courses/redis/overview'),
+      coursePage.shareProgressModal.copyableText.value.includes('https://app.codecrafters.io/courses/redis/overview'),
       'correct link in copyable text is shown',
     );
 
-    await coursePage.progressBannerModal.socialPlatformIcons[1].click();
+    await coursePage.shareProgressModal.socialPlatformIcons[1].click();
     assert.true(
-      coursePage.progressBannerModal.copyableText.value.includes('Just completed Stage #2 of the CodeCrafters Build your own Redis challenge in Go.'),
+      coursePage.shareProgressModal.copyableText.value.includes('Just completed Stage #2 of the CodeCrafters Build your own Redis challenge in Go.'),
       'correct copyable text is shown',
     );
   });
@@ -238,7 +238,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await animationsSettled();
 
     await coursePage.completedStepNotice.shareProgressButton.click();
-    await coursePage.progressBannerModal.clickOnCopyButton();
+    await coursePage.shareProgressModal.clickOnCopyButton();
 
     const analyticsEvents = this.server.schema.analyticsEvents.all().models;
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');

@@ -153,18 +153,22 @@ export default create({
   privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
 
   progressBannerModal: {
+    scope: '[data-test-progress-banner-modal]',
+  },
+
+  secondStageInstructionsCard: {
+    hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
+  },
+
+  shareProgressModal: {
     clickOnCopyButton: clickable('[data-test-copy-button]'),
 
     copyableText: {
       scope: '[data-test-copyable-text]',
     },
 
-    scope: '[data-test-progress-banner-modal]',
+    scope: '[data-test-share-progress-modal]',
     socialPlatformIcons: collection('[data-test-social-platform-icon]'),
-  },
-
-  secondStageInstructionsCard: {
-    hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
   },
 
   repositorySetupCard: RepositorySetupCard,
