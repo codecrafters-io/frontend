@@ -1,4 +1,4 @@
-<div class="bg-white" {{did-update this.handleConceptDidUpdate @concept}}>
+<div class="bg-white">
   {{! Mobile !}}
   {{#unless this.hasCompletedConcept}}
     <div class="block md:hidden px-3 border-b flex-shrink-0 sticky top-0 backdrop-blur-sm bg-white/80 z-20 w-full">
@@ -23,7 +23,7 @@
     <div class="flex flex-col-reverse items-stretch md:flex-row">
       <div class="md:pr-8 pt-10 pb-60 min-w-0 flex-grow">
         {{! @glint-expect-error not ts-ified yet}}
-        <Concept @concept={{@concept}} @onProgressPercentageChange={{this.handleProgressPercentageChanged}} />
+        <Concept @concept={{@concept}} @latestConceptEngagement={{@latestConceptEngagement}} />
 
         {{#animated-if this.hasCompletedConcept}}
           <div class="flex flex-col items-center justify-center py-16 border-t" {{did-insert this.handleCompletionContainerInserted}}>
@@ -76,7 +76,7 @@
         {{#if (gt this.currentProgressPercentage 0)}}
           <div class="sticky py-9 top-0 bg-white">
             {{! @glint-expect-error not ts-ified yet}}
-            <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} />
+            <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} data-test-concept-progress />
           </div>
         {{else}}
           <div class="py-9">

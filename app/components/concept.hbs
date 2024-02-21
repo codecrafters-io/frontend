@@ -1,4 +1,4 @@
-<div {{did-insert this.handleDidInsertContainer}} {{did-update this.handleConceptDidUpdate @concept}} ...attributes>
+<div {{did-insert this.handleDidInsertContainer}} {{will-destroy this.handleWillDestroyContainer}} ...attributes>
   {{#each this.visibleBlockGroups as |blockGroup|}}
     <div
       class="scroll-mb-10 md:scroll-mb-[20vh] scroll-mt-20 md:scroll-mt-10

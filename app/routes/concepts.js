@@ -7,6 +7,12 @@ export default class ConceptsRoute extends BaseRoute {
   @service store;
 
   async model() {
+    if (this.authenticator.isAuthenticated) {
+      await this.store.findAll('concept-engagement', {
+        include: 'concept,user',
+      });
+    }
+
     return RSVP.hash({
       concepts: this.store.findAll('concept', {
         include: 'author,questions',

@@ -92,6 +92,13 @@ function routes() {
 
   this.get('/badges');
 
+  this.get('/concept-engagements', function (schema) {
+    return schema.conceptEngagements.all().filter((engagement) => engagement.user.id === '63c51e91-e448-4ea9-821b-a80415f266d3');
+  });
+
+  this.patch('/concept-engagements/:id');
+  this.post('/concept-engagements');
+
   this.get('/concept-groups', function (schema) {
     return schema.conceptGroups.all();
   });

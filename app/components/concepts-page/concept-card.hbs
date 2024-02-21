@@ -23,16 +23,37 @@
   {{! Footer }}
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300"}}
-      <span class="text-xs text-gray-400">
-        {{@concept.estimatedReadingTimeInMinutes}}
-        mins
-      </span>
+      {{#if this.latestConceptEngagement}}
+        {{#if (eq this.latestConceptEngagement.currentProgressPercentage 100)}}
+          {{svg-jar "check-circle" class="w-4 mr-1 fill-current text-teal-500"}}
+
+          <span class="text-xs text-teal-500">
+            completed
+          </span>
+        {{else}}
+          <ConceptCard::ProgressBar @latestConceptEngagement={{this.latestConceptEngagement}} class="flex shrink-0" />
+        {{/if}}
+      {{else}}
+        {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300"}}
+
+        <span class="text-xs text-gray-400">
+          {{@concept.estimatedReadingTimeInMinutes}}
+          mins
+        </span>
+      {{/if}}
     </div>
 
     <div class="flex items-center">
       <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
-        View
+        {{#if this.latestConceptEngagement}}
+          {{#if (eq this.latestConceptEngagement.currentProgressPercentage 100)}}
+            View
+          {{else}}
+            Resume
+          {{/if}}
+        {{else}}
+          View
+        {{/if}}
       </span>
 
       {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}

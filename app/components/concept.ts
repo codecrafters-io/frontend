@@ -1,21 +1,25 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import { TrackedSet } from 'tracked-built-ins';
+import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
+import ConceptModel from 'codecrafters-frontend/models/concept';
+import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
+import type { Block } from 'codecrafters-frontend/models/concept';
 
 // @ts-ignore
 import { cached } from '@glimmer/tracking';
 
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import ConceptModel from 'codecrafters-frontend/models/concept';
-import type { Block } from 'codecrafters-frontend/models/concept';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
+import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { TrackedSet } from 'tracked-built-ins';
 
 interface Signature {
   Args: {
     concept: ConceptModel;
-    onProgressPercentageChange: (percentage: number) => void;
+    latestConceptEngagement: ConceptEngagementModel;
   };
 
   Element: HTMLElement;
@@ -28,6 +32,7 @@ interface BlockGroup {
 
 export default class ConceptComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+  @service declare authenticator: AuthenticatorService;
 
   @tracked lastRevealedBlockGroupIndex: number | null = null;
   @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
@@ -42,6 +47,11 @@ export default class ConceptComponent extends Component<Signature> {
 
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
+    } else {
+      const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
+      const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
+      const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
+      this.lastRevealedBlockGroupIndex = blockGroupIndex;
     }
   }
 
@@ -77,11 +87,7 @@ export default class ConceptComponent extends Component<Signature> {
     }, 0);
   }
 
-  get currentBlockGroupIndex() {
-    return this.lastRevealedBlockGroupIndex || 0;
-  }
-
-  get progressPercentage() {
+  get computedProgressPercentage() {
     if (!this.lastRevealedBlockGroupIndex) {
       return 0; // The user hasn't interacted with any blocks yet
     }
@@ -93,9 +99,41 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
+  get currentBlockGroupIndex() {
+    return this.lastRevealedBlockGroupIndex || 0;
+  }
+
   get visibleBlockGroups() {
     return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
   }
+
+  findCurrentBlockGroupIndex(completedBlocksCount: number) {
+    let traversedBlocksCount = 0;
+    let currentBlockGroupIndex = 0;
+
+    for (let i = 0; i < this.allBlockGroups.length; i++) {
+      const blockGroup = this.allBlockGroups[i];
+      traversedBlocksCount = traversedBlocksCount + blockGroup!.blocks.length;
+
+      if (traversedBlocksCount > completedBlocksCount) {
+        currentBlockGroupIndex = i;
+        break;
+      } else if (traversedBlocksCount === completedBlocksCount) {
+        currentBlockGroupIndex = i + 1;
+        break;
+      }
+    }
+
+    return currentBlockGroupIndex;
+  }
+
+  enqueueConceptEngagementUpdate = task({ keepLatest: true }, async () => {
+    this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+
+    if (this.authenticator.isAuthenticated) {
+      await this.args.latestConceptEngagement.save();
+    }
+  });
 
   @action
   handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
@@ -105,26 +143,22 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleConceptDidUpdate() {
-    this.lastRevealedBlockGroupIndex = null;
-  }
-
-  @action
   handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   @action
-  handleContinueButtonClick() {
+  async handleContinueButtonClick() {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
+      this.enqueueConceptEngagementUpdate.perform();
     }
 
     this.analyticsEventTracker.track('progressed_through_concept', {
       concept_id: this.args.concept.id,
-      progress_percentage: this.progressPercentage,
+      progress_percentage: this.computedProgressPercentage,
     });
   }
 
@@ -139,7 +173,7 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleStepBackButtonClick() {
+  async handleStepBackButtonClick() {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
@@ -150,14 +184,21 @@ export default class ConceptComponent extends Component<Signature> {
       });
 
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex - 1);
+      this.enqueueConceptEngagementUpdate.perform();
     }
 
     // TODO: Add analytics event?
   }
 
+  @action
+  handleWillDestroyContainer() {
+    if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
+      this.args.latestConceptEngagement.deleteRecord();
+    }
+  }
+
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
-    this.args.onProgressPercentageChange(this.progressPercentage);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);

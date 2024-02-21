@@ -1,6 +1,7 @@
 import AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
 import AffiliateReferralModel from 'codecrafters-frontend/models/affiliate-referral';
 import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
+import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import config from 'codecrafters-frontend/config/environment';
 import CourseExtensionIdeaVoteModel from 'codecrafters-frontend/models/course-extension-idea-vote';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
@@ -47,6 +48,7 @@ export default class UserModel extends Model {
   @hasMany('affiliate-referral', { async: false, inverse: 'customer' }) affiliateReferralsAsCustomer!: AffiliateReferralModel[];
   @hasMany('affiliate-referral', { async: false, inverse: 'referrer' }) affiliateReferralsAsReferrer!: AffiliateReferralModel[];
   @hasMany('badge-award', { async: false, inverse: 'user' }) badgeAwards!: BadgeAwardModel[];
+  @hasMany('concept-engagement', { async: false, inverse: 'user' }) conceptEngagements!: ConceptEngagementModel[];
   @hasMany('course-language-request', { async: false, inverse: 'user' }) courseLanguageRequests!: CourseLanguageRequestModel[];
   @hasMany('course-extension-idea-vote', { async: false, inverse: 'user' }) courseExtensionIdeaVotes!: CourseExtensionIdeaVoteModel[];
   @hasMany('course-idea-vote', { async: false, inverse: 'user' }) courseIdeaVotes!: CourseIdeaVoteModel[];
