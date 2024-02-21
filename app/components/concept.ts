@@ -127,7 +127,7 @@ export default class ConceptComponent extends Component<Signature> {
     return currentBlockGroupIndex;
   }
 
-  enqueueConceptEngagementUpdate = task({ enqueue: true }, async () => {
+  enqueueConceptEngagementUpdate = task({ keepLatest: true }, async () => {
     this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
 
     if (this.authenticator.isAuthenticated) {
