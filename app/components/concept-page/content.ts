@@ -35,6 +35,13 @@ export default class ContentComponent extends Component<Signature> {
     return this.args.allConcepts.find((concept) => concept.slug === this.args.conceptGroup?.nextConceptSlug(this.args.concept.slug));
   }
 
+  get remainingBlocksCount() {
+    const allBlocks = this.args.concept.parsedBlocks;
+    const completedBlocksCount = Math.round((this.currentProgressPercentage / 100) * allBlocks.length);
+
+    return allBlocks.length - completedBlocksCount;
+  }
+
   @action
   handleCompletionContainerInserted(element: HTMLElement) {
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

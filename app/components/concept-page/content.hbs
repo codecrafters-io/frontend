@@ -5,7 +5,7 @@
       {{#if (gt this.currentProgressPercentage 0)}}
         <div class="py-5">
           {{! @glint-expect-error not ts-ified yet}}
-          <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} />
+          <ConceptProgress @latestConceptEngagement={{@latestConceptEngagement}} />
         </div>
       {{else}}
         <div class="py-5">
@@ -76,7 +76,7 @@
         {{#if (gt this.currentProgressPercentage 0)}}
           <div class="sticky py-9 top-0 bg-white">
             {{! @glint-expect-error not ts-ified yet}}
-            <ConceptProgress @progressPercentage={{this.currentProgressPercentage}} data-test-concept-progress />
+            <ConceptProgress @latestConceptEngagement={{@latestConceptEngagement}} data-test-concept-progress />
           </div>
         {{else}}
           <div class="py-9">

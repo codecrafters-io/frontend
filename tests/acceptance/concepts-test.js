@@ -296,6 +296,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present after starting concept');
     assert.ok(conceptPage.progress.text.includes('5%'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly');
 
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].clickOnShowExplanationButton();
@@ -347,6 +348,9 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     assert.strictEqual(conceptPage.blocks.length, 2, 'Completed blocks are automatically shown');
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present');
+    assert.ok(conceptPage.progress.text.includes('5%'), 'Progress text should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly');
   });
 
   test('progress for completed concepts is rendered properly', async function (assert) {
@@ -376,5 +380,66 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.conceptCards[0].hover();
     assert.strictEqual(conceptsPage.conceptCards[0].actionText, 'View', 'Concept card action text should be view for completed concept');
+  });
+
+  test('remaining blocks left is rendered properly', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    const user = this.server.schema.users.first();
+    signIn(this.owner, this.server, user);
+
+    await conceptsPage.visit();
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    assert.notOk(conceptPage.progress.isPresent, 'Remaining blocks left should not be shown if no progress is made');
+
+    await conceptPage.clickOnContinueButton();
+    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly');
+
+    await conceptPage.clickOnContinueButton();
+    assert.ok(conceptPage.progress.text.includes('37 blocks left'), 'Remaining blocks left should be reflected properly');
+  });
+
+  test('remaining blocks left is not present if user completed concept', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.notOk(conceptPage.progress.text.includes('blocks left'), 'Remaining blocks left should not be present');
   });
 });
