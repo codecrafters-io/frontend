@@ -78,20 +78,20 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   }
 
   @action
+  handleCourseStageChange(stage) {
+    if (!stage) {
+      return;
+    }
+
+    this.router.transitionTo({ queryParams: { course_stage_slugs: stage.slug } });
+  }
+
+  @action
   handleRequestedLanguageChange(language) {
     if (!language) {
       return;
     }
 
     this.router.transitionTo({ queryParams: { languages: language.slug } });
-  }
-
-  @action
-  handleRequestedStageChange(stage) {
-    if (!stage) {
-      return;
-    }
-
-    this.router.transitionTo({ queryParams: { course_stage_slugs: stage.slug } });
   }
 }

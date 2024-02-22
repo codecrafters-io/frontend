@@ -10,7 +10,7 @@ interface Signature {
     course: CourseModel;
     selectedCourseStage: CourseStageModel | null;
     onAllCourseStagesDropdownLinkClick?: () => void;
-    onRequestedStageChange: (stage: CourseStageModel) => void;
+    onSelectedCourseStageChange: (courseStage: CourseStageModel) => void;
   };
 }
 
@@ -29,8 +29,8 @@ export default class CourseStageDropdownComponent extends Component<Signature> {
   }
 
   @action
-  handleStageDropdownLinkClick(stage: CourseStageModel, closeDropdownFn: () => void) {
+  handleStageDropdownLinkClick(courseStage: CourseStageModel, closeDropdownFn: () => void) {
     closeDropdownFn();
-    this.args.onRequestedStageChange(stage);
+    this.args.onSelectedCourseStageChange(courseStage);
   }
 }
