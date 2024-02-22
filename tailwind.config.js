@@ -200,10 +200,15 @@ module.exports = {
           '50%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-25deg)' },
+          '50%': { transform: 'rotate(25deg)' },
+        },
       },
       animation: {
         'infinite-slide': 'infinite-slide 30s linear infinite',
         'blink-fast': 'blink 1s step-start infinite',
+        'badge-wiggle': 'wiggle 2s ease-in-out infinite',
       },
     },
   },
