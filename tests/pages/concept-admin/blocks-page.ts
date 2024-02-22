@@ -29,9 +29,8 @@ export default create({
 
     conceptQuestionBlockEditor: {
       selectQuestion: fillable('select'),
-      dropdownOptions: collection('[data-test-concept-question-block-editor-dropdown-button]', {
+      dropdownOptions: collection('[data-test-concept-question-block-editor-dropdown-option]', {
         isDisabled: property('disabled'),
-        optionText: text(),
       }),
       clickOnNewQuestionButton: clickable('[data-test-concept-question-block-editor-new-question-button]'),
       scope: '[data-test-concept-question-block-editor]',

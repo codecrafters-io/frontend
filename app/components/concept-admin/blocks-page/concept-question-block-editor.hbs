@@ -8,12 +8,12 @@
 
     {{! template-lint-disable require-input-label }}
     <select class="p-2 border rounded mb-3 block" {{on "change" this.handleConceptQuestionSlugSelected}}>
-      <option disabled selected={{not @model.conceptQuestionSlug}} data-test-concept-question-block-editor-dropdown-button>Select a question...</option>
+      <option disabled selected={{not @model.conceptQuestionSlug}} data-test-concept-question-block-editor-dropdown-option>Select a question...</option>
       {{#each this.enabledQuestions as |question|}}
         <option
           value={{question.slug}}
           selected={{eq @model.conceptQuestionSlug question.slug}}
-          data-test-concept-question-block-editor-dropdown-button
+          data-test-concept-question-block-editor-dropdown-option
         >{{question.queryMarkdown}}</option>
       {{/each}}
       {{#each this.disabledQuestions as |question|}}
@@ -22,7 +22,7 @@
           selected={{eq @model.conceptQuestionSlug question.slug}}
           disabled
           class="text-gray-1200"
-          data-test-concept-question-block-editor-dropdown-button
+          data-test-concept-question-block-editor-dropdown-option
         >{{question.queryMarkdown}}</option>
       {{/each}}
     </select>
@@ -35,7 +35,7 @@
       <div class="flex items-center">
         {{svg-jar "question-mark-circle" class="w-4 h-4 mr-1.5 text-gray-500"}}
         <span>
-          Create a new question.
+          Create a new question
         </span>
       </div>
     </TertiaryLinkButton>
