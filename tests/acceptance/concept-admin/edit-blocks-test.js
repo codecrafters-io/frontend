@@ -1,7 +1,7 @@
 import { drag } from 'ember-sortable/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { settled } from '@ember/test-helpers';
+import { currentURL, settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import blocksPage from 'codecrafters-frontend/tests/pages/concept-admin/blocks-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -164,10 +164,140 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
       ],
     });
 
+    const numberOfQuestions = 2;
+
+    for (let i = 1; i <= numberOfQuestions; i++) {
+      this.server.create('concept-question', {
+        concept: concept,
+        slug: `dummy-question-${i}`,
+        queryMarkdown: `Question${i}`,
+        options: [],
+      });
+    }
+
+    await blocksPage.visit({ concept_slug: 'dummy' });
+    assert.strictEqual(1, 1);
+
+    await blocksPage.insertBlockMarkers[1].click();
+    await blocksPage.insertBlockMarkers[1].dropdown.clickOnItem('Question Block');
+
+    await blocksPage.editableBlocks[1].click();
+    await blocksPage.editableBlocks[1].conceptQuestionBlockEditor.selectQuestion('dummy-question-1');
+    await blocksPage.editableBlocks[1].clickOnSaveButton();
+
+    await blocksPage.clickOnPublishChangesButton();
+    await settled();
+    assert.strictEqual(blocksPage.editableBlocks.length, 3, 'expected 3 editable blocks to be present');
+
+    await blocksPage.insertBlockMarkers[2].click();
+    await blocksPage.insertBlockMarkers[2].dropdown.clickOnItem('Question Block');
+    await blocksPage.editableBlocks[2].click();
+    assert.ok(blocksPage.editableBlocks[2].conceptQuestionBlockEditor.dropdownOptions[0].isDisabled); // Select a question
+    assert.strictEqual(blocksPage.editableBlocks[2].conceptQuestionBlockEditor.dropdownOptions[0].text, 'Select a question...');
+    assert.ok(blocksPage.editableBlocks[2].conceptQuestionBlockEditor.dropdownOptions[2].isDisabled); // Previously used question
+    assert.strictEqual(blocksPage.editableBlocks[2].conceptQuestionBlockEditor.dropdownOptions[2].text, 'Question1');
+
+    await blocksPage.editableBlocks[2].conceptQuestionBlockEditor.selectQuestion('dummy-question-2');
+    await blocksPage.editableBlocks[2].clickOnSaveButton();
+
+    await blocksPage.clickOnPublishChangesButton();
+    assert.strictEqual(blocksPage.editableBlocks.length, 4, 'expected 4 editable blocks to be present'); // Continue block is added at the end after publishing.
+  });
+
+  test('question blocks are sorted', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const concept = this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is a markdown block.`,
+          },
+        },
+      ],
+    });
+
+    const numberOfQuestions = 4;
+
+    for (let i = 1; i <= numberOfQuestions; i++) {
+      this.server.create('concept-question', {
+        concept: concept,
+        slug: `dummy-question-${i}`,
+        queryMarkdown: `Question${i}`,
+        options: [],
+      });
+    }
+
+    await blocksPage.visit({ concept_slug: 'dummy' });
+    assert.strictEqual(1, 1);
+
+    await blocksPage.insertBlockMarkers[1].click();
+    await blocksPage.insertBlockMarkers[1].dropdown.clickOnItem('Question Block');
+
+    await blocksPage.editableBlocks[1].click();
+
+    // No questions disabled, all sorted in order.
+    for (let i = 1; i <= numberOfQuestions; i++) {
+      assert.strictEqual(blocksPage.editableBlocks[1].conceptQuestionBlockEditor.dropdownOptions[i].text, `Question${i}`);
+    }
+
+    await blocksPage.editableBlocks[1].conceptQuestionBlockEditor.selectQuestion('dummy-question-1');
+    await blocksPage.editableBlocks[1].clickOnSaveButton();
+
+    await blocksPage.clickOnPublishChangesButton();
+    await settled();
+
+    await blocksPage.insertBlockMarkers[2].click();
+    await blocksPage.insertBlockMarkers[2].dropdown.clickOnItem('Question Block');
+
+    await blocksPage.editableBlocks[2].click();
+    await blocksPage.editableBlocks[2].conceptQuestionBlockEditor.selectQuestion('dummy-question-2');
+    await blocksPage.editableBlocks[2].clickOnSaveButton();
+
+    await blocksPage.clickOnPublishChangesButton();
+    await settled();
+
+    await blocksPage.insertBlockMarkers[3].click();
+    await blocksPage.insertBlockMarkers[3].dropdown.clickOnItem('Question Block');
+
+    await blocksPage.editableBlocks[3].click();
+
+    const numberOfUsedQuestions = 2;
+
+    // Question1 & Question2 selected, they will come at the bottom sorted.
+    // At the top we should get Question3 & Question4.
+    for (let i = 1; i <= numberOfUsedQuestions; i++) {
+      assert.strictEqual(blocksPage.editableBlocks[3].conceptQuestionBlockEditor.dropdownOptions[i].text, `Question${i + 2}`);
+    }
+
+    for (let i = numberOfUsedQuestions + 1; i <= 4; i++) {
+      assert.strictEqual(blocksPage.editableBlocks[3].conceptQuestionBlockEditor.dropdownOptions[i].text, `Question${i - 2}`);
+    }
+  });
+
+  test('Add new question button works', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const concept = this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is a markdown block.`,
+          },
+        },
+      ],
+    });
+
     this.server.create('concept-question', {
       concept: concept,
-      slug: 'dummy-question',
-      queryMarkdown: 'What is the answer?',
+      slug: `dummy-question-1`,
+      queryMarkdown: `Question1`,
       options: [],
     });
 
@@ -178,11 +308,11 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     await blocksPage.insertBlockMarkers[1].dropdown.clickOnItem('Question Block');
 
     await blocksPage.editableBlocks[1].click();
-    await blocksPage.editableBlocks[1].conceptQuestionBlockEditor.selectQuestion('dummy-question');
-    await blocksPage.editableBlocks[1].clickOnSaveButton();
 
-    await blocksPage.clickOnPublishChangesButton();
-    assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
+    window.confirm = () => true;
+
+    await blocksPage.editableBlocks[1].conceptQuestionBlockEditor.clickOnNewQuestionButton();
+    assert.strictEqual(currentURL(), '/concepts/dummy/admin/questions');
   });
 
   test('click to continue block is automatically added when changes are published', async function (assert) {
