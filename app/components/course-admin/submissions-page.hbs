@@ -8,16 +8,26 @@
     </div>
   </div>
 
-  <LanguageDropdown
-    @languages={{this.sortedLanguagesForDropdown}}
-    @requestedLanguage={{this.requestedLanguage}}
-    @selectedLanguage={{this.currentLanguage}}
-    @shouldShowAllLanguagesOption={{true}}
-    @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
-    @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
-    @onDidInsertDropdown={{(noop)}}
-    class="py-3"
-  />
+  <div class="flex items-center">
+    <CourseStageDropdown
+      @course={{@course}}
+      @selectedCourseStage={{this.currentCourseStage}}
+      @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
+      @onSelectedCourseStageChange={{this.handleCourseStageChange}}
+      class="py-3 mr-4"
+    />
+
+    <LanguageDropdown
+      @languages={{this.sortedLanguagesForDropdown}}
+      @requestedLanguage={{this.requestedLanguage}}
+      @selectedLanguage={{this.currentLanguage}}
+      @shouldShowAllLanguagesOption={{true}}
+      @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
+      @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+      @onDidInsertDropdown={{(noop)}}
+      class="py-3"
+    />
+  </div>
 </div>
 
 <div class="border-t pb-4">

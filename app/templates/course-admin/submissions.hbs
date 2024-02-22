@@ -1,5 +1,10 @@
 <div class="bg-white">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <CourseAdmin::SubmissionsPage @course={{@model.course}} @submissions={{@model.submissions}} @filteredLanguages={{this.filteredLanguages}} />
+    <CourseAdmin::SubmissionsPage
+      @course={{@model.course}}
+      @submissions={{@model.submissions}}
+      @filteredLanguages={{this.filteredLanguages}}
+      @filteredCourseStages={{this.filteredCourseStages}}
+    />
   </div>
 </div>

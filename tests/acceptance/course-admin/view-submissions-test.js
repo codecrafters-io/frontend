@@ -242,6 +242,56 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'All Languages');
   });
 
+  test('it filters by stage(s) if given', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let user1 = this.server.create('user', { username: 'user1' });
+    let user2 = this.server.create('user', { username: 'user2' });
+
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+    let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let stage1 = redis.stages.models.sortBy('position')[0].slug;
+    let stage2 = redis.stages.models.sortBy('position')[1].slug;
+
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
+
+    await submissionsPage.visit({ course_slug: 'redis', course_stage_slugs: stage1 + ',' + stage2 });
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 stages each
+  });
+
+  test('it should be able to filter by stage(s) through a dropdown menu', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let user1 = this.server.create('user', { username: 'user1' });
+    let user2 = this.server.create('user', { username: 'user2' });
+
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+    let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let stage1 = redis.stages.models.sortBy('position')[0].name;
+
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 14); // 2 users, 7 stages each
+    assert.strictEqual(submissionsPage.stageDropdown.currentStageName, 'All Stages');
+
+    await submissionsPage.stageDropdown.click();
+    await submissionsPage.stageDropdown.clickOnStageLink(stage1);
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 2); // 2 user, 1 stages each
+    assert.strictEqual(submissionsPage.stageDropdown.currentStageName, stage1);
+
+    await submissionsPage.stageDropdown.click();
+    await submissionsPage.stageDropdown.clickOnStageLink('All Stages');
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 14); // 2 users, 7 stages each
+    assert.strictEqual(submissionsPage.stageDropdown.currentStageName, 'All Stages');
+  });
+
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
     testScenario(this.server);
     const course = this.server.schema.courses.findBy({ slug: 'redis' });

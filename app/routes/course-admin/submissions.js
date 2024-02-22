@@ -12,6 +12,9 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
     languages: {
       refreshModel: true,
     },
+    course_stage_slugs: {
+      refreshModel: true,
+    },
   };
 
   async model(params) {
@@ -27,6 +30,10 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
       filters.language_slugs = params.languages.split(',');
     }
 
+    if (params.course_stage_slugs.length > 0) {
+      filters.course_stage_slugs = params.course_stage_slugs.split(',');
+    }
+
     let submissions = await this.store.query('submission', {
       ...filters,
       ...{
@@ -35,6 +42,8 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
           'repository.language',
           'repository.user',
           'course-stage',
+          'course-stage.course',
+          'course-stage.course.extensions',
           'community-course-stage-solution',
           'community-course-stage-solution.comments',
           'community-course-stage-solution.comments.user',
@@ -48,6 +57,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
       course: course,
       languages: await this.store.findAll('language'),
       filteredLanguageSlugs: filters.language_slugs || [],
+      filteredCourseStageSlugs: filters.course_stage_slugs || [],
       submissions: submissions,
     };
   }

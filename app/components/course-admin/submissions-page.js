@@ -15,24 +15,52 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
     this.selectedSubmission = this.args.submissions.sortBy('createdAt').at(-1);
   }
 
+  get currentCourseStage() {
+    return this.args.filteredCourseStages[0];
+  }
+
   get currentLanguage() {
     return this.args.filteredLanguages[0];
   }
 
   get filteringDescription() {
+    let description = 'Showing submissions in ';
+
     if (this.args.filteredLanguages[0]) {
-      return `Showing submissions in ${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
+      description += `${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
     } else {
-      return `Showing submissions in all languages`;
+      description += `all languages`;
     }
+
+    description += ', for ';
+
+    if (this.args.filteredCourseStages[0]) {
+      description += `stage ${this.args.filteredCourseStages.mapBy('name').sort().join(' / ')}`;
+    } else {
+      description += `all stages`;
+    }
+
+    return description;
   }
 
   get filteringTitle() {
+    let title = '';
+
     if (this.args.filteredLanguages[0]) {
-      return `${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
+      title += `Language: ${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
     } else {
-      return `All Languages`;
+      title += `Languages: All`;
     }
+
+    title += ' & ';
+
+    if (this.args.filteredCourseStages[0]) {
+      title += `Stage: ${this.args.filteredCourseStages.mapBy('name').sort().join(' / ')}`;
+    } else {
+      title += `Stages: All`;
+    }
+
+    return title;
   }
 
   get sortedLanguagesForDropdown() {
@@ -40,8 +68,22 @@ export default class AdminCourseSubmissionsPageComponent extends Component {
   }
 
   @action
+  handleAllCourseStagesDropdownLinkClick() {
+    this.router.transitionTo({ queryParams: { course_stage_slugs: [] } });
+  }
+
+  @action
   handleAllLanguagesDropdownLinkClick() {
     this.router.transitionTo({ queryParams: { languages: [] } });
+  }
+
+  @action
+  handleCourseStageChange(stage) {
+    if (!stage) {
+      return;
+    }
+
+    this.router.transitionTo({ queryParams: { course_stage_slugs: stage.slug } });
   }
 
   @action

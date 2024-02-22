@@ -1,5 +1,6 @@
 import { collection, create, clickOnText, triggerable, visitable } from 'ember-cli-page-object';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/language-dropdown';
+import CourseStageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/course-stage-dropdown';
 
 export default create({
   clickOnLink: clickOnText(),
@@ -11,6 +12,7 @@ export default create({
   },
 
   languageDropdown: LanguageDropdown,
+  stageDropdown: CourseStageDropdown,
 
   submissionDetails: {
     userProficiencyInfoIcon: {
