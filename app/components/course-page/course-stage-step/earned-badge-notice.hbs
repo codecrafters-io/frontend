@@ -1,12 +1,12 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div
-  class="border rounded flex items-center justify-between border-gray-800 hover:border-[#3F3F3F] bg-gradient-to-br from-[#383838] to-black from-0% to-100% cursor-pointer"
+  class="border rounded flex items-center justify-between border-gray-200 bg-gradient-to-br from-black via-black to-[#383838] from-0% to-100% cursor-pointer overflow-hidden"
   {{on "click" this.handleViewButtonClicked}}
   role="button"
   data-test-earned-badge-notice
   ...attributes
 >
-  <div class="flex items-center justify-start overflow-hidden relative">
+  <div class="flex items-center justify-start relative">
     {{svg-jar "gold-badge" class="animate-spin-slow w-24 h-24 absolute -top-3 -left-4"}}
 
     <div class="text-gray-100 text-sm leading-relaxed ml-24 m-4">
