@@ -208,7 +208,7 @@ module.exports = {
       animation: {
         'infinite-slide': 'infinite-slide 30s linear infinite',
         'blink-fast': 'blink 1s step-start infinite',
-        'badge-wiggle': 'wiggle 2s ease-in-out infinite',
+        'spin-slow': 'spin 12s linear infinite',
       },
     },
   },
