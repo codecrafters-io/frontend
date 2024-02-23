@@ -1,13 +1,13 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div
-  class="border rounded flex items-center justify-between p-4 border-gray-800 hover:border-[#3F3F3F] bg-gradient-to-br from-[#383838] to-black from-0% to-100% cursor-pointer" {{on "click" this.handleViewButtonClicked}} role="button"
+  class="border rounded flex items-center justify-between border-gray-800 hover:border-[#3F3F3F] bg-gradient-to-br from-[#383838] to-black from-0% to-100% cursor-pointer" {{on "click" this.handleViewButtonClicked}} role="button"
   data-test-earned-badge-notice
   ...attributes
 >
-  <div class="flex items-center justify-start overflow-hidden p-1">
-  {{svg-jar "gold-badge" class="animate-spin-slow w-12 h-12"}}
+  <div class="flex items-center justify-start overflow-hidden relative">
+  {{svg-jar "gold-badge" class="animate-spin-slow w-24 h-24 absolute -top-3 -left-4"}}
 
-    <div class="text-gray-100 text-sm leading-relaxed ml-4">
+    <div class="text-gray-100 text-sm leading-relaxed ml-24 m-4">
       You just earned the
       {{#each @badgeAwards as |badgeAward index|}}
         <span
