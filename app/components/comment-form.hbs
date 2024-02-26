@@ -1,8 +1,10 @@
 <div class="w-full" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
   <div class="bg-gray-100 pt-1.5 px-2 border-b border-gray-300 flex items-center {{if this.isReplying '' 'rounded-t'}}">
     <div class="transform translate-y-px flex">
+      {{! @glint-expect-error Not ts-ified yet}}
       <CommentForm::TabHeader @text="Write" @isActive={{eq this.activeTab "write"}} {{on "click" (fn this.setActiveTab "write")}} />
 
+      {{! @glint-expect-error Not ts-ified yet}}
       <CommentForm::TabHeader
         @text="Preview"
         @isActive={{eq this.activeTab "preview"}}
@@ -17,6 +19,7 @@
       {{#if (eq this.activeTab "write")}}
         {{! template-lint-disable require-input-label }}
         <Textarea
+          {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
           @value={{this.comment.bodyMarkdown}}
           class="leading-relaxed border border-gray-300 rounded w-full p-2 text-sm bg-gray-100 focus:bg-white"
           placeholder={{this.placeholderText}}
@@ -29,6 +32,7 @@
         {{! template-lint-disable no-inline-styles }}
         <div class="px-2 py-2 border-b-2 mb-2" style="min-height: 135px;">
           <div class="leading-relaxed prose-sm prose max-w-none break-words comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
+            {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
             {{markdown-to-html this.commentMarkdown}}
           </div>
         </div>

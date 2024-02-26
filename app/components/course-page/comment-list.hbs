@@ -1,4 +1,4 @@
-<div data-test-comment-list {{did-update this.loadComments @requestedSolutionLanguage @courseStage}}>
+<div data-test-comment-list {{did-update this.loadComments @language @courseStage}}>
   <CoursePage::CommentTimelineItem @author={{this.currentUser}}>
     <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
       {{! TODO: Pass in language here so that users can choose whether their comment is language-specific }}
@@ -15,6 +15,7 @@
     {{#each this.sortedComments key="id" as |comment|}}
       <CoursePage::CommentTimelineItem @author={{comment.user}}>
         <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
+          {{! @glint-expect-error Not ts-ified yet }}
           <CommentCard @comment={{comment}} />
         </div>
       </CoursePage::CommentTimelineItem>
@@ -24,10 +25,12 @@
       <div class="flex flex-col items-center">
         <div class="h-px my-4 bg-gray-200 w-full" />
         {{#if this.rejectedCommentsAreExpanded}}
+          {{! @glint-expect-error mut helper not typed yet}}
           <TertiaryButton @size="small" {{on "click" (fn (mut this.rejectedCommentsAreExpanded) false)}} class="mb-4">
             Hide rejected comments
           </TertiaryButton>
         {{else}}
+          {{! @glint-expect-error mut helper not typed yet}}
           <TertiaryButton @size="small" {{on "click" (fn (mut this.rejectedCommentsAreExpanded) true)}} class="mb-4">
             Show
             {{this.rejectedComments.length}}
@@ -40,6 +43,7 @@
         {{#each this.rejectedComments key="id" as |comment|}}
           <CoursePage::CommentTimelineItem @author={{comment.user}}>
             <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
+              {{! @glint-expect-error Not ts-ified yet }}
               <CommentCard @comment={{comment}} />
             </div>
           </CoursePage::CommentTimelineItem>

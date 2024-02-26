@@ -4,18 +4,39 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
+import type CourseStageCommentModel from 'codecrafters-frontend/models/course-stage-comment';
+import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
+import type Store from '@ember-data/store';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 
-export default class CommentFormComponent extends Component {
-  @service authenticator;
-  @service store;
+type Signature = {
+  Element: HTMLDivElement;
 
-  @tracked comment;
+  Args: {
+    comment?: CourseStageCommentModel | CommunityCourseStageSolutionCommentModel;
+    language?: LanguageModel | null;
+    parentComment?: CourseStageCommentModel | CommunityCourseStageSolutionCommentModel | null;
+    commentModelType: 'course-stage-comment' | 'community-course-stage-solution-comment';
+    onCancel?: () => void;
+    onSubmit?: () => void;
+    target: unknown;
+  };
+};
+
+export default class CommentFormComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+
+  @tracked declare comment: CourseStageCommentModel | CommunityCourseStageSolutionCommentModel;
   @tracked isSaving = false;
-  @tracked activeTab = 'write';
+  @tracked activeTab: 'write' | 'preview' = 'write';
   @tracked isEditingComment = false;
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
 
     if (this.args.comment) {
       this.comment = this.args.comment;
@@ -46,32 +67,36 @@ export default class CommentFormComponent extends Component {
   }
 
   get submitButtonIsDisabled() {
-    return !this.comment.bodyMarkdown || this.comment.bodyMarkdown.trim().length < 1 || this.isSaving;
+    return !this.comment.bodyMarkdown || (this.comment.bodyMarkdown as unknown as string).trim().length < 1 || this.isSaving;
   }
 
   @action
   handleCancelReplyButtonClick() {
-    this.args.onCancel();
+    if (this.args.onCancel) {
+      this.args.onCancel();
+    }
   }
 
   @action
-  handleDidInsertBodyHTML(element) {
+  handleDidInsertBodyHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
   }
 
   @action
   handleEditCancelButtonClick() {
-    this.args.onCancel();
+    if (this.args.onCancel) {
+      this.args.onCancel();
+    }
   }
 
   @action
-  async handleFormSubmit(e) {
+  async handleFormSubmit(e: SubmitEvent) {
     e.preventDefault();
-    e.target.reportValidity();
+    (e.target as HTMLFormElement).reportValidity();
 
-    if (e.target.checkValidity()) {
+    if ((e.target as HTMLFormElement).checkValidity()) {
       if (!this.args.comment) {
-        this.comment.target = this.args.target || this.args.parentComment.target;
+        this.comment.target = this.args.target || this.args.parentComment!.target;
       }
 
       this.isSaving = true;
@@ -91,6 +116,7 @@ export default class CommentFormComponent extends Component {
     next(() => {
       if (this.isEditingComment) {
         this.comment.rollbackAttributes();
+        // @ts-expect-error isNew isn't correctly typed
       } else if (this.comment.isNew && !this.comment.isSaving) {
         this.comment.unloadRecord();
       }
@@ -98,7 +124,7 @@ export default class CommentFormComponent extends Component {
   }
 
   @action
-  setActiveTab(tab) {
+  setActiveTab(tab: 'write' | 'preview') {
     this.activeTab = tab;
   }
 
@@ -118,5 +144,11 @@ export default class CommentFormComponent extends Component {
         language: this.args.language,
       });
     }
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    CommentForm: typeof CommentFormComponent;
   }
 }
