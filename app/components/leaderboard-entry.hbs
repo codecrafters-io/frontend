@@ -6,7 +6,7 @@
     {{if @isForCurrentUser 'border-teal-500' 'border-transparent'}}"
   data-test-leaderboard-entry
 >
-  <div class="flex items-center">
+  <div class="flex items-center min-w-0">
     <div class="{{unless @isCollapsed 'mr-2'}} flex-shrink-0">
       {{#if this.isSkeleton}}
         <div class="w-8 h-8 bg-gray-200 rounded"></div>
