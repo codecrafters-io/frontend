@@ -204,6 +204,7 @@ module.exports = {
       animation: {
         'infinite-slide': 'infinite-slide 30s linear infinite',
         'blink-fast': 'blink 1s step-start infinite',
+        'spin-slow': 'spin 16s linear infinite',
       },
     },
   },

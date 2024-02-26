@@ -105,7 +105,6 @@ export default create({
       scope: '[data-test-badge-earned-modal]',
     },
 
-    clickOnViewButton: clickable('[data-test-view-button]'),
     scope: '[data-test-earned-badge-notice]',
   },
 

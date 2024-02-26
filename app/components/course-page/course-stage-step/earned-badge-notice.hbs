@@ -1,30 +1,28 @@
 {{! @glint-nocheck: not typesafe yet }}
 <div
-  class="border rounded flex items-center justify-between p-4 border-gray-800 hover:border-[#3F3F3F] bg-gradient-to-br from-[#383838] to-black from-0% to-100%"
+  class="border rounded flex items-center justify-between border-gray-200 bg-gradient-to-br from-black via-black to-[#383838] from-0% to-100% cursor-pointer overflow-hidden group/earned-badge-notice"
+  {{on "click" this.handleClick}}
+  role="button"
   data-test-earned-badge-notice
   ...attributes
 >
-  <div class="flex items-center justify-start">
-    {{svg-jar "gold-badge-icon" class="w-7 h-7 mr-3 flex-shrink-0"}}
+  <div class="flex items-center justify-start relative">
+    <div
+      class="absolute w-28 h-28 -left-7 sm:w-32 sm:h-32 sm:-left-8 flex items-center justify-center transform scale-100 group-hover/earned-badge-notice:scale-105 transition-all"
+    >
+      {{svg-jar "gold-badge" class="animate-spin-slow w-full"}}
+    </div>
 
-    <div class="text-gray-100 text-sm leading-relaxed">
-      You earned the
+    <div class="text-gray-100 text-xs sm:text-sm leading-relaxed ml-28 sm:ml-32 m-6 line-clamp-2">
+      You just earned the
       {{#each @badgeAwards as |badgeAward index|}}
-        <span
-          class="font-semibold underline"
-          role="button"
-          {{on "click" (fn this.handleBadgeClicked badgeAward.badge)}}
-        >{{badgeAward.badge.name}}</span>
+        <span class="font-bold">{{badgeAward.badge.name}}</span>
         {{#if (lt index (sub @badgeAwards.length 2))}}, {{/if}}
         {{#if (eq index (sub @badgeAwards.length 2))}} and {{/if}}
       {{/each}}
-      {{if (gt @badgeAwards.length 1) "badges" "Badge"}}.
+      {{if (gt @badgeAwards.length 1) "badges" "Badge"}}!
+      <span class="underline">Read the story.</span>
     </div>
-  </div>
-  <div class="dark">
-    <TertiaryButton @size="small" {{on "click" this.handleViewButtonClicked}} data-test-view-button>
-      View →
-    </TertiaryButton>
   </div>
 
   {{#if this.selectedBadge}}
