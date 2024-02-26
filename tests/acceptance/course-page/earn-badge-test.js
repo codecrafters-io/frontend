@@ -55,7 +55,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
 
     await percySnapshot('Course Stage - Earned Badged Notice');
 
-    await coursePage.earnedBadgeNotice.clickOnViewButton();
+    await coursePage.earnedBadgeNotice.click();
     assert.strictEqual(coursePage.earnedBadgeNotice.badgeEarnedModal.badgeName, 'The Tesla Badge');
 
     await percySnapshot('Course Stage - View Earned Badged');

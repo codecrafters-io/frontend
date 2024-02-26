@@ -15,7 +15,7 @@ export default class EarnedBadgeNoticeComponent extends Component {
   }
 
   @action
-  handleViewButtonClicked() {
+  handleClick() {
     this.selectedBadge = this.args.badgeAwards[0].badge;
   }
 }
