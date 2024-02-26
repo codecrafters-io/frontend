@@ -1,7 +1,8 @@
 <div data-test-comment-list {{did-update this.loadComments @requestedSolutionLanguage @courseStage}}>
   <CoursePage::CommentTimelineItem @author={{this.currentUser}}>
     <div class="shadow-sm rounded border border-gray-300 w-full mb-4">
-      <CommentForm @target={{@courseStage}} @language={{@language}} @commentModelType="course-stage-comment" />
+      {{! TODO: Pass in language here so that users can choose whether their comment is language-specific }}
+      <CommentForm @target={{@courseStage}} @commentModelType="course-stage-comment" />
     </div>
   </CoursePage::CommentTimelineItem>
 
