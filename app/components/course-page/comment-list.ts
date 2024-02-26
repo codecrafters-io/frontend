@@ -13,7 +13,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 type Signature = {
   Args: {
     courseStage: CourseStageModel;
-    language: LanguageModel | null;
+    language?: LanguageModel;
     shouldFilterByLanguage: boolean;
   };
 };
@@ -80,5 +80,11 @@ export default class CommentListComponent extends Component<Signature> {
     });
 
     this.isLoading = false;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CommentList': typeof CommentListComponent;
   }
 }
