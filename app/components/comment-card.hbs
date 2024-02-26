@@ -31,6 +31,15 @@
         <div class="text-xs text-gray-400">
           {{date-from-now @comment.createdAt}}
         </div>
+
+        {{#if @comment.language}}
+          <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
+
+          <Pill @color="gray">
+            {{@comment.language.name}}
+            <EmberTooltip @text="This comment is specific to {{@comment.language.name}}." />
+          </Pill>
+        {{/if}}
       </div>
 
       <div class="flex items-center">
