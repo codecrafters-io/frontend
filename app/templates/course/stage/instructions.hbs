@@ -47,9 +47,31 @@
   {{/if}}
 
   <div data-percy-hints-section>
-    <h2 class="font-semibold border-b pb-2 mb-6 text-lg mt-8">Hints</h2>
+    <div class="border-b pb-2 mb-6 mt-8 flex items-center justify-between">
+      <h2 class="font-semibold text-lg">Hints</h2>
 
-    {{! @glint-expect-error: not ts-ified }}
-    <CoursePage::CommentList @courseStage={{@model.courseStage}} @language={{@model.activeRepository.language}} />
+      {{#if @model.activeRepository.language}}
+        <div class="flex items-center gap-1">
+          <span class="text-xs text-gray-500 mr-2">Filter by {{@model.activeRepository.language.name}}</span>
+          <Toggle @isOn={{this.commentListIsFilteredByLanguage}} {{on "click" this.handleCommentListFilterToggled}} />
+
+          <EmberTooltip>
+            {{#if this.commentListIsFilteredByLanguage}}
+              You're currently viewing hints that are relevant to
+              {{@model.activeRepository.language.name}}. Turn this off to view hints for all languages.
+            {{else}}
+              You're currently viewing hints for all languages. Turn this on to filter hints that are relevant to
+              {{@model.activeRepository.language.name}}.
+            {{/if}}
+          </EmberTooltip>
+        </div>
+      {{/if}}
+    </div>
+
+    <CoursePage::CommentList
+      @courseStage={{@model.courseStage}}
+      @language={{@model.activeRepository.language}}
+      @shouldFilterByLanguage={{this.commentListIsFilteredByLanguage}}
+    />
   </div>
 </div>

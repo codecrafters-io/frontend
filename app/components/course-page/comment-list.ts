@@ -14,6 +14,7 @@ type Signature = {
   Args: {
     courseStage: CourseStageModel;
     language: LanguageModel | null;
+    shouldFilterByLanguage: boolean;
   };
 };
 
@@ -50,12 +51,20 @@ export default class CommentListComponent extends Component<Signature> {
   }
 
   get visibleComments() {
-    if (this.currentUser.isStaff) {
-      // Include pending approval for staff users
-      return this.topLevelPersistedComments.filter((comment) => !comment.isRejected || comment.user === this.authenticator.currentUser);
-    } else {
-      return this.topLevelPersistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
+    let comments = this.topLevelPersistedComments;
+
+    if (this.args.shouldFilterByLanguage) {
+      comments = comments.filter((comment) => !comment.language || !this.args.language || comment.language === this.args.language);
     }
+
+    if (this.currentUser.isStaff) {
+      // Rejected comments are visible in a separate section at the bottom of the list
+      comments = comments.filter((comment) => !comment.isRejected || comment.user === this.authenticator.currentUser);
+    } else {
+      comments = comments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
+    }
+
+    return comments;
   }
 
   @action
