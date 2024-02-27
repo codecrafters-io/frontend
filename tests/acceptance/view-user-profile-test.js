@@ -81,9 +81,6 @@ module('Acceptance | view-user-profile', function (hooks) {
     });
 
     await userPage.visit({ username: 'rohitpaulk' });
-    console.log(userPage.courseLabels);
-    console.log(userPage.courseLabels[0].text);
-
     assert.strictEqual(userPage.courseLabels[0].text, 'Build your own Docker');
     // Completed course will be listed first.
     assert.strictEqual(userPage.courseLabels[1].text, 'Build your own grep');
