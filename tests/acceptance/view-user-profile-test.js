@@ -11,7 +11,7 @@ module('Acceptance | view-user-profile', function (hooks) {
   setupApplicationTest(hooks);
   setupWindowMock(hooks);
 
-  test('it renders', async function (assert) {
+  test('it renders courses with proper ordering', async function (assert) {
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -19,12 +19,14 @@ module('Acceptance | view-user-profile', function (hooks) {
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
 
     this.server.create('course-participation', {
       course: redis,
       language: python,
       user: currentUser,
       currentStage: redis.stages.models.sortBy('position')[1],
+      lastSubmissionAt: new Date('2022-10-10'),
     });
 
     this.server.create('course-participation', {
@@ -32,13 +34,29 @@ module('Acceptance | view-user-profile', function (hooks) {
       language: go,
       user: currentUser,
       currentStage: redis.stages.models.sortBy('position')[5],
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: grep,
+      language: go,
+      user: currentUser,
+      currentStage: grep.stages.models.sortBy('position')[5],
+      lastSubmissionAt: new Date('2020-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: docker,
+      language: python,
+      user: currentUser,
+      currentStage: docker.stages.models.sortBy('position')[5],
     });
 
     this.server.create('course-participation', {
       course: docker,
       language: go,
       user: currentUser,
-      currentStage: redis.stages.models.sortBy('position')[3],
+      completedAt: new Date('2020-01-01'),
     });
 
     this.server.create('user-profile-event', {
@@ -63,6 +81,14 @@ module('Acceptance | view-user-profile', function (hooks) {
     });
 
     await userPage.visit({ username: 'rohitpaulk' });
+    console.log(userPage.courseLabels);
+    console.log(userPage.courseLabels[0].text);
+
+    assert.strictEqual(userPage.courseLabels[0].text, 'Build your own Docker');
+    // Completed course will be listed first.
+    assert.strictEqual(userPage.courseLabels[1].text, 'Build your own grep');
+    assert.strictEqual(userPage.courseLabels[2].text, 'Build your own Redis');
+    // Then ordering is done on latest submission, earlier comes first.
     await percySnapshot('User profile');
 
     assert.strictEqual(1, 1);
