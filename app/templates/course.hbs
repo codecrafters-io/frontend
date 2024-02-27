@@ -82,13 +82,14 @@
       class="px-3 md:px-6 lg:pl-10 bg-gray-50"
     />
     <div class="flex flex-grow bg-white">
-
       <div class="flex-grow flex-shrink min-w-0">
         {{#if this.coursePageState.currentStep.completionNoticeMessage}}
           <CoursePage::CompletedStepNotice
             @step={{this.coursePageState.currentStep}}
             @repository={{@model.activeRepository}}
-            class="px-3 md:px-6 lg:px-10 w-full"
+            class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
+            {{! Confetti etc. makes more sense when the top section is focused }}
+            {{scroll-into-view block="start"}}
           />
         {{/if}}
 
