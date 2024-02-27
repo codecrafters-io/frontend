@@ -26,7 +26,7 @@
         <Concept @concept={{@concept}} @latestConceptEngagement={{@latestConceptEngagement}} />
 
         {{#animated-if this.hasCompletedConcept}}
-          <div class="flex flex-col items-center justify-center py-16 border-t" {{did-insert this.handleCompletionContainerInserted}}>
+          <div class="flex flex-col items-center justify-center py-16 border-t" {{scroll-into-view}}>
             <div class="text-5xl mb-8">
               🎉
             </div>

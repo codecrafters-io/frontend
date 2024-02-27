@@ -43,11 +43,6 @@ export default class ContentComponent extends Component<Signature> {
   }
 
   @action
-  handleCompletionContainerInserted(element: HTMLElement) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  @action
   handleCopyButtonClick() {
     this.analyticsEventTracker.track('clicked_share_concept_button', {
       concept_id: this.args.concept.id,
