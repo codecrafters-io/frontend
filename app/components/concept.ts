@@ -143,11 +143,6 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleContinueBlockInsertedAfterQuestion(element: HTMLElement) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  @action
   async handleContinueButtonClick() {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
