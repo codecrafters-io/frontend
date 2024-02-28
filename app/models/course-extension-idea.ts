@@ -57,7 +57,7 @@ export default class CourseExtensionIdeaModel extends Model {
     return vote;
   }
 
-  unvote!: (payload: unknown) => Promise<void>;
+  declare unvote: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CourseExtensionIdeaModel.prototype.unvote = memberAction({
@@ -65,9 +65,9 @@ CourseExtensionIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    // @ts-ignore
+    // @ts-expect-error
     for (const record of [...this.currentUserVotes]) {
-      // @ts-ignore
+      // @ts-expect-error
       this.votesCount -= 1;
       record.unloadRecord();
     }
