@@ -7,9 +7,11 @@ import { createPopup } from '@typeform/embed';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type ModelType = {
   courseStage: CourseStageModel;
+  activeRepository: RepositoryModel;
 };
 
 export default class ScreencastsTabComponent extends Controller {
@@ -25,6 +27,22 @@ export default class ScreencastsTabComponent extends Controller {
   @service declare authenticator;
 
   @service declare store: Store;
+
+  get activeRepositoryLanguage() {
+    return this.model.activeRepository.language?.slug;
+  }
+
+  get activeRepositoryLanguageScreencastsForList() {
+    return this.screencastsForList
+      .filter((screencast) => screencast.language.slug === this.activeRepositoryLanguage)
+      .sort((b, a) => a.publishedAt.getTime() - b.publishedAt.getTime());
+  }
+
+  get remainingLanguageScreencastsForList() {
+    return this.screencastsForList
+      .filter((screencast) => screencast.language.slug !== this.activeRepositoryLanguage)
+      .sort((b, a) => a.publishedAt.getTime() - b.publishedAt.getTime());
+  }
 
   get screencasts() {
     return this.model.courseStage.screencasts;
