@@ -10,9 +10,7 @@ export default class CourseParticipationModel extends Model {
   @belongsTo('user', { async: false, inverse: 'courseParticipations' }) declare user: UserModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
 
-  @attr('date') declare completedAt: Date;
-  @attr('date') declare lastActivityAt: Date;
-  @attr('date') declare startedAt: Date;
+  @attr('date') declare completedAt: Date | null;
   @attr('date') declare lastSubmissionAt: Date;
 
   get isCompleted(): boolean {

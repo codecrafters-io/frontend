@@ -1,5 +1,6 @@
 import { collection, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
+import CourseProgressListItem from 'codecrafters-frontend/tests/pages/components/course-progress-list-item';
 
 export default createPage({
   adminProfileButton: {
@@ -11,7 +12,7 @@ export default createPage({
     hover: triggerable('mouseenter'),
   },
 
-  courseLabels: collection('[data-test-course-name]'),
+  courseProgressListItems: collection('[data-test-course-name]', CourseProgressListItem),
 
   visit: visitable('/users/:username'),
 });
