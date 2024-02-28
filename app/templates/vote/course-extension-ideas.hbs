@@ -4,6 +4,7 @@
 
 <div class="flex items-center flex-wrap mb-6">
   {{#each this.orderedCourses as |course|}}
+    {{! @glint-expect-error not ts-ified yet }}
     <VotePage::CoursePill
       @course={{course}}
       @isSelected={{eq this.selectedCourse course}}
@@ -15,10 +16,12 @@
 
 <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
   {{#if this.authenticator.isAuthenticated}}
+    {{! @glint-expect-error not ts-ified yet }}
     <VotePage::SubmitCourseExtensionIdeaCard @course={{this.selectedCourse}} />
   {{/if}}
 
   {{#each this.orderedCourseExtensionIdeas as |courseExtensionIdea|}}
+    {{! @glint-expect-error not ts-ified yet }}
     <VotePage::CourseExtensionIdeaCard @courseExtensionIdea={{courseExtensionIdea}} />
   {{/each}}
 </div>

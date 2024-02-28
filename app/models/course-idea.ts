@@ -24,10 +24,11 @@ export default class CourseIdeaModel extends Model {
   @service declare authenticator: AuthenticatorService;
 
   get isNewlyCreated(): boolean {
-    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votesCount < 100;
+    // 30 days or less old or less than 100 votes
+    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 100;
   }
 
-  get reverseSortPositionForCourseIdeasPage(): string {
+  get reverseSortPositionForVotePage(): string {
     const reverseSortPositionFromDevelopmentStatus = {
       not_started: 3,
       in_progress: 2,
