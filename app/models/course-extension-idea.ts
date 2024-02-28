@@ -34,7 +34,7 @@ export default class CourseExtensionIdeaModel extends Model {
 
   get isNewlyCreated() {
     // 30 days or less old or less than 20 votes
-    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votesCount < 20;
+    return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 20;
   }
 
   get reverseSortPositionForVotePage(): string {
