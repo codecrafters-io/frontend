@@ -12,7 +12,7 @@ export default createPage({
     hover: triggerable('mouseenter'),
   },
 
-  courseProgressListItems: collection('[data-test-course-name]', CourseProgressListItem),
+  courseProgressListItems: collection('[data-test-course-progress-list-item]', CourseProgressListItem),
 
   visit: visitable('/users/:username'),
 });
