@@ -1,5 +1,5 @@
 {{! @glint-nocheck: not typesafe yet }}
-<div class="flex gap-4 flex-col md:flex-row items-center overflow-hidden group" role="button" ...attributes>
+<div class="flex gap-4 flex-col md:flex-row items-center overflow-hidden group" role="button" data-test-screencasts-previews ...attributes>
   {{! thumbnail }}
   <div class="relative w-full md:max-w-[50%] lg:max-w-[33%] border">
     <img src={{@screencast.thumbnailUrl}} alt="thumbnail" />
@@ -12,7 +12,7 @@
     <span
       class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
     >{{@screencast.language.name}}</span>
-    <div class="font-semibold text-gray-800 text-lg mt-2">{{@screencast.title}}</div>
+    <div class="font-semibold text-gray-800 text-lg mt-2" data-test-screencasts-previews-title>{{@screencast.title}}</div>
     <div class="flex items-center gap-1 mt-1">
       <img src={{@screencast.sourceIconUrl}} class="h-5" alt="source" />
       <div class="text-gray-600 text-xs">{{@screencast.authorName}}</div>

@@ -15,7 +15,12 @@
   {{/if}}
 
   <div class="grid grid-cols-1 gap-6 pb-16">
-    {{#each this.screencastsForList as |screencast|}}
+    {{#each this.activeRepositoryLanguageScreencastsForList as |screencast|}}
+      {{! @glint-expect-error: not typesafe yet }}
+      <CourseStageScreencastPreview @screencast={{screencast}} {{on "click" (fn this.handleScreencastClicked screencast)}} />
+    {{/each}}
+
+    {{#each this.remainingLanguageScreencastsForList as |screencast|}}
       {{! @glint-expect-error: not typesafe yet }}
       <CourseStageScreencastPreview @screencast={{screencast}} {{on "click" (fn this.handleScreencastClicked screencast)}} />
     {{/each}}
