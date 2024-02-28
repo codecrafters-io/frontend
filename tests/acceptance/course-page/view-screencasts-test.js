@@ -84,8 +84,6 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     assert.strictEqual(screencastsPage.screencastPreviews[1].titleText, 'Go screencast #2');
     assert.strictEqual(screencastsPage.screencastPreviews[2].titleText, 'Go screencast #1');
 
-    console.log(screencastsPage.screencastPreviews);
-    console.log(screencastsPage.screencastPreviews[0].titleText);
     // TODO: Check that clicking on a screencast shows it as active one
 
     assert.strictEqual(1, 1);
