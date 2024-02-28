@@ -37,6 +37,16 @@ export default class CourseExtensionIdeaModel extends Model {
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24) || this.votesCount < 20;
   }
 
+  get reverseSortPositionForVotePage(): string {
+    const reverseSortPositionFromDevelopmentStatus = {
+      not_started: 3,
+      in_progress: 2,
+      released: 1,
+    }[this.developmentStatus];
+
+    return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
+  }
+
   async vote() {
     this.votesCount += 1;
 
