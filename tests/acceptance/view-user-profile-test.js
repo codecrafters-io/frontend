@@ -82,10 +82,10 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: 'rohitpaulk' });
     // Completed course will be listed first.
-    assert.strictEqual(userPage.courseProgressListItems[0].text, 'Build your own Docker');
+    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Docker');
     // Then ordering is done on latest submission, earlier comes first.
-    assert.strictEqual(userPage.courseProgressListItems[1].text, 'Build your own grep');
-    assert.strictEqual(userPage.courseProgressListItems[2].text, 'Build your own Redis');
+    assert.strictEqual(userPage.courseProgressListItems[1].name, 'Build your own grep');
+    assert.strictEqual(userPage.courseProgressListItems[2].name, 'Build your own Redis');
     await percySnapshot('User profile');
 
     assert.strictEqual(1, 1);
