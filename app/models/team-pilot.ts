@@ -1,10 +1,10 @@
-import { attr, belongsTo } from '@ember-data/model';
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
+import type TeamModel from './team';
 
 export default class TeamPilotModel extends Model {
-  @attr('date') endDate;
-  @attr('boolean') requiresPaymentMethod;
-  @belongsTo('team', { async: false, inverse: 'pilots' }) team;
+  @belongsTo('team', { async: false, inverse: 'pilots' }) declare team: TeamModel;
+  @attr('date') declare endDate: Date;
+  @attr('boolean') declare requiresPaymentMethod: boolean;
 
   get isActive() {
     return new Date() < this.endDate;
