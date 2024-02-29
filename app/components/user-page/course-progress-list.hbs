@@ -5,6 +5,7 @@
 
   <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
     {{#each this.courseParticipationGroups as |courseParticipationGroup|}}
+      {{! @glint-expect-error }}
       <UserPage::CourseProgressListItem @courseParticipations={{courseParticipationGroup}} />
     {{/each}}
   </div>
