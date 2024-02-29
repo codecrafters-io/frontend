@@ -143,7 +143,7 @@
     "ember-tooltips": "^3.6.0",
     "ember-truth-helpers": "^4.0.3",
     "ember-window-mock": "github:codecrafters-io/ember-window-mock#renovate/ember-source-5.x",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ember": "^12.0.2",
     "eslint-plugin-ember-template-lint": "^0.15.0",
