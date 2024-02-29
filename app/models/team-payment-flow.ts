@@ -1,23 +1,22 @@
-import { attr } from '@ember-data/model';
+import Model, { attr } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
-import Model from '@ember-data/model';
 
 export default class TeamPaymentFlowModel extends Model {
-  @attr('boolean') couponCodeIsValid;
-  @attr('boolean') couponCodeIsInvalid;
-  @attr('string') teamName;
-  @attr('string') contactEmailAddress;
-  @attr('string') couponCode;
-  @attr('string') pricingPlanType; // monthly, yearly
-  @attr('number') numberOfSeats;
-  @attr('string') stripeSetupIntentClientSecret;
-  @attr('string') stripeSetupIntentId;
-  @attr('string') stripeSetupIntentStatus;
-  @attr('string') teamSetupUrl;
+  @attr('boolean') declare couponCodeIsValid: boolean;
+  @attr('boolean') declare couponCodeIsInvalid: boolean;
+  @attr('string') declare teamName: string;
+  @attr('string') declare contactEmailAddress: string;
+  @attr('string') declare couponCode: string;
+  @attr('string') declare pricingPlanType: string; // monthly, yearly
+  @attr('number') declare numberOfSeats: number;
+  @attr('string') declare stripeSetupIntentClientSecret: string;
+  @attr('string') declare stripeSetupIntentId: string;
+  @attr('string') declare stripeSetupIntentStatus: string;
+  @attr('string') declare teamSetupUrl: string;
 
-  @equal('pricingPlanType', 'monthly') pricingPlanTypeIsMonthly;
-  @equal('pricingPlanType', 'yearly') pricingPlanTypeIsYearly;
+  @equal('pricingPlanType', 'monthly') declare pricingPlanTypeIsMonthly: boolean;
+  @equal('pricingPlanType', 'yearly') declare pricingPlanTypeIsYearly: boolean;
 
   get contactEmailAddressIsComplete() {
     return this.contactEmailAddress && this.contactEmailAddress.trim().length > 0;
@@ -46,6 +45,10 @@ export default class TeamPaymentFlowModel extends Model {
   get teamNameIsComplete() {
     return this.teamName && this.teamName.trim().length > 0;
   }
+
+  declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<void>;
+  declare attemptPayment: (this: Model, payload: unknown) => Promise<void>;
+  declare resetPaymentDetails: (this: Model, payload: unknown) => Promise<void>;
 }
 
 TeamPaymentFlowModel.prototype.fetchFirstInvoicePreview = memberAction({
