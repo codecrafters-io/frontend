@@ -8,10 +8,6 @@ import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import Prism from 'prismjs';
-
-import 'prismjs';
-import 'prismjs/components/prism-bash'; // This is the only one we use in instructions at the moment
 
 interface Signature {
   Element: HTMLDivElement;
@@ -48,16 +44,6 @@ export default class YourTaskCardComponent extends Component<Signature> {
 
   get shouldShowFeedbackPromptIfStageIsComplete() {
     return !this.args.courseStage.isFirst;
-  }
-
-  @action
-  handleDidInsertInstructionsHTML(element: HTMLDivElement) {
-    Prism.highlightAllUnder(element);
-  }
-
-  @action
-  handleDidUpdateInstructionsHTML(element: HTMLDivElement) {
-    Prism.highlightAllUnder(element);
   }
 
   @action
