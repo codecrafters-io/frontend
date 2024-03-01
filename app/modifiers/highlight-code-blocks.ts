@@ -21,6 +21,10 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-zig';
 import 'prismjs/components/prism-diff';
 
+// Used in stage instructions
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-yaml';
+
 type Signature = {
   Args: {
     Positional: [contents: string];
