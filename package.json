@@ -48,7 +48,7 @@
     "@glint/template": "^1.2.1",
     "@percy/cli": "^1.28.0",
     "@percy/ember": "^4.0.0",
-    "@sentry/ember": "^7.101.1",
+    "@sentry/ember": "^7.104.0",
     "@sentry/webpack-plugin": "^2.14.1",
     "@tsconfig/ember": "^3.0.4",
     "@types/canvas-confetti": "^1.6.4",
