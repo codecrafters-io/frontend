@@ -7,7 +7,7 @@ type Signature = {
   };
 };
 
-export default class ScrollToTopOnInsertModifier extends Modifier<Signature> {
+export default class UpscrollWindowOnInsertModifier extends Modifier<Signature> {
   modify() {
     scrollToTop();
   }
@@ -15,6 +15,6 @@ export default class ScrollToTopOnInsertModifier extends Modifier<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'scroll-to-top-on-insert': typeof ScrollToTopOnInsertModifier;
+    'upscroll-window-on-insert': typeof UpscrollWindowOnInsertModifier;
   }
 }
