@@ -30,7 +30,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@babel/plugin-proposal-decorators": "^7.24.0",
     "@ember-data/model": "^5.3.0",
     "@ember/optional-features": "^2.1.0",
