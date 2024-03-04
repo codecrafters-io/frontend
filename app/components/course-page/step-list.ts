@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
+import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 
@@ -7,6 +9,9 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    activeRepository: RepositoryModel;
+    course: CourseModel;
+    handleConfigureExtensionsButtonClick: () => void;
     stepList: StepList;
   };
 }

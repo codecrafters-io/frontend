@@ -20,30 +20,7 @@
   <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
 
   <div class="flex-grow overflow-y-auto mt-10 -mx-3">
-    <CoursePage::StepList @stepList={{this.stepList}} />
-    {{#if (gt @course.extensions.length 0)}}
-      <div class="flex justify-center mt-3 px-3">
-        <TertiaryButton
-          @size="extra-small"
-          {{! We're using the get helper instead of model.isNew because of a typescript error. }}
-          {{! An issue is opened here: https://github.com/emberjs/data/issues/9146. }}
-          @isDisabled={{get @activeRepository "isNew"}}
-          {{on "click" this.handleConfigureExtensionsButtonClick}}
-          data-test-configure-extensions-button
-        >
-          <div class="flex items-center">
-            {{svg-jar "plus-circle" class="w-3 h-3 mr-1 text-gray-500"}}
-            Extensions
-          </div>
-
-          {{! We're using the get helper instead of model.isNew because of a typescript error. }}
-          {{! An issue is opened here: https://github.com/emberjs/data/issues/9146. }}
-          {{#if (get @activeRepository "isNew")}}
-            <EmberTooltip @text="Complete repository setup to configure extensions" />
-          {{/if}}
-        </TertiaryButton>
-      </div>
-    {{/if}}
+    <CoursePage::StepList @activeRepository={{@activeRepository}} @course={{@course}} @handleConfigureExtensionsButtonClick={{this.handleConfigureExtensionsButtonClick}} @stepList={{this.stepList}} />
   </div>
 
   <div class="flex flex-col mt-4">
