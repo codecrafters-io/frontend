@@ -1,5 +1,15 @@
 <div class="flex flex-col gap-y-1" ...attributes>
-  {{#each @stepList.stepGroups as |stepGroup|}}
+  {{#if this.baseStagesStepGroup.title}}
+    <div class="px-3 py-2">
+      <h3 class="text-xs uppercase font-semibold text-gray-400 border-b">{{this.baseStagesStepGroup.title}}</h3>
+    </div>
+  {{/if}}
+
+  {{#each this.baseStagesStepGroup.visibleSteps as |step|}}
+    <CoursePage::StepListItem @step={{step}} @isCurrent={{eq this.currentStep step}} @isActive={{eq this.activeStep step}} />
+  {{/each}}
+
+  {{#each this.otherStepGroups as |stepGroup|}}
     {{#if stepGroup.title}}
       <div class="px-3 py-2">
         <h3 class="text-xs uppercase font-semibold text-gray-400 border-b">{{stepGroup.title}}</h3>

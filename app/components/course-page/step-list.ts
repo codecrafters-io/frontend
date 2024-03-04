@@ -18,8 +18,16 @@ export default class StepListComponent extends Component<Signature> {
     return this.coursePageState.activeStep;
   }
 
+  get baseStagesStepGroup() {
+    return this.args.stepList.stepGroups.find((group) => group.type === 'BaseStagesStepGroup');
+  }
+
   get currentStep() {
     return this.coursePageState.currentStep;
+  }
+
+  get otherStepGroups() {
+    return this.args.stepList.stepGroups.filter((group) => group.type !== 'BaseStagesStepGroup');
   }
 }
 
