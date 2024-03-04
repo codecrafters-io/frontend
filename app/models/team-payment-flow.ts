@@ -1,6 +1,7 @@
 import Model, { attr } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
+import type InvoiceModel from './invoice';
 
 export default class TeamPaymentFlowModel extends Model {
   @attr('boolean') declare couponCodeIsValid: boolean;
@@ -46,7 +47,7 @@ export default class TeamPaymentFlowModel extends Model {
     return this.teamName && this.teamName.trim().length > 0;
   }
 
-  declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<void>;
+  declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel>;
   declare attemptPayment: (this: Model, payload: unknown) => Promise<void>;
   declare resetPaymentDetails: (this: Model, payload: unknown) => Promise<void>;
 }

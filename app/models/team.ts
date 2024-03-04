@@ -6,21 +6,23 @@ import TeamPaymentMethod from './team-payment-method';
 import TeamPilot from './team-pilot';
 import SlackIntegration from './slack-integration';
 import TeamSubscription from './team-subscription';
+import type InvoiceModel from './invoice';
 
 export default class TeamModel extends Model {
-  @attr('number') committedSeats!: number;
-  @attr('string') inviteCode!: string;
-  @hasMany('team-membership', { async: false, inverse: 'team' }) memberships!: TeamMembership[];
-  @attr('string') name!: string;
-  @hasMany('team-payment-method', { async: false, inverse: 'team' }) paymentMethods!: TeamPaymentMethod[];
-  @hasMany('team-pilot', { async: false, inverse: 'team' }) pilots!: TeamPilot[];
-  @attr('string') pricingPlanType!: string;
-  @attr('string') slackAppInstallationUrl!: string;
-  @hasMany('slack-integration', { async: false, inverse: 'team' }) slackIntegrations!: SlackIntegration[];
-  @hasMany('team-subscription', { async: false, inverse: 'team' }) subscriptions!: TeamSubscription[];
+  @hasMany('slack-integration', { async: false, inverse: 'team' }) declare slackIntegrations: SlackIntegration[];
+  @hasMany('team-membership', { async: false, inverse: 'team' }) declare memberships: TeamMembership[];
+  @hasMany('team-payment-method', { async: false, inverse: 'team' }) declare paymentMethods: TeamPaymentMethod[];
+  @hasMany('team-pilot', { async: false, inverse: 'team' }) declare pilots: TeamPilot[];
+  @hasMany('team-subscription', { async: false, inverse: 'team' }) declare subscriptions: TeamSubscription[];
 
-  @equal('pricingPlanType', 'monthly') pricingPlanTypeIsMonthly!: boolean;
-  @equal('pricingPlanType', 'yearly') pricingPlanTypeIsYearly!: boolean;
+  @attr('number') declare committedSeats: number;
+  @attr('string') declare inviteCode: string;
+  @attr('string') declare name: string;
+  @attr('string') declare pricingPlanType: string;
+  @attr('string') declare slackAppInstallationUrl: string;
+
+  @equal('pricingPlanType', 'monthly') declare pricingPlanTypeIsMonthly: boolean;
+  @equal('pricingPlanType', 'yearly') declare pricingPlanTypeIsYearly: boolean;
 
   get activePilot() {
     return this.pilots.sortBy('endDate').reverse().findBy('isActive');
@@ -78,7 +80,7 @@ export default class TeamModel extends Model {
     return this.slackIntegrations[0];
   }
 
-  declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<void>;
+  declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel>;
 }
 
 TeamModel.prototype.fetchFirstInvoicePreview = memberAction({

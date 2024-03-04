@@ -3,6 +3,7 @@ import type TeamModel from './team';
 
 export default class TeamPilotModel extends Model {
   @belongsTo('team', { async: false, inverse: 'pilots' }) declare team: TeamModel;
+
   @attr('date') declare endDate: Date;
   @attr('boolean') declare requiresPaymentMethod: boolean;
 
