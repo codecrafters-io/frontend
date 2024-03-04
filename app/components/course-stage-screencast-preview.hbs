@@ -20,7 +20,7 @@
     <div class="flex gap-3 mt-3">
       <div class="flex items-center">
         {{svg-jar "clock" class="w-4 text-gray-300 mr-1.5"}}
-        <div class="text-gray-600 text-xs">{{round (div @screencast.durationInSeconds 60)}} minutes</div>
+        <div class="text-gray-600 text-xs" data-test-screencasts-formatted-duration>{{format-time-duration @screencast.durationInSeconds}}</div>
         <div class="w-px h-3 bg-gray-200 ml-3"></div>
       </div>
       <div class="flex items-center">

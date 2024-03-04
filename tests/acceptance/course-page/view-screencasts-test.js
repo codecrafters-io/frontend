@@ -49,7 +49,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
       user: currentUser,
     });
 
-    function createScreencast(server, language, publishedAt, title) {
+    function createScreencast(server, language, publishedAt, title, durationInSeconds) {
       return server.create('course-stage-screencast', {
         language: language,
         user: currentUser,
@@ -58,7 +58,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
         canonicalUrl: 'https://www.loom.com/share/1dd746eaaba34bc2b5459ad929934c08?sid=a5f6ec60-5ae4-4e9c-9566-33235d483431',
         publishedAt: publishedAt,
         description: 'Hey there! blah blah',
-        durationInSeconds: 808.5666666666664,
+        durationInSeconds: durationInSeconds,
         embedHtml:
           '\u003cdiv\u003e\u003cdiv style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"\u003e\u003ciframe src="//cdn.iframe.ly/api/iframe?click_to_play=1\u0026url=https%3A%2F%2Fwww.loom.com%2Fshare%2F1dd746eaaba34bc2b5459ad929934c08%3Fsid%3Da5f6ec60-5ae4-4e9c-9566-33235d483431\u0026key=3aafd05f43d700b9a7382620ac7cdfa3" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="encrypted-media *;"\u003e\u003c/iframe\u003e\u003c/div\u003e\u003c/div\u003e',
         sourceIconUrl: 'https://cdn.loom.com/assets/favicons-loom/android-chrome-192x192.png',
@@ -68,9 +68,9 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
       });
     }
 
-    createScreencast(this.server, python, '2023-06-30T19:11:29.254Z', 'Python screencast');
-    createScreencast(this.server, go, '2023-06-30T19:11:29.254Z', 'Go screencast #1'); // Older
-    createScreencast(this.server, go, '2024-01-30T19:11:29.254Z', 'Go screencast #2'); // Newer
+    createScreencast(this.server, python, '2023-06-30T19:11:29.254Z', 'Python screencast', 50);
+    createScreencast(this.server, go, '2023-06-30T19:11:29.254Z', 'Go screencast #1', 500); // Older
+    createScreencast(this.server, go, '2024-01-30T19:11:29.254Z', 'Go screencast #2', 5000); // Newer
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
@@ -83,6 +83,10 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     // Newer screencast between languages should be shown earlier
     assert.strictEqual(screencastsPage.screencastPreviews[1].titleText, 'Go screencast #2');
     assert.strictEqual(screencastsPage.screencastPreviews[2].titleText, 'Go screencast #1');
+
+    assert.strictEqual(screencastsPage.screencastPreviews[0].formattedDurationText, '50 seconds');
+    assert.strictEqual(screencastsPage.screencastPreviews[1].formattedDurationText, '1 hour 23 minutes');
+    assert.strictEqual(screencastsPage.screencastPreviews[2].formattedDurationText, '8 minutes');
 
     // TODO: Check that clicking on a screencast shows it as active one
 
