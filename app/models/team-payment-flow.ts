@@ -48,7 +48,7 @@ export default class TeamPaymentFlowModel extends Model {
   }
 
   declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel>;
-  declare attemptPayment: (this: Model, payload: unknown) => Promise<void>;
+  declare attemptPayment: (this: Model, payload: unknown) => Promise<TeamPaymentFlowModel>;
   declare resetPaymentDetails: (this: Model, payload: unknown) => Promise<void>;
 }
 
