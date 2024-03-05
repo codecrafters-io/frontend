@@ -915,7 +915,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.false(coursePage.desktopHeader.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
   });
 
-  test('free weeks left button redirects to refer', async function (assert) {
+  test('free weeks left button redirects to /pay', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -928,6 +928,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.desktopHeader.freeWeeksLeftButton.click();
 
-    assert.strictEqual(currentURL(), '/refer', 'expect to be redirected to refer page');
+    assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
   });
 });
