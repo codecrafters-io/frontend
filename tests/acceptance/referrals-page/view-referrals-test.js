@@ -439,7 +439,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     await percySnapshot('Header | Has no VIP status and free usage grants');
   });
 
-  test('free weeks left button redirects to refer', async function (assert) {
+  test('free weeks left button redirects to /pay', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -450,6 +450,6 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
     await catalogPage.visit();
     await catalogPage.header.freeWeeksLeftButton.click();
 
-    assert.strictEqual(currentURL(), '/refer', 'expect to be redirected to refer page');
+    assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to refer page');
   });
 });
