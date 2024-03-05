@@ -64,6 +64,7 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
         })
         .save();
 
+      await this.authenticator.currentUser!.fetchCurrent({}); // Refresh free usage grant columns
       this.router.transitionTo('pay');
     }
   }

@@ -1,6 +1,6 @@
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import affiliateLinkPage from 'codecrafters-frontend/tests/pages/affiliate-link-page';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, waitUntil } from '@ember/test-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -44,6 +44,9 @@ module('Acceptance | affiliate-link-page | accept-referral-offer', function (hoo
 
     await affiliateLinkPage.visit({ via: 'referral1' });
     await affiliateLinkPage.acceptReferralButton.click();
+
+    // We make two separate HTTP requests, so we can't rely on waiting for the first in-progress request
+    await waitUntil(() => currentURL() === '/pay');
 
     assert.strictEqual(currentURL(), '/pay', 'should redirect to pay URL');
     await percySnapshot('Pay Page | With Referral Offer');
