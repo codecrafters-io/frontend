@@ -9,4 +9,14 @@ interface Signature {
   };
 }
 
-export default class CourseStageScreencastPlayer extends Component<Signature> {}
+export default class CourseStageScreencastPlayer extends Component<Signature> {
+  get roundedDurationToNearestMinute() {
+    const { durationInSeconds } = this.args.screencast;
+
+    if (durationInSeconds < 60) {
+      return durationInSeconds;
+    } else {
+      return Math.round(durationInSeconds / 60) * 60;
+    }
+  }
+}
