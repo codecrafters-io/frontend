@@ -12,6 +12,7 @@ declare module '@glint/environment-ember-loose/registry' {
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'date-format': HelperLike<{ Return: string; Args: { Positional: [Date]; Named: { format?: string } } }>;
     'date-from-now': HelperLike<{ Return: string; Args: { Positional: [Date]; Named: { currentDate?: Date } } }>;
+    'format-duration': HelperLike<{ Return: string; Args: { Positional: [number] } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
     EmberTooltip: ComponentLike<{ Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right' } }; Blocks: { default?: [] } }>;
     eq: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
