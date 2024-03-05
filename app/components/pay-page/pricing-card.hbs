@@ -87,9 +87,16 @@
   </div>
   <div class="p-6 rounded-b-lg">
     {{#each this.featureDescriptions as |featureDescription|}}
-      <div class="flex items-center py-1">
+      <div class="flex items-center py-1 gap-2">
         {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
-        <span class="text-gray-600 text-sm ml-2">{{featureDescription}}</span>
+        {{#if featureDescription.link}}
+          <a href={{featureDescription.link}} target="_blank" class="flex items-center gap-1 group">
+            <span class="text-gray-600 text-sm underline decoration-dotted">{{featureDescription.text}}</span>
+            {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-300 group-hover:text-gray-400"}}
+          </a>
+        {{else}}
+          <span class="text-gray-600 text-sm">{{featureDescription.text}}</span>
+        {{/if}}
       </div>
     {{/each}}
   </div>

@@ -38,7 +38,14 @@ export default class PricingCardComponent extends Component<Signature> {
   }
 
   get featureDescriptions() {
-    return ['One time payment', 'No limits on content', 'Community features', 'Access to Perks', 'Priority support'];
+    return [
+      { text: 'One time payment' },
+      { text: 'No limits on content' },
+      { text: 'Turbo test runs', link: 'https://codecrafters.io/turbo' },
+      { text: 'Community features' },
+      { text: 'Access to Perks', link: 'https://codecrafters.io/perks' },
+      { text: 'Priority support' },
+    ];
   }
 
   get numberOfMonths() {
