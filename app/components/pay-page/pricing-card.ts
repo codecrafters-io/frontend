@@ -1,9 +1,29 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import Store from '@ember-data/store';
+import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 
-export default class PricingCardComponent extends Component {
-  @service authenticator;
-  @service store;
+type Signature = {
+  Element: HTMLDivElement;
+
+  Args: {
+    actualPrice: number;
+    discountedPrice: number | null;
+    highlightedText?: string;
+    footerText: string;
+    onStartMembershipButtonClick: () => void;
+    isRecommended: boolean;
+    pricingFrequency: 'quarterly' | 'yearly' | 'lifetime';
+    regionalDiscount?: RegionalDiscountModel;
+    shouldShowAmortizedMonthlyPrice: boolean;
+    title: string;
+  };
+};
+
+export default class PricingCardComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
 
   get actualAmortizedMonthlyPrice() {
     return Math.round((this.args.actualPrice / this.numberOfMonths) * 100) / 100;
