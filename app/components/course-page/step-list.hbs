@@ -1,5 +1,39 @@
 <div class="flex flex-col gap-y-1" ...attributes>
-  {{#each @stepList.stepGroups as |stepGroup|}}
+  {{#if this.baseStagesStepGroup.title}}
+    <div class="px-3 py-2">
+      <h3 class="text-xs uppercase font-semibold text-gray-400 border-b">{{this.baseStagesStepGroup.title}}</h3>
+    </div>
+  {{/if}}
+
+  {{#each this.baseStagesStepGroup.visibleSteps as |step|}}
+    <CoursePage::StepListItem @step={{step}} @isCurrent={{eq this.currentStep step}} @isActive={{eq this.activeStep step}} />
+  {{/each}}
+
+  {{#if @course.hasExtensions}}
+    <div class="flex justify-center my-3 px-3">
+      <TertiaryButton
+        @size="extra-small"
+        {{! We're using the get helper instead of model.isNew because of a typescript error. }}
+        {{! An issue is opened here: https://github.com/emberjs/data/issues/9146. }}
+        @isDisabled={{get @activeRepository "isNew"}}
+        {{on "click" @onConfigureExtensionsButtonClick}}
+        data-test-configure-extensions-button
+      >
+        <div class="flex items-center">
+          {{svg-jar "plus-circle" class="w-3 h-3 mr-1 text-gray-500"}}
+          Extensions
+        </div>
+
+        {{! We're using the get helper instead of model.isNew because of a typescript error. }}
+        {{! An issue is opened here: https://github.com/emberjs/data/issues/9146. }}
+        {{#if (get @activeRepository "isNew")}}
+          <EmberTooltip @text="Complete repository setup to configure extensions" />
+        {{/if}}
+      </TertiaryButton>
+    </div>
+  {{/if}}
+
+  {{#each this.otherStepGroups as |stepGroup|}}
     {{#if stepGroup.title}}
       <div class="px-3 py-2">
         <h3 class="text-xs uppercase font-semibold text-gray-400 border-b">{{stepGroup.title}}</h3>

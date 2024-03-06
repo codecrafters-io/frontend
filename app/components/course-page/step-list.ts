@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
+import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 
@@ -7,6 +9,9 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    activeRepository: RepositoryModel;
+    course: CourseModel;
+    onConfigureExtensionsButtonClick: () => void;
     stepList: StepList;
   };
 }
@@ -18,8 +23,16 @@ export default class StepListComponent extends Component<Signature> {
     return this.coursePageState.activeStep;
   }
 
+  get baseStagesStepGroup() {
+    return this.args.stepList.stepGroups.find((group) => group.type === 'BaseStagesStepGroup');
+  }
+
   get currentStep() {
     return this.coursePageState.currentStep;
+  }
+
+  get otherStepGroups() {
+    return this.args.stepList.stepGroups.filter((group) => group.type !== 'BaseStagesStepGroup');
   }
 }
 
