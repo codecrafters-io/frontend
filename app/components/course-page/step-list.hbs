@@ -16,7 +16,7 @@
         {{! We're using the get helper instead of model.isNew because of a typescript error. }}
         {{! An issue is opened here: https://github.com/emberjs/data/issues/9146. }}
         @isDisabled={{get @activeRepository "isNew"}}
-        {{on "click" @handleConfigureExtensionsButtonClick}}
+        {{on "click" @onConfigureExtensionsButtonClick}}
         data-test-configure-extensions-button
       >
         <div class="flex items-center">

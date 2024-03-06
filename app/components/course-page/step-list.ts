@@ -11,7 +11,7 @@ interface Signature {
   Args: {
     activeRepository: RepositoryModel;
     course: CourseModel;
-    handleConfigureExtensionsButtonClick: () => void;
+    onConfigureExtensionsButtonClick: () => void;
     stepList: StepList;
   };
 }
