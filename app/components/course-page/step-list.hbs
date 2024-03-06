@@ -9,7 +9,7 @@
     <CoursePage::StepListItem @step={{step}} @isCurrent={{eq this.currentStep step}} @isActive={{eq this.activeStep step}} />
   {{/each}}
 
-  {{#if (gt @course.extensions.length 0)}}
+  {{#if @course.hasExtensions}}
     <div class="flex justify-center mt-3 px-3">
       <TertiaryButton
         @size="extra-small"
