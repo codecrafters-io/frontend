@@ -11,6 +11,7 @@ declare const config: {
   rootURL: string;
   x: {
     backendUrl: string;
+    stripePublishableKey: string;
   };
 };
 

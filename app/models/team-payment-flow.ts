@@ -3,6 +3,10 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import { memberAction } from 'ember-api-actions';
 import type InvoiceModel from './invoice';
 
+interface TeamPaymentFlowErrorResponse {
+  error: string;
+}
+
 export default class TeamPaymentFlowModel extends Model {
   @attr('boolean') declare couponCodeIsValid: boolean;
   @attr('boolean') declare couponCodeIsInvalid: boolean;
@@ -48,7 +52,7 @@ export default class TeamPaymentFlowModel extends Model {
   }
 
   declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel>;
-  declare attemptPayment: (this: Model, payload: unknown) => Promise<TeamPaymentFlowModel>;
+  declare attemptPayment: (this: Model, payload: unknown) => Promise<TeamPaymentFlowModel | TeamPaymentFlowErrorResponse>;
   declare resetPaymentDetails: (this: Model, payload: unknown) => Promise<void>;
 }
 
