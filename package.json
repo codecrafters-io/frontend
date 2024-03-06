@@ -50,7 +50,7 @@
     "@percy/ember": "^4.0.0",
     "@sentry/ember": "^7.105.0",
     "@sentry/webpack-plugin": "^2.14.2",
-    "@tsconfig/ember": "^3.0.4",
+    "@tsconfig/ember": "^3.0.5",
     "@types/canvas-confetti": "^1.6.4",
     "@types/ember": "^4.0.11",
     "@types/ember__application": "^4.0.11",
