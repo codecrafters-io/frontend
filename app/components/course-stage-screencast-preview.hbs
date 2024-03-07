@@ -1,4 +1,3 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="flex gap-4 flex-col md:flex-row items-center overflow-hidden group" role="button" data-test-screencasts-previews ...attributes>
   {{! thumbnail }}
   <div class="relative w-full md:max-w-[50%] lg:max-w-[33%] border">
@@ -20,7 +19,9 @@
     <div class="flex gap-3 mt-3">
       <div class="flex items-center">
         {{svg-jar "clock" class="w-4 text-gray-300 mr-1.5"}}
-        <div class="text-gray-600 text-xs">{{round (div @screencast.durationInSeconds 60)}} minutes</div>
+        <div class="text-gray-600 text-xs" data-test-screencasts-formatted-duration>{{format-duration
+            this.durationInSecondsRoundedToNearestMinute
+          }}</div>
         <div class="w-px h-3 bg-gray-200 ml-3"></div>
       </div>
       <div class="flex items-center">

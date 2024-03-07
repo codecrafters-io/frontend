@@ -10,8 +10,6 @@ declare module '@glint/environment-ember-loose/registry' {
     and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     autoresize: ModifierLike<{ Args: { Positional: [string] } }>;
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
-    'date-format': HelperLike<{ Return: string; Args: { Positional: [Date]; Named: { format?: string } } }>;
-    'date-from-now': HelperLike<{ Return: string; Args: { Positional: [Date]; Named: { currentDate?: Date } } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
     EmberTooltip: ComponentLike<{ Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right' } }; Blocks: { default?: [] } }>;
     eq: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
