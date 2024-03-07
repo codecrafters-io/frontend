@@ -11,7 +11,7 @@ const dateFormat = helper(function dateFormat([date]: [(Date | null | undefined)
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    dateFormat: typeof dateFormat;
+    'date-format': typeof dateFormat;
   }
 }
 

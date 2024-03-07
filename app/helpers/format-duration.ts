@@ -9,7 +9,7 @@ const formatDuration = helper(function formatDuration([durationInSeconds]: [numb
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    formatDuration: typeof formatDuration;
+    'format-duration': typeof formatDuration;
   }
 }
 
