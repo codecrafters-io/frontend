@@ -10,7 +10,7 @@ interface Signature {
 }
 
 export default class CourseStageScreencastPlayer extends Component<Signature> {
-  get roundedDurationToNearestMinute() {
+  get durationInSecondsRoundedToNearestMinute() {
     const { durationInSeconds } = this.args.screencast;
 
     if (durationInSeconds < 60) {
