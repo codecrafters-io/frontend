@@ -1,6 +1,8 @@
+{{! @glint-expect-error: not ts-ified yet }}
 <TeamPaymentPage::StepContainer @title="Review Payment" data-test-review-payment-step-container>
   <div class="text-gray-600 leading-7">
     <p class="mb-4">
+      {{! @glint-expect-error: not ts-ified yet }}
       <TeamPaymentPage::PaymentPreview @teamPaymentFlow={{@teamPaymentFlow}}>
         Once payment is complete, we'll send you a team setup link.
       </TeamPaymentPage::PaymentPreview>
@@ -26,6 +28,7 @@
     <PrimaryButtonWithSpinner
       @isDisabled={{this.isAttemptingPayment}}
       @shouldShowSpinner={{this.isAttemptingPayment}}
+      @size="regular"
       {{on "click" this.handleContinueButtonClick}}
     >
       Continue

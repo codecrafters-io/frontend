@@ -1,22 +1,28 @@
-import Model from '@ember-data/model';
-import { attr, hasMany } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
+import TeamMembership from './team-membership';
+import TeamPaymentMethod from './team-payment-method';
+import TeamPilot from './team-pilot';
+import SlackIntegration from './slack-integration';
+import TeamSubscription from './team-subscription';
+import type InvoiceModel from './invoice';
 
 export default class TeamModel extends Model {
-  @attr('number') committedSeats;
-  @attr('string') inviteCode;
-  @hasMany('team-membership', { async: false, inverse: 'team' }) memberships;
-  @attr('string') name;
-  @hasMany('team-payment-method', { async: false, inverse: 'team' }) paymentMethods;
-  @hasMany('team-pilot', { async: false, inverse: 'team' }) pilots;
-  @attr('string') pricingPlanType;
-  @attr('string') slackAppInstallationUrl;
-  @hasMany('slack-integration', { async: false, inverse: 'team' }) slackIntegrations;
-  @hasMany('team-subscription', { async: false, inverse: 'team' }) subscriptions;
+  @hasMany('slack-integration', { async: false, inverse: 'team' }) declare slackIntegrations: SlackIntegration[];
+  @hasMany('team-membership', { async: false, inverse: 'team' }) declare memberships: TeamMembership[];
+  @hasMany('team-payment-method', { async: false, inverse: 'team' }) declare paymentMethods: TeamPaymentMethod[];
+  @hasMany('team-pilot', { async: false, inverse: 'team' }) declare pilots: TeamPilot[];
+  @hasMany('team-subscription', { async: false, inverse: 'team' }) declare subscriptions: TeamSubscription[];
 
-  @equal('pricingPlanType', 'monthly') pricingPlanTypeIsMonthly;
-  @equal('pricingPlanType', 'yearly') pricingPlanTypeIsYearly;
+  @attr('number') declare committedSeats: number;
+  @attr('string') declare inviteCode: string;
+  @attr('string') declare name: string;
+  @attr('string') declare pricingPlanType: string;
+  @attr('string') declare slackAppInstallationUrl: string;
+
+  @equal('pricingPlanType', 'monthly') declare pricingPlanTypeIsMonthly: boolean;
+  @equal('pricingPlanType', 'yearly') declare pricingPlanTypeIsYearly: boolean;
 
   get activePilot() {
     return this.pilots.sortBy('endDate').reverse().findBy('isActive');
@@ -73,6 +79,8 @@ export default class TeamModel extends Model {
   get slackIntegration() {
     return this.slackIntegrations[0];
   }
+
+  declare fetchFirstInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel>;
 }
 
 TeamModel.prototype.fetchFirstInvoicePreview = memberAction({
