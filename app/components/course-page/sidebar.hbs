@@ -53,10 +53,10 @@
 
   {{#if this.configureExtensionsModalIsOpen}}
     <ModalBackdrop>
-      {{! @glint-expect-error: mut helper types don't agree?}}
       <CoursePage::ConfigureExtensionsModal
         @courseExtensionIdeas={{@courseExtensionIdeas}}
         @repository={{@activeRepository}}
+        {{! @glint-expect-error: mut helper types don't agree?}}
         @onClose={{fn (mut this.configureExtensionsModalIsOpen) false}}
       />
     </ModalBackdrop>
