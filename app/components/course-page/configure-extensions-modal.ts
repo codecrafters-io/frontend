@@ -30,9 +30,9 @@ export default class ConfigureExtensionsModalComponent extends Component<Signatu
 
   @action
   async loadAllCourseExtensionIdeas() {
-    this.allCourseExtensionIdeas = await this.store.findAll('course-extension-idea', {
+    this.allCourseExtensionIdeas = (await this.store.findAll('course-extension-idea', {
       include: 'course,current-user-votes,current-user-votes.user',
-    }) as unknown as CourseExtensionIdeaModel[];
+    })) as unknown as CourseExtensionIdeaModel[];
   }
 }
 
