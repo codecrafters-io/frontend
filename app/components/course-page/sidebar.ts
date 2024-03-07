@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
@@ -13,6 +14,7 @@ interface Signature {
 
   Args: {
     course: CourseModel;
+    courseExtensionIdeas: CourseExtensionIdeaModel[];
     repositories: unknown[];
     activeRepository: RepositoryModel;
   };
