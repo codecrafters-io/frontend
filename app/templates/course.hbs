@@ -27,6 +27,7 @@
   {{#if this.sidebarIsExpandedOnDesktop}}
     <CoursePage::Sidebar
       @course={{@model.course}}
+      @courseExtensionIdeas={{@model.courseExtensionIdeas}}
       @repositories={{@model.repositories}}
       @activeRepository={{@model.activeRepository}}
       class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
@@ -48,6 +49,7 @@
 
       <CoursePage::Sidebar
         @course={{@model.course}}
+        @courseExtensionIdeas={{@model.courseExtensionIdeas}}
         @repositories={{@model.repositories}}
         @activeRepository={{@model.activeRepository}}
         class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"

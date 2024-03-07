@@ -2,6 +2,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RSVP from 'rsvp';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
@@ -14,6 +15,7 @@ import { next } from '@ember/runloop';
 
 export type ModelType = {
   course: CourseModel;
+  courseExtensionIdeas: CourseExtensionIdeaModel[];
   activeRepository: RepositoryModel;
   repositories: RepositoryModel[];
 };
@@ -121,8 +123,15 @@ export default class CourseRoute extends BaseRoute {
     const activeRepository = this.findOrCreateRepository(course, transition, repositories);
     this.coursePageState.setStepList(new StepList(activeRepository));
 
+    const allCourseExtensionIdeas = await this.store.findAll('course-extension-idea', {
+      include: 'course,current-user-votes,current-user-votes.user',
+    });
+
+    const courseExtensionIdeas = allCourseExtensionIdeas.filterBy('course', course);
+
     return {
       course: course,
+      courseExtensionIdeas: courseExtensionIdeas,
       activeRepository: activeRepository,
       repositories: repositories,
     };
