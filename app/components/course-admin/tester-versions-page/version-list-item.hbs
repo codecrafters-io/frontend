@@ -2,21 +2,14 @@
   <div class="min-w-0">
     <div class="flex items-start gap-x-3">
       <p class="text-sm font-semibold leading-6 text-gray-900">{{@courseTesterVersion.tagName}}</p>
+
       {{#if @courseTesterVersion.isActive}}
-        <p
-          class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20"
-        >
-          Active
-        </p>
+        <Pill @color="green">Active</Pill>
       {{else if @courseTesterVersion.isLatest}}
-        <p
-          class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-yellow-700 bg-yellow-50 ring-yellow-600/20"
-        >
-          Latest
-        </p>
+        <Pill @color="yellow">Latest</Pill>
       {{/if}}
     </div>
-    <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+    <div class="mt-1.5 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
       {{#if (and @courseTesterVersion.isActive @courseTesterVersion.lastActivatedAt)}}
         <p class="whitespace-nowrap">
           Activated on
