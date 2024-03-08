@@ -37,7 +37,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
 
-    assert.strictEqual(coursePage.courseExtensionIdeas.length, 1, 'course extension idea card should be rendered');
+    assert.strictEqual(coursePage.configureExtensionsModal.extensionIdeaCards.length, 1, 'course extension idea card should be rendered');
 
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
