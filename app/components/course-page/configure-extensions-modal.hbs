@@ -7,9 +7,28 @@
     Extensions are sets of additional stages that can be added to your repository. You can add &amp; remove extensions at any time.
   </Alert>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
     {{#each @repository.course.extensions as |extension|}}
       <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+    {{/each}}
+  </div>
+
+  <div class="border-b pb-1 mb-6 flex items-center gap-2">
+    <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Vote on future extensions</h1>
+
+    <div>
+      {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+      <EmberTooltip @text={{"These are ideas for extensions we'll build in the future. Vote to let us know which ones you're interested in!"}} />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
+    {{! @glint-expect-error not ts-ified yet }}
+    <VotePage::SubmitCourseExtensionIdeaCard @course={{@repository.course}} />
+
+    {{#each this.orderedCourseExtensionIdeas as |courseExtensionIdea|}}
+      {{! @glint-expect-error not ts-ified yet }}
+      <VotePage::CourseExtensionIdeaCard @courseExtensionIdea={{courseExtensionIdea}} />
     {{/each}}
   </div>
 </ModalBody>

@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | extensions | enable-extensions', function (hooks) {
@@ -14,6 +15,8 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
   test('can enable extensions', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
+
+    createCourseExtensionIdeas(this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -33,6 +36,8 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
 
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
+
+    assert.strictEqual(coursePage.configureExtensionsModal.extensionIdeaCards.length, 1, 'course extension idea card should be rendered');
 
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
