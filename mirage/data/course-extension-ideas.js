@@ -24,7 +24,6 @@ export default [
     slug: 'extension-idea-1',
     course_slug: 'dummy',
     name: 'Extension idea 1',
-    description_md:
-      "This is the first extension idea for the dummy course"
-  }
+    description_md: 'This is the first extension idea for the dummy course',
+  },
 ];

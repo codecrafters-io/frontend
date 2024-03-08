@@ -25,7 +25,11 @@ export default class ConfigureExtensionsModalComponent extends Component<Signatu
   }
 
   get orderedCourseExtensionIdeas() {
-    return this.allCourseExtensionIdeas.filterBy('course', this.args.repository.course).rejectBy('developmentStatus', 'released').sortBy('reverseSortPositionForVotePage').reverse();
+    return this.allCourseExtensionIdeas
+      .filterBy('course', this.args.repository.course)
+      .rejectBy('developmentStatus', 'released')
+      .sortBy('reverseSortPositionForVotePage')
+      .reverse();
   }
 
   @action
