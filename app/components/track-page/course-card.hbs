@@ -7,18 +7,26 @@
     @recentParticipants={{this.recentParticipants}}
     class="mb-4"
   >
-    <div class="leading-6 prose mb-6">
-      {{markdown-to-html this.introductionMarkdown}}
-    </div>
+    <:afterTitle>
+      {{#if @course.isFree}}
+        <FreeCourseLabel @course={{@course}} />
+      {{/if}}
+    </:afterTitle>
 
-    {{! Contents are masked, hence the fixed height }}
-    <div class="h-60 overflow-hidden">
-      <TrackPage::CourseCard::StageList @completedStages={{(array)}} @course={{@course}} />
-
-      <div class="absolute top-16 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
-        <TrackPage::CourseCard::SignupToPreviewButton />
+    <:default>
+      <div class="leading-6 prose mb-6">
+        {{markdown-to-html this.introductionMarkdown}}
       </div>
-    </div>
+
+      {{! Contents are masked, hence the fixed height }}
+      <div class="h-60 overflow-hidden">
+        <TrackPage::CourseCard::StageList @completedStages={{(array)}} @course={{@course}} />
+
+        <div class="absolute top-20 bottom-0 left-0 right-0 vertical-mask p-4 flex items-end justify-center">
+          <TrackPage::CourseCard::SignupToPreviewButton />
+        </div>
+      </div>
+    </:default>
   </TrackPage::Card>
 {{else}}
   <TrackPage::Card
@@ -32,17 +40,25 @@
     class="mb-4"
     {{on "click" this.handleClick}}
   >
-    {{#if @activeRepository}}
-      <div class="mb-4">
-        {{! @glint-expect-error not ts-ified yet }}
-        <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
+    <:afterTitle>
+      {{#if @course.isFree}}
+        <FreeCourseLabel @course={{@course}} />
+      {{/if}}
+    </:afterTitle>
+
+    <:default>
+      {{#if @activeRepository}}
+        <div class="mb-4">
+          {{! @glint-expect-error not ts-ified yet }}
+          <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
+        </div>
+      {{/if}}
+
+      <div class="leading-6 prose mb-6 pr-8 md:pr-12">
+        {{markdown-to-html this.introductionMarkdown}}
       </div>
-    {{/if}}
 
-    <div class="leading-6 prose mb-6 pr-8 md:pr-12">
-      {{markdown-to-html this.introductionMarkdown}}
-    </div>
-
-    <TrackPage::CourseCard::StageList @completedStages={{this.completedStages}} @course={{@course}} />
+      <TrackPage::CourseCard::StageList @completedStages={{this.completedStages}} @course={{@course}} />
+    </:default>
   </TrackPage::Card>
 {{/if}}

@@ -1,9 +1,9 @@
 <div class="bg-white rounded-md shadow-sm border border-gray-200 relative w-full group" data-test-track-page-card ...attributes>
   <div class="p-4 md:p-6">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center flex-wrap">
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <div class="flex items-center flex-wrap gap-4">
         <div
-          class="text-lg md:text-xl font-semibold text-gray-700 mr-3 mb-4 flex items-center
+          class="text-lg md:text-xl font-semibold text-gray-700 mr-3 flex items-center
             {{if @isNavigatingToOtherPage 'group-hover:text-teal-500 transition-colors'}}"
           data-test-track-page-card-title
         >
@@ -11,15 +11,19 @@
         </div>
 
         {{#if (gt @recentParticipants.length 0)}}
-          <div class="flex -space-x-3 hover:space-x-1 items-center mb-4">
+          <div class="flex -space-x-3 hover:space-x-1 items-center">
             {{#each @recentParticipants as |user|}}
               {{! @glint-nocheck not ts-ified yet }}
               <TrackPage::Header::TopParticipantAvatar @user={{user}} />
             {{/each}}
           </div>
         {{/if}}
+
+        {{#if (has-block "afterTitle")}}
+          {{yield to="afterTitle"}}
+        {{/if}}
       </div>
-      <div class="font-bold pl-4 text-gray-300 text-lg md:text-xl group-hover:text-gray-400 transition-colors mb-4">
+      <div class="font-bold pl-4 text-gray-300 text-lg md:text-xl group-hover:text-gray-400 transition-colors">
         {{#if @isComplete}}
           {{svg-jar "check-circle" class="w-8 h-8 fill-current text-teal-500"}}
         {{else if (and @logoImageUrl @logoImageAltText)}}
