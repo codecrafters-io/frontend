@@ -20,4 +20,11 @@ export default [
     description_md:
       "[Shells](https://en.wikipedia.org/wiki/Unix_shell) are a command-line interface to your operating system. In this challenge, you'll build your own version of `bash` that is capable of executing basic shell commands. \n\nAlong the way, you'll learn about [pipes](https://en.wikipedia.org/wiki/Pipeline_(Unix)), [redirection](https://en.wikipedia.org/wiki/Redirection_(computing)), [fork+exec](https://en.wikipedia.org/wiki/Fork%E2%80%93exec) and more.",
   },
+  {
+    slug: 'extension-idea-1',
+    course_slug: 'dummy',
+    name: 'Extension idea 1',
+    description_md:
+      "This is the first extension idea for the dummy course"
+  }
 ];

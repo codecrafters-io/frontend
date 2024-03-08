@@ -13,6 +13,8 @@ export default {
     clickOnToggleExtensionButton: clickable('[data-test-toggle-extension-button]'),
   }),
 
+  extensionIdeaCards: collection('[data-test-course-extension-idea-card]'),
+
   scope: '[data-test-configure-extensions-modal]',
 
   async toggleExtension(name) {
