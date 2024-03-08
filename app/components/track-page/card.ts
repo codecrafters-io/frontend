@@ -15,6 +15,7 @@ type Signature = {
 
   Blocks: {
     default: [];
+    afterTitle?: [];
   };
 };
 
