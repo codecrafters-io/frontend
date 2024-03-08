@@ -86,7 +86,7 @@ export default class LanguageModel extends Model {
         go: 1,
         rust: 2,
         python: 3,
-      }[this.slug] || 100 - this.stagesCount
+      }[this.slug] || 1000 - this.stagesCount
     );
   }
 
