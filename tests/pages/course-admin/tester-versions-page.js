@@ -16,7 +16,7 @@ export default create({
     provisionedTestRunnersCount: {
       hover: triggerable('mouseenter'),
       scope: '[data-test-provisioned-test-runners-count]',
-    }
+    },
   }),
 
   visit: visitable('/courses/:course_slug/admin/tester-versions'),
