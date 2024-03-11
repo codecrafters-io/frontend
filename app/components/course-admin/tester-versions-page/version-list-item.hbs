@@ -31,12 +31,12 @@
       {{/if}}
 
       {{#if (gt @courseTesterVersion.provisionedTestRunnersCount 0)}}
-        <div class="flex items-center gap-x-2" data-test-provisioned-test-runners-count>
+        <div class="flex items-center gap-x-2">
           <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
             <circle cx="1" cy="1" r="1" />
           </svg>
 
-          <div class="flex items-center gap-x-2 text-teal-500">
+          <div class="flex items-center gap-x-2 text-teal-500" data-test-provisioned-test-runners-count>
             {{svg-jar "command-line" class="h-4 w-4"}}
             {{@courseTesterVersion.provisionedTestRunnersCount}}
             <EmberTooltip @text={{this.provisionedTestRunnersCountTooltipCopy}} />
