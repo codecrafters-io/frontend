@@ -29,6 +29,14 @@ export default class VersionListItemComponent extends Component<Signature> {
     }
   }
 
+  get provisionedTestRunnersCountTooltipCopy() {
+    if (this.args.courseTesterVersion.provisionedTestRunnersCount === 1) {
+      return `This version has ${this.args.courseTesterVersion.provisionedTestRunnersCount} provisioned test runner. You can deprovision this if you want users to use the active version instead.`;
+    } else {
+      return `This version has ${this.args.courseTesterVersion.provisionedTestRunnersCount} provisioned test runners. You can deprovision these if you want users to use the active version instead.`;
+    }
+  }
+
   async activate() {
     if (!this.isActivating) {
       this.isActivating = true;
