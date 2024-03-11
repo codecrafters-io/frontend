@@ -1,6 +1,7 @@
 import percySnapshot from '@percy/ember';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -31,6 +32,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
       isActive: false,
+      provisionedTestRunnersCount: 4,
       tagName: 'v10',
     });
 
@@ -42,6 +44,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       isLatest: true,
       isActive: true,
       lastActivatedAt: new Date(2021, 1, 1),
+      provisionedTestRunnersCount: 0,
       tagName: 'v11',
     });
 
@@ -112,5 +115,45 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     assert.strictEqual(currentURL(), '/courses/redis/admin/tester-versions', 'route should be accessible');
+  });
+
+  test('it properly renders the provisioned test runners count', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('course-tester-version', {
+      activator: this.server.schema.users.first(),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      commitSha: '1234567890',
+      createdAt: new Date(2021, 1, 1),
+      isLatest: false,
+      isActive: false,
+      provisionedTestRunnersCount: 0,
+      tagName: 'v10',
+    });
+
+    this.server.create('course-tester-version', {
+      activator: this.server.schema.users.first(),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      commitSha: '1234567890',
+      createdAt: new Date(2021, 1, 1),
+      isLatest: true,
+      isActive: true,
+      lastActivatedAt: new Date(2021, 1, 1),
+      provisionedTestRunnersCount: 2,
+      tagName: 'v11',
+    });
+
+    await testerVersionsPage.visit({ course_slug: 'redis' });
+
+    assert.ok(testerVersionsPage.testerVersionListItem[0].provisionedTestRunnersCount.isPresent, 'should be rendered if provisioned test runners count is not 0');
+
+    await testerVersionsPage.testerVersionListItem[0].provisionedTestRunnersCount.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'This version has 2 provisioned test runners. You can deprovision these if you want users to use the active version instead.',
+    });
+
+    assert.notOk(testerVersionsPage.testerVersionListItem[1].provisionedTestRunnersCount.isPresent, 'should not be rendered if provisioned test runners count is 0');
   });
 });
