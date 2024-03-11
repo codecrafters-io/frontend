@@ -1,6 +1,18 @@
 import { Factory, trait } from 'miragejs';
 import config from 'codecrafters-frontend/config/environment';
 
+function generateRandomAlphanumericString(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+
+  for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+}
+
 export default Factory.extend({
   changedFiles: () => {
     return [
@@ -37,6 +49,9 @@ export default Factory.extend({
   },
 
   createdAt: () => new Date(),
+
+  commitSha: () => generateRandomAlphanumericString(40),
+
   githubStorageHtmlUrl: 'https://github.com',
 
   withFailureStatus: trait({

@@ -15,6 +15,15 @@ export default create({
   stageDropdown: CourseStageDropdown,
 
   submissionDetails: {
+    commitSha: {
+      copyButton: {
+        hover: triggerable('mouseenter'),
+        scope: '[data-test-copy-commit-sha-button]',
+      },
+
+      scope: '[data-test-commit-sha]',
+    },
+
     userProficiencyInfoIcon: {
       hover: triggerable('mouseenter'),
       scope: '[data-test-user-proficiency-info-icon]',

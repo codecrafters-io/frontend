@@ -309,4 +309,40 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     await submissionsPage.visit({ course_slug: 'redis' });
     assert.strictEqual(currentURL(), '/courses/redis/admin/submissions', 'route should be accessible');
   });
+
+  test('it should have the commit SHA in the header', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+
+    assert.ok(submissionsPage.submissionDetails.commitSha.isPresent, 'commit sha should be present');
+
+    await submissionsPage.timelineContainer.entries[1].click();
+
+    assert.true(submissionsPage.submissionDetails.commitSha.text.includes('a77c9d85'), 'commit sha is displayed');
+    assert.false(submissionsPage.submissionDetails.commitSha.text.includes('a77c9d851'), 'commit sha should be truncated')
+
+    await submissionsPage.submissionDetails.commitSha.copyButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Click to copy Git commit SHA',
+    });
+  })
 });
