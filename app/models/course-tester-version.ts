@@ -10,6 +10,7 @@ export default class CourseTesterVersionModel extends Model {
   @attr('date') declare lastActivatedAt?: Date;
   @attr('boolean') declare isLatest: boolean;
   @attr('boolean') declare isActive: boolean;
+  @attr('number') declare provisionedTestRunnersCount: number;
   @attr('string') declare tagName: string;
 
   declare activate: (this: Model, payload: unknown) => Promise<void>;
