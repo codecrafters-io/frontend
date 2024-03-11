@@ -21,6 +21,7 @@ export default class SubmissionModel extends Model {
   @hasMany('submission-evaluation', { async: false, inverse: 'submission' }) declare evaluations: SubmissionEvaluationModel[];
 
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
+  @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
   @attr('boolean') declare wasSubmittedViaCli: boolean;
