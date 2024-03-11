@@ -337,12 +337,12 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     await submissionsPage.timelineContainer.entries[1].click();
 
     assert.true(submissionsPage.submissionDetails.commitSha.text.includes('a77c9d85'), 'commit sha is displayed');
-    assert.false(submissionsPage.submissionDetails.commitSha.text.includes('a77c9d851'), 'commit sha should be truncated')
+    assert.false(submissionsPage.submissionDetails.commitSha.text.includes('a77c9d851'), 'commit sha should be truncated');
 
     await submissionsPage.submissionDetails.commitSha.copyButton.hover();
 
     assertTooltipContent(assert, {
       contentString: 'Click to copy Git commit SHA',
     });
-  })
+  });
 });
