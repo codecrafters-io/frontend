@@ -7,7 +7,10 @@ import { action } from '@ember/object';
 import { memberAction } from 'ember-api-actions';
 import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
 
-export default class CommunityCourseStageSolutionModel extends Model {
+/* eslint-disable ember/no-mixins */
+import ViewableMixin from 'codecrafters-frontend/mixins/viewable';
+
+export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
 
   @belongsTo('course-stage', { async: false, inverse: 'communitySolutions' }) declare courseStage: CourseStageModel;
