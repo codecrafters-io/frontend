@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
+import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -14,6 +15,7 @@ type Signature = {
 };
 
 export default class VersionListItemComponent extends Component<Signature> {
+  @service declare router: RouterService;
   @service declare store: Store;
 
   @tracked isActivating = false;
@@ -52,6 +54,11 @@ export default class VersionListItemComponent extends Component<Signature> {
 
       this.isActivating = false;
     }
+  }
+
+  @action
+  handleClick() {
+    this.router.transitionTo('course-admin.tester-version', this.args.courseTesterVersion.id);
   }
 
   @action

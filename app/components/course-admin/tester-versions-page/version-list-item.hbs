@@ -1,4 +1,9 @@
-<li class="flex items-center justify-between gap-x-6 py-5 group/version-list-item hover:bg-gray-50 px-1" data-test-version-list-item role="button">
+<li
+  class="flex items-center justify-between gap-x-6 py-5 group/version-list-item hover:bg-gray-50 px-1"
+  data-test-version-list-item
+  {{on "click" this.handleClick}}
+  role="button"
+>
   <div class="min-w-0">
     <div class="flex items-start gap-x-3">
       <p class="text-sm font-semibold leading-6 text-gray-900">{{@courseTesterVersion.tagName}}</p>
