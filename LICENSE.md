@@ -6,7 +6,7 @@ FSL-1.1-MIT
 
 ## Notice
 
-Copyright 2024 GitButler Inc
+Copyright 2021-2024 CodeCrafters, Inc.
 
 ## Terms and Conditions
 
