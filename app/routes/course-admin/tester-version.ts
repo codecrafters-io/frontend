@@ -8,7 +8,7 @@ export default class CourseAdminTesterVersionRoute extends BaseRoute {
   async model(params: { tester_version_id: string }) {
     // @ts-ignore
     const course = this.modelFor('course-admin').course;
-    const testerVersion = await this.store.findRecord('course-tester-version', params.tester_version_id, { include: 'applier,course' });
+    const testerVersion = await this.store.findRecord('course-tester-version', params.tester_version_id, { include: 'activator,course' });
 
     return {
       course: course,
