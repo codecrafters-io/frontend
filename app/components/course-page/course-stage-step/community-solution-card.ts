@@ -58,7 +58,9 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     this.loadComments();
     this.loadFileComparisons();
 
-    this.args.solution.createView();
+    if (this.currentUser) {
+      this.args.solution.createView();
+    }
   }
 
   @action
