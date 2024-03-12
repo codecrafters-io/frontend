@@ -16,7 +16,6 @@ type Signature = {
     solution: CommunityCourseStageSolutionModel;
     onPublishToGithubButtonClick?: () => void;
     isCollapsedByDefault?: boolean;
-    positionInList?: number;
   };
 };
 
@@ -59,10 +58,7 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     this.loadComments();
     this.loadFileComparisons();
 
-    this.analyticsEventTracker.track('viewed_community_course_stage_solution', {
-      community_course_stage_solution_id: this.args.solution.id,
-      position_in_list: this.args.positionInList,
-    });
+    this.args.solution.createView();
   }
 
   @action
