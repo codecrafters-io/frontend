@@ -74,6 +74,25 @@
           </a>
         </div>
       </div>
+
+      {{#if this.shouldShowDeprovisioningNotice}}
+        <Alert @type="success" class="relative mt-6">
+          <span class="leading-7 inline-block mr-10">
+            A job has been scheduled and test runners will be deprovisioned shortly.
+          </span>
+
+          <div class="absolute right-3 top-0 bottom-0 flex items-center justify-center">
+            <button
+              class="border border-green-300 p-1 rounded hover:bg-green-200"
+              type="button"
+              {{on "click" this.handleDismissButtonClick}}
+              data-test-dismiss-button
+            >
+              {{svg-jar "x" class="w-5 h-5 text-green-500"}}
+            </button>
+          </div>
+        </Alert>
+      {{/if}}
     </div>
 
     <div>

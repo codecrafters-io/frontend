@@ -20,6 +20,7 @@ export default class CourseAdminTesterVersionController extends Controller {
 
   @tracked isActivating = false;
   @tracked isDeprovisioningTestRunners = false;
+  @tracked shouldShowDeprovisioningNotice = false;
 
   @action
   async handleActivateButtonClick() {
@@ -36,10 +37,16 @@ export default class CourseAdminTesterVersionController extends Controller {
   @action
   async handleDeprovisionTestRunnersButtonClick() {
     this.isDeprovisioningTestRunners = true;
+    this.shouldShowDeprovisioningNotice = true;
 
     // @ts-ignore
     await this.model.testerVersion.deprovision();
 
     this.isDeprovisioningTestRunners = false;
+  }
+
+  @action
+  async handleDismissButtonClick() {
+    this.shouldShowDeprovisioningNotice = false;
   }
 }
