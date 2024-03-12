@@ -38,6 +38,26 @@
                 <span>by {{@model.testerVersion.activator.username}}</span>
               {{/if}}
             </div>
+          {{else}}
+            <div class="flex items-center mt-6 gap-x-3">
+              <PrimaryButtonWithSpinner
+                @shouldShowSpinner={{this.isActivating}}
+                @size="small"
+                {{on "click" this.handleActivateButtonClick}}
+                data-test-activate-button
+              >
+                Activate
+              </PrimaryButtonWithSpinner>
+
+              <TertiaryButtonWithSpinner
+                @shouldShowSpinner={{this.isDeprovisioningTestRunners}}
+                @size="small"
+                {{on "click" this.handleDeprovisionTestRunnersButtonClick}}
+                data-test-deprovision-test-runners-button
+              >
+                Deprovision Test Runners
+              </TertiaryButtonWithSpinner>
+            </div>
           {{/if}}
         </div>
 

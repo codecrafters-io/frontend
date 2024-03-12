@@ -18,32 +18,28 @@ export default class CourseAdminTesterVersionController extends Controller {
 
   @service declare store: Store;
 
-  @tracked isApplyingUpdate = false;
-  @tracked isSyncingWithGitHub = false;
+  @tracked isActivating = false;
+  @tracked isDeprovisioningTestRunners = false;
 
   @action
-  async handleApplyUpdateButtonClick() {
-    if (!this.isApplyingUpdate) {
-      this.isApplyingUpdate = true;
+  async handleActivateButtonClick() {
+    if (!this.isActivating) {
+      this.isActivating = true;
 
       // @ts-ignore
-      await this.model.update.apply();
+      await this.model.testerVersion.activate();
 
-      this.isApplyingUpdate = false;
+      this.isActivating = false;
     }
   }
 
   @action
-  async handleSyncWithGitHubButtonClick() {
-    this.isSyncingWithGitHub = true;
+  async handleDeprovisionTestRunnersButtonClick() {
+    this.isDeprovisioningTestRunners = true;
 
-    await this.model.course.syncCourseDefinitionUpdates();
+    // @ts-ignore
+    await this.model.testerVersion.deprovision();
 
-    await this.store.query('course-definition-update', {
-      course_id: this.model.course.id,
-      include: ['course', 'applier'].join(','),
-    });
-
-    this.isSyncingWithGitHub = false;
+    this.isDeprovisioningTestRunners = false;
   }
 }
