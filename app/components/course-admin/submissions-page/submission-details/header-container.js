@@ -27,6 +27,10 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     return capitalize(this.args.submission.repository.languageProficiencyLevel);
   }
 
+  get shortSubmissionCommitSha() {
+    return this.args.submission.commitSha.substring(0, 8);
+  }
+
   get shouldShowTesterVersion() {
     return this.authenticator.currentUser.isStaff;
   }
@@ -37,6 +41,11 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     } else {
       return 'Unknown';
     }
+  }
+
+  @action
+  async handleCopyCommitShaButtonClick() {
+    await navigator.clipboard.writeText(this.args.submission.commitSha);
   }
 
   @action
