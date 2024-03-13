@@ -11,4 +11,10 @@
   <div class="text-gray-400">
     {{@statistic.label}}
   </div>
+
+  <EmberTooltip>
+    <div class="prose prose-sm prose-invert text-white">
+      {{markdown-to-html @statistic.explanationMarkdown}}
+    </div>
+  </EmberTooltip>
 </div>
