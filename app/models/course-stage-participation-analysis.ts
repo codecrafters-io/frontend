@@ -2,6 +2,7 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import type CourseStageModel from './course-stage';
 
 export type CourseStageParticipationAnalysisStatistic = {
+  title: string;
   label: string;
   value: string | null;
   color: 'green' | 'yellow' | 'red' | 'gray';
@@ -25,7 +26,7 @@ A well-designed stage should have a completion rate of >95%.
 const medianAttemptsCountStatisticExplanationMarkdown = `
 The median number of attempts users have made to complete this stage.
 
-A high number (> 3) suggests that our error messages or hints could be improved.
+A high number (> 3) suggests that the error messages or hints for this stage could be improved.
 `.trim();
 
 export default class CourseStageParticipationAnalysisModel extends Model {
@@ -39,6 +40,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
   get completionRateStatistic(): CourseStageParticipationAnalysisStatistic {
     if (this.attemptToCompletionPercentage === null) {
       return {
+        title: 'Attempt to Completion Rate',
         label: 'completion rate',
         value: null,
         color: 'gray',
@@ -46,6 +48,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
       };
     } else {
       return {
+        title: 'Attempt to Completion Rate',
         label: 'completion rate',
         value: `${Math.floor(this.attemptToCompletionPercentage)}%`,
         color: this.attemptToCompletionPercentage >= 95 ? 'green' : this.attemptToCompletionPercentage >= 0.85 ? 'yellow' : 'red',
@@ -57,6 +60,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
   get medianAttemptsCountStatistic(): CourseStageParticipationAnalysisStatistic {
     if (this.medianAttemptsCount === null) {
       return {
+        title: 'Median Attempts Count',
         label: 'attempts',
         value: null,
         color: 'gray',
@@ -64,6 +68,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
       };
     } else {
       return {
+        title: 'Median Attempts Count',
         label: 'attempts',
         value: this.medianAttemptsCount.toString(),
         color: this.medianAttemptsCount <= 3 ? 'green' : this.medianAttemptsCount <= 7 ? 'yellow' : 'red',
@@ -74,6 +79,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
 
   get participationsCountStatistic(): CourseStageParticipationAnalysisStatistic {
     return {
+      title: 'Data Points',
       label: 'data points',
       value: this.participationsCount >= 250 ? '250+' : this.participationsCount.toString(),
       color: this.participationsCount >= 100 ? 'green' : this.participationsCount >= 25 ? 'yellow' : 'red',

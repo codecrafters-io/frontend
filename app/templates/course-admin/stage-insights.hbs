@@ -1,16 +1,16 @@
 <div class="bg-white min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <CourseAdmin::StageInsightsPage::Header @stage={{@model.stage}} class="py-3 border-b" />
+    <CourseAdmin::StageInsightsPage::Header @stage={{@model.stage}} class="py-3 border-b mb-6" />
+
+    {{#if (lt this.participationAnalysis.participationsCount 100)}}
+      <Alert @type="error">
+        This stage has less than 100 data points, so the statistics below may not be reliable.
+      </Alert>
+    {{/if}}
 
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
-      <div class="overflow-hidden rounded-lg bg-white px-4 py-5 border sm:p-6">
-        <dt class="truncate text-sm font-medium text-gray-500">Total Subscribers</dt>
-        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">71,897</dd>
-      </div>
-      <div class="overflow-hidden rounded-lg bg-white px-4 py-5 border sm:p-6">
-        <dt class="truncate text-sm font-medium text-gray-500">Avg. Open Rate</dt>
-        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
-      </div>
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.completionRateStatistic}} />
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.medianAttemptsCountStatistic}} />
     </dl>
   </div>
 </div>
