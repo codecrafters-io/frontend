@@ -1,5 +1,5 @@
 <div class="rounded-lg bg-white px-4 py-5 border sm:p-6">
-  <dt class="inline-flex items-center gap-1 group/statistic-card-title">
+  <div class="inline-flex items-center gap-1 group/statistic-card-title">
     <span class="truncate font-medium text-gray-600">
       {{@statistic.title}}
     </span>
@@ -9,9 +9,9 @@
         {{markdown-to-html @statistic.explanationMarkdown}}
       </div>
     </EmberTooltip>
-  </dt>
+  </div>
 
-  <dd class="mt-1 text-4xl font-semibold tracking-tight {{this.valueColorClasses}}">
+  <div class="mt-1 text-4xl font-semibold tracking-tight {{this.valueColorClasses}}">
     {{@statistic.value}}
-  </dd>
+  </div>
 </div>

@@ -8,9 +8,9 @@
       </Alert>
     {{/if}}
 
-    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
       <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.completionRateStatistic}} />
       <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.medianAttemptsCountStatistic}} />
-    </dl>
+    </div>
   </div>
 </div>
