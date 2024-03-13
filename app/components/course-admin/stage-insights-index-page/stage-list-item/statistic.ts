@@ -22,6 +22,6 @@ export default class StatisticComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::StageInsightsPage::StageListItem::Statistic': typeof StatisticComponent;
+    'CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic': typeof StatisticComponent;
   }
 }

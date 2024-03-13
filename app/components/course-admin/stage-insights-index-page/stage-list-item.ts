@@ -3,7 +3,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import CourseStageParticipationAnalysisModel from 'codecrafters-frontend/models/course-stage-participation-analysis';
 
 type Signature = {
-  Element: HTMLDivElement;
+  Element: HTMLAnchorElement;
 
   Args: {
     stage: CourseStageModel;
@@ -42,6 +42,6 @@ export default class StageListItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::StageInsightsPage::StageListItem': typeof StageListItemComponent;
+    'CourseAdmin::StageInsightsIndexPage::StageListItem': typeof StageListItemComponent;
   }
 }

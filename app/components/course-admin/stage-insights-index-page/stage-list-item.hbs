@@ -1,0 +1,25 @@
+<LinkTo
+  class="flex items-center justify-between flex-wrap gap-x-6 gap-y-2 py-2.5 group/stage-list-item hover:bg-gray-50 px-1"
+  data-test-version-list-item
+  role="button"
+  @route="course-admin.stage-insights"
+  @models={{array @stage.slug}}
+  ...attributes
+>
+  <div class="min-w-0">
+    <div class="flex items-center flex-wrap gap-2">
+      <div class="font-semibold leading-6 text-sm text-gray-700">{{@stage.name}}</div>
+      <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
+        <circle cx="1" cy="1" r="1" />
+      </svg>
+      <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.dataPointsStatistic}} />
+    </div>
+  </div>
+  <div class="flex flex-none items-center gap-x-2">
+    <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.completionRateStatistic}} />
+    <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
+      <circle cx="1" cy="1" r="1" />
+    </svg>
+    <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.medianAttemptsCountStatistic}} />
+  </div>
+</LinkTo>
