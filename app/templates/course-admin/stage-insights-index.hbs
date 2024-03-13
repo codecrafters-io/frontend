@@ -1,0 +1,39 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Stage Insights 🚧 (Work in progress!)
+        </h3>
+        <div class="text-xs text-gray-400">
+          Stage-wise statistics that can help identify areas for improvement in your challenge.
+        </div>
+      </div>
+    </div>
+
+    {{#if (gt @model.course.stages.length 0)}}
+      <ul role="list" class="divide-y divide-gray-100">
+        {{#each @model.course.sortedBaseStages as |stage|}}
+          <CourseAdmin::StageInsightsPage::StageListItem @stage={{stage}} />
+        {{/each}}
+      </ul>
+
+      {{#each @model.course.sortedExtensions as |extension|}}
+        <h3 class="font-semibold text-gray-400 text-center relative mt-8 mb-3">
+          <span class="block h-px w-full bg-gray-200 absolute top-50-percent -mt-px"></span>
+          <span class="relative px-6 bg-white">{{extension.name}}</span>
+        </h3>
+
+        <ul role="list" class="divide-y divide-gray-100">
+          {{#each extension.sortedStages as |stage|}}
+            <CourseAdmin::StageInsightsPage::StageListItem @stage={{stage}} />
+          {{/each}}
+        </ul>
+      {{/each}}
+    {{else}}
+      <div class="text-gray-400 py-32 flex items-center justify-center">
+        No stages found.
+      </div>
+    {{/if}}
+  </div>
+</div>
