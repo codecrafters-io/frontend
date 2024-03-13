@@ -9,6 +9,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import type RepositoryModel from './repository';
 import Mustache from 'mustache';
+import type CourseStageParticipationAnalysisModel from './course-stage-participation-analysis';
 
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false, inverse: 'stages' }) declare course: CourseModel;
@@ -18,6 +19,10 @@ export default class CourseStageModel extends Model {
   declare communitySolutions: CommunityCourseStageSolutionModel[];
 
   @hasMany('course-stage-language-guide', { async: false, inverse: 'courseStage' }) declare languageGuides: CourseStageLanguageGuideModel[];
+
+  @hasMany('course-stage-participation-analysis', { async: false, inverse: 'stage' })
+  declare participationAnalyses: CourseStageParticipationAnalysisModel[];
+
   @hasMany('course-stage-solution', { async: false, inverse: 'courseStage' }) declare solutions: CourseStageSolutionModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: 'courseStage' }) declare screencasts: CourseStageScreencastModel[];
 
