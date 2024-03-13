@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import CourseStageParticipationAnalysisModel from 'codecrafters-frontend/models/course-stage-participation-analysis';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -10,16 +11,24 @@ type Signature = {
 };
 
 export default class StageListItemComponent extends Component<Signature> {
-  get courseStageParticipationsCount() {
-    if (this.args.stage.position <= 3) {
-      return 204;
+  get completionRateStatistic() {
+    if (this.participationAnalysis) {
+      return this.participationAnalysis.completionRateStatistic;
     } else {
-      return 85;
+      return CourseStageParticipationAnalysisModel.nullCompletionRateStatistic;
     }
   }
 
-  get courseStageParticipationsCountMeetsThreshold() {
-    return this.courseStageParticipationsCount > 100;
+  get dataPointsStatistic() {
+    if (this.participationAnalysis) {
+      return this.participationAnalysis.participationCountsStatistic;
+    } else {
+      return CourseStageParticipationAnalysisModel.nullParticipationCountsStatistic;
+    }
+  }
+
+  get participationAnalysis() {
+    return this.args.stage.participationAnalyses[0] || null;
   }
 }
 
