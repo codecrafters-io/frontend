@@ -1,12 +1,13 @@
 import Component from '@glimmer/component';
 import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
+import type CourseModel from 'codecrafters-frontend/models/course';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    course: { slug: string };
+    course: CourseModel;
   };
 };
 
@@ -15,7 +16,7 @@ type Tab = {
   name: string;
   slug: string;
   route: string;
-  models: unknown[];
+  models: string[];
   isActive: boolean;
 };
 
@@ -38,7 +39,7 @@ export default class CourseAdminHeaderComponent extends Component<Signature> {
         slug: 'updates',
         route: 'course-admin.updates',
         models: [this.args.course.slug],
-        isActive: this.router.currentRouteName === 'course-admin.updates' || this.router.currentRouteName === 'course-admin.update',
+        isActive: ['course-admin.updates', 'course-admin.update'].includes(this.router.currentRouteName),
       },
       {
         icon: 'clipboard-check',
@@ -62,16 +63,30 @@ export default class CourseAdminHeaderComponent extends Component<Signature> {
         slug: 'buildpacks',
         route: 'course-admin.buildpacks',
         models: [this.args.course.slug],
-        isActive: this.router.currentRouteName === 'course-admin.buildpacks' || this.router.currentRouteName === 'course-admin.buildpack',
+        isActive: ['course-admin.buildpacks', 'course-admin.buildpack'].includes(this.router.currentRouteName),
       },
       {
-        icon: 'presentation-chart-line',
+        icon: 'chart-bar',
         name: 'Insights',
         slug: 'insights',
         route: 'course-admin.insights',
         models: [this.args.course.slug],
         isActive: this.router.currentRouteName === 'course-admin.insights',
       },
+      {
+        icon: 'presentation-chart-bar',
+        name: 'Stage Insights',
+        slug: 'stage-insights',
+        route: 'course-admin.stage-insights-index',
+        models: [this.args.course.slug],
+        isActive: ['course-admin.stage-insights-index', 'course-admin.stage-insights'].includes(this.router.currentRouteName),
+      },
     ];
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CourseAdmin::Header': typeof CourseAdminHeaderComponent;
   }
 }

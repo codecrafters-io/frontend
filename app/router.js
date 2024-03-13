@@ -31,6 +31,8 @@ Router.map(function () {
     this.route('code-example', { path: '/code-examples/:code_example_id' });
     this.route('feedback');
     this.route('insights');
+    this.route('stage-insights-index', { path: '/stage-insights' });
+    this.route('stage-insights', { path: '/stage-insights/:stage_slug' });
     this.route('submissions');
     this.route('tester-versions');
     this.route('update', { path: '/updates/:update_id' });

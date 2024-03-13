@@ -1,0 +1,54 @@
+<li
+  class="flex items-center justify-between flex-wrap gap-x-6 gap-y-2 py-2 group/stage-list-item hover:bg-gray-50 px-1"
+  data-test-version-list-item
+  role="button"
+>
+  <div class="min-w-0">
+    <div class="flex items-center flex-wrap gap-2">
+      <div class="font-semibold leading-6 text-sm text-gray-800">{{@stage.name}}</div>
+      <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
+        <circle cx="1" cy="1" r="1" />
+      </svg>
+      <div class="inline-flex items-center gap-x-1">
+        <div class="text-xs text-gray-400">
+          <span class="font-semibold {{if this.courseStageParticipationsCountMeetsThreshold 'text-teal-500' 'text-yellow-500'}}">
+            {{this.courseStageParticipationsCount}}
+          </span>
+          data points
+        </div>
+        <EmberTooltip @text="This is the number of data points collected for this stage.">
+          <p class="mb-2">
+            This is the number of data points collected for this stage.
+          </p>
+
+          <p>
+            A number greater than 100 is recommended for reliable insights.
+          </p>
+        </EmberTooltip>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-none items-center gap-x-2">
+    <div class="inline-flex items-center gap-x-1">
+      <div class="text-xs text-gray-400">
+        <span class="font-semibold {{if this.courseStageParticipationsCountMeetsThreshold 'text-teal-500' 'text-yellow-500'}}">
+          {{this.courseStageParticipationsCount}}%
+        </span>
+        completion rate
+      </div>
+      <EmberTooltip @text="This is the number of data points collected for this stage." @side="left" />
+    </div>
+    <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
+      <circle cx="1" cy="1" r="1" />
+    </svg>
+    <div class="inline-flex items-center gap-x-1">
+      <div class="text-xs text-gray-400">
+        <span class="font-semibold {{if this.courseStageParticipationsCountMeetsThreshold 'text-teal-500' 'text-yellow-500'}}">
+          {{this.courseStageParticipationsCount}}
+        </span>
+        median attempts
+      </div>
+      <EmberTooltip @text="This is the number of data points collected for this stage." @side="left" />
+    </div>
+  </div>
+</li>
