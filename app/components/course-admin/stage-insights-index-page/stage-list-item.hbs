@@ -12,14 +12,15 @@
       <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
         <circle cx="1" cy="1" r="1" />
       </svg>
-      <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.dataPointsStatistic}} />
+      <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.participationAnalysis.completionRateStatistic}} />
     </div>
   </div>
   <div class="flex flex-none items-center gap-x-2">
-    <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.completionRateStatistic}} />
+    <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.participationAnalysis.completionRateStatistic}} />
     <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
       <circle cx="1" cy="1" r="1" />
     </svg>
-    <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.medianAttemptsCountStatistic}} />
+    <CourseAdmin::StageInsightsIndexPage::StageListItem::Statistic @statistic={{this.participationAnalysis.medianAttemptsCountStatistic}} />
   </div>
 </LinkTo>
+

@@ -2,21 +2,17 @@ import Component from '@glimmer/component';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
 type Signature = {
-  Element: HTMLAnchorElement;
+  Element: HTMLDivElement;
 
   Args: {
     stage: CourseStageModel;
   };
 };
 
-export default class StageListItemComponent extends Component<Signature> {
-  get participationAnalysis() {
-    return this.args.stage.participationAnalyses[0]!;
-  }
-}
+export default class HeaderComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::StageInsightsIndexPage::StageListItem': typeof StageListItemComponent;
+    'CourseAdmin::StageInsightsPage::Header': typeof HeaderComponent;
   }
 }

@@ -31,47 +31,45 @@ A high number (> 3) suggests that our error messages or hints could be improved.
 export default class CourseStageParticipationAnalysisModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'participationAnalyses' }) declare stage: CourseStageModel;
 
+  // The API always returns participationsCount, but the others might be null if there are no participations.
   @attr('number') declare participationsCount: number;
-  @attr('number') declare attemptToCompletionPercentage: number;
-  @attr('number') declare medianAttemptsCount: number;
-
-  static nullParticipationsCountStatistic: CourseStageParticipationAnalysisStatistic = {
-    label: 'data points',
-    value: null,
-    color: 'gray',
-    explanationMarkdown: participationCountsStatisticExplanationMarkdown,
-  };
-
-  static nullCompletionRateStatistic: CourseStageParticipationAnalysisStatistic = {
-    label: 'completion rate',
-    value: null,
-    color: 'gray',
-    explanationMarkdown: completionRateStatisticExplanationMarkdown,
-  };
-
-  static nullMedianAttemptsCountStatistic: CourseStageParticipationAnalysisStatistic = {
-    label: 'attempts',
-    value: null,
-    color: 'gray',
-    explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
-  };
+  @attr('number') declare attemptToCompletionPercentage: number | null;
+  @attr('number') declare medianAttemptsCount: number | null;
 
   get completionRateStatistic(): CourseStageParticipationAnalysisStatistic {
-    return {
-      label: 'completion rate',
-      value: `${Math.floor(this.attemptToCompletionPercentage)}%`,
-      color: this.attemptToCompletionPercentage >= 95 ? 'green' : this.attemptToCompletionPercentage >= 0.85 ? 'yellow' : 'red',
-      explanationMarkdown: completionRateStatisticExplanationMarkdown,
-    };
+    if (this.attemptToCompletionPercentage === null) {
+      return {
+        label: 'completion rate',
+        value: null,
+        color: 'gray',
+        explanationMarkdown: completionRateStatisticExplanationMarkdown,
+      };
+    } else {
+      return {
+        label: 'completion rate',
+        value: `${Math.floor(this.attemptToCompletionPercentage)}%`,
+        color: this.attemptToCompletionPercentage >= 95 ? 'green' : this.attemptToCompletionPercentage >= 0.85 ? 'yellow' : 'red',
+        explanationMarkdown: completionRateStatisticExplanationMarkdown,
+      };
+    }
   }
 
   get medianAttemptsCountStatistic(): CourseStageParticipationAnalysisStatistic {
-    return {
-      label: 'attempts',
-      value: this.medianAttemptsCount.toString(),
-      color: this.medianAttemptsCount <= 3 ? 'green' : this.medianAttemptsCount <= 7 ? 'yellow' : 'red',
-      explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
-    };
+    if (this.medianAttemptsCount === null) {
+      return {
+        label: 'attempts',
+        value: null,
+        color: 'gray',
+        explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
+      };
+    } else {
+      return {
+        label: 'attempts',
+        value: this.medianAttemptsCount.toString(),
+        color: this.medianAttemptsCount <= 3 ? 'green' : this.medianAttemptsCount <= 7 ? 'yellow' : 'red',
+        explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
+      };
+    }
   }
 
   get participationsCountStatistic(): CourseStageParticipationAnalysisStatistic {

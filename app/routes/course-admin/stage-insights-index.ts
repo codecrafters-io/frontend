@@ -13,7 +13,7 @@ export default class StageInsightsIndexRoute extends BaseRoute {
 
   async model(): Promise<ModelType> {
     // @ts-ignore
-    const course = this.modelFor('course-admin').course;
+    const course = this.modelFor('course-admin').course as CourseModel;
 
     (await this.store.query('course-stage-participation-analysis', {
       course_id: course.id,
