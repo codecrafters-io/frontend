@@ -1,0 +1,17 @@
+<div class="rounded-lg bg-white px-4 py-5 border sm:p-6">
+  <div class="inline-flex items-center gap-1 group/statistic-card-title">
+    <span class="truncate font-medium text-gray-600">
+      {{@statistic.title}}
+    </span>
+    {{svg-jar "question-mark-circle" class="w-4 h-4 text-gray-300 group-hover/statistic-card-title:text-gray-400"}}
+    <EmberTooltip>
+      <div class="prose prose-sm prose-invert text-white">
+        {{markdown-to-html @statistic.explanationMarkdown}}
+      </div>
+    </EmberTooltip>
+  </div>
+
+  <div class="mt-1 text-4xl font-semibold tracking-tight {{this.valueColorClasses}}">
+    {{@statistic.value}}
+  </div>
+</div>

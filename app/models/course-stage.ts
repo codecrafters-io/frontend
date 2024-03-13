@@ -109,6 +109,10 @@ export default class CourseStageModel extends Model {
     return this.course.concepts.reject((concept) => this.concepts.includes(concept));
   }
 
+  get participationAnalysis() {
+    return this.participationAnalyses[0] || null;
+  }
+
   get positionWithinExtensionOrCourse() {
     return this.isBaseStage ? this.positionWithinCourse : this.positionWithinExtension;
   }

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { type CourseStageParticipationAnalysisStatistic } from 'codecrafters-frontend/models/course-stage-participation-analysis';
+import type { CourseStageParticipationAnalysisStatistic } from 'codecrafters-frontend/models/course-stage-participation-analysis';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -9,7 +9,7 @@ type Signature = {
   };
 };
 
-export default class StatisticComponent extends Component<Signature> {
+export default class StatisticCardComponent extends Component<Signature> {
   get valueColorClasses(): string {
     return {
       green: 'text-teal-500',
@@ -22,6 +22,6 @@ export default class StatisticComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::StageInsightsPage::StageListItem::Statistic': typeof StatisticComponent;
+    'CourseAdmin::StageInsightsPage::StatisticCard': typeof StatisticCardComponent;
   }
 }

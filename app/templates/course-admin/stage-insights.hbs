@@ -1,0 +1,16 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <CourseAdmin::StageInsightsPage::Header @stage={{@model.stage}} class="py-3 border-b mb-6" />
+
+    {{#if (lt this.participationAnalysis.participationsCount 100)}}
+      <Alert @type="error">
+        This stage has less than 100 data points, so the statistics below may not be reliable.
+      </Alert>
+    {{/if}}
+
+    <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.completionRateStatistic}} />
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.medianAttemptsCountStatistic}} />
+    </div>
+  </div>
+</div>
