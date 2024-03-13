@@ -22,13 +22,20 @@ Users who don't attempt the stage are excluded from this calculation.
 A well-designed stage should have a completion rate of >95%.
 `.trim();
 
+const medianAttemptsCountStatisticExplanationMarkdown = `
+The median number of attempts users have made to complete this stage.
+
+A high number (> 3) suggests that our error messages or hints could be improved.
+`.trim();
+
 export default class CourseStageParticipationAnalysisModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'participationAnalyses' }) declare stage: CourseStageModel;
 
   @attr('number') declare participationsCount: number;
   @attr('number') declare attemptToCompletionPercentage: number;
+  @attr('number') declare medianAttemptsCount: number;
 
-  static nullParticipationCountsStatistic: CourseStageParticipationAnalysisStatistic = {
+  static nullParticipationsCountStatistic: CourseStageParticipationAnalysisStatistic = {
     label: 'data points',
     value: null,
     color: 'gray',
@@ -42,6 +49,13 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     explanationMarkdown: completionRateStatisticExplanationMarkdown,
   };
 
+  static nullMedianAttemptsCountStatistic: CourseStageParticipationAnalysisStatistic = {
+    label: 'attempts',
+    value: null,
+    color: 'gray',
+    explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
+  };
+
   get completionRateStatistic(): CourseStageParticipationAnalysisStatistic {
     return {
       label: 'completion rate',
@@ -51,7 +65,16 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     };
   }
 
-  get participationCountsStatistic(): CourseStageParticipationAnalysisStatistic {
+  get medianAttemptsCountStatistic(): CourseStageParticipationAnalysisStatistic {
+    return {
+      label: 'attempts',
+      value: this.medianAttemptsCount.toString(),
+      color: this.medianAttemptsCount <= 3 ? 'green' : this.medianAttemptsCount <= 7 ? 'yellow' : 'red',
+      explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
+    };
+  }
+
+  get participationsCountStatistic(): CourseStageParticipationAnalysisStatistic {
     return {
       label: 'data points',
       value: this.participationsCount >= 250 ? '250+' : this.participationsCount.toString(),

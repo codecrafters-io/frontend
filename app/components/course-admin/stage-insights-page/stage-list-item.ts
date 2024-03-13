@@ -21,9 +21,17 @@ export default class StageListItemComponent extends Component<Signature> {
 
   get dataPointsStatistic() {
     if (this.participationAnalysis) {
-      return this.participationAnalysis.participationCountsStatistic;
+      return this.participationAnalysis.participationsCountStatistic;
     } else {
-      return CourseStageParticipationAnalysisModel.nullParticipationCountsStatistic;
+      return CourseStageParticipationAnalysisModel.nullParticipationsCountStatistic;
+    }
+  }
+
+  get medianAttemptsCountStatistic() {
+    if (this.participationAnalysis) {
+      return this.participationAnalysis.medianAttemptsCountStatistic;
+    } else {
+      return CourseStageParticipationAnalysisModel.nullMedianAttemptsCountStatistic;
     }
   }
 
