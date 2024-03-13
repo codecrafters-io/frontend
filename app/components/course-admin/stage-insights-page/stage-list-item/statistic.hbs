@@ -1,0 +1,15 @@
+<div class="inline-flex items-center gap-x-1">
+  <div class="text-xs text-gray-400">
+    <span class="font-semibold {{this.valueColorClasses}}">
+      {{this.args.statistic.value}}
+    </span>
+
+    {{this.args.statistic.unit}}
+  </div>
+
+  <EmberTooltip>
+    <div class="prose prose-invert prose-compact prose-sm text-white">
+      {{markdown-to-html this.args.statistic.explanationMarkdown}}
+    </div>
+  </EmberTooltip>
+</div>
