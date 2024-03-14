@@ -9,9 +9,10 @@ export default create({
   },
 
   testerVersionListItem: collection('[data-test-version-list-item]', {
-    activateButton: {
-      scope: '[data-test-activate-button]',
+    viewTesterVersionButton: {
+      scope: '[data-test-view-tester-version-button]',
     },
+
 
     provisionedTestRunnersCount: {
       hover: triggerable('mouseenter'),

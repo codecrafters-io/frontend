@@ -390,6 +390,7 @@ function routes() {
   this.get('/course-stage-language-guides');
 
   this.get('/course-tester-versions');
+  this.get('/course-tester-versions/:id');
 
   this.post('/course-tester-versions/:id/activate', function (schema, request) {
     const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
