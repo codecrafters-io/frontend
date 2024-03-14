@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 
 function debugConsole() {
   if (DEBUG) {
@@ -83,7 +83,7 @@ function syncRepositoryStageList(server, repository) {
       position: currentStageListItemPosition++,
       completedAt: courseStageCompletion ? courseStageCompletion.completedAt : null,
       isDisabled: isDisabled,
-      isCurrent: false,
+      isCurrent: firstIncompleteStage && firstIncompleteStage.id === stage.id,
     };
 
     // Update can be expensive and this is run for every GET /repositories call.
