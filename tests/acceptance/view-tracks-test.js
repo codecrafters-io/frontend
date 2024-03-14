@@ -87,25 +87,29 @@ module('Acceptance | view-tracks', function (hooks) {
   });
 
   test('it renders completed track cards', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy', 'sqlite']);
     signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    this.server.schema.courses.all().models.forEach((course) => {
-      const courseSupportsGo = course.languageConfigurations.models
-        .map((languageConfiguration) => languageConfiguration.language.slug)
-        .includes(go.slug);
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    const sqlite = this.server.schema.courses.findBy({ slug: 'sqlite' });
 
-      if (courseSupportsGo && course.releaseStatus != 'alpha') {
-        this.server.create('repository', 'withAllStagesCompleted', {
-          createdAt: new Date('2022-01-01'),
-          course: course,
-          language: go,
-          user: currentUser,
-        });
-      }
+    dummy.update({ releaseStatus: 'live' });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      createdAt: new Date('2022-01-01'),
+      course: dummy,
+      language: go,
+      user: currentUser,
+    });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      createdAt: new Date('2022-02-02'),
+      course: sqlite,
+      language: go,
+      user: currentUser,
     });
 
     await catalogPage.visit();
@@ -117,7 +121,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[1].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '68/68 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '15/15 stages');
     assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:100%');
   });
 

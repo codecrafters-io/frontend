@@ -131,30 +131,29 @@ module('Acceptance | view-courses', function (hooks) {
   });
 
   test('it renders completed course cards', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy', 'sqlite']);
     signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
 
     this.server.create('repository', 'withAllStagesCompleted', {
       createdAt: new Date('2022-01-01'),
-      course: redis,
+      course: course,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 2, 'expected 2 course cards to be present');
 
     await percySnapshot('Courses Page - Course completed');
 
-    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
+    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Dummy');
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Start Again');
     assert.strictEqual(catalogPage.courseCards[1].actionText, 'Start');
-    assert.strictEqual(catalogPage.courseCards[2].actionText, 'Start');
-    assert.strictEqual(catalogPage.courseCards[3].actionText, 'Start');
   });
 
   test('it renders if user is not signed in', async function (assert) {
