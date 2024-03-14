@@ -50,22 +50,24 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
   });
 
   test('modal has the correct submissions count copy', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signInAsStaff(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    course.update({ releaseStatus: 'live' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: course,
       language: python,
       user: currentUser,
     });
     repository.update({ submissionsCount: null });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -79,7 +81,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     repository.update({ submissionsCount: 0 });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -93,7 +95,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     repository.update({ submissionsCount: 1 });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -107,7 +109,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     repository.update({ submissionsCount: 2 });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -120,21 +122,23 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
   });
 
   test('can delete repository', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signInAsStaff(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    course.update({ releaseStatus: 'live' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: course,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -150,7 +154,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     await waitUntil(() => currentURL() === '/catalog');
     await settled(); // Delete request triggers after redirect
 
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     assert.notOk(coursePage.repositoryDropdown.content.text.includes('Delete Repository'), 'delete repository action should not be available');
