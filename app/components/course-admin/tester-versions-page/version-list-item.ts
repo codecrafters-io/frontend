@@ -39,34 +39,9 @@ export default class VersionListItemComponent extends Component<Signature> {
     }
   }
 
-  async activate() {
-    if (!this.isActivating) {
-      this.isActivating = true;
-
-      // @ts-ignore
-      await this.args.courseTesterVersion.activate();
-
-      await this.store.query('course-tester-version', {
-        // @ts-ignore
-        course_id: this.args.courseTesterVersion.course.id,
-        include: ['course', 'activator'].join(','),
-      });
-
-      this.isActivating = false;
-    }
-  }
-
   @action
-  async handleActivateButtonClick() {
-    if (this.args.courseTesterVersion.isLatest) {
-      await this.activate();
-
-      return;
-    }
-
-    if (window.confirm(this.activationConfirmationMessage)) {
-      await this.activate();
-    }
+  handleClick() {
+    this.router.transitionTo('course-admin.tester-version', this.args.courseTesterVersion.id);
   }
 }
 
