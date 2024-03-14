@@ -8,6 +8,7 @@ import { escapeHtml, groupBy, zip } from 'codecrafters-frontend/utils/lodash-uti
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
+import { task } from 'ember-concurrency';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -23,6 +24,7 @@ type Signature = {
 
 export default class SyntaxHighlightedDiffComponent extends Component<Signature> {
   @tracked asyncHighlightedHTML: string | null = null;
+  @tracked asyncHighlightedCode: string | null = null;
   @tracked lineNumberWithExpandedComments: number | null = null;
   @tracked isDarkMode: boolean | undefined = undefined;
 
@@ -36,7 +38,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
 
-    this.highlightCode();
+    this.highlightCode.perform();
   }
 
   get chunksForRender() {
@@ -98,7 +100,11 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   get highlightedHtml() {
-    return this.asyncHighlightedHTML || this.temporaryHTML;
+    if (this.asyncHighlightedCode === this.args.code) {
+      return this.asyncHighlightedHTML!;
+    } else {
+      return this.temporaryHTML;
+    }
   }
 
   get temporaryHTML() {
@@ -121,7 +127,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
   @action
   handleDidUpdateCode() {
-    this.highlightCode();
+    this.highlightCode.perform();
   }
 
   @action
@@ -130,7 +136,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
       // Avoid re-use in same computation bug
       next(() => {
         this.isDarkMode = isDarkMode;
-        this.highlightCode();
+        this.highlightCode.perform();
       });
     }
   }
@@ -148,7 +154,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     }
   }
 
-  highlightCode() {
+  highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
     if (this.isDarkMode === undefined) {
       return; // Not ready to highlight yet
     }
@@ -161,9 +167,10 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     highlighterPromise.then((highlighter) => {
       highlighter.loadLanguage(this.args.language as shiki.Lang).then(() => {
         this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
+        this.asyncHighlightedCode = this.args.code;
       });
     });
-  }
+  });
 
   static preloadHighlighter() {
     preloadHighlighter(this.highlighterIdForDarkMode, this.highlighterOptionsForDarkMode);
