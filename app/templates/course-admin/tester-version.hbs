@@ -23,7 +23,7 @@
             {{/if}}
           </h3>
 
-          <div class="prose prose-sm" data-test-description>
+          <div class="prose prose-sm">
             Created {{date-from-now @model.testerVersion.createdAt}}
           </div>
 
@@ -44,7 +44,7 @@
                 @shouldShowSpinner={{this.isActivating}}
                 @size="small"
                 {{on "click" this.handleActivateButtonClick}}
-                data-test-activate-button
+                data-test-activate-tester-version-button
               >
                 Activate
               </PrimaryButtonWithSpinner>
