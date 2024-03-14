@@ -56,8 +56,6 @@ export default function createCourseFromData(server, courseData) {
       releaseStatus: languageConfigurationData.release_status || 'live',
       alphaTesterUsernames: languageConfigurationData.alphaTesterUsernames || [],
     });
-
-    createCourseStageSolution(server, course, 1, language);
   }
 
   for (const courseExtensionData of courseData.extensions || []) {

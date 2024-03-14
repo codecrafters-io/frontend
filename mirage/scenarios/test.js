@@ -35,7 +35,9 @@ export default function (server, courses = ['redis', 'docker', 'dummy', 'git', '
       throw new Error(`Course data not found for ${courseSlug}`);
     }
 
+    console.time(`createCourseFromData ${courseSlug}`);
     createCourseFromData(server, courseToDataMap[courseSlug]);
+    console.timeEnd(`createCourseFromData ${courseSlug}`);
   });
 
   const redis = server.schema.courses.findBy({ slug: 'redis' });
