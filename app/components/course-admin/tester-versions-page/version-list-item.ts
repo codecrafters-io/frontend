@@ -57,11 +57,6 @@ export default class VersionListItemComponent extends Component<Signature> {
   }
 
   @action
-  handleClick() {
-    this.router.transitionTo('course-admin.tester-version', this.args.courseTesterVersion.id);
-  }
-
-  @action
   async handleActivateButtonClick() {
     if (this.args.courseTesterVersion.isLatest) {
       await this.activate();
