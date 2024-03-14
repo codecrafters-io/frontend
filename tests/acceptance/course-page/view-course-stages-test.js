@@ -553,8 +553,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
     const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    assert.ok(filteredAnalyticsEventsNames .includes('collapsed_course_page_sidebar'), 'collapsed_course_page_sidebar event should be tracked');
-    assert.ok(filteredAnalyticsEventsNames .includes('expanded_course_page_sidebar'), 'expanded_course_page_sidebar event should be tracked');
+    assert.ok(filteredAnalyticsEventsNames.includes('collapsed_course_page_sidebar'), 'collapsed_course_page_sidebar event should be tracked');
+    assert.ok(filteredAnalyticsEventsNames.includes('expanded_course_page_sidebar'), 'expanded_course_page_sidebar event should be tracked');
   });
 
   test('it should have a working expand/collapse leaderboard button', async function (assert) {
@@ -575,8 +575,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
     const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    assert.ok(filteredAnalyticsEventsNames .includes('collapsed_course_page_leaderboard'), 'collapsed_course_page_leaderboard event should be tracked');
-    assert.ok(filteredAnalyticsEventsNames .includes('expanded_course_page_leaderboard'), 'expanded_course_page_leaderboard event should be tracked');
+    assert.ok(
+      filteredAnalyticsEventsNames.includes('collapsed_course_page_leaderboard'),
+      'collapsed_course_page_leaderboard event should be tracked',
+    );
+    assert.ok(filteredAnalyticsEventsNames.includes('expanded_course_page_leaderboard'), 'expanded_course_page_leaderboard event should be tracked');
   });
 
   test('it should show a screencasts link in the second stage if there are screencasts available', async function (assert) {
@@ -663,7 +666,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
     const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    assert.ok(filteredAnalyticsEventsNames .includes('clicked_monthly_challenge_banner'), 'clicked_monthly_challenge_banner event should be tracked');
+    assert.ok(filteredAnalyticsEventsNames.includes('clicked_monthly_challenge_banner'), 'clicked_monthly_challenge_banner event should be tracked');
   });
 
   test('stage should restrict admin access to user if user is course author and course is not authored by user', async function (assert) {
@@ -768,7 +771,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
     const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    assert.ok(filteredAnalyticsEventsNames .includes('clicked_cli_installation_link'), 'clicked_cli_installation_link event should be tracked');
+    assert.ok(filteredAnalyticsEventsNames.includes('clicked_cli_installation_link'), 'clicked_cli_installation_link event should be tracked');
   });
 
   test('header should have a badge that shows the remaining time in days', async function (assert) {
