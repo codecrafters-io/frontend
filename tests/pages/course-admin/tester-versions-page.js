@@ -13,7 +13,6 @@ export default create({
       scope: '[data-test-view-tester-version-button]',
     },
 
-
     provisionedTestRunnersCount: {
       hover: triggerable('mouseenter'),
       scope: '[data-test-provisioned-test-runners-count]',

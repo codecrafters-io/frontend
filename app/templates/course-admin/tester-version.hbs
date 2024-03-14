@@ -24,13 +24,15 @@
           </h3>
 
           <div class="prose prose-sm">
-            Created {{date-from-now @model.testerVersion.createdAt}}
+            Created
+            {{date-from-now @model.testerVersion.createdAt}}
           </div>
 
           {{#if @model.testerVersion.isActive}}
             <div class="flex items-center mt-6 gap-x-1 text-gray-600 text-sm">
               <span>
-                Activated {{date-from-now @model.testerVersion.lastActivatedAt}}
+                Activated
+                {{date-from-now @model.testerVersion.lastActivatedAt}}
               </span>
 
               {{#if @model.testerVersion.activator}}
@@ -97,7 +99,9 @@
 
     <div>
       {{#if (gt @model.testerVersion.provisionedTestRunnersCount 0)}}
-        The test runner has {{@model.testerVersion.provisionedTestRunnersCount}} provisioned test runners.
+        The test runner has
+        {{@model.testerVersion.provisionedTestRunnersCount}}
+        provisioned test runners.
       {{else}}
         The test runner has no provisioned test runners.
       {{/if}}

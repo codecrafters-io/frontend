@@ -34,7 +34,7 @@ Router.map(function () {
     this.route('stage-insights-index', { path: '/stage-insights' });
     this.route('stage-insights', { path: '/stage-insights/:stage_slug' });
     this.route('submissions');
-    this.route('tester-version', { path: '/tester-versions/:tester_version_id' })
+    this.route('tester-version', { path: '/tester-versions/:tester_version_id' });
     this.route('tester-versions');
     this.route('update', { path: '/updates/:update_id' });
     this.route('updates');

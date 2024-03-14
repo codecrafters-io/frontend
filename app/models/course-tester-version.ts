@@ -17,7 +17,7 @@ export default class CourseTesterVersionModel extends Model {
   declare deprovision: (this: Model, payload: unknown) => Promise<void>;
 
   get viewReleaseLink() {
-    return `https://github.com/codecrafters-io/${this.course.slug}-tester/releases/tag/${this.tagName}`
+    return `https://github.com/codecrafters-io/${this.course.slug}-tester/releases/tag/${this.tagName}`;
   }
 }
 
