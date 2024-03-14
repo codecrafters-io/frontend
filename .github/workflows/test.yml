@@ -14,8 +14,8 @@ concurrency:
 
 jobs:
   test:
-    runs-on: 'namespace-profile-frontend' # Change this to namespace-profile-frontend-light if we're low on namespace credits
-    # Change to this if we're low on namespace credits:
+    runs-on: depot-ubuntu-22.04-16
+    # Use cheaper machines for dependabot if we're low on namespace credits
     # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
     permissions: write-all
     timeout-minutes: 10
@@ -26,46 +26,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.17.1' # 18.18.0 causes problems?
-          cache: '' # We're caching manually below
-
-      - name: Compute shasum of package-lock.json
-        id: deps-sha
-        run: echo "sha=$(shasum -a 256 package-lock.json | awk '{print $1}')" >> $GITHUB_OUTPUT
-
-      # This step only returns cache-hit=true if **all** paths are cached.
-      # Since the paths include the shasum of package-lock.json, this'll force a npm ci run if deps change.
-      - name: Setup npm cache
-        id: cache-npm
-        uses: namespacelabs/nscloud-cache-action@v1
-        with:
-          path: |
-            ~/.npm
-            ./node_modules
-            ./.deps-sha-v3-${{ steps.deps-sha.outputs.sha }}
-
-      # Debugging
-      - run: ls -lah /cache
-
-      - name: Install dependencies
-        run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-
-      # If we had to re-install deps due to a cache miss, we write a new file to the dir so that it's persisted in the cache.
-      - name: 'Persist deps sha'
-        run: |
-          cd /cache
-
-          # First, we remove any old deps-sha folders from the cache
-          echo "Removing all files excluding current sha"
-          ls -A . | grep -E "^\.deps-sha-" | grep -v ${{ steps.deps-sha.outputs.sha }} | xargs -n1 rm -rf
-
-          # Then, we create a new file in the deps-sha folder so that it's persisted in the cache
-          echo "Creating file ./.deps-sha-v3-${{ steps.deps-sha.outputs.sha }}/dummy-file"
-          echo "cached" > ./.deps-sha-v3-${{ steps.deps-sha.outputs.sha }}/dummy-file
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-
-      # Debugging
-      - run: ls -lah /cache
+          cache: 'npm'
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
@@ -80,7 +41,6 @@ jobs:
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
       - run: npx ember --version
-
       - run: npx percy --version
 
       - run: npm run tailwind:build
@@ -135,7 +95,9 @@ jobs:
           seconds_between_github_reads: 0.01
 
   lint:
-    runs-on: 'namespace-profile-frontend' # Change this to namespace-profile-frontend-light if we're low on namespace credits
+    runs-on: depot-ubuntu-22.04-16
+    # Use cheaper machines for dependabot if we're low on namespace credits
+    # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
 
     steps:
       - uses: actions/checkout@v3
@@ -143,46 +105,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: '' # We're caching manually below
-
-      - name: Compute shasum of package-lock.json
-        id: deps-sha
-        run: echo "sha=$(shasum -a 256 package-lock.json | awk '{print $1}')" >> $GITHUB_OUTPUT
-
-      # This step only returns cache-hit=true if **all** paths are cached.
-      # Since the paths include the shasum of package-lock.json, this'll force a npm ci run if deps change.
-      - name: Setup npm cache
-        id: cache-npm
-        uses: namespacelabs/nscloud-cache-action@v1
-        with:
-          path: |
-            ~/.npm
-            ./node_modules
-            ./.deps-sha-v3-${{ steps.deps-sha.outputs.sha }}
-
-      # Debugging
-      - run: ls -lah /cache
-
-      - name: Install dependencies
-        run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-
-      # If we had to re-install deps due to a cache miss, we write a new file to the dir so that it's persisted in the cache.
-      - name: 'Persist deps sha'
-        run: |
-          cd /cache
-
-          # First, we remove any old deps-sha folders from the cache
-          echo "Removing all files excluding current sha"
-          ls -A . | grep -E "^\.deps-sha-" | grep -v ${{ steps.deps-sha.outputs.sha }} | xargs -n1 rm -rf
-
-          # Then, we create a new file in the deps-sha folder so that it's persisted in the cache
-          echo "Creating file ./.deps-sha-v3-${{ steps.deps-sha.outputs.sha }}/dummy-file"
-          echo "cached" > ./.deps-sha-v3-${{ steps.deps-sha.outputs.sha }}/dummy-file
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-
-      # Debugging
-      - run: ls -lah /cache
+          cache: 'npm'
 
       - run: npm run tailwind:build
       - run: npm run lint
