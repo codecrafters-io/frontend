@@ -37,13 +37,13 @@ function syncRepositoryStageList(server, repository) {
 
   debugConsole().groupCollapsed('syncRepositoryStageList');
 
+  const stageListItems = [];
+
   repository.course.stages.models.sortBy('position').forEach((stage) => {
     debugConsole().time(`stage ${stage.slug} (${stage.position})`);
     debugConsole().group(`${stage.slug} (${stage.position})`);
 
-    debugConsole().time('find stageListItem');
     let stageListItem = stageIdToStageListItem[stage.id];
-    debugConsole().timeEnd('find stageListItem');
 
     // If the stage has a primary extension, but the user doesn't have an activation for it, then destroy the stageListItem
     if (stage.primaryExtensionSlug && !activatedExtensionSlugs.includes(stage.primaryExtensionSlug)) {
@@ -62,10 +62,13 @@ function syncRepositoryStageList(server, repository) {
 
     if (!stageListItem) {
       debugConsole().log('creating stageListItem');
-      stageListItem = server.create('repository-stage-list-item', { list: repository.stageList, stage: stage });
+      // Passing listId here and then updating list.items later is faster (50ms vs 200ms) than creating the stageListItem with the list.items association
+      stageListItem = server.create('repository-stage-list-item', { listId: repository.stageList.id, stage: stage });
     } else {
       debugConsole().log('found existing stageListItem');
     }
+
+    stageListItems.push(stageListItem);
 
     debugConsole().time('find courseStageCompletion');
     const courseStageCompletion = repository.courseStageCompletions.models.findBy('courseStage.id', stage.id);
@@ -88,6 +91,8 @@ function syncRepositoryStageList(server, repository) {
     debugConsole().groupEnd();
     debugConsole().timeEnd(`stage ${stage.slug} (${stage.position})`);
   });
+
+  repository.stageList.update({ items: stageListItems });
 
   debugConsole().groupEnd();
 
