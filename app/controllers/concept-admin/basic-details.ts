@@ -6,6 +6,7 @@ import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class BasicDetailsController extends Controller {
   @service declare store: Store;
@@ -42,7 +43,7 @@ export default class BasicDetailsController extends Controller {
 
   flashSavedMessage = task({ keepLatest: true }, async (): Promise<void> => {
     this.wasSavedRecently = true;
-    await timeout(1000);
+    await timeout(config.environment === 'test' ? 0 : 1000);
     this.wasSavedRecently = false;
   });
 }
