@@ -25,7 +25,7 @@ module('Acceptance | course-admin | view-tester-version', function (hooks) {
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
-    assert.strictEqual(testerVersionPage.viewReleaseLink.href, 'https://github.com/codecrafters-io/redis/releases/tag/v10');
+    assert.strictEqual(testerVersionPage.viewReleaseLink.href, 'https://github.com/codecrafters-io/redis-tester/releases/tag/v10');
   });
 
   test('it properly renders buttons for activating and deprovisioning test runners', async function (assert) {
