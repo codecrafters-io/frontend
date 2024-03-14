@@ -8,8 +8,13 @@ export default class LeaderboardPoller extends Poller {
 
   async doPoll() {
     // Avoid thundering herd by waiting for a random amount of time (up to 1 second)
-    const maxJitterMs = config.environment === 'test' ? 10 : 1000;
-    await new Promise((resolve) => setTimeout(resolve, Math.floor(Math.random() * maxJitterMs)));
+    const maxJitterMs = 1000;
+    const delayMs = Math.floor(Math.random() * maxJitterMs);
+
+    // In tests, running this with a low value like 10ms doesn't work, it ends up waiting for ~300ms.
+    if (config.environment !== 'test') {
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
 
     if (this.team) {
       return await this.store.query('course-leaderboard-entry', {
