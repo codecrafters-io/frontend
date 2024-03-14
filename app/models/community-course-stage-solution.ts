@@ -1,14 +1,21 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseStageCommentModel from './course-stage-comment';
 import type CourseStageModel from './course-stage';
 import type LanguageModel from './language';
 import type UserModel from './user';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
 
-export default class CommunityCourseStageSolutionModel extends Model {
+/* eslint-disable ember/no-mixins */
+import ViewableMixin from 'codecrafters-frontend/mixins/viewable';
+
+export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
+
+  @service declare authenticator: AuthenticatorService;
 
   @belongsTo('course-stage', { async: false, inverse: 'communitySolutions' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
