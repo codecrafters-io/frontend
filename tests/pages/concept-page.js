@@ -8,12 +8,12 @@ export default createPage({
   _clickOnStepBackButton: clickable('[data-test-step-back-button]'),
 
   async clickOnContinueButton() {
-    this._clickOnContinueButton();
+    await this._clickOnContinueButton();
     await animationsSettled();
   },
 
   async clickOnStepBackButton() {
-    this._clickOnStepBackButton();
+    await this._clickOnStepBackButton();
     await animationsSettled();
   },
 

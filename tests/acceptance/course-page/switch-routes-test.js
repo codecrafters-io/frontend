@@ -16,17 +16,10 @@ module('Acceptance | course-page | switch-routes', function (hooks) {
     const python = this.server.schema.languages.findBy({ name: 'Python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    const repository = this.server.create('repository', 'withFirstStageCompleted', {
+    this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: currentUser,
-    });
-
-    redis.stages.models.forEach((courseStage) => {
-      this.server.create('submission', 'withSuccessStatus', {
-        repository: repository,
-        courseStage: courseStage,
-      });
     });
 
     await catalogPage.visit();

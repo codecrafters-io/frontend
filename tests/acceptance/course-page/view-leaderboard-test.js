@@ -5,7 +5,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -38,15 +38,12 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await finishRender();
-
-    await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
-    await finishRender();
+    await settled();
 
     this.server.schema.submissions.find(1).update({ status: 'failed' });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await finishRender();
+    await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 31', 'progress text must still be 0 if first stage is not completed');
@@ -54,7 +51,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await finishRender();
+    await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 31', 'progress text must still be 0 if first stage is not completed');
@@ -67,10 +64,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await finishRender();
-
-    await new Promise((resolve) => setTimeout(resolve, 101)); // Transition
-    await finishRender();
+    await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must still be 0 if first stage is not completed');

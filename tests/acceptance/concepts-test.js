@@ -394,10 +394,10 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.notOk(conceptPage.progress.isPresent, 'Remaining blocks left should not be shown if no progress is made');
 
     await conceptPage.clickOnContinueButton();
-    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly');
+    assert.contains(conceptPage.progress.text, '39 blocks left');
 
     await conceptPage.clickOnContinueButton();
-    assert.ok(conceptPage.progress.text.includes('37 blocks left'), 'Remaining blocks left should be reflected properly');
+    assert.contains(conceptPage.progress.text, '37 blocks left');
   });
 
   test('remaining blocks left is not present if user completed concept', async function (assert) {

@@ -8,7 +8,7 @@ import grepCourseData from 'codecrafters-frontend/mirage/course-fixtures/grep';
 import redisCourseData from 'codecrafters-frontend/mirage/course-fixtures/redis';
 import sqliteCourseData from 'codecrafters-frontend/mirage/course-fixtures/sqlite';
 
-export default function (server) {
+export default function (server, courses = ['redis', 'docker', 'dummy', 'git', 'grep', 'sqlite']) {
   server.create('user', {
     id: '63c51e91-e448-4ea9-821b-a80415f266d3',
     avatarUrl: 'https://github.com/rohitpaulk.png',
@@ -21,15 +21,27 @@ export default function (server) {
 
   createLanguages(server);
 
-  createCourseFromData(server, redisCourseData);
-  createCourseFromData(server, dockerCourseData);
-  createCourseFromData(server, gitCourseData);
-  createCourseFromData(server, sqliteCourseData);
-  createCourseFromData(server, grepCourseData);
-  createCourseFromData(server, dummyCourseData);
+  const courseToDataMap = {
+    docker: dockerCourseData,
+    dummy: dummyCourseData,
+    git: gitCourseData,
+    grep: grepCourseData,
+    redis: redisCourseData,
+    sqlite: sqliteCourseData,
+  };
+
+  courses.forEach((courseSlug) => {
+    if (!courseToDataMap[courseSlug]) {
+      throw new Error(`Course data not found for ${courseSlug}`);
+    }
+
+    createCourseFromData(server, courseToDataMap[courseSlug]);
+  });
 
   const redis = server.schema.courses.findBy({ slug: 'redis' });
 
   // TODO: Do this for all courses?
-  createCourseStageSolution(server, redis, 1);
+  if (redis) {
+    createCourseStageSolution(server, redis, 1);
+  }
 }

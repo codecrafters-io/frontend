@@ -12,12 +12,13 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
   setupAnimationTest(hooks);
 
   test('can disable extensions when viewing an extension stage', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signInAsStaff(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
       course: course,
@@ -34,21 +35,12 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is /stages/ext1:1');
 
-    // TODO: Triggers the recorddata error
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     await coursePage.sidebar.clickOnConfigureExtensionsButton();
-
-    // TODO: Triggers the recorddata error
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is /stages/2');
-
-    // TODO: Triggers the recorddata error
-    await new Promise((resolve) => setTimeout(resolve, 1000));
   });
 });

@@ -172,7 +172,7 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
   });
 
   test('paginates if more than three solutions', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
     this.server.create('user', {
@@ -189,47 +189,46 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
+    course.update({ releaseStatus: 'live' });
+
     for (let i = 1; i <= 7; i++) {
-      createCommunityCourseStageSolution(this.server, redis, 2, go);
+      createCommunityCourseStageSolution(this.server, course, 2, go);
     }
 
     for (let i = 1; i <= 7; i++) {
-      createCommunityCourseStageSolution(this.server, redis, 2, python);
+      createCommunityCourseStageSolution(this.server, course, 2, python);
     }
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3, 'expected 3 Go solutions to be present');
 
     await scrollTo('#course-page-scrollable-area', 0, 99999);
-    await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 5);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 5, 'expected 5 Go solutions to be present');
 
     await scrollTo('#course-page-scrollable-area', 0, 99999);
-    await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7, 'expected 7 Go solutions to be present');
 
     await scrollTo('#course-page-scrollable-area', 0, 99999);
-    await new Promise((resolve) => setTimeout(resolve, 200));
     await settled();
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7); // No more to load
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7, 'expected 7 Go solutions to be present'); // No more to load
 
     // Switching to other language must restart pagination
     await coursePage.codeExamplesTab.languageDropdown.toggle();
     await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3);
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3, 'expected 3 Python solutions to be present');
   });
 });

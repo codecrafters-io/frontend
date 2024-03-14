@@ -79,16 +79,16 @@ module('Acceptance | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has finished one course', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy', 'sqlite']);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
+    createTrackLeaderboardEntries(this.server, 'go', 'dummy');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withAllStagesCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
