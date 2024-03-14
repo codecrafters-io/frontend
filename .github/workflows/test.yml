@@ -14,8 +14,7 @@ concurrency:
 
 jobs:
   test:
-    # runs-on: depot-ubuntu-22.04-16 # TODO: Enable this
-    runs-on: ubuntu-latest-16-cores
+    runs-on: depot-ubuntu-22.04-16
     # Use cheaper machines for dependabot if we're low on namespace credits
     # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
     permissions: write-all
@@ -96,8 +95,7 @@ jobs:
           seconds_between_github_reads: 0.01
 
   lint:
-    # runs-on: depot-ubuntu-22.04-16 # TODO: Enable this
-    runs-on: ubuntu-latest-16-cores
+    runs-on: depot-ubuntu-22.04-16
     # Use cheaper machines for dependabot if we're low on namespace credits
     # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
 
