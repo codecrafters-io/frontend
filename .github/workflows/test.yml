@@ -28,7 +28,7 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - run: npm ci
+      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
@@ -109,6 +109,6 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - run: npm ci
+      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
       - run: npm run tailwind:build
       - run: npm run lint
