@@ -4,6 +4,7 @@ import Store from '@ember-data/store';
 import type CourseStageParticipationAnalysisModel from 'codecrafters-frontend/models/course-stage-participation-analysis';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import type CourseStageParticipationModel from 'codecrafters-frontend/models/course-stage-participation';
 
 export type ModelType = {
   stage: CourseStageModel;
@@ -19,7 +20,13 @@ export default class StageInsightsIndexRoute extends BaseRoute {
 
     (await this.store.query('course-stage-participation-analysis', {
       course_id: course.id,
+      include: 'stage',
     })) as unknown as CourseStageParticipationAnalysisModel[];
+
+    (await this.store.query('course-stage-participation', {
+      stage_id: stage.id,
+      include: 'user,language,stage',
+    })) as unknown as CourseStageParticipationModel[];
 
     return {
       stage: stage,

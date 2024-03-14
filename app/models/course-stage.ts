@@ -10,6 +10,7 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import type RepositoryModel from './repository';
 import Mustache from 'mustache';
 import type CourseStageParticipationAnalysisModel from './course-stage-participation-analysis';
+import type CourseStageParticipationModel from './course-stage-participation';
 
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false, inverse: 'stages' }) declare course: CourseModel;
@@ -19,6 +20,7 @@ export default class CourseStageModel extends Model {
   declare communitySolutions: CommunityCourseStageSolutionModel[];
 
   @hasMany('course-stage-language-guide', { async: false, inverse: 'courseStage' }) declare languageGuides: CourseStageLanguageGuideModel[];
+  @hasMany('course-stage-participation', { async: false, inverse: 'stage' }) declare participations: CourseStageParticipationModel[];
 
   @hasMany('course-stage-participation-analysis', { async: false, inverse: 'stage' })
   declare participationAnalyses: CourseStageParticipationAnalysisModel[];

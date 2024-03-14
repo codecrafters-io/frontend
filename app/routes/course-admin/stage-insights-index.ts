@@ -17,6 +17,7 @@ export default class StageInsightsIndexRoute extends BaseRoute {
 
     (await this.store.query('course-stage-participation-analysis', {
       course_id: course.id,
+      include: 'stage',
     })) as unknown as CourseStageParticipationAnalysisModel[];
 
     return {
