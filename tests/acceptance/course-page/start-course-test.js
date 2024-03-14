@@ -17,14 +17,14 @@ module('Acceptance | course-page | start-course', function (hooks) {
   setupAnimationTest(hooks);
 
   test('can start course', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/redis/introduction', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
 
     let baseRequestsCount = [
       'fetch courses (courses listing page)',
@@ -52,7 +52,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     );
     // assert.ok(coursePage.desktopHeader.statusIsInProgress, 'current status is in-progress');
 
-    await coursePage.createRepositoryCard.clickOnLanguageButton('JavaScript');
+    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
@@ -111,7 +111,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Git Push Received');
 
     await coursePage.repositorySetupCard.continueButton.click();
-    assert.strictEqual(currentURL(), '/courses/redis/stages/1?repo=1', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/1?repo=1', 'current URL is course page URL');
 
     await percySnapshot('Start Course - Waiting For Second Push', {
       percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',
@@ -124,22 +124,22 @@ module('Acceptance | course-page | start-course', function (hooks) {
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
-    assert.contains(currentURL(), '/courses/redis/introduction?repo=1', 'current URL includes repo ID');
+    assert.contains(currentURL(), '/courses/dummy/introduction?repo=1', 'current URL includes repo ID');
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await coursePage.desktopHeader.clickOnCloseCourseButton();
     await catalogPage.clickOnTrack('Python');
-    await trackPage.clickOnCourseCard('Build your own Redis →');
+    await trackPage.clickOnCourseCard('Build your own Dummy →');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
 
@@ -150,19 +150,19 @@ module('Acceptance | course-page | start-course', function (hooks) {
   });
 
   test('started and abandoned repo course card redirects correctly', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
     const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
     const python = this.server.schema.languages.findBy({ slug: 'python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    this.server.create('repository', { user, language: python, course: redis });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    this.server.create('repository', { user, language: python, course: course });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
-    assert.contains(currentURL(), '/courses/redis/introduction', 'has correct URL');
+    assert.contains(currentURL(), '/courses/dummy/introduction', 'has correct URL');
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
