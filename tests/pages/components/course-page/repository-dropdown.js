@@ -5,7 +5,7 @@ export default {
   activeRepositoryName: text('[data-test-active-repository-name]'),
 
   async click() {
-    this.clickRaw();
+    await this.clickRaw();
     await settled();
   },
 

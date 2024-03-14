@@ -13,15 +13,17 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
   setupAnimationTest(hooks);
 
   test('can try other language', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    course.update({ releaseStatus: 'live' });
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: course,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -38,12 +40,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     ].length;
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'first stage should be active');
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'The second stage', 'first stage should be active');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
@@ -57,7 +59,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     ].length;
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
-    assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=new');
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=new');
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Go');
@@ -73,7 +75,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
-    assert.strictEqual(currentURL(), '/courses/redis/introduction?repo=2', 'current URL is course page URL with repo query param');
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=2', 'current URL is course page URL with repo query param');
 
     await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
     await animationsSettled();
@@ -105,17 +107,19 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    course.update({ releaseStatus: 'live' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: course,
       language: python,
       name: 'Python #1',
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
     await coursePage.sidebar.clickOnStepListItem('Repository Setup');
 
