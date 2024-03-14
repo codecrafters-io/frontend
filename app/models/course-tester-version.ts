@@ -14,6 +14,11 @@ export default class CourseTesterVersionModel extends Model {
   @attr('string') declare tagName: string;
 
   declare activate: (this: Model, payload: unknown) => Promise<void>;
+  declare deprovision: (this: Model, payload: unknown) => Promise<void>;
+
+  get viewReleaseLink() {
+    return `https://github.com/codecrafters-io/${this.course.slug}-tester/releases/tag/${this.tagName}`
+  }
 }
 
 CourseTesterVersionModel.prototype.activate = memberAction({
@@ -23,4 +28,9 @@ CourseTesterVersionModel.prototype.activate = memberAction({
   after(response) {
     this.store.pushPayload(response);
   },
+});
+
+CourseTesterVersionModel.prototype.deprovision = memberAction({
+  path: 'deprovision',
+  type: 'post',
 });
