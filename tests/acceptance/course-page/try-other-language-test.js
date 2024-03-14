@@ -16,6 +16,8 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
+    console.log('testing');
+
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -25,11 +27,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       language: python,
       name: 'Python #1',
       user: currentUser,
-    });
-
-    this.server.create('course-stage-completion', {
-      repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[0],
     });
 
     let expectedRequestsCount = [

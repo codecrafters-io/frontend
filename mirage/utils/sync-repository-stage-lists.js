@@ -79,29 +79,45 @@ function syncRepositoryStageList(server, repository) {
       firstIncompleteStage = stage;
     }
 
-    debugConsole().time('update stageListItem');
-    stageListItem.update({
+    const stageListItemAttributes = {
       position: currentStageListItemPosition++,
       completedAt: courseStageCompletion ? courseStageCompletion.completedAt : null,
       isDisabled: isDisabled,
-      isCurrent: firstIncompleteStage && firstIncompleteStage.id === stage.id,
-    });
-    debugConsole().timeEnd('update stageListItem');
+      isCurrent: false,
+    };
+
+    // Update can be expensive and this is run for every GET /repositories call.
+    if (Object.keys(stageListItemAttributes).some((key) => stageListItemAttributes[key] !== stageListItem[key])) {
+      debugConsole().time('update stageListItem');
+      stageListItem.update(stageListItemAttributes);
+      debugConsole().timeEnd('update stageListItem');
+    }
 
     debugConsole().groupEnd();
     debugConsole().timeEnd(`stage ${stage.slug} (${stage.position})`);
   });
 
-  repository.stageList.update({ items: stageListItems });
+  const currentIds = repository.stageList.items.models
+    .toArray()
+    .map((item) => item.id)
+    .sort()
+    .join(',');
+
+  const newIds = stageListItems
+    .map((item) => item.id)
+    .sort()
+    .join(',');
+
+  if (currentIds !== newIds) {
+    debugConsole().time('update repository.stageList');
+    repository.stageList.update({ items: stageListItems });
+    debugConsole().timeEnd('update repository.stageList');
+  }
 
   debugConsole().groupEnd();
 
   if (!repository.stageList.items.models.find((item) => item.isCurrent)) {
     repository.stageList.items.models[repository.stageList.items.models.length - 1].update({ isCurrent: true });
-  }
-
-  if (!repository.stageList.items.models.find((item) => item.isCurrent)) {
-    throw new Error('Expected at least one currentStage to be present');
   }
 }
 
