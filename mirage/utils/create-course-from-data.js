@@ -1,5 +1,3 @@
-import createCourseStageSolution from './create-course-stage-solution';
-
 export default function createCourseFromData(server, courseData) {
   const course = server.create('course', {
     completionPercentage: courseData.completion_percentage,
