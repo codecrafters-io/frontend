@@ -127,7 +127,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
   @action
   handleDidUpdateCode() {
-    console.log('handleDidUpdateCode');
     this.highlightCode.perform();
   }
 
