@@ -51,23 +51,8 @@
     </div>
   </div>
   <div class="flex flex-none items-center gap-x-4">
-    {{#unless @courseTesterVersion.isActive}}
-      {{#if @courseTesterVersion.isLatest}}
-        <TertiaryButtonWithSpinner
-          @size="small"
-          @shouldShowSpinner={{this.isActivating}}
-          {{on "click" this.handleActivateButtonClick}}
-          data-test-activate-button
-        >Activate</TertiaryButtonWithSpinner>
-      {{else}}
-        <TertiaryButtonWithSpinner
-          @size="small"
-          @shouldShowSpinner={{this.isActivating}}
-          class="opacity-0 group-hover/version-list-item:opacity-100"
-          {{on "click" this.handleActivateButtonClick}}
-          data-test-activate-button
-        >Activate</TertiaryButtonWithSpinner>
-      {{/if}}
-    {{/unless}}
+    <TertiaryLinkButton @size="small" @route="course-admin.tester-version" @models={{array @courseTesterVersion.id}} data-test-view-tester-version-button>
+      View Tester Version
+    </TertiaryLinkButton>
   </div>
 </li>
