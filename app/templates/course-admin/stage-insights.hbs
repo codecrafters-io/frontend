@@ -25,8 +25,12 @@
     <div class="prose mt-4">
       <ul>
         <li>Total: {{this.participationAnalysis.participationsCount}}</li>
-        <li>Complete: {{this.participationAnalysis.completeParticipationsCount}} ({{this.participationAnalysis.completeParticipationsPercentage}}%)</li>
-        <li>Dropped off: {{this.participationAnalysis.droppedOffParticipationsCount}} ({{this.participationAnalysis.droppedOffParticipationsPercentage}}%)</li>
+        <li>Complete:
+          {{this.participationAnalysis.completeParticipationsCount}}
+          ({{this.participationAnalysis.completeParticipationsPercentage}}%)</li>
+        <li>Dropped off:
+          {{this.participationAnalysis.droppedOffParticipationsCount}}
+          ({{this.participationAnalysis.droppedOffParticipationsPercentage}}%)</li>
         <li>Active: {{this.participationAnalysis.activeParticipationsCount}} ({{this.participationAnalysis.activeParticipationsPercentage}}%)</li>
       </ul>
     </div>
@@ -40,12 +44,18 @@
       </div>
     </div>
 
-    <ul role="list" class="mt-4 divide-y divide-gray-100">
-      {{#each this.sortedDroppedOffParticipations as |participation|}}
-        <div>
-          <CourseAdmin::StageInsightsPage::ParticipationListItem @participation={{participation}} />
-        </div>
-      {{/each}}
-    </ul>
+    <div class="mt-4">
+      {{#if (eq this.participationAnalysis.droppedOffParticipationsCount 0)}}
+        <p class="py-12 text-sm text-gray-500 text-center">No records found.</p>
+      {{else}}
+        <ul role="list" class="divide-y divide-gray-100">
+          {{#each this.sortedDroppedOffParticipations as |participation|}}
+            <div>
+              <CourseAdmin::StageInsightsPage::ParticipationListItem @participation={{participation}} />
+            </div>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   </div>
 </div>
