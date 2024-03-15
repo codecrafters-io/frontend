@@ -10,7 +10,7 @@
 
     <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
       <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.completionRateStatistic}} />
-      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.medianAttemptsCountStatistic}} />
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.medianAttemptsToCompletionStatistic}} />
     </div>
 
     <div class="border-b pb-1 flex items-center gap-2 mt-6">
@@ -18,7 +18,7 @@
 
       <div>
         {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
-        <EmberTooltip @text="These are users who attempted this stage but didn't complete it." />
+        <EmberTooltip @text="These are users who attempted this stage more than once but didn't complete it." />
       </div>
     </div>
 
