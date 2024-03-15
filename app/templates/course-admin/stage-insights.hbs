@@ -14,6 +14,28 @@
     </div>
 
     <div class="border-b pb-1 flex items-center gap-2 mt-6">
+      <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Data Points Summary</h1>
+
+      <div>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        <EmberTooltip @text="These are the data points used to calculate the statistics above." />
+      </div>
+    </div>
+
+    <div class="prose mt-4">
+      <ul>
+        <li>Total: {{this.participationAnalysis.participationsCount}}</li>
+        <li>Complete:
+          {{this.participationAnalysis.completeParticipationsCount}}
+          ({{this.participationAnalysis.completeParticipationsPercentage}}%)</li>
+        <li>Dropped off:
+          {{this.participationAnalysis.droppedOffParticipationsCount}}
+          ({{this.participationAnalysis.droppedOffParticipationsPercentage}}%)</li>
+        <li>Active: {{this.participationAnalysis.activeParticipationsCount}} ({{this.participationAnalysis.activeParticipationsPercentage}}%)</li>
+      </ul>
+    </div>
+
+    <div class="border-b pb-1 flex items-center gap-2 mt-6">
       <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Dropped Off Users</h1>
 
       <div>
@@ -22,12 +44,18 @@
       </div>
     </div>
 
-    <ul role="list" class="mt-4 divide-y divide-gray-100">
-      {{#each this.sortedDroppedOffParticipations as |participation|}}
-        <div>
-          <CourseAdmin::StageInsightsPage::ParticipationListItem @participation={{participation}} />
-        </div>
-      {{/each}}
-    </ul>
+    <div class="mt-4">
+      {{#if (eq this.participationAnalysis.droppedOffParticipationsCount 0)}}
+        <p class="py-12 text-sm text-gray-500 text-center">No records found.</p>
+      {{else}}
+        <ul role="list" class="divide-y divide-gray-100">
+          {{#each this.sortedDroppedOffParticipations as |participation|}}
+            <div>
+              <CourseAdmin::StageInsightsPage::ParticipationListItem @participation={{participation}} />
+            </div>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   </div>
 </div>

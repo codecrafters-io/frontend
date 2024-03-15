@@ -33,10 +33,22 @@ A high number (> 3) suggests that the error messages or hints for this stage cou
 export default class CourseStageParticipationAnalysisModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'participationAnalyses' }) declare stage: CourseStageModel;
 
-  // The API always returns participationsCount, but the others might be null if there are no participations.
   @attr('number') declare participationsCount: number;
+  @attr('number') declare completeParticipationsCount: number;
+  @attr('number') declare droppedOffParticipationsCount: number;
+  @attr('number') declare activeParticipationsCount: number;
+
+  // These statistics might be null if there are no participations.
   @attr('number') declare attemptToCompletionPercentage: number | null;
   @attr('number') declare medianAttemptsToCompletion: number | null;
+
+  get activeParticipationsPercentage(): number {
+    return parseFloat((100 * (this.activeParticipationsCount / this.participationsCount)).toFixed(2));
+  }
+
+  get completeParticipationsPercentage(): number {
+    return parseFloat((100 * (this.completeParticipationsCount / this.participationsCount)).toFixed(2));
+  }
 
   get completionRateStatistic(): CourseStageParticipationAnalysisStatistic {
     if (this.attemptToCompletionPercentage === null) {
@@ -58,6 +70,10 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     }
   }
 
+  get droppedOffParticipationsPercentage(): number {
+    return parseFloat((100 * (this.droppedOffParticipationsCount / this.participationsCount)).toFixed(2));
+  }
+
   get medianAttemptsToCompletionStatistic(): CourseStageParticipationAnalysisStatistic {
     if (this.medianAttemptsToCompletion === null) {
       return {
@@ -68,8 +84,6 @@ export default class CourseStageParticipationAnalysisModel extends Model {
         explanationMarkdown: medianAttemptsToCompletionStatisticExplanationMarkdown,
       };
     } else {
-      console.log(this.medianAttemptsToCompletion, this.medianAttemptsToCompletion === 1);
-
       return {
         title: 'Median Attempts To Completion',
         label: pluralize(this.medianAttemptsToCompletion, 'attempt', { withoutCount: true }),
