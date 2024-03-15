@@ -3,7 +3,7 @@
   data-test-version-list-item
   role="button"
   @route="course-admin.submissions"
-  @query={{hash usernames=@participation.user.username}}
+  @query={{hash usernames=@participation.user.username languages=@participation.language.slug}}
   ...attributes
 >
   <div class="min-w-0">
@@ -13,6 +13,7 @@
         <span class="font-semibold text-gray-600">{{@participation.user.username}}</span>
         using
         <span class="font-semibold text-gray-600">{{@participation.language.name}}</span>
+        <span class="text-xs">({{or @participation.repository.languageProficiencyLevelHumanized "Unknown"}})</span>
       </div>
     </div>
   </div>
