@@ -19,7 +19,7 @@
   <div class="flex flex-none items-center gap-x-2">
     <div class="text-gray-400 text-xs">
       <span class="font-semibold text-gray-500">{{@participation.attemptsCount}}</span>
-      attempts
+      {{pluralize "attempt" count=@participation.attemptsCount}}
       <EmberTooltip @text="The number of times the user attempted this stage." />
     </div>
     <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">

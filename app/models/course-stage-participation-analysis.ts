@@ -1,5 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type CourseStageModel from './course-stage';
+import { pluralize } from 'ember-inflector';
 
 export type CourseStageParticipationAnalysisStatistic = {
   title: string;
@@ -23,7 +24,7 @@ Users who don't attempt the stage are excluded from this calculation.
 A well-designed stage should have a completion rate of >95%.
 `.trim();
 
-const medianAttemptsCountStatisticExplanationMarkdown = `
+const medianAttemptsToCompletionStatisticExplanationMarkdown = `
 The median number of attempts users have made to complete this stage.
 
 A high number (> 3) suggests that the error messages or hints for this stage could be improved.
@@ -35,7 +36,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
   // The API always returns participationsCount, but the others might be null if there are no participations.
   @attr('number') declare participationsCount: number;
   @attr('number') declare attemptToCompletionPercentage: number | null;
-  @attr('number') declare medianAttemptsCount: number | null;
+  @attr('number') declare medianAttemptsToCompletion: number | null;
 
   get completionRateStatistic(): CourseStageParticipationAnalysisStatistic {
     if (this.attemptToCompletionPercentage === null) {
@@ -57,22 +58,24 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     }
   }
 
-  get medianAttemptsCountStatistic(): CourseStageParticipationAnalysisStatistic {
-    if (this.medianAttemptsCount === null) {
+  get medianAttemptsToCompletionStatistic(): CourseStageParticipationAnalysisStatistic {
+    if (this.medianAttemptsToCompletion === null) {
       return {
-        title: 'Median Attempts Count',
+        title: 'Median Attempts To Completion',
         label: 'attempts',
         value: null,
         color: 'gray',
-        explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
+        explanationMarkdown: medianAttemptsToCompletionStatisticExplanationMarkdown,
       };
     } else {
+      console.log(this.medianAttemptsToCompletion, this.medianAttemptsToCompletion === 1);
+
       return {
-        title: 'Median Attempts Count',
-        label: 'attempts',
-        value: this.medianAttemptsCount.toString(),
-        color: this.medianAttemptsCount <= 3 ? 'green' : this.medianAttemptsCount <= 7 ? 'yellow' : 'red',
-        explanationMarkdown: medianAttemptsCountStatisticExplanationMarkdown,
+        title: 'Median Attempts To Completion',
+        label: pluralize(this.medianAttemptsToCompletion, 'attempt', { withoutCount: true }),
+        value: this.medianAttemptsToCompletion.toString(),
+        color: this.medianAttemptsToCompletion <= 3 ? 'green' : this.medianAttemptsToCompletion <= 7 ? 'yellow' : 'red',
+        explanationMarkdown: medianAttemptsToCompletionStatisticExplanationMarkdown,
       };
     }
   }
