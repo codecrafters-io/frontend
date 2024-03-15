@@ -36,7 +36,7 @@
     </div>
 
     <div class="border-b pb-1 flex items-center gap-2 mt-6">
-      <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Dropped Off Users</h1>
+      <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Dropped Off</h1>
 
       <div>
         {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
@@ -44,18 +44,28 @@
       </div>
     </div>
 
-    <div class="mt-4">
-      {{#if (eq this.participationAnalysis.droppedOffParticipationsCount 0)}}
-        <p class="py-12 text-sm text-gray-500 text-center">No records found.</p>
-      {{else}}
-        <ul role="list" class="divide-y divide-gray-100">
-          {{#each this.sortedDroppedOffParticipations as |participation|}}
-            <div>
-              <CourseAdmin::StageInsightsPage::ParticipationListItem @participation={{participation}} />
-            </div>
-          {{/each}}
-        </ul>
-      {{/if}}
+    <CourseAdmin::StageInsightsPage::ParticipationList @participations={{this.sortedDroppedOffParticipations}} class="mt-4" />
+
+    <div class="border-b pb-1 flex items-center gap-2 mt-6">
+      <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Active</h1>
+
+      <div>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        <EmberTooltip @text="These are users who attempted this stage in the past 7 days but haven't completed it yet." />
+      </div>
     </div>
+
+    <CourseAdmin::StageInsightsPage::ParticipationList @participations={{this.sortedActiveParticipations}} class="mt-4" />
+
+    <div class="border-b pb-1 flex items-center gap-2 mt-6">
+      <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Complete</h1>
+
+      <div>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        <EmberTooltip @text="These are users who completed this stage." />
+      </div>
+    </div>
+
+    <CourseAdmin::StageInsightsPage::ParticipationList @participations={{this.sortedCompleteParticipations}} class="mt-4" />
   </div>
 </div>

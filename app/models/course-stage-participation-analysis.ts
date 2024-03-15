@@ -64,7 +64,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
         title: 'Attempt to Completion Rate',
         label: 'completion rate',
         value: `${Math.floor(this.attemptToCompletionPercentage)}%`,
-        color: this.attemptToCompletionPercentage >= 95 ? 'green' : this.attemptToCompletionPercentage >= 0.85 ? 'yellow' : 'red',
+        color: this.attemptToCompletionPercentage >= 97 ? 'green' : this.attemptToCompletionPercentage >= 90 ? 'yellow' : 'red',
         explanationMarkdown: completionRateStatisticExplanationMarkdown,
       };
     }
