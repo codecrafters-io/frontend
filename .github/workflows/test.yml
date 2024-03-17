@@ -30,7 +30,7 @@ jobs:
 
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: latest
+          bun-version: 1.0.x
 
       - run: bun install --frozen-lockfile
       # - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
@@ -111,7 +111,7 @@ jobs:
 
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: latest
+          bun-version: 1.0.x
 
       - run: bun install --frozen-lockfile
       - run: bun run tailwind:build
