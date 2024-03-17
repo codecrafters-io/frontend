@@ -31,6 +31,7 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: 1.0.x
+          no-cache: true
 
       - run: bun install
       # - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
@@ -112,6 +113,7 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: 1.0.x
+          no-cache: true
 
       - run: bun install
       - run: bun run tailwind:build
