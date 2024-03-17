@@ -21,14 +21,19 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '18'
+      #     cache: 'npm'
+
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: '18'
-          cache: 'npm'
+          bun-version: latest
 
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+      - run: bun install --frozen-lockfile
+      # - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
@@ -42,12 +47,12 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
-      - run: npx ember --version
-      - run: npx percy --version
+      - run: bun run ember --version
+      - run: bun run percy --version
 
-      - run: npm run tailwind:build
+      - run: bun run tailwind:build
 
-      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name | tee test-results.xml
+      - run: bun run percy exec --quiet -- bun run ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name | tee test-results.xml >/dev/null 2>&1
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
@@ -62,8 +67,8 @@ jobs:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Remove percy logs
-        run: sed -i '/^\[percy\]/d' test-results.xml
+      # - name: Remove percy logs
+      #   run: sed -i '/^\[percy\]/d' test-results.xml
 
       - name: Remove sentry-webpack-plugin logs
         run: sed -i '/^\[sentry-webpack-plugin\]/d' test-results.xml
@@ -102,13 +107,12 @@ jobs:
     # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: '18'
-          cache: 'npm'
+          bun-version: latest
 
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
-      - run: npm run tailwind:build
-      - run: npm run lint
+      - run: bun install --frozen-lockfile
+      - run: bun run tailwind:build
+      - run: bun run lint
