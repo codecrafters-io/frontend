@@ -32,7 +32,7 @@ jobs:
         with:
           bun-version: 1.0.x
 
-      - run: bun install --frozen-lockfile
+      - run: bun install
       # - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - id: compute_percy_enable_for_branch
@@ -113,6 +113,6 @@ jobs:
         with:
           bun-version: 1.0.x
 
-      - run: bun install --frozen-lockfile
+      - run: bun install
       - run: bun run tailwind:build
       - run: bun run lint
