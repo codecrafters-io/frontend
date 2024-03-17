@@ -11,8 +11,8 @@
     "test": "tests"
   },
   "scripts": {
-    "tailwind:build": "npx tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css",
-    "tailwind:watch": "npx tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css --watch",
+    "tailwind:build": "bun run tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css",
+    "tailwind:watch": "bun run tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css --watch",
     "build": "bun --version && bun run tailwind:build && ember build --environment=production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
