@@ -203,6 +203,7 @@
       "lib/default-meta-tags"
     ]
   },
+  "packageManager": "bun@1.0.31",
   "trustedDependencies": [
     "@sentry/cli",
     "core-js",
