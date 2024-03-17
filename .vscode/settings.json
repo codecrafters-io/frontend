@@ -2,5 +2,6 @@
   "eslint.validate": [
     "glimmer-ts",
     "glimmer-js"
-  ]
+  ],
+  "npm.packageManager": "bun"
 }

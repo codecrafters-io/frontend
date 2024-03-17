@@ -46,4 +46,4 @@ refresh_course_fixtures:
 	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
 
 serve:
-	npm run start
+	bun run start
