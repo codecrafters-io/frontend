@@ -1,4 +1,6 @@
 {
+  "installCommand": "bun install --frozen-lockfile",
+  "buildCommand": "bun run build",
   "rewrites": [
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
