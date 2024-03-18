@@ -25,13 +25,14 @@
     <div class="prose mt-4">
       <ul>
         <li>Total: {{this.participationAnalysis.participationsCount}}</li>
-        <li>Complete:
-          {{this.participationAnalysis.completeParticipationsCount}}
-          ({{this.participationAnalysis.completeParticipationsPercentage}}%)</li>
-        <li>Dropped off:
-          {{this.participationAnalysis.droppedOffParticipationsCount}}
-          ({{this.participationAnalysis.droppedOffParticipationsPercentage}}%)</li>
-        <li>Active: {{this.participationAnalysis.activeParticipationsCount}} ({{this.participationAnalysis.activeParticipationsPercentage}}%)</li>
+        <ul>
+          <li>Complete:
+            {{this.participationAnalysis.completeParticipationsCount}}
+            ({{this.participationAnalysis.completeParticipationsPercentage}}%)</li>
+          <li>Dropped off:
+            {{this.participationAnalysis.droppedOffParticipationsCount}}
+            ({{this.participationAnalysis.droppedOffParticipationsPercentage}}%)</li>
+        </ul>
       </ul>
     </div>
 
@@ -39,13 +40,6 @@
       @title="Dropped Off"
       @tooltipText="These are users who attempted this stage more than once but didn't complete it."
       @participations={{this.sortedDroppedOffParticipations}}
-      class="mt-6"
-    />
-
-    <CourseAdmin::StageInsightsPage::ParticipationListSection
-      @title="Active"
-      @tooltipText="These are users who attempted this stage in the past 7 days but haven't completed it yet."
-      @participations={{this.sortedActiveParticipations}}
       class="mt-6"
     />
 
