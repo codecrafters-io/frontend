@@ -52,8 +52,6 @@ module('Acceptance | view-user-profile', function (hooks) {
       completedStageSlugs: docker.stages.models.sortBy('position').slice(0, 5).mapBy('slug').join(','),
     });
 
-    console.log(docker.stages.models.sortBy('position').slice(0, 5).mapBy('slug').join(','));
-
     this.server.create('course-participation', {
       course: docker,
       language: go,
