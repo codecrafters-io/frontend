@@ -1,0 +1,23 @@
+<div class="border-b pb-1 flex items-center justify-between" ...attributes>
+  <div class="flex items-center gap-2">
+    <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">{{@title}}</h1>
+
+    <div>
+      {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+      <EmberTooltip @text={{@tooltipText}} />
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="text-xs text-gray-400">
+      Include single attempts
+    </div>
+
+    <Toggle
+      @isOn={{this.shouldShowParticipationsWithSingleAttempt}}
+      {{on "click" this.handleShowParticipationsWithSingleAttemptToggle}}
+      class="flex-shrink-0"
+    />
+  </div>
+</div>
+
+<CourseAdmin::StageInsightsPage::ParticipationList @participations={{this.filteredParticipations}} class="mt-4" />

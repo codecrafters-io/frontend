@@ -11,21 +11,21 @@ export default class StageInsightsController extends Controller {
   get sortedActiveParticipations() {
     return this.model.stage.participations
       .filter((participation) => participation.status === 'active')
-      .sortBy('lastAttemptAt')
+      .sortBy('firstAttemptAt')
       .reverse();
   }
 
   get sortedCompleteParticipations() {
     return this.model.stage.participations
       .filter((participation) => participation.status === 'complete')
-      .sortBy('lastAttemptAt')
+      .sortBy('firstAttemptAt')
       .reverse();
   }
 
   get sortedDroppedOffParticipations() {
     return this.model.stage.participations
       .filter((participation) => participation.status === 'dropped_off')
-      .sortBy('lastAttemptAt')
+      .sortBy('firstAttemptAt')
       .reverse();
   }
 }
