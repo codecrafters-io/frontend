@@ -113,7 +113,7 @@
     "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-mirage": "^3.0.3",
-    "ember-cli-page-object": "^2.2.3",
+    "ember-cli-page-object": "^2.3.0",
     "ember-cli-postcss": "^8.2.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-string-helpers": "^6.1.0",
