@@ -10,7 +10,7 @@ export default class CourseParticipationModel extends Model {
 
   @attr('date') declare completedAt: Date | null;
   @attr('date') declare lastSubmissionAt: Date;
-  @attr('string') declare completedStageSlugs: string[] | null;
+  @attr('string') declare completedStageSlugs: string;
 
   get isCompleted(): boolean {
     return !!this.completedAt;
