@@ -27,7 +27,7 @@ function syncRepositoryStageList(server, repository) {
   let currentStageListItemPosition = 1;
   let firstIncompleteStage = null;
 
-  const activatedExtensionSlugs = repository.courseExtensionActivations.models.map((activation) => activation.extension.slug);
+  const activatedExtensionSlugs = repository.extensionActivations.models.map((activation) => activation.extension.slug);
 
   const stageIdToStageListItem = {};
 
