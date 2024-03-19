@@ -8,7 +8,6 @@ export default class RepositoryStageListItemModel extends Model {
 
   @attr('date') declare completedAt: Date | null; // If the user completed the stage, when they did
   @attr('boolean') declare isCurrent: boolean; // Whether this is the current stage
-  @attr('boolean') declare isDisabled: boolean;
   @attr('number') declare position: number; // The position of the stage in the list
 
   get isBaseStage(): boolean {
@@ -17,10 +16,6 @@ export default class RepositoryStageListItemModel extends Model {
 
   get isCompleted(): boolean {
     return this.completedAt !== null;
-  }
-
-  get isEnabled(): boolean {
-    return !this.isDisabled;
   }
 
   get isExtensionStage(): boolean {
