@@ -29,7 +29,7 @@ export default class ExtensionCardComponent extends Component<Signature> {
   @tracked unsavedIsActivatedValue: boolean | null = null;
 
   get activations() {
-    return this.args.repository.courseExtensionActivations.filter((activation) => activation.extension === this.args.extension);
+    return this.args.repository.extensionActivations.filter((activation) => activation.extension === this.args.extension);
   }
 
   get isActivated(): boolean {
