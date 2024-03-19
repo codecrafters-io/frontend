@@ -39,7 +39,7 @@ export class StepList {
     if (!this.repository.stageList) {
       this.repository.course.sortedBaseStages.forEach((stage) => {
         // TODO: Find better way around this?
-        const fakeStageListItem = { stage: stage, isDisabled: false } as RepositoryStageListItemModel;
+        const fakeStageListItem = { stage: stage } as RepositoryStageListItemModel;
         steps.push(new CourseStageStep(this.repository, fakeStageListItem));
       });
     } else {
@@ -65,7 +65,7 @@ export class StepList {
         const steps: Step[] = [];
 
         extension.sortedStages.forEach((stage) => {
-          const fakeStageListItem = { stage, isDisabled: false } as RepositoryStageListItemModel;
+          const fakeStageListItem = { stage } as RepositoryStageListItemModel;
           steps.push(new CourseStageStep(this.repository, fakeStageListItem));
         });
 
