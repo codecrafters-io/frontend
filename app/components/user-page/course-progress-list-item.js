@@ -15,15 +15,7 @@ export default class CourseProgressListItemComponent extends Component {
   }
 
   get completedStagesCount() {
-    let stagesCount = 0;
-
-    this.args.courseParticipations.mapBy('completedStageSlugs').forEach((stage_list) => {
-      if (stage_list) {
-        stagesCount = Math.max(stagesCount, stage_list.split(',').uniq().length);
-      }
-    });
-
-    return stagesCount;
+    return Math.max(...this.args.courseParticipations.mapBy('completedStageSlugs').map((stage_list) => stage_list.length));
   }
 
   get course() {
