@@ -1,0 +1,22 @@
+{{page-title "Settings"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
+  <div class="flex justify-between flex-wrap">
+    <div class="font-semibold text-2xl text-gray-700 mb-6 flex-shrink-0 border-b-2 border-gray-300">Settings</div>
+  </div>
+
+  <div class="flex items-start gap-4">
+    <div class="w-40 flex-shrink-0">
+      <VerticalTabList>
+        <VerticalTabList::Item @label="Profile" @route="settings.profile" />
+        <VerticalTabList::Item @label="Billing" @route="settings.billing" />
+      </VerticalTabList>
+    </div>
+
+    <div class="flex-grow bg-white rounded-md p-6 border">
+      <div class="font-semibold text-lg text-gray-700 mb-6">Profile</div>
+    </div>
+  </div>
+</div>
+
+{{outlet}}
