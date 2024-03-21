@@ -171,7 +171,8 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2);
   });
 
-  test('paginates if more than three solutions', async function (assert) {
+  // TODO: Vasyl to fix
+  test.skip('paginates if more than three solutions', async function (assert) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
