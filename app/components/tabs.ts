@@ -6,6 +6,7 @@ type Signature = {
     tabs: {
       slug: string;
       title: string;
+      icon?: string;
     }[];
   };
 
