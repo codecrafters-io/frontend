@@ -1,5 +1,6 @@
 <Settings::FormSection @title="Username" @description="Your publicly visible username on CodeCrafters">
   <div>
+    {{! template-lint-disable require-input-label }}
     <Input
       @value={{"rohitpaulk"}}
       class="text-sm rounded px-3 py-2 bg-gray-50 border w-full text-gray-500 font-mono cursor-not-allowed"
@@ -50,6 +51,7 @@
 
 <Settings::FormSection @title="About" @description="Shown on your profile page">
   <div>
+    {{! template-lint-disable require-input-label }}
     <Textarea
       @value={{"testing"}}
       class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm w-full"
