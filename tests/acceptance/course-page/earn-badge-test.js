@@ -31,7 +31,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
-    const submission = this.server.create('submission', 'withSuccessStatus', {
+    const submission = this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[0],
     });

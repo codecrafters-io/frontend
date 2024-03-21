@@ -32,7 +32,7 @@ export default class TestResultsBarComponent extends Component<Signature> {
 
       if (courseStageStep.courseStage.isFirst) {
         return ['logs'];
-      } else if (courseStageStep.courseStage.isSecond) {
+      } else if (courseStageStep.courseStage.isSecond && courseStageStep.testsStatus !== 'passed') {
         return ['logs', 'autofix'];
       } else {
         if (this.authenticator.currentUser?.isStaff) {
