@@ -12,7 +12,7 @@ export default class SettingsController extends Controller {
   get tabs() {
     return [
       { route: 'settings.profile', label: 'Profile' },
-      { route: 'settings.billing', label: 'Billing' },
+      { route: 'settings.account', label: 'Account' },
     ];
   }
 }

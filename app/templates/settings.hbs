@@ -10,8 +10,9 @@
   <div class="flex items-start gap-4">
     <div class="w-40 flex-shrink-0">
       <VerticalTabList>
-        <VerticalTabList::Item @label="Profile" @route="settings.profile" />
-        <VerticalTabList::Item @label="Billing" @route="settings.billing" />
+        {{#each this.tabs as |tab|}}
+          <VerticalTabList::Item @label={{tab.label}} @route={{tab.route}} />
+        {{/each}}
       </VerticalTabList>
     </div>
 

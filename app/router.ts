@@ -73,7 +73,7 @@ Router.map(function () {
 
   this.route('settings', function () {
     this.route('profile');
-    this.route('billing');
+    this.route('account');
   });
 
   this.route('team', { path: '/teams/:team_id' });
