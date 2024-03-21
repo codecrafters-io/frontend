@@ -1,3 +1,24 @@
 <Alert @type="success" @icon="check-circle" class="mb-4 has-prism-highlighting" ...attributes {{highlight-code-blocks this.instructionsMarkdown}}>
-  {{markdown-to-html this.instructionsMarkdown}}
+  <h3>Tests passed!</h3>
+
+  <p>
+    You can either refactor your code or move on to the next stage.
+  </p>
+
+  <p>
+    <b>To refactor your code</b>:
+  </p>
+
+  {{markdown-to-html this.runTestsInstructionsMarkdown}}
+
+  <p>
+    <b>To move on to the next stage, click on the button below</b>:
+  </p>
+
+  <PrimaryButtonWithSpinner @size="large" @shouldShowSpinner={{true}} class="mr-2">
+    <div class="flex items-center">
+      {{svg-jar "check-circle" class="w-6 h-6 mr-1.5"}}
+      Mark stage as complete
+    </div>
+  </PrimaryButtonWithSpinner>
 </Alert>

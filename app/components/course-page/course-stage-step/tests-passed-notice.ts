@@ -1,22 +1,20 @@
 import Component from '@glimmer/component';
+import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
 type Signature = {
   Element: HTMLDivElement;
+
+  Args: {
+    submission: SubmissionModel;
+  };
 };
 
 export default class TestsPassedNoticeComponent extends Component<Signature> {
   get instructionsMarkdown() {
     return `
-### Tests passed!
-
-You can either refactor your code or move on to the next stage.
-
 **To refactor your code**:
 
-\`\`\`bash
-# ... Make changes to your code, then run the tests again:
-$ codecrafters test
-\`\`\`
+${this.runTestsInstructionsMarkdown}
 
 **To move on to the next stage**:
 
@@ -26,6 +24,26 @@ $ git commit -m "pass stage" # any msg
 $ git push origin master
 \`\`\`
 `;
+  }
+
+  get runTestsInstructionsMarkdown() {
+    if (this.args.submission.wasSubmittedViaCli) {
+      return `
+\`\`\`bash
+# ... Make changes to your code, then run the tests again:
+$ codecrafters test
+\`\`\`
+`;
+    } else {
+      return `
+\`\`\`bash
+# ... Make changes to your code, then run the tests again:
+$ git add .
+$ git commit -m "<any msg>"
+$ git push origin master
+\`\`\`
+`;
+    }
   }
 }
 
