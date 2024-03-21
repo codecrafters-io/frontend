@@ -1,0 +1,23 @@
+{{page-title "Settings"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
+  <div class="mb-6 inline-flex border-b-2 border-gray-200 text-xl">
+    <div class="font-semibold text-gray-700">Settings</div>
+    <div class="font-semibold text-gray-300 mx-2">&gt;</div>
+    <div class="font-semibold text-gray-700">{{this.activeTab.label}}</div>
+  </div>
+
+  <div class="flex items-start gap-4">
+    <div class="w-40 flex-shrink-0">
+      <VerticalTabList>
+        {{#each this.tabs as |tab|}}
+          <VerticalTabList::Item @label={{tab.label}} @route={{tab.route}} />
+        {{/each}}
+      </VerticalTabList>
+    </div>
+
+    <div class="flex-grow bg-white rounded-md p-6 border">
+      {{outlet}}
+    </div>
+  </div>
+</div>

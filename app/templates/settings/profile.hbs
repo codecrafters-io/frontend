@@ -1,0 +1,74 @@
+<Settings::FormSection @title="Username" @description="Your publicly visible username on CodeCrafters">
+  <div>
+    {{! template-lint-disable require-input-label }}
+    <Input
+      @value={{"rohitpaulk"}}
+      class="text-sm rounded px-3 py-2 bg-gray-50 border w-full text-gray-500 font-mono cursor-not-allowed"
+      placeholder="cool_username"
+      disabled={{true}}
+    />
+
+    <EmberTooltip @text="This value is synced with your GitHub account. Click on the refresh button below to update your username." />
+  </div>
+  <div class="text-gray-400 text-xs mt-1">
+    This value is synced with your GitHub account.
+  </div>
+  <TertiaryButtonWithSpinner @size="extra-small" class="mt-4" @shouldShowSpinner={{false}}>
+    <div class="flex items-center gap-1">
+      {{svg-jar "refresh" class="w-4 h-4 text-gray-400"}}
+      Refresh from GitHub
+    </div>
+  </TertiaryButtonWithSpinner>
+</Settings::FormSection>
+
+{{! This isn't implemented yet }}
+{{!-- <Settings::FormDivider />
+
+<Settings::FormSection @title="Anonymous Mode" @description="Hide your GitHub username & avatar">
+  <:belowDescription>
+    <Pill @color="green">
+      {{svg-jar "shield-check" class="w-4 h-4 text-green-500 mr-1"}}
+      Members only
+
+      <EmberTooltip @text="This feature is only available to CodeCrafters members." />
+    </Pill>
+  </:belowDescription>
+  <:default>
+    <div class="flex items-center gap-3">
+      <Toggle @isOn={{true}} />
+      <div class="text-gray-600 text-sm">Enable anonymous mode</div>
+    </div>
+    <div class="text-gray-400 text-xs mt-4 leading-relaxed">
+      When anonymous mode is enabled, your GitHub username &amp; avatar will be hidden on CodeCrafters. Your code examples &amp; profile page will
+      still be visible to the public, but under a random username.
+    </div>
+  </:default>
+</Settings::FormSection>
+
+--}}
+
+<Settings::FormDivider />
+
+<Settings::FormSection @title="About" @description="Shown on your profile page">
+  <div>
+    {{! template-lint-disable require-input-label }}
+    <Textarea
+      @value={{"testing"}}
+      class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm w-full"
+      placeholder="Test"
+      rows="3"
+      required
+      {{autoresize "testing"}}
+      {{markdown-input}}
+    />
+  </div>
+  <div class="text-gray-400 text-xs mt-1">
+    Displayed on your profile page. Markdown supported.
+  </div>
+  <TertiaryLinkButton @size="extra-small" class="mt-4" @route="user" @models={{array "rohitpaulk"}} @shouldOpenInNewTab={{true}}>
+    <div class="flex items-center gap-1">
+      {{svg-jar "external-link" class="w-4 h-4 text-gray-400"}}
+      Preview
+    </div>
+  </TertiaryLinkButton>
+</Settings::FormSection>
