@@ -11,6 +11,7 @@ export interface BaseLinkButtonSignature {
     model?: string;
     models?: string[];
     query?: Record<string, null | string>;
+    shouldOpenInNewTab?: boolean;
   };
 
   Blocks: {

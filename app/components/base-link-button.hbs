@@ -2,6 +2,7 @@
   @route={{@route}}
   @models={{this.normalizedModels}}
   @query={{this.query}}
+  target={{if @shouldOpenInNewTab '_blank'}}
   class="inline-block border
     {{if this.sizeIsExtraSmall 'px-2 py-1'}}
     {{if this.sizeIsSmall 'px-3 py-1.5'}}
