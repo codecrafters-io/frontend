@@ -3,7 +3,11 @@
 
   {{#if @shouldShowSpinner}}
     <svg
-      class="animate-spin {{if (eq @size 'small') 'ml-2 w-4' 'ml-3 w-5'}}"
+      class="animate-spin
+        {{if this.sizeIsExtraSmall 'ml-1.5 w-3'}}
+        {{if this.sizeIsSmall 'ml-2 w-4'}}
+        {{if this.sizeIsRegular 'ml-3 w-5'}}
+        {{if this.sizeIsLarge 'ml-3 w-5'}}"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
