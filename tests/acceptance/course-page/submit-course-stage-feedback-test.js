@@ -27,7 +27,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     // Stages 2 and 3 are completed
     [2, 3].forEach((stageNumber) => {
-      this.server.create('submission', 'withSuccessStatus', {
+      this.server.create('submission', 'withStageCompletion', {
         repository: repository,
         courseStage: redis.stages.models.sortBy('position')[stageNumber - 1],
       });
@@ -92,7 +92,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       user: currentUser,
     });
 
-    this.server.create('submission', 'withSuccessStatus', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
     });
@@ -110,7 +110,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'Nice work! How did we do?');
 
     const completeStage = async (stageNumber) => {
-      this.server.create('submission', 'withSuccessStatus', {
+      this.server.create('submission', 'withStageCompletion', {
         repository: repository,
         courseStage: redis.stages.models.sortBy('position')[stageNumber - 1], // Stage #3
       });
@@ -157,7 +157,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       user: currentUser,
     });
 
-    this.server.create('submission', 'withSuccessStatus', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
     });

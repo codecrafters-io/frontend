@@ -76,7 +76,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
 
-    this.server.create('submission', 'withSuccessStatus', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
     });
@@ -107,7 +107,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
-    const submission = this.server.create('submission', 'withSuccessStatus', {
+    const submission = this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[0],
     });
@@ -154,7 +154,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    this.server.create('submission', 'withSuccessStatus', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
     });
@@ -182,7 +182,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    this.server.create('submission', 'withSuccessStatus', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
     });
@@ -229,7 +229,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    this.server.create('submission', 'withSuccessStatus', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
     });

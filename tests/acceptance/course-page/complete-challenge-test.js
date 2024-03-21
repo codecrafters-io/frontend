@@ -21,17 +21,10 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     const python = this.server.schema.languages.findBy({ name: 'Python' });
     const docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
-    const repository = this.server.create('repository', 'withFirstStageCompleted', {
+    this.server.create('repository', 'withAllStagesCompleted', {
       course: docker,
       language: python,
       user: currentUser,
-    });
-
-    docker.stages.models.forEach((courseStage) => {
-      this.server.create('submission', 'withSuccessStatus', {
-        repository: repository,
-        courseStage: courseStage,
-      });
     });
 
     await catalogPage.visit();

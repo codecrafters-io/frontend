@@ -41,7 +41,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 4, 'step list has 4 items both extensions are disabled');
 
-    this.server.create('submission', 'withSuccessStatus', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
@@ -110,7 +110,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     // Complete all stages for extension 1
     course.stages.models.forEach((stage) => {
       if (stage.primaryExtensionSlug === 'ext1') {
-        this.server.create('submission', 'withSuccessStatus', {
+        this.server.create('submission', 'withStageCompletion', {
           repository,
           courseStage: stage,
           createdAt: repository.createdAt, // 1s

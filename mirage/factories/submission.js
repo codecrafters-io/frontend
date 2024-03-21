@@ -66,7 +66,7 @@ export default Factory.extend({
     },
   }),
 
-  withSuccessStatus: trait({
+  withStageCompletion: trait({
     status: 'success',
 
     afterCreate(submission, server) {
@@ -83,6 +83,18 @@ export default Factory.extend({
           completedAt: submission.createdAt,
         });
       }
+    },
+  }),
+
+  withSuccessStatus: trait({
+    status: 'success',
+
+    afterCreate(submission, server) {
+      server.create('submission-evaluation', {
+        submission,
+        createdAt: new Date(submission.createdAt.getTime() + 4219), // 4.219s
+        logsFileUrl: `${config.x.backendUrl}/api/v1/fake-submission-logs?type=success`,
+      });
     },
   }),
 

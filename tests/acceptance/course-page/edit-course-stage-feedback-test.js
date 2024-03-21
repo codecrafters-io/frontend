@@ -26,7 +26,7 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
 
     // Stages 2 and 3 are completed
     [2, 3].forEach((stageNumber) => {
-      this.server.create('submission', 'withSuccessStatus', {
+      this.server.create('submission', 'withStageCompletion', {
         repository: repository,
         courseStage: redis.stages.models.sortBy('position')[stageNumber - 1],
       });

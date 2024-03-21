@@ -36,7 +36,7 @@ export default Factory.extend({
           return; // Not a base stage
         }
 
-        server.create('submission', 'withSuccessStatus', {
+        server.create('submission', 'withStageCompletion', {
           repository,
           courseStage: stage,
           createdAt: repository.createdAt, // 1s
@@ -48,7 +48,7 @@ export default Factory.extend({
   withAllStagesCompleted: trait({
     afterCreate(repository, server) {
       repository.course.stages.models.forEach((stage) => {
-        server.create('submission', 'withSuccessStatus', {
+        server.create('submission', 'withStageCompletion', {
           repository,
           courseStage: stage,
           createdAt: repository.createdAt, // 1s
@@ -65,7 +65,7 @@ export default Factory.extend({
         createdAt: repository.createdAt,
         status: 'failure',
       });
-      server.create('submission', 'withSuccessStatus', {
+      server.create('submission', 'withStageCompletion', {
         repository,
         courseStage: repository.course.stages.models.sortBy('position')[0],
         createdAt: new Date(repository.createdAt.getTime() + 1000), // 1s
