@@ -41,6 +41,7 @@ export default class UserModel extends Model {
   @attr('date') declare lastFreeUsageGrantExpiresAt: Date | null;
   @attr('string') declare name: string;
   @attr('string') declare primaryEmailAddress: string;
+  @attr('string') declare profileDescriptionMarkdown: string;
   @attr('string') declare username: string;
   @attr('date') declare vipStatusExpiresAt: Date | null;
 
