@@ -25,7 +25,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: redis,
       language: python,
       user: currentUser,
-      currentStage: redis.stages.models.sortBy('position')[1],
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 1).mapBy('slug').join(','),
       lastSubmissionAt: new Date('2022-10-10'),
     });
 
@@ -33,7 +33,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: redis,
       language: go,
       user: currentUser,
-      currentStage: redis.stages.models.sortBy('position')[5],
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug').join(','),
       lastSubmissionAt: new Date('2021-10-10'),
     });
 
@@ -41,7 +41,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: grep,
       language: go,
       user: currentUser,
-      currentStage: grep.stages.models.sortBy('position')[5],
+      completedStageSlugs: grep.stages.models.sortBy('position').slice(0, 5).mapBy('slug').join(','),
       lastSubmissionAt: new Date('2020-10-10'),
     });
 
@@ -49,7 +49,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: docker,
       language: python,
       user: currentUser,
-      currentStage: docker.stages.models.sortBy('position')[5],
+      completedStageSlugs: docker.stages.models.sortBy('position').slice(0, 5).mapBy('slug').join(','),
     });
 
     this.server.create('course-participation', {
