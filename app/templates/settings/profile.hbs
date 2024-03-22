@@ -2,23 +2,27 @@
   <div>
     {{! template-lint-disable require-input-label }}
     <Input
-      @value={{"rohitpaulk"}}
+      @value={{@model.user.username}}
       class="text-sm rounded px-3 py-2 bg-gray-50 border w-full text-gray-500 font-mono cursor-not-allowed"
       placeholder="cool_username"
       disabled={{true}}
     />
 
-    <EmberTooltip @text="This value is synced with your GitHub account. Click on the refresh button below to update your username." />
+    {{!-- TODO: Bring this back once implemented }}
+    {{!-- <EmberTooltip @text="This value is synced with your GitHub account. Click on the refresh button below to update your username." /> --}}
+    <EmberTooltip @text="This value is synced with your GitHub account." />
   </div>
   <div class="text-gray-400 text-xs mt-1">
     This value is synced with your GitHub account.
   </div>
-  <TertiaryButtonWithSpinner @size="extra-small" class="mt-4" @shouldShowSpinner={{false}}>
+
+  {{!-- TODO: Bring this back once implemented }}
+  {{!-- <TertiaryButtonWithSpinner @size="extra-small" class="mt-4" @shouldShowSpinner={{false}}>
     <div class="flex items-center gap-1">
       {{svg-jar "refresh" class="w-4 h-4 text-gray-400"}}
       Refresh from GitHub
     </div>
-  </TertiaryButtonWithSpinner>
+  </TertiaryButtonWithSpinner> --}}
 </Settings::FormSection>
 
 {{! This isn't implemented yet }}
@@ -53,19 +57,34 @@
   <div>
     {{! template-lint-disable require-input-label }}
     <Textarea
-      @value={{"testing"}}
+      @value={{@model.user.profileDescriptionMarkdown}}
       class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm w-full"
       placeholder="Test"
       rows="3"
       required
-      {{autoresize "testing"}}
+      {{autoresize @model.user.profileDescriptionMarkdown}}
       {{markdown-input}}
+      {{on "blur" this.handleProfileDescriptionMarkdownUpdated}}
     />
   </div>
-  <div class="text-gray-400 text-xs mt-1">
-    Displayed on your profile page. Markdown supported.
+
+  <div class="text-xs mt-1">
+    {{#if this.isUpdatingProfileDescriptionMarkdown}}
+      <span class="text-teal-500 font-semibold">
+        Saving...
+      </span>
+    {{else if this.profileDescriptionMarkdownWasUpdatedRecently}}
+      <span class="text-teal-500 font-semibold">
+        Saved!
+      </span>
+    {{else}}
+      <span class="text-gray-400">
+        Displayed on your profile page. Markdown supported.
+      </span>
+    {{/if}}
   </div>
-  <TertiaryLinkButton @size="extra-small" class="mt-4" @route="user" @models={{array "rohitpaulk"}} @shouldOpenInNewTab={{true}}>
+
+  <TertiaryLinkButton class="mt-4" @size="extra-small" @route="user" @models={{array "rohitpaulk"}} @shouldOpenInNewTab={{true}}>
     <div class="flex items-center gap-1">
       {{svg-jar "external-link" class="w-4 h-4 text-gray-400"}}
       Preview
