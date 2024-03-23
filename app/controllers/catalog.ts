@@ -37,23 +37,24 @@ export default class CatalogController extends Controller {
       });
     } else {
       return this.courses.toArray().sort((course1, course2) => {
-        const repositoriesForCourse1 = this.authenticator.currentUser!.repositories.filterBy('course', course1).filterBy('firstSubmissionCreated');
-        const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('firstSubmissionCreated');
+        const repositoriesForCourse1 = this.authenticator.currentUser!.repositories.filterBy('course', course1).filterBy('lastActivityAt');
+        const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('lastActivityAt');
 
-        const lastSubmissionForCourse1At =
+        const lastActivityForCourse1At =
           // @ts-expect-error at(-1) is not defined on Array
-          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt.getTime() : null;
-        const lastSubmissionForCourse2At =
-          // @ts-expect-error at(-1) is not defined on Array
-          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt.getTime() : null;
+          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
 
-        if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At > lastSubmissionForCourse2At) {
+        const lastActivityForCourse2At =
+          // @ts-expect-error at(-1) is not defined on Array
+          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
+
+        if (lastActivityForCourse1At && lastActivityForCourse2At && lastActivityForCourse1At > lastActivityForCourse2At) {
           return -1;
-        } else if (lastSubmissionForCourse1At && lastSubmissionForCourse2At && lastSubmissionForCourse1At < lastSubmissionForCourse2At) {
+        } else if (lastActivityForCourse1At && lastActivityForCourse2At && lastActivityForCourse1At < lastActivityForCourse2At) {
           return 1;
-        } else if (lastSubmissionForCourse1At && !lastSubmissionForCourse2At) {
+        } else if (lastActivityForCourse1At && !lastActivityForCourse2At) {
           return -1;
-        } else if (!lastSubmissionForCourse1At && lastSubmissionForCourse2At) {
+        } else if (!lastActivityForCourse1At && lastActivityForCourse2At) {
           return 1;
         } else {
           return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;

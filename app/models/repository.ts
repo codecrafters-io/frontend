@@ -143,6 +143,10 @@ export default class RepositoryModel extends Model {
     return RepositoryModel.languageProficiencyLevelMappings;
   }
 
+  get lastActivityAt() {
+    return this.lastSubmissionAt || this.createdAt;
+  }
+
   get lastSubmissionAt() {
     return this.lastSubmission && this.lastSubmission.createdAt;
   }
