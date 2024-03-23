@@ -3,12 +3,17 @@ import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type ColorScheme from 'codecrafters-frontend/services/color-scheme';
+import type RouterService from '@ember/routing/router-service';
+import type Store from '@ember-data/store';
+import type TeamModel from 'codecrafters-frontend/models/team';
 
 export default class HeaderAccountDropdownComponent extends Component {
-  @service authenticator;
-  @service colorScheme;
-  @service router;
-  @service store;
+  @service declare authenticator: AuthenticatorService;
+  @service declare colorScheme: ColorScheme;
+  @service declare router: RouterService;
+  @service declare store: Store;
 
   @tracked isCreatingBillingSession = false;
 
@@ -17,19 +22,20 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
-  handleCommunityClick(dropdownActions) {
+  handleCommunityClick(dropdownActions: { close: () => void }) {
     window.open('https://discord.gg/DeqUD2P', '_blank');
     dropdownActions.close();
   }
 
   @action
-  handleCreateTeamClick(dropdownActions) {
+  handleCreateTeamClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
     this.router.transitionTo('teams.create');
   }
 
   @action
-  handleGetHelpClick(dropdownActions) {
+  handleGetHelpClick(dropdownActions: { close: () => void }) {
+    // @ts-expect-error Beacon not registered yet
     window.Beacon('open');
     dropdownActions.close();
   }
@@ -45,60 +51,67 @@ export default class HeaderAccountDropdownComponent extends Component {
   }
 
   @action
-  async handleManageSubscriptionClick(dropdownActions) {
+  async handleManageSubscriptionClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
     this.router.transitionTo('membership');
   }
 
   @action
-  handleManageTeamClick(dropdownActions, team) {
+  handleManageTeamClick(dropdownActions: { close: () => void }, team: TeamModel) {
     dropdownActions.close();
     this.router.transitionTo('team', team.id);
   }
 
   @action
-  handlePartnerDashboardClick(dropdownActions) {
+  handlePartnerDashboardClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
     this.router.transitionTo('partner');
   }
 
   @action
-  handlePerksLinkClick(dropdownActions) {
+  handlePerksLinkClick(dropdownActions: { close: () => void }) {
     window.open('https://codecrafters.io/perks', '_blank');
     dropdownActions.close();
   }
 
   @action
-  handleReferralsLinkClick(dropdownActions) {
+  handleReferralsLinkClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
     this.router.transitionTo('refer');
   }
 
   @action
-  handleStatusPageClick(dropdownActions) {
+  handleSettingsLinkClick(dropdownActions: { close: () => void }) {
+    dropdownActions.close();
+    this.router.transitionTo('settings');
+  }
+
+  @action
+  handleStatusPageClick(dropdownActions: { close: () => void }) {
     window.open('https://status.codecrafters.io/', '_blank');
     dropdownActions.close();
   }
 
   @action
-  handleSubscribeClick(dropdownActions) {
+  handleSubscribeClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
     this.router.transitionTo('pay');
   }
 
   @action
   handleTestSentryClick() {
+    // @ts-expect-error this is supposed to raise an error
     this.testingSentry.boom();
   }
 
   @action
-  handleViewProfileClick(dropdownActions) {
+  handleViewProfileClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
-    this.router.transitionTo('user', this.authenticator.currentUsername);
+    this.router.transitionTo('user', this.authenticator.currentUsername!);
   }
 
   @action
-  handleViewTeamClick(dropdownActions, team) {
+  handleViewTeamClick(dropdownActions: { close: () => void }, team: TeamModel) {
     dropdownActions.close();
     this.router.transitionTo('team', team.id);
   }
