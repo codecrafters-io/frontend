@@ -29,7 +29,7 @@ export default class CopyableCodeComponent extends Component<Signature> {
       () => {
         this.codeWasCopiedRecently = false;
       },
-      1000,
+      config.environment === 'test' ? 10 : 1000,
     );
 
     if (this.args.onCopyButtonClick) {
