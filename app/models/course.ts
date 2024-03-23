@@ -137,9 +137,9 @@ export default class CourseModel extends Model {
       {
         'http-server': 3,
         'dns-server': 4,
-        bittorrent: 5,
+        bittorrent: 1,
         docker: 7,
-        git: 1,
+        git: 5,
         grep: 6,
         redis: 2,
         sqlite: 8,
