@@ -33,6 +33,7 @@ export default class UserModel extends Model {
   @attr() declare featureFlags: { [key: string]: string };
   @attr('string') declare githubUsername: string;
   @attr('boolean') declare hasActiveFreeUsageGrants: boolean;
+  @attr('boolean') declare hasAnonymousModeEnabled: boolean;
   @attr('boolean') declare isAdmin: boolean;
   @attr('boolean') declare isAffiliate: boolean;
   @attr('boolean') declare isConceptAuthor: boolean;
