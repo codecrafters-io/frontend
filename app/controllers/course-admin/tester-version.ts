@@ -62,9 +62,4 @@ export default class CourseAdminTesterVersionController extends Controller {
 
     this.isDeprovisioningTestRunners = false;
   }
-
-  @action
-  async handleDismissButtonClick() {
-    this.shouldShowDeprovisioningNotice = false;
-  }
 }
