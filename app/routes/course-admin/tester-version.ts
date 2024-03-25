@@ -1,6 +1,13 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import CourseModel from 'codecrafters-frontend/models/course';
+import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Store from '@ember-data/store';
+
+export type ModelType = {
+  course: CourseModel;
+  testerVersion: CourseTesterVersionModel;
+}
 
 export default class CourseAdminTesterVersionRoute extends BaseRoute {
   @service declare store: Store;

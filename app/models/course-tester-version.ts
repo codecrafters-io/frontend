@@ -1,10 +1,11 @@
 import CourseModel from 'codecrafters-frontend/models/course';
 import Model, { attr, belongsTo } from '@ember-data/model';
+import UserModel from 'codecrafters-frontend/models/user';
 import { memberAction } from 'ember-api-actions';
 
 export default class CourseTesterVersionModel extends Model {
   @belongsTo('course', { async: false, inverse: 'testerVersions' }) declare course: CourseModel;
-  @belongsTo('user', { async: false, inverse: null }) declare activator: unknown;
+  @belongsTo('user', { async: false, inverse: null }) declare activator: UserModel;
 
   @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;

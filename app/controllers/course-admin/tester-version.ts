@@ -1,16 +1,12 @@
 import Controller from '@ember/controller';
-import CourseModel from 'codecrafters-frontend/models/course';
-import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import type { ModelType } from 'codecrafters-frontend/routes/course-admin/tester-version';
 import { tracked } from '@glimmer/tracking';
 
 export default class CourseAdminTesterVersionController extends Controller {
-  declare model: {
-    course: CourseModel;
-    testerVersion: CourseTesterVersionModel;
-  };
+  declare model: ModelType;
 
   @service declare store: Store;
 
