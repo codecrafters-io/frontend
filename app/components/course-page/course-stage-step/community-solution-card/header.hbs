@@ -11,9 +11,7 @@
         <span class="text-xs font-semibold leading-5 text-gray-700">Private</span>
         <EmberTooltip @text="This solution is only visible to users within your team." />
       </div>
-    {{/if}}
-
-    {{#if @solution.isPinned}}
+    {{else if @solution.isPinned}}
       <Pill @color="green">
         Editor's choice
 
