@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import CourseModel from 'codecrafters-frontend/models/course';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
@@ -7,12 +8,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class CourseAdminTesterVersionController extends Controller {
   declare model: {
-    course: {
-      id: string;
-      definitionRepositoryFullName: string;
-      syncCourseDefinitionUpdates: () => Promise<void>;
-    };
-
+    course: CourseModel;
     testerVersion: CourseTesterVersionModel;
   };
 
