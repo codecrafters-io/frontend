@@ -73,8 +73,12 @@ export default class UserModel extends Model {
     return `${config.x.backendUrl}/admin/users/${this.id}`;
   }
 
+  get canAccessMembershipBenefits() {
+    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+  }
+
   get canAccessPaidContent() {
-    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot || this.hasActiveFreeUsageGrants;
+    return this.canAccessMembershipBenefits || this.hasActiveFreeUsageGrants;
   }
 
   get codecraftersProfileUrl() {
