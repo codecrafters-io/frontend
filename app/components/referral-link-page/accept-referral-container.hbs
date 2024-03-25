@@ -65,8 +65,10 @@
           <EmberTooltip
             @text="You've already accepted another referral offer. You can refer other users to get more free weeks. Visit /refer to get started."
           />
-        {{else if this.currentUser.canAccessPaidContent}}
+        {{else if this.currentUser.canAccessMembershipBenefits}}
           <EmberTooltip @text="As a CodeCrafters member, you already have full access." />
+        {{else if this.currentUser.canAccessPaidContent}}
+          <EmberTooltip @text="You already have full access to CodeCrafters content." />
         {{/if}}
       </div>
 

@@ -12,7 +12,12 @@ export default class BillingStatusDisplayService extends Service {
   }
 
   get shouldShowFreeWeeksLeftButton(): boolean {
-    return !!this.currentUser && this.currentUser.hasActiveFreeUsageGrants && !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated;
+    return (
+      !!this.currentUser &&
+      !this.currentUser.canAccessMembershipBenefits &&
+      this.currentUser.hasActiveFreeUsageGrants &&
+      !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated
+    );
   }
 
   get shouldShowSubscribeButton(): boolean {
