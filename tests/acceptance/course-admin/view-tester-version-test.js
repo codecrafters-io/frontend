@@ -5,10 +5,10 @@ import testerVersionPage from 'codecrafters-frontend/tests/pages/course-admin/te
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-admin | view-tester-version', function(hooks) {
+module('Acceptance | course-admin | view-tester-version', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('it has the correct link for viewing releases', async function(assert) {
+  test('it has the correct link for viewing releases', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -28,7 +28,7 @@ module('Acceptance | course-admin | view-tester-version', function(hooks) {
     assert.strictEqual(testerVersionPage.viewReleaseLink.href, 'https://github.com/codecrafters-io/redis-tester/releases/tag/v10');
   });
 
-  test('it properly renders buttons for activating and deprovisioning test runners', async function(assert) {
+  test('it properly renders buttons for activating and deprovisioning test runners', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 

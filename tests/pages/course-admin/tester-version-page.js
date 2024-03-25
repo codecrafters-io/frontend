@@ -9,6 +9,10 @@ export default create({
     scope: '[data-test-deprovision-test-runners-button]',
   },
 
+  initiatedDeprovisioningNotice: {
+    scope: '[data-test-initiated-deprovisioning-notice]',
+  },
+
   viewReleaseLink: {
     scope: '[data-test-view-release-link]',
     href: attribute('href'),

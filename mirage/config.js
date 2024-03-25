@@ -402,6 +402,10 @@ function routes() {
     return courseTesterVersion;
   });
 
+  this.post('/course-tester-versions/:id/deprovision', function (schema, request) {
+    return schema.courseTesterVersions.find(request.params.id);
+  });
+
   this.get('/course-stage-feedback-submissions', function (schema, request) {
     return schema.courseStageFeedbackSubmissions.all().filter((submission) => submission.courseStage.course.id === request.queryParams.course_id);
   });

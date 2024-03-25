@@ -7,7 +7,7 @@ import Store from '@ember-data/store';
 export type ModelType = {
   course: CourseModel;
   testerVersion: CourseTesterVersionModel;
-}
+};
 
 export default class CourseAdminTesterVersionRoute extends BaseRoute {
   @service declare store: Store;
