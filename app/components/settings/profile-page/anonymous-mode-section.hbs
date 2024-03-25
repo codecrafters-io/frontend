@@ -9,11 +9,15 @@
   </:belowDescription>
   <:default>
     <div class="flex items-center gap-3">
-      <Toggle @isOn={{@user.hasAnonymousModeEnabled}} @isDisabled={{not @user.canAccessMembershipBenefits}} {{on "click" this.handleToggle}} />
+      <Toggle @isOn={{@user.hasAnonymousModeEnabled}} @isDisabled={{this.toggleIsDisabled}} {{on "click" this.handleToggle}} />
       <div class="text-gray-600 text-sm">Enable anonymous mode</div>
 
       {{#unless @user.canAccessMembershipBenefits}}
-        <EmberTooltip @text="Become a CodeCrafters member to enable this feature." />
+        {{#if @user.hasAnonymousModeEnabled}}
+          <EmberTooltip @text="Become a CodeCrafters member to toggle anonymous mode." />
+        {{else}}
+          <EmberTooltip @text="Become a CodeCrafters member to enable anonymous mode." />
+        {{/if}}
       {{/unless}}
     </div>
     <div class="text-gray-400 text-xs mt-4 leading-relaxed">

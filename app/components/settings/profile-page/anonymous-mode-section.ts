@@ -15,9 +15,15 @@ interface Signature {
 export default class AnonymousModeSectionComponent extends Component<Signature> {
   @tracked isSaving = false;
 
+  get toggleIsDisabled(): boolean {
+    return !this.args.user.canAccessMembershipBenefits;
+  }
+
   @action
   async handleToggle() {
-    this.toggleValue.perform();
+    if (!this.toggleIsDisabled) {
+      this.toggleValue.perform();
+    }
   }
 
   toggleValue = task({ keepLatest: true }, async (): Promise<void> => {
