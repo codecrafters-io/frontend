@@ -44,7 +44,7 @@ export default create({
 
     solutionCards: collection('[data-test-community-solution-card]', {
       clickOnCollapseButton: async function () {
-        await this.collapseButtons.at(0).click();
+        await this.collapseButtons[0].click();
       },
 
       clickOnExpandButton: clickable('[data-test-expand-button]'),
