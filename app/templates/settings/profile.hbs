@@ -1,31 +1,5 @@
 <Settings::ProfilePage::UsernameSection @user={{@model.user}} />
-
-{{! This isn't implemented yet }}
-{{!-- <Settings::FormDivider />
-
-<Settings::FormSection @title="Anonymous Mode" @description="Hide your GitHub username & avatar">
-  <:belowDescription>
-    <Pill @color="green">
-      {{svg-jar "shield-check" class="w-4 h-4 text-green-500 mr-1"}}
-      Members only
-
-      <EmberTooltip @text="This feature is only available to CodeCrafters members." />
-    </Pill>
-  </:belowDescription>
-  <:default>
-    <div class="flex items-center gap-3">
-      <Toggle @isOn={{true}} />
-      <div class="text-gray-600 text-sm">Enable anonymous mode</div>
-    </div>
-    <div class="text-gray-400 text-xs mt-4 leading-relaxed">
-      When anonymous mode is enabled, your GitHub username &amp; avatar will be hidden on CodeCrafters. Your code examples &amp; profile page will
-      still be visible to the public, but under a random username.
-    </div>
-  </:default>
-</Settings::FormSection>
-
---}}
-
 <Settings::FormDivider />
-
+<Settings::ProfilePage::AnonymousModeSection @user={{@model.user}} />
+<Settings::FormDivider />
 <Settings::ProfilePage::AboutSection @user={{@model.user}} />

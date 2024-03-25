@@ -6,13 +6,15 @@
     {{@user.name}}
   </div>
 
-  <a class="group inline-flex items-center text-gray-400 mb-4 w-full" href={{@user.githubProfileUrl}}>
-    <div class="text-lg group-hover:underline truncate">
-      {{@user.githubUsername}}
-    </div>
+  {{#unless @user.hasAnonymousModeEnabled}}
+    <a class="group inline-flex items-center text-gray-400 mb-4 w-full" href={{@user.githubProfileUrl}}>
+      <div class="text-lg group-hover:underline truncate">
+        {{@user.githubUsername}}
+      </div>
 
-    {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
-  </a>
+      {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
+    </a>
+  {{/unless}}
 
   {{#if (gt @user.completedCourseParticipations.length 0)}}
     <div class="mb-4 flex items-center space-x-1.5">
