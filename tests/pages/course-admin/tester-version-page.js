@@ -5,7 +5,7 @@ export default create({
     scope: '[data-test-activate-tester-version-button]',
   },
 
-  dataTestDeprovisionTestRunnersButton: {
+  deprovisionTestRunnersButton: {
     scope: '[data-test-deprovision-test-runners-button]',
   },
 
