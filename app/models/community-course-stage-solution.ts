@@ -11,6 +11,7 @@ import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-fronte
 
 /* eslint-disable ember/no-mixins */
 import ViewableMixin from 'codecrafters-frontend/mixins/viewable';
+import type CourseStageScreencastModel from './course-stage-screencast';
 
 export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
@@ -22,6 +23,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
+  @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
 
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
@@ -73,6 +75,10 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
     }
 
     return Math.round(this.ratingStandardDeviation * 100) / 100;
+  }
+
+  get screencast() {
+    return this.screencasts[0];
   }
 
   @action
