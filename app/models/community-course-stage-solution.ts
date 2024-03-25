@@ -31,6 +31,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @attr('string') declare commitSha: string;
   @attr('string') declare githubRepositoryName: string;
   @attr('boolean') declare githubRepositoryIsPrivate: boolean;
+  @attr('boolean') declare isPinned: boolean;
   @attr('number') declare ratingEstimate: number | null;
   @attr('number') declare ratingMean: number | null;
   @attr('number') declare ratingStandardDeviation: number | null;
