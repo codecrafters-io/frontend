@@ -43,8 +43,12 @@ export default create({
     languageDropdown: LanguageDropdown,
 
     solutionCards: collection('[data-test-community-solution-card]', {
+      clickOnCollapseButton: async function () {
+        await this.collapseButtons.at(0).click();
+      },
+
       clickOnExpandButton: clickable('[data-test-expand-button]'),
-      clickOnCollapseButton: clickable('[data-test-collapse-button]'),
+      collapseButtons: collection('[data-test-collapse-button]'),
       toggleCommentsButtons: collection('[data-test-toggle-comments-button]'),
       commentCards: collection('[data-test-comment-card]', CommentCard),
     }),
