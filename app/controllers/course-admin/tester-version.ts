@@ -33,11 +33,9 @@ export default class CourseAdminTesterVersionController extends Controller {
     if (!this.isActivating) {
       this.isActivating = true;
 
-      // @ts-ignore
-      await this.model.testerVersion.activate();
+      await this.model.testerVersion.activate(null);
 
       await this.store.query('course-tester-version', {
-        // @ts-ignore
         course_id: this.model.testerVersion.course.id,
         include: ['course', 'activator'].join(','),
       });
@@ -64,8 +62,7 @@ export default class CourseAdminTesterVersionController extends Controller {
     this.isDeprovisioningTestRunners = true;
     this.shouldShowDeprovisioningNotice = true;
 
-    // @ts-ignore
-    await this.model.testerVersion.deprovision();
+    await this.model.testerVersion.deprovision(null);
 
     this.isDeprovisioningTestRunners = false;
   }

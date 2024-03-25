@@ -21,7 +21,6 @@ export default class VersionListItemComponent extends Component<Signature> {
   @tracked isActivating = false;
 
   get activationConfirmationMessage() {
-    // @ts-ignore
     const latestTesterVersion = this.args.courseTesterVersion.course.latestTesterVersion;
 
     if (latestTesterVersion) {
