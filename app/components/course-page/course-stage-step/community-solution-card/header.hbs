@@ -18,6 +18,17 @@
         <EmberTooltip @text="This solution was hand-picked by CodeCrafters staff." />
       </Pill>
     {{/if}}
+
+    {{#if @solution.screencast}}
+      <LinkTo @route="course.stage.screencasts" @query={{hash selectedScreencastId=@solution.screencast.id}} class="flex">
+        <Pill @color="blue">
+          {{svg-jar "play" class="w-4 h-4 mr-1 text-blue-500"}}
+          Screencast
+
+          <EmberTooltip @text="This solution has a linked screencast. Click to view." />
+        </Pill>
+      </LinkTo>
+    {{/if}}
   </div>
 
   <div class="flex items-center shrink-0">
