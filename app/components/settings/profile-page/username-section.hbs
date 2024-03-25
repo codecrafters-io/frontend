@@ -8,12 +8,20 @@
       disabled={{true}}
     />
 
-    {{!-- TODO: Bring this back once implemented }}
-    {{!-- <EmberTooltip @text="This value is synced with your GitHub account. Click on the refresh button below to update your username." /> --}}
-    <EmberTooltip @text="This value is synced with your GitHub account." />
+    {{#if @user.hasAnonymousModeEnabled}}
+      <EmberTooltip @text="Your profile has anonymous mode enabled. Your GitHub username is not visible to others." />
+    {{else}}
+      {{! activate this once implemented }}
+      {{! <EmberTooltip @text="This value is synced with your GitHub account. Click on the refresh button below to update your username." /> }}
+      <EmberTooltip @text="This value is synced with your GitHub account." />
+    {{/if}}
   </div>
   <div class="text-gray-400 text-xs mt-1">
-    This value is synced with your GitHub account.
+    {{#if @user.hasAnonymousModeEnabled}}
+      Your profile has anonymous mode enabled. Your GitHub username is not visible to others.
+    {{else}}
+      This value is synced with your GitHub account.
+    {{/if}}
   </div>
 
   {{!-- TODO: Bring this back once implemented }}

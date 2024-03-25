@@ -1,4 +1,3 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div ...attributes>
   <img alt="avatar" src={{@user.avatarUrl}} class="border-2 border-white shadow rounded w-48 h-48 mb-6" />
 
@@ -6,15 +5,23 @@
     {{@user.name}}
   </div>
 
-  {{#unless @user.hasAnonymousModeEnabled}}
-    <a class="group inline-flex items-center text-gray-400 mb-4 w-full" href={{@user.githubProfileUrl}}>
+  {{#if @user.hasAnonymousModeEnabled}}
+    <a class="group inline-flex items-center text-gray-400 mb-4 w-full" href="https://github.com/ghost" target="_blank" rel="noopener noreferrer">
+      <div class="text-lg group-hover:underline truncate">
+        {{@user.username}}
+      </div>
+
+      {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
+    </a>
+  {{else}}
+    <a class="group inline-flex items-center text-gray-400 mb-4 w-full" href={{@user.githubProfileUrl}} target="_blank" rel="noopener noreferrer">
       <div class="text-lg group-hover:underline truncate">
         {{@user.githubUsername}}
       </div>
 
       {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
     </a>
-  {{/unless}}
+  {{/if}}
 
   {{#if (gt @user.completedCourseParticipations.length 0)}}
     <div class="mb-4 flex items-center space-x-1.5">
@@ -31,6 +38,7 @@
         {{date-from-now @user.createdAt}}
       </div>
 
+      {{! @glint-expect-error not ts-ified yet }}
       <UserLabel @user={{@user}} />
     </div>
 
@@ -38,6 +46,12 @@
       <TertiaryButton @size="extra-small" data-test-admin-profile-button class="w-fit">
         <a href={{@user.adminProfileUrl}} target="_blank" rel="noopener noreferrer">Admin Profile</a>
       </TertiaryButton>
+    {{/if}}
+
+    {{#if this.isCurrentUser}}
+      <TertiaryLinkButton @route="settings.profile" class="w-fit" @size="small">
+        Customize Profile
+      </TertiaryLinkButton>
     {{/if}}
   </div>
 </div>
