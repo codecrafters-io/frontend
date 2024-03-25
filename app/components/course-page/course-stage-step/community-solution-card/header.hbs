@@ -14,19 +14,6 @@
     {{/if}}
   </div>
 
-  <div class={{if @isExpanded "visible" "hidden"}}>
-    <button
-      class="border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 text-xs rounded flex flex-col items-center w-full"
-      type="button"
-      {{on "click" @onCollapseButtonClick}}
-    >
-      <div class="font-bold flex items-center sm:mb-0">
-        Collapse example
-        {{svg-jar "arrow-up" class="w-3 ml-1 fill-current"}}
-      </div>
-    </button>
-  </div>
-
   <div class="flex items-center shrink-0">
     {{#if (or (current-user-is-staff) (current-user-is-course-author @solution.courseStage.course))}}
       <div class="flex items-center">
