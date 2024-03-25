@@ -4,12 +4,21 @@
   ...attributes
   {{did-insert this.handleDidInsert}}
 >
-  <CoursePage::CourseStageStep::CommunitySolutionCard::Header
-    @solution={{@solution}}
-    @isExpanded={{this.isExpanded}}
-    @onCollapseButtonClick={{this.handleCollapseButtonClick}}
-    class="mb-3"
-  />
+  <CoursePage::CourseStageStep::CommunitySolutionCard::Header @solution={{@solution}} class="mb-3" />
+
+  <div class={{if this.isExpanded "visible" "hidden"}}>
+    <button
+      class="mb-3 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"
+      type="button"
+      {{on "click" this.handleCollapseButtonClick}}
+      data-test-collapse-button
+    >
+      <div class="font-bold flex items-center sm:mb-0">
+        Collapse example
+        {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
+      </div>
+    </button>
+  </div>
 
   <div class="{{if this.isCollapsed 'h-72 overflow-hidden'}}">
     <CoursePage::CourseStageStep::CommunitySolutionCard::Content

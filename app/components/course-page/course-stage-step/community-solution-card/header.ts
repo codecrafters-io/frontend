@@ -6,8 +6,6 @@ type Signature = {
 
   Args: {
     solution: CommunityCourseStageSolutionModel;
-    isExpanded: boolean;
-    onCollapseButtonClick: () => void;
   };
 };
 
