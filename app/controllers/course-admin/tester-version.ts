@@ -19,7 +19,6 @@ export default class CourseAdminTesterVersionController extends Controller {
   @tracked shouldShowDeprovisioningNotice = false;
 
   get activationConfirmationMessage() {
-    // @ts-ignore
     const latestTesterVersion = this.model.testerVersion.course.latestTesterVersion;
 
     if (latestTesterVersion) {
