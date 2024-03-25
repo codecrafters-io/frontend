@@ -1,0 +1,18 @@
+<Settings::FormSection @title="Avatar" @description="Your publicly visible avatar on CodeCrafters">
+  <div class="inline-flex">
+    <AvatarImage @user={{@user}} class="w-16 h-16 rounded" />
+
+    {{#if @user.hasAnonymousModeEnabled}}
+      <EmberTooltip @text="Your profile has anonymous mode enabled. Your GitHub avatar is not visible to others." />
+    {{else}}
+      <EmberTooltip @text="This image is synced with your GitHub account." />
+    {{/if}}
+  </div>
+  <div class="text-gray-400 text-xs mt-2">
+    {{#if @user.hasAnonymousModeEnabled}}
+      Your profile has anonymous mode enabled. Your GitHub avatar is not visible to others.
+    {{else}}
+      This image is synced with your GitHub account.
+    {{/if}}
+  </div>
+</Settings::FormSection>
