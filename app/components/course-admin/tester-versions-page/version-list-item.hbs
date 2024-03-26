@@ -40,9 +40,11 @@
             <circle cx="1" cy="1" r="1" />
           </svg>
 
-          <div class="flex items-center gap-x-2 text-teal-500" data-test-provisioned-test-runners-count>
+          <div class="flex items-center gap-x-1 text-teal-500" data-test-provisioned-test-runners-count>
             {{svg-jar "command-line" class="h-4 w-4"}}
-            {{@courseTesterVersion.provisionedTestRunnersCount}}
+            <span class="font-semibold">
+              {{@courseTesterVersion.provisionedTestRunnersCount}}
+            </span>
             <EmberTooltip @text={{this.provisionedTestRunnersCountTooltipCopy}} />
           </div>
         </div>
