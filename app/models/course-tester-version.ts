@@ -1,9 +1,11 @@
+import CourseModel from 'codecrafters-frontend/models/course';
 import Model, { attr, belongsTo } from '@ember-data/model';
+import UserModel from 'codecrafters-frontend/models/user';
 import { memberAction } from 'ember-api-actions';
 
 export default class CourseTesterVersionModel extends Model {
-  @belongsTo('course', { async: false, inverse: 'testerVersions' }) declare course: { slug: string };
-  @belongsTo('user', { async: false, inverse: null }) declare activator: unknown;
+  @belongsTo('course', { async: false, inverse: 'testerVersions' }) declare course: CourseModel;
+  @belongsTo('user', { async: false, inverse: null }) declare activator: UserModel;
 
   @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;
@@ -14,6 +16,11 @@ export default class CourseTesterVersionModel extends Model {
   @attr('string') declare tagName: string;
 
   declare activate: (this: Model, payload: unknown) => Promise<void>;
+  declare deprovision: (this: Model, payload: unknown) => Promise<void>;
+
+  get viewReleaseLink() {
+    return `https://github.com/codecrafters-io/${this.course.slug}-tester/releases/tag/${this.tagName}`;
+  }
 }
 
 CourseTesterVersionModel.prototype.activate = memberAction({
@@ -23,4 +30,9 @@ CourseTesterVersionModel.prototype.activate = memberAction({
   after(response) {
     this.store.pushPayload(response);
   },
+});
+
+CourseTesterVersionModel.prototype.deprovision = memberAction({
+  path: 'deprovision',
+  type: 'post',
 });

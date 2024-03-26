@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
+import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -14,12 +15,12 @@ type Signature = {
 };
 
 export default class VersionListItemComponent extends Component<Signature> {
+  @service declare router: RouterService;
   @service declare store: Store;
 
   @tracked isActivating = false;
 
   get activationConfirmationMessage() {
-    // @ts-ignore
     const latestTesterVersion = this.args.courseTesterVersion.course.latestTesterVersion;
 
     if (latestTesterVersion) {
@@ -37,34 +38,9 @@ export default class VersionListItemComponent extends Component<Signature> {
     }
   }
 
-  async activate() {
-    if (!this.isActivating) {
-      this.isActivating = true;
-
-      // @ts-ignore
-      await this.args.courseTesterVersion.activate();
-
-      await this.store.query('course-tester-version', {
-        // @ts-ignore
-        course_id: this.args.courseTesterVersion.course.id,
-        include: ['course', 'activator'].join(','),
-      });
-
-      this.isActivating = false;
-    }
-  }
-
   @action
-  async handleActivateButtonClick() {
-    if (this.args.courseTesterVersion.isLatest) {
-      await this.activate();
-
-      return;
-    }
-
-    if (window.confirm(this.activationConfirmationMessage)) {
-      await this.activate();
-    }
+  handleClick() {
+    this.router.transitionTo('course-admin.tester-version', this.args.courseTesterVersion.id);
   }
 }
 

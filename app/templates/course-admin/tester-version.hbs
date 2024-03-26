@@ -1,0 +1,107 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b mb-6">
+      <TertiaryLinkButton @route="course-admin.tester-versions" @models={{array @model.testerVersion.course.slug}} @size="small" class="pl-1.5 mb-3">
+        <div class="flex items-center">
+          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+          <span>
+            Back
+          </span>
+        </div>
+      </TertiaryLinkButton>
+
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="flex items-center gap-x-2 text-xl font-bold text-gray-800 mb-2">
+            <p>{{@model.testerVersion.tagName}}</p>
+
+            {{#if @model.testerVersion.isActive}}
+              <Pill @color="green">Active</Pill>
+            {{else if @model.testerVersion.isLatest}}
+              <Pill @color="yellow">Latest</Pill>
+            {{/if}}
+          </h3>
+
+          <div class="text-xs text-gray-500">
+            Created
+            {{date-from-now @model.testerVersion.createdAt}}
+          </div>
+
+          {{#if @model.testerVersion.isActive}}
+            <div class="flex items-center mt-4 gap-x-1">
+              {{svg-jar "check-circle" class="w-6 fill-current text-teal-500"}}
+
+              <span class="text-gray-500 text-xs">
+                Activated
+                {{date-from-now @model.testerVersion.lastActivatedAt}}
+
+                {{#if @model.testerVersion.activator}}
+                  <span>by {{@model.testerVersion.activator.username}}</span>
+                {{/if}}
+              </span>
+            </div>
+          {{else}}
+            <div class="flex items-center mt-6 gap-x-3">
+              <PrimaryButtonWithSpinner
+                @shouldShowSpinner={{this.isActivating}}
+                @size="small"
+                {{on "click" this.handleActivateButtonClick}}
+                data-test-activate-tester-version-button
+              >
+                Activate
+              </PrimaryButtonWithSpinner>
+
+              <div class="inline-flex">
+                <TertiaryButtonWithSpinner
+                  @shouldShowSpinner={{this.isDeprovisioningTestRunners}}
+                  @size="small"
+                  @isDisabled={{eq @model.testerVersion.provisionedTestRunnersCount 0}}
+                  {{on "click" this.handleDeprovisionTestRunnersButtonClick}}
+                  data-test-deprovision-test-runners-button
+                >
+                  Deprovision Test Runners
+                </TertiaryButtonWithSpinner>
+
+                {{#if (eq @model.testerVersion.provisionedTestRunnersCount 0)}}
+                  <EmberTooltip @text="This tester version does not have any provisioned test runners." />
+                {{/if}}
+              </div>
+            </div>
+          {{/if}}
+        </div>
+
+        <div class="flex flex-col items-end">
+          <a
+            href={{@model.testerVersion.viewReleaseLink}}
+            class="text-gray-400 flex items-center hover:text-gray-600"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-test-view-release-link
+          >
+            {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
+            <span class="text-xs underline font-medium">View release</span>
+          </a>
+        </div>
+      </div>
+
+      {{#if this.shouldShowDeprovisioningNotice}}
+        <Alert @type="success" class="relative mt-6" data-test-initiated-deprovisioning-notice>
+          <span class="leading-7 inline-block mr-10">
+            A job has been scheduled and test runners will be deprovisioned shortly.
+          </span>
+        </Alert>
+      {{/if}}
+    </div>
+
+    <div class="prose">
+      {{#if (gt @model.testerVersion.provisionedTestRunnersCount 0)}}
+        This tester version has
+        {{@model.testerVersion.provisionedTestRunnersCount}}
+        provisioned test runners.
+      {{else}}
+        This tester version has no provisioned test runners.
+      {{/if}}
+    </div>
+  </div>
+</div>

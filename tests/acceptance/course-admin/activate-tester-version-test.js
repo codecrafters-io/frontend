@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import testerVersionPage from 'codecrafters-frontend/tests/pages/course-admin/tester-version-page';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -41,18 +42,14 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
     };
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
-    assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
-
-    await testerVersionsPage.testerVersionListItem[0].activateButton.click();
+    await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
+    await testerVersionPage.activateTesterVersionButton.click();
     await settled(); // Investigate why clickable() doesn't call settled()
 
-    assert.notOk(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
-
-    await testerVersionsPage.testerVersionListItem[1].activateButton.click();
+    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.testerVersionListItem[1].viewTesterVersionButton.click();
+    await testerVersionPage.activateTesterVersionButton.click();
     await settled(); // Investigate why clickable() doesn't call settled()
-
-    assert.ok(testerVersionsPage.testerVersionListItem[0].activateButton.isPresent);
-    assert.notOk(testerVersionsPage.testerVersionListItem[1].activateButton.isPresent);
 
     assert.strictEqual(lastConfirmationMessage, 'v11 is the latest version. Are you sure you want to activate v10 instead?');
 
@@ -61,7 +58,8 @@ module('Acceptance | course-admin | activate-tester-version', function (hooks) {
 
     await testerVersionsPage.visit({ course_slug: 'git' });
     await testerVersionsPage.visit({ course_slug: 'redis' });
-    await testerVersionsPage.testerVersionListItem[0].activateButton.click();
+    await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
+    await testerVersionPage.activateTesterVersionButton.click();
 
     assert.strictEqual(lastConfirmationMessage, 'v11 is not the latest version. Are you sure you want to activate it?');
   });

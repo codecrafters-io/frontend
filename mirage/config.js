@@ -390,6 +390,7 @@ function routes() {
   this.get('/course-stage-language-guides');
 
   this.get('/course-tester-versions');
+  this.get('/course-tester-versions/:id');
 
   this.post('/course-tester-versions/:id/activate', function (schema, request) {
     const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
@@ -399,6 +400,10 @@ function routes() {
     otherTesterVersions.update({ isActive: false });
 
     return courseTesterVersion;
+  });
+
+  this.post('/course-tester-versions/:id/deprovision', function (schema, request) {
+    return schema.courseTesterVersions.find(request.params.id);
   });
 
   this.get('/course-stage-feedback-submissions', function (schema, request) {

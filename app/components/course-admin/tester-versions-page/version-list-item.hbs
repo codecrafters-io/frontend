@@ -1,4 +1,9 @@
-<li class="flex items-center justify-between gap-x-6 py-5 group/version-list-item hover:bg-gray-50 px-1" data-test-version-list-item role="button">
+<li
+  class="flex items-center justify-between gap-x-6 py-5 group/version-list-item hover:bg-gray-50 px-1"
+  data-test-version-list-item
+  {{on "click" this.handleClick}}
+  role="button"
+>
   <div class="min-w-0">
     <div class="flex items-start gap-x-3">
       <p class="text-sm font-semibold leading-6 text-gray-900">{{@courseTesterVersion.tagName}}</p>
@@ -20,7 +25,6 @@
           <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
             <circle cx="1" cy="1" r="1" />
           </svg>
-          {{! @glint-expect-error user is not ts-ified yet !}}
           <p class="truncate">by {{@courseTesterVersion.activator.username}}</p>
         {{/if}}
       {{else if @courseTesterVersion.createdAt}}
@@ -46,23 +50,13 @@
     </div>
   </div>
   <div class="flex flex-none items-center gap-x-4">
-    {{#unless @courseTesterVersion.isActive}}
-      {{#if @courseTesterVersion.isLatest}}
-        <TertiaryButtonWithSpinner
-          @size="small"
-          @shouldShowSpinner={{this.isActivating}}
-          {{on "click" this.handleActivateButtonClick}}
-          data-test-activate-button
-        >Activate</TertiaryButtonWithSpinner>
-      {{else}}
-        <TertiaryButtonWithSpinner
-          @size="small"
-          @shouldShowSpinner={{this.isActivating}}
-          class="opacity-0 group-hover/version-list-item:opacity-100"
-          {{on "click" this.handleActivateButtonClick}}
-          data-test-activate-button
-        >Activate</TertiaryButtonWithSpinner>
-      {{/if}}
-    {{/unless}}
+    <TertiaryLinkButton
+      @size="small"
+      @route="course-admin.tester-version"
+      @models={{array @courseTesterVersion.id}}
+      data-test-view-tester-version-button
+    >
+      View Tester Version
+    </TertiaryLinkButton>
   </div>
 </li>
