@@ -345,4 +345,41 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
       contentString: 'Click to copy Git commit SHA',
     });
   });
+
+  test('it should have the tree SHA in the header', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
+      treeSha: 'fooa77c9d85161984249205b5b83772b63ae866e',
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+
+    assert.ok(submissionsPage.submissionDetails.treeSha.isPresent, 'tree sha should be present');
+
+    await submissionsPage.timelineContainer.entries[1].click();
+
+    assert.true(submissionsPage.submissionDetails.treeSha.text.includes('fooa77c9'), 'tree sha is displayed');
+    assert.false(submissionsPage.submissionDetails.treeSha.text.includes('fooa77c91'), 'tree sha should be truncated');
+
+    await submissionsPage.submissionDetails.treeSha.copyButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Click to copy Git tree SHA',
+    });
+  });
 });

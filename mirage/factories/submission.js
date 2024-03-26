@@ -52,6 +52,8 @@ export default Factory.extend({
 
   commitSha: () => generateRandomAlphanumericString(40),
 
+  treeSha: () => generateRandomAlphanumericString(40),
+
   githubStorageHtmlUrl: 'https://github.com',
 
   withFailureStatus: trait({
