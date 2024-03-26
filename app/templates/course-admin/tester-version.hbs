@@ -13,7 +13,7 @@
 
       <div class="flex items-start justify-between">
         <div>
-          <h3 class="flex items-start gap-x-3 text-lg font-bold text-gray-800 mb-2">
+          <h3 class="flex items-center gap-x-2 text-xl font-bold text-gray-800 mb-2">
             <p>{{@model.testerVersion.tagName}}</p>
 
             {{#if @model.testerVersion.isActive}}
@@ -23,21 +23,23 @@
             {{/if}}
           </h3>
 
-          <div class="prose prose-sm">
+          <div class="text-xs text-gray-500">
             Created
             {{date-from-now @model.testerVersion.createdAt}}
           </div>
 
           {{#if @model.testerVersion.isActive}}
-            <div class="flex items-center mt-6 gap-x-1 text-gray-600 text-sm">
-              <span>
+            <div class="flex items-center mt-4 gap-x-1">
+              {{svg-jar "check-circle" class="w-6 fill-current text-teal-500"}}
+
+              <span class="text-gray-500 text-xs">
                 Activated
                 {{date-from-now @model.testerVersion.lastActivatedAt}}
-              </span>
 
-              {{#if @model.testerVersion.activator}}
-                <span>by {{@model.testerVersion.activator.username}}</span>
-              {{/if}}
+                {{#if @model.testerVersion.activator}}
+                  <span>by {{@model.testerVersion.activator.username}}</span>
+                {{/if}}
+              </span>
             </div>
           {{else}}
             <div class="flex items-center mt-6 gap-x-3">
@@ -50,14 +52,21 @@
                 Activate
               </PrimaryButtonWithSpinner>
 
-              <TertiaryButtonWithSpinner
-                @shouldShowSpinner={{this.isDeprovisioningTestRunners}}
-                @size="small"
-                {{on "click" this.handleDeprovisionTestRunnersButtonClick}}
-                data-test-deprovision-test-runners-button
-              >
-                Deprovision Test Runners
-              </TertiaryButtonWithSpinner>
+              <div class="inline-flex">
+                <TertiaryButtonWithSpinner
+                  @shouldShowSpinner={{this.isDeprovisioningTestRunners}}
+                  @size="small"
+                  @isDisabled={{eq @model.testerVersion.provisionedTestRunnersCount 0}}
+                  {{on "click" this.handleDeprovisionTestRunnersButtonClick}}
+                  data-test-deprovision-test-runners-button
+                >
+                  Deprovision Test Runners
+                </TertiaryButtonWithSpinner>
+
+                {{#if (eq @model.testerVersion.provisionedTestRunnersCount 0)}}
+                  <EmberTooltip @text="This tester version does not have any provisioned test runners." />
+                {{/if}}
+              </div>
             </div>
           {{/if}}
         </div>
@@ -85,7 +94,7 @@
       {{/if}}
     </div>
 
-    <div>
+    <div class="prose">
       {{#if (gt @model.testerVersion.provisionedTestRunnersCount 0)}}
         This tester version has
         {{@model.testerVersion.provisionedTestRunnersCount}}
