@@ -1,6 +1,6 @@
 <div class="pt-8 pb-16">
   {{#if this.shouldShowTestsPassedNotice}}
-    <CoursePage::CourseStageStep::TestsPassedNotice class="mb-6" />
+    <CoursePage::CourseStageStep::TestsPassedNotice class="mb-6" @submission={{@model.activeRepository.lastSubmission}} />
   {{/if}}
 
   {{#if this.shouldShowTestFailureExpectedHint}}

@@ -76,13 +76,15 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
 
-    this.server.create('submission', 'withStageCompletion', {
+    this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
+
+    // await this.pauseTest();
 
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage passed');
   });
