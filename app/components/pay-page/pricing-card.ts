@@ -40,8 +40,9 @@ export default class PricingCardComponent extends Component<Signature> {
   get featureDescriptions() {
     return [
       { text: 'One time payment' },
-      { text: 'No limits on content' },
+      { text: 'No limits on content', link: 'https://docs.codecrafters.io/content' },
       { text: 'Turbo test runs', link: 'https://codecrafters.io/turbo' },
+      { text: 'Anonymous Mode', link: 'https://docs.codecrafters.io/anon' },
       { text: 'Community features' },
       { text: 'Access to Perks', link: 'https://codecrafters.io/perks' },
       { text: 'Priority support' },
