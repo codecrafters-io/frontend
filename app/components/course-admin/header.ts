@@ -47,7 +47,7 @@ export default class CourseAdminHeaderComponent extends Component<Signature> {
         slug: 'tester-versions',
         route: 'course-admin.tester-versions',
         models: [this.args.course.slug],
-        isActive: this.router.currentRouteName === 'course-admin.tester-versions',
+        isActive: ['course-admin.tester-versions', 'course-admin.tester-version'].includes(this.router.currentRouteName),
       },
       {
         icon: 'speakerphone',

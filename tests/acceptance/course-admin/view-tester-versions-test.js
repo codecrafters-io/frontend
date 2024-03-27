@@ -151,15 +151,84 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       'should be rendered if provisioned test runners count is not 0',
     );
 
-    await testerVersionsPage.testerVersionListItem[0].provisionedTestRunnersCount.hover();
-
-    assertTooltipContent(assert, {
-      contentString: 'This version has 2 provisioned test runners. You can deprovision these if you want users to use the active version instead.',
-    });
+    assert.true(
+      testerVersionsPage.testerVersionListItem[0].provisionedTestRunnersCount.text.includes('2'),
+      'should render the correct provisioned test runners count',
+    );
 
     assert.notOk(
       testerVersionsPage.testerVersionListItem[1].provisionedTestRunnersCount.isPresent,
       'should not be rendered if provisioned test runners count is 0',
     );
+  });
+
+  test('it has the correct provisioned test runners icon tooltip when the tester version is active', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('course-tester-version', {
+      activator: this.server.schema.users.first(),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      commitSha: '1234567890',
+      createdAt: new Date(2021, 1, 1),
+      isLatest: false,
+      isActive: false,
+      provisionedTestRunnersCount: 0,
+      tagName: 'v10',
+    });
+
+    this.server.create('course-tester-version', {
+      activator: this.server.schema.users.first(),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      commitSha: '1234567890',
+      createdAt: new Date(2021, 1, 1),
+      isLatest: true,
+      isActive: true,
+      lastActivatedAt: new Date(2021, 1, 1),
+      provisionedTestRunnersCount: 2,
+      tagName: 'v11',
+    });
+
+    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.testerVersionListItem[0].provisionedTestRunnersCount.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'This version has 2 provisioned test runners.',
+    });
+  });
+
+  test('it has the correct provisioned test runners icon tooltip when the tester version is not active', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('course-tester-version', {
+      activator: this.server.schema.users.first(),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      commitSha: '1234567890',
+      createdAt: new Date(2021, 1, 1),
+      isLatest: false,
+      isActive: false,
+      provisionedTestRunnersCount: 1,
+      tagName: 'v10',
+    });
+
+    this.server.create('course-tester-version', {
+      activator: this.server.schema.users.first(),
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      commitSha: '1234567890',
+      createdAt: new Date(2021, 1, 1),
+      isLatest: true,
+      isActive: true,
+      lastActivatedAt: new Date(2021, 1, 1),
+      provisionedTestRunnersCount: 2,
+      tagName: 'v11',
+    });
+
+    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.testerVersionListItem[1].provisionedTestRunnersCount.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'This version has 1 provisioned test runner. You can deprovision this if you want users to use the active version instead.',
+    });
   });
 });
