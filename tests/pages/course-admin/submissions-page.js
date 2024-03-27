@@ -24,6 +24,15 @@ export default create({
       scope: '[data-test-commit-sha]',
     },
 
+    treeSha: {
+      copyButton: {
+        hover: triggerable('mouseenter'),
+        scope: '[data-test-copy-tree-sha-button]',
+      },
+
+      scope: '[data-test-tree-sha]',
+    },
+
     userProficiencyInfoIcon: {
       hover: triggerable('mouseenter'),
       scope: '[data-test-user-proficiency-info-icon]',
