@@ -44,7 +44,6 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
     const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    console.log(filteredAnalyticsEventsNames);
     assert.ok(filteredAnalyticsEventsNames.includes('updated_profile_description'), 'updated_profile_description event should be tracked');
   });
 });
