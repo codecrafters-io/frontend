@@ -184,5 +184,5 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: 'nonexistent' });
     assert.strictEqual(currentURL(), '/404');
-  })
+  });
 });
