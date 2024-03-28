@@ -704,5 +704,6 @@ function routes() {
     });
   });
 
+  this.patch('/users/:id');
   this.post('/views');
 }
