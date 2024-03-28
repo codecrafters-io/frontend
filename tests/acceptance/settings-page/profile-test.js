@@ -13,14 +13,18 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-    currentUser.update({ profileDescriptionMarkdown: "" });
+    currentUser.update({ profileDescriptionMarkdown: '' });
 
     await profilePage.visit();
-    await profilePage.profileDescription.input.fillIn("Updated profile description");
+    await profilePage.profileDescription.input.fillIn('Updated profile description');
     await profilePage.profileDescription.input.blur();
 
     await userPage.visit({ username: 'rohitpaulk' });
-    assert.strictEqual(userPage.profileDescriptionMarkdown.text, "Updated profile description", 'user page should reflect updated profile description');
+    assert.strictEqual(
+      userPage.profileDescriptionMarkdown.text,
+      'Updated profile description',
+      'user page should reflect updated profile description',
+    );
   });
 
   test('tracks when the profile description is updated', async function (assert) {
@@ -28,10 +32,10 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-    currentUser.update({ profileDescriptionMarkdown: "" });
+    currentUser.update({ profileDescriptionMarkdown: '' });
 
     await profilePage.visit();
-    await profilePage.profileDescription.input.fillIn("Updated profile description");
+    await profilePage.profileDescription.input.fillIn('Updated profile description');
     await profilePage.profileDescription.input.blur();
 
     await userPage.visit({ username: 'rohitpaulk' });
@@ -40,7 +44,7 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
     const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
 
-    console.log(filteredAnalyticsEventsNames)
+    console.log(filteredAnalyticsEventsNames);
     assert.ok(filteredAnalyticsEventsNames.includes('updated_profile_description'), 'updated_profile_description event should be tracked');
   });
 });
