@@ -12,8 +12,6 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const currentUser = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-
     await profilePage.visit();
     await profilePage.profileDescription.input.fillIn('Updated profile description');
     await profilePage.profileDescription.input.blur();
@@ -29,8 +27,6 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
   test('tracks when the profile description is updated', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
-
-    const currentUser = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
     await profilePage.visit();
     await profilePage.profileDescription.input.fillIn('Updated profile description');
