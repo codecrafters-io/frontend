@@ -13,7 +13,6 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-    currentUser.update({ profileDescriptionMarkdown: '' });
 
     await profilePage.visit();
     await profilePage.profileDescription.input.fillIn('Updated profile description');
@@ -32,7 +31,6 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-    currentUser.update({ profileDescriptionMarkdown: '' });
 
     await profilePage.visit();
     await profilePage.profileDescription.input.fillIn('Updated profile description');
