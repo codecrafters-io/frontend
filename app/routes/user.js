@@ -13,6 +13,10 @@ export default class UserRoute extends BaseRoute {
       include: 'course-participations.language,course-participations.course.stages,course-participations.current-stage,profile-events',
     });
 
-    return users[0];
+    if (users.length === 0) {
+      this.router.transitionTo('not-found');
+    } else {
+      return users[0];
+    }
   }
 }
