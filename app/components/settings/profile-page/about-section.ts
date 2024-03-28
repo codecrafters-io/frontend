@@ -24,7 +24,7 @@ export default class AboutSectionComponent extends Component<Signature> {
   async handleBlur() {
     this.updateValue.perform();
 
-    if (!this.isUpdating && !this.wasUpdatedRecently) {
+    if (!this.wasUpdatedRecently) {
       this.analyticsEventTracker.track('updated_profile_description', {});
     }
   }
