@@ -7,6 +7,10 @@ export default createPage({
     scope: '[data-test-admin-profile-button]',
   },
 
+  profileDescriptionMarkdown: {
+    scope: '[data-test-profile-description-markdown]',
+  },
+
   userLabel: {
     scope: '[data-test-user-label]',
     hover: triggerable('mouseenter'),
