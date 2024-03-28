@@ -7,6 +7,12 @@ export default class UserRoute extends BaseRoute {
   @service router;
   @service store;
 
+  afterModel(model) {
+    if (!model) {
+      this.router.transitionTo('not-found');
+    }
+  }
+
   async model(params) {
     const users = await this.store.query('user', {
       username: params.username,
