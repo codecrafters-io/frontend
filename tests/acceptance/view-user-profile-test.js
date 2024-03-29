@@ -185,4 +185,14 @@ module('Acceptance | view-user-profile', function (hooks) {
     await userPage.visit({ username: 'nonexistent' });
     assert.strictEqual(currentURL(), '/404');
   });
+
+  test('renders for current user', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+
+    await userPage.visit({ username: user.username });
+    assert.ok(userPage.profileCustomizationNotice.isVisible);
+  });
 });

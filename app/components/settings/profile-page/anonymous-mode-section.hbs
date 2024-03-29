@@ -8,7 +8,7 @@
     </Pill>
   </:belowDescription>
   <:default>
-    <div class="flex items-center gap-3">
+    <div class="inline-flex items-center gap-3">
       <Toggle @isOn={{@user.hasAnonymousModeEnabled}} @isDisabled={{this.toggleIsDisabled}} {{on "click" this.handleToggle}} />
       <div class="text-gray-600 text-sm">Enable anonymous mode</div>
 
