@@ -11,7 +11,7 @@
       {{#if this.shouldShowProfileCustomizationNotice}}
         <Alert class="mb-8" data-test-profile-customization-notice>
           You can
-          <a href="/settings/profile" class="underline">customize your profile</a>
+          <LinkTo @route="settings.profile" target="_blank">customize your profile</LinkTo>
           to add a description or turn on anonymous mode.
         </Alert>
       {{/if}}

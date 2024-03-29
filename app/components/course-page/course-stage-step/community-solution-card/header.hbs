@@ -17,6 +17,31 @@
 
         <EmberTooltip @text="This solution was hand-picked by CodeCrafters staff." />
       </Pill>
+    {{else if (eq @solution.user this.authenticator.currentUser)}}
+      <Pill @color="green">
+        Yours
+
+        {{! @glint-expect-error not types yet }}
+        <EmberPopover @popperContainer="body">
+          <div class="prose prose-sm prose-invert text-white">
+            <p>
+              This is your code example.
+            </p>
+
+            {{#if this.authenticator.currentUser.hasAnonymousModeEnabled}}
+              <p>
+                You have Anonymous Mode enabled, so your GitHub username and avatar are hidden.
+              </p>
+            {{else}}
+              <p>
+                You can
+                <LinkTo @route="settings.profile" target="_blank">turn on Anonymous Mode</LinkTo>
+                to hide your GitHub username and avatar.
+              </p>
+            {{/if}}
+          </div>
+        </EmberPopover>
+      </Pill>
     {{/if}}
 
     {{#if @solution.screencast}}
