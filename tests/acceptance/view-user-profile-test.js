@@ -2,6 +2,7 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -176,6 +177,13 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: other_user.username });
     assert.notOk(userPage.adminProfileButton.isPresent);
+  });
+
+  test('it should redirect to not-found if the user does not exist', async function (assert) {
+    testScenario(this.server);
+
+    await userPage.visit({ username: 'nonexistent' });
+    assert.strictEqual(currentURL(), '/404');
   });
 
   test('renders for current user', async function (assert) {
