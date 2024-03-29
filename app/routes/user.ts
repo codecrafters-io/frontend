@@ -13,7 +13,7 @@ export default class UserRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  async afterModel(model: ModelType): Promise<void> {
+  afterModel(model: ModelType): void {
     if (!model) {
       this.router.transitionTo('not-found');
     }
