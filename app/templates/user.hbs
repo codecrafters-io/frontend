@@ -4,7 +4,6 @@
 
 <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 min-h-screen">
   <div class="flex flex-col md:flex-row -my-24 pb-24 md:my-0 md:pb-0">
-    {{! @glint-expect-error not ts-ified yet }}
     <UserPage::SidebarContainer class="md:-my-24 w-48 flex-shrink-0" @user={{this.model}} />
 
     <div class="flex-grow md:ml-8 mt-8">
@@ -25,10 +24,7 @@
       {{/if}}
 
       {{#if (gt this.model.courseParticipations.length 0)}}
-        {{! @glint-expect-error not ts-ified yet }}
         <UserPage::CourseProgressList @user={{this.model}} class="mb-16" />
-
-        {{! @glint-expect-error not ts-ified yet }}
         <UserPage::ActivityContainer @user={{this.model}} class="mb-16" />
       {{else}}
         <div class="text-gray-400 text-center py-16">

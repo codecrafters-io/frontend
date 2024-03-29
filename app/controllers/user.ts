@@ -11,4 +11,8 @@ export default class UserController extends Controller {
   get currentUser() {
     return this.authenticator.currentUser;
   }
+
+  get shouldShowProfileCustomizationNotice() {
+    return this.currentUser && this.currentUser == this.model && !this.currentUser.profileDescriptionMarkdown;
+  }
 }
