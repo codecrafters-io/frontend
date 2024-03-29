@@ -8,6 +8,14 @@
     <UserPage::SidebarContainer class="md:-my-24 w-48 flex-shrink-0" @user={{this.model}} />
 
     <div class="flex-grow md:ml-8 mt-8">
+      {{#if this.shouldShowProfileCustomizationNotice}}
+        <Alert class="mb-8" data-test-profile-customization-notice>
+          You can
+          <a href="/settings/profile" class="underline">customize your profile</a>
+          to add a description or turn on anonymous mode.
+        </Alert>
+      {{/if}}
+
       {{#if this.model.profileDescriptionMarkdown}}
         <div class="bg-white rounded p-4 shadow-sm mb-8 border">
           <div class="prose">

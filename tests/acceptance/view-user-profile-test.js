@@ -177,4 +177,14 @@ module('Acceptance | view-user-profile', function (hooks) {
     await userPage.visit({ username: other_user.username });
     assert.notOk(userPage.adminProfileButton.isPresent);
   });
+
+  test('renders for current user', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+
+    await userPage.visit({ username: user.username });
+    assert.ok(userPage.profileCustomizationNotice.isVisible);
+  });
 });

@@ -13,6 +13,7 @@ export default createPage({
   },
 
   courseProgressListItems: collection('[data-test-course-progress-list-item]', CourseProgressListItem),
+  profileCustomizationNotice: { scope: '[data-test-profile-customization-notice]' },
 
   visit: visitable('/users/:username'),
 });
