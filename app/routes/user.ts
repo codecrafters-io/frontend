@@ -13,6 +13,12 @@ export default class UserRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
+  async afterModel(model: ModelType): Promise<void> {
+    if (!model) {
+      this.router.transitionTo('not-found');
+    }
+  }
+
   async model(params: { username: string }): Promise<ModelType> {
     const users = (await this.store.query('user', {
       username: params.username,
