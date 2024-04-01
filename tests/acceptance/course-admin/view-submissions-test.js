@@ -1,5 +1,5 @@
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, pauseTest } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -381,5 +381,35 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'Click to copy Git tree SHA',
     });
+  });
+
+  test('it should handle null value for tree SHA', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
+      treeSha: null,
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[2],
+    });
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+
+    assert.ok(submissionsPage.submissionDetails.treeSha.isPresent, 'tree sha should be present');
+
+    await submissionsPage.timelineContainer.entries[1].click();
+
+    assert.true(submissionsPage.submissionDetails.treeSha.text.includes('Unknown'), 'tree sha is displayed');
   });
 });

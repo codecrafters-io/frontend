@@ -32,6 +32,10 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
   }
 
   get shortSubmissionTreeSha() {
+    if (!this.args.submission.treeSha) {
+      return 'Unknown';
+    }
+
     return this.args.submission.treeSha.substring(0, 8);
   }
 
