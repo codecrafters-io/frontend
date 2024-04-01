@@ -26,39 +26,32 @@
         <Concept @concept={{@concept}} @latestConceptEngagement={{@latestConceptEngagement}} />
 
         {{#animated-if this.hasCompletedConcept}}
-          <div class="flex flex-col items-center justify-center py-16 border-t" {{scroll-into-view}}>
-            <div class="text-5xl mb-8">
-              🎉
-            </div>
-            <div class="text-lg text-center text-gray-800 mb-8">
-              You've completed this concept!
-            </div>
-
-            <FeedbackButton @source="concept_completed" class="mr-4 mb-16" as |dd|>
-              <div
-                role="button"
-                class="rounded border
-                  {{if dd.isOpen 'border-gray-600' 'border-gray-200'}}
-                  hover:border-gray-600 transition-colors px-3 py-2 text-sm text-gray-600"
-                data-test-feedback-button
-              >
-                Share Feedback
+          <div class="flex flex-col gap-y-16 border-t pt-12" {{scroll-into-view block="start"}}>
+            <div class="flex flex-col items-center justify-center">
+              <div class="text-5xl mb-8" {{did-insert this.handleDidInsertConfettiEmoji}}>
+                🎉
               </div>
-            </FeedbackButton>
-
-            <div class="pt-16 pb-8 border-t w-full" data-test-share-concept-container>
-              <div class="flex flex-col items-start gap-4 border rounded shadow-sm p-4">
-                <span class="flex gap-2 items-center text-gray-700 text-sm">
-                  {{svg-jar "gift" class="w-5 text-teal-500"}}
-                  Learnt something new? Share it with a friend.
-                </span>
-
-                <CopyableCode @code={{@concept.url}} @onCopyButtonClick={{this.handleCopyButtonClick}} />
+              <div class="text-lg text-center text-gray-800 mb-8">
+                You've completed this concept!
               </div>
+
+              <FeedbackButton @source="concept_completed" as |dd|>
+                <div
+                  role="button"
+                  class="rounded border
+                    {{if dd.isOpen 'border-gray-600' 'border-gray-200'}}
+                    hover:border-gray-600 transition-colors px-3 py-2 text-sm text-gray-600"
+                  data-test-feedback-button
+                >
+                  Share Feedback
+                </div>
+              </FeedbackButton>
             </div>
+
+            <ConceptPage::ShareConceptContainer class="w-full" @concept={{@concept}} />
 
             {{#if this.nextConcept}}
-              <div class="py-8" data-test-upcoming-concept>
+              <div data-test-upcoming-concept>
                 <div class="text-lg text-center text-gray-800 mb-8" data-test-upcoming-concept-title>
                   Next up in
                   {{@conceptGroup.title}}:

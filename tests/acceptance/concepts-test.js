@@ -1,6 +1,7 @@
 import conceptPage from 'codecrafters-frontend/tests/pages/concept-page';
 import conceptsPage from 'codecrafters-frontend/tests/pages/concepts-page';
 import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
+import dummy from 'codecrafters-frontend/mirage/concept-fixtures/dummy';
 import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
 import percySnapshot from '@percy/ember';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
@@ -15,6 +16,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 function createConcepts(server) {
   createConceptFromFixture(server, tcpOverview);
   createConceptFromFixture(server, networkProtocols);
+  createConceptFromFixture(server, dummy);
 }
 
 module('Acceptance | concepts-test', function (hooks) {
@@ -214,37 +216,12 @@ module('Acceptance | concepts-test', function (hooks) {
 
     signInAsStaff(this.owner, this.server);
 
-    this.server.schema.conceptGroups.create({
-      conceptSlugs: ['network-protocols', 'tcp-overview'],
-      descriptionMarkdown: 'This is a group about network concepts',
-      slug: 'network-primer',
-      title: 'Network Primer',
-    });
-
     await conceptsPage.visit();
 
-    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptsPage.clickOnConceptCard('Dummy Concept');
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].clickOnShowExplanationButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.questionCards[1].clickOnShowExplanationButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.questionCards[2].clickOnShowExplanationButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.questionCards[3].clickOnShowExplanationButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 

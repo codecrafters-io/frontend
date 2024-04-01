@@ -8,6 +8,7 @@ interface Signature {
   Element: HTMLElement;
 
   Args: {
+    backgroundColor?: 'gray' | 'white';
     code: string;
     onCopyButtonClick?: () => void;
   };
