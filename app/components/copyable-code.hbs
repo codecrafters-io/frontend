@@ -1,5 +1,8 @@
 <div class="flex items-stretch w-full copyable-code" ...attributes>
-  <div class="px-3 py-1.5 flex-grow-1 w-full overflow-x-scroll border border-gray-300 border-r-0 rounded-l bg-gray-100">
+  <div
+    class="px-3 py-1.5 flex-grow-1 w-full overflow-x-scroll border border-gray-300 border-r-0 rounded-l
+      {{if (eq @backgroundColor 'white') 'bg-white' 'bg-gray-100'}}"
+  >
     <span class="whitespace-nowrap font-mono text-gray-600 text-xs">
       {{@code}}
     </span>
