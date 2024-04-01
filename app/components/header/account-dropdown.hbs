@@ -57,6 +57,16 @@
 
       {{#if this.currentUser.isStaff}}
         <Header::AccountDropdownLink @text="Test Sentry" @icon="fire" {{on "click" this.handleTestSentryClick}} />
+        <div class="text-xs text-gray-400 px-3 py-2">
+          {{this.version.currentVersion}}
+
+          {{#if (and this.version.latestVersion (eq this.version.currentVersion this.version.latestVersion))}}
+            (Latest)
+          {{else}}
+            (Latest:
+            {{or this.version.latestVersion "unknown"}})
+          {{/if}}
+        </div>
       {{/if}}
     </div>
   </dd.Content>

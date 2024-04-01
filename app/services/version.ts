@@ -1,17 +1,40 @@
 import config from 'codecrafters-frontend/config/environment';
 import Service from '@ember/service';
+import { tracked } from 'tracked-built-ins';
 
 export default class VersionService extends Service {
-  get majorVersion() {
-    return this.#parseVersionString(config.x.version).major;
+  VERSION_CHECK_INTERVAL_SECONDS = 60; // 1 minute
+
+  @tracked latestVersion: string | null = null;
+  @tracked latestVersionLastFetchedAt: Date | null = null;
+
+  get currentMajorVersion() {
+    return this.#parseVersionString(this.currentVersion).major;
   }
 
-  get minorVersion() {
-    return this.#parseVersionString(config.x.version).minor;
+  get currentMinorVersion() {
+    return this.#parseVersionString(this.currentVersion).minor;
   }
 
-  get versionString() {
+  get currentVersion() {
     return config.x.version;
+  }
+
+  async fetchLatestVersionIfNeeded() {
+    if (!this.#latestVersionNeedsFetching()) {
+      return;
+    }
+
+    this.latestVersion = await fetch('/version.txt').then((response) => response.text());
+    this.latestVersionLastFetchedAt = new Date();
+  }
+
+  #latestVersionNeedsFetching() {
+    if (!this.latestVersionLastFetchedAt) {
+      return true;
+    }
+
+    return Date.now() - this.latestVersionLastFetchedAt.getTime() > this.VERSION_CHECK_INTERVAL_SECONDS * 1000;
   }
 
   #parseVersionString(versionString: string) {
@@ -22,5 +45,11 @@ export default class VersionService extends Service {
       minor: parseInt(parts[1] as string),
       patch: parts[2], // We use git commit hashes for patch versions
     };
+  }
+
+  versionIsOutdated(latestVersionString: string) {
+    const latestVersionParts = this.#parseVersionString(latestVersionString);
+
+    return this.currentMajorVersion < latestVersionParts.major;
   }
 }
