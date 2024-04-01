@@ -2,7 +2,7 @@ import config from 'codecrafters-frontend/config/environment';
 import Service from '@ember/service';
 import { tracked } from 'tracked-built-ins';
 
-export default class VersionService extends Service {
+export default class VersionTrackerService extends Service {
   VERSION_CHECK_INTERVAL_SECONDS = 60; // 1 minute
 
   @tracked latestVersion: string | null = null;

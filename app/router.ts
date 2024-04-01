@@ -58,6 +58,7 @@ Router.map(function () {
   });
 
   this.route('course-overview', { path: '/courses/:course_slug/overview' });
+  this.route('debug');
   this.route('join');
   this.route('login');
   this.route('logged-in');

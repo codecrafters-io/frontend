@@ -8,14 +8,12 @@ import type ColorScheme from 'codecrafters-frontend/services/color-scheme';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
-import type VersionService from 'codecrafters-frontend/services/version';
 
 export default class HeaderAccountDropdownComponent extends Component {
   @service declare authenticator: AuthenticatorService;
   @service declare colorScheme: ColorScheme;
   @service declare router: RouterService;
   @service declare store: Store;
-  @service declare version: VersionService;
 
   @tracked isCreatingBillingSession = false;
 

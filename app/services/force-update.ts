@@ -1,16 +1,17 @@
 import { action } from '@ember/object';
 import Service, { service } from '@ember/service';
-import type VersionService from './version';
+import type VersionTrackerService from './version-tracker';
 import type RouterService from '@ember/routing/router-service';
 
 export default class ForceUpdateService extends Service {
   @service declare router: RouterService;
-  @service declare version: VersionService;
+  @service declare versionTracker: VersionTrackerService;
 
   @action
   handleRouteChange() {
-    console.log('Route changed, checking for updates');
-    this.version.fetchLatestVersionIfNeeded();
+    this.versionTracker.fetchLatestVersionIfNeeded();
+
+    // TODO: Do something when the version is outdated?
   }
 
   setupListener() {
