@@ -21,8 +21,8 @@ type Tab = {
   icon: string;
   name: string;
   slug: string;
-  route: string;
-  models: string[];
+  externalLink?: { url: string };
+  internalLink?: { route: string; models: string[] }; // Easier to type this using two params than one union type
   isActive: boolean;
 };
 
@@ -50,8 +50,10 @@ export default class TabListComponent extends Component<Signature> {
         icon: 'sparkles',
         name: 'Congratulations!',
         slug: 'congratulations',
-        route: this.args.currentStep.routeParams.route,
-        models: this.args.currentStep.routeParams.models,
+        internalLink: {
+          route: this.args.currentStep.routeParams.route,
+          models: this.args.currentStep.routeParams.models,
+        },
         isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
       },
     ];
@@ -63,8 +65,10 @@ export default class TabListComponent extends Component<Signature> {
         icon: 'document-text',
         name: 'Instructions',
         slug: 'instructions',
-        route: this.args.currentStep.routeParams.route,
-        models: this.args.currentStep.routeParams.models,
+        internalLink: {
+          route: this.args.currentStep.routeParams.route,
+          models: this.args.currentStep.routeParams.models,
+        },
         isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
       },
     ];
@@ -90,8 +94,10 @@ export default class TabListComponent extends Component<Signature> {
       icon: 'document-text',
       name: 'Instructions',
       slug: 'instructions',
-      route: 'course.stage.instructions',
-      models: this.args.currentStep.routeParams.models,
+      internalLink: {
+        route: 'course.stage.instructions',
+        models: this.args.currentStep.routeParams.models,
+      },
       isActive: this.router.currentRouteName === 'course.stage.instructions',
     });
 
@@ -99,8 +105,10 @@ export default class TabListComponent extends Component<Signature> {
       icon: 'code',
       name: 'Code Examples',
       slug: 'code_examples',
-      route: 'course.stage.code-examples',
-      models: this.args.currentStep.routeParams.models,
+      internalLink: {
+        route: 'course.stage.code-examples',
+        models: this.args.currentStep.routeParams.models,
+      },
       isActive: this.router.currentRouteName === 'course.stage.code-examples',
     });
 
@@ -110,8 +118,10 @@ export default class TabListComponent extends Component<Signature> {
         icon: 'play',
         name: 'Screencasts',
         slug: 'screencasts',
-        route: 'course.stage.screencasts',
-        models: this.args.currentStep.routeParams.models,
+        internalLink: {
+          route: 'course.stage.screencasts',
+          models: this.args.currentStep.routeParams.models,
+        },
         isActive: this.router.currentRouteName === 'course.stage.screencasts',
       });
     }
@@ -122,11 +132,23 @@ export default class TabListComponent extends Component<Signature> {
         icon: 'academic-cap',
         name: 'Concepts',
         slug: 'concepts',
-        route: 'course.stage.concepts',
-        models: this.args.currentStep.routeParams.models,
+        internalLink: {
+          route: 'course.stage.concepts',
+          models: this.args.currentStep.routeParams.models,
+        },
         isActive: this.router.currentRouteName === 'course.stage.concepts',
       });
     }
+
+    tabs.push({
+      icon: 'chat-alt-2',
+      name: 'Forum',
+      slug: 'forum',
+      externalLink: {
+        url: this.args.course.forumUrl,
+      },
+      isActive: false,
+    });
 
     return tabs;
   }
