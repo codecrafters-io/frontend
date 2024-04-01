@@ -1,5 +1,5 @@
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL, pauseTest } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
