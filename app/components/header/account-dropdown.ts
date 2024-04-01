@@ -9,7 +9,7 @@ import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
 
-export default class HeaderAccountDropdownComponent extends Component {
+export default class AccountDropdownComponent extends Component {
   @service declare authenticator: AuthenticatorService;
   @service declare colorScheme: ColorScheme;
   @service declare router: RouterService;
@@ -114,5 +114,11 @@ export default class HeaderAccountDropdownComponent extends Component {
   handleViewTeamClick(dropdownActions: { close: () => void }, team: TeamModel) {
     dropdownActions.close();
     this.router.transitionTo('team', team.id);
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'Header::AccountDropdown': typeof AccountDropdownComponent;
   }
 }
