@@ -1,7 +1,7 @@
 import Service, { service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
 
-export default class ColorScheme extends Service {
+export default class ColorSchemeService extends Service {
   @service declare router: RouterService;
 
   get isDark(): boolean {

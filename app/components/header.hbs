@@ -4,8 +4,6 @@
   {{will-destroy this.handleWillDestroy}}
   data-test-header
 >
-  {{!  <div class="w-full absolute top-0 left-0 bg-teal-500 h-2px"></div>}}
-
   <div class="container {{if this.containerWidth.maxWidthIsLg 'lg:max-w-screen-lg'}} mx-auto flex items-stretch flex-col md:flex-row px-3 md:px-6">
     <div class="flex items-center justify-between">
       {{! Logo }}
@@ -41,12 +39,17 @@
 
         {{! Top-level links }}
         {{#each this.links as |link|}}
+          {{! @glint-expect-error not ts-ified yet }}
           <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @isDark={{this.colorScheme.isDark}} class="px-2" />
         {{/each}}
       </div>
 
       {{! Account Dropdown on Desktop }}
       <div class="invisible md:visible flex items-center ml-6">
+        {{#if (and this.authenticator.currentUser.isStaff this.versionTracker.currentVersionIsOutdated)}}
+          <OutdatedClientBadge class="mr-4" />
+        {{/if}}
+
         {{#if this.authenticator.isAuthenticated}}
           <FeedbackButton @source="header" class="mr-4" as |dd|>
             <div
@@ -81,6 +84,7 @@
 
           <Header::AccountDropdown />
         {{else}}
+          {{! @glint-expect-error not ts-ified yet }}
           <Header::SignInWithGithubButton />
         {{/if}}
       </div>
@@ -94,12 +98,14 @@
 
         <div class="py-3">
           {{#each this.links as |link|}}
+            {{! @glint-expect-error not ts-ified yet }}
             <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @isDark={{this.colorScheme.isDark}} class="block py-3" />
           {{/each}}
 
           {{#if this.currentUser}}
             <Header::AccountDropdown />
           {{else}}
+            {{! @glint-expect-error not ts-ified yet }}
             <Header::SignInWithGithubButton />
           {{/if}}
         </div>

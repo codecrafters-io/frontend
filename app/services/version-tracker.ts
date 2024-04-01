@@ -23,6 +23,25 @@ export default class VersionTrackerService extends Service {
     return config.x.version;
   }
 
+  // TODO: We don't use this yet!
+  get currentVersionIsIncompatible() {
+    if (!this.latestVersion) {
+      return false; // Without a latest version, we can't determine if the current version is incompatible
+    }
+
+    const latestVersionParts = this.#parseVersionString(this.latestVersion);
+
+    return this.currentMajorVersion < latestVersionParts.major;
+  }
+
+  get currentVersionIsOutdated() {
+    if (!this.latestVersion) {
+      return false; // Without a latest version, we can't determine if the current version is outdated
+    }
+
+    return this.currentVersion !== this.latestVersion;
+  }
+
   async fetchLatestVersionIfNeeded() {
     // Don't fire requests during FastBoot runs
     if (this.fastboot.isFastBoot) {
@@ -53,11 +72,5 @@ export default class VersionTrackerService extends Service {
       minor: parseInt(parts[1] as string),
       patch: parts[2], // We use git commit hashes for patch versions
     };
-  }
-
-  versionIsOutdated(latestVersionString: string) {
-    const latestVersionParts = this.#parseVersionString(latestVersionString);
-
-    return this.currentMajorVersion < latestVersionParts.major;
   }
 }
