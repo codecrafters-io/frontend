@@ -27,8 +27,7 @@ module.exports = function (environment) {
 
     x: {
       backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
-      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-      vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
+
       defaultMetaTags: {
         type: 'website',
         siteName: 'CodeCrafters',
@@ -41,7 +40,11 @@ module.exports = function (environment) {
         twitterCard: 'summary_large_image',
         twitterSite: '@codecraftersio',
       },
+
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
+      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
+      version: `2.0.${(process.env.VERCEL_GIT_COMMIT_SHA || 'dev').slice(0, 7)}`,
     },
     fastboot: {
       hostWhitelist: [/^localhost:\d+$/],

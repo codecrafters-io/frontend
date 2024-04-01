@@ -10,6 +10,7 @@ const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
 
 const fetch = require('node-fetch');
+const customFilePlugin = require('./lib/custom-file-plugin');
 const config = require('./config/environment')(EmberApp.env());
 
 module.exports = function (defaults) {
@@ -91,6 +92,8 @@ module.exports = function (defaults) {
       publicAssetURL: '/',
       webpackConfig: {
         plugins: [
+          customFilePlugin('version.txt', config.x.version),
+
           sentryWebpackPlugin({
             org: process.env.SENTRY_ORG,
             project: process.env.SENTRY_PROJECT,
