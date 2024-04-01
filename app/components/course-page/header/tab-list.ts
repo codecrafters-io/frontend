@@ -128,15 +128,6 @@ export default class TabListComponent extends Component<Signature> {
       });
     }
 
-    tabs.push({
-      icon: 'code',
-      name: 'Forum',
-      slug: 'forum',
-      route: 'course.stage.code-examples',
-      models: this.args.currentStep.routeParams.models,
-      isActive: this.router.currentRouteName === 'course.stage.code-examples',
-    });
-
     return tabs;
   }
 
