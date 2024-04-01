@@ -1,4 +1,9 @@
-<div class="flex p-1.5 rounded bg-gradient-to-br from-red-500 to-red-600 hover:to-red-500 shadow" ...attributes {{on "click" this.handleClick}} role="button">
+<div
+  class="flex p-1.5 rounded bg-gradient-to-br from-red-500 to-red-600 hover:to-red-500 shadow"
+  ...attributes
+  {{on "click" this.handleClick}}
+  role="button"
+>
   {{svg-jar "cloud-download" class="w-5 h-5 inline-block text-white animate-pulse"}}
 
   <EmberTooltip @text="This version of the app is outdated. Click this icon or refresh the page to get the latest version." />
