@@ -26,8 +26,19 @@
         <Concept @concept={{@concept}} @latestConceptEngagement={{@latestConceptEngagement}} />
 
         {{#animated-if this.hasCompletedConcept}}
-          <div {{scroll-into-view}}>
-            <div class="flex flex-col items-center justify-center py-16 border-t">
+          <div class="flex flex-col gap-y-16 border-t pt-12" {{scroll-into-view}}>
+            <div class="w-full" data-test-share-concept-container>
+              <div class="flex flex-col items-start gap-4 border rounded shadow-sm p-4">
+                <span class="flex gap-2 items-center text-gray-700 text-sm">
+                  {{svg-jar "gift" class="w-5 text-teal-500"}}
+                  Learnt something new? Share it with a friend.
+                </span>
+
+                <CopyableCode @code={{@concept.url}} @onCopyButtonClick={{this.handleCopyButtonClick}} />
+              </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center">
               <div class="text-5xl mb-8">
                 🎉
               </div>
@@ -46,17 +57,6 @@
                   Share Feedback
                 </div>
               </FeedbackButton>
-            </div>
-
-            <div class="py-8 border-t w-full" data-test-share-concept-container>
-              <div class="flex flex-col items-start gap-4 border rounded shadow-sm p-4">
-                <span class="flex gap-2 items-center text-gray-700 text-sm">
-                  {{svg-jar "gift" class="w-5 text-teal-500"}}
-                  Learnt something new? Share it with a friend.
-                </span>
-
-                <CopyableCode @code={{@concept.url}} @onCopyButtonClick={{this.handleCopyButtonClick}} />
-              </div>
             </div>
 
             {{#if this.nextConcept}}
