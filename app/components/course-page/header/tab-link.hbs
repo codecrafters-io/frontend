@@ -13,21 +13,4 @@
   {{/if}}
 
   <span class="whitespace-nowrap {{if @isActive 'text-gray-700' 'text-gray-600'}}">{{@text}}</span>
-
-  {{#if @authorDetails}}
-    <div class="ml-2 flex -space-x-3 hover:space-x-1 items-center">
-      {{! @glint-expect-error: not typesafe yet }}}
-      <ContributorAvatar @contributorDetails={{@authorDetails}} @contributorType="author" />
-
-      {{! @glint-expect-error: not typesafe yet }}}
-      {{#each @reviewersDetails as |reviewerDetails|}}
-        {{! @glint-expect-error: not typesafe yet }}}
-        <ContributorAvatar @contributorDetails={{reviewerDetails}} @contributorType="reviewer" />
-      {{/each}}
-    </div>
-  {{else}}
-    {{! alignment fix }}
-    <div class="h-6">
-    </div>
-  {{/if}}
 </LinkTo>

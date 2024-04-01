@@ -10,7 +10,6 @@ interface Signature {
     iconUrl?: string;
     icon?: string;
     text: string;
-    authorDetails?: unknown;
   };
 
   Blocks: {
