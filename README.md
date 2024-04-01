@@ -4,7 +4,7 @@ The front-end app that powers [app.codecrafters.io](https://app.codecrafters.io)
 
 ## Prerequisites
 
-You will need the following things properly installed on your computer.
+You will need the following things installed on your computer:
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/) (with npm)
