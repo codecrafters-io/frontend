@@ -75,7 +75,7 @@ export default {
         {
           args: {
             markdown:
-              'The most commonly used Transport Layer protocols are:\n\n- TCP, for reliable delivery of data\n- UDP, for fast but less reliable delivery\n\nThere are a few other not so popular ones too (like RUDP, DCCP etc.), but TCP \u0026 UDP are the most common ones.',
+              'The most commonly used Transport Layer protocols are:\n\n- TCP, for reliable delivery of data\n- UDP, for fast but less reliable delivery\n\nThere are a few other not so popular ones too (like RUDP, DCCP etc.), but TCP & UDP are the most common ones.',
           },
           type: 'markdown',
         },
@@ -106,7 +106,7 @@ export default {
         {
           args: {
             markdown:
-              'Links for further reading: \n\n- [Internet Protocol Suite](https://en.wikipedia.org/wiki/Internet_protocol_suite) (Wikipedia page)\n- [The layers in the TCP/IP model](https://subscription.packtpub.com/book/networking-and-servers/9781783989522/1/ch01lvl1sec10/the-layers-in-the-tcp-ip-model) (chapter from the book "Networking \u0026 Servers")',
+              'Links for further reading: \n\n- [Internet Protocol Suite](https://en.wikipedia.org/wiki/Internet_protocol_suite) (Wikipedia page)\n- [The layers in the TCP/IP model](https://subscription.packtpub.com/book/networking-and-servers/9781783989522/1/ch01lvl1sec10/the-layers-in-the-tcp-ip-model) (chapter from the book "Networking & Servers")',
           },
           type: 'markdown',
         },
@@ -117,6 +117,7 @@ export default {
       title: 'Network Protocols',
     },
     relationships: {
+      author: { data: null },
       questions: {
         data: [
           { id: '3c9c5042-f401-457f-9b44-f45cadff227b', type: 'concept-questions' },
@@ -190,7 +191,7 @@ export default {
           {
             markdown: 'Ethernet',
             is_correct: true,
-            explanation_markdown: 'Ethernet is a Link Layer protocol. HTTP, FTP \u0026 SMTP are Application Layer protocols.',
+            explanation_markdown: 'Ethernet is a Link Layer protocol. HTTP, FTP & SMTP are Application Layer protocols.',
           },
           { markdown: 'HTTP', is_correct: false, explanation_markdown: 'HTTP is an Application Layer protocol.' },
           { markdown: 'FTP', is_correct: false, explanation_markdown: 'FTP is an Application Layer protocol.' },
