@@ -223,8 +223,8 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].clickOnShowExplanationButton();
     await conceptPage.clickOnContinueButton();
-    await this.pauseTest();
     await conceptPage.clickOnContinueButton();
+    await this.pauseTest();
 
     await conceptPage.shareConceptContainer.clickOnCopyButton();
 
