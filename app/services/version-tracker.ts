@@ -1,5 +1,6 @@
 import config from 'codecrafters-frontend/config/environment';
-import Service from '@ember/service';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
+import Service, { service } from '@ember/service';
 import { tracked } from 'tracked-built-ins';
 
 export default class VersionTrackerService extends Service {
@@ -7,6 +8,8 @@ export default class VersionTrackerService extends Service {
 
   @tracked latestVersion: string | null = null;
   @tracked latestVersionLastFetchedAt: Date | null = null;
+
+  @service declare fastboot: FastBootService;
 
   get currentMajorVersion() {
     return this.#parseVersionString(this.currentVersion).major;
@@ -21,6 +24,11 @@ export default class VersionTrackerService extends Service {
   }
 
   async fetchLatestVersionIfNeeded() {
+    // Don't fire requests during FastBoot runs
+    if (this.fastboot.isFastBoot) {
+      return;
+    }
+
     if (!this.#latestVersionNeedsFetching()) {
       return;
     }
