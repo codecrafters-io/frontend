@@ -92,7 +92,7 @@ export default {
         {
           args: {
             markdown:
-              "The server waits for connections, and the client initiates a connection. Once a connection is established, the client \u0026 server can both receive \nand send data (it's a two-way channel).",
+              "The server waits for connections, and the client initiates a connection. Once a connection is established, the client & server can both receive \nand send data (it's a two-way channel).",
           },
           type: 'markdown',
         },
@@ -170,14 +170,15 @@ export default {
       title: 'TCP: An Overview',
     },
     relationships: {
+      author: { data: null },
       questions: {
         data: [
           { id: '33e2aff0-ae9a-406c-b896-aef6d5d915ef', type: 'concept-questions' },
           { id: '90fd9df0-c7f5-4876-a856-be9a564df643', type: 'concept-questions' },
           { id: '88bedc53-afd7-4d6d-b272-f6a3a15a509e', type: 'concept-questions' },
           { id: 'feef1a64-04b9-4f37-9443-32e5b11029d0', type: 'concept-questions' },
-          { id: '34d24b5c-0e84-4c11-a29b-8ac79742765b', type: 'concept-questions' },
           { id: '91b04790-4cf2-400b-b912-126e2e86ff91', type: 'concept-questions' },
+          { id: '34d24b5c-0e84-4c11-a29b-8ac79742765b', type: 'concept-questions' },
         ],
       },
     },
@@ -291,35 +292,6 @@ export default {
       relationships: { concept: {} },
     },
     {
-      id: '34d24b5c-0e84-4c11-a29b-8ac79742765b',
-      type: 'concept-questions',
-      attributes: {
-        'query-markdown': 'Which of the following values are NOT used to identify a TCP connection?',
-        options: [
-          {
-            markdown: 'The source \u0026 destination IP addresses',
-            is_correct: false,
-            explanation_markdown:
-              'The source \u0026 destination IP addresses are indeed used to identify a TCP connection.\n\nThe correct answer is the source \u0026 destination MAC addresses, which are not used in identifying a TCP connection, \nas they pertain to the data link layer and not the transport layer where TCP operates.',
-          },
-          {
-            markdown: 'The source \u0026 destination MAC addresses',
-            is_correct: true,
-            explanation_markdown:
-              'MAC addresses  are not used in identifying a TCP connection as they pertain to the data link layer and not the \ntransport layer where TCP operates.',
-          },
-          {
-            markdown: 'The source \u0026 destionation port numbers',
-            is_correct: false,
-            explanation_markdown:
-              'The source and destination port numbers are indeed used to identify a TCP connection, they help differentiate between \nmultiple programs running on the same host.\n\nThe correct answer is the source \u0026 destination MAC addresses, which are not used in identifying a TCP connection, \nas they pertain to the data link layer and not the transport layer where TCP operates.',
-          },
-        ],
-        slug: 'tcp-connection-identifiers',
-      },
-      relationships: { concept: {} },
-    },
-    {
       id: '91b04790-4cf2-400b-b912-126e2e86ff91',
       type: 'concept-questions',
       attributes: {
@@ -345,6 +317,35 @@ export default {
           },
         ],
         slug: 'tcp-handshake-steps',
+      },
+      relationships: { concept: {} },
+    },
+    {
+      id: '34d24b5c-0e84-4c11-a29b-8ac79742765b',
+      type: 'concept-questions',
+      attributes: {
+        'query-markdown': 'Which of the following values are NOT used to identify a TCP connection?',
+        options: [
+          {
+            markdown: 'The source & destination IP addresses',
+            is_correct: false,
+            explanation_markdown:
+              'The source & destination IP addresses are indeed used to identify a TCP connection.\n\nThe correct answer is the source & destination MAC addresses, which are not used in identifying a TCP connection, \nas they pertain to the data link layer and not the transport layer where TCP operates.',
+          },
+          {
+            markdown: 'The source & destination MAC addresses',
+            is_correct: true,
+            explanation_markdown:
+              'MAC addresses  are not used in identifying a TCP connection as they pertain to the data link layer and not the \ntransport layer where TCP operates.',
+          },
+          {
+            markdown: 'The source & destionation port numbers',
+            is_correct: false,
+            explanation_markdown:
+              'The source and destination port numbers are indeed used to identify a TCP connection, they help differentiate between \nmultiple programs running on the same host.\n\nThe correct answer is the source & destination MAC addresses, which are not used in identifying a TCP connection, \nas they pertain to the data link layer and not the transport layer where TCP operates.',
+          },
+        ],
+        slug: 'tcp-connection-identifiers',
       },
       relationships: { concept: {} },
     },
