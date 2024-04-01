@@ -44,7 +44,7 @@ module.exports = function (environment) {
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
-      version: `2.0.${process.env.VERCEL_GIT_COMMIT_SHA || 'dev'}`,
+      version: `2.0.${(process.env.VERCEL_GIT_COMMIT_SHA || 'dev').slice(0, 7)}`,
     },
     fastboot: {
       hostWhitelist: [/^localhost:\d+$/],
