@@ -12,6 +12,7 @@ declare const config: {
   x: {
     backendUrl: string;
     stripePublishableKey: string;
+    version: string;
   };
 };
 
