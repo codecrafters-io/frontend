@@ -1,0 +1,20 @@
+<div class="container mx-auto py-16 min-h-screen lg:max-w-screen-lg px-6">
+  <div class="pb-8 mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">Debugging</h1>
+    <p class="text-lg text-gray-600">This is a page for debugging purposes. It should not be linked to in the app.</p>
+  </div>
+
+  <div class="text-gray-800">
+    <b class="font-semibold">Version:</b>
+    {{this.versionTracker.currentVersion}}
+
+    <span class="text-xs text-gray-400">
+      {{#if (and this.versionTracker.latestVersion (eq this.versionTracker.currentVersion this.versionTracker.latestVersion))}}
+        (Latest)
+      {{else}}
+        (Latest:
+        {{or this.versionTracker.latestVersion "unknown"}})
+      {{/if}}
+    </span>
+  </div>
+</div>

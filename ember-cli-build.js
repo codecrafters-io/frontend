@@ -98,6 +98,9 @@ module.exports = function (defaults) {
             org: process.env.SENTRY_ORG,
             project: process.env.SENTRY_PROJECT,
             authToken: process.env.SENTRY_AUTH_TOKEN,
+            release: {
+              name: config.x.version,
+            },
           }),
 
           shouldSpawnBundleAnalyzer ? new BundleAnalyzerPlugin() : null,
