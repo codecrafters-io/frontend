@@ -1,5 +1,16 @@
 <div class="flex items-center overflow-x-scroll" ...attributes>
   {{#each this.availableTabs key="slug" as |tab|}}
-    <CoursePage::Header::TabLink @icon={{tab.icon}} @route={{tab.route}} @models={{tab.models}} @text={{tab.name}} @isActive={{tab.isActive}} />
+    {{#if tab.externalLink}}
+      <a href={{tab.externalLink.url}} class="flex" target="_blank" rel="noopener noreferrer">
+        <CoursePage::Header::TabLink @icon={{tab.icon}} @text={{tab.name}} @isActive={{tab.isActive}} />
+      </a>
+    {{else}}
+      {{! this if condition just helps with type checking }}
+      {{#if tab.internalLink}}
+        <LinkTo @route={{tab.internalLink.route}} @models={{tab.internalLink.models}} class="flex">
+          <CoursePage::Header::TabLink @icon={{tab.icon}} @text={{tab.name}} @isActive={{tab.isActive}} />
+        </LinkTo>
+      {{/if}}
+    {{/if}}
   {{/each}}
 </div>

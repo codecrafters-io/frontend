@@ -1,11 +1,9 @@
 import Component from '@glimmer/component';
 
 interface Signature {
-  Element: HTMLAnchorElement;
+  Element: HTMLDivElement;
 
   Args: {
-    route: string;
-    models: string[];
     isActive: boolean;
     iconUrl?: string;
     icon?: string;
@@ -18,10 +16,10 @@ interface Signature {
   };
 }
 
-export default class InstructionsCardComponent extends Component<Signature> {}
+export default class TabLinkComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::TabLink': typeof InstructionsCardComponent;
+    'CoursePage::Header::TabLink': typeof TabLinkComponent;
   }
 }
