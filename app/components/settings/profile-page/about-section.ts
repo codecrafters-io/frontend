@@ -1,7 +1,7 @@
-import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import type UserModel from 'codecrafters-frontend/models/user';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 
 interface Signature {
