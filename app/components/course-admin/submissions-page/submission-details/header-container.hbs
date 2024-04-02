@@ -106,7 +106,7 @@
         <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Tree SHA" data-test-tree-sha>
           <div class="flex items-center">
             <span class="mr-2 text-gray-600">
-              {{this.shortSubmissionTreeSha}}
+              {{or this.shortSubmissionTreeSha "Unknown"}}
             </span>
 
             <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleCopyTreeShaButtonClick}} data-test-copy-tree-sha-button>
