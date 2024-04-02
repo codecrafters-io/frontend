@@ -83,6 +83,7 @@ Router.map(function () {
   this.route('teams.pay', { path: '/teams/pay' });
   this.route('track', { path: '/tracks/:track_slug' });
   this.route('tracks');
+  this.route('update-required');
   this.route('user', { path: '/users/:username' });
 
   this.route('vote', function () {

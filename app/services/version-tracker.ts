@@ -4,7 +4,7 @@ import Service, { service } from '@ember/service';
 import { tracked } from 'tracked-built-ins';
 
 export default class VersionTrackerService extends Service {
-  VERSION_CHECK_INTERVAL_SECONDS = 60; // 1 minute
+  static VERSION_CHECK_INTERVAL_SECONDS = 30; // 30 seconds
 
   @tracked latestVersion: string | null = null;
   @tracked latestVersionLastFetchedAt: Date | null = null;
@@ -23,7 +23,6 @@ export default class VersionTrackerService extends Service {
     return config.x.version;
   }
 
-  // TODO: We don't use this yet!
   get currentVersionIsIncompatible() {
     if (!this.latestVersion) {
       return false; // Without a latest version, we can't determine if the current version is incompatible
@@ -31,7 +30,7 @@ export default class VersionTrackerService extends Service {
 
     const latestVersionParts = this.#parseVersionString(this.latestVersion);
 
-    return this.currentMajorVersion < latestVersionParts.major;
+    return this.currentMajorVersion !== latestVersionParts.major;
   }
 
   get currentVersionIsOutdated() {
@@ -61,7 +60,7 @@ export default class VersionTrackerService extends Service {
       return true;
     }
 
-    return Date.now() - this.latestVersionLastFetchedAt.getTime() > this.VERSION_CHECK_INTERVAL_SECONDS * 1000;
+    return Date.now() - this.latestVersionLastFetchedAt.getTime() > VersionTrackerService.VERSION_CHECK_INTERVAL_SECONDS * 1000;
   }
 
   #parseVersionString(versionString: string) {
