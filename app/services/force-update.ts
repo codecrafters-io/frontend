@@ -8,10 +8,12 @@ export default class ForceUpdateService extends Service {
   @service declare versionTracker: VersionTrackerService;
 
   @action
-  handleRouteChange() {
-    this.versionTracker.fetchLatestVersionIfNeeded();
+  async handleRouteChange() {
+    await this.versionTracker.fetchLatestVersionIfNeeded();
 
-    // TODO: Do something when the version is outdated?
+    if (this.versionTracker.currentVersionIsIncompatible && this.router.currentRouteName !== 'update-required') {
+      this.router.transitionTo('update-required', { queryParams: { next: `${this.router.currentURL}` } });
+    }
   }
 
   setupListener() {

@@ -1,0 +1,31 @@
+<div class="container mx-auto py-16 min-h-screen md:max-w-screen-md px-6">
+  {{#if this.versionTracker.currentVersionIsIncompatible}}
+    <div class="mb-8">
+      <div class="flex items-center mb-4 gap-2">
+        {{svg-jar "exclamation" class="w-12 h-12 text-yellow-500"}}
+        <h1 class="text-4xl font-bold text-gray-800 mb-1">Update Required</h1>
+      </div>
+      <p class="text-gray-600">
+        This version of the app is out of date. Please reload your page or click the button below to get the latest version.
+      </p>
+    </div>
+
+    <PrimaryButtonWithSpinner {{on "click" this.handleUpdateNowButtonClick}} @size="large" @shouldShowSpinner={{this.isNavigatingToOtherRoute}}>
+      Update now
+    </PrimaryButtonWithSpinner>
+  {{else}}
+    <div class="mb-8">
+      <div class="flex items-center mb-4 gap-2">
+        {{svg-jar "check-circle" class="w-12 h-12 text-teal-500"}}
+        <h1 class="text-4xl font-bold text-gray-800 mb-1">Updated!</h1>
+      </div>
+      <p class="text-gray-600">
+        Your app is now up-to-date. Click the button below to go back to the page you were on.
+      </p>
+    </div>
+
+    <PrimaryButtonWithSpinner {{on "click" this.handleContinueButtonClick}} @size="large" @shouldShowSpinner={{this.isNavigatingToOtherRoute}}>
+      Continue
+    </PrimaryButtonWithSpinner>
+  {{/if}}
+</div>

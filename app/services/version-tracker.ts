@@ -23,7 +23,6 @@ export default class VersionTrackerService extends Service {
     return config.x.version;
   }
 
-  // TODO: We don't use this yet!
   get currentVersionIsIncompatible() {
     if (!this.latestVersion) {
       return false; // Without a latest version, we can't determine if the current version is incompatible
@@ -31,7 +30,7 @@ export default class VersionTrackerService extends Service {
 
     const latestVersionParts = this.#parseVersionString(this.latestVersion);
 
-    return this.currentMajorVersion < latestVersionParts.major;
+    return this.currentMajorVersion !== latestVersionParts.major;
   }
 
   get currentVersionIsOutdated() {
