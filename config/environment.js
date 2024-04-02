@@ -44,6 +44,9 @@ module.exports = function (environment) {
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
+
+      // Update the major version number to force all clients to update.
+      // The minor version doesn't do anything at the moment, might use in the future.
       version: `2.0.${(process.env.VERCEL_GIT_COMMIT_SHA || 'dev').slice(0, 7)}`,
     },
     fastboot: {
