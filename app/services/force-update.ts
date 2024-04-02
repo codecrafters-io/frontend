@@ -7,7 +7,7 @@ import { runTask, pollTask, cancelPoll } from 'ember-lifeline';
 import { tracked } from 'tracked-built-ins';
 
 export default class ForceUpdateService extends Service {
-  POLL_INTERVAL_SECONDS = VersionTrackerService.VERSION_CHECK_INTERVAL_SECONDS / 10;
+  POLL_INTERVAL_SECONDS = VersionTrackerService.VERSION_CHECK_INTERVAL_SECONDS;
 
   @service declare router: RouterService;
   @service declare versionTracker: VersionTrackerService;
