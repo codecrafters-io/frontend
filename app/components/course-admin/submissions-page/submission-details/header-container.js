@@ -31,6 +31,14 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     return this.args.submission.commitSha.substring(0, 8);
   }
 
+  get shortSubmissionTreeSha() {
+    if (!this.args.submission.treeSha) {
+      return 'Unknown';
+    }
+
+    return this.args.submission.treeSha.substring(0, 8);
+  }
+
   get shouldShowTesterVersion() {
     return this.authenticator.currentUser.isStaff;
   }
@@ -51,6 +59,11 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
   @action
   async handleCopyRepositoryURLButtonClick() {
     await navigator.clipboard.writeText(this.args.submission.repository.cloneUrl);
+  }
+
+  @action
+  async handleCopyTreeShaButtonClick() {
+    await navigator.clipboard.writeText(this.args.submission.treeSha);
   }
 
   @action

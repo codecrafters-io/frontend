@@ -103,6 +103,27 @@
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Tree SHA" data-test-tree-sha>
+          <div class="flex items-center">
+            <span class="mr-2 text-gray-600">
+              {{or this.shortSubmissionTreeSha "Unknown"}}
+            </span>
+
+            <TertiaryButton
+              @size="extra-small"
+              @isDisabled={{eq this.shortSubmissionTreeSha "Unknown"}}
+              class="mr-2"
+              {{on "click" this.handleCopyTreeShaButtonClick}}
+              data-test-copy-tree-sha-button
+            >
+              {{svg-jar "clipboard-list" class="w-4 text-gray-500"}}
+              {{#if (not-eq this.shortSubmissionTreeSha "Unknown")}}
+                <EmberTooltip @text="Click to copy Git tree SHA" />
+              {{/if}}
+            </TertiaryButton>
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+
         {{#if this.shouldShowTesterVersion}}
           <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow
             @title="Tester version"

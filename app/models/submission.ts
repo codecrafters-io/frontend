@@ -26,6 +26,7 @@ export default class SubmissionModel extends Model {
   @attr('string') declare githubStorageHtmlUrl: string;
   @attr('boolean') declare wasSubmittedViaCli: boolean;
   @attr('string') declare status: string;
+  @attr('string') declare treeSha: string | null;
 
   get hasChangedFiles() {
     return this.changedFiles && this.changedFiles.length > 0;
