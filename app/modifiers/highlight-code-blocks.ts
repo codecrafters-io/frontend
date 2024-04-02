@@ -20,6 +20,7 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-zig';
 import 'prismjs/components/prism-diff';
+import 'prismjs/components/typescript';
 
 // Used in stage instructions
 import 'prismjs/components/prism-bash';
