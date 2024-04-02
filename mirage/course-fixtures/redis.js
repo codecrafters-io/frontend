@@ -30,6 +30,9 @@ export default {
       "slug": "elixir"
     },
     {
+      "slug": "gleam"
+    },
+    {
       "slug": "go"
     },
     {
@@ -52,6 +55,9 @@ export default {
     },
     {
       "slug": "rust"
+    },
+    {
+      "slug": "typescript"
     }
   ],
   "marketing": {
