@@ -2,6 +2,7 @@ import Service, { service } from '@ember/service';
 import VersionTrackerService from './version-tracker';
 import config from 'codecrafters-frontend/config/environment';
 import type RouterService from '@ember/routing/router-service';
+import * as Sentry from '@sentry/ember';
 import { action } from '@ember/object';
 import { runTask, pollTask, cancelPoll } from 'ember-lifeline';
 import { tracked } from 'tracked-built-ins';
@@ -16,7 +17,15 @@ export default class ForceUpdateService extends Service {
 
   @action
   async poll(next: () => void) {
-    await this.versionTracker.fetchLatestVersionIfNeeded();
+    try {
+      await this.versionTracker.fetchLatestVersionIfNeeded();
+    } catch (error) {
+      if (config.environment === 'test') {
+        throw error;
+      }
+
+      Sentry.captureException(error);
+    }
 
     if (this.versionTracker.currentVersionIsIncompatible && this.router.currentRouteName !== 'update-required') {
       this.router.transitionTo('update-required', { queryParams: { next: `${this.router.currentURL}` } });
