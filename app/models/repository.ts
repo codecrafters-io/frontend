@@ -202,7 +202,7 @@ export default class RepositoryModel extends Model {
     return !!this.courseStageCompletionFor(courseStage);
   }
 
-  declare fork: (this: Model, payload: unknown) => Promise<void>;
+  declare fork: (this: Model, payload: unknown) => Promise<{ data: { id: string } }>;
   declare updateTesterVersion: (this: Model, payload: unknown) => Promise<void>;
 }
 

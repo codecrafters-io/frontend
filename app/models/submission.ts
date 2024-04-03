@@ -6,6 +6,7 @@ import Model, { hasMany } from '@ember-data/model';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubmissionEvaluationModel from 'codecrafters-frontend/models/submission-evaluation';
 import { attr, belongsTo } from '@ember-data/model';
+import { capitalize } from '@ember/string';
 import type AutofixRequestModel from './autofix-request';
 
 export default class SubmissionModel extends Model {
@@ -25,8 +26,13 @@ export default class SubmissionModel extends Model {
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
   @attr('boolean') declare wasSubmittedViaCli: boolean;
+  @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
   @attr('string') declare status: string;
   @attr('string') declare treeSha: string | null;
+
+  get flakinessCheckStatusHumanized(): string | null {
+    return this.flakinessCheckStatus ? capitalize(this.flakinessCheckStatus) : null;
+  }
 
   get hasChangedFiles() {
     return this.changedFiles && this.changedFiles.length > 0;

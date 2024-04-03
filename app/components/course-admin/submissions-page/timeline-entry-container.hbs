@@ -33,15 +33,25 @@
     </div>
   </div>
 
-  <div class="flex flex-col items-end flex-shrink-0">
+  <div class="flex flex-col items-end justify-between flex-shrink-0">
     <div class="text-xs text-gray-400 ml-2 pt-2 percy-time">
       {{this.formattedTimestamp}}
     </div>
-    {{#if @submission.wasSubmittedViaCli}}
-      <div class="mt-1">
-        {{svg-jar "terminal" class="text-gray-400 w-4 fill-current"}}
-        <EmberTooltip @text="Submitted via CLI" />
-      </div>
-    {{/if}}
+
+    <div class="mt-1 flex items-center gap-1">
+      {{#if (eq @submission.flakinessCheckStatus "failure")}}
+        <div>
+          {{svg-jar "flag" class="text-yellow-500 w-4 fill-current"}}
+          <EmberTooltip @text="Flaky test. The test results of this submission were found to be inconsistent when run multiple times." />
+        </div>
+      {{/if}}
+
+      {{#if @submission.wasSubmittedViaCli}}
+        <div>
+          {{svg-jar "terminal" class="text-gray-400 w-4 fill-current"}}
+          <EmberTooltip @text="Submitted via CLI" />
+        </div>
+      {{/if}}
+    </div>
   </div>
 </div>

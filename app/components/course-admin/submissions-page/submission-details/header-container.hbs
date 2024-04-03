@@ -19,7 +19,7 @@
               <div class="w-4 h-4 rounded-full bg-red-600 ml-2 flex items-center justify-center">
                 {{svg-jar "x" class="w-3 fill-current text-white"}}
               </div>
-            {{else if @submission.statusIsEvaluatin}}
+            {{else if @submission.statusIsEvaluating}}
               Evaluating
             {{else if @submission.statusIsInternalError}}
               Internal Error
@@ -124,30 +124,39 @@
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 
-        {{#if this.shouldShowTesterVersion}}
-          <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow
-            @title="Tester version"
-            class="group/tester-version-row"
-            data-test-tester-version
-          >
-            <div class="flex items-center">
-              {{this.testerVersionTagName}}
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow
+          @title="Tester version"
+          class="group/tester-version-row"
+          data-test-tester-version
+        >
+          <div class="flex items-center">
+            {{this.testerVersionTagName}}
 
-              {{#if @submission.testerVersion.isActive}}
-                <span class="ml-1 text-gray-400 text-sm">(active)</span>
-              {{else}}
-                <TertiaryButtonWithSpinner
-                  @shouldShowSpinner={{this.isUpdatingTesterVersion}}
-                  @size="extra-small"
-                  class="ml-2"
-                  {{on "click" this.handleTesterVersionUpdateButtonClick}}
-                >
-                  Update to active version
-                </TertiaryButtonWithSpinner>
-              {{/if}}
+            {{#if @submission.testerVersion.isActive}}
+              <span class="ml-1 text-gray-400 text-sm">(active)</span>
+            {{else}}
+              <TertiaryButtonWithSpinner
+                @shouldShowSpinner={{this.isUpdatingTesterVersion}}
+                @size="extra-small"
+                class="ml-2"
+                {{on "click" this.handleTesterVersionUpdateButtonClick}}
+              >
+                Update to active version
+              </TertiaryButtonWithSpinner>
+            {{/if}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Flakiness">
+          <div class="flex items-center">
+            {{or @submission.flakinessCheckStatusHumanized "Unknown"}}
+
+            <div data-test-flakiness-check-info-icon>
+              {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
+              <EmberTooltip @text="We run tests multiple times to check for flakiness. If the results are inconsistent, this should say 'Failure'." />
             </div>
-          </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
-        {{/if}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
       </tbody>
     </table>
   </div>
