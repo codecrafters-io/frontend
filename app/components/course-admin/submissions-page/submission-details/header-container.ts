@@ -3,16 +3,25 @@ import { action } from '@ember/object';
 import { capitalize } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type RouterService from '@ember/routing/router-service';
+import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
-export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerComponent extends Component {
+export type Signature = {
+  Args: {
+    submission: SubmissionModel;
+  };
+};
+
+export default class HeaderContainerComponent extends Component<Signature> {
   @tracked isUpdatingTesterVersion = false;
   @tracked isForking = false;
 
-  @service authenticator;
-  @service router;
+  @service declare authenticator: AuthenticatorService;
+  @service declare router: RouterService;
 
   get durationInMilliseconds() {
-    return this.args.submission.evaluations[0].createdAt.getTime() - this.args.submission.createdAt.getTime();
+    return this.args.submission.evaluations[0]!.createdAt.getTime() - this.args.submission.createdAt.getTime();
   }
 
   get formattedDuration() {
@@ -39,10 +48,6 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     return this.args.submission.treeSha.substring(0, 8);
   }
 
-  get shouldShowTesterVersion() {
-    return this.authenticator.currentUser.isStaff;
-  }
-
   get testerVersionTagName() {
     if (this.args.submission.testerVersion) {
       return this.args.submission.testerVersion.tagName;
@@ -63,7 +68,7 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
 
   @action
   async handleCopyTreeShaButtonClick() {
-    await navigator.clipboard.writeText(this.args.submission.treeSha);
+    await navigator.clipboard.writeText(this.args.submission.treeSha!);
   }
 
   @action
@@ -73,7 +78,7 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
     }
 
     this.isForking = true;
-    const forkResponse = await this.args.submission.repository.fork();
+    const forkResponse = await this.args.submission.repository.fork({});
     this.isForking = false;
 
     const forkedRepositoryId = forkResponse.data.id;
@@ -87,12 +92,12 @@ export default class AdminCourseSubmissionsPageSubmissionDetailsHeaderContainerC
   @action
   async handleTesterVersionUpdateButtonClick() {
     this.isUpdatingTesterVersion = true;
-    await this.args.submission.repository.updateTesterVersion();
+    await this.args.submission.repository.updateTesterVersion({});
     this.isUpdatingTesterVersion = false;
   }
 
   @action
   async handleViewCodeButtonClick() {
-    window.open(this.args.submission.githubStorageHtmlUrl, '_blank').focus();
+    window.open(this.args.submission.githubStorageHtmlUrl, '_blank')!.focus();
   }
 }
