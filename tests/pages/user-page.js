@@ -1,8 +1,19 @@
-import { collection, triggerable, visitable } from 'ember-cli-page-object';
+import { attribute, collection, text, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import CourseProgressListItem from 'codecrafters-frontend/tests/pages/components/course-progress-list-item';
 
 export default createPage({
+  avatar: {
+    scope: 'img[alt="avatar"]',
+    src: attribute('src'),
+  },
+
+  githubDetails: {
+    scope: '[data-test-github-link]',
+    username: text(),
+    link: attribute('href'),
+  },
+
   adminProfileButton: {
     scope: '[data-test-admin-profile-button]',
   },

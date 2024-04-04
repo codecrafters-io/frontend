@@ -9,7 +9,12 @@
   </:belowDescription>
   <:default>
     <div class="inline-flex items-center gap-3">
-      <Toggle @isOn={{@user.hasAnonymousModeEnabled}} @isDisabled={{this.toggleIsDisabled}} {{on "click" this.handleToggle}} />
+      <Toggle
+        @isOn={{@user.hasAnonymousModeEnabled}}
+        @isDisabled={{this.toggleIsDisabled}}
+        {{on "click" this.handleToggle}}
+        data-test-profile-anonymous-mode-toggle
+      />
       <div class="text-gray-600 text-sm">Enable anonymous mode</div>
 
       {{#unless @user.canAccessMembershipBenefits}}

@@ -705,6 +705,29 @@ function routes() {
     });
   });
 
-  this.patch('/users/:id');
+  this.patch('/users/:id', function (schema, request) {
+    const { id } = request.params;
+    const attrs = this.normalizedRequestAttrs();
+    const hasAnonymousModeEnabled = attrs.hasAnonymousModeEnabled;
+    var username = attrs.username;
+    var avatarUrl = attrs.avatarUrl;
+    const githubUsername = attrs.githubUsername;
+
+    if (hasAnonymousModeEnabled) {
+      username = 'Anonymous';
+      avatarUrl = 'https://avatars.githubusercontent.com/u/59389854';
+    } else {
+      if (username === 'Anonymous') {
+        username = githubUsername;
+        avatarUrl = 'https://github.com/rohitpaulk.png';
+      }
+    }
+
+    const user = schema.users.find(id);
+    user.update({ username, avatarUrl });
+
+    return user;
+  });
+
   this.post('/views');
 }
