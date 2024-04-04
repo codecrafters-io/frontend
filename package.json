@@ -158,7 +158,7 @@
     "postcss-import": "^16.0.1",
     "prember": "^2.0.0",
     "prettier": "^3.2.5",
-    "prettier-plugin-ember-template-tag": "^2.0.0",
+    "prettier-plugin-ember-template-tag": "^2.0.2",
     "prismjs": "^1.28.0",
     "qunit": "^2.20.1",
     "qunit-assertions-extra": "^1.0",
