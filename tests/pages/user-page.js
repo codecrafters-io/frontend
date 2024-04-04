@@ -9,7 +9,7 @@ export default createPage({
   },
 
   githubDetails: {
-    scope: '[data-test-github-link]',
+    scope: '[data-test-profile-github-link]',
     username: text(),
     link: attribute('href'),
   },
