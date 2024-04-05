@@ -1,5 +1,5 @@
 <div class="px-5 py-4 rounded border border-teal-500 bg-green-50" ...attributes>
-  <div class="flex items-center gap-1.5 mb-4 -mx-1">
+  <div class="flex items-center gap-1.5 mb-3 -mx-1">
     {{! -mx-1 aligns the tick icon to the left }}
     {{svg-jar "check-circle" class="h-8 w-8 text-teal-500"}}
     {{! <StaticDot @color="green" @size="large" /> }}
@@ -17,7 +17,7 @@
       To refactor your code:
     </div>
 
-    <div class="prose prose-sm mb-4">
+    <div class="prose prose-sm mb-2.5">
       <p>
         Make changes to your code and run the test command again:
       </p>
@@ -26,18 +26,18 @@
     <CopyableCode @code="$ codecrafters test" @backgroundColor="white" />
   </div>
 
-  <div>
+  <div class="mb-2">
     <div class="text-md font-semibold text-gray-700 mb-4 border-b-2 border-teal-500 border-opacity-60 inline-flex">
       To move on to the next step:
     </div>
 
-    <div class="prose prose-sm mb-4">
+    <div class="prose prose-sm mb-2.5">
       <p>
         Submit your code using Git:
       </p>
     </div>
 
-    <CopyableCode class="mb-4" @code="git add . && git commit -am 'test' && git push origin master" @backgroundColor="white" />
+    <CopyableCode @code="git add . && git commit -am 'test' && git push origin master" @backgroundColor="white" />
 
     {{! TODO: Revive this when we're handling regular git pushes}}
 
