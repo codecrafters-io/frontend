@@ -4,25 +4,21 @@
       {{svg-jar "terminal" class="h-4 w-4 text-gray-400"}}
       <span class="text-gray-500 text-xs">command line</span>
     </div>
-    <div
-      class="border rounded p-1 bg-white group/copy-button {{if this.wasCopiedRecently '' 'hover:bg-gray-100'}} hover:border-gray-300 cursor-pointer"
-      {{on "click" this.handleCopyButtonClick}}
-      role="button"
-    >
+    <TertiaryButton @size="extra-small" {{on "click" this.handleCopyButtonClick}}>
       <AnimatedContainer>
         {{#animated-if this.wasCopiedRecently use=this.transition duration=200}}
           <div class="flex items-center gap-1">
             {{svg-jar "clipboard-check" class="h-4 w-4 text-teal-500"}}
-            <span class="text-teal-500 text-xs">copied!</span>
+            <span class="text-xs text-teal-500">copied!</span>
           </div>
         {{else}}
           <div class="flex items-center gap-1">
-            {{svg-jar "clipboard-copy" class="h-4 w-4 text-gray-500 group-hover/copy-button:text-gray-600"}}
-            <span class="text-gray-600 text-xs group-hover/copy-button:text-gray-700">copy</span>
+            {{svg-jar "clipboard-copy" class="h-4 w-4 text-gray-700"}}
+            <span class="text-xs text-gray-700">copy</span>
           </div>
         {{/animated-if}}
       </AnimatedContainer>
-    </div>
+    </TertiaryButton>
   </div>
 
   <div class="px-3 py-2.5 w-full font-mono text-xs overflow-x-auto">
