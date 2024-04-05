@@ -21,7 +21,7 @@ import replaceMetaTag from './app/utils/replace-meta-tag';
 export const config = {
   // Limit the middleware to run only for user profile and concept routes
   // RegExp syntax uses rules from pillarjs/path-to-regexp
-  matcher: ['/users/:path*', '/concepts/:path*']
+  matcher: ['/users/:path*', '/concepts/:path*'],
 };
 
 export default async function middleware(request) {
@@ -38,9 +38,9 @@ export default async function middleware(request) {
     return next(request);
   }
 
-  let pageImageUrl
-  let pageTitle
-  let pageDescription
+  let pageImageUrl;
+  let pageTitle;
+  let pageDescription;
 
   if (username) {
     // Generate a proper OG Image URL for the username's Profile
@@ -58,7 +58,7 @@ export default async function middleware(request) {
 
     // Generate a proper OG Image URL for the concept
     pageImageUrl = `https://og.codecrafters.io/api/concept/${conceptSlug}`;
-    pageTitle = conceptTitle
+    pageTitle = conceptTitle;
     pageDescription = `View the ${conceptTitle} concept on CodeCrafters`;
   }
 
