@@ -16,13 +16,13 @@
       To refactor your code:
     </div>
 
-    <div class="prose prose-sm mb-2.5">
+    <div class="prose prose-sm mb-3">
       <p>
         Make changes to your code and run the test command again:
       </p>
     </div>
 
-    <CopyableCode @code="codecrafters test" @backgroundColor="white" />
+    <CopyableTerminalCommand @commands={{array "codecrafters test"}} />
   </div>
 
   <div class="mb-2">
@@ -30,13 +30,13 @@
       To move on to the next step:
     </div>
 
-    <div class="prose prose-sm mb-2.5">
+    <div class="prose prose-sm mb-3">
       <p>
         Submit your code using Git:
       </p>
     </div>
 
-    <CopyableCode @code="git add . && git commit -am 'pass stage' && git push origin master" @backgroundColor="white" />
+    <CopyableTerminalCommand @commands={{array "git add . " "git commit -am 'pass stage'" "git push origin master"}} />
 
     {{! TODO: Revive this when we're handling regular git pushes}}
 
