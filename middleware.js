@@ -25,12 +25,12 @@ export const config = {
 };
 
 export default async function middleware(request) {
-  // Parse the username or concept slug from the request URL
-  const username = request.url.match(/\/users\/([^/?]+)/)[1];
-  const conceptSlug = request.url.match(/\/concepts\/([^/?]+)/)[1];
+  // Parse the users or concepts path match result from the request URL
+  const usersPathMatchResult = request.url.match(/\/users\/([^/?]+)/);
+  const conceptsPathMatchResult = request.url.match(/\/concepts\/([^/?]+)/);
 
   // Skip the request if username or concept slug is missing
-  if (!username && !conceptSlug) {
+  if (!usersPathMatchResult && !conceptsPathMatchResult) {
     // Log an error to the console
     console.error('Unable to parse username or concept slug from the URL:', request.url);
 
@@ -42,12 +42,16 @@ export default async function middleware(request) {
   let pageTitle;
   let pageDescription;
 
-  if (username) {
+  if (usersPathMatchResult) {
+    const username = usersPathMatchResult[1];
+
     // Generate a proper OG Image URL for the username's Profile
     pageImageUrl = `https://og.codecrafters.io/api/user_profile/${username}`;
     pageTitle = `${username}'s CodeCrafters Profile`;
     pageDescription = `View ${username}'s profile on CodeCrafters`;
-  } else if (conceptSlug) {
+  } else if (conceptsPathMatchResult) {
+    const conceptSlug = conceptsPathMatchResult[1];
+
     // Convert the slug('network-protocols') to title('Network Protocols')
     const conceptTitle = conceptSlug
       .split('-')
