@@ -25,14 +25,6 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   get solution() {
     return this.args.repository.course.firstStage!.solutions.find((solution) => solution.language === this.args.repository.language);
   }
-
-  get submitChangesInstructionsMarkdown() {
-    return `\`\`\`
-git add .
-git commit -m "pass 1st stage" # any msg
-git push origin master
-\`\`\``;
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

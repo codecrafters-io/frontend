@@ -24,8 +24,8 @@
       </p>
     </div>
   {{else}}
-    <CopyableCode
-      @code="git clone {{@repository.cloneUrl}} {{@repository.cloneDirectory}} && cd {{@repository.cloneDirectory}}"
+    <CopyableTerminalCommand
+      @commands={{array (concat "git clone " @repository.cloneUrl " " @repository.cloneDirectory) (concat "cd " @repository.cloneDirectory)}}
       class="mb-5"
       data-test-copyable-repository-clone-instructions
     />
@@ -40,7 +40,7 @@
     Push an empty commit.
   </p>
 
-  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" class="mb-5" />
+<CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} class="mb-5" />
 
   <p class={{if @isComplete "line-through"}}>
     When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
