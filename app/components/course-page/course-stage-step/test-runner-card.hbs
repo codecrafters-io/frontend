@@ -1,15 +1,38 @@
-<div class="px-4 py-3 border border-gray-700 rounded bg-gradient-to-br from-gray-900 to-gray-800" ...attributes>
-  <div class="flex items-center gap-1.5 pb-1 w-full mb-4 -mx-1">
+<div class="px-5 py-4 rounded border border-teal-500 bg-green-50" ...attributes>
+  <div class="flex items-center gap-1.5 mb-4 -mx-1">
+    {{! -mx-1 aligns the tick icon to the left }}
     {{svg-jar "check-circle" class="h-8 w-8 text-teal-500"}}
     {{! <StaticDot @color="green" @size="large" /> }}
-    <h2 class="font-semibold text-lg text-white">Tests Passed!</h2>
+    <h2 class="font-semibold text-xl text-teal-500">Tests Passed!</h2>
   </div>
 
-  <div class="text-gray-100 mb-4">
+  <div class="text-gray-700 mb-4 text-sm">
     You can either refactor your code or move on the next step.
   </div>
 
-  <div class="text-lg font-semibold text-white mb-4">
-    To refactor your code:
+  <div class="mb-6">
+    <div class="text-md font-semibold text-gray-700 mb-4 border-b-2 border-teal-500 border-opacity-60 inline-flex">
+      To refactor your code:
+    </div>
+
+    <div class="text-gray-700 mb-4 text-sm">
+      Make changes to your code and git push again:
+    </div>
+
+    <CopyableCode @code="git add ." @backgroundColor="white" />
+  </div>
+
+  <div>
+    <div class="text-md font-semibold text-gray-700 mb-4 border-b-2 border-teal-500 border-opacity-60 inline-flex">
+      To move on to the next step:
+    </div>
+
+    <div class="text-gray-700 mb-4 text-sm">
+      Click the button below to move on to the next step.
+    </div>
+
+    <PrimaryButtonWithSpinner @shouldShowSpinner={{false}} @size="large">
+      Mark stage as complete
+    </PrimaryButtonWithSpinner>
   </div>
 </div>
