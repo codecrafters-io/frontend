@@ -24,30 +24,8 @@
   <div class="px-3 py-2 w-full font-mono text-xs bg-gray-800 rounded-b">
     {{#each @commands as |command|}}
       <div>
-        <span class="whitespace-nowrap text-white leading-relaxed">{{command}}</span>
+        <span class="whitespace-nowrap text-white leading-loose">{{command}}</span>
       </div>
     {{/each}}
   </div>
-  {{!-- <div
-    class="px-3 py-1.5 flex-grow-1 w-full overflow-x-scroll border border-gray-300 border-r-0 rounded-l"
-  >
-    <span class="whitespace-nowrap font-mono text-gray-600 text-xs">
-      {{#each @commands as |command|}}
-        {{command}}
-      {{/each}}
-    </span>
-  </div>
-
-  <div class="relative flex items-stretch">
-    <button
-      type="button"
-      class="bg-teal-600 px-3 py-1 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
-      {{on "click" this.handleCopyButtonClick}}
-      data-test-copy-button
-    >
-      {{if this.codeWasCopiedRecently "COPIED" "COPY"}}
-    </button>
-    <div class="absolute top-px bottom-px -left-6 w-6 bg-gray-300 border-text-mask">
-    </div>
-  </div> --}}
 </div>
