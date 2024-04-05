@@ -19,10 +19,14 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
 
   @tracked wasCopiedRecently: boolean = false;
 
+  get copyableText(): string {
+    return this.args.commands.join('\n');
+  }
+
   @action
   handleCopyButtonClick() {
     if (config.environment !== 'test') {
-      navigator.clipboard.writeText(this.args.commands.join('\n'));
+      navigator.clipboard.writeText(this.copyableText);
     }
 
     this.wasCopiedRecently = true;
