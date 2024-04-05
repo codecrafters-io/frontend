@@ -30,9 +30,9 @@ export default async function middleware(request) {
   const conceptSlug = request.url.match(/\/concepts\/([^/?]+)/)[1];
 
   // Skip the request if username or concept slug is missing
-  if (!username || !conceptSlug) {
+  if (!username && !conceptSlug) {
     // Log an error to the console
-    console.error('Unable to parse username from the URL:', request.url);
+    console.error('Unable to parse username or concept slug from the URL:', request.url);
 
     // Pass the request down the stack for processing and return
     return next(request);
@@ -47,9 +47,7 @@ export default async function middleware(request) {
     pageImageUrl = `https://og.codecrafters.io/api/user_profile/${username}`;
     pageTitle = `${username}'s CodeCrafters Profile`;
     pageDescription = `View ${username}'s profile on CodeCrafters`;
-  }
-
-  if (conceptSlug) {
+  } else if (conceptSlug) {
     // Convert the slug('network-protocols') to title('Network Protocols')
     const conceptTitle = conceptSlug
       .split('-')
