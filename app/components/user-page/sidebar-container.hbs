@@ -6,7 +6,13 @@
   </div>
 
   {{#if @user.hasAnonymousModeEnabled}}
-    <a class="group inline-flex items-center text-gray-400 mb-4 w-full" href="https://github.com/ghost" target="_blank" rel="noopener noreferrer">
+    <a
+      class="group inline-flex items-center text-gray-400 mb-4 w-full"
+      href="https://github.com/ghost"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-test-github-profile-link
+    >
       <div class="text-lg group-hover:underline truncate">
         {{@user.username}}
       </div>
@@ -14,7 +20,13 @@
       {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
     </a>
   {{else}}
-    <a class="group inline-flex items-center text-gray-400 mb-4 w-full" href={{@user.githubProfileUrl}} target="_blank" rel="noopener noreferrer">
+    <a
+      class="group inline-flex items-center text-gray-400 mb-4 w-full"
+      href={{@user.githubProfileUrl}}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-test-github-profile-link
+    >
       <div class="text-lg group-hover:underline truncate">
         {{@user.githubUsername}}
       </div>

@@ -1,6 +1,11 @@
-import { create, triggerable, visitable } from 'ember-cli-page-object';
+import { clickable, triggerable, visitable } from 'ember-cli-page-object';
+import createPage from 'codecrafters-frontend/tests/support/create-page';
 
-export default create({
+export default createPage({
+  anonymousModeToggle: {
+    toggle: clickable('[data-test-anonymous-mode-toggle]'),
+  },
+
   profileDescription: {
     input: {
       blur: triggerable('blur'),
