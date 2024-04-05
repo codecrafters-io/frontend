@@ -56,8 +56,9 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.courseStage.isFirst && this.currentStep.status !== 'complete';
   }
 
+  // TODO: Also show this for test failures
   get shouldShowTestRunnerCard() {
-    return this.isCurrentStage && this.currentStep.status !== 'complete';
+    return this.isCurrentStage && this.currentStep.status !== 'complete' && this.currentStep.testsStatus === 'passed';
   }
 
   get shouldShowUpgradePrompt() {
