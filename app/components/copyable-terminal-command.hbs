@@ -1,5 +1,5 @@
 <div class="flex flex-col items-stretch rounded bg-white w-full max-w-2xl border border-gray-300" ...attributes>
-  <div class="border-b border-gray-200 bg-gray-50 rounded-t pl-3 pr-2 py-1.5 flex items-center justify-between">
+  <div class="border-b border-gray-200 bg-gray-50 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
     <div class="flex items-center gap-1 mr-8">
       {{svg-jar "terminal" class="h-4 w-4 text-gray-400"}}
       <span class="text-gray-500 text-xs">command line</span>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="px-3 py-2.5 w-full font-mono text-xs">
+  <div class="px-3 py-2.5 w-full font-mono text-xs overflow-x-auto">
     {{#each @commands as |command|}}
       <div>
         <span class="whitespace-nowrap text-gray-800 leading-loose">{{command}}</span>
