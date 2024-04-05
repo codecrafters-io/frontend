@@ -1,10 +1,15 @@
-<div
-  class="p-3 border rounded flex items-center justify-between border-gray-200 bg-gradient-to-br from-black via-black to-[#383838] from-0% to-100% cursor-pointer overflow-hidden"
-  ...attributes
->
-  <div class="flex items-center gap-1.5">
+<div class="px-4 py-3 border border-gray-700 rounded bg-gradient-to-br from-gray-900 to-gray-800" ...attributes>
+  <div class="flex items-center gap-1.5 pb-1 w-full mb-4 -mx-1">
     {{svg-jar "check-circle" class="h-8 w-8 text-teal-500"}}
     {{! <StaticDot @color="green" @size="large" /> }}
     <h2 class="font-semibold text-lg text-white">Tests Passed!</h2>
+  </div>
+
+  <div class="text-gray-100 mb-4">
+    You can either refactor your code or move on the next step.
+  </div>
+
+  <div class="text-lg font-semibold text-white mb-4">
+    To refactor your code:
   </div>
 </div>
