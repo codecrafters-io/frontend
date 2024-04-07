@@ -6,15 +6,15 @@
     code for you.
   </p>
 
-  <p class="mb-4">
+  <div class="mb-4 border-b-2 border-teal-500 border-opacity-60 inline-flex items-center gap-1">
     {{#if @isComplete}}
       {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
     {{else}}
       <b class="text-teal-600">Step 1:</b>
     {{/if}}
 
-    Clone the repository.
-  </p>
+    Clone the repository
+  </div>
 
   {{#if @repository.isNew}}
     <div class="prose mb-5">
@@ -31,14 +31,15 @@
     />
   {{/if}}
 
-  <p class="mb-4">
+  <div class="mb-4 border-b-2 border-teal-500 border-opacity-60 inline-flex items-center gap-1">
     {{#if @isComplete}}
       {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
     {{else}}
       <b class="text-teal-600">Step 2:</b>
     {{/if}}
-    Push an empty commit.
-  </p>
+
+    Push an empty commit
+  </div>
 
 <CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} class="mb-5" />
 
