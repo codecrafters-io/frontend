@@ -1,8 +1,8 @@
-<div class="flex flex-col items-stretch rounded bg-white w-full max-w-2xl border border-gray-300" ...attributes>
-  <div class="border-b border-gray-200 bg-gray-50 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
+<div class="flex flex-col items-stretch rounded bg-white dark:bg-gray-800 w-full max-w-2xl border border-gray-300 dark:border-gray-600" ...attributes>
+  <div class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
     <div class="flex items-center gap-1 mr-8">
-      {{svg-jar "terminal" class="h-4 w-4 text-gray-400"}}
-      <span class="text-gray-500 text-xs">command line</span>
+      {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-600"}}
+      <span class="text-gray-500 dark:text-gray-500 text-xs">command line</span>
     </div>
     <TertiaryButton @size="extra-small" {{on "click" this.handleCopyButtonClick}}>
       <AnimatedContainer>
@@ -13,8 +13,8 @@
           </div>
         {{else}}
           <div class="flex items-center gap-1">
-            {{svg-jar "clipboard-copy" class="h-4 w-4 text-gray-700"}}
-            <span class="text-xs text-gray-700">copy</span>
+            {{svg-jar "clipboard-copy" class="h-4 w-4"}}
+            <span class="text-xs">copy</span>
           </div>
         {{/animated-if}}
       </AnimatedContainer>
@@ -24,7 +24,7 @@
   <div class="px-3 py-2.5 w-full font-mono text-xs overflow-x-auto">
     {{#each @commands as |command|}}
       <div>
-        <span class="whitespace-nowrap text-gray-800 leading-loose">{{command}}</span>
+        <span class="whitespace-nowrap text-gray-800 dark:text-gray-100 leading-loose">{{command}}</span>
       </div>
     {{/each}}
   </div>
