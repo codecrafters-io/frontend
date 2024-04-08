@@ -6,15 +6,15 @@
     code for you.
   </p>
 
-  <p class="mb-4">
+  <div class="mb-4 border-b-2 border-teal-500 border-opacity-60 inline-flex items-center gap-1">
     {{#if @isComplete}}
       {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
     {{else}}
       <b class="text-teal-600">Step 1:</b>
     {{/if}}
 
-    Clone the repository.
-  </p>
+    Clone the repository
+  </div>
 
   {{#if @repository.isNew}}
     <div class="prose mb-5">
@@ -24,23 +24,27 @@
       </p>
     </div>
   {{else}}
-    <CopyableCode
-      @code="git clone {{@repository.cloneUrl}} {{@repository.cloneDirectory}} && cd {{@repository.cloneDirectory}}"
-      class="mb-5"
-      data-test-copyable-repository-clone-instructions
-    />
+    <div class="mb-5">
+      <CopyableTerminalCommand
+        @commands={{array (concat "git clone " @repository.cloneUrl " " @repository.cloneDirectory) (concat "cd " @repository.cloneDirectory)}}
+        data-test-copyable-repository-clone-instructions
+      />
+    </div>
   {{/if}}
 
-  <p class="mb-4">
+  <div class="mb-4 border-b-2 border-teal-500 border-opacity-60 inline-flex items-center gap-1">
     {{#if @isComplete}}
       {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
     {{else}}
       <b class="text-teal-600">Step 2:</b>
     {{/if}}
-    Push an empty commit.
-  </p>
 
-  <CopyableCode @code="git commit --allow-empty -m 'test' && git push origin master" class="mb-5" />
+    Push an empty commit
+  </div>
+
+  <div class="mb-5">
+    <CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} />
+  </div>
 
   <p class={{if @isComplete "line-through"}}>
     When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
