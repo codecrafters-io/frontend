@@ -36,7 +36,17 @@
   {{#each this.otherStepGroups as |stepGroup|}}
     {{#if stepGroup.title}}
       <div class="px-3 py-2">
-        <h3 class="text-xs uppercase font-semibold text-gray-400 border-b">{{stepGroup.title}}</h3>
+        <h3 class="flex justify-between items-center text-xs uppercase font-semibold text-gray-400 border-b pb-0.5">
+          {{stepGroup.title}}
+
+          <Toggle
+            @isDisabled={{get @activeRepository "isNew"}}
+            @isOn={{(not @configureExtensionsModalIsOpen)}}
+            @size='small'
+            @tooltipCopy={{this.toggleButtonTooltipCopy}}
+            {{on 'click' @onConfigureExtensionsButtonClick}}
+          />
+        </h3>
       </div>
     {{/if}}
 
