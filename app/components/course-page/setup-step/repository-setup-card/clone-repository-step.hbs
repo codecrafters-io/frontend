@@ -24,7 +24,7 @@
       </p>
     </div>
   {{else}}
-    <div class="dark mb-5">
+    <div class="mb-5">
       <CopyableTerminalCommand
         @commands={{array (concat "git clone " @repository.cloneUrl " " @repository.cloneDirectory) (concat "cd " @repository.cloneDirectory)}}
         data-test-copyable-repository-clone-instructions
@@ -42,7 +42,7 @@
     Push an empty commit
   </div>
 
-  <div class="dark mb-5">
+  <div class="mb-5">
     <CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} />
   </div>
 
