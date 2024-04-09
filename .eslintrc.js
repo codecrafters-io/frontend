@@ -105,6 +105,7 @@ module.exports = {
       extends: ['plugin:ember-template-lint/recommended', 'plugin:ember-template-lint/ember-template-lint-plugin-prettier:recommended'],
       rules: {
         'ember-template-lint/require-presentational-children': 'off',
+        'ember-template-lint/no-invalid-link-text': 'off',
       },
     },
   ],
