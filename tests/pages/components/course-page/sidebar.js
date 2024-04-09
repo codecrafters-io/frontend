@@ -1,4 +1,4 @@
-import { collection, clickable, clickOnText, triggerable } from 'ember-cli-page-object';
+import { collection, clickOnText, triggerable } from 'ember-cli-page-object';
 
 export default {
   configureExtensionsButton: {

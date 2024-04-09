@@ -42,9 +42,9 @@
           <Toggle
             @isDisabled={{get @activeRepository "isNew"}}
             @isOn={{(not @configureExtensionsModalIsOpen)}}
-            @size='small'
+            @size="small"
             @tooltipCopy={{this.toggleButtonTooltipCopy}}
-            {{on 'click' @onConfigureExtensionsButtonClick}}
+            {{on "click" @onConfigureExtensionsButtonClick}}
             data-test-configure-extensions-toggle
           />
         </h3>

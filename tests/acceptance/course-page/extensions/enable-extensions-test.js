@@ -70,12 +70,12 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.configureExtensionsButton.click();
 
-    assert.strictEqual(coursePage.configureExtensionsModal.isVisible, false, 'configure extensions modal is not visible')
+    assert.false(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is not visible');
 
     await coursePage.sidebar.configureExtensionsButton.hover();
 
     assertTooltipContent(assert, {
-      contentString: "Complete repository setup to configure extensions",
+      contentString: 'Complete repository setup to configure extensions',
     });
   });
 
@@ -88,12 +88,12 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
-    assert.strictEqual(coursePage.configureExtensionsModal.isVisible, false, 'configure extensions modal is not visible')
+    assert.false(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is not visible');
 
     await coursePage.sidebar.configureExtensionsToggles[0].hover();
 
     assertTooltipContent(assert, {
-      contentString: "Complete repository setup to configure extensions",
+      contentString: 'Complete repository setup to configure extensions',
     });
   });
 
@@ -110,7 +110,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     await coursePage.sidebar.configureExtensionsButton.click();
 
-    assert.strictEqual(coursePage.configureExtensionsModal.isVisible, true, 'configure extensions modal is visible')
+    assert.true(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is visible');
   });
 
   test('configure extensions toggle is enabled after a user creates a repository', async function (assert) {
@@ -127,11 +127,11 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.sidebar.configureExtensionsToggles[0].hover();
 
     assertTooltipContent(assert, {
-      contentString: "Click here to configure extensions",
+      contentString: 'Click here to configure extensions',
     });
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
-    assert.strictEqual(coursePage.configureExtensionsModal.isVisible, true, 'configure extensions modal is visible')
+    assert.true(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is visible');
   });
 });
