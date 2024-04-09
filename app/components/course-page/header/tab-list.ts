@@ -44,7 +44,7 @@ export default class TabListComponent extends Component<Signature> {
     return this.allTabs.filter((tab) => this.tabIsAvailable(tab));
   }
 
-  get courseCompletedTabs() {
+  get courseCompletedTabs(): Tab[] {
     return [
       {
         icon: 'sparkles',
@@ -59,7 +59,7 @@ export default class TabListComponent extends Component<Signature> {
     ];
   }
 
-  get introductionTabs() {
+  get introductionTabs(): Tab[] {
     return [
       {
         icon: 'document-text',
@@ -74,20 +74,22 @@ export default class TabListComponent extends Component<Signature> {
     ];
   }
 
-  get setupTabs() {
+  get setupTabs(): Tab[] {
     return [
       {
         icon: 'document-text',
         name: 'Instructions',
         slug: 'instructions',
-        route: this.args.currentStep.routeParams.route,
-        models: this.args.currentStep.routeParams.models,
+        internalLink: {
+          route: this.args.currentStep.routeParams.route,
+          models: this.args.currentStep.routeParams.models,
+        },
         isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
       },
     ];
   }
 
-  get stageTabs() {
+  get stageTabs(): Tab[] {
     const tabs: Tab[] = [];
 
     tabs.push({
