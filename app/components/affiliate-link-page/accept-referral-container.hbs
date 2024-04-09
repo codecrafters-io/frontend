@@ -47,6 +47,8 @@
         <EmberTooltip
           @text="You've already accepted {{this.currentUser.currentAffiliateReferral.affiliateLink.usernameForDisplay}}'s referral offer."
         />
+      {{else if this.currentUserCanAccessMembershipBenefits}}
+        <EmberTooltip @text="As a CodeCrafters member, you already have full access." />
       {{/if}}
     </div>
 

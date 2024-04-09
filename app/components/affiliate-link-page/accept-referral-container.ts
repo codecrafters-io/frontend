@@ -26,11 +26,20 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
   @tracked isCreatingAffiliateReferral = false;
 
   get acceptOfferButtonIsEnabled() {
-    return !this.isCreatingAffiliateReferral && !this.currentUserIsReferrer && !this.currentUserIsAlreadyEligibleForReferralDiscount;
+    return (
+      !this.isCreatingAffiliateReferral &&
+      !this.currentUserIsReferrer &&
+      !this.currentUserIsAlreadyEligibleForReferralDiscount &&
+      !this.currentUserCanAccessMembershipBenefits
+    );
   }
 
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  get currentUserCanAccessMembershipBenefits() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.canAccessMembershipBenefits;
   }
 
   get currentUserIsAlreadyEligibleForReferralDiscount() {
