@@ -35,7 +35,7 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is /stages/ext1:1');
 
-    await coursePage.sidebar.clickOnConfigureExtensionsButton();
+    await coursePage.sidebar.configureExtensionsButton.click();
 
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
