@@ -25,7 +25,9 @@
         </div>
       </div>
 
-      <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+      {{#unless (and (eq @currentStep.type "CourseStageStep") (eq @currentStep @activeStep))}}
+        <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+      {{/unless}}
     </div>
   </div>
 </div>

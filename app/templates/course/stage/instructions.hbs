@@ -1,6 +1,8 @@
 <div class="pt-6 pb-16">
-  {{#if this.shouldShowTestsPassedCard}}
-    <CoursePage::CourseStageStep::TestsPassedCard class="mb-6" />
+  {{#if this.shouldShowTestRunnerCard}}
+    <CoursePage::CourseStageStep::TestRunnerCard @repository={{@model.activeRepository}} @stage={{@model.courseStage}} class="mb-6" />
+  {{else if this.shouldShowTestsPassedCard}}
+    <CoursePage::CourseStageStep::TestsPassedCard class="mb-6" {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}} />
   {{/if}}
 
   {{#if this.shouldShowTestFailureExpectedHint}}
@@ -9,10 +11,6 @@
 
   {{#if this.shouldShowUpgradePrompt}}
     <CoursePage::CourseStageStep::UpgradePrompt class="mb-6" />
-  {{/if}}
-
-  {{#if this.shouldShowCLIUsageInstructions}}
-    <CoursePage::CourseStageStep::CliUsageInstructions @courseStage={{@model.courseStage}} class="mb-6" />
   {{/if}}
 
   {{#if (gt this.badgeAwards.length 0)}}

@@ -1,0 +1,33 @@
+<div class="prose prose-sm prose-compact">
+  {{#if this.lastSubmissionWasForCurrentStage}}
+    <p>
+      <a href="#" role="button" {{on "click" @onViewLogsButtonClick}}>Click here</a>
+      to view logs.
+    </p>
+  {{/if}}
+
+  {{#if this.lastSubmissionWasForCurrentStage}}
+    <p>
+      To run tests again, make changes to your code and run the test command:
+    </p>
+  {{else}}
+    <p>
+      To run tests, make changes to your code and run the test command:
+    </p>
+  {{/if}}
+</div>
+
+<CopyableTerminalCommand @commands={{array "codecrafters test"}} class="mt-3" />
+
+<div class="prose prose-sm mt-4 prose-compact">
+  <p>
+    Don't have the
+    <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
+    installed? You can also submit code using Git:
+  </p>
+</div>
+
+<CopyableTerminalCommand
+  @commands={{array "git add ." 'git commit --allow-empty -am "pass stage" # any message' "git push origin master"}}
+  class="mt-3"
+/>
