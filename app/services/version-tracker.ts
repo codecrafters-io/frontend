@@ -51,7 +51,17 @@ export default class VersionTrackerService extends Service {
       return;
     }
 
-    this.latestVersion = await fetch('/version.txt').then((response) => response.text());
+    const response = await fetch('/version.txt');
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch latest version: ${response.status} ${response.statusText}`);
+    }
+
+    if (!response.headers.get('Content-Type')?.startsWith('text/plain')) {
+      throw new Error(`Failed to fetch latest version: response is not text/plain (Content-Type: ${response.headers.get('Content-Type')})`);
+    }
+
+    this.latestVersion = await response.text();
     this.latestVersionLastFetchedAt = new Date();
   }
 
