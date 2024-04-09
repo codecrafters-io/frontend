@@ -31,17 +31,18 @@
       {{/if}}
     </div>
 
-    <div class="prose">
+    <div class="prose mb-3">
       <p>
         <b>Step 2:</b>
         Commit and push your changes.
       </p>
+
       <p>
         Run the following commands to submit your changes:
       </p>
-
-      {{markdown-to-html this.submitChangesInstructionsMarkdown}}
     </div>
+
+    <CopyableTerminalCommand @commands={{array "git add . " "git commit -am 'pass 2nd stage' # any msg" "git push origin master"}} />
   </:content>
   <:footer>
     <CoursePage::CourseStageStep::Card::Footer @repository={{@repository}} @courseStage={{@courseStage}} />
