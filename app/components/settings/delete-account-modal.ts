@@ -26,12 +26,12 @@ export default class DeleteAccountModalComponent extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
 
   get currentUser() {
-    return this.authenticator.currentUser as UserModel;
+    return this.authenticator.currentUser as UserModel; // User should be authed to access this page
   }
 
   @action
   async deleteAccount() {
-    if (!this.currentUser) {
+    if (this.isDeletingAccount) {
       return;
     }
 
