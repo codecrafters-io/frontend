@@ -31,7 +31,7 @@ jobs:
       # - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - id: get_head_commit_message
-        run: echo "MESSAGE=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
+        run: echo "MESSAGE=$(git show -s --format=%s ${{github.event.pull_request.head.sha}})" >> "$GITHUB_OUTPUT"
 
       - run: echo "${{ steps.get_head_commit_message.outputs.MESSAGE }}"
 
