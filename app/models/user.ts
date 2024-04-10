@@ -74,16 +74,6 @@ export default class UserModel extends Model {
     return `${config.x.backendUrl}/admin/users/${this.id}`;
   }
 
-  get attemptedCoursesCount() {
-    const attemptedCourseSlugs = new Set<string>();
-
-    this.repositories.forEach((repository) => {
-      attemptedCourseSlugs.add(repository.course.slug);
-    });
-
-    return attemptedCourseSlugs.size;
-  }
-
   get canAccessMembershipBenefits() {
     return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
   }
@@ -186,22 +176,6 @@ export default class UserModel extends Model {
 
   get pendingProductWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
     return this.featureSuggestions.filterBy('featureIsProductWalkthrough').rejectBy('isDismissed')[0] || null;
-  }
-
-  get repositoriesCount() {
-    return this.repositories.length;
-  }
-
-  get submissionsCount() {
-    let total = 0;
-
-    this.repositories.forEach((repository) => {
-      if (repository.submissionsCount) {
-        total += repository.submissionsCount;
-      }
-    });
-
-    return total;
   }
 
   get teamHasActivePilot() {

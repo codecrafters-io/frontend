@@ -10,63 +10,37 @@
   </div>
 
   <div class="prose mb-4">
-    Are you sure you want to delete your account?
+    Deleting your account will permanently remove all your data from our servers.
   </div>
 
   <div class="prose mb-4">
-    All code will be deleted, and will NOT be recoverable.
+    Are you sure you want to delete your
+    <b>{{this.currentUser.username}}</b>
+    account? Any deleted data will
+    <b>NOT</b>
+    be recoverable.
   </div>
 
   <div class="prose mb-4">
-    {{#if (eq this.currentUser.attemptedCoursesCount 0)}}
-      You have not yet attempted any challenge.
-    {{else if (eq this.currentUser.attemptedCoursesCount 1)}}
-      You have attempted
-      <span class="font-bold">{{this.currentUser.attemptedCoursesCount}}</span>
-      challenge.
-    {{else}}
-      You have attempted
-      <span class="font-bold">{{this.currentUser.attemptedCoursesCount}}</span>
-      challenges.
-    {{/if}}
+    <ul>
+      <li>
+        Any code you've stored in CodeCrafters repositories will be permanently deleted.
+      </li>
+      <li>
+        If you have an active membership, it will be cancelled. If you'd like to transfer your membership to a different account, please contact us at
+        <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>.
+      </li>
+    </ul>
   </div>
 
   <div class="prose mb-4">
-    {{#if (eq this.currentUser.submissionsCount 0)}}
-      You have not made a submission for any challenge.
-    {{else if (eq this.currentUser.repositoriesCount 1)}}
-      {{#if (eq this.currentUser.submissionsCount 1)}}
-        You have made
-        <span class="font-bold">{{this.currentUser.submissionsCount}}</span>
-        submission on
-        <span class="font-bold">{{this.currentUser.repositoriesCount}}</span>
-        repository.
-      {{else}}
-        You have made
-        <span class="font-bold">{{this.currentUser.submissionsCount}}</span>
-        submissions on
-        <span class="font-bold">{{this.currentUser.repositoriesCount}}</span>
-        repository.
-      {{/if}}
-    {{else}}
-      {{#if (eq this.currentUser.submissionsCount 1)}}
-        You have made
-        <span class="font-bold">{{this.currentUser.submissionsCount}}</span>
-        submission on
-        <span class="font-bold">{{this.currentUser.repositoriesCount}}</span>
-        repositories.
-      {{else}}
-        You have made
-        <span class="font-bold">{{this.currentUser.submissionsCount}}</span>
-        submissions on
-        <span class="font-bold">{{this.currentUser.repositoriesCount}}</span>
-        repositories.
-      {{/if}}
-    {{/if}}
+    After your account is deleted, you can signup using your GitHub account again at any point in the future.
   </div>
 
   <div class="prose mb-4 text-red-600">
-    To proceed, press and hold the button below for
+    To proceed with deleting your
+    <b>{{this.currentUser.username}}</b>
+    account, press and hold the button below for
     <span class="font-bold">3 seconds</span>:
   </div>
 
