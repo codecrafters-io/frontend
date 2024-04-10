@@ -6,7 +6,6 @@ interface Signature {
   Args: {
     isDisabled?: boolean;
     isOn: boolean;
-    isVisible?: boolean;
     size?: 'small' | 'regular';
   };
 }
@@ -14,10 +13,6 @@ interface Signature {
 export default class ToggleComponent extends Component<Signature> {
   get isOff(): boolean {
     return !this.args.isOn;
-  }
-
-  get isVisible(): boolean {
-    return this.args.isVisible ?? true;
   }
 
   get sizeIsRegular(): boolean {
