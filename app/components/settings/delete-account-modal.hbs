@@ -1,10 +1,4 @@
 <ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-delete-account-modal>
-  {{#if this.accountDeletionErrorMessage}}
-    <Alert @type="error" class="mb-5">
-      {{this.accountDeletionErrorMessage}}
-    </Alert>
-  {{/if}}
-
   <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
     Delete Account
   </div>
@@ -53,5 +47,11 @@
     <DangerButtonWithTimedConfirmation @onConfirm={{this.deleteAccount}} @size="regular" data-test-delete-account-button>
       Delete
     </DangerButtonWithTimedConfirmation>
+  {{/if}}
+
+  {{#if this.accountDeletionErrorMessage}}
+    <Alert @type="error" class="mt-4">
+      {{this.accountDeletionErrorMessage}}
+    </Alert>
   {{/if}}
 </ModalBody>
