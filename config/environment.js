@@ -79,6 +79,8 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    ENV.x.percyIsEnabled = process.env.PERCY_ENABLE === 'true';
   }
 
   return ENV;
