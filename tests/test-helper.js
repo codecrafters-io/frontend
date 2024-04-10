@@ -38,4 +38,4 @@ QUnit.done(async function () {
 
 start();
 
-QUnit.config.testTimeout = config.x.percyIsEnabled ? 10000 : 5000;
+QUnit.config.testTimeout = config.x.percyIsEnabled ? 20000 : 5000;
