@@ -45,7 +45,7 @@ export default class DeleteAccountModalComponent extends Component<Signature> {
     } catch (error) {
       this.isDeletingAccount = false;
 
-      this.accountDeletionErrorMessage = 'Failed to create repository, please try again? Contact us at hello@codecrafters.io if this error persists.';
+      this.accountDeletionErrorMessage = 'Failed to delete account, please try again? Contact us at hello@codecrafters.io if this error persists.';
 
       Sentry.captureException(error);
     }
