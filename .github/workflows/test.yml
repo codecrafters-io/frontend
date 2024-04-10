@@ -30,8 +30,8 @@ jobs:
 
       - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
-      - run: "echo ${{github.event.head_commit.message}}"
-      - run: "echo ${{toJson(github.event)}}"
+      - id: get_head_commit_message
+        run: echo "MESSAGE=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
@@ -39,7 +39,7 @@ jobs:
 
       - id: compute_percy_enable_for_commit
         run: echo "::set-output name=percy_enable::true"
-        if: "contains(github.event.head_commit.message, '[percy]')"
+        if: "contains(steps.get_head_commit_message.outputs.MESSAGE, '[percy]')"
 
       - id: compute_percy_enable
         run: echo "::set-output name=percy_enable::true"
