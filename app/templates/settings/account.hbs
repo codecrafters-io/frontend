@@ -4,10 +4,7 @@
     {{on "click" (fn (mut this.deleteAccountModalIsOpen) (not this.deleteAccountModalIsOpen))}}
     data-test-delete-my-account-button
   >
-    <div class="flex items-center gap-1">
-      {{svg-jar "external-link" class="w-4 h-4 text-gray-100"}}
-      Delete my account
-    </div>
+    Delete my account
   </DangerButton>
 
   <div class="text-gray-400 text-xs mt-3 leading-relaxed">
