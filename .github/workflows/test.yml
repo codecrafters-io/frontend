@@ -30,6 +30,8 @@ jobs:
 
       # - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
+      - run: git fetch origin ${{ github.event.pull_request.head.sha }}
+
       - id: get_head_commit_message
         run: echo "MESSAGE=$(git show -s --format=%s ${{github.event.pull_request.head.sha}})" >> "$GITHUB_OUTPUT"
 
