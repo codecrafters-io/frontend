@@ -39,14 +39,17 @@
         <h3 class="flex justify-between items-center text-xs uppercase font-semibold text-gray-400 border-b pb-0.5">
           {{stepGroup.title}}
 
-          <Toggle
-            @isDisabled={{get @activeRepository "isNew"}}
-            @isOn={{true}}
-            @size="small"
-            @tooltipCopy={{this.toggleButtonTooltipCopy}}
-            {{on "click" @onConfigureExtensionsButtonClick}}
-            data-test-configure-extensions-toggle
-          />
+          <div>
+            <Toggle
+              @isDisabled={{get @activeRepository "isNew"}}
+              @isOn={{true}}
+              @size="small"
+              {{on "click" @onConfigureExtensionsButtonClick}}
+              data-test-configure-extensions-toggle
+            />
+
+            <EmberTooltip @text={{this.toggleButtonTooltipCopy}} />
+          </div>
         </h3>
       </div>
     {{/if}}

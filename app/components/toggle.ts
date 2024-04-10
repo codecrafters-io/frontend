@@ -8,7 +8,6 @@ interface Signature {
     isOn: boolean;
     isVisible?: boolean;
     size?: 'small' | 'regular';
-    tooltipCopy?: string;
   };
 }
 
