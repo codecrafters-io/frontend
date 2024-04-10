@@ -727,5 +727,7 @@ function routes() {
     return user;
   });
 
+  this.delete('/users/:id');
+
   this.post('/views');
 }

@@ -1,0 +1,57 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-delete-account-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
+    Delete Account
+  </div>
+
+  <div class="prose mb-4">
+    Deleting your account will permanently remove all your data from our servers.
+  </div>
+
+  <div class="prose mb-4">
+    Are you sure you want to delete your
+    <b>{{this.currentUser.username}}</b>
+    account? Any deleted data will
+    <b>NOT</b>
+    be recoverable.
+  </div>
+
+  <div class="prose mb-4">
+    <ul>
+      <li>
+        Any code you've stored in CodeCrafters repositories will be permanently deleted.
+      </li>
+      <li>
+        If you have an active membership, it will be cancelled. If you'd like to transfer your membership to a different account, please contact us at
+        <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="prose mb-4">
+    After your account is deleted, you can signup using your GitHub account again at any point in the future.
+  </div>
+
+  <div class="prose mb-4 text-red-600">
+    To proceed with deleting your
+    <b>{{this.currentUser.username}}</b>
+    account, press and hold the button below for
+    <span class="font-bold">3 seconds</span>:
+  </div>
+
+  {{#if this.isDeletingAccount}}
+    <div class="flex items-center">
+      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+      <span class="ml-3">Deleting account...</span>
+    </div>
+  {{else}}
+    <DangerButtonWithTimedConfirmation @onConfirm={{this.deleteAccount}} @size="regular" data-test-delete-account-button>
+      Delete
+    </DangerButtonWithTimedConfirmation>
+  {{/if}}
+
+  {{#if this.accountDeletionErrorMessage}}
+    <Alert @type="error" class="mt-4">
+      {{this.accountDeletionErrorMessage}}
+    </Alert>
+  {{/if}}
+</ModalBody>
