@@ -178,6 +178,11 @@ export default create({
   sidebar: Sidebar,
   testResultsBar: TestResultsBar,
 
+  testRunnerCard: {
+    clickOnHideInstructionsButton: clickable('[data-test-hide-instructions-button]'),
+    scope: '[data-test-test-runner-card]',
+  },
+
   testsPassedCard: {
     scope: '[data-test-tests-passed-card]',
   },

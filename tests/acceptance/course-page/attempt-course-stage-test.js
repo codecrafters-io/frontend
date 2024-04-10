@@ -1,12 +1,13 @@
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import percySnapshot from '@percy/ember';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -54,6 +55,13 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
+
+    await percySnapshot('Course Page - Second stage failed');
+
+    await coursePage.testRunnerCard.click();
+    await percySnapshot('Test Runner Card - Failed tests');
+
+    await coursePage.testRunnerCard.clickOnHideInstructionsButton();
   });
 
   test('can pass course stage', async function (assert) {

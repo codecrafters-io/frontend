@@ -8,7 +8,7 @@
   </div>
   <div>
     {{#if @isExpanded}}
-      <TertiaryButton @size="extra-small" {{on "click" @onCollapseButtonClick}}>
+      <TertiaryButton @size="extra-small" {{on "click" @onCollapseButtonClick}} data-test-hide-instructions-button>
         <div class="flex items-center gap-1">
           {{svg-jar "arrow-circle-up" class="h-4 w-4 text-gray-400"}}
           <span>Hide Instructions</span>
