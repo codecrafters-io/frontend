@@ -28,10 +28,12 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+      # - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
       - id: get_head_commit_message
         run: echo "MESSAGE=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
+
+      - run: echo "${{ steps.get_head_commit_message.outputs.MESSAGE }}"
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
