@@ -7,6 +7,7 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
+  this.route('account-deleted');
   this.route('badges');
   this.route('catalog');
   this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' });
