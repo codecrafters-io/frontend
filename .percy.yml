@@ -3,9 +3,9 @@ snapshot:
   percy-css: |-
     .percy-timestamp {
       font-size: 0;
-    } 
+    }
     .percy-timestamp::before {
-      content: "July 23, 2023 2:45 PM"; 
+      content: "July 23, 2023 2:45 PM";
       font-size: 1rem;
     }
     .percy-time {

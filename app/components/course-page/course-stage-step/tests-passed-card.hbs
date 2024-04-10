@@ -1,4 +1,4 @@
-<div class="px-5 py-4 rounded border border-teal-500 bg-green-50" ...attributes>
+<div class="px-5 py-4 rounded border border-teal-500 bg-green-50" data-test-tests-passed-card ...attributes>
   <div class="flex items-center gap-1.5 mb-3 -mx-1">
     {{! -mx-1 aligns the tick icon to the left }}
     {{svg-jar "check-circle" class="h-8 w-8 text-teal-500"}}
@@ -36,7 +36,7 @@
       </p>
     </div>
 
-    <CopyableTerminalCommand @commands={{array "git add . " "git commit -am --allow-empty 'pass stage'" "git push origin master"}} />
+    <CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -am 'pass stage'" "git push origin master"}} />
 
     {{! TODO: Revive this when we're handling regular git pushes}}
 

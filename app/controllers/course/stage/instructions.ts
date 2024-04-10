@@ -40,10 +40,6 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.courseStage.prerequisiteInstructionsMarkdownFor(this.model.activeRepository);
   }
 
-  get shouldShowCLIUsageInstructions() {
-    return this.model.courseStage.isSecond;
-  }
-
   get shouldShowLanguageGuide() {
     return !this.model.courseStage.isFirst && this.authenticator.currentUser?.isStaff;
   }
@@ -54,6 +50,10 @@ export default class CourseStageInstructionsController extends Controller {
 
   get shouldShowTestFailureExpectedHint() {
     return this.model.courseStage.isFirst && this.currentStep.status !== 'complete';
+  }
+
+  get shouldShowTestRunnerCard() {
+    return this.isCurrentStage && this.currentStep.status !== 'complete' && this.currentStep.testsStatus !== 'passed';
   }
 
   get shouldShowTestsPassedCard() {

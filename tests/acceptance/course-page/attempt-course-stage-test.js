@@ -1,12 +1,13 @@
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import percySnapshot from '@percy/ember';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -45,7 +46,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     );
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
@@ -53,7 +54,14 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
+
+    await percySnapshot('Course Page - Second stage failed');
+
+    await coursePage.testRunnerCard.click();
+    await percySnapshot('Test Runner Card - Failed tests');
+
+    await coursePage.testRunnerCard.clickOnHideInstructionsButton();
   });
 
   test('can pass course stage', async function (assert) {
@@ -74,7 +82,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is waiting for git push');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
@@ -85,6 +93,37 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage passed');
+  });
+
+  test('can pass tests using CLI', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+      wasSubmittedViaCLI: true,
+    });
+
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await animationsSettled();
+
+    assert.ok(coursePage.testsPassedCard.isVisible);
   });
 
   test('passing first stage shows badges', async function (assert) {
@@ -105,7 +144,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withStageCompletion', {
       repository: repository,

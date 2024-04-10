@@ -174,7 +174,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', '3rd stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'footer text is git push listener');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is git push listener');
 
     await animationsSettled();
   });

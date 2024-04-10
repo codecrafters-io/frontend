@@ -1,0 +1,31 @@
+{{! template-lint-disable no-invalid-interactive }}
+<div
+  class="rounded border border-gray-300 px-3 py-2
+    {{if this.isCollapsed 'cursor-pointer bg-gradient-to-b from-white to-gray-50 hover:from-gray-50 hover:to-gray-100' 'bg-white'}}"
+  role={{if this.isCollapsed "button" "presentation"}}
+  {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+  data-test-test-runner-card
+  ...attributes
+>
+  <CoursePage::CourseStageStep::TestRunnerCard::Header
+    @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
+    @isExpanded={{this.isExpanded}}
+    @onCollapseButtonClick={{this.handleCollapseButtonClick}}
+  />
+
+  {{#if this.isExpanded}}
+    <div class="mt-2 border-t pt-3 mb-1">
+      {{#if @stage.isFirst}}
+        <CoursePage::CourseStageStep::TestRunnerCard::FirstStageInstructions
+          @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
+          @onViewLogsButtonClick={{this.handleViewLogsButtonClick}}
+        />
+      {{else}}
+        <CoursePage::CourseStageStep::TestRunnerCard::SubsequentStageInstructions
+          @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
+          @onViewLogsButtonClick={{this.handleViewLogsButtonClick}}
+        />
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

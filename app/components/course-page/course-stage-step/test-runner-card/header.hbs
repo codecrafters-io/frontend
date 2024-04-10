@@ -1,0 +1,27 @@
+<div class="flex items-center justify-between flex-wrap gap-2">
+  <div class="flex items-center gap-2 flex-wrap">
+    <div class="text-xs font-semibold uppercase text-gray-400">
+      Test Runner:
+    </div>
+
+    <CoursePage::StepProgressIndicator @step={{@currentStep}} />
+  </div>
+  <div>
+    {{#if @isExpanded}}
+      <TertiaryButton @size="extra-small" {{on "click" @onCollapseButtonClick}} data-test-hide-instructions-button>
+        <div class="flex items-center gap-1">
+          {{svg-jar "arrow-circle-up" class="h-4 w-4 text-gray-400"}}
+          <span>Hide Instructions</span>
+        </div>
+      </TertiaryButton>
+    {{else}}
+      {{! Global click handler is present, this doesn't need a click handler }}
+      <TertiaryButton @size="extra-small">
+        <div class="flex items-center gap-1">
+          {{svg-jar "arrow-circle-down" class="h-4 w-4 text-gray-400"}}
+          <span>View Instructions</span>
+        </div>
+      </TertiaryButton>
+    {{/if}}
+  </div>
+</div>

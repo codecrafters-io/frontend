@@ -1,5 +1,5 @@
 import SubmissionLogsPreview from 'codecrafters-frontend/tests/pages/components/submission-logs-preview';
-import { clickable, clickOnText, collection, triggerable } from 'ember-cli-page-object';
+import { clickable, clickOnText, collection, text, triggerable } from 'ember-cli-page-object';
 import { find } from '@ember/test-helpers';
 
 export default {
@@ -22,6 +22,7 @@ export default {
   },
 
   logsPreview: SubmissionLogsPreview,
+  progressIndicatorText: text('[data-test-progress-indicator-text]'),
 
   resizeHandler: {
     mouseDown: triggerable('mousedown'),

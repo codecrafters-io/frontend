@@ -29,7 +29,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
     const submission = this.server.create('submission', 'withStageCompletion', {
       repository: repository,

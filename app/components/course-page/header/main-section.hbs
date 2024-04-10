@@ -25,7 +25,11 @@
         </div>
       </div>
 
-      <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+      {{! TODO: This uses if (not ...) instead of unless because ESLint seems to replace this before linting? }}
+      {{! We already have this shown in the test runner card }}
+      {{#if (not (and (eq @currentStep.type "CourseStageStep") (eq @currentStep @activeStep)))}}
+        <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+      {{/if}}
     </div>
   </div>
 </div>
