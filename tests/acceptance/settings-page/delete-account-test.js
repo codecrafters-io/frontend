@@ -34,4 +34,19 @@ module('Acceptance | settings-page | delete-account-test', function (hooks) {
 
     assert.notOk(this.server.schema.users.first(), 'user is deleted');
   });
+
+  test('renders failure message if delete fails', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.delete('/users/:id', { errors: ['Delete failed'] }, 500);
+
+    await accountPage.visit();
+    await accountPage.deleteMyAccountButton.click();
+
+    await accountPage.deleteAccountModal.deleteAccountButton.press();
+    await waitUntil(() => accountPage.deleteAccountModal.text.includes('Failed to delete account'));
+
+    assert.ok(this.server.schema.users.first(), 'user is not deleted');
+  });
 });
