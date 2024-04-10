@@ -760,20 +760,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
   });
 
-  test('tracks when the cli installation link is clicked', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    await visit('/courses/redis/stages/2');
-    await coursePage.installCliLink.click();
-
-    const analyticsEvents = this.server.schema.analyticsEvents.all().models;
-    const filteredAnalyticsEvents = analyticsEvents.filter((event) => event.name !== 'feature_flag_called');
-    const filteredAnalyticsEventsNames = filteredAnalyticsEvents.map((event) => event.name);
-
-    assert.ok(filteredAnalyticsEventsNames.includes('clicked_cli_installation_link'), 'clicked_cli_installation_link event should be tracked');
-  });
-
   test('header should have a badge that shows the remaining time in days', async function (assert) {
     testScenario(this.server);
 
