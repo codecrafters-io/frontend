@@ -75,15 +75,13 @@ export default class UserModel extends Model {
   }
 
   get attemptedCoursesCount() {
-    const attemptedCourseSlugs: string[] = [];
+    const attemptedCourseSlugs = new Set<string>();
 
     this.repositories.forEach((repository) => {
-      if (!attemptedCourseSlugs.includes(repository.course.slug)) {
-        attemptedCourseSlugs.push(repository.course.slug);
-      }
+      attemptedCourseSlugs.add(repository.course.slug);
     });
 
-    return attemptedCourseSlugs.length;
+    return attemptedCourseSlugs.size;
   }
 
   get canAccessMembershipBenefits() {
