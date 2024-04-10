@@ -34,6 +34,14 @@ export default class StepListComponent extends Component<Signature> {
   get otherStepGroups() {
     return this.args.stepList.stepGroups.filter((group) => group.type !== 'BaseStagesStepGroup');
   }
+
+  get toggleButtonTooltipCopy() {
+    if (this.args.activeRepository.get('isNew')) {
+      return 'Complete repository setup to configure extensions';
+    } else {
+      return 'Click here to configure extensions';
+    }
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

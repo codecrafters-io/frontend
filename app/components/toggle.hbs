@@ -2,14 +2,19 @@
   type="button"
   class="{{if @isOn 'bg-teal-600' 'bg-gray-200'}}
     {{if @isDisabled 'opacity-50 cursor-not-allowed' 'cursor-pointer'}}
-    relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-100 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"
+    {{if this.sizeIsSmall 'h-3.5 w-7'}}
+    {{if this.sizeIsRegular 'h-6 w-11'}}
+    relative inline-flex flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-100 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"
   role="switch"
   aria-checked="false"
   ...attributes
 >
   <span
-    class="{{if @isOn 'translate-x-5' 'translate-x-0'}}
-      pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-100 ease-in-out"
+    class="{{if (and @isOn this.sizeIsSmall) 'translate-x-3.5' 'translate-x-0'}}
+      {{if (and @isOn this.sizeIsRegular) 'translate-x-5' 'translate-x-0'}}
+      {{if this.sizeIsSmall 'h-2.5 w-2.5'}}
+      {{if this.sizeIsRegular 'h-5 w-5'}}
+      pointer-events-none relative inline-block transform rounded-full bg-white shadow ring-0 transition duration-100 ease-in-out"
   >
     <span
       class="{{if
