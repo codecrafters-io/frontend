@@ -1,13 +1,23 @@
 <Settings::FormSection @title="Danger Zone" @description="Destructive actions on your account">
-  <a class="inline-flex" href="https://docs.codecrafters.io/account/delete-account" target="_blank" rel="noopener noreferrer">
-    <DangerButton @size="small">
-      <div class="flex items-center gap-1">
-        {{svg-jar "external-link" class="w-4 h-4 text-gray-100"}}
-        Delete my account
-      </div>
-    </DangerButton>
-  </a>
+  <DangerButton
+    @size="small"
+    {{on "click" (fn (mut this.deleteAccountModalIsOpen) (not this.deleteAccountModalIsOpen))}}
+    data-test-delete-my-account-button
+  >
+    <div class="flex items-center gap-1">
+      {{svg-jar "external-link" class="w-4 h-4 text-gray-100"}}
+      Delete my account
+    </div>
+  </DangerButton>
+
   <div class="text-gray-400 text-xs mt-3 leading-relaxed">
     Deleting your account will permanently remove all your data from our servers. You can choose to signup via your GitHub account again at any time.
   </div>
 </Settings::FormSection>
+
+{{#if this.deleteAccountModalIsOpen}}
+  <ModalBackdrop>
+    {{! @glint-expect-error: mut not ts-ified yet }}
+    <Settings::DeleteAccountModal @onClose={{fn (mut this.deleteAccountModalIsOpen) false}} />
+  </ModalBackdrop>
+{{/if}}
