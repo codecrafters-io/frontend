@@ -43,6 +43,7 @@ export default class DeleteAccountModalComponent extends Component<Signature> {
       this.accountDeletionErrorMessage = null;
       this.isDeletingAccount = false;
       this.router.transitionTo('account-deleted');
+      this.authenticator.logout();
     } catch (error) {
       this.isDeletingAccount = false;
 
