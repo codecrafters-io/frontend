@@ -30,6 +30,9 @@ jobs:
 
       - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
 
+      - run: "echo ${{github.event.head_commit.message}}"
+      - run: "echo ${{toJson(github.event)}}"
+
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
         if: "github.ref == 'refs/heads/master'"
