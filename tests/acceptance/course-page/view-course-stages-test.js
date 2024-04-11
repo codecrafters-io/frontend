@@ -89,7 +89,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'course stage item is active if clicked on');
-    assert.strictEqual(coursePage.yourTaskCard.footerText, 'You completed this stage 5 days ago.', 'footer text for stage completed > 1 day');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
 
     await percySnapshot('Course Stages - Completed stage');
 
@@ -97,13 +97,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
-    assert.strictEqual(coursePage.yourTaskCard.footerText, 'You completed this stage yesterday.', 'footer text for stage completed yesterday');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage yesterday.');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text for stage completed today');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 
   test('can navigate directly to stage even if previous stages are not completed', async function (assert) {
