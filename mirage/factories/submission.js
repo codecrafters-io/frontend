@@ -49,9 +49,8 @@ export default Factory.extend({
   },
 
   createdAt: () => new Date(),
-
   commitSha: () => generateRandomAlphanumericString(40),
-
+  status: 'evaluating',
   treeSha: () => generateRandomAlphanumericString(40),
 
   githubStorageHtmlUrl: 'https://github.com',
