@@ -1,5 +1,11 @@
-<CoursePage::InstructionsCard data-test-your-task-card class="group/your-task-card" ...attributes>
-  <:content>
+<CoursePage::InstructionsCard
+  @contentIdentifier={{@courseStage.id}}
+  @isCollapsedByDefault={{true}}
+  data-test-your-task-card
+  class="group/your-task-card"
+  ...attributes
+>
+  <:header>
     <div class="flex items-center justify-between flex-wrap gap-3 border-b pb-2 mb-5 w-full">
       <div class="flex items-center gap-x-3 gap-y-1.5 flex-wrap">
         <h2 class="font-semibold text-lg text-gray-700 flex-shrink-0">Your Task</h2>
@@ -34,7 +40,9 @@
 
       <CourseStageDifficultyLabel @stage={{@courseStage}} class="flex-shrink-0" />
     </div>
+  </:header>
 
+  <:content>
     <div class="prose has-prism-highlighting" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
       {{markdown-to-html this.instructionsMarkdown}}
     </div>
@@ -76,7 +84,4 @@
       </div>
     {{/if}}
   </:content>
-  <:footer>
-    <CoursePage::CourseStageStep::Card::Footer @repository={{@repository}} @courseStage={{@courseStage}} />
-  </:footer>
 </CoursePage::InstructionsCard>
