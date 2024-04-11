@@ -47,9 +47,17 @@ export default class ExpandableStepListComponent extends Component<Signature> {
     const stepIndex = this.args.steps.indexOf(this.expandedStep);
     const nextStep = this.args.steps[stepIndex + 1];
 
-    this.expandedStepId = nextStep ? nextStep.id : null;
+    if (nextStep) {
+      this.#expandStepAndScrollContainerIntoView(nextStep);
+    } else {
+      this.expandedStepId = null;
+    }
+  }
 
-    if (nextStep && this.containerElement) {
+  #expandStepAndScrollContainerIntoView(step: Step) {
+    this.expandedStepId = step.id;
+
+    if (this.containerElement) {
       this.containerElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
@@ -60,13 +68,17 @@ export default class ExpandableStepListComponent extends Component<Signature> {
   }
 
   @action
-  handleStepCollapse(_step: Step) {
-    this.expandedStepId = null;
+  handleStepCollapse(collapsedStep: Step) {
+    if (this.firstIncompleteStep && this.firstIncompleteStep.id !== collapsedStep.id) {
+      this.#expandStepAndScrollContainerIntoView(this.firstIncompleteStep);
+    } else {
+      this.expandedStepId = null;
+    }
   }
 
   @action
   handleStepExpand(step: Step) {
-    this.expandedStepId = step.id;
+    this.#expandStepAndScrollContainerIntoView(step);
   }
 }
 

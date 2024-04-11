@@ -68,4 +68,9 @@ export default class CourseStageInstructionsController extends Controller {
   handleCommentListFilterToggled() {
     this.commentListIsFilteredByLanguage = !this.commentListIsFilteredByLanguage;
   }
+
+  @action
+  handleTestRunnerCardExpandedOnFirstStage() {
+    document.getElementById('first-stage-instructions-card')?.scrollIntoView({ behavior: 'smooth' });
+  }
 }

@@ -26,16 +26,20 @@ class UncommentCodeStep implements Step {
   }
 
   get title() {
-    return 'Uncomment Code';
+    return 'Uncomment code';
   }
 }
 
 class SubmitCodeStep implements Step {
-  isComplete = false;
   id = 'submit-code';
+  isComplete: boolean;
+
+  constructor(isComplete: boolean) {
+    this.isComplete = isComplete;
+  }
 
   get title() {
-    return 'Submit Code';
+    return 'Submit changes';
   }
 }
 
@@ -43,16 +47,29 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
-  @tracked uncommentCodeStepIsComplete = false;
+  @tracked uncommentCodeStepWasMarkedAsComplete = false;
+
+  get allStepsAreComplete() {
+    return this.args.repository.stageIsComplete(this.args.courseStage);
+  }
 
   get steps() {
-    return [new UncommentCodeStep(this.uncommentCodeStepIsComplete), new SubmitCodeStep()];
+    return [new UncommentCodeStep(this.uncommentCodeStepIsComplete), new SubmitCodeStep(this.allStepsAreComplete)];
+  }
+
+  get uncommentCodeStepIsComplete() {
+    return this.uncommentCodeStepWasMarkedAsComplete || this.args.repository.stageIsComplete(this.args.courseStage);
   }
 
   @action
   handleUncommentCodeStepCompleted(stepList: { expandNextStep: () => void }) {
-    this.uncommentCodeStepIsComplete = true;
+    this.uncommentCodeStepWasMarkedAsComplete = true;
     stepList.expandNextStep();
+  }
+
+  @action
+  handleViewLogsButtonClick() {
+    this.coursePageState.testResultsBarIsExpanded = true;
   }
 }
 
