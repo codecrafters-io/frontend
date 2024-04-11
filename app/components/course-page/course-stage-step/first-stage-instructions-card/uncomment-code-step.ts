@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -21,11 +20,6 @@ export default class UncommentCodeStepComponent extends Component<Signature> {
 
   get solution() {
     return this.args.courseStage.solutions.find((solution) => solution.language === this.args.repository.language);
-  }
-
-  @action
-  handleCompleteButtonClick() {
-    this.args.onComplete();
   }
 }
 

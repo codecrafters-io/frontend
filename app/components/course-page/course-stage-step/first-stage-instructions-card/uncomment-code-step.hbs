@@ -28,7 +28,7 @@
 {{/if}}
 
 {{#unless @isComplete}}
-  <PrimaryButton {{on "click" this.handleCompleteButtonClick}} class="mt-4">
+  <PrimaryButton {{on "click" @onComplete}} class="mt-4" data-test-uncomment-code-step-completed-button>
     <div class="flex items-center gap-2">
       {{svg-jar "check-circle" class="w-6 h-6"}}
       <span>I've done this</span>
