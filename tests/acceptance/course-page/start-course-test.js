@@ -101,7 +101,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Listening for Git push');
 
     let repository = this.server.schema.repositories.find(1);
-    repository.update({ lastSubmission: this.server.create('submission', { repository }) });
+    this.server.create('submission', { repository, courseStage: repository.course.stages.models.find((stage) => stage.position === 1) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
