@@ -1,0 +1,18 @@
+<div class="divide-y divide-gray-200 border-t border-b" {{did-insert this.handleDidInsertContainer}} ...attributes>
+  {{#each @steps as |step stepIndex|}}
+    <ExpandableStepList::Step
+      @title={{step.title}}
+      @number={{add stepIndex 1}}
+      @isComplete={{step.isComplete}}
+      @isExpanded={{eq this.expandedStepId step.id}}
+      @onExpand={{fn this.handleStepExpand step}}
+      @onCollapse={{fn this.handleStepCollapse step}}
+    >
+      {{#if (eq step.id this.expandedStepId)}}
+        <div class={{@stepContainerClass}}>
+          {{yield (hash expandedStep=this.expandedStep expandNextStep=this.expandNextStep)}}
+        </div>
+      {{/if}}
+    </ExpandableStepList::Step>
+  {{/each}}
+</div>

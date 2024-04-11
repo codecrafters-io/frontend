@@ -9,53 +9,22 @@
 
       <p>
         Since this is your first stage in this challenge, we've included some starter code in your repository. To pass this stage, simply uncomment
-        the code and
-        <code>git push</code>.
-      </p>
-
-      <p>
-        <b>Step 1:</b>
-        {{#if this.filename}}
-          Uncomment the code in
-          <code>{{this.filename}}</code>.
-        {{else}}
-          Uncomment the code.
-        {{/if}}
+        the code, run tests and then submit your code.
       </p>
     </div>
 
-    {{#if this.solution}}
-      <div class="mb-5">
-        {{#each this.solution.changedFiles as |changedFile|}}
-          <FileDiffCard class="mb-4" @filename={{changedFile.filename}} @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
-        {{/each}}
-      </div>
-    {{else if (not @repository.language)}}
-      <div class="prose mb-5">
-        <p>
-          <span class="text-lg">⚠️</span>
-          Complete repository setup to see the code you need to uncomment.
-        </p>
-      </div>
-    {{else}}
-      <div class="prose mb-5">
-        <p>
-          View the README in your repository for instructions on how to uncomment the code.
-        </p>
-      </div>
-    {{/if}}
-
-    <div class="prose mb-3">
-      <p>
-        <b>Step 2:</b>
-        Commit and push your changes.
-      </p>
-      <p>
-        Run the following commands to submit your changes:
-      </p>
-    </div>
-
-    <CopyableTerminalCommand @commands={{array "git add . " "git commit -am 'pass 1st stage' # any msg" "git push origin master"}} />
+    <ExpandableStepList @steps={{this.steps}} class="scroll-mt-32" as |stepList|>
+      {{#if (eq stepList.expandedStep.id "uncomment-code")}}
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::UncommentCodeStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.uncommentCodeStepIsComplete}}
+          @onComplete={{fn this.handleUncommentCodeStepCompleted stepList}}
+        />
+      {{else if (eq stepList.expandedStep.id "submit-code")}}
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep />
+      {{/if}}
+    </ExpandableStepList>
   </:content>
   <:footer>
     <CoursePage::CourseStageStep::Card::Footer @repository={{@repository}} @courseStage={{@courseStage}} />

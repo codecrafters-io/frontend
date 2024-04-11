@@ -1,0 +1,37 @@
+{{#if this.solution}}
+  <div class="prose mb-5">
+    <p>
+      Navigate to
+      <code>{{this.filename}}</code>
+      in your repository and uncomment the following code:
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    {{#each this.solution.changedFiles as |changedFile|}}
+      <FileDiffCard @filename={{changedFile.filename}} @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
+    {{/each}}
+  </div>
+{{else if (not @repository.language)}}
+  <div class="prose">
+    <p>
+      <span class="text-lg">⚠️</span>
+      Complete repository setup to see the code you need to uncomment.
+    </p>
+  </div>
+{{else}}
+  <div class="prose">
+    <p>
+      View the README in your repository for instructions on how to uncomment the code.
+    </p>
+  </div>
+{{/if}}
+
+{{#unless @isComplete}}
+  <PrimaryButton {{on "click" this.handleCompleteButtonClick}} class="mt-4" @size="large">
+    <div class="flex items-center gap-2">
+      {{svg-jar "check-circle" class="w-6 h-6"}}
+      <span>I've done this</span>
+    </div>
+  </PrimaryButton>
+{{/unless}}

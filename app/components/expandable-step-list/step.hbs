@@ -1,0 +1,41 @@
+<div
+  class="py-2 px-1 {{if @isExpanded 'pb-6' 'cursor-pointer hover:bg-gray-50'}}"
+  {{on "click" (if @isExpanded (noop) this.handleExpandButtonClick)}}
+  ...attributes
+>
+  <div class="{{if @isExpanded 'mb-3' ''}} flex items-start justify-between">
+    <div class="prose">
+      <p>
+        {{#if @isComplete}}
+          <span class="mr-1">✅</span>
+        {{/if}}
+
+        <b class={{if @isComplete "line-through" ""}}>Step {{@number}}:</b>
+
+        <span>
+          {{@title}}
+        </span>
+      </p>
+    </div>
+
+    {{#if @isExpanded}}
+      <TertiaryButton @size="extra-small" {{on "click" this.handleCollapseButtonClick}}>
+        <div class="font-bold flex items-center gap-1">
+          {{svg-jar "arrow-up" class="w-3 fill-current"}}
+          Collapse
+        </div>
+      </TertiaryButton>
+    {{else if (not @isComplete)}}
+      <TertiaryButton @size="extra-small">
+        <div class="font-bold flex items-center gap-1">
+          {{svg-jar "arrow-down" class="w-3 fill-current"}}
+          Expand
+        </div>
+      </TertiaryButton>
+    {{/if}}
+  </div>
+
+  {{#if @isExpanded}}
+    {{yield}}
+  {{/if}}
+</div>
