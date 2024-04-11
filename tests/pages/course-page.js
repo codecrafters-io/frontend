@@ -3,6 +3,7 @@ import CommentList from 'codecrafters-frontend/tests/pages/components/course-pag
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
+import FirstStageInstructionsCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-instructions-card';
 import LanguageDropdown from './components/language-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
@@ -111,6 +112,8 @@ export default create({
 
     scope: '[data-test-earned-badge-notice]',
   },
+
+  firstStageInstructionsCard: FirstStageInstructionsCard,
 
   freeCourseLabel: {
     hover: triggerable('mouseenter'),

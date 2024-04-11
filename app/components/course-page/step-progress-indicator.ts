@@ -6,6 +6,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    shouldHideExplanationTooltip?: boolean;
     step: Step;
     size?: 'base' | 'large';
   };

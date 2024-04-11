@@ -1,0 +1,47 @@
+{{! template-lint-disable no-invalid-interactive }}
+<div
+  class="py-2 px-1 {{if @isExpanded 'pb-6' 'cursor-pointer hover:bg-gray-50'}}"
+  {{on "click" (if @isExpanded (noop) this.handleExpandButtonClick)}}
+  data-test-expandable-step-list-step
+  ...attributes
+>
+  <div class="{{if @isExpanded 'mb-3' ''}} flex items-center justify-between">
+    <div class="flex items-center gap-1">
+      <div class="prose {{if @isComplete 'opacity-50'}}" data-test-step-title>
+        <b>Step {{@number}}:</b>
+
+        <span>
+          {{@title}}
+        </span>
+      </div>
+
+      {{#if @isComplete}}
+        <div class="flex" data-test-step-complete-icon>
+          {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
+        </div>
+      {{/if}}
+    </div>
+
+    {{#if @isExpanded}}
+      <TertiaryButton @size="extra-small" {{on "click" this.handleCollapseButtonClick}}>
+        <div class="font-bold flex items-center gap-1">
+          {{svg-jar "arrow-up" class="w-3 fill-current"}}
+          Collapse
+        </div>
+      </TertiaryButton>
+    {{else if (not @isComplete)}}
+      <TertiaryButton @size="extra-small">
+        <div class="font-bold flex items-center gap-1">
+          {{svg-jar "arrow-down" class="w-3 fill-current"}}
+          Expand
+        </div>
+      </TertiaryButton>
+    {{/if}}
+  </div>
+
+  {{#if @isExpanded}}
+    <div data-test-expanded-step-content>
+      {{yield}}
+    </div>
+  {{/if}}
+</div>

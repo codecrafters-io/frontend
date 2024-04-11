@@ -18,14 +18,17 @@
 
     <span class="text-gray-600 dark:text-gray-400" data-test-progress-indicator-text>{{@step.progressIndicator.text}}</span>
 
-    {{#if @step.progressIndicator.explanationMarkdown}}
+    {{#if (and @step.progressIndicator.explanationMarkdown (not @shouldHideExplanationTooltip))}}
       <div class="flex ml-1 mb-px group/tooltip-trigger">
         {{svg-jar "question-mark-circle" class="w-4 h-4 fill-current text-gray-300 dark:text-gray-500 group-hover/tooltip-trigger:text-gray-400"}}
 
         {{! @glint-ignore }}
         <EmberPopover @popperContainer="body">
           <div class="prose prose-sm prose-invert text-white">
-            {{markdown-to-html @step.progressIndicator.explanationMarkdown}}
+            {{! The extra #if here is solely for type-checking }}
+            {{#if @step.progressIndicator.explanationMarkdown}}
+              {{markdown-to-html @step.progressIndicator.explanationMarkdown}}
+            {{/if}}
           </div>
         </EmberPopover>
       </div>

@@ -11,6 +11,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    onExpand?: () => void; // Overrides the default expand action if passed in
     repository: RepositoryModel;
     stage: CourseStageModel;
   };
@@ -34,6 +35,13 @@ export default class TestRunnerCardComponent extends Component<Signature> {
 
   @action
   handleExpandButtonClick() {
+    // If onExpand is passed in, bypass the default
+    if (this.args.onExpand) {
+      this.args.onExpand();
+
+      return;
+    }
+
     next(() => {
       this.isExpanded = true;
     });

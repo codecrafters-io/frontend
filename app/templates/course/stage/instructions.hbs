@@ -1,6 +1,11 @@
 <div class="pt-6 pb-16">
   {{#if this.shouldShowTestRunnerCard}}
-    <CoursePage::CourseStageStep::TestRunnerCard @repository={{@model.activeRepository}} @stage={{@model.courseStage}} class="mb-6" />
+    <CoursePage::CourseStageStep::TestRunnerCard
+      @repository={{@model.activeRepository}}
+      @stage={{@model.courseStage}}
+      @onExpand={{if @model.courseStage.isFirst this.handleTestRunnerCardExpandedOnFirstStage undefined}}
+      class="mb-6"
+    />
   {{else if this.shouldShowTestsPassedCard}}
     <CoursePage::CourseStageStep::TestsPassedCard class="mb-6" {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}} />
   {{/if}}
