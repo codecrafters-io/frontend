@@ -1,10 +1,11 @@
 <CoursePage::InstructionsCard data-test-repository-setup-card ...attributes>
-  <:content>
+  <:header>
     <div class="flex items-center gap-x-3 w-full border-b pb-2 mb-5">
       <h2 class="font-semibold text-lg text-gray-700">Repository Setup</h2>
       <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} data-test-status-text />
     </div>
-
+  </:header>
+  <:content>
     <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} @isComplete={{this.isComplete}} />
 
     {{#if this.isComplete}}

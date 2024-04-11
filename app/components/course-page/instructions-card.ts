@@ -15,7 +15,8 @@ interface Signature {
 
   Blocks: {
     content: [];
-    footer: [];
+    footer?: [];
+    header?: []; // Either title or header should be provided
   };
 }
 

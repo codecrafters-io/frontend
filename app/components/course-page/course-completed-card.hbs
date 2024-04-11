@@ -1,10 +1,11 @@
 <CoursePage::InstructionsCard ...attributes data-test-course-completed-card>
-  <:content>
+  <:header>
     <div class="flex items-center mb-6 border-b pb-2">
       <img src={{this.congratulationsImage}} alt="Congratulations!" class="mr-3 w-10 h-10" />
       <span class="font-semibold text-lg text-gray-700">Challenge Complete!</span>
     </div>
-
+  </:header>
+  <:content>
     <div class="text-gray-700 leading-7 prose" data-test-instructions-text>
       <p>
         Congratulations are in order. Only ~{{@repository.course.roundedCompletionPercentage}}% of users that attempt this challenge end up completing
