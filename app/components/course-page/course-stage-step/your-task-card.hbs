@@ -1,4 +1,10 @@
-<CoursePage::InstructionsCard data-test-your-task-card class="group/your-task-card" ...attributes>
+<CoursePage::InstructionsCard
+  @contentIdentifier={{@courseStage.id}}
+  @isCollapsedByDefault={{true}}
+  data-test-your-task-card
+  class="group/your-task-card"
+  ...attributes
+>
   <:content>
     <div class="flex items-center justify-between flex-wrap gap-3 border-b pb-2 mb-5 w-full">
       <div class="flex items-center gap-x-3 gap-y-1.5 flex-wrap">
@@ -76,7 +82,4 @@
       </div>
     {{/if}}
   </:content>
-  <:footer>
-    <CoursePage::CourseStageStep::Card::Footer @repository={{@repository}} @courseStage={{@courseStage}} />
-  </:footer>
 </CoursePage::InstructionsCard>
