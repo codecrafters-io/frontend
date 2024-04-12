@@ -8,6 +8,8 @@
   },
   "ember-addon": {
     "main": "index.js",
-    "after": ["prember"]
+    "after": [
+      "prember"
+    ]
   }
 }

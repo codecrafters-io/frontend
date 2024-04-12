@@ -4,7 +4,7 @@
  * @author Lea Verou
  */
 
-pre[class*="language-"] {
+pre[class*='language-'] {
   color: black;
   background: none;
   text-shadow: 0 1px white;
@@ -27,30 +27,32 @@ pre[class*="language-"] {
   hyphens: none;
 }
 
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection {
+pre[class*='language-']::-moz-selection,
+pre[class*='language-'] ::-moz-selection {
   text-shadow: none;
   background: #b3d4fc;
 }
 
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection {
+pre[class*='language-']::selection,
+pre[class*='language-'] ::selection {
   text-shadow: none;
   background: #b3d4fc;
 }
 
 @media print {
-  pre[class*="language-"] {
+  pre[class*='language-'] {
     text-shadow: none;
   }
 }
 
 /* Code blocks */
-pre[class*="language-"] {
+pre[class*='language-'] {
   padding: 1em;
-  margin: .5em 0;
+  margin: 0.5em 0;
   overflow: auto;
 }
 
-pre[class*="language-"] {
+pre[class*='language-'] {
   background: #f5f2f0;
 }
 
@@ -66,7 +68,7 @@ pre[class*="language-"] {
 }
 
 .token.namespace {
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .token.property,
@@ -104,7 +106,7 @@ pre[class*="language-"] {
 
 .token.function,
 .token.class-name {
-  color: #DD4A68;
+  color: #dd4a68;
 }
 
 .token.regex,
