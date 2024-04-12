@@ -82,7 +82,7 @@ module.exports = {
     // TypeScript files
     {
       files: ['**/*.ts'],
-      extends: ['plugin:@typescript-eslint/recommended'],
+      extends: ['plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/eslint-recommended'],
       plugins: ['@typescript-eslint'],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
