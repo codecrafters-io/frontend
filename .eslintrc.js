@@ -1,6 +1,7 @@
 'use strict';
 
-require('eslint-plugin-ember-template-lint/lib/ember-teplate-lint/config').registerPlugin('ember-template-lint-plugin-prettier');
+// Disable until https://github.com/ember-template-lint/ember-template-lint-plugin-prettier/issues/268 is resolved
+// require('eslint-plugin-ember-template-lint/lib/ember-teplate-lint/config').registerPlugin('ember-template-lint-plugin-prettier');
 
 module.exports = {
   root: true,

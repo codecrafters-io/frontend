@@ -14,3 +14,6 @@
 
 # ember-cli-mirage
 /mirage/course-fixtures/
+
+# assets
+/public/assets/
