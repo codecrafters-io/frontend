@@ -30,6 +30,8 @@ module.exports = function (defaults) {
       },
     },
 
+    'ember-cli-babel': { enableTypeScriptTransform: true },
+
     postcssOptions: {
       compile: {
         plugins: [

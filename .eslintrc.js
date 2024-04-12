@@ -1,6 +1,7 @@
 'use strict';
 
-require('eslint-plugin-ember-template-lint/lib/ember-teplate-lint/config').registerPlugin('ember-template-lint-plugin-prettier');
+// Disable until https://github.com/ember-template-lint/ember-template-lint-plugin-prettier/issues/268 is resolved
+// require('eslint-plugin-ember-template-lint/lib/ember-teplate-lint/config').registerPlugin('ember-template-lint-plugin-prettier');
 
 module.exports = {
   root: true,
@@ -82,7 +83,7 @@ module.exports = {
     // TypeScript files
     {
       files: ['**/*.ts'],
-      extends: ['plugin:@typescript-eslint/recommended'],
+      extends: ['plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/eslint-recommended'],
       plugins: ['@typescript-eslint'],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
@@ -97,16 +98,6 @@ module.exports = {
       parser: 'ember-eslint-parser',
       plugins: ['ember'],
       extends: ['plugin:@typescript-eslint/recommended', 'plugin:ember/recommended-gts'],
-    },
-    // HBS files
-    {
-      files: ['**/*.hbs'],
-      plugins: ['ember-template-lint'],
-      extends: ['plugin:ember-template-lint/recommended', 'plugin:ember-template-lint/ember-template-lint-plugin-prettier:recommended'],
-      rules: {
-        'ember-template-lint/require-presentational-children': 'off',
-        'ember-template-lint/no-invalid-link-text': 'off',
-      },
     },
   ],
 };
