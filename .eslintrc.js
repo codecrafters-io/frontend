@@ -98,15 +98,5 @@ module.exports = {
       plugins: ['ember'],
       extends: ['plugin:@typescript-eslint/recommended', 'plugin:ember/recommended-gts'],
     },
-    // HBS files
-    {
-      files: ['**/*.hbs'],
-      plugins: ['ember-template-lint'],
-      extends: ['plugin:ember-template-lint/recommended', 'plugin:ember-template-lint/ember-template-lint-plugin-prettier:recommended'],
-      rules: {
-        'ember-template-lint/require-presentational-children': 'off',
-        'ember-template-lint/no-invalid-link-text': 'off',
-      },
-    },
   ],
 };
