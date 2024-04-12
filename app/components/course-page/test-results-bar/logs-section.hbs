@@ -2,17 +2,27 @@
   {{#if this.lastSubmission}}
     <SubmissionLogsPreview @submission={{this.lastSubmission}} />
 
-    <div class="text-gray-400 text-xs mt-2">
-      {{#if this.lastSubmission.statusIsSuccess}}
-        All tests passed! Commit and push your code to move to the next stage.
-      {{else}}
-        Read our article on
-        <a
-          href={{this.debuggingArticleLink}}
-          class="font-semibold underline text-sky-500 hover:text-sky-400"
-          target="_blank"
-          rel="noopener noreferrer"
-        >debugging test failures</a>.
+    <div class="flex items-center justify-between">
+      <div class="text-gray-400 text-xs mt-2">
+        {{#if this.lastSubmission.statusIsSuccess}}
+          All tests passed! Commit and push your code to move to the next stage.
+        {{else}}
+          Read our article on
+          <a
+            href={{this.debuggingArticleLink}}
+            class="font-semibold underline text-sky-500 hover:text-sky-400"
+            target="_blank"
+            rel="noopener noreferrer"
+          >debugging test failures</a>.
+        {{/if}}
+      </div>
+
+      {{!-- Only show to staff until https://linear.app/codecrafters/issue/CC-1142/update-dates-in-real-time is done --}}
+      {{#if (current-user-is-staff)}}
+        <div class="text-gray-400 text-xs mt-2">
+          Submitted
+          {{date-from-now this.lastSubmission.createdAt}}
+        </div>
       {{/if}}
     </div>
   {{else}}
