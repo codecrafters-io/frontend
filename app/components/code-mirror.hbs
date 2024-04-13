@@ -1,0 +1,9 @@
+<code-mirror
+  {{did-insert this.renderEditor}}
+  {{did-update this.updateReadOnly @readOnly}}
+  {{did-update this.updateDocument @document}}
+  data-test-code-mirror-component
+  ...attributes
+>
+  {{yield}}
+</code-mirror>
