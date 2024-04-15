@@ -40,6 +40,8 @@
         posthog.init('phc_jCl1mm3XbnvyIUr4h54oORqWEqj37gxhZIOebREBwxb',{api_host:'https://app.posthog.com'})
       }
     </script>
+
+    <script type="module" src="https://unpkg.com/@spotlightjs/overlay@latest/dist/sentry-spotlight.js"></script>
   </head>
   <body style="margin: 0; background-color: rgb(248 250 252)">
     <div class="ember-load-indicator">
@@ -322,5 +324,12 @@
     <script src="{{rootURL}}assets/codecrafters-frontend.js"></script>
 
     {{content-for "body-footer"}}
+
+    <script type="module">
+      import * as Spotlight from 'https://unpkg.com/@spotlightjs/overlay@latest/dist/sentry-spotlight.js';
+      Spotlight.init({
+        injectImmediately: true,
+      });
+    </script>
   </body>
 </html>

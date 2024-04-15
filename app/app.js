@@ -15,12 +15,6 @@ if (config.environment === 'development' || config.environment === 'production')
     release: config.x.version,
     tracesSampleRate: 0.01,
   });
-
-  if (config.environment === 'development') {
-    Spotlight.init({
-      injectImmediately: true,
-    });
-  }
 }
 
 export default class App extends Application {
