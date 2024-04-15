@@ -55,7 +55,6 @@
     "@percy/ember": "^4.0.0",
     "@sentry/ember": "^7.110.0",
     "@sentry/webpack-plugin": "^2.16.1",
-    "@spotlightjs/spotlight": "^1.2.17",
     "@tsconfig/ember": "^3.0.6",
     "@types/canvas-confetti": "^1.6.4",
     "@types/ember": "^4.0.11",
@@ -199,7 +198,8 @@
     "player.js": "^0.1.0",
     "showdown": "^2.1.0",
     "three": "^0.163.0",
-    "web-vitals": "^3.5.2"
+    "web-vitals": "^3.5.2",
+    "@spotlightjs/spotlight": "^1.2.17"
   },
   "fastbootDependencies": [
     "crypto"
