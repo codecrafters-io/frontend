@@ -73,6 +73,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     return this.args.code
       .trim()
       .split('\n')
+      .filter((line) => !line.startsWith('@@'))
       .map((line) => {
         if (line.startsWith('+')) {
           return [line.substring(1), 'added'];
