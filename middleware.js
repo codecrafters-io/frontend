@@ -53,10 +53,25 @@ export default async function middleware(request) {
     const conceptSlug = conceptsPathMatchResult[1];
 
     // Convert the slug('network-protocols') to title('Network Protocols')
-    const conceptTitle = conceptSlug
+    // Use this as a fallback
+    let conceptTitle = conceptSlug
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
+
+    // Get concept data from the backend
+    let conceptData;
+
+    try {
+      conceptData = await fetch(`https://backend.codecrafters.io/services/dynamic_og_images/concept_data?id_or_slug=${conceptSlug}`).then((res) =>
+        res.json(),
+      );
+
+      conceptTitle = conceptData.title;
+    } catch (e) {
+      console.error(e);
+      console.log('ignoring error for now');
+    }
 
     // Generate a proper OG Image URL for the concept
     pageImageUrl = `https://og.codecrafters.io/api/concept/${conceptSlug}`;
