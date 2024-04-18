@@ -22,10 +22,10 @@ export default class SubmissionModel extends Model {
   @hasMany('submission-evaluation', { async: false, inverse: 'submission' }) declare evaluations: SubmissionEvaluationModel[];
 
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
+  @attr('string') declare clientType: 'cli' | 'git';
   @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
-  @attr('boolean') declare wasSubmittedViaCli: boolean;
   @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
   @attr('string') declare status: string;
   @attr('string') declare treeSha: string | null;
@@ -45,10 +45,6 @@ export default class SubmissionModel extends Model {
     return now - createdAt <= 300 * 1000; // in last 5 minutes
   }
 
-  get isSubmittedViaGit() {
-    return !this.wasSubmittedViaCli;
-  }
-
   get statusIsEvaluating() {
     return this.status === 'evaluating';
   }
@@ -63,5 +59,13 @@ export default class SubmissionModel extends Model {
 
   get statusIsSuccess() {
     return this.status === 'success';
+  }
+
+  get wasSubmittedViaCli() {
+    return this.clientType === 'cli';
+  }
+
+  get wasSubmittedViaGit() {
+    return this.clientType === 'git';
   }
 }

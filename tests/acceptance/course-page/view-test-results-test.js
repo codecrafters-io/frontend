@@ -101,8 +101,8 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
+      clientType: 'cli',
       courseStage: redis.stages.models.sortBy('position')[1],
-      wasSubmittedViaCli: true,
     });
 
     await catalogPage.visit();
