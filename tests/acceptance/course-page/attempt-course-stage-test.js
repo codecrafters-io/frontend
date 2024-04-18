@@ -116,8 +116,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
+      clientType: 'cli',
       courseStage: redis.stages.models.sortBy('position')[1],
-      wasSubmittedViaCLI: true,
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
