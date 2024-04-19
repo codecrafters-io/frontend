@@ -78,7 +78,11 @@ export default class HeaderContainerComponent extends Component<Signature> {
     }
 
     this.isForking = true;
-    const forkResponse = await this.args.submission.repository.fork({});
+
+    const forkResponse = await this.args.submission.repository.fork({
+      commit_sha: this.args.submission.commitSha,
+    });
+
     this.isForking = false;
 
     const forkedRepositoryId = forkResponse.data.id;
