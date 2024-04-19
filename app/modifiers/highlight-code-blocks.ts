@@ -21,6 +21,7 @@ import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-zig';
 import 'prismjs/components/prism-diff';
 import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-scala';
 
 // Used in stage instructions
 import 'prismjs/components/prism-bash';
