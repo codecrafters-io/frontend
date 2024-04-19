@@ -34,6 +34,12 @@ export default class AccountDropdownComponent extends Component {
   }
 
   @action
+  handleForumLinkClick(dropdownActions: { close: () => void }) {
+    window.open('https://forum.codecrafters.io/', '_blank');
+    dropdownActions.close();
+  }
+
+  @action
   handleGetHelpClick(dropdownActions: { close: () => void }) {
     // @ts-expect-error Beacon not registered yet
     window.Beacon('open');
