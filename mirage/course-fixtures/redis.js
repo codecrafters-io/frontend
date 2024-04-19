@@ -57,6 +57,9 @@ export default {
       "slug": "rust"
     },
     {
+      "slug": "scala"
+    },
+    {
       "slug": "typescript"
     }
   ],

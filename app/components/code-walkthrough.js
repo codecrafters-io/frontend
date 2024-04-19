@@ -23,6 +23,7 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-zig';
 import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-scala';
 
 class ProseSection {
   type = 'ProseSection';

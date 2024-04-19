@@ -20,6 +20,7 @@ import grayLogoPython from '/assets/images/language-logos/python-gray-500.svg';
 import grayLogoReasonml from '/assets/images/language-logos/reasonml-gray-500.svg';
 import grayLogoRuby from '/assets/images/language-logos/ruby-gray-500.svg';
 import grayLogoRust from '/assets/images/language-logos/rust-gray-500.svg';
+import grayLogoScala from '/assets/images/language-logos/scala-gray-500.svg';
 import grayLogoSwift from '/assets/images/language-logos/swift-gray-500.svg';
 import grayLogoTypescript from '/assets/images/language-logos/typescript-gray-500.svg';
 import grayLogoZig from '/assets/images/language-logos/zig-gray-500.svg';
@@ -42,6 +43,7 @@ import tealLogoPython from '/assets/images/language-logos/python-teal-500.svg';
 import tealLogoReasonml from '/assets/images/language-logos/reasonml-teal-500.svg';
 import tealLogoRuby from '/assets/images/language-logos/ruby-teal-500.svg';
 import tealLogoRust from '/assets/images/language-logos/rust-teal-500.svg';
+import tealLogoScala from '/assets/images/language-logos/scala-teal-500.svg';
 import tealLogoSwift from '/assets/images/language-logos/swift-teal-500.svg';
 import tealLogoTypescript from '/assets/images/language-logos/typescript-teal-500.svg';
 import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
@@ -73,6 +75,7 @@ export default class LanguageModel extends Model {
       reasonml: grayLogoReasonml,
       ruby: grayLogoRuby,
       rust: grayLogoRust,
+      scala: grayLogoScala,
       swift: grayLogoSwift,
       typescript: grayLogoTypescript,
       zig: grayLogoZig,
@@ -121,6 +124,7 @@ export default class LanguageModel extends Model {
       reasonml: tealLogoReasonml,
       ruby: tealLogoRuby,
       rust: tealLogoRust,
+      scala: tealLogoScala,
       swift: tealLogoSwift,
       typescript: tealLogoTypescript,
       zig: tealLogoZig,
