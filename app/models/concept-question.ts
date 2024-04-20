@@ -3,7 +3,7 @@ import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 
-type Option = {
+export type Option = {
   markdown: string;
   is_correct: boolean;
   explanation_markdown: string;

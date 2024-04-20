@@ -23,7 +23,10 @@
     {{/if}}
 
     {{#if @isCurrentBlock}}
-      {{on-key "Enter" (if this.isSubmitted @onContinueButtonClick (noop))}}
+      {{#if this.isSubmitted}}
+        {{on-key "Enter" @onContinueButtonClick}}
+      {{/if}}
+
       {{on-key "Backspace" @onStepBackButtonClick}}
     {{/if}}
   </div>
