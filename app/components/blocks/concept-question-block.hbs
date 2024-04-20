@@ -1,15 +1,34 @@
 {{#if this.question}}
-  {{! @glint-expect-error not ts-ified yet }}
-  <ConceptPage::QuestionCard
-    @question={{this.question}}
-    @onSubmit={{@onSubmit}}
-    class="w-full max-w-xl"
-    {{did-insert this.handleDidInsertHTML}}
-    {{did-update this.handleDidUpdateHTML}}
-    ...attributes
-  />
+  <div ...attributes>
+    {{! @glint-expect-error not ts-ified yet }}
+    <ConceptPage::QuestionCard
+      @question={{this.question}}
+      @onSubmit={{fn (mut this.isSubmitted) true}}
+      class="w-full max-w-xl"
+      {{did-insert this.handleDidInsertHTML}}
+      {{did-update this.handleDidUpdateHTML}}
+    />
+
+    {{#if (and this.isSubmitted @isCurrentBlock)}}
+      <Concept::ContinueOrStepBack
+        @onContinueButtonClick={{@onContinueButtonClick}}
+        @onStepBackButtonClick={{@onStepBackButtonClick}}
+        @continueButtonText="Continue"
+        @shouldEnableKeyboardShortcuts={{false}}
+        @shouldHighlightKeyboardShortcuts={{false}}
+        @shouldShowStepBackButton={{true}}
+        class="mt-6 scroll-mb-10 md:scroll-mb-[20vh]"
+        {{scroll-into-view}}
+      />
+    {{/if}}
+
+    {{#if @isCurrentBlock}}
+      {{on-key "Enter" (if this.isSubmitted @onContinueButtonClick (noop))}}
+      {{on-key "Backspace" @onStepBackButtonClick}}
+    {{/if}}
+  </div>
 {{else}}
-  <div class="text-gray-400">
+  <div class="text-gray-400" ...attributes>
     Unknown question:
     {{or @model.conceptQuestionSlug "no_slug_provided"}}
   </div>

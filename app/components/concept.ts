@@ -15,6 +15,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { TrackedSet } from 'tracked-built-ins';
+import { next } from '@ember/runloop';
 
 interface Signature {
   Args: {
@@ -34,6 +35,7 @@ export default class ConceptComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
 
+  @tracked containerElement: HTMLElement | null = null;
   @tracked lastRevealedBlockGroupIndex: number | null = null;
   @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
   @tracked hasFinished = false;
@@ -136,13 +138,6 @@ export default class ConceptComponent extends Component<Signature> {
   });
 
   @action
-  handleBlockGroupContainerInserted(blockGroup: BlockGroup, containerElement: HTMLElement) {
-    if (blockGroup.index === this.lastRevealedBlockGroupIndex) {
-      containerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }
-
-  @action
   async handleContinueButtonClick() {
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
@@ -158,8 +153,9 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleDidInsertContainer() {
+  handleDidInsertContainer(containerElement: HTMLElement) {
     this.analyticsEventTracker.track('viewed_concept', { concept_id: this.args.concept.id });
+    this.containerElement = containerElement;
   }
 
   @action
@@ -203,5 +199,15 @@ export default class ConceptComponent extends Component<Signature> {
       urlParams.set('bgi', newBlockGroupIndex.toString());
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
     }
+
+    next(() => {
+      if (this.containerElement) {
+        const lastChildElement = this.containerElement.children[this.containerElement.children.length - 1];
+
+        if (lastChildElement) {
+          lastChildElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    });
   }
 }

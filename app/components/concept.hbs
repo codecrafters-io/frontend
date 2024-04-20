@@ -1,9 +1,8 @@
 <div {{did-insert this.handleDidInsertContainer}} {{will-destroy this.handleWillDestroyContainer}} ...attributes>
   {{#each this.visibleBlockGroups as |blockGroup|}}
     <div
-      class="scroll-mb-10 md:scroll-mb-[20vh] scroll-mt-20 md:scroll-mt-10
+      class="scroll-mb-10 md:scroll-mb-[20vh] scroll-mt-20 md:scroll-mt-[20vh]
         {{if (not-eq blockGroup.index this.currentBlockGroupIndex) 'opacity-50 hover:opacity-100'}}"
-      {{did-insert (fn this.handleBlockGroupContainerInserted blockGroup)}}
     >
       {{#each blockGroup.blocks as |block|}}
         {{#if (eq block.type "markdown")}}
@@ -13,23 +12,15 @@
           {{! @glint-expect-error: not ts-ified yet }}
           <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" data-test-block />
         {{else if (eq block.type "concept_question")}}
-          {{! @glint-expect-error: not ts-ified yet }}
-          <Blocks::ConceptQuestionBlock @model={{block}} @onSubmit={{fn this.handleQuestionBlockSubmitted block}} class="mb-6" data-test-block />
-
-          {{! @glint-expect-error: not typecast yet }}
-          {{#if (and (eq this.currentBlockGroupIndex blockGroup.index) (set-has this.submittedQuestionSlugs block.conceptQuestionSlug))}}
-            <Concept::ContinueOrStepBack
-              @onContinueButtonClick={{this.handleContinueButtonClick}}
-              @onStepBackButtonClick={{this.handleStepBackButtonClick}}
-              {{! @glint-expect-error: not typecast yet }}
-              @continueButtonText={{block.buttonTextForDisplay}}
-              @shouldEnableKeyboardShortcuts={{true}}
-              @shouldHighlightKeyboardShortcuts={{lt this.currentBlockGroupIndex 2}}
-              @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
-              class="mb-6 scroll-mb-10"
-              {{scroll-into-view}}
-            />
-          {{/if}}
+          <Blocks::ConceptQuestionBlock
+            {{! @glint-expect-error: type is generic block}}
+            @model={{block}}
+            @isCurrentBlock={{eq blockGroup.index this.currentBlockGroupIndex}}
+            @onContinueButtonClick={{this.handleContinueButtonClick}}
+            @onStepBackButtonClick={{this.handleStepBackButtonClick}}
+            class="mb-6"
+            data-test-block
+          />
         {{else if (eq block.type "click_to_continue")}}
           {{#if (eq blockGroup.index this.currentBlockGroupIndex)}}
             <Concept::ContinueOrStepBack
@@ -40,7 +31,7 @@
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
-              class="mb-6 scroll-mb-10"
+              class="mb-6"
             />
           {{/if}}
         {{else}}
