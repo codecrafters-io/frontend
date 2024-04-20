@@ -3,9 +3,12 @@
     <PrimaryButton {{on "click" @onContinueButtonClick}} data-test-continue-button>
       {{or @continueButtonText "Continue"}}
     </PrimaryButton>
-    <div class="mt-1.5 text-xs text-gray-400">
-      Enter ↵
-    </div>
+
+    {{#if @shouldHighlightKeyboardShortcuts}}
+      <div class="mt-2 text-xs text-gray-400">
+        Enter ↵
+      </div>
+    {{/if}}
   </div>
 
   {{#if @shouldShowStepBackButton}}
@@ -18,12 +21,17 @@
           </div>
         </div>
       </TertiaryButton>
-      <div class="mt-1.5 text-xs text-gray-400">
-        Backspace ⌫
-      </div>
+
+      {{#if @shouldHighlightKeyboardShortcuts}}
+        <div class="mt-2 text-xs text-gray-400">
+          Backspace ⌫
+        </div>
+      {{/if}}
     </div>
   {{/if}}
 
-  {{on-key "Enter" @onContinueButtonClick}}
-  {{on-key "Backspace" @onStepBackButtonClick}}
+  {{#if @shouldEnableKeyboardShortcuts}}
+    {{on-key "Enter" @onContinueButtonClick}}
+    {{on-key "Backspace" @onStepBackButtonClick}}
+  {{/if}}
 </div>
