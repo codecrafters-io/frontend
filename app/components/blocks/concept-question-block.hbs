@@ -3,7 +3,7 @@
     {{! @glint-expect-error not ts-ified yet }}
     <ConceptPage::QuestionCard
       @question={{this.question}}
-      @onSubmit={{fn (mut this.isSubmitted) true}}
+      @onSubmit={{this.handleSubmit}}
       class="w-full max-w-xl"
       {{did-insert this.handleDidInsertHTML}}
       {{did-update this.handleDidUpdateHTML}}
@@ -19,7 +19,7 @@
         @shouldShowContinueButton={{this.isSubmitted}}
         @shouldShowStepBackButton={{true}}
         class="mt-6 scroll-mb-10 md:scroll-mb-[20vh]"
-        {{scroll-into-view}}
+        {{did-insert this.handleDidInsertContinueOrStepBackElement}}
       />
     {{/if}}
 
