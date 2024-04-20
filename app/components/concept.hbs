@@ -27,7 +27,7 @@
               @onContinueButtonClick={{this.handleContinueButtonClick}}
               @onStepBackButtonClick={{this.handleStepBackButtonClick}}
               @shouldEnableKeyboardShortcuts={{true}}
-              @shouldHighlightKeyboardShortcuts={{lt this.currentBlockGroupIndex 2}}
+              @shouldHighlightKeyboardShortcuts={{true}}
               {{! @glint-expect-error: not typecast yet }}
               @continueButtonText={{block.buttonTextForDisplay}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}

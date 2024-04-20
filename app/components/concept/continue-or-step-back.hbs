@@ -8,8 +8,6 @@
       <div class="mt-2 text-xs text-gray-400">
         Enter ↵
       </div>
-    {{else}}
-      <EmberTooltip @text="Shortcut: Enter ↵" @side="bottom" @delay={{500}} @duration={{2500}} />
     {{/if}}
   </div>
 
@@ -20,7 +18,9 @@
         Step back
       </div>
 
-      <EmberTooltip @text="Shortcut: Backspace ⌫" @side="bottom" @delay={{500}} @duration={{2500}} />
+      {{#if @shouldHighlightKeyboardShortcuts}}
+        <EmberTooltip @text="Shortcut: Backspace ⌫" @side="bottom" @delay={{500}} @duration={{2500}} />
+      {{/if}}
     </div>
   {{/if}}
 
