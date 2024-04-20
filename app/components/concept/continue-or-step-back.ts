@@ -9,6 +9,7 @@ interface Signature {
     shouldEnableKeyboardShortcuts: boolean;
     shouldHighlightKeyboardShortcuts: boolean;
     shouldShowStepBackButton: boolean;
+    shouldShowContinueButton: boolean;
     continueButtonText: string;
   };
 }
