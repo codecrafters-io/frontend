@@ -21,6 +21,7 @@ declare module '@glint/environment-ember-loose/registry' {
     lt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     mult: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     'on-click-outside': ModifierLike<{ Args: { Positional: [(event: MouseEvent) => void] } }>;
+    'on-key': HelperLike<{ Args: { Positional: [key: string, onKey: () => void] }; Return: '' }>;
     'in-viewport': ModifierLike<{ Args: { Named: { onEnter: () => void } } }>;
     noop: HelperLike<{ Return: () => void }>;
     'not-eq': HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;

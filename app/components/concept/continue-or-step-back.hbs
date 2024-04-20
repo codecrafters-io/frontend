@@ -1,14 +1,29 @@
-<div class="flex items-center" ...attributes>
-  {{! @glint-ignore }}
-  <PrimaryButton {{on "click" @onContinueButtonClick}} data-test-continue-button>
-    {{or @continueButtonText "Continue"}}
-  </PrimaryButton>
+<div class="flex items-start" ...attributes>
+  <div class="flex flex-col items-center">
+    <PrimaryButton {{on "click" @onContinueButtonClick}} data-test-continue-button>
+      {{or @continueButtonText "Continue"}}
+    </PrimaryButton>
+    <div class="mt-1.5 text-xs text-gray-400">
+      Enter ↵
+    </div>
+  </div>
+
   {{#if @shouldShowStepBackButton}}
-    <div class="flex items-center ml-4 group" role="button" data-test-step-back-button {{on "click" @onStepBackButtonClick}}>
-      <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
-      <div class="ml-1 text-gray-500 group-hover:text-gray-800 text-xs hover:underline">
-        Step back
+    <div class="ml-4 flex flex-col items-center">
+      <TertiaryButton {{on "click" @onStepBackButtonClick}} class="group">
+        <div class="flex items-center">
+          <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
+          <div class="ml-1 text-gray-500 font-normal group-hover:text-gray-700">
+            Step back
+          </div>
+        </div>
+      </TertiaryButton>
+      <div class="mt-1.5 text-xs text-gray-400">
+        Backspace ⌫
       </div>
     </div>
   {{/if}}
+
+  {{on-key "Enter" @onContinueButtonClick}}
+  {{on-key "Backspace" @onStepBackButtonClick}}
 </div>
