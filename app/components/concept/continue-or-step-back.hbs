@@ -8,25 +8,19 @@
       <div class="mt-2 text-xs text-gray-400">
         Enter ↵
       </div>
+    {{else}}
+      <EmberTooltip @text="Shortcut: Enter ↵" @side="bottom" @delay={{500}} @duration={{2500}} />
     {{/if}}
   </div>
 
   {{#if @shouldShowStepBackButton}}
-    <div class="ml-4 flex flex-col items-center">
-      <TertiaryButton {{on "click" @onStepBackButtonClick}} class="group">
-        <div class="flex items-center">
-          <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
-          <div class="ml-1 text-gray-500 font-normal group-hover:text-gray-700">
-            Step back
-          </div>
-        </div>
-      </TertiaryButton>
+    <div class="flex items-center ml-4 py-3 group" role="button" data-test-step-back-button {{on "click" @onStepBackButtonClick}}>
+      <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
+      <div class="ml-1 text-gray-500 group-hover:text-gray-800 text-xs hover:underline">
+        Step back
+      </div>
 
-      {{#if @shouldHighlightKeyboardShortcuts}}
-        <div class="mt-2 text-xs text-gray-400">
-          Backspace ⌫
-        </div>
-      {{/if}}
+      <EmberTooltip @text="Shortcut: Backspace ⌫" @side="bottom" @delay={{500}} @duration={{2500}} />
     </div>
   {{/if}}
 

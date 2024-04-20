@@ -18,7 +18,7 @@ export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;
 
   get hasSubmitted() {
-    return !!this.selectedOptionIndex;
+    return this.selectedOptionIndex !== null;
   }
 
   get options() {
