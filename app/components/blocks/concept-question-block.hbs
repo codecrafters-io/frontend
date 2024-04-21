@@ -14,21 +14,12 @@
         @onContinueButtonClick={{@onContinueButtonClick}}
         @onStepBackButtonClick={{@onStepBackButtonClick}}
         @continueButtonText="Continue"
-        @shouldEnableKeyboardShortcuts={{false}}
         @shouldHighlightKeyboardShortcuts={{true}}
         @shouldShowContinueButton={{this.isSubmitted}}
         @shouldShowStepBackButton={{true}}
         class="mt-6 scroll-mb-10 md:scroll-mb-[20vh]"
         {{did-insert this.handleDidInsertContinueOrStepBackElement}}
       />
-    {{/if}}
-
-    {{#if @isCurrentBlock}}
-      {{#if this.isSubmitted}}
-        {{on-key "Enter" @onContinueButtonClick}}
-      {{/if}}
-
-      {{on-key "Backspace" @onStepBackButtonClick}}
     {{/if}}
   </div>
 {{else}}
