@@ -5,6 +5,8 @@
         {{on "click" @onContinueButtonClick}}
         {{(if @shouldHighlightKeyboardShortcuts (modifier "focus-on-insert"))}}
         data-test-continue-button
+        {{! @glint-expect-error on-key modifier types aren't right? }}
+        {{on-key "Enter"}}
       >
         {{or @continueButtonText "Continue"}}
       </PrimaryButton>
@@ -18,7 +20,14 @@
   {{/if}}
 
   {{#if @shouldShowStepBackButton}}
-    <div class="flex items-center py-3 group" role="button" data-test-step-back-button {{on "click" @onStepBackButtonClick}}>
+    <div
+      class="flex items-center py-3 group"
+      role="button"
+      data-test-step-back-button
+      {{on "click" @onStepBackButtonClick}}
+      {{! @glint-expect-error on-key modifier types aren't right? }}
+      {{on-key "Backspace"}}
+    >
       <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
       <div class="ml-1 text-gray-500 group-hover:text-gray-800 text-xs hover:underline">
         Step back
@@ -28,15 +37,5 @@
         <EmberTooltip @text="Shortcut: Backspace ⌫" @side="bottom" @delay={{500}} @duration={{2500}} />
       {{/if}}
     </div>
-  {{/if}}
-
-  {{#if @shouldEnableKeyboardShortcuts}}
-    {{#if @shouldShowContinueButton}}
-      {{on-key "Enter" @onContinueButtonClick}}
-    {{/if}}
-
-    {{#if @shouldShowStepBackButton}}
-      {{on-key "Backspace" @onStepBackButtonClick}}
-    {{/if}}
   {{/if}}
 </div>

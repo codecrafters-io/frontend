@@ -6,7 +6,6 @@ interface Signature {
   Args: {
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
-    shouldEnableKeyboardShortcuts: boolean;
     shouldHighlightKeyboardShortcuts: boolean;
     shouldShowStepBackButton: boolean;
     shouldShowContinueButton: boolean;
