@@ -5,8 +5,9 @@
         {{on "click" @onContinueButtonClick}}
         {{(if @shouldHighlightKeyboardShortcuts (modifier "focus-on-insert"))}}
         data-test-continue-button
+        {{did-insert this.handleDidInsertContinueButtonElement}}
         {{! @glint-expect-error on-key modifier types aren't right? }}
-        {{on-key "Enter"}}
+        {{on-key "Enter" this.handleEnterKeyPress}}
       >
         {{or @continueButtonText "Continue"}}
       </PrimaryButton>
