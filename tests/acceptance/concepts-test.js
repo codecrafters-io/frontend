@@ -56,7 +56,6 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].selectOption('PDF');
-    await conceptPage.questionCards[0].clickOnSubmitButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
@@ -102,7 +101,6 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].selectOption('PDF');
-    await conceptPage.questionCards[0].clickOnSubmitButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
@@ -146,7 +144,6 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].selectOption('PDF');
-    await conceptPage.questionCards[0].clickOnSubmitButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
@@ -244,11 +241,9 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    await conceptPage.questionCards[0].clickOnSubmitButton();
     assert.notOk(conceptPage.questionCards[0].hasSubmitted, 'The submission result should not be visible without selecting an option.');
 
     await conceptPage.questionCards[0].selectOption('PDF');
-    await conceptPage.questionCards[0].clickOnSubmitButton();
 
     assert.ok(conceptPage.questionCards[0].hasSubmitted, 'After selecting an option, the submission result should be visible.');
   });

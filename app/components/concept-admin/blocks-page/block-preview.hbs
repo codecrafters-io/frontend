@@ -4,15 +4,22 @@
   {{else if (eq @model.type "concept_animation")}}
     <Blocks::ConceptAnimationBlock @model={{this.modelAsConceptAnimationBlock}} />
   {{else if (eq @model.type "click_to_continue")}}
-    {{! @glint-expect-error: not typecast yet }}
     <Concept::ContinueOrStepBack
       @onContinueButtonClick={{(noop)}}
       @onStepBackButtonClick={{(noop)}}
       @continueButtonText={{this.modelAsClickToContinueBlock.buttonTextForDisplay}}
+      @shouldShowContinueButton={{true}}
       @shouldShowStepBackButton={{false}}
+      @shouldEnableKeyboardShortcuts={{false}}
+      @shouldHighlightKeyboardShortcuts={{false}}
     />
   {{else if (eq @model.type "concept_question")}}
-    <Blocks::ConceptQuestionBlock @model={{this.modelAsConceptQuestionBlock}} @onSubmit={{(noop)}} />
+    <Blocks::ConceptQuestionBlock
+      @model={{this.modelAsConceptQuestionBlock}}
+      @onContinueButtonClick={{(noop)}}
+      @onStepBackButtonClick={{(noop)}}
+      @isCurrentBlock={{false}}
+    />
   {{else}}
     <div class="text-gray-600 text-sm">
       Unknown block type:

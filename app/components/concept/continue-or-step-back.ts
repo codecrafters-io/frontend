@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -7,13 +6,18 @@ interface Signature {
   Args: {
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
+    shouldEnableKeyboardShortcuts: boolean;
+    shouldHighlightKeyboardShortcuts: boolean;
     shouldShowStepBackButton: boolean;
+    shouldShowContinueButton: boolean;
     continueButtonText: string;
   };
 }
 
-export default class ConceptProgressComponent extends Component<Signature> {
-  rules() {
-    return fade;
+export default class ContinueOrStepBackComponent extends Component<Signature> {}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'Concept::ContinueOrStepBack': typeof ContinueOrStepBackComponent;
   }
 }

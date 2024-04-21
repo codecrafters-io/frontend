@@ -11,7 +11,10 @@ declare module '@glint/environment-ember-loose/registry' {
     autoresize: ModifierLike<{ Args: { Positional: [string] } }>;
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
-    EmberTooltip: ComponentLike<{ Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right' } }; Blocks: { default?: [] } }>;
+    EmberTooltip: ComponentLike<{
+      Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right'; delay?: number; duration?: number } };
+      Blocks: { default?: [] };
+    }>;
     eq: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     includes: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     gt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
@@ -21,6 +24,7 @@ declare module '@glint/environment-ember-loose/registry' {
     lt: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     mult: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     'on-click-outside': ModifierLike<{ Args: { Positional: [(event: MouseEvent) => void] } }>;
+    'on-key': HelperLike<{ Args: { Positional: [key: string, onKey: () => void] }; Return: '' }>;
     'in-viewport': ModifierLike<{ Args: { Named: { onEnter: () => void } } }>;
     noop: HelperLike<{ Return: () => void }>;
     'not-eq': HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;

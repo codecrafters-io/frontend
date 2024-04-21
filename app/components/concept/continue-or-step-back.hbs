@@ -1,14 +1,38 @@
-<div class="flex items-center" ...attributes>
-  {{! @glint-ignore }}
-  <PrimaryButton {{on "click" @onContinueButtonClick}} data-test-continue-button>
-    {{or @continueButtonText "Continue"}}
-  </PrimaryButton>
+<div class="flex items-start gap-4" ...attributes>
+  {{#if @shouldShowContinueButton}}
+    <div class="flex flex-col items-center">
+      <PrimaryButton {{on "click" @onContinueButtonClick}} data-test-continue-button>
+        {{or @continueButtonText "Continue"}}
+      </PrimaryButton>
+
+      {{#if @shouldHighlightKeyboardShortcuts}}
+        <div class="mt-2 text-xs text-gray-400 hidden sm:block">
+          Enter ↵
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+
   {{#if @shouldShowStepBackButton}}
-    <div class="flex items-center ml-4 group" role="button" data-test-step-back-button {{on "click" @onStepBackButtonClick}}>
+    <div class="flex items-center py-3 group" role="button" data-test-step-back-button {{on "click" @onStepBackButtonClick}}>
       <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
       <div class="ml-1 text-gray-500 group-hover:text-gray-800 text-xs hover:underline">
         Step back
       </div>
+
+      {{#if @shouldHighlightKeyboardShortcuts}}
+        <EmberTooltip @text="Shortcut: Backspace ⌫" @side="bottom" @delay={{500}} @duration={{2500}} />
+      {{/if}}
     </div>
+  {{/if}}
+
+  {{#if @shouldEnableKeyboardShortcuts}}
+    {{#if @shouldShowContinueButton}}
+      {{on-key "Enter" @onContinueButtonClick}}
+    {{/if}}
+
+    {{#if @shouldShowStepBackButton}}
+      {{on-key "Backspace" @onStepBackButtonClick}}
+    {{/if}}
   {{/if}}
 </div>

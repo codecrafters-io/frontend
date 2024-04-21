@@ -1,8 +1,8 @@
-{{! @glint-nocheck: not typesafe yet }}
-<div
-  role="button"
+<button
+  type="button"
+  tabindex={{if @isSubmitted "-1" "0"}}
   class="flex items-start gap-2 py-2
-    {{if this.isUnselected 'hover:bg-gray-100'}}
+    {{if this.isUnselected 'hover:bg-gray-100 focus:bg-gray-100'}}
     {{if this.isUnselectedAndCorrect 'bg-green-200'}}
     {{if this.isSelectedAndUnsubmitted 'bg-gray-100'}}
     {{if this.isSelectedAndCorrect 'bg-green-200'}}
@@ -26,4 +26,4 @@
   <div class="prose {{if (and this.isSubmitted this.isCorrect) 'text-gray-800 font-semibold' 'text-gray-800'}}">
     {{markdown-to-html @option.markdown}}
   </div>
-</div>
+</button>

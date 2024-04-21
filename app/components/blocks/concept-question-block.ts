@@ -6,21 +6,31 @@ import { action } from '@ember/object';
 
 import Prism from 'prismjs';
 import 'prismjs/components/prism-rust'; // This is the only one we use in concepts at the moment
+import { tracked } from '@glimmer/tracking';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
     model: ConceptQuestionBlock;
-    onSubmit: () => void;
+    onContinueButtonClick: () => void;
+    onStepBackButtonClick: () => void;
+    isCurrentBlock: boolean;
   };
 };
 
 export default class ConceptQuestionBlockComponent extends Component<Signature> {
+  @tracked isSubmitted = false;
+  @tracked continueOrStepBackElement: HTMLDivElement | null = null;
   @service declare store: Store;
 
   get question() {
     return this.store.peekAll('concept-question').findBy('slug', this.args.model.conceptQuestionSlug);
+  }
+
+  @action
+  handleDidInsertContinueOrStepBackElement(element: HTMLDivElement) {
+    this.continueOrStepBackElement = element;
   }
 
   @action
@@ -31,6 +41,15 @@ export default class ConceptQuestionBlockComponent extends Component<Signature> 
   @action
   handleDidUpdateHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
+  }
+
+  @action
+  handleSubmit() {
+    this.isSubmitted = true;
+
+    if (this.continueOrStepBackElement) {
+      this.continueOrStepBackElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 }
 

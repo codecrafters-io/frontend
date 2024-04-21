@@ -1,22 +1,21 @@
-{{! @glint-nocheck: not typesafe yet }}
-<div class="border rounded shadow-sm scroll-mb-10" {{did-insert this.handleDidInsertContainer}} data-test-question-card ...attributes>
+<div class="border rounded shadow-sm scroll-mb-10" data-test-question-card ...attributes>
   <div class="p-3 sm:p-4">
     <div class="text-gray-800 mr-2 mb-2 border-b pb-2.5 prose">
       {{markdown-to-html @question.queryMarkdown}}
     </div>
 
-    <div class="flex flex-col -mx-3 sm:-mx-4 gap-px">
+    <div class="flex flex-col -mx-3 sm:-mx-4 gap-px" {{did-insert this.handleDidInsertOptionsList}}>
       {{#each this.options as |option optionIndex|}}
+        {{! @glint-expect-error: not ts-ified yet }}
         <ConceptPage::QuestionCardOption
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
-          {{on "click" (fn (mut this.selectedOptionIndex) optionIndex)}}
+          {{on "click" (fn this.handleOptionClick optionIndex)}}
           data-test-question-card-option
         />
       {{/each}}
     </div>
-
   </div>
 
   <div class="px-3 py-3 sm:px-4 bg-gray-50 relative rounded-b">
@@ -38,18 +37,15 @@
         </div>
 
         <div class="leading-7 prose max-w-none {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
-          {{markdown-to-html this.selectedOption.explanation_markdown}}
+          {{! if statement used for typechecker, explanation_markdown is always present !}}
+          {{#if this.selectedOption.explanation_markdown}}
+            {{markdown-to-html this.selectedOption.explanation_markdown}}
+          {{/if}}
         </div>
       </div>
     {{else}}
       <div class="flex flex-col sm:flex-row gap-x-2 gap-y-2 rounded-b">
-
-        <PrimaryButton
-          @isDisabled={{is-empty this.selectedOptionIndex}}
-          {{on "click" this.handleSubmitClick}}
-          data-test-question-card-submit-button
-        >Submit</PrimaryButton>
-
+        <PrimaryButton @isDisabled={{true}} {{on "click" (noop)}} data-test-question-card-submit-button>Submit</PrimaryButton>
         <TertiaryButton {{on "click" this.handleShowExplanationClick}} data-test-question-card-show-explanation-button>Show explanation</TertiaryButton>
       </div>
     {{/if}}
