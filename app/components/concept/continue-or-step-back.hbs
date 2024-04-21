@@ -1,7 +1,11 @@
 <div class="flex items-start gap-4" ...attributes>
   {{#if @shouldShowContinueButton}}
     <div class="flex flex-col items-center">
-      <PrimaryButton {{on "click" @onContinueButtonClick}} data-test-continue-button>
+      <PrimaryButton
+        {{on "click" @onContinueButtonClick}}
+        {{(if @shouldHighlightKeyboardShortcuts (modifier "focus-on-insert"))}}
+        data-test-continue-button
+      >
         {{or @continueButtonText "Continue"}}
       </PrimaryButton>
 
