@@ -27,7 +27,7 @@ export default class SubmissionModel extends Model {
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
   @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
-  @attr('string') declare status: string;
+  @attr('string') declare status: 'evaluating' | 'success' | 'failure' | 'error' | 'cancelled';
   @attr('string') declare treeSha: string | null;
 
   get canBeUsedForStageCompletion() {

@@ -1,11 +1,5 @@
 <div
-  class="rounded border px-3
-    {{if
-      this.isCollapsed
-      'cursor-pointer bg-gradient-to-b from-white to-gray-50 hover:from-gray-50 hover:to-gray-100 border-gray-300'
-      (if (eq this.testsStatus 'passed') 'border-teal-500 bg-teal-50' 'bg-white border-gray-300')
-    }}
-    "
+  class="rounded border px-3 {{this.borderColorClasses}} {{this.backgroundColorClasses}} {{if this.isCollapsed 'cursor-pointer'}}"
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
@@ -17,6 +11,7 @@
     @isCollapsible={{@isCollapsible}}
     @isExpanded={{this.isExpanded}}
     @onCollapseButtonClick={{this.handleCollapseButtonClick}}
+    @textColorClasses={{this.headerTextColorClasses}}
     class={{if this.isExpanded "border-b" ""}}
   />
 
