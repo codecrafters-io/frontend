@@ -29,7 +29,8 @@
       @course={{@model.course}}
       @repositories={{@model.repositories}}
       @activeRepository={{@model.activeRepository}}
-      class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
+      {{! pb-16 accounts for the test results bar at the bottom !}}
+      class="group relative p-6 pb-16 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
     >
       <CoursePage::CollapseSidebarButton
         class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5 z-30"
