@@ -30,6 +30,10 @@ export default class SubmissionModel extends Model {
   @attr('string') declare status: string;
   @attr('string') declare treeSha: string | null;
 
+  get canBeUsedForStageCompletion() {
+    return !!this.treeSha && this.treeSha === this.repository.defaultBranchTreeSha;
+  }
+
   get flakinessCheckStatusHumanized(): string | null {
     return this.flakinessCheckStatus ? capitalize(this.flakinessCheckStatus) : null;
   }

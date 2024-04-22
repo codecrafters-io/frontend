@@ -11,6 +11,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    isCollapsible: boolean;
     onExpand?: () => void; // Overrides the default expand action if passed in
     repository: RepositoryModel;
     stage: CourseStageModel;
@@ -20,16 +21,24 @@ type Signature = {
 export default class TestRunnerCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
-  @tracked isExpanded = false;
+  @tracked wasExpandedByUser = false;
 
   get isCollapsed() {
     return !this.isExpanded;
   }
 
+  get isExpanded() {
+    return this.wasExpandedByUser || !this.args.isCollapsible;
+  }
+
+  get testsStatus() {
+    return this.coursePageState.currentStepAsCourseStageStep.testsStatus;
+  }
+
   @action
   handleCollapseButtonClick() {
     next(() => {
-      this.isExpanded = false;
+      this.wasExpandedByUser = false;
     });
   }
 
@@ -43,7 +52,7 @@ export default class TestRunnerCardComponent extends Component<Signature> {
     }
 
     next(() => {
-      this.isExpanded = true;
+      this.wasExpandedByUser = true;
     });
   }
 

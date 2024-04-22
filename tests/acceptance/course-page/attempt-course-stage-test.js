@@ -113,6 +113,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
+    assert.notOk(coursePage.testRunnerCard.borderIsTeal, 'test runner card is gray');
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -123,7 +124,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.ok(coursePage.testsPassedCard.isVisible);
+    assert.ok(coursePage.testRunnerCard.borderIsTeal, 'test runner card is teal');
   });
 
   test('passing first stage shows badges', async function (assert) {

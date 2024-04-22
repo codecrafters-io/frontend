@@ -6,14 +6,13 @@ interface Signature {
 
   Args: {
     currentStep: CourseStageStep;
-    onViewLogsButtonClick: () => void;
   };
 }
 
-export default class FirstStageInstructionsComponent extends Component<Signature> {}
+export default class TestsPassedInstructionsComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestRunnerCard::FirstStageInstructions': typeof FirstStageInstructionsComponent;
+    'CoursePage::CourseStageStep::TestRunnerCard::TestsPassedInstructions': typeof TestsPassedInstructionsComponent;
   }
 }

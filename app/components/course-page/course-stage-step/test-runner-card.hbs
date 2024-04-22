@@ -1,27 +1,31 @@
-{{! template-lint-disable no-invalid-interactive }}
 <div
-  class="rounded border border-gray-300 px-3 py-2
-    {{if this.isCollapsed 'cursor-pointer bg-gradient-to-b from-white to-gray-50 hover:from-gray-50 hover:to-gray-100' 'bg-white'}}"
+  class="rounded border px-3
+    {{if
+      this.isCollapsed
+      'cursor-pointer bg-gradient-to-b from-white to-gray-50 hover:from-gray-50 hover:to-gray-100 border-gray-300'
+      (if (eq this.testsStatus 'passed') 'border-teal-500 bg-teal-50' 'bg-white border-gray-300')
+    }}
+    "
   role={{if this.isCollapsed "button" "presentation"}}
+  {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
   data-test-test-runner-card
   ...attributes
 >
   <CoursePage::CourseStageStep::TestRunnerCard::Header
     @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
+    @isCollapsible={{@isCollapsible}}
     @isExpanded={{this.isExpanded}}
     @onCollapseButtonClick={{this.handleCollapseButtonClick}}
+    class={{if this.isExpanded "border-b" ""}}
   />
 
   {{#if this.isExpanded}}
-    <div class="mt-2 border-t pt-3 mb-1">
-      {{#if @stage.isFirst}}
-        <CoursePage::CourseStageStep::TestRunnerCard::FirstStageInstructions
-          @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
-          @onViewLogsButtonClick={{this.handleViewLogsButtonClick}}
-        />
+    <div class="py-3">
+      {{#if (eq this.testsStatus "passed")}}
+        <CoursePage::CourseStageStep::TestRunnerCard::TestsPassedInstructions @currentStep={{this.coursePageState.currentStepAsCourseStageStep}} />
       {{else}}
-        <CoursePage::CourseStageStep::TestRunnerCard::SubsequentStageInstructions
+        <CoursePage::CourseStageStep::TestRunnerCard::RunTestsInstructions
           @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
           @onViewLogsButtonClick={{this.handleViewLogsButtonClick}}
         />

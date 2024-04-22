@@ -53,11 +53,7 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowTestRunnerCard() {
-    return this.isCurrentStage && this.currentStep.status !== 'complete' && this.currentStep.testsStatus !== 'passed';
-  }
-
-  get shouldShowTestsPassedCard() {
-    return this.isCurrentStage && this.currentStep.status !== 'complete' && this.currentStep.testsStatus === 'passed';
+    return this.isCurrentStage && this.currentStep.status !== 'complete';
   }
 
   get shouldShowUpgradePrompt() {

@@ -12,7 +12,7 @@ import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/co
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
-import { collection, clickable, create, fillable, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, create, fillable, isVisible, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -183,11 +183,8 @@ export default create({
 
   testRunnerCard: {
     clickOnHideInstructionsButton: clickable('[data-test-hide-instructions-button]'),
+    borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
     scope: '[data-test-test-runner-card]',
-  },
-
-  testsPassedCard: {
-    scope: '[data-test-tests-passed-card]',
   },
 
   upgradePrompt: {

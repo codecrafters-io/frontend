@@ -55,6 +55,8 @@ export default class RepositoryModel extends Model {
 
   @attr('string') declare cloneUrl: string;
   @attr('date') declare createdAt: Date;
+  @attr('string') declare defaultBranchCommitSha: string;
+  @attr('string') declare defaultBranchTreeSha: string;
   @attr('string') declare expectedActivityFrequency: ExpectedActivityFrequency;
   @attr('string') declare name: string;
   @attr('string') declare languageProficiencyLevel: LanguageProficiencyLevel;
