@@ -6,6 +6,7 @@ interface Signature {
 
   Args: {
     currentStep: CourseStageStep;
+    isCollapsible: boolean;
     isExpanded: boolean;
     onCollapseButtonClick: () => void;
   };
