@@ -29,19 +29,17 @@
 
     <div class="flex items-center gap-x-3">
       {{#if (or this.currentUser.isStaff (current-user-is-course-author @course))}}
-        <LinkTo @route="course-admin.submissions" @model={{@course.slug}}>
-          <TertiaryButton @size="small" data-test-course-admin-button>
-            Admin
-          </TertiaryButton>
-        </LinkTo>
+        <TertiaryLinkButton @size="extra-small" @route="course-admin.submissions" @model={{@course.slug}} data-test-course-admin-button>
+          Admin
+        </TertiaryLinkButton>
       {{/if}}
 
       {{#if this.billingStatusDisplay.shouldShowVipBadge}}
-        <Header::VipBadge class="mr-3" />
+        <Header::VipBadge />
       {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
-        <Header::FreeWeeksLeftButton class="mr-3" />
+        <Header::FreeWeeksLeftButton />
       {{else if this.billingStatusDisplay.shouldShowSubscribeButton}}
-        <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-subscribe-button>
+        <PrimaryLinkButton @size="extra-small" @route="pay" data-test-subscribe-button>
           <span class="flex items-center gap-x-1">
             <span>Subscribe</span>
             {{svg-jar "lock-open" class="w-4"}}
