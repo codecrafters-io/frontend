@@ -48,6 +48,7 @@ export default Factory.extend({
     ];
   },
 
+  clientType: 'git',
   createdAt: () => new Date(),
   commitSha: () => generateRandomAlphanumericString(40),
   status: 'evaluating',
@@ -105,5 +106,10 @@ export default Factory.extend({
 
   afterCreate(submission) {
     submission.repository.update('lastSubmission', submission);
+
+    if (submission.clientType === 'git') {
+      submission.repository.update('defaultBranchCommitSha', submission.commitSha);
+      submission.repository.update('defaultBranchTreeSha', submission.treeSha);
+    }
   },
 });

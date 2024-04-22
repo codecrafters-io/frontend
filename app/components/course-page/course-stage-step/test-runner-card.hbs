@@ -1,8 +1,8 @@
-{{! template-lint-disable no-invalid-interactive }}
 <div
   class="rounded border border-gray-300 px-3 py-2
     {{if this.isCollapsed 'cursor-pointer bg-gradient-to-b from-white to-gray-50 hover:from-gray-50 hover:to-gray-100' 'bg-white'}}"
   role={{if this.isCollapsed "button" "presentation"}}
+  {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
   data-test-test-runner-card
   ...attributes
