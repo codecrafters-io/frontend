@@ -1,34 +1,30 @@
+import payPage from 'codecrafters-frontend/tests/pages/pay-page';
+import percySnapshot from '@percy/ember';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
+import { currentURL } from '@ember/test-helpers';
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import payPage from 'codecrafters-frontend/tests/pages/pay-page';
-import percySnapshot from '@percy/ember';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import windowMock from 'ember-window-mock';
-import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
   setupWindowMock(hooks);
 
-  test('redirects to login page if user is not signed in', async function (assert) {
+  test('user can view the page even if not signed in', async function (assert) {
     testScenario(this.server);
 
-    assert.expect(2);
+    await payPage.visit();
 
-    try {
-      await payPage.visit();
-    } catch (e) {
-      assert.strictEqual(1, 1);
-    }
+    assert.strictEqual(currentURL(), '/pay');
 
-    assert.strictEqual(
-      windowMock.location.href,
-      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fpay`,
-      'should redirect to login URL',
-    );
+    await payPage.pricingCards[0].startPaymentButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Login via GitHub to start a membership.',
+    });
   });
 
   test('new user can start checkout session', async function (assert) {

@@ -1,4 +1,4 @@
-import { clickable, collection, create, text, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, text, triggerable, visitable } from 'ember-cli-page-object';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
 
@@ -13,6 +13,11 @@ export default create({
 
   pricingCards: collection('[data-test-pricing-card]', {
     discountedPriceText: text('[data-test-discounted-price]'),
+
+    startPaymentButton: {
+      hover: triggerable('mouseenter'),
+      scope: '[data-test-start-payment-button]',
+    },
   }),
 
   visit: visitable('/pay'),
