@@ -11,8 +11,12 @@ interface Signature {
 }
 
 export default class RunTestsInstructionsComponent extends Component<Signature> {
+  get lastSubmission() {
+    return this.args.currentStep.repository.lastSubmission;
+  }
+
   get lastSubmissionWasForCurrentStage() {
-    return this.args.currentStep.repository.lastSubmission?.courseStage === this.args.currentStep.courseStage;
+    return this.lastSubmission?.courseStage === this.args.currentStep.courseStage;
   }
 }
 

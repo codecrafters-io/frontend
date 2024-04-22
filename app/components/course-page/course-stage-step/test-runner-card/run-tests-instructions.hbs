@@ -1,6 +1,12 @@
 <div class="prose prose-sm prose-compact">
   {{#if this.lastSubmissionWasForCurrentStage}}
     <p>
+      {{#if (eq this.lastSubmission.status "evaluating")}}
+        <b>Running tests... </b>
+      {{else if (eq this.lastSubmission.status "failure")}}
+        <b>Tests failed. </b>
+      {{/if}}
+
       <a href="#" role="button" {{on "click" @onViewLogsButtonClick}}>Click here</a>
       to view logs.
     </p>

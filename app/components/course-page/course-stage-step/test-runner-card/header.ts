@@ -9,6 +9,7 @@ interface Signature {
     isCollapsible: boolean;
     isExpanded: boolean;
     onCollapseButtonClick: () => void;
+    textColorClasses: string;
   };
 }
 

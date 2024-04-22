@@ -27,7 +27,7 @@ export default class SubmissionModel extends Model {
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
   @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
-  @attr('string') declare status: string;
+  @attr('string') declare status: 'evaluating' | 'success' | 'failure' | 'error' | 'cancelled';
   @attr('string') declare treeSha: string | null;
 
   get canBeUsedForStageCompletion() {
@@ -49,16 +49,16 @@ export default class SubmissionModel extends Model {
     return now - createdAt <= 300 * 1000; // in last 5 minutes
   }
 
+  get statusIsError() {
+    return this.status === 'error';
+  }
+
   get statusIsEvaluating() {
     return this.status === 'evaluating';
   }
 
   get statusIsFailure() {
     return this.status === 'failure';
-  }
-
-  get statusIsInternalError() {
-    return this.status === 'internal_error';
   }
 
   get statusIsSuccess() {
