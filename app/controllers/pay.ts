@@ -26,15 +26,15 @@ export default class PayController extends Controller {
     return {
       pricingFrequency: this.selectedPricingFrequency,
       regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
-      earlyBirdDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user.isEligibleForEarlyBirdDiscount,
-      referralDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user.isEligibleForReferralDiscount,
+      earlyBirdDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user?.isEligibleForEarlyBirdDiscount,
+      referralDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user?.isEligibleForReferralDiscount,
     };
   }
 
   get discountedYearlyPrice() {
-    if (this.user.isEligibleForReferralDiscount) {
+    if (this.user?.isEligibleForReferralDiscount) {
       return 216;
-    } else if (this.user.isEligibleForEarlyBirdDiscount) {
+    } else if (this.user?.isEligibleForEarlyBirdDiscount) {
       return 216;
     } else {
       return null;
@@ -42,13 +42,17 @@ export default class PayController extends Controller {
   }
 
   get user() {
-    return this.authenticator.currentUser as UserModel; // pay route is protected by auth, so currentUser is guaranteed to be a UserModel
+    return this.authenticator.currentUser as UserModel | null;
   }
 
   @action
   handleStartMembershipButtonClick(pricingFrequency: string) {
-    this.configureCheckoutSessionModalIsOpen = true;
-    this.selectedPricingFrequency = pricingFrequency;
+    if (this.authenticator.isAuthenticated) {
+      this.configureCheckoutSessionModalIsOpen = true;
+      this.selectedPricingFrequency = pricingFrequency;
+    } else {
+      this.authenticator.initiateLogin(null);
+    }
   }
 
   @action
