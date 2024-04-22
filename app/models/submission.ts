@@ -49,16 +49,16 @@ export default class SubmissionModel extends Model {
     return now - createdAt <= 300 * 1000; // in last 5 minutes
   }
 
+  get statusIsError() {
+    return this.status === 'error';
+  }
+
   get statusIsEvaluating() {
     return this.status === 'evaluating';
   }
 
   get statusIsFailure() {
     return this.status === 'failure';
-  }
-
-  get statusIsInternalError() {
-    return this.status === 'internal_error';
   }
 
   get statusIsSuccess() {
