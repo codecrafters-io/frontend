@@ -1,7 +1,7 @@
 import { clickable, collection, isVisible, text } from 'ember-cli-page-object';
 
 export default {
-  clickOnUncommentCodeStepCompletedButton: clickable('[data-test-uncomment-code-step-completed-button]'),
+  clickOnCompleteStepButton: clickable('[data-test-complete-step-button]'),
   scope: '#first-stage-instructions-card',
 
   scrollIntoView() {
