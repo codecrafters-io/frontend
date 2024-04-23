@@ -42,6 +42,15 @@
   {{#if @isExpanded}}
     <div data-test-expanded-step-content>
       {{yield}}
+
+      {{#if (and @canBeCompletedManually (not @isComplete))}}
+        <PrimaryButton {{on "click" @onManualComplete}} class="mt-4" data-test-complete-step-button>
+          <div class="flex items-center gap-2">
+            {{svg-jar "check-circle" class="w-6 h-6"}}
+            <span>I've done this</span>
+          </div>
+        </PrimaryButton>
+      {{/if}}
     </div>
   {{/if}}
 </div>

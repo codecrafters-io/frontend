@@ -6,12 +6,14 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    number: number;
-    title: string;
+    canBeCompletedManually: boolean;
     isComplete: boolean;
     isExpanded: boolean;
-    onExpand: () => void;
+    number: number;
     onCollapse: () => void;
+    onExpand: () => void;
+    onManualComplete: () => void;
+    title: string;
   };
 
   Blocks: {

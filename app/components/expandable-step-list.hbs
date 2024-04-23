@@ -3,15 +3,26 @@
     <ExpandableStepList::Step
       @title={{step.title}}
       @number={{add stepIndex 1}}
+      @canBeCompletedManually={{step.canBeCompletedManually}}
       @isComplete={{step.isComplete}}
       @isExpanded={{eq this.expandedStepId step.id}}
       @onExpand={{fn this.handleStepExpand step}}
       @onCollapse={{fn this.handleStepCollapse step}}
+      @onManualComplete={{fn this.handleStepCompletedManually step}}
     >
       {{#if (eq step.id this.expandedStepId)}}
         <div class={{@stepContainerClass}}>
           {{yield (hash expandedStep=this.expandedStep expandNextStep=this.expandNextStep)}}
         </div>
+      {{/if}}
+
+      {{#if (and step.isComplete this.nextStepAfterExpandedStep)}}
+        <PrimaryButton {{on "click" this.handleNextStepButtonClick}} class="mt-4" data-test-complete-step-button>
+          <div class="flex items-center gap-2">
+            {{svg-jar "arrow-down" class="w-4 h-4"}}
+            <span>Next Step</span>
+          </div>
+        </PrimaryButton>
       {{/if}}
     </ExpandableStepList::Step>
   {{/each}}
