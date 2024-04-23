@@ -53,7 +53,7 @@ export default class LanguageModel extends Model {
 
   @attr('string') declare name: string;
   @attr('string') declare slug: string;
-  @attr('string') declare trackStatus: string;
+  @attr('string') declare trackStatus: 'live' | 'beta';
 
   get grayLogoUrl() {
     return {
@@ -87,13 +87,15 @@ export default class LanguageModel extends Model {
   }
 
   get sortPositionForTrack() {
-    return (
+    return [
+      // Popular tracks, sorted by usage
       {
-        go: 1,
-        rust: 2,
+        rust: 1,
+        go: 2,
         python: 3,
-      }[this.slug] || 1000 - this.stagesCount
-    );
+      }[this.slug] || 9,
+      this.name,
+    ].join('');
   }
 
   get stagesCount() {

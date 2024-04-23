@@ -18,11 +18,11 @@ module('Acceptance | view-tracks', function (hooks) {
 
     await percySnapshot('Tracks Page');
 
-    assert.notOk(catalogPage.trackCards[0].hasBetaLabel, 'go should not have beta label');
-    assert.notOk(catalogPage.trackCards[1].hasBetaLabel, 'rust should not have beta label');
-    assert.notOk(catalogPage.trackCards[2].hasBetaLabel, 'python should not have beta label');
-    assert.ok(catalogPage.trackCards[3].hasBetaLabel, 'other tracks should have beta label');
-    assert.ok(catalogPage.trackCards[4].hasBetaLabel, 'other tracks should have beta label');
+    assert.ok(catalogPage.trackCards[0].hasPopularLabel, 'go should have popular label');
+    assert.ok(catalogPage.trackCards[1].hasPopularLabel, 'rust should have popular label');
+    assert.ok(catalogPage.trackCards[2].hasPopularLabel, 'python should have popular label');
+    assert.notOk(catalogPage.trackCards[3].hasPopularLabel, 'other tracks should not have popular label');
+    assert.notOk(catalogPage.trackCards[4].hasPopularLabel, 'other tracks should not have popular label');
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
@@ -130,6 +130,10 @@ module('Acceptance | view-tracks', function (hooks) {
 
     await catalogPage.visit();
     assert.strictEqual(catalogPage.trackCards.length, 19, 'expected 19 track cards to be present');
+
+    assert.strictEqual(catalogPage.trackCards[0].name, 'Rust');
+    assert.strictEqual(catalogPage.trackCards[1].name, 'Go');
+    assert.strictEqual(catalogPage.trackCards[2].name, 'Python');
   });
 
   test('first time visit has loading page', async function (assert) {
