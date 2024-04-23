@@ -160,7 +160,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     this.server.create('badge-award', {
       user: currentUser,
       badge: badge,
-      submission: submission,
+      courseStageCompletion: submission.repository.courseStageCompletions.models[0],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -168,10 +168,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     // TODO: Add tests for badge display
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
-    assert.notOk(
-      coursePage.completedStepNotice.shareProgressButton.isVisible,
-      'completed step notice is not visible after finishing the first stage',
-    );
+    assert.ok(coursePage.earnedBadgeNotice.isVisible, 'badge is visible');
 
     await coursePage.completedStepNotice.clickOnNextStepButton();
     assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is stage 2');
