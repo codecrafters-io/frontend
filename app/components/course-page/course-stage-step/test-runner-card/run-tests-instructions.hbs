@@ -1,10 +1,12 @@
-<div class="prose prose-sm prose-compact">
+<div class="prose prose-sm prose-compact mb-3">
   {{#if this.lastSubmissionWasForCurrentStage}}
-    <p>
+    <p class="mb-3">
       {{#if (eq this.lastSubmission.status "evaluating")}}
-        <b>Running tests... </b>
+        <b>Running tests...</b>
       {{else if (eq this.lastSubmission.status "failure")}}
-        <b>Tests failed. </b>
+        <b>Tests failed.</b>
+      {{else if (eq this.lastSubmission.status "error")}}
+        <b>Whoops! Looks like we ran into an internal error. Trying again might work.</b>
       {{/if}}
 
       <a href="#" role="button" {{on "click" @onViewLogsButtonClick}}>Click here</a>
@@ -14,26 +16,56 @@
 
   {{#if this.lastSubmissionWasForCurrentStage}}
     <p>
-      To run tests again, make changes to your code and run the test command:
+      To run tests again, make changes to your code and run the
+      {{#if (eq this.suggestedClientType "git")}}
+        following commands:
+      {{else}}
+        test command:
+      {{/if}}
     </p>
   {{else}}
     <p>
-      To run tests, make changes to your code and run the test command:
+      To run tests, make changes to your code and run the
+
+      {{#if (eq this.suggestedClientType "git")}}
+        following commands:
+      {{else}}
+        test command:
+      {{/if}}
     </p>
   {{/if}}
 </div>
 
-<CopyableTerminalCommand @commands={{array "codecrafters test"}} class="mt-3" />
+<CopyableTerminalCommand @commands={{this.suggestedCommands}} class="mb-4" />
 
-<div class="prose prose-sm mt-4 prose-compact">
-  <p>
-    Don't have the
-    <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
-    installed? You can also submit code using Git:
-  </p>
+<div class="prose prose-sm prose-compact">
+  {{#if (eq this.suggestedClientType "cli")}}
+    <p>
+      Don't have the
+      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
+      installed? You can also submit code
+      <a href="#" {{on "click" this.toggleAlternateClientInstructions}} data-test-toggle-alternate-client-instructions-link>
+        using Git
+        {{if this.alternateClientInstructionsAreExpanded "↑" "↓"}}
+      </a>.
+    </p>
+  {{else}}
+    <p>
+      You can also submit code
+      <a href="#" {{on "click" this.toggleAlternateClientInstructions}} data-test-toggle-alternate-client-instructions-link>
+        using the codecrafters CLI
+        {{if this.alternateClientInstructionsAreExpanded "↑" "↓"}}
+      </a>.
+    </p>
+  {{/if}}
 </div>
 
-<CopyableTerminalCommand
-  @commands={{array "git add ." 'git commit --allow-empty -am "pass stage" # any message' "git push origin master"}}
-  class="mt-3"
-/>
+{{#if this.alternateClientInstructionsAreExpanded}}
+  <CopyableTerminalCommand @commands={{this.suggestedCommandsForAlternateClient}} class="mt-3" />
+
+  <TertiaryButton @size="extra-small" {{on "click" this.toggleAlternateClientInstructions}} class="mt-3">
+    ↑ Hide
+    {{if (eq this.suggestedClientType "git") "CLI" "Git"}}
+    instructions
+  </TertiaryButton>
+{{/if}}

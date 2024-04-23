@@ -1,5 +1,6 @@
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
+import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
@@ -182,6 +183,8 @@ export default create({
   testResultsBar: TestResultsBar,
 
   testRunnerCard: {
+    copyableTerminalCommands: collection('[data-test-copyable-terminal-command]', CopyableTerminalCommand),
+    clickOnToggleAlternateClientInstructionsLink: clickable('[data-test-toggle-alternate-client-instructions-link]'),
     clickOnHideInstructionsButton: clickable('[data-test-hide-instructions-button]'),
     borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
     scope: '[data-test-test-runner-card]',

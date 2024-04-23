@@ -166,7 +166,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    // TODO: Add tests for badge display
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is still active');
     assert.ok(coursePage.earnedBadgeNotice.isVisible, 'badge is visible');
 
