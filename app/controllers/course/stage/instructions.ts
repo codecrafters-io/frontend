@@ -20,11 +20,8 @@ export default class CourseStageInstructionsController extends Controller {
   };
 
   get badgeAwards() {
-    return this.model.activeRepository.user.badgeAwards.filter((badgeAward) => {
-      // @ts-ignore
-      return (
-        badgeAward.submission.repository.id === this.model.activeRepository.id && badgeAward.submission.courseStage.id === this.model.courseStage.id
-      );
+    return this.model.activeRepository.courseStageCompletions.filterBy('courseStage', this.model.courseStage).flatMap((courseStageCompletion) => {
+      return courseStageCompletion.badgeAwards;
     });
   }
 

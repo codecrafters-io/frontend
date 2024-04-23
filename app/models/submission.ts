@@ -1,5 +1,5 @@
-import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
 import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Model, { hasMany } from '@ember-data/model';
@@ -18,7 +18,6 @@ export default class SubmissionModel extends Model {
   @belongsTo('course-tester-version', { async: false, inverse: null }) declare testerVersion: CourseTesterVersionModel;
   @belongsTo('repository', { async: false, inverse: 'submissions' }) declare repository: RepositoryModel;
 
-  @hasMany('badge-award', { async: false, inverse: 'submission' }) declare badgeAwards: BadgeAwardModel[];
   @hasMany('submission-evaluation', { async: false, inverse: 'submission' }) declare evaluations: SubmissionEvaluationModel[];
 
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
