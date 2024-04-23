@@ -31,7 +31,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Bind to a port', 'first stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer is tests failed');
 
-    const submission = this.server.create('submission', 'withStageCompletion', {
+    this.server.create('submission', 'withStageCompletion', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[0],
     });
@@ -44,7 +44,7 @@ module('Acceptance | course-page | earn-badge', function (hooks) {
     this.server.create('badge-award', {
       user: currentUser,
       badge: badge,
-      submission: submission,
+      courseStageCompletion: repository.courseStageCompletions.models[0],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
