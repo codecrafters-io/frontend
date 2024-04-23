@@ -7,29 +7,36 @@
 >
   <div class="{{if @isExpanded 'mb-3' ''}} flex items-center justify-between">
     <div class="flex items-center gap-1">
-      <div class="prose {{if @isComplete 'opacity-50'}}" data-test-step-title>
+      <div class="prose {{if @step.isComplete 'opacity-50'}}" data-test-step-title>
         <b>Step {{@number}}:</b>
 
         <span>
-          {{@title}}
+          {{@step.title}}
         </span>
       </div>
 
-      {{#if @isComplete}}
+      {{#if @step.isComplete}}
         <div class="flex" data-test-step-complete-icon>
           {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
         </div>
       {{/if}}
     </div>
 
-    {{#if @isExpanded}}
+    {{#if (and @isExpanded (not @step.isComplete) @step.canBeCompletedManually)}}
+      <PrimaryButton {{on "click" @onManualComplete}} @size="extra-small">
+        <div class="flex items-center gap-1">
+          {{svg-jar "check-circle" class="w-4 h-4"}}
+          <span>I've done this</span>
+        </div>
+      </PrimaryButton>
+    {{else if (and @isExpanded (not @isFirstIncompleteStep))}}
       <TertiaryButton @size="extra-small" {{on "click" this.handleCollapseButtonClick}}>
         <div class="font-bold flex items-center gap-1">
           {{svg-jar "arrow-up" class="w-3 fill-current"}}
           Collapse
         </div>
       </TertiaryButton>
-    {{else if (not @isComplete)}}
+    {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
       <TertiaryButton @size="extra-small">
         <div class="font-bold flex items-center gap-1">
           {{svg-jar "arrow-down" class="w-3 fill-current"}}
@@ -42,6 +49,15 @@
   {{#if @isExpanded}}
     <div data-test-expanded-step-content>
       {{yield}}
+
+      {{#if (and @step.canBeCompletedManually (not @step.isComplete))}}
+        <PrimaryButton {{on "click" @onManualComplete}} class="mt-4" data-test-complete-step-button>
+          <div class="flex items-center gap-2">
+            {{svg-jar "check-circle" class="w-6 h-6"}}
+            <span>I've done this</span>
+          </div>
+        </PrimaryButton>
+      {{/if}}
     </div>
   {{/if}}
 </div>

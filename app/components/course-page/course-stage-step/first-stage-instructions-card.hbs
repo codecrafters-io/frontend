@@ -13,13 +13,12 @@
       </p>
     </div>
 
-    <ExpandableStepList @steps={{this.steps}} class="scroll-mt-32 mb-5" as |stepList|>
+    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32 mb-5" as |stepList|>
       {{#if (eq stepList.expandedStep.id "uncomment-code")}}
         <CoursePage::CourseStageStep::FirstStageInstructionsCard::UncommentCodeStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.uncommentCodeStepIsComplete}}
-          @onComplete={{fn this.handleUncommentCodeStepCompleted stepList}}
         />
       {{else if (eq stepList.expandedStep.id "submit-code")}}
         <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep />

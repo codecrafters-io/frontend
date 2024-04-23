@@ -7,7 +7,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);

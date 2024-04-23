@@ -1,17 +1,19 @@
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
+import type { Step } from '../expandable-step-list';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    number: number;
-    title: string;
-    isComplete: boolean;
     isExpanded: boolean;
-    onExpand: () => void;
+    isFirstIncompleteStep: boolean;
+    number: number;
     onCollapse: () => void;
+    onExpand: () => void;
+    onManualComplete: () => void;
+    step: Step;
   };
 
   Blocks: {

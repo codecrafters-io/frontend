@@ -20,6 +20,7 @@ interface Signature {
 class UncommentCodeStep implements Step {
   id = 'uncomment-code';
   isComplete: boolean;
+  canBeCompletedManually = true;
 
   constructor(isComplete: boolean) {
     this.isComplete = isComplete;
@@ -33,6 +34,7 @@ class UncommentCodeStep implements Step {
 class SubmitCodeStep implements Step {
   id = 'submit-code';
   isComplete: boolean;
+  canBeCompletedManually = false;
 
   constructor(isComplete: boolean) {
     this.isComplete = isComplete;
@@ -62,9 +64,10 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   }
 
   @action
-  handleUncommentCodeStepCompleted(stepList: { expandNextStep: () => void }) {
-    this.uncommentCodeStepWasMarkedAsComplete = true;
-    stepList.expandNextStep();
+  handleStepCompletedManually(step: Step) {
+    if (step.id === 'uncomment-code') {
+      this.uncommentCodeStepWasMarkedAsComplete = true;
+    }
   }
 
   @action

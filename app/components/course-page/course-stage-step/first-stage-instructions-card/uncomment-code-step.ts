@@ -9,7 +9,6 @@ interface Signature {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
     isComplete: boolean;
-    onComplete: () => void;
   };
 }
 

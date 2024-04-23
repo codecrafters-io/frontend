@@ -1,17 +1,27 @@
 <div class="divide-y divide-gray-200 border-t border-b" {{did-insert this.handleDidInsertContainer}} ...attributes>
   {{#each @steps as |step stepIndex|}}
     <ExpandableStepList::Step
-      @title={{step.title}}
-      @number={{add stepIndex 1}}
-      @isComplete={{step.isComplete}}
       @isExpanded={{eq this.expandedStepId step.id}}
-      @onExpand={{fn this.handleStepExpand step}}
+      @isFirstIncompleteStep={{eq step.id this.firstIncompleteStep.id}}
+      @number={{add stepIndex 1}}
       @onCollapse={{fn this.handleStepCollapse step}}
+      @onExpand={{fn this.handleStepExpand step}}
+      @onManualComplete={{fn this.handleStepCompletedManually step}}
+      @step={{step}}
     >
       {{#if (eq step.id this.expandedStepId)}}
         <div class={{@stepContainerClass}}>
           {{yield (hash expandedStep=this.expandedStep expandNextStep=this.expandNextStep)}}
         </div>
+      {{/if}}
+
+      {{#if (and step.isComplete this.nextStepAfterExpandedStep)}}
+        <PrimaryButton {{on "click" this.handleNextStepButtonClick}} class="mt-4" data-test-complete-step-button>
+          <div class="flex items-center gap-2">
+            {{svg-jar "arrow-down" class="w-4 h-4"}}
+            <span>Next Step</span>
+          </div>
+        </PrimaryButton>
       {{/if}}
     </ExpandableStepList::Step>
   {{/each}}
