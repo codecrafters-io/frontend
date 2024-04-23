@@ -7,7 +7,6 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
 import type RouterService from '@ember/routing/router-service';
 import type { ModelType } from 'codecrafters-frontend/routes/pay';
-import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class PayController extends Controller {
   declare model: ModelType;
@@ -42,7 +41,7 @@ export default class PayController extends Controller {
   }
 
   get user() {
-    return this.authenticator.currentUser as UserModel | null;
+    return this.authenticator.currentUser;
   }
 
   @action
