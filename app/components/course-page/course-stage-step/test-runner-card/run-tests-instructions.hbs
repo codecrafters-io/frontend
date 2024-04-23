@@ -43,19 +43,38 @@
     <p>
       Don't have the
       <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
-      installed? You can also submit code
-      <a href="#" {{on "click" this.toggleAlternateClientInstructions}} data-test-toggle-alternate-client-instructions-link>
-        using Git
-        {{if this.alternateClientInstructionsAreExpanded "↑" "↓"}}
-      </a>.
+      installed? You can also submit code using Git.
+
+      <TertiaryButton
+        @size="extra-small"
+        {{on "click" this.toggleAlternateClientInstructions}}
+        class="ml-2"
+        data-test-toggle-alternate-client-instructions-link
+      >
+        {{#if this.alternateClientInstructionsAreExpanded}}
+          Hide Git instructions ↑
+        {{else}}
+          Show Git instructions ↓
+        {{/if}}
+      </TertiaryButton>
     </p>
   {{else}}
     <p>
-      You can also submit code
-      <a href="#" {{on "click" this.toggleAlternateClientInstructions}} data-test-toggle-alternate-client-instructions-link>
-        using the codecrafters CLI
-        {{if this.alternateClientInstructionsAreExpanded "↑" "↓"}}
-      </a>.
+      You can also submit code using the
+      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">codecrafters CLI</a>.
+
+      <TertiaryButton
+        @size="extra-small"
+        {{on "click" this.toggleAlternateClientInstructions}}
+        class="ml-2"
+        data-test-toggle-alternate-client-instructions-link
+      >
+        {{#if this.alternateClientInstructionsAreExpanded}}
+          Hide CLI instructions ↑
+        {{else}}
+          Show CLI instructions ↓
+        {{/if}}
+      </TertiaryButton>
     </p>
   {{/if}}
 </div>
