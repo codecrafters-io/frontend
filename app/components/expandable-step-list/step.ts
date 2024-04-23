@@ -9,6 +9,7 @@ type Signature = {
     canBeCompletedManually: boolean;
     isComplete: boolean;
     isExpanded: boolean;
+    isFirstIncompleteStep: boolean;
     number: number;
     onCollapse: () => void;
     onExpand: () => void;

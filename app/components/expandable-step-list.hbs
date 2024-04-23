@@ -5,6 +5,7 @@
       @number={{add stepIndex 1}}
       @canBeCompletedManually={{step.canBeCompletedManually}}
       @isComplete={{step.isComplete}}
+      @isFirstIncompleteStep={{eq step.id this.firstIncompleteStep.id}}
       @isExpanded={{eq this.expandedStepId step.id}}
       @onExpand={{fn this.handleStepExpand step}}
       @onCollapse={{fn this.handleStepCollapse step}}

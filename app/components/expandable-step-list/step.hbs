@@ -22,14 +22,21 @@
       {{/if}}
     </div>
 
-    {{#if @isExpanded}}
+    {{#if (and @isExpanded (not @isComplete) @canBeCompletedManually)}}
+      <PrimaryButton {{on "click" @onManualComplete}} @size="extra-small">
+        <div class="flex items-center gap-1">
+          {{svg-jar "check-circle" class="w-4 h-4"}}
+          <span>I've done this</span>
+        </div>
+      </PrimaryButton>
+    {{else if @isExpanded}}
       <TertiaryButton @size="extra-small" {{on "click" this.handleCollapseButtonClick}}>
         <div class="font-bold flex items-center gap-1">
           {{svg-jar "arrow-up" class="w-3 fill-current"}}
           Collapse
         </div>
       </TertiaryButton>
-    {{else if (not @isComplete)}}
+    {{else if @isFirstIncompleteStep}}
       <TertiaryButton @size="extra-small">
         <div class="font-bold flex items-center gap-1">
           {{svg-jar "arrow-down" class="w-3 fill-current"}}
