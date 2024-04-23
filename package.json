@@ -23,7 +23,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:prettier": "prettier --check .",
-    "lint:prettier:fix": "prettier --write .",
+    "lint:prettier:fix": "prettier --write . --log-level error",
     "lint:types": "tsc --noEmit",
     "lint:glint": "glint",
     "lint:glint:fix": "glint",
