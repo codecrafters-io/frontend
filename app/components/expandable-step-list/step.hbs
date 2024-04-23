@@ -7,22 +7,22 @@
 >
   <div class="{{if @isExpanded 'mb-3' ''}} flex items-center justify-between">
     <div class="flex items-center gap-1">
-      <div class="prose {{if @isComplete 'opacity-50'}}" data-test-step-title>
+      <div class="prose {{if @step.isComplete 'opacity-50'}}" data-test-step-title>
         <b>Step {{@number}}:</b>
 
         <span>
-          {{@title}}
+          {{@step.title}}
         </span>
       </div>
 
-      {{#if @isComplete}}
+      {{#if @step.isComplete}}
         <div class="flex" data-test-step-complete-icon>
           {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
         </div>
       {{/if}}
     </div>
 
-    {{#if (and @isExpanded (not @isComplete) @canBeCompletedManually)}}
+    {{#if (and @isExpanded (not @step.isComplete) @step.canBeCompletedManually)}}
       <PrimaryButton {{on "click" @onManualComplete}} @size="extra-small">
         <div class="flex items-center gap-1">
           {{svg-jar "check-circle" class="w-4 h-4"}}
@@ -50,7 +50,7 @@
     <div data-test-expanded-step-content>
       {{yield}}
 
-      {{#if (and @canBeCompletedManually (not @isComplete))}}
+      {{#if (and @step.canBeCompletedManually (not @step.isComplete))}}
         <PrimaryButton {{on "click" @onManualComplete}} class="mt-4" data-test-complete-step-button>
           <div class="flex items-center gap-2">
             {{svg-jar "check-circle" class="w-6 h-6"}}

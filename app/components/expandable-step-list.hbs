@@ -1,15 +1,13 @@
 <div class="divide-y divide-gray-200 border-t border-b" {{did-insert this.handleDidInsertContainer}} ...attributes>
   {{#each @steps as |step stepIndex|}}
     <ExpandableStepList::Step
-      @title={{step.title}}
-      @number={{add stepIndex 1}}
-      @canBeCompletedManually={{step.canBeCompletedManually}}
-      @isComplete={{step.isComplete}}
-      @isFirstIncompleteStep={{eq step.id this.firstIncompleteStep.id}}
       @isExpanded={{eq this.expandedStepId step.id}}
-      @onExpand={{fn this.handleStepExpand step}}
+      @isFirstIncompleteStep={{eq step.id this.firstIncompleteStep.id}}
+      @number={{add stepIndex 1}}
       @onCollapse={{fn this.handleStepCollapse step}}
+      @onExpand={{fn this.handleStepExpand step}}
       @onManualComplete={{fn this.handleStepCompletedManually step}}
+      @step={{step}}
     >
       {{#if (eq step.id this.expandedStepId)}}
         <div class={{@stepContainerClass}}>
