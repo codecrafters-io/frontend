@@ -1,13 +1,14 @@
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import windowMock from 'ember-window-mock';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, visit } from '@ember/test-helpers';
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -25,6 +26,19 @@ module('Acceptance | pay-test', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'Login via GitHub to start a membership.',
     });
+  });
+
+  test('user is redirected to login page after clicking on start membership if not logged in', async function (assert) {
+    testScenario(this.server);
+
+    await payPage.visit();
+    await payPage.pricingCards[0].startPaymentButton.click();
+
+    assert.strictEqual(
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fpay`,
+      'should redirect to login URL',
+    );
   });
 
   test('new user can start checkout session', async function (assert) {
@@ -148,5 +162,14 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.accountDropdown.clickOnLink('Logout');
 
     assert.strictEqual(currentURL(), '/catalog');
+  });
+
+  test('user should be redirected to /membership if user is authenticated and has an active subscription', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await visit('/pay');
+
+    assert.strictEqual(currentURL(), '/membership');
   });
 });
