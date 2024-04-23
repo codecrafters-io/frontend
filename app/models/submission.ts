@@ -1,5 +1,4 @@
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
 import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Model, { hasMany } from '@ember-data/model';
