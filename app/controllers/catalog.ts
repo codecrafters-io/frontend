@@ -71,6 +71,7 @@ export default class CatalogController extends Controller {
         const repositoriesForLanguage1 = this.authenticator
           .currentUser!.repositories.filterBy('language', language1)
           .filterBy('firstSubmissionCreated');
+
         const repositoriesForLanguage2 = this.authenticator
           .currentUser!.repositories.filterBy('language', language2)
           .filterBy('firstSubmissionCreated');

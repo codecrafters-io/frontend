@@ -6,7 +6,7 @@ interface Signature {
 
   Args: {
     language: LanguageModel;
-    variant: string;
+    variant: 'gray' | 'teal';
   };
 }
 

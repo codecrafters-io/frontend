@@ -6,7 +6,7 @@
 >
   {{! Logo }}
   <div class="flex justify-end h-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
-    <LanguageLogo @language={{@language}} />
+    <LanguageLogo @language={{@language}} @variant="teal" />
   </div>
 
   {{! Text }}
@@ -16,10 +16,11 @@
         {{@language.name}}
       </div>
 
-      {{#if (eq @language.trackStatus "beta")}}
-        <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.5 mr-3" data-test-track-beta-label>
-          BETA
-        </div>
+      {{#if (eq @language.trackStatus "live")}}
+        <Pill @color="green" data-test-popular-track-label>
+          Popular
+          <EmberTooltip @text="This track is a favourite among our learners." />
+        </Pill>
       {{/if}}
     </div>
   </div>
@@ -27,6 +28,7 @@
   {{! Footer }}
   <div class="flex items-center justify-between">
     {{#if this.currentUserHasStartedTrack}}
+      {{! @glint-expect-error: not ts-ified yet }}
       <TracksPage::TrackCard::ProgressBar
         @language={{@language}}
         @completedStagesCount={{this.completedStagesCount}}
