@@ -29,14 +29,14 @@
           <span>I've done this</span>
         </div>
       </PrimaryButton>
-    {{else if @isExpanded}}
+    {{else if (and @isExpanded (not @isFirstIncompleteStep))}}
       <TertiaryButton @size="extra-small" {{on "click" this.handleCollapseButtonClick}}>
         <div class="font-bold flex items-center gap-1">
           {{svg-jar "arrow-up" class="w-3 fill-current"}}
           Collapse
         </div>
       </TertiaryButton>
-    {{else if @isFirstIncompleteStep}}
+    {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
       <TertiaryButton @size="extra-small">
         <div class="font-bold flex items-center gap-1">
           {{svg-jar "arrow-down" class="w-3 fill-current"}}

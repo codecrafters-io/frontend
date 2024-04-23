@@ -7,7 +7,7 @@ import type { ComponentLike } from '@glint/template';
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends RenderModifiersRegistry {
     add: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
-    and: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
+    and: HelperLike<{ Args: { Positional: unknown[] }; Return: boolean }>;
     autoresize: ModifierLike<{ Args: { Positional: [string] } }>;
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
