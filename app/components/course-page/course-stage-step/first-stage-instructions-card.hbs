@@ -20,51 +20,25 @@
           @courseStage={{@courseStage}}
           @isComplete={{this.uncommentCodeStepIsComplete}}
         />
-      {{else if (eq stepList.expandedStep.id "submit-code")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep />
+      {{else if (eq stepList.expandedStep.id "run-tests")}}
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::RunTestsStep
+          {{! @glint-expect-error expandedStep can be null }}
+          @isComplete={{stepList.expandedStep.isComplete}}
+        />
       {{/if}}
     </ExpandableStepList>
 
-    <div class="prose mb-5">
-      <p class={{if this.allStepsAreComplete "line-through"}}>
-        Once you complete the steps above, the
-        <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
-        message below will change to
-        <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
-      </p>
+    <div class="prose">
+      {{#if this.markStageAsCompleteStepIsComplete}}
+        <p class="text-gray-600 mt-4">
+          <span class="text-xl mr-1">🎉</span>
+          First stage passed!
+        </p>
+      {{else}}
+        <p class={{if this.markStageAsCompleteStepIsComplete "line-through"}}>
+          Complete the steps above to pass this stage.
+        </p>
+      {{/if}}
     </div>
-
-    {{#if this.allStepsAreComplete}}
-      <p class="text-gray-600 mt-4">
-        <span class="text-xl mr-1">🎉</span>
-        First stage passed!
-      </p>
-
-      <PrimaryLinkButton
-        class="mt-4"
-        @size="large"
-        @route={{this.coursePageState.activeStep.routeParams.route}}
-        @models={{this.coursePageState.activeStep.routeParams.models}}
-        data-test-continue-button
-      >
-        Continue →
-      </PrimaryLinkButton>
-    {{else}}
-      <div class="px-3 py-2 bg-gray-50 inline-flex items-center gap-2 flex-wrap rounded border border-gray-300 mb-5">
-        <div class="text-xs font-semibold uppercase text-gray-400">
-          Test Runner:
-        </div>
-
-        <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @shouldHideExplanationTooltip={{true}} />
-      </div>
-
-      <p class="prose prose-sm">
-        <b>Note:</b>
-        If you're still seeing "Tests failed" after completing the steps above,
-        <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
-        to troubleshoot.
-      </p>
-    {{/if}}
-
   </:content>
 </CoursePage::InstructionsCard>

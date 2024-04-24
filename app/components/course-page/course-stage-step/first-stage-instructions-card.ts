@@ -31,8 +31,8 @@ class UncommentCodeStep implements Step {
   }
 }
 
-class SubmitCodeStep implements Step {
-  id = 'submit-code';
+class RunTestsStep implements Step {
+  id = 'run-tests';
   isComplete: boolean;
   canBeCompletedManually = false;
 
@@ -41,7 +41,21 @@ class SubmitCodeStep implements Step {
   }
 
   get title() {
-    return 'Submit changes';
+    return 'Run tests';
+  }
+}
+
+class MarkStageAsCompleteStep implements Step {
+  id = 'mark-stage-as-complete';
+  isComplete: boolean;
+  canBeCompletedManually = false;
+
+  constructor(isComplete: boolean) {
+    this.isComplete = isComplete;
+  }
+
+  get title() {
+    return 'Mark stage as complete';
   }
 }
 
@@ -51,16 +65,24 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
 
   @tracked uncommentCodeStepWasMarkedAsComplete = false;
 
-  get allStepsAreComplete() {
+  get markStageAsCompleteStepIsComplete() {
     return this.args.repository.stageIsComplete(this.args.courseStage);
   }
 
+  get runTestsStepIsComplete() {
+    return this.markStageAsCompleteStepIsComplete || this.args.repository.lastSubmissionHasSuccessStatus;
+  }
+
   get steps() {
-    return [new UncommentCodeStep(this.uncommentCodeStepIsComplete), new SubmitCodeStep(this.allStepsAreComplete)];
+    return [
+      new UncommentCodeStep(this.uncommentCodeStepIsComplete),
+      new RunTestsStep(this.runTestsStepIsComplete),
+      new MarkStageAsCompleteStep(this.markStageAsCompleteStepIsComplete),
+    ];
   }
 
   get uncommentCodeStepIsComplete() {
-    return this.uncommentCodeStepWasMarkedAsComplete || this.args.repository.stageIsComplete(this.args.courseStage);
+    return this.uncommentCodeStepWasMarkedAsComplete || this.runTestsStepIsComplete;
   }
 
   @action

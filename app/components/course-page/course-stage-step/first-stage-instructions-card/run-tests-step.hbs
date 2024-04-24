@@ -1,0 +1,41 @@
+<div class="prose mb-3">
+  <p>
+    Run the following commands to submit your changes:
+  </p>
+</div>
+
+<CopyableTerminalCommand
+  @commands={{array "git add . " "git commit --allow-empty -m 'pass 1st stage' # any msg" "git push origin master"}}
+  class="mb-3"
+/>
+
+<div class="prose mb-5">
+  <p class={{if @isComplete "line-through"}}>
+    Once you run the commands above, the
+    <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+    message below should change to
+    <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
+  </p>
+</div>
+
+{{#if @isComplete}}
+  <p class="text-gray-600 mt-4">
+    <span class="text-xl mr-1">🎉</span>
+    Tests passed!
+  </p>
+{{else}}
+  <div class="px-3 py-2 bg-gray-50 inline-flex items-center gap-2 flex-wrap rounded border border-gray-300 mb-5">
+    <div class="text-xs font-semibold uppercase text-gray-400">
+      Test Runner:
+    </div>
+
+    <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @shouldHideExplanationTooltip={{true}} />
+  </div>
+
+  <p class="prose prose-sm">
+    <b>Note:</b>
+    If you're still seeing "Tests failed" after completing the steps above,
+    <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
+    to troubleshoot.
+  </p>
+{{/if}}
