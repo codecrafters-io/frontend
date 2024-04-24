@@ -53,15 +53,15 @@
     />
   {{/if}}
 
-  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
-
   {{#if @model.courseStage.isSecond}}
     <CoursePage::CourseStageStep::SecondStageInstructionsCard
       @repository={{@model.activeRepository}}
       @courseStage={{@model.courseStage}}
-      class="mt-6"
+      class="mb-6"
     />
   {{/if}}
+
+  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
   {{#if this.shouldShowLanguageGuide}}
     <CoursePage::CourseStageStep::LanguageGuideCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
