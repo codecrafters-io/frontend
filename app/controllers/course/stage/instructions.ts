@@ -45,10 +45,6 @@ export default class CourseStageInstructionsController extends Controller {
     return !!this.prerequisiteInstructionsMarkdown;
   }
 
-  get shouldShowTestFailureExpectedHint() {
-    return this.model.courseStage.isFirst && this.currentStep.status !== 'complete';
-  }
-
   get shouldShowTestRunnerCard() {
     return this.isCurrentStage && this.currentStep.status !== 'complete';
   }
