@@ -22,24 +22,17 @@ export default class PayRoute extends BaseRoute {
   }
 
   async model() {
-    if (this.authenticator.isAuthenticated) {
-      await this.authenticator.authenticate();
+    await this.authenticator.authenticate();
 
-      if (this.authenticator.currentUser && this.authenticator.currentUser.hasActiveSubscription) {
-        this.router.transitionTo('membership');
+    if (this.authenticator.currentUser && this.authenticator.currentUser.hasActiveSubscription) {
+      this.router.transitionTo('membership');
 
-        return;
-      } else {
-        return {
-          courses: await this.store.findAll('course'), // For testimonials
-          regionalDiscount: await this.store.createRecord('regional-discount').fetchCurrent(),
-        };
-      }
-    } else {
-      return {
-        courses: await this.store.findAll('course'), // For testimonials
-        regionalDiscount: null,
-      };
+      return;
     }
+
+    return {
+      courses: await this.store.findAll('course'), // For testimonials
+      regionalDiscount: this.authenticator.currentUser ? await this.store.createRecord('regional-discount').fetchCurrent() : null,
+    };
   }
 }
