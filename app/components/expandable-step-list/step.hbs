@@ -5,7 +5,7 @@
   data-test-expandable-step-list-step
   ...attributes
 >
-  <div class="{{if @isExpanded 'mb-3' ''}} flex items-center justify-between">
+  <div class="{{if @isExpanded 'mb-3' ''}} flex items-center gap-2">
     <div class="flex items-center gap-1">
       <div class="prose {{if @step.isComplete 'opacity-50'}}" data-test-step-title>
         <b>Step {{@number}}:</b>
@@ -26,7 +26,7 @@
       <PrimaryButton {{on "click" @onManualComplete}} @size="extra-small">
         <div class="flex items-center gap-1">
           {{svg-jar "check-circle" class="w-4 h-4"}}
-          <span>I've done this</span>
+          <span>Mark as complete</span>
         </div>
       </PrimaryButton>
     {{else if (and @isExpanded (not @isFirstIncompleteStep))}}
@@ -37,12 +37,12 @@
         </div>
       </TertiaryButton>
     {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
-      <TertiaryButton @size="extra-small">
+      <PrimaryButton @size="extra-small">
         <div class="font-bold flex items-center gap-1">
           {{svg-jar "arrow-down" class="w-3 fill-current"}}
           Expand
         </div>
-      </TertiaryButton>
+      </PrimaryButton>
     {{/if}}
   </div>
 
@@ -54,7 +54,7 @@
         <PrimaryButton {{on "click" @onManualComplete}} class="mt-4" data-test-complete-step-button>
           <div class="flex items-center gap-2">
             {{svg-jar "check-circle" class="w-6 h-6"}}
-            <span>I've done this</span>
+            <span>Mark as complete</span>
           </div>
         </PrimaryButton>
       {{/if}}
