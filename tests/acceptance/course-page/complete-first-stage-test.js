@@ -43,6 +43,8 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageInstructionsCard.steps[0].isExpanded, 'First step is not expanded');
     assert.notOk(coursePage.firstStageInstructionsCard.steps[1].isComplete, 'Second step is not complete');
     assert.notOk(coursePage.firstStageInstructionsCard.steps[1].isExpanded, 'Second step is not expanded');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isComplete, 'Third step is not complete');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isExpanded, 'Third step is not expanded');
 
     await coursePage.firstStageInstructionsCard.steps[0].click();
 
@@ -50,6 +52,8 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.ok(coursePage.firstStageInstructionsCard.steps[0].isExpanded, 'First step is expanded');
     assert.notOk(coursePage.firstStageInstructionsCard.steps[1].isComplete, 'Second step is not complete');
     assert.notOk(coursePage.firstStageInstructionsCard.steps[1].isExpanded, 'Second step is not expanded');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isComplete, 'Third step is not complete');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isExpanded, 'Third step is not expanded');
 
     await coursePage.firstStageInstructionsCard.clickOnCompleteStepButton();
 
@@ -57,6 +61,10 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageInstructionsCard.steps[0].isExpanded, 'First step is collapsed');
     assert.notOk(coursePage.firstStageInstructionsCard.steps[1].isComplete, 'Second step is not complete');
     assert.ok(coursePage.firstStageInstructionsCard.steps[1].isExpanded, 'Second step is expanded');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isComplete, 'Third step is not complete');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isExpanded, 'Third step is not expanded');
+
+    await coursePage.firstStageInstructionsCard.clickOnCompleteStepButton();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: this.server.schema.repositories.find(1),
@@ -69,9 +77,9 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.ok(coursePage.firstStageInstructionsCard.steps[0].isComplete, 'First step is complete');
     assert.notOk(coursePage.firstStageInstructionsCard.steps[0].isExpanded, 'First step is collapsed');
     assert.ok(coursePage.firstStageInstructionsCard.steps[1].isComplete, 'Second step is complete');
-
-    // TODO: Auto-collapse on completion?
-    assert.ok(coursePage.firstStageInstructionsCard.steps[1].isExpanded, 'Second step is expanded');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[1].isExpanded, 'Second step is collapsed');
+    assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isExpanded, 'Third step is collapsed');
+    assert.ok(coursePage.firstStageInstructionsCard.steps[2].isComplete, 'Third step is complete');
 
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'header says stage completed');
   });

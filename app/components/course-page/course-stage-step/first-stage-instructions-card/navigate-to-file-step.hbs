@@ -1,0 +1,30 @@
+{{#if this.solution}}
+  <div class="prose">
+    <p>
+      Navigate to the
+      <code>{{this.filename}}</code>
+      file in your repository.
+    </p>
+    <p>
+      We recommend using an editor / IDE since you'll need to edit this file in the next step.
+    </p>
+  </div>
+{{else if (not @repository.language)}}
+  <div class="prose">
+    <p>
+      <span class="text-lg">⚠️</span>
+      Complete repository setup to see the instructions for this step.
+    </p>
+  </div>
+{{else}}
+  <div class="prose">
+    <p>
+      Navigate to the
+      <code>README.md</code>
+      file in your repository.
+    </p>
+    <p>
+      You'll need to make changes to this file, so we recommend opening the repository in your editor / IDE of choice.
+    </p>
+  </div>
+{{/if}}

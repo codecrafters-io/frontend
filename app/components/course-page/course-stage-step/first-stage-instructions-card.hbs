@@ -18,7 +18,13 @@
     </div>
 
     <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
-      {{#if (eq stepList.expandedStep.id "uncomment-code")}}
+      {{#if (eq stepList.expandedStep.id "navigate-to-file")}}
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::NavigateToFileStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.navigateToFileStepIsComplete}}
+        />
+      {{else if (eq stepList.expandedStep.id "uncomment-code")}}
         <CoursePage::CourseStageStep::FirstStageInstructionsCard::UncommentCodeStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}

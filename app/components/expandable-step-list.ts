@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 
 export interface Step {
   id: string;
-  title: string;
+  titleMarkdown: string;
   isComplete: boolean;
   canBeCompletedManually: boolean;
 }
@@ -88,12 +88,12 @@ export default class ExpandableStepListComponent extends Component<Signature> {
 
   @action
   handleStepCompletedManually(step: Step) {
-    if (this.args.onManualStepComplete) {
-      this.args.onManualStepComplete(step);
-    }
-
     next(() => {
       this.expandNextIncompleteStep();
+
+      if (this.args.onManualStepComplete) {
+        this.args.onManualStepComplete(step);
+      }
     });
   }
 

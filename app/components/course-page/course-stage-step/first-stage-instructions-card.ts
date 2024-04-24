@@ -17,30 +17,49 @@ interface Signature {
   };
 }
 
-class UncommentCodeStep implements Step {
-  id = 'uncomment-code';
+class BaseStep {
   isComplete: boolean;
+  repository: RepositoryModel;
+
+  constructor(repository: RepositoryModel, isComplete: boolean) {
+    this.isComplete = isComplete;
+    this.repository = repository;
+  }
+}
+
+class NavigateToFileStep extends BaseStep implements Step {
+  id = 'navigate-to-file';
   canBeCompletedManually = true;
 
-  constructor(isComplete: boolean) {
-    this.isComplete = isComplete;
-  }
+  get titleMarkdown() {
+    if (!this.repository.firstStageSolution) {
+      return 'Navigate to README.md';
+    }
 
-  get title() {
+    const filename = this.repository.firstStageSolution.changedFiles[0].filename;
+
+    if (filename) {
+      return `Navigate to ${filename}`;
+    } else {
+      return 'Navigate to file';
+    }
+  }
+}
+
+class UncommentCodeStep extends BaseStep implements Step {
+  id = 'uncomment-code';
+  canBeCompletedManually = true;
+
+  get titleMarkdown() {
     return 'Uncomment code';
   }
 }
 
-class SubmitCodeStep implements Step {
+class SubmitCodeStep extends BaseStep implements Step {
   id = 'submit-code';
-  isComplete: boolean;
   canBeCompletedManually = false;
 
-  constructor(isComplete: boolean) {
-    this.isComplete = isComplete;
-  }
-
-  get title() {
+  get titleMarkdown() {
     return 'Submit changes';
   }
 }
@@ -50,13 +69,22 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @service declare store: Store;
 
   @tracked uncommentCodeStepWasMarkedAsComplete = false;
+  @tracked navigateToFileStepWasMarkedAsComplete = false;
 
   get allStepsAreComplete() {
     return this.args.repository.stageIsComplete(this.args.courseStage);
   }
 
+  get navigateToFileStepIsComplete() {
+    return this.navigateToFileStepWasMarkedAsComplete || this.uncommentCodeStepIsComplete;
+  }
+
   get steps() {
-    return [new UncommentCodeStep(this.uncommentCodeStepIsComplete), new SubmitCodeStep(this.allStepsAreComplete)];
+    return [
+      new NavigateToFileStep(this.args.repository, this.navigateToFileStepIsComplete),
+      new UncommentCodeStep(this.args.repository, this.uncommentCodeStepIsComplete),
+      new SubmitCodeStep(this.args.repository, this.allStepsAreComplete),
+    ];
   }
 
   get uncommentCodeStepIsComplete() {
@@ -65,8 +93,13 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
 
   @action
   handleStepCompletedManually(step: Step) {
+    if (step.id === 'navigate-to-file') {
+      this.navigateToFileStepWasMarkedAsComplete = true;
+    }
+
     if (step.id === 'uncomment-code') {
       this.uncommentCodeStepWasMarkedAsComplete = true;
+      this.navigateToFileStepWasMarkedAsComplete = true;
     }
   }
 
