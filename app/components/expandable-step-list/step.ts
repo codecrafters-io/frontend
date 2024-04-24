@@ -10,8 +10,8 @@ type Signature = {
     isExpanded: boolean;
     isFirstIncompleteStep: boolean;
     number: number;
+    nextIncompleteStep: Step | null;
     onCollapse: () => void;
-    onExpand: () => void;
     onManualComplete: () => void;
     step: Step;
   };
@@ -26,13 +26,6 @@ export default class StepComponent extends Component<Signature> {
   handleCollapseButtonClick() {
     next(() => {
       this.args.onCollapse();
-    });
-  }
-
-  @action
-  handleExpandButtonClick() {
-    next(() => {
-      this.args.onExpand();
     });
   }
 }

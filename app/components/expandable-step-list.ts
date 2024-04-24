@@ -23,7 +23,6 @@ interface Signature {
     default: [
       {
         expandedStep: Step | null;
-        expandNextStep: () => void;
       },
     ];
   };
@@ -41,20 +40,20 @@ export default class ExpandableStepListComponent extends Component<Signature> {
     return this.args.steps.find((step) => !step.isComplete) ?? null;
   }
 
-  get nextStepAfterExpandedStep(): Step | null {
+  get nextIncompleteStep(): Step | null {
     if (!this.expandedStep) {
-      return null;
+      return this.firstIncompleteStep;
     }
 
-    const stepIndex = this.args.steps.indexOf(this.expandedStep);
+    const expandedStepIndex = this.args.steps.indexOf(this.expandedStep);
 
-    return this.args.steps[stepIndex + 1] || null;
+    return this.args.steps.slice(expandedStepIndex + 1).find((step) => !step.isComplete) ?? null;
   }
 
   @action
-  expandNextStep() {
-    if (this.nextStepAfterExpandedStep) {
-      this.#expandStepAndScrollContainerIntoView(this.nextStepAfterExpandedStep);
+  expandNextIncompleteStep() {
+    if (this.nextIncompleteStep) {
+      this.#expandStepAndScrollContainerIntoView(this.nextIncompleteStep);
     } else {
       this.expandedStepId = null;
     }
@@ -76,17 +75,15 @@ export default class ExpandableStepListComponent extends Component<Signature> {
   @action
   handleNextStepButtonClick() {
     next(() => {
-      this.expandNextStep();
+      this.expandNextIncompleteStep();
     });
   }
 
   @action
-  handleStepCollapse(collapsedStep: Step) {
-    if (this.firstIncompleteStep && this.firstIncompleteStep.id !== collapsedStep.id) {
-      this.#expandStepAndScrollContainerIntoView(this.firstIncompleteStep);
-    } else {
-      this.expandedStepId = null;
-    }
+  handleStepCollapse(_collapsedStep: Step) {
+    next(() => {
+      this.expandNextIncompleteStep();
+    });
   }
 
   @action
@@ -95,11 +92,22 @@ export default class ExpandableStepListComponent extends Component<Signature> {
       this.args.onManualStepComplete(step);
     }
 
-    this.expandNextStep();
+    next(() => {
+      this.expandNextIncompleteStep();
+    });
   }
 
   @action
   handleStepExpand(step: Step) {
+    if (this.expandedStepId === step.id) {
+      return;
+    }
+
+    // Don't allow expanding incomplete steps other than the first incomplete step
+    if (!step.isComplete && step.id !== this.firstIncompleteStep?.id) {
+      return;
+    }
+
     this.#expandStepAndScrollContainerIntoView(step);
   }
 }
