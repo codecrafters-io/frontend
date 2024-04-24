@@ -1,9 +1,5 @@
 {{! template-lint-disable no-invalid-interactive }}
-<div
-  class="py-2 px-1 {{if @isExpanded 'pb-6' 'cursor-pointer hover:bg-gray-50'}}"
-  data-test-expandable-step-list-step
-  ...attributes
->
+<div class="py-2 px-1 {{if @isExpanded 'pb-6' 'cursor-pointer hover:bg-gray-50'}}" data-test-expandable-step-list-step ...attributes>
   <div class="{{if @isExpanded 'mb-3' ''}} flex items-center gap-2">
     <div class="flex items-center gap-1">
       <div class="prose {{if @step.isComplete 'opacity-50'}}" data-test-step-title>
@@ -28,13 +24,13 @@
           <span>Mark as complete</span>
         </div>
       </PrimaryButton>
-    {{else if (and @isExpanded (not @isFirstIncompleteStep))}}
-      <TertiaryButton @size="extra-small" {{on "click" this.handleCollapseButtonClick}}>
-        <div class="font-bold flex items-center gap-1">
-          {{svg-jar "arrow-up" class="w-3 fill-current"}}
-          Collapse
+    {{else if (and @isExpanded @step.isComplete @nextIncompleteStep)}}
+      <PrimaryButton {{on "click" @onCollapse}} @size="extra-small">
+        <div class="flex items-center gap-1">
+          {{svg-jar "arrow-down" class="w-3 h-3"}}
+          <span>Next Step</span>
         </div>
-      </TertiaryButton>
+      </PrimaryButton>
     {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
       <PrimaryButton @size="extra-small">
         <div class="font-bold flex items-center gap-1">
@@ -54,6 +50,13 @@
           <div class="flex items-center gap-2">
             {{svg-jar "check-circle" class="w-6 h-6"}}
             <span>Mark as complete</span>
+          </div>
+        </PrimaryButton>
+      {{else if (and @step.isComplete @nextIncompleteStep)}}
+        <PrimaryButton {{on "click" @onCollapse}} class="mt-4" data-test-complete-step-button>
+          <div class="flex items-center gap-2">
+            {{svg-jar "arrow-down" class="w-4 h-4"}}
+            <span>Next Step</span>
           </div>
         </PrimaryButton>
       {{/if}}

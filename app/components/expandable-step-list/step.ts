@@ -10,6 +10,7 @@ type Signature = {
     isExpanded: boolean;
     isFirstIncompleteStep: boolean;
     number: number;
+    nextIncompleteStep: Step | null;
     onCollapse: () => void;
     onManualComplete: () => void;
     step: Step;

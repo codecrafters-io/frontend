@@ -80,12 +80,10 @@ export default class ExpandableStepListComponent extends Component<Signature> {
   }
 
   @action
-  handleStepCollapse(collapsedStep: Step) {
-    if (this.firstIncompleteStep && this.firstIncompleteStep.id !== collapsedStep.id) {
-      this.#expandStepAndScrollContainerIntoView(this.firstIncompleteStep);
-    } else {
-      this.expandedStepId = null;
-    }
+  handleStepCollapse(_collapsedStep: Step) {
+    next(() => {
+      this.expandNextIncompleteStep();
+    });
   }
 
   @action
