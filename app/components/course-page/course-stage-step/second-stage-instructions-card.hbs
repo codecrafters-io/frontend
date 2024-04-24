@@ -9,67 +9,28 @@
         <b class="text-teal-600">98%</b>
         of users who attempt this stage complete it.
       </p>
-
-      <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
-        {{#if (eq stepList.expandedStep.id "read-instructions")}}
-          <CoursePage::CourseStageStep::SecondStageInstructionsCard::ReadInstructionsStep
-            @repository={{@repository}}
-            @courseStage={{@courseStage}}
-            @isComplete={{this.readInstructionsStepIsComplete}}
-          />
-        {{else if (eq stepList.expandedStep.id "implement-solution")}}
-          {{!-- <CoursePage::CourseStageStep::SecondStageInstructionsCard::ImplementSolutionStep
-            @repository={{@repository}}
-            @courseStage={{@courseStage}}
-            @isComplete={{this.uncommentCodeStepIsComplete}}
-          /> --}}
-        {{else if (eq stepList.expandedStep.id "run-tests")}}
-          {{!-- <CoursePage::CourseStageStep::SecondStageInstructionsCard::RunTestsStep
-            @repository={{@repository}}
-            @courseStage={{@courseStage}}
-            @isComplete={{this.runTestsStepIsComplete}}
-          /> --}}
-        {{else if (eq stepList.expandedStep.id "mark-stage-as-complete")}}
-          {{!-- <CoursePage::CourseStageStep::SecondStageInstructionsCard::MarkStageAsCompleteStep
-            @repository={{@repository}}
-            @courseStage={{@courseStage}}
-            @isComplete={{this.markStageAsCompleteStepIsComplete}}
-          /> --}}
-        {{/if}}
-      </ExpandableStepList>
     </div>
 
-    {{!-- <p>
-        We recommend taking a look at the
-        <LinkTo @route="course.stage.code-examples" @model={{@courseStage.position}} class="font-semibold underline">Code Examples</LinkTo>
-        tab, which contains code examples from other users.
-      </p>
-
-      {{#if (gt @courseStage.screencasts.length 0)}}
-        <p>
-          If you prefer more detailed video walkthroughs, take a look at the
-          <LinkTo
-            @route="course.stage.screencasts"
-            @model={{@courseStage.position}}
-            class="font-semibold underline"
-            data-test-screencasts-link
-          >Screencasts</LinkTo>
-          tab.
-        </p>
+    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
+      {{#if (eq stepList.expandedStep.id "read-instructions")}}
+        <CoursePage::CourseStageStep::SecondStageInstructionsCard::ReadInstructionsStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.readInstructionsStepIsComplete}}
+        />
+      {{else if (eq stepList.expandedStep.id "implement-solution")}}
+        <CoursePage::CourseStageStep::SecondStageInstructionsCard::ImplementSolutionStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.implementSolutionStepIsComplete}}
+        />
+      {{else if (eq stepList.expandedStep.id "run-tests")}}
+        <CoursePage::CourseStageStep::SecondStageInstructionsCard::RunTestsStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.runTestsStepIsComplete}}
+        />
       {{/if}}
-    </div>
-
-    <div class="prose mb-3">
-      <p>
-        <b>Step 2:</b>
-        Commit and push your changes.
-      </p>
-
-      <p>
-        Run the following commands to submit your changes:
-      </p>
-    </div>
-
-    <CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass 2nd stage' # any msg" "git push origin master"}} /> --}}
+    </ExpandableStepList>
   </:content>
 </CoursePage::InstructionsCard>

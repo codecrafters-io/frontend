@@ -102,7 +102,7 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   }
 
   get uncommentCodeStepIsComplete() {
-    return this.uncommentCodeStepWasMarkedAsComplete || this.args.repository.stageIsComplete(this.args.courseStage);
+    return this.uncommentCodeStepWasMarkedAsComplete || this.submitCodeStepIsComplete;
   }
 
   @action

@@ -54,15 +54,6 @@ class RunTestsStep extends BaseStep implements Step {
   }
 }
 
-class MarkStageAsCompleteStep extends BaseStep implements Step {
-  id = 'mark-stage-as-complete';
-  canBeCompletedManually = false;
-
-  get titleMarkdown() {
-    return 'Mark stage as complete';
-  }
-}
-
 export default class SecondStageInstructionsCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
@@ -71,11 +62,11 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   @tracked implementSolutionStepWasMarkedAsComplete = false;
 
   get implementSolutionStepIsComplete() {
-    return this.implementSolutionStepWasMarkedAsComplete || this.runTestsStepIsComplete;
-  }
-
-  get markStageAsCompleteStepIsComplete() {
-    return this.args.repository.stageIsComplete(this.args.courseStage);
+    return (
+      this.implementSolutionStepWasMarkedAsComplete ||
+      this.runTestsStepIsComplete ||
+      this.args.repository.lastSubmission?.courseStage === this.args.courseStage // Run tests (in progress)
+    );
   }
 
   get readInstructionsStepIsComplete() {
@@ -84,7 +75,7 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
 
   get runTestsStepIsComplete() {
     return (
-      this.markStageAsCompleteStepIsComplete ||
+      this.args.repository.stageIsComplete(this.args.courseStage) ||
       (this.args.repository.lastSubmissionHasSuccessStatus && this.args.repository.lastSubmission.courseStage === this.args.courseStage)
     );
   }
@@ -94,7 +85,6 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
       new ReadInstructionsStep(this.args.repository, this.readInstructionsStepIsComplete),
       new ImplementSolutionStep(this.args.repository, this.implementSolutionStepIsComplete),
       new RunTestsStep(this.args.repository, this.runTestsStepIsComplete),
-      new MarkStageAsCompleteStep(this.args.repository, this.markStageAsCompleteStepIsComplete),
     ];
   }
 

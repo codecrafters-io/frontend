@@ -1,0 +1,12 @@
+<PrimaryButtonWithSpinner
+  @shouldShowSpinner={{this.isCreatingStageCompletion}}
+  {{! TODO: Ensure tests status is success }}
+  @isDisabled={{false}}
+  {{on "click" this.handleCreateStageCompletionButtonClick}}
+  data-test-mark-stage-as-complete-button
+>
+  <div class="flex items-center gap-2">
+    {{svg-jar "check-circle" class="w-6 h-6"}}
+    <span>Mark stage as complete</span>
+  </div>
+</PrimaryButtonWithSpinner>
