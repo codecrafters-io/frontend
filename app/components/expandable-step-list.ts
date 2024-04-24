@@ -100,6 +100,10 @@ export default class ExpandableStepListComponent extends Component<Signature> {
 
   @action
   handleStepExpand(step: Step) {
+    if (this.expandedStepId === step.id) {
+      return;
+    }
+
     this.#expandStepAndScrollContainerIntoView(step);
   }
 }

@@ -5,9 +5,9 @@
       @isFirstIncompleteStep={{eq step.id this.firstIncompleteStep.id}}
       @number={{add stepIndex 1}}
       @onCollapse={{fn this.handleStepCollapse step}}
-      @onExpand={{fn this.handleStepExpand step}}
       @onManualComplete={{fn this.handleStepCompletedManually step}}
       @step={{step}}
+      {{on "click" (fn this.handleStepExpand step)}}
     >
       {{#if (eq step.id this.expandedStepId)}}
         <div class={{@stepContainerClass}}>
