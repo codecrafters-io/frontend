@@ -1,19 +1,23 @@
-<CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-instructions-card" ...attributes>
+<CoursePage::InstructionsCard @title="Tutorial" id="first-stage-instructions-card" ...attributes>
   <:content>
     <div class="prose mb-5">
-      <p>
-        CodeCrafters runs tests when you submit code. Your first push should have streamed back a
-        <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
-        error — that's expected. Once you implement this stage, you'll pass the test!
-      </p>
-
       <p>
         Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
         submit your changes.
       </p>
     </div>
 
-    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32 mb-5" as |stepList|>
+    <div class="prose prose-sm prose-compact mb-5">
+      <p>
+        {{svg-jar "information-circle" class="w-5 h-5 mb-0.5 inline-flex text-sky-500"}}
+        <b>Note:</b>
+        After your first Git push, you should see
+        <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+        in the bar above this card. This is expected! Complete the steps below to pass the tests.
+      </p>
+    </div>
+
+    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
       {{#if (eq stepList.expandedStep.id "uncomment-code")}}
         <CoursePage::CourseStageStep::FirstStageInstructionsCard::UncommentCodeStep
           @repository={{@repository}}
@@ -21,49 +25,8 @@
           @isComplete={{this.uncommentCodeStepIsComplete}}
         />
       {{else if (eq stepList.expandedStep.id "submit-code")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep />
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep @isComplete={{this.allStepsAreComplete}} />
       {{/if}}
     </ExpandableStepList>
-
-    <div class="prose mb-5">
-      <p class={{if this.allStepsAreComplete "line-through"}}>
-        Once you complete the steps above, the
-        <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
-        message below will change to
-        <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
-      </p>
-    </div>
-
-    {{#if this.allStepsAreComplete}}
-      <p class="text-gray-600 mt-4">
-        <span class="text-xl mr-1">🎉</span>
-        First stage passed!
-      </p>
-
-      <PrimaryLinkButton
-        class="mt-4"
-        @size="large"
-        @route={{this.coursePageState.activeStep.routeParams.route}}
-        @models={{this.coursePageState.activeStep.routeParams.models}}
-        data-test-continue-button
-      >
-        Continue →
-      </PrimaryLinkButton>
-    {{else}}
-      <div class="px-3 py-2 bg-gray-50 inline-flex items-center gap-2 flex-wrap rounded border border-gray-300 mb-5">
-        <div class="text-xs font-semibold uppercase text-gray-400">
-          Test Runner:
-        </div>
-
-        <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @shouldHideExplanationTooltip={{true}} />
-      </div>
-
-      <p class="prose prose-sm">
-        <b>Note:</b>
-        If you're still seeing "Tests failed" after completing the steps above,
-        <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
-        to troubleshoot.
-      </p>
-    {{/if}}
   </:content>
 </CoursePage::InstructionsCard>

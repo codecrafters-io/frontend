@@ -4,7 +4,7 @@
       Test Runner:
     </div>
 
-    <CoursePage::StepProgressIndicator @step={{@currentStep}} />
+    <CoursePage::StepProgressIndicator @step={{@currentStep}} @shouldHideExplanationTooltip={{true}} />
   </div>
   <div>
     {{#if (and @isExpanded @isCollapsible)}}

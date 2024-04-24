@@ -37,8 +37,6 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    await this.pauseTest();
-
     await coursePage.firstStageInstructionsCard.scrollIntoView();
 
     assert.notOk(coursePage.firstStageInstructionsCard.steps[0].isComplete, 'First step is not complete');
