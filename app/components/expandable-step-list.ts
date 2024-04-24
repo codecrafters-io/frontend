@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 
 export interface Step {
   id: string;
-  title: string;
+  titleMarkdown: string;
   isComplete: boolean;
   canBeCompletedManually: boolean;
 }

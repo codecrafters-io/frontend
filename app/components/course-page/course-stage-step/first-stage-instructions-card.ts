@@ -19,9 +19,11 @@ interface Signature {
 
 class BaseStep {
   isComplete: boolean;
+  repository: RepositoryModel;
 
-  constructor(isComplete: boolean) {
+  constructor(repository: RepositoryModel, isComplete: boolean) {
     this.isComplete = isComplete;
+    this.repository = repository;
   }
 }
 
@@ -29,8 +31,18 @@ class NavigateToFileStep extends BaseStep implements Step {
   id = 'navigate-to-file';
   canBeCompletedManually = true;
 
-  get title() {
-    return 'Navigate to file';
+  get titleMarkdown() {
+    if (!this.repository.firstStageSolution) {
+      return 'Navigate to README.md';
+    }
+
+    const filename = this.repository.firstStageSolution.changedFiles[0].filename;
+
+    if (filename) {
+      return `Navigate to ${filename}`;
+    } else {
+      return 'Navigate to file';
+    }
   }
 }
 
@@ -38,7 +50,7 @@ class UncommentCodeStep extends BaseStep implements Step {
   id = 'uncomment-code';
   canBeCompletedManually = true;
 
-  get title() {
+  get titleMarkdown() {
     return 'Uncomment code';
   }
 }
@@ -47,7 +59,7 @@ class SubmitCodeStep extends BaseStep implements Step {
   id = 'submit-code';
   canBeCompletedManually = false;
 
-  get title() {
+  get titleMarkdown() {
     return 'Submit changes';
   }
 }
@@ -69,9 +81,9 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
 
   get steps() {
     return [
-      new NavigateToFileStep(this.navigateToFileStepIsComplete),
-      new UncommentCodeStep(this.uncommentCodeStepIsComplete),
-      new SubmitCodeStep(this.allStepsAreComplete),
+      new NavigateToFileStep(this.args.repository, this.navigateToFileStepIsComplete),
+      new UncommentCodeStep(this.args.repository, this.uncommentCodeStepIsComplete),
+      new SubmitCodeStep(this.args.repository, this.allStepsAreComplete),
     ];
   }
 

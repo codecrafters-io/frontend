@@ -80,7 +80,7 @@ module.exports = {
               fontWeight: 'normal',
               padding: '0.2em 0.4em',
               backgroundColor: colors.slate[100],
-              borderRadius: '5px',
+              borderRadius: '4px',
               whiteSpace: 'nowrap',
             },
             'code::before': { content: 'none' },

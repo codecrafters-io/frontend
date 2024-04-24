@@ -3,11 +3,7 @@
   <div class="{{if @isExpanded 'mb-3' ''}} flex items-center justify-between gap-2">
     <div class="flex items-center gap-1">
       <div class="prose {{if @step.isComplete 'opacity-50'}}" data-test-step-title>
-        <b>Step {{@number}}:</b>
-
-        <span>
-          {{@step.title}}
-        </span>
+        {{markdown-to-html (concat "**Step " @number "**: " @step.titleMarkdown)}}
       </div>
 
       {{#if @step.isComplete}}
