@@ -57,6 +57,10 @@ export default class CourseStageInstructionsController extends Controller {
     return this.currentStep.status !== 'complete' && !this.model.activeRepository.user.canAttemptCourseStage(this.model.courseStage);
   }
 
+  get testRunnerCardIsCollapsible() {
+    return this.currentStep.testsStatus !== 'passed' || this.currentStep.courseStage.isFirst;
+  }
+
   @action
   handleCommentListFilterToggled() {
     this.commentListIsFilteredByLanguage = !this.commentListIsFilteredByLanguage;

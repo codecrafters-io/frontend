@@ -33,6 +33,12 @@ export default class ExpandableStepListComponent extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
   @tracked expandedStepId: string | null = null;
 
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    this.expandedStepId = this.firstIncompleteStep?.id ?? null;
+  }
+
   get expandedStep(): Step | null {
     return this.args.steps.find((step) => step.id === this.expandedStepId) ?? null;
   }
