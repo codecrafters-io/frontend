@@ -64,9 +64,7 @@ export default class CourseStageStep extends Step {
     return `
 This failure is expected!
 
-CodeCrafters runs tests when you do a git push. Once you implement the stage, you'll pass the test!
-
-Check the [How to pass this stage](#first-stage-instructions-card) section for instructions.`.trim();
+Check the [Tutorial](#first-stage-instructions-card) section for instructions.`.trim();
   }
 
   get lastFailedSubmission() {
