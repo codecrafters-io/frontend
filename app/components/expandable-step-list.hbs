@@ -11,11 +11,11 @@
     >
       {{#if (eq step.id this.expandedStepId)}}
         <div class={{@stepContainerClass}}>
-          {{yield (hash expandedStep=this.expandedStep expandNextStep=this.expandNextStep)}}
+          {{yield (hash expandedStep=this.expandedStep)}}
         </div>
       {{/if}}
 
-      {{#if (and step.isComplete this.nextStepAfterExpandedStep)}}
+      {{#if (and step.isComplete this.nextIncompleteStep)}}
         <PrimaryButton {{on "click" this.handleNextStepButtonClick}} class="mt-4" data-test-complete-step-button>
           <div class="flex items-center gap-2">
             {{svg-jar "arrow-down" class="w-4 h-4"}}
