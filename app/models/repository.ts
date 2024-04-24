@@ -18,11 +18,16 @@ import { memberAction } from 'ember-api-actions';
 import type AutofixRequestModel from './autofix-request';
 import type CourseExtensionModel from './course-extension';
 import type CourseStageSolutionModel from './course-stage-solution';
+import { service } from '@ember/service';
+import type Store from '@ember-data/store';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
 
 export default class RepositoryModel extends Model {
+  @service declare store: Store;
+
   static expectedActivityFrequencyMappings = {
     every_day: 'Every day',
     few_times_a_week: 'Few times a week',
@@ -199,6 +204,13 @@ export default class RepositoryModel extends Model {
     return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
   }
 
+  async refreshStateFromServer() {
+    return await this.store.query('repository', {
+      course_id: this.course.id,
+      include: RepositoryPoller.defaultIncludedResources,
+    });
+  }
+
   stageCompletedAt(courseStage: CourseStageModel) {
     if (!this.stageList) {
       return null;
@@ -210,7 +222,9 @@ export default class RepositoryModel extends Model {
   }
 
   stageIsComplete(courseStage: CourseStageModel) {
-    return !!this.courseStageCompletionFor(courseStage);
+    const courseStageCompletion = this.courseStageCompletionFor(courseStage);
+
+    return !!(courseStageCompletion && !courseStageCompletion.isNew);
   }
 
   declare fork: (this: Model, payload: unknown) => Promise<{ data: { id: string } }>;

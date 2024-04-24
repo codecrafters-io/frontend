@@ -1,0 +1,33 @@
+<div class="prose mb-3">
+  <p class={{if @isComplete "line-through"}}>
+    You can now mark
+    <b>{{@courseStage.name}}</b>
+    as complete! 🎉
+  </p>
+
+  <p>
+    We recommend reviewing the code you uncommented in the previous step. You'll need to build on it in the next stages.
+  </p>
+</div>
+
+{{#if @isComplete}}
+  <div class="prose">
+    <p>
+      🎉
+      <b class="text-teal-500 ml-1">Stage complete!</b>
+    </p>
+  </div>
+{{else}}
+  <PrimaryButtonWithSpinner
+    @shouldShowSpinner={{this.isCreatingStageCompletion}}
+    {{! TODO: Ensure tests status is success }}
+    @isDisabled={{false}}
+    {{on "click" this.handleCreateStageCompletionButtonClick}}
+    data-test-mark-stage-as-complete-button
+  >
+    <div class="flex items-center gap-2">
+      {{svg-jar "check-circle" class="w-6 h-6"}}
+      <span>Mark stage as complete</span>
+    </div>
+  </PrimaryButtonWithSpinner>
+{{/if}}

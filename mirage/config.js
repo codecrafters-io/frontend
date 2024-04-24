@@ -388,6 +388,13 @@ function routes() {
   this.patch('/course-stage-comments/:id');
   this.post('/course-stage-comments/:id/unvote', () => {});
 
+  this.post('/course-stage-completions', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.completedAt = new Date();
+
+    return schema.courseStageCompletions.create(attrs);
+  });
+
   this.get('/course-stage-language-guides');
 
   this.get('/course-tester-versions');
