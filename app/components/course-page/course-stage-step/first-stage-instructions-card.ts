@@ -17,28 +17,35 @@ interface Signature {
   };
 }
 
-class UncommentCodeStep implements Step {
-  id = 'uncomment-code';
+class BaseStep {
   isComplete: boolean;
-  canBeCompletedManually = true;
 
   constructor(isComplete: boolean) {
     this.isComplete = isComplete;
   }
+}
+
+class NavigateToFileStep extends BaseStep implements Step {
+  id = 'navigate-to-file';
+  canBeCompletedManually = true;
+
+  get title() {
+    return 'Navigate to file';
+  }
+}
+
+class UncommentCodeStep extends BaseStep implements Step {
+  id = 'uncomment-code';
+  canBeCompletedManually = true;
 
   get title() {
     return 'Uncomment code';
   }
 }
 
-class SubmitCodeStep implements Step {
+class SubmitCodeStep extends BaseStep implements Step {
   id = 'submit-code';
-  isComplete: boolean;
   canBeCompletedManually = false;
-
-  constructor(isComplete: boolean) {
-    this.isComplete = isComplete;
-  }
 
   get title() {
     return 'Submit changes';
@@ -50,13 +57,22 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @service declare store: Store;
 
   @tracked uncommentCodeStepWasMarkedAsComplete = false;
+  @tracked navigateToFileStepWasMarkedAsComplete = false;
 
   get allStepsAreComplete() {
     return this.args.repository.stageIsComplete(this.args.courseStage);
   }
 
+  get navigateToFileStepIsComplete() {
+    return this.navigateToFileStepWasMarkedAsComplete || this.uncommentCodeStepIsComplete;
+  }
+
   get steps() {
-    return [new UncommentCodeStep(this.uncommentCodeStepIsComplete), new SubmitCodeStep(this.allStepsAreComplete)];
+    return [
+      new NavigateToFileStep(this.navigateToFileStepIsComplete),
+      new UncommentCodeStep(this.uncommentCodeStepIsComplete),
+      new SubmitCodeStep(this.allStepsAreComplete),
+    ];
   }
 
   get uncommentCodeStepIsComplete() {
@@ -65,8 +81,13 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
 
   @action
   handleStepCompletedManually(step: Step) {
+    if (step.id === 'navigate-to-file') {
+      this.navigateToFileStepWasMarkedAsComplete = true;
+    }
+
     if (step.id === 'uncomment-code') {
       this.uncommentCodeStepWasMarkedAsComplete = true;
+      this.navigateToFileStepWasMarkedAsComplete = true;
     }
   }
 

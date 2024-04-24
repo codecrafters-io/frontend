@@ -17,6 +17,8 @@ import { cached } from '@glimmer/tracking';
 import { memberAction } from 'ember-api-actions';
 import type AutofixRequestModel from './autofix-request';
 import type CourseExtensionModel from './course-extension';
+import type CommunityCourseStageSolutionModel from './community-course-stage-solution';
+import type CourseStageSolutionModel from './course-stage-solution';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
@@ -111,6 +113,14 @@ export default class RepositoryModel extends Model {
   // TODO: Only to bypass TS checks - find out how to use RepositoryModel#expectedActivityFrequencyMappings directly in a .hbs templates
   get expectedActivityFrequencyMappings() {
     return RepositoryModel.expectedActivityFrequencyMappings;
+  }
+
+  get firstStageSolution(): CourseStageSolutionModel | null {
+    if (!this.course.firstStage) {
+      return null;
+    }
+
+    return this.course.firstStage.solutions.find((solution) => solution.language === this.language) || null;
   }
 
   get firstSubmissionCreated() {
