@@ -8,15 +8,23 @@
         @onExpand={{if @model.courseStage.isFirst this.handleTestRunnerCardExpandedOnFirstStage undefined}}
       />
 
-      {{#if (and @model.courseStage.isFirst (eq this.currentStep.testsStatus "failed"))}}
+      {{#if @model.courseStage.isFirst}}
         {{! @glint-expect-error: not ts-ified }}
         <EmberPopover @popperContainer="body">
           <div class="prose prose-sm prose-invert text-white">
-            <p>
-              This failure is expected! Check the
-              <a href="#first-stage-instructions-card">Tutorial</a>
-              section for instructions.
-            </p>
+            {{#if (eq this.currentStep.testsStatus "failed")}}
+              <p>
+                This failure is expected! Check the
+                <a href="#first-stage-instructions-card">Tutorial</a>
+                section for instructions.
+              </p>
+            {{else}}
+              <p>
+                Check the
+                <a href="#first-stage-instructions-card">Tutorial</a>
+                section for instructions.
+              </p>
+            {{/if}}
           </div>
         </EmberPopover>
       {{/if}}
