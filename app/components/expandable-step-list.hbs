@@ -1,20 +1,26 @@
 <div class="divide-y divide-gray-200 border-t border-b" {{did-insert this.handleDidInsertContainer}} ...attributes>
   {{#each @steps as |step stepIndex|}}
-    <ExpandableStepList::Step
-      @isExpanded={{eq this.expandedStepId step.id}}
-      @isFirstIncompleteStep={{eq step.id this.firstIncompleteStep.id}}
-      @nextIncompleteStep={{this.nextIncompleteStep}}
-      @number={{add stepIndex 1}}
-      @onCollapse={{fn this.handleStepCollapse step}}
-      @onManualComplete={{fn this.handleStepCompletedManually step}}
-      @step={{step}}
-      {{on "click" (fn this.handleStepExpand step)}}
-    >
-      {{#if (eq step.id this.expandedStepId)}}
-        <div class={{@stepContainerClass}}>
-          {{yield (hash expandedStep=this.expandedStep)}}
-        </div>
+    <div>
+      <ExpandableStepList::Step
+        @isExpanded={{eq this.expandedStepId step.id}}
+        @isFirstIncompleteStep={{eq step.id this.firstIncompleteStep.id}}
+        @nextIncompleteStep={{this.nextIncompleteStep}}
+        @number={{add stepIndex 1}}
+        @onCollapse={{fn this.handleStepCollapse step}}
+        @onManualComplete={{fn this.handleStepCompletedManually step}}
+        @step={{step}}
+        {{on "click" (fn this.handleStepExpand step)}}
+      >
+        {{#if (eq step.id this.expandedStepId)}}
+          <div class={{@stepContainerClass}}>
+            {{yield (hash expandedStep=this.expandedStep)}}
+          </div>
+        {{/if}}
+      </ExpandableStepList::Step>
+
+      {{#if (and (not step.isComplete) (not-eq step.id this.firstIncompleteStep.id))}}
+        <EmberTooltip @text="Complete previous steps to expand this step" />
       {{/if}}
-    </ExpandableStepList::Step>
+    </div>
   {{/each}}
 </div>

@@ -103,6 +103,11 @@ export default class ExpandableStepListComponent extends Component<Signature> {
       return;
     }
 
+    // Don't allow expanding incomplete steps other than the first incomplete step
+    if (!step.isComplete && step.id !== this.firstIncompleteStep?.id) {
+      return;
+    }
+
     this.#expandStepAndScrollContainerIntoView(step);
   }
 }
