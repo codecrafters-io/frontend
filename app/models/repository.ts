@@ -17,7 +17,6 @@ import { cached } from '@glimmer/tracking';
 import { memberAction } from 'ember-api-actions';
 import type AutofixRequestModel from './autofix-request';
 import type CourseExtensionModel from './course-extension';
-import type CommunityCourseStageSolutionModel from './community-course-stage-solution';
 import type CourseStageSolutionModel from './course-stage-solution';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
