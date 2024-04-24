@@ -1,7 +1,7 @@
-import { action } from '@ember/object';
-import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import type { Step } from '../expandable-step-list';
+import { action } from '@ember/object';
+import { next } from '@ember/runloop';
 
 type Signature = {
   Element: HTMLDivElement;

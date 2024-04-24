@@ -88,11 +88,13 @@ export default class ExpandableStepListComponent extends Component<Signature> {
 
   @action
   handleStepCompletedManually(step: Step) {
-    this.expandNextIncompleteStep();
+    next(() => {
+      this.expandNextIncompleteStep();
 
-    if (this.args.onManualStepComplete) {
-      this.args.onManualStepComplete(step);
-    }
+      if (this.args.onManualStepComplete) {
+        this.args.onManualStepComplete(step);
+      }
+    });
   }
 
   @action

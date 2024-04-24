@@ -1,5 +1,5 @@
 <div class="divide-y divide-gray-200 border-t border-b" {{did-insert this.handleDidInsertContainer}} ...attributes>
-  {{#each @steps as |step stepIndex|}}
+  {{#each @steps key="id" as |step stepIndex|}}
     <div>
       <ExpandableStepList::Step
         @isExpanded={{eq this.expandedStepId step.id}}
