@@ -2,7 +2,7 @@
   <:content>
     <div class="prose mb-5">
       <p>
-        In this stage, you'll be writing your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.
+        In this stage, you'll implement your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.
       </p>
 
       <p>
@@ -12,11 +12,11 @@
 
       <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
         {{#if (eq stepList.expandedStep.id "read-instructions")}}
-          {{!-- <CoursePage::CourseStageStep::SecondStageInstructionsCard::ReadInstructionsStep
+          <CoursePage::CourseStageStep::SecondStageInstructionsCard::ReadInstructionsStep
             @repository={{@repository}}
             @courseStage={{@courseStage}}
-            @isComplete={{this.navigateToFileStepIsComplete}}
-          /> --}}
+            @isComplete={{this.readInstructionsStepIsComplete}}
+          />
         {{else if (eq stepList.expandedStep.id "implement-solution")}}
           {{!-- <CoursePage::CourseStageStep::SecondStageInstructionsCard::ImplementSolutionStep
             @repository={{@repository}}
