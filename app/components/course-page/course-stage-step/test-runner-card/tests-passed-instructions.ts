@@ -9,11 +9,7 @@ interface Signature {
   };
 }
 
-export default class TestsPassedInstructionsComponent extends Component<Signature> {
-  get shouldShowRefactorCodeInstructions() {
-    return !this.args.currentStep.courseStage.isFirst;
-  }
-}
+export default class TestsPassedInstructionsComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
