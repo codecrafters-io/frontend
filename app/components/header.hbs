@@ -73,10 +73,10 @@
             <Header::VipBadge class="mr-3" />
           {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
             <Header::FreeWeeksLeftButton class="mr-3" />
-          {{else if this.billingStatusDisplay.shouldShowSubscribeButton}}
+          {{else if this.billingStatusDisplay.shouldShowUpgradeButton}}
             <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-subscribe-button>
               <span class="flex items-center gap-x-1">
-                <span>Subscribe</span>
+                <span>Upgrade</span>
                 {{svg-jar "lock-open" class="w-4"}}
               </span>
             </PrimaryLinkButton>
@@ -84,8 +84,17 @@
 
           <Header::AccountDropdown />
         {{else}}
-          {{! @glint-expect-error not ts-ified yet }}
-          <Header::SignInWithGithubButton />
+          <div class="flex items-center ml-6">
+            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-subscribe-button>
+              <span class="flex items-center gap-x-1">
+                <span>Subscribe</span>
+                {{svg-jar "lock-open" class="w-4"}}
+              </span>
+            </PrimaryLinkButton>
+
+            {{! @glint-expect-error not ts-ified yet }}
+            <Header::SignInWithGithubButton />
+          </div>
         {{/if}}
       </div>
     </div>
