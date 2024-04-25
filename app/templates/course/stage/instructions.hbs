@@ -22,13 +22,13 @@
   {{#if this.shouldShowTestRunnerCard}}
     <div class="mb-6">
       <CoursePage::CourseStageStep::TestRunnerCard
-        @isCollapsible={{or this.shouldSupressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
+        @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
         @repository={{@model.activeRepository}}
         @stage={{@model.courseStage}}
-        @onExpand={{if this.shouldSupressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
+        @onExpand={{if this.shouldSuppressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
       />
 
-      {{#if @model.courseStage.isFirst}}
+      {{#if this.shouldSuppressTestRunnerCardExpands}}
         {{! @glint-expect-error: not ts-ified }}
         <EmberPopover @popperContainer="body">
           <div class="prose prose-sm prose-invert text-white">

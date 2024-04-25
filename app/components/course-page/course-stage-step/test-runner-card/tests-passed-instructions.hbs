@@ -1,4 +1,20 @@
-{{#if this.shouldShowRefactorCodeInstructions}}
+{{#if @currentStep.courseStage.isFirst}}
+  <div>
+    <div class="prose prose-sm prose-compact mb-3">
+      <p>
+        You can now mark
+        <b>{{@currentStep.courseStage.name}}</b>
+        as complete! 🎉
+      </p>
+
+      <p>
+        We recommend reviewing the code you just uncommented. You'll need to build on it in the next stages.
+      </p>
+    </div>
+
+    <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
+  </div>
+{{else}}
   <div class="prose prose-sm prose-compact mb-3">
     <p>
       You can either refactor your code or move on the next step. You can now move on to the next step!
@@ -19,13 +35,5 @@
     </div>
 
     <CoursePage::CourseStageStep::TestRunnerCard::RefactorCodeInstructions @currentStep={{@currentStep}} />
-  </div>
-{{else}}
-  <div>
-    <div class="prose prose-sm prose-compact mb-3">
-      <h4>🎉 You can now move on to the next step!</h4>
-    </div>
-
-    <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
   </div>
 {{/if}}
