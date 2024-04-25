@@ -3,7 +3,6 @@ import config from 'codecrafters-frontend/config/environment';
 import getOrCreateCachedHighlighterPromise from 'codecrafters-frontend/utils/highlighter-cache';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
-import { transformerNotationDiff } from '@shikijs/transformers';
 import type { SafeString } from '@ember/template/-private/handlebars';
 
 export type Signature = {
@@ -28,16 +27,9 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
       langs: [this.args.language],
     });
 
-    // const lineOptions = (this.args.highlightedLines || '')
-    //   .split(',')
-    //   .flatMap((lineOrBlock) => [{ line: parseInt(lineOrBlock), classes: ['highlighted'] }]);
-
     highlighterPromise
       .then((highlighter) => {
-        // this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.trimmedCode, { lang: this.args.language, lineOptions: lineOptions }));
-        this.asyncHighlightedHTML = htmlSafe(
-          highlighter.codeToHtml(this.trimmedCode, { lang: this.args.language, theme: this.args.theme, transformers: [transformerNotationDiff()] }),
-        );
+        this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.trimmedCode, { lang: this.args.language, theme: this.args.theme }));
         // this.asyncHighlightedHTML = this.temporaryHTML;
       })
       .catch((error) => {
