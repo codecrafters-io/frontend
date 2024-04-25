@@ -32,6 +32,14 @@
 
       gtag('config', 'G-N8D6K4M2HE');
     </script>
+
+    <script>
+      import posthog from 'posthog-js';
+
+      if (window.location.hostname === 'codecrafters.io') {
+        posthog.init('phc_jCl1mm3XbnvyIUr4h54oORqWEqj37gxhZIOebREBwxb', { api_host: 'https://app.posthog.com' });
+      }
+    </script>
   </head>
   <body style="margin: 0; background-color: rgb(248 250 252)">
     <div class="ember-load-indicator">
