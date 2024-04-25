@@ -20,6 +20,10 @@ export default {
 
   scope: '[data-test-header]',
 
+  subscribeButton: {
+    scope: '[data-test-subscribe-button]',
+  },
+
   upgradeButton: {
     scope: '[data-test-upgrade-button]',
   },
