@@ -77,15 +77,16 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
-  @tracked uncommentCodeStepWasMarkedAsComplete = false;
-  @tracked navigateToFileStepWasMarkedAsComplete = false;
-
   get markStageAsCompleteStepIsComplete() {
     return this.args.repository.stageIsComplete(this.args.courseStage);
   }
 
   get navigateToFileStepIsComplete() {
     return this.navigateToFileStepWasMarkedAsComplete || this.uncommentCodeStepIsComplete;
+  }
+
+  get navigateToFileStepWasMarkedAsComplete() {
+    return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('navigate-to-file');
   }
 
   get steps() {
@@ -105,15 +106,19 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
     return this.uncommentCodeStepWasMarkedAsComplete || this.submitCodeStepIsComplete;
   }
 
+  get uncommentCodeStepWasMarkedAsComplete() {
+    return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('uncomment-code');
+  }
+
   @action
   handleStepCompletedManually(step: Step) {
     if (step.id === 'navigate-to-file') {
-      this.navigateToFileStepWasMarkedAsComplete = true;
+      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
     }
 
     if (step.id === 'uncomment-code') {
-      this.uncommentCodeStepWasMarkedAsComplete = true;
-      this.navigateToFileStepWasMarkedAsComplete = true;
+      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('uncomment-code');
+      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
     }
   }
 
