@@ -24,20 +24,20 @@
 
 <div class="prose prose-sm prose-compact mb-3">
   <h4 class="mt-3">To move on to the next step:</h4>
-
-  <p>
-    Submit your code using Git:
-  </p>
 </div>
 
-<CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass stage'" "git push origin master"}} />
+{{#if @currentStep.repository.lastSubmissionCanBeUsedForStageCompletion}}
+  <div class="text-gray-700 mb-4 text-sm">
+    Click the button below to move on to the next step.
+  </div>
 
-{{! TODO: Revive this when we're handling regular git pushes}}
+  <CoursePage::CourseStageStep::MarkStageAsCompleteButton @courseStage={{@currentStep.courseStage}} @repository={{@currentStep.repository}} />
+{{else}}
+  <div class="prose prose-sm prose-compact mb-3">
+    <p>
+      Submit your code using Git:
+    </p>
+  </div>
 
-{{!-- <div class="text-gray-700 mb-4 text-sm">
-      Click the button below to move on to the next step.
-    </div>
-
-    <PrimaryButtonWithSpinner @shouldShowSpinner={{false}} @size="large">
-      Mark stage as complete →
-    </PrimaryButtonWithSpinner> --}}
+  <CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass stage'" "git push origin master"}} />
+{{/if}}

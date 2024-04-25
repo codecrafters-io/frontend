@@ -2,21 +2,29 @@
   {{#if this.shouldShowTestRunnerCard}}
     <div class="mb-6">
       <CoursePage::CourseStageStep::TestRunnerCard
-        @isCollapsible={{not-eq this.currentStep.testsStatus "passed"}}
+        @isCollapsible={{or @model.courseStage.isFirst (not-eq this.currentStep.testsStatus "passed")}}
         @repository={{@model.activeRepository}}
         @stage={{@model.courseStage}}
         @onExpand={{if @model.courseStage.isFirst this.handleTestRunnerCardExpandedOnFirstStage undefined}}
       />
 
-      {{#if (and @model.courseStage.isFirst (eq this.currentStep.testsStatus "failed"))}}
+      {{#if @model.courseStage.isFirst}}
         {{! @glint-expect-error: not ts-ified }}
         <EmberPopover @popperContainer="body">
           <div class="prose prose-sm prose-invert text-white">
-            <p>
-              This failure is expected! Check the
-              <a href="#first-stage-instructions-card">Tutorial</a>
-              section for instructions.
-            </p>
+            {{#if (eq this.currentStep.testsStatus "failed")}}
+              <p>
+                This failure is expected! Check the
+                <a href="#first-stage-instructions-card">How to pass this stage</a>
+                section for instructions.
+              </p>
+            {{else}}
+              <p>
+                Check the
+                <a href="#first-stage-instructions-card">How to pass this stage</a>
+                section for instructions.
+              </p>
+            {{/if}}
           </div>
         </EmberPopover>
       {{/if}}
@@ -32,9 +40,10 @@
     <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
   {{/if}}
 
-  {{#if this.shouldShowPrerequisites}}
+  {{! TODO: Bring this back? }}
+  {{!-- {{#if this.shouldShowPrerequisites}}
     <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
-  {{/if}}
+  {{/if}} --}}
 
   {{#if @model.courseStage.isFirst}}
     <CoursePage::CourseStageStep::FirstStageInstructionsCard
@@ -44,15 +53,15 @@
     />
   {{/if}}
 
-  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
-
   {{#if @model.courseStage.isSecond}}
     <CoursePage::CourseStageStep::SecondStageInstructionsCard
       @repository={{@model.activeRepository}}
       @courseStage={{@model.courseStage}}
-      class="mt-6"
+      class="mb-6"
     />
   {{/if}}
+
+  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
   {{#if this.shouldShowLanguageGuide}}
     <CoursePage::CourseStageStep::LanguageGuideCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />

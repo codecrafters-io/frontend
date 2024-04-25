@@ -64,6 +64,15 @@ class SubmitCodeStep extends BaseStep implements Step {
   }
 }
 
+class MarkStageAsCompleteStep extends BaseStep implements Step {
+  id = 'mark-stage-as-complete';
+  canBeCompletedManually = false;
+
+  get titleMarkdown() {
+    return 'Mark stage as complete';
+  }
+}
+
 export default class FirstStageInstructionsCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
@@ -71,7 +80,7 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @tracked uncommentCodeStepWasMarkedAsComplete = false;
   @tracked navigateToFileStepWasMarkedAsComplete = false;
 
-  get allStepsAreComplete() {
+  get markStageAsCompleteStepIsComplete() {
     return this.args.repository.stageIsComplete(this.args.courseStage);
   }
 
@@ -83,12 +92,17 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
     return [
       new NavigateToFileStep(this.args.repository, this.navigateToFileStepIsComplete),
       new UncommentCodeStep(this.args.repository, this.uncommentCodeStepIsComplete),
-      new SubmitCodeStep(this.args.repository, this.allStepsAreComplete),
+      new SubmitCodeStep(this.args.repository, this.submitCodeStepIsComplete),
+      new MarkStageAsCompleteStep(this.args.repository, this.markStageAsCompleteStepIsComplete),
     ];
   }
 
+  get submitCodeStepIsComplete() {
+    return this.markStageAsCompleteStepIsComplete || this.args.repository.lastSubmissionHasSuccessStatus;
+  }
+
   get uncommentCodeStepIsComplete() {
-    return this.uncommentCodeStepWasMarkedAsComplete || this.args.repository.stageIsComplete(this.args.courseStage);
+    return this.uncommentCodeStepWasMarkedAsComplete || this.submitCodeStepIsComplete;
   }
 
   @action

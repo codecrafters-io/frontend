@@ -1,50 +1,36 @@
-<CoursePage::InstructionsCard @title="How to pass this stage" ...attributes>
+<CoursePage::InstructionsCard @title="How to pass this stage" id="second-stage-instructions-card" ...attributes>
   <:content>
     <div class="prose mb-5">
       <p>
-        Welcome to Stage 2! Unlike stage 1, your repository doesn't contain commented code to pass this stage - you'll be writing your own. Don't
-        worry, this stage should be pretty easy. Almost everyone who attempts this stage passes it.
+        In this stage, you'll implement your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.
       </p>
 
       <p>
-        <b>Step 1:</b>
-        Implement your solution
+        <b class="text-teal-600">98%</b>
+        of users who attempt this stage complete it.
       </p>
+    </div>
 
-      <p>
-        We recommend taking a look at the
-        <LinkTo @route="course.stage.code-examples" @model={{@courseStage.position}} class="font-semibold underline">Code Examples</LinkTo>
-        tab, which contains code examples from other users.
-      </p>
-
-      {{#if (gt @courseStage.screencasts.length 0)}}
-        <p>
-          If you prefer more detailed video walkthroughs, take a look at the
-          <LinkTo
-            @route="course.stage.screencasts"
-            @model={{@courseStage.position}}
-            class="font-semibold underline"
-            data-test-screencasts-link
-          >Screencasts</LinkTo>
-          tab.
-        </p>
+    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
+      {{#if (eq stepList.expandedStep.id "read-instructions")}}
+        <CoursePage::CourseStageStep::SecondStageInstructionsCard::ReadInstructionsStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.readInstructionsStepIsComplete}}
+        />
+      {{else if (eq stepList.expandedStep.id "implement-solution")}}
+        <CoursePage::CourseStageStep::SecondStageInstructionsCard::ImplementSolutionStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.implementSolutionStepIsComplete}}
+        />
+      {{else if (eq stepList.expandedStep.id "run-tests")}}
+        <CoursePage::CourseStageStep::SecondStageInstructionsCard::RunTestsStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.runTestsStepIsComplete}}
+        />
       {{/if}}
-    </div>
-
-    <div class="prose mb-3">
-      <p>
-        <b>Step 2:</b>
-        Commit and push your changes.
-      </p>
-
-      <p>
-        Run the following commands to submit your changes:
-      </p>
-    </div>
-
-    <CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass 2nd stage' # any msg" "git push origin master"}} />
+    </ExpandableStepList>
   </:content>
-  <:footer>
-    <CoursePage::CourseStageStep::Card::Footer @repository={{@repository}} @courseStage={{@courseStage}} />
-  </:footer>
 </CoursePage::InstructionsCard>

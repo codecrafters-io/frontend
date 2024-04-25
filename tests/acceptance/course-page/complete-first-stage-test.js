@@ -66,7 +66,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
 
     await coursePage.firstStageInstructionsCard.clickOnCompleteStepButton();
 
-    this.server.create('submission', 'withStageCompletion', {
+    this.server.create('submission', 'withSuccessStatus', {
       repository: this.server.schema.repositories.find(1),
       courseStage: course.stages.models.toArray().find((stage) => stage.position === 1),
     });
@@ -80,6 +80,8 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageInstructionsCard.steps[1].isExpanded, 'Second step is collapsed');
     assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isExpanded, 'Third step is collapsed');
     assert.ok(coursePage.firstStageInstructionsCard.steps[2].isComplete, 'Third step is complete');
+
+    await coursePage.firstStageInstructionsCard.clickOnMarkStageAsCompleteButton();
 
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'header says stage completed');
   });

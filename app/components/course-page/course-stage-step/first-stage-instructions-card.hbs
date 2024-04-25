@@ -1,4 +1,4 @@
-<CoursePage::InstructionsCard @title="Tutorial" id="first-stage-instructions-card" ...attributes>
+<CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-instructions-card" ...attributes>
   <:content>
     <div class="prose mb-5">
       <p>
@@ -31,7 +31,13 @@
           @isComplete={{this.uncommentCodeStepIsComplete}}
         />
       {{else if (eq stepList.expandedStep.id "submit-code")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep @isComplete={{this.allStepsAreComplete}} />
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
+      {{else if (eq stepList.expandedStep.id "mark-stage-as-complete")}}
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::MarkStageAsCompleteStep
+          @repository={{@repository}}
+          @courseStage={{@courseStage}}
+          @isComplete={{this.markStageAsCompleteStepIsComplete}}
+        />
       {{/if}}
     </ExpandableStepList>
   </:content>
