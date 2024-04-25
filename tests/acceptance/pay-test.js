@@ -1,28 +1,38 @@
-/* eslint-disable qunit/require-expect */
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import windowMock from 'ember-window-mock';
-import { currentURL } from '@ember/test-helpers';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
+import { currentURL, visit } from '@ember/test-helpers';
+/* eslint-disable qunit/require-expect */
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import { setupWindowMock } from 'ember-window-mock/test-support';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
   setupWindowMock(hooks);
 
-  test('redirects to login page if user is not signed in', async function (assert) {
+  test('user can view the page even if not signed in', async function (assert) {
     testScenario(this.server);
 
-    assert.expect(2);
+    await payPage.visit();
 
-    try {
-      await payPage.visit();
-    } catch (e) {
-      assert.strictEqual(1, 1);
-    }
+    assert.strictEqual(currentURL(), '/pay');
+
+    await payPage.pricingCards[0].startPaymentButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Login via GitHub to start a membership.',
+    });
+  });
+
+  test('user is redirected to login page after clicking on start membership if not logged in', async function (assert) {
+    testScenario(this.server);
+
+    await payPage.visit();
+    await payPage.pricingCards[0].startPaymentButton.click();
 
     assert.strictEqual(
       windowMock.location.href,
@@ -152,5 +162,14 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.accountDropdown.clickOnLink('Logout');
 
     assert.strictEqual(currentURL(), '/catalog');
+  });
+
+  test('user should be redirected to /membership if user is authenticated and has an active subscription', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await visit('/pay');
+
+    assert.strictEqual(currentURL(), '/membership');
   });
 });

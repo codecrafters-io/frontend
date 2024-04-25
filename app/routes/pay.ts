@@ -12,6 +12,8 @@ export type ModelType = {
 };
 
 export default class PayRoute extends BaseRoute {
+  allowsAnonymousAccess = true;
+
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
@@ -24,11 +26,13 @@ export default class PayRoute extends BaseRoute {
 
     if (this.authenticator.currentUser && this.authenticator.currentUser.hasActiveSubscription) {
       this.router.transitionTo('membership');
+
+      return;
     }
 
     return {
       courses: await this.store.findAll('course'), // For testimonials
-      regionalDiscount: await this.store.createRecord('regional-discount').fetchCurrent(),
+      regionalDiscount: this.authenticator.currentUser ? await this.store.createRecord('regional-discount').fetchCurrent() : null,
     };
   }
 }
