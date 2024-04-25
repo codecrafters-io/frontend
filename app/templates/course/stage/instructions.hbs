@@ -1,4 +1,24 @@
 <div class="pt-6 pb-16">
+  {{#if this.shouldShowUpgradePrompt}}
+    <CoursePage::CourseStageStep::UpgradePrompt class="mb-6" />
+  {{/if}}
+
+  {{#if @model.courseStage.isFirst}}
+    <CoursePage::CourseStageStep::FirstStageInstructionsCard
+      @repository={{@model.activeRepository}}
+      @courseStage={{@model.courseStage}}
+      class="mb-6"
+    />
+  {{/if}}
+
+  {{#if @model.courseStage.isSecond}}
+    <CoursePage::CourseStageStep::SecondStageInstructionsCard
+      @repository={{@model.activeRepository}}
+      @courseStage={{@model.courseStage}}
+      class="mb-6"
+    />
+  {{/if}}
+
   {{#if this.shouldShowTestRunnerCard}}
     <div class="mb-6">
       <CoursePage::CourseStageStep::TestRunnerCard
@@ -31,10 +51,6 @@
     </div>
   {{/if}}
 
-  {{#if this.shouldShowUpgradePrompt}}
-    <CoursePage::CourseStageStep::UpgradePrompt class="mb-6" />
-  {{/if}}
-
   {{#if (gt this.badgeAwards.length 0)}}
     {{! @glint-expect-error: not ts-ified }}
     <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
@@ -44,22 +60,6 @@
   {{!-- {{#if this.shouldShowPrerequisites}}
     <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
   {{/if}} --}}
-
-  {{#if @model.courseStage.isFirst}}
-    <CoursePage::CourseStageStep::FirstStageInstructionsCard
-      @repository={{@model.activeRepository}}
-      @courseStage={{@model.courseStage}}
-      class="mb-6"
-    />
-  {{/if}}
-
-  {{#if @model.courseStage.isSecond}}
-    <CoursePage::CourseStageStep::SecondStageInstructionsCard
-      @repository={{@model.activeRepository}}
-      @courseStage={{@model.courseStage}}
-      class="mb-6"
-    />
-  {{/if}}
 
   <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 

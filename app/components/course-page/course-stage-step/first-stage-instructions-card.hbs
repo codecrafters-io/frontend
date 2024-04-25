@@ -7,16 +7,6 @@
       </p>
     </div>
 
-    <div class="prose prose-sm prose-compact mb-5">
-      <p>
-        {{svg-jar "information-circle" class="w-5 h-5 mb-0.5 inline-flex text-sky-500"}}
-        <b>Note:</b>
-        After your first Git push, you should see
-        <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
-        in the bar above this card. This is expected! Complete the steps below to pass the tests.
-      </p>
-    </div>
-
     <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
       {{#if (eq stepList.expandedStep.id "navigate-to-file")}}
         <CoursePage::CourseStageStep::FirstStageInstructionsCard::NavigateToFileStep
@@ -40,5 +30,15 @@
         />
       {{/if}}
     </ExpandableStepList>
+
+    <div class="prose prose-sm prose-compact mt-5">
+      <p>
+        {{svg-jar "information-circle" class="w-5 h-5 mb-0.5 inline-flex text-sky-500"}}
+        <b>Note:</b>
+        After your first Git push, you should see
+        <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+        in the bar below this card. This is expected! Complete the steps above to pass the tests.
+      </p>
+    </div>
   </:content>
 </CoursePage::InstructionsCard>
