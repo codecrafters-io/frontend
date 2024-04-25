@@ -74,7 +74,7 @@
           {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
             <Header::FreeWeeksLeftButton class="mr-3" />
           {{else if this.billingStatusDisplay.shouldShowUpgradeButton}}
-            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-subscribe-button>
+            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-upgrade-button>
               <span class="flex items-center gap-x-1">
                 <span>Upgrade</span>
                 {{svg-jar "lock-open" class="w-4"}}

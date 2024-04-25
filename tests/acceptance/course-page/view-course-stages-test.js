@@ -899,7 +899,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.desktopHeader.subscribeButton.isVisible, 'expect subscribe button to be visible');
+    assert.true(coursePage.desktopHeader.upgradeButton.isVisible, 'expect subscribe button to be visible');
     assert.false(coursePage.desktopHeader.vipBadge.isVisible, 'expect vip badge to be hidden');
     assert.false(coursePage.desktopHeader.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
   });
