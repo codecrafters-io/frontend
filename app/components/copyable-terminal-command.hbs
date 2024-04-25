@@ -4,10 +4,23 @@
   data-test-copyable-terminal-command
 >
   <div class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
-    <div class="flex items-center gap-1 mr-8">
-      {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-600"}}
-      <span class="text-gray-500 dark:text-gray-500 text-xs">command line</span>
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1">
+        {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-600"}}
+        <span class="text-gray-500 dark:text-gray-500 text-xs">command line</span>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <div class="text-xs text-white dark:text-gray-400 rounded bg-teal-500 dark:bg-gray-500 px-1.5 py-0.5">
+          cli
+        </div>
+
+        <div class="text-xs text-gray-800 dark:text-gray-400 rounded bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5">
+          git
+        </div>
+      </div>
     </div>
+
     <TertiaryButton @size="extra-small" {{on "click" this.handleCopyButtonClick}}>
       <AnimatedContainer>
         {{#animated-if this.wasCopiedRecently use=this.transition duration=200}}

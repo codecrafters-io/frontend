@@ -36,55 +36,11 @@
   {{/if}}
 </div>
 
-<CopyableTerminalCommand @commands={{this.suggestedCommands}} class="mb-4" />
+<CopyableTerminalCommand @commands={{this.suggestedCommands}} class="mb-3" />
 
 <div class="prose prose-sm prose-compact">
-  {{#if (eq this.suggestedClientType "cli")}}
-    <p>
-      Don't have the
-      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
-      installed? You can also submit code using Git.
-
-      <TertiaryButton
-        @size="extra-small"
-        {{on "click" this.toggleAlternateClientInstructions}}
-        class="ml-2"
-        data-test-toggle-alternate-client-instructions-link
-      >
-        {{#if this.alternateClientInstructionsAreExpanded}}
-          Hide Git instructions ↑
-        {{else}}
-          Show Git instructions ↓
-        {{/if}}
-      </TertiaryButton>
-    </p>
-  {{else}}
-    <p>
-      You can also submit code using the
-      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">codecrafters CLI</a>.
-
-      <TertiaryButton
-        @size="extra-small"
-        {{on "click" this.toggleAlternateClientInstructions}}
-        class="ml-2"
-        data-test-toggle-alternate-client-instructions-link
-      >
-        {{#if this.alternateClientInstructionsAreExpanded}}
-          Hide CLI instructions ↑
-        {{else}}
-          Show CLI instructions ↓
-        {{/if}}
-      </TertiaryButton>
-    </p>
-  {{/if}}
+  <p>
+    We recommend using the
+    <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>, but you can use Git too.
+  </p>
 </div>
-
-{{#if this.alternateClientInstructionsAreExpanded}}
-  <CopyableTerminalCommand @commands={{this.suggestedCommandsForAlternateClient}} class="mt-3" />
-
-  <TertiaryButton @size="extra-small" {{on "click" this.toggleAlternateClientInstructions}} class="mt-3">
-    ↑ Hide
-    {{if (eq this.suggestedClientType "git") "CLI" "Git"}}
-    instructions
-  </TertiaryButton>
-{{/if}}

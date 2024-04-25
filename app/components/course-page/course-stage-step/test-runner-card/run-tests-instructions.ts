@@ -40,7 +40,7 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
   }
 
   get suggestedCommandsForCli() {
-    return ['codecrafters test'];
+    return ['codecrafters test # Visit https://codecrafters.io/cli to install'];
   }
 
   get suggestedCommandsForGit() {
