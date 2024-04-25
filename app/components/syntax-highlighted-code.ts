@@ -36,6 +36,8 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
     highlighterPromise
       .then((highlighter) => {
         this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.trimmedCode, { lang: this.args.language, lineOptions: lineOptions }));
+
+        // Uncomment to test temporaryHTML rendering
         // this.asyncHighlightedHTML = this.temporaryHTML;
       })
       .catch((error) => {
