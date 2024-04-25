@@ -60,12 +60,10 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     await coursePage.clickOnHeaderTabLink('Code Examples');
     await coursePage.clickOnHeaderTabLink('Instructions');
 
-    // TODO: See if we can retain completion state after switching tabs?
-    assert.notOk(coursePage.secondStageInstructionsCard.steps[0].isComplete, 'First step is not complete');
-    assert.notOk(coursePage.secondStageInstructionsCard.steps[0].isExpanded, 'First step is collapsed');
+    assert.ok(coursePage.secondStageInstructionsCard.steps[0].isComplete, 'First step is complete');
+    assert.notOk(coursePage.secondStageInstructionsCard.steps[1].isComplete, 'Second step is not complete');
+    assert.ok(coursePage.secondStageInstructionsCard.steps[1].isExpanded, 'Second step is expanded');
 
-    await coursePage.secondStageInstructionsCard.steps[0].click();
-    await coursePage.secondStageInstructionsCard.clickOnCompleteStepButton();
     await coursePage.secondStageInstructionsCard.clickOnCompleteStepButton();
 
     this.server.create('submission', 'withSuccessStatus', {

@@ -4,7 +4,6 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
 
@@ -58,9 +57,6 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
-  @tracked readInstructionsStepWasMarkedAsComplete = false;
-  @tracked implementSolutionStepWasMarkedAsComplete = false;
-
   get implementSolutionStepIsComplete() {
     return (
       this.implementSolutionStepWasMarkedAsComplete ||
@@ -69,8 +65,16 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
     );
   }
 
+  get implementSolutionStepWasMarkedAsComplete() {
+    return this.coursePageState.manuallyCompletedStepIdsInSecondStageInstructions.includes('implement-solution');
+  }
+
   get readInstructionsStepIsComplete() {
     return this.implementSolutionStepIsComplete || this.readInstructionsStepWasMarkedAsComplete;
+  }
+
+  get readInstructionsStepWasMarkedAsComplete() {
+    return this.coursePageState.manuallyCompletedStepIdsInSecondStageInstructions.includes('read-instructions');
   }
 
   get runTestsStepIsComplete() {
@@ -91,11 +95,12 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   @action
   handleStepCompletedManually(step: Step) {
     if (step.id === 'read-instructions') {
-      this.readInstructionsStepWasMarkedAsComplete = true;
+      this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('read-instructions');
     }
 
     if (step.id === 'implement-solution') {
-      this.implementSolutionStepWasMarkedAsComplete = true;
+      this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('read-instructions');
+      this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('implement-solution');
     }
   }
 
