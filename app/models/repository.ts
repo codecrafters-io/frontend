@@ -167,6 +167,16 @@ export default class RepositoryModel extends Model {
     return this.lastSubmission && this.lastSubmission.createdAt;
   }
 
+  // TODO: Change this to compare tree sha
+  get lastSubmissionCanBeUsedForStageCompletion() {
+    return (
+      this.lastSubmission &&
+      this.lastSubmission.statusIsSuccess &&
+      this.lastSubmission.wasSubmittedViaGit &&
+      this.lastSubmission.courseStage === this.currentStage
+    );
+  }
+
   get lastSubmissionHasFailureStatus() {
     return this.lastSubmission && this.lastSubmission.statusIsFailure;
   }

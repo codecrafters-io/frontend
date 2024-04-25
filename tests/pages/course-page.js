@@ -184,10 +184,19 @@ export default create({
 
   testRunnerCard: {
     borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
-    copyableTerminalCommands: collection('[data-test-copyable-terminal-command]', CopyableTerminalCommand),
-    clickOnMarkStageAsCompleteButton: clickable('[data-test-mark-stage-as-complete-button]'),
+
+    async clickOnMarkStageAsCompleteButton() {
+      await this.markStageAsCompleteButton.click();
+    },
+
     clickOnToggleAlternateClientInstructionsLink: clickable('[data-test-toggle-alternate-client-instructions-link]'),
     clickOnHideInstructionsButton: clickable('[data-test-hide-instructions-button]'),
+    copyableTerminalCommands: collection('[data-test-copyable-terminal-command]', CopyableTerminalCommand),
+
+    markStageAsCompleteButton: {
+      scope: '[data-test-mark-stage-as-complete-button]',
+    },
+
     isExpanded: isVisible('[data-test-expanded-content]'),
     scope: '[data-test-test-runner-card]',
   },

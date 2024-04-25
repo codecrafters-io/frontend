@@ -1,7 +1,6 @@
 <PrimaryButtonWithSpinner
   @shouldShowSpinner={{this.isCreatingStageCompletion}}
-  {{! TODO: Ensure tests status is success }}
-  @isDisabled={{false}}
+  @isDisabled={{this.isDisabled}}
   {{on "click" this.handleCreateStageCompletionButtonClick}}
   data-test-mark-stage-as-complete-button
 >

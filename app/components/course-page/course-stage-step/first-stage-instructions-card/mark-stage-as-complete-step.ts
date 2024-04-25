@@ -1,4 +1,3 @@
-import type Store from '@ember-data/store';
 import Component from '@glimmer/component';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';

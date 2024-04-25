@@ -1,12 +1,10 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
+import type Store from '@ember-data/store';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -21,6 +19,14 @@ export default class MarkStageAsCompleteButtonComponent extends Component<Signat
   @service declare store: Store;
 
   @tracked isCreatingStageCompletion = false;
+
+  get isDisabled() {
+    return !this.isEnabled;
+  }
+
+  get isEnabled() {
+    return this.args.repository.lastSubmissionCanBeUsedForStageCompletion;
+  }
 
   @action
   async handleCreateStageCompletionButtonClick() {
