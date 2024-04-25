@@ -18,7 +18,7 @@ if (config.environment === 'development' || config.environment === 'production')
 }
 
 if (window.location.href.includes('codecrafters.io')) {
-  posthog.init('phc_jCl1mm3XbnvyIUr4h54oORqWEqj37gxhZIOebREBwxb',{api_host:'https://app.posthog.com'})
+  posthog.init('phc_jCl1mm3XbnvyIUr4h54oORqWEqj37gxhZIOebREBwxb', { api_host: 'https://app.posthog.com' });
 }
 
 export default class App extends Application {
