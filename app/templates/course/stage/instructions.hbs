@@ -22,10 +22,10 @@
   {{#if this.shouldShowTestRunnerCard}}
     <div class="mb-6">
       <CoursePage::CourseStageStep::TestRunnerCard
-        @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
+        @isCollapsible={{or this.shouldSupressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
         @repository={{@model.activeRepository}}
         @stage={{@model.courseStage}}
-        @onExpand={{if this.shouldSuppressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
+        @onExpand={{if this.shouldSupressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
       />
 
       {{#if @model.courseStage.isFirst}}

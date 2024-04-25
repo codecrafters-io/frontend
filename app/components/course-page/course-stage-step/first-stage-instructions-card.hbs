@@ -22,16 +22,10 @@
         />
       {{else if (eq stepList.expandedStep.id "submit-code")}}
         <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
-      {{else if (eq stepList.expandedStep.id "mark-stage-as-complete")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::MarkStageAsCompleteStep
-          @repository={{@repository}}
-          @courseStage={{@courseStage}}
-          @isComplete={{this.markStageAsCompleteStepIsComplete}}
-        />
       {{/if}}
     </ExpandableStepList>
 
-    {{#unless this.markStageAsCompleteStepIsComplete}}
+    {{#unless this.submitCodeStepIsComplete}}
       <div class="prose prose-sm prose-compact mt-5">
         <p>
           {{svg-jar "information-circle" class="w-5 h-5 mb-0.5 inline-flex text-sky-500"}}
