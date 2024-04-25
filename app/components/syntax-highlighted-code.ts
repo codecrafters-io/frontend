@@ -11,6 +11,7 @@ export type Signature = {
   Args: {
     code: string;
     language: string;
+    shouldDisplayLineNumbers: boolean;
     theme: string;
     highlightedLines?: string;
   };

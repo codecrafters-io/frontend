@@ -19,6 +19,10 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
 
   @tracked wasCopiedRecently: boolean = false;
 
+  get codeForHighlighting(): string {
+    return this.args.commands.join('\n');
+  }
+
   get copyableText(): string {
     return this.args.commands.join('\n');
   }

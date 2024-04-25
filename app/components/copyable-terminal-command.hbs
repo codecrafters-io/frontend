@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col items-stretch rounded bg-white dark:bg-gray-800 w-full max-w-2xl border border-gray-300 dark:border-gray-600"
+  class="flex flex-col items-stretch rounded bg-white dark:bg-gray-800 w-full max-w-2xl border border-gray-300 dark:border-gray-600 overflow-y-hidden"
   ...attributes
   data-test-copyable-terminal-command
 >
@@ -25,11 +25,7 @@
     </TertiaryButton>
   </div>
 
-  <div class="px-3 py-2.5 w-full font-mono text-xs overflow-x-auto">
-    {{#each @commands as |command|}}
-      <div data-test-copyable-terminal-command-text>
-        <span class="whitespace-nowrap text-gray-800 dark:text-gray-100 leading-loose">{{command}}</span>
-      </div>
-    {{/each}}
+  <div class="w-full text-xs overflow-x-auto">
+    <SyntaxHighlightedCode @code={{this.codeForHighlighting}} @language="shellscript" @theme="github-light" @shouldDisplayLineNumbers={{false}} />
   </div>
 </div>
