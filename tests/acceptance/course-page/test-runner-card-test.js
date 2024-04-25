@@ -34,17 +34,16 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands.length, 1, 'only one copyable terminal command is present by default');
 
-    assert.deepEqual(coursePage.testRunnerCard.copyableTerminalCommands[0].commands, ['codecrafters test']);
+    assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText, 'codecrafters test');
 
     await coursePage.testRunnerCard.clickOnToggleAlternateClientInstructionsLink();
 
     assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands.length, 2, 'two copyable terminal commands are present');
 
-    assert.deepEqual(coursePage.testRunnerCard.copyableTerminalCommands[1].commands, [
-      'git add .',
-      'git commit --allow-empty -m "pass stage" # any message',
-      'git push origin master',
-    ]);
+    assert.strictEqual(
+      coursePage.testRunnerCard.copyableTerminalCommands[1].copyableText,
+      ['git add .', 'git commit --allow-empty -m "pass stage" # any message', 'git push origin master'].join(' '),
+    );
 
     await coursePage.testRunnerCard.clickOnToggleAlternateClientInstructionsLink();
     assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands.length, 1, 'only one copyable terminal command is present by default');
