@@ -1,45 +1,39 @@
-<div class="prose prose-sm prose-compact mb-3">
-  <p>
-    You can either refactor your code or move on the next step.
-  </p>
-</div>
-
-<div class="mb-4">
-  <div class="prose prose-sm prose-compact mb-3">
-    <h4 class="mt-3">To move on to the next step:</h4>
-  </div>
-
-  {{#if @currentStep.repository.lastSubmissionCanBeUsedForStageCompletion}}
-    <div class="text-gray-700 mb-4 text-sm">
-      Click the button below to move on to the next step.
-    </div>
-
-    <CoursePage::CourseStageStep::MarkStageAsCompleteButton @courseStage={{@currentStep.courseStage}} @repository={{@currentStep.repository}} />
-  {{else}}
+{{#if @currentStep.courseStage.isFirst}}
+  <div>
     <div class="prose prose-sm prose-compact mb-3">
       <p>
-        Submit your code using Git:
+        You can now mark
+        <b>{{@currentStep.courseStage.name}}</b>
+        as complete! 🎉
+      </p>
+
+      <p>
+        We recommend reviewing the code you just uncommented. You'll need to build on it in the next stages.
       </p>
     </div>
 
-    <CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass stage'" "git push origin master"}} />
-  {{/if}}
-</div>
+    <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
+  </div>
+{{else}}
+  <div class="prose prose-sm prose-compact mb-3">
+    <p>
+      You can either refactor your code or move on the next step.
+    </p>
+  </div>
 
-<div class="prose prose-sm prose-compact mb-3">
-  <h4>To refactor your code:</h4>
+  <div class="mb-4">
+    <div class="prose prose-sm prose-compact mb-3">
+      <h4 class="mt-3">To move on to the next step:</h4>
+    </div>
 
-  <p>
-    Make changes to your code and run the test command again:
-  </p>
-</div>
+    <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
+  </div>
 
-<CopyableTerminalCommand @commands={{array "codecrafters test"}} class="mb-3" />
+  <div>
+    <div class="prose prose-sm prose-compact mb-3">
+      <h4>To refactor your code:</h4>
+    </div>
 
-<div class="prose prose-sm prose-compact">
-  <p>
-    Don't have the
-    <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
-    installed? You can also submit code via a Git push.
-  </p>
-</div>
+    <CoursePage::CourseStageStep::TestRunnerCard::RefactorCodeInstructions @currentStep={{@currentStep}} />
+  </div>
+{{/if}}

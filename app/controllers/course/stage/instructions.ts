@@ -53,6 +53,10 @@ export default class CourseStageInstructionsController extends Controller {
     return this.currentStep.status !== 'complete' && !this.model.activeRepository.user.canAttemptCourseStage(this.model.courseStage);
   }
 
+  get shouldSuppressTestRunnerCardExpands() {
+    return this.model.courseStage.isFirst && this.currentStep.testsStatus !== 'passed';
+  }
+
   @action
   handleCommentListFilterToggled() {
     this.commentListIsFilteredByLanguage = !this.commentListIsFilteredByLanguage;
