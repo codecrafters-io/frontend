@@ -81,7 +81,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageInstructionsCard.steps[2].isExpanded, 'Third step is collapsed');
     assert.ok(coursePage.firstStageInstructionsCard.steps[2].isComplete, 'Third step is complete');
 
-    await coursePage.firstStageInstructionsCard.clickOnMarkStageAsCompleteButton();
+    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'header says stage completed');
   });
