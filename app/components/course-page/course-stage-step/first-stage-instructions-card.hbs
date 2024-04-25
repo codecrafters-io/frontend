@@ -25,7 +25,8 @@
       {{/if}}
     </ExpandableStepList>
 
-    {{#unless this.submitCodeStepIsComplete}}
+    {{! After step 2, step 3 already contains a note on Tests Failed, so we can hide this !}}
+    {{#unless this.uncommentCodeStepIsComplete}}
       <div class="prose prose-sm prose-compact mt-5">
         <p>
           {{svg-jar "information-circle" class="w-5 h-5 mb-0.5 inline-flex text-sky-500"}}
