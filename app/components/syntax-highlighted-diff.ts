@@ -7,6 +7,7 @@ import { action } from '@ember/object';
 import { escapeHtml, groupBy, zip } from 'codecrafters-frontend/utils/lodash-utils';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
+import { transformerNotationDiff } from '@shikijs/transformers';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 
@@ -18,6 +19,7 @@ type Signature = {
     comments: CommunityCourseStageSolutionCommentModel[];
     language: string;
     shouldCollapseUnchangedLines: boolean;
+    theme: string;
     onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
   };
 };
@@ -30,8 +32,8 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
   static highlighterIdForDarkMode = 'syntax-highlighted-diff-dark';
   static highlighterIdForLightMode = 'syntax-highlighted-diff-light';
-  static highlighterOptionsForDarkMode = { theme: 'github-dark', langs: [] };
-  static highlighterOptionsForLightMode = { theme: 'github-light', langs: [] };
+  static highlighterOptionsForDarkMode = { themes: ['github-dark'], langs: [] };
+  static highlighterOptionsForLightMode = { themes: ['github-light'], langs: [] };
   static LINES_AROUND_CHANGED_CHUNK = 3;
   static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
 
@@ -166,8 +168,12 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     );
 
     highlighterPromise.then((highlighter) => {
-      highlighter.loadLanguage(this.args.language as shiki.Lang).then(() => {
-        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, { lang: this.args.language });
+      highlighter.loadLanguage(this.args.language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage).then(() => {
+        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, {
+          lang: this.args.language,
+          theme: this.args.theme,
+          transformers: [transformerNotationDiff()],
+        });
         this.asyncHighlightedCode = this.args.code;
       });
     });
