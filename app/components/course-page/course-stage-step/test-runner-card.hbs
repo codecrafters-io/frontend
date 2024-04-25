@@ -17,7 +17,7 @@
   />
 
   {{#if this.isExpanded}}
-    <div class="py-3">
+    <div class="py-3" data-test-expanded-content>
       {{#if (eq this.testsStatus "passed")}}
         <CoursePage::CourseStageStep::TestRunnerCard::TestsPassedInstructions @currentStep={{this.coursePageState.currentStepAsCourseStageStep}} />
       {{else}}

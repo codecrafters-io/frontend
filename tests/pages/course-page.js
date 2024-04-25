@@ -10,10 +10,11 @@ import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-pag
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/course-page/repository-setup-card';
+import SecondStageInstructionsCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/second-stage-instructions-card';
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
-import { collection, clickable, create, fillable, isVisible, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, create, fillable, isVisible, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -25,6 +26,7 @@ export default create({
   clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
   clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
+  clickOnHeaderTabLink: clickOnText('[data-test-course-page-header-sticky-section] [data-test-header-tab-link]'),
 
   completedStepNotice: {
     clickOnNextStepButton: clickable('[data-test-next-step-button]'),
@@ -163,9 +165,7 @@ export default create({
     scope: '[data-test-progress-banner-modal]',
   },
 
-  secondStageInstructionsCard: {
-    hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
-  },
+  secondStageInstructionsCard: SecondStageInstructionsCard,
 
   shareProgressModal: {
     clickOnCopyButton: clickable('[data-test-copy-button]'),
@@ -183,10 +183,12 @@ export default create({
   testResultsBar: TestResultsBar,
 
   testRunnerCard: {
+    borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
     copyableTerminalCommands: collection('[data-test-copyable-terminal-command]', CopyableTerminalCommand),
+    clickOnMarkStageAsCompleteButton: clickable('[data-test-mark-stage-as-complete-button]'),
     clickOnToggleAlternateClientInstructionsLink: clickable('[data-test-toggle-alternate-client-instructions-link]'),
     clickOnHideInstructionsButton: clickable('[data-test-hide-instructions-button]'),
-    borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
+    isExpanded: isVisible('[data-test-expanded-content]'),
     scope: '[data-test-test-runner-card]',
   },
 
