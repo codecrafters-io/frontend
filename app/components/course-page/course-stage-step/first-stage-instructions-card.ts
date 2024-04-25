@@ -4,7 +4,6 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
 
