@@ -38,10 +38,10 @@
         <Header::VipBadge />
       {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
         <Header::FreeWeeksLeftButton />
-      {{else if this.billingStatusDisplay.shouldShowSubscribeButton}}
+      {{else if this.billingStatusDisplay.shouldShowUpgradeButton}}
         <PrimaryLinkButton @size="extra-small" @route="pay" data-test-subscribe-button>
           <span class="flex items-center gap-x-1">
-            <span>Subscribe</span>
+            <span>Upgrade</span>
             {{svg-jar "lock-open" class="w-4"}}
           </span>
         </PrimaryLinkButton>
