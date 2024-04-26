@@ -5,20 +5,28 @@
 >
   <div class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <div class="flex items-center gap-1">
-        {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-600"}}
-        <span class="text-gray-500 dark:text-gray-500 text-xs">command line</span>
-      </div>
-
-      <div class="flex items-center gap-1">
-        <div class="text-xs text-white dark:text-gray-400 rounded bg-teal-500 dark:bg-gray-500 px-1.5 py-0.5">
-          cli
+      {{#if (gt @variants.length 1)}}
+        <div class="flex items-center gap-1">
+          {{#each @variants as |variant|}}
+            <button
+              type="button"
+              class="text-xs rounded px-1.5 py-0.5
+                {{if (eq variant @selectedVariant) 'text-white bg-teal-500'}}
+                {{if (not-eq variant @selectedVariant) 'text-gray-800 bg-gray-200'}}
+                "
+              {{! @glint-expect-error @onVariantSelect is nullable}}
+              {{on "click" (fn @onVariantSelect variant)}}
+            >
+              {{variant}}
+            </button>
+          {{/each}}
         </div>
-
-        <div class="text-xs text-gray-800 dark:text-gray-400 rounded bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5">
-          git
+      {{else}}
+        <div class="flex items-center gap-1">
+          {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-600"}}
+          <span class="text-gray-500 dark:text-gray-500 text-xs">command line</span>
         </div>
-      </div>
+      {{/if}}
     </div>
 
     <TertiaryButton @size="extra-small" {{on "click" this.handleCopyButtonClick}}>
