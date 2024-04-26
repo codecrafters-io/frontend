@@ -19,7 +19,6 @@ type Signature = {
     comments: CommunityCourseStageSolutionCommentModel[];
     language: string;
     shouldCollapseUnchangedLines: boolean;
-    theme: string;
     onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
   };
 };
@@ -171,7 +170,9 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
       highlighter.loadLanguage(this.args.language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage).then(() => {
         this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, {
           lang: this.args.language,
-          theme: this.args.theme,
+          theme: this.isDarkMode
+            ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
+            : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
           transformers: [transformerNotationDiff()],
         });
         this.asyncHighlightedCode = this.args.code;
