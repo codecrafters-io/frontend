@@ -71,12 +71,12 @@
   min-width: 100%;
 }
 
-.syntax-highlighted-code.with-line-numbers pre code {
+.syntax-highlighted-code pre code {
   counter-reset: step;
   counter-increment: step 0;
 }
 
-.syntax-highlighted-code.with-line-numbers pre code .line::before {
+.syntax-highlighted-code pre code .line::before {
   content: counter(step);
   counter-increment: step;
   width: 1rem;

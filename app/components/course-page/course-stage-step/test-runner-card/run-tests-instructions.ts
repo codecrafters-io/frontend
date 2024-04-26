@@ -24,7 +24,7 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
   }
 
   get suggestedClientType() {
-    if (this.args.currentStep.courseStage.isFirst) {
+    if (this.args.currentStep.courseStage.isFirst || this.args.currentStep.courseStage.isSecond) {
       return 'git';
     } else {
       return 'cli';

@@ -1,62 +1,52 @@
-<div data-test-clone-repository-step>
-  <div class="prose mb-5">
-    <p>
-      We've prepared a starter repository with some
-      {{@repository.language.name}}
-      code for you.
-    </p>
-  </div>
+{{! @glint-nocheck: not typesafe yet }}
+<div class="text-gray-700 prose" data-test-clone-repository-step>
+  <p class="mb-5">
+    We've prepared a starter repository with some
+    {{@repository.language.name}}
+    code for you.
+  </p>
 
-  <div class="prose mb-3">
-    <div class="inline-flex items-center gap-1">
-      {{#if @isComplete}}
-        {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
-      {{else}}
-        <b class="text-teal-600">Step 1:</b>
-      {{/if}}
-
-      Clone the repository
-    </div>
-  </div>
-
-  <div class="mb-5">
-    {{! @glint-expect-error isNew is not typed? }}
-    {{#if @repository.isNew}}
-      <div class="prose">
-        <p>
-          <span class="text-lg">⚠️</span>
-          Select a language to see instructions to clone your repository.
-        </p>
-      </div>
+  <div class="mb-3 inline-flex items-center gap-1">
+    {{#if @isComplete}}
+      {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
     {{else}}
-      <div class="mb-5">
-        <CopyableTerminalCommand
-          @commands={{array (concat "git clone " @repository.cloneUrl " " @repository.cloneDirectory) (concat "cd " @repository.cloneDirectory)}}
-          data-test-copyable-repository-clone-instructions
-        />
-      </div>
+      <b class="text-teal-600">Step 1:</b>
     {{/if}}
+
+    Clone the repository
   </div>
 
-  <div class="prose mb-3">
-    <div class="inline-flex items-center gap-1">
-      {{#if @isComplete}}
-        {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
-      {{else}}
-        <b class="text-teal-600">Step 2:</b>
-      {{/if}}
-
-      Push an empty commit
+  {{#if @repository.isNew}}
+    <div class="prose mb-5">
+      <p>
+        <span class="text-lg">⚠️</span>
+        Select a language to see instructions to clone your repository.
+      </p>
     </div>
+  {{else}}
+    <div class="mb-5">
+      <CopyableTerminalCommand
+        @commands={{array (concat "git clone " @repository.cloneUrl " " @repository.cloneDirectory) (concat "cd " @repository.cloneDirectory)}}
+        data-test-copyable-repository-clone-instructions
+      />
+    </div>
+  {{/if}}
+
+  <div class="mb-3 inline-flex items-center gap-1">
+    {{#if @isComplete}}
+      {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+    {{else}}
+      <b class="text-teal-600">Step 2:</b>
+    {{/if}}
+
+    Push an empty commit
   </div>
 
   <div class="mb-5">
     <CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} />
   </div>
 
-  <div class="prose">
-    <p class={{if @isComplete "line-through"}}>
-      When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
-    </p>
-  </div>
+  <p class={{if @isComplete "line-through"}}>
+    When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
+  </p>
 </div>
