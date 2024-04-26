@@ -4,7 +4,6 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
 
@@ -68,38 +67,43 @@ export default class FirstStageInstructionsCardComponent extends Component<Signa
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
-  @tracked uncommentCodeStepWasMarkedAsComplete = false;
-  @tracked navigateToFileStepWasMarkedAsComplete = false;
-
-  get allStepsAreComplete() {
-    return this.args.repository.stageIsComplete(this.args.courseStage);
-  }
-
   get navigateToFileStepIsComplete() {
     return this.navigateToFileStepWasMarkedAsComplete || this.uncommentCodeStepIsComplete;
+  }
+
+  get navigateToFileStepWasMarkedAsComplete() {
+    return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('navigate-to-file');
   }
 
   get steps() {
     return [
       new NavigateToFileStep(this.args.repository, this.navigateToFileStepIsComplete),
       new UncommentCodeStep(this.args.repository, this.uncommentCodeStepIsComplete),
-      new SubmitCodeStep(this.args.repository, this.allStepsAreComplete),
+      new SubmitCodeStep(this.args.repository, this.submitCodeStepIsComplete),
     ];
   }
 
+  get submitCodeStepIsComplete() {
+    return this.args.repository.lastSubmissionHasSuccessStatus || this.args.repository.stageIsComplete(this.args.courseStage);
+  }
+
   get uncommentCodeStepIsComplete() {
-    return this.uncommentCodeStepWasMarkedAsComplete || this.args.repository.stageIsComplete(this.args.courseStage);
+    return this.uncommentCodeStepWasMarkedAsComplete || this.submitCodeStepIsComplete;
+  }
+
+  get uncommentCodeStepWasMarkedAsComplete() {
+    return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('uncomment-code');
   }
 
   @action
   handleStepCompletedManually(step: Step) {
     if (step.id === 'navigate-to-file') {
-      this.navigateToFileStepWasMarkedAsComplete = true;
+      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
     }
 
     if (step.id === 'uncomment-code') {
-      this.uncommentCodeStepWasMarkedAsComplete = true;
-      this.navigateToFileStepWasMarkedAsComplete = true;
+      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('uncomment-code');
+      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
     }
   }
 

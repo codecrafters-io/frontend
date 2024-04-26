@@ -1,39 +1,6 @@
 <div class="pt-6 pb-16">
-  {{#if this.shouldShowTestRunnerCard}}
-    <div class="mb-6">
-      <CoursePage::CourseStageStep::TestRunnerCard
-        @isCollapsible={{not-eq this.currentStep.testsStatus "passed"}}
-        @repository={{@model.activeRepository}}
-        @stage={{@model.courseStage}}
-        @onExpand={{if @model.courseStage.isFirst this.handleTestRunnerCardExpandedOnFirstStage undefined}}
-      />
-
-      {{#if (and @model.courseStage.isFirst (eq this.currentStep.testsStatus "failed"))}}
-        {{! @glint-expect-error: not ts-ified }}
-        <EmberPopover @popperContainer="body">
-          <div class="prose prose-sm prose-invert text-white">
-            <p>
-              This failure is expected! Check the
-              <a href="#first-stage-instructions-card">Tutorial</a>
-              section for instructions.
-            </p>
-          </div>
-        </EmberPopover>
-      {{/if}}
-    </div>
-  {{/if}}
-
   {{#if this.shouldShowUpgradePrompt}}
     <CoursePage::CourseStageStep::UpgradePrompt class="mb-6" />
-  {{/if}}
-
-  {{#if (gt this.badgeAwards.length 0)}}
-    {{! @glint-expect-error: not ts-ified }}
-    <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
-  {{/if}}
-
-  {{#if this.shouldShowPrerequisites}}
-    <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
   {{/if}}
 
   {{#if @model.courseStage.isFirst}}
@@ -44,15 +11,57 @@
     />
   {{/if}}
 
-  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
-
   {{#if @model.courseStage.isSecond}}
     <CoursePage::CourseStageStep::SecondStageInstructionsCard
       @repository={{@model.activeRepository}}
       @courseStage={{@model.courseStage}}
-      class="mt-6"
+      class="mb-6"
     />
   {{/if}}
+
+  {{#if this.shouldShowTestRunnerCard}}
+    <div class="mb-6">
+      <CoursePage::CourseStageStep::TestRunnerCard
+        @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
+        @repository={{@model.activeRepository}}
+        @stage={{@model.courseStage}}
+        @onExpand={{if this.shouldSuppressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
+      />
+
+      {{#if this.shouldSuppressTestRunnerCardExpands}}
+        {{! @glint-expect-error: not ts-ified }}
+        <EmberPopover @popperContainer="body">
+          <div class="prose prose-sm prose-invert text-white">
+            {{#if (eq this.currentStep.testsStatus "failed")}}
+              <p>
+                This failure is expected! Check the
+                <a href="#first-stage-instructions-card">How to pass this stage</a>
+                section for instructions.
+              </p>
+            {{else}}
+              <p>
+                Check the
+                <a href="#first-stage-instructions-card">How to pass this stage</a>
+                section for instructions.
+              </p>
+            {{/if}}
+          </div>
+        </EmberPopover>
+      {{/if}}
+    </div>
+  {{/if}}
+
+  {{#if (gt this.badgeAwards.length 0)}}
+    {{! @glint-expect-error: not ts-ified }}
+    <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
+  {{/if}}
+
+  {{! TODO: Bring this back? }}
+  {{!-- {{#if this.shouldShowPrerequisites}}
+    <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
+  {{/if}} --}}
+
+  <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
   {{#if this.shouldShowLanguageGuide}}
     <CoursePage::CourseStageStep::LanguageGuideCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />

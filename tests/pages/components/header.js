@@ -20,8 +20,8 @@ export default {
 
   scope: '[data-test-header]',
 
-  upgradeButton: {
-    scope: '[data-test-upgrade-button]',
+  subscribeButton: {
+    scope: '[data-test-subscribe-button]',
   },
 
   vipBadge: {
