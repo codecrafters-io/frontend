@@ -11,6 +11,7 @@ export type Signature = {
   Args: {
     code: string;
     language: string;
+    shouldDisplayLineNumbers: boolean;
     theme: string;
     highlightedLines?: string;
   };
@@ -30,6 +31,8 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
     highlighterPromise
       .then((highlighter) => {
         this.asyncHighlightedHTML = htmlSafe(highlighter.codeToHtml(this.trimmedCode, { lang: this.args.language, theme: this.args.theme }));
+
+        // Uncomment to test temporaryHTML rendering
         // this.asyncHighlightedHTML = this.temporaryHTML;
       })
       .catch((error) => {

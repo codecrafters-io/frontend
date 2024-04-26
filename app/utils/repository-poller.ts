@@ -1,6 +1,9 @@
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import Poller from 'codecrafters-frontend/utils/poller';
 
 export default class RepositoryPoller extends Poller {
+  declare model: RepositoryModel;
+
   static defaultIncludedResources = [
     'language',
     'extension-activations',

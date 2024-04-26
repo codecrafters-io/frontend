@@ -22,7 +22,7 @@ export default function getOrCreateCachedHighlighterPromise(
           codeToHtml: (code: string) => {
             const lineSpans = code
               .split('\n')
-              .map((line) => `<span>${line}</span>`)
+              .map((line) => `<span class="line">${line}</span>`)
               .join('\n');
 
             return `<pre><code>${lineSpans}</code></pre>`;

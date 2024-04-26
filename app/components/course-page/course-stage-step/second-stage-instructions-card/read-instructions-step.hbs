@@ -1,0 +1,35 @@
+<div class="prose prose-compact">
+  <p>
+    The
+    <a href="#your-task-card">"Your Task"</a>
+    card below contains a description of what you need to implement to pass tests.
+  </p>
+  <p>
+    We also recommend taking a look at:
+  </p>
+  <ul>
+    <li>
+      The
+      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
+      tab, which contains code examples from other users.
+    </li>
+
+    {{! Let's limit to 2 suggestions for now so that we don't overwhelm the user.}}
+    {{#if (gt @courseStage.screencasts.length 0)}}
+      <li>
+        The
+        <LinkTo @route="course.stage.screencasts" data-test-screencasts-link>Screencasts</LinkTo>
+        tab, if you prefer more detailed video walkthroughs.
+      </li>
+    {{else}}
+      <li>
+        The
+        <LinkTo @route="course.stage.concepts" data-test-concepts-link>Concepts</LinkTo>
+        tab, if you want to learn more about the fundamental concepts related to this stage.
+      </li>
+    {{/if}}
+  </ul>
+  <p>
+    Mark this step as complete once you've read the instructions and are ready to implement your solution.
+  </p>
+</div>

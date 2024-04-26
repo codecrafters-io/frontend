@@ -4,4 +4,32 @@
   </p>
 </div>
 
-<CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass 1st stage' # any msg" "git push origin master"}} />
+<CopyableTerminalCommand
+  @commands={{array "git add . " "git commit --allow-empty -m 'pass 1st stage' # any msg" "git push origin master"}}
+  class="mb-3"
+/>
+
+<div class="prose">
+  <p class={{if @isComplete "line-through"}}>
+    Once you run the commands above, the
+    <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+    message below this card will change to
+    <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
+  </p>
+
+  {{#if @isComplete}}
+    <p>
+      🎉
+      <b class="text-teal-500 ml-1">Tests passed!</b>
+    </p>
+  {{/if}}
+</div>
+
+{{#unless @isComplete}}
+  <p class="prose prose-sm mt-3">
+    <b>Note:</b>
+    If you're still seeing "Tests failed" after completing the steps above,
+    <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
+    to troubleshoot.
+  </p>
+{{/unless}}

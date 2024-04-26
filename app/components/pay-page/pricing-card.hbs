@@ -56,7 +56,8 @@
     {{/if}}
 
     <button
-      class="flex items-center justify-center mx-4 mt-8 transition-colors px-5 py-3 font-bold rounded-full max-w-lg shadow
+      class="flex items-center justify-center mx-4 mt-8 transition-colors p-3 font-bold rounded-full max-w-lg shadow
+        {{if this.authenticator.isAuthenticated 'px-5 py-3' 'p-3'}}
         {{if
           @isRecommended
           'border-2 border-teal-500 bg-teal-500 text-white hover:bg-teal-600 hover:border-teal-600'
@@ -67,7 +68,15 @@
       type="button"
       {{on "click" (fn @onStartMembershipButtonClick @pricingFrequency)}}
     >
+      {{#unless this.authenticator.isAuthenticated}}
+        {{svg-jar "github" class="fill-current w-4 transform transition-all mr-2"}}
+      {{/unless}}
+
       Start membership →
+
+      {{#unless this.authenticator.isAuthenticated}}
+        <EmberTooltip @text="Login via GitHub to start a membership." />
+      {{/unless}}
     </button>
 
     {{#if @regionalDiscount}}

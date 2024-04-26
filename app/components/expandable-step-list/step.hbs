@@ -1,13 +1,13 @@
-{{! template-lint-disable no-invalid-interactive }}
-<div class="py-2 px-1 {{if @isExpanded 'pb-6' 'cursor-pointer hover:bg-gray-50'}}" data-test-expandable-step-list-step ...attributes>
-  <div class="{{if @isExpanded 'mb-3' ''}} flex items-center gap-2">
+<div
+  class="py-2 px-1 {{if @isExpanded 'pb-6' 'cursor-pointer hover:bg-gray-50'}}"
+  data-test-expandable-step-list-step
+  {{did-update this.handleDidUpdateIsComplete @step.isComplete}}
+  ...attributes
+>
+  <div class="{{if @isExpanded 'mb-3' ''}} flex items-center justify-between gap-2">
     <div class="flex items-center gap-1">
       <div class="prose {{if @step.isComplete 'opacity-50'}}" data-test-step-title>
-        <b>Step {{@number}}:</b>
-
-        <span>
-          {{@step.title}}
-        </span>
+        {{markdown-to-html (concat "**Step " @number "**: " @step.titleMarkdown)}}
       </div>
 
       {{#if @step.isComplete}}
@@ -15,35 +15,50 @@
           {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
         </div>
       {{/if}}
+
+      <div class="flex ml-2">
+        {{#if (and @isExpanded @step.isComplete @nextIncompleteStep)}}
+          <PrimaryButton {{on "click" @onCollapse}} @size="extra-small">
+            <div class="flex items-center gap-1">
+              {{svg-jar "arrow-down" class="w-3 h-3"}}
+              <span>Next Step</span>
+            </div>
+          </PrimaryButton>
+        {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
+          <PrimaryButton @size="extra-small">
+            <div class="font-bold flex items-center gap-1">
+              {{svg-jar "arrow-down" class="w-3 fill-current"}}
+              Expand
+            </div>
+          </PrimaryButton>
+        {{/if}}
+      </div>
     </div>
 
-    {{#if (and @isExpanded (not @step.isComplete) @step.canBeCompletedManually)}}
-      <PrimaryButton {{on "click" @onManualComplete}} @size="extra-small">
-        <div class="flex items-center gap-1">
-          {{svg-jar "check-circle" class="w-4 h-4"}}
-          <span>Mark as complete</span>
-        </div>
-      </PrimaryButton>
-    {{else if (and @isExpanded @step.isComplete @nextIncompleteStep)}}
-      <PrimaryButton {{on "click" @onCollapse}} @size="extra-small">
-        <div class="flex items-center gap-1">
-          {{svg-jar "arrow-down" class="w-3 h-3"}}
-          <span>Next Step</span>
-        </div>
-      </PrimaryButton>
-    {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
-      <PrimaryButton @size="extra-small">
-        <div class="font-bold flex items-center gap-1">
-          {{svg-jar "arrow-down" class="w-3 fill-current"}}
-          Expand
-        </div>
-      </PrimaryButton>
-    {{/if}}
+    <div>
+      {{#if (and @isExpanded (not @step.isComplete) @step.canBeCompletedManually)}}
+        <PrimaryButton {{on "click" @onManualComplete}} @size="extra-small">
+          <div class="flex items-center gap-1">
+            {{svg-jar "check-circle" class="w-4 h-4"}}
+            <span>Mark as complete</span>
+          </div>
+        </PrimaryButton>
+      {{else if (and @isExpanded @step.isComplete (not @nextIncompleteStep))}}
+        <TertiaryButton @size="extra-small" {{on "click" @onCollapse}}>
+          <div class="flex items-center gap-1">
+            {{svg-jar "arrow-up" class="w-3 h-3"}}
+            <span>Collapse</span>
+          </div>
+        </TertiaryButton>
+      {{/if}}
+    </div>
   </div>
 
   {{#if @isExpanded}}
     <div data-test-expanded-step-content>
-      {{yield}}
+      <div class={{if @step.isComplete "opacity-50 hover:opacity-100" ""}}>
+        {{yield}}
+      </div>
 
       {{#if (and @step.canBeCompletedManually (not @step.isComplete))}}
         <PrimaryButton {{on "click" @onManualComplete}} class="mt-4" data-test-complete-step-button>

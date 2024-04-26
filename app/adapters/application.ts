@@ -1,6 +1,8 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
+import * as Sentry from '@sentry/ember';
 import config from 'codecrafters-frontend/config/environment';
+import posthog from 'posthog-js';
 import type SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
 
@@ -18,6 +20,12 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     }
 
     headers['x-codecrafters-client-version'] = this.versionTracker.currentVersion;
+
+    try {
+      headers['x-posthog-session-id'] = posthog.get_session_id();
+    } catch (error) {
+      Sentry.captureException(error);
+    }
 
     return headers;
   }

@@ -1,17 +1,21 @@
+import Component from '@glimmer/component';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import Component from '@glimmer/component';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    repository: RepositoryModel;
+    courseStage: CourseStageModel;
     isComplete: boolean;
   };
 }
 
-export default class SubmitCodeStepComponent extends Component<Signature> {
+export default class RunTestsStepComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   @action
@@ -22,6 +26,6 @@ export default class SubmitCodeStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep': typeof SubmitCodeStepComponent;
+    'CoursePage::CourseStageStep::SecondStageInstructionsCard::RunTestsStep': typeof RunTestsStepComponent;
   }
 }

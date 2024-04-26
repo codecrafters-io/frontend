@@ -1,0 +1,17 @@
+<div ...attributes>
+  {{#if @currentStep.repository.lastSubmissionCanBeUsedForStageCompletion}}
+    <div class="text-gray-700 mb-4 text-sm">
+      Click the button below to move on to the next step:
+    </div>
+
+    <CoursePage::CourseStageStep::MarkStageAsCompleteButton @courseStage={{@currentStep.courseStage}} @repository={{@currentStep.repository}} />
+  {{else}}
+    <div class="prose prose-sm prose-compact mb-3">
+      <p>
+        Submit your code using Git:
+      </p>
+    </div>
+
+    <CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass stage'" "git push origin master"}} />
+  {{/if}}
+</div>

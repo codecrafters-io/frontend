@@ -1,8 +1,9 @@
 <div
-  class="rounded border px-3 {{this.borderColorClasses}} {{this.backgroundColorClasses}} {{if this.isCollapsed 'cursor-pointer'}}"
+  class="rounded border px-3 {{this.borderColorClasses}} {{this.backgroundColorClasses}} {{if this.isCollapsed 'cursor-pointer'}} scroll-mt-20"
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+  {{did-update this.handleDidUpdateTestsStatus this.coursePageState.currentStepAsCourseStageStep.testsStatus}}
   data-test-test-runner-card
   ...attributes
 >
@@ -16,7 +17,7 @@
   />
 
   {{#if this.isExpanded}}
-    <div class="py-3">
+    <div class="py-3" data-test-expanded-content>
       {{#if (eq this.testsStatus "passed")}}
         <CoursePage::CourseStageStep::TestRunnerCard::TestsPassedInstructions @currentStep={{this.coursePageState.currentStepAsCourseStageStep}} />
       {{else}}

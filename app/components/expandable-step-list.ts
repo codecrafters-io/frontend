@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 
 export interface Step {
   id: string;
-  title: string;
+  titleMarkdown: string;
   isComplete: boolean;
   canBeCompletedManually: boolean;
 }
@@ -31,6 +31,17 @@ interface Signature {
 export default class ExpandableStepListComponent extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
   @tracked expandedStepId: string | null = null;
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    const firstIncompleteStep = this.firstIncompleteStep;
+    const firstStep = this.args.steps[0];
+
+    if (firstIncompleteStep && firstStep && firstIncompleteStep.id !== firstStep.id) {
+      this.expandedStepId = firstIncompleteStep.id;
+    }
+  }
 
   get expandedStep(): Step | null {
     return this.args.steps.find((step) => step.id === this.expandedStepId) ?? null;
@@ -88,12 +99,12 @@ export default class ExpandableStepListComponent extends Component<Signature> {
 
   @action
   handleStepCompletedManually(step: Step) {
-    if (this.args.onManualStepComplete) {
-      this.args.onManualStepComplete(step);
-    }
-
     next(() => {
       this.expandNextIncompleteStep();
+
+      if (this.args.onManualStepComplete) {
+        this.args.onManualStepComplete(step);
+      }
     });
   }
 

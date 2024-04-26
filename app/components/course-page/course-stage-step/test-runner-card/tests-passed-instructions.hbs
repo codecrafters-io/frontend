@@ -1,43 +1,39 @@
-<div class="prose prose-sm prose-compact mb-3">
-  <p>
-    You can either refactor your code or move on the next step.
-  </p>
-</div>
+{{#if @currentStep.courseStage.isFirst}}
+  <div>
+    <div class="prose prose-sm prose-compact mb-3">
+      <p>
+        You can now mark
+        <b>{{@currentStep.courseStage.name}}</b>
+        as complete! 🎉
+      </p>
 
-<div class="prose prose-sm prose-compact mb-3">
-  <h4>To refactor your code:</h4>
-
-  <p>
-    Make changes to your code and run the test command again:
-  </p>
-</div>
-
-<CopyableTerminalCommand @commands={{array "codecrafters test"}} class="mb-4" />
-
-<div class="prose prose-sm prose-compact mb-3">
-  <p>
-    Don't have the
-    <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
-    installed? You can also submit code via a Git push.
-  </p>
-</div>
-
-<div class="prose prose-sm prose-compact mb-3">
-  <h4 class="mt-3">To move on to the next step:</h4>
-
-  <p>
-    Submit your code using Git:
-  </p>
-</div>
-
-<CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass stage'" "git push origin master"}} />
-
-{{! TODO: Revive this when we're handling regular git pushes}}
-
-{{!-- <div class="text-gray-700 mb-4 text-sm">
-      Click the button below to move on to the next step.
+      <p>
+        We recommend reviewing the code you just uncommented. You'll need to build on it in the next stages.
+      </p>
     </div>
 
-    <PrimaryButtonWithSpinner @shouldShowSpinner={{false}} @size="large">
-      Mark stage as complete →
-    </PrimaryButtonWithSpinner> --}}
+    <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
+  </div>
+{{else}}
+  <div class="prose prose-sm prose-compact mb-3">
+    <p>
+      You can either refactor your code or move on the next step.
+    </p>
+  </div>
+
+  <div class="mb-4">
+    <div class="prose prose-sm prose-compact mb-3">
+      <h4 class="mt-3">To move on to the next step:</h4>
+    </div>
+
+    <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
+  </div>
+
+  <div>
+    <div class="prose prose-sm prose-compact mb-3">
+      <h4>To refactor your code:</h4>
+    </div>
+
+    <CoursePage::CourseStageStep::TestRunnerCard::RefactorCodeInstructions @currentStep={{@currentStep}} />
+  </div>
+{{/if}}

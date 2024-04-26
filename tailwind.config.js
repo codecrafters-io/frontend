@@ -80,7 +80,7 @@ module.exports = {
               fontWeight: 'normal',
               padding: '0.2em 0.4em',
               backgroundColor: colors.slate[100],
-              borderRadius: '5px',
+              borderRadius: '4px',
               whiteSpace: 'nowrap',
             },
             'code::before': { content: 'none' },
@@ -174,6 +174,13 @@ module.exports = {
             },
             '.prose :where(.prose > :last-child):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
               marginBottom: '0',
+            },
+            '.prose :where(ul):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
+              marginTop: '0.6em',
+            },
+            '.prose :where(li):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
+              marginTop: '0.3em',
+              marginBottom: '0.3em',
             },
             pre: {
               marginTop: '0.5em',
