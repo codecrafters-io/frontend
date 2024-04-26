@@ -1,9 +1,19 @@
-<CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-instructions-card" ...attributes>
+<CoursePage::InstructionsCard @title="Tutorial" id="first-stage-instructions-card" ...attributes>
   <:content>
     <div class="prose mb-5">
       <p>
         Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
         submit your changes.
+      </p>
+    </div>
+
+    <div class="prose prose-sm prose-compact mb-5">
+      <p>
+        {{svg-jar "information-circle" class="w-5 h-5 mb-0.5 inline-flex text-sky-500"}}
+        <b>Note:</b>
+        After your first Git push, you should see
+        <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+        in the bar above this card. This is expected! Complete the steps below to pass the tests.
       </p>
     </div>
 
@@ -21,21 +31,8 @@
           @isComplete={{this.uncommentCodeStepIsComplete}}
         />
       {{else if (eq stepList.expandedStep.id "submit-code")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
+        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep @isComplete={{this.allStepsAreComplete}} />
       {{/if}}
     </ExpandableStepList>
-
-    {{! After step 2, step 3 already contains a note on Tests Failed, so we can hide this !}}
-    {{#unless this.uncommentCodeStepIsComplete}}
-      <div class="prose prose-sm prose-compact mt-5">
-        <p>
-          {{svg-jar "information-circle" class="w-5 h-5 mb-0.5 inline-flex text-sky-500"}}
-          <b>Note:</b>
-          After your first Git push, you should see
-          <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
-          in the bar below this card. This is expected! Complete the steps above to pass the tests.
-        </p>
-      </div>
-    {{/unless}}
   </:content>
 </CoursePage::InstructionsCard>
