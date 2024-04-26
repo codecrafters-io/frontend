@@ -29,14 +29,14 @@ module('Acceptance | pay-test', function (hooks) {
     });
   });
 
-  test('user can view the page through the subscribe button', async function (assert) {
+  test('user can view the page through the upgrade button', async function (assert) {
     testScenario(this.server);
 
     await catalogPage.visit();
 
-    assert.ok(catalogPage.header.subscribeButton.isVisible, 'Subscribe button is visible');
+    assert.ok(catalogPage.header.upgradeButton.isVisible, 'Upgrade button is visible');
 
-    await catalogPage.header.subscribeButton.click();
+    await catalogPage.header.upgradeButton.click();
 
     assert.strictEqual(currentURL(), '/pay');
   });
