@@ -20,12 +20,8 @@ export default class BillingStatusDisplayService extends Service {
     );
   }
 
-  get shouldShowUpgradeButton(): boolean {
-    if (this.currentUser) {
-      return !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
-    } else {
-      return true;
-    }
+  get shouldShowSubscribeButton(): boolean {
+    return !!this.currentUser && !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
   }
 
   get shouldShowVipBadge(): boolean {

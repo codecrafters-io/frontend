@@ -432,7 +432,7 @@ module('Acceptance | referrals-page | view-referrals', function (hooks) {
 
     await catalogPage.visit();
 
-    assert.true(catalogPage.header.upgradeButton.isVisible, 'expect upgrade button to be visible');
+    assert.true(catalogPage.header.subscribeButton.isVisible, 'expect subscribe button to be visible');
     assert.false(catalogPage.header.vipBadge.isVisible, 'expect vip badge to be hidden');
     assert.false(catalogPage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
 

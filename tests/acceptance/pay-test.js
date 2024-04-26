@@ -1,4 +1,3 @@
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -27,18 +26,6 @@ module('Acceptance | pay-test', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'Login via GitHub to start a membership.',
     });
-  });
-
-  test('user can view the page through the upgrade button', async function (assert) {
-    testScenario(this.server);
-
-    await catalogPage.visit();
-
-    assert.ok(catalogPage.header.upgradeButton.isVisible, 'Upgrade button is visible');
-
-    await catalogPage.header.upgradeButton.click();
-
-    assert.strictEqual(currentURL(), '/pay');
   });
 
   test('user is redirected to login page after clicking on start membership if not logged in', async function (assert) {

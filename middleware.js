@@ -59,6 +59,9 @@ export default async function middleware(request) {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
 
+    // Use this as a fallback
+    let conceptDescription = `View the ${conceptTitle} concept on CodeCrafters`;
+
     // Get concept data from the backend
     let conceptData;
 
@@ -68,6 +71,7 @@ export default async function middleware(request) {
       );
 
       conceptTitle = conceptData.title;
+      conceptDescription = conceptData.description_markdown;
     } catch (e) {
       console.error(e);
       console.log('ignoring error for now');
@@ -76,7 +80,7 @@ export default async function middleware(request) {
     // Generate a proper OG Image URL for the concept
     pageImageUrl = `https://og.codecrafters.io/api/concept/${conceptSlug}`;
     pageTitle = conceptTitle;
-    pageDescription = `View the ${conceptTitle} concept on CodeCrafters`;
+    pageDescription = conceptDescription;
   }
 
   // Determine URL for reading local `/dist/_empty.html`
