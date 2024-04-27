@@ -24,7 +24,7 @@ export default class TestResultsBarComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
-  @tracked customHeight = htmlSafe('height: 50vh');
+  @tracked customHeight = htmlSafe('height: 100vh');
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
@@ -67,7 +67,7 @@ export default class TestResultsBarComponent extends Component<Signature> {
   @action
   handleMouseResize(event: MouseEvent) {
     const newHeight = window.innerHeight - event.clientY;
-    this.customHeight = htmlSafe(`height: ${newHeight}px`);
+    this.customHeight = htmlSafe(`height: min(100vh, ${newHeight}px)`);
   }
 
   @action
