@@ -1,7 +1,7 @@
 <div
   role="button"
   class="flex flex-shrink-0 items-center group/tab-header
-    {{if (eq @size 'small') 'px-2' 'px-3'}}
+    {{if (eq @size 'small') 'px-1.5' 'px-3'}}
     py-2 mr-2 border-b-2
     {{if (eq @size 'small') 'text-xs' 'text-sm'}}
     {{if @isActive 'border-teal-500' 'border-gray-200 hover:border-gray-300'}}
@@ -20,7 +20,7 @@
         "mr-2 fill-current "
         (if
           @isActive
-          "text-gray-600 dark:text-gray-500 "
+          "text-gray-600 dark:text-gray-400 "
           "text-gray-500 dark:text-gray-600 group-hover/tab-header:text-gray-600 dark:group-hover/tab-header:text-gray-500 "
         )
       )
@@ -28,10 +28,9 @@
   {{/if}}
 
   <span
-    class="whitespace-nowrap
-      {{if @isActive 'font-medium' 'font-normal'}}
-      {{if @isActive 'text-gray-700' 'text-gray-600 group-hover/tab-header:text-gray-700'}}
-      {{if @isActive 'dark:text-gray-400' 'dark:text-gray-500 dark:group-hover/tab-header:text-gray-400'}}
+    class="whitespace-nowrap font-medium
+      {{if @isActive 'text-gray-700' 'text-gray-500 group-hover/tab-header:text-gray-600'}}
+      {{if @isActive 'dark:text-gray-300' 'dark:text-gray-500 dark:group-hover/tab-header:text-gray-400'}}
       "
   >{{@text}}</span>
 </div>

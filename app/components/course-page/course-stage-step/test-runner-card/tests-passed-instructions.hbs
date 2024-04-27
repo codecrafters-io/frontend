@@ -23,19 +23,21 @@
     </p>
   </div>
 
-  <div class="mb-4">
-    <div class="prose prose-sm prose-compact mb-3">
-      <h4 class="mt-3">To move on to the next step:</h4>
+  <Tabs @size="small" @tabs={{this.tabs}} as |activeTabSlug|>
+    <div class="mt-4">
+      {{#if (eq activeTabSlug "mark-as-complete")}}
+        {{!-- <div class="prose prose-sm prose-compact mb-3">
+          <p>To move on to the next step:</p>
+        </div> --}}
+
+        <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
+      {{else}}
+        {{!-- <div class="prose prose-sm prose-compact mb-3">
+          <p>To refactor your code:</p>
+        </div> --}}
+
+        <CoursePage::CourseStageStep::TestRunnerCard::RefactorCodeInstructions @currentStep={{@currentStep}} />
+      {{/if}}
     </div>
-
-    <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
-  </div>
-
-  <div>
-    <div class="prose prose-sm prose-compact mb-3">
-      <h4>To refactor your code:</h4>
-    </div>
-
-    <CoursePage::CourseStageStep::TestRunnerCard::RefactorCodeInstructions @currentStep={{@currentStep}} />
-  </div>
+  </Tabs>
 {{/if}}

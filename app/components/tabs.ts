@@ -8,6 +8,7 @@ type Signature = {
       title: string;
       icon?: string;
     }[];
+    size?: 'regular' | 'small';
   };
 
   Blocks: {
@@ -19,7 +20,6 @@ export default class TabsComponent extends Component<Signature> {
   @tracked activeTabSlug;
 
   constructor(owner: unknown, args: Signature['Args']) {
-    // @ts-ignore
     super(owner, args);
 
     this.activeTabSlug = args.tabs[0]!.slug;
