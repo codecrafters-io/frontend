@@ -16,8 +16,8 @@ export default class StepProgressIndicatorComponent extends Component<Signature>
   get textColorClasses() {
     return {
       gray: 'text-gray-600 dark:text-gray-400',
-      green: 'text-green-500 font-medium',
-      yellow: 'text-yellow-500 font-medium',
+      green: 'text-teal-600 dark:text-teal-500 font-medium',
+      yellow: 'text-yellow-600 dark:text-yellow-500 font-medium',
       red: 'text-red-600 dark:text-red-500 font-medium',
     }[this.args.step.progressIndicator?.textColor ?? 'gray'];
   }
