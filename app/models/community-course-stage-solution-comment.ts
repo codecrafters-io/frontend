@@ -1,4 +1,5 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+/* eslint-disable ember/no-mixins */
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
@@ -11,14 +12,15 @@ import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type UserModel from 'codecrafters-frontend/models/user';
 
-
 export default class CommunityCourseStageSolutionCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin, IsCommentMixin) {
   @attr('date') declare createdAt: Date;
   @attr('string') declare subtargetLocator: string; // filename.js or filename.js:line1-line2
   @attr('date') declare updatedAt: Date;
 
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
-  @belongsTo('community-course-stage-solution-comment', { async: false, inverse: null }) declare parentComment: CommunityCourseStageSolutionCommentModel;
+  @belongsTo('community-course-stage-solution-comment', { async: false, inverse: null })
+  declare parentComment: CommunityCourseStageSolutionCommentModel;
+
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'comments' }) declare target: CommunityCourseStageSolutionModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
@@ -45,7 +47,9 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
       return { startLine: null, endLine: null };
     }
 
-    const [startLine, endLine] = this.subtargetLocator.split(':')[1]!.split('-');
+    const lines = this.subtargetLocator.split(':')[1]!.split('-') as [string, string];
+    const startLine = parseInt(lines[0], 10);
+    const endLine = parseInt(lines[1], 10);
 
     return { startLine, endLine };
   }

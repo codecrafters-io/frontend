@@ -5,7 +5,7 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 
 export default class CourseStageSolutionModel extends Model {
   @attr() declare authorDetails: { [key: string]: string }; // free-form JSON
-  @attr() declare changedFiles: { [key: string]: string }; // free-form JSON
+  @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('string') declare explanationMarkdown: string;
   @attr() declare reviewersDetails: Array<{ [key: string]: string }>; // free-form JSON
 

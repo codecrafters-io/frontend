@@ -5,7 +5,9 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import type CourseStageCommentModel from 'codecrafters-frontend/models/course-stage-comment';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
+import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type Store from '@ember-data/store';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
@@ -21,7 +23,7 @@ type Signature = {
     commentModelType: 'course-stage-comment' | 'community-course-stage-solution-comment';
     onCancel?: () => void;
     onSubmit?: () => void;
-    target: unknown;
+    target: CourseStageModel | CommunityCourseStageSolutionModel;
   };
 };
 
@@ -116,7 +118,7 @@ export default class CommentFormComponent extends Component<Signature> {
     next(() => {
       if (this.isEditingComment) {
         this.comment.rollbackAttributes();
-        // @ts-expect-error isNew isn't correctly typed
+        // @ts-ignore isNew isn't correctly typed
       } else if (this.comment.isNew && !this.comment.isSaving) {
         this.comment.unloadRecord();
       }
