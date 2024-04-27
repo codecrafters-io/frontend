@@ -1,5 +1,6 @@
 export interface ProgressIndicatorBase {
   text: string;
+  textColor?: 'gray' | 'green' | 'yellow' | 'red';
   explanationMarkdown?: string;
 }
 
