@@ -20,7 +20,7 @@
         "mr-2 fill-current "
         (if
           @isActive
-          "text-gray-600 dark:text-gray-400 "
+          "text-gray-700 dark:text-gray-400 "
           "text-gray-500 dark:text-gray-600 group-hover/tab-header:text-gray-600 dark:group-hover/tab-header:text-gray-500 "
         )
       )
@@ -29,7 +29,7 @@
 
   <span
     class="whitespace-nowrap font-medium
-      {{if @isActive 'text-gray-700' 'text-gray-500 group-hover/tab-header:text-gray-600'}}
+      {{if @isActive 'text-gray-800' 'text-gray-500 group-hover/tab-header:text-gray-600'}}
       {{if @isActive 'dark:text-gray-300' 'dark:text-gray-500 dark:group-hover/tab-header:text-gray-400'}}
       "
   >{{@text}}</span>

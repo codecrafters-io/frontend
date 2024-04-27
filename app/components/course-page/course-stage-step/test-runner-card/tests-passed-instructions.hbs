@@ -24,18 +24,10 @@
   </div>
 
   <Tabs @size="regular" @tabs={{this.tabs}} as |activeTabSlug|>
-    <div class="mt-4">
+    <div class="mt-3">
       {{#if (eq activeTabSlug "mark-as-complete")}}
-        {{!-- <div class="prose prose-sm prose-compact mb-3">
-          <p>To move on to the next step:</p>
-        </div> --}}
-
         <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
       {{else}}
-        {{!-- <div class="prose prose-sm prose-compact mb-3">
-          <p>To refactor your code:</p>
-        </div> --}}
-
         <CoursePage::CourseStageStep::TestRunnerCard::RefactorCodeInstructions @currentStep={{@currentStep}} />
       {{/if}}
     </div>
