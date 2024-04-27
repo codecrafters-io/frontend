@@ -51,7 +51,7 @@
     "@glint/core": "^1.4.0",
     "@glint/environment-ember-loose": "^1.4.0",
     "@glint/template": "^1.2.1",
-    "@percy/cli": "^1.28.3",
+    "@percy/cli": "^1.28.5",
     "@percy/ember": "^4.0.0",
     "@sentry/ember": "^7.112.2",
     "@sentry/webpack-plugin": "^2.16.1",
@@ -198,7 +198,6 @@
     "mustache": "^4.2.0",
     "node-html-parser": "^6.1.13",
     "player.js": "^0.1.0",
-    "posthog-js": "^1.129.0",
     "showdown": "^2.1.0",
     "three": "^0.163.0",
     "web-vitals": "^3.5.2"

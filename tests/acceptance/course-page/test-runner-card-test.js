@@ -34,18 +34,26 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands.length, 1, 'only one copyable terminal command is present by default');
 
-    assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText, 'codecrafters test');
-
-    await coursePage.testRunnerCard.clickOnToggleAlternateClientInstructionsLink();
-
-    assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands.length, 2, 'two copyable terminal commands are present');
-
     assert.strictEqual(
-      coursePage.testRunnerCard.copyableTerminalCommands[1].copyableText,
-      ['git add .', 'git commit --allow-empty -m "pass stage" # any message', 'git push origin master'].join(' '),
+      coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
+      'codecrafters test # Visit https://codecrafters.io/cli to install',
+      'copyable text mentions cli by default',
     );
 
-    await coursePage.testRunnerCard.clickOnToggleAlternateClientInstructionsLink();
-    assert.strictEqual(coursePage.testRunnerCard.copyableTerminalCommands.length, 1, 'only one copyable terminal command is present by default');
+    await coursePage.testRunnerCard.copyableTerminalCommands[0].clickOnVariantButton('git');
+
+    assert.strictEqual(
+      coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
+      ['git add .', 'git commit --allow-empty -m "pass stage" # any message', 'git push origin master'].join(' '),
+      'copyable text is updated to include git commands',
+    );
+
+    await coursePage.testRunnerCard.copyableTerminalCommands[0].clickOnVariantButton('codecrafters cli');
+
+    assert.strictEqual(
+      coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
+      'codecrafters test # Visit https://codecrafters.io/cli to install',
+      'copyable text mentions cli after switching back',
+    );
   });
 });

@@ -1,10 +1,11 @@
 <div>
-  <ul class="flex items-center overflow-x-scroll pb-4 mb-2">
+  <ul class="flex items-center overflow-x-scroll">
     {{#each @tabs as |tab|}}
       <TabHeader
         @icon={{tab.icon}}
         @text={{tab.title}}
         @isActive={{eq this.activeTabSlug tab.slug}}
+        @size={{@size}}
         {{on "click" (fn (mut this.activeTabSlug) tab.slug)}}
       />
     {{/each}}

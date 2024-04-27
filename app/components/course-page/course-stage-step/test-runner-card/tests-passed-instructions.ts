@@ -9,7 +9,20 @@ interface Signature {
   };
 }
 
-export default class TestsPassedInstructionsComponent extends Component<Signature> {}
+export default class TestsPassedInstructionsComponent extends Component<Signature> {
+  get tabs() {
+    return [
+      {
+        slug: 'mark-as-complete',
+        title: 'Move to next step',
+      },
+      {
+        slug: 'refactor',
+        title: 'Refactor code',
+      },
+    ];
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

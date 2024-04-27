@@ -1,17 +1,28 @@
 <div ...attributes>
   <div class="prose prose-sm prose-compact mb-3">
     <p>
-      Make changes to your code and run the test command again:
+      Make changes to your code and run the
+      {{#if (gt this.commandsForSelectedClientType.length 1)}}
+        following commands:
+      {{else}}
+        test command:
+      {{/if}}
     </p>
   </div>
 
-  <CopyableTerminalCommand @commands={{array "codecrafters test"}} class="mb-3" />
+  <CopyableTerminalCommand
+    @commands={{this.commandsForSelectedClientType}}
+    @variants={{array "codecrafters cli" "git"}}
+    @selectedVariant={{this.selectedVariant}}
+    @onVariantSelect={{this.handleVariantSelect}}
+  />
 
-  <div class="prose prose-sm prose-compact">
-    <p>
-      Don't have the
-      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CLI</a>
-      installed? You can also submit code via a Git push.
-    </p>
-  </div>
+  {{#if (eq this.recommendedClientType "cli")}}
+    <div class="prose prose-sm prose-compact mt-3">
+      <p>
+        We recommend using the
+        <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters CLI</a>, but you can use Git too.
+      </p>
+    </div>
+  {{/if}}
 </div>
