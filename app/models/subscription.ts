@@ -2,7 +2,7 @@ import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 
-import type UserModel from 'codecrafters-frontend/models/user'
+import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class SubscriptionModel extends Model {
   @attr('date') declare cancelAt: Date;

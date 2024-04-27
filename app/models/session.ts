@@ -15,7 +15,7 @@ export default class SessionModel extends Model {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
-  declare logout: (this: Model, payload: unknown) => Promise<Promise<any>>;
+  declare logout: (this: Model, payload: unknown) => Promise<Promise<{ redirect_url: string }>>;
 }
 
 SessionModel.prototype.logout = collectionAction({

@@ -27,11 +27,11 @@ export default class ReviewPaymentStepContainer extends Component<Signature> {
   }
 
   get perUnitAmountInDollarsInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
+    return this.firstInvoicePreview.lineItems[0]!.amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
   }
 
   get subscriptionQuantityInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].quantity;
+    return this.firstInvoicePreview.lineItems[0]!.quantity;
   }
 
   @action
