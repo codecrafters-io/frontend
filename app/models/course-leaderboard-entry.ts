@@ -1,12 +1,17 @@
 import { attr, belongsTo } from '@ember-data/model';
 import Model from '@ember-data/model';
 
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type LanguageModel from 'codecrafters-frontend/models/language';
+import type UserModel from 'codecrafters-frontend/models/user';
+
 export default class CourseLeaderboardEntry extends Model {
-  @attr('string') status;
-  @belongsTo('course-stage', { async: false, inverse: null }) currentCourseStage;
-  @belongsTo('language', { async: false, inverse: null }) language;
-  @belongsTo('user', { async: false, inverse: null }) user;
-  @attr('date') lastAttemptAt;
+  @attr('date') declare lastAttemptAt: Date;
+  @attr('string') declare status: string;
+
+  @belongsTo('course-stage', { async: false, inverse: null }) declare currentCourseStage: CourseStageModel;
+  @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
+  @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   get completedStagesCount() {
     if (this.statusIsCompleted) {
