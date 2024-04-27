@@ -16,7 +16,9 @@
       {{/if}}
     </AnimatedContainer>
 
-    <span class="text-gray-600 dark:text-gray-400" data-test-progress-indicator-text>{{@step.progressIndicator.text}}</span>
+    <span class={{this.textColorClasses}} data-test-progress-indicator-text>
+      {{@step.progressIndicator.text}}
+    </span>
 
     {{#if (and @step.progressIndicator.explanationMarkdown (not @shouldHideExplanationTooltip))}}
       <div class="flex ml-1 mb-px group/tooltip-trigger">

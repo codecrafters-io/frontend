@@ -89,6 +89,7 @@ Check the [How to pass this stage](#first-stage-instructions-card) section for i
         dotColor: 'yellow',
         dotType: 'blinking',
         text: 'Running tests...',
+        textColor: 'yellow',
       };
     } else if (this.status === 'complete') {
       return {
@@ -100,6 +101,7 @@ Check the [How to pass this stage](#first-stage-instructions-card) section for i
         dotColor: 'red',
         dotType: 'static',
         text: this.testFailureMessage,
+        textColor: 'red',
         explanationMarkdown: this.courseStage.isFirst ? this.firstStageTestFailureExplanationMarkdown : undefined,
       };
     } else if (this.testsStatus === 'passed') {
@@ -107,6 +109,7 @@ Check the [How to pass this stage](#first-stage-instructions-card) section for i
         dotColor: 'green',
         dotType: 'static',
         text: 'Tests passed!',
+        textColor: 'green',
       };
     } else if (this.status === 'in_progress') {
       return {
