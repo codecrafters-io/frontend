@@ -2,20 +2,21 @@ import { attr, belongsTo } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 import config from 'codecrafters-frontend/config/environment';
+import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class Charge extends Model {
-  @attr('date') createdAt;
-  @attr('number') amount;
-  @attr('number') amountRefunded;
-  @attr('string') currency;
-  @attr('string') invoiceId;
-  @attr('string') status;
+  @attr('number') declare amount: number;
+  @attr('number') declare amountRefunded: number;
+  @attr('date') declare createdAt: Date;
+  @attr('string') declare currency: string;
+  @attr('string') declare invoiceId: string;
+  @attr('string') declare status: string;
 
-  @belongsTo('user', { async: false, inverse: null }) user;
+  @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
-  @equal('status', 'failed') statusIsFailed;
-  @equal('status', 'pending') statusIsPending;
-  @equal('status', 'succeeded') statusIsSucceeded;
+  @equal('status', 'failed') declare statusIsFailed: boolean;
+  @equal('status', 'pending') declare statusIsPending: boolean;
+  @equal('status', 'succeeded') declare statusIsSucceeded: boolean;
 
   get amountInDollars() {
     return this.amount / 100;
