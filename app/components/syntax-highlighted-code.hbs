@@ -1,3 +1,7 @@
-<div class="syntax-highlighted-code leading-6 {{if @shouldDisplayLineNumbers 'with-line-numbers'}}" ...attributes>
-  {{this.highlightedHtml}}
+<div
+  class="syntax-highlighted-code leading-6 {{if @shouldDisplayLineNumbers 'with-line-numbers'}}"
+  {{did-update this.handleDidUpdateCode @code}}
+  ...attributes
+>
+  {{html-safe this.highlightedHtml}}
 </div>

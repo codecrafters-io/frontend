@@ -13,7 +13,28 @@ interface Signature {
 }
 
 export default class RunTestsInstructionsComponent extends Component<Signature> {
-  @tracked alternateClientInstructionsAreExpanded = false;
+  static clientTypeToVariantMap = {
+    cli: 'codecrafters cli',
+    git: 'git',
+  };
+
+  @tracked alternateClientTypeIsSelected = false;
+
+  get commandsForCli() {
+    return ['codecrafters test # Visit https://codecrafters.io/cli to install'];
+  }
+
+  get commandsForGit() {
+    return ['git add .', 'git commit --allow-empty -m "pass stage" # any message', 'git push origin master'];
+  }
+
+  get commandsForSelectedClientType() {
+    if (this.recommendedClientType === 'cli') {
+      return this.alternateClientTypeIsSelected ? this.commandsForGit : this.commandsForCli;
+    } else {
+      return this.alternateClientTypeIsSelected ? this.commandsForCli : this.commandsForGit;
+    }
+  }
 
   get lastSubmission() {
     return this.args.currentStep.repository.lastSubmission;
@@ -23,7 +44,7 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
     return this.lastSubmission?.courseStage === this.args.currentStep.courseStage;
   }
 
-  get suggestedClientType() {
+  get recommendedClientType() {
     if (this.args.currentStep.courseStage.isFirst) {
       return 'git';
     } else {
@@ -31,25 +52,22 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
     }
   }
 
-  get suggestedCommands() {
-    return this.suggestedClientType === 'git' ? this.suggestedCommandsForGit : this.suggestedCommandsForCli;
+  get selectedClientType() {
+    if (this.alternateClientTypeIsSelected) {
+      return this.recommendedClientType === 'cli' ? 'git' : 'cli';
+    } else {
+      return this.recommendedClientType;
+    }
   }
 
-  get suggestedCommandsForAlternateClient() {
-    return this.suggestedClientType === 'git' ? this.suggestedCommandsForCli : this.suggestedCommandsForGit;
-  }
-
-  get suggestedCommandsForCli() {
-    return ['codecrafters test'];
-  }
-
-  get suggestedCommandsForGit() {
-    return ['git add .', 'git commit --allow-empty -m "pass stage" # any message', 'git push origin master'];
+  get selectedVariant() {
+    return RunTestsInstructionsComponent.clientTypeToVariantMap[this.selectedClientType];
   }
 
   @action
-  toggleAlternateClientInstructions() {
-    this.alternateClientInstructionsAreExpanded = !this.alternateClientInstructionsAreExpanded;
+  handleVariantSelect(variant: string) {
+    const clientType = variant === 'git' ? 'git' : 'cli'; // variant can be 'git' or 'codecrafters cli'
+    this.alternateClientTypeIsSelected = clientType !== this.recommendedClientType;
   }
 }
 

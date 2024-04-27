@@ -11,6 +11,9 @@ interface Signature {
   Args: {
     commands: string[];
     onCopyButtonClick?: () => void;
+    onVariantSelect?: (variant: string) => void;
+    selectedVariant?: string;
+    variants?: string[];
   };
 }
 
@@ -24,7 +27,7 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
   }
 
   get copyableText(): string {
-    return this.args.commands.join('\n');
+    return this.args.commands.map((command) => command.replace(/# .*$/, '')).join('\n');
   }
 
   @action
