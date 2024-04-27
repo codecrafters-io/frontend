@@ -2,14 +2,17 @@ import Model from '@ember-data/model';
 import { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 
+import type UserModel from 'codecrafters-frontend/models/user'
+
 export default class SubscriptionModel extends Model {
-  @belongsTo('user', { async: false, inverse: 'subscriptions' }) user;
-  @attr('date') cancelAt;
-  @attr('date') currentPeriodEnd;
-  @attr('date') endedAt;
-  @attr('date') startDate;
-  @attr('string') pricingPlanName;
-  @attr('date') trialEnd;
+  @attr('date') declare cancelAt: Date;
+  @attr('date') declare currentPeriodEnd: Date;
+  @attr('date') declare endedAt: Date;
+  @attr('string') declare pricingPlanName: string;
+  @attr('date') declare startDate: Date;
+  @attr('date') declare trialEnd: Date;
+
+  @belongsTo('user', { async: false, inverse: 'subscriptions' }) declare user: UserModel;
 
   get isActive() {
     return !this.endedAt && !this.isNew;
@@ -22,6 +25,9 @@ export default class SubscriptionModel extends Model {
   get isTrialing() {
     return this.isActive && this.trialEnd && new Date() < this.trialEnd;
   }
+
+  declare cancel: (this: Model, payload: unknown) => Promise<void>;
+  declare cancelTrial: (this: Model, payload: unknown) => Promise<void>;
 }
 
 SubscriptionModel.prototype.cancelTrial = memberAction({
