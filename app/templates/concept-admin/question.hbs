@@ -48,11 +48,13 @@
     </div>
 
     <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
-      {{#if (eq activeTabSlug "edit")}}
-        <ConceptAdmin::QuestionsPage::QuestionForm @question={{@model.question}} />
-      {{else if (eq activeTabSlug "preview")}}
-        <ConceptAdmin::BlocksPage::BlockPreview @model={{@model.question.blockForPreview}} />
-      {{/if}}
+      <div class="mt-6">
+        {{#if (eq activeTabSlug "edit")}}
+          <ConceptAdmin::QuestionsPage::QuestionForm @question={{@model.question}} />
+        {{else if (eq activeTabSlug "preview")}}
+          <ConceptAdmin::BlocksPage::BlockPreview @model={{@model.question.blockForPreview}} />
+        {{/if}}
+      </div>
     </Tabs>
   </div>
 </div>
