@@ -13,8 +13,8 @@ export default {
   scope: '[data-test-course-page-header]',
   stepName: text('[data-test-step-name]'),
 
-  subscribeButton: {
-    scope: '[data-test-subscribe-button]',
+  upgradeButton: {
+    scope: '[data-test-upgrade-button]',
   },
 
   vipBadge: {
