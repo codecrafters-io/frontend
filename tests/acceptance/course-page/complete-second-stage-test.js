@@ -27,6 +27,13 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       user: currentUser,
     });
 
+    // Auto-create next submission
+    this.server.create('submission', 'withEvaluatingStatus', {
+      repository: repository,
+      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      clientType: 'system',
+    });
+
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
