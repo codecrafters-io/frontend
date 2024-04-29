@@ -8,9 +8,10 @@ import * as shiki from 'shiki';
  */
 const highlighterCacheAsync = new Map();
 
-export default function getOrCreateCachedHighlighterPromise(cacheId: string, options: shiki.HighlighterOptions): Promise<shiki.Highlighter> {
-  shiki.setCDN('https://unpkg.com/shiki@0.14.7/');
-
+export default function getOrCreateCachedHighlighterPromise(
+  cacheId: string,
+  options: shiki.BundledHighlighterOptions<shiki.BundledLanguage, shiki.BundledTheme>,
+): Promise<shiki.Highlighter> {
   if (!highlighterCacheAsync.has(cacheId)) {
     let highlighterPromise: Promise<shiki.Highlighter>;
 
@@ -43,12 +44,16 @@ export default function getOrCreateCachedHighlighterPromise(cacheId: string, opt
   return highlighterCacheAsync.get(cacheId);
 }
 
-export async function preloadHighlighter(cacheId: string, options: shiki.HighlighterOptions, languages?: string[]) {
+export async function preloadHighlighter(
+  cacheId: string,
+  options: shiki.BundledHighlighterOptions<shiki.BundledLanguage, shiki.BundledTheme>,
+  languages?: string[],
+) {
   const highlighter = await getOrCreateCachedHighlighterPromise(cacheId, options);
 
   await Promise.all(
     (languages || []).map((language) => {
-      highlighter.loadLanguage(language as shiki.Lang);
+      highlighter.loadLanguage(language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage);
     }),
   );
 }
