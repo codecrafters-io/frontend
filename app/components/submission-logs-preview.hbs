@@ -10,7 +10,7 @@
     <div class="flex items-center">
       <BlinkingDot class="mr-2" @color="yellow" />
 
-      {{#if @submission.wasSubmittedViaCli}}
+      {{#if @submission.clientTypeIsCli}}
         Running tests... (view `codecrafters test` output for live logs)
       {{else}}
         Running tests... (view `git push` output for live logs)
