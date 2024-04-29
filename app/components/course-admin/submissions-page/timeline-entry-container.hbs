@@ -46,7 +46,7 @@
         </div>
       {{/if}}
 
-      {{#if @submission.wasSubmittedViaCli}}
+      {{#if @submission.clientTypeIsCli}}
         <div>
           {{svg-jar "terminal" class="text-gray-400 w-4 fill-current"}}
           <EmberTooltip @text="Submitted via CLI" />

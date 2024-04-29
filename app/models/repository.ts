@@ -172,7 +172,7 @@ export default class RepositoryModel extends Model {
     return (
       this.lastSubmission &&
       this.lastSubmission.statusIsSuccess &&
-      this.lastSubmission.wasSubmittedViaGit &&
+      this.lastSubmission.clientTypeIsGit &&
       this.lastSubmission.courseStage === this.currentStage
     );
   }
