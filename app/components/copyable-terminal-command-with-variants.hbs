@@ -1,9 +1,10 @@
 {{#if (gt this.variantLabels.length 1)}}
   <CopyableTerminalCommand
     @commands={{this.commandsForSelectedVariant}}
-    @variantLabels={{this.variantLabels}}
-    @selectedVariantLabel={{this.selectedVariant.label}}
+    @onCopyButtonClick={{@onCopyButtonClick}}
     @onVariantLabelClick={{this.handleVariantSelect}}
+    @selectedVariantLabel={{this.selectedVariant.label}}
+    @variantLabels={{this.variantLabels}}
   />
 {{else}}
   {{! If there's only one variant, don't show variant labels }}
