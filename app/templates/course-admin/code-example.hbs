@@ -30,6 +30,7 @@
           <Toggle
             @isOn={{@model.solution.isPinned}}
             {{on "click" this.handlePinCodeExampleToggled}}
+            data-test-pin-code-example-toggle
           />
 
           <div class="text-xs text-gray-400 mt-2">
