@@ -25,6 +25,17 @@
             {{@model.solution.courseStage.name}}
           </h3>
         </div>
+
+        <div class="flex flex-col items-end">
+          <Toggle
+            @isOn={{@model.solution.isPinned}}
+            {{on "click" this.handlePinCodeExampleToggled}}
+          />
+
+          <div class="text-xs text-gray-400 mt-2">
+            Editor's choice
+          </div>
+        </div>
       </div>
     </div>
 
