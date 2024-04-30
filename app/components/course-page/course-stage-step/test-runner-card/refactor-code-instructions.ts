@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import type { CopyableTerminalCommandVariant } from 'codecrafters-frontend/components/copyable-terminal-command-with-variants';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -12,26 +13,29 @@ interface Signature {
 }
 
 export default class RefactorCodeInstructionsComponent extends Component<Signature> {
-  static clientTypeToVariantMap = {
-    cli: 'codecrafters cli',
-    git: 'git',
-  };
+  @tracked selectedCommandVariant: CopyableTerminalCommandVariant;
 
-  @tracked alternateClientTypeIsSelected = false;
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
 
-  get commandsForCli() {
-    return ['codecrafters test # Visit https://codecrafters.io/cli to install'];
+    this.selectedCommandVariant = this.commandVariants[0]!;
   }
 
-  get commandsForGit() {
-    return ['git add .', 'git commit --allow-empty -m "run tests" # any message', 'git push origin master'];
-  }
+  get commandVariants(): CopyableTerminalCommandVariant[] {
+    const cliVariant = {
+      label: 'codecrafters cli',
+      commands: ['codecrafters test # Visit https://codecrafters.io/cli to install'],
+    };
 
-  get commandsForSelectedClientType() {
+    const gitVariant = {
+      label: 'git',
+      commands: ['git add .', 'git commit --allow-empty -m "run tests" # any message', 'git push origin master'],
+    };
+
     if (this.recommendedClientType === 'cli') {
-      return this.alternateClientTypeIsSelected ? this.commandsForGit : this.commandsForCli;
+      return [cliVariant, gitVariant];
     } else {
-      return this.alternateClientTypeIsSelected ? this.commandsForCli : this.commandsForGit;
+      return [gitVariant];
     }
   }
 
@@ -43,22 +47,9 @@ export default class RefactorCodeInstructionsComponent extends Component<Signatu
     }
   }
 
-  get selectedClientType() {
-    if (this.alternateClientTypeIsSelected) {
-      return this.recommendedClientType === 'cli' ? 'git' : 'cli';
-    } else {
-      return this.recommendedClientType;
-    }
-  }
-
-  get selectedVariant() {
-    return RefactorCodeInstructionsComponent.clientTypeToVariantMap[this.selectedClientType];
-  }
-
   @action
-  handleVariantSelect(variant: string) {
-    const clientType = variant === 'git' ? 'git' : 'cli'; // variant can be 'git' or 'codecrafters cli'
-    this.alternateClientTypeIsSelected = clientType !== this.recommendedClientType;
+  handleVariantSelect(variant: CopyableTerminalCommandVariant) {
+    this.selectedCommandVariant = variant;
   }
 }
 
