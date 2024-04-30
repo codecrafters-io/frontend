@@ -2,7 +2,7 @@
   <div class="prose prose-sm prose-compact mb-3">
     <p>
       Make changes to your code and run the
-      {{#if (gt this.commandsForSelectedClientType.length 1)}}
+      {{#if (gt this.selectedCommandVariant.commands.length 1)}}
         following commands:
       {{else}}
         test command:
@@ -10,12 +10,7 @@
     </p>
   </div>
 
-  <CopyableTerminalCommand
-    @commands={{this.commandsForSelectedClientType}}
-    @variants={{array "codecrafters cli" "git"}}
-    @selectedVariant={{this.selectedVariant}}
-    @onVariantSelect={{this.handleVariantSelect}}
-  />
+  <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
 
   {{#if (eq this.recommendedClientType "cli")}}
     <div class="prose prose-sm prose-compact mt-3">

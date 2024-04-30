@@ -5,20 +5,20 @@
 >
   <div class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
     <div class="flex items-center gap-2">
-      {{#if (gt @variants.length 1)}}
+      {{#if (gt @variantLabels.length 1)}}
         <div class="flex items-center gap-1">
-          {{#each @variants as |variant|}}
+          {{#each @variantLabels as |variantLabel|}}
             <button
               type="button"
               class="text-xs rounded px-1.5 py-0.5
-                {{if (eq variant @selectedVariant) 'text-white bg-teal-500'}}
-                {{if (not-eq variant @selectedVariant) 'text-gray-800 bg-gray-200'}}
+                {{if (eq variantLabel @selectedVariantLabel) 'text-white bg-teal-500'}}
+                {{if (not-eq variantLabel @selectedVariantLabel) 'text-gray-800 bg-gray-200'}}
                 "
               {{! @glint-expect-error @onVariantSelect is nullable}}
-              {{on "click" (fn @onVariantSelect variant)}}
+              {{on "click" (fn @onVariantLabelClick variantLabel)}}
               data-test-variant-button
             >
-              {{variant}}
+              {{variantLabel}}
             </button>
           {{/each}}
         </div>
