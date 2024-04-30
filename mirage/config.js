@@ -4,7 +4,7 @@ import { add } from 'date-fns';
 import config from 'codecrafters-frontend/config/environment';
 import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
 
-export default function(config) {
+export default function (config) {
   let finalConfig = {
     ...config,
     models: {
@@ -49,7 +49,7 @@ function routes() {
   this.namespace = '/api/v1';
   // this.timing = 1000;
 
-  this.pretender.prepareHeaders = function(headers) {
+  this.pretender.prepareHeaders = function (headers) {
     headers['Access-Control-Allow-Origin'] = '*';
     headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS';
 
@@ -62,14 +62,14 @@ function routes() {
   this.post('/affiliate-earnings-payouts');
   this.get('/affiliate-links');
 
-  this.post('/affiliate-links', function(schema) {
+  this.post('/affiliate-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.url = `https://app.codecrafters.io/join?via=${attrs.slug}`;
 
     return schema.affiliateLinks.create(attrs);
   });
 
-  this.post('/affiliate-referrals', function(schema) {
+  this.post('/affiliate-referrals', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.activatedAt = new Date();
 
@@ -80,7 +80,7 @@ function routes() {
 
   this.get('/autofix-requests/:id');
 
-  this.post('/autofix-requests', function(schema) {
+  this.post('/autofix-requests', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     const fakeLogstream = schema.fakeLogstreams.create({ chunks: [], isTerminated: false });
 
@@ -93,18 +93,18 @@ function routes() {
 
   this.get('/badges');
 
-  this.get('/concept-engagements', function(schema) {
+  this.get('/concept-engagements', function (schema) {
     return schema.conceptEngagements.all().filter((engagement) => engagement.user.id === '63c51e91-e448-4ea9-821b-a80415f266d3');
   });
 
   this.patch('/concept-engagements/:id');
   this.post('/concept-engagements');
 
-  this.get('/concept-groups', function(schema) {
+  this.get('/concept-groups', function (schema) {
     return schema.conceptGroups.all();
   });
 
-  this.get('/concept-groups/:concept_group_slug', function(schema, request) {
+  this.get('/concept-groups/:concept_group_slug', function (schema, request) {
     let result = schema.conceptGroups.where({ slug: request.params.concept_group_slug });
 
     return result.models[0];
@@ -112,11 +112,11 @@ function routes() {
 
   this.get('/concepts');
 
-  this.post('/concepts', function(schema) {
+  this.post('/concepts', function (schema) {
     return schema.concepts.create({ title: 'New Concept', slug: 'new-concept' });
   });
 
-  this.patch('/concepts/:id', function(schema, request) {
+  this.patch('/concepts/:id', function (schema, request) {
     const concept = schema.concepts.find(request.params.id);
     const attrs = this.normalizedRequestAttrs();
 
@@ -157,7 +157,7 @@ function routes() {
     return concept;
   });
 
-  this.post('/concepts/:id/update-blocks', function(schema, request) {
+  this.post('/concepts/:id/update-blocks', function (schema, request) {
     const concept = schema.concepts.find(request.params.id);
     const jsonBody = JSON.parse(request.requestBody);
 
@@ -186,7 +186,7 @@ function routes() {
     return concept;
   });
 
-  this.post('/concept-questions', function(schema) {
+  this.post('/concept-questions', function (schema) {
     const attrs = this.normalizedRequestAttrs();
 
     return schema.conceptQuestions.create({
@@ -204,7 +204,7 @@ function routes() {
 
   this.get('/contests');
 
-  this.get('/contests/:slug', function(schema, request) {
+  this.get('/contests/:slug', function (schema, request) {
     return schema.contests.where({ slug: request.params.slug }).models[0];
   });
 
@@ -213,7 +213,7 @@ function routes() {
   this.get('/code-walkthroughs');
 
   // TODO: Add pagination
-  this.get('/community-course-stage-solutions', function(schema, request) {
+  this.get('/community-course-stage-solutions', function (schema, request) {
     let result = schema.communityCourseStageSolutions.all();
 
     if (request.queryParams.language_id) {
@@ -228,9 +228,9 @@ function routes() {
   });
 
   this.get('/community-course-stage-solutions/:id');
-  this.get('/solution-comparisons')
+  this.get('/solution-comparisons');
 
-  this.get('/community-course-stage-solutions/:id/file-comparisons', function(schema, request) {
+  this.get('/community-course-stage-solutions/:id/file-comparisons', function (schema, request) {
     const solution = schema.communityCourseStageSolutions.find(request.params.id);
 
     if (!solution) {
@@ -297,30 +297,30 @@ function routes() {
     ];
   });
 
-  this.get('/community-course-stage-solution-comments', function(schema, request) {
+  this.get('/community-course-stage-solution-comments', function (schema, request) {
     let result = schema.communityCourseStageSolutionComments.all().filter((comment) => comment.targetId.toString() === request.queryParams.target_id);
 
     return result;
   });
 
-  this.post('/community-course-stage-solution-comments', function(schema) {
+  this.post('/community-course-stage-solution-comments', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.createdAt = new Date();
 
     return schema.communityCourseStageSolutionComments.create(attrs);
   });
 
-  this.post('/community-course-stage-solution-comments/:id/unvote', () => { });
+  this.post('/community-course-stage-solution-comments/:id/unvote', () => {});
 
   this.get('/courses');
 
-  this.post('/courses/:id/sync-course-definition-updates', function(schema, request) {
+  this.post('/courses/:id/sync-course-definition-updates', function (schema, request) {
     const course_id = request.params.id;
 
     return schema.courseDefinitionUpdates.where({ course_id });
   });
 
-  this.post('/courses/:id/sync-course-tester-versions', function(schema, request) {
+  this.post('/courses/:id/sync-course-tester-versions', function (schema, request) {
     const course_id = request.params.id;
 
     return schema.courseTesterVersions.where({ course_id });
@@ -329,7 +329,7 @@ function routes() {
   this.get('/course-definition-updates');
   this.get('/course-definition-updates/:id');
 
-  this.post('/course-definition-updates/:id/apply', function(schema, request) {
+  this.post('/course-definition-updates/:id/apply', function (schema, request) {
     const courseDefinitionUpdate = schema.courseDefinitionUpdates.find(request.params.id);
 
     if (courseDefinitionUpdate.summary.includes('[should_error]')) {
@@ -345,18 +345,18 @@ function routes() {
   this.delete('/course-extension-activations/:id');
 
   this.get('/course-extension-ideas');
-  this.post('/course-extension-ideas/:id/unvote', () => { });
+  this.post('/course-extension-ideas/:id/unvote', () => {});
   this.post('/course-extension-idea-votes');
 
   this.get('/course-ideas');
-  this.post('/course-ideas/:id/unvote', () => { });
+  this.post('/course-ideas/:id/unvote', () => {});
   this.post('/course-idea-votes');
 
   this.get('/course-language-requests');
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');
 
-  this.get('/course-leaderboard-entries', function(schema, request) {
+  this.get('/course-leaderboard-entries', function (schema, request) {
     let result = schema.courseLeaderboardEntries.all();
 
     if (request.queryParams.team_id) {
@@ -374,13 +374,13 @@ function routes() {
     return result;
   });
 
-  this.get('/course-stage-comments', function(schema, request) {
+  this.get('/course-stage-comments', function (schema, request) {
     let result = schema.courseStageComments.all().filter((comment) => comment.targetId.toString() === request.queryParams.target_id);
 
     return result;
   });
 
-  this.post('/course-stage-comments', function(schema) {
+  this.post('/course-stage-comments', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.createdAt = new Date();
 
@@ -389,9 +389,9 @@ function routes() {
 
   this.delete('/course-stage-comments/:id');
   this.patch('/course-stage-comments/:id');
-  this.post('/course-stage-comments/:id/unvote', () => { });
+  this.post('/course-stage-comments/:id/unvote', () => {});
 
-  this.post('/course-stage-completions', function(schema) {
+  this.post('/course-stage-completions', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.completedAt = new Date();
 
@@ -403,7 +403,7 @@ function routes() {
   this.get('/course-tester-versions');
   this.get('/course-tester-versions/:id');
 
-  this.post('/course-tester-versions/:id/activate', function(schema, request) {
+  this.post('/course-tester-versions/:id/activate', function (schema, request) {
     const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
     courseTesterVersion.update({ isActive: true });
 
@@ -413,11 +413,11 @@ function routes() {
     return courseTesterVersion;
   });
 
-  this.post('/course-tester-versions/:id/deprovision', function(schema, request) {
+  this.post('/course-tester-versions/:id/deprovision', function (schema, request) {
     return schema.courseTesterVersions.find(request.params.id);
   });
 
-  this.get('/course-stage-feedback-submissions', function(schema, request) {
+  this.get('/course-stage-feedback-submissions', function (schema, request) {
     return schema.courseStageFeedbackSubmissions.all().filter((submission) => submission.courseStage.course.id === request.queryParams.course_id);
   });
 
@@ -426,7 +426,7 @@ function routes() {
 
   this.post('/downvotes');
 
-  this.get('/fake-submission-logs', function(schema, request) {
+  this.get('/fake-submission-logs', function (schema, request) {
     if (request.queryParams.type === 'success') {
       return new Response(200, {}, '\x1b[92m[stage-1] passed\x1b[0m\n\x1b[92m[stage-2] passed\x1b[0m');
     } else {
@@ -435,14 +435,14 @@ function routes() {
   });
 
   this.patch('/feature-suggestions/:id');
-  this.get('/free-usage-grants', function(schema, request) {
+  this.get('/free-usage-grants', function (schema, request) {
     return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
   });
 
   this.get('/github-app-installations');
   this.get('/github-app-installations/:id');
 
-  this.get('/github-app-installations/:id/accessible-repositories', function() {
+  this.get('/github-app-installations/:id/accessible-repositories', function () {
     return [
       { id: 564057934, full_name: 'rohitpaulk/cc-publish-test', created_at: '2022-11-09T22:40:59Z' },
       { id: 564057935, full_name: 'rohitpaulk/other-repo', created_at: '2022-10-08T22:40:59Z' },
@@ -453,20 +453,20 @@ function routes() {
   this.post('/github-repository-sync-configurations');
   this.delete('/github-repository-sync-configurations/:id');
 
-  this.post('/individual-checkout-sessions', function(schema) {
+  this.post('/individual-checkout-sessions', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.url = 'https://test.com/checkout_session';
 
     return schema.individualCheckoutSessions.create(attrs);
   });
 
-  this.post('/individual-payment-method-update-requests', function(schema) {
+  this.post('/individual-payment-method-update-requests', function (schema) {
     return schema.individualPaymentMethodUpdateRequests.create({ url: 'https://test.com/checkout_session' });
   });
 
   this.get('/languages');
 
-  this.get('/leaderboard-entries', function(schema, request) {
+  this.get('/leaderboard-entries', function (schema, request) {
     let result = schema.leaderboardEntries.all();
 
     if (!request.queryParams.leaderboard_id) {
@@ -478,7 +478,7 @@ function routes() {
     return result;
   });
 
-  this.get('/logstreams/:id/poll', function(schema, request) {
+  this.get('/logstreams/:id/poll', function (schema, request) {
     const logstream = schema.fakeLogstreams.find(request.params.id);
 
     if (!request.queryParams.cursor) {
@@ -498,25 +498,25 @@ function routes() {
     }
   });
 
-  this.get('/onboarding-surveys', function(schema, request) {
+  this.get('/onboarding-surveys', function (schema, request) {
     return schema.onboardingSurveys.where({ userId: request.queryParams.user_id });
   });
 
   this.patch('/onboarding-surveys/:id');
 
-  this.get('/perks', function(schema, request) {
+  this.get('/perks', function (schema, request) {
     const slug = request.queryParams.slug;
 
     return schema.perks.where({ slug });
   });
 
-  this.post('/perks/:id/claim', function() {
+  this.post('/perks/:id/claim', function () {
     return {
       claim_url: 'https://dummy-claim-url.com',
     };
   });
 
-  this.post('/referral-activations', function(schema) {
+  this.post('/referral-activations', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     let referralActivation = schema.referralActivations.create(attrs);
 
@@ -541,7 +541,7 @@ function routes() {
     return referralActivation;
   });
 
-  this.get('/referral-links', function(schema, request) {
+  this.get('/referral-links', function (schema, request) {
     if (request.queryParams.user_id) {
       return schema.referralLinks.where({ userId: request.queryParams.user_id });
     } else if (request.queryParams.slug) {
@@ -549,14 +549,14 @@ function routes() {
     }
   });
 
-  this.post('/referral-links', function(schema) {
+  this.post('/referral-links', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.url = 'https://app.codecrafters.io/r/dummy';
 
     return schema.referralLinks.create(attrs);
   });
 
-  this.get('/regional-discounts/current', function(schema) {
+  this.get('/regional-discounts/current', function (schema) {
     const regionalDiscount = schema.regionalDiscounts.find('current-discount-id');
 
     if (regionalDiscount) {
@@ -566,7 +566,7 @@ function routes() {
     }
   });
 
-  this.get('/repositories', function(schema, request) {
+  this.get('/repositories', function (schema, request) {
     let repositories;
 
     if (request.queryParams.course_id) {
@@ -580,7 +580,7 @@ function routes() {
     return repositories;
   });
 
-  this.post('/repositories', function(schema) {
+  this.post('/repositories', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     const language = schema.languages.find(attrs.languageId);
 
@@ -604,7 +604,7 @@ function routes() {
 
   this.delete('/slack-integrations/:id');
 
-  this.get('/submissions', function(schema, request) {
+  this.get('/submissions', function (schema, request) {
     const queryParams = request.queryParams;
 
     return schema.submissions
@@ -615,22 +615,22 @@ function routes() {
       .filter((submission) => !queryParams.course_stage_slugs || queryParams.course_stage_slugs.includes(submission.courseStage.slug));
   });
 
-  this.get('/subscriptions', function(schema) {
+  this.get('/subscriptions', function (schema) {
     return schema.subscriptions.where({ userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
   });
 
-  this.post('/sessions/logout', function() {
+  this.post('/sessions/logout', function () {
     return new Response(200, {}, {});
   });
 
-  this.post('/subscriptions/:id/cancel-trial', function(schema, request) {
+  this.post('/subscriptions/:id/cancel-trial', function (schema, request) {
     const subscription = schema.subscriptions.find(request.params.id);
     subscription.update({ endedAt: new Date() });
 
     return subscription;
   });
 
-  this.post('/subscriptions/:id/cancel', function(schema, request) {
+  this.post('/subscriptions/:id/cancel', function (schema, request) {
     const subscription = schema.subscriptions.find(request.params.id);
     subscription.update({ cancelAt: subscription.currentPeriodEnd });
 
@@ -639,7 +639,7 @@ function routes() {
 
   this.get('/teams');
 
-  this.post('/teams', function(schema) {
+  this.post('/teams', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     const team = schema.teams.create({ name: attrs.name });
     schema.teamMemberships.create({ isAdmin: true, team: team, userId: '63c51e91-e448-4ea9-821b-a80415f266d3' });
@@ -647,7 +647,7 @@ function routes() {
     return team;
   });
 
-  this.get('/teams/:id/first-invoice-preview', function(schema) {
+  this.get('/teams/:id/first-invoice-preview', function (schema) {
     return schema.invoices.create({ amountDue: 790000, lineItems: [{ amount: 790000, amount_after_discounts: 790000, quantity: 10 }] });
   });
 
@@ -655,7 +655,7 @@ function routes() {
 
   this.delete('/team-memberships/:id');
 
-  this.post('/team-payment-method-update-requests', function(schema) {
+  this.post('/team-payment-method-update-requests', function (schema) {
     return schema.teamPaymentMethodUpdateRequests.create({ url: 'https://test.com/team_payment_method_update_request' });
   });
 
@@ -663,7 +663,7 @@ function routes() {
   this.get('/team-payment-flows/:id');
   this.patch('/team-payment-flows/:id');
 
-  this.get('/team-payment-flows/:id/first-invoice-preview', function(schema, request) {
+  this.get('/team-payment-flows/:id/first-invoice-preview', function (schema, request) {
     const teamPaymentFlow = schema.teamPaymentFlows.find(request.params.id);
     const amount = teamPaymentFlow.numberOfSeats * 79000;
 
@@ -673,13 +673,13 @@ function routes() {
     });
   });
 
-  this.post('/team-payment-flows/:id/attempt-payment', function() {
+  this.post('/team-payment-flows/:id/attempt-payment', function () {
     return {
       error: 'Your card was declined.',
     };
   });
 
-  this.get('/track-leaderboard-entries', function(schema, request) {
+  this.get('/track-leaderboard-entries', function (schema, request) {
     let result = schema.trackLeaderboardEntries.all();
 
     if (request.queryParams.language_id) {
@@ -691,11 +691,11 @@ function routes() {
 
   this.post('/upvotes');
 
-  this.get('/users', function(schema, request) {
+  this.get('/users', function (schema, request) {
     return schema.users.where({ username: request.queryParams.username });
   });
 
-  this.get('/users/current', function(schema) {
+  this.get('/users/current', function (schema) {
     const session = schema.sessions.find('current-session-id');
 
     if (session) {
@@ -707,7 +707,7 @@ function routes() {
 
   this.get('/users/:id');
 
-  this.get('/users/:id/next-invoice-preview', function(schema) {
+  this.get('/users/:id/next-invoice-preview', function (schema) {
     return schema.invoices.create({
       createdAt: new Date(2025, 1, 1),
       amountDue: 7900,
@@ -715,7 +715,7 @@ function routes() {
     });
   });
 
-  this.patch('/users/:id', function(schema, request) {
+  this.patch('/users/:id', function (schema, request) {
     const { id } = request.params;
     const attrs = this.normalizedRequestAttrs();
     var username = attrs.username;
