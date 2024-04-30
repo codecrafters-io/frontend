@@ -8,10 +8,27 @@
   {{else}}
     <div class="prose prose-sm prose-compact mb-3">
       <p>
-        Submit your code using Git:
+        Run the
+
+        {{#if (gt this.selectedCommandVariant.commands.length 1)}}
+          following commands
+        {{else}}
+          following command
+        {{/if}}
+
+        to submit your code:
       </p>
     </div>
 
-    <CopyableTerminalCommand @commands={{array "git add . " "git commit --allow-empty -m 'pass stage'" "git push origin master"}} />
+    <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
+
+    {{#if (eq this.recommendedClientType "cli")}}
+      <div class="prose prose-sm prose-compact mt-3">
+        <p>
+          We recommend using the
+          <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters CLI</a>, but you can use Git too.
+        </p>
+      </div>
+    {{/if}}
   {{/if}}
 </div>
