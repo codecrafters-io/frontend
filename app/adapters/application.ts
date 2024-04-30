@@ -25,7 +25,9 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
       // posthog is initialized in a script tag in index.html
       headers['x-posthog-session-id'] = window.posthog.get_session_id();
     } catch (error) {
-      Sentry.captureException(error);
+      // High volume, affects Sentry quota
+      console.log('posthog.get_session_id error');
+      // Sentry.captureException(error);
     }
 
     return headers;
