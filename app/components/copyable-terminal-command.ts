@@ -11,9 +11,9 @@ interface Signature {
   Args: {
     commands: string[];
     onCopyButtonClick?: () => void;
-    onVariantSelect?: (variant: string) => void;
-    selectedVariant?: string;
-    variants?: string[];
+    onVariantLabelClick?: (variant: string) => void;
+    selectedVariantLabel?: string;
+    variantLabels?: string[];
   };
 }
 
