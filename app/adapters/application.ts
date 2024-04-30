@@ -24,7 +24,9 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     try {
       headers['x-posthog-session-id'] = posthog.get_session_id();
     } catch (error) {
-      Sentry.captureException(error);
+      // High volume, affects Sentry quota
+      console.log('posthog.get_session_id error');
+      // Sentry.captureException(error);
     }
 
     return headers;

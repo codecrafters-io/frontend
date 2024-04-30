@@ -20,7 +20,7 @@ export default class SubmissionModel extends Model {
   @hasMany('submission-evaluation', { async: false, inverse: 'submission' }) declare evaluations: SubmissionEvaluationModel[];
 
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
-  @attr('string') declare clientType: 'cli' | 'git';
+  @attr('string') declare clientType: 'cli' | 'git' | 'system';
   @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
@@ -30,6 +30,18 @@ export default class SubmissionModel extends Model {
 
   get canBeUsedForStageCompletion() {
     return !!this.treeSha && this.treeSha === this.repository.defaultBranchTreeSha;
+  }
+
+  get clientTypeIsCli() {
+    return this.clientType === 'cli';
+  }
+
+  get clientTypeIsGit() {
+    return this.clientType === 'git';
+  }
+
+  get clientTypeIsSystem() {
+    return this.clientType === 'system';
   }
 
   get flakinessCheckStatusHumanized(): string | null {
@@ -61,13 +73,5 @@ export default class SubmissionModel extends Model {
 
   get statusIsSuccess() {
     return this.status === 'success';
-  }
-
-  get wasSubmittedViaCli() {
-    return this.clientType === 'cli';
-  }
-
-  get wasSubmittedViaGit() {
-    return this.clientType === 'git';
   }
 }

@@ -78,7 +78,7 @@ export default Factory.extend({
         logsFileUrl: `${config.x.backendUrl}/api/v1/fake-submission-logs?type=success`,
       });
 
-      if (!submission.wasSubmittedViaCli) {
+      if (!submission.clientTypeIsCli) {
         server.create('course-stage-completion', {
           repository: submission.repository,
           courseStage: submission.courseStage,

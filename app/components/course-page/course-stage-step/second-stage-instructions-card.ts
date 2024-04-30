@@ -61,7 +61,7 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
     return (
       this.implementSolutionStepWasMarkedAsComplete ||
       this.runTestsStepIsComplete ||
-      this.args.repository.lastSubmission?.courseStage === this.args.courseStage // Run tests (in progress)
+      (this.args.repository.lastSubmission?.courseStage === this.args.courseStage && !this.args.repository.lastSubmission?.clientTypeIsSystem) // Run tests (in progress)
     );
   }
 
@@ -80,7 +80,9 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   get runTestsStepIsComplete() {
     return (
       this.args.repository.stageIsComplete(this.args.courseStage) ||
-      (this.args.repository.lastSubmissionHasSuccessStatus && this.args.repository.lastSubmission.courseStage === this.args.courseStage)
+      (this.args.repository.lastSubmissionHasSuccessStatus &&
+        this.args.repository.lastSubmission.courseStage === this.args.courseStage &&
+        !this.args.repository.lastSubmission.clientTypeIsSystem)
     );
   }
 
