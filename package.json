@@ -97,7 +97,7 @@
     "@vercel/edge": "^1.1.1",
     "autoprefixer": "^10.4.19",
     "broccoli-asset-rev": "^3.0.0",
-    "canvas-confetti": "^1.9.2",
+    "canvas-confetti": "^1.9.3",
     "concurrently": "^8.2.2",
     "date-fns": "3.6.0",
     "date-fns-tz": "^3.1.3",
