@@ -7,7 +7,7 @@ export default class AffiliateEarningsPayoutModel extends Model {
   @attr('number') declare amountInCents: number;
   @attr('date') declare completedAt: Date | null;
   @attr('date') declare initiatedAt: Date;
-  @attr('string') declare lastFailureReason: string;
+  @attr('string') declare lastFailureReason: string | null;
   @attr() declare payoutMethodArgs: { [key: string]: string };
   @attr('string') declare payoutMethodType: string; // 'paypal'
   @attr('string') declare status: string; // 'processing', 'completed', 'failed'
