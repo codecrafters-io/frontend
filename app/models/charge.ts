@@ -10,7 +10,7 @@ export default class Charge extends Model {
   @attr('date') declare createdAt: Date;
   @attr('string') declare currency: string;
   @attr('string') declare invoiceId: string;
-  @attr('string') declare status: string;
+  @attr('string') declare status: 'succeeded' | 'pending' | 'failed';
 
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
