@@ -118,7 +118,7 @@ export default class CommentFormComponent extends Component<Signature> {
     next(() => {
       if (this.isEditingComment) {
         this.comment.rollbackAttributes();
-        // @ts-ignore isNew isn't correctly typed
+        // @ts-expect-error isNew isn't correctly typed
       } else if (this.comment.isNew && !this.comment.isSaving) {
         this.comment.unloadRecord();
       }
