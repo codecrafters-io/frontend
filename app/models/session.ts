@@ -24,7 +24,7 @@ SessionModel.prototype.logout = collectionAction({
   // urlType: 'findRecord',
 
   async after(response) {
-    // @ts-ignore authenticator is not recognized
+    // @ts-expect-error authenticator is not recognized
     this.authenticator.logout();
 
     return response;
