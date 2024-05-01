@@ -6,7 +6,7 @@ export default class GithubRepositorySyncConfiguration extends Model {
   @attr('string') declare githubRepositoryId: string;
   @attr('string') declare githubRepositoryName: string;
   @attr('string') declare lastSyncStatus: 'success' | 'failure';
-  @attr('date') declare lastSyncedAt: Date;
+  @attr('date') declare lastSyncedAt: Date | null;
 
   @belongsTo('repository', { async: false, inverse: 'githubRepositorySyncConfigurations' }) declare repository: RepositoryModel;
 
