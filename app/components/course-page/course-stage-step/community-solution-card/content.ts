@@ -17,7 +17,7 @@ type Signature = {
   Args: {
     solution: CommunityCourseStageSolutionModel;
     fileComparisons: FileComparison[];
-    onPublishToGithubButtonClick?: () => void;
+    onPublishToGithubButtonClick?: (event: MouseEvent) => void;
   };
 };
 
@@ -97,6 +97,13 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
   handleExpandUnchangedFile(filePath: string) {
     if (!this.expandedUnchangedFilePaths.includes(filePath)) {
       this.expandedUnchangedFilePaths = [...this.expandedUnchangedFilePaths, filePath];
+    }
+  }
+
+  @action
+  handlePublishToGithubButtonClick(event: MouseEvent) {
+    if (typeof this.args.onPublishToGithubButtonClick === 'function') {
+      this.args.onPublishToGithubButtonClick(event);
     }
   }
 }
