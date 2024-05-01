@@ -1,16 +1,17 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import codeExamplePage from 'codecrafters-frontend/tests/pages/course-admin/code-example-page'
+import codeExamplePage from 'codecrafters-frontend/tests/pages/course-admin/code-example-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-admin | pin-code-example', function(hooks) {
+module('Acceptance | course-admin | pin-code-example', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('can pin code example', async function(assert) {
+  test('can pin code example', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 

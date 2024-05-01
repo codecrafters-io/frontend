@@ -623,7 +623,7 @@ function routes() {
     return new Response(200, {}, {});
   });
 
-  this.get('/solution-comparisons')
+  this.get('/solution-comparisons');
 
   this.post('/subscriptions/:id/cancel-trial', function (schema, request) {
     const subscription = schema.subscriptions.find(request.params.id);
