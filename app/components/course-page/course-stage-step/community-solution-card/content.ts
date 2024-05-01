@@ -17,7 +17,7 @@ type Signature = {
   Args: {
     solution: CommunityCourseStageSolutionModel;
     fileComparisons: FileComparison[];
-    onPublishToGithubButtonClick?: (event: MouseEvent) => void;
+    onPublishToGithubButtonClick?: () => void;
   };
 };
 
@@ -101,9 +101,9 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
   }
 
   @action
-  handlePublishToGithubButtonClick(event: MouseEvent) {
+  handlePublishToGithubButtonClick() {
     if (typeof this.args.onPublishToGithubButtonClick === 'function') {
-      this.args.onPublishToGithubButtonClick(event);
+      this.args.onPublishToGithubButtonClick();
     }
   }
 }
