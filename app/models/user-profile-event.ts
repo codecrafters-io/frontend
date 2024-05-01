@@ -7,7 +7,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 export default class UserProfileEvent extends Model {
   @attr('string') declare descriptionMarkdown: string;
   @attr('date') declare occurredAt: Date;
-  @attr('string') declare type: string;
+  @attr('string') declare type: 'CompletedCourseEvent' | 'CreatedAccountEvent' | 'StartedCourseEvent';
 
   @belongsTo('user', { async: false, inverse: 'profileEvents' }) declare user: UserModel;
 
