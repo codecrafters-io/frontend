@@ -35,7 +35,7 @@ class NavigateToFileStep extends BaseStep implements Step {
       return 'Navigate to README.md';
     }
 
-    const filename = this.repository.firstStageSolution.changedFiles[0].filename;
+    const filename = this.repository.firstStageSolution.changedFiles[0]!.filename;
 
     if (filename) {
       return `Navigate to ${filename}`;

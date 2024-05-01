@@ -124,6 +124,10 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   commentTargetsLine(comment: CommunityCourseStageSolutionCommentModel, lineNumber: number) {
+    if (!comment.subtargetStartLine || !comment.subtargetEndLine) {
+      return false;
+    }
+
     return lineNumber <= comment.subtargetEndLine && lineNumber >= comment.subtargetStartLine;
   }
 

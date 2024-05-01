@@ -8,15 +8,17 @@ import hopperBadgeImage from '/assets/images/badges/hopper-badge.svg';
 import teslaBadgeImage from '/assets/images/badges/tesla-badge.svg';
 import turingBadgeImage from '/assets/images/badges/turing-badge.svg';
 
-export default class Badge extends Model {
-  @attr('string') descriptionMarkdown;
-  @attr('string') instructionsMarkdown;
-  @attr('string') name;
-  @attr('number') priority;
-  @attr('string') shortDescription;
-  @attr('string') slug;
+import type BadgeAwardModel from './badge-award';
 
-  @hasMany('badge-award', { async: false, inverse: null }) currentUserAwards;
+export default class Badge extends Model {
+  @attr('string') declare descriptionMarkdown: string;
+  @attr('string') declare instructionsMarkdown: string;
+  @attr('string') declare name: string;
+  @attr('number') declare priority: number;
+  @attr('string') declare shortDescription: string;
+  @attr('string') declare slug: string;
+
+  @hasMany('badge-award', { async: false, inverse: null }) declare currentUserAwards: BadgeAwardModel[];
 
   get previewImage() {
     switch (this.slug) {
