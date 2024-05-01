@@ -51,16 +51,16 @@ CourseStageCommentModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    // @ts-ignore Model mixin methods/properties are not recognized
+    // @ts-expect-error Model mixin methods/properties are not recognized
     for (const record of [...this.currentUserUpvotes]) {
-      // @ts-ignore Model mixin methods/properties are not recognized
+      // @ts-expect-error Model mixin methods/properties are not recognized
       this.upvotesCount -= 1;
       record.unloadRecord();
     }
 
-    // @ts-ignore Model mixin methods/properties are not recognized
+    // @ts-expect-error Model mixin methods/properties are not recognized
     for (const record of [...this.currentUserDownvotes]) {
-      // @ts-ignore Model mixin methods/properties are not recognized
+      // @ts-expect-error Model mixin methods/properties are not recognized
       this.downvotesCount -= 1;
       record.unloadRecord();
     }
