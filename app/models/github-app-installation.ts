@@ -1,11 +1,13 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
 
-export default class GithubAppInstallation extends Model {
-  @belongsTo('user', { async: false, inverse: 'githubAppInstallations' }) user;
+import type UserModel from 'codecrafters-frontend/models/user';
 
-  @attr('string') githubConfigureUrl;
-  @attr('string') status;
+export default class GithubAppInstallation extends Model {
+  @attr('string') declare githubConfigureUrl: string;
+  @attr('string') declare status: string;
+
+  @belongsTo('user', { async: false, inverse: 'githubAppInstallations' }) declare user: UserModel;
 
   get isBroken() {
     return this.status && this.status !== 'active';
@@ -14,6 +16,8 @@ export default class GithubAppInstallation extends Model {
   get isUninstalled() {
     return this.status === 'uninstalled';
   }
+
+  declare fetchAccessibleRepositories: (this: Model, payload: unknown) => Promise<{ id: string; fullName: string; createdAt: number }[]>;
 }
 
 GithubAppInstallation.prototype.fetchAccessibleRepositories = memberAction({
@@ -21,7 +25,7 @@ GithubAppInstallation.prototype.fetchAccessibleRepositories = memberAction({
   type: 'get',
 
   after(response) {
-    return response.map((repository) => {
+    return response.map((repository: { id: string; full_name: string; created_at: string }) => {
       return {
         id: repository.id,
         fullName: repository.full_name,
