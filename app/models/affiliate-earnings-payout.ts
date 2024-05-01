@@ -5,7 +5,7 @@ export default class AffiliateEarningsPayoutModel extends Model {
   @belongsTo('user', { async: false, inverse: 'affiliateEarningsPayouts' }) declare user: UserModel;
 
   @attr('number') declare amountInCents: number;
-  @attr('date') declare completedAt: Date;
+  @attr('date') declare completedAt: Date | null;
   @attr('date') declare initiatedAt: Date;
   @attr('string') declare lastFailureReason: string;
   @attr() declare payoutMethodArgs: { [key: string]: string };
