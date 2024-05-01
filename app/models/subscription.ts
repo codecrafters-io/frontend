@@ -10,7 +10,7 @@ export default class SubscriptionModel extends Model {
   @attr('date') declare endedAt: Date | null;
   @attr('string') declare pricingPlanName: string;
   @attr('date') declare startDate: Date;
-  @attr('date') declare trialEnd: Date;
+  @attr('date') declare trialEnd: Date | null;
 
   @belongsTo('user', { async: false, inverse: 'subscriptions' }) declare user: UserModel;
 
