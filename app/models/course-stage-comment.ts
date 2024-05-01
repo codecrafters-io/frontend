@@ -16,7 +16,7 @@ export default class CourseStageCommentModel extends Model.extend(UpvotableMixin
   @attr('date') declare createdAt: Date;
   @attr('date') declare updatedAt: Date;
 
-  @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
+  @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel | null;
   @belongsTo('course-stage-comment', { async: false, inverse: null }) declare parentComment: CourseStageCommentModel;
   @belongsTo('course-stage', { async: false, inverse: 'comments' }) declare target: CourseStageModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
