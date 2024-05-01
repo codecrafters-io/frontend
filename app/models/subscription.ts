@@ -7,7 +7,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 export default class SubscriptionModel extends Model {
   @attr('date') declare cancelAt: Date;
   @attr('date') declare currentPeriodEnd: Date;
-  @attr('date') declare endedAt: Date;
+  @attr('date') declare endedAt: Date | null;
   @attr('string') declare pricingPlanName: string;
   @attr('date') declare startDate: Date;
   @attr('date') declare trialEnd: Date;
