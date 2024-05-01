@@ -8,7 +8,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class CourseLanguageConfigurationModel extends Model {
   @attr() declare alphaTesterUsernames: Array<string>;
-  @attr('string') declare releaseStatus: string;
+  @attr('string') declare releaseStatus: 'alpha' | 'beta' | 'live';
 
   @belongsTo('course', { async: false, inverse: 'languageConfigurations' }) declare course: CourseModel;
   @belongsTo('language', { async: false, inverse: 'courseConfigurations' }) declare language: LanguageModel;
