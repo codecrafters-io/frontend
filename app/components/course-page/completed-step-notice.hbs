@@ -14,12 +14,12 @@
     {{#if (and (not-eq @step this.activeStep) (not-eq this.activeStep.type "CourseCompletedStep"))}}
       <PrimaryLinkButton
         @size="small"
-        @route={{this.activeStep.routeParams.route}}
-        @models={{this.activeStep.routeParams.models}}
+        @route={{this.nextStepRoute}}
+        @models={{this.nextStepModels}}
         data-test-next-step-button
       >
         <div class="flex items-center">
-          {{#if (eq this.nextStep this.activeStep)}}
+          {{#if (or (eq this.nextStep this.activeStep) (eq this.nextStep.type 'BaseStagesCompletedStep'))}}
             {{#if (eq this.nextStep.type "CourseStageStep")}}
               <span>View next stage</span>
             {{else}}

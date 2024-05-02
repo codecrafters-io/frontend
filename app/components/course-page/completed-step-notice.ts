@@ -42,6 +42,22 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
     return this.coursePageState.nextStep;
   }
 
+  get nextStepModels() {
+    if (this.nextStep?.type === 'BaseStagesCompletedStep') {
+      return this.nextStep.routeParams.models;
+    }
+
+    return this.activeStep?.routeParams.models;
+  }
+
+  get nextStepRoute() {
+    if (this.nextStep?.type === 'BaseStagesCompletedStep') {
+      return this.nextStep.routeParams.route;
+    }
+
+    return this.activeStep?.routeParams.route;
+  }
+
   get shouldShowShareProgressButton() {
     return this.currentStep?.type === 'CourseStageStep' && !this.currentStepAsCourseStageStep?.stageListItem?.stage?.isFirst;
   }
