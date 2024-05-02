@@ -29,7 +29,10 @@ export default create({
   clickOnHeaderTabLink: clickOnText('[data-test-course-page-header-sticky-section] [data-test-header-tab-link]'),
 
   completedStepNotice: {
-    clickOnNextStepButton: clickable('[data-test-next-step-button]'),
+    nextStepButton: {
+      scope: '[data-test-next-step-button]',
+    },
+
     scope: '[data-test-completed-step-notice]',
 
     shareProgressButton: {

@@ -6,7 +6,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
 
 module('Acceptance | course-page | complete-challenge-test', function (hooks) {
@@ -55,5 +55,30 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     await visit('/courses/docker/completed');
     assert.strictEqual(currentURL(), '/courses/docker/stages/2', 'URL is /stages/2');
+  });
+
+  test('next step button in completed step notice redirects to next step if the next step is base stages completed', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    this.server.create('repository', 'withBaseStagesCompleted', {
+      course: dummy,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
+
+    assert.true(coursePage.completedStepNotice.nextStepButton.text.includes('View next step'), 'copy for next step button is correct');
+
+    await coursePage.completedStepNotice.nextStepButton.click();
+
+    assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'URL is /base-stages-completed');
   });
 });
