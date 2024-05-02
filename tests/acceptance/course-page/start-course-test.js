@@ -7,6 +7,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -123,6 +124,53 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await animationsSettled();
+  });
+
+  test('repository dropdown has the correct tooltip copy', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    signIn(this.owner, this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.content.actions[0].hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Please select a language first',
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.content.actions[1].hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Please select a language first',
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await animationsSettled();
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.content.actions[0].hover();
+
+    assertTooltipNotRendered(assert);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.content.actions[1].hover();
+
+    assertTooltipNotRendered(assert);
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {
