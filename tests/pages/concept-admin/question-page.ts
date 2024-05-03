@@ -8,8 +8,10 @@ export default create({
 
   optionForms: collection('[data-test-option-form]', {
     clickOnDeleteButton: clickable('[data-test-delete-button]'),
-    fillInMarkdown: fillable('#option_markdown'),
     clickOnIsCorrectToggle: clickable('[data-test-is-correct-toggle]'),
+    clickOnMoveDownButton: clickable('[data-test-move-down-button]'),
+    clickOnMoveUpButton: clickable('[data-test-move-up-button]'),
+    fillInMarkdown: fillable('#option_markdown'),
   }),
 
   visit: visitable('/concepts/:concept_slug/admin/questions/:question_slug'),

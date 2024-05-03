@@ -91,4 +91,35 @@ module('Acceptance | concept-admin | edit-questions', function (hooks) {
 
     assert.strictEqual(question.options.length, 2);
   });
+
+  test('can move options up and down', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const question = this.server.create('concept-question', {
+      concept: this.server.create('concept', { slug: 'dummy', blocks: [] }),
+      queryMarkdown: 'What is question?',
+      slug: 'question-slug',
+      options: [
+        { markdown: '42', is_correct: true, explanation_markdown: 'Explanation 1' },
+        { markdown: '24', isS_correct: false, explanation_markdown: 'Explanation 2' },
+      ],
+    });
+
+    await questionsPage.visit({ concept_slug: 'dummy' });
+    await questionsPage.clickOnQuestionCard('question-slug');
+
+    assert.strictEqual(question.options[0].markdown, '42');
+    assert.strictEqual(question.options[1].markdown, '24');
+
+    await questionPage.optionForms[1].clickOnMoveUpButton();
+    await questionPage.clickOnPublishChangesButton();
+
+    assert.strictEqual(question.options[0].markdown, '24');
+
+    await questionPage.optionForms[0].clickOnMoveDownButton();
+    await questionPage.clickOnPublishChangesButton();
+
+    assert.strictEqual(question.options[0].markdown, '42');
+  });
 });
