@@ -227,6 +227,9 @@ function routes() {
     return result;
   });
 
+  this.get('/community-course-stage-solutions/:id');
+  this.patch('/community-course-stage-solutions/:id');
+
   this.get('/community-course-stage-solutions/:id/file-comparisons', function (schema, request) {
     const solution = schema.communityCourseStageSolutions.find(request.params.id);
 
@@ -619,6 +622,8 @@ function routes() {
   this.post('/sessions/logout', function () {
     return new Response(200, {}, {});
   });
+
+  this.get('/solution-comparisons');
 
   this.post('/subscriptions/:id/cancel-trial', function (schema, request) {
     const subscription = schema.subscriptions.find(request.params.id);
