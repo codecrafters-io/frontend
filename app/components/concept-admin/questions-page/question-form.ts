@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import ConceptQuestionModel, { type Option } from 'codecrafters-frontend/models/concept-question';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -12,7 +11,9 @@ interface Signature {
 }
 
 export default class QuestionFormComponent extends Component<Signature> {
-  @tracked options = this.args.question.options;
+  get options() {
+    return this.args.question.options;
+  }
 
   @action
   async handleCorrectOptionToggled(optionIndex: number) {
@@ -45,21 +46,25 @@ export default class QuestionFormComponent extends Component<Signature> {
 
   @action
   moveOptionDown(optionIndex: number) {
-    if (optionIndex < this.options.length - 1) {
-      let temp = this.options[optionIndex + 1];
-      this.options[optionIndex + 1] = this.options[optionIndex] as Option;
-      this.options[optionIndex] = temp as Option;
-      this.args.question.options = [...this.options];
+    let options = this.options.slice();
+
+    if (optionIndex < options.length - 1) {
+      const temp = options[optionIndex + 1];
+      options[optionIndex + 1] = options[optionIndex] as Option;
+      options[optionIndex] = temp as Option;
+      this.args.question.options = [...options];
     }
   }
 
   @action
   moveOptionUp(optionIndex: number) {
+    let options = this.options.slice();
+
     if (optionIndex > 0) {
-      let temp = this.options[optionIndex - 1];
-      this.options[optionIndex - 1] = this.options[optionIndex] as Option;
-      this.options[optionIndex] = temp as Option;
-      this.args.question.options = [...this.options];
+      const temp = options[optionIndex - 1];
+      options[optionIndex - 1] = options[optionIndex] as Option;
+      options[optionIndex] = temp as Option;
+      this.args.question.options = [...options];
     }
   }
 }
