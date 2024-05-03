@@ -102,7 +102,7 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
 
   @action
   handlePublishToGithubButtonClick() {
-    if (typeof this.args.onPublishToGithubButtonClick === 'function') {
+    if (this.args.onPublishToGithubButtonClick) {
       this.args.onPublishToGithubButtonClick();
     }
   }
