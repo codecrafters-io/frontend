@@ -46,7 +46,7 @@ export default class QuestionFormComponent extends Component<Signature> {
 
   @action
   moveOptionDown(optionIndex: number) {
-    let options = this.options.slice();
+    const options = this.options.slice();
 
     if (optionIndex < options.length - 1) {
       const temp = options[optionIndex + 1];
@@ -58,7 +58,7 @@ export default class QuestionFormComponent extends Component<Signature> {
 
   @action
   moveOptionUp(optionIndex: number) {
-    let options = this.options.slice();
+    const options = this.options.slice();
 
     if (optionIndex > 0) {
       const temp = options[optionIndex - 1];
