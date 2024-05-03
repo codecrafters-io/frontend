@@ -54,11 +54,11 @@
                 Option #{{add optionIndex 1}}
               </div>
               <div class="flex items-center gap-2 opacity-0 group-hover/option-form:opacity-100 transition-opacity">
-                <TertiaryButton @size="extra-small" class="group/trash-button" @isDisabled={{eq optionIndex 0}} data-test-move-up-button>
+                <TertiaryButton @size="extra-small" class="group/trash-button" @isDisabled={{eq optionIndex 0}} {{on "click" (fn this.moveOptionUp optionIndex)}} data-test-move-up-button>
                   {{svg-jar "arrow-up" class="w-4 h-4 text-gray-600 group-hover/trash-button:text-teal-600"}}
                   <EmberTooltip @text="Move this option up" />
                 </TertiaryButton>
-                <TertiaryButton @size="extra-small" class="group/trash-button" data-test-move-down-button>
+                <TertiaryButton @size="extra-small" class="group/trash-button" {{on "click" (fn this.moveOptionDown optionIndex)}}data-test-move-down-button>
                   {{svg-jar "arrow-down" class="w-4 h-4 text-gray-600 group-hover/trash-button:text-teal-600"}}
                   <EmberTooltip @text="Move this option down" />
                 </TertiaryButton>
