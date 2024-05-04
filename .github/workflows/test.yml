@@ -57,6 +57,8 @@ jobs:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
           PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
+          LOG_LEVEL: 'debug'
+          PERCY_DEBUG: '*'
 
       - run: cat test-results.xml
         if: always()
