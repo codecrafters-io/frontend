@@ -29,6 +29,7 @@
         <div class="absolute right-2 -top-2 z-10">
           <SyntaxHighlightedDiff::ToggleCommentsButton
             @commentsAreExpanded={{line.commentsAreExpanded}}
+            class="select-none"
             {{on "click" (fn @handleToggleCommentsButtonClick line.number)}}
           />
         </div>
