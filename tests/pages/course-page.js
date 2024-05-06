@@ -29,8 +29,8 @@ export default create({
   clickOnHeaderTabLink: clickOnText('[data-test-course-page-header-sticky-section] [data-test-header-tab-link]'),
 
   completedStepNotice: {
-    nextStepButton: {
-      scope: '[data-test-next-step-button]',
+    nextOrActiveStepButton: {
+      scope: '[data-test-next-or-active-step-button]',
     },
 
     scope: '[data-test-completed-step-notice]',

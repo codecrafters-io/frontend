@@ -53,7 +53,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     // URL should still be stage 2
     assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
 
-    await coursePage.completedStepNotice.nextStepButton.click();
+    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
     assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'current URL is /base-stages-complete');
 
     await percySnapshot('Base Stages Completed Page');
@@ -66,7 +66,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 7, 'step list has 7 items when first extension is enabled');
 
-    await coursePage.completedStepNotice.nextStepButton.click();
+    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
     await percySnapshot('Extension - First Stage Page');
 
     // Enable Extension 2
