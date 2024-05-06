@@ -67,6 +67,7 @@
                 <TertiaryButton
                   @size="extra-small"
                   class="group/move-down-button"
+                  @isDisabled={{eq optionIndex (sub (length @question.options) 1)}}
                   {{on "click" (fn this.moveOptionDown optionIndex)}}
                   data-test-move-down-button
                 >
