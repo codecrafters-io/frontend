@@ -48,20 +48,24 @@ export default class QuestionFormComponent extends Component<Signature> {
   moveOptionDown(optionIndex: number) {
     const options = this.options.slice();
 
-    if (optionIndex < options.length - 1) {
-      [options[optionIndex + 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex + 1] as Option];
-      this.args.question.options = [...options];
+    if (optionIndex >= options.length - 1) {
+      return;
     }
+
+    [options[optionIndex + 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex + 1] as Option];
+    this.args.question.options = [...options];
   }
 
   @action
   moveOptionUp(optionIndex: number) {
     const options = this.options.slice();
 
-    if (optionIndex > 0) {
-      [options[optionIndex - 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex - 1] as Option];
-      this.args.question.options = [...options];
+    if (optionIndex <= 0) {
+      return;
     }
+
+    [options[optionIndex - 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex - 1] as Option];
+    this.args.question.options = [...options];
   }
 }
 
