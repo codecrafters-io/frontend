@@ -49,9 +49,7 @@ export default class QuestionFormComponent extends Component<Signature> {
     const options = this.options.slice();
 
     if (optionIndex < options.length - 1) {
-      const temp = options[optionIndex + 1];
-      options[optionIndex + 1] = options[optionIndex] as Option;
-      options[optionIndex] = temp as Option;
+      [options[optionIndex + 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex + 1] as Option];
       this.args.question.options = [...options];
     }
   }
@@ -61,9 +59,7 @@ export default class QuestionFormComponent extends Component<Signature> {
     const options = this.options.slice();
 
     if (optionIndex > 0) {
-      const temp = options[optionIndex - 1];
-      options[optionIndex - 1] = options[optionIndex] as Option;
-      options[optionIndex] = temp as Option;
+      [options[optionIndex - 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex - 1] as Option];
       this.args.question.options = [...options];
     }
   }
