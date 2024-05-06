@@ -109,8 +109,12 @@ module('Acceptance | concept-admin | edit-questions', function (hooks) {
     await questionsPage.visit({ concept_slug: 'dummy' });
     await questionsPage.clickOnQuestionCard('question-slug');
 
-    assert.strictEqual(question.options[0].markdown, '42');
-    assert.strictEqual(question.options[1].markdown, '24');
+    assert.strictEqual(question.options[0].markdown, '42', 'markdown for the first option is correct');
+    assert.strictEqual(question.options[1].markdown, '24', 'markdown for the second option is correct');
+
+    await questionPage.optionForms[0].clickOnMoveUpButton();
+
+    assert.strictEqual(question.options[0].markdown, '42', 'clicking on move up button for the first option does not change the order');
 
     await questionPage.optionForms[1].clickOnMoveUpButton();
     await questionPage.clickOnPublishChangesButton();
@@ -121,5 +125,9 @@ module('Acceptance | concept-admin | edit-questions', function (hooks) {
     await questionPage.clickOnPublishChangesButton();
 
     assert.strictEqual(question.options[0].markdown, '42');
+
+    await questionPage.optionForms[1].clickOnMoveDownButton();
+
+    assert.strictEqual(question.options[1].markdown, '24', 'clicking on move down button for the last option does not change the order');
   });
 });
