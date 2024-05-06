@@ -44,6 +44,10 @@
                 </div>
               {{/animated-if}}
             </AnimatedContainer>
+
+            {{#if @activeRepository.isNew}}
+              <EmberTooltip @text="Please select a language first" />
+            {{/if}}
           </div>
 
           {{#if @activeRepository.progressBannerUrl}}
@@ -60,6 +64,10 @@
           >
             Publish to GitHub
             {{svg-jar "github" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
+
+            {{#if @activeRepository.isNew}}
+              <EmberTooltip @text="Please select a language first" />
+            {{/if}}
           </div>
 
           <div
