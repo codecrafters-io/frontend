@@ -1,5 +1,7 @@
 import { formatDistanceStrictWithOptions } from 'date-fns/fp';
+import { inject as service } from '@ember/service';
 import Helper from '@ember/component/helper';
+import TimeService from 'codecrafters-frontend/services/time'
 
 interface DateFromNowSignature {
   Args: {
@@ -8,29 +10,11 @@ interface DateFromNowSignature {
 }
 
 export default class DateFromNow extends Helper<DateFromNowSignature> {
-  timer: number | null = null;
-
-  clearTimer() {
-    if (this.timer !== null) {
-      window.clearTimeout(this.timer);
-      this.timer = null;
-    }
-  }
+  @service declare time: TimeService;
 
   compute(positional: [Date]) {
     let [date] = positional;
-    this.scheduleRecompute();
-    return formatDistanceStrictWithOptions({ addSuffix: true }, new Date(), date);
-  }
-
-  scheduleRecompute() {
-    this.clearTimer();
-    this.timer = window.setTimeout(() => this.recompute(), 1000);
-  }
-
-  willDestroy() {
-    super.willDestroy();
-    this.clearTimer();
+    return formatDistanceStrictWithOptions({ addSuffix: true }, this.time.currentTime, date);
   }
 }
 
