@@ -63,25 +63,25 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     this.server.create('repository', 'withBaseStagesCompleted', {
-      course: dummy,
+      course: redis,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Dummy');
-    await coursePage.sidebar.clickOnStepListItem('The second stage');
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await coursePage.sidebar.clickOnStepListItem('Expiry');
 
     assert.true(
       coursePage.completedStepNotice.nextOrActiveStepButton.text.includes('View next step'),
       'copy for next or active step button is correct',
     );
 
-    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
+    await coursePage.completedStepNotice.nextOrActiveStepButton.click()
 
-    assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'URL is /base-stages-completed');
+    assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
   });
 });
