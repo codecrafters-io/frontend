@@ -75,7 +75,10 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await coursePage.sidebar.clickOnStepListItem('The second stage');
 
-    assert.true(coursePage.completedStepNotice.nextOrActiveStepButton.text.includes('View next step'), 'copy for next or active step button is correct');
+    assert.true(
+      coursePage.completedStepNotice.nextOrActiveStepButton.text.includes('View next step'),
+      'copy for next or active step button is correct',
+    );
 
     await coursePage.completedStepNotice.nextOrActiveStepButton.click();
 
