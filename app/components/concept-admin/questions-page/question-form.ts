@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import ConceptQuestionModel from 'codecrafters-frontend/models/concept-question';
+import ConceptQuestionModel, { type Option } from 'codecrafters-frontend/models/concept-question';
 import { action } from '@ember/object';
 
 interface Signature {
@@ -11,6 +11,10 @@ interface Signature {
 }
 
 export default class QuestionFormComponent extends Component<Signature> {
+  get options() {
+    return this.args.question.options;
+  }
+
   @action
   async handleCorrectOptionToggled(optionIndex: number) {
     const option = this.args.question.options[optionIndex]!;
@@ -38,6 +42,30 @@ export default class QuestionFormComponent extends Component<Signature> {
   @action
   async handleOptionDeleted(optionIndex: number) {
     this.args.question.options = this.args.question.options.filter((_, currentOptionIndex) => currentOptionIndex !== optionIndex);
+  }
+
+  @action
+  moveOptionDown(optionIndex: number) {
+    const options = this.options.slice();
+
+    if (optionIndex >= options.length - 1) {
+      return;
+    }
+
+    [options[optionIndex + 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex + 1] as Option];
+    this.args.question.options = [...options];
+  }
+
+  @action
+  moveOptionUp(optionIndex: number) {
+    const options = this.options.slice();
+
+    if (optionIndex <= 0) {
+      return;
+    }
+
+    [options[optionIndex - 1], options[optionIndex]] = [options[optionIndex] as Option, options[optionIndex - 1] as Option];
+    this.args.question.options = [...options];
   }
 }
 

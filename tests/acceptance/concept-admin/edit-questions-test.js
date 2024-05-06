@@ -91,4 +91,43 @@ module('Acceptance | concept-admin | edit-questions', function (hooks) {
 
     assert.strictEqual(question.options.length, 2);
   });
+
+  test('can move options up and down', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const question = this.server.create('concept-question', {
+      concept: this.server.create('concept', { slug: 'dummy', blocks: [] }),
+      queryMarkdown: 'What is question?',
+      slug: 'question-slug',
+      options: [
+        { markdown: '42', is_correct: true, explanation_markdown: 'Explanation 1' },
+        { markdown: '24', isS_correct: false, explanation_markdown: 'Explanation 2' },
+      ],
+    });
+
+    await questionsPage.visit({ concept_slug: 'dummy' });
+    await questionsPage.clickOnQuestionCard('question-slug');
+
+    assert.strictEqual(question.options[0].markdown, '42', 'markdown for the first option is correct');
+    assert.strictEqual(question.options[1].markdown, '24', 'markdown for the second option is correct');
+
+    await questionPage.optionForms[0].clickOnMoveUpButton();
+
+    assert.strictEqual(question.options[0].markdown, '42', 'clicking on move up button for the first option does not change the order');
+
+    await questionPage.optionForms[1].clickOnMoveUpButton();
+    await questionPage.clickOnPublishChangesButton();
+
+    assert.strictEqual(question.options[0].markdown, '24');
+
+    await questionPage.optionForms[0].clickOnMoveDownButton();
+    await questionPage.clickOnPublishChangesButton();
+
+    assert.strictEqual(question.options[0].markdown, '42');
+
+    await questionPage.optionForms[1].clickOnMoveDownButton();
+
+    assert.strictEqual(question.options[1].markdown, '24', 'clicking on move down button for the last option does not change the order');
+  });
 });
