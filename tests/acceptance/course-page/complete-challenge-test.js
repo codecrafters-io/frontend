@@ -80,7 +80,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
       'copy for next or active step button is correct',
     );
 
-    await coursePage.completedStepNotice.nextOrActiveStepButton.click()
+    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
 
     assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
   });
