@@ -4,13 +4,28 @@ import { next } from '@ember/runloop';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type Store from '@ember-data/store';
 
-export default class FeedbackPromptComponent extends Component {
-  @service store;
+type Signature = {
+  Element: HTMLDivElement;
+
+  Args: {
+    onClose: () => void;
+    onSubmit: () => void;
+    courseStage: CourseStageModel;
+    repository: RepositoryModel;
+    wasTriggeredManually: boolean;
+  };
+};
+
+export default class FeedbackPromptComponent extends Component<Signature> {
+  @service declare store: Store;
   transition = fade;
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
 
     if (!this.feedbackSubmission) {
       next(() => {
@@ -27,11 +42,13 @@ export default class FeedbackPromptComponent extends Component {
   }
 
   get congratulatoryMessage() {
-    if (this.args.courseStage.isLast) {
-      return 'You did it!';
-    } else if (this.args.courseStage.isPenultimate) {
-      return 'Just one more to go!';
-    }
+    // TODO: Fix last & penultimate cases
+
+    // if (this.args.courseStage.isLast) {
+    //   return 'You did it!';
+    // } else if (this.args.courseStage.isPenultimate) {
+    //   return 'Just one more to go!';
+    // }
 
     return (
       {
@@ -49,7 +66,7 @@ export default class FeedbackPromptComponent extends Component {
   }
 
   get explanationTextareaPlaceholder() {
-    if (['😍', '😃'].includes(this.feedbackSubmission.selectedAnswer)) {
+    if (['😍', '😃'].includes(this.feedbackSubmission!.selectedAnswer)) {
       return `Tell us more!`;
     } else {
       return `What could be better?`;
@@ -65,28 +82,34 @@ export default class FeedbackPromptComponent extends Component {
   }
 
   @action
-  handleAnswerOptionSelected(answerOption) {
-    this.feedbackSubmission.selectedAnswer = answerOption;
-    this.feedbackSubmission.save();
+  handleAnswerOptionSelected(answerOption: string) {
+    this.feedbackSubmission!.selectedAnswer = answerOption;
+    this.feedbackSubmission!.save();
   }
 
   @action
   handleExplanationTextareaBlur() {
-    this.feedbackSubmission.save();
+    this.feedbackSubmission!.save();
   }
 
   @action
   handleSubmitButtonClick() {
-    this.feedbackSubmission.status = 'closed';
+    this.feedbackSubmission!.status = 'closed';
     this.args.onSubmit();
 
     // Wait for animation to complete
     later(
       this,
       () => {
-        this.feedbackSubmission.save();
+        this.feedbackSubmission!.save();
       },
       500,
     );
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::YourTaskCard::FeedbackPrompt': typeof FeedbackPromptComponent;
   }
 }
