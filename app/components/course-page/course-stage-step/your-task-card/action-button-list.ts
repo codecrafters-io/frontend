@@ -2,10 +2,26 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import type RouterService from '@ember/routing/router-service';
 
-export default class ActionButtonListComponent extends Component {
-  @service featureFlags;
-  @service router;
+type Signature = {
+  Element: HTMLDivElement;
+
+  Args: {
+    courseStage: CourseStageModel;
+    repository: RepositoryModel;
+    onFeedbackButtonClick: () => void;
+    shouldHideFeedbackButtons: boolean;
+  };
+};
+
+export default class ActionButtonListComponent extends Component<Signature> {
+  @service declare featureFlags: FeatureFlagsService;
+  @service declare router: RouterService;
+
   transition = fade;
 
   get anyButtonIsVisible() {
@@ -68,6 +84,12 @@ export default class ActionButtonListComponent extends Component {
 
   @action
   handleViewTestCasesButtonClicked() {
-    window.open(this.args.courseStage.testerSourceCodeUrl, '_blank').focus();
+    window.open(this.args.courseStage.testerSourceCodeUrl, '_blank')!.focus();
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::YourTaskCard::ActionButtonList': typeof ActionButtonListComponent;
   }
 }

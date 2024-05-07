@@ -48,7 +48,6 @@
       {{markdown-to-html this.instructionsMarkdown}}
     </div>
 
-    {{! @glint-expect-error not ts-ified yet }}
     <CoursePage::CourseStageStep::YourTaskCard::ActionButtonList
       @courseStage={{@courseStage}}
       @repository={{@repository}}
@@ -58,7 +57,6 @@
     />
 
     {{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
-      {{! @glint-expect-error not ts-ified yet }}
       <CoursePage::CourseStageStep::YourTaskCard::FeedbackPrompt
         @onClose={{this.handleFeedbackPromptClosed}}
         @onSubmit={{this.handleFeedbackSubmitted}}
