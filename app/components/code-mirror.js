@@ -44,6 +44,7 @@ import * as THEME_EXTENSIONS from '@uiw/codemirror-themes-all';
 //   ]),
 // ];
 
+// Not everything exported under THEME_EXTENSIONS is a theme, some are internal classes
 const SUPPORTED_THEMES = Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init')));
 
 const OPTION_HANDLERS = {
