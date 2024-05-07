@@ -1,0 +1,40 @@
+<code-mirror
+  {{did-insert this.renderEditor}}
+  {{did-update this.documentDidChange @document}}
+  {{did-update (fn this.optionDidChange "allowMultipleSelections") @allowMultipleSelections}}
+  {{did-update (fn this.optionDidChange "autocompletion") @autocompletion}}
+  {{did-update (fn this.optionDidChange "bracketMatching") @bracketMatching}}
+  {{did-update (fn this.optionDidChange "closeBrackets") @closeBrackets}}
+  {{did-update (fn this.optionDidChange "crosshairCursor") @crosshairCursor}}
+  {{did-update (fn this.optionDidChange "drawSelection") @drawSelection}}
+  {{did-update (fn this.optionDidChange "dropCursor") @dropCursor}}
+  {{did-update (fn this.optionDidChange "editable") @editable}}
+  {{did-update (fn this.optionDidChange "foldGutter") @foldGutter}}
+  {{did-update (fn this.optionDidChange "highlightActiveLine") @highlightActiveLine}}
+  {{did-update (fn this.optionDidChange "highlightSelectionMatches") @highlightSelectionMatches}}
+  {{did-update (fn this.optionDidChange "highlightSpecialChars") @highlightSpecialChars}}
+  {{did-update (fn this.optionDidChange "highlightTrailingWhitespace") @highlightTrailingWhitespace}}
+  {{did-update (fn this.optionDidChange "highlightWhitespace") @highlightWhitespace}}
+  {{did-update (fn this.optionDidChange "history") @history}}
+  {{did-update (fn this.optionDidChange "indentOnInput") @indentOnInput}}
+  {{did-update (fn this.optionDidChange "indentUnit") @indentUnit}}
+  {{did-update (fn this.optionDidChange "indentWithTab") @indentWithTab}}
+  {{did-update (fn this.optionDidChange "languageOrFilename") @filename}}
+  {{did-update (fn this.optionDidChange "languageOrFilename") @language}}
+  {{did-update (fn this.optionDidChange "lineNumbers") @lineNumbers}}
+  {{did-update (fn this.optionDidChange "lineSeparator") @lineSeparator}}
+  {{did-update (fn this.optionDidChange "lineWrapping") @lineWrapping}}
+  {{did-update (fn this.optionDidChange "originalDocumentOrMergeControls") @mergeControls}}
+  {{did-update (fn this.optionDidChange "originalDocumentOrMergeControls") @originalDocument}}
+  {{did-update (fn this.optionDidChange "placeholder") @placeholder}}
+  {{did-update (fn this.optionDidChange "readOnly") @readOnly}}
+  {{did-update (fn this.optionDidChange "rectangularSelection") @rectangularSelection}}
+  {{did-update (fn this.optionDidChange "scrollPastEnd") @scrollPastEnd}}
+  {{did-update (fn this.optionDidChange "syntaxHighlighting") @syntaxHighlighting}}
+  {{did-update (fn this.optionDidChange "tabSize") @tabSize}}
+  {{did-update (fn this.optionDidChange "theme") @theme}}
+  data-test-code-mirror-component
+  ...attributes
+>
+  {{yield}}
+</code-mirror>
