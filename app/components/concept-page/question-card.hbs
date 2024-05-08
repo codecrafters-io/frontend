@@ -12,7 +12,7 @@
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
-          {{on "click" (fn this.handleOptionClick optionIndex)}}
+          {{on "click" (fn this.handleOptionSelected optionIndex)}}
           data-test-question-card-option
         />
       {{/each}}

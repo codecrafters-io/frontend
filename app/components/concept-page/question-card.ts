@@ -58,39 +58,39 @@ export default class QuestionCardComponent extends Component<Signature> {
   handleKeydown(event: KeyboardEvent) {
     event.preventDefault();
 
-    const currentOption = document.activeElement as HTMLElement;
+    const currentFocusedOption = document.activeElement as HTMLElement;
     const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
-    const currentOptionIndex = options.indexOf(currentOption);
+    const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
     if (event.key.toLowerCase() === 'k' || event.key === 'ArrowUp') {
-      if (currentOptionIndex > 0) {
-        options[currentOptionIndex - 1]!.focus();
+      if (currentFocusedOptionIndex > 0) {
+        options[currentFocusedOptionIndex - 1]!.focus();
       } else {
         options[options.length - 1]!.focus();
       }
     }
 
     if (event.key.toLowerCase() === 'j' || event.key === 'ArrowDown' || event.key === 'Tab') {
-      if (currentOptionIndex < options.length - 1) {
-        options[currentOptionIndex + 1]!.focus();
+      if (currentFocusedOptionIndex < options.length - 1) {
+        options[currentFocusedOptionIndex + 1]!.focus();
       } else {
         options[0]!.focus();
       }
     }
 
     if (event.key === 'Enter') {
-      this.handleOptionClick(currentOptionIndex);
+      this.handleOptionSelected(currentFocusedOptionIndex);
     }
 
     const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
 
     if (optionIndexFromKey !== null && optionIndexFromKey < this.options.length) {
-      this.handleOptionClick(optionIndexFromKey);
+      this.handleOptionSelected(optionIndexFromKey);
     }
   }
 
   @action
-  handleOptionClick(optionIndex: number) {
+  handleOptionSelected(optionIndex: number) {
     const selectedOptionIndexWasNull = this.selectedOptionIndex === null;
 
     this.selectedOptionIndex = optionIndex;
@@ -104,7 +104,7 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleShowExplanationClick() {
-    this.handleOptionClick(this.args.question.correctOptionIndex);
+    this.handleOptionSelected(this.args.question.correctOptionIndex);
   }
 
   getOptionIndexFromKey(key: string) {
