@@ -434,11 +434,11 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     await conceptPage.questionCards[0].keydown({ key: '1' });
 
-    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
   test('can select an option for a question using a/b/c/d', async function (assert) {
@@ -460,11 +460,11 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     await conceptPage.questionCards[0].keydown({ key: 'A' });
 
-    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
   test('can navigate question options using j/k', async function (assert) {
@@ -486,29 +486,29 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     await conceptPage.questionCards[0].keydown({ key: 'J' });
     await conceptPage.questionCards[0].keydown({ key: 'J' });
     await conceptPage.questionCards[0].keydown({ key: 'J' });
     await conceptPage.questionCards[0].keydown({ key: 'Enter' });
 
-    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
-    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected');
 
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.false(conceptPage.questionCards[1].hasSubmitted, 'the question has not been submitted yet')
+    assert.false(conceptPage.questionCards[1].hasSubmitted, 'the question has not been submitted yet');
 
     await conceptPage.questionCards[1].keydown({ key: 'K' });
     await conceptPage.questionCards[1].keydown({ key: 'K' });
     await conceptPage.questionCards[1].keydown({ key: 'K' });
     await conceptPage.questionCards[1].keydown({ key: 'Enter' });
 
-    assert.true(conceptPage.questionCards[1].hasSubmitted, 'the question has been submitted')
-    assert.true(conceptPage.questionCards[1].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+    assert.true(conceptPage.questionCards[1].hasSubmitted, 'the question has been submitted');
+    assert.true(conceptPage.questionCards[1].hasSubmittedText.includes('Correct'), 'the correct option has been selected');
   });
 
   test('can navigate question options using arrow keys', async function (assert) {
@@ -530,29 +530,29 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' });
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' });
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' });
     await conceptPage.questionCards[0].keydown({ key: 'Enter' });
 
-    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
-    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected');
 
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.false(conceptPage.questionCards[1].hasSubmitted, 'the question has not been submitted yet')
+    assert.false(conceptPage.questionCards[1].hasSubmitted, 'the question has not been submitted yet');
 
     await conceptPage.questionCards[1].keydown({ key: 'ArrowUp' });
     await conceptPage.questionCards[1].keydown({ key: 'ArrowUp' });
     await conceptPage.questionCards[1].keydown({ key: 'ArrowUp' });
     await conceptPage.questionCards[1].keydown({ key: 'Enter' });
 
-    assert.true(conceptPage.questionCards[1].hasSubmitted, 'the question has been submitted')
-    assert.true(conceptPage.questionCards[1].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+    assert.true(conceptPage.questionCards[1].hasSubmitted, 'the question has been submitted');
+    assert.true(conceptPage.questionCards[1].hasSubmittedText.includes('Correct'), 'the correct option has been selected');
   });
 
   test('can navigate question options using the tab key', async function (assert) {
@@ -574,14 +574,14 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     await conceptPage.questionCards[0].keydown({ key: 'Tab' });
     await conceptPage.questionCards[0].keydown({ key: 'Tab' });
     await conceptPage.questionCards[0].keydown({ key: 'Tab' });
     await conceptPage.questionCards[0].keydown({ key: 'Enter' });
 
-    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
-    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected');
   });
 });

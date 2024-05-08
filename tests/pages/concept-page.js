@@ -29,7 +29,7 @@ export default createPage({
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
     hasSubmitted: isPresent('[data-test-question-submitted]'),
     hasSubmittedText: text('[data-test-question-submitted]'),
-    keydown: triggerable('keydown', '.question-card-option-container')
+    keydown: triggerable('keydown', '.question-card-option-container'),
   }),
 
   shareConceptContainer: {

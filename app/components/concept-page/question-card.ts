@@ -42,6 +42,16 @@ export default class QuestionCardComponent extends Component<Signature> {
     return this.selectedOption && this.selectedOption.is_correct;
   }
 
+  getOptionIndexFromKey(key: string) {
+    if (!isNaN(parseInt(key))) {
+      return parseInt(key) - 1;
+    } else if (/^[a-iA-I]$/.test(key)) {
+      return key.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0);
+    } else {
+      return null;
+    }
+  }
+
   @action
   handleDidInsertOptionsList(element: HTMLElement) {
     const firstOptionElement = element.children[0];
@@ -106,15 +116,4 @@ export default class QuestionCardComponent extends Component<Signature> {
   handleShowExplanationClick() {
     this.handleOptionSelected(this.args.question.correctOptionIndex);
   }
-
-  getOptionIndexFromKey(key: string) {
-    if (!isNaN(parseInt(key))) {
-      return parseInt(key) - 1;
-    } else if (/^[a-iA-I]$/.test(key)) {
-      return key.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0);
-    } else {
-      return null;
-    }
-  }
-
 }
