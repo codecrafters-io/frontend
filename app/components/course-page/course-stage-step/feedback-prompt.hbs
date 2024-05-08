@@ -18,9 +18,17 @@
   <div class="w-full">
     <div class="flex items-center">
       {{#if (and this.submissionIsClosed (not this.isEditingClosedSubmission))}}
-        <div class="text-teal-700 leading-7 text-sm" data-test-question-text>
+        <div class="text-teal-700 leading-7 text-sm">
           Feedback submitted!
-          <span class="underline font-semibold" role="button" {{on "click" (fn (mut this.isEditingClosedSubmission) true)}}>Edit Feedback</span>
+
+          <span
+            class="underline font-semibold"
+            role="button"
+            {{on "click" (fn (mut this.isEditingClosedSubmission) true)}}
+            data-test-edit-feedback-button
+          >
+            Edit Feedback
+          </span>
         </div>
       {{else}}
         <div class="text-teal-700 leading-7 text-base" data-test-question-text>
@@ -67,7 +75,7 @@
               </div>
             </div>
 
-            <PrimaryButton {{on "click" this.handleSubmitButtonClick}}>
+            <PrimaryButton {{on "click" this.handleSubmitButtonClick}} data-test-submit-feedback-button>
               Submit
             </PrimaryButton>
           </div>
