@@ -4,7 +4,8 @@
       {{markdown-to-html @question.queryMarkdown}}
     </div>
 
-    <div class="flex flex-col -mx-3 sm:-mx-4 gap-px" {{did-insert this.handleDidInsertOptionsList}}>
+    {{! template-lint-disable no-invalid-interactive }}
+    <div class="flex flex-col -mx-3 sm:-mx-4 gap-px" {{did-insert this.handleDidInsertOptionsList}} {{on "keydown" this.handleKeydown}}>
       {{#each this.options as |option optionIndex|}}
         {{! @glint-expect-error: not ts-ified yet }}
         <ConceptPage::QuestionCardOption

@@ -55,6 +55,17 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
+  handleKeydown(event: KeyboardEvent) {
+    const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
+
+    if (optionIndexFromKey === null || optionIndexFromKey >= this.options.length) {
+      return
+    }
+
+    this.handleOptionClick(optionIndexFromKey);
+  }
+
+  @action
   handleOptionClick(optionIndex: number) {
     const selectedOptionIndexWasNull = this.selectedOptionIndex === null;
 
@@ -71,4 +82,15 @@ export default class QuestionCardComponent extends Component<Signature> {
   handleShowExplanationClick() {
     this.handleOptionClick(this.args.question.correctOptionIndex);
   }
+
+  getOptionIndexFromKey(key: string) {
+    if (!isNaN(parseInt(key))) {
+      return parseInt(key) - 1;
+    } else if (/^[a-zA-Z]$/.test(key)) {
+      return key.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0);
+    } else {
+      return null;
+    }
+  }
+
 }
