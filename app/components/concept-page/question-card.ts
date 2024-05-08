@@ -56,13 +56,31 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleKeydown(event: KeyboardEvent) {
-    const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
+    const currentOption = document.activeElement as HTMLElement;
+    const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
+    const currentOptionIndex = options.indexOf(currentOption);
 
-    if (optionIndexFromKey === null || optionIndexFromKey >= this.options.length) {
-      return
+    if (event.key === 'k' || event.key === 'ArrowUp') {
+      if (currentOptionIndex > 0) {
+        options[currentOptionIndex - 1]!.focus();
+      } else {
+        options[options.length - 1]!.focus();
+      }
     }
 
-    this.handleOptionClick(optionIndexFromKey);
+    if (event.key === 'j' || event.key === 'ArrowDown') {
+      if (currentOptionIndex < options.length - 1) {
+        options[currentOptionIndex + 1]!.focus();
+      } else {
+        options[0]!.focus();
+      }
+    }
+
+    const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
+
+    if (optionIndexFromKey !== null && optionIndexFromKey < this.options.length) {
+      this.handleOptionClick(optionIndexFromKey);
+    }
   }
 
   @action
@@ -86,7 +104,7 @@ export default class QuestionCardComponent extends Component<Signature> {
   getOptionIndexFromKey(key: string) {
     if (!isNaN(parseInt(key))) {
       return parseInt(key) - 1;
-    } else if (/^[a-zA-Z]$/.test(key)) {
+    } else if (/^[a-iA-I]$/.test(key)) {
       return key.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0);
     } else {
       return null;
