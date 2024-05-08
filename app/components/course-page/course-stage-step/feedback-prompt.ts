@@ -1,5 +1,4 @@
 import { inject as service } from '@ember/service';
-import { later } from '@ember/runloop';
 import { next } from '@ember/runloop';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';

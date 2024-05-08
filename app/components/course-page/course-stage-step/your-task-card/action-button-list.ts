@@ -13,7 +13,6 @@ type Signature = {
   Args: {
     courseStage: CourseStageModel;
     repository: RepositoryModel;
-    onFeedbackButtonClick: () => void;
   };
 };
 
