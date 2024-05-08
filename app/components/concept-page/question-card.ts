@@ -56,6 +56,8 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleKeydown(event: KeyboardEvent) {
+    event.preventDefault();
+
     const currentOption = document.activeElement as HTMLElement;
     const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentOptionIndex = options.indexOf(currentOption);
