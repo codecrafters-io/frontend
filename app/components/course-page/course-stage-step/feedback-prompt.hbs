@@ -1,0 +1,78 @@
+<div class="flex p-4 bg-teal-50 border border-teal-500 rounded relative" data-test-feedback-prompt ...attributes>
+  {{#if this.isEditingClosedSubmission}}
+    <button
+      class="absolute right-4 top-4 opacity-60 hover:opacity-100"
+      type="button"
+      {{! @glint-expect-error fn/mut types don't work with false?}}
+      {{on "click" (fn (mut this.isEditingClosedSubmission) false)}}
+      data-test-close-feedback-prompt-button
+    >
+      {{svg-jar "x" class="w-5 h-5 text-gray-400"}}
+    </button>
+  {{/if}}
+
+  <div class="mr-2 mt-0.5 flex-shrink-0">
+    {{svg-jar "check-circle" class="w-6 fill-current text-teal-500"}}
+  </div>
+
+  <div class="w-full">
+    <div class="flex items-center">
+      {{#if (and this.submissionIsClosed (not this.isEditingClosedSubmission))}}
+        <div class="text-teal-700 leading-7 text-sm" data-test-question-text>
+          Feedback submitted!
+          <span class="underline font-semibold" role="button" {{on "click" (fn (mut this.isEditingClosedSubmission) true)}}>Edit Feedback</span>
+        </div>
+      {{else}}
+        <div class="text-teal-700 leading-7 text-base" data-test-question-text>
+          {{#if this.isEditingClosedSubmission}}
+            How did we do?
+          {{else}}
+            {{this.congratulatoryMessage}}
+            How did we do?
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+
+    {{#if (or this.isEditingClosedSubmission (not this.submissionIsClosed))}}
+      <div class="flex items-center mt-2">
+        {{#each this.answerOptions as |answerOption|}}
+          <CoursePage::CourseStageStep::FeedbackPromptOption
+            @emoji={{answerOption}}
+            @isSelected={{eq this.feedbackSubmission.selectedAnswer answerOption}}
+            {{on "click" (fn this.handleAnswerOptionSelected answerOption)}}
+            class="mr-2"
+          />
+        {{/each}}
+      </div>
+
+      <AnimatedContainer>
+        {{#if this.feedbackSubmission.hasSelectedAnswer}}
+          {{! template-lint-disable require-input-label }}
+          <Textarea
+            @value={{this.feedbackSubmission.explanation}}
+            class="mt-4 border border-teal-500 border-opacity-50 rounded w-full p-4 placeholder-gray-300"
+            rows="5"
+            placeholder={{this.explanationTextareaPlaceholder}}
+            {{on "blur" this.handleExplanationTextareaBlur}}
+            {{markdown-input}}
+          />
+
+          <div class="flex items-start justify-between mt-1">
+            <div class="flex items-center">
+              {{svg-jar "markdown" class="fill-current w-5 mr-1 text-teal-500"}}
+
+              <div class="text-xs text-teal-600">
+                Markdown supported.
+              </div>
+            </div>
+
+            <PrimaryButton {{on "click" this.handleSubmitButtonClick}}>
+              Submit
+            </PrimaryButton>
+          </div>
+        {{/if}}
+      </AnimatedContainer>
+    {{/if}}
+  </div>
+</div>

@@ -24,14 +24,6 @@ export default class YourTaskCardComponent extends Component<Signature> {
   @service declare store: Store;
   @tracked manualFeedbackFlowIsActive = false;
 
-  get automaticFeedbackFlowIsActive() {
-    return (
-      this.shouldShowFeedbackPromptIfStageIsComplete &&
-      this.args.repository.highestCompletedStage === this.args.courseStage &&
-      !this.args.repository.hasClosedCourseStageFeedbackSubmissionFor(this.args.courseStage)
-    );
-  }
-
   get instructionsMarkdown() {
     const variables: Record<string, unknown> = {};
 
@@ -40,10 +32,6 @@ export default class YourTaskCardComponent extends Component<Signature> {
     });
 
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
-  }
-
-  get shouldShowFeedbackPromptIfStageIsComplete() {
-    return !this.args.courseStage.isFirst;
   }
 
   @action

@@ -66,11 +66,18 @@ export default class CoursePageStateService extends Service {
 
   get nextStep(): Step | null {
     if (!this.stepList) {
-      // @ts-ignore
       return null;
     }
 
     return this.stepList.nextVisibleStepFor(this.currentStep);
+  }
+
+  get stepAfterNextStep(): Step | null {
+    if (!this.nextStep || !this.stepList) {
+      return null;
+    }
+
+    return this.stepList.nextVisibleStepFor(this.nextStep);
   }
 
   get stepListAsStepList(): StepList {

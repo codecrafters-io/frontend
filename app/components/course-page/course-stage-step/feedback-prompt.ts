@@ -2,6 +2,7 @@ import { inject as service } from '@ember/service';
 import { later } from '@ember/runloop';
 import { next } from '@ember/runloop';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
@@ -12,15 +13,14 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    onClose: () => void;
-    onSubmit: () => void;
     courseStage: CourseStageModel;
     repository: RepositoryModel;
-    wasTriggeredManually: boolean;
+    onSubmit: () => void;
   };
 };
 
 export default class FeedbackPromptComponent extends Component<Signature> {
+  @tracked isEditingClosedSubmission = false;
   @service declare store: Store;
   transition = fade;
 
@@ -77,8 +77,8 @@ export default class FeedbackPromptComponent extends Component<Signature> {
     return this.args.repository.courseStageFeedbackSubmissionFor(this.args.courseStage);
   }
 
-  get stageIsComplete() {
-    return this.args.repository.stageIsComplete(this.args.courseStage);
+  get submissionIsClosed() {
+    return this.feedbackSubmission?.statusIsClosed;
   }
 
   @action
@@ -95,21 +95,19 @@ export default class FeedbackPromptComponent extends Component<Signature> {
   @action
   handleSubmitButtonClick() {
     this.feedbackSubmission!.status = 'closed';
-    this.args.onSubmit();
 
-    // Wait for animation to complete
-    later(
-      this,
-      () => {
-        this.feedbackSubmission!.save();
-      },
-      500,
-    );
+    // Don't fire for editing submissions
+    if (!this.isEditingClosedSubmission) {
+      this.args.onSubmit();
+    }
+
+    this.isEditingClosedSubmission = false;
+    this.feedbackSubmission!.save();
   }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::YourTaskCard::FeedbackPrompt': typeof FeedbackPromptComponent;
+    'CoursePage::CourseStageStep::FeedbackPrompt': typeof FeedbackPromptComponent;
   }
 }
