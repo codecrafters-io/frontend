@@ -6,6 +6,7 @@ type Signature = {
   Args: {
     emoji: string;
     isSelected: boolean;
+    colorOnHoverAndSelect: 'green' | 'red';
   };
 };
 

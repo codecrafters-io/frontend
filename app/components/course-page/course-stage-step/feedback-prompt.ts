@@ -36,8 +36,14 @@ export default class FeedbackPromptComponent extends Component<Signature> {
     }
   }
 
-  get answerOptions() {
-    return ['😍', '😃', '😐', '😕', '😭'];
+  get answerOptionsWithColors(): { answer: string; colorOnHoverAndSelect: 'green' | 'red' }[] {
+    return [
+      { answer: '😍', colorOnHoverAndSelect: 'green' },
+      { answer: '😃', colorOnHoverAndSelect: 'green' },
+      { answer: '😐', colorOnHoverAndSelect: 'green' },
+      { answer: '😕', colorOnHoverAndSelect: 'red' },
+      { answer: '😭', colorOnHoverAndSelect: 'red' },
+    ];
   }
 
   get congratulatoryMessage() {

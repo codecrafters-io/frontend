@@ -44,11 +44,12 @@
 
     {{#if (or this.isEditingClosedSubmission (not this.submissionIsClosed))}}
       <div class="flex items-center mt-2">
-        {{#each this.answerOptions as |answerOption|}}
+        {{#each this.answerOptionsWithColors as |answerOptionWithColor|}}
           <CoursePage::CourseStageStep::FeedbackPromptOption
-            @emoji={{answerOption}}
-            @isSelected={{eq this.feedbackSubmission.selectedAnswer answerOption}}
-            {{on "click" (fn this.handleAnswerOptionSelected answerOption)}}
+            @emoji={{answerOptionWithColor.answer}}
+            @isSelected={{eq this.feedbackSubmission.selectedAnswer answerOptionWithColor.answer}}
+            @colorOnHoverAndSelect={{answerOptionWithColor.colorOnHoverAndSelect}}
+            {{on "click" (fn this.handleAnswerOptionSelected answerOptionWithColor.answer)}}
             class="mr-2"
           />
         {{/each}}
@@ -59,11 +60,12 @@
           {{! template-lint-disable require-input-label }}
           <Textarea
             @value={{this.feedbackSubmission.explanation}}
-            class="mt-4 border border-teal-500 border-opacity-50 rounded w-full p-4 placeholder-gray-300"
+            class="mt-4 border border-teal-500 border-opacity-50 rounded w-full p-4 placeholder-gray-400"
             rows="5"
             placeholder={{this.explanationTextareaPlaceholder}}
             {{on "blur" this.handleExplanationTextareaBlur}}
             {{markdown-input}}
+            {{focus-on-insert}}
           />
 
           <div class="flex items-start justify-between mt-1">
