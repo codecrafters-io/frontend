@@ -414,4 +414,174 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.notOk(conceptPage.progress.text.includes('blocks left'), 'Remaining blocks left should not be present');
   });
+
+  test('can select an option for a question using 1/2/3/4', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+
+    await conceptPage.questionCards[0].keydown({ key: '1' });
+
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
+  });
+
+  test('can select an option for a question using a/b/c/d', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+
+    await conceptPage.questionCards[0].keydown({ key: 'A' });
+
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
+  });
+
+  test('can navigate question options using j/k', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+
+    await conceptPage.questionCards[0].keydown({ key: 'J' });
+    await conceptPage.questionCards[0].keydown({ key: 'J' });
+    await conceptPage.questionCards[0].keydown({ key: 'J' });
+    await conceptPage.questionCards[0].keydown({ key: 'Enter' });
+
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
+    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[1].hasSubmitted, 'the question has not been submitted yet')
+
+    await conceptPage.questionCards[1].keydown({ key: 'K' });
+    await conceptPage.questionCards[1].keydown({ key: 'K' });
+    await conceptPage.questionCards[1].keydown({ key: 'K' });
+    await conceptPage.questionCards[1].keydown({ key: 'Enter' });
+
+    assert.true(conceptPage.questionCards[1].hasSubmitted, 'the question has been submitted')
+    assert.true(conceptPage.questionCards[1].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+  });
+
+  test('can navigate question options using arrow keys', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' });
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' });
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' });
+    await conceptPage.questionCards[0].keydown({ key: 'Enter' });
+
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
+    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[1].hasSubmitted, 'the question has not been submitted yet')
+
+    await conceptPage.questionCards[1].keydown({ key: 'ArrowUp' });
+    await conceptPage.questionCards[1].keydown({ key: 'ArrowUp' });
+    await conceptPage.questionCards[1].keydown({ key: 'ArrowUp' });
+    await conceptPage.questionCards[1].keydown({ key: 'Enter' });
+
+    assert.true(conceptPage.questionCards[1].hasSubmitted, 'the question has been submitted')
+    assert.true(conceptPage.questionCards[1].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+  });
+
+  test('can navigate question options using the tab key', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet')
+
+    await conceptPage.questionCards[0].keydown({ key: 'Tab' });
+    await conceptPage.questionCards[0].keydown({ key: 'Tab' });
+    await conceptPage.questionCards[0].keydown({ key: 'Tab' });
+    await conceptPage.questionCards[0].keydown({ key: 'Enter' });
+
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted')
+    assert.true(conceptPage.questionCards[0].hasSubmittedText.includes('Correct'), 'the correct option has been selected')
+  });
 });

@@ -62,7 +62,7 @@ export default class QuestionCardComponent extends Component<Signature> {
     const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentOptionIndex = options.indexOf(currentOption);
 
-    if (event.key === 'k' || event.key === 'ArrowUp') {
+    if (event.key.toLowerCase() === 'k' || event.key === 'ArrowUp') {
       if (currentOptionIndex > 0) {
         options[currentOptionIndex - 1]!.focus();
       } else {
@@ -70,12 +70,16 @@ export default class QuestionCardComponent extends Component<Signature> {
       }
     }
 
-    if (event.key === 'j' || event.key === 'ArrowDown' || event.key === 'Tab') {
+    if (event.key.toLowerCase() === 'j' || event.key === 'ArrowDown' || event.key === 'Tab') {
       if (currentOptionIndex < options.length - 1) {
         options[currentOptionIndex + 1]!.focus();
       } else {
         options[0]!.focus();
       }
+    }
+
+    if (event.key === 'Enter') {
+      this.handleOptionClick(currentOptionIndex);
     }
 
     const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
