@@ -70,7 +70,7 @@ export default class QuestionCardComponent extends Component<Signature> {
       }
     }
 
-    if (event.key === 'j' || event.key === 'ArrowDown') {
+    if (event.key === 'j' || event.key === 'ArrowDown' || event.key === 'Tab') {
       if (currentOptionIndex < options.length - 1) {
         options[currentOptionIndex + 1]!.focus();
       } else {
