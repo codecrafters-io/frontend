@@ -4,6 +4,7 @@ import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/component
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
+import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
 import FirstStageInstructionsCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-instructions-card';
 import LanguageDropdown from './components/language-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
@@ -119,6 +120,7 @@ export default create({
     scope: '[data-test-earned-badge-notice]',
   },
 
+  feedbackPrompt: FeedbackPrompt,
   firstStageInstructionsCard: FirstStageInstructionsCard,
 
   freeCourseLabel: {

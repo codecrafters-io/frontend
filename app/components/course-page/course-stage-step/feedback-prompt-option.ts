@@ -6,6 +6,7 @@ type Signature = {
   Args: {
     emoji: string;
     isSelected: boolean;
+    colorOnHoverAndSelect: 'green' | 'red';
   };
 };
 
@@ -13,6 +14,6 @@ export default class FeedbackPromptOptionComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::YourTaskCard::FeedbackPromptOption': typeof FeedbackPromptOptionComponent;
+    'CoursePage::CourseStageStep::FeedbackPromptOption': typeof FeedbackPromptOptionComponent;
   }
 }

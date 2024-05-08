@@ -48,24 +48,7 @@
       {{markdown-to-html this.instructionsMarkdown}}
     </div>
 
-    <CoursePage::CourseStageStep::YourTaskCard::ActionButtonList
-      @courseStage={{@courseStage}}
-      @repository={{@repository}}
-      @onFeedbackButtonClick={{this.handleFeedbackActionButtonClicked}}
-      @shouldHideFeedbackButtons={{this.automaticFeedbackFlowIsActive}}
-      class="mt-3"
-    />
-
-    {{#if (or this.manualFeedbackFlowIsActive this.automaticFeedbackFlowIsActive)}}
-      <CoursePage::CourseStageStep::YourTaskCard::FeedbackPrompt
-        @onClose={{this.handleFeedbackPromptClosed}}
-        @onSubmit={{this.handleFeedbackSubmitted}}
-        @courseStage={{@courseStage}}
-        @repository={{@repository}}
-        @wasTriggeredManually={{this.manualFeedbackFlowIsActive}}
-        class="mt-6"
-      />
-    {{/if}}
+    <CoursePage::CourseStageStep::YourTaskCard::ActionButtonList @courseStage={{@courseStage}} @repository={{@repository}} class="mt-3" />
 
     {{#if (eq this.coursePageState.nextStep this.coursePageState.activeStep)}}
       <div class="mt-4 flex">

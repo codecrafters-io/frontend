@@ -1,0 +1,16 @@
+<div
+  role="button"
+  class="group border rounded-full text-4xl w-12 h-12 flex items-center justify-center
+    {{unless @isSelected 'bg-white border-opacity-50 border-teal-500'}}
+    {{if (and @isSelected (eq @colorOnHoverAndSelect 'green')) 'bg-teal-200 border-teal-500'}}
+    {{if (and (not @isSelected) (eq @colorOnHoverAndSelect 'green')) 'hover:bg-teal-100 hover:border-teal-400'}}
+    {{if (and @isSelected (eq @colorOnHoverAndSelect 'red')) 'bg-red-200 border-red-500'}}
+    {{if (and (not @isSelected) (eq @colorOnHoverAndSelect 'red')) 'hover:bg-red-100 hover:border-red-400'}}
+    "
+  data-test-feedback-prompt-option
+  ...attributes
+>
+  <span class="transform {{if @isSelected 'scale-105' 'scale-100'}} group-hover:scale-105 transition-all duration-75">
+    {{@emoji}}
+  </span>
+</div>
