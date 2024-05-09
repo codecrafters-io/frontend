@@ -1,10 +1,20 @@
 import Component from '@glimmer/component';
 import image from '/assets/images/logo/logomark-color.svg';
 
+interface FooterLink {
+  text: string;
+  url: string;
+}
+
+interface FooterLinkGroup {
+  heading: string;
+  links: FooterLink[];
+}
+
 export default class FooterComponent extends Component {
   image = image;
 
-  get challengeLinkGroup() {
+  get challengeLinkGroup(): FooterLinkGroup {
     return {
       heading: 'Challenges',
       links: [
@@ -44,7 +54,7 @@ export default class FooterComponent extends Component {
     };
   }
 
-  get companyLinkGroup() {
+  get companyLinkGroup(): FooterLinkGroup {
     return {
       heading: 'Company',
       links: [
@@ -60,11 +70,11 @@ export default class FooterComponent extends Component {
     };
   }
 
-  get footerLinkGroups() {
+  get footerLinkGroups(): FooterLinkGroup[] {
     return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
   }
 
-  get legalLinkGroup() {
+  get legalLinkGroup(): FooterLinkGroup {
     return {
       heading: 'Legal',
       links: [
@@ -80,7 +90,7 @@ export default class FooterComponent extends Component {
     };
   }
 
-  get supportLinkGroup() {
+  get supportLinkGroup(): FooterLinkGroup {
     return {
       heading: 'Support',
       links: [
@@ -94,5 +104,11 @@ export default class FooterComponent extends Component {
         },
       ],
     };
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    Footer: typeof FooterComponent;
   }
 }
