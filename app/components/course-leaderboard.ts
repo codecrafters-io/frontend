@@ -95,6 +95,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
       // TODO: Use "completed stages count" instead?
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
+        completedStageSlugs: repository.completedStageSlugs,
         currentCourseStage: repository.currentStage || repository.course.firstStage,
         language: repository.language,
         user: repository.user,
@@ -127,6 +128,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
       result.push(
         new CourseLeaderboardEntry({
           status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage!.status,
+          completedStageSlugs: entryWithHighestCourseStage!.completedStageSlugs,
           currentCourseStage: entryWithHighestCourseStage!.currentCourseStage,
           language: entryWithHighestCourseStage!.language,
           user: entryWithHighestCourseStage!.user,

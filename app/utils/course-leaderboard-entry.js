@@ -1,13 +1,15 @@
 // Same as the ember model, to avoid creating fake models
 export default class CourseLeaderboardEntry {
   status;
+  completedStageSlugs;
   currentCourseStage;
   language;
   user;
   lastAttemptAt;
 
-  constructor({ status, currentCourseStage, language, user, lastAttemptAt }) {
+  constructor({ status, completedStageSlugs, currentCourseStage, language, user, lastAttemptAt }) {
     this.status = status;
+    this.completedStageSlugs = completedStageSlugs || [];
     this.currentCourseStage = currentCourseStage;
     this.language = language;
     this.user = user;
@@ -15,11 +17,7 @@ export default class CourseLeaderboardEntry {
   }
 
   get completedStagesCount() {
-    if (this.statusIsCompleted) {
-      return this.currentCourseStage.position;
-    } else {
-      return this.currentCourseStage.position - 1;
-    }
+    return this.completedStageSlugs.length;
   }
 
   get course() {
