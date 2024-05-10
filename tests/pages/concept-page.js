@@ -23,6 +23,7 @@ export default createPage({
   },
 
   questionCards: collection('[data-test-question-card]', {
+    focusedOption: { scope: '[data-test-question-card-option]:focus' },
     selectOption: clickOnText('[data-test-question-card-option]'),
     clickOnSubmitButton: clickable('[data-test-question-card-submit-button]'),
     clickOnContinueButton: clickable('[data-test-question-card-continue-button]'),

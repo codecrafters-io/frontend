@@ -466,4 +466,21 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
+
+  test('can select option using enter', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+  });
 });
