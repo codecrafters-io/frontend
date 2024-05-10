@@ -21,7 +21,7 @@
         <LinkTo @route="course.stage.screencasts" data-test-screencasts-link>Screencasts</LinkTo>
         tab, if you prefer more detailed video walkthroughs.
       </li>
-    {{else}}
+    {{else if (gt @courseStage.concepts.length 0)}}
       <li>
         The
         <LinkTo @route="course.stage.concepts" data-test-concepts-link>Concepts</LinkTo>
