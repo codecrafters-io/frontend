@@ -45,11 +45,13 @@ export default class QuestionCardComponent extends Component<Signature> {
   getOptionIndexFromKey(key: string) {
     if (!isNaN(parseInt(key))) {
       return parseInt(key) - 1;
-    } else if (/^[a-iA-I]$/.test(key)) {
-      return key.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0);
-    } else {
-      return null;
     }
+
+    if (/^[a-iA-I]$/.test(key)) {
+      return key.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0);
+    }
+
+    return -1;
   }
 
   @action
@@ -66,36 +68,36 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleKeydown(event: KeyboardEvent) {
-    event.preventDefault();
+    const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
 
+    if (optionIndexFromKey !== -1 && optionIndexFromKey < this.options.length) {
+      this.handleOptionSelected(optionIndexFromKey);
+    }
+  }
+
+  @action
+  handleMoveDown() {
     const currentFocusedOption = document.activeElement as HTMLElement;
     const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
-    if (event.key.toLowerCase() === 'k' || event.key === 'ArrowUp') {
-      if (currentFocusedOptionIndex > 0) {
-        options[currentFocusedOptionIndex - 1]!.focus();
-      } else {
-        options[options.length - 1]!.focus();
-      }
+    if (currentFocusedOptionIndex < options.length - 1) {
+      options[currentFocusedOptionIndex + 1]!.focus();
+    } else {
+      options[0]!.focus();
     }
+  }
 
-    if (event.key.toLowerCase() === 'j' || event.key === 'ArrowDown' || event.key === 'Tab') {
-      if (currentFocusedOptionIndex < options.length - 1) {
-        options[currentFocusedOptionIndex + 1]!.focus();
-      } else {
-        options[0]!.focus();
-      }
-    }
+  @action
+  handleMoveUp() {
+    const currentFocusedOption = document.activeElement as HTMLElement;
+    const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
+    const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
-    if (event.key === 'Enter') {
-      this.handleOptionSelected(currentFocusedOptionIndex);
-    }
-
-    const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
-
-    if (optionIndexFromKey !== null && optionIndexFromKey < this.options.length) {
-      this.handleOptionSelected(optionIndexFromKey);
+    if (currentFocusedOptionIndex > 0) {
+      options[currentFocusedOptionIndex - 1]!.focus();
+    } else {
+      options[options.length - 1]!.focus();
     }
   }
 

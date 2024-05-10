@@ -8,6 +8,14 @@
     <div
       class="question-card-option-container flex flex-col -mx-3 sm:-mx-4 gap-px"
       {{did-insert this.handleDidInsertOptionsList}}
+      {{! @glint-expect-error on-key modifier types aren't right? }}
+      {{on-key "k" this.handleMoveUp}}
+      {{! @glint-expect-error on-key modifier types aren't right? }}
+      {{on-key "j" this.handleMoveDown}}
+      {{! @glint-expect-error on-key modifier types aren't right? }}
+      {{on-key "ArrowUp" this.handleMoveUp}}
+      {{! @glint-expect-error on-key modifier types aren't right? }}
+      {{on-key "ArrowDown" this.handleMoveDown}}
       {{on "keydown" this.handleKeydown}}
     >
       {{#each this.options as |option optionIndex|}}
