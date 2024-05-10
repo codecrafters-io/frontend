@@ -59,7 +59,6 @@ export default class RepositoryModel extends Model {
   @belongsTo('repository-stage-list', { async: false, inverse: 'repository' }) declare stageList: RepositoryStageListModel;
   @hasMany('submission', { async: false, inverse: 'repository' }) declare submissions: SubmissionModel[];
 
-  @attr() declare completedStageSlugs: string[];
   @attr('string') declare cloneUrl: string;
   @attr('date') declare createdAt: Date;
   @attr('string') declare defaultBranchCommitSha: string;
@@ -97,6 +96,10 @@ export default class RepositoryModel extends Model {
 
   get completedStages() {
     return this.courseStageCompletions.mapBy('courseStage').uniq();
+  }
+
+  get completedStageSlugs() {
+    return this.completedStages.mapBy('slug');
   }
 
   get currentStage() {
