@@ -161,14 +161,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       username: 'Gufran',
     });
 
-    let userRepo = this.server.create('repository', 'withFirstStageCompleted', {
+    this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: currentUser,
       createdAt: new Date(2002, 1),
     });
 
-    let otherRepo = this.server.create('repository', 'withFirstStageCompleted', {
+    this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: otherUser,
