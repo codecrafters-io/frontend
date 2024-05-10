@@ -19,6 +19,11 @@ export default Factory.extend({
       status: nextStage ? 'idle' : 'completed',
     });
 
+    courseStageCompletion.repository.update(
+      'completedStageSlugs',
+      courseStageCompletion.repository.courseStageCompletions.models.map((c) => c.courseStage.slug),
+    );
+
     syncRepositoryStageLists(server, courseStageCompletion.repository);
   },
 });

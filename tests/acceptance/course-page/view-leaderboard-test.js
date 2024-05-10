@@ -11,11 +11,11 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | course-page | view-leaderboard', function (hooks) {
+module('Acceptance | course-page | view-leaderboard', function(hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('can view leaderboard when no recent players are present', async function (assert) {
+  test('can view leaderboard when no recent players are present', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -70,7 +70,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must still be 0 if first stage is not completed');
   });
 
-  test('can view leaderboard on overview page when other recent players are present', async function (assert) {
+  test('can view leaderboard on overview page when other recent players are present', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -86,12 +86,11 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       username: 'Gufran',
     });
 
-    this.server.create('course-leaderboard-entry', {
-      status: 'idle',
-      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
       language: python,
       user: otherUser,
-      lastAttemptAt: new Date(),
+      createdAt: new Date(2003),
     });
 
     await catalogPage.visit();
@@ -110,7 +109,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entries should be sorted by last attempt');
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '0 / 31', 'progress text must be shown');
 
-    let repository = this.server.schema.repositories.find(1);
+    let repository = currentUser.reload().repositories.models[0];
     repository.update({
       lastSubmission: this.server.create('submission', {
         repository,
@@ -125,7 +124,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
     await finishRender();
 
-    this.server.schema.submissions.find(1).update({ status: 'success' });
+    repository.lastSubmission.update({ status: 'success' })
 
     this.server.create('course-stage-completion', {
       repository: repository,
@@ -146,7 +145,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
   });
 
-  test('can view leaderboard when current user has leaderboard entry', async function (assert) {
+  test('can view leaderboard when current user has leaderboard entry', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -162,19 +161,20 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       username: 'Gufran',
     });
 
-    this.server.create('repository', 'withFirstStageCompleted', {
+    let userRepo = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: currentUser,
-      createdAt: new Date(2002),
+      createdAt: new Date(2002, 1),
     });
 
-    this.server.create('repository', 'withFirstStageCompleted', {
+    let otherRepo = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: otherUser,
-      createdAt: new Date(2003),
+      createdAt: new Date(2003, 1),
     });
+
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
@@ -195,7 +195,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
   });
 
-  test('can view leaderboard when current user has completed all stages', async function (assert) {
+  test('can view leaderboard when current user has completed all stages', async function(assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -244,7 +244,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 15', 'progress text must be shown');
   });
 
-  test('team member can view leaderboard when no recent players in organization are present', async function (assert) {
+  test('team member can view leaderboard when no recent players in organization are present', async function(assert) {
     testScenario(this.server);
     signInAsTeamMember(this.owner, this.server);
 
@@ -284,7 +284,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await percySnapshot('Leaderboard for teams - Viewing World');
   });
 
-  test('private leaderboard feature suggestion is shown to non-team members with a prompt', async function (assert) {
+  test('private leaderboard feature suggestion is shown to non-team members with a prompt', async function(assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -303,7 +303,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should not have feature suggestion');
   });
 
-  test('private leaderboard feature suggestion is not shown to team members', async function (assert) {
+  test('private leaderboard feature suggestion is not shown to team members', async function(assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -318,7 +318,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
   });
 
-  test('private leaderboard feature suggestion is not shown to users who do not have a prompt', async function (assert) {
+  test('private leaderboard feature suggestion is not shown to users who do not have a prompt', async function(assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -333,7 +333,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
   });
 
-  test('invite button redirects to the teams page on team leaderboard', async function (assert) {
+  test('invite button redirects to the teams page on team leaderboard', async function(assert) {
     testScenario(this.server);
     signInAsTeamMember(this.owner, this.server);
 
@@ -353,7 +353,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.ok(filteredAnalyticsEventsNames.includes('clicked_invite_button'), 'clicked_invite_button event should be tracked');
   });
 
-  test('invite button redirects to the refer page on public leaderboard', async function (assert) {
+  test('invite button redirects to the refer page on public leaderboard', async function(assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -379,7 +379,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.ok(filteredAnalyticsEventsNames.includes('clicked_invite_button'), 'clicked_invite_button event should be tracked');
   });
 
-  test('invite button has no tooltip for user with paid content access', async function (assert) {
+  test('invite button has no tooltip for user with paid content access', async function(assert) {
     testScenario(this.server);
     const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
     user.update('isVip', true);
@@ -394,5 +394,53 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     await coursePage.leaderboard.inviteButton.hover();
     assertTooltipNotRendered(assert);
+  });
+
+  test('leaderboard reflects the correct progress if stages at a later position are completed first', async function(assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let otherUser = this.server.create('user', {
+      id: 'other-user',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    let userRepository = this.server.create('repository', 'withBaseStagesCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+      createdAt: new Date(2002),
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: otherUser,
+      createdAt: new Date(2003),
+    });
+
+    let replicationFirstStage = this.server.schema.courseStages.findBy({ slug: 'repl-custom-port' });
+
+    this.server.create('submission', 'withStageCompletion', {
+      repository: userRepository,
+      courseStage: replicationFirstStage,
+      createdAt: userRepository.createdAt,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '8 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
   });
 });
