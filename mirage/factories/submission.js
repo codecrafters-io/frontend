@@ -86,11 +86,6 @@ export default Factory.extend({
         });
       }
 
-      submission.repository.update(
-        'completedStageSlugs',
-        submission.repository.courseStageCompletions.models.map((c) => c.courseStage.slug),
-      );
-
       server.create('course-leaderboard-entry', {
         status: submission.repository.lastSubmissionIsEvaluating ? 'evaluating' : submission.repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: submission.repository.completedStageSlugs,
