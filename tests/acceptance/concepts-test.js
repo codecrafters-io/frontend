@@ -467,7 +467,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
-  test('can select option using enter', async function (assert) {
+  test('can navigate using j/k and select option using enter', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -480,6 +480,24 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
 
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
+
+    // Should be able to move back and fort
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'HTTP');
+    await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+
+    // Can move to end of list
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
+
+    // Can wrap around to start of list
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+
     await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
