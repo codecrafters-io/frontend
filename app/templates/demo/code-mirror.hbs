@@ -19,11 +19,11 @@
       </label>
     </codemirror-options-left>
     <codemirror-options-right class="flex">
-      <label class="{{labelClasses}}" title="Show a border around the editor component's element">
+      <label class="{{labelClasses}}" title="Show a border around the component's element">
         <Input @type="checkbox" @checked={{this.border}} />
         <span class="ml-2">border</span>
       </label>
-      <label class="{{labelClasses}}" title="Theme for the editor">
+      <label class="{{labelClasses}}" title="Theme to use for the editor">
         <Input @type="checkbox" @checked={{this.theme}} />
         <span class="mx-2">theme:</span>
         <select class="text-right {{unless this.theme 'bg-gray-200'}}" {{on "change" this.selectedThemeIndexDidChange}} disabled={{not this.theme}}>
@@ -85,7 +85,7 @@
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
-    <label class="{{labelClasses}}" title="Document to pass to the editor (from selected document preset)">
+    <label class="{{labelClasses}}" title="Document for the editor to render & edit (from selected document preset)">
       <Input @type="checkbox" @checked={{this.document}} />
       <span class="ml-2">document</span>
     </label>
@@ -93,7 +93,10 @@
       <Input @type="checkbox" @checked={{this.language}} />
       <span class="ml-2">language</span>
     </label>
-    <label class="{{labelClasses}}" title="Pass a filename to the editor (from selected document preset, language is auto-detected)">
+    <label
+      class="{{labelClasses}}"
+      title="Pass a filename to automatically detect language based on file name and extension (from selected document preset)"
+    >
       <Input @type="checkbox" @checked={{this.filename}} disabled={{eq this.language true}} />
       <span class="ml-2 {{if this.language 'text-gray-300'}}">filename</span>
     </label>
@@ -114,14 +117,14 @@
   <codemirror-options class="{{groupClasses}} border-dotted">
     <label
       class="{{labelClasses}}"
-      title="Present the editor as an editable & focusable control, sets the DOM 'contenteditable' attribute, do not confuse with 'readOnly'"
+      title="Present the editor as an editable & focusable control, sets the DOM `contenteditable` attribute, do not confuse with `readOnly`"
     >
       <Input @type="checkbox" @checked={{this.editable}} />
       <span class="ml-2">editable</span>
     </label>
     <label
       class="{{labelClasses}}"
-      title="Make the document in the editor read-only, disable commands and other mutating extensions, do not confuse with 'editable'"
+      title="Make the document in the editor read-only, disable commands and other mutating extensions, do not confuse with `editable`"
     >
       <Input @type="checkbox" @checked={{this.readOnly}} />
       <span class="ml-2">readOnly</span>
@@ -130,7 +133,7 @@
       <Input @type="checkbox" @checked={{this.history}} />
       <span class="ml-2">history</span>
     </label>
-    <label class="{{labelClasses}}" title="Preserve changes history when parent component passes a new document to the code-mirror component">
+    <label class="{{labelClasses}}" title="Preserve changes history when parent component passes a new `@document` to the component">
       <Input @type="checkbox" @checked={{this.preserveHistory}} disabled={{not this.history}} />
       <span class="ml-2 {{unless this.history 'text-gray-300'}}">preserveHistory</span>
     </label>
@@ -161,7 +164,7 @@
     <codemirror-options-right class="flex">
       <label
         class="{{labelClasses}}"
-        title="Symbols to use for indentation with 'indentOnInput' and 'indentWithTab' (does NOT reformat document upon loading)"
+        title="Symbols to use for indentation with `indentOnInput` and `indentWithTab` (does NOT reformat document upon loading)"
       >
         {{#let (or (or this.readOnly (not this.editable)) (and (not this.indentOnInput) (not this.indentWithTab))) as |isDisabled|}}
           <Input @type="checkbox" @checked={{this.indentUnit}} disabled={{isDisabled}} />
@@ -197,7 +200,7 @@
       <Input @type="checkbox" @checked={{this.highlightSelectionMatches}} />
       <span class="ml-2">highlightSelectionMatches</span>
     </label>
-    <label class="{{labelClasses}}" title="Enable highlighting of invisible characters, such as U+200E">
+    <label class="{{labelClasses}}" title="Enable highlighting of invisible characters, such as `U+200E`">
       <Input @type="checkbox" @checked={{this.highlightSpecialChars}} />
       <span class="ml-2">highlightSpecialChars</span>
     </label>

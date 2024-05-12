@@ -53,40 +53,146 @@ export interface Signature {
   Args: {
     Named: {
       [key: string]: Argument;
+      /**
+       * Document for the editor to render & edit
+       */
       document?: string;
+      /**
+       * Function to call when document is edited inside the editor
+       * @param newValue string New value of the document
+       */
       onDocumentUpdate?: (newValue: string) => void;
+      /**
+       * Pass a filename to automatically detect language based on file name and extension
+       */
       filename?: string;
+      /**
+       * Explicitly pass a language to the editor
+       */
       language?: string;
+      /**
+       * Enable unified diff editor by passing the original document
+       */
       originalDocument?: string;
+      /**
+       * Symbols to use for indentation with `indentOnInput` and `indentWithTab` (does NOT reformat document upon loading)
+       */
       indentUnit?: string;
+      /**
+       * Line ending separator to use when Enter is pressed in editor (does NOT reformat document upon loading)
+       */
       lineSeparator?: string;
+      /**
+       * Placeholder text to show when document is empty or not passed
+       */
       placeholder?: string;
+      /**
+       * Number of spaces to use for representing the TAB character visually
+       */
       tabSize?: number;
+      /**
+       * Theme to use for the editor
+       */
       theme?: string;
+      /**
+       * Allow multiple selections by using CTRL/CMD key
+       */
       allowMultipleSelections?: boolean;
+      /**
+       * Enable auto-completion
+       */
       autocompletion?: boolean;
+      /**
+       * Enable highlighting of matching brackets
+       */
       bracketMatching?: boolean;
+      /**
+       * Automatically close brackets when typing
+       */
       closeBrackets?: boolean;
+      /**
+       * Use a crosshair cursor over the editor when ALT key is pressed
+       */
       crosshairCursor?: boolean;
+      /**
+       * Use a custom method for selection drawing instead of the browser's built-in, allows multiple selections and other goodies
+       */
       drawSelection?: boolean;
+      /**
+       * Draw a blinking edit cursor to indicate where pasting will occur when a file is dragged over the editor
+       */
       dropCursor?: boolean;
+      /**
+       * Present the editor as an editable & focusable control, sets the DOM `contenteditable` attribute, do not confuse with `readOnly`
+       */
       editable?: boolean;
+      /**
+       * Enable code folding & the fold gutter
+       */
       foldGutter?: boolean;
+      /**
+       * Enable highlighting of active line
+       */
       highlightActiveLine?: boolean;
+      /**
+       * Enable highlighting of current selection matches in the document
+       */
       highlightSelectionMatches?: boolean;
+      /**
+       * Enable highlighting of invisible characters, such as `U+200E`
+       */
       highlightSpecialChars?: boolean;
+      /**
+       * Enable highlighting of trailing whitespace
+       */
       highlightTrailingWhitespace?: boolean;
+      /**
+       * Enable highlighting of whitespace
+       */
       highlightWhitespace?: boolean;
+      /**
+       * Enable changes history and undo/redo keymap
+       */
       history?: boolean;
+      /**
+       * Enable automatic indentation (in languages that support/require it)
+       */
       indentOnInput?: boolean;
+      /**
+       * Enable indentation of lines or selection using TAB and Shift+TAB keys, otherwise editor loses focus when TAB is pressed
+       */
       indentWithTab?: boolean;
+      /**
+       * Enable the line numbers gutter
+       */
       lineNumbers?: boolean;
+      /**
+       * Enable visual line wrapping for lines exceeding editor width
+       */
       lineWrapping?: boolean;
+      /**
+       * Enable showing accept/reject buttons in the diff editor
+       */
       mergeControls?: boolean;
+      /**
+       * Preserve changes history when parent component passes a new `@document` to the component
+       */
       preserveHistory?: boolean;
+      /**
+       * Make the document in the editor read-only, disable commands and other mutating extensions, do not confuse with `editable`
+       */
       readOnly?: boolean;
+      /**
+       * Allow drawing rectangular selections by using ALT key
+       */
       rectangularSelection?: boolean;
+      /**
+       * Allow scrolling past the end of the document
+       */
       scrollPastEnd?: boolean;
+      /**
+       * Enable syntax highlighting (using a theme enables syntax highlighting automatically)
+       */
       syntaxHighlighting?: boolean;
     };
   };
