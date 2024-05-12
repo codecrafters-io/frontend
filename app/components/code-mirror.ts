@@ -235,7 +235,9 @@ export default class CodeMirrorComponent extends Component<Signature> {
 
   @action async optionDidChange(optionName: string, _element: Element, [newValue]: [boolean | string | number | undefined]) {
     const compartment = this.compartments.get(optionName);
+    const handlerMethod = OPTION_HANDLERS[optionName];
 
+    // some compartments need to be unloaded before new changes are applied
     if (['originalDocumentOrMergeControls'].includes(optionName)) {
       this.renderedView?.dispatch({
         effects: compartment?.reconfigure([]),
@@ -243,14 +245,7 @@ export default class CodeMirrorComponent extends Component<Signature> {
     }
 
     this.renderedView?.dispatch({
-      effects: compartment?.reconfigure(
-        await (
-          OPTION_HANDLERS[optionName] ||
-          function (): Extension[] {
-            return [];
-          }
-        )(newValue as undefined, this.args, optionName),
-      ),
+      effects: compartment?.reconfigure(handlerMethod ? await handlerMethod(newValue as undefined, this.args, optionName) : []),
     });
   }
 
