@@ -15,7 +15,7 @@ export default class CourseLeaderboardEntry extends Model {
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   get completedStagesCount() {
-    return this.completedStageSlugs?.length;
+    return this.completedStageSlugs.length;
   }
 
   get course() {

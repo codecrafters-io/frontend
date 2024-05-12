@@ -85,15 +85,6 @@ export default Factory.extend({
           completedAt: submission.createdAt,
         });
       }
-
-      server.create('course-leaderboard-entry', {
-        status: submission.repository.lastSubmissionIsEvaluating ? 'evaluating' : submission.repository.allStagesAreComplete ? 'completed' : 'idle',
-        completedStageSlugs: submission.repository.completedStageSlugs,
-        currentCourseStage: submission.courseStage,
-        language: submission.repository.language,
-        user: submission.repository.user,
-        lastAttemptAt: submission.repository.lastSubmissionAt || submission.repository.createdAt,
-      });
     },
   }),
 
