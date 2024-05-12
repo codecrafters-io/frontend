@@ -90,6 +90,10 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleOptionSelected(optionIndex: number) {
+    if (optionIndex >= this.args.question.options.length) {
+      return;
+    }
+
     const selectedOptionIndexWasNull = this.selectedOptionIndex === null;
 
     this.selectedOptionIndex = optionIndex;
