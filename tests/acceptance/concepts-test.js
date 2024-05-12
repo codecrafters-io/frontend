@@ -462,7 +462,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
-    await conceptPage.questionCards[0].keydown({ key: 'A' });
+    await conceptPage.questionCards[0].keydown({ keyCode: 65 });
 
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });

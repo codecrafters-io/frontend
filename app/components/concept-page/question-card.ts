@@ -17,8 +17,16 @@ type Signature = {
 export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;
 
+  get digitKeys() {
+    return '1 2 3 4 5 6 7 8 9'.split(' ');
+  }
+
   get hasSubmitted() {
     return this.selectedOptionIndex !== null;
+  }
+
+  get letterKeys() {
+    return 'a b c d e f g h i'.split(' ');
   }
 
   get options() {

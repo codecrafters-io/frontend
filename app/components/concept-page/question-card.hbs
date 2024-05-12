@@ -16,7 +16,6 @@
       {{on-key "ArrowUp" this.handleMoveUp}}
       {{! @glint-expect-error on-key modifier types aren't right? }}
       {{on-key "ArrowDown" this.handleMoveDown}}
-      {{on "keydown" this.handleKeydown}}
     >
       {{#each this.options as |option optionIndex|}}
         {{! @glint-expect-error: not ts-ified yet }}
@@ -27,6 +26,14 @@
           {{on "click" (fn this.handleOptionSelected optionIndex)}}
           data-test-question-card-option
         />
+      {{/each}}
+
+      {{#each this.digitKeys as |digitKey digitKeyIndex|}}
+        {{on-key digitKey (fn this.handleOptionSelected digitKeyIndex)}}
+      {{/each}}
+
+      {{#each this.letterKeys as |letterKey letterKeyIndex|}}
+        {{on-key letterKey (fn this.handleOptionSelected letterKeyIndex)}}
       {{/each}}
     </div>
   </div>
