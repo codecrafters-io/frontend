@@ -244,7 +244,7 @@
 <CodeMirror
   {{! Document options }}
   @document={{if this.document this.selectedDocument.document}}
-  @onUpdate={{fn this.documentDidChange this}}
+  @onDocumentUpdate={{fn this.documentDidChange this}}
   {{! Filename & Language }}
   @filename={{if this.filename this.selectedDocument.filename}}
   @language={{if this.language this.selectedDocument.language}}

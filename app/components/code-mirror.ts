@@ -54,7 +54,7 @@ export interface Signature {
     Named: {
       [key: string]: Argument;
       document?: string;
-      onUpdate?: (newValue: string) => void;
+      onDocumentUpdate?: (newValue: string) => void;
       filename?: string;
       language?: string;
       originalDocument?: string;
@@ -267,8 +267,8 @@ export default class CodeMirrorComponent extends Component<Signature> {
         )),
 
         EditorView.updateListener.of((update) => {
-          if (update.docChanged && typeof this.args.onUpdate == 'function') {
-            this.args.onUpdate(update.state.doc.toString());
+          if (update.docChanged && typeof this.args.onDocumentUpdate === 'function') {
+            this.args.onDocumentUpdate(update.state.doc.toString());
           }
         }),
       ],

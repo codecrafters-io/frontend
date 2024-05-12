@@ -48,7 +48,7 @@ module('Integration | Component | code-mirror', function (hooks) {
   });
 
   module('Updating edited document', function () {
-    skip('it calls @onUpdate when document is edited inside the editor');
+    skip('it calls @onDocumentUpdate when document is edited inside the editor');
   });
 
   module('Options', function () {
