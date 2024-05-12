@@ -97,7 +97,7 @@
     "@types/showdown": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "@uiw/codemirror-themes-all": "^4.22.0",
+    "@uiw/codemirror-theme-github": "^4.22.0",
     "@vercel/edge": "^1.1.1",
     "autoprefixer": "^10.4.19",
     "broccoli-asset-rev": "^3.0.0",

@@ -2,10 +2,18 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
-import * as THEME_EXTENSIONS from '@uiw/codemirror-themes-all';
+import { type Extension } from '@codemirror/state';
+import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
+
+const THEME_EXTENSIONS: {
+  [key: string]: Extension;
+} = {
+  githubDark,
+  githubLight,
+};
 
 const SUPPORTED_THEMES = Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init')));
-const DEFAULT_THEME = 'gruvboxDark';
+const DEFAULT_THEME = 'githubDark';
 
 class ExampleDocument {
   @tracked document!: string;

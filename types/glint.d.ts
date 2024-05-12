@@ -43,54 +43,6 @@ declare module '@glint/environment-ember-loose/registry' {
     'sortable-handle': ModifierLike<{ Args: { Positional: [] } }>;
     sub: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     'svg-jar': ComponentLike<{ Args: { Named: { class: string }; Positional: [string] } }>;
-    CodeMirror: ComponentLike<{
-      Element: HTMLElement;
-      Args: {
-        Named: {
-          // Document options
-          document?: string;
-          onUpdate?: (newValue: string) => void;
-          // Filename & Language
-          filename?: string;
-          language?: string;
-          // Original document (to show diff)
-          originalDocument?: string;
-          // String & Number options
-          indentUnit?: string;
-          lineSeparator?: string;
-          placeholder?: string;
-          tabSize?: number;
-          theme?: string;
-          // Boolean options
-          allowMultipleSelections?: boolean;
-          autocompletion?: boolean;
-          bracketMatching?: boolean;
-          closeBrackets?: boolean;
-          crosshairCursor?: boolean;
-          drawSelection?: boolean;
-          dropCursor?: boolean;
-          editable?: boolean;
-          foldGutter?: boolean;
-          highlightActiveLine?: boolean;
-          highlightSelectionMatches?: boolean;
-          highlightSpecialChars?: boolean;
-          highlightTrailingWhitespace?: boolean;
-          highlightWhitespace?: boolean;
-          history?: boolean;
-          indentOnInput?: boolean;
-          indentWithTab?: boolean;
-          lineNumbers?: boolean;
-          lineWrapping?: boolean;
-          mergeControls?: boolean;
-          preserveHistory?: boolean;
-          readOnly?: boolean;
-          rectangularSelection?: boolean;
-          scrollPastEnd?: boolean;
-          syntaxHighlighting?: boolean;
-        };
-      };
-      Blocks: { default?: [] };
-    }>;
     // ...
   }
 }
