@@ -92,7 +92,6 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     const allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
 
     return allRepositories.map((repository) => {
-      // TODO: Use "completed stages count" instead?
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: repository.completedStageSlugs,
