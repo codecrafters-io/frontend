@@ -123,16 +123,16 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     const result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      const entryWithHighestCourseStage = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
+      const entryWithMostStageCompletions = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
 
       result.push(
         new CourseLeaderboardEntry({
-          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage!.status,
-          completedStageSlugs: entryWithHighestCourseStage!.completedStageSlugs,
-          currentCourseStage: entryWithHighestCourseStage!.currentCourseStage,
-          language: entryWithHighestCourseStage!.language,
-          user: entryWithHighestCourseStage!.user,
-          lastAttemptAt: entryWithHighestCourseStage!.lastAttemptAt,
+          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
+          completedStageSlugs: entryWithMostStageCompletions!.completedStageSlugs,
+          currentCourseStage: entryWithMostStageCompletions!.currentCourseStage,
+          language: entryWithMostStageCompletions!.language,
+          user: entryWithMostStageCompletions!.user,
+          lastAttemptAt: entryWithMostStageCompletions!.lastAttemptAt,
         }),
       );
     }
