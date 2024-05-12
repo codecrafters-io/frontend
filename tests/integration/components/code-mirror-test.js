@@ -67,6 +67,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('autocompletion', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('autocompletion', true);
@@ -77,6 +78,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('bracketMatching', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('bracketMatching', true);
@@ -87,6 +89,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('closeBrackets', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('closeBrackets', true);
@@ -97,6 +100,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('crosshairCursor', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('crosshairCursor', true);
@@ -107,6 +111,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('drawSelection', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('drawSelection', true);
@@ -117,6 +122,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('dropCursor', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('dropCursor', true);
@@ -127,6 +133,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('editable', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('editable', true);
@@ -137,6 +144,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('foldGutter', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('foldGutter', true);
@@ -147,6 +155,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('highlightActiveLine', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightActiveLine', true);
@@ -157,6 +166,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('highlightSelectionMatches', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightSelectionMatches', true);
@@ -167,6 +177,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('highlightSpecialChars', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightSpecialChars', true);
@@ -177,6 +188,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('highlightTrailingWhitespace', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightTrailingWhitespace', true);
@@ -187,6 +199,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('highlightWhitespace', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightWhitespace', true);
@@ -197,6 +210,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('history', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('history', true);
@@ -207,6 +221,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('indentOnInput', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('indentOnInput', true);
@@ -217,6 +232,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('indentUnit', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('indentUnit', '  ');
@@ -227,6 +243,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('indentWithTab', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('indentWithTab', true);
@@ -237,6 +254,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('filename', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('filename', 'javascript.js');
@@ -247,6 +265,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('language', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('language', 'javascript');
@@ -257,6 +276,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('lineNumbers', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('lineNumbers', true);
@@ -267,6 +287,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('lineSeparator', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('lineSeparator', '\n');
@@ -277,6 +298,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('lineWrapping', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('lineWrapping', true);
@@ -287,6 +309,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('mergeControls', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('mergeControls', true);
@@ -297,6 +320,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('originalDocument', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('originalDocument', 'original content');
@@ -309,6 +333,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('placeholder', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('placeholder', 'placeholder text');
@@ -319,6 +344,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('readOnly', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('readOnly', true);
@@ -329,6 +355,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('rectangularSelection', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('rectangularSelection', true);
@@ -339,6 +366,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('scrollPastEnd', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('scrollPastEnd', true);
@@ -349,6 +377,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('syntaxHighlighting', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('syntaxHighlighting', true);
@@ -359,6 +388,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('tabSize', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('tabSize', 2);
@@ -369,6 +399,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       });
       skip('it does something useful with the editor');
     });
+
     module('theme', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('theme', 'githubLight');
