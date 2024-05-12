@@ -50,18 +50,6 @@ export default class QuestionCardComponent extends Component<Signature> {
     return this.selectedOption && this.selectedOption.is_correct;
   }
 
-  getOptionIndexFromKey(key: string) {
-    if (!isNaN(parseInt(key))) {
-      return parseInt(key) - 1;
-    }
-
-    if (/^[a-iA-I]$/.test(key)) {
-      return key.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0);
-    }
-
-    return -1;
-  }
-
   @action
   handleDidInsertOptionsList(element: HTMLElement) {
     const firstOptionElement = element.children[0];
@@ -71,15 +59,6 @@ export default class QuestionCardComponent extends Component<Signature> {
       next(() => {
         firstOptionElement && firstOptionElement.focus();
       });
-    }
-  }
-
-  @action
-  handleKeydown(event: KeyboardEvent) {
-    const optionIndexFromKey = this.getOptionIndexFromKey(event.key);
-
-    if (optionIndexFromKey !== -1 && optionIndexFromKey < this.options.length) {
-      this.handleOptionSelected(optionIndexFromKey);
     }
   }
 
