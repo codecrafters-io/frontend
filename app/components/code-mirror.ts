@@ -200,11 +200,7 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
 export default class CodeMirrorComponent extends Component<Signature> {
   renderedView: EditorView | null = null;
 
-  compartments: Map<string, Compartment> = Object.keys(OPTION_HANDLERS).reduce(function (map, optionName) {
-    map.set(optionName, new Compartment());
-
-    return map;
-  }, new Map<string, Compartment>());
+  compartments: Map<string, Compartment> = new Map(Object.keys(OPTION_HANDLERS).map((optionName) => [optionName, new Compartment()]));
 
   @action documentDidChange(_element: Element, [newValue]: [string | undefined]) {
     const documentChanged = this.renderedView?.state.doc.toString() !== newValue;
