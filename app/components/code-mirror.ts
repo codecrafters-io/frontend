@@ -46,10 +46,10 @@ const THEME_EXTENSIONS: {
   githubLight,
 };
 
-type Argument = string | boolean | number | undefined | ((newValue: string) => void);
+type Argument = boolean | string | number | ((newValue: string) => void) | undefined;
 
 export interface Signature {
-  Element: HTMLElement;
+  Element: Element;
   Args: {
     Named: {
       [key: string]: Argument;
@@ -125,8 +125,12 @@ export interface OptionHandlersSignature {
   syntaxHighlighting: (enabled?: boolean) => Extension[];
   tabSize: (tabSize?: number) => Extension[];
   theme: (theme?: string) => Extension[];
-  languageOrFilename: (newValue: undefined, args: Signature['Args']['Named'], changedOptionName?: string) => Promise<Extension[]>;
-  originalDocumentOrMergeControls: (newValue: undefined | boolean, args: Signature['Args']['Named'], changedOptionName?: string) => Extension[];
+  languageOrFilename: (newValue: string | undefined, args: Signature['Args']['Named'], changedOptionName?: string) => Promise<Extension[]>;
+  originalDocumentOrMergeControls: (
+    newValue: string | boolean | undefined,
+    args: Signature['Args']['Named'],
+    changedOptionName?: string,
+  ) => Extension[];
 }
 
 const OPTION_HANDLERS: OptionHandlersSignature = {
@@ -202,7 +206,7 @@ export default class CodeMirrorComponent extends Component<Signature> {
     return map;
   }, new Map<string, Compartment>());
 
-  @action documentDidChange(element: HTMLElement, [newValue]: [string]) {
+  @action documentDidChange(_element: Element, [newValue]: [string | undefined]) {
     const documentChanged = this.renderedView?.state.doc.toString() !== newValue;
 
     if (!documentChanged || !this.renderedView) {
@@ -229,7 +233,7 @@ export default class CodeMirrorComponent extends Component<Signature> {
     );
   }
 
-  @action async optionDidChange(optionName: string, _element: HTMLElement, [newValue]: [undefined]) {
+  @action async optionDidChange(optionName: string, _element: Element, [newValue]: [boolean | string | number | undefined]) {
     const compartment = this.compartments.get(optionName);
 
     if (['originalDocumentOrMergeControls'].includes(optionName)) {
@@ -245,12 +249,12 @@ export default class CodeMirrorComponent extends Component<Signature> {
           function (): Extension[] {
             return [];
           }
-        )(newValue, this.args, optionName),
+        )(newValue as undefined, this.args, optionName),
       ),
     });
   }
 
-  @action async renderEditor(element: HTMLElement) {
+  @action async renderEditor(element: Element) {
     this.renderedView = new EditorView({
       parent: element,
       doc: this.args.document,
