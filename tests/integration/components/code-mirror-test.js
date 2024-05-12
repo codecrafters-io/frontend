@@ -48,7 +48,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       this.set('document', exampleTextUpdated);
       assert.dom(SELECTOR_CONTENT).hasText(exampleTextUpdated);
     });
+
     skip('it resets edit history when @presereveHistory is false');
+
     skip('it preserves edit history when @presereveHistory is true');
   });
 
@@ -65,6 +67,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('allowMultipleSelections', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -76,6 +79,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('autocompletion', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -87,6 +91,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('bracketMatching', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -98,6 +103,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('closeBrackets', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -109,6 +115,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('crosshairCursor', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -120,6 +127,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('drawSelection', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -131,6 +139,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('dropCursor', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -142,6 +151,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('editable', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -153,6 +163,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('foldGutter', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -164,6 +175,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('highlightActiveLine', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -175,6 +187,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('highlightSelectionMatches', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -186,6 +199,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('highlightSpecialChars', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -197,6 +211,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('highlightTrailingWhitespace', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -208,6 +223,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('highlightWhitespace', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -219,6 +235,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('history', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -230,6 +247,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('indentOnInput', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -241,6 +259,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('indentUnit', '\t');
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -252,6 +271,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('indentWithTab', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -263,6 +283,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('filename', 'python.py');
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -274,6 +295,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('language', 'markdown');
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -285,6 +307,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('lineNumbers', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -296,6 +319,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('lineSeparator', '\r\n');
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -307,6 +331,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('lineWrapping', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -318,6 +343,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('mergeControls', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -331,6 +357,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('originalDocument', 'original content modified');
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -342,6 +369,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('placeholder', 'placeholder text modified');
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -353,6 +381,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('readOnly', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -364,6 +393,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('rectangularSelection', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -375,6 +405,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('scrollPastEnd', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -386,6 +417,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('syntaxHighlighting', false);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -397,6 +429,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('tabSize', 4);
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
 
@@ -408,6 +441,7 @@ module('Integration | Component | code-mirror', function (hooks) {
         this.set('theme', 'githubDark');
         assert.dom(SELECTOR_CONTENT).exists();
       });
+
       skip('it does something useful with the editor');
     });
   });
