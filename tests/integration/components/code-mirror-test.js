@@ -17,11 +17,16 @@ module('Integration | Component | code-mirror', function (hooks) {
     assert.dom(SELECTOR_EDITOR).exists();
     assert.dom(SELECTOR_SCROLLER).exists();
     assert.dom(SELECTOR_CONTENT).exists();
+  });
+
+  test('it renders (block form)', async function (assert) {
     await render(hbs`<CodeMirror>template block text</CodeMirror>`);
     assert.dom(SELECTOR_COMPONENT).exists();
     assert.dom(SELECTOR_EDITOR).exists();
     assert.dom(SELECTOR_SCROLLER).exists();
     assert.dom(SELECTOR_CONTENT).exists();
+    assert.dom(SELECTOR_COMPONENT).hasText('template block text');
+    assert.dom(SELECTOR_CONTENT).hasNoText();
   });
 
   test('it renders passed document', async function (assert) {
