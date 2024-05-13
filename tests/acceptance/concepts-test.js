@@ -554,12 +554,11 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
 
     assert.strictEqual(window.scrollY, currentScrollY, 'scrolling should not be triggered');
   });
 
-  test('using arrow keys after choosing a question options triggers scrolling', async function (assert) {
+  test('navigating options wraps around the list for the current question card only', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -569,13 +568,19 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
     await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
 
-    const currentScrollY = window.scrollY;
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
 
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
 
-    assert.notStrictEqual(window.scrollY, currentScrollY, 'scrolling should be triggered');
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
   });
 });
