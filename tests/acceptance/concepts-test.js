@@ -501,4 +501,46 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
+
+  test('navigating question options using arrow keys does not trigger scrolling', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    const currentScrollY = window.scrollY;
+
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+
+    assert.strictEqual(window.scrollY, currentScrollY, 'scrolling should not be triggered');
+  });
+
+  test('using arrow keys after choosing a question options triggers scrolling', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+
+    const currentScrollY = window.scrollY;
+
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+
+    assert.notStrictEqual(window.scrollY, currentScrollY, 'scrolling should be triggered');
+  });
 });

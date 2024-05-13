@@ -63,9 +63,22 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  handleMoveDown() {
-    const currentFocusedOption = document.activeElement as HTMLElement;
-    const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
+  handleMoveDown(event: KeyboardEvent) {
+    if (this.selectedOptionIndex !== null) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const currentFocusedOption = document.activeElement;
+    const questionCards = document.querySelectorAll('[data-test-question-card]');
+
+    if (!(currentFocusedOption instanceof HTMLElement) || !(questionCards.length > 0)) {
+      return;
+    }
+
+    const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
+    const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
     if (currentFocusedOptionIndex < options.length - 1) {
@@ -76,9 +89,22 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  handleMoveUp() {
-    const currentFocusedOption = document.activeElement as HTMLElement;
-    const options = Array.from(document.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
+  handleMoveUp(event: KeyboardEvent) {
+    if (this.selectedOptionIndex !== null) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const currentFocusedOption = document.activeElement;
+    const questionCards = document.querySelectorAll('[data-test-question-card]');
+
+    if (!(currentFocusedOption instanceof HTMLElement) || !(questionCards.length > 0)) {
+      return;
+    }
+
+    const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
+    const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
     if (currentFocusedOptionIndex > 0) {
