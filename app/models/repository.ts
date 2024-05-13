@@ -94,6 +94,10 @@ export default class RepositoryModel extends Model {
     return `codecrafters-${this.course.slug}-${this.language.slug}`;
   }
 
+  get completedStageSlugs() {
+    return this.completedStages.mapBy('slug');
+  }
+
   get completedStages() {
     return this.courseStageCompletions.mapBy('courseStage').uniq();
   }

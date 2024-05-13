@@ -86,12 +86,11 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       username: 'Gufran',
     });
 
-    this.server.create('course-leaderboard-entry', {
-      status: 'idle',
-      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
       language: python,
       user: otherUser,
-      lastAttemptAt: new Date(),
+      createdAt: new Date(2003),
     });
 
     await catalogPage.visit();
@@ -110,7 +109,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entries should be sorted by last attempt');
     assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '0 / 31', 'progress text must be shown');
 
-    let repository = this.server.schema.repositories.find(1);
+    let repository = currentUser.reload().repositories.models[0];
     repository.update({
       lastSubmission: this.server.create('submission', {
         repository,
@@ -125,7 +124,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
     await finishRender();
 
-    this.server.schema.submissions.find(1).update({ status: 'success' });
+    repository.lastSubmission.update({ status: 'success' });
 
     this.server.create('course-stage-completion', {
       repository: repository,
@@ -166,14 +165,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       course: redis,
       language: python,
       user: currentUser,
-      createdAt: new Date(2002),
+      createdAt: new Date(2002, 1),
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: otherUser,
-      createdAt: new Date(2003),
+      createdAt: new Date(2003, 1),
     });
 
     await catalogPage.visit();
@@ -394,5 +393,53 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     await coursePage.leaderboard.inviteButton.hover();
     assertTooltipNotRendered(assert);
+  });
+
+  test('leaderboard reflects the correct progress if stages at a later position are completed first', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let otherUser = this.server.create('user', {
+      id: 'other-user',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    let userRepository = this.server.create('repository', 'withBaseStagesCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+      createdAt: new Date(2002),
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: otherUser,
+      createdAt: new Date(2003),
+    });
+
+    let replicationFirstStage = this.server.schema.courseStages.findBy({ slug: 'repl-custom-port' });
+
+    this.server.create('submission', 'withStageCompletion', {
+      repository: userRepository,
+      courseStage: replicationFirstStage,
+      createdAt: userRepository.createdAt,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '8 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
   });
 });

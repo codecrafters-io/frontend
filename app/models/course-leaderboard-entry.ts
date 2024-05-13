@@ -6,6 +6,7 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class CourseLeaderboardEntry extends Model {
+  @attr() declare completedStageSlugs: string[];
   @attr('date') declare lastAttemptAt: Date;
   @attr('string') declare status: 'evaluating' | 'completed' | 'idle';
 
@@ -14,11 +15,7 @@ export default class CourseLeaderboardEntry extends Model {
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   get completedStagesCount() {
-    if (this.statusIsCompleted) {
-      return this.currentCourseStage.position;
-    } else {
-      return this.currentCourseStage.position - 1;
-    }
+    return this.completedStageSlugs.length;
   }
 
   get course() {
