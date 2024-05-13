@@ -70,15 +70,12 @@
             {{/if}}
           </div>
 
-          <div
-            class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group"
-            role="button"
+          <CoursePage::RepositoryDropdownAction
+            @icon="beaker"
             {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
-            data-test-dropdown-action
           >
             Try a different language
-            {{svg-jar "beaker" class="w-5 ml-4 text-gray-300 group-hover:text-teal-500"}}
-          </div>
+          </CoursePage::RepositoryDropdownAction>
 
           {{#unless @activeRepository.isNew}}
             <div

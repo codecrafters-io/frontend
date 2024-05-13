@@ -55,6 +55,8 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
 
     await coursePage.repositoryDropdown.click();
 
+    await this.pauseTest();
+
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 1, 'non active repositories should be 1');
 
     await coursePage.repositoryDropdown.clickOnRepositoryLink(pythonRepository.name);
