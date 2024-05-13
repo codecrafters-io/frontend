@@ -1,9 +1,8 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div
   class="flex justify-between items-center py-2 pl-2 pr-3 hover:bg-gray-50 group cursor-pointer"
   role="button"
   data-test-repository-link
-  {{on "click" @onClick}}
+  ...attributes
 >
   <div class="flex items-center mr-6">
     <img src={{@repository.language.grayLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 mr-2 block group-hover:hidden" />
