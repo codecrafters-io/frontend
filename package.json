@@ -37,6 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/plugin-proposal-decorators": "^7.24.1",
+    "@codecov/webpack-plugin": "^0.0.1-beta.6",
     "@ember-data/model": "^5.3.0",
     "@ember/optional-features": "^2.1.0",
     "@ember/render-modifiers": "^2.0.4",
