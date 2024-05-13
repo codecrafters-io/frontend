@@ -23,7 +23,7 @@
       </button>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white rounded-lg shadow-lg border py-2 my-1" data-test-repository-dropdown-content>
+      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
         <div class="text-sm text-gray-700">
           <div
             class="px-3 py-2 hover:bg-gray-50 flex group {{if @activeRepository.isNew 'text-gray-300'}}"
@@ -84,19 +84,15 @@
           {{/unless}}
         </div>
         {{#if (gt this.nonActiveRepositories.length 0)}}
-          <div class="pl-3 text-sm">
-            <div class="font-bold text-gray-600 mb-2 mt-3">
-              Switch to a different repo:
-            </div>
-            <div class="">
-              {{#each this.nonActiveRepositories as |repository|}}
-                <CoursePage::RepositoryDropdown::NonActiveRepositoryLink
-                  @onClick={{fn this.handleRepositoryLinkClick repository dd.actions}}
-                  @repository={{repository}}
-                />
-              {{/each}}
-            </div>
+          <div class="font-bold text-gray-600 mb-2 mt-3 pl-3 text-sm">
+            Switch to a different repo:
           </div>
+          {{#each this.nonActiveRepositories as |repository|}}
+            <CoursePage::RepositoryDropdown::NonActiveRepositoryLink
+              @repository={{repository}}
+              {{on "click" (fn this.handleRepositoryLinkClick repository dd.actions)}}
+            />
+          {{/each}}
         {{/if}}
       </div>
     </dd.Content>
