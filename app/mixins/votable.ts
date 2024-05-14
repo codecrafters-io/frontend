@@ -41,7 +41,7 @@ export default Mixin.create({
     return this.allUpvotes.filter((upvote) => upvote.targetId === (this as unknown as Votable).id);
   },
 
-  async downvote() {
+  async downvote(metadata?: Record<string, unknown>) {
     if (this.currentUserUpvotes.length > 0) {
       await (this as unknown as Votable).unvote();
     }
@@ -56,12 +56,13 @@ export default Mixin.create({
       targetId: (this as unknown as Votable).id,
       targetType: (this as unknown as Votable).constructor.modelName,
       user: (this as unknown as Votable).authenticator.currentUser,
+      metadata: metadata || {},
     });
 
     await downvote.save();
   },
 
-  async upvote(): Promise<void> {
+  async upvote(metadata?: Record<string, unknown>): Promise<void> {
     if (this.currentUserDownvotes.length > 0) {
       await (this as unknown as Votable).unvote();
     }
@@ -76,6 +77,7 @@ export default Mixin.create({
       targetId: (this as unknown as Votable).id,
       targetType: (this as unknown as Votable).constructor.modelName,
       user: (this as unknown as Votable).authenticator.currentUser,
+      metadata: metadata || {},
     });
 
     await upvote.save();

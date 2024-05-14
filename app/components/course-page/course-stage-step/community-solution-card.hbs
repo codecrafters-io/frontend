@@ -4,7 +4,12 @@
   ...attributes
   {{did-insert this.handleDidInsert}}
 >
-  <CoursePage::CourseStageStep::CommunitySolutionCard::Header @solution={{@solution}} class="mb-3" />
+  <CoursePage::CourseStageStep::CommunitySolutionCard::Header
+    @metadataForDownvote={{@metadataForDownvote}}
+    @metadataForUpvote={{@metadataForUpvote}}
+    @solution={{@solution}}
+    class="mb-3"
+  />
 
   <div class={{if this.isExpanded "visible" "hidden"}}>
     <button

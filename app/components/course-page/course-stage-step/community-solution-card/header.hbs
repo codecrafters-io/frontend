@@ -58,8 +58,8 @@
 
   <div class="flex items-center shrink-0">
     {{#unless (eq @solution.user this.authenticator.currentUser)}}
-      <CoursePage::CourseStageStep::CommunitySolutionCard::UpvoteButton @solution={{@solution}} class="mr-2" />
-      <CoursePage::CourseStageStep::CommunitySolutionCard::DownvoteButton @solution={{@solution}} />
+      <CoursePage::CourseStageStep::CommunitySolutionCard::UpvoteButton @solution={{@solution}} @metadata={{@metadataForUpvote}} class="mr-2" />
+      <CoursePage::CourseStageStep::CommunitySolutionCard::DownvoteButton @solution={{@solution}} @metadata={{@metadataForDownvote}} />
       <div class="w-px h-3 bg-gray-200 mx-2"></div>
     {{/unless}}
 

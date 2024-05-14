@@ -16,6 +16,8 @@ type Signature = {
     solution: CommunityCourseStageSolutionModel;
     onPublishToGithubButtonClick?: () => void;
     onExpand?: () => void;
+    metadataForUpvote?: Record<string, unknown>;
+    metadataForDownvote?: Record<string, unknown>;
     isCollapsedByDefault?: boolean;
   };
 };
