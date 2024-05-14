@@ -12,13 +12,12 @@ import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-fronte
 /* eslint-disable ember/no-mixins */
 import ViewableMixin from 'codecrafters-frontend/mixins/viewable';
 import type CourseStageScreencastModel from './course-stage-screencast';
-import UpvotableMixin from 'codecrafters-frontend/mixins/upvotable';
-import DownvotableMixin from 'codecrafters-frontend/mixins/downvotable';
+import VotableMixin from 'codecrafters-frontend/mixins/votable';
 
-export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, UpvotableMixin, DownvotableMixin) {
+export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, VotableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
 
-  @service declare authenticator: AuthenticatorService;
+  @service declare authenticator: AuthenticatorService; // used by VotableMixin
 
   @belongsTo('course-stage', { async: false, inverse: 'communitySolutions' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
