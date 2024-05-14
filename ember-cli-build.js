@@ -99,7 +99,7 @@ module.exports = function (defaults) {
 
           codecovWebpackPlugin({
             enableBundleAnalysis: process.env.CODECOV_TOKEN !== undefined,
-            bundleName: 'codecrafters-frontend-bundle',
+            bundleName: 'client',
             uploadToken: process.env.CODECOV_TOKEN,
           }),
 
