@@ -19,6 +19,15 @@ export default function (config) {
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('course-stage-comment', { inverse: null }),
         }),
+        communityCourseStageSolution: Model.extend({
+          comments: hasMany('community-course-stage-solution-comment', { inverse: 'target' }),
+          courseStage: belongsTo('course-stage', { inverse: 'communitySolutions' }),
+          currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
+          currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+          language: belongsTo('language', { inverse: null }),
+          screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
+          user: belongsTo('user', { inverse: null }),
+        }),
         communityCourseStageSolutionComment: Model.extend({
           user: belongsTo('user', { inverse: null }),
           target: belongsTo('community-course-stage-solution', { inverse: 'comments' }),

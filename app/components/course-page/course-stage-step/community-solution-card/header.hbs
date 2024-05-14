@@ -57,27 +57,15 @@
   </div>
 
   <div class="flex items-center shrink-0">
-    {{#if (or (current-user-is-staff) (current-user-is-course-author @solution.courseStage.course))}}
-      <div class="flex items-center">
-        {{svg-jar "chart-bar" class="w-4 text-gray-500 mr-1"}}
-
-        {{! Investigate why this doesn't work without target=blank }}
-        <LinkTo @route="course-admin.code-example" @model={{@solution.id}} class="text-xs text-gray-500 hover:underline" target="_blank">
-          {{#if @solution.ratingEstimate}}
-            Rating:
-            {{@solution.ratingEstimateRounded}}
-            <EmberTooltip @text="{{@solution.ratingMeanRounded}} ± {{@solution.ratingStandardDeviationRounded}}" />
-          {{else}}
-            Unrated
-            <EmberTooltip @text="Once ratings are computed, they will be shown here." />
-          {{/if}}
-        </LinkTo>
-      </div>
+    {{#unless (eq @solution.user this.authenticator.currentUser)}}
+      <CoursePage::CourseStageStep::CommunitySolutionCard::UpvoteButton @solution={{@solution}} class="mr-2" />
+      <CoursePage::CourseStageStep::CommunitySolutionCard::DownvoteButton @solution={{@solution}} />
       <div class="w-px h-3 bg-gray-200 mx-2"></div>
-    {{/if}}
+    {{/unless}}
+
     {{#if (gt @solution.approvedCommentsCount 0)}}
       <div class="flex items-center">
-        {{svg-jar "chat-alt" class="w-4 text-gray-500 mr-1"}}
+        {{svg-jar "chat-alt" class="w-4 text-gray-400 mr-1"}}
         <div class="text-xs text-gray-500">
           {{@solution.approvedCommentsCount}}
           comments
@@ -86,10 +74,17 @@
       <div class="w-px h-3 bg-gray-200 mx-2"></div>
     {{/if}}
     <div class="flex items-center">
-      {{svg-jar "clock" class="w-4 text-gray-500 mr-1"}}
-      <div class="text-xs text-gray-500">
-        {{date-from-now @solution.submittedAt}}
-      </div>
+      {{svg-jar "clock" class="w-4 text-gray-400 mr-1"}}
+
+      {{#if (current-user-is-staff)}}
+        <LinkTo @route="course-admin.code-example" @model={{@solution.id}} class="text-xs text-gray-500 hover:underline" target="_blank">
+          {{date-from-now @solution.submittedAt}}
+        </LinkTo>
+      {{else}}
+        <div class="text-xs text-gray-500">
+          {{date-from-now @solution.submittedAt}}
+        </div>
+      {{/if}}
     </div>
     {{!      <div class="flex items-center">}}
     {{!--        {{svg-jar "plus" class="w-4 text-green-600"}}--}}
