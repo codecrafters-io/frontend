@@ -4,15 +4,14 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 
-import UpvotableMixin from '../mixins/upvotable';
-import DownvotableMixin from '../mixins/downvotable';
+import VotableMixin from '../mixins/votable';
 import IsCommentMixin from '../mixins/is-comment';
 
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type UserModel from 'codecrafters-frontend/models/user';
 
-export default class CommunityCourseStageSolutionCommentModel extends Model.extend(UpvotableMixin, DownvotableMixin, IsCommentMixin) {
+export default class CommunityCourseStageSolutionCommentModel extends Model.extend(VotableMixin, IsCommentMixin) {
   @attr('date') declare createdAt: Date;
   @attr('string') declare subtargetLocator: string; // filename.js or filename.js:line1-line2
   @attr('date') declare updatedAt: Date;
@@ -24,7 +23,7 @@ export default class CommunityCourseStageSolutionCommentModel extends Model.exte
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'comments' }) declare target: CommunityCourseStageSolutionModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
-  @service declare authenticator: AuthenticatorService; // used by UpvotableMixin and DownvotableMixin
+  @service declare authenticator: AuthenticatorService; // used by VotableMixin
 
   get contextForUserLabel() {
     return this.target.courseStage.course;
