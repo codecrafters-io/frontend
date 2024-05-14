@@ -1,17 +1,15 @@
 /* eslint-disable ember/no-new-mixins */
 import Mixin from '@ember/object/mixin';
 
-import type Store from '@ember-data/store';
 import type UpvoteModel from 'codecrafters-frontend/models/upvote';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type DownvoteModel from 'codecrafters-frontend/models/downvote';
+import type Model from '@ember-data/model';
 
-interface Votable {
+interface Votable extends Model {
   authenticator: AuthenticatorService;
-  constructor: { modelName: string }; // EmberModel
+  constructor: typeof Model;
   downvotesCount: number;
-  id: string;
-  store: Store;
   unvote: () => Promise<void>;
   upvotesCount: number;
 }
