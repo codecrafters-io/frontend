@@ -8,6 +8,7 @@ type Signature = {
   Element: HTMLButtonElement;
 
   Args: {
+    metadata?: Record<string, unknown>;
     solution: CommunityCourseStageSolutionModel;
   };
 };
@@ -24,7 +25,7 @@ export default class DownvoteButtonComponent extends Component<Signature> {
     if (this.currentUserHasDownvoted) {
       this.args.solution.unvote({});
     } else {
-      this.args.solution.downvote();
+      this.args.solution.downvote(this.args.metadata || {});
     }
   }
 }

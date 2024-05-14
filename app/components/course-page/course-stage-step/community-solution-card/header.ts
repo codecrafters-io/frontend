@@ -7,6 +7,8 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    metadataForDownvote?: Record<string, unknown>;
+    metadataForUpvote?: Record<string, unknown>;
     solution: CommunityCourseStageSolutionModel;
   };
 };

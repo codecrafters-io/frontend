@@ -1,9 +1,11 @@
 {{#each this.visibleSolutions as |solution solutionIndex|}}
   <CoursePage::CourseStageStep::CommunitySolutionCard
+    @isCollapsedByDefault={{true}}
+    @metadataForDownvote={{hash position_in_list=(add solutionIndex 1)}}
+    @metadataForUpvote={{hash position_in_list=(add solutionIndex 1)}}
+    @onExpand={{fn this.handleSolutionExpand solution solutionIndex}}
     @onPublishToGithubButtonClick={{fn (mut this.configureGithubIntegrationModalIsOpen) true}}
     @solution={{solution}}
-    @isCollapsedByDefault={{true}}
-    @onExpand={{fn this.handleSolutionExpand solution solutionIndex}}
     {{! account for the sticky menu bar }}
     class="scroll-mt-16"
   />
