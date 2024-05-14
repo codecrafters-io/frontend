@@ -1,8 +1,9 @@
-{{#each this.visibleSolutions as |solution|}}
+{{#each this.visibleSolutions as |solution solutionIndex|}}
   <CoursePage::CourseStageStep::CommunitySolutionCard
     @onPublishToGithubButtonClick={{fn (mut this.configureGithubIntegrationModalIsOpen) true}}
     @solution={{solution}}
     @isCollapsedByDefault={{true}}
+    @onExpand={{fn this.handleSolutionExpand solution solutionIndex}}
     {{! account for the sticky menu bar }}
     class="scroll-mt-16"
   />
@@ -24,9 +25,11 @@
 
 {{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
+    {{! @glint-expect-error not ts-ified yet }}
     <CoursePage::ConfigureGithubIntegrationModal
       {{! TODO: We actually don't know if the solution belongs to the **active** repository, just that it belongs to the user !}}
       @repository={{@repository}}
+      {{! @glint-expect-error mut types are broken }}
       @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
     />
   </ModalBackdrop>
