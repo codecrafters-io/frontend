@@ -1,4 +1,6 @@
 <TertiaryButton @size="extra-small" {{on "click" this.handleClick}} ...attributes>
   {{svg-jar "thumb-down" class=(concat "w-4 " (if this.currentUserHasDownvoted "text-red-600" "text-gray-500"))}}
-  <EmberTooltip @text={{if this.currentUserHasDownvoted "Downvoted! Click again to undo." "Downvote this example and we'll show it less often."}} />
+  <EmberTooltip
+    @text={{if this.currentUserHasDownvoted "Downvoted! Thank you for submitting feedback." "Downvote this example and we'll show it less often."}}
+  />
 </TertiaryButton>
