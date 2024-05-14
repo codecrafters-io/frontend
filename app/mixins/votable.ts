@@ -15,12 +15,12 @@ interface Votable extends Model {
 }
 
 export default Mixin.create({
-  get allUpvotes(): UpvoteModel[] {
-    return (this as unknown as Votable).store.peekAll('upvote') as unknown as UpvoteModel[];
-  },
-
   get allDownvotes(): DownvoteModel[] {
     return (this as unknown as Votable).store.peekAll('downvote') as unknown as DownvoteModel[];
+  },
+
+  get allUpvotes(): UpvoteModel[] {
+    return (this as unknown as Votable).store.peekAll('upvote') as unknown as UpvoteModel[];
   },
 
   get currentUserDownvotes(): DownvoteModel[] {
