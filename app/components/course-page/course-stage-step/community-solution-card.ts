@@ -15,6 +15,7 @@ type Signature = {
   Args: {
     solution: CommunityCourseStageSolutionModel;
     onPublishToGithubButtonClick?: () => void;
+    onExpand?: () => void;
     isCollapsedByDefault?: boolean;
   };
 };
@@ -58,8 +59,8 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     this.loadComments();
     this.loadFileComparisons();
 
-    if (this.authenticator.isAuthenticated) {
-      this.args.solution.createView();
+    if (this.args.onExpand) {
+      this.args.onExpand();
     }
   }
 
