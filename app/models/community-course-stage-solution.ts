@@ -12,8 +12,10 @@ import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-fronte
 /* eslint-disable ember/no-mixins */
 import ViewableMixin from 'codecrafters-frontend/mixins/viewable';
 import type CourseStageScreencastModel from './course-stage-screencast';
+import UpvotableMixin from 'codecrafters-frontend/mixins/upvotable';
+import DownvotableMixin from 'codecrafters-frontend/mixins/downvotable';
 
-export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin) {
+export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, UpvotableMixin, DownvotableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
 
   @service declare authenticator: AuthenticatorService;
@@ -87,6 +89,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   }
 
   declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
+  declare unvote: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CommunityCourseStageSolutionModel.prototype.fetchFileComparisons = memberAction({
@@ -95,5 +98,27 @@ CommunityCourseStageSolutionModel.prototype.fetchFileComparisons = memberAction(
 
   after(response) {
     return response.map((json: Record<string, unknown>) => FileComparisonFromJSON(json));
+  },
+});
+
+// TODO: Move to "VotableMixin"?
+CommunityCourseStageSolutionModel.prototype.unvote = memberAction({
+  path: 'unvote',
+  type: 'post',
+
+  before() {
+    // @ts-expect-error Model mixin methods/properties are not recognized
+    for (const record of [...this.currentUserUpvotes]) {
+      // @ts-expect-error Model mixin methods/properties are not recognized
+      this.upvotesCount -= 1;
+      record.unloadRecord();
+    }
+
+    // @ts-expect-error Model mixin methods/properties are not recognized
+    for (const record of [...this.currentUserDownvotes]) {
+      // @ts-expect-error Model mixin methods/properties are not recognized
+      this.downvotesCount -= 1;
+      record.unloadRecord();
+    }
   },
 });

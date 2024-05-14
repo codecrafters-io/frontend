@@ -57,17 +57,11 @@
   </div>
 
   <div class="flex items-center shrink-0">
-    <TertiaryButton @size="extra-small" class="mr-2" {{on "click" (noop)}}>
-      {{svg-jar "thumb-up" class="w-4 text-gray-500"}}
-      <EmberTooltip @text="Upvote this example and we'll show it more often." />
-    </TertiaryButton>
-
-    <TertiaryButton @size="extra-small" {{on "click" (noop)}}>
-      {{svg-jar "thumb-down" class="w-4 text-gray-500"}}
-      <EmberTooltip @text="Downvote this example and we'll show it less often." />
-    </TertiaryButton>
-
-    <div class="w-px h-3 bg-gray-200 mx-2"></div>
+    {{#unless (eq @solution.user this.authenticator.currentUser)}}
+      <CoursePage::CourseStageStep::CommunitySolutionCard::UpvoteButton @solution={{@solution}} class="mr-2" />
+      <CoursePage::CourseStageStep::CommunitySolutionCard::DownvoteButton @solution={{@solution}} />
+      <div class="w-px h-3 bg-gray-200 mx-2"></div>
+    {{/unless}}
 
     {{#if (gt @solution.approvedCommentsCount 0)}}
       <div class="flex items-center">
