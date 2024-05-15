@@ -146,7 +146,7 @@
     "ember-sortable": "^5.0.1",
     "ember-source": "~5.5.0",
     "ember-svg-jar": "^2.4.9",
-    "ember-template-imports": "^4.1.0",
+    "ember-template-imports": "^4.1.1",
     "ember-template-lint-plugin-prettier": "^5.0.0",
     "ember-tooltips": "^3.6.0",
     "ember-truth-helpers": "^4.0.3",
