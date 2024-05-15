@@ -4,16 +4,34 @@
       {{markdown-to-html @question.queryMarkdown}}
     </div>
 
-    <div class="flex flex-col -mx-3 sm:-mx-4 gap-px" {{did-insert this.handleDidInsertOptionsList}}>
+    {{! template-lint-disable no-invalid-interactive }}
+    <div class="question-card-option-container flex flex-col -mx-3 sm:-mx-4 gap-px" {{did-insert this.handleDidInsertOptionsList}}>
       {{#each this.options as |option optionIndex|}}
         {{! @glint-expect-error: not ts-ified yet }}
         <ConceptPage::QuestionCardOption
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
-          {{on "click" (fn this.handleOptionClick optionIndex)}}
+          {{on "click" (fn this.handleOptionSelected optionIndex)}}
           data-test-question-card-option
         />
+      {{/each}}
+
+      {{! @glint-expect-error incorrect type - event object is passed to handler}}
+      {{on-key "k" this.handleMoveUp}}
+      {{! @glint-expect-error incorrect type - event object is passed to handler}}
+      {{on-key "j" this.handleMoveDown}}
+      {{! @glint-expect-error incorrect type - event object is passed to handler}}
+      {{on-key "ArrowUp" this.handleMoveUp}}
+      {{! @glint-expect-error incorrect type - event object is passed to handler}}
+      {{on-key "ArrowDown" this.handleMoveDown}}
+
+      {{#each this.digitKeys as |digitKey digitKeyIndex|}}
+        {{on-key digitKey (fn this.handleOptionSelected digitKeyIndex)}}
+      {{/each}}
+
+      {{#each this.letterKeys as |letterKey letterKeyIndex|}}
+        {{on-key letterKey (fn this.handleOptionSelected letterKeyIndex)}}
       {{/each}}
     </div>
   </div>

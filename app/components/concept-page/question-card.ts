@@ -17,8 +17,16 @@ type Signature = {
 export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;
 
+  get digitKeys() {
+    return '1 2 3 4 5 6 7 8 9'.split(' ');
+  }
+
   get hasSubmitted() {
     return this.selectedOptionIndex !== null;
+  }
+
+  get letterKeys() {
+    return 'a b c d e f g h i'.split(' ');
   }
 
   get options() {
@@ -55,7 +63,63 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  handleOptionClick(optionIndex: number) {
+  handleMoveDown(event: KeyboardEvent) {
+    if (this.selectedOptionIndex !== null) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const currentFocusedOption = document.activeElement;
+    const questionCards = document.querySelectorAll('[data-test-question-card]');
+
+    if (!(currentFocusedOption instanceof HTMLElement) || !(questionCards.length > 0)) {
+      return;
+    }
+
+    const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
+    const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
+    const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
+
+    if (currentFocusedOptionIndex < options.length - 1) {
+      options[currentFocusedOptionIndex + 1]!.focus();
+    } else {
+      options[0]!.focus();
+    }
+  }
+
+  @action
+  handleMoveUp(event: KeyboardEvent) {
+    if (this.selectedOptionIndex !== null) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const currentFocusedOption = document.activeElement;
+    const questionCards = document.querySelectorAll('[data-test-question-card]');
+
+    if (!(currentFocusedOption instanceof HTMLElement) || !(questionCards.length > 0)) {
+      return;
+    }
+
+    const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
+    const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
+    const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
+
+    if (currentFocusedOptionIndex > 0) {
+      options[currentFocusedOptionIndex - 1]!.focus();
+    } else {
+      options[options.length - 1]!.focus();
+    }
+  }
+
+  @action
+  handleOptionSelected(optionIndex: number) {
+    if (optionIndex >= this.args.question.options.length) {
+      return;
+    }
+
     const selectedOptionIndexWasNull = this.selectedOptionIndex === null;
 
     this.selectedOptionIndex = optionIndex;
@@ -69,6 +133,6 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleShowExplanationClick() {
-    this.handleOptionClick(this.args.question.correctOptionIndex);
+    this.handleOptionSelected(this.args.question.correctOptionIndex);
   }
 }

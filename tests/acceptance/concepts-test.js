@@ -414,4 +414,173 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.notOk(conceptPage.progress.text.includes('blocks left'), 'Remaining blocks left should not be present');
   });
+
+  test('can select an option for a question using 1/2/3/4', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
+
+    await conceptPage.questionCards[0].keydown({ key: '1' });
+
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+  });
+
+  test('can select an option for a question using a/b/c/d', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
+
+    await conceptPage.questionCards[0].keydown({ keyCode: 65 });
+
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+  });
+
+  test('can navigate using j/k and select option using enter', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
+
+    // Should be able to move back and fort
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'HTTP');
+    await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+
+    // Can move to end of list
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
+
+    // Can wrap around to start of list
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+  });
+
+  test('can navigate using arrow keys and select option using enter', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
+
+    // Should be able to move back and fort
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'HTTP');
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowUp' }); // Send up arrow key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+
+    // Can move to end of list
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
+
+    // Can wrap around to start of list
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
+    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
+  });
+
+  test('navigating question options using arrow keys does not trigger scrolling', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    const currentScrollY = window.scrollY;
+
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+
+    assert.strictEqual(window.scrollY, currentScrollY, 'scrolling should not be triggered');
+  });
+
+  test('navigating options wraps around the list for the current question card only', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
+
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
+  });
 });
