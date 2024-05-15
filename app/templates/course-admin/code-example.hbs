@@ -40,6 +40,16 @@
 
     <div class="border-b mb-4 pb-2">
       <h3 class="text-lg font-bold text-gray-800">
+        Evaluations ({{@model.evaluations.length}})
+      </h3>
+    </div>
+
+    {{#each @model.evaluations as |evaluation|}}
+      <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
+    {{/each}}
+
+    <div class="border-b mb-4 pb-2">
+      <h3 class="text-lg font-bold text-gray-800">
         Comparisons ({{@model.comparisons.length}})
       </h3>
     </div>

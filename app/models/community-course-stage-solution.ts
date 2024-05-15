@@ -13,6 +13,7 @@ import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-fronte
 import ViewableMixin from 'codecrafters-frontend/mixins/viewable';
 import type CourseStageScreencastModel from './course-stage-screencast';
 import VotableMixin from 'codecrafters-frontend/mixins/votable';
+import type CodeExampleEvaluationModel from './code-example-evaluation';
 
 export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, VotableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
@@ -23,6 +24,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
+  @hasMany('code-example-evaluation', { async: false, inverse: 'codeExample' }) declare evaluations: CodeExampleEvaluationModel[];
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
 
