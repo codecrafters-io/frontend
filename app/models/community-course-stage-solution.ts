@@ -24,7 +24,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
-  @hasMany('community-solution-evaluation', { async: false, inverse: 'codeExample' }) declare evaluations: CommunitySolutionEvalutionModel[];
+  @hasMany('community-solution-evaluation', { async: false, inverse: 'communitySolution' }) declare evaluations: CommunitySolutionEvalutionModel[];
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
 
