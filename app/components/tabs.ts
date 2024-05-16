@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+export type Signature = {
   Args: {
     tabs: {
       slug: string;

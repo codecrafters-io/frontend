@@ -1,13 +1,9 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
-import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
+import type { CodeExampleRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example';
 
 export default class CodeExampleController extends Controller {
-  declare model: {
-    solution: CommunityCourseStageSolutionModel;
-    comparisons: SolutionComparisonModel[];
-  };
+  declare model: CodeExampleRouteModel;
 
   @action
   handlePinCodeExampleToggled() {

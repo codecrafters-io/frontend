@@ -1,0 +1,44 @@
+<div
+  class="border rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
+  role={{if this.isCollapsed "button" "presentation"}}
+  {{! template-lint-disable no-invalid-interactive }}
+  {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+>
+  <CourseAdmin::CodeExamplePage::EvaluationCard::Header
+    @evaluation={{@evaluation}}
+    @isExpanded={{this.isExpanded}}
+    @onCloseButtonClick={{this.handleCollapseButtonClick}}
+  />
+
+  {{#if this.isExpanded}}
+    <div class="flex items-start gap-6 mt-4 relative">
+      <div class="w-1/2">
+        <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
+          <div class="mt-4">
+            {{#if (eq activeTabSlug "evaluation")}}
+              <div class="prose prose-sm">
+                {{#if @evaluation.logsFileContents}}
+                  {{markdown-to-html @evaluation.logsFileContents}}
+                {{else}}
+                  <p>Loading...</p>
+                {{/if}}
+              </div>
+            {{else if (eq activeTabSlug "prompt")}}
+              <div class="bg-gray-900 border border-gray-700 rounded overflow-y-auto relative flex-grow p-3">
+                {{#if @evaluation.promptFileContents}}
+                  <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @evaluation.promptFileContents}}</code></pre>
+                {{else}}
+                  <AnsiStream @content="Loading..." class="text-xs whitespace-pre-wrap" />
+                {{/if}}
+              </div>
+            {{else}}
+              <div>Nothing yet!</div>
+            {{/if}}
+          </div>
+        </Tabs>
+      </div>
+
+      <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{@evaluation.communitySolution}} @isCollapsedByDefault={{false}} class="w-1/2" />
+    </div>
+  {{/if}}
+</div>

@@ -1,0 +1,67 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="py-3 border-b mb-6">
+      <TertiaryLinkButton @route="course-admin.code-example-evaluators" @models={{array @model.course.slug}} @size="small" class="pl-1.5 mb-3">
+        <div class="flex items-center">
+          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+          <span>
+            Back
+          </span>
+        </div>
+      </TertiaryLinkButton>
+
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-gray-800">
+            {{@model.evaluator.slug}}
+          </h3>
+        </div>
+        <div class="flex items-center">
+          <CourseStageDropdown
+            @course={{@model.course}}
+            @selectedCourseStage={{this.currentCourseStage}}
+            @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
+            @onSelectedCourseStageChange={{this.handleCourseStageChange}}
+            class="py-3 mr-4"
+          />
+
+          <LanguageDropdown
+            @languages={{this.sortedLanguagesForDropdown}}
+            @requestedLanguage={{this.currentLanguage}}
+            @selectedLanguage={{this.currentLanguage}}
+            @shouldShowAllLanguagesOption={{true}}
+            @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
+            @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+            @onDidInsertDropdown={{(noop)}}
+            class="py-3"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
+
+      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+        @resultFilter="fail"
+        @evaluator={{@model.evaluator}}
+        @evaluations={{@model.failEvaluations}}
+        class="mt-8"
+      />
+
+      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+        @resultFilter="pass"
+        @evaluator={{@model.evaluator}}
+        @evaluations={{@model.passEvaluations}}
+        class="mt-8"
+      />
+
+      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+        @resultFilter="unsure"
+        @evaluator={{@model.evaluator}}
+        @evaluations={{@model.unsureEvaluations}}
+        class="mt-8"
+      />
+    </div>
+  </div>
+</div>
