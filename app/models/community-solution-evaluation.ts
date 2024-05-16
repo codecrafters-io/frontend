@@ -3,11 +3,15 @@ import { attr, belongsTo } from '@ember-data/model';
 import type CommunityCourseStageSolutionModel from './community-course-stage-solution';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
+import type CommunitySolutionEvaluatorModel from './community-solution-evaluator';
 
 export default class CommunitySolutionEvaluationModel extends Model {
-  @belongsTo('community-course-stage-solution', { async: false, inverse: 'evaluations' }) declare communitySolution: CommunityCourseStageSolutionModel;
+  @belongsTo('community-course-stage-solution', { async: false, inverse: 'evaluations' })
+  declare communitySolution: CommunityCourseStageSolutionModel;
+
+  @belongsTo('community-solution-evaluator', { async: false, inverse: 'evaluations' }) declare evaluator: CommunitySolutionEvaluatorModel;
+
   @attr('string') declare result: 'pass' | 'fail' | 'unsure';
-  @attr('string') declare criteriaType: 'relevance' | 'naming';
   @attr('string') declare logsFileUrl: string;
 
   @tracked logsFileContents: string | null = null;
