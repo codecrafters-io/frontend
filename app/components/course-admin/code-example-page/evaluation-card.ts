@@ -2,13 +2,13 @@ import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import type CodeExampleEvaluationModel from 'codecrafters-frontend/models/code-example-evaluation';
+import type CommunitySolutionEvalutionModel from 'codecrafters-frontend/models/community-solution-evaluation';
 
 export type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    evaluation: CodeExampleEvaluationModel;
+    evaluation: CommunitySolutionEvalutionModel;
   };
 };
 

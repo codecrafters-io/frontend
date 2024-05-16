@@ -4,8 +4,8 @@ import type CommunityCourseStageSolutionModel from './community-course-stage-sol
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 
-export default class CodeExampleEvaluationModel extends Model {
-  @belongsTo('community-course-stage-solution', { async: false, inverse: 'evaluations' }) declare codeExample: CommunityCourseStageSolutionModel;
+export default class CommunitySolutionEvaluationModel extends Model {
+  @belongsTo('community-course-stage-solution', { async: false, inverse: 'evaluations' }) declare communitySolution: CommunityCourseStageSolutionModel;
   @attr('string') declare result: 'pass' | 'fail' | 'unsure';
   @attr('string') declare criteriaType: 'relevance' | 'naming';
   @attr('string') declare logsFileUrl: string;
