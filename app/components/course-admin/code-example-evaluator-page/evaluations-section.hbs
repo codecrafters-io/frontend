@@ -1,7 +1,12 @@
 <div ...attributes>
   <div class="mb-6">
-    <div class="text-gray-800 font-semibold mb-1 text-lg">
-      "{{@resultFilter}}" Evaluations ({{@evaluations.length}})
+    <div class="flex items-center mb-1 gap-2">
+      <span class="text-gray-800 font-semibold text-lg">
+        Evaluations with {{@resultFilter}}
+      </span>
+      <Pill @color="gray">
+        {{@evaluations.length}}
+      </Pill>
     </div>
 
     <div class="text-gray-400 text-xs">
