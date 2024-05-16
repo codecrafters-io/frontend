@@ -11,6 +11,7 @@ export default class CommunitySolutionEvaluationModel extends Model {
 
   @belongsTo('community-solution-evaluator', { async: false, inverse: 'evaluations' }) declare evaluator: CommunitySolutionEvaluatorModel;
 
+  @attr('date') declare createdAt: Date;
   @attr('string') declare result: 'pass' | 'fail' | 'unsure';
   @attr('string') declare logsFileUrl: string;
   @attr('string') declare promptFileUrl: string;

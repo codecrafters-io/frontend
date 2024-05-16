@@ -33,11 +33,14 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
 
   async loadEvaluations(
     evaluator: CommunitySolutionEvaluatorModel,
+    course: CourseModel,
     languageSlugsFilter: string[],
     courseStageSlugsFilter: string[],
     resultFilter: string,
-  ): Promise<CommunitySolutionEvaluatorModel[]> {
-    const filters: Record<string, string> = {};
+  ): Promise<CommunitySolutionEvaluationModel[]> {
+    const filters: Record<string, string> = {
+      course_id: course.id,
+    };
 
     if (resultFilter) {
       filters['result'] = resultFilter;
@@ -63,7 +66,7 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
           'evaluator',
         ].join(','),
       },
-    })) as unknown as CommunitySolutionEvaluatorModel[];
+    })) as unknown as CommunitySolutionEvaluationModel[];
   }
 
   async model(params: { evaluator_slug: string; languages: string; course_stage_slugs: string }): Promise<CodeExampleEvaluatorRouteModel> {
@@ -89,9 +92,9 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
       course: course,
       languages: (await this.store.findAll('language')) as unknown as LanguageModel[],
       evaluator: evaluator,
-      passEvaluations: await this.loadEvaluations(evaluator, languageSlugs, courseStageSlugs, 'pass'),
-      failEvaluations: await this.loadEvaluations(evaluator, languageSlugs, courseStageSlugs, 'fail'),
-      unsureEvaluations: await this.loadEvaluations(evaluator, languageSlugs, courseStageSlugs, 'unsure'),
+      passEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'pass'),
+      failEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'fail'),
+      unsureEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'unsure'),
       filteredLanguageSlugs: params.languages.split(','),
       filteredCourseStageSlugs: params.course_stage_slugs.split(','),
     };

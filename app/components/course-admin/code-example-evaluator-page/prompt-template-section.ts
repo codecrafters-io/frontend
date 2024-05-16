@@ -1,7 +1,4 @@
-import { action } from '@ember/object';
-import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
 
 export type Signature = {
