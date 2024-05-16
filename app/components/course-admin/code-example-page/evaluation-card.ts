@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import type { Signature as TabsComponentSignature } from 'codecrafters-frontend/components/tabs';
 import type CommunitySolutionEvalutionModel from 'codecrafters-frontend/models/community-solution-evaluation';
 
 export type Signature = {
@@ -19,6 +20,21 @@ export default class EvaluationCard extends Component<Signature> {
     return !this.isExpanded;
   }
 
+  get tabs(): TabsComponentSignature['Args']['tabs'] {
+    return [
+      {
+        slug: 'evaluation',
+        title: 'Evaluation',
+        icon: 'academic-cap',
+      },
+      {
+        slug: 'prompt',
+        title: 'Prompt',
+        icon: 'document-text',
+      },
+    ];
+  }
+
   @action
   handleCollapseButtonClick() {
     next(() => {
@@ -28,6 +44,9 @@ export default class EvaluationCard extends Component<Signature> {
 
   @action
   handleExpandButtonClick() {
+    this.args.evaluation.fetchLogsFileContentsIfNeeded();
+    this.args.evaluation.fetchPromptFileContentsIfNeeded();
+
     next(() => {
       this.isExpanded = true;
     });

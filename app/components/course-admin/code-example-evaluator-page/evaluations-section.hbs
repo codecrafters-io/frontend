@@ -1,0 +1,21 @@
+<div ...attributes>
+  <div class="mb-6">
+    <div class="text-gray-800 font-semibold mb-1 text-lg">
+      "{{@resultFilter}}" Evaluations ({{@evaluations.length}})
+    </div>
+
+    <div class="text-gray-400 text-xs">
+      All evaluations that have been marked as "{{@resultFilter}}".
+    </div>
+  </div>
+
+  {{#if (eq @evaluations.length 0)}}
+    <div class="text-gray-400 text-xs py-8">
+      No evaluations found with result "{{@resultFilter}}".
+    </div>
+  {{else}}
+    {{#each @evaluations as |evaluation|}}
+      <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
+    {{/each}}
+  {{/if}}
+</div>

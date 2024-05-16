@@ -11,16 +11,57 @@
         </div>
       </TertiaryLinkButton>
 
-      <div class="flex items-start justify-between">
+      <div class="flex items-center justify-between">
         <div>
-          <h3 class="text-lg font-bold text-gray-800 mb-2">
+          <h3 class="text-xl font-bold text-gray-800">
             {{@model.evaluator.slug}}
           </h3>
+        </div>
+        <div class="flex items-center">
+          <CourseStageDropdown
+            @course={{@model.course}}
+            @selectedCourseStage={{this.currentCourseStage}}
+            @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
+            @onSelectedCourseStageChange={{this.handleCourseStageChange}}
+            class="py-3 mr-4"
+          />
+
+          <LanguageDropdown
+            @languages={{this.sortedLanguagesForDropdown}}
+            @requestedLanguage={{this.currentLanguage}}
+            @selectedLanguage={{this.currentLanguage}}
+            @shouldShowAllLanguagesOption={{true}}
+            @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
+            @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+            @onDidInsertDropdown={{(noop)}}
+            class="py-3"
+          />
         </div>
       </div>
     </div>
     <div>
       <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
+
+      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+        @resultFilter="fail"
+        @evaluator={{@model.evaluator}}
+        @evaluations={{@model.failEvaluations}}
+        class="mt-8"
+      />
+
+      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+        @resultFilter="pass"
+        @evaluator={{@model.evaluator}}
+        @evaluations={{@model.passEvaluations}}
+        class="mt-8"
+      />
+
+      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+        @resultFilter="unsure"
+        @evaluator={{@model.evaluator}}
+        @evaluations={{@model.unsureEvaluations}}
+        class="mt-8"
+      />
     </div>
   </div>
 </div>

@@ -40,7 +40,7 @@ export default class CodeExampleRoute extends BaseRoute {
       // Evaluations
       this.store.query('community-solution-evaluation', {
         community_solution_id: params.code_example_id,
-        include: ['community-solution'].join(','),
+        include: ['community-solution', 'evaluator'].join(','),
       }),
     ]);
 

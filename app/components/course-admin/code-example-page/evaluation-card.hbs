@@ -4,7 +4,7 @@
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
 >
-  <div class="flex items-center justify-between">
+  <div class="flex items-center gap-3">
     <div class="flex items-center">
       <div>
         {{#if (eq @evaluation.result "pass")}}
@@ -42,15 +42,41 @@
           {{on "click" this.handleCollapseButtonClick}}
         >
           {{svg-jar "x" class="w-3 mr-1 fill-current"}}
-          Collapse evaluation
+          Close
         </button>
       {{/if}}
     </div>
   </div>
 
   {{#if this.isExpanded}}
-    <div class="flex items-start gap-6 mt-4">
-      Nothing yet!
+    <div class="flex items-start gap-6 mt-4 relative">
+      <div class="w-1/2">
+        <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
+          <div class="mt-4">
+            {{#if (eq activeTabSlug "evaluation")}}
+              <div class="prose prose-sm">
+                {{#if @evaluation.logsFileContents}}
+                  {{markdown-to-html @evaluation.logsFileContents}}
+                {{else}}
+                  <p>Loading...</p>
+                {{/if}}
+              </div>
+            {{else if (eq activeTabSlug "prompt")}}
+              <div class="bg-gray-900 border border-gray-700 rounded overflow-y-auto relative flex-grow p-3">
+                {{#if @evaluation.promptFileContents}}
+                  <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @evaluation.promptFileContents}}</code></pre>
+                {{else}}
+                  <AnsiStream @content="Loading..." class="text-xs whitespace-pre-wrap" />
+                {{/if}}
+              </div>
+            {{else}}
+              <div>Nothing yet!</div>
+            {{/if}}
+          </div>
+        </Tabs>
+      </div>
+
+      <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{@evaluation.communitySolution}} @isCollapsedByDefault={{false}} class="w-1/2" />
     </div>
   {{/if}}
 </div>

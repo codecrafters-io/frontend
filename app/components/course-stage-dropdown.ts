@@ -34,3 +34,9 @@ export default class CourseStageDropdownComponent extends Component<Signature> {
     this.args.onSelectedCourseStageChange(courseStage);
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    CourseStageDropdown: typeof CourseStageDropdownComponent;
+  }
+}
