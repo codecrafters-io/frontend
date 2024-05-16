@@ -1,0 +1,25 @@
+<div>
+  <div class="mb-6">
+    <div class="text-gray-800 font-semibold mb-1 text-lg">Prompt Template</div>
+    <div class="text-gray-400 text-xs">
+      Must start with a "&lt;criteria&gt; ... &lt;/criteria&gt;" section. Can be followed by additional instructions as a markdown list.
+    </div>
+  </div>
+
+  <Textarea
+    @value={{@evaluator.promptTemplate}}
+    class="font-mono text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-3000 shadow-sm w-full"
+    placeholder="Learn about various network protocols and the TCP/IP model."
+    rows="3"
+    id="prompt_template"
+    required
+    {{autoresize @evaluator.promptTemplate}}
+    {{markdown-input}}
+  />
+
+  <PrimaryButton @isDisabled={{true}} class="flex mt-4">
+    Update Prompt Template
+
+    <EmberTooltip @text="Not supported yet" />
+  </PrimaryButton>
+</div>
