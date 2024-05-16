@@ -1,0 +1,43 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-1">
+          Code Example Evaluators
+        </h3>
+      </div>
+    </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
+      {{#each @model.evaluators as |evaluator|}}
+        <LinkTo
+          @route="course-admin.code-example-evaluator"
+          @models={{array @model.course.slug evaluator.slug}}
+          class="flex items-center justify-between gap-x-6 py-5 hover:bg-gray-50 px-1"
+          data-test-evaluator-item
+          role="button"
+        >
+          <div class="min-w-0">
+            <div class="flex items-center gap-x-2">
+              <span class="font-semibold leading-6 text-gray-900">{{evaluator.slug}}</span>
+            </div>
+          </div>
+          <div class="flex flex-none items-center gap-x-4">
+            <TertiaryLinkButton
+              @size="small"
+              @route="course-admin.code-example-evaluator"
+              @models={{array @model.course.slug evaluator.slug}}
+              data-test-view-evaluator-button
+            >
+              View evaluator
+            </TertiaryLinkButton>
+          </div>
+        </LinkTo>
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No evaluators found.
+        </div>
+      {{/each}}
+    </ul>
+  </div>
+</div>
