@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import type CommunitySolutionEvalutionModel from 'codecrafters-frontend/models/community-solution-evaluation';
+import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 
 export type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    evaluation: CommunitySolutionEvalutionModel;
+    evaluation: CommunitySolutionEvaluationModel;
     isExpanded: boolean;
     onCloseButtonClick: () => void;
   };

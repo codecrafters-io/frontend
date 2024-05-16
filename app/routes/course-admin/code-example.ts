@@ -3,13 +3,13 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import Store from '@ember-data/store';
 import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
-import type CommunitySolutionEvalutionModel from 'codecrafters-frontend/models/community-solution-evaluation';
+import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CourseModel from 'codecrafters-frontend/models/course';
 
 export type CodeExampleRouteModel = {
   course: CourseModel;
   comparisons: SolutionComparisonModel[];
-  evaluations: CommunitySolutionEvalutionModel[];
+  evaluations: CommunitySolutionEvaluationModel[];
   solution: CommunityCourseStageSolutionModel;
 };
 
@@ -47,7 +47,7 @@ export default class CodeExampleRoute extends BaseRoute {
     return {
       course: course,
       comparisons: comparisons as unknown as SolutionComparisonModel[],
-      evaluations: evaluations as unknown as CommunitySolutionEvalutionModel[],
+      evaluations: evaluations as unknown as CommunitySolutionEvaluationModel[],
       solution: solution,
     };
   }

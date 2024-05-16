@@ -3,13 +3,13 @@ import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type { Signature as TabsComponentSignature } from 'codecrafters-frontend/components/tabs';
-import type CommunitySolutionEvalutionModel from 'codecrafters-frontend/models/community-solution-evaluation';
+import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 
 export type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    evaluation: CommunitySolutionEvalutionModel;
+    evaluation: CommunitySolutionEvaluationModel;
   };
 };
 
