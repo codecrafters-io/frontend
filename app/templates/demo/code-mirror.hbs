@@ -1,0 +1,292 @@
+{{page-title "CodeMirror"}}
+
+{{#let
+  "flex flex-wrap text-sm font-semibold text-gray-600 border-b border-gray-200 py-2" "flex cursor-default select-none text-nowrap mx-2"
+  as |groupClasses labelClasses|
+}}
+  <codemirror-options class="{{groupClasses}} -mt-8">
+    <codemirror-options-left class="flex flex-grow flex-wrap">
+      <label class="{{labelClasses}} ml-0" title="Document preset to use">
+        <span class="ml-2">Document:</span>
+        <select {{on "change" this.selectedDocumentIndexDidChange}}>
+          {{#each this.documents as |doc index|}}
+            <option selected={{eq this.selectedDocumentIndex index}}>{{doc.filename}}</option>
+          {{/each}}
+        </select>
+      </label>
+      <label class="{{labelClasses}} font-thin">
+        <span class="ml-2 text-gray-300">language: {{this.selectedDocument.language}}</span>
+      </label>
+    </codemirror-options-left>
+    <codemirror-options-right class="flex">
+      <label class="{{labelClasses}}" title="Show a border around the component's element">
+        <Input @type="checkbox" @checked={{this.border}} />
+        <span class="ml-2">border</span>
+      </label>
+      <label class="{{labelClasses}}" title="Theme to use for the editor">
+        <Input @type="checkbox" @checked={{this.theme}} />
+        <span class="mx-2">theme:</span>
+        <select class="text-right {{unless this.theme 'bg-gray-200'}}" {{on "change" this.selectedThemeIndexDidChange}} disabled={{not this.theme}}>
+          {{#each this.themes as |theme index|}}
+            <option selected={{eq this.selectedThemeIndex index}}>{{theme}}</option>
+          {{/each}}
+        </select>
+      </label>
+    </codemirror-options-right>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}} border-dotted">
+    <codemirror-options-left class="flex flex-grow flex-wrap">
+      <label class="{{labelClasses}}" title="Enable the line numbers gutter">
+        <Input @type="checkbox" @checked={{this.lineNumbers}} />
+        <span class="ml-2">lineNumbers</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable code folding & the fold gutter">
+        <Input @type="checkbox" @checked={{this.foldGutter}} />
+        <span class="ml-2">foldGutter</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable visual line wrapping for lines exceeding editor width">
+        <Input @type="checkbox" @checked={{this.lineWrapping}} />
+        <span class="ml-2">lineWrapping</span>
+      </label>
+      <label class="{{labelClasses}}" title="Allow scrolling past the end of the document">
+        <Input @type="checkbox" @checked={{this.scrollPastEnd}} />
+        <span class="ml-2">scrollPastEnd</span>
+      </label>
+    </codemirror-options-left>
+    <codemirror-options-right class="flex">
+      <label class="{{labelClasses}}" title="Number of spaces to use for representing the TAB character visually">
+        <Input @type="checkbox" @checked={{this.tabSize}} />
+        <span class="mx-2">tabSize:</span>
+        <select
+          class="text-right {{unless this.tabSize 'bg-gray-200'}}"
+          {{on "change" this.selectedTabSizeIndexDidChange}}
+          disabled={{not this.tabSize}}
+        >
+          {{#each this.tabSizes as |tabSize index|}}
+            <option selected={{eq this.selectedTabSizeIndex index}}>{{tabSize}}</option>
+          {{/each}}
+        </select>
+      </label>
+      <label class="{{labelClasses}}" title="Line ending separator to use when Enter is pressed in editor (does NOT reformat document upon loading)">
+        <Input @type="checkbox" @checked={{this.lineSeparator}} />
+        <span class="mx-2">lineSeparator:</span>
+        <select
+          class="text-right {{unless this.lineSeparator 'bg-gray-200'}}"
+          {{on "change" this.selectedLineSeparatorIndexDidChange}}
+          disabled={{not this.lineSeparator}}
+        >
+          {{#each this.lineSeparators as |lineSeparator index|}}
+            <option selected={{eq this.selectedLineSeparatorIndex index}}>{{lineSeparator.name}}</option>
+          {{/each}}
+        </select>
+      </label>
+    </codemirror-options-right>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}} border-dotted">
+    <label class="{{labelClasses}}" title="Document for the editor to render & edit (from selected document preset)">
+      <Input @type="checkbox" @checked={{this.document}} />
+      <span class="ml-2">document</span>
+    </label>
+    <label class="{{labelClasses}}" title="Explicitly pass a language to the editor (from selected document preset)">
+      <Input @type="checkbox" @checked={{this.language}} />
+      <span class="ml-2">language</span>
+    </label>
+    <label
+      class="{{labelClasses}}"
+      title="Pass a filename to automatically detect language based on file name and extension (from selected document preset)"
+    >
+      <Input @type="checkbox" @checked={{this.filename}} disabled={{eq this.language true}} />
+      <span class="ml-2 {{if this.language 'text-gray-300'}}">filename</span>
+    </label>
+    <label class="{{labelClasses}}" title="Placeholder text to show when document is empty or not passed">
+      <Input @type="checkbox" @checked={{this.placeholder}} />
+      <span class="ml-2">placeholder</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable unified diff editor by passing the original document">
+      <Input @type="checkbox" @checked={{this.originalDocument}} />
+      <span class="ml-2">originalDocument</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable showing accept/reject buttons in the diff editor">
+      <Input @type="checkbox" @checked={{this.mergeControls}} disabled={{not this.originalDocument}} />
+      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
+    </label>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}} border-dotted">
+    <label
+      class="{{labelClasses}}"
+      title="Present the editor as an editable & focusable control, sets the DOM `contenteditable` attribute, do not confuse with `readOnly`"
+    >
+      <Input @type="checkbox" @checked={{this.editable}} />
+      <span class="ml-2">editable</span>
+    </label>
+    <label
+      class="{{labelClasses}}"
+      title="Make the document in the editor read-only, disable commands and other mutating extensions, do not confuse with `editable`"
+    >
+      <Input @type="checkbox" @checked={{this.readOnly}} />
+      <span class="ml-2">readOnly</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable changes history and undo/redo keymap">
+      <Input @type="checkbox" @checked={{this.history}} />
+      <span class="ml-2">history</span>
+    </label>
+    <label class="{{labelClasses}}" title="Preserve changes history when parent component passes a new `@document` to the component">
+      <Input @type="checkbox" @checked={{this.preserveHistory}} disabled={{not this.history}} />
+      <span class="ml-2 {{unless this.history 'text-gray-300'}}">preserveHistory</span>
+    </label>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}} border-dotted">
+    <codemirror-options-left class="flex flex-grow flex-wrap">
+      <label class="{{labelClasses}}" title="Automatically close brackets when typing">
+        <Input @type="checkbox" @checked={{this.closeBrackets}} disabled={{or this.readOnly (not this.editable)}} />
+        <span class="ml-2 {{if (or this.readOnly (not this.editable)) 'text-gray-300'}}">closeBrackets</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable auto-completion">
+        <Input @type="checkbox" @checked={{this.autocompletion}} disabled={{or this.readOnly (not this.editable)}} />
+        <span class="ml-2 {{if (or this.readOnly (not this.editable)) 'text-gray-300'}}">autocompletion</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable automatic indentation (in languages that support/require it)">
+        <Input @type="checkbox" @checked={{this.indentOnInput}} disabled={{or this.readOnly (not this.editable)}} />
+        <span class="ml-2 {{if (or this.readOnly (not this.editable)) 'text-gray-300'}}">indentOnInput</span>
+      </label>
+      <label
+        class="{{labelClasses}}"
+        title="Enable indentation of lines or selection using TAB and Shift+TAB keys, otherwise editor loses focus when TAB is pressed"
+      >
+        <Input @type="checkbox" @checked={{this.indentWithTab}} disabled={{or this.readOnly (not this.editable)}} />
+        <span class="ml-2 {{if (or this.readOnly (not this.editable)) 'text-gray-300'}}">indentWithTab</span>
+      </label>
+    </codemirror-options-left>
+    <codemirror-options-right class="flex">
+      <label
+        class="{{labelClasses}}"
+        title="Symbols to use for indentation with `indentOnInput` and `indentWithTab` (does NOT reformat document upon loading)"
+      >
+        {{#let (or (or this.readOnly (not this.editable)) (and (not this.indentOnInput) (not this.indentWithTab))) as |isDisabled|}}
+          <Input @type="checkbox" @checked={{this.indentUnit}} disabled={{isDisabled}} />
+          <span class="mx-2 {{if isDisabled 'text-gray-300'}}">indentUnit:</span>
+          <select
+            class="text-right {{if (or isDisabled (not this.indentUnit)) 'bg-gray-200'}}"
+            {{on "change" this.selectedIndentUnitIndexDidChange}}
+            disabled={{or isDisabled (not this.indentUnit)}}
+          >
+            {{#each this.indentUnits as |indentUnit index|}}
+              <option selected={{eq this.selectedIndentUnitIndex index}}>{{indentUnit.name}}</option>
+            {{/each}}
+          </select>
+        {{/let}}
+      </label>
+    </codemirror-options-right>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}} border-dotted">
+    <label class="{{labelClasses}}" title="Enable syntax highlighting (using a theme enables syntax highlighting automatically)">
+      <Input @type="checkbox" @checked={{this.syntaxHighlighting}} disabled={{this.theme}} />
+      <span class="ml-2 {{if this.theme 'text-gray-300'}}">syntaxHighlighting</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable highlighting of matching brackets">
+      <Input @type="checkbox" @checked={{this.bracketMatching}} disabled={{not this.editable}} />
+      <span class="ml-2 {{unless this.editable 'text-gray-300'}}">bracketMatching</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable highlighting of active line">
+      <Input @type="checkbox" @checked={{this.highlightActiveLine}} />
+      <span class="ml-2">highlightActiveLine</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable highlighting of current selection matches in the document">
+      <Input @type="checkbox" @checked={{this.highlightSelectionMatches}} />
+      <span class="ml-2">highlightSelectionMatches</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable highlighting of invisible characters, such as `U+200E`">
+      <Input @type="checkbox" @checked={{this.highlightSpecialChars}} />
+      <span class="ml-2">highlightSpecialChars</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable highlighting of whitespace">
+      <Input @type="checkbox" @checked={{this.highlightWhitespace}} />
+      <span class="ml-2">highlightWhitespace</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable highlighting of trailing whitespace">
+      <Input @type="checkbox" @checked={{this.highlightTrailingWhitespace}} />
+      <span class="ml-2">highlightTrailingWhitespace</span>
+    </label>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}} border-dotted">
+    <label
+      class="{{labelClasses}}"
+      title="Use a custom method for selection drawing instead of the browser's built-in, allows multiple selections and other goodies"
+    >
+      <Input @type="checkbox" @checked={{this.drawSelection}} />
+      <span class="ml-2">drawSelection</span>
+    </label>
+    <label class="{{labelClasses}}" title="Allow multiple selections by using CTRL/CMD key">
+      <Input @type="checkbox" @checked={{this.allowMultipleSelections}} disabled={{not this.drawSelection}} />
+      <span class="ml-2 {{unless this.drawSelection 'text-gray-300'}}">allowMultipleSelections</span>
+    </label>
+    <label class="{{labelClasses}}" title="Allow drawing rectangular selections by using ALT key">
+      <Input @type="checkbox" @checked={{this.rectangularSelection}} disabled={{not this.drawSelection}} />
+      <span class="ml-2 {{unless this.drawSelection 'text-gray-300'}}">rectangularSelection</span>
+    </label>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}}">
+    <label class="{{labelClasses}}" title="Use a crosshair cursor over the editor when ALT key is pressed">
+      <Input @type="checkbox" @checked={{this.crosshairCursor}} />
+      <span class="ml-2">crosshairCursor</span>
+    </label>
+    <label class="{{labelClasses}}" title="Draw a blinking edit cursor to indicate where pasting will occur when a file is dragged over the editor">
+      <Input @type="checkbox" @checked={{this.dropCursor}} />
+      <span class="ml-2">dropCursor</span>
+    </label>
+  </codemirror-options>
+{{/let}}
+
+<CodeMirror
+  {{! Document options }}
+  @document={{if this.document this.selectedDocument.document}}
+  @onDocumentUpdate={{fn this.documentDidChange this}}
+  {{! Filename & Language }}
+  @filename={{if this.filename this.selectedDocument.filename}}
+  @language={{if this.language this.selectedDocument.language}}
+  {{! Original document (to show diff) }}
+  @originalDocument={{if this.originalDocument this.selectedDocument.originalDocument}}
+  {{! String & Number options }}
+  @indentUnit={{if this.indentUnit this.selectedIndentUnit.symbol}}
+  @lineSeparator={{if this.lineSeparator this.selectedLineSeparator.symbol}}
+  @placeholder={{if this.placeholder this.placeholderMessage}}
+  @tabSize={{if this.tabSize this.selectedTabSize}}
+  @theme={{if this.theme this.selectedTheme}}
+  {{! Boolean Options }}
+  @allowMultipleSelections={{this.allowMultipleSelections}}
+  @autocompletion={{this.autocompletion}}
+  @bracketMatching={{this.bracketMatching}}
+  @closeBrackets={{this.closeBrackets}}
+  @crosshairCursor={{this.crosshairCursor}}
+  @drawSelection={{this.drawSelection}}
+  @dropCursor={{this.dropCursor}}
+  @editable={{this.editable}}
+  @foldGutter={{this.foldGutter}}
+  @highlightActiveLine={{this.highlightActiveLine}}
+  @highlightSelectionMatches={{this.highlightSelectionMatches}}
+  @highlightSpecialChars={{this.highlightSpecialChars}}
+  @highlightTrailingWhitespace={{this.highlightTrailingWhitespace}}
+  @highlightWhitespace={{this.highlightWhitespace}}
+  @history={{this.history}}
+  @indentOnInput={{this.indentOnInput}}
+  @indentWithTab={{this.indentWithTab}}
+  @lineNumbers={{this.lineNumbers}}
+  @lineWrapping={{this.lineWrapping}}
+  @mergeControls={{this.mergeControls}}
+  @preserveHistory={{this.preserveHistory}}
+  @readOnly={{this.readOnly}}
+  @rectangularSelection={{this.rectangularSelection}}
+  @scrollPastEnd={{this.scrollPastEnd}}
+  @syntaxHighlighting={{this.syntaxHighlighting}}
+  {{! Element classes }}
+  class="block overflow-scroll my-4 h-72 {{if this.border 'border-2 border-dashed border-green-500'}}"
+/>
+
+{{outlet}}

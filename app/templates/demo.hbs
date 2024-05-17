@@ -1,0 +1,23 @@
+{{page-title "Demo"}}
+
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+  <h1 class="text-3xl text-gray-700 font-bold tracking-tighter mb-3">Demo</h1>
+
+  <p class="text-gray-500 mb-6">
+    Demo zone for complex components.
+  </p>
+
+  <div class="flex mb-8 border-b overflow-x-scroll">
+    <LinkTo
+      @route="demo.code-mirror"
+      role="button"
+      class="flex flex-shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+        {{if (eq this.router.currentRouteName 'demo.code-mirror') 'border-teal-500' 'border-gray-100'}}"
+    >
+      <span class={{if (eq this.router.currentRouteName "demo.code-mirror") "font-medium text-teal-500" "text-gray-600"}}>CodeMirror</span>
+    </LinkTo>
+  </div>
+
+  {{outlet}}
+
+</div>
