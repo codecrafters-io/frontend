@@ -7,11 +7,6 @@
   ],
   "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "https://codecrafters.io/heroku_pages/maintenance.html",
-      "permanent": false
-    },
-    {
       "source": "/r/famous-wombat-417894",
       "destination": "/join?via=gnomezgrave"
     },
