@@ -3,39 +3,68 @@ import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-const SELECTOR_COMPONENT = '[data-test-code-mirror-component]';
-const SELECTOR_EDITOR = `${SELECTOR_COMPONENT} > .cm-editor`;
-const SELECTOR_SCROLLER = `${SELECTOR_EDITOR} > .cm-scroller`;
-const SELECTOR_CONTENT = `${SELECTOR_SCROLLER} > .cm-content`;
+import { create, text } from 'ember-cli-page-object';
+import { alias } from 'ember-cli-page-object/macros';
+
+const codeMirror = create({
+  scope: '[data-test-code-mirror-component]',
+  componentText: text(),
+
+  editor: {
+    scope: '> .cm-editor',
+    scroller: {
+      scope: '> .cm-scroller',
+      content: {
+        text: text(),
+        scope: '> .cm-content',
+      },
+    },
+  },
+
+  content: alias('editor.scroller.content'),
+
+  hasRendered: alias('content.isPresent'),
+  text: alias('content.text'),
+});
 
 module('Integration | Component | code-mirror', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
     await render(hbs`<CodeMirror />`);
-    assert.dom(SELECTOR_COMPONENT).exists();
-    assert.dom(SELECTOR_EDITOR).exists();
-    assert.dom(SELECTOR_SCROLLER).exists();
-    assert.dom(SELECTOR_CONTENT).exists();
+    assert.ok(codeMirror.isPresent);
+    assert.ok(codeMirror.editor.isPresent);
+    assert.ok(codeMirror.editor.scroller.isPresent);
+    assert.ok(codeMirror.editor.scroller.content.isPresent);
+    assert.ok(codeMirror.hasRendered);
+    assert.strictEqual(codeMirror.componentText, '');
+    assert.strictEqual(codeMirror.text, '');
   });
 
   test('it renders (block form)', async function (assert) {
     await render(hbs`<CodeMirror>template block text</CodeMirror>`);
-    assert.dom(SELECTOR_COMPONENT).exists();
-    assert.dom(SELECTOR_EDITOR).exists();
-    assert.dom(SELECTOR_SCROLLER).exists();
-    assert.dom(SELECTOR_CONTENT).exists();
-    assert.dom(SELECTOR_COMPONENT).hasText('template block text');
-    assert.dom(SELECTOR_CONTENT).hasNoText();
+    assert.ok(codeMirror.isPresent);
+    assert.ok(codeMirror.editor.isPresent);
+    assert.ok(codeMirror.editor.scroller.isPresent);
+    assert.ok(codeMirror.editor.scroller.content.isPresent);
+    assert.ok(codeMirror.hasRendered);
+    assert.strictEqual(codeMirror.componentText, 'template block text');
+    assert.strictEqual(codeMirror.text, '');
   });
 
   test('it renders passed document', async function (assert) {
     const exampleText = 'function myJavaScriptFunction() { return "hello world"; }';
     this.set('document', exampleText);
     await render(hbs`<CodeMirror @document={{this.document}} />`);
-    assert.dom(SELECTOR_CONTENT).hasText(exampleText);
+    assert.strictEqual(codeMirror.text, exampleText);
+  });
+
+  test('it renders passed document (block form)', async function (assert) {
+    const exampleText = 'function myJavaScriptFunction() { return "hello world"; }';
+    this.set('document', exampleText);
     await render(hbs`<CodeMirror @document={{this.document}}>template block text</CodeMirror>`);
-    assert.dom(SELECTOR_CONTENT).hasText(exampleText);
+    assert.strictEqual(codeMirror.componentText, `template block text ${exampleText}`);
+    assert.strictEqual(codeMirror.text, exampleText);
   });
 
   module('Updating passed document', function () {
@@ -44,9 +73,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       const exampleTextUpdated = 'export const function myJavaScriptFunction() { return "hello world"; }';
       this.set('document', exampleText);
       await render(hbs`<CodeMirror @document={{this.document}} />`);
-      assert.dom(SELECTOR_CONTENT).hasText(exampleText);
+      assert.strictEqual(codeMirror.text, exampleText);
       this.set('document', exampleTextUpdated);
-      assert.dom(SELECTOR_CONTENT).hasText(exampleTextUpdated);
+      assert.strictEqual(codeMirror.text, exampleTextUpdated);
     });
 
     skip('it resets edit history when @presereveHistory is false');
@@ -63,9 +92,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('allowMultipleSelections', true);
         await render(hbs`<CodeMirror @allowMultipleSelections={{this.allowMultipleSelections}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('allowMultipleSelections', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -75,9 +104,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('autocompletion', true);
         await render(hbs`<CodeMirror @autocompletion={{this.autocompletion}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('autocompletion', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -87,9 +116,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('bracketMatching', true);
         await render(hbs`<CodeMirror @bracketMatching={{this.bracketMatching}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('bracketMatching', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -99,9 +128,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('closeBrackets', true);
         await render(hbs`<CodeMirror @closeBrackets={{this.closeBrackets}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('closeBrackets', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -111,9 +140,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('crosshairCursor', true);
         await render(hbs`<CodeMirror @crosshairCursor={{this.crosshairCursor}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('crosshairCursor', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -123,9 +152,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('drawSelection', true);
         await render(hbs`<CodeMirror @drawSelection={{this.drawSelection}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('drawSelection', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -135,9 +164,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('dropCursor', true);
         await render(hbs`<CodeMirror @dropCursor={{this.dropCursor}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('dropCursor', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -147,9 +176,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('editable', true);
         await render(hbs`<CodeMirror @editable={{this.editable}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('editable', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -159,9 +188,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('foldGutter', true);
         await render(hbs`<CodeMirror @foldGutter={{this.foldGutter}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('foldGutter', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -171,9 +200,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightActiveLine', true);
         await render(hbs`<CodeMirror @highlightActiveLine={{this.highlightActiveLine}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('highlightActiveLine', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -183,9 +212,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightSelectionMatches', true);
         await render(hbs`<CodeMirror @highlightSelectionMatches={{this.highlightSelectionMatches}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('highlightSelectionMatches', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -195,9 +224,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightSpecialChars', true);
         await render(hbs`<CodeMirror @highlightSpecialChars={{this.highlightSpecialChars}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('highlightSpecialChars', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -207,9 +236,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightTrailingWhitespace', true);
         await render(hbs`<CodeMirror @highlightTrailingWhitespace={{this.highlightTrailingWhitespace}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('highlightTrailingWhitespace', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -219,9 +248,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightWhitespace', true);
         await render(hbs`<CodeMirror @highlightWhitespace={{this.highlightWhitespace}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('highlightWhitespace', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -231,9 +260,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('history', true);
         await render(hbs`<CodeMirror @history={{this.history}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('history', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -243,9 +272,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('indentOnInput', true);
         await render(hbs`<CodeMirror @indentOnInput={{this.indentOnInput}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('indentOnInput', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -255,9 +284,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('indentUnit', '  ');
         await render(hbs`<CodeMirror @indentUnit={{this.indentUnit}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('indentUnit', '\t');
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -267,9 +296,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('indentWithTab', true);
         await render(hbs`<CodeMirror @indentWithTab={{this.indentWithTab}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('indentWithTab', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -279,9 +308,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('filename', 'javascript.js');
         await render(hbs`<CodeMirror @filename={{this.filename}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('filename', 'python.py');
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -291,9 +320,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('language', 'javascript');
         await render(hbs`<CodeMirror @language={{this.language}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('language', 'markdown');
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -303,9 +332,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('lineNumbers', true);
         await render(hbs`<CodeMirror @lineNumbers={{this.lineNumbers}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('lineNumbers', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -315,9 +344,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('lineSeparator', '\n');
         await render(hbs`<CodeMirror @lineSeparator={{this.lineSeparator}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('lineSeparator', '\r\n');
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -327,9 +356,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('lineWrapping', true);
         await render(hbs`<CodeMirror @lineWrapping={{this.lineWrapping}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('lineWrapping', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -339,9 +368,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('mergeControls', true);
         await render(hbs`<CodeMirror @mergeControls={{this.mergeControls}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('mergeControls', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -351,11 +380,11 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('originalDocument', 'original content');
         await render(hbs`<CodeMirror @originalDocument={{this.originalDocument}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('originalDocument', 'original content'); // trigger update with same content
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('originalDocument', 'original content modified');
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -365,9 +394,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('placeholder', 'placeholder text');
         await render(hbs`<CodeMirror @placeholder={{this.placeholder}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('placeholder', 'placeholder text modified');
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -377,9 +406,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('readOnly', true);
         await render(hbs`<CodeMirror @readOnly={{this.readOnly}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('readOnly', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -389,9 +418,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('rectangularSelection', true);
         await render(hbs`<CodeMirror @rectangularSelection={{this.rectangularSelection}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('rectangularSelection', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -401,9 +430,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('scrollPastEnd', true);
         await render(hbs`<CodeMirror @scrollPastEnd={{this.scrollPastEnd}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('scrollPastEnd', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -413,9 +442,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('syntaxHighlighting', true);
         await render(hbs`<CodeMirror @syntaxHighlighting={{this.syntaxHighlighting}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('syntaxHighlighting', false);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -425,9 +454,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('tabSize', 2);
         await render(hbs`<CodeMirror @tabSize={{this.tabSize}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('tabSize', 4);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
@@ -437,9 +466,9 @@ module('Integration | Component | code-mirror', function (hooks) {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('theme', 'githubLight');
         await render(hbs`<CodeMirror @theme={{this.theme}} />`);
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
         this.set('theme', 'githubDark');
-        assert.dom(SELECTOR_CONTENT).exists();
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
