@@ -35,4 +35,19 @@
       </div>
     </EmberPopover>
   </Pill>
+{{else if (eq @solution.scoreReason "concise")}}
+  <Pill @color="green" ...attributes>
+    Concise
+
+    <EmberTooltip>
+      <div class="prose prose-sm prose-invert text-white">
+        <p>
+          This solution is shown at the top of the list because it is concise.
+        </p>
+        <p>
+          Note that a concise solution isn't necessarily the "best" solution, but it is a good starting point for learning.
+        </p>
+      </div>
+    </EmberTooltip>
+  </Pill>
 {{/if}}
