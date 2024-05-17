@@ -37,9 +37,8 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @attr('string') declare githubRepositoryName: string;
   @attr('boolean') declare githubRepositoryIsPrivate: boolean;
   @attr('boolean') declare isPinned: boolean;
-  @attr('number') declare ratingEstimate: number | null;
-  @attr('number') declare ratingMean: number | null;
-  @attr('number') declare ratingStandardDeviation: number | null;
+  @attr('number') declare score: number | null;
+  @attr('string') declare scoreReason: 'concise' | 'pinned' | null;
   @attr('date') declare submittedAt: Date;
   @attr('boolean') declare isRestrictedToTeam: boolean; // if true, only fellow team members can see this solution
 
@@ -54,30 +53,6 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   get isPublishedToPublicGithubRepository() {
     return this.isPublishedToGithub && !this.githubRepositoryIsPrivate;
-  }
-
-  get ratingEstimateRounded() {
-    if (this.ratingEstimate === null) {
-      return null;
-    }
-
-    return Math.round(this.ratingEstimate * 100) / 100;
-  }
-
-  get ratingMeanRounded() {
-    if (this.ratingMean === null) {
-      return null;
-    }
-
-    return Math.round(this.ratingMean * 100) / 100;
-  }
-
-  get ratingStandardDeviationRounded() {
-    if (this.ratingStandardDeviation === null) {
-      return null;
-    }
-
-    return Math.round(this.ratingStandardDeviation * 100) / 100;
   }
 
   get screencast() {
