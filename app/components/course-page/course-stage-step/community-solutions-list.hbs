@@ -1,6 +1,6 @@
 {{#each this.visibleSolutions as |solution solutionIndex|}}
   <CoursePage::CourseStageStep::CommunitySolutionCard
-    @isCollapsedByDefault={{true}}
+    @isCollapsedByDefault={{gt solutionIndex 0}}
     @metadataForDownvote={{hash position_in_list=(add solutionIndex 1)}}
     @metadataForUpvote={{hash position_in_list=(add solutionIndex 1)}}
     @onExpand={{fn this.handleSolutionExpand solution solutionIndex}}
