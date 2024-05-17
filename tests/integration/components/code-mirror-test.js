@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-import { create, text } from 'ember-cli-page-object';
+import { blurrable, create, clickable, collection, fillable, focusable, text } from 'ember-cli-page-object';
 import { alias } from 'ember-cli-page-object/macros';
 
 const codeMirror = create({
@@ -15,8 +15,14 @@ const codeMirror = create({
     scroller: {
       scope: '> .cm-scroller',
       content: {
-        text: text(),
         scope: '> .cm-content',
+        text: text(),
+        focus: focusable(),
+        blur: blurrable(),
+        lines: collection('> .cm-line', {
+          click: clickable(),
+          fillIn: fillable(),
+        }),
       },
     },
   },
@@ -84,7 +90,30 @@ module('Integration | Component | code-mirror', function (hooks) {
   });
 
   module('Updating edited document', function () {
-    skip('it calls @onDocumentUpdate when document is edited inside the editor');
+    test('it calls @onDocumentUpdate when document is edited inside the editor', async function (assert) {
+      const exampleText = 'function myJavaScriptFunction() { return "hello world"; }';
+      let callCount = 0;
+
+      const documentDidChange = (_target, newValue) => {
+        callCount++;
+        assert.strictEqual(newValue, 'New Content', 'new value is passed to onDocumentUpdate');
+
+        if (newValue !== this.document) {
+          this.set('document', newValue);
+        }
+      };
+
+      this.set('document', exampleText);
+      this.set('documentDidChange', documentDidChange);
+      await render(hbs`<CodeMirror @document={{this.document}} @editable={{true}} @onDocumentUpdate={{fn this.documentDidChange this}} />`);
+      assert.strictEqual(codeMirror.text, exampleText, 'initial text is rendered');
+      await codeMirror.content.focus();
+      await codeMirror.content.lines.objectAt(0).click();
+      await codeMirror.content.lines.objectAt(0).fillIn('New Content');
+      await codeMirror.content.blur();
+      assert.strictEqual(callCount, 1, 'onDocumentUpdate is called once');
+      assert.strictEqual(codeMirror.text, 'New Content', 'text in the editor is updated');
+    });
   });
 
   module('Options', function () {
