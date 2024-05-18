@@ -18,7 +18,7 @@ export default class CodeExamplesController extends Controller {
   @service declare store: Store;
 
   rippleSpinnerImage = rippleSpinnerImage;
-  @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recent';
+  @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recommended';
   @tracked isLoading = true;
   @tracked solutions: CommunityCourseStageSolutionModel[] = [];
   @tracked requestedLanguage: LanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
