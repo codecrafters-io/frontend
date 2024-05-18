@@ -1,4 +1,4 @@
-{{#each this.visibleSolutions as |solution solutionIndex|}}
+{{#each @solutions as |solution solutionIndex|}}
   <CoursePage::CourseStageStep::CommunitySolutionCard
     @isCollapsedByDefault={{gt solutionIndex 0}}
     @metadataForDownvote={{hash position_in_list=(add solutionIndex 1)}}
@@ -10,20 +10,6 @@
     class="scroll-mt-16"
   />
 {{/each}}
-
-{{#if this.hasNextResults}}
-  {{#if this.isLoadingNextBatch}}
-    <div class="flex p-4 items-center mb-40 mt-16 justify-center">
-      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4 mr-2" />
-      <span class="text-sm text-gray-600">
-        Loading...
-      </span>
-    </div>
-  {{else}}
-    <div {{in-viewport onEnter=this.handleListEndReached}} key={{this.visibleSolutions.length}}>
-    </div>
-  {{/if}}
-{{/if}}
 
 {{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
