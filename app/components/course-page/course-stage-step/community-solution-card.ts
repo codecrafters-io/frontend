@@ -59,6 +59,11 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   @action
   handleDidInsert(element: HTMLDivElement) {
     this.containerElement = element;
+
+    // Trigger comments, expand event etc.
+    if (this.isExpanded) {
+      this.handleExpandButtonClick();
+    }
   }
 
   @action

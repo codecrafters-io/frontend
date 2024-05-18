@@ -25,29 +25,27 @@
     </button>
   </div>
 
-  <div class="{{if this.isCollapsed 'h-72 overflow-hidden'}}">
-    <CoursePage::CourseStageStep::CommunitySolutionCard::Content
-      @solution={{@solution}}
-      @fileComparisons={{this.fileComparisons}}
-      @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
-    />
+  <div>
+    {{#if this.isExpanded}}
+      <CoursePage::CourseStageStep::CommunitySolutionCard::Content
+        @solution={{@solution}}
+        @fileComparisons={{this.fileComparisons}}
+        @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
+      />
+    {{/if}}
 
     {{#if this.isCollapsed}}
-      <div
-        role="button"
-        class="absolute rounded inset-0 vertical-mask p-4 flex items-end justify-center group z-10"
-        data-test-expand-button
+      <button
+        class="mt-4 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"
+        type="button"
         {{on "click" this.handleExpandButtonClick}}
+        data-test-expand-button
       >
-        <div
-          class="border bg-white group-hover:bg-gray-100 hover:group-border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"
-        >
-          <div class="font-bold flex items-center sm:mb-0">
-            Expand example
-            {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
-          </div>
+        <div class="font-bold flex items-center sm:mb-0">
+          Expand example
+          {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
         </div>
-      </div>
+      </button>
     {{else}}
       <button
         class="mt-4 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-4 py-5 text-gray-700 text-sm rounded flex flex-col items-center w-full group"

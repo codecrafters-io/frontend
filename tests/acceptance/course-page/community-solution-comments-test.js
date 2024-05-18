@@ -55,13 +55,12 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await codeExamplesTab.languageDropdown.clickOnLink('Python');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'title should be respond to ping');
-    assert.strictEqual(codeExamplesTab.solutionCards.length, 1);
+    assert.strictEqual(codeExamplesTab.solutionCards.length, 1, 'should have 1 solution card');
 
     await percySnapshot('Community Solution Comments - Collapsed');
 
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
-    assert.strictEqual(codeExamplesTab.solutionCards[0].toggleCommentsButtons.length, 2);
-    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 0);
+    assert.strictEqual(codeExamplesTab.solutionCards[0].toggleCommentsButtons.length, 2, 'should have 2 comment buttons');
+    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 0, 'should have 0 comment cards');
 
     await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
     assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 1);
@@ -116,9 +115,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await codeExamplesTab.languageDropdown.toggle();
     await codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
     await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
-
     assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 1);
 
     const firstCommentCard = codeExamplesTab.solutionCards[0].commentCards[0];
@@ -176,7 +173,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     const solutionCard = codeExamplesTab.solutionCards[0];
 
-    await solutionCard.clickOnExpandButton();
     await solutionCard.toggleCommentsButtons[0].click();
 
     const firstCommentCard = solutionCard.commentCards[0];
@@ -403,6 +399,5 @@ async function navigateToComment() {
   await coursePage.codeExamplesTab.languageDropdown.toggle();
   await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-  await coursePage.codeExamplesTab.solutionCards[0].clickOnExpandButton();
   await coursePage.codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
 }
