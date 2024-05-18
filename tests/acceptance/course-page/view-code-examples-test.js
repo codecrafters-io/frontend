@@ -1,15 +1,14 @@
-import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
-import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
+import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
-import { settled, scrollTo } from '@ember/test-helpers';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
