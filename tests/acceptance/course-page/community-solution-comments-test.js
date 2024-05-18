@@ -59,7 +59,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     await percySnapshot('Community Solution Comments - Collapsed');
 
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
     assert.strictEqual(codeExamplesTab.solutionCards[0].toggleCommentsButtons.length, 2);
     assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 0);
 
@@ -116,9 +115,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await codeExamplesTab.languageDropdown.toggle();
     await codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    await codeExamplesTab.solutionCards[0].clickOnExpandButton();
     await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
-
     assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 1);
 
     const firstCommentCard = codeExamplesTab.solutionCards[0].commentCards[0];

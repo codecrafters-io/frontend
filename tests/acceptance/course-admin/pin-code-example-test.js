@@ -45,7 +45,6 @@ module('Acceptance | course-admin | pin-code-example', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await coursePage.codeExamplesTab.solutionCards[0].clickOnExpandButton();
 
     assert.true(coursePage.codeExamplesTab.solutionCards[0].text.includes("Editor's choice"));
   });
