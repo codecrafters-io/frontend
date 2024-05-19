@@ -14,7 +14,7 @@ interface DateFromNowSignature {
 export default class DateFromNow extends Helper<DateFromNowSignature> {
   @service declare time: TimeService;
 
-  public compute(positional: [Date | null | undefined]): string | undefined {
+  public compute(positional: DateFromNowSignature['Args']['Positional']): DateFromNowSignature['Return'] {
     if (!positional[0]) {
       return;
     }
