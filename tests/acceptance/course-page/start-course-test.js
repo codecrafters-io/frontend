@@ -71,12 +71,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
 
-    assert.strictEqual(
-      coursePage.desktopHeader.progressIndicatorText,
-      'Complete pre-challenge assessment to proceed',
-      'progress text is pre-challenge assessment',
-    );
-
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
 
     await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
@@ -97,7 +91,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnContinueButton();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Repository Setup', 'step name is repository setup');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
 
     await percySnapshot('Start Course - Listening for Git push');
 
@@ -108,7 +102,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Git push received.', 'progress text is git push received');
+    assert.ok(coursePage.completedStepNotice.isVisible, 'completed step notice is visible');
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
     await percySnapshot('Start Course - Git Push Received');
