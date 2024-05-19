@@ -10,11 +10,11 @@
     </div>
   {{else if (eq @step.status "locked")}}
     <div class="rounded w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-gray-100 border-gray-300">
-      {{svg-jar "lock-closed" class="w-4 h-4 fill-current text-gray-500"}}
+      {{svg-jar (if (eq @step.type "CourseStageStep") "hashtag" "document-text") class="w-4 h-4 fill-current text-gray-500"}}
     </div>
   {{else if (eq @step.type "IntroductionStep")}}
     <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-white border-teal-500 shadow-sm">
-      {{svg-jar "dots-horizontal" class="w-4 h-4 fill-current text-teal-500"}}
+      {{svg-jar "arrow-right" class="w-4 h-4 fill-current text-teal-500"}}
     </div>
   {{else if (eq @step.type "CourseStageStep")}}
     <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-white border-teal-500 shadow-sm">
