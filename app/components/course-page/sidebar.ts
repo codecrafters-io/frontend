@@ -16,10 +16,6 @@ interface Signature {
     repositories: unknown[];
     activeRepository: RepositoryModel;
   };
-
-  Blocks: {
-    default: [];
-  };
 }
 
 export default class CoursePageSidebarComponent extends Component<Signature> {

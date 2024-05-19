@@ -24,21 +24,13 @@
     <FakeDataToolbar @repository={{@model.activeRepository}} class="absolute top-4 left-4 hidden" />
   {{/if}}
 
-  {{#if this.sidebarIsExpandedOnDesktop}}
-    <CoursePage::Sidebar
-      @course={{@model.course}}
-      @repositories={{@model.repositories}}
-      @activeRepository={{@model.activeRepository}}
-      {{! pb-16 accounts for the test results bar at the bottom !}}
-      class="group relative p-6 pb-16 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
-    >
-      <CoursePage::CollapseSidebarButton
-        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5 z-30"
-        {{on "click" this.handleCollapseSidebarButtonClick}}
-        data-test-collapse-sidebar-button
-      />
-    </CoursePage::Sidebar>
-  {{/if}}
+  <CoursePage::Sidebar
+    @course={{@model.course}}
+    @repositories={{@model.repositories}}
+    @activeRepository={{@model.activeRepository}}
+    {{! pb-16 accounts for the test results bar at the bottom !}}
+    class="group relative p-6 pb-16 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
+  />
 
   {{#if this.sidebarIsExpandedOnMobile}}
     <CoursePage::Sidebar::MobileBackdrop>
@@ -57,13 +49,6 @@
   {{/if}}
 
   <div class="flex flex-col max-h-screen overflow-y-auto flex-grow relative" id="course-page-scrollable-area">
-    {{! For collapse/expand on desktop }}
-    <CoursePage::ExpandSidebarButton
-      class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
-      {{on "click" this.handleExpandSidebarButtonClick}}
-      data-test-expand-sidebar-button
-    />
-
     <CoursePage::Header::MainSection
       @course={{@model.course}}
       @stepList={{this.coursePageState.stepListAsStepList}}

@@ -41,7 +41,6 @@ export default class CourseController extends Controller {
 
   @tracked polledRepository: RepositoryModel | null = null;
   @tracked configureGithubIntegrationModalIsOpen = false;
-  @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;
   @tracked leaderboardIsExpanded = true;
 
@@ -80,15 +79,6 @@ export default class CourseController extends Controller {
   }
 
   @action
-  handleCollapseSidebarButtonClick() {
-    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
-
-    this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
-      course_id: this.model.course.id,
-    });
-  }
-
-  @action
   handleDidInsertContainer() {
     this.setupRouteChangeListeners();
     this.startRepositoryPoller();
@@ -117,15 +107,6 @@ export default class CourseController extends Controller {
     this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
 
     this.analyticsEventTracker.track('expanded_course_page_leaderboard', {
-      course_id: this.model.course.id,
-    });
-  }
-
-  @action
-  handleExpandSidebarButtonClick() {
-    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
-
-    this.analyticsEventTracker.track('expanded_course_page_sidebar', {
       course_id: this.model.course.id,
     });
   }
