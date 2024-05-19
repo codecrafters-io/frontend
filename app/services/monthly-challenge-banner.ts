@@ -1,4 +1,4 @@
-import config from 'ember-get-config';
+// import config from 'ember-get-config';
 import Service from '@ember/service';
 import LargeImage from '/assets/images/monthly-challenges/large.png';
 import SmallImage from '/assets/images/monthly-challenges/small.png';
@@ -9,7 +9,7 @@ export default class MonthlyChallengeBannerService extends Service {
   }
 
   get isOutdated(): boolean {
-    return new Date() >= new Date('January 01, 2024') && config.environment !== 'test';
+    return new Date() >= new Date('January 01, 2024');
   }
 
   get largeImage() {

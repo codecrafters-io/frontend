@@ -1,60 +1,73 @@
-<div class="bg-gray-100 border-r flex flex-col" data-test-course-page-sidebar ...attributes>
-  <div class="flex items-center">
-    <CourseLogo @course={{@course}} class="w-6 h-6 mr-2.5" />
+{{! The sidebar is either 18em or 3em wide, depending on whether it's expanded.}}
+{{! "Collapsed" elements should be 1.5em wide to account for the 0.75em padding.}}
+<div
+  data-test-course-page-sidebar
+  ...attributes
+  {{on "mouseenter" (fn (mut this.isHovered) true)}}
+  {{on "mouseleave" (fn (mut this.isHovered) false)}}
+  class="px-[0.75em] py-6 bg-gray-100 border-r flex flex-col {{if this.isExpanded 'w-[18em]' 'w-[3em]'}} transition-[width] duration-200"
+>
+  <div class="flex flex-col w-[16.5em]">
+    <div class="flex items-center">
+      <CourseLogo @course={{@course}} class="w-[1.5em] h-[1.5em]" />
 
-    <h1 class="text-gray-800 font-semibold mr-3 tracking-tight">
-      {{@course.name}}
-    </h1>
-  </div>
+      {{#animated-if this.isExpanded use=this.fade}}
+        <h1 class="text-gray-800 font-semibold tracking-tight pl-2.5">
+          {{@course.name}}
+        </h1>
+      {{/animated-if}}
+    </div>
 
-  {{#if @course.releaseStatusIsBeta}}
+    {{! TODO: Find another place for this?}}
+    {{!-- {{#if @course.releaseStatusIsBeta}}
     <BetaCourseLabel class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
   {{else if @course.isFree}}
     <FreeCourseLabel @course={{@course}} class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
-  {{/if}}
+  {{/if}} --}}
 
-  {{! @glint-expect-error: not typesafe yet}}
-  <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
+    {{! @glint-expect-error: not typesafe yet}}
+    <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
 
-  <div class="flex-grow overflow-y-auto mt-6 -mx-3">
-    <CoursePage::StepList
-      @activeRepository={{@activeRepository}}
-      @course={{@course}}
-      @onConfigureExtensionsButtonClick={{this.handleConfigureExtensionsButtonClick}}
-      @stepList={{this.stepList}}
-    />
-  </div>
+    <div class="flex-grow overflow-y-auto mt-6 -mx-1.5">
+      <CoursePage::StepList
+        @activeRepository={{@activeRepository}}
+        @course={{@course}}
+        @onConfigureExtensionsButtonClick={{this.handleConfigureExtensionsButtonClick}}
+        @stepList={{this.stepList}}
+      />
+    </div>
 
-  <div class="flex flex-col mt-4">
-    {{#unless this.currentUser.canAccessPaidContent}}
-      {{#unless this.monthlyChallengeBanner.isOutdated}}
-        <CoursePage::Sidebar::MonthlyChallengeBanner @course={{@course}} class="mb-4" />
+    <div class="flex flex-col mt-4">
+      {{#unless this.currentUser.canAccessPaidContent}}
+        {{#unless this.monthlyChallengeBanner.isOutdated}}
+          <CoursePage::Sidebar::MonthlyChallengeBanner @course={{@course}} class="mb-4" />
+        {{/unless}}
+
+        <PrimaryLinkButton @size="small" @route="pay" class="mb-4">
+          <span class="flex items-center gap-x-1 justify-center w-full">
+            <span>Subscribe</span>
+            {{svg-jar "lock-open" class="w-4"}}
+          </span>
+        </PrimaryLinkButton>
       {{/unless}}
 
-      <PrimaryLinkButton @size="small" @route="pay" class="mb-4">
-        <span class="flex items-center gap-x-1 justify-center w-full">
-          <span>Subscribe</span>
-          {{svg-jar "lock-open" class="w-4"}}
-        </span>
-      </PrimaryLinkButton>
-    {{/unless}}
+      <LinkTo
+        @route="catalog"
+        class="inline-flex justify-center items-center text-gray-500 hover:text-gray-600 transition-colors text-xs p-2 border border-gray-300 rounded-lg hover:bg-white"
+      >
+        {{svg-jar "arrow-circle-left" class="w-4 mr-1 fill-current"}}
+        <span class="font-bold uppercase tracking-wide">Back to Catalog</span>
+      </LinkTo>
+    </div>
 
-    <LinkTo
-      @route="catalog"
-      class="inline-flex justify-center items-center text-gray-500 hover:text-gray-600 transition-colors text-xs p-2 border border-gray-300 rounded-lg hover:bg-white"
-    >
-      {{svg-jar "arrow-circle-left" class="w-4 mr-1 fill-current"}}
-      <span class="font-bold uppercase tracking-wide">Back to Catalog</span>
-    </LinkTo>
+    {{#if this.configureExtensionsModalIsOpen}}
+      <ModalBackdrop>
+        <CoursePage::ConfigureExtensionsModal
+          @repository={{@activeRepository}}
+          {{! @glint-expect-error: mut helper types don't agree?}}
+          @onClose={{fn (mut this.configureExtensionsModalIsOpen) false}}
+        />
+      </ModalBackdrop>
+    {{/if}}
   </div>
-
-  {{#if this.configureExtensionsModalIsOpen}}
-    <ModalBackdrop>
-      <CoursePage::ConfigureExtensionsModal
-        @repository={{@activeRepository}}
-        {{! @glint-expect-error: mut helper types don't agree?}}
-        @onClose={{fn (mut this.configureExtensionsModalIsOpen) false}}
-      />
-    </ModalBackdrop>
-  {{/if}}
 </div>

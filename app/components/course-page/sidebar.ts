@@ -7,6 +7,7 @@ import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -15,15 +16,19 @@ interface Signature {
     course: CourseModel;
     repositories: unknown[];
     activeRepository: RepositoryModel;
+    isCollapsedByDefault: boolean;
   };
 }
 
 export default class CoursePageSidebarComponent extends Component<Signature> {
+  fade = fade;
+
   @service declare authenticator: unknown;
   @service declare coursePageState: CoursePageStateService;
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
 
   @tracked configureExtensionsModalIsOpen = false;
+  @tracked isHovered = false;
 
   get currentStep() {
     return this.coursePageState.currentStep;
@@ -32,6 +37,14 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
   get currentUser() {
     // @ts-ignore
     return this.authenticator.currentUser;
+  }
+
+  get isCollapsed() {
+    return !this.isExpanded;
+  }
+
+  get isExpanded() {
+    return this.args.isCollapsedByDefault ? this.isHovered : true;
   }
 
   get stepList() {
