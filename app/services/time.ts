@@ -3,15 +3,20 @@ import { tracked } from '@glimmer/tracking';
 
 export default class TimeService extends Service {
   @tracked currentTime = new Date();
+  @tracked intervalId: number;
 
   constructor() {
     super();
-    this.updateTime();
+    this.intervalId = this.updateTime();
   }
 
   updateTime() {
-    setInterval(() => {
+    return setInterval(() => {
       this.currentTime = new Date();
     }, 1000);
+  }
+
+  willDestroy() {
+    clearInterval(this.intervalId);
   }
 }
