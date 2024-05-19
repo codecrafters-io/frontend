@@ -72,7 +72,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     assert.false(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is not visible');
 
-    await coursePage.sidebar.configureExtensionsButton.hover();
+    await coursePage.sidebar.configureExtensionsToggles[0].hover();
 
     assertTooltipContent(assert, {
       contentString: 'Complete repository setup to configure extensions',

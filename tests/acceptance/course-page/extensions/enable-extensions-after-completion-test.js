@@ -60,7 +60,8 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 5, 'step list has 5 items before first extension is enabled');
 
-    await coursePage.sidebar.configureExtensionsToggles[0].click();
+    // Enable Extension 1
+    await coursePage.sidebar.configureExtensionsButton.click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
