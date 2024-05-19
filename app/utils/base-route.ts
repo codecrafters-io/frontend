@@ -1,10 +1,11 @@
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
-import window from 'ember-window-mock';
 import RouterService from '@ember/routing/router-service';
 import paramsFromRouteInfo from 'codecrafters-frontend/utils/params-from-route-info';
-import FastBootService from 'ember-cli-fastboot/services/fastboot';
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import posthog from 'posthog-js';
+import window from 'ember-window-mock';
+import { inject as service } from '@ember/service';
 
 type Transition = ReturnType<RouterService['transitionTo']>;
 
@@ -38,10 +39,8 @@ export default class BaseRoute extends Route {
 
     // TODO: Handle case where `isAuthenticated` isn't present yet
     if (!this.fastboot.isFastBoot && window.origin.includes('codecrafters.io')) {
-      // @ts-ignore
-      if (window.posthog && this.authenticator.currentUserId) {
-        // @ts-ignore
-        window.posthog.identify(this.authenticator.currentUserId, { username: this.authenticator.currentUsername });
+      if (this.authenticator.currentUserId) {
+        posthog.identify(this.authenticator.currentUserId, { username: this.authenticator.currentUsername });
       }
     }
 

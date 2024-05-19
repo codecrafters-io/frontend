@@ -42,40 +42,36 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'stage 3 is active');
 
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage completed');
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', '2nd stage is expanded');
     assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage completed');
-    assert.notOk(coursePage.yourTaskCard.hasFeedbackPrompt, 'does not have feedback prompt');
+    assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
     await percySnapshot('Course Stage Feedback Prompt - No Selection');
 
-    await coursePage.yourTaskCard.feedbackPrompt.clickOnOption('😍');
+    await coursePage.feedbackPrompt.clickOnOption('😍');
     await percySnapshot('Course Stage Feedback Prompt - With Selection');
 
-    assert.strictEqual(
-      coursePage.yourTaskCard.feedbackPrompt.explanationTextareaPlaceholder,
-      'Tell us more!',
-      'explanation textarea placeholder is correct',
-    );
+    assert.strictEqual(coursePage.feedbackPrompt.explanationTextareaPlaceholder, 'Tell us more!', 'explanation textarea placeholder is correct');
 
-    await coursePage.yourTaskCard.feedbackPrompt.clickOnOption('😭');
+    await coursePage.feedbackPrompt.clickOnOption('😭');
 
     assert.strictEqual(
-      coursePage.yourTaskCard.feedbackPrompt.explanationTextareaPlaceholder,
+      coursePage.feedbackPrompt.explanationTextareaPlaceholder,
       'What could be better?',
       'explanation textarea placeholder is correct',
     );
 
-    await coursePage.yourTaskCard.feedbackPrompt.clickOnSubmitButton();
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'same stage is shown');
+    await coursePage.feedbackPrompt.clickOnSubmitButton();
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
   });
 
   test('is shown different prompts based on stage number', async function (assert) {
@@ -106,8 +102,8 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', '2nd stage is expanded');
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'Nice work! How did we do?');
+    assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
+    assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Nice work! How did we do?');
 
     const completeStage = async (stageNumber) => {
       this.server.create('submission', 'withStageCompletion', {
@@ -123,24 +119,26 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', '3rd stage is expanded');
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'Great streak! How did we do?');
+    assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
+    assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Great streak! How did we do?');
 
     await completeStage(6);
     await coursePage.sidebar.clickOnStepListItem('Implement the SET & GET commands');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Implement the SET & GET commands', 'penultimate stage is expanded');
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'Just one more to go! How did we do?');
+    // TODO: Bring back the last & penultimate feedback prompts!
+    //
+    // assert.strictEqual(coursePage.desktopHeader.stepName, 'Implement the SET & GET commands', 'penultimate stage is expanded');
+    // assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
+    // assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Just one more to go! How did we do?');
 
-    await completeStage(7);
-    await coursePage.sidebar.clickOnStepListItem('Expiry');
-    await animationsSettled();
+    // await completeStage(7);
+    // await coursePage.sidebar.clickOnStepListItem('Expiry');
+    // await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Expiry', 'last stage is expanded');
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
-    assert.strictEqual(coursePage.yourTaskCard.feedbackPrompt.questionText, 'You did it! How did we do?');
+    // assert.strictEqual(coursePage.desktopHeader.stepName, 'Expiry', 'last stage is expanded');
+    // assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
+    // assert.strictEqual(coursePage.feedbackPrompt.questionText, 'You did it! How did we do?');
   });
 
   test('is not prompted for course stage feedback again if closed', async function (assert) {

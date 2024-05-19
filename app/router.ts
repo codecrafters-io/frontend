@@ -30,6 +30,8 @@ Router.map(function () {
     this.route('buildpacks');
     this.route('buildpack', { path: '/buildpacks/:buildpack_id' });
     this.route('code-example', { path: '/code-examples/:code_example_id' });
+    this.route('code-example-evaluators');
+    this.route('code-example-evaluator', { path: '/code-example-evaluators/:evaluator_slug' });
     this.route('feedback');
     this.route('insights');
     this.route('stage-insights-index', { path: '/stage-insights' });
@@ -96,4 +98,8 @@ Router.map(function () {
 
   this.route('not-found', { path: '/*path' }); // Catch-all
   this.route('not-found', { path: '/404' }); // Allow redirecting to this route
+
+  this.route('demo', function () {
+    this.route('code-mirror');
+  });
 });

@@ -18,7 +18,7 @@ export default class CodeExamplesController extends Controller {
   @service declare store: Store;
 
   rippleSpinnerImage = rippleSpinnerImage;
-  @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recent';
+  @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recommended';
   @tracked isLoading = true;
   @tracked solutions: CommunityCourseStageSolutionModel[] = [];
   @tracked requestedLanguage: LanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
@@ -99,7 +99,7 @@ export default class CodeExamplesController extends Controller {
     this.solutions = (await this.store.query('community-course-stage-solution', {
       course_stage_id: this.courseStage.id,
       language_id: this.currentLanguage.id,
-      include: 'user,language,course-stage,screencasts',
+      include: 'user,language,course-stage,screencasts,current-user-upvotes,current-user-downvotes',
       order: this.order,
     })) as unknown as CommunityCourseStageSolutionModel[]; // TODO: Doesn't store.query support model type inference?
 

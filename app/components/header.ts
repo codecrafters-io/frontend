@@ -44,6 +44,10 @@ export default class HeaderComponent extends Component {
       links.push({ text: 'Concepts', route: 'concepts', type: 'route' });
     }
 
+    if (config.environment !== 'production') {
+      links.push({ text: 'Demo', route: 'demo', type: 'route' });
+    }
+
     if (this.currentUser && this.currentUser.isAdmin) {
       links.push({ text: 'Admin', route: this.adminPanelLink, type: 'link' });
     }

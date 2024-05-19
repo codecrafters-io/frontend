@@ -1,4 +1,4 @@
-import { clickable, clickOnText, text, count } from 'ember-cli-page-object';
+import { clickable, clickOnText, collection, count, text, triggerable } from 'ember-cli-page-object';
 import { settled } from '@ember/test-helpers';
 
 export default {
@@ -20,6 +20,10 @@ export default {
   },
 
   content: {
+    actions: collection('[data-test-dropdown-action]', {
+      hover: triggerable('mouseenter'),
+    }),
+
     clickOnRepositoryLink: clickOnText('[data-test-repository-link]'),
     clickOnAction: clickOnText('[data-test-dropdown-action]'),
     scope: '[data-test-repository-dropdown-content]',

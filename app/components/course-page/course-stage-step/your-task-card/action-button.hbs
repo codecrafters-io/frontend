@@ -1,24 +1,12 @@
-{{! @glint-nocheck: not typesafe yet }}
 <button
   type="button"
   class="flex items-center px-2.5 py-2 rounded border border-gray-200 hover:border-gray-400 group relative"
   data-test-action-button
   ...attributes
 >
-  {{#if @iconUrl}}
-    <img alt="icon" src={{@iconUrl}} class="h-4 mr-2" />
-  {{else}}
-    {{svg-jar @icon class=(concat "w-5 mr-1.5 fill-current opacity-80 group-hover:opacity-100 text-teal-500")}}
-  {{/if}}
+  {{svg-jar @icon class=(concat "w-5 mr-1.5 fill-current opacity-80 group-hover:opacity-100 text-teal-500")}}
 
   <span class="text-gray-700">
     {{@text}}
   </span>
-
-  <div class="absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1 {{if @shouldPulse 'flex' 'hidden'}}">
-    <span class="relative flex h-3 w-3">
-      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-      <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
-    </span>
-  </div>
 </button>

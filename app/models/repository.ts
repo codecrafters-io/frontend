@@ -94,6 +94,10 @@ export default class RepositoryModel extends Model {
     return `codecrafters-${this.course.slug}-${this.language.slug}`;
   }
 
+  get completedStageSlugs() {
+    return this.completedStages.mapBy('slug');
+  }
+
   get completedStages() {
     return this.courseStageCompletions.mapBy('courseStage').uniq();
   }
@@ -167,12 +171,13 @@ export default class RepositoryModel extends Model {
     return this.lastSubmission && this.lastSubmission.createdAt;
   }
 
-  // TODO: Change this to compare tree sha
   get lastSubmissionCanBeUsedForStageCompletion() {
+    // The tree_sha comparison here ensures that a user can "complete" stage
+    // even if they run tests via the CLI after submitting a solution.
     return (
       this.lastSubmission &&
       this.lastSubmission.statusIsSuccess &&
-      this.lastSubmission.wasSubmittedViaGit &&
+      this.lastSubmission.treeSha === this.defaultBranchTreeSha &&
       this.lastSubmission.courseStage === this.currentStage
     );
   }

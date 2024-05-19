@@ -4,6 +4,7 @@ import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/component
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
+import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
 import FirstStageInstructionsCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-instructions-card';
 import LanguageDropdown from './components/language-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
@@ -29,7 +30,10 @@ export default create({
   clickOnHeaderTabLink: clickOnText('[data-test-course-page-header-sticky-section] [data-test-header-tab-link]'),
 
   completedStepNotice: {
-    clickOnNextStepButton: clickable('[data-test-next-step-button]'),
+    nextOrActiveStepButton: {
+      scope: '[data-test-next-or-active-step-button]',
+    },
+
     scope: '[data-test-completed-step-notice]',
 
     shareProgressButton: {
@@ -116,6 +120,7 @@ export default create({
     scope: '[data-test-earned-badge-notice]',
   },
 
+  feedbackPrompt: FeedbackPrompt,
   firstStageInstructionsCard: FirstStageInstructionsCard,
 
   freeCourseLabel: {

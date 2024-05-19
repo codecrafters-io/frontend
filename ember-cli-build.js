@@ -6,6 +6,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
 const { Webpack } = require('@embroider/webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
 
@@ -95,6 +96,12 @@ module.exports = function (defaults) {
       webpackConfig: {
         plugins: [
           customFilePlugin('version.txt', config.x.version),
+
+          codecovWebpackPlugin({
+            enableBundleAnalysis: process.env.CODECOV_TOKEN !== undefined,
+            bundleName: 'client',
+            uploadToken: process.env.CODECOV_TOKEN,
+          }),
 
           sentryWebpackPlugin({
             org: process.env.SENTRY_ORG,

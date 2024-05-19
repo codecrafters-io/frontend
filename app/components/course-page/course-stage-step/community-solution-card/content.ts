@@ -99,6 +99,13 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
       this.expandedUnchangedFilePaths = [...this.expandedUnchangedFilePaths, filePath];
     }
   }
+
+  @action
+  handlePublishToGithubButtonClick() {
+    if (this.args.onPublishToGithubButtonClick) {
+      this.args.onPublishToGithubButtonClick();
+    }
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

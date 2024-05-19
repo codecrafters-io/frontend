@@ -25,10 +25,28 @@
             {{@model.solution.courseStage.name}}
           </h3>
         </div>
+
+        <div class="flex flex-col items-end">
+          <Toggle @isOn={{@model.solution.isPinned}} {{on "click" this.handlePinCodeExampleToggled}} data-test-pin-code-example-toggle />
+
+          <div class="text-xs text-gray-400 mt-2">
+            Editor's choice
+          </div>
+        </div>
       </div>
     </div>
 
     <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{@model.solution}} @isCollapsedByDefault={{true}} class="mb-8" />
+
+    <div class="border-b mb-4 pb-2">
+      <h3 class="text-lg font-bold text-gray-800">
+        Evaluations ({{@model.evaluations.length}})
+      </h3>
+    </div>
+
+    {{#each @model.evaluations as |evaluation|}}
+      <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
+    {{/each}}
 
     <div class="border-b mb-4 pb-2">
       <h3 class="text-lg font-bold text-gray-800">

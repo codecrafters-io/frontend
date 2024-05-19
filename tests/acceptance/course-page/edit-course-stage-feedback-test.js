@@ -36,13 +36,18 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
     await catalogPage.clickOnCourse('Build your own Redis');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
-    await coursePage.yourTaskCard.feedbackPrompt.clickOnOption('😍');
-    await coursePage.yourTaskCard.feedbackPrompt.clickOnSubmitButton();
-    assert.notOk(coursePage.yourTaskCard.hasFeedbackPrompt, 'feedback prompt is closed');
+    await coursePage.feedbackPrompt.clickOnOption('😍');
+    await coursePage.feedbackPrompt.clickOnSubmitButton();
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Edit Feedback');
-    assert.ok(coursePage.yourTaskCard.hasFeedbackPrompt, 'has feedback prompt');
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
+    await coursePage.feedbackPrompt.clickOnEditFeedbackButton();
+    await coursePage.feedbackPrompt.clickOnOption('😭');
+    await coursePage.feedbackPrompt.clickOnSubmitButton();
+
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'same stage is shown after editing feedback');
   });
 });

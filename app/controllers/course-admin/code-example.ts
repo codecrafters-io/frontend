@@ -1,10 +1,13 @@
 import Controller from '@ember/controller';
-import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
-import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
+import { action } from '@ember/object';
+import type { CodeExampleRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example';
 
 export default class CodeExampleController extends Controller {
-  declare model: {
-    solution: CommunityCourseStageSolutionModel;
-    comparisons: SolutionComparisonModel[];
-  };
+  declare model: CodeExampleRouteModel;
+
+  @action
+  handlePinCodeExampleToggled() {
+    this.model.solution.isPinned = !this.model.solution.isPinned;
+    this.model.solution.save();
+  }
 }

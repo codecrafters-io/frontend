@@ -19,6 +19,15 @@ export default function (config) {
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('course-stage-comment', { inverse: null }),
         }),
+        communityCourseStageSolution: Model.extend({
+          comments: hasMany('community-course-stage-solution-comment', { inverse: 'target' }),
+          courseStage: belongsTo('course-stage', { inverse: 'communitySolutions' }),
+          currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
+          currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+          language: belongsTo('language', { inverse: null }),
+          screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
+          user: belongsTo('user', { inverse: null }),
+        }),
         communityCourseStageSolutionComment: Model.extend({
           user: belongsTo('user', { inverse: null }),
           target: belongsTo('community-course-stage-solution', { inverse: 'comments' }),
@@ -92,6 +101,8 @@ function routes() {
   });
 
   this.get('/badges');
+
+  this.get('/community-solution-evaluations');
 
   this.get('/concept-engagements', function (schema) {
     return schema.conceptEngagements.all().filter((engagement) => engagement.user.id === '63c51e91-e448-4ea9-821b-a80415f266d3');
@@ -226,6 +237,9 @@ function routes() {
 
     return result;
   });
+
+  this.get('/community-course-stage-solutions/:id');
+  this.patch('/community-course-stage-solutions/:id');
 
   this.get('/community-course-stage-solutions/:id/file-comparisons', function (schema, request) {
     const solution = schema.communityCourseStageSolutions.find(request.params.id);
@@ -619,6 +633,8 @@ function routes() {
   this.post('/sessions/logout', function () {
     return new Response(200, {}, {});
   });
+
+  this.get('/solution-comparisons');
 
   this.post('/subscriptions/:id/cancel-trial', function (schema, request) {
     const subscription = schema.subscriptions.find(request.params.id);

@@ -1,0 +1,49 @@
+<div class="flex items-center gap-3 justify-between" ...attributes>
+  <div class="flex items-center gap-3">
+    <div class="flex items-center">
+      <div>
+        {{#if (eq @evaluation.result "pass")}}
+          <Pill @color="green" class="text-xs">
+            Pass
+          </Pill>
+        {{else if (eq @evaluation.result "fail")}}
+          <Pill @color="red" class="text-xs">
+            Fail
+          </Pill>
+        {{else if (eq @evaluation.result "unsure")}}
+          <Pill @color="gray" class="text-xs">
+            Unsure
+          </Pill>
+        {{else}}
+          <div class="text-red-500 font-bold">
+            Unknown ({{@evaluation.result}})
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="text-sm text-gray-600 ml-1.5 mr-1">
+        for
+      </div>
+
+      <span class="text-sm text-gray-700 font-semibold">
+        {{@evaluation.evaluator.slug}}
+      </span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button
+        class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center
+          {{if @isExpanded 'opacity-100' 'opacity-0'}}"
+        type="button"
+        {{on "click" @onCloseButtonClick}}
+      >
+        {{svg-jar "x" class="w-3 mr-1 fill-current"}}
+        Close
+      </button>
+    </div>
+  </div>
+  <div>
+    <span class="text-xs text-gray-400">
+      {{date-from-now @evaluation.createdAt}}
+    </span>
+  </div>
+</div>

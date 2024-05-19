@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type SubmissionModel from './submission';
-import * as Sentry from '@sentry/ember';
 import { tracked } from '@glimmer/tracking';
+import { fetchFileContentsIfNeeded } from 'codecrafters-frontend/utils/fetch-file-contents-if-needed';
 
 export default class SubmissionEvaluationModel extends Model {
   @belongsTo('submission', { async: false, inverse: 'evaluations' }) declare submission: SubmissionModel;
@@ -11,26 +11,6 @@ export default class SubmissionEvaluationModel extends Model {
   @tracked logsFileContents: string | null = null;
 
   async fetchLogsFileContentsIfNeeded(): Promise<void> {
-    if (this.logsFileContents) {
-      return;
-    }
-
-    if (!this.logsFileUrl) {
-      return;
-    }
-
-    try {
-      const response = await fetch(this.logsFileUrl);
-
-      if (response.status === 200) {
-        this.logsFileContents = (await response.text()) as string;
-      } else {
-        Sentry.captureMessage(`Failed to fetch logs file for submission evaluation`, {
-          extra: { response_status: response.status, response_body: await response.text(), submission_evaluation_id: this.id },
-        });
-      }
-    } catch (error) {
-      Sentry.captureException(error);
-    }
+    return fetchFileContentsIfNeeded(this, 'logsFileUrl', 'logsFileContents');
   }
 }

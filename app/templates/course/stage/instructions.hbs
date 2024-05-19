@@ -3,6 +3,15 @@
     <CoursePage::CourseStageStep::UpgradePrompt class="mb-6" />
   {{/if}}
 
+  {{#if this.shouldShowFeedbackPrompt}}
+    <CoursePage::CourseStageStep::FeedbackPrompt
+      @courseStage={{@model.courseStage}}
+      @repository={{@model.activeRepository}}
+      @onSubmit={{this.handleStageFeedbackSubmitted}}
+      class="mb-6"
+    />
+  {{/if}}
+
   {{#if @model.courseStage.isFirst}}
     <CoursePage::CourseStageStep::FirstStageInstructionsCard
       @repository={{@model.activeRepository}}

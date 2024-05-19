@@ -1,32 +1,23 @@
-{{#each this.visibleSolutions as |solution|}}
+{{#each @solutions as |solution solutionIndex|}}
   <CoursePage::CourseStageStep::CommunitySolutionCard
+    @isCollapsedByDefault={{gt solutionIndex 0}}
+    @metadataForDownvote={{hash position_in_list=(add solutionIndex 1)}}
+    @metadataForUpvote={{hash position_in_list=(add solutionIndex 1)}}
+    @onExpand={{fn this.handleSolutionExpand solution solutionIndex}}
     @onPublishToGithubButtonClick={{fn (mut this.configureGithubIntegrationModalIsOpen) true}}
     @solution={{solution}}
-    @isCollapsedByDefault={{true}}
     {{! account for the sticky menu bar }}
     class="scroll-mt-16"
   />
 {{/each}}
 
-{{#if this.hasNextResults}}
-  {{#if this.isLoadingNextBatch}}
-    <div class="flex p-4 items-center mb-40 mt-16 justify-center">
-      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4 mr-2" />
-      <span class="text-sm text-gray-600">
-        Loading...
-      </span>
-    </div>
-  {{else}}
-    <div {{in-viewport onEnter=this.handleListEndReached}} key={{this.visibleSolutions.length}}>
-    </div>
-  {{/if}}
-{{/if}}
-
 {{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
+    {{! @glint-expect-error not ts-ified yet }}
     <CoursePage::ConfigureGithubIntegrationModal
       {{! TODO: We actually don't know if the solution belongs to the **active** repository, just that it belongs to the user !}}
       @repository={{@repository}}
+      {{! @glint-expect-error mut types are broken }}
       @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
     />
   </ModalBackdrop>

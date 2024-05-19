@@ -1,17 +1,33 @@
-{{! @glint-nocheck: not typesafe yet }}
-<div
-  class="flex justify-between items-center py-2 pl-2 pr-3 hover:bg-gray-50 group cursor-pointer"
-  role="button"
-  data-test-repository-link
-  {{on "click" @onClick}}
->
-  <div class="flex items-center mr-6">
-    <img src={{@repository.language.grayLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 mr-2 block group-hover:hidden" />
-    <img src={{@repository.language.tealLogoUrl}} alt={{@repository.language.name}} class="w-4 h-4 mr-2 hidden group-hover:block" />
-    <span class="text-gray-700">{{@repository.name}}</span>
+<div class="flex justify-between items-center py-2 px-3 hover:bg-gray-50 group cursor-pointer" role="button" data-test-repository-link ...attributes>
+  <div>
+    <div class="flex items-center">
+      <span class="text-gray-700 text-sm">{{@repository.name}}</span>
+
+      <div class="text-gray-400 text-xs ml-1">
+        {{#if @repository.lastSubmissionAt}}
+          (pushed
+          {{date-from-now @repository.lastSubmissionAt}})
+        {{else}}
+          (not pushed yet)
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="text-gray-400 text-xs mt-1">
+      {{@repository.completedStages.length}}
+      /
+      {{@repository.course.stages.length}}
+      stages
+    </div>
   </div>
 
-  {{#if @repository.lastSubmissionAt}}
-    <span class="text-gray-400 text-xs">(pushed {{date-from-now @repository.lastSubmissionAt}})</span>
-  {{/if}}
+  <div class="text-gray-400 text-xs ml-6">
+    <img
+      src={{@repository.language.grayLogoUrl}}
+      alt={{@repository.language.name}}
+      class="opacity-75 w-6 h-6 block group-hover:hidden flex-shrink-0"
+    />
+
+    <img src={{@repository.language.tealLogoUrl}} alt={{@repository.language.name}} class="w-6 h-6 hidden group-hover:block flex-shrink-0" />
+  </div>
 </div>

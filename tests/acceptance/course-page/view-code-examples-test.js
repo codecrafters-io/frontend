@@ -1,15 +1,14 @@
-import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
-import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
+import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
-import { settled, scrollTo } from '@ember/test-helpers';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
@@ -56,8 +55,8 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2, 'expected 2 Go solutions to be present'); // Go is picked by default
 
     // Trigger logic that runs on expand
-    await coursePage.codeExamplesTab.solutionCards[0].clickOnExpandButton();
-    await coursePage.codeExamplesTab.solutionCards[0].clickOnCollapseButton();
+    await coursePage.codeExamplesTab.solutionCards[1].clickOnExpandButton();
+    await coursePage.codeExamplesTab.solutionCards[1].clickOnCollapseButton();
 
     await coursePage.codeExamplesTab.languageDropdown.toggle();
     await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
@@ -169,67 +168,5 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2);
-  });
-
-  // TODO: Vasyl to fix
-  test.skip('paginates if more than three solutions', async function (assert) {
-    testScenario(this.server, ['dummy']);
-    signIn(this.owner, this.server);
-
-    this.server.create('user', {
-      avatarUrl: 'https://github.com/sarupbanskota.png',
-      createdAt: new Date(),
-      githubUsername: 'sarupbanskota',
-      username: 'sarupbanskota',
-    });
-
-    this.server.create('user', {
-      avatarUrl: 'https://github.com/Gufran.png',
-      createdAt: new Date(),
-      githubUsername: 'gufran',
-      username: 'gufran',
-    });
-
-    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let python = this.server.schema.languages.findBy({ slug: 'python' });
-
-    course.update({ releaseStatus: 'live' });
-
-    for (let i = 1; i <= 7; i++) {
-      createCommunityCourseStageSolution(this.server, course, 2, go);
-    }
-
-    for (let i = 1; i <= 7; i++) {
-      createCommunityCourseStageSolution(this.server, course, 2, python);
-    }
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Dummy');
-    await courseOverviewPage.clickOnStartCourse();
-
-    await coursePage.sidebar.clickOnStepListItem('The second stage');
-    await animationsSettled();
-
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3, 'expected 3 Go solutions to be present');
-
-    await scrollTo('#course-page-scrollable-area', 0, 99999);
-    await settled();
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 5, 'expected 5 Go solutions to be present');
-
-    await scrollTo('#course-page-scrollable-area', 0, 99999);
-    await settled();
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7, 'expected 7 Go solutions to be present');
-
-    await scrollTo('#course-page-scrollable-area', 0, 99999);
-    await settled();
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 7, 'expected 7 Go solutions to be present'); // No more to load
-
-    // Switching to other language must restart pagination
-    await coursePage.codeExamplesTab.languageDropdown.toggle();
-    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
-
-    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 3, 'expected 3 Python solutions to be present');
   });
 });

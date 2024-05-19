@@ -26,21 +26,5 @@
         class="mt-3 mr-3"
       />
     {{/if}}
-
-    {{#if this.shouldShowSubmitFeedbackButton}}
-      <CoursePage::CourseStageStep::YourTaskCard::ActionButton
-        @text="Feedback"
-        @icon="chat"
-        {{on "click" @onFeedbackButtonClick}}
-        class="mt-3 mr-3"
-      />
-    {{else if this.shouldShowEditFeedbackButton}}
-      <CoursePage::CourseStageStep::YourTaskCard::ActionButton
-        @text="Edit Feedback"
-        @icon="chat"
-        {{on "click" @onFeedbackButtonClick}}
-        class="mt-3 mr-3"
-      />
-    {{/if}}
   </div>
 {{/if}}

@@ -81,6 +81,14 @@ export default class CourseAdminHeaderComponent extends Component<Signature> {
         models: [this.args.course.slug],
         isActive: ['course-admin.stage-insights-index', 'course-admin.stage-insights'].includes(this.router.currentRouteName),
       },
+      {
+        icon: 'academic-cap',
+        name: 'Evaluators',
+        slug: 'evaluators',
+        route: 'course-admin.code-example-evaluators',
+        models: [this.args.course.slug],
+        isActive: ['course-admin.code-example-evaluators', 'course-admin.code-example-evaluator'].includes(this.router.currentRouteName),
+      },
     ];
   }
 }

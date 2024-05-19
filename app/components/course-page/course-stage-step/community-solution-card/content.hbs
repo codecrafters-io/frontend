@@ -29,8 +29,7 @@
             {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600"}}
           </a>
         {{else if this.shouldShowPublishToGithubButton}}
-          {{! @glint-expect-error onPublishToGithubButton is not null }}
-          <button type="button" {{on "click" @onPublishToGithubButtonClick}} class="flex gap-x-1 items-center group">
+          <button type="button" {{on "click" this.handlePublishToGithubButtonClick}} class="flex gap-x-1 items-center group">
             <span class="text-[10px] text-gray-700 group-hover:underline">
               Publish to GitHub
             </span>

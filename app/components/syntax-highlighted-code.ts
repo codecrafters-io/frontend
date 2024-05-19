@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import getOrCreateCachedHighlighterPromise from 'codecrafters-frontend/utils/highlighter-cache';
 import { tracked } from '@glimmer/tracking';
+import { transformerCompactLineOptions } from '@shikijs/transformers';
 import { task } from 'ember-concurrency';
 
 export type Signature = {
@@ -61,8 +62,7 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
 
   highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
     const highlighterPromise = getOrCreateCachedHighlighterPromise(`${this.args.theme}-${this.args.language}`, {
-      theme: this.args.theme,
-      // @ts-expect-error - shiki types are not up to date
+      themes: [this.args.theme],
       langs: [this.args.language],
     });
 
@@ -71,8 +71,12 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
       .flatMap((lineOrBlock) => [{ line: parseInt(lineOrBlock), classes: ['highlighted'] }]);
 
     highlighterPromise.then((highlighter) => {
-      highlighter.loadLanguage(this.args.language as shiki.Lang).then(() => {
-        this.asyncHighlightedHTML = highlighter.codeToHtml(this.trimmedCode, { lang: this.args.language, lineOptions: lineOptions });
+      highlighter.loadLanguage(this.args.language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage).then(() => {
+        this.asyncHighlightedHTML = highlighter.codeToHtml(this.trimmedCode, {
+          lang: this.args.language,
+          theme: this.args.theme,
+          transformers: [transformerCompactLineOptions(lineOptions)],
+        });
         this.asyncHighlightedCode = this.args.code;
       });
     });

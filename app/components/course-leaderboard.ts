@@ -92,9 +92,9 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     const allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
 
     return allRepositories.map((repository) => {
-      // TODO: Use "completed stages count" instead?
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
+        completedStageSlugs: repository.completedStageSlugs,
         currentCourseStage: repository.currentStage || repository.course.firstStage,
         language: repository.language,
         user: repository.user,
@@ -122,15 +122,16 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     const result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      const entryWithHighestCourseStage = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
+      const entryWithMostStageCompletions = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
 
       result.push(
         new CourseLeaderboardEntry({
-          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithHighestCourseStage!.status,
-          currentCourseStage: entryWithHighestCourseStage!.currentCourseStage,
-          language: entryWithHighestCourseStage!.language,
-          user: entryWithHighestCourseStage!.user,
-          lastAttemptAt: entryWithHighestCourseStage!.lastAttemptAt,
+          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
+          completedStageSlugs: entryWithMostStageCompletions!.completedStageSlugs,
+          currentCourseStage: entryWithMostStageCompletions!.currentCourseStage,
+          language: entryWithMostStageCompletions!.language,
+          user: entryWithMostStageCompletions!.user,
+          lastAttemptAt: entryWithMostStageCompletions!.lastAttemptAt,
         }),
       );
     }

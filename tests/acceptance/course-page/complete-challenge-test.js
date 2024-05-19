@@ -6,7 +6,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
 
 module('Acceptance | course-page | complete-challenge-test', function (hooks) {
@@ -55,5 +55,33 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     await visit('/courses/docker/completed');
     assert.strictEqual(currentURL(), '/courses/docker/stages/2', 'URL is /stages/2');
+  });
+
+  test('next step button in completed step notice redirects to next step if the next step is base stages completed', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withBaseStagesCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await coursePage.sidebar.clickOnStepListItem('Expiry');
+
+    assert.true(
+      coursePage.completedStepNotice.nextOrActiveStepButton.text.includes('View next step'),
+      'copy for next or active step button is correct',
+    );
+
+    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
+
+    assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
   });
 });

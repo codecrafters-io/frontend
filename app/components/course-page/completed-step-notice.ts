@@ -46,6 +46,10 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
     return this.currentStep?.type === 'CourseStageStep' && !this.currentStepAsCourseStageStep?.stageListItem?.stage?.isFirst;
   }
 
+  get stepForNextOrActiveStepButton() {
+    return this.nextStep?.type === 'BaseStagesCompletedStep' ? this.nextStep : this.activeStep;
+  }
+
   @action
   handleShareProgressButtonClick() {
     this.analyticsEventTracker.track('initiated_share_progress_flow', {

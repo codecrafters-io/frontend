@@ -15,6 +15,9 @@ type Signature = {
   Args: {
     solution: CommunityCourseStageSolutionModel;
     onPublishToGithubButtonClick?: () => void;
+    onExpand?: () => void;
+    metadataForUpvote?: Record<string, unknown>;
+    metadataForDownvote?: Record<string, unknown>;
     isCollapsedByDefault?: boolean;
   };
 };
@@ -28,6 +31,12 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+
+    this.isExpanded = !this.isCollapsedByDefault;
+  }
 
   get currentUser() {
     return this.authenticator.currentUser as UserModel; // For now, this is only rendered in contexts where the current user is logged in
@@ -50,6 +59,11 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   @action
   handleDidInsert(element: HTMLDivElement) {
     this.containerElement = element;
+
+    // Trigger comments, expand event etc.
+    if (this.isExpanded) {
+      this.handleExpandButtonClick();
+    }
   }
 
   @action
@@ -58,8 +72,8 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     this.loadComments();
     this.loadFileComparisons();
 
-    if (this.authenticator.isAuthenticated) {
-      this.args.solution.createView();
+    if (this.args.onExpand) {
+      this.args.onExpand();
     }
   }
 
