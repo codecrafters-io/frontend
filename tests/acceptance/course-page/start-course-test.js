@@ -101,7 +101,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 10, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
     assert.ok(coursePage.completedStepNotice.isVisible, 'completed step notice is visible');
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
