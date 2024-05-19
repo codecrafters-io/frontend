@@ -29,15 +29,11 @@
       @course={{@model.course}}
       @repositories={{@model.repositories}}
       @activeRepository={{@model.activeRepository}}
-      {{! pb-16 accounts for the test results bar at the bottom !}}
-      class="group relative p-6 pb-16 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
-    >
-      <CoursePage::CollapseSidebarButton
-        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5 z-30"
-        {{on "click" this.handleCollapseSidebarButtonClick}}
-        data-test-collapse-sidebar-button
-      />
-    </CoursePage::Sidebar>
+      {{! @glint-expect-error: fn/mut not ts-ified yet}}
+      @onCollapseButtonClick={{fn (mut this.sidebarIsExpandedOnDesktop) false}}
+      {{! pb-12 accounts for the test results bar at the bottom !}}
+      class="group relative p-6 pb-12 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
+    />
   {{/if}}
 
   {{#if this.sidebarIsExpandedOnMobile}}
@@ -51,6 +47,8 @@
         @course={{@model.course}}
         @repositories={{@model.repositories}}
         @activeRepository={{@model.activeRepository}}
+        {{! @glint-expect-error: fn/mut not ts-ified yet}}
+        @onCollapseButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) false}}
         class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
       />
     </CoursePage::Sidebar::MobileBackdrop>
