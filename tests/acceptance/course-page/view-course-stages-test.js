@@ -7,7 +7,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { add, sub } from 'date-fns';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import {
   signIn,
@@ -582,7 +582,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.ok(filteredAnalyticsEventsNames.includes('expanded_course_page_leaderboard'), 'expanded_course_page_leaderboard event should be tracked');
   });
 
-  test('it should track when the monthly challenge banner is clicked', async function (assert) {
+  // Disabled the monthly challenge banner for now
+  skip('it should track when the monthly challenge banner is clicked', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 

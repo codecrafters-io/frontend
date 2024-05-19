@@ -29,8 +29,7 @@
       @course={{@model.course}}
       @repositories={{@model.repositories}}
       @activeRepository={{@model.activeRepository}}
-      {{! @glint-expect-error: fn/mut not ts-ified yet}}
-      @onCollapseButtonClick={{fn (mut this.sidebarIsExpandedOnDesktop) false}}
+      @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
       {{! pb-12 accounts for the test results bar at the bottom !}}
       class="group relative pb-12 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
     />
@@ -47,8 +46,7 @@
         @course={{@model.course}}
         @repositories={{@model.repositories}}
         @activeRepository={{@model.activeRepository}}
-        {{! @glint-expect-error: fn/mut not ts-ified yet}}
-        @onCollapseButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) false}}
+        @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
         class="group relative w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
       />
     </CoursePage::Sidebar::MobileBackdrop>

@@ -34,7 +34,7 @@
   </div>
 
   <div class="flex flex-col pt-2 border-t">
-    <CoursePage::Sidebar::Button @icon="chevron-left" @text="Collapse" {{on "click" @onCollapseButtonClick}} />
+    <CoursePage::Sidebar::Button @icon="chevron-left" @text="Collapse" {{on "click" @onCollapseButtonClick}} data-test-collapse-sidebar-button />
   </div>
 
   {{#if this.configureExtensionsModalIsOpen}}
