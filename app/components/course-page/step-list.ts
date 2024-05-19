@@ -35,6 +35,15 @@ export default class StepListComponent extends Component<Signature> {
     return this.args.stepList.stepGroups.filter((group) => group.type !== 'BaseStagesStepGroup');
   }
 
+  get shouldShowConfigureExtensionsButtonBelowBaseStages() {
+    // get('isNew') works around type error
+    if (this.args.activeRepository.get('isNew')) {
+      return false;
+    }
+
+    return this.args.course.hasExtensions && this.args.activeRepository.extensionActivations.length < this.args.course.extensions.length;
+  }
+
   get toggleButtonTooltipCopy() {
     if (this.args.activeRepository.get('isNew')) {
       return 'Complete repository setup to configure extensions';
