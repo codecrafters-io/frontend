@@ -37,7 +37,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
 
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     assert.strictEqual(coursePage.configureExtensionsModal.extensionIdeaCards.length, 1, 'course extension idea card should be rendered');
 
@@ -68,7 +68,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     assert.false(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is not visible');
 
@@ -108,7 +108,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     assert.true(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is visible');
   });
