@@ -5,7 +5,7 @@
   ...attributes
   {{on "mouseenter" (fn (mut this.isHovered) true)}}
   {{on "mouseleave" (fn (mut this.isHovered) false)}}
-  class="px-[0.75em] py-6 bg-gray-100 border-r flex flex-col {{if this.isExpanded 'w-[18em]' 'w-[3em]'}} transition-[width] duration-200"
+  class="px-[0.75em] py-6 bg-gray-100 border-r border-gray-300 flex flex-col {{if this.isExpanded 'w-[18em]' 'w-[3em]'}} transition-[width] duration-200"
 >
   <div class="flex flex-col w-[16.5em]">
     <div class="flex items-center">
@@ -34,6 +34,7 @@
         @course={{@course}}
         @onConfigureExtensionsButtonClick={{this.handleConfigureExtensionsButtonClick}}
         @stepList={{this.stepList}}
+        @sidebarIsExpanded={{this.isExpanded}}
       />
     </div>
 

@@ -1,7 +1,7 @@
 <div data-test-repository-dropdown ...attributes>
   <BasicDropdown @horizontalPosition="auto-right" as |dd|>
     <dd.Trigger>
-      <button
+      {{!-- <button
         type="button"
         class="inline-flex items-center justify-center rounded-md border border-gray-300
           {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
@@ -20,7 +20,14 @@
 
         {{svg-jar "cog" class=(concat "flex-shrink-0 fill-current w-4 transform transition-all text-gray-300")}}
         {{svg-jar "chevron-down" class=(concat "flex-shrink-0 fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
-      </button>
+      </button> --}}
+      <div class="flex items-center gap-x-2.5">
+        {{svg-jar "cog" class="w-5 h-5 fill-current text-gray-400 mx-0.5"}}
+
+        <span class="text-sm {{if @isActive 'text-teal-500' 'text-gray-600'}} font-semibold truncate">
+          Settings
+        </span>
+      </div>
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>

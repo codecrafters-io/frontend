@@ -12,6 +12,7 @@ interface Signature {
     activeRepository: RepositoryModel;
     course: CourseModel;
     onConfigureExtensionsButtonClick: () => void;
+    sidebarIsExpanded: boolean;
     stepList: StepList;
   };
 }

@@ -6,7 +6,12 @@
   {{/if}}
 
   {{#each this.baseStagesStepGroup.visibleSteps as |step|}}
-    <CoursePage::StepListItem @step={{step}} @isCurrent={{eq this.currentStep step}} @isActive={{eq this.activeStep step}} />
+    <CoursePage::StepListItem
+      @step={{step}}
+      @isCurrent={{eq this.currentStep step}}
+      @isActive={{eq this.activeStep step}}
+      @sidebarIsExpanded={{@sidebarIsExpanded}}
+    />
   {{/each}}
 
   {{#if @course.hasExtensions}}
@@ -57,7 +62,12 @@
     {{/if}}
 
     {{#each stepGroup.visibleSteps as |step|}}
-      <CoursePage::StepListItem @step={{step}} @isCurrent={{eq this.currentStep step}} @isActive={{eq this.activeStep step}} />
+      <CoursePage::StepListItem
+        @step={{step}}
+        @isCurrent={{eq this.currentStep step}}
+        @isActive={{eq this.activeStep step}}
+        @sidebarIsExpanded={{@sidebarIsExpanded}}
+      />
     {{/each}}
   {{/each}}
 </div>
