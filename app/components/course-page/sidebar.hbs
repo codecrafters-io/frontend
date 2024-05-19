@@ -9,7 +9,7 @@
   </div>
 
   <div class="px-3">
-    {{! Find ways to move this? }}
+    {{! Find ways to move this out of sidebar? }}
     {{#if @course.releaseStatusIsBeta}}
       <BetaCourseLabel class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
     {{else if @course.isFree}}
@@ -20,15 +20,6 @@
     <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
   </div>
 
-  {{!-- {{#unless this.currentUser.canAccessPaidContent}}
-    <PrimaryLinkButton @size="small" @route="pay" class="mt-4">
-      <span class="flex items-center gap-x-1 justify-center w-full">
-        <span>Upgrade</span>
-        {{svg-jar "lock-open" class="w-4"}}
-      </span>
-    </PrimaryLinkButton>
-  {{/unless}} --}}
-
   <div class="flex-grow overflow-y-auto relative mt-6">
     <CoursePage::StepList
       @activeRepository={{@activeRepository}}
@@ -37,6 +28,7 @@
       @stepList={{this.stepList}}
     />
   </div>
+
   <div class="relative">
     <div class="absolute bottom-0 left-0 right-0 w-full h-6 bg-gradient-to-t from-10% from-gray-100 to-transparent" />
   </div>
