@@ -43,7 +43,7 @@ module.exports = {
     },
     fontFamily: {
       sans: 'Montserrat, sans-serif',
-      mono: 'Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace',
+      mono: 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
     },
     extend: {
       brightness: {

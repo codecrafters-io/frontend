@@ -7,24 +7,15 @@
 
       <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
 
-      {{#if (eq @currentStep.type "CourseStageStep")}}
-        <div class="flex items-center">
-          <div class="inline-flex items-center text-xs font-semibold text-gray-500">
-            {{#each this.currentStepAsCourseStageStep.breadcrumbs as |breadcrumb index|}}
-              {{#if (eq index 0)}}
-                {{breadcrumb}}
-              {{else}}
-                <span class="text-gray-300 px-2 inline-flex">&gt;</span>
-                {{breadcrumb}}
-              {{/if}}
-            {{/each}}
-          </div>
-
-          {{#if this.currentStepAsCourseStageStep.courseStage.primaryExtension}}
-            <BetaCourseExtensionLabel class="ml-2" />
-          {{/if}}
-        </div>
-      {{/if}}
+      <div class="flex items-center">
+        {{#if @course.releaseStatusIsBeta}}
+          <BetaCourseLabel />
+        {{else if @course.isFree}}
+          <FreeCourseLabel @course={{@course}} />
+        {{else if (and (eq @currentStep.type "CourseStageStep") this.currentStepAsCourseStageStep.courseStage.primaryExtension)}}
+          <BetaCourseExtensionLabel />
+        {{/if}}
+      </div>
     </div>
 
     <div class="flex items-center gap-x-3">

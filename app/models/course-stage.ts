@@ -67,11 +67,7 @@ export default class CourseStageModel extends Model {
   }
 
   get identifierForURL() {
-    if (this.isBaseStage) {
-      return `${this.positionWithinCourse}`; // Example: /stages/3
-    } else {
-      return `${this.primaryExtensionSlug}:${this.positionWithinExtension}`; // Example: /stages/ext2:1
-    }
+    return this.slug;
   }
 
   get isBaseStage() {
@@ -148,6 +144,10 @@ Our interactive concepts can help with this:
 
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
+  }
+
+  get uppercasedSlug() {
+    return this.slug.toUpperCase();
   }
 
   hasCommunitySolutionsForLanguage(language: LanguageModel) {
