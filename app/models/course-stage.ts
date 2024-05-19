@@ -146,10 +146,6 @@ Our interactive concepts can help with this:
     return this.position > 3;
   }
 
-  get uppercasedSlug() {
-    return this.slug.toUpperCase();
-  }
-
   hasCommunitySolutionsForLanguage(language: LanguageModel) {
     return ((this.communitySolutionCounts || {})[language.slug] || 0) > 0;
   }

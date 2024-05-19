@@ -17,7 +17,7 @@
             <span class="font-bold text-gray-700">{{@currentStep.courseStage.name}}</span>
             <span class="font-mono text-base sm:text-lg md:text-xl">
               {{! @glint-expect-error not typesafe }}
-              <span class="text-gray-300">#</span><span class="font-mono text-gray-400">{{@currentStep.courseStage.uppercasedSlug}}</span>
+              <span class="text-gray-300">#</span><span class="font-mono text-gray-400 uppercase">{{@currentStep.courseStage.slug}}</span>
             </span>
           {{else}}
             <span class="font-bold text-gray-700">{{@currentStep.title}}</span>
