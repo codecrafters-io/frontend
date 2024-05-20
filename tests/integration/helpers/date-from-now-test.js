@@ -36,7 +36,8 @@ module('Integration | Helper | date-from-now', function (hooks) {
   test('it renders "0 seconds ago" if passed date equals now', async function (assert) {
     this.set('currentDate', DUMMY_CURRENT_DATE);
     this.set('customDate', DUMMY_CURRENT_DATE);
-    await render(hbs`{{date-from-now this.customDate currentDate=this.currentDate}}`);
+
+    await render(hbs`{{date-from-now this.customDate}}`);
     assert.dom(this.element).hasText('0 seconds ago');
   });
 

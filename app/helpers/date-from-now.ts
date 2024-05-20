@@ -8,7 +8,7 @@ interface DateFromNowSignature {
     Positional: Array<Date | null | undefined>;
   };
 
-  Return: string | undefined;
+  Return: string;
 }
 
 export default class DateFromNow extends Helper<DateFromNowSignature> {
@@ -16,7 +16,7 @@ export default class DateFromNow extends Helper<DateFromNowSignature> {
 
   public compute(positional: DateFromNowSignature['Args']['Positional']): DateFromNowSignature['Return'] {
     if (!positional[0]) {
-      return;
+      return '';
     }
 
     return formatDistanceStrictWithOptions({ addSuffix: true }, this.time.currentTime, positional[0]);
