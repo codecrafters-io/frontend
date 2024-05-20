@@ -32,7 +32,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, '1 leaderboard entry should be present once course has started');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to current user');
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle until user pushes submission');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 44', 'progress text must be shown');
 
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
@@ -46,7 +46,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 31', 'progress text must still be 0 if first stage is not completed');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 44', 'progress text must still be 0 if first stage is not completed');
 
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
@@ -54,7 +54,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 31', 'progress text must still be 0 if first stage is not completed');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 44', 'progress text must still be 0 if first stage is not completed');
 
     this.server.schema.submissions.find(2).update({ status: 'success' });
 
@@ -67,7 +67,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must still be 0 if first stage is not completed');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 44', 'progress text must still be 0 if first stage is not completed');
   });
 
   test('can view leaderboard on overview page when other recent players are present', async function (assert) {
@@ -99,15 +99,15 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 44', 'progress text must be shown');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once course has started');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 44', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entries should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '0 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '0 / 44', 'progress text must be shown');
 
     let repository = currentUser.reload().repositories.models[0];
     repository.update({
@@ -140,9 +140,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once other user has been passed');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 44', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entries should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 44', 'progress text must be shown');
   });
 
   test('can view leaderboard when current user has leaderboard entry', async function (assert) {
@@ -180,18 +180,18 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 44', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 44', 'progress text must be shown');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 44', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 44', 'progress text must be shown');
   });
 
   test('can view leaderboard when current user has completed all stages', async function (assert) {
@@ -425,7 +425,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       createdAt: new Date(2003),
     });
 
-    let replicationFirstStage = this.server.schema.courseStages.findBy({ slug: 'repl-custom-port' });
+    let replicationFirstStage = this.server.schema.courseStages.findBy({ slug: 'bw1' });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: userRepository,
@@ -438,8 +438,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '8 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '8 / 44', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 31', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 44', 'progress text must be shown');
   });
 });

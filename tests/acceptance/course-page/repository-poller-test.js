@@ -30,11 +30,11 @@ module('Acceptance | course-page | repository-poller', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
     assert.strictEqual(window.pollerInstances.length, 2, 'poller instance is created');
 
     await coursePage.sidebar.clickOnStepListItem('Bind to a port');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/1', 'stage 1 is shown');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/jm1', 'stage 1 is shown');
     assert.strictEqual(window.pollerInstances.length, 2, 'poller instance is created');
   });
 });

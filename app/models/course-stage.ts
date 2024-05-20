@@ -67,11 +67,7 @@ export default class CourseStageModel extends Model {
   }
 
   get identifierForURL() {
-    if (this.isBaseStage) {
-      return `${this.positionWithinCourse}`; // Example: /stages/3
-    } else {
-      return `${this.primaryExtensionSlug}:${this.positionWithinExtension}`; // Example: /stages/ext2:1
-    }
+    return this.slug;
   }
 
   get isBaseStage() {

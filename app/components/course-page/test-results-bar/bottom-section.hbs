@@ -5,24 +5,6 @@
   data-test-bottom-section
   ...attributes
 >
-  {{!-- <div class="inline-flex items-center text-xs text-gray-400">
-    {{#if (eq @activeStep.type "CourseStageStep")}}
-      <span class="text-gray-400 font-semibold">{{@activeStep.title}}</span>
-      <span>&nbsp;(</span>
-      {{#each this.activeStepAsCourseStageStep.breadcrumbs as |breadcrumb index|}}
-        {{#if (eq index 0)}}
-          {{breadcrumb}}
-        {{else}}
-          <span class="text-gray-300 px-2 inline-flex">&gt;</span>
-          {{breadcrumb}}
-        {{/if}}
-      {{/each}}
-      <span>)</span>
-    {{else}}
-      <span class="text-gray-400 font-semibold">{{@activeStep.title}}</span>
-    {{/if}}
-  </div> --}}
-
   <CoursePage::StepProgressIndicator @step={{@activeStep}} />
 
   {{#if (eq @activeStep.type "CourseStageStep")}}

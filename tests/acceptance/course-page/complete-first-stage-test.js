@@ -83,7 +83,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
 
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'header says stage completed');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.', 'header says stage completed');
   });
 
   test('retains state when navigating to other course page areas', async function (assert) {
