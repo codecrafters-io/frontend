@@ -33,7 +33,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
 

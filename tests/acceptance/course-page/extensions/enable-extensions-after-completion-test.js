@@ -29,7 +29,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
@@ -51,7 +51,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await settled();
 
     // URL should still be stage 2
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
     await coursePage.completedStepNotice.nextOrActiveStepButton.click();
     assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'current URL is /base-stages-complete');

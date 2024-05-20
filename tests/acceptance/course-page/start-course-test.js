@@ -108,7 +108,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Git Push Received');
 
     await coursePage.repositorySetupCard.continueButton.click();
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/1?repo=1', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/yz1?repo=1', 'current URL is course page URL');
 
     await percySnapshot('Start Course - Waiting For Second Push', {
       percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',

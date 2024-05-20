@@ -22,7 +22,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     assert.expect(2);
 
     try {
-      await visit('/courses/redis/stages/2/screencasts');
+      await visit('/courses/redis/stages/rg2/screencasts');
     } catch (e) {
       assert.strictEqual(1, 1);
     }
