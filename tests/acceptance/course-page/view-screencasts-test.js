@@ -29,7 +29,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
 
     assert.strictEqual(
       windowMock.location.href,
-      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcourses%2Fredis%2Fstages%2F2%2Fscreencasts`,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcourses%2Fredis%2Fstages%2Frg2%2Fscreencasts`,
       'should redirect to login URL',
     );
   });
