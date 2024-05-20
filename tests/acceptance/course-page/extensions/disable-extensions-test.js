@@ -33,7 +33,7 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
 
     await coursePage.sidebar.clickOnStepListItem('Start with ext1');
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is /stages/ext1:1');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/qh7', 'current URL is /stages/qh7');
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 

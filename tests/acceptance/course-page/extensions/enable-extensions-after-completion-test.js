@@ -102,7 +102,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is first extension stage URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/qh7', 'current URL is first extension stage URL');
 
     // Disable Extension 2
     await coursePage.sidebar.configureExtensionsToggles[0].click();
@@ -132,6 +132,6 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext2:1', 'current URL is next extension stage');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ae0', 'current URL is next extension stage');
   });
 });
