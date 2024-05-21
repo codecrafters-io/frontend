@@ -13,7 +13,7 @@ interface Signature {
 
   Args: {
     course: CourseModel;
-    repositories: unknown[];
+    repositories: RepositoryModel[];
     activeRepository: RepositoryModel;
     onCollapseButtonClick: () => void;
   };
