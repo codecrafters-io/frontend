@@ -1,4 +1,5 @@
 <div data-test-repository-dropdown ...attributes>
+  {{! @glint-expect-error not ts-ified yet !}}
   <BasicDropdown @horizontalPosition="auto-right" as |dd|>
     <dd.Trigger>
       <button
@@ -26,6 +27,7 @@
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
         <div class="text-sm text-gray-700">
           <div
+            {{! @glint-expect-error model.isNew has wrong type !}}
             class="px-3 py-2 hover:bg-gray-50 flex group {{if @activeRepository.isNew 'text-gray-300'}}"
             role="button"
             {{on "click" (fn this.handleCopyGitRepositoryURLClick dd.actions)}}
@@ -45,6 +47,7 @@
               {{/animated-if}}
             </AnimatedContainer>
 
+            {{! @glint-expect-error model.isNew has wrong type !}}
             {{#if @activeRepository.isNew}}
               <EmberTooltip @text="Please select a language first" />
             {{/if}}
@@ -58,11 +61,13 @@
 
           <CoursePage::RepositoryDropdownAction
             @icon="github"
+            {{! @glint-expect-error model.isNew has wrong type !}}
             @isDisabled={{@activeRepository.isNew}}
             {{on "click" (fn this.handlePublishToGithubButtonClick dd.actions)}}
           >
             Publish to GitHub
 
+            {{! @glint-expect-error model.isNew has wrong type !}}
             {{#if @activeRepository.isNew}}
               <EmberTooltip @text="Please select a language first" />
             {{/if}}
@@ -101,8 +106,10 @@
 
 {{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
+    {{! @glint-expect-error not ts-ified yet !}}
     <CoursePage::ConfigureGithubIntegrationModal
       @repository={{@activeRepository}}
+      {{! @glint-expect-error fn mut types aren't compatible !}}
       @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
     />
   </ModalBackdrop>
@@ -110,12 +117,14 @@
 
 {{#if this.deleteRepositoryModalIsOpen}}
   <ModalBackdrop>
+    {{! @glint-expect-error not ts-ified yet !}}
     <CoursePage::DeleteRepositoryModal @repository={{@activeRepository}} @onClose={{fn (mut this.deleteRepositoryModalIsOpen) false}} />
   </ModalBackdrop>
 {{/if}}
 
 {{#if this.progressBannerModalIsOpen}}
   <ModalBackdrop>
+    {{! @glint-expect-error not ts-ified yet !}}
     <CoursePage::ProgressBannerModal @repository={{@activeRepository}} @onClose={{fn (mut this.progressBannerModalIsOpen) false}} />
   </ModalBackdrop>
 {{/if}}
