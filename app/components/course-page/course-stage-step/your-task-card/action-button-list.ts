@@ -31,6 +31,10 @@ export default class ActionButtonListComponent extends Component<Signature> {
   }
 
   get shouldShowViewScreencastsButton() {
+    if (this.args.courseStage.isFirst) {
+      return false; // Don't expose user to too many features at once
+    }
+
     return this.args.courseStage.hasScreencasts;
   }
 
