@@ -132,7 +132,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[0].hover();
+    await coursePage.repositoryDropdown.content.actions[1].hover();
 
     assertTooltipContent(assert, {
       contentString: 'Please select a language first',
