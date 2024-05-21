@@ -9,7 +9,7 @@ export default {
     await settled();
   },
 
-  clickRaw: clickable('button'),
+  clickRaw: clickable('[data-test-repository-dropdown-trigger]'),
 
   clickOnRepositoryLink(repositoryName) {
     return this.content.clickOnRepositoryLink(repositoryName);

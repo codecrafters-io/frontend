@@ -41,6 +41,12 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
   }
 
   @action
+  async handleBackToCatalogButtonClick(dropdownActions: { close: () => void }) {
+    dropdownActions.close();
+    this.router.transitionTo('catalog');
+  }
+
+  @action
   async handleCopyGifBannerButtonClick(dropdownActions: { close: () => void }) {
     // get('isNew') works around type bug
     if (this.args.activeRepository.get('isNew')) {

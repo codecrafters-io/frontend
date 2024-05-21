@@ -132,7 +132,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[0].hover();
+    await coursePage.repositoryDropdown.content.actions[1].hover();
 
     assertTooltipContent(assert, {
       contentString: 'Please select a language first',
@@ -142,7 +142,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[1].hover();
+    await coursePage.repositoryDropdown.content.actions[2].hover();
 
     assertTooltipContent(assert, {
       contentString: 'Please select a language first',
@@ -154,7 +154,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[0].hover();
+    await coursePage.repositoryDropdown.content.actions[1].hover();
 
     assertTooltipNotRendered(assert);
 
@@ -162,7 +162,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[1].hover();
+    await coursePage.repositoryDropdown.content.actions[2].hover();
 
     assertTooltipNotRendered(assert);
   });

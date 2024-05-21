@@ -1,17 +1,16 @@
-<div class="bg-gray-100 border-r border-gray-300 flex flex-col py-6 px-3" data-test-course-page-sidebar ...attributes>
-  <div class="flex items-center px-3">
-    <CourseLogo @course={{@course}} class="w-8 h-8 mr-3" />
+<div class="bg-gray-100 border-r border-gray-300 flex flex-col pt-4 px-3" data-test-course-page-sidebar ...attributes>
+  <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} />
 
-    <h1 class="text-gray-800 font-semibold mr-3 tracking-tight">
-      {{@course.name}}
-    </h1>
+  <div class="px-3 mt-1">
+    <div class="h-px bg-gray-200 w-full"></div>
   </div>
 
-  <div class="px-3">
-    <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
+  {{! Fade for scrollable area below }}
+  <div class="relative pointer-events-none">
+    <div class="absolute top-0 left-0 right-0 w-full h-6 bg-gradient-to-b from-10% from-gray-100 to-transparent" />
   </div>
 
-  <div class="flex-grow overflow-y-auto mt-6">
+  <div class="flex-grow overflow-y-auto pt-4">
     <CoursePage::StepList
       @activeRepository={{@activeRepository}}
       @course={{@course}}
@@ -21,7 +20,8 @@
     />
   </div>
 
-  <div class="relative">
+  {{! Fade for scrollable area on top }}
+  <div class="relative pointer-events-none">
     <div class="absolute bottom-0 left-0 right-0 w-full h-6 bg-gradient-to-t from-10% from-gray-100 to-transparent" />
   </div>
 
