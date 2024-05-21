@@ -3,8 +3,9 @@
   <BasicDropdown @horizontalPosition="auto-right" as |dd|>
     <dd.Trigger>
       <div
-        class="flex items-start gap-2 pl-3 py-3 rounded group/dropdown-trigger
+        class="flex items-start gap-2 pl-3 py-3 rounded group/dropdown-trigger text-left w-full
           {{if dd.isOpen 'bg-gray-300 bg-opacity-50' 'hover:bg-gray-300 hover:bg-opacity-50'}}"
+        data-test-repository-dropdown-trigger
       >
         <CourseLogo @course={{@activeRepository.course}} class="w-6 h-6 mt-0.25" />
 
@@ -32,26 +33,6 @@
           )
         }}
       </div>
-      {{!-- <button
-        type="button"
-        class="inline-flex items-center justify-center rounded-md border border-gray-300
-          {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
-          shadow-sm px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-none"
-      >
-        <span class="mr-1">
-          {{#if @activeRepository.name}}
-            using
-            <span data-test-active-repository-name>
-              {{@activeRepository.name}}
-            </span>
-          {{else}}
-            New Repository
-          {{/if}}
-        </span>
-
-        {{svg-jar "cog" class=(concat "flex-shrink-0 fill-current w-4 transform transition-all text-gray-300")}}
-        {{svg-jar "chevron-down" class=(concat "flex-shrink-0 fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
-      </button> --}}
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
