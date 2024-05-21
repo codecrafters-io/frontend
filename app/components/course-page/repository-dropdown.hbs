@@ -2,7 +2,34 @@
   {{! @glint-expect-error not ts-ified yet !}}
   <BasicDropdown @horizontalPosition="auto-right" as |dd|>
     <dd.Trigger>
-      <button
+      <div
+        class="flex items-start gap-2 pl-3 py-3 rounded group/dropdown-trigger
+          {{if dd.isOpen 'bg-gray-300 bg-opacity-50' 'hover:bg-gray-300 hover:bg-opacity-50'}}"
+      >
+        <CourseLogo @course={{@activeRepository.course}} class="w-6 h-6 mt-0.25" />
+
+        <div class="flex-grow">
+          <h1 class="text-gray-800 font-semibold tracking-tight w-full">
+            {{@activeRepository.course.name}}
+          </h1>
+          <div class="text-xs text-gray-500 mt-1 w-full">
+            {{#if @activeRepository.name}}
+              using
+              <span data-test-active-repository-name>
+                {{@activeRepository.name}}
+              </span>
+            {{else}}
+              New Repository
+            {{/if}}
+          </div>
+        </div>
+
+        {{svg-jar
+          "chevron-down"
+          class=(concat "mt-0.25 flex-shrink-0 text-gray-600 group-hover/dropdown-trigger:text-teal-500 w-6 transition-transform " (if dd.isOpen "text-teal-500 rotate-180" "rotate-0"))
+        }}
+      </div>
+      {{!-- <button
         type="button"
         class="inline-flex items-center justify-center rounded-md border border-gray-300
           {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
@@ -21,7 +48,7 @@
 
         {{svg-jar "cog" class=(concat "flex-shrink-0 fill-current w-4 transform transition-all text-gray-300")}}
         {{svg-jar "chevron-down" class=(concat "flex-shrink-0 fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
-      </button>
+      </button> --}}
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
@@ -73,8 +100,18 @@
             {{/if}}
           </CoursePage::RepositoryDropdownAction>
 
-          <CoursePage::RepositoryDropdownAction @icon="beaker" {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}>
+          <CoursePage::RepositoryDropdownAction
+            @icon="beaker"
+            {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
+            {{! @glint-expect-error model.isNew has wrong type !}}
+            @isDisabled={{@activeRepository.isNew}}
+          >
             Try a different language
+
+            {{! @glint-expect-error model.isNew has wrong type !}}
+            {{#if @activeRepository.isNew}}
+              <EmberTooltip @text="Please select a language first" />
+            {{/if}}
           </CoursePage::RepositoryDropdownAction>
 
           {{#unless @activeRepository.isNew}}
