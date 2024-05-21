@@ -26,7 +26,10 @@
 
         {{svg-jar
           "chevron-down"
-          class=(concat "mt-0.25 flex-shrink-0 text-gray-400 group-hover/dropdown-trigger:text-teal-500 w-6 transition-transform " (if dd.isOpen "text-teal-500 rotate-180" "rotate-0"))
+          class=(concat
+            "mt-0.25 flex-shrink-0 text-gray-400 group-hover/dropdown-trigger:text-teal-500 w-6 transition-transform "
+            (if dd.isOpen "text-teal-500 rotate-180" "rotate-0")
+          )
         }}
       </div>
       {{!-- <button
@@ -53,6 +56,10 @@
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
         <div class="text-sm text-gray-700">
+          <CoursePage::RepositoryDropdownAction @icon="login" {{on "click" (fn this.handleBackToCatalogButtonClick dd.actions)}}>
+            Back to Catalog
+          </CoursePage::RepositoryDropdownAction>
+
           <div
             {{! @glint-expect-error model.isNew has wrong type !}}
             class="px-3 py-2 hover:bg-gray-50 flex group {{if @activeRepository.isNew 'text-gray-300'}}"
