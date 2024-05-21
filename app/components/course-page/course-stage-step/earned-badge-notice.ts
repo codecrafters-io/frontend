@@ -24,3 +24,9 @@ export default class EarnedBadgeNoticeComponent extends Component<Signature> {
     this.selectedBadge = this.args.badgeAwards[0]!.badge;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::EarnedBadgeNotice': typeof EarnedBadgeNoticeComponent;
+  }
+}
