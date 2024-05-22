@@ -1,3 +1,4 @@
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
@@ -22,6 +23,10 @@ const DATE_DIFF_EXAMPLES = [
 module('Integration | Helper | date-from-now', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.owner.register('service:date', FakeDateService);
+  });
+
   test('it renders an empty string if passed an undefined date', async function (assert) {
     await render(hbs`{{date-from-now this.undefinedDate}}`);
     assert.dom(this.element).hasText('');
@@ -36,8 +41,21 @@ module('Integration | Helper | date-from-now', function (hooks) {
   test('it renders "0 seconds ago" if passed date equals now', async function (assert) {
     this.set('currentDate', DUMMY_CURRENT_DATE);
     this.set('customDate', DUMMY_CURRENT_DATE);
-    await render(hbs`{{date-from-now this.customDate currentDate=this.currentDate}}`);
+
+    this.owner.register('service:date', FakeDateService);
+
+    let dateService = this.owner.lookup('service:date');
+    let now = new Date(this.currentDate).getTime();
+
+    dateService.setNow(now);
+
+    let timeService = this.owner.lookup('service:time');
+    timeService.setupTimer();
+
+    await render(hbs`{{date-from-now this.customDate}}`);
     assert.dom(this.element).hasText('0 seconds ago');
+
+    dateService.reset();
   });
 
   // Generate an individual test for every example date diff
@@ -45,8 +63,21 @@ module('Integration | Helper | date-from-now', function (hooks) {
     test(`it renders a human-readable difference between now and "${expectedOutput}"`, async function (assert) {
       this.set('currentDate', DUMMY_CURRENT_DATE);
       this.set('customDate', providedDate);
-      await render(hbs`{{date-from-now this.customDate currentDate=this.currentDate}}`);
+
+      this.owner.register('service:date', FakeDateService);
+
+      let dateService = this.owner.lookup('service:date');
+      let now = new Date(this.currentDate).getTime();
+
+      dateService.setNow(now);
+
+      let timeService = this.owner.lookup('service:time');
+      timeService.setupTimer();
+
+      await render(hbs`{{date-from-now this.customDate}}`);
       assert.dom(this.element).hasText(expectedOutput);
+
+      dateService.reset();
     });
   }
 });

@@ -1,18 +1,19 @@
+import DateService from 'codecrafters-frontend/services/date';
 import Service from '@ember/service';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class TimeService extends Service {
-  @tracked currentTime = new Date();
-  @tracked intervalId: number;
+  @tracked declare currentTime: Date;
+  @tracked declare intervalId: number;
 
-  constructor() {
-    super();
-    this.intervalId = this.updateTime();
-  }
+  @service declare date: DateService;
 
-  updateTime() {
-    return setInterval(() => {
-      this.currentTime = new Date();
+  setupTimer() {
+    this.currentTime = new Date(this.date.now());
+
+    this.intervalId = setInterval(() => {
+      this.currentTime = new Date(this.date.now());
     }, 1000);
   }
 
