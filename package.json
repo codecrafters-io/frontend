@@ -157,7 +157,7 @@
     "ember-window-mock": "github:codecrafters-io/ember-window-mock#renovate/ember-source-5.x",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-ember": "^12.1.0",
+    "eslint-plugin-ember": "^12.1.1",
     "eslint-plugin-ember-template-lint": "^0.15.0",
     "eslint-plugin-n": "^17.7.0",
     "eslint-plugin-prettier": "^5.1.3",
