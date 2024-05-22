@@ -79,21 +79,11 @@
       class="px-3 md:px-6 lg:pl-10 bg-gray-50"
     />
     <div class="flex flex-grow bg-white">
-      <div class="flex-grow flex-shrink min-w-0">
-        {{#if this.coursePageState.currentStep.completionNoticeMessage}}
-          <CoursePage::CompletedStepNotice
-            @step={{this.coursePageState.currentStep}}
-            @repository={{@model.activeRepository}}
-            class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
-            {{! Confetti etc. makes more sense when the top section is focused }}
-            {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-          />
-        {{/if}}
-
-        <div class="px-3 md:px-6 lg:px-10">
-          {{outlet}}
-        </div>
-      </div>
+      <CoursePage::StepContent
+        @step={{this.coursePageState.currentStep}}
+        @repository={{@model.activeRepository}}
+        class="flex-grow flex-shrink min-w-0"
+      />
 
       <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block group relative">
         {{#if this.leaderboardIsExpanded}}

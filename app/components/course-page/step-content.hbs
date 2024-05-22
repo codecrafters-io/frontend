@@ -1,0 +1,22 @@
+<div class="flex-grow flex-shrink min-w-0" ...attributes>
+  {{#if @step.completionNoticeMessage}}
+    <CoursePage::CompletedStepNotice
+      @step={{@step}}
+      @repository={{@repository}}
+      class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
+      {{! Confetti etc. makes more sense when the top section is focused }}
+      {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+    />
+  {{/if}}
+
+  <BlurredOverlay @isBlurred={{eq @step.status "locked"}} class="px-3 md:px-6 lg:px-10">
+    <:content>
+      {{outlet}}
+    </:content>
+    <:overlay>
+      <PrimaryButton class="mt-8">
+        Reveal Diff
+      </PrimaryButton>
+    </:overlay>
+  </BlurredOverlay>
+</div>

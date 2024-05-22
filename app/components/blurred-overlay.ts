@@ -5,11 +5,11 @@ interface Signature {
 
   Args: {
     isBlurred: boolean;
-    onUnblur: () => void;
   };
 
   Blocks: {
-    default: [];
+    content: [];
+    overlay: [];
   };
 }
 

@@ -74,16 +74,23 @@
           >Learn more</a>.
         </div>
 
-        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @onUnblur={{this.toggleBlur}}>
-          {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
-            <FileDiffCard
-              class="mt-6"
-              @filename={{changedFile.filename}}
-              @code={{changedFile.diff}}
-              {{! @glint-expect-error language.slug can be null? }}
-              @language={{@autofixRequest.submission.repository.language.slug}}
-            />
-          {{/each}}
+        <BlurredOverlay @isBlurred={{this.diffIsBlurred}}>
+          <:content>
+            {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
+              <FileDiffCard
+                class="mt-6"
+                @filename={{changedFile.filename}}
+                @code={{changedFile.diff}}
+                {{! @glint-expect-error language.slug can be null? }}
+                @language={{@autofixRequest.submission.repository.language.slug}}
+              />
+            {{/each}}
+          </:content>
+          <:overlay>
+            <PrimaryButton {{on "click" this.toggleBlur}} class="mt-8">
+              Reveal Diff
+            </PrimaryButton>
+          </:overlay>
         </BlurredOverlay>
       </div>
     {{else if (eq @autofixRequest.status "failure")}}
