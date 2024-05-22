@@ -47,7 +47,7 @@ module.exports = function (environment) {
 
       // Update the major version number to force all clients to update.
       // The minor version doesn't do anything at the moment, might use in the future.
-      version: `14.0.${process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || 'dev'}`,
+      version: `15.0.${process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || 'dev'}`,
     },
     fastboot: {
       hostWhitelist: [/^localhost:\d+$/],
