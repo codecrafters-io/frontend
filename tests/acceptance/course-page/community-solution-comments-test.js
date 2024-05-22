@@ -48,6 +48,9 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
+    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
+    assert.notOk(coursePage.previousStepsIncompleteModal.isVisible, 'modal should be hidden');
+
     const codeExamplesTab = coursePage.codeExamplesTab;
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
@@ -57,6 +60,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'title should be respond to ping');
     assert.strictEqual(codeExamplesTab.solutionCards.length, 1, 'should have 1 solution card');
 
+    assert.notOk(coursePage.previousStepsIncompleteModal.isVisible, 'modal should be hidden'); // Assert before percy
     await percySnapshot('Community Solution Comments - Collapsed');
 
     assert.strictEqual(codeExamplesTab.solutionCards[0].toggleCommentsButtons.length, 2, 'should have 2 comment buttons');

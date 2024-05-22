@@ -164,6 +164,13 @@ export default create({
   },
 
   repositoryDropdown: RepositoryDropdown,
+
+  previousStepsIncompleteModal: {
+    clickOnActiveStepButton: clickable('[data-test-active-step-button]'),
+    clickOnJustExploringButton: clickable('[data-test-just-exploring-button]'),
+    scope: '[data-test-previous-steps-incomplete-modal]',
+  },
+
   privateLeaderboardFeatureSuggestion: PrivateLeaderboardFeatureSuggestion,
 
   progressBannerModal: {
