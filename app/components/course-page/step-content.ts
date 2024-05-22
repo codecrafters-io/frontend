@@ -13,6 +13,10 @@ interface Signature {
     step: Step;
     repository: RepositoryModel;
   };
+
+  Blocks: {
+    default: [];
+  };
 }
 
 export default class StepContentComponent extends Component<Signature> {

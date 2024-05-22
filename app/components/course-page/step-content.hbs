@@ -16,7 +16,7 @@
     {{did-update this.handleStepIdUpdated @step.id}}
   >
     <:content>
-      {{outlet}}
+      {{yield}}
     </:content>
     <:overlay>
       <ModalBody @allowManualClose={{false}} @onClose={{this.handlePreviousStepsIncompleteModalDismissed}} class="w-full mt-8 border">
