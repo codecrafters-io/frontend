@@ -21,6 +21,7 @@ interface Signature {
 
 export default class StepContentComponent extends Component<Signature> {
   @tracked previousStepsIncompleteModalWasDismissed = false;
+  @tracked lastSeenStepId: string | null = null;
 
   @service declare coursePageState: CoursePageStateService;
 
@@ -35,6 +36,11 @@ export default class StepContentComponent extends Component<Signature> {
 
   @action
   handleStepIdUpdated() {
+    if (this.args.step.id === this.lastSeenStepId) {
+      return;
+    }
+
+    this.lastSeenStepId = this.args.step.id;
     this.previousStepsIncompleteModalWasDismissed = false;
   }
 }
