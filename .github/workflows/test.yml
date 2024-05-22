@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: '0 0 * * 0'
 
@@ -37,7 +37,7 @@ jobs:
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
-        if: "github.ref == 'refs/heads/master'"
+        if: "github.ref == 'refs/heads/main'"
 
       - id: compute_percy_enable_for_commit
         run: echo "::set-output name=percy_enable::true"

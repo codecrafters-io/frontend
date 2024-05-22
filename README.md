@@ -69,5 +69,5 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ### Deploying
 
-- This app is automatically deployed to [app.codecrafters.io](https://app.codecrafters.io) when a commit is merged into master.
+- This app is automatically deployed to [app.codecrafters.io](https://app.codecrafters.io) when a commit is merged into main.
 - Each branch is also deployed to a preview URL via Vercel.
