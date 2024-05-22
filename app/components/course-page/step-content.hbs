@@ -9,14 +9,48 @@
     />
   {{/if}}
 
-  <BlurredOverlay @isBlurred={{eq @step.status "locked"}} class="px-3 md:px-6 lg:px-10">
+  <BlurredOverlay
+    @isBlurred={{this.shouldShowPreviousStepsIncompleteModal}}
+    @overlayClass="bg-gray-200 bg-opacity-20"
+    class="px-3 md:px-6 lg:px-10"
+    {{did-update this.handleStepIdUpdated @step.id}}
+  >
     <:content>
       {{outlet}}
     </:content>
     <:overlay>
-      <PrimaryButton class="mt-8">
-        Reveal Diff
-      </PrimaryButton>
+      <ModalBody @allowManualClose={{false}} @onClose={{this.handlePreviousStepsIncompleteModalDismissed}} class="w-full mt-8 border">
+        <div class="mb-4 font-semibold text-2xl text-gray-600 mr-6">
+          Previous steps incomplete
+        </div>
+
+        <div class="prose mb-6">
+          <p>
+            This step depends on previous steps that you haven't completed yet.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <PrimaryLinkButton
+            @route={{this.coursePageState.activeStep.routeParams.route}}
+            @models={{this.coursePageState.activeStep.routeParams.models}}
+            data-test-active-step-button
+          >
+            <div class="flex items-center">
+              {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
+              <span>Back to "{{this.coursePageState.activeStep.shortTitle}}"</span>
+            </div>
+          </PrimaryLinkButton>
+
+          <div
+            class="text-gray-500 hover:text-gray-800 text-sm pb-0.25 border-b border-gray-400 hover:border-gray-600"
+            role="button"
+            {{on "click" this.handlePreviousStepsIncompleteModalDismissed}}
+          >
+            I'm just exploring 👀
+          </div>
+        </div>
+      </ModalBody>
     </:overlay>
   </BlurredOverlay>
 </div>

@@ -5,6 +5,7 @@ interface Signature {
 
   Args: {
     isBlurred: boolean;
+    overlayClass?: string;
   };
 
   Blocks: {
