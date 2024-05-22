@@ -35,9 +35,14 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       user: user,
     });
 
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      user: user,
+      language: this.server.schema.languages.findBy({ slug: 'python' }),
+    });
+
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
@@ -55,11 +60,15 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      user: this.server.schema.users.first(),
+      language: this.server.schema.languages.findBy({ slug: 'python' }),
+    });
+
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'title should be respond to ping');
@@ -105,9 +114,14 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       user: user,
     });
 
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      user: this.server.schema.users.first(),
+      language: this.server.schema.languages.findBy({ slug: 'python' }),
+    });
+
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
@@ -132,9 +146,14 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      user: this.server.schema.users.first(),
+      language: this.server.schema.languages.findBy({ slug: 'python' }),
+    });
+
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
@@ -247,9 +266,14 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       user: user,
     });
 
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      user: this.server.schema.users.first(),
+      language: this.server.schema.languages.findBy({ slug: 'python' }),
+    });
+
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
