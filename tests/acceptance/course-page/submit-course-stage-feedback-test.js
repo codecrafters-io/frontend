@@ -70,8 +70,13 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       'explanation textarea placeholder is correct',
     );
 
+    await coursePage.feedbackPrompt.fillInExplanation('I love this course!');
+
     await coursePage.feedbackPrompt.clickOnSubmitButton();
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
+
+    const submission = this.server.schema.courseStageFeedbackSubmissions.first();
+    assert.strictEqual(submission.explanation, 'I love this course!', 'explanation is saved');
   });
 
   test('is shown different prompts based on stage number', async function (assert) {

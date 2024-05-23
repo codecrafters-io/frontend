@@ -94,7 +94,8 @@ export default class FeedbackPromptComponent extends Component<Signature> {
 
   @action
   handleExplanationTextareaBlur() {
-    this.feedbackSubmission!.save();
+    // TODO: This seems to have some race condition that causes the explanation to be blank. Check why
+    // this.feedbackSubmission!.save();
   }
 
   @action
