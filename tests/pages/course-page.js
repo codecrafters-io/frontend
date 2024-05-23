@@ -56,9 +56,20 @@ export default create({
       },
 
       clickOnExpandButton: clickable('[data-test-expand-button]'),
-      collapseButtons: collection('[data-test-collapse-button]'),
-      toggleCommentsButtons: collection('[data-test-toggle-comments-button]'),
       commentCards: collection('[data-test-comment-card]', CommentCard),
+      collapseButtons: collection('[data-test-collapse-button]'),
+
+      downvoteButton: {
+        hover: triggerable('mouseenter'),
+        scope: '[data-test-solution-card-downvote-button]',
+      },
+
+      toggleCommentsButtons: collection('[data-test-toggle-comments-button]'),
+
+      upvoteButton: {
+        hover: triggerable('mouseenter'),
+        scope: '[data-test-solution-card-upvote-button]',
+      },
     }),
 
     scope: '[data-test-code-examples-tab]',
