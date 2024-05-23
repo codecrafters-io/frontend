@@ -22,6 +22,7 @@ import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 import httpServerLogo from '/assets/images/challenge-logos/challenge-logo-http-server.svg';
 import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
+import shellLogo from '/assets/images/challenge-logos/challenge-logo-shell.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 
 type SyncBuildpacksResponse = { error: string } | { success: boolean };
@@ -120,6 +121,7 @@ export default class CourseModel extends Model {
         'http-server': httpServerLogo,
         react: reactLogo,
         redis: redisLogo,
+        shell: shellLogo,
         sqlite: sqliteLogo,
       }[this.slug] || grepLogo
     );
