@@ -43,12 +43,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
     this.set('currentDate', DUMMY_CURRENT_DATE);
     this.set('customDate', DUMMY_CURRENT_DATE);
 
-    this.owner.register('service:date', FakeDateService);
-
-    let dateService = this.owner.lookup('service:date');
-    let now = new Date(this.currentDate).getTime();
-
-    dateService.setNow(now);
+    this.clock = lolex.install({ now: this.currentDate.getTime() });
 
     let timeService = this.owner.lookup('service:time');
     timeService.setupTimer();
@@ -56,7 +51,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
     await render(hbs`{{date-from-now this.customDate}}`);
     assert.dom(this.element).hasText('0 seconds ago');
 
-    dateService.reset();
+    this.clock.uninstall();
   });
 
   // Generate an individual test for every example date diff
@@ -65,12 +60,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
       this.set('currentDate', DUMMY_CURRENT_DATE);
       this.set('customDate', providedDate);
 
-      this.owner.register('service:date', FakeDateService);
-
-      let dateService = this.owner.lookup('service:date');
-      let now = new Date(this.currentDate).getTime();
-
-      dateService.setNow(now);
+      this.clock = lolex.install({ now: this.currentDate.getTime() });
 
       let timeService = this.owner.lookup('service:time');
       timeService.setupTimer();
@@ -78,7 +68,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
       await render(hbs`{{date-from-now this.customDate}}`);
       assert.dom(this.element).hasText(expectedOutput);
 
-      dateService.reset();
+      this.clock.uninstall();
     });
   }
 
@@ -87,8 +77,6 @@ module('Integration | Helper | date-from-now', function (hooks) {
     this.set('customDate', DUMMY_CURRENT_DATE);
 
     this.clock = lolex.install({ now: this.currentDate.getTime() });
-
-    this.owner.register('service:date', FakeDateService);
 
     let timeService = this.owner.lookup('service:time');
     timeService.setupTimer();
