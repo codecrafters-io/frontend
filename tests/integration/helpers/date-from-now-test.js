@@ -1,7 +1,8 @@
 import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
+import lolex from 'lolex';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 // Dummy date that will be considered "current" or "base" date
@@ -80,4 +81,26 @@ module('Integration | Helper | date-from-now', function (hooks) {
       dateService.reset();
     });
   }
+
+  test('it renders dates in real time', async function (assert) {
+    this.set('currentDate', DUMMY_CURRENT_DATE);
+    this.set('customDate', DUMMY_CURRENT_DATE);
+
+    this.clock = lolex.install({ now: this.currentDate.getTime() });
+
+    this.owner.register('service:date', FakeDateService);
+
+    let timeService = this.owner.lookup('service:time');
+    timeService.setupTimer();
+
+    await render(hbs`{{date-from-now this.customDate}}`);
+    assert.dom(this.element).hasText('0 seconds ago');
+
+    this.clock.tick(1000);
+    await settled();
+
+    assert.dom(this.element).hasText('1 second ago');
+
+    this.clock.uninstall();
+  });
 });
