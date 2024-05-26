@@ -13,6 +13,7 @@ import communityCourseStageSolutions from './handlers/community-course-stage-sol
 import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
 import concepts from './handlers/concepts';
+import conceptQuestions from './handlers/concept-questions';
 import contests from './handlers/contests';
 import courseLeaderboardEntries from './handlers/course-leaderboard-entries';
 import courseStageComments from './handlers/course-stage-comments';
@@ -126,6 +127,7 @@ function routes() {
   conceptEngagements(this);
   conceptGroups(this);
   concepts(this);
+  conceptQuestions(this);
   contests(this);
   courses(this);
   courseStageComments(this);
