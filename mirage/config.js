@@ -102,6 +102,8 @@ function routes() {
 
   this.get('/badges');
 
+  this.get('/community-solution-evaluators');
+
   this.get('/community-solution-evaluations');
 
   this.get('/concept-engagements', function (schema) {
