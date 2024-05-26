@@ -1,3 +1,5 @@
+import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
+
 export default function (server) {
   server.get('/repositories', function (schema, request) {
     let repositories;

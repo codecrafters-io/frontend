@@ -1,27 +1,24 @@
 import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
-import { createServer, belongsTo, hasMany, Model, Response } from 'miragejs';
-import { add } from 'date-fns';
+import { createServer, belongsTo, hasMany, Model } from 'miragejs';
 import config from 'codecrafters-frontend/config/environment';
-import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
 
-import users from './handlers/users';
-import courseLeaderboardEntries from './handlers/course-leaderboard-entries';
 import affiliateEarningsPayouts from './handlers/affiliate-earnings-payouts';
 import affiliateLinks from './handlers/affiliate-links';
 import affiliateReferrals from './handlers/affiliate-referrals';
 import analyticsEvents from './handlers/analytics-events';
 import autofixRequests from './handlers/autofix-requests';
 import badges from './handlers/badges';
-import communityCourseStageSolutions from './handlers/community-course-stage-solutions';
 import communityCourseStageSolutionComments from './handlers/community-course-stage-solution-comments';
+import communityCourseStageSolutions from './handlers/community-course-stage-solutions';
 import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
 import concepts from './handlers/concepts';
 import contests from './handlers/contests';
-import courses from './handlers/courses';
+import courseLeaderboardEntries from './handlers/course-leaderboard-entries';
 import courseStageComments from './handlers/course-stage-comments';
 import courseStageCompletions from './handlers/course-stage-completions';
 import courseStageFeedbackSubmissions from './handlers/course-stage-feedback-submissions';
+import courses from './handlers/courses';
 import downvotes from './handlers/downvotes';
 import fakeSubmissionLogs from './handlers/fake-submission-logs';
 import githubAppInstallations from './handlers/github-app-installations';
@@ -37,19 +34,20 @@ import referralActivations from './handlers/referral-activations';
 import referralLinks from './handlers/referral-links';
 import regionalDiscounts from './handlers/regional-discounts';
 import repositories from './handlers/repositories';
+import sessions from './handlers/sessions';
 import siteFeedbackSubmissions from './handlers/site-feedback-submissions';
 import slackIntegrations from './handlers/slack-integrations';
 import submissions from './handlers/submissions';
 import subscriptions from './handlers/subscriptions';
-import teams from './handlers/teams';
-import teamSubscriptions from './handlers/team-subscriptions';
 import teamMemberships from './handlers/team-memberships';
-import teamPaymentMethodUpdateRequests from './handlers/team-payment-method-update-requests';
 import teamPaymentFlows from './handlers/team-payment-flows';
+import teamPaymentMethodUpdateRequests from './handlers/team-payment-method-update-requests';
+import teamSubscriptions from './handlers/team-subscriptions';
+import teams from './handlers/teams';
 import trackLeaderboardEntries from './handlers/track-leaderboard-entries';
 import upvotes from './handlers/upvotes';
+import users from './handlers/users';
 import views from './handlers/views';
-import sessions from './handlers/sessions';
 
 export default function (config) {
   let finalConfig = {
