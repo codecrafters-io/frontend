@@ -8,8 +8,24 @@ import { escapeHtml, groupBy, zip } from 'codecrafters-frontend/utils/lodash-uti
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { transformerNotationDiff } from '@shikijs/transformers';
-import { next } from '@ember/runloop';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
+
+/**
+ * Method to use for delaying `highlightCode` task execution:
+ * - `restartable` cancels all queued calls before they have a chance to execute, executes only the latest call: causes much less unnecessary task executions
+ * - `keepLatest` always executes first & last queued calls, cancelling the ones in-between: might be more reliable but always triggers rendering twice
+ */
+const HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD: 'keepLatest' | 'restartable' = 'restartable';
+
+/**
+ * Timeout used for `restartable` method
+ */
+const HIGHLIGHT_CODE_TASK_TIMEOUT_PRE: number = 10;
+
+/**
+ * Timeout used for `keepLatest` method
+ */
+const HIGHLIGHT_CODE_TASK_TIMEOUT_POST: number = 100;
 
 type Signature = {
   Element: HTMLDivElement;
@@ -27,7 +43,19 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   @tracked asyncHighlightedHTML: string | null = null;
   @tracked asyncHighlightedCode: string | null = null;
   @tracked lineNumberWithExpandedComments: number | null = null;
-  @tracked isDarkMode: boolean | undefined = undefined;
+
+  /**
+   * Current Dark Mode environment setting, reported by `is-dark-mode` modifier
+   * and used by `highlightCode` task to decide which mode to format code with
+   * @private
+   */
+  #isDarkMode: boolean | undefined = undefined;
+
+  /**
+   * The last Dark Mode environment setting that was used to format code
+   * @private
+   */
+  #isDarkModeRendered: boolean | undefined = undefined;
 
   static highlighterIdForDarkMode = 'syntax-highlighted-diff-dark';
   static highlighterIdForLightMode = 'syntax-highlighted-diff-light';
@@ -35,12 +63,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   static highlighterOptionsForLightMode = { themes: ['github-light'], langs: [] };
   static LINES_AROUND_CHANGED_CHUNK = 3;
   static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
-
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-
-    this.highlightCode.perform();
-  }
 
   get chunksForRender() {
     const parsedHtml = new DOMParser().parseFromString(this.highlightedHtml, 'text/html');
@@ -138,13 +160,8 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
   @action
   handleIsDarkModeUpdate(isDarkMode: boolean) {
-    if (isDarkMode !== this.isDarkMode) {
-      // Avoid re-use in same computation bug
-      next(() => {
-        this.isDarkMode = isDarkMode;
-        this.highlightCode.perform();
-      });
-    }
+    this.#isDarkMode = isDarkMode;
+    this.highlightCode.perform();
   }
 
   @action
@@ -160,28 +177,53 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     }
   }
 
-  highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
-    if (this.isDarkMode === undefined) {
-      return; // Not ready to highlight yet
+  highlightCode = task({ [HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD]: true }, async (): Promise<void> => {
+    // For "restartable" to have immediate effect for sequential calls
+    if (HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD === 'restartable') {
+      await timeout(HIGHLIGHT_CODE_TASK_TIMEOUT_PRE);
     }
 
+    // Return if not ready to highlight yet
+    if (this.#isDarkMode === undefined) {
+      return;
+    }
+
+    // Return if nothing changed since last render
+    if (this.#isDarkMode === this.#isDarkModeRendered) {
+      return;
+    }
+
+    // Remember which mode we've last used for rendering
+    this.#isDarkModeRendered = this.#isDarkMode;
+
+    // Prepare the highlither promise
     const highlighterPromise = getOrCreateCachedHighlighterPromise(
-      this.isDarkMode ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
-      this.isDarkMode ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
+      this.#isDarkMode ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
+      this.#isDarkMode ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
     );
 
-    highlighterPromise.then((highlighter) => {
-      highlighter.loadLanguage(this.args.language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage).then(() => {
-        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, {
-          lang: this.args.language,
-          theme: this.isDarkMode
-            ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
-            : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
-          transformers: [transformerNotationDiff()],
-        });
-        this.asyncHighlightedCode = this.args.code;
-      });
+    // Wait for the highlighter promise to load
+    const highlighter = await highlighterPromise;
+
+    // Wait for the language to load
+    await highlighter.loadLanguage(this.args.language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage);
+
+    // Format the code and use it
+    this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, {
+      lang: this.args.language,
+      theme: this.#isDarkMode
+        ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
+        : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
+      transformers: [transformerNotationDiff()],
     });
+
+    // Remember which code we've last formatted
+    this.asyncHighlightedCode = this.args.code;
+
+    // Ensure we don't run this task too often when `keepLatest` is used
+    if (HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD === 'keepLatest') {
+      await timeout(HIGHLIGHT_CODE_TASK_TIMEOUT_POST);
+    }
   });
 
   static preloadHighlighter() {
