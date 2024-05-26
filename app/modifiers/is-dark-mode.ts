@@ -50,7 +50,7 @@ type Signature = {
  * Invokes a callback on initial load and when Dark Mode environment changes,
  * passing it `isDarkMode: boolean` as argument.
  * Calculated based on element's DOM parents with `.dark` class.
- * Relies on DarkModeService and/or DOM Mutation Obsersers for monitoring changes.
+ * Relies on DarkModeService and/or DOM Mutation Observers for monitoring changes.
  * Usage:
  * ```
  * <div {{is-dark-mode this.handleDarkModeUpdated}} />
@@ -66,7 +66,7 @@ export default class IsDarkModeModifier extends Modifier<Signature> {
   #callback?: (isDarkMode: boolean) => void;
 
   /**
-   * Elemnent which the modifier was used on
+   * Element which the modifier was used on
    * @private
    */
   #element?: HTMLElement;

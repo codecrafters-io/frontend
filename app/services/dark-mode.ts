@@ -102,7 +102,7 @@ export default class DarkModeService extends Service {
   }
 
   /**
-   * Unregisters a callback previsouly resigtered with `registerUpdateListener`
+   * Unregisters a callback previsouly registered with `registerUpdateListener`
    * @param listener method to unregister, must be exactly the same instance, compared using `===`
    */
   @action unregisterUpdateListener(listener: UpdateListener) {
