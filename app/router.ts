@@ -101,5 +101,6 @@ Router.map(function () {
 
   this.route('demo', function () {
     this.route('code-mirror');
+    this.route('dark-mode-toggle');
   });
 });

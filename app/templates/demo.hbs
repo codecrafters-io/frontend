@@ -16,6 +16,14 @@
     >
       <span class={{if (eq this.router.currentRouteName "demo.code-mirror") "font-medium text-teal-500" "text-gray-600"}}>CodeMirror</span>
     </LinkTo>
+    <LinkTo
+      @route="demo.dark-mode-toggle"
+      role="button"
+      class="flex flex-shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+        {{if (eq this.router.currentRouteName 'demo.dark-mode-toggle') 'border-teal-500' 'border-gray-100'}}"
+    >
+      <span class={{if (eq this.router.currentRouteName "demo.dark-mode-toggle") "font-medium text-teal-500" "text-gray-600"}}>DarkModeToggle</span>
+    </LinkTo>
   </div>
 
   {{outlet}}

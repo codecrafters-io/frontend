@@ -1,0 +1,15 @@
+{{page-title "DarkModeToggle"}}
+
+<h3 class="mb-2">Set localStorage dark mode preference to:</h3>
+
+<DarkModeToggle />
+
+<hr class="my-4" />
+
+<h3 class="mb-2">Current localStorage preference:</h3>
+
+<code class="code" {{did-insert this.loadDarkModePreference}} {{did-update this.loadDarkModePreference this.darkMode.isEnabled}}>
+  {{or this.currentLocalStoragePreference "null"}}
+</code>
+
+{{outlet}}
