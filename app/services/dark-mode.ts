@@ -2,9 +2,9 @@ import Service, { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { registerDestructor } from '@ember/destroyable';
-import RouterService from '@ember/routing/router-service';
+import type RouterService from '@ember/routing/router-service';
+import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
-import LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
 export const LOCAL_STORAGE_KEY = 'dark-mode-preference';
 
