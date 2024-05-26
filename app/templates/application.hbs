@@ -2,7 +2,7 @@
 
 {{page-title "CodeCrafters"}}
 
-<div class="bg-gray-50 min-h-screen">
+<div class="application-container bg-gray-50 min-h-screen {{if this.darkMode.isEnabled 'dark'}}">
   {{#if this.layout.shouldShowHeader}}
     <Header />
   {{/if}}
