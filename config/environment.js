@@ -41,6 +41,7 @@ module.exports = function (environment) {
         twitterSite: '@codecraftersio',
       },
 
+      isCI: false, // Overrideen in test environment
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
@@ -81,6 +82,7 @@ module.exports = function (environment) {
     ENV.APP.autoboot = false;
 
     ENV.x.percyIsEnabled = process.env.PERCY_ENABLE === 'true';
+    ENV.x.isCI = !!process.env.CI;
   }
 
   return ENV;
