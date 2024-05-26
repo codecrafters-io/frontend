@@ -23,7 +23,20 @@ module.exports = {
       /animated-orphans/,
     ],
   },
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: [
+    'variant',
+    [
+      /**
+       * Use Dark Mode for all elements nested in a parent with `.dark` class
+       */
+      '&:is(.dark *)',
+
+      /**
+       * Use Dark Mode for all users automatically, based on system preference
+       */
+      // '@media (prefers-color-scheme: dark) { &:not(.light *) }',
+    ],
+  ],
   theme: {
     colors: {
       // Build your palette here
