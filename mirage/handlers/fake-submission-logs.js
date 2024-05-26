@@ -1,3 +1,5 @@
+import { Response } from 'miragejs';
+
 export default function (server) {
   server.get('/fake-submission-logs', function (schema, request) {
     if (request.queryParams.type === 'success') {

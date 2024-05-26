@@ -1,3 +1,5 @@
+import { Response } from 'miragejs';
+
 export default function (server) {
   server.get('/users', function (schema, request) {
     return schema.users.where({ username: request.queryParams.username });

@@ -1,3 +1,5 @@
+import { Response } from 'miragejs';
+
 export default function (server) {
   // TODO: Add pagination
   server.get('/community-course-stage-solutions', function (schema, request) {

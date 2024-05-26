@@ -1,3 +1,5 @@
+import { Response } from 'miragejs';
+
 export default function (server) {
   server.get('/regional-discounts/current', function (schema) {
     const regionalDiscount = schema.regionalDiscounts.find('current-discount-id');
