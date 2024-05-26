@@ -86,7 +86,7 @@ export default class IsDarkModeModifier extends Modifier<Signature> {
     }
 
     // Scan the DOM for element parents with `.dark` class
-    const isDarkMode = !!this.#element!.closest('.dark');
+    const isDarkMode = !!this.#element?.closest('.dark');
 
     // If callback was called earlier with same value - don't call it again to avoid double-renders
     if (this.#element?.getAttribute(CACHED_STATE_ATTRIBUTE_NAME) === `${isDarkMode}`) {
