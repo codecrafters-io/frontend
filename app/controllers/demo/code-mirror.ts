@@ -12,8 +12,10 @@ const THEME_EXTENSIONS: {
   githubLight,
 };
 
-const SUPPORTED_THEMES = Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init')));
-const DEFAULT_THEME = 'githubDark';
+const SUPPORTED_THEMES = [...Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init'))), 'Auto'];
+const DEFAULT_THEME = 'Auto';
+const DEFAULT_THEME_DARK = 'githubDark';
+const DEFAULT_THEME_LIGHT = 'githubLight';
 
 class ExampleDocument {
   @tracked document!: string;
@@ -123,10 +125,17 @@ export default class DemoCodeMirrorController extends Controller {
   }
 
   get selectedTheme() {
-    return this.themes[this.selectedThemeIndex];
+    const theme = this.themes[this.selectedThemeIndex];
+
+    return theme === 'Auto'
+      ? this.useDarkTheme
+        ? this.themes[this.themes.indexOf(DEFAULT_THEME_DARK)]
+        : this.themes[this.themes.indexOf(DEFAULT_THEME_LIGHT)]
+      : theme;
   }
 
   @tracked border: boolean = true;
+  @tracked useDarkTheme: boolean = false;
 
   @tracked allowMultipleSelections: boolean = true;
   @tracked autocompletion: boolean = true;
@@ -196,5 +205,9 @@ export default class DemoCodeMirrorController extends Controller {
   @action selectedThemeIndexDidChange(event: Event) {
     const target: HTMLSelectElement = event.target as HTMLSelectElement;
     this.selectedThemeIndex = target.selectedIndex;
+  }
+
+  @action useDarkThemeDidChange(useDarkTheme: boolean) {
+    this.useDarkTheme = useDarkTheme;
   }
 }
