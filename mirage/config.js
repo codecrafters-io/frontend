@@ -164,12 +164,21 @@ function routes() {
   sessions(this);
 
   // TODO: Move these to handler files too
+
   // mirage/handlers/community-solution-evaluators.js
   this.get('/community-solution-evaluators');
+
   // mirage/handlers/community-solution-evaluations.js
   this.get('/community-solution-evaluations');
+
   // mirage/handlers/charges.js
   this.get('/charges');
+
   // mirage/handlers/code-walkthroughs.js
   this.get('/code-walkthroughs');
+
+  // mirage/handlers/free-usage-grants.js
+  this.get('/free-usage-grants', function (schema, request) {
+    return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
+  });
 }
