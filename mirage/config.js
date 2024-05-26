@@ -114,25 +114,24 @@ function routes() {
 
   window.server = this; // Hack! Is there a better way?
 
-  users(this);
-  courseLeaderboardEntries(this);
   affiliateEarningsPayouts(this);
   affiliateLinks(this);
   affiliateReferrals(this);
   analyticsEvents(this);
   autofixRequests(this);
   badges(this);
-  communityCourseStageSolutions(this);
   communityCourseStageSolutionComments(this);
+  communityCourseStageSolutions(this);
   conceptEngagements(this);
   conceptGroups(this);
-  concepts(this);
   conceptQuestions(this);
+  concepts(this);
   contests(this);
-  courses(this);
+  courseLeaderboardEntries(this);
   courseStageComments(this);
   courseStageCompletions(this);
   courseStageFeedbackSubmissions(this);
+  courses(this);
   downvotes(this);
   fakeSubmissionLogs(this);
   githubAppInstallations(this);
@@ -148,22 +147,23 @@ function routes() {
   referralLinks(this);
   regionalDiscounts(this);
   repositories(this);
+  sessions(this);
   siteFeedbackSubmissions(this);
   slackIntegrations(this);
   solutionComparisons(this);
   submissions(this);
   subscriptions(this);
-  teams(this);
-  teamSubscriptions(this);
   teamMemberships(this);
-  teamPaymentMethodUpdateRequests(this);
   teamPaymentFlows(this);
+  teamPaymentMethodUpdateRequests(this);
+  teamSubscriptions(this);
+  teams(this);
   trackLeaderboardEntries(this);
   upvotes(this);
+  users(this);
   views(this);
-  sessions(this);
 
-  // TODO: Move these to handler files too
+  // TODO: Move everything else to separate 'handler' files too
 
   // mirage/handlers/community-solution-evaluators.js
   this.get('/community-solution-evaluators');
@@ -177,8 +177,70 @@ function routes() {
   // mirage/handlers/code-walkthroughs.js
   this.get('/code-walkthroughs');
 
+  // mirage/handlers/course-definition-updates.js
+  this.get('/course-definition-updates');
+  this.get('/course-definition-updates/:id');
+
+  this.post('/course-definition-updates/:id/apply', function (schema, request) {
+    const courseDefinitionUpdate = schema.courseDefinitionUpdates.find(request.params.id);
+
+    if (courseDefinitionUpdate.summary.includes('[should_error]')) {
+      courseDefinitionUpdate.update({ lastErrorMessage: 'Expected "slug" to be "redis", got: "docker".\n\nChange slug to "redis" to fix this.' });
+    } else {
+      courseDefinitionUpdate.update({ appliedAt: new Date(), status: 'applied', lastErrorMessage: null });
+    }
+
+    return courseDefinitionUpdate;
+  });
+
+  // mirage/handlers/course-extension-activations.js
+  this.post('/course-extension-activations');
+  this.delete('/course-extension-activations/:id');
+
+  // mirage/handlers/course-extension-ideas.js
+  this.get('/course-extension-ideas');
+  this.post('/course-extension-ideas/:id/unvote', () => {});
+  this.post('/course-extension-idea-votes');
+
+  // mirage/handlers/course-ideas.js
+  this.get('/course-ideas');
+  this.post('/course-ideas/:id/unvote', () => {});
+  this.post('/course-idea-votes');
+
+  // mirage/handlers/course-language-requests.js
+  this.get('/course-language-requests');
+  this.post('/course-language-requests');
+  this.delete('/course-language-requests/:id');
+
+  // mirage/handlers/course-stage-language-guides.js
+  this.get('/course-stage-language-guides');
+
+  // mirage/handlers/course-tester-versions.js
+  this.get('/course-tester-versions');
+  this.get('/course-tester-versions/:id');
+
+  this.post('/course-tester-versions/:id/activate', function (schema, request) {
+    const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
+    courseTesterVersion.update({ isActive: true });
+
+    const otherTesterVersions = schema.courseTesterVersions.where((version) => version.id !== courseTesterVersion.id);
+    otherTesterVersions.update({ isActive: false });
+
+    return courseTesterVersion;
+  });
+
+  this.post('/course-tester-versions/:id/deprovision', function (schema, request) {
+    return schema.courseTesterVersions.find(request.params.id);
+  });
+
+  // mirage/handlers/feature-suggestions.js
+  this.patch('/feature-suggestions/:id');
+
   // mirage/handlers/free-usage-grants.js
   this.get('/free-usage-grants', function (schema, request) {
     return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
   });
+
+  // mirage/handlers/solution-comparisons.js
+  this.get('/solution-comparisons');
 }
