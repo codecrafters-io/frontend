@@ -4,6 +4,8 @@ import { add } from 'date-fns';
 import config from 'codecrafters-frontend/config/environment';
 import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
 
+import users from './handlers/users';
+
 export default function (config) {
   let finalConfig = {
     ...config,
@@ -66,6 +68,10 @@ function routes() {
   };
 
   window.server = this; // Hack! Is there a better way?
+
+  users(this);
+
+  // TODO: Move everything else to separate 'handler' files too
 
   this.get('/affiliate-earnings-payouts');
   this.post('/affiliate-earnings-payouts');
@@ -705,54 +711,6 @@ function routes() {
   });
 
   this.post('/upvotes');
-
-  this.get('/users', function (schema, request) {
-    return schema.users.where({ username: request.queryParams.username });
-  });
-
-  this.get('/users/current', function (schema) {
-    const session = schema.sessions.find('current-session-id');
-
-    if (session) {
-      return session.user;
-    } else {
-      return new Response(200, {}, { data: {} });
-    }
-  });
-
-  this.get('/users/:id');
-
-  this.get('/users/:id/next-invoice-preview', function (schema) {
-    return schema.invoices.create({
-      createdAt: new Date(2025, 1, 1),
-      amountDue: 7900,
-      lineItems: [{ amount: 7900, amount_after_discounts: 7900, quantity: 1 }],
-    });
-  });
-
-  this.patch('/users/:id', function (schema, request) {
-    const { id } = request.params;
-    const attrs = this.normalizedRequestAttrs();
-    var username = attrs.username;
-    var avatarUrl = attrs.avatarUrl;
-
-    if (attrs.hasAnonymousModeEnabled) {
-      username = 'Anonymous';
-      avatarUrl = 'https://avatars.githubusercontent.com/u/59389854';
-    } else {
-      if (username === 'Anonymous') {
-        username = attrs.githubUsername;
-        avatarUrl = 'https://github.com/rohitpaulk.png';
-      }
-    }
-
-    const user = schema.users.find(id);
-    user.update({ username, avatarUrl });
-
-    return user;
-  });
-
-  this.delete('/users/:id');
 
   this.post('/views');
 }
