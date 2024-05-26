@@ -5,6 +5,7 @@ import config from 'codecrafters-frontend/config/environment';
 import syncRepositoryStageLists from './utils/sync-repository-stage-lists';
 
 import users from './handlers/users';
+import courseLeaderboardEntries from './handlers/course-leaderboard-entries';
 
 export default function (config) {
   let finalConfig = {
@@ -70,6 +71,7 @@ function routes() {
   window.server = this; // Hack! Is there a better way?
 
   users(this);
+  courseLeaderboardEntries(this);
 
   // TODO: Move everything else to separate 'handler' files too
 
@@ -374,24 +376,6 @@ function routes() {
   this.get('/course-language-requests');
   this.post('/course-language-requests');
   this.delete('/course-language-requests/:id');
-
-  this.get('/course-leaderboard-entries', function (schema, request) {
-    let result = schema.courseLeaderboardEntries.all();
-
-    if (request.queryParams.team_id) {
-      const team = schema.teams.find(request.queryParams.team_id);
-      const teamMemberships = schema.teamMemberships.where({ teamId: team.id }).models;
-      const userIds = teamMemberships.map((teamMembership) => teamMembership.user.id);
-
-      result = result.filter((leaderboardEntry) => userIds.includes(leaderboardEntry.user.id));
-    }
-
-    if (request.queryParams.course_id) {
-      result = result.filter((leaderboardEntry) => leaderboardEntry.currentCourseStage.course.id === request.queryParams.course_id);
-    }
-
-    return result;
-  });
 
   this.get('/course-stage-comments', function (schema, request) {
     let result = schema.courseStageComments.all().filter((comment) => comment.targetId.toString() === request.queryParams.target_id);
