@@ -37,6 +37,7 @@ import repositories from './handlers/repositories';
 import sessions from './handlers/sessions';
 import siteFeedbackSubmissions from './handlers/site-feedback-submissions';
 import slackIntegrations from './handlers/slack-integrations';
+import solutionComparisons from './handlers/solution-comparisons';
 import submissions from './handlers/submissions';
 import subscriptions from './handlers/subscriptions';
 import teamMemberships from './handlers/team-memberships';
@@ -147,6 +148,7 @@ function routes() {
   repositories(this);
   siteFeedbackSubmissions(this);
   slackIntegrations(this);
+  solutionComparisons(this);
   submissions(this);
   subscriptions(this);
   teams(this);
@@ -158,4 +160,14 @@ function routes() {
   upvotes(this);
   views(this);
   sessions(this);
+
+  // TODO: Move these to handler files too
+  // mirage/handlers/community-solution-evaluators.js
+  this.get('/community-solution-evaluators');
+  // mirage/handlers/community-solution-evaluations.js
+  this.get('/community-solution-evaluations');
+  // mirage/handlers/charges.js
+  this.get('/charges');
+  // mirage/handlers/code-walkthroughs.js
+  this.get('/code-walkthroughs');
 }
