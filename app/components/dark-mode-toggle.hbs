@@ -1,0 +1,6 @@
+<TertiaryButton @size="small" {{on "click" (fn this.setPreference "system")}}>System</TertiaryButton>
+<TertiaryButton @size="small" {{on "click" (fn this.setPreference "dark")}}>Dark</TertiaryButton>
+<TertiaryButton @size="small" {{on "click" (fn this.setPreference "light")}}>Light</TertiaryButton>
+<TertiaryButton @size="small" {{on "click" (fn this.setPreference null)}}>Unset</TertiaryButton>
+
+{{yield}}

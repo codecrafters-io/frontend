@@ -6,12 +6,12 @@ import RouterService from '@ember/routing/router-service';
 import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 import LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
-const LOCAL_STORAGE_KEY = 'dark-mode-preference';
+export const LOCAL_STORAGE_KEY = 'dark-mode-preference';
 
-type LocalStoragePreference = 'system' | 'dark' | 'light';
+export type UpdateListener = (isEnabled: boolean) => void;
+
+export type LocalStoragePreference = 'system' | 'dark' | 'light';
 type SystemPreference = 'dark' | 'light';
-
-type UpdateListener = (isEnabled: boolean) => void;
 
 export default class DarkModeService extends Service {
   @service declare router: RouterService;
