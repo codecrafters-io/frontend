@@ -1,5 +1,5 @@
 <div
-  class="shadow relative {{if this.colorScheme.isDark 'bg-black border-b border-gray-800' 'bg-white'}}"
+  class="shadow relative bg-white dark:bg-black dark:border-b dark:border-gray-800"
   {{did-insert this.handleDidInsert}}
   {{will-destroy this.handleWillDestroy}}
   data-test-header
@@ -8,7 +8,7 @@
     <div class="flex items-center justify-between">
       {{! Logo }}
       <div class="flex">
-        <div class="{{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}} pr-5 text-sm flex-grow">
+        <div class="text-gray-600 dark:text-gray-200 pr-5 text-sm flex-grow">
           <LinkTo class="flex items-center" @route="catalog">
             <img class="h-8 w-8 my-3 mr-2" src={{this.logoImage}} alt="CodeCrafters" />
             CodeCrafters
@@ -17,11 +17,7 @@
       </div>
 
       {{! Nav Toggle on Mobile }}
-      <button
-        class="md:hidden {{if this.colorScheme.isDark 'text-gray-200' 'text-gray-600'}} pl-10 py-3 focus:outline-none"
-        type="button"
-        {{on "click" this.toggleMobileMenu}}
-      >
+      <button class="md:hidden text-gray-600 dark:text-gray-200 pl-10 py-3 focus:outline-none" type="button" {{on "click" this.toggleMobileMenu}}>
         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
           <path
             class="heroicon-ui"
@@ -35,12 +31,12 @@
     <div class="hidden md:flex items-center justify-between flex-grow">
       <div class="flex items-center">
         {{! Divider }}
-        <div class="{{if this.colorScheme.isDark 'bg-gray-700' 'bg-gray-200'}} w-px h-5 mr-3"></div>
+        <div class="bg-gray-200 dark:bg-gray-700 w-px h-5 mr-3"></div>
 
         {{! Top-level links }}
         {{#each this.links as |link|}}
           {{! @glint-expect-error not ts-ified yet }}
-          <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @isDark={{this.colorScheme.isDark}} class="px-2" />
+          <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="px-2" />
         {{/each}}
       </div>
 
@@ -55,14 +51,8 @@
             <div
               role="button"
               class="rounded border
-                {{if
-                  dd.isOpen
-                  (if this.colorScheme.isDark 'border-gray-300' 'border-gray-600')
-                  (if this.colorScheme.isDark 'border-gray-600' 'border-gray-200')
-                }}
-                {{if this.colorScheme.isDark 'text-gray-300' 'text-gray-600'}}
-                {{if this.colorScheme.isDark 'hover:border-gray-300' 'hover:border-gray-600'}}
-                transition-colors px-2 py-1 text-xs"
+                {{if dd.isOpen 'border-gray-600 dark:border-gray-300' 'border-gray-200 dark:border-gray-600'}}
+                text-gray-600 dark:text-gray-300 hover:border-gray-600 dark:hover:border-gray-300 transition-colors px-2 py-1 text-xs"
               data-test-feedback-button
             >
               Feedback
@@ -110,7 +100,7 @@
         <div class="py-3">
           {{#each this.links as |link|}}
             {{! @glint-expect-error not ts-ified yet }}
-            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @isDark={{this.colorScheme.isDark}} class="block py-3" />
+            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="block py-3" />
           {{/each}}
 
           {{#if this.currentUser}}

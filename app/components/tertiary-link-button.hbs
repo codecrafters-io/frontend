@@ -5,9 +5,7 @@
   @size={{@size}}
   @query={{@query}}
   @shouldOpenInNewTab={{@shouldOpenInNewTab}}
-  class="{{if @isDark 'bg-transparent' 'bg-white hover:bg-gray-50'}}
-    {{if @isDark 'text-gray-200 hover:text-white' 'text-gray-900'}}
-    {{if @isDark 'border-gray-300 hover:border-gray-200' 'border-gray-300'}}
+  class="bg-white dark:bg-transparent text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-300 light:hover:bg-gray-50 dark:hover:text-white dark:hover:border-gray-200
     {{if @isDisabled 'cursor-not-allowed opacity-50'}}"
   ...attributes
 >
