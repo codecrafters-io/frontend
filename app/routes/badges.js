@@ -1,11 +1,16 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 import RSVP from 'rsvp';
 
 export default class BadgesRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ isDarkRoute: true });
+  }
 
   async model() {
     return RSVP.hash({

@@ -5,6 +5,7 @@ import type ContestModel from 'codecrafters-frontend/models/contest';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   contest: ContestModel;
@@ -16,6 +17,10 @@ export type ModelType = {
 
 export default class ContestRoute extends BaseRoute {
   allowsAnonymousAccess = true;
+
+  buildRouteInfoMetadata(): RouteInfoMetadata {
+    return new RouteInfoMetadata({ isDarkRoute: true });
+  }
 
   @service declare router: RouterService;
   @service declare store: Store;
