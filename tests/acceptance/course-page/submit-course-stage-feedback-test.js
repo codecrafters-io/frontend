@@ -181,4 +181,32 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     await animationsSettled();
   });
+
+  test('can submit course stage feedback after passing base stage', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withBaseStagesCompleted', {
+      course: redis,
+      language: go,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    await coursePage.sidebar.clickOnStepListItem('Expiry');
+    await coursePage.feedbackPrompt.clickOnOption('😍');
+    await coursePage.feedbackPrompt.fillInExplanation('I love this course!');
+
+    await coursePage.feedbackPrompt.clickOnSubmitButton();
+    assert.strictEqual(coursePage.desktopHeader.stepName, 'Base stages complete!', 'next stage is shown after feedback submission');
+
+    const submission = this.server.schema.courseStageFeedbackSubmissions.first();
+    assert.strictEqual(submission.explanation, 'I love this course!', 'explanation is saved');
+  });
 });
