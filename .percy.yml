@@ -15,5 +15,3 @@ snapshot:
       content: "11:11 PM";
       font-size: 0.6rem;
     }
-discovery:
-  disable-cache: true
