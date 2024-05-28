@@ -1,0 +1,8 @@
+<div ...attributes data-test-trusted-evaluation-tab>
+  {{! template-lint-disable require-input-label }}
+  <select class="p-2 border rounded mb-3 block" {{on "change" (noop)}}>
+    <option value="none">None</option>
+    <option value="pass">Pass</option>
+    <option value="fail">Fail</option>
+  </select>
+</div>

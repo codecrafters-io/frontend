@@ -43,10 +43,19 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await codeExampleEvaluatorsPage.visit({ course_slug: this.course.slug });
 
     await codeExampleEvaluatorsPage.clickOnEvaluator('relevance');
-    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance');
+    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance', 'URL is correct');
 
+    await codeExampleEvaluatorPage.evaluationsSection.scrollIntoView();
     await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].click();
+    await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].clickOnTabHeader('Trusted Evaluation');
 
-    // await this.pauseTest();
+    const trustedEvaluationTab = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].trustedEvaluationTab;
+
+    assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations yet');
+    assert.strictEqual(trustedEvaluationTab.value, 'none', 'Default value is none');
+
+    await trustedEvaluationTab.fillInValue('pass');
+    assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 1, 'Trusted evaluation created');
+    assert.strictEqual(trustedEvaluationTab.value, 'pass', 'Updated value is pass');
   });
 });

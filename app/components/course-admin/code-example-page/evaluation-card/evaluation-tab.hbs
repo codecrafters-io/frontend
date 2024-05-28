@@ -1,0 +1,7 @@
+<div class="prose prose-sm">
+  {{#if @evaluation.logsFileContents}}
+    {{markdown-to-html @evaluation.logsFileContents}}
+  {{else}}
+    <p>Loading...</p>
+  {{/if}}
+</div>
