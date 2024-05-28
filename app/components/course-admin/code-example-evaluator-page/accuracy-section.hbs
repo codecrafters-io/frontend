@@ -11,6 +11,7 @@
     </div>
   </div>
 
+  {{! TODO: Use a "generic" statistic component? }}
   <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 mb-6">
     <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.falsePositiveRateStatistic}} />
     <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.falseNegativeRateStatistic}} />
