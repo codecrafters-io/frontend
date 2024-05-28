@@ -57,5 +57,13 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await trustedEvaluationTab.fillInValue('pass');
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 1, 'Trusted evaluation created');
     assert.strictEqual(trustedEvaluationTab.value, 'pass', 'Updated value is pass');
+
+    await trustedEvaluationTab.fillInValue('fail');
+    assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 1, 'Trusted evaluation created');
+    assert.strictEqual(trustedEvaluationTab.value, 'fail', 'Updated value is fail');
+
+    await trustedEvaluationTab.fillInValue('none');
+    assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations yet');
+    assert.strictEqual(trustedEvaluationTab.value, 'none', 'Updated value is none');
   });
 });

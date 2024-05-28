@@ -1,8 +1,37 @@
 <div ...attributes data-test-trusted-evaluation-tab>
   {{! template-lint-disable require-input-label }}
-  <select class="p-2 border rounded mb-3 block" {{on "change" (noop)}}>
+  <select class="p-2 border rounded mb-3 block" {{on "change" this.handleSelect}}>
     <option value="none">None</option>
     <option value="pass">Pass</option>
     <option value="fail">Fail</option>
   </select>
+
+  <div class="prose">
+    {{#if this.trustedEvaluation}}
+      {{#if (eq this.trustedEvaluation.result @evaluation.result)}}
+        <p>
+          ✅ This evaluation matches the trusted evaluation.
+        </p>
+      {{else}}
+        <p>
+          ❌ This evaluation does not match the trusted evaluation.
+        </p>
+
+        <ul>
+          <li>
+            <b>Trusted:</b>
+            {{this.trustedEvaluation.result}}
+          </li>
+          <li>
+            <b>Evaluation:</b>
+            {{@evaluation.result}}
+          </li>
+        </ul>
+      {{/if}}
+    {{else}}
+      <p>
+        This solution doesn't have a trusted evaluation yet.
+      </p>
+    {{/if}}
+  </div>
 </div>
