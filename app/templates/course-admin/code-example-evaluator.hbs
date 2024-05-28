@@ -1,5 +1,5 @@
 <div class="bg-white min-h-screen">
-  <div class="container mx-auto pt-4 pb-10 px-6">
+  <div class="container mx-auto pt-4 pb-32 px-6">
     <div class="py-3 border-b mb-6">
       <TertiaryLinkButton @route="course-admin.code-example-evaluators" @models={{array @model.course.slug}} @size="small" class="pl-1.5 mb-3">
         <div class="flex items-center">
@@ -42,34 +42,13 @@
     <div>
       <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
 
-      <Tabs @size="regular" @tabs={{this.tabs}} class="mt-8" as |activeTabSlug|>
-        <div class="mt-6">
-          {{#if (eq activeTabSlug "fail")}}
-            <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
-              @resultFilter="fail"
-              @evaluator={{@model.evaluator}}
-              @evaluations={{@model.failEvaluations}}
-            />
-          {{else if (eq activeTabSlug "pass")}}
-            <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
-              @resultFilter="pass"
-              @evaluator={{@model.evaluator}}
-              @evaluations={{@model.passEvaluations}}
-            />
-          {{else if (eq activeTabSlug "unsure")}}
-            <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
-              @resultFilter="unsure"
-              @evaluator={{@model.evaluator}}
-              @evaluations={{@model.unsureEvaluations}}
-            />
-          {{else}}
-            <div class="text-red-500">
-              Error! Unknown tab:
-              {{activeTabSlug}}
-            </div>
-          {{/if}}
-        </div>
-      </Tabs>
+      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+        @evaluator={{@model.evaluator}}
+        @passEvaluations={{@model.passEvaluations}}
+        @failEvaluations={{@model.failEvaluations}}
+        @unsureEvaluations={{@model.unsureEvaluations}}
+        class="mt-8"
+      />
     </div>
   </div>
 </div>
