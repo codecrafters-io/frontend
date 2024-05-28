@@ -2,20 +2,28 @@
   <div class="mb-4">
     <div class="flex items-center mb-1 gap-2">
       <span class="text-gray-800 font-semibold text-lg">
-        Recent Evaluations
+        Accuracy
       </span>
     </div>
 
     <div class="text-gray-400 text-xs">
-      View recent evaluations by result
+      Measure accuracy by comparing LLM evaluations against human evaluations
     </div>
+  </div>
+
+  <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 mb-6">
+    <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.falsePositiveRateStatistic}} />
+    <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.falseNegativeRateStatistic}} />
   </div>
 
   <Tabs @size="regular" @tabs={{this.tabs}} @activeTabSlug={{this.activeTabSlug}} @onTabChange={{this.handleTabChange}}>
     <div class="mt-6">
-      {{#each this.sortedEvaluations as |evaluation|}}
+      <div class="py-10">
+        Incomplete
+      </div>
+      {{!-- {{#each this.sortedEvaluations as |evaluation|}}
         <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
-      {{/each}}
+      {{/each}} --}}
     </div>
   </Tabs>
 </div>

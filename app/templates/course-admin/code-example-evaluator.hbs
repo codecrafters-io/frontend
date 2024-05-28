@@ -42,6 +42,8 @@
     <div>
       <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
 
+      <CourseAdmin::CodeExampleEvaluatorPage::AccuracySection @evaluator={{@model.evaluator}} class="mt-8" />
+
       <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
         @evaluator={{@model.evaluator}}
         @passEvaluations={{@model.passEvaluations}}
