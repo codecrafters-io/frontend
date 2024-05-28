@@ -82,7 +82,8 @@ export default class CourseStageInstructionsController extends Controller {
 
     // If the "active step" is after a "BaseStagesCompletedStep", navigate to "BaseStagesCompletedStep" instead.
     if (nextStep?.type === 'BaseStagesCompletedStep' && stepAfterNextStep === activeStep) {
-      this.router.transitionTo(nextStep.routeParams.route, nextStep.routeParams.models[0]!);
+      // @ts-expect-error Ember dosn't support types for variadic arguments
+      this.router.transitionTo(nextStep.routeParams.route, ...nextStep.routeParams.models);
     }
   }
 
