@@ -1,9 +1,10 @@
 import { collection, create, visitable } from 'ember-cli-page-object';
 
 export default create({
-  evaluationsSections: collection('[data-test-evaluations-section]', {
+  evaluationsSection: {
     evaluationCards: collection('[data-test-evaluation-card]', {}),
-  }),
+    scope: '[data-test-evaluations-section]',
+  },
 
   visit: visitable('/courses/:course_slug/admin/code-example-evaluators'),
 });

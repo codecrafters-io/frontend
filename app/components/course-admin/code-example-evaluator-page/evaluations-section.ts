@@ -50,7 +50,7 @@ export default class EvaluationsSection extends Component<Signature> {
       {
         slug: 'unsure',
         title: `Unsure`,
-        icon: 'question-circle',
+        icon: 'question-mark-circle',
       },
     ];
   }

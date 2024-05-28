@@ -45,7 +45,7 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await codeExampleEvaluatorsPage.clickOnEvaluator('relevance');
     assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance');
 
-    await codeExampleEvaluatorPage.evaluationsSections[0].evaluationCards[0].click();
+    await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].click();
 
     // await this.pauseTest();
   });
