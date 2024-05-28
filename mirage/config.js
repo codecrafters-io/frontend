@@ -10,6 +10,7 @@ import autofixRequests from './handlers/autofix-requests';
 import badges from './handlers/badges';
 import communityCourseStageSolutionComments from './handlers/community-course-stage-solution-comments';
 import communityCourseStageSolutions from './handlers/community-course-stage-solutions';
+import communitySolutionEvaluations from './handlers/community-solution-evaluations';
 import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
 import concepts from './handlers/concepts';
@@ -122,6 +123,7 @@ function routes() {
   badges(this);
   communityCourseStageSolutionComments(this);
   communityCourseStageSolutions(this);
+  communitySolutionEvaluations(this);
   conceptEngagements(this);
   conceptGroups(this);
   conceptQuestions(this);
@@ -167,9 +169,6 @@ function routes() {
 
   // mirage/handlers/community-solution-evaluators.js
   this.get('/community-solution-evaluators');
-
-  // mirage/handlers/community-solution-evaluations.js
-  this.get('/community-solution-evaluations');
 
   // mirage/handlers/charges.js
   this.get('/charges');

@@ -3,6 +3,7 @@
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+  data-test-evaluation-card
 >
   <CourseAdmin::CodeExamplePage::EvaluationCard::Header
     @evaluation={{@evaluation}}

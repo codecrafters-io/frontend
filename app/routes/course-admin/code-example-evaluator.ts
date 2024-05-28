@@ -31,6 +31,7 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
     },
   };
 
+
   async loadEvaluations(
     evaluator: CommunitySolutionEvaluatorModel,
     course: CourseModel,

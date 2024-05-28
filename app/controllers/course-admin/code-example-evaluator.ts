@@ -36,6 +36,26 @@ export default class CodeExampleEvaluatorController extends Controller {
     return this.model.course.betaOrLiveLanguages.sortBy('name');
   }
 
+  get tabs() {
+    return [
+      {
+        slug: 'fail',
+        title: `Fail`,
+        icon: 'x',
+      },
+      {
+        slug: 'pass',
+        title: `Pass`,
+        icon: 'check',
+      },
+      {
+        slug: 'unsure',
+        title: `Unsure`,
+        icon: 'question-circle',
+      },
+    ];
+  }
+
   @action
   handleAllCourseStagesDropdownLinkClick() {
     this.router.transitionTo({ queryParams: { course_stage_slugs: [] } });

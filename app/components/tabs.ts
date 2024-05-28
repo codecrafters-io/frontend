@@ -2,6 +2,8 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 export type Signature = {
+  Element: HTMLDivElement;
+
   Args: {
     tabs: {
       slug: string;

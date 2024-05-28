@@ -42,26 +42,34 @@
     <div>
       <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
 
-      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
-        @resultFilter="fail"
-        @evaluator={{@model.evaluator}}
-        @evaluations={{@model.failEvaluations}}
-        class="mt-8"
-      />
-
-      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
-        @resultFilter="pass"
-        @evaluator={{@model.evaluator}}
-        @evaluations={{@model.passEvaluations}}
-        class="mt-8"
-      />
-
-      <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
-        @resultFilter="unsure"
-        @evaluator={{@model.evaluator}}
-        @evaluations={{@model.unsureEvaluations}}
-        class="mt-8"
-      />
+      <Tabs @size="regular" @tabs={{this.tabs}} class="mt-8" as |activeTabSlug|>
+        <div class="mt-6">
+          {{#if (eq activeTabSlug "fail")}}
+            <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+              @resultFilter="fail"
+              @evaluator={{@model.evaluator}}
+              @evaluations={{@model.failEvaluations}}
+            />
+          {{else if (eq activeTabSlug "pass")}}
+            <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+              @resultFilter="pass"
+              @evaluator={{@model.evaluator}}
+              @evaluations={{@model.passEvaluations}}
+            />
+          {{else if (eq activeTabSlug "unsure")}}
+            <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
+              @resultFilter="unsure"
+              @evaluator={{@model.evaluator}}
+              @evaluations={{@model.unsureEvaluations}}
+            />
+          {{else}}
+            <div class="text-red-500">
+              Error! Unknown tab:
+              {{activeTabSlug}}
+            </div>
+          {{/if}}
+        </div>
+      </Tabs>
     </div>
   </div>
 </div>
