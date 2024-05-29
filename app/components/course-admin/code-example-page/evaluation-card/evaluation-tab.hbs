@@ -1,7 +1,13 @@
-<div class="prose prose-sm">
-  {{#if @evaluation.logsFileContents}}
-    {{markdown-to-html @evaluation.logsFileContents}}
-  {{else}}
-    <p>Loading...</p>
-  {{/if}}
+<div>
+  <TertiaryButton class="mb-4" {{on "click" this.handleCopyToClipboardButtonClick}} @isDisabled={{not @evaluation.logsFileContents}}>
+    Copy to Clipboard
+  </TertiaryButton>
+
+  <div class="prose prose-sm">
+    {{#if @evaluation.logsFileContents}}
+      {{markdown-to-html @evaluation.logsFileContents}}
+    {{else}}
+      <p>Loading...</p>
+    {{/if}}
+  </div>
 </div>
