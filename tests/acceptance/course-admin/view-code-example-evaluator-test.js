@@ -23,17 +23,17 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
       promptTemplate: 'Is the code example relevant to the prompt?',
     });
 
-    const solution1 = createCommunityCourseStageSolution(this.server, this.course, 2, this.language);
-    const solution2 = createCommunityCourseStageSolution(this.server, this.course, 2, this.language);
+    this.solution1 = createCommunityCourseStageSolution(this.server, this.course, 2, this.language);
+    this.solution2 = createCommunityCourseStageSolution(this.server, this.course, 2, this.language);
 
     this.server.create('community-solution-evaluation', {
-      communitySolution: solution1,
+      communitySolution: this.solution1,
       evaluator: this.evaluator,
       result: 'pass',
     });
 
     this.server.create('community-solution-evaluation', {
-      communitySolution: solution2,
+      communitySolution: this.solution2,
       evaluator: this.evaluator,
       result: 'fail',
     });
@@ -65,5 +65,25 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await trustedEvaluationTab.fillInValue('none');
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations yet');
     assert.strictEqual(trustedEvaluationTab.value, 'none', 'Updated value is none');
+  });
+
+  test('can view trusted evaluation for existing evaluation', async function (assert) {
+    this.server.create('trusted-community-solution-evaluation', {
+      communitySolution: this.solution2,
+      evaluator: this.evaluator,
+      result: 'pass',
+    });
+
+    await codeExampleEvaluatorsPage.visit({ course_slug: this.course.slug });
+
+    await codeExampleEvaluatorsPage.clickOnEvaluator('relevance');
+    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance', 'URL is correct');
+
+    await codeExampleEvaluatorPage.evaluationsSection.scrollIntoView();
+    await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].click();
+    await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].clickOnTabHeader('Trusted Evaluation');
+
+    const trustedEvaluationTab = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].trustedEvaluationTab;
+    assert.strictEqual(trustedEvaluationTab.value, 'pass', 'Updated value is pass');
   });
 });

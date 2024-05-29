@@ -33,10 +33,10 @@ export default class TrustedEvaluationTabComponent extends Component<Signature> 
         record = this.store.createRecord('trusted-community-solution-evaluation', {
           communitySolution: this.args.evaluation.communitySolution,
           evaluator: this.args.evaluation.evaluator,
-          result: selectedValue,
         });
       }
 
+      record!.result = selectedValue as 'pass' | 'fail';
       await record!.save();
     }
   }
