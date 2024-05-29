@@ -1,5 +1,5 @@
 import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
-import lolex from 'lolex';
+import FakeTimers from '@sinonjs/fake-timers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
@@ -24,10 +24,6 @@ const DATE_DIFF_EXAMPLES = [
 module('Integration | Helper | date-from-now', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.owner.register('service:date', FakeDateService);
-  });
-
   test('it renders an empty string if passed an undefined date', async function (assert) {
     await render(hbs`{{date-from-now this.undefinedDate}}`);
     assert.dom(this.element).hasText('');
@@ -43,7 +39,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
     this.set('currentDate', DUMMY_CURRENT_DATE);
     this.set('customDate', DUMMY_CURRENT_DATE);
 
-    this.clock = lolex.install({ now: this.currentDate.getTime() });
+    let clock = FakeTimers.install({ now: this.currentDate.getTime() });
 
     let timeService = this.owner.lookup('service:time');
     timeService.setupTimer();
@@ -51,7 +47,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
     await render(hbs`{{date-from-now this.customDate}}`);
     assert.dom(this.element).hasText('0 seconds ago');
 
-    this.clock.uninstall();
+    clock.uninstall();
   });
 
   // Generate an individual test for every example date diff
@@ -60,7 +56,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
       this.set('currentDate', DUMMY_CURRENT_DATE);
       this.set('customDate', providedDate);
 
-      this.clock = lolex.install({ now: this.currentDate.getTime() });
+      let clock = FakeTimers.install({ now: this.currentDate.getTime() });
 
       let timeService = this.owner.lookup('service:time');
       timeService.setupTimer();
@@ -68,7 +64,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
       await render(hbs`{{date-from-now this.customDate}}`);
       assert.dom(this.element).hasText(expectedOutput);
 
-      this.clock.uninstall();
+      clock.uninstall();
     });
   }
 
@@ -76,7 +72,7 @@ module('Integration | Helper | date-from-now', function (hooks) {
     this.set('currentDate', DUMMY_CURRENT_DATE);
     this.set('customDate', DUMMY_CURRENT_DATE);
 
-    this.clock = lolex.install({ now: this.currentDate.getTime() });
+    let clock = FakeTimers.install({ now: this.currentDate.getTime() });
 
     let timeService = this.owner.lookup('service:time');
     timeService.setupTimer();
@@ -84,11 +80,11 @@ module('Integration | Helper | date-from-now', function (hooks) {
     await render(hbs`{{date-from-now this.customDate}}`);
     assert.dom(this.element).hasText('0 seconds ago');
 
-    this.clock.tick(1000);
+    clock.tick(1000);
     await settled();
 
     assert.dom(this.element).hasText('1 second ago');
 
-    this.clock.uninstall();
+    clock.uninstall();
   });
 });
