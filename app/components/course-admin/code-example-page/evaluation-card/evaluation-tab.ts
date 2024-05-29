@@ -9,6 +9,7 @@ export type Signature = {
 
   Args: {
     evaluation: CommunitySolutionEvaluationModel;
+    onRegenerate: () => void;
   };
 };
 
@@ -23,6 +24,7 @@ export default class EvaluationTabComponent extends Component<Signature> {
   @action
   handleRegenerateButtonClick() {
     this.regenerateTask.perform();
+    this.args.onRegenerate();
   }
 
   copyToClipboardTask = task({ keepLatest: true }, async (): Promise<void> => {

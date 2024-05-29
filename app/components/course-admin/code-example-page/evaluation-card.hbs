@@ -17,7 +17,10 @@
         <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
           <div class="mt-4">
             {{#if (eq activeTabSlug "evaluation")}}
-              <CourseAdmin::CodeExamplePage::EvaluationCard::EvaluationTab @evaluation={{@evaluation}} />
+              <CourseAdmin::CodeExamplePage::EvaluationCard::EvaluationTab
+                @evaluation={{@evaluation}}
+                @onRegenerate={{this.handleCollapseButtonClick}}
+              />
             {{else if (eq activeTabSlug "prompt")}}
               <CourseAdmin::CodeExamplePage::EvaluationCard::PromptTab @evaluation={{@evaluation}} />
             {{else if (eq activeTabSlug "trusted-evaluation")}}
