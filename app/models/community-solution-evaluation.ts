@@ -4,6 +4,7 @@ import type CommunityCourseStageSolutionModel from './community-course-stage-sol
 import { tracked } from '@glimmer/tracking';
 import type CommunitySolutionEvaluatorModel from './community-solution-evaluator';
 import { fetchFileContentsIfNeeded } from 'codecrafters-frontend/utils/fetch-file-contents-if-needed';
+import type TrustedCommunitySolutionEvaluationModel from './trusted-community-solution-evaluation';
 
 export default class CommunitySolutionEvaluationModel extends Model {
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'evaluations' })
@@ -18,6 +19,10 @@ export default class CommunitySolutionEvaluationModel extends Model {
 
   @tracked logsFileContents: string | null = null;
   @tracked promptFileContents: string | null = null;
+
+  get trustedEvaluation(): TrustedCommunitySolutionEvaluationModel | null {
+    return this.communitySolution.trustedEvaluations.findBy('evaluator', this.evaluator) || null;
+  }
 
   async fetchLogsFileContentsIfNeeded(): Promise<void> {
     return fetchFileContentsIfNeeded(this, 'logsFileUrl', 'logsFileContents');

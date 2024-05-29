@@ -3,11 +3,11 @@
     <div class="flex items-center">
       <div>
         {{#if (eq @evaluation.result "pass")}}
-          <Pill @color="green" class="text-xs">
+          <Pill @color="gray" class="text-xs">
             Pass
           </Pill>
         {{else if (eq @evaluation.result "fail")}}
-          <Pill @color="red" class="text-xs">
+          <Pill @color="gray" class="text-xs">
             Fail
           </Pill>
         {{else if (eq @evaluation.result "unsure")}}
@@ -28,6 +28,16 @@
       <span class="text-sm text-gray-700 font-semibold">
         {{@evaluation.evaluator.slug}}
       </span>
+
+      {{#if (and @evaluation.trustedEvaluation (eq @evaluation.trustedEvaluation.result @evaluation.result))}}
+        <Pill @color="green" class="text-xs ml-1.5">
+          Matches Trusted
+        </Pill>
+      {{else if (and @evaluation.trustedEvaluation (not-eq @evaluation.trustedEvaluation.result @evaluation.result))}}
+        <Pill @color="red" class="text-xs ml-1.5">
+          Mismatch
+        </Pill>
+      {{/if}}
     </div>
     <div class="flex items-center gap-3">
       <button

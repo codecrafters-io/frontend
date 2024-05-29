@@ -17,15 +17,54 @@ export type Signature = {
 export default class AccuracySection extends Component<Signature> {
   @tracked activeTabSlug: 'false_positives' | 'false_negatives' | 'matches' = 'false_positives';
 
+  get allEvaluations() {
+    return this.args.evaluator.evaluations;
+  }
+
+  get evaluationsWithTrustedEvaluation() {
+    return this.allEvaluations.filter((evaluation) => {
+      return evaluation.trustedEvaluation;
+    });
+  }
+
+  get falseNegativeEvaluations() {
+    return this.allEvaluations.filter((evaluation) => {
+      return evaluation.result === 'fail' && evaluation.trustedEvaluation?.result === 'pass';
+    });
+  }
+
+  get falseNegativePercentage() {
+    if (this.evaluationsWithTrustedEvaluation.length > 10) {
+      return parseFloat(((100 * this.falseNegativeEvaluations.length) / this.evaluationsWithTrustedEvaluation.length).toFixed(2));
+    } else {
+      return null;
+    }
+  }
+
   // TODO: Figure out a "generic" statistic type rather than piggybacking off CourseStageParticipationAnalysis?
   get falseNegativeRateStatistic(): CourseStageParticipationAnalysisStatistic {
     return {
       title: 'False Negative Rate',
       label: 'false negatives',
-      value: '80%',
-      color: 'red',
-      explanationMarkdown: 'The percentage of "fail" evaluations that did not match human values.',
+      value: this.falseNegativePercentage !== null ? `${this.falseNegativePercentage}%` : '-',
+      color: this.falseNegativePercentage !== null && this.falseNegativePercentage < 10 ? 'green' : 'red',
+      explanationMarkdown:
+        'The percentage of "fail" evaluations that did not match human values. \n\nNeeds at least 10 trusted evaluations for comparison.',
     };
+  }
+
+  get falsePositiveEvaluations() {
+    return this.allEvaluations.filter((evaluation) => {
+      return evaluation.result === 'pass' && evaluation.trustedEvaluation?.result === 'fail';
+    });
+  }
+
+  get falsePositivePercentage() {
+    if (this.evaluationsWithTrustedEvaluation.length > 10) {
+      return parseFloat(((100 * this.falsePositiveEvaluations.length) / this.evaluationsWithTrustedEvaluation.length).toFixed(2));
+    } else {
+      return null;
+    }
   }
 
   // TODO: Figure out a "generic" statistic type rather than piggybacking off CourseStageParticipationAnalysis?
@@ -33,9 +72,10 @@ export default class AccuracySection extends Component<Signature> {
     return {
       title: 'False Positive Rate',
       label: 'false positives',
-      value: '80%',
-      color: 'red',
-      explanationMarkdown: 'The percentage of "pass" evaluations that did not match human values.',
+      value: this.falsePositivePercentage !== null ? `${this.falsePositivePercentage}%` : '-',
+      color: this.falsePositivePercentage !== null && this.falsePositivePercentage < 10 ? 'green' : 'red',
+      explanationMarkdown:
+        'The percentage of "pass" evaluations that did not match human values. \n\nNeeds at least 10 trusted evaluations for comparison.',
     };
   }
 

@@ -16,8 +16,7 @@ export default class TrustedEvaluationTabComponent extends Component<Signature> 
   @service declare store: Store;
 
   get trustedEvaluation() {
-    // There can't be more than one trusted evaluation per solution
-    return this.args.evaluation.communitySolution.trustedEvaluations[0];
+    return this.args.evaluation.trustedEvaluation;
   }
 
   @action
