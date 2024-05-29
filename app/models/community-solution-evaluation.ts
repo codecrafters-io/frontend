@@ -18,6 +18,7 @@ export default class CommunitySolutionEvaluationModel extends Model {
   @attr('string') declare logsFileUrl: string;
   @attr('string') declare promptFileUrl: string;
   @attr('boolean') declare requiresRegeneration: boolean;
+  @attr('date') declare updatedAt: Date;
 
   @tracked logsFileContents: string | null = null;
   @tracked promptFileContents: string | null = null;

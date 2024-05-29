@@ -14,7 +14,11 @@
       @isDisabled={{@evaluation.requiresRegeneration}}
       @shouldShowSpinner={{this.regenerateTask.isRunning}}
     >
-      Regenerate
+      {{#if @evaluation.requiresRegeneration}}
+        Regenerating...
+      {{else}}
+        Regenerate
+      {{/if}}
     </TertiaryButtonWithSpinner>
   </div>
 
