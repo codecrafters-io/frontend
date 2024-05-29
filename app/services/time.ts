@@ -9,6 +9,10 @@ export default class TimeService extends Service {
 
   @service declare date: DateService;
 
+  advanceTimeByMilliseconds(milliseconds: number) {
+    this.currentTime = new Date(this.currentTime.getTime() + milliseconds);
+  }
+
   setupTimer() {
     this.currentTime = new Date(this.date.now());
 
