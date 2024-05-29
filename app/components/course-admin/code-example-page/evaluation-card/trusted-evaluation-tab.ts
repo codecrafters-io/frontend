@@ -15,15 +15,33 @@ export type Signature = {
 export default class TrustedEvaluationTabComponent extends Component<Signature> {
   @service declare store: Store;
 
+  get options(): { value: 'none' | 'pass' | 'fail'; isSelected: boolean; text: string }[] {
+    return [
+      {
+        value: 'none',
+        isSelected: !this.trustedEvaluation,
+        text: 'None',
+      },
+      {
+        value: 'pass',
+        isSelected: this.trustedEvaluation?.result == 'pass',
+        text: 'Pass',
+      },
+      {
+        value: 'fail',
+        isSelected: this.trustedEvaluation?.result == 'fail',
+        text: 'Fail',
+      },
+    ];
+  }
+
   get trustedEvaluation() {
     return this.args.evaluation.trustedEvaluation;
   }
 
   @action
-  async handleSelect(event: Event) {
-    const selectedValue = (event.target! as HTMLSelectElement).value;
-
-    if (selectedValue == 'none') {
+  async handleSelect(value: 'none' | 'pass' | 'fail') {
+    if (value == 'none') {
       this.trustedEvaluation?.destroyRecord();
     } else {
       let record = this.trustedEvaluation;
@@ -35,7 +53,7 @@ export default class TrustedEvaluationTabComponent extends Component<Signature> 
         });
       }
 
-      record!.result = selectedValue as 'pass' | 'fail';
+      record!.result = value;
       await record!.save();
     }
   }

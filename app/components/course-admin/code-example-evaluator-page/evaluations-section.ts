@@ -32,7 +32,7 @@ export default class EvaluationsSection extends Component<Signature> {
   }
 
   get sortedEvaluations() {
-    return this.filteredEvaluations.sortBy('createdAt').reverse();
+    return this.filteredEvaluations.sortBy('updatedAt').reverse();
   }
 
   get tabs() {

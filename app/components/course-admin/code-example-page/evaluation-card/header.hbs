@@ -51,9 +51,14 @@
       </button>
     </div>
   </div>
-  <div>
+  <div class="flex items-center gap-4">
+    {{#if @evaluation.requiresRegeneration}}
+      <Pill @color="yellow" class="text-xs">
+        Regenerating...
+      </Pill>
+    {{/if}}
     <span class="text-xs text-gray-400">
-      {{date-from-now @evaluation.createdAt}}
+      {{date-from-now @evaluation.updatedAt}}
     </span>
   </div>
 </div>

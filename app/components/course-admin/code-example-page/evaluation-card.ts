@@ -35,6 +35,11 @@ export default class EvaluationCard extends Component<Signature> {
   get tabs(): TabsComponentSignature['Args']['tabs'] {
     const allTabs = [
       {
+        slug: 'trusted-evaluation',
+        title: 'Trusted Evaluation',
+        icon: 'shield-check',
+      },
+      {
         slug: 'evaluation',
         title: 'Evaluation',
         icon: 'academic-cap',
@@ -43,11 +48,6 @@ export default class EvaluationCard extends Component<Signature> {
         slug: 'prompt',
         title: 'Prompt',
         icon: 'document-text',
-      },
-      {
-        slug: 'trusted-evaluation',
-        title: 'Trusted Evaluation',
-        icon: 'shield-check',
       },
     ];
 

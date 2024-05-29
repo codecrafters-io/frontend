@@ -1,4 +1,4 @@
-import { clickOnText, fillable, value } from 'ember-cli-page-object';
+import { clickOnText, text } from 'ember-cli-page-object';
 
 export default {
   clickOnTabHeader: clickOnText('[data-test-tab-header]'),
@@ -6,7 +6,7 @@ export default {
 
   trustedEvaluationTab: {
     scope: '[data-test-trusted-evaluation-tab]',
-    fillInValue: fillable('select'),
-    value: value('select'),
+    clickOnValue: clickOnText('[data-test-selectable-item]'),
+    selectedItemText: text('[data-test-selectable-item].border-teal-500'),
   },
 };

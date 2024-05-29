@@ -34,8 +34,8 @@ export default class AccuracySection extends Component<Signature> {
   }
 
   get falseNegativePercentage() {
-    if (this.evaluationsWithTrustedEvaluation.length > 10) {
-      return parseFloat(((100 * this.falseNegativeEvaluations.length) / this.evaluationsWithTrustedEvaluation.length).toFixed(2));
+    if (this.negativeEvaluationsWithTrustedEvaluation.length >= 10) {
+      return parseFloat(((100 * this.falseNegativeEvaluations.length) / this.negativeEvaluationsWithTrustedEvaluation.length).toFixed(2));
     } else {
       return null;
     }
@@ -46,8 +46,16 @@ export default class AccuracySection extends Component<Signature> {
     return {
       title: 'False Negative Rate',
       label: 'false negatives',
-      value: this.falseNegativePercentage !== null ? `${this.falseNegativePercentage}%` : '-',
-      color: this.falseNegativePercentage !== null && this.falseNegativePercentage < 10 ? 'green' : 'red',
+      value:
+        this.falseNegativePercentage !== null
+          ? `${this.falseNegativePercentage}%`
+          : `${this.negativeEvaluationsWithTrustedEvaluation.length} datapoints (need 10)`,
+      color:
+        this.falseNegativePercentage !== null && this.falseNegativePercentage < 10
+          ? 'green'
+          : this.negativeEvaluationsWithTrustedEvaluation.length >= 10
+            ? 'red'
+            : 'gray',
       explanationMarkdown:
         'The percentage of "fail" evaluations that did not match human values. \n\nNeeds at least 10 trusted evaluations for comparison.',
     };
@@ -60,8 +68,8 @@ export default class AccuracySection extends Component<Signature> {
   }
 
   get falsePositivePercentage() {
-    if (this.evaluationsWithTrustedEvaluation.length > 10) {
-      return parseFloat(((100 * this.falsePositiveEvaluations.length) / this.evaluationsWithTrustedEvaluation.length).toFixed(2));
+    if (this.positiveEvaluationsWithTrustedEvaluation.length >= 10) {
+      return parseFloat(((100 * this.falsePositiveEvaluations.length) / this.positiveEvaluationsWithTrustedEvaluation.length).toFixed(2));
     } else {
       return null;
     }
@@ -72,11 +80,31 @@ export default class AccuracySection extends Component<Signature> {
     return {
       title: 'False Positive Rate',
       label: 'false positives',
-      value: this.falsePositivePercentage !== null ? `${this.falsePositivePercentage}%` : '-',
-      color: this.falsePositivePercentage !== null && this.falsePositivePercentage < 10 ? 'green' : 'red',
+      value:
+        this.falsePositivePercentage !== null
+          ? `${this.falsePositivePercentage}%`
+          : `${this.positiveEvaluationsWithTrustedEvaluation.length} datapoints (need 10)`,
+      color:
+        this.falsePositivePercentage !== null && this.falsePositivePercentage < 10
+          ? 'green'
+          : this.positiveEvaluationsWithTrustedEvaluation.length >= 10
+            ? 'red'
+            : 'gray',
       explanationMarkdown:
         'The percentage of "pass" evaluations that did not match human values. \n\nNeeds at least 10 trusted evaluations for comparison.',
     };
+  }
+
+  get negativeEvaluationsWithTrustedEvaluation() {
+    return this.allEvaluations.filter((evaluation) => {
+      return evaluation.result === 'fail' && evaluation.trustedEvaluation;
+    });
+  }
+
+  get positiveEvaluationsWithTrustedEvaluation() {
+    return this.allEvaluations.filter((evaluation) => {
+      return evaluation.result === 'pass' && evaluation.trustedEvaluation;
+    });
   }
 
   get tabs() {

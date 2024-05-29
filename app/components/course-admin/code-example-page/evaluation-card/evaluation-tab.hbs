@@ -1,7 +1,32 @@
-<div class="prose prose-sm">
-  {{#if @evaluation.logsFileContents}}
-    {{markdown-to-html @evaluation.logsFileContents}}
-  {{else}}
-    <p>Loading...</p>
-  {{/if}}
+<div>
+  <div class="flex items-center mb-4 gap-4 flex-wrap">
+    <TertiaryButton class="mb-4" {{on "click" this.handleCopyToClipboardButtonClick}} @isDisabled={{not @evaluation.logsFileContents}}>
+      {{#if this.wasRecentlyCopied}}
+        Copied!
+      {{else}}
+        Copy to Clipboard
+      {{/if}}
+    </TertiaryButton>
+
+    <TertiaryButtonWithSpinner
+      class="mb-4"
+      {{on "click" this.handleRegenerateButtonClick}}
+      @isDisabled={{@evaluation.requiresRegeneration}}
+      @shouldShowSpinner={{this.regenerateTask.isRunning}}
+    >
+      {{#if @evaluation.requiresRegeneration}}
+        Regenerating...
+      {{else}}
+        Regenerate
+      {{/if}}
+    </TertiaryButtonWithSpinner>
+  </div>
+
+  <div class="prose prose-sm">
+    {{#if @evaluation.logsFileContents}}
+      {{markdown-to-html @evaluation.logsFileContents}}
+    {{else}}
+      <p>Loading...</p>
+    {{/if}}
+  </div>
 </div>
