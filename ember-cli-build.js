@@ -104,9 +104,9 @@ module.exports = function (defaults) {
           }),
 
           sentryWebpackPlugin({
-            org: process.env.SENTRY_ORG,
-            project: process.env.SENTRY_PROJECT,
-            authToken: process.env.SENTRY_AUTH_TOKEN,
+            org: 'codecrafters',
+            project: 'frontend',
+            authToken: process.env.CI ? process.env.SENTRY_AUTH_TOKEN : undefined,
             release: {
               name: config.x.version,
             },
