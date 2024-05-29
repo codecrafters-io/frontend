@@ -14,6 +14,7 @@ import ViewableMixin from 'codecrafters-frontend/mixins/viewable';
 import type CourseStageScreencastModel from './course-stage-screencast';
 import VotableMixin from 'codecrafters-frontend/mixins/votable';
 import type CommunitySolutionEvaluationModel from './community-solution-evaluation';
+import type TrustedCommunitySolutionEvaluationModel from './trusted-community-solution-evaluation';
 
 export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, VotableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
@@ -25,6 +26,10 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   @hasMany('community-solution-evaluation', { async: false, inverse: 'communitySolution' }) declare evaluations: CommunitySolutionEvaluationModel[];
+
+  @hasMany('trusted-community-solution-evaluation', { async: false, inverse: 'communitySolution' })
+  declare trustedEvaluations: TrustedCommunitySolutionEvaluationModel[];
+
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
 

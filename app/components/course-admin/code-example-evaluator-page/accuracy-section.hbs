@@ -1,0 +1,27 @@
+<div data-test-evaluations-section ...attributes>
+  <div class="mb-4">
+    <div class="flex items-center mb-1 gap-2">
+      <span class="text-gray-800 font-semibold text-lg">
+        Accuracy
+      </span>
+    </div>
+
+    <div class="text-gray-400 text-xs">
+      Measure accuracy by comparing LLM evaluations against human evaluations
+    </div>
+  </div>
+
+  {{! TODO: Use a "generic" statistic component? }}
+  <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 mb-6">
+    <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.falsePositiveRateStatistic}} />
+    <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.falseNegativeRateStatistic}} />
+  </div>
+
+  {{!-- <Tabs @size="regular" @tabs={{this.tabs}} @activeTabSlug={{this.activeTabSlug}} @onTabChange={{this.handleTabChange}}>
+    <div class="mt-6">
+      <div class="py-10">
+        Incomplete
+      </div>
+    </div>
+  </Tabs> --}}
+</div>

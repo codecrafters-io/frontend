@@ -17,21 +17,11 @@
         <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
           <div class="mt-4">
             {{#if (eq activeTabSlug "evaluation")}}
-              <div class="prose prose-sm">
-                {{#if @evaluation.logsFileContents}}
-                  {{markdown-to-html @evaluation.logsFileContents}}
-                {{else}}
-                  <p>Loading...</p>
-                {{/if}}
-              </div>
+              <CourseAdmin::CodeExamplePage::EvaluationCard::EvaluationTab @evaluation={{@evaluation}} />
             {{else if (eq activeTabSlug "prompt")}}
-              <div class="bg-gray-900 border border-gray-700 rounded overflow-y-auto relative flex-grow p-3">
-                {{#if @evaluation.promptFileContents}}
-                  <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @evaluation.promptFileContents}}</code></pre>
-                {{else}}
-                  <AnsiStream @content="Loading..." class="text-xs whitespace-pre-wrap" />
-                {{/if}}
-              </div>
+              <CourseAdmin::CodeExamplePage::EvaluationCard::PromptTab @evaluation={{@evaluation}} />
+            {{else if (eq activeTabSlug "trusted-evaluation")}}
+              <CourseAdmin::CodeExamplePage::EvaluationCard::TrustedEvaluationTab @evaluation={{@evaluation}} />
             {{else}}
               <div>Nothing yet!</div>
             {{/if}}
