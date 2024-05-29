@@ -1,7 +1,22 @@
 <div>
-  <TertiaryButton class="mb-4" {{on "click" this.handleCopyToClipboardButtonClick}} @isDisabled={{not @evaluation.logsFileContents}}>
-    Copy to Clipboard
-  </TertiaryButton>
+  <div class="flex items-center mb-4 gap-4 flex-wrap">
+    <TertiaryButton class="mb-4" {{on "click" this.handleCopyToClipboardButtonClick}} @isDisabled={{not @evaluation.logsFileContents}}>
+      {{#if this.wasRecentlyCopied}}
+        Copied!
+      {{else}}
+        Copy to Clipboard
+      {{/if}}
+    </TertiaryButton>
+
+    <TertiaryButtonWithSpinner
+      class="mb-4"
+      {{on "click" this.handleRegenerateButtonClick}}
+      @isDisabled={{@evaluation.requiresRegeneration}}
+      @shouldShowSpinner={{this.regenerateTask.isRunning}}
+    >
+      Regenerate
+    </TertiaryButtonWithSpinner>
+  </div>
 
   <div class="prose prose-sm">
     {{#if @evaluation.logsFileContents}}

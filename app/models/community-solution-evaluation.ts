@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import type CommunitySolutionEvaluatorModel from './community-solution-evaluator';
 import { fetchFileContentsIfNeeded } from 'codecrafters-frontend/utils/fetch-file-contents-if-needed';
 import type TrustedCommunitySolutionEvaluationModel from './trusted-community-solution-evaluation';
+import { memberAction } from 'ember-api-actions';
 
 export default class CommunitySolutionEvaluationModel extends Model {
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'evaluations' })
@@ -16,6 +17,7 @@ export default class CommunitySolutionEvaluationModel extends Model {
   @attr('string') declare result: 'pass' | 'fail' | 'unsure';
   @attr('string') declare logsFileUrl: string;
   @attr('string') declare promptFileUrl: string;
+  @attr('boolean') declare requiresRegeneration: boolean;
 
   @tracked logsFileContents: string | null = null;
   @tracked promptFileContents: string | null = null;
@@ -31,4 +33,15 @@ export default class CommunitySolutionEvaluationModel extends Model {
   async fetchPromptFileContentsIfNeeded(): Promise<void> {
     return fetchFileContentsIfNeeded(this, 'promptFileUrl', 'promptFileContents');
   }
+
+  declare regenerate: (this: Model, payload: unknown) => Promise<void>;
 }
+
+CommunitySolutionEvaluationModel.prototype.regenerate = memberAction({
+  path: 'regenerate',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});

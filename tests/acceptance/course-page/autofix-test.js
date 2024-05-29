@@ -102,7 +102,6 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await waitUntil(() => !fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
 
     await percySnapshot('Autofix - Success', { scope: '[data-test-test-results-bar]' });
-    // await this.pauseTest();
   });
 
   test('renders failed autofix', async function (assert) {

@@ -11,6 +11,13 @@ export default function (server) {
     return result;
   });
 
+  server.post('/community-solution-evaluations/:id/regenerate', (schema, request) => {
+    const evaluation = schema.communitySolutionEvaluations.find(request.params.id);
+    evaluation.update({ requiresRegeneration: true });
+
+    return evaluation;
+  });
+
   server.get('/fake-community-solution-evaluation-logs', () => {
     return new Response(200, {}, 'Test log');
   });
