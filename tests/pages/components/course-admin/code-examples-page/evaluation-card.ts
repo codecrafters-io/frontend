@@ -1,4 +1,4 @@
-import { clickOnText, text, value } from 'ember-cli-page-object';
+import { clickOnText, text } from 'ember-cli-page-object';
 
 export default {
   clickOnTabHeader: clickOnText('[data-test-tab-header]'),
