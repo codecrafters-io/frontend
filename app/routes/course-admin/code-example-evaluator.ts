@@ -66,6 +66,7 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
       ...filters,
       ...{
         evaluator_id: evaluator.id,
+        limit: 30,
         include: [
           'community-solution',
           'community-solution.user',
