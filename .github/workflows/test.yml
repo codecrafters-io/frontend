@@ -25,7 +25,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
 
       - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
@@ -118,26 +118,9 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
 
       - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
       - run: npm run tailwind:build
       - run: npm run lint
-
-  build_production_bundle:
-    runs-on: depot-ubuntu-22.04-16
-
-    if: "github.ref == 'refs/heads/main'"
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
-      - run: npm run build
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

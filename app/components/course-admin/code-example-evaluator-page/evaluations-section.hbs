@@ -12,7 +12,7 @@
   </div>
 
   <Tabs @size="regular" @tabs={{this.tabs}} @activeTabSlug={{this.activeTabSlug}} @onTabChange={{this.handleTabChange}}>
-    <div class="mt-6">
+    <div class="mt-6" {{did-insert this.handleDidInsertTabContents}}>
       {{#each this.sortedEvaluations as |evaluation|}}
         <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
       {{/each}}

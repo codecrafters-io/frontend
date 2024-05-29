@@ -1,14 +1,15 @@
 <div class="border-b">
   <div class="container mx-auto pt-8 px-6">
-    <LinkTo @route="course" @model={{@course.slug}} class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors mb-4 text-sm">
-      {{svg-jar "arrow-left" class="w-4 mr-1 fill-current"}}
-      <span class="font-bold uppercase tracking-wide">Challenge Page</span>
-    </LinkTo>
+    <div class="flex items-center gap-3 mb-4">
+      <LinkTo
+        @route="course"
+        @model={{@course.slug}}
+        class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors flex-shrink-0"
+      >
+        {{svg-jar "arrow-left" class="w-6 mr-1 fill-current"}}
+      </LinkTo>
 
-    <div class="flex items-center mb-4">
-      <div class="w-10 h-10 flex items-center justify-center rounded bg-gray-700 mr-4 shadow">
-        <CourseLogo @course={{@course}} class="w-8 h-8" />
-      </div>
+      <CourseLogo @course={{@course}} class="w-8 h-8" />
 
       <div class="font-bold text-2xl text-gray-700">{{@course.name}}</div>
     </div>
