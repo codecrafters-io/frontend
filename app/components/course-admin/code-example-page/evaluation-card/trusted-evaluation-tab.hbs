@@ -1,10 +1,15 @@
 <div ...attributes data-test-trusted-evaluation-tab>
-  {{! template-lint-disable require-input-label }}
-  <select class="p-2 border rounded mb-3 block" {{on "change" this.handleSelect}}>
-    <option value="none" selected={{not this.trustedEvaluation}}>None</option>
-    <option value="pass" selected={{eq this.trustedEvaluation.result "pass"}}>Pass</option>
-    <option value="fail" selected={{eq this.trustedEvaluation.result "fail"}}>Fail</option>
-  </select>
+  <div class="flex items-center flex-wrap gap-3 mb-6">
+    {{#each this.options as |option|}}
+      <WelcomePage::OnboardingSurveyWizard::SelectableItem
+        @isSelected={{option.isSelected}}
+        {{on "click" (fn this.handleSelect option.value)}}
+        data-test-selectable-item
+      >
+        {{option.text}}
+      </WelcomePage::OnboardingSurveyWizard::SelectableItem>
+    {{/each}}
+  </div>
 
   <div class="prose">
     {{#if this.trustedEvaluation}}

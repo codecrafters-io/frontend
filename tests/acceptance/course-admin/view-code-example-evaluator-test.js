@@ -52,19 +52,19 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     const trustedEvaluationTab = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].trustedEvaluationTab;
 
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations yet');
-    assert.strictEqual(trustedEvaluationTab.value, 'none', 'Default value is none');
+    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'None', 'Default value is none');
 
-    await trustedEvaluationTab.fillInValue('pass');
+    await trustedEvaluationTab.clickOnValue('Pass');
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 1, 'Trusted evaluation created');
-    assert.strictEqual(trustedEvaluationTab.value, 'pass', 'Updated value is pass');
+    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'Pass', 'Updated value is pass');
 
-    await trustedEvaluationTab.fillInValue('fail');
+    await trustedEvaluationTab.clickOnValue('Fail');
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 1, 'Trusted evaluation created');
-    assert.strictEqual(trustedEvaluationTab.value, 'fail', 'Updated value is fail');
+    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'Fail', 'Updated value is fail');
 
-    await trustedEvaluationTab.fillInValue('none');
+    await trustedEvaluationTab.clickOnValue('None');
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations yet');
-    assert.strictEqual(trustedEvaluationTab.value, 'none', 'Updated value is none');
+    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'None', 'Updated value is none');
   });
 
   test('can view trusted evaluation for existing evaluation', async function (assert) {
@@ -84,6 +84,6 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].clickOnTabHeader('Trusted Evaluation');
 
     const trustedEvaluationTab = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].trustedEvaluationTab;
-    assert.strictEqual(trustedEvaluationTab.value, 'pass', 'Updated value is pass');
+    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'Pass', 'Updated value is pass');
   });
 });
