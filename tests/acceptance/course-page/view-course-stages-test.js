@@ -7,7 +7,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { add, sub } from 'date-fns';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import {
   signIn,
@@ -32,10 +32,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'stage 2 is shown');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'stage 2 is shown');
 
     await coursePage.sidebar.clickOnStepListItem('Bind to a port');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/1', 'stage 1 is shown');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/jm1', 'stage 1 is shown');
 
     await coursePage.sidebar.clickOnStepListItem('Repository Setup');
     assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown');
@@ -110,8 +110,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await visit('/courses/redis/stages/2');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'stage 2 is shown');
+    await visit('/courses/redis/stages/rg2');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'stage 2 is shown');
   });
 
   test('trying to view an invalid stage number redirects to active step', async function (assert) {
@@ -582,7 +582,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.ok(filteredAnalyticsEventsNames.includes('expanded_course_page_leaderboard'), 'expanded_course_page_leaderboard event should be tracked');
   });
 
-  test('it should track when the monthly challenge banner is clicked', async function (assert) {
+  // Disabled the monthly challenge banner for now
+  skip('it should track when the monthly challenge banner is clicked', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 

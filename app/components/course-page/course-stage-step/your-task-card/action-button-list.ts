@@ -31,6 +31,10 @@ export default class ActionButtonListComponent extends Component<Signature> {
   }
 
   get shouldShowViewScreencastsButton() {
+    if (this.args.courseStage.isFirst) {
+      return false; // Don't expose user to too many features at once
+    }
+
     return this.args.courseStage.hasScreencasts;
   }
 
@@ -44,12 +48,12 @@ export default class ActionButtonListComponent extends Component<Signature> {
 
   @action
   handleViewCodeExamplesButtonClicked() {
-    this.router.transitionTo('course.stage.code-examples', this.args.courseStage.position);
+    this.router.transitionTo('course.stage.code-examples');
   }
 
   @action
   handleViewScreencastsButtonClicked() {
-    this.router.transitionTo('course.stage.screencasts', this.args.courseStage.position);
+    this.router.transitionTo('course.stage.screencasts');
   }
 
   @action

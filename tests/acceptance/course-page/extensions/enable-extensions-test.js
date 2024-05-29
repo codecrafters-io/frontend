@@ -33,11 +33,11 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
 
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     assert.strictEqual(coursePage.configureExtensionsModal.extensionIdeaCards.length, 1, 'course extension idea card should be rendered');
 
@@ -68,11 +68,11 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     assert.false(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is not visible');
 
-    await coursePage.sidebar.configureExtensionsButton.hover();
+    await coursePage.sidebar.configureExtensionsToggles[0].hover();
 
     assertTooltipContent(assert, {
       contentString: 'Complete repository setup to configure extensions',
@@ -108,7 +108,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     assert.true(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is visible');
   });

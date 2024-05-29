@@ -29,9 +29,9 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
@@ -51,7 +51,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await settled();
 
     // URL should still be stage 2
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
     await coursePage.completedStepNotice.nextOrActiveStepButton.click();
     assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'current URL is /base-stages-complete');
@@ -60,6 +60,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 5, 'step list has 5 items before first extension is enabled');
 
+    // Enable Extension 1
     await coursePage.sidebar.configureExtensionsButton.click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
@@ -70,14 +71,14 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await percySnapshot('Extension - First Stage Page');
 
     // Enable Extension 2
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 9, 'step list has 9 items when both extensions are enabled');
 
     // Disable Extension 1
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
@@ -101,10 +102,10 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is first extension stage URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/qh7', 'current URL is first extension stage URL');
 
     // Disable Extension 2
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
 
     // Complete all stages for extension 1
@@ -127,10 +128,10 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     assert.strictEqual(currentURL(), '/courses/dummy/extension-completed/ext1', 'current URL is extension completed page');
 
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext2:1', 'current URL is next extension stage');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ae0', 'current URL is next extension stage');
   });
 });

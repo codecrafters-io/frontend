@@ -1,11 +1,9 @@
-<div class="relative">
-  {{yield}}
+<div class="relative" ...attributes>
+  {{yield to="content"}}
 
   {{#if @isBlurred}}
-    <div class="absolute inset-0 bg-black bg-opacity-20 z-10 backdrop-blur-sm flex items-start justify-center">
-      <PrimaryButton {{on "click" @onUnblur}} class="mt-8">
-        Reveal Diff
-      </PrimaryButton>
+    <div class="absolute inset-0 z-10 backdrop-blur-sm flex items-start justify-center {{@overlayClass}}">
+      {{yield to="overlay"}}
     </div>
   {{/if}}
 </div>

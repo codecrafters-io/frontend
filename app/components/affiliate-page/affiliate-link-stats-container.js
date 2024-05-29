@@ -9,10 +9,6 @@ export default class AffiliateLinkStatsContainerComponent extends Component {
   }
 
   get paidUsersCount() {
-    return this.args.affiliateLink.visibleReferrals.filter((referral) => referral.spentAmountInDollars > 0).length;
-  }
-
-  get trialCount() {
-    return this.args.affiliateLink.referrals.filterBy('hasStartedTrial').length;
+    return this.args.affiliateLink.referrals.filter((referral) => referral.spentAmountInDollars > 0).uniqBy('customer').length;
   }
 }

@@ -28,7 +28,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
 
     await coursePage.testRunnerCard.click(); // Expand to view instructions
 

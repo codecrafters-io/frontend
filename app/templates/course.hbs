@@ -29,15 +29,10 @@
       @course={{@model.course}}
       @repositories={{@model.repositories}}
       @activeRepository={{@model.activeRepository}}
-      {{! pb-16 accounts for the test results bar at the bottom !}}
-      class="group relative p-6 pb-16 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
-    >
-      <CoursePage::CollapseSidebarButton
-        class="opacity-0 group-hover:opacity-100 absolute top-6 -right-3.5 z-30"
-        {{on "click" this.handleCollapseSidebarButtonClick}}
-        data-test-collapse-sidebar-button
-      />
-    </CoursePage::Sidebar>
+      @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
+      {{! pb-12 accounts for the test results bar at the bottom !}}
+      class="group relative pb-12 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
+    />
   {{/if}}
 
   {{#if this.sidebarIsExpandedOnMobile}}
@@ -51,7 +46,8 @@
         @course={{@model.course}}
         @repositories={{@model.repositories}}
         @activeRepository={{@model.activeRepository}}
-        class="group relative p-6 w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
+        @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
+        class="group relative w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
       />
     </CoursePage::Sidebar::MobileBackdrop>
   {{/if}}
@@ -83,21 +79,13 @@
       class="px-3 md:px-6 lg:pl-10 bg-gray-50"
     />
     <div class="flex flex-grow bg-white">
-      <div class="flex-grow flex-shrink min-w-0">
-        {{#if this.coursePageState.currentStep.completionNoticeMessage}}
-          <CoursePage::CompletedStepNotice
-            @step={{this.coursePageState.currentStep}}
-            @repository={{@model.activeRepository}}
-            class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
-            {{! Confetti etc. makes more sense when the top section is focused }}
-            {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-          />
-        {{/if}}
-
-        <div class="px-3 md:px-6 lg:px-10">
-          {{outlet}}
-        </div>
-      </div>
+      <CoursePage::StepContent
+        @step={{this.coursePageState.currentStep}}
+        @repository={{@model.activeRepository}}
+        class="flex-grow flex-shrink min-w-0"
+      >
+        {{outlet}}
+      </CoursePage::StepContent>
 
       <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block group relative">
         {{#if this.leaderboardIsExpanded}}

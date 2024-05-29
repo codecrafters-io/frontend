@@ -1,4 +1,7 @@
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import type { Tab } from 'codecrafters-frontend/components/tabs';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
 
@@ -7,14 +10,54 @@ export type Signature = {
 
   Args: {
     evaluator: CommunitySolutionEvaluatorModel;
-    evaluations: CommunitySolutionEvaluationModel[];
-    resultFilter: CommunitySolutionEvaluationModel['result'];
+    passEvaluations: CommunitySolutionEvaluationModel[];
+    failEvaluations: CommunitySolutionEvaluationModel[];
+    unsureEvaluations: CommunitySolutionEvaluationModel[];
   };
 };
 
 export default class EvaluationsSection extends Component<Signature> {
+  @tracked activeTabSlug: 'fail' | 'pass' | 'unsure' = 'fail';
+
+  get filteredEvaluations() {
+    if (this.activeTabSlug === 'fail') {
+      return this.args.failEvaluations;
+    } else if (this.activeTabSlug === 'pass') {
+      return this.args.passEvaluations;
+    } else if (this.activeTabSlug === 'unsure') {
+      return this.args.unsureEvaluations;
+    } else {
+      throw new Error(`Invalid tab: ${this.activeTabSlug}`);
+    }
+  }
+
   get sortedEvaluations() {
-    return this.args.evaluations.sortBy('createdAt').reverse();
+    return this.filteredEvaluations.sortBy('createdAt').reverse();
+  }
+
+  get tabs() {
+    return [
+      {
+        slug: 'fail',
+        title: `Fail`,
+        icon: 'x',
+      },
+      {
+        slug: 'pass',
+        title: `Pass`,
+        icon: 'check',
+      },
+      {
+        slug: 'unsure',
+        title: `Unsure`,
+        icon: 'question-mark-circle',
+      },
+    ];
+  }
+
+  @action
+  handleTabChange(tab: Tab) {
+    this.activeTabSlug = tab.slug as 'fail' | 'pass' | 'unsure';
   }
 }
 

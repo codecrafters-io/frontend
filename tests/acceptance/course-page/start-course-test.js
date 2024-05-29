@@ -71,12 +71,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
 
-    assert.strictEqual(
-      coursePage.desktopHeader.progressIndicatorText,
-      'Complete pre-challenge assessment to proceed',
-      'progress text is pre-challenge assessment',
-    );
-
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
 
     await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
@@ -97,7 +91,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnContinueButton();
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Repository Setup', 'step name is repository setup');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
 
     await percySnapshot('Start Course - Listening for Git push');
 
@@ -108,13 +102,13 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'Git push received.', 'progress text is git push received');
+    assert.ok(coursePage.completedStepNotice.isVisible, 'completed step notice is visible');
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
     await percySnapshot('Start Course - Git Push Received');
 
     await coursePage.repositorySetupCard.continueButton.click();
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/1?repo=1', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/yz1?repo=1', 'current URL is course page URL');
 
     await percySnapshot('Start Course - Waiting For Second Push', {
       percyCss: '#course-page-scrollable-area { overflow-y: visible !important; }',
@@ -138,7 +132,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[0].hover();
+    await coursePage.repositoryDropdown.content.actions[1].hover();
 
     assertTooltipContent(assert, {
       contentString: 'Please select a language first',
@@ -148,7 +142,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[1].hover();
+    await coursePage.repositoryDropdown.content.actions[2].hover();
 
     assertTooltipContent(assert, {
       contentString: 'Please select a language first',
@@ -160,7 +154,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[0].hover();
+    await coursePage.repositoryDropdown.content.actions[1].hover();
 
     assertTooltipNotRendered(assert);
 
@@ -168,7 +162,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
 
     await coursePage.repositoryDropdown.click();
-    await coursePage.repositoryDropdown.content.actions[1].hover();
+    await coursePage.repositoryDropdown.content.actions[2].hover();
 
     assertTooltipNotRendered(assert);
   });

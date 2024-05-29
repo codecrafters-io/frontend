@@ -54,7 +54,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     });
 
     await visit('/courses/docker/completed');
-    assert.strictEqual(currentURL(), '/courses/docker/stages/2', 'URL is /stages/2');
+    assert.strictEqual(currentURL(), '/courses/docker/stages/kf3', 'URL is /stages/kf3');
   });
 
   test('next step button in completed step notice redirects to next step if the next step is base stages completed', async function (assert) {

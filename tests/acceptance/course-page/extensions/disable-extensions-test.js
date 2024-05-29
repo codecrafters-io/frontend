@@ -29,18 +29,18 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is /stages/2');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is /stages/2');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');
 
     await coursePage.sidebar.clickOnStepListItem('Start with ext1');
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext1:1', 'current URL is /stages/ext1:1');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/qh7', 'current URL is /stages/qh7');
 
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     // Disable Extension 1
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 6, 'step list has 6 items when first extension is disabled');
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/2', 'current URL is /stages/2');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is /stages/2');
   });
 });

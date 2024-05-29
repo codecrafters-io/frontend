@@ -1,25 +1,21 @@
-<div ...attributes>
-  <div class="mb-6">
+<div data-test-evaluations-section ...attributes>
+  <div class="mb-4">
     <div class="flex items-center mb-1 gap-2">
       <span class="text-gray-800 font-semibold text-lg">
-        Evaluations with
-        {{@resultFilter}}
+        Evaluations
       </span>
-      <Pill @color="gray">
-        {{@evaluations.length}}
-      </Pill>
     </div>
 
     <div class="text-gray-400 text-xs">
-      {{#if (eq @evaluations.length 0)}}
-        No evaluations found with result "{{@resultFilter}}".
-      {{else}}
-        Evaluations that have been marked as "{{@resultFilter}}".
-      {{/if}}
+      Filter evaluations by result using the tabs below
     </div>
   </div>
 
-  {{#each this.sortedEvaluations as |evaluation|}}
-    <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
-  {{/each}}
+  <Tabs @size="regular" @tabs={{this.tabs}} @activeTabSlug={{this.activeTabSlug}} @onTabChange={{this.handleTabChange}}>
+    <div class="mt-6">
+      {{#each this.sortedEvaluations as |evaluation|}}
+        <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
+      {{/each}}
+    </div>
+  </Tabs>
 </div>

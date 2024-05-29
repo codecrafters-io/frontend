@@ -13,12 +13,9 @@ interface Signature {
 
   Args: {
     course: CourseModel;
-    repositories: unknown[];
+    repositories: RepositoryModel[];
     activeRepository: RepositoryModel;
-  };
-
-  Blocks: {
-    default: [];
+    onCollapseButtonClick: () => void;
   };
 }
 

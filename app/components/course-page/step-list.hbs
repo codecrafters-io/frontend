@@ -9,7 +9,7 @@
     <CoursePage::StepListItem @step={{step}} @isCurrent={{eq this.currentStep step}} @isActive={{eq this.activeStep step}} />
   {{/each}}
 
-  {{#if @course.hasExtensions}}
+  {{#if this.shouldShowConfigureExtensionsButtonBelowBaseStages}}
     <div class="flex justify-center my-3 px-3">
       <TertiaryButton
         @size="extra-small"
@@ -35,7 +35,7 @@
 
   {{#each this.otherStepGroups as |stepGroup|}}
     {{#if stepGroup.title}}
-      <div class="px-3 py-2">
+      <div class="px-3 pt-4 pb-2">
         <div class="flex justify-between items-center text-gray-400 border-b pb-0.5">
           <h3 class="text-xs uppercase font-semibold">
             {{stepGroup.title}}

@@ -41,7 +41,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     });
 
     this.server.create('course-stage-feedback-submission', {
-      courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, slug: 'init' }),
+      courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, position: 1 }),
       language,
       repository,
       user,
@@ -51,7 +51,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     });
 
     this.server.create('course-stage-feedback-submission', {
-      courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, slug: 'init' }),
+      courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, position: 1 }),
       language,
       repository: other_repository,
       user: other_user,
@@ -81,7 +81,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     });
 
     this.server.create('course-stage-feedback-submission', {
-      courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, slug: 'init' }),
+      courseStage: this.server.schema.courseStages.findBy({ courseId: course.id, position: 1 }),
       language,
       repository,
       user,

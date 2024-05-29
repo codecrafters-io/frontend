@@ -30,7 +30,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(currentURL(), '/courses/redis/stages/2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
 
     assert.strictEqual(
       apiRequestsCount(this.server),
@@ -92,7 +92,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.progressIndicatorText, 'You completed this stage today.', 'footer text is stage passed');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.', 'footer text is stage passed');
   });
 
   test('can pass tests using CLI', async function (assert) {

@@ -1,8 +1,8 @@
 # Sweep AI turns bug fixes & feature requests into code changes (https://sweep.dev)
 # For details on our config file, check out our docs at https://docs.sweep.dev
 
-# If you use this be sure to frequently sync your default branch(main, master) to dev.
-branch: 'master'
+# If you use this be sure to frequently sync your default branch(main) to dev.
+branch: 'main'
 # By default Sweep will read the logs and outputs from your existing Github Actions. To disable this, set this to false.
 # Please ensure that no sensitive data is logged in your Github Actions.
 gha_enabled: true

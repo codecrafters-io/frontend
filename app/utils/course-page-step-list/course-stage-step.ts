@@ -17,17 +17,6 @@ export default class CourseStageStep extends Step {
     this.stageListItem = stageListItem;
   }
 
-  get breadcrumbs(): string[] {
-    if (this.courseStage.isExtensionStage) {
-      return [
-        this.courseStage.primaryExtension!.name,
-        `Stage ${this.courseStage.positionWithinExtension}/${this.courseStage.primaryExtension!.stages.length}`,
-      ];
-    } else {
-      return [`Stage ${this.courseStage.positionWithinCourse}/${this.courseStage.course.baseStages.length}`];
-    }
-  }
-
   get completedAt(): Date | null {
     return this.stageListItem.completedAt;
   }

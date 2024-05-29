@@ -1,54 +1,32 @@
-<div class="bg-gray-100 border-r flex flex-col" data-test-course-page-sidebar ...attributes>
-  {{yield}}
+<div class="bg-gray-100 border-r border-gray-300 flex flex-col pt-4 px-3" data-test-course-page-sidebar ...attributes>
+  <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} />
 
-  <div class="flex items-center">
-    {{! @glint-expect-error: not typesafe yet}}
-    <CourseLogo @course={{@course}} class="w-8 h-8 mr-3" />
-
-    <h1 class="text-gray-800 font-semibold mr-3 tracking-tight">
-      {{@course.name}}
-    </h1>
+  <div class="px-3 mt-1">
+    <div class="h-px bg-gray-200 w-full"></div>
   </div>
 
-  {{#if @course.releaseStatusIsBeta}}
-    <BetaCourseLabel class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
-  {{else if @course.isFree}}
-    <FreeCourseLabel @course={{@course}} class="mr-3 mt-3 sm:mt-2" @tooltipSide="right" />
-  {{/if}}
+  {{! Fade for scrollable area below }}
+  <div class="relative pointer-events-none">
+    <div class="absolute top-0 left-0 right-0 w-full h-6 bg-gradient-to-b from-10% from-gray-100 to-transparent" />
+  </div>
 
-  {{! @glint-expect-error: not typesafe yet}}
-  <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} class="mt-4" />
-
-  <div class="flex-grow overflow-y-auto mt-6 -mx-3">
+  <div class="flex-grow overflow-y-auto pt-4">
     <CoursePage::StepList
       @activeRepository={{@activeRepository}}
       @course={{@course}}
       @onConfigureExtensionsButtonClick={{this.handleConfigureExtensionsButtonClick}}
       @stepList={{this.stepList}}
+      class="pb-6"
     />
   </div>
 
-  <div class="flex flex-col mt-4">
-    {{#unless this.currentUser.canAccessPaidContent}}
-      {{#unless this.monthlyChallengeBanner.isOutdated}}
-        <CoursePage::Sidebar::MonthlyChallengeBanner @course={{@course}} class="mb-4" />
-      {{/unless}}
+  {{! Fade for scrollable area on top }}
+  <div class="relative pointer-events-none">
+    <div class="absolute bottom-0 left-0 right-0 w-full h-6 bg-gradient-to-t from-10% from-gray-100 to-transparent" />
+  </div>
 
-      <PrimaryLinkButton @size="small" @route="pay" class="mb-4">
-        <span class="flex items-center gap-x-1 justify-center w-full">
-          <span>Subscribe</span>
-          {{svg-jar "lock-open" class="w-4"}}
-        </span>
-      </PrimaryLinkButton>
-    {{/unless}}
-
-    <LinkTo
-      @route="catalog"
-      class="inline-flex justify-center items-center text-gray-500 hover:text-gray-600 transition-colors text-xs p-2 border border-gray-300 rounded-lg hover:bg-white"
-    >
-      {{svg-jar "arrow-circle-left" class="w-4 mr-1 fill-current"}}
-      <span class="font-bold uppercase tracking-wide">Back to Catalog</span>
-    </LinkTo>
+  <div class="flex flex-col pt-2 border-t">
+    <CoursePage::Sidebar::Button @icon="chevron-left" @text="Collapse" {{on "click" @onCollapseButtonClick}} data-test-collapse-sidebar-button />
   </div>
 
   {{#if this.configureExtensionsModalIsOpen}}

@@ -1,4 +1,4 @@
-<div>
+<div ...attributes>
   <ul class="flex items-center overflow-x-scroll">
     {{#each @tabs as |tab|}}
       <TabHeader
@@ -6,7 +6,7 @@
         @text={{tab.title}}
         @isActive={{eq this.activeTabSlug tab.slug}}
         @size={{@size}}
-        {{on "click" (fn (mut this.activeTabSlug) tab.slug)}}
+        {{on "click" (fn this.handleTabChange tab)}}
       />
     {{/each}}
   </ul>

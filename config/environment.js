@@ -41,13 +41,14 @@ module.exports = function (environment) {
         twitterSite: '@codecraftersio',
       },
 
+      isCI: false, // Overrideen in test environment
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
 
       // Update the major version number to force all clients to update.
       // The minor version doesn't do anything at the moment, might use in the future.
-      version: `13.0.${process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || 'dev'}`,
+      version: `15.0.${process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || 'dev'}`,
     },
     fastboot: {
       hostWhitelist: [/^localhost:\d+$/],
@@ -81,6 +82,7 @@ module.exports = function (environment) {
     ENV.APP.autoboot = false;
 
     ENV.x.percyIsEnabled = process.env.PERCY_ENABLE === 'true';
+    ENV.x.isCI = !!process.env.CI;
   }
 
   return ENV;

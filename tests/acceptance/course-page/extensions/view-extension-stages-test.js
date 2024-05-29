@@ -20,10 +20,11 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 33, 'step list has 33 items');
+    // Stages count (44) + 2 (introduction and repository setup)
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 46, 'step list has 46 items');
 
     await coursePage.sidebar.clickOnStepListItem('RDB file config');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/persistence-rdb:1', 'current URL is stage page URL');
+    assert.strictEqual(currentURL(), '/courses/redis/stages/zg5', 'current URL is stage page URL');
   });
 
   test('can view extension stages after creating repository', async function (assert) {
@@ -43,6 +44,6 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
 
     // View a stage from extension 2
     await coursePage.sidebar.clickOnStepListItem('Start with ext2');
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ext2:1?repo=1', 'current URL is stage page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ae0?repo=1', 'current URL is stage page URL');
   });
 });

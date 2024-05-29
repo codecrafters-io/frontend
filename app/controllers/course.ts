@@ -81,7 +81,8 @@ export default class CourseController extends Controller {
 
   @action
   handleCollapseSidebarButtonClick() {
-    this.sidebarIsExpandedOnDesktop = !this.sidebarIsExpandedOnDesktop;
+    this.sidebarIsExpandedOnDesktop = false;
+    this.sidebarIsExpandedOnMobile = false;
 
     this.analyticsEventTracker.track('collapsed_course_page_sidebar', {
       course_id: this.model.course.id,
