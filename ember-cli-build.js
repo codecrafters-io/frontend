@@ -8,7 +8,9 @@ const { Webpack } = require('@embroider/webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
+
 const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
+const shouldUploadSentrySourcemaps = !!process.env.CI;
 
 const fetch = require('node-fetch');
 const customFilePlugin = require('./lib/custom-file-plugin');
@@ -103,14 +105,16 @@ module.exports = function (defaults) {
             uploadToken: process.env.CODECOV_TOKEN,
           }),
 
-          sentryWebpackPlugin({
-            org: 'codecrafters',
-            project: 'frontend',
-            authToken: process.env.CI ? process.env.SENTRY_AUTH_TOKEN : undefined,
-            release: {
-              name: config.x.version,
-            },
-          }),
+          shouldUploadSentrySourcemaps
+            ? sentryWebpackPlugin({
+                org: 'codecrafters',
+                project: 'frontend',
+                authToken: process.env.SENTRY_AUTH_TOKEN,
+                release: {
+                  name: config.x.version,
+                },
+              })
+            : null,
 
           shouldSpawnBundleAnalyzer ? new BundleAnalyzerPlugin() : null,
         ],
