@@ -1,6 +1,8 @@
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
+import TimeService from 'codecrafters-frontend/services/time';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 // Dummy date that will be considered "current" or "base" date
@@ -19,6 +21,19 @@ const DATE_DIFF_EXAMPLES = [
   ['in 19 years', new Date('2042-08-24T10:35:31.681')],
 ];
 
+function setupTimeService(owner, date) {
+  owner.unregister('service:time');
+  owner.unregister('service:date');
+  owner.register('service:date', FakeDateService);
+
+  let dateService = owner.lookup('service:date');
+  dateService.setNow(date);
+
+  owner.register('service:time', TimeService);
+  let timeService = owner.lookup('service:time');
+  timeService.setupTimer();
+}
+
 module('Integration | Helper | date-from-now', function (hooks) {
   setupRenderingTest(hooks);
 
@@ -36,7 +51,10 @@ module('Integration | Helper | date-from-now', function (hooks) {
   test('it renders "0 seconds ago" if passed date equals now', async function (assert) {
     this.set('currentDate', DUMMY_CURRENT_DATE);
     this.set('customDate', DUMMY_CURRENT_DATE);
-    await render(hbs`{{date-from-now this.customDate currentDate=this.currentDate}}`);
+
+    setupTimeService(this.owner, this.currentDate);
+
+    await render(hbs`{{date-from-now this.customDate}}`);
     assert.dom(this.element).hasText('0 seconds ago');
   });
 
@@ -45,8 +63,27 @@ module('Integration | Helper | date-from-now', function (hooks) {
     test(`it renders a human-readable difference between now and "${expectedOutput}"`, async function (assert) {
       this.set('currentDate', DUMMY_CURRENT_DATE);
       this.set('customDate', providedDate);
-      await render(hbs`{{date-from-now this.customDate currentDate=this.currentDate}}`);
+
+      setupTimeService(this.owner, this.currentDate);
+
+      await render(hbs`{{date-from-now this.customDate}}`);
       assert.dom(this.element).hasText(expectedOutput);
     });
   }
+
+  test('it renders dates in real time', async function (assert) {
+    this.set('currentDate', DUMMY_CURRENT_DATE);
+    this.set('customDate', DUMMY_CURRENT_DATE);
+
+    setupTimeService(this.owner, this.currentDate);
+
+    await render(hbs`{{date-from-now this.customDate}}`);
+    assert.dom(this.element).hasText('0 seconds ago');
+
+    let timeService = this.owner.lookup('service:time');
+    timeService.advanceTimeByMilliseconds(1000);
+    await settled();
+
+    assert.dom(this.element).hasText('1 second ago');
+  });
 });

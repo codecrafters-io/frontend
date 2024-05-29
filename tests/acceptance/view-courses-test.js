@@ -159,6 +159,7 @@ module('Acceptance | view-courses', function (hooks) {
   test('it renders if user is not signed in', async function (assert) {
     testScenario(this.server);
 
+    this.owner.unregister('service:date');
     this.owner.register('service:date', FakeDateService);
 
     let dateService = this.owner.lookup('service:date');

@@ -76,6 +76,7 @@ module('Acceptance | contests-test', function (hooks) {
   setupWindowMock(hooks);
 
   hooks.beforeEach(function () {
+    this.owner.unregister('service:date');
     this.owner.register('service:date', FakeDateService);
 
     let dateService = this.owner.lookup('service:date');

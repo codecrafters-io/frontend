@@ -652,6 +652,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    this.owner.unregister('service:date');
     this.owner.register('service:date', FakeDateService);
 
     let dateService = this.owner.lookup('service:date');
