@@ -8,7 +8,7 @@
     class="mb-4"
   >
     <:afterTitle>
-      {{#if @course.isFree}}
+      {{#if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
         <FreeCourseLabel @course={{@course}} />
       {{/if}}
     </:afterTitle>
@@ -41,7 +41,7 @@
     {{on "click" this.handleClick}}
   >
     <:afterTitle>
-      {{#if @course.isFree}}
+      {{#if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
         <FreeCourseLabel @course={{@course}} />
       {{/if}}
     </:afterTitle>

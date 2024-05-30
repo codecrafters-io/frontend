@@ -10,7 +10,7 @@
       <div class="flex items-center">
         {{#if @course.releaseStatusIsBeta}}
           <BetaCourseLabel />
-        {{else if @course.isFree}}
+        {{else if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
           <FreeCourseLabel @course={{@course}} />
         {{else if (and (eq @currentStep.type "CourseStageStep") this.currentStepAsCourseStageStep.courseStage.primaryExtension)}}
           <BetaCourseExtensionLabel />
