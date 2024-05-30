@@ -4,7 +4,7 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
 
 module('Acceptance | view-courses', function (hooks) {
@@ -188,6 +188,27 @@ module('Acceptance | view-courses', function (hooks) {
     assert.notOk(catalogPage.courseCardByName('Build your own Docker').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own Git').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
+  });
+
+  test('course card does not render free label if user has access to membership benefits', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    this.owner.unregister('service:date');
+    this.owner.register('service:date', FakeDateService);
+
+    let dateService = this.owner.lookup('service:date');
+    let now = new Date('2024-01-01').getTime();
+    dateService.setNow(now);
+
+    let isFreeExpirationDate = new Date(dateService.now() + 20 * 24 * 60 * 60 * 1000);
+
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    redis.update({ isFreeUntil: isFreeExpirationDate });
+
+    await catalogPage.visit();
+
+    assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasFreeLabel, 'free challenges should not have the free label if user has subscription');
   });
 
   test('first time visit has loading page', async function (assert) {
