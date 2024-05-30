@@ -203,7 +203,7 @@
     "mustache": "^4.2.0",
     "node-html-parser": "^6.1.13",
     "player.js": "^0.1.0",
-    "posthog-js": "^1.136.1",
+    "posthog-js": "^1.136.2",
     "showdown": "^2.1.0",
     "three": "^0.164.1",
     "web-vitals": "^4.0.1"
