@@ -6,7 +6,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 export default createPage({
   cards: collection('[data-test-track-page-card]', {
     freeCourseLabel: {
-      scope: '[data-test-course-free-label]'
+      scope: '[data-test-course-free-label]',
     },
 
     title: text('[data-test-track-page-card-title]'),
