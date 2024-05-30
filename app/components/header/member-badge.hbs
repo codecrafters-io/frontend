@@ -1,0 +1,8 @@
+<PrimaryLinkButton @size="extra-small" @route="membership" class="mr-4" data-test-member-badge ...attributes>
+  <span class="flex items-center gap-x-1">
+    Member
+    {{svg-jar "shield-check" class="w-4 ml-1 fill-current"}}
+  </span>
+
+  <EmberTooltip @text="You're a CodeCrafters member. Click here to view your membership details." />
+</PrimaryLinkButton>
