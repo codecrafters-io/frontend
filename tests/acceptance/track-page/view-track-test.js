@@ -1,10 +1,11 @@
 import createTrackLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-track-leaderboard-entries';
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
 
 module('Acceptance | view-track', function (hooks) {
@@ -105,5 +106,23 @@ module('Acceptance | view-track', function (hooks) {
 
     await trackPage.visit({ track_slug: 'javascript' });
     assert.notOk(trackPage.cards.mapBy('title').includes('Build your own React'));
+  });
+
+  test('it does not render the free course label if a user has access to membership benefits', async function (assert) {
+    testScenario(this.server, ['dummy', 'sqlite']);
+    signInAsSubscriber(this.owner, this.server);
+
+    this.owner.unregister('service:date');
+    this.owner.register('service:date', FakeDateService);
+
+    let dateService = this.owner.lookup('service:date');
+    let now = new Date('2024-01-01').getTime();
+    dateService.setNow(now);
+
+    let isFreeExpirationDate = new Date('2024-02-01');
+    this.server.schema.courses.findBy({ slug: 'sqlite' }).update('isFreeUntil', isFreeExpirationDate);
+
+    await visit('/tracks/go');
+    assert.notOk(trackPage.cards.first.freeCourseLabel.isPresent, 'free course label does not render if user has access to membership benefits');
   });
 });
