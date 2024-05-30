@@ -123,6 +123,8 @@ module('Acceptance | view-track', function (hooks) {
     this.server.schema.courses.findBy({ slug: 'sqlite' }).update('isFreeUntil', isFreeExpirationDate);
 
     await visit('/tracks/go');
+    console.log(trackPage);
+    await this.pauseTest();
     assert.notOk(trackPage.cards.first.freeCourseLabel.isPresent, 'free course label does not render if user has access to membership benefits');
   });
 });
