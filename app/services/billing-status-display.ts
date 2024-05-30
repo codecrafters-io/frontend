@@ -21,7 +21,7 @@ export default class BillingStatusDisplayService extends Service {
   }
 
   get shouldShowMemberBadge(): boolean {
-    return !!this.currentUser && !!this.currentUser.hasActiveSubscription;
+    return !!this.currentUser && this.currentUser.hasActiveSubscription;
   }
 
   get shouldShowUpgradeButton(): boolean {
