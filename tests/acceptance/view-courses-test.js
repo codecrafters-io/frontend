@@ -208,7 +208,10 @@ module('Acceptance | view-courses', function (hooks) {
 
     await catalogPage.visit();
 
-    assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasFreeLabel, 'free challenges should not have the free label if user has subscription');
+    assert.notOk(
+      catalogPage.courseCardByName('Build your own Redis').hasFreeLabel,
+      'free challenges should not have the free label if user has subscription',
+    );
   });
 
   test('first time visit has loading page', async function (assert) {
