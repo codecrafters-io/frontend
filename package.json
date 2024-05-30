@@ -171,7 +171,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.2",
     "prismjs": "^1.28.0",
-    "qunit": "^2.20.1",
+    "qunit": "^2.21.0",
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^3.1.2",
     "shiki": "^1.5.2",
