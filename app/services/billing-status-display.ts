@@ -11,10 +11,6 @@ export default class BillingStatusDisplayService extends Service {
     return this.authenticator.currentUser;
   }
 
-  get shouldShowMemberBadge(): boolean {
-    return !!this.currentUser && !!this.currentUser.hasActiveSubscription;
-  }
-
   get shouldShowFreeWeeksLeftButton(): boolean {
     return (
       !!this.currentUser &&
@@ -22,6 +18,10 @@ export default class BillingStatusDisplayService extends Service {
       this.currentUser.hasActiveFreeUsageGrants &&
       !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated
     );
+  }
+
+  get shouldShowMemberBadge(): boolean {
+    return !!this.currentUser && !!this.currentUser.hasActiveSubscription;
   }
 
   get shouldShowUpgradeButton(): boolean {
