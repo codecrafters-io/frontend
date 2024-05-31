@@ -58,7 +58,7 @@
             </div>
           {{else if @course.releaseStatusIsBeta}}
             <BetaCourseLabel class="mr-3" />
-          {{else if @course.isFree}}
+          {{else if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
             <FreeCourseLabel @course={{@course}} />
           {{else}}
             <div class="flex items-center">

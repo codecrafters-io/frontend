@@ -5,6 +5,10 @@ export default class CourseCardComponent extends Component {
   @service authenticator;
   @service router;
 
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   get isSkeleton() {
     return !this.args.course;
   }
@@ -15,13 +19,13 @@ export default class CourseCardComponent extends Component {
     }
 
     if (this.authenticator.currentUserIsLoaded) {
-      const lastPushedRepository = this.authenticator.currentUser.repositories
+      const lastPushedRepository = this.currentUser.repositories
         .filterBy('course', this.args.course)
         .filterBy('firstSubmissionCreated')
         .sortBy('lastSubmissionAt')
         .at(-1);
 
-      const lastCreatedRepository = this.authenticator.currentUser.repositories.filterBy('course', this.args.course).sortBy('createdAt').at(-1);
+      const lastCreatedRepository = this.currentUser.repositories.filterBy('course', this.args.course).sortBy('createdAt').at(-1);
 
       return lastPushedRepository ? lastPushedRepository : lastCreatedRepository;
     } else {

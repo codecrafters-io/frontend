@@ -701,6 +701,27 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
   });
 
+  test('free label does not render if user can access membership benefits', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    this.owner.unregister('service:date');
+    this.owner.register('service:date', FakeDateService);
+
+    let dateService = this.owner.lookup('service:date');
+    let now = new Date('2024-01-01').getTime();
+    dateService.setNow(now);
+
+    let isFreeExpirationDate = new Date('2024-02-01');
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.notOk(coursePage.freeCourseLabel.isVisible, 'free label should not be present');
+  });
+
   test('header should have a badge that shows the remaining time in days', async function (assert) {
     testScenario(this.server);
 

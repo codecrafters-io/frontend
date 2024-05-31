@@ -32,6 +32,10 @@ export default class CourseCardComponent extends Component<Signature> {
     }
   }
 
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   get currentUserIsAnonymous() {
     return this.authenticator.isAnonymous;
   }
