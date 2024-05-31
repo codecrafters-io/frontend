@@ -11,7 +11,9 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    handleStageIncompleteModalDismissed: () => void;
     solutions: CommunityCourseStageSolutionModel[];
+    stageIncompleteModalWasDismissed: boolean;
     repository: string;
   };
 };
@@ -23,7 +25,6 @@ export default class CommunitySolutionsListComponent extends Component<Signature
   @service declare coursePageState: CoursePageStateService;
 
   @tracked configureGithubIntegrationModalIsOpen = false;
-  @tracked stageIncompleteModalWasDismissed = false;
 
   @action
   handleSolutionExpand(solution: CommunityCourseStageSolutionModel, solutionIndex: number) {
@@ -32,13 +33,7 @@ export default class CommunitySolutionsListComponent extends Component<Signature
     }
   }
 
-  @action
-  handleStageIncompleteModalDismissed() {
-    this.stageIncompleteModalWasDismissed = true;
-  }
-
   get shouldShowStageIncompleteModal() {
-    console.log(this.coursePageState.currentStep.globalPosition);
-    return !this.stageIncompleteModalWasDismissed && this.coursePageState.currentStep.globalPosition > 4 && this.args.solutions.length > 0;
+    return !this.args.stageIncompleteModalWasDismissed && this.coursePageState.currentStep.globalPosition > 4 && this.args.solutions.length > 0 && this.coursePageState.currentStep.status !== 'complete';
   }
 }
