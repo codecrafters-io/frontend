@@ -869,9 +869,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.header.memberBadge.isVisible, 'expect member badge to be visible');
+    assert.true(coursePage.desktopHeader.memberBadge.isVisible, 'expect member badge to be visible');
 
-    await coursePage.header.memberBadge.hover();
+    await coursePage.desktopHeader.memberBadge.hover();
 
     assertTooltipContent(assert, {
       contentString: "You're a CodeCrafters member. Click here to view your membership details.",
@@ -885,7 +885,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.header.memberBadge.click();
+    await coursePage.desktopHeader.memberBadge.click();
 
     assert.strictEqual(currentURL(), '/membership', 'expect to be redirected to membership page');
   });
