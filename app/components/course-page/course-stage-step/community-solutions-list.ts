@@ -26,14 +26,19 @@ export default class CommunitySolutionsListComponent extends Component<Signature
 
   @tracked configureGithubIntegrationModalIsOpen = false;
 
+  get shouldShowStageIncompleteModal() {
+    return (
+      !this.args.stageIncompleteModalWasDismissed &&
+      this.coursePageState.currentStep.globalPosition > 4 &&
+      this.args.solutions.length > 0 &&
+      this.coursePageState.currentStep.status !== 'complete'
+    );
+  }
+
   @action
   handleSolutionExpand(solution: CommunityCourseStageSolutionModel, solutionIndex: number) {
     if (this.authenticator.isAuthenticated) {
       solution.createView({ position_in_list: solutionIndex + 1 });
     }
-  }
-
-  get shouldShowStageIncompleteModal() {
-    return !this.args.stageIncompleteModalWasDismissed && this.coursePageState.currentStep.globalPosition > 4 && this.args.solutions.length > 0 && this.coursePageState.currentStep.status !== 'complete';
   }
 }

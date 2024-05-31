@@ -14,7 +14,12 @@
     {{/each}}
   </:content>
   <:overlay>
-    <ModalBody @allowManualClose={{false}} @onClose={{@handleStageIncompleteModalDismissed}} class="w-full mt-8 border mx-3 md:mx-6" data-test-stage-incomplete-modal>
+    <ModalBody
+      @allowManualClose={{false}}
+      @onClose={{@handleStageIncompleteModalDismissed}}
+      class="w-full mt-8 border mx-3 md:mx-6"
+      data-test-stage-incomplete-modal
+    >
       <div class="mb-4 font-semibold text-2xl text-gray-600 mr-6">
         Stage incomplete
       </div>

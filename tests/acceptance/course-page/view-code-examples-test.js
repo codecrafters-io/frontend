@@ -10,11 +10,11 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 
-module('Acceptance | course-page | view-code-examples', function(hooks) {
+module('Acceptance | course-page | view-code-examples', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('can view solutions before starting course', async function(assert) {
+  test('can view solutions before starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -69,7 +69,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 0, 'expected no C solutions to be present');
   });
 
-  test('can view solutions after starting course', async function(assert) {
+  test('can view solutions after starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -125,7 +125,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 1, 'Solutions are visible');
   });
 
-  test('can view team-restricted solutions', async function(assert) {
+  test('can view team-restricted solutions', async function (assert) {
     testScenario(this.server);
 
     const currentUser = this.server.create('user', {
@@ -170,7 +170,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2);
   });
 
-  test('stage incomplete modal shows up when code examples are viewed before completing a stage', async function(assert) {
+  test('stage incomplete modal shows up when code examples are viewed before completing a stage', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -207,7 +207,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
   });
 
-  test('stage incomplete modal does not show up on stage two even if stage is not completed', async function(assert) {
+  test('stage incomplete modal does not show up on stage two even if stage is not completed', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -218,7 +218,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
 
     createCommunityCourseStageSolution(this.server, redis, 2, python);
 
-    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
+    this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       name: 'Python #1',
@@ -232,7 +232,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.notOk(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
-  test('stage incomplete model does not show up if stage is completed', async function(assert) {
+  test('stage incomplete model does not show up if stage is completed', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -278,7 +278,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.notOk(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
-  test('back to instructions button in stage incomplete modal redirects to instructions', async function(assert) {
+  test('back to instructions button in stage incomplete modal redirects to instructions', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -316,7 +316,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.ok(coursePage.yourTaskCard.isVisible, 'user is redirected to instructions');
   });
 
-  test('show code button in stage incomplete modal shows code examples', async function(assert) {
+  test('show code button in stage incomplete modal shows code examples', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -354,7 +354,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.notOk(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
-  test('stage incomplete modal does not render if no solutions for language exist', async function(assert) {
+  test('stage incomplete modal does not render if no solutions for language exist', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -388,7 +388,7 @@ module('Acceptance | course-page | view-code-examples', function(hooks) {
     assert.notOk(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
-  test('stage incomplete modal does not show up again if show code button is clicked when user switches to a different language', async function(assert) {
+  test('stage incomplete modal does not show up again if show code button is clicked when user switches to a different language', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
