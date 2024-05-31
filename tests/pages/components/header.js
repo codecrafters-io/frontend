@@ -18,6 +18,11 @@ export default {
     scope: '[data-test-free-weeks-left-button]',
   },
 
+  memberBadge: {
+    hover: triggerable('mouseenter'),
+    scope: '[data-test-member-badge]',
+  },
+
   scope: '[data-test-header]',
 
   upgradeButton: {

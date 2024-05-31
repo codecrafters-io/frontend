@@ -860,4 +860,33 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
   });
+
+  test('header should show member badge if user has an active subscription', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.true(coursePage.desktopHeader.memberBadge.isVisible, 'expect member badge to be visible');
+
+    await coursePage.desktopHeader.memberBadge.hover();
+
+    assertTooltipContent(assert, {
+      contentString: "You're a CodeCrafters member. Click here to view your membership details.",
+    });
+  });
+
+  test('member badge redirects to /membership', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.desktopHeader.memberBadge.click();
+
+    assert.strictEqual(currentURL(), '/membership', 'expect to be redirected to membership page');
+  });
 });

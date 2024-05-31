@@ -71,6 +71,8 @@
 
           {{#if this.billingStatusDisplay.shouldShowVipBadge}}
             <Header::VipBadge class="mr-3" />
+          {{else if this.billingStatusDisplay.shouldShowMemberBadge}}
+            <Header::MemberBadge class="mr-3" />
           {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
             <Header::FreeWeeksLeftButton class="mr-3" />
           {{else if this.billingStatusDisplay.shouldShowUpgradeButton}}

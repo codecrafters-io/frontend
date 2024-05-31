@@ -20,6 +20,10 @@ export default class BillingStatusDisplayService extends Service {
     );
   }
 
+  get shouldShowMemberBadge(): boolean {
+    return !!this.currentUser && this.currentUser.hasActiveSubscription;
+  }
+
   get shouldShowUpgradeButton(): boolean {
     if (this.currentUser) {
       return !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';

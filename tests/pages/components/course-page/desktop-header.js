@@ -9,6 +9,11 @@ export default {
     scope: '[data-test-free-weeks-left-button]',
   },
 
+  memberBadge: {
+    hover: triggerable('mouseenter'),
+    scope: '[data-test-member-badge]',
+  },
+
   progressIndicatorText: text('[data-test-progress-indicator-text]'),
   scope: '[data-test-course-page-header]',
   stepName: text('[data-test-step-name]'),
