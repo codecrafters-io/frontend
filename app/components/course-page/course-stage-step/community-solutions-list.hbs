@@ -1,15 +1,55 @@
-{{#each @solutions as |solution solutionIndex|}}
-  <CoursePage::CourseStageStep::CommunitySolutionCard
-    @isCollapsedByDefault={{gt solutionIndex 0}}
-    @metadataForDownvote={{hash position_in_list=(add solutionIndex 1)}}
-    @metadataForUpvote={{hash position_in_list=(add solutionIndex 1)}}
-    @onExpand={{fn this.handleSolutionExpand solution solutionIndex}}
-    @onPublishToGithubButtonClick={{fn (mut this.configureGithubIntegrationModalIsOpen) true}}
-    @solution={{solution}}
-    {{! account for the sticky menu bar }}
-    class="scroll-mt-16"
-  />
-{{/each}}
+<BlurredOverlay @isBlurred={{this.shouldShowStageIncompleteModal}} class="px-3 md:px-6 lg:px-10">
+  <:content>
+    {{#each @solutions as |solution solutionIndex|}}
+      <CoursePage::CourseStageStep::CommunitySolutionCard
+        @isCollapsedByDefault={{gt solutionIndex 0}}
+        @metadataForDownvote={{hash position_in_list=(add solutionIndex 1)}}
+        @metadataForUpvote={{hash position_in_list=(add solutionIndex 1)}}
+        @onExpand={{fn this.handleSolutionExpand solution solutionIndex}}
+        @onPublishToGithubButtonClick={{fn (mut this.configureGithubIntegrationModalIsOpen) true}}
+        @solution={{solution}}
+        {{! account for the sticky menu bar }}
+        class="scroll-mt-16"
+      />
+    {{/each}}
+  </:content>
+  <:overlay>
+    <ModalBody @allowManualClose={{false}} @onClose={{this.handleStageIncompleteModalDismissed}} class="w-full mt-8 border mx-3 md:mx-6">
+      <div class="mb-4 font-semibold text-2xl text-gray-600 mr-6">
+        Stage incomplete
+      </div>
+
+      <div class="prose mb-6">
+        <p>
+          You haven't completed this stage yet. Are you sure you want to view code examples?
+        </p>
+      </div>
+
+      <div class="flex items-center gap-x-6 gap-y-4 flex-wrap">
+        <PrimaryLinkButton
+          @route={{this.coursePageState.activeStep.routeParams.route}}
+          @models={{this.coursePageState.activeStep.routeParams.models}}
+          data-test-instructions-button
+          class="flex-shrink-0"
+        >
+          <div class="flex items-center">
+            {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
+            <span>No, back to instructions</span>
+          </div>
+        </PrimaryLinkButton>
+
+        <div
+          class="text-gray-500 hover:text-gray-800 text-sm pb-0.25 border-b border-gray-400 hover:border-gray-600 flex-shrink-0"
+          role="button"
+          {{on "click" this.handleStageIncompleteModalDismissed}}
+          data-test-show-code-button
+        >
+          Yes, show me the code 👀
+        </div>
+      </div>
+    </ModalBody>
+  </:overlay>
+</BlurredOverlay>
 
 {{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
