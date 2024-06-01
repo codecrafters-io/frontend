@@ -140,14 +140,14 @@ export default class CourseModel extends Model {
       {
         'http-server': 2,
         'dns-server': 5,
-        bittorrent: 6,
-        docker: 7,
+        bittorrent: 7,
+        docker: 8,
         git: 4,
         grep: 6,
         redis: 1,
         shell: 3,
-        sqlite: 8,
-      }[this.slug] || 9
+        sqlite: 9,
+      }[this.slug] || 100
     );
   }
 
