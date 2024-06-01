@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 
 import { type Extension } from '@codemirror/state';
 import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
+import { service } from '@ember/service';
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
 const THEME_EXTENSIONS: {
   [key: string]: Extension;
@@ -41,6 +43,8 @@ class ExampleDocument {
 }
 
 export default class DemoCodeMirrorController extends Controller {
+  @service declare darkMode: DarkModeService;
+
   @tracked placeholderMessage = 'Welcome to CodeCrafters test zone for CodeMirror! Start editing the document here...';
 
   @tracked documents: ExampleDocument[] = [
@@ -128,14 +132,13 @@ export default class DemoCodeMirrorController extends Controller {
     const theme = this.themes[this.selectedThemeIndex];
 
     return theme === 'Auto'
-      ? this.useDarkTheme
+      ? this.darkMode.isEnabled
         ? this.themes[this.themes.indexOf(DEFAULT_THEME_DARK)]
         : this.themes[this.themes.indexOf(DEFAULT_THEME_LIGHT)]
       : theme;
   }
 
   @tracked border: boolean = true;
-  @tracked useDarkTheme: boolean = false;
 
   @tracked allowMultipleSelections: boolean = true;
   @tracked autocompletion: boolean = true;
@@ -205,9 +208,5 @@ export default class DemoCodeMirrorController extends Controller {
   @action selectedThemeIndexDidChange(event: Event) {
     const target: HTMLSelectElement = event.target as HTMLSelectElement;
     this.selectedThemeIndex = target.selectedIndex;
-  }
-
-  @action useDarkThemeDidChange(useDarkTheme: boolean) {
-    this.useDarkTheme = useDarkTheme;
   }
 }

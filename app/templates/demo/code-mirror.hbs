@@ -23,7 +23,7 @@
         <Input @type="checkbox" @checked={{this.border}} />
         <span class="ml-2">border</span>
       </label>
-      <label class="{{labelClasses}}" title="Theme to use for the editor" {{is-dark-mode this.useDarkThemeDidChange}}>
+      <label class="{{labelClasses}}" title="Theme to use for the editor">
         <Input @type="checkbox" @checked={{this.theme}} />
         <span class="mx-2">theme:</span>
         <select class="text-right {{unless this.theme 'bg-gray-200'}}" {{on "change" this.selectedThemeIndexDidChange}} disabled={{not this.theme}}>
