@@ -228,13 +228,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
       return;
     }
 
-    // Remember all paramteters used for this task run
-    this.#lastHighlightCodeParams.setParams({
-      isDarkMode: isDarkMode,
-      language: language,
-      codeWithoutDiffMarkers: codeWithoutDiffMarkers,
-    });
-
     // Prepare the highlighter promise
     const highlighterPromise = getOrCreateCachedHighlighterPromise(
       isDarkMode ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
@@ -258,6 +251,13 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
     // Remember which code we've last formatted
     this.asyncHighlightedCode = code;
+
+    // Remember all paramteters used for this task run
+    this.#lastHighlightCodeParams.setParams({
+      isDarkMode: isDarkMode,
+      language: language,
+      codeWithoutDiffMarkers: codeWithoutDiffMarkers,
+    });
 
     // Ensure we don't run this task too often when `keepLatest` is used
     if (HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD === 'keepLatest') {
