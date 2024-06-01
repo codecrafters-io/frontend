@@ -138,13 +138,14 @@ export default class CourseModel extends Model {
   get sortPositionForTrack() {
     return (
       {
-        'http-server': 3,
-        'dns-server': 4,
-        bittorrent: 5,
+        'http-server': 2,
+        'dns-server': 5,
+        bittorrent: 6,
         docker: 7,
-        git: 1,
+        git: 4,
         grep: 6,
-        redis: 2,
+        redis: 1,
+        shell: 3,
         sqlite: 8,
       }[this.slug] || 9
     );
