@@ -11,21 +11,9 @@ import { transformerNotationDiff } from '@shikijs/transformers';
 import { task, timeout } from 'ember-concurrency';
 
 /**
- * Method to use for delaying `highlightCode` task execution:
- * - `restartable` cancels all queued calls before they have a chance to execute, executes only the latest call: causes much less unnecessary task executions
- * - `keepLatest` always executes first & last queued calls, cancelling the ones in-between: might be more reliable but always triggers rendering twice
+ * Time to wait at the end of `highlightCode` task before allowing a new run to be performed
  */
-const HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD: 'keepLatest' | 'restartable' = 'restartable';
-
-/**
- * Timeout used for `restartable` method
- */
-const HIGHLIGHT_CODE_TASK_TIMEOUT_PRE: number = 10;
-
-/**
- * Timeout used for `keepLatest` method
- */
-const HIGHLIGHT_CODE_TASK_TIMEOUT_POST: number = 100;
+const DELAY_BETWEEN_HIGHLIGHT_CODE_TASKS_IN_MS: number = 100;
 
 type Signature = {
   Element: HTMLDivElement;
@@ -199,12 +187,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     }
   }
 
-  highlightCode = task({ [HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD]: true }, async (): Promise<void> => {
-    // For "restartable" to have immediate effect for sequential calls
-    if (HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD === 'restartable') {
-      await timeout(HIGHLIGHT_CODE_TASK_TIMEOUT_PRE);
-    }
-
+  highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
     // Read all dependent parameters into local constants
     const {
       #isDarkMode: isDarkMode,
@@ -259,10 +242,8 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
       codeWithoutDiffMarkers: codeWithoutDiffMarkers,
     });
 
-    // Ensure we don't run this task too often when `keepLatest` is used
-    if (HIGHLIGHT_CODE_TASK_TIMEOUT_METHOD === 'keepLatest') {
-      await timeout(HIGHLIGHT_CODE_TASK_TIMEOUT_POST);
-    }
+    // Ensure we don't run this task too often
+    await timeout(DELAY_BETWEEN_HIGHLIGHT_CODE_TASKS_IN_MS);
   });
 
   static preloadHighlighter() {
