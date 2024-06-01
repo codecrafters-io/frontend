@@ -9,6 +9,9 @@ import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { transformerNotationDiff } from '@shikijs/transformers';
 import { task, timeout } from 'ember-concurrency';
+import type EmberConcurrencyRegistry from 'ember-concurrency/template-registry';
+import { service } from '@ember/service';
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
 /**
  * Time to wait at the end of `highlightCode` task before allowing a new run to be performed
@@ -50,16 +53,11 @@ class HighlightCodeParamsCache implements HighlightCodeParams {
 }
 
 export default class SyntaxHighlightedDiffComponent extends Component<Signature> {
+  @service declare darkMode: DarkModeService;
+
   @tracked asyncHighlightedHTML: string | null = null;
   @tracked asyncHighlightedCode: string | null = null;
   @tracked lineNumberWithExpandedComments: number | null = null;
-
-  /**
-   * Current Dark Mode environment setting, reported by `is-dark-mode` modifier
-   * and used by `highlightCode` task to decide which mode to format code with
-   * @private
-   */
-  #isDarkMode: boolean | undefined = undefined;
 
   /**
    * The last parameters used for formatting & rendering the code
@@ -164,17 +162,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   @action
-  handleDidUpdateCode() {
-    this.highlightCode.perform();
-  }
-
-  @action
-  handleIsDarkModeUpdate(isDarkMode: boolean) {
-    this.#isDarkMode = isDarkMode;
-    this.highlightCode.perform();
-  }
-
-  @action
   handleToggleCommentsButtonClick(lineNumber: number) {
     if (this.lineNumberWithExpandedComments === lineNumber) {
       this.lineNumberWithExpandedComments = null;
@@ -190,9 +177,9 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
     // Read all dependent parameters into local constants
     const {
-      #isDarkMode: isDarkMode,
       codeWithoutDiffMarkers,
       args: { code, language },
+      darkMode: { isEnabled: isDarkMode },
     } = this;
 
     // Return if not ready to highlight yet
@@ -235,7 +222,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     // Remember which code we've last formatted
     this.asyncHighlightedCode = code;
 
-    // Remember all paramteters used for this task run
+    // Remember all parameters used for this task run
     this.#lastHighlightCodeParams.setParams({
       isDarkMode: isDarkMode,
       language: language,
@@ -257,7 +244,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 }
 
 declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry {
+  export default interface Registry extends EmberConcurrencyRegistry {
     SyntaxHighlightedDiff: typeof SyntaxHighlightedDiffComponent;
   }
 }
