@@ -1,0 +1,21 @@
+{
+  // https://code.visualstudio.com/docs/editor/tasks-appendix
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "process",
+      "command": "sh",
+      "args": [
+        ".vscode/tasks/js-component-to-ts.sh",
+        "${file}"
+      ],
+      "label": "Convert JS component to TS",
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "OPENAI_API_KEY": "bar"
+        }
+      }
+    }
+  ]
+}

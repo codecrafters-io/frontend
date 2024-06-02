@@ -26,3 +26,6 @@
 
 # broccoli-debug
 /DEBUG/
+
+# tasks
+.vscode/tasks/*
