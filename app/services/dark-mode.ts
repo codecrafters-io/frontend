@@ -65,14 +65,14 @@ export default class DarkModeService extends Service {
    * "dark route", or derived from localStorage & system preference
    */
   get isEnabled(): boolean {
-    return this.#isVisitingDarkRoute || this.#isLocalStorageEnabled;
+    return this.#isVisitingDarkRoute || this.#isEnabledViaPreferences;
   }
 
   /**
    * Returns whether Dark Mode should be enabled based on localStorage & system preference
    * @private
    */
-  get #isLocalStorageEnabled(): boolean {
+  get #isEnabledViaPreferences(): boolean {
     return this.localStoragePreference === 'dark' || (this.localStoragePreference === 'system' && this.systemPreference === 'dark');
   }
 
