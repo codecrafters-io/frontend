@@ -2,10 +2,19 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
-export default class FaqListComponent extends Component {
-  @tracked openItem = false;
+type Faq = {
+  query: string;
+  answer: string;
+};
 
-  faqs = [
+type Signature = {
+  Element: HTMLElement;
+};
+
+export default class FaqListComponent extends Component<Signature> {
+  @tracked openItem: Faq | null = null;
+
+  faqs: Faq[] = [
     {
       query: "What's included in the individual Membership?",
       answer: 'All our challenges, in every language we support. If we launch new ones during your membership, you can access those too.',
@@ -31,11 +40,17 @@ export default class FaqListComponent extends Component {
   ];
 
   @action
-  handleToggle(item) {
+  handleToggle(item: Faq) {
     if (this.openItem === item) {
       this.openItem = null;
     } else {
       this.openItem = item;
     }
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    FaqList: typeof FaqListComponent;
   }
 }
