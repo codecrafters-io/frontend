@@ -6,9 +6,13 @@ export function initialize() {
     posthog.init('phc_jCl1mm3XbnvyIUr4h54oORqWEqj37gxhZIOebREBwxb', {
       api_host: 'https://app.posthog.com',
       autocapture: false, // We have our own events
-      maskAllInputs: false,
-      maskInputOptions: {
-        password: true,
+      capture_pageview: false,
+      capture_pageleave: false,
+      session_recording: {
+        maskAllInputs: false,
+        maskInputOptions: {
+          password: true,
+        },
       },
     });
   }
