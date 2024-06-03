@@ -2,7 +2,6 @@
   <div class="text-2xl sm:text-3xl font-bold text-gray-700 text-center">Frequently Asked Questions</div>
   <div class="flex flex-col gap-2.5 pt-10">
     {{#each this.faqs as |faq|}}
-      {{! @glint-expect-error not ts-ified yet }}
       <FaqItem @faq={{faq}} @onToggle={{this.handleToggle}} @isOpen={{eq faq this.openItem}} />
     {{/each}}
   </div>
