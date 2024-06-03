@@ -182,11 +182,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
       darkMode: { isEnabled: isDarkMode },
     } = this;
 
-    // Return if not ready to highlight yet
-    if (isDarkMode === undefined) {
-      return;
-    }
-
     // Return if nothing changed since last render
     if (
       this.#lastHighlightCodeParams.compareWithParams({
