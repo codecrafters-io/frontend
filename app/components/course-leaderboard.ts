@@ -39,7 +39,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @tracked isReloadingEntries = false;
   @tracked entriesFromAPI: CourseLeaderboardEntry[] = [];
   @tracked polledCourse?: CourseModel;
-  @tracked team?: TeamModel;
+  @tracked team: TeamModel | null = null;
 
   @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
@@ -50,7 +50,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
-    this.team = this.currentUserIsTeamMember ? this.currentUserTeams[0] : undefined;
+    this.team = this.currentUserTeams[0] ?? null;
   }
 
   get currentUserIsTeamMember() {
@@ -185,7 +185,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   async handleTeamChange(team: TeamModel | null) {
     this.stopLeaderboardPoller();
 
-    this.team = team || undefined;
+    this.team = team;
     // this.entriesFromAPI = [];
     this.isReloadingEntries = true;
 
@@ -226,7 +226,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
       actionCableConsumerService: this.actionCableConsumer,
     });
 
-    this.leaderboardPoller.team = this.team;
+    this.leaderboardPoller.team = this.team || undefined;
     // @ts-expect-error poll handler not typed
     this.leaderboardPoller.start(this.args.course, this.handlePoll, 'CourseLeaderboardChannel', { course_id: this.args.course.id });
     this.polledCourse = this.args.course;

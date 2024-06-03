@@ -19,7 +19,6 @@
 
       <div>
         {{#if (gt this.currentUserTeams.length 0)}}
-          {{! @glint-expect-error not ts-ified yet !}}
           <CourseLeaderboardTeamDropdown @team={{this.team}} @teams={{this.currentUserTeams}} @onChange={{this.handleTeamChange}} />
         {{/if}}
       </div>
