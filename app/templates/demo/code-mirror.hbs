@@ -1,7 +1,8 @@
 {{page-title "CodeMirror"}}
 
 {{#let
-  "flex flex-wrap text-sm font-semibold text-gray-600 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700 py-2" "flex cursor-default select-none text-nowrap mx-2"
+  "flex flex-wrap text-sm font-semibold text-gray-600 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700 py-2"
+  "flex cursor-default select-none text-nowrap mx-2"
   as |groupClasses labelClasses|
 }}
   <codemirror-options class="{{groupClasses}} -mt-8">
@@ -26,7 +27,11 @@
       <label class="{{labelClasses}}" title="Theme to use for the editor">
         <Input @type="checkbox" @checked={{this.theme}} />
         <span class="mx-2">theme:</span>
-        <select class="text-right dark:bg-gray-700 {{unless this.theme 'bg-gray-200'}}" {{on "change" this.selectedThemeIndexDidChange}} disabled={{not this.theme}}>
+        <select
+          class="text-right dark:bg-gray-700 {{unless this.theme 'bg-gray-200'}}"
+          {{on "change" this.selectedThemeIndexDidChange}}
+          disabled={{not this.theme}}
+        >
           {{#each this.themes as |theme index|}}
             <option selected={{eq this.selectedThemeIndex index}}>{{theme}}</option>
           {{/each}}
