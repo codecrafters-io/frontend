@@ -5,6 +5,7 @@ import { registerDestructor } from '@ember/destroyable';
 import type RouterService from '@ember/routing/router-service';
 import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import type RouteInfo from '@ember/routing/route-info';
 
 export const LOCAL_STORAGE_KEY = 'dark-mode-preference';
 
@@ -65,7 +66,7 @@ export default class DarkModeService extends Service {
    * "dark route", or derived from localStorage & system preference
    */
   get isEnabled(): boolean {
-    return this.#isVisitingDarkRoute || this.#isEnabledViaPreferences;
+    return this.#isVisitingDarkModeSupportingRoute && (this.#isVisitingDarkRoute || this.#isEnabledViaPreferences);
   }
 
   /**
@@ -77,11 +78,40 @@ export default class DarkModeService extends Service {
   }
 
   /**
+   * Returns whether current route supports Dark Mode
+   * TODO: Make all routes support dark mode and remove this getter
+   * @private
+   */
+  get #isVisitingDarkModeSupportingRoute(): boolean {
+    let currentRoute: RouteInfo | null = this.router.currentRoute;
+
+    while (currentRoute) {
+      if (currentRoute.metadata instanceof RouteInfoMetadata && currentRoute.metadata.supportsDarkMode) {
+        return true;
+      }
+
+      currentRoute = currentRoute.parent;
+    }
+
+    return false;
+  }
+
+  /**
    * Returns whether Dark Mode should be enabled because the user is visiting a "dark route"
    * @private
    */
   get #isVisitingDarkRoute(): boolean {
-    return this.router.currentRoute.metadata instanceof RouteInfoMetadata && !!this.router.currentRoute.metadata.isDarkRoute;
+    let currentRoute: RouteInfo | null = this.router.currentRoute;
+
+    while (currentRoute) {
+      if (currentRoute.metadata instanceof RouteInfoMetadata && currentRoute.metadata.isDarkRoute) {
+        return true;
+      }
+
+      currentRoute = currentRoute.parent;
+    }
+
+    return false;
   }
 
   /**
