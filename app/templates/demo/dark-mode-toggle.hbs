@@ -1,14 +1,14 @@
 {{page-title "DarkModeToggle"}}
 
-<h3 class="mb-2">Set localStorage dark mode preference to:</h3>
+<h3 class="mb-2 dark:text-gray-300">Set localStorage dark mode preference to:</h3>
 
 <DarkModeToggle @onDarkModeToggled={{fn this.loadDarkModePreference}} />
 
-<hr class="my-4" />
+<hr class="my-4 dark:border-gray-700" />
 
-<h3 class="mb-2">Current localStorage preference:</h3>
+<h3 class="mb-2 dark:text-gray-300">Current localStorage preference:</h3>
 
-<code class="code" {{did-insert this.loadDarkModePreference}}>
+<code class="code dark:text-gray-400" {{did-insert this.loadDarkModePreference}}>
   {{or this.currentLocalStoragePreference "null"}}
 </code>
 
