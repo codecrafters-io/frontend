@@ -147,7 +147,7 @@
     "ember-qunit": "^8.0.2",
     "ember-resize-modifier": "^0.7.1",
     "ember-resolver": "^11.0.1",
-    "ember-sortable": "^5.0.1",
+    "ember-sortable": "^5.0.2",
     "ember-source": "~5.5.0",
     "ember-svg-jar": "^2.4.9",
     "ember-template-imports": "^4.1.1",
