@@ -3,6 +3,13 @@
     Initiate payout
   </div>
 
+  <div class="prose mb-8">
+    <span class="font-bold">Note</span>: PayPal might charge you a fee for receiving payments. This can be as high as 10% depending on the country
+    you're in. We recommend trying a $100 payment first to see what the fees are like. Bank transfers are usually cheaper, please contact us at
+    <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>
+    to enable this option.
+  </div>
+
   {{#if this.payoutWasCreated}}
     <div class="p-8 flex flex-col items-center justify-center">
       {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-4"}}
@@ -24,7 +31,7 @@
         @isSelected={{eq this.selectedPayoutMethod "paypal"}}
       />
 
-      <AffiliatePage::CreatePayoutModal::PayoutMethodCard @name="Amazon Gift Card" @isDisabled={{true}} @imageUrl={{this.amazonImage}} />
+      <AffiliatePage::CreatePayoutModal::PayoutMethodCard @name="Bank Transfer" @isDisabled={{true}} @imageUrl={{this.bankTransferImage}} />
     </div>
 
     {{#if (eq this.selectedPayoutMethod "paypal")}}
