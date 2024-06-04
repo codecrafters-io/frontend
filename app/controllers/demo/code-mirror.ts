@@ -173,7 +173,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked scrollPastEnd: boolean = false;
   @tracked syntaxHighlighting: boolean = true;
   @tracked tabSize: boolean = true;
-  @tracked theme: boolean = false;
+  @tracked theme: boolean = true;
 
   @action documentDidChange(_target: Controller, newValue: string) {
     if (!this.document) {
