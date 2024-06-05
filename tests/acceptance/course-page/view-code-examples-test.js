@@ -477,4 +477,49 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
 
     assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
   });
+
+  test('stage incomplete modal status should not change if a course stage is updated', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    createCommunityCourseStageSolution(this.server, redis, 2, python);
+    createCommunityCourseStageSolution(this.server, redis, 3, python);
+    createCommunityCourseStageSolution(this.server, redis, 3, go);
+    createCommunityCourseStageSolution(this.server, redis, 4, python);
+    createCommunityCourseStageSolution(this.server, redis, 4, go);
+
+    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
+    });
+
+    this.server.create('submission', 'withStageCompletion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+
+    assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
+
+    this.server.schema.courseStages.findBy({ name: 'Respond to multiple PINGs' }).update({ marketingMarkdown: 'Updated marketing markdown' });
+
+    assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
+  });
 });
