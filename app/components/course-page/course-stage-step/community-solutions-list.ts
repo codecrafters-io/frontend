@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
@@ -29,7 +30,9 @@ export default class CommunitySolutionsListComponent extends Component<Signature
   get shouldShowStageIncompleteModal() {
     return (
       !this.args.stageIncompleteModalWasDismissed &&
-      this.coursePageState.currentStep.globalPosition > 4 &&
+      this.coursePageState.currentStep.type === 'CourseStageStep' &&
+      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isFirst &&
+      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isSecond &&
       this.args.solutions.length > 0 &&
       this.coursePageState.currentStep.status !== 'complete'
     );
