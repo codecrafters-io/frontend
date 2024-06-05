@@ -11,7 +11,6 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
-    handleStageIncompleteModalDismissed: () => void;
     solutions: CommunityCourseStageSolutionModel[];
     stageIncompleteModalWasDismissed: boolean;
     repository: string;

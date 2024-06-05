@@ -1,4 +1,11 @@
-<div class="pt-8 pb-32" {{did-update this.loadSolutions this.courseStage}} {{did-insert this.loadSolutions}} data-test-code-examples-tab>
+<div
+  class="pt-8 pb-32"
+  {{did-update (fn (mut this.stageIncompleteModalWasDismissed) false) this.courseStage}}
+  {{did-update this.loadSolutions this.courseStage}}
+  {{did-insert this.loadSolutions}}
+  {{will-destroy (fn (mut this.stageIncompleteModalWasDismissed) false) this.courseStage}}
+  data-test-code-examples-tab
+>
   <div class="flex items-center justify-between mb-4 pb-2 border-b">
     <div class="flex items-center gap-x-3 gap-y-2 flex-wrap">
       <h2 class="font-semibold text-lg">Code Examples using {{this.currentLanguage.name}}</h2>
@@ -62,7 +69,6 @@
         @solutions={{this.sortedSolutions}}
         @repository={{@model.activeRepository}}
         @stageIncompleteModalWasDismissed={{this.stageIncompleteModalWasDismissed}}
-        @handleStageIncompleteModalDismissed={{this.handleStageIncompleteModalDismissed}}
       />
     {{else}}
       <div class="flex py-16 justify-center items-center w-full">

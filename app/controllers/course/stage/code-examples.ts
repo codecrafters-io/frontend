@@ -90,11 +90,6 @@ export default class CodeExamplesController extends Controller {
   }
 
   @action
-  handleStageIncompleteModalDismissed() {
-    this.stageIncompleteModalWasDismissed = true;
-  }
-
-  @action
   async loadSolutions() {
     if (!this.currentLanguage) {
       return;
