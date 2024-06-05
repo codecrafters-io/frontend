@@ -64,7 +64,6 @@
         <span class="ml-3 text-gray-700">Loading...</span>
       </div>
     {{else if (gt this.sortedSolutions.length 0)}}
-      {{! @glint-expect-error: not ts-ified yet }}
       <CoursePage::CourseStageStep::CommunitySolutionsList
         @solutions={{this.sortedSolutions}}
         @repository={{@model.activeRepository}}

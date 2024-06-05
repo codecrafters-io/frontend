@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {
   Element: HTMLDivElement;
@@ -13,7 +14,7 @@ type Signature = {
   Args: {
     solutions: CommunityCourseStageSolutionModel[];
     stageIncompleteModalWasDismissed: boolean;
-    repository: string;
+    repository: RepositoryModel;
   };
 };
 
@@ -39,5 +40,11 @@ export default class CommunitySolutionsListComponent extends Component<Signature
     if (this.authenticator.isAuthenticated) {
       solution.createView({ position_in_list: solutionIndex + 1 });
     }
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::CommunitySolutionsList': typeof CommunitySolutionsListComponent;
   }
 }
