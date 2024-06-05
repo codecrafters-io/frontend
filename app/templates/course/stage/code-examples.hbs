@@ -3,7 +3,7 @@
   {{did-update (fn (mut this.stageIncompleteModalWasDismissed) false) this.courseStage}}
   {{did-update this.loadSolutions this.courseStage}}
   {{did-insert this.loadSolutions}}
-  {{will-destroy (fn (mut this.stageIncompleteModalWasDismissed) false) this.courseStage}}
+  {{will-destroy (fn (mut this.stageIncompleteModalWasDismissed) false)}}
   data-test-code-examples-tab
 >
   <div class="flex items-center justify-between mb-4 pb-2 border-b">
