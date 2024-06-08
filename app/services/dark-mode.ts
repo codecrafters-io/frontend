@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { registerDestructor } from '@ember/destroyable';
 import type RouterService from '@ember/routing/router-service';
 import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorSchemes } from 'codecrafters-frontend/utils/route-info-metadata';
 import type RouteInfo from '@ember/routing/route-info';
 
 export const LOCAL_STORAGE_KEY = 'dark-mode-preference';
@@ -86,7 +86,10 @@ export default class DarkModeService extends Service {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
-      if (currentRoute.metadata instanceof RouteInfoMetadata && currentRoute.metadata.supportsDarkMode) {
+      if (
+        currentRoute.metadata instanceof RouteInfoMetadata &&
+        (currentRoute.metadata.colorScheme === RouteColorSchemes.Dark || currentRoute.metadata.colorScheme === RouteColorSchemes.Both)
+      ) {
         return true;
       }
 
@@ -104,7 +107,7 @@ export default class DarkModeService extends Service {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
-      if (currentRoute.metadata instanceof RouteInfoMetadata && currentRoute.metadata.isDarkRoute) {
+      if (currentRoute.metadata instanceof RouteInfoMetadata && currentRoute.metadata.colorScheme === RouteColorSchemes.Dark) {
         return true;
       }
 

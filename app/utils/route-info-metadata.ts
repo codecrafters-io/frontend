@@ -1,9 +1,13 @@
-export default class RouteInfoMetadata {
-  isDarkRoute = false;
-  supportsDarkMode = false; // TODO: Make all routes support dark mode and remove this property
+export enum RouteColorSchemes {
+  Light,
+  Dark,
+  Both,
+}
 
-  constructor({ isDarkRoute = false, supportsDarkMode = isDarkRoute }: { isDarkRoute?: boolean; supportsDarkMode?: boolean } = {}) {
-    this.isDarkRoute = isDarkRoute;
-    this.supportsDarkMode = supportsDarkMode || isDarkRoute;
+export default class RouteInfoMetadata {
+  colorScheme: RouteColorSchemes = RouteColorSchemes.Light;
+
+  constructor({ colorScheme = RouteColorSchemes.Light }: { colorScheme?: RouteColorSchemes } = {}) {
+    this.colorScheme = colorScheme;
   }
 }
