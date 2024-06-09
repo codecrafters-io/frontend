@@ -2,6 +2,7 @@
   class="overflow-x-scroll"
   {{did-insert (perform this.highlightCode)}}
   {{did-update (perform this.highlightCode) this.darkMode.isEnabled}}
+  {{did-update (perform this.highlightCode) @forceDarkTheme}}
   {{did-update (perform this.highlightCode) @code}}
   {{did-update (perform this.highlightCode) @language}}
   ...attributes

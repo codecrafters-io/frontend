@@ -26,27 +26,36 @@ type Signature = {
     comments: CommunityCourseStageSolutionCommentModel[];
     language: string;
     shouldCollapseUnchangedLines: boolean;
+    forceDarkTheme?: boolean;
     onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
   };
 };
 
 interface HighlightCodeParams {
   isDarkMode?: boolean;
+  forceDarkTheme?: boolean;
   language?: string;
   codeWithoutDiffMarkers?: string;
 }
 
 class HighlightCodeParamsCache implements HighlightCodeParams {
   isDarkMode?: boolean;
+  forceDarkTheme?: boolean;
   language?: string;
   codeWithoutDiffMarkers?: string;
 
-  compareWithParams({ isDarkMode, language, codeWithoutDiffMarkers }: HighlightCodeParams): boolean {
-    return this.isDarkMode === isDarkMode && this.language === language && this.codeWithoutDiffMarkers === codeWithoutDiffMarkers;
+  compareWithParams({ isDarkMode, forceDarkTheme, language, codeWithoutDiffMarkers }: HighlightCodeParams): boolean {
+    return (
+      this.isDarkMode === isDarkMode &&
+      this.forceDarkTheme === forceDarkTheme &&
+      this.language === language &&
+      this.codeWithoutDiffMarkers === codeWithoutDiffMarkers
+    );
   }
 
-  setParams({ isDarkMode, language, codeWithoutDiffMarkers }: HighlightCodeParams): void {
+  setParams({ isDarkMode, forceDarkTheme, language, codeWithoutDiffMarkers }: HighlightCodeParams): void {
     this.isDarkMode = isDarkMode;
+    this.forceDarkTheme = forceDarkTheme;
     this.language = language;
     this.codeWithoutDiffMarkers = codeWithoutDiffMarkers;
   }
@@ -178,25 +187,29 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     // Read all dependent parameters into local constants
     const {
       codeWithoutDiffMarkers,
-      args: { code, language },
+      args: { code, language, forceDarkTheme },
       darkMode: { isEnabled: isDarkMode },
     } = this;
 
     // Return if nothing changed since last render
     if (
       this.#lastHighlightCodeParams.compareWithParams({
-        isDarkMode: isDarkMode,
-        language: language,
-        codeWithoutDiffMarkers: codeWithoutDiffMarkers,
+        isDarkMode,
+        forceDarkTheme,
+        language,
+        codeWithoutDiffMarkers,
       })
     ) {
       return;
     }
 
+    // Decide whether to actually use the dark theme
+    const useDarkTheme = !!(isDarkMode || forceDarkTheme);
+
     // Prepare the highlighter promise
     const highlighterPromise = getOrCreateCachedHighlighterPromise(
-      isDarkMode ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
-      isDarkMode ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
+      useDarkTheme ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
+      useDarkTheme ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
     );
 
     // Wait for the highlighter promise to load
@@ -208,7 +221,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     // Format the code and use it
     this.asyncHighlightedHTML = highlighter.codeToHtml(codeWithoutDiffMarkers, {
       lang: language,
-      theme: isDarkMode
+      theme: useDarkTheme
         ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
         : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
       transformers: [transformerNotationDiff()],
@@ -219,9 +232,10 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
     // Remember all parameters used for this task run
     this.#lastHighlightCodeParams.setParams({
-      isDarkMode: isDarkMode,
-      language: language,
-      codeWithoutDiffMarkers: codeWithoutDiffMarkers,
+      isDarkMode,
+      forceDarkTheme,
+      language,
+      codeWithoutDiffMarkers,
     });
 
     // Ensure we don't run this task too often
