@@ -1,6 +1,9 @@
-<TertiaryButton @size="small" {{on "click" (fn this.setPreference "system")}}>System</TertiaryButton>
-<TertiaryButton @size="small" {{on "click" (fn this.setPreference "dark")}}>Dark</TertiaryButton>
-<TertiaryButton @size="small" {{on "click" (fn this.setPreference "light")}}>Light</TertiaryButton>
-<TertiaryButton @size="small" {{on "click" (fn this.setPreference null)}}>Unset</TertiaryButton>
+{{#each this.possiblePreferences as |preference|}}
+  {{#if (eq this.darkMode.localStoragePreference preference)}}
+    <PrimaryButton @size="small" class="capitalize" {{on "click" (fn this.setPreference preference)}}>{{or preference "unset"}}</PrimaryButton>
+  {{else}}
+    <TertiaryButton @size="small" class="capitalize" {{on "click" (fn this.setPreference preference)}}>{{or preference "unset"}}</TertiaryButton>
+  {{/if}}
+{{/each}}
 
 {{yield}}

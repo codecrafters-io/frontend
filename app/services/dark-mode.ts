@@ -7,12 +7,12 @@ import type LocalStorageService from 'codecrafters-frontend/services/local-stora
 import RouteInfoMetadata, { RouteColorSchemes } from 'codecrafters-frontend/utils/route-info-metadata';
 import type RouteInfo from '@ember/routing/route-info';
 
-export const LOCAL_STORAGE_KEY = 'dark-mode-preference';
+const LOCAL_STORAGE_KEY = 'dark-mode-preference';
 
 export type UpdateListener = (isEnabled: boolean) => void;
 
-export type LocalStoragePreference = 'system' | 'dark' | 'light';
-type SystemPreference = 'dark' | 'light';
+export type LocalStoragePreference = 'system' | 'dark' | 'light' | null;
+export type SystemPreference = 'dark' | 'light';
 
 export default class DarkModeService extends Service {
   @service declare router: RouterService;
@@ -38,7 +38,7 @@ export default class DarkModeService extends Service {
     super(properties);
 
     // Load the localStorage preference from localStorage service
-    this.localStoragePreference = (this.localStorage.getItem(LOCAL_STORAGE_KEY) as LocalStoragePreference | null) || undefined;
+    this.localStoragePreference = this.localStorage.getItem(LOCAL_STORAGE_KEY) as LocalStoragePreference;
 
     // Create a media query to load current system Dark Mode preference
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
