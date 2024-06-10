@@ -9,8 +9,6 @@ import type RouteInfo from '@ember/routing/route-info';
 
 const LOCAL_STORAGE_KEY = 'dark-mode-preference';
 
-export type UpdateListener = (isEnabled: boolean) => void;
-
 export type LocalStoragePreference = 'system' | 'dark' | 'light' | null;
 export type SystemPreference = 'dark' | 'light';
 
@@ -28,12 +26,6 @@ export default class DarkModeService extends Service {
    */
   @tracked systemPreference?: SystemPreference;
 
-  /**
-   * Callback methods currently registered as listeners to Dark Mode environment changes
-   * @private
-   */
-  #registeredListeners: UpdateListener[] = [];
-
   constructor(properties: object | undefined) {
     super(properties);
 
@@ -46,7 +38,6 @@ export default class DarkModeService extends Service {
     // Create a listener for media query result changes
     const mqChangeListener = (e: MediaQueryListEvent) => {
       this.systemPreference = e.matches ? 'dark' : 'light';
-      this.invokeUpdateListeners();
     };
 
     // Load the current system preference by executing the media query
@@ -118,35 +109,7 @@ export default class DarkModeService extends Service {
   }
 
   /**
-   * Invokes all currently registered update listeners, passing them a new value
-   */
-  @action invokeUpdateListeners() {
-    for (const listener of this.#registeredListeners) {
-      listener(this.isEnabled);
-    }
-  }
-
-  /**
-   * Registers a callback to invoke when Dark Mode environment changes
-   * @param listener method to invoke, new boolean value will be passed as first argument
-   */
-  @action registerUpdateListener(listener: UpdateListener) {
-    this.#registeredListeners.push(listener);
-  }
-
-  /**
-   * Unregisters a callback previsouly registered with `registerUpdateListener`
-   * @param listener method to unregister, must be exactly the same instance, compared using `===`
-   */
-  @action unregisterUpdateListener(listener: UpdateListener) {
-    if (this.#registeredListeners.includes(listener)) {
-      this.#registeredListeners.removeAt(this.#registeredListeners.indexOf(listener));
-    }
-  }
-
-  /**
-   * Writes the new Dark Mode preference to localStorage and executes all currently
-   * registered update listeners, passing them a new value
+   * Writes the new Dark Mode preference to localStorage and updates loaded `localStoragePreference`
    * @param {'system'|'dark'|'light'|null} newValue New dark mode preference
    */
   @action updateLocalStoragePreference(newValue?: LocalStoragePreference) {
@@ -157,7 +120,6 @@ export default class DarkModeService extends Service {
     }
 
     this.localStoragePreference = newValue;
-    this.invokeUpdateListeners();
   }
 }
 
