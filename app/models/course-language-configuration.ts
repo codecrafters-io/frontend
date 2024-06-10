@@ -16,9 +16,10 @@ export default class CourseLanguageConfigurationModel extends Model {
   @equal('releaseStatus', 'alpha') declare releaseStatusIsAlpha: boolean;
   @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
   @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
+  @equal('releaseStatus', 'deprecated') declare releaseStatusIsDeprecated: boolean;
 
   isAvailableForUser(user: UserModel) {
-    if (this.releaseStatusIsAlpha) {
+    if (this.releaseStatusIsAlpha || this.releaseStatusIsDeprecated) {
       return user.isStaff || this.alphaTesterUsernames.includes(user.username) || user.isCourseAuthor(this.course);
     } else {
       return true;
