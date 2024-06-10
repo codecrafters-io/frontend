@@ -77,9 +77,11 @@ export default class DarkModeService extends Service {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
+      const metadata = currentRoute.metadata;
+
       if (
-        currentRoute.metadata instanceof RouteInfoMetadata &&
-        (currentRoute.metadata.colorScheme === RouteColorSchemes.Dark || currentRoute.metadata.colorScheme === RouteColorSchemes.Both)
+        metadata instanceof RouteInfoMetadata &&
+        (metadata.colorScheme === RouteColorSchemes.Dark || metadata.colorScheme === RouteColorSchemes.Both)
       ) {
         return true;
       }
@@ -98,7 +100,9 @@ export default class DarkModeService extends Service {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
-      if (currentRoute.metadata instanceof RouteInfoMetadata && currentRoute.metadata.colorScheme === RouteColorSchemes.Dark) {
+      const metadata = currentRoute.metadata;
+
+      if (metadata instanceof RouteInfoMetadata && metadata.colorScheme === RouteColorSchemes.Dark) {
         return true;
       }
 
