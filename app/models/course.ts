@@ -71,6 +71,7 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'alpha') declare releaseStatusIsAlpha: boolean;
   @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
   @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
+  @equal('releaseStatus', 'deprecated') declare releaseStatusIsDeprecated: boolean;
 
   @service declare date: DateService;
 
@@ -79,7 +80,7 @@ export default class CourseModel extends Model {
   }
 
   get betaOrLiveLanguages() {
-    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated').mapBy('language');
   }
 
   get concepts() {

@@ -56,4 +56,16 @@ export default class CourseCardComponent extends Component {
       };
     }
   }
+
+  get shouldShowCourseCard() {
+    if (this.lastUsedRepository) {
+      return true;
+    }
+
+    if (this.args.course?.releaseStatusIsDeprecated) {
+      return false;
+    }
+
+    return true;
+  }
 }
