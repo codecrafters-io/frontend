@@ -38,6 +38,30 @@ refresh_course_fixtures:
 		| yq -o json eval \
 		> mirage/course-fixtures/grep.js
 
+	gh api repos/codecrafters-io/build-your-own-http-server/contents/course-definition.yml \
+		| jq -r .content \
+		| base64 -d \
+		| yq -o json eval \
+		> mirage/course-fixtures/http-server.js
+
+	gh api repos/codecrafters-io/build-your-own-dns-server/contents/course-definition.yml \
+		| jq -r .content \
+		| base64 -d \
+		| yq -o json eval \
+		> mirage/course-fixtures/dns-server.js
+
+	gh api repos/codecrafters-io/build-your-own-bittorrent/contents/course-definition.yml \
+		| jq -r .content \
+		| base64 -d \
+		| yq -o json eval \
+		> mirage/course-fixtures/bittorrent.js
+
+	gh api repos/codecrafters-io/build-your-own-shell/contents/course-definition.yml \
+		| jq -r .content \
+		| base64 -d \
+		| yq -o json eval \
+		> mirage/course-fixtures/shell.js
+
 	gh api repos/codecrafters-io/build-your-own-dummy/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
