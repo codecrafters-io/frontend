@@ -478,7 +478,7 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
   });
 
-  test('stage incomplete modal status should not change if a course stage is updated', async function (assert) {
+  test('stage incomplete modal should not show up again after being dismissed when a course stage is updated', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -516,10 +516,15 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
-    assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
+    assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible the first time');
+
+    await coursePage.codeExamplesTab.stageIncompleteModal.clickOnShowCodeButton();
+
+    assert.notOk(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after dismissing modal');
 
     this.server.schema.courseStages.findBy({ name: 'Respond to multiple PINGs' }).update({ marketingMarkdown: 'Updated marketing markdown' });
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
 
-    assert.ok(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
+    assert.notOk(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after updating course stage');
   });
 });
