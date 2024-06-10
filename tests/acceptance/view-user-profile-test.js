@@ -195,4 +195,34 @@ module('Acceptance | view-user-profile', function (hooks) {
     await userPage.visit({ username: user.username });
     assert.ok(userPage.profileCustomizationNotice.isVisible);
   });
+
+  test('it does not show a challenge if it is deprecated', async function (assert) {
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    this.server.create('course-participation', {
+      course: grep,
+      language: go,
+      user: currentUser,
+      completedStageSlugs: grep.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2020-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: docker,
+      language: go,
+      user: currentUser,
+      completedAt: new Date('2020-01-01'),
+    });
+
+    await userPage.visit({ username: 'rohitpaulk' });
+
+    assert.strictEqual(userPage.courseProgressListItems.length, 1, 'only one course progress list item should be shown');
+    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the course progress list item should be for grep');
+  });
 });
