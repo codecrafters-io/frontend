@@ -18,15 +18,19 @@ module('Acceptance | view-courses', function (hooks) {
     course.update({ releaseStatus: 'beta' });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 9, 'expected 9 course cards to be present');
 
     await percySnapshot('Catalog Page');
 
     assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
-    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Git');
-    assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own grep');
-    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Docker');
-    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
+    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own HTTP server');
+    assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Shell');
+    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Git');
+    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own DNS server');
+    assert.strictEqual(catalogPage.courseCards[5].name, 'Build your own grep');
+    assert.strictEqual(catalogPage.courseCards[6].name, 'Build your own BitTorrent');
+    assert.strictEqual(catalogPage.courseCards[7].name, 'Build your own Docker');
+    assert.strictEqual(catalogPage.courseCards[8].name, 'Build your own SQLite');
 
     assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasBetaLabel, 'live challenges should not have beta label');
@@ -40,9 +44,9 @@ module('Acceptance | view-courses', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 6, 'expected 6 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 10, 'expected 10 course cards to be present');
 
-    assert.ok(catalogPage.courseCards[5].hasAlphaLabel, 'alpha challenges should have alpha label');
+    assert.ok(catalogPage.courseCards[9].hasAlphaLabel, 'alpha challenges should have alpha label');
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
@@ -60,7 +64,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 9, 'expected 9 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.strictEqual(catalogPage.courseCards[1].actionText, 'Start');
@@ -118,7 +122,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 9, 'expected 9 course cards to be present');
 
     await percySnapshot('Courses Page - Courses in progress');
 
@@ -175,13 +179,17 @@ module('Acceptance | view-courses', function (hooks) {
     redis.update({ isFreeUntil: isFreeExpirationDate });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 9, 'expected 9 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
-    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Git');
-    assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own grep');
-    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Docker');
-    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
+    assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own HTTP server');
+    assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Shell');
+    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Git');
+    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own DNS server');
+    assert.strictEqual(catalogPage.courseCards[5].name, 'Build your own grep');
+    assert.strictEqual(catalogPage.courseCards[6].name, 'Build your own BitTorrent');
+    assert.strictEqual(catalogPage.courseCards[7].name, 'Build your own Docker');
+    assert.strictEqual(catalogPage.courseCards[8].name, 'Build your own SQLite');
 
     assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
     assert.ok(catalogPage.courseCardByName('Build your own Redis').hasFreeLabel, 'free challenges should have free label');
@@ -223,7 +231,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 9, 'expected 9 course cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -253,7 +261,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 9, 'expected 9 course cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -275,6 +283,39 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 9, 'expected 9 course cards to be present');
+  });
+
+  test('it should show deprecated courses if user already has progress', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    this.server.create('repository', {
+      course: docker,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+
+    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Docker');
+  });
+
+  test('it should not show deprecated courses if user has no progress', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    await catalogPage.visit();
+
+    assert.strictEqual(catalogPage.courseCards.length, 8, 'expected 8 course cards to be present');
+    assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Docker'), 'docker should not be included');
   });
 });
