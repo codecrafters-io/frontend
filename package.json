@@ -146,7 +146,7 @@
     "ember-page-title": "^8.2.3",
     "ember-qunit": "^8.0.2",
     "ember-resize-modifier": "^0.7.1",
-    "ember-resolver": "^11.0.1",
+    "ember-resolver": "^12.0.0",
     "ember-sinon-qunit": "^7.4.0",
     "ember-sortable": "^5.0.2",
     "ember-source": "~5.5.0",
