@@ -3,9 +3,9 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { registerDestructor } from '@ember/destroyable';
 import type RouterService from '@ember/routing/router-service';
+import type RouteInfo from '@ember/routing/route-info';
 import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 import RouteInfoMetadata, { RouteColorSchemes } from 'codecrafters-frontend/utils/route-info-metadata';
-import type RouteInfo from '@ember/routing/route-info';
 
 const LOCAL_STORAGE_KEY = 'dark-mode-preference';
 
