@@ -3,7 +3,7 @@
     <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{@filename}}</span>
   </div>
 
-  <div class="text-sm leading-6 dark:text-gray-400">
+  <div class="text-sm leading-6">
     {{! @glint-expect-error: not ts-ified yet }}
     <SyntaxHighlightedDiff @code={{@code}} @language={{@language}} @shouldCollapseUnchangedLines={{true}} @forceDarkTheme={{@forceDarkTheme}} />
   </div>
