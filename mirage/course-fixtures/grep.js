@@ -41,6 +41,10 @@ export default {
     {
       "slug": "typescript",
       "release_status": "beta"
+    },
+    {
+      "slug": "gleam",
+      "release_status": "beta"
     }
   ],
   "marketing": {
