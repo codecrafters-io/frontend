@@ -14,7 +14,7 @@ module('Acceptance | view-tracks', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.trackCards.length, 19, 'expected 19 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 20, 'expected 20 track cards to be present');
 
     await percySnapshot('Tracks Page');
 
@@ -47,7 +47,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start', 'expected fourth track to have start action');
 
     assert.true(catalogPage.trackCards[0].hasProgressBar, 'expected first track to have progress bar');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/81 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/123 stages');
     assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:1%');
   });
 
@@ -129,7 +129,7 @@ module('Acceptance | view-tracks', function (hooks) {
     testScenario(this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.trackCards.length, 19, 'expected 19 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 20, 'expected 20 track cards to be present');
 
     assert.strictEqual(catalogPage.trackCards[0].name, 'Rust');
     assert.strictEqual(catalogPage.trackCards[1].name, 'Go');
@@ -145,7 +145,7 @@ module('Acceptance | view-tracks', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(catalogPage.trackCards.length, 19, 'expected 19 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 20, 'expected 20 track cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -177,7 +177,7 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.trackCards.length, 19, 'expected 19 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 20, 'expected 20 track cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -199,6 +199,19 @@ module('Acceptance | view-tracks', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.trackCards.length, 19, 'expected 19 track cards to be present');
+    assert.strictEqual(catalogPage.trackCards.length, 20, 'expected 20 track cards to be present');
+  });
+
+  test('deprecated challenges do not count towards the number of stages on a language card', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    await catalogPage.visit();
+
+    assert.ok(catalogPage.trackCards[0].hasPopularLabel, 'go should have popular label');
+    assert.ok(catalogPage.trackCards[0].text.includes('117 stages'), 'number of stages should not include deprecated stages count');
   });
 });
