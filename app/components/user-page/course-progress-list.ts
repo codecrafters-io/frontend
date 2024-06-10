@@ -13,7 +13,12 @@ type Signature = {
 
 export default class CourseProgressListComponent extends Component<Signature> {
   get courseParticipationGroups() {
-    const participationsGroupedByCourse: CourseParticipationModel[][] = Object.values(groupBy(this.args.user.courseParticipations, 'course'));
+    const participationsGroupedByCourse: CourseParticipationModel[][] = Object.values(
+      groupBy(
+        this.args.user.courseParticipations.filter((participation) => !participation.course.releaseStatusIsDeprecated),
+        'course',
+      ),
+    );
 
     const sortedParticipationsGroupedByCourse = participationsGroupedByCourse.map((group) =>
       group.sort((a, b) => new Date(a.lastSubmissionAt).getTime() - new Date(b.lastSubmissionAt).getTime()),
