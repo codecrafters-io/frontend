@@ -70,7 +70,6 @@ export default class DarkModeService extends Service {
 
   /**
    * Returns whether current route supports Dark Mode
-   * TODO: Make all routes support dark mode and remove this getter
    * @private
    */
   get #isVisitingDarkModeSupportingRoute(): boolean {
@@ -79,11 +78,12 @@ export default class DarkModeService extends Service {
     while (currentRoute) {
       const metadata = currentRoute.metadata;
 
-      if (
-        metadata instanceof RouteInfoMetadata &&
-        (metadata.colorScheme === RouteColorSchemes.Dark || metadata.colorScheme === RouteColorSchemes.Both)
-      ) {
-        return true;
+      if (metadata instanceof RouteInfoMetadata) {
+        if (metadata.colorScheme === RouteColorSchemes.Dark || metadata.colorScheme === RouteColorSchemes.Both) {
+          return true;
+        } else if (metadata.colorScheme === RouteColorSchemes.Light) {
+          return false;
+        }
       }
 
       currentRoute = currentRoute.parent;
@@ -102,8 +102,12 @@ export default class DarkModeService extends Service {
     while (currentRoute) {
       const metadata = currentRoute.metadata;
 
-      if (metadata instanceof RouteInfoMetadata && metadata.colorScheme === RouteColorSchemes.Dark) {
-        return true;
+      if (metadata instanceof RouteInfoMetadata) {
+        if (metadata.colorScheme === RouteColorSchemes.Dark) {
+          return true;
+        } else if (metadata.colorScheme === RouteColorSchemes.Light) {
+          return false;
+        }
       }
 
       currentRoute = currentRoute.parent;
