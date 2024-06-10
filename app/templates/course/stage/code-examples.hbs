@@ -1,4 +1,11 @@
-<div class="pt-8 pb-32" {{did-update this.loadSolutions this.courseStage}} {{did-insert this.loadSolutions}} data-test-code-examples-tab>
+<div
+  class="pt-8 pb-32"
+  {{did-update (fn (mut this.stageIncompleteModalWasDismissed) false) this.courseStage}}
+  {{did-update this.loadSolutions this.courseStage}}
+  {{did-insert this.loadSolutions}}
+  {{will-destroy (fn (mut this.stageIncompleteModalWasDismissed) false)}}
+  data-test-code-examples-tab
+>
   <div class="flex items-center justify-between mb-4 pb-2 border-b">
     <div class="flex items-center gap-x-3 gap-y-2 flex-wrap">
       <h2 class="font-semibold text-lg">Code Examples using {{this.currentLanguage.name}}</h2>
@@ -57,8 +64,11 @@
         <span class="ml-3 text-gray-700">Loading...</span>
       </div>
     {{else if (gt this.sortedSolutions.length 0)}}
-      {{! @glint-expect-error: not ts-ified yet }}
-      <CoursePage::CourseStageStep::CommunitySolutionsList @solutions={{this.sortedSolutions}} @repository={{@model.activeRepository}} />
+      <CoursePage::CourseStageStep::CommunitySolutionsList
+        @solutions={{this.sortedSolutions}}
+        @repository={{@model.activeRepository}}
+        @stageIncompleteModalWasDismissed={{this.stageIncompleteModalWasDismissed}}
+      />
     {{else}}
       <div class="flex py-16 justify-center items-center w-full">
         <div class="text-sm text-gray-500 text-center max-w-lg">

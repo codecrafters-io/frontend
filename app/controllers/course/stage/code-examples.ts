@@ -20,8 +20,9 @@ export default class CodeExamplesController extends Controller {
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recommended';
   @tracked isLoading = true;
-  @tracked solutions: CommunityCourseStageSolutionModel[] = [];
   @tracked requestedLanguage: LanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
+  @tracked solutions: CommunityCourseStageSolutionModel[] = [];
+  @tracked stageIncompleteModalWasDismissed = false;
 
   get communitySolutionsAreAvailableForCurrentLanguage() {
     return this.currentLanguage && this.courseStage.hasCommunitySolutionsForLanguage(this.currentLanguage);

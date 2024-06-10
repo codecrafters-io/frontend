@@ -73,6 +73,12 @@ export default create({
     }),
 
     scope: '[data-test-code-examples-tab]',
+
+    stageIncompleteModal: {
+      clickOnInstructionsButton: clickable('[data-test-instructions-button]'),
+      clickOnShowCodeButton: clickable('[data-test-show-code-button]'),
+      scope: '[data-test-stage-incomplete-modal]',
+    },
   },
 
   commentList: CommentList,
