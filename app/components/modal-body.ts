@@ -6,7 +6,6 @@ type Signature = {
 
   Args: {
     allowManualClose?: boolean;
-    isDark?: boolean;
     isWide?: boolean;
     onClose?: () => void;
     shouldHideCloseButton?: boolean;
