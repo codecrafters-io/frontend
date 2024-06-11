@@ -15,14 +15,7 @@ export default class CatalogController extends Controller {
       return this.model.courses;
     }
 
-    return this.model.courses.filter((course) => {
-      const isAlphaOrDeprecated = course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated;
-      const isAuthorizedUser =
-        this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-      const hasUserProgress = isAlphaOrDeprecated && this.hasUserProgress(course);
-
-      return !isAlphaOrDeprecated || isAuthorizedUser || hasUserProgress;
-    });
+    return this.model.courses.filter((course) => this.shouldDisplayCourse(course));
   }
 
   get languages() {
@@ -106,15 +99,13 @@ export default class CatalogController extends Controller {
       .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
   }
 
-  hasUserProgress(course: CourseModel) {
-    if (!this.authenticator.currentUserIsLoaded) {
-      return false;
-    }
+  shouldDisplayCourse(course: CourseModel) {
+    const isAlphaOrDeprecated = course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated;
+    const isAuthorizedUser =
+      this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
+    const hasUserProgress =
+      isAlphaOrDeprecated && this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
 
-    const repositories = this.authenticator.currentUser!.repositories.filterBy('course', course);
-    const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt');
-    const lastCreatedRepository = repositories.sortBy('createdAt');
-
-    return lastPushedRepository.length > 0 || lastCreatedRepository.length > 0;
+    return !isAlphaOrDeprecated || isAuthorizedUser || hasUserProgress;
   }
 }
