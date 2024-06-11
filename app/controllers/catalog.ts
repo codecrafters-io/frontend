@@ -106,6 +106,6 @@ export default class CatalogController extends Controller {
     const hasUserProgress =
       isAlphaOrDeprecated && this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
 
-    return !isAlphaOrDeprecated || isAuthorizedUser || hasUserProgress;
+    return isAlphaOrDeprecated ? isAuthorizedUser || hasUserProgress : true;
   }
 }
