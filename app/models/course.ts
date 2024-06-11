@@ -80,7 +80,7 @@ export default class CourseModel extends Model {
   }
 
   get betaOrLiveLanguages() {
-    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated').mapBy('language');
+    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
   }
 
   get concepts() {
