@@ -1,6 +1,7 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseModel from 'codecrafters-frontend/models/course';
 import type { ModelType } from 'codecrafters-frontend/routes/catalog';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 
@@ -15,12 +16,24 @@ export default class CatalogController extends Controller {
     }
 
     return this.model.courses.filter((course) => {
-      if (course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated) {
-        return this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-      } else {
-        return true;
-      }
+      const isAlphaOrDeprecated = course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated
+      const isAuthorizedUser = this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
+      const hasUserProgress = isAlphaOrDeprecated && this.hasUserProgress(course)
+
+      return !isAlphaOrDeprecated || isAuthorizedUser || hasUserProgress
     });
+  }
+
+  hasUserProgress(course: CourseModel) {
+    if (!this.authenticator.currentUserIsLoaded) {
+      return false
+    }
+
+    const repositories = this.authenticator.currentUser!.repositories.filterBy('course', course);
+    const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt');
+    const lastCreatedRepository = repositories.sortBy('createdAt');
+
+    return lastPushedRepository.length > 0 || lastCreatedRepository.length > 0;
   }
 
   get languages() {
