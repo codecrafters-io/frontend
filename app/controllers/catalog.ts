@@ -16,24 +16,13 @@ export default class CatalogController extends Controller {
     }
 
     return this.model.courses.filter((course) => {
-      const isAlphaOrDeprecated = course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated
-      const isAuthorizedUser = this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-      const hasUserProgress = isAlphaOrDeprecated && this.hasUserProgress(course)
+      const isAlphaOrDeprecated = course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated;
+      const isAuthorizedUser =
+        this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
+      const hasUserProgress = isAlphaOrDeprecated && this.hasUserProgress(course);
 
-      return !isAlphaOrDeprecated || isAuthorizedUser || hasUserProgress
+      return !isAlphaOrDeprecated || isAuthorizedUser || hasUserProgress;
     });
-  }
-
-  hasUserProgress(course: CourseModel) {
-    if (!this.authenticator.currentUserIsLoaded) {
-      return false
-    }
-
-    const repositories = this.authenticator.currentUser!.repositories.filterBy('course', course);
-    const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt');
-    const lastCreatedRepository = repositories.sortBy('createdAt');
-
-    return lastPushedRepository.length > 0 || lastCreatedRepository.length > 0;
   }
 
   get languages() {
@@ -115,5 +104,17 @@ export default class CatalogController extends Controller {
     return this.authenticator.currentUser.featureSuggestions
       .filterBy('featureIsProductWalkthrough')
       .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
+  }
+
+  hasUserProgress(course: CourseModel) {
+    if (!this.authenticator.currentUserIsLoaded) {
+      return false;
+    }
+
+    const repositories = this.authenticator.currentUser!.repositories.filterBy('course', course);
+    const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt');
+    const lastCreatedRepository = repositories.sortBy('createdAt');
+
+    return lastPushedRepository.length > 0 || lastCreatedRepository.length > 0;
   }
 }
