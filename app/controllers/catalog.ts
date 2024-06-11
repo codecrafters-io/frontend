@@ -15,7 +15,7 @@ export default class CatalogController extends Controller {
     }
 
     return this.model.courses.filter((course) => {
-      if (course.releaseStatusIsAlpha) {
+      if (course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated) {
         return this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
       } else {
         return true;

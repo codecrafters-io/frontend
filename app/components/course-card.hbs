@@ -1,89 +1,87 @@
-{{#if this.shouldShowCourseCard}}
-  {{! template-lint-disable no-invalid-interactive }}
-  <LinkTo
-    class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border relative"
-    @route={{this.linkToRoute.name}}
-    @model={{this.linkToRoute.model}}
-    @query={{this.linkToRoute.query}}
-    data-test-course-card={{not this.isSkeleton}}
-  >
-    {{! Logo }}
-    <div class="w-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
+{{! template-lint-disable no-invalid-interactive }}
+<LinkTo
+  class="group bg-white p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border relative"
+  @route={{this.linkToRoute.name}}
+  @model={{this.linkToRoute.model}}
+  @query={{this.linkToRoute.query}}
+  data-test-course-card={{not this.isSkeleton}}
+>
+  {{! Logo }}
+  <div class="w-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
+    {{#if this.isSkeleton}}
+      <div class="bg-gray-100 w-8 h-8 rounded-full" />
+    {{else}}
+      <CourseLogo @course={{@course}} />
+    {{/if}}
+  </div>
+
+  {{! Text }}
+  <div class="mb-6">
+    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
+      <div class="text-lg font-semibold text-gray-600 mr-2" data-test-course-name>
+        {{#if this.isSkeleton}}
+          <span class="inline-block bg-gray-100 rounded">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+        {{else}}
+          <span>{{@course.name}}</span>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="text-sm leading-relaxed text-gray-500 pr-10" data-test-course-description>
       {{#if this.isSkeleton}}
-        <div class="bg-gray-100 w-8 h-8 rounded-full" />
+        <div>
+          <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
+            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 rounded"></div>
+          </div>
+          <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
+            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 rounded"></div>
+          </div>
+        </div>
       {{else}}
-        <CourseLogo @course={{@course}} />
+        <span>{{@course.shortDescription}}</span>
+      {{/if}}
+    </div>
+  </div>
+
+  {{! Footer }}
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      {{#if this.isSkeleton}}
+        <div class="bg-gray-100 rounded h-4 w-24"></div>
+      {{else}}
+        {{#if this.lastUsedRepository}}
+          <CourseCard::ProgressBar @course={{@course}} @lastUsedRepository={{this.lastUsedRepository}} class="flex-shrink-0" />
+        {{else}}
+          {{#if @course.releaseStatusIsAlpha}}
+            <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.25 mr-3" data-test-course-alpha-label>
+              ALPHA
+            </div>
+          {{else if @course.releaseStatusIsBeta}}
+            <BetaCourseLabel class="mr-3" />
+          {{else if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
+            <FreeCourseLabel @course={{@course}} />
+          {{else}}
+            <div class="flex items-center">
+              {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300"}}
+              <span class="text-xs text-gray-400">{{@course.stages.length}} stages</span>
+            </div>
+          {{/if}}
+        {{/if}}
       {{/if}}
     </div>
 
-    {{! Text }}
-    <div class="mb-6">
-      <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
-        <div class="text-lg font-semibold text-gray-600 mr-2" data-test-course-name>
-          {{#if this.isSkeleton}}
-            <span class="inline-block bg-gray-100 rounded">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
-          {{else}}
-            <span>{{@course.name}}</span>
-          {{/if}}
-        </div>
-      </div>
-
-      <div class="text-sm leading-relaxed text-gray-500 pr-10" data-test-course-description>
-        {{#if this.isSkeleton}}
-          <div>
-            <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-              <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 rounded"></div>
-            </div>
-            <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-              <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 rounded"></div>
-            </div>
-          </div>
+    <div class="flex items-center">
+      <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
+        {{#if this.lastUsedRepository.allStagesAreComplete}}
+          Start Again
+        {{else if this.lastUsedRepository}}
+          Resume
         {{else}}
-          <span>{{@course.shortDescription}}</span>
+          Start
         {{/if}}
-      </div>
+      </span>
+
+      {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
     </div>
-
-    {{! Footer }}
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        {{#if this.isSkeleton}}
-          <div class="bg-gray-100 rounded h-4 w-24"></div>
-        {{else}}
-          {{#if this.lastUsedRepository}}
-            <CourseCard::ProgressBar @course={{@course}} @lastUsedRepository={{this.lastUsedRepository}} class="flex-shrink-0" />
-          {{else}}
-            {{#if @course.releaseStatusIsAlpha}}
-              <div class="text-xs text-gray-400 font-semibold border border-gray-300 rounded px-1 py-0.25 mr-3" data-test-course-alpha-label>
-                ALPHA
-              </div>
-            {{else if @course.releaseStatusIsBeta}}
-              <BetaCourseLabel class="mr-3" />
-            {{else if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
-              <FreeCourseLabel @course={{@course}} />
-            {{else}}
-              <div class="flex items-center">
-                {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300"}}
-                <span class="text-xs text-gray-400">{{@course.stages.length}} stages</span>
-              </div>
-            {{/if}}
-          {{/if}}
-        {{/if}}
-      </div>
-
-      <div class="flex items-center">
-        <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
-          {{#if this.lastUsedRepository.allStagesAreComplete}}
-            Start Again
-          {{else if this.lastUsedRepository}}
-            Resume
-          {{else}}
-            Start
-          {{/if}}
-        </span>
-
-        {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
-      </div>
-    </div>
-  </LinkTo>
-{{/if}}
+  </div>
+</LinkTo>
