@@ -100,12 +100,18 @@ export default class CatalogController extends Controller {
   }
 
   shouldDisplayCourse(course: CourseModel) {
-    const isAlphaOrDeprecated = course.releaseStatusIsAlpha || course.releaseStatusIsDeprecated;
-    const isAuthorizedUser =
+    const userIsStaffOrCourseAuthor =
       this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-    const hasUserProgress =
-      isAlphaOrDeprecated && this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
+    const userHasRepository = this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
 
-    return isAlphaOrDeprecated ? isAuthorizedUser || hasUserProgress : true;
+    if (course.releaseStatusIsDeprecated) {
+      return userHasRepository;
+    }
+
+    if (course.releaseStatusIsAlpha) {
+      return userIsStaffOrCourseAuthor;
+    }
+
+    return true;
   }
 }
