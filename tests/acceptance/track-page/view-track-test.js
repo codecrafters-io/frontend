@@ -106,4 +106,24 @@ module('Acceptance | view-track', function (hooks) {
     await trackPage.visit({ track_slug: 'javascript' });
     assert.notOk(trackPage.cards.mapBy('title').includes('Build your own React'));
   });
+
+  test('it does not show a challenge if it is deprecated', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: docker,
+      language: go,
+      user: currentUser,
+    });
+
+    await visit('/tracks/go');
+    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Docker'));
+  });
 });

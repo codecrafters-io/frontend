@@ -9,7 +9,7 @@ export default class TrackController extends Controller {
       return this.model.courses;
     }
 
-    return this.model.courses.rejectBy('releaseStatusIsAlpha');
+    return this.model.courses.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated');
   }
 
   get sortedCourses() {
