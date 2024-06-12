@@ -61,14 +61,14 @@ module('Acceptance | view-tracks', function (hooks) {
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      createdAt: new Date('2022-01-01'),
+      createdAt: new Date('1922-01-01'),
       course: redis,
       language: go,
       user: currentUser,
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      createdAt: new Date('2022-02-02'),
+      createdAt: new Date('1922-02-02'),
       course: redis,
       language: python,
       user: currentUser,
@@ -99,14 +99,14 @@ module('Acceptance | view-tracks', function (hooks) {
     dummy.update({ releaseStatus: 'live' });
 
     this.server.create('repository', 'withAllStagesCompleted', {
-      createdAt: new Date('2022-01-01'),
+      createdAt: new Date('1922-01-01'),
       course: dummy,
       language: go,
       user: currentUser,
     });
 
     this.server.create('repository', 'withAllStagesCompleted', {
-      createdAt: new Date('2022-02-02'),
+      createdAt: new Date('1922-02-02'),
       course: sqlite,
       language: go,
       user: currentUser,
@@ -200,5 +200,18 @@ module('Acceptance | view-tracks', function (hooks) {
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
     assert.strictEqual(catalogPage.trackCards.length, 19, 'expected 19 track cards to be present');
+  });
+
+  test('deprecated challenges do not count towards the number of stages on a language card', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    await catalogPage.visit();
+
+    assert.ok(catalogPage.trackCards[0].hasPopularLabel, 'go should have popular label');
+    assert.ok(catalogPage.trackCards[0].text.includes('75 stages'), 'number of stages should not include deprecated stages count');
   });
 });
