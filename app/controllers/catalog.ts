@@ -1,6 +1,7 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseModel from 'codecrafters-frontend/models/course';
 import type { ModelType } from 'codecrafters-frontend/routes/catalog';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 
@@ -14,13 +15,7 @@ export default class CatalogController extends Controller {
       return this.model.courses;
     }
 
-    return this.model.courses.filter((course) => {
-      if (course.releaseStatusIsAlpha) {
-        return this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-      } else {
-        return true;
-      }
-    });
+    return this.model.courses.filter((course) => this.shouldDisplayCourse(course));
   }
 
   get languages() {
@@ -102,5 +97,21 @@ export default class CatalogController extends Controller {
     return this.authenticator.currentUser.featureSuggestions
       .filterBy('featureIsProductWalkthrough')
       .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
+  }
+
+  shouldDisplayCourse(course: CourseModel) {
+    const userIsStaffOrCourseAuthor =
+      this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
+    const userHasRepository = this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
+
+    if (course.releaseStatusIsDeprecated) {
+      return userHasRepository;
+    }
+
+    if (course.releaseStatusIsAlpha) {
+      return userIsStaffOrCourseAuthor;
+    }
+
+    return true;
   }
 }

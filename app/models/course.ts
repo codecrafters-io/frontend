@@ -71,6 +71,7 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'alpha') declare releaseStatusIsAlpha: boolean;
   @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
   @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
+  @equal('releaseStatus', 'deprecated') declare releaseStatusIsDeprecated: boolean;
 
   @service declare date: DateService;
 

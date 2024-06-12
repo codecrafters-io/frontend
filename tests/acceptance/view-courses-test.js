@@ -60,7 +60,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.strictEqual(catalogPage.courseCards[1].actionText, 'Start');
@@ -118,7 +118,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     await percySnapshot('Courses Page - Courses in progress');
 
@@ -223,7 +223,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -253,7 +253,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -275,6 +275,39 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
+  });
+
+  test('it should show deprecated courses if user already has progress', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    this.server.create('repository', {
+      course: docker,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+
+    assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Docker');
+  });
+
+  test('it should not show deprecated courses if user has no progress', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    await catalogPage.visit();
+
+    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Docker'), 'docker should not be included');
   });
 });
