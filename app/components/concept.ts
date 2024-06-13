@@ -33,7 +33,7 @@ interface BlockGroup {
 }
 
 export default class ConceptComponent extends Component<Signature> {
-  lenis: Lenis | null = null
+  lenis: Lenis | null = null;
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
@@ -46,7 +46,7 @@ export default class ConceptComponent extends Component<Signature> {
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
 
-    this.initializeLenis()
+    this.initializeLenis();
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
     const urlParams = new URLSearchParams(window.location.search);
@@ -134,17 +134,6 @@ export default class ConceptComponent extends Component<Signature> {
     return currentBlockGroupIndex;
   }
 
-  initializeLenis() {
-    this.lenis = new Lenis()
-
-    const raf = (time: number) => {
-      this.lenis?.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    requestAnimationFrame(raf)
-  }
-
   enqueueConceptEngagementUpdate = task({ keepLatest: true }, async () => {
     this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
 
@@ -204,6 +193,17 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
+  initializeLenis() {
+    this.lenis = new Lenis();
+
+    const raf = (time: number) => {
+      this.lenis?.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+  }
+
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
     this.lastRevealedBlockGroupIndex = newBlockGroupIndex;
 
@@ -221,10 +221,10 @@ export default class ConceptComponent extends Component<Signature> {
         const lastChildElement = this.containerElement.children[this.containerElement.children.length - 1];
 
         if (lastChildElement) {
-          const lastChildElementRect = lastChildElement.getBoundingClientRect()
-          const absoluteElementTop = lastChildElementRect.top + window.pageYOffset
-          const middle = absoluteElementTop - (window.innerHeight / 2) + (lastChildElementRect.height / 2)
-          this.lenis?.scrollTo(middle, { offset: 0 })
+          const lastChildElementRect = lastChildElement.getBoundingClientRect();
+          const absoluteElementTop = lastChildElementRect.top + window.pageYOffset;
+          const middle = absoluteElementTop - window.innerHeight / 2 + lastChildElementRect.height / 2;
+          this.lenis?.scrollTo(middle, { offset: 0 });
         }
       }
     });
