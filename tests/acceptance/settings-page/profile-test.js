@@ -53,14 +53,14 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first()
+    let currentUser = this.server.schema.users.first();
 
     assert.strictEqual(currentUser.username, 'rohitpaulk');
 
     await profilePage.visit();
     await profilePage.refreshFromGitHubButton.click();
-    await settled()
+    await settled();
 
     assert.strictEqual(currentUser.reload().username, 'updated-username');
-  })
+  });
 });

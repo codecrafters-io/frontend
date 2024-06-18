@@ -22,7 +22,13 @@
     {{/if}}
   </div>
 
-  <TertiaryButtonWithSpinner @size="extra-small" class="mt-4" @shouldShowSpinner={{this.isSyncingGitHubUsername}} {{on "click" this.refreshFromGitHub}} data-test-refresh-from-github-button>
+  <TertiaryButtonWithSpinner
+    @size="extra-small"
+    class="mt-4"
+    @shouldShowSpinner={{this.isSyncingGitHubUsername}}
+    {{on "click" this.refreshFromGitHub}}
+    data-test-refresh-from-github-button
+  >
     <div class="flex items-center gap-1">
       {{svg-jar "refresh" class="w-4 h-4 text-gray-400"}}
       Refresh from GitHub

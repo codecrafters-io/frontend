@@ -29,8 +29,8 @@ export default function (server) {
     let user = schema.users.find(request.params.id);
     user.update({ username: 'updated-username' });
 
-    return user
-  })
+    return user;
+  });
 
   server.patch('/users/:id', function (schema, request) {
     const { id } = request.params;

@@ -260,4 +260,4 @@ UserModel.prototype.syncGitHubUsername = memberAction({
   after(response) {
     this.store.pushPayload(response);
   },
-})
+});
