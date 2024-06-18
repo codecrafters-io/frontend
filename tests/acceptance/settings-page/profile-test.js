@@ -2,6 +2,7 @@ import profilePage from 'codecrafters-frontend/tests/pages/settings/profile-page
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
+import { settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
@@ -47,4 +48,19 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     assert.strictEqual(userPage.githubDetails.username, 'rohitpaulk');
     assert.strictEqual(userPage.githubDetails.link, 'https://github.com/rohitpaulk');
   });
+
+  test('can refresh github username', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first()
+
+    assert.strictEqual(currentUser.username, 'rohitpaulk');
+
+    await profilePage.visit();
+    await profilePage.refreshFromGitHubButton.click();
+    await settled()
+
+    assert.strictEqual(currentUser.reload().username, 'updated-username');
+  })
 });

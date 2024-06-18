@@ -13,5 +13,9 @@ export default createPage({
     },
   },
 
+  refreshFromGitHubButton: {
+    scope: '[data-test-refresh-from-github-button]',
+  },
+
   visit: visitable('/settings/profile'),
 });

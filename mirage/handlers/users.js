@@ -25,6 +25,13 @@ export default function (server) {
     });
   });
 
+  server.post('/users/:id/sync-github-username', function (schema, request) {
+    let user = schema.users.find(request.params.id);
+    user.update({ username: 'updated-username' });
+
+    return user
+  })
+
   server.patch('/users/:id', function (schema, request) {
     const { id } = request.params;
     const attrs = this.normalizedRequestAttrs();
