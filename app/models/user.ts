@@ -210,7 +210,7 @@ export default class UserModel extends Model {
   declare fetchCurrent: (this: Model, payload: unknown) => Promise<UserModel | null>;
   declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel | null>;
   declare syncFeatureFlags: (this: Model, payload: unknown) => Promise<void>;
-  declare syncGitHubUsername: (this: Model, payload: unknown) => Promise<void>;
+  declare syncUsernameFromGitHub: (this: Model, payload: unknown) => Promise<void>;
 }
 
 UserModel.prototype.fetchNextInvoicePreview = memberAction({
@@ -253,8 +253,8 @@ UserModel.prototype.syncFeatureFlags = memberAction({
   },
 });
 
-UserModel.prototype.syncGitHubUsername = memberAction({
-  path: 'sync-github-username',
+UserModel.prototype.syncUsernameFromGitHub = memberAction({
+  path: 'sync-username-from-github',
   type: 'post',
 
   after(response) {

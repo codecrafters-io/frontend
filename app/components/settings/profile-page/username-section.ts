@@ -16,13 +16,13 @@ interface Signature {
 export default class UsernameSectionComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
-  @tracked isSyncingGitHubUsername = false;
+  @tracked isSyncingUsernameFromGitHub = false;
 
   @action
   async refreshFromGitHub() {
-    this.isSyncingGitHubUsername = true;
-    await this.authenticator.currentUser?.syncGitHubUsername(null);
-    this.isSyncingGitHubUsername = false;
+    this.isSyncingUsernameFromGitHub = true;
+    await this.authenticator.currentUser?.syncUsernameFromGitHub(null);
+    this.isSyncingUsernameFromGitHub = false;
   }
 }
 

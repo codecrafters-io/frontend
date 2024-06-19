@@ -25,7 +25,7 @@
   <TertiaryButtonWithSpinner
     @size="extra-small"
     class="mt-4"
-    @shouldShowSpinner={{this.isSyncingGitHubUsername}}
+    @shouldShowSpinner={{this.isSyncingUsernameFromGitHub}}
     {{on "click" this.refreshFromGitHub}}
     data-test-refresh-from-github-button
   >

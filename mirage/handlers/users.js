@@ -25,7 +25,7 @@ export default function (server) {
     });
   });
 
-  server.post('/users/:id/sync-github-username', function (schema, request) {
+  server.post('/users/:id/sync-username-from-github', function (schema, request) {
     let user = schema.users.find(request.params.id);
     user.update({ username: 'updated-username' });
 
