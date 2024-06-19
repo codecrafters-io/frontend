@@ -1,10 +1,7 @@
 <div
   class="overflow-x-scroll dark:text-gray-400 dark:bg-gray-900"
   {{did-insert (perform this.highlightCode)}}
-  {{did-update (perform this.highlightCode) this.darkMode.isEnabled}}
-  {{did-update (perform this.highlightCode) @forceDarkTheme}}
-  {{did-update (perform this.highlightCode) @code}}
-  {{did-update (perform this.highlightCode) @language}}
+  {{did-update (perform this.highlightCode) this.darkMode.isEnabled @forceDarkTheme @code @language}}
   ...attributes
 >
   <div class="min-w-fit">
