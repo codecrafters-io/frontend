@@ -53,26 +53,10 @@ export default class DarkModeService extends Service {
   }
 
   /**
-   * Indicates whether Dark Mode is currently enabled: either because visiting a
-   * "dark route", or derived from localStorage & system preference
-   */
-  get isEnabled(): boolean {
-    return this.#isVisitingDarkModeSupportingRoute && (this.#isVisitingDarkRoute || this.#isEnabledViaPreferences);
-  }
-
-  /**
-   * Returns whether Dark Mode should be enabled based on localStorage & system preference
+   * Returns whether current mode requires Dark Mode (doesn't support Light Mode)
    * @private
    */
-  get #isEnabledViaPreferences(): boolean {
-    return this.localStoragePreference === 'dark' || (this.localStoragePreference === 'system' && this.systemPreference === 'dark');
-  }
-
-  /**
-   * Returns whether current route supports Dark Mode
-   * @private
-   */
-  get #isVisitingDarkModeSupportingRoute(): boolean {
+  get #currentRouteRequiresDarkMode(): boolean {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
@@ -93,10 +77,10 @@ export default class DarkModeService extends Service {
   }
 
   /**
-   * Returns whether Dark Mode should be enabled because the user is visiting a "dark route"
+   * Returns whether current route supports Dark Mode
    * @private
    */
-  get #isVisitingDarkRoute(): boolean {
+  get #currentRouteSupportsDarkMode(): boolean {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
@@ -114,6 +98,22 @@ export default class DarkModeService extends Service {
     }
 
     return false;
+  }
+
+  /**
+   * Indicates whether Dark Mode is currently enabled: either because visiting a
+   * "dark route", or derived from localStorage & system preference
+   */
+  get isEnabled(): boolean {
+    return this.#currentRouteSupportsDarkMode && (this.#currentRouteRequiresDarkMode || this.#isEnabledViaPreferences);
+  }
+
+  /**
+   * Returns whether Dark Mode should be enabled based on localStorage & system preference
+   * @private
+   */
+  get #isEnabledViaPreferences(): boolean {
+    return this.localStoragePreference === 'dark' || (this.localStoragePreference === 'system' && this.systemPreference === 'dark');
   }
 
   /**
