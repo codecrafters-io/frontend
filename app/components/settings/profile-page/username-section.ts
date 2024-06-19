@@ -18,10 +18,18 @@ export default class UsernameSectionComponent extends Component<Signature> {
 
   @tracked isSyncingUsernameFromGitHub = false;
 
+  get currentUser() {
+    return this.authenticator.currentUser as UserModel;
+  }
+
   @action
   async refreshFromGitHub() {
+    if (this.currentUser.hasAnonymousModeEnabled) {
+      return
+    }
+
     this.isSyncingUsernameFromGitHub = true;
-    await this.authenticator.currentUser?.syncUsernameFromGitHub(null);
+    await this.currentUser.syncUsernameFromGitHub(null);
     this.isSyncingUsernameFromGitHub = false;
   }
 }

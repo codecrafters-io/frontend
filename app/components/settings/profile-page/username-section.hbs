@@ -26,6 +26,7 @@
     @size="extra-small"
     class="mt-4"
     @shouldShowSpinner={{this.isSyncingUsernameFromGitHub}}
+    @isDisabled={{this.currentUser.hasAnonymousModeEnabled}}
     {{on "click" this.refreshFromGitHub}}
     data-test-refresh-from-github-button
   >
