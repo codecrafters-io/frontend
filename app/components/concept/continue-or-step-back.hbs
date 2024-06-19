@@ -3,7 +3,8 @@
     <div class="flex flex-col items-center">
       <PrimaryButton
         {{on "click" @onContinueButtonClick}}
-        {{(if @shouldHighlightKeyboardShortcuts (modifier "focus-on-insert"))}}
+        {{! @glint-expect-error modifier helper types aren't right? }}
+        {{(if @shouldHighlightKeyboardShortcuts (modifier "focus-on-insert" preventScroll=true))}}
         data-test-continue-button
         {{did-insert this.handleDidInsertContinueButtonElement}}
         {{! @glint-expect-error on-key modifier types aren't right? }}

@@ -57,7 +57,7 @@ export default class QuestionCardComponent extends Component<Signature> {
     if (firstOptionElement instanceof HTMLElement) {
       // focus() doesn't seem to work unless it's called after the current runloop
       next(() => {
-        firstOptionElement && firstOptionElement.focus();
+        firstOptionElement && firstOptionElement.focus({ preventScroll: true });
       });
     }
   }
@@ -82,9 +82,9 @@ export default class QuestionCardComponent extends Component<Signature> {
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
     if (currentFocusedOptionIndex < options.length - 1) {
-      options[currentFocusedOptionIndex + 1]!.focus();
+      options[currentFocusedOptionIndex + 1]!.focus({ preventScroll: true })
     } else {
-      options[0]!.focus();
+      options[0]!.focus({ preventScroll: true })
     }
   }
 
@@ -108,9 +108,9 @@ export default class QuestionCardComponent extends Component<Signature> {
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
     if (currentFocusedOptionIndex > 0) {
-      options[currentFocusedOptionIndex - 1]!.focus();
+      options[currentFocusedOptionIndex - 1]!.focus({ preventScroll: true })
     } else {
-      options[options.length - 1]!.focus();
+      options[options.length - 1]!.focus({ preventScroll: true })
     }
   }
 

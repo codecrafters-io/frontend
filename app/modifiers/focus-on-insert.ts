@@ -4,13 +4,15 @@ type Signature = {
   Args: {
     Positional: [];
 
-    Named: Record<string, never>;
+    Named: {
+      preventScroll?: boolean;
+    }
   };
 };
 
 export default class FocusOnInsertModifier extends Modifier<Signature> {
-  modify(element: HTMLElement, _positional: [], _named: Signature['Args']['Named']) {
-    element.focus();
+  modify(element: HTMLElement, _positional: [], named: Signature['Args']['Named']) {
+    element.focus({ preventScroll: !!named.preventScroll });
   }
 }
 
