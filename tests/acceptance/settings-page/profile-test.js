@@ -59,7 +59,6 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
 
     await profilePage.visit();
     await profilePage.refreshFromGitHubButton.click();
-    await settled();
 
     assert.strictEqual(currentUser.reload().username, 'updated-username');
   });
