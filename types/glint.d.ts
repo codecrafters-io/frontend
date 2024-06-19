@@ -1,11 +1,12 @@
 // eslint-disable-next-line ember/no-at-ember-render-modifiers
 import type RenderModifiersRegistry from '@ember/render-modifiers/template-registry';
+import type EmberConcurrencyRegistry from 'ember-concurrency/template-registry';
 import type { ModifierLike } from '@glint/template';
 import type { HelperLike } from '@glint/template';
 import type { ComponentLike } from '@glint/template';
 
 declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry extends RenderModifiersRegistry {
+  export default interface Registry extends RenderModifiersRegistry, EmberConcurrencyRegistry {
     add: HelperLike<{ Args: { Positional: [number, number] }; Return: number }>;
     and: HelperLike<{ Args: { Positional: unknown[] }; Return: boolean }>;
     autoresize: ModifierLike<{ Args: { Positional: [string] } }>;

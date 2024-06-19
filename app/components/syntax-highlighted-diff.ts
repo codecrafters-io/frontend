@@ -9,7 +9,6 @@ import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { transformerNotationDiff } from '@shikijs/transformers';
 import { task, timeout } from 'ember-concurrency';
-import type EmberConcurrencyRegistry from 'ember-concurrency/template-registry';
 import { service } from '@ember/service';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
@@ -253,7 +252,7 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 }
 
 declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry extends EmberConcurrencyRegistry {
+  export default interface Registry {
     SyntaxHighlightedDiff: typeof SyntaxHighlightedDiffComponent;
   }
 }
