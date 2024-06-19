@@ -7,6 +7,7 @@ interface Signature {
     code: string;
     language: string;
     filename: string;
+    forceDarkTheme?: boolean;
   };
 }
 

@@ -8,8 +8,14 @@ import { escapeHtml, groupBy, zip } from 'codecrafters-frontend/utils/lodash-uti
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { transformerNotationDiff } from '@shikijs/transformers';
-import { next } from '@ember/runloop';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
+import { service } from '@ember/service';
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
+
+/**
+ * Time to wait at the end of `highlightCode` task before allowing a new run to be performed
+ */
+const DELAY_BETWEEN_HIGHLIGHT_CODE_TASKS_IN_MS: number = 100;
 
 type Signature = {
   Element: HTMLDivElement;
@@ -19,15 +25,53 @@ type Signature = {
     comments: CommunityCourseStageSolutionCommentModel[];
     language: string;
     shouldCollapseUnchangedLines: boolean;
+    forceDarkTheme?: boolean;
     onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
   };
 };
 
+interface HighlightCodeParams {
+  isDarkMode?: boolean;
+  forceDarkTheme?: boolean;
+  language?: string;
+  codeWithoutDiffMarkers?: string;
+}
+
+class HighlightCodeParamsCache implements HighlightCodeParams {
+  isDarkMode?: boolean;
+  forceDarkTheme?: boolean;
+  language?: string;
+  codeWithoutDiffMarkers?: string;
+
+  compareWithParams({ isDarkMode, forceDarkTheme, language, codeWithoutDiffMarkers }: HighlightCodeParams): boolean {
+    return (
+      this.isDarkMode === isDarkMode &&
+      this.forceDarkTheme === forceDarkTheme &&
+      this.language === language &&
+      this.codeWithoutDiffMarkers === codeWithoutDiffMarkers
+    );
+  }
+
+  setParams({ isDarkMode, forceDarkTheme, language, codeWithoutDiffMarkers }: HighlightCodeParams): void {
+    this.isDarkMode = isDarkMode;
+    this.forceDarkTheme = forceDarkTheme;
+    this.language = language;
+    this.codeWithoutDiffMarkers = codeWithoutDiffMarkers;
+  }
+}
+
 export default class SyntaxHighlightedDiffComponent extends Component<Signature> {
+  @service declare darkMode: DarkModeService;
+
   @tracked asyncHighlightedHTML: string | null = null;
   @tracked asyncHighlightedCode: string | null = null;
   @tracked lineNumberWithExpandedComments: number | null = null;
-  @tracked isDarkMode: boolean | undefined = undefined;
+
+  /**
+   * The last parameters used for formatting & rendering the code
+   * @private
+   */
+  #lastHighlightCodeParams: HighlightCodeParamsCache = new HighlightCodeParamsCache();
 
   static highlighterIdForDarkMode = 'syntax-highlighted-diff-dark';
   static highlighterIdForLightMode = 'syntax-highlighted-diff-light';
@@ -35,12 +79,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   static highlighterOptionsForLightMode = { themes: ['github-light'], langs: [] };
   static LINES_AROUND_CHANGED_CHUNK = 3;
   static MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
-
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-
-    this.highlightCode.perform();
-  }
 
   get chunksForRender() {
     const parsedHtml = new DOMParser().parseFromString(this.highlightedHtml, 'text/html');
@@ -132,22 +170,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   @action
-  handleDidUpdateCode() {
-    this.highlightCode.perform();
-  }
-
-  @action
-  handleIsDarkModeUpdate(isDarkMode: boolean) {
-    if (isDarkMode !== this.isDarkMode) {
-      // Avoid re-use in same computation bug
-      next(() => {
-        this.isDarkMode = isDarkMode;
-        this.highlightCode.perform();
-      });
-    }
-  }
-
-  @action
   handleToggleCommentsButtonClick(lineNumber: number) {
     if (this.lineNumberWithExpandedComments === lineNumber) {
       this.lineNumberWithExpandedComments = null;
@@ -161,27 +183,62 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   }
 
   highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
-    if (this.isDarkMode === undefined) {
-      return; // Not ready to highlight yet
+    // Read all dependent parameters into local constants
+    const {
+      codeWithoutDiffMarkers,
+      args: { code, language, forceDarkTheme },
+      darkMode: { isEnabled: isDarkMode },
+    } = this;
+
+    // Return if nothing changed since last render
+    if (
+      this.#lastHighlightCodeParams.compareWithParams({
+        isDarkMode,
+        forceDarkTheme,
+        language,
+        codeWithoutDiffMarkers,
+      })
+    ) {
+      return;
     }
 
+    // Decide whether to actually use the dark theme
+    const useDarkTheme = !!(isDarkMode || forceDarkTheme);
+
+    // Prepare the highlighter promise
     const highlighterPromise = getOrCreateCachedHighlighterPromise(
-      this.isDarkMode ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
-      this.isDarkMode ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
+      useDarkTheme ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
+      useDarkTheme ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
     );
 
-    highlighterPromise.then((highlighter) => {
-      highlighter.loadLanguage(this.args.language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage).then(() => {
-        this.asyncHighlightedHTML = highlighter.codeToHtml(this.codeWithoutDiffMarkers, {
-          lang: this.args.language,
-          theme: this.isDarkMode
-            ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
-            : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
-          transformers: [transformerNotationDiff()],
-        });
-        this.asyncHighlightedCode = this.args.code;
-      });
+    // Wait for the highlighter promise to load
+    const highlighter = await highlighterPromise;
+
+    // Wait for the language to load
+    await highlighter.loadLanguage(language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage);
+
+    // Format the code and use it
+    this.asyncHighlightedHTML = highlighter.codeToHtml(codeWithoutDiffMarkers, {
+      lang: language,
+      theme: useDarkTheme
+        ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
+        : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
+      transformers: [transformerNotationDiff()],
     });
+
+    // Remember which code we've last formatted
+    this.asyncHighlightedCode = code;
+
+    // Remember all parameters used for this task run
+    this.#lastHighlightCodeParams.setParams({
+      isDarkMode,
+      forceDarkTheme,
+      language,
+      codeWithoutDiffMarkers,
+    });
+
+    // Ensure we don't run this task too often
+    await timeout(DELAY_BETWEEN_HIGHLIGHT_CODE_TASKS_IN_MS);
   });
 
   static preloadHighlighter() {

@@ -8,7 +8,6 @@ interface Signature {
     size?: BaseButtonSignature['Args']['size'];
     isDisabled?: BaseButtonSignature['Args']['isDisabled'];
     shouldOpenInNewTab?: boolean;
-    isDark?: boolean;
     route: string;
     model?: string;
     models?: string[];

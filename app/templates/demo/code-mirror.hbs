@@ -1,14 +1,15 @@
 {{page-title "CodeMirror"}}
 
 {{#let
-  "flex flex-wrap text-sm font-semibold text-gray-600 border-b border-gray-200 py-2" "flex cursor-default select-none text-nowrap mx-2"
+  "flex flex-wrap text-sm font-semibold text-gray-600 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700 py-2"
+  "flex cursor-default select-none text-nowrap mx-2"
   as |groupClasses labelClasses|
 }}
   <codemirror-options class="{{groupClasses}} -mt-8">
     <codemirror-options-left class="flex flex-grow flex-wrap">
       <label class="{{labelClasses}} ml-0" title="Document preset to use">
-        <span class="ml-2">Document:</span>
-        <select {{on "change" this.selectedDocumentIndexDidChange}}>
+        <span class="mx-2">Document:</span>
+        <select class="dark:bg-gray-700" {{on "change" this.selectedDocumentIndexDidChange}}>
           {{#each this.documents as |doc index|}}
             <option selected={{eq this.selectedDocumentIndex index}}>{{doc.filename}}</option>
           {{/each}}
@@ -26,7 +27,11 @@
       <label class="{{labelClasses}}" title="Theme to use for the editor">
         <Input @type="checkbox" @checked={{this.theme}} />
         <span class="mx-2">theme:</span>
-        <select class="text-right {{unless this.theme 'bg-gray-200'}}" {{on "change" this.selectedThemeIndexDidChange}} disabled={{not this.theme}}>
+        <select
+          class="text-right dark:bg-gray-700 {{unless this.theme 'bg-gray-200'}}"
+          {{on "change" this.selectedThemeIndexDidChange}}
+          disabled={{not this.theme}}
+        >
           {{#each this.themes as |theme index|}}
             <option selected={{eq this.selectedThemeIndex index}}>{{theme}}</option>
           {{/each}}
@@ -59,7 +64,7 @@
         <Input @type="checkbox" @checked={{this.tabSize}} />
         <span class="mx-2">tabSize:</span>
         <select
-          class="text-right {{unless this.tabSize 'bg-gray-200'}}"
+          class="text-right dark:bg-gray-700 {{unless this.tabSize 'bg-gray-200'}}"
           {{on "change" this.selectedTabSizeIndexDidChange}}
           disabled={{not this.tabSize}}
         >
@@ -72,7 +77,7 @@
         <Input @type="checkbox" @checked={{this.lineSeparator}} />
         <span class="mx-2">lineSeparator:</span>
         <select
-          class="text-right {{unless this.lineSeparator 'bg-gray-200'}}"
+          class="text-right dark:bg-gray-700 {{unless this.lineSeparator 'bg-gray-200'}}"
           {{on "change" this.selectedLineSeparatorIndexDidChange}}
           disabled={{not this.lineSeparator}}
         >
@@ -170,7 +175,7 @@
           <Input @type="checkbox" @checked={{this.indentUnit}} disabled={{isDisabled}} />
           <span class="mx-2 {{if isDisabled 'text-gray-300'}}">indentUnit:</span>
           <select
-            class="text-right {{if (or isDisabled (not this.indentUnit)) 'bg-gray-200'}}"
+            class="text-right dark:bg-gray-700 {{if (or isDisabled (not this.indentUnit)) 'bg-gray-200'}}"
             {{on "change" this.selectedIndentUnitIndexDidChange}}
             disabled={{or isDisabled (not this.indentUnit)}}
           >

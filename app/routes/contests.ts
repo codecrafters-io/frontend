@@ -3,6 +3,7 @@ import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 import type ContestModel from 'codecrafters-frontend/models/contest';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import RSVP from 'rsvp';
 
 export type ModelType = {
@@ -14,6 +15,10 @@ export default class ContestsRoute extends BaseRoute {
 
   @service declare router: RouterService;
   @service declare store: Store;
+
+  buildRouteInfoMetadata(): RouteInfoMetadata {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Dark });
+  }
 
   async model(): Promise<ModelType> {
     return RSVP.hash({

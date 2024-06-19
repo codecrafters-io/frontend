@@ -1,4 +1,9 @@
-<div class="overflow-x-scroll" {{did-update this.handleDidUpdateCode @code}} {{is-dark-mode this.handleIsDarkModeUpdate}} ...attributes>
+<div
+  class="overflow-x-scroll dark:text-gray-400 dark:bg-gray-900"
+  {{did-insert (perform this.highlightCode)}}
+  {{did-update (perform this.highlightCode) this.darkMode.isEnabled @forceDarkTheme @code @language}}
+  ...attributes
+>
   <div class="min-w-fit">
     {{#each this.chunksForRender as |chunk|}}
       {{! @glint-expect-error not ts-ified yet }}

@@ -1,0 +1,23 @@
+{{page-title "DarkModeToggle"}}
+
+<h3 class="mb-2 dark:text-gray-300">Set localStorage dark mode preference to:</h3>
+
+<DarkModeToggle />
+
+<hr class="my-4 dark:border-gray-700" />
+
+<h3 class="mb-2 dark:text-gray-300">Current localStorage preference:</h3>
+
+<code class="code dark:text-gray-400">
+  {{or this.darkMode.localStoragePreference "null"}}
+</code>
+
+<hr class="my-4 dark:border-gray-700" />
+
+<h3 class="mb-2 dark:text-gray-300">Current system preference:</h3>
+
+<code class="code dark:text-gray-400">
+  {{this.darkMode.systemPreference}}
+</code>
+
+{{outlet}}

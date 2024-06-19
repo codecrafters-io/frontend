@@ -7,7 +7,6 @@ interface Signature {
   Args: {
     size?: BaseButtonSignature['Args']['size'];
     isDisabled?: BaseButtonSignature['Args']['isDisabled'];
-    isDark?: boolean;
   };
 
   Blocks: {

@@ -23,7 +23,7 @@ module.exports = {
       /animated-orphans/,
     ],
   },
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: ['variant', ['&:is(.dark *)']],
   theme: {
     colors: {
       // Build your palette here

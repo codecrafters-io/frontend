@@ -1,0 +1,9 @@
+{{#each this.possiblePreferences as |preference|}}
+  {{#if (eq this.darkMode.localStoragePreference preference)}}
+    <PrimaryButton @size="small" class="capitalize" {{on "click" (fn this.setPreference preference)}}>{{or preference "unset"}}</PrimaryButton>
+  {{else}}
+    <TertiaryButton @size="small" class="capitalize" {{on "click" (fn this.setPreference preference)}}>{{or preference "unset"}}</TertiaryButton>
+  {{/if}}
+{{/each}}
+
+{{yield}}

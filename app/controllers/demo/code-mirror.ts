@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 
 import { type Extension } from '@codemirror/state';
 import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
+import { service } from '@ember/service';
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
 const THEME_EXTENSIONS: {
   [key: string]: Extension;
@@ -12,8 +14,10 @@ const THEME_EXTENSIONS: {
   githubLight,
 };
 
-const SUPPORTED_THEMES = Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init')));
-const DEFAULT_THEME = 'githubDark';
+const SUPPORTED_THEMES = [...Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init'))), 'Auto'];
+const DEFAULT_THEME = 'Auto';
+const DEFAULT_THEME_DARK = 'githubDark';
+const DEFAULT_THEME_LIGHT = 'githubLight';
 
 class ExampleDocument {
   @tracked document!: string;
@@ -39,6 +43,8 @@ class ExampleDocument {
 }
 
 export default class DemoCodeMirrorController extends Controller {
+  @service declare darkMode: DarkModeService;
+
   @tracked placeholderMessage = 'Welcome to CodeCrafters test zone for CodeMirror! Start editing the document here...';
 
   @tracked documents: ExampleDocument[] = [
@@ -123,7 +129,13 @@ export default class DemoCodeMirrorController extends Controller {
   }
 
   get selectedTheme() {
-    return this.themes[this.selectedThemeIndex];
+    const theme = this.themes[this.selectedThemeIndex];
+
+    return theme === 'Auto'
+      ? this.darkMode.isEnabled
+        ? this.themes[this.themes.indexOf(DEFAULT_THEME_DARK)]
+        : this.themes[this.themes.indexOf(DEFAULT_THEME_LIGHT)]
+      : theme;
   }
 
   @tracked border: boolean = true;
@@ -161,7 +173,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked scrollPastEnd: boolean = false;
   @tracked syntaxHighlighting: boolean = true;
   @tracked tabSize: boolean = true;
-  @tracked theme: boolean = false;
+  @tracked theme: boolean = true;
 
   @action documentDidChange(_target: Controller, newValue: string) {
     if (!this.document) {
