@@ -6,7 +6,7 @@ type Signature = {
 
     Named: {
       preventScroll?: boolean;
-    }
+    };
   };
 };
 

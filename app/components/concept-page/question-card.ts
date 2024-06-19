@@ -82,9 +82,9 @@ export default class QuestionCardComponent extends Component<Signature> {
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
     if (currentFocusedOptionIndex < options.length - 1) {
-      options[currentFocusedOptionIndex + 1]!.focus({ preventScroll: true })
+      options[currentFocusedOptionIndex + 1]!.focus({ preventScroll: true });
     } else {
-      options[0]!.focus({ preventScroll: true })
+      options[0]!.focus({ preventScroll: true });
     }
   }
 
@@ -108,9 +108,9 @@ export default class QuestionCardComponent extends Component<Signature> {
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
     if (currentFocusedOptionIndex > 0) {
-      options[currentFocusedOptionIndex - 1]!.focus({ preventScroll: true })
+      options[currentFocusedOptionIndex - 1]!.focus({ preventScroll: true });
     } else {
-      options[options.length - 1]!.focus({ preventScroll: true })
+      options[options.length - 1]!.focus({ preventScroll: true });
     }
   }
 
