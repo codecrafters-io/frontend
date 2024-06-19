@@ -5,7 +5,7 @@ import { registerDestructor } from '@ember/destroyable';
 import type RouterService from '@ember/routing/router-service';
 import type RouteInfo from '@ember/routing/route-info';
 import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
-import RouteInfoMetadata, { RouteColorSchemes } from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 const LOCAL_STORAGE_KEY = 'dark-mode-preference';
 
@@ -79,9 +79,9 @@ export default class DarkModeService extends Service {
       const metadata = currentRoute.metadata;
 
       if (metadata instanceof RouteInfoMetadata) {
-        if (metadata.colorScheme === RouteColorSchemes.Dark || metadata.colorScheme === RouteColorSchemes.Both) {
+        if (metadata.colorScheme === RouteColorScheme.Dark) {
           return true;
-        } else if (metadata.colorScheme === RouteColorSchemes.Light) {
+        } else if (metadata.colorScheme === RouteColorScheme.Light) {
           return false;
         }
       }
@@ -103,9 +103,9 @@ export default class DarkModeService extends Service {
       const metadata = currentRoute.metadata;
 
       if (metadata instanceof RouteInfoMetadata) {
-        if (metadata.colorScheme === RouteColorSchemes.Dark) {
+        if (metadata.colorScheme === RouteColorScheme.Dark || metadata.colorScheme === RouteColorScheme.Both) {
           return true;
-        } else if (metadata.colorScheme === RouteColorSchemes.Light) {
+        } else if (metadata.colorScheme === RouteColorScheme.Light) {
           return false;
         }
       }

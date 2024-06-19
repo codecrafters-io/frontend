@@ -1,13 +1,13 @@
-export enum RouteColorSchemes {
+export enum RouteColorScheme {
   Light,
   Dark,
   Both,
 }
 
 export default class RouteInfoMetadata {
-  colorScheme: RouteColorSchemes = RouteColorSchemes.Light;
+  colorScheme: RouteColorScheme = RouteColorScheme.Light;
 
-  constructor({ colorScheme = RouteColorSchemes.Light }: { colorScheme?: RouteColorSchemes } = {}) {
+  constructor({ colorScheme = RouteColorScheme.Light }: { colorScheme?: RouteColorScheme } = {}) {
     this.colorScheme = colorScheme;
   }
 }

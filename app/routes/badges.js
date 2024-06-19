@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RouteInfoMetadata, { RouteColorSchemes } from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import RSVP from 'rsvp';
 
 export default class BadgesRoute extends BaseRoute {
@@ -9,7 +9,7 @@ export default class BadgesRoute extends BaseRoute {
   @service store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ colorScheme: RouteColorSchemes.Dark });
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Dark });
   }
 
   async model() {

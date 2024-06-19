@@ -1,4 +1,4 @@
-import RouteInfoMetadata, { RouteColorSchemes } from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | route-info-metadata', function () {
@@ -6,7 +6,7 @@ module('Unit | Utility | route-info-metadata', function () {
     assert.ok(new RouteInfoMetadata());
   });
 
-  test('it defines a property `colorScheme`, by default set to `RouteColorShemes.Light`', function (assert): void {
-    assert.strictEqual(new RouteInfoMetadata().colorScheme, RouteColorSchemes.Light);
+  test('it defines a property `colorScheme`, by default set to `RouteColorSheme.Light`', function (assert): void {
+    assert.strictEqual(new RouteInfoMetadata().colorScheme, RouteColorScheme.Light);
   });
 });
