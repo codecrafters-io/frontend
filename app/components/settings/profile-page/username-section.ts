@@ -25,7 +25,7 @@ export default class UsernameSectionComponent extends Component<Signature> {
   @action
   async refreshFromGitHub() {
     if (this.currentUser.hasAnonymousModeEnabled) {
-      return
+      return;
     }
 
     this.isSyncingUsernameFromGitHub = true;

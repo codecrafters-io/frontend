@@ -2,7 +2,6 @@ import profilePage from 'codecrafters-frontend/tests/pages/settings/profile-page
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
-import { settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
@@ -80,5 +79,5 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     await profilePage.accountDropdown.clickOnLink('Your Profile');
 
     assert.strictEqual(userPage.githubDetails.username, 'Anonymous', 'should not have updated username');
-  })
+  });
 });
