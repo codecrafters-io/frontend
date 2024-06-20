@@ -1,4 +1,4 @@
-<BlurredOverlay @isBlurred={{this.shouldShowStageIncompleteModal}} class="px-3 md:px-6 lg:px-10">
+<BlurredOverlay @isBlurred={{this.shouldShowStageIncompleteModal}}>
   <:content>
     {{#each @solutions as |solution solutionIndex|}}
       <CoursePage::CourseStageStep::CommunitySolutionCard
