@@ -37,6 +37,12 @@ export default class ConceptRoute extends BaseRoute {
     const allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
     const concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
 
+    if (!concept) {
+      this.router.transitionTo('not-found');
+
+      return;
+    }
+
     const allConceptGroups = await this.store.findAll('concept-group');
     const relatedConceptGroups = allConceptGroups
       .filter((group) => group.conceptSlugs.includes(concept.slug))
