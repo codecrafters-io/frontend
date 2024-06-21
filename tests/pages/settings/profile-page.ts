@@ -14,6 +14,7 @@ export default createPage({
   },
 
   refreshFromGitHubButton: {
+    hover: triggerable('mouseenter'),
     scope: '[data-test-refresh-from-github-button]',
   },
 
