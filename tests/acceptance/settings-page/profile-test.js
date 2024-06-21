@@ -47,4 +47,37 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     assert.strictEqual(userPage.githubDetails.username, 'rohitpaulk');
     assert.strictEqual(userPage.githubDetails.link, 'https://github.com/rohitpaulk');
   });
+
+  test('can refresh github username', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    assert.strictEqual(currentUser.username, 'rohitpaulk');
+
+    await profilePage.visit();
+    await profilePage.refreshFromGitHubButton.click();
+
+    assert.strictEqual(currentUser.reload().username, 'updated-username');
+  });
+
+  test('users with anonymous mode toggled should not be able to refresh github username', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await profilePage.visit();
+    await profilePage.anonymousModeToggle.toggle();
+    await profilePage.accountDropdown.toggle();
+    await profilePage.accountDropdown.clickOnLink('Your Profile');
+
+    assert.strictEqual(userPage.githubDetails.username, 'Anonymous');
+
+    await profilePage.visit();
+    await profilePage.refreshFromGitHubButton.click();
+    await profilePage.accountDropdown.toggle();
+    await profilePage.accountDropdown.clickOnLink('Your Profile');
+
+    assert.strictEqual(userPage.githubDetails.username, 'Anonymous', 'should not have updated username');
+  });
 });

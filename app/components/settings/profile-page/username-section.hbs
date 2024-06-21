@@ -11,24 +11,32 @@
     {{#if @user.hasAnonymousModeEnabled}}
       <EmberTooltip @text="Your profile has anonymous mode enabled. Your GitHub username is not visible to others." />
     {{else}}
-      {{! activate this once implemented }}
-      {{! <EmberTooltip @text="This value is synced with your GitHub account. Click on the refresh button below to update your username." /> }}
-      <EmberTooltip @text="This value is synced with your GitHub account." />
+      <EmberTooltip @text="This value is synced with your GitHub account. Click on the refresh button below to update your username." />
     {{/if}}
   </div>
   <div class="text-gray-400 text-xs mt-1">
     {{#if @user.hasAnonymousModeEnabled}}
       Your profile has anonymous mode enabled. Your GitHub username is not visible to others.
     {{else}}
-      This value is synced with your GitHub account.
+      This value is synced with your GitHub account. Click on the refresh button below to update your username.
     {{/if}}
   </div>
 
-  {{!-- TODO: Bring this back once implemented }}
-  {{!-- <TertiaryButtonWithSpinner @size="extra-small" class="mt-4" @shouldShowSpinner={{false}}>
+  <TertiaryButtonWithSpinner
+    @size="extra-small"
+    class="mt-4"
+    @shouldShowSpinner={{this.isSyncingUsernameFromGitHub}}
+    @isDisabled={{this.currentUser.hasAnonymousModeEnabled}}
+    {{on "click" this.refreshFromGitHub}}
+    data-test-refresh-from-github-button
+  >
     <div class="flex items-center gap-1">
       {{svg-jar "refresh" class="w-4 h-4 text-gray-400"}}
       Refresh from GitHub
     </div>
-  </TertiaryButtonWithSpinner> --}}
+
+    {{#if this.currentUser.hasAnonymousModeEnabled}}
+      <EmberTooltip @text="Your profile has anonymous mode enabled. Your GitHub username is not visible to others." />
+    {{/if}}
+  </TertiaryButtonWithSpinner>
 </Settings::FormSection>
