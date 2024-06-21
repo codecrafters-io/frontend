@@ -5,6 +5,7 @@ import { registerDestructor } from '@ember/destroyable';
 import type RouterService from '@ember/routing/router-service';
 import type RouteInfo from '@ember/routing/route-info';
 import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 const LOCAL_STORAGE_KEY = 'dark-mode-preference';
@@ -15,6 +16,7 @@ export type SystemPreference = 'dark' | 'light';
 export default class DarkModeService extends Service {
   @service declare router: RouterService;
   @service declare localStorage: LocalStorageService;
+  @service declare fastboot: FastBootService;
 
   /**
    * Currently loaded localStorage preference value
@@ -31,6 +33,11 @@ export default class DarkModeService extends Service {
 
     // Load the localStorage preference from localStorage service
     this.localStoragePreference = this.localStorage.getItem(LOCAL_STORAGE_KEY) as LocalStoragePreference;
+
+    // There are no media queries when running under FastBoot
+    if (this.fastboot.isFastBoot) {
+      return;
+    }
 
     // Create a media query to load current system Dark Mode preference
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
