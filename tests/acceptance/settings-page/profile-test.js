@@ -1,6 +1,7 @@
 import profilePage from 'codecrafters-frontend/tests/pages/settings/profile-page';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -74,6 +75,12 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     assert.strictEqual(userPage.githubDetails.username, 'Anonymous');
 
     await profilePage.visit();
+    await profilePage.refreshFromGitHubButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Your profile has anonymous mode enabled. Your GitHub username is not visible to others.',
+    });
+
     await profilePage.refreshFromGitHubButton.click();
     await profilePage.accountDropdown.toggle();
     await profilePage.accountDropdown.clickOnLink('Your Profile');
