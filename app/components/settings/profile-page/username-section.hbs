@@ -34,5 +34,9 @@
       {{svg-jar "refresh" class="w-4 h-4 text-gray-400"}}
       Refresh from GitHub
     </div>
+
+    {{#if this.currentUser.hasAnonymousModeEnabled}}
+      <EmberTooltip @text="Your profile has anonymous mode enabled. Your GitHub username is not visible to others." />
+    {{/if}}
   </TertiaryButtonWithSpinner>
 </Settings::FormSection>
