@@ -349,6 +349,19 @@ export default class CodeMirrorComponent extends Component<Signature> {
     this.renderedView?.dispatch({
       effects: compartment?.reconfigure(handlerMethod ? await handlerMethod(newValue as undefined, this.args, optionName) : []),
     });
+
+    // some options need the document to be re-loaded after being applied
+    if (['lineSeparator'].includes(optionName)) {
+      this.renderedView?.dispatch(
+        this.renderedView?.state.update({
+          changes: {
+            from: 0,
+            to: this.renderedView.state.doc.length,
+            insert: this.args.document,
+          },
+        }),
+      );
+    }
   }
 
   @action async renderEditor(element: Element) {
