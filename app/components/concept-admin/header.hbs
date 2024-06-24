@@ -11,8 +11,15 @@
           <span class="font-bold uppercase tracking-wide">Back to Concept</span>
         </LinkTo>
 
-        <div class="flex items-center mb-4">
+        <div class="flex flex-col justify-center mb-4">
           <div class="font-bold text-2xl text-gray-700">{{or @concept.title "Unnamed Concept"}}</div>
+
+          <LinkTo @route="concept-admin.basic-details" @model={{@concept.lastPersistedSlug}} class="mt-1">
+            <Pill @color="gray">
+              Draft
+              <EmberTooltip @text="This concept is only visible to staff" />
+            </Pill>
+          </LinkTo>
         </div>
       </div>
       <div>
