@@ -1,11 +1,12 @@
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import Controller from '@ember/controller';
-import RouterService from '@ember/routing/router-service';
-import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type RouterService from '@ember/routing/router-service';
+import type Store from '@ember-data/store';
+import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class ConceptsController extends Controller {
   declare model: {
@@ -18,12 +19,23 @@ export default class ConceptsController extends Controller {
   @service declare router: RouterService;
   @service declare authenticator: AuthenticatorService;
 
+  get currentUser(): UserModel {
+    return this.authenticator.currentUser as UserModel;
+  }
+
   get shouldShowCreateConceptButton(): boolean {
     if (!this.authenticator.currentUser) {
       return false;
     }
 
     return this.authenticator.currentUser.isConceptAuthor || this.authenticator.currentUser.isStaff;
+  }
+
+  get visibleConcepts(): ConceptModel[] {
+    return this.model.concepts.filter((concept) => {
+      const canViewDraft = this.currentUser.isStaff || concept.author === this.currentUser;
+      return concept.statusIsPublished || (concept.statusIsDraft && canViewDraft);
+    });
   }
 
   @action

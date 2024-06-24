@@ -4,6 +4,7 @@ import Model, { belongsTo } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
 import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
@@ -23,8 +24,11 @@ export default class ConceptModel extends Model {
   @attr() declare blocks: Array<BlockJSON>;
   @attr('string') declare slug: string;
   @attr('string') declare title: string;
-  @attr('string') declare status: string;
+  @attr('string') declare status: 'draft' | 'published';
   @attr('date') declare updatedAt: Date;
+
+  @equal('status', 'draft') declare statusIsDraft: boolean;
+  @equal('status', 'published') declare statusIsPublished: boolean;
 
   get estimatedReadingTimeInMinutes(): number {
     if (this.blocks) {
