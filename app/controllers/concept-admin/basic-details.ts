@@ -11,11 +11,20 @@ import config from 'codecrafters-frontend/config/environment';
 export default class BasicDetailsController extends Controller {
   @service declare store: Store;
   @service declare router: RouterService;
+
+  @tracked isConceptPublished = false;
   @tracked wasSavedRecently = false;
 
   declare model: {
     concept: ConceptModel;
   };
+
+  @action
+  handlePublishConceptToggled() {
+    this.isConceptPublished = !this.isConceptPublished;
+    this.model.concept.status = this.isConceptPublished ? 'published' : 'draft';
+    this.updateConceptDetails.perform();
+  }
 
   @action
   handleValueUpdated() {

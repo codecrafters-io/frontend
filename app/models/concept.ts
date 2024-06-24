@@ -23,6 +23,7 @@ export default class ConceptModel extends Model {
   @attr() declare blocks: Array<BlockJSON>;
   @attr('string') declare slug: string;
   @attr('string') declare title: string;
+  @attr('string') declare status: string;
   @attr('date') declare updatedAt: Date;
 
   get estimatedReadingTimeInMinutes(): number {
