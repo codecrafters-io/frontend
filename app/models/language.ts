@@ -7,6 +7,7 @@ import grayLogoCpp from '/assets/images/language-logos/cpp-gray-500.svg';
 import grayLogoClojure from '/assets/images/language-logos/clojure-gray-500.svg';
 import grayLogoCrystal from '/assets/images/language-logos/crystal-gray-500.svg';
 import grayLogoCsharp from '/assets/images/language-logos/csharp-gray-500.svg';
+import grayLogoDart from '/assets/images/language-logos/dart-gray-500.svg';
 import grayLogoElixir from '/assets/images/language-logos/elixir-gray-500.svg';
 import grayLogoGleam from '/assets/images/language-logos/gleam-gray-500.svg';
 import grayLogoGo from '/assets/images/language-logos/go-gray-500.svg';
@@ -30,6 +31,7 @@ import tealLogoCpp from '/assets/images/language-logos/cpp-teal-500.svg';
 import tealLogoClojure from '/assets/images/language-logos/clojure-teal-500.svg';
 import tealLogoCrystal from '/assets/images/language-logos/crystal-teal-500.svg';
 import tealLogoCsharp from '/assets/images/language-logos/csharp-teal-500.svg';
+import tealLogoDart from '/assets/images/language-logos/dart-teal-500.svg';
 import tealLogoElixir from '/assets/images/language-logos/elixir-teal-500.svg';
 import tealLogoGleam from '/assets/images/language-logos/gleam-teal-500.svg';
 import tealLogoGo from '/assets/images/language-logos/go-teal-500.svg';
@@ -62,6 +64,7 @@ export default class LanguageModel extends Model {
       clojure: grayLogoClojure,
       crystal: grayLogoCrystal,
       csharp: grayLogoCsharp,
+      dart: grayLogoDart,
       elixir: grayLogoElixir,
       gleam: grayLogoGleam,
       go: grayLogoGo,
@@ -113,6 +116,7 @@ export default class LanguageModel extends Model {
       clojure: tealLogoClojure,
       crystal: tealLogoCrystal,
       csharp: tealLogoCsharp,
+      dart: tealLogoDart,
       elixir: tealLogoElixir,
       gleam: tealLogoGleam,
       go: tealLogoGo,

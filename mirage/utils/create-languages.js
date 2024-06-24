@@ -4,6 +4,7 @@ export default function createLanguages(server) {
   server.create('language', { name: 'C++', slug: 'cpp', trackStatus: 'beta' });
   server.create('language', { name: 'Clojure', slug: 'clojure', trackStatus: 'beta' });
   server.create('language', { name: 'Crystal', slug: 'crystal', trackStatus: 'beta' });
+  server.create('language', { name: 'Dart', slug: 'dart', trackStatus: 'beta' });
   server.create('language', { name: 'Elixir', slug: 'elixir', trackStatus: 'beta' });
   server.create('language', { name: 'Gleam', slug: 'gleam', trackStatus: 'beta' });
   server.create('language', { name: 'Go', slug: 'go', trackStatus: 'live' });
