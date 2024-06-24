@@ -20,7 +20,7 @@
 
   <div class="w-full h-px bg-gray-100"></div>
 
-  <div class="text-xs overflow-y-scroll h-28" {{did-insert this.handleSuggestionListDidInsert}}>
+  <div class="text-xs overflow-y-auto h-28" {{did-insert this.handleSuggestionListDidInsert}}>
     {{#each this.languageSuggestions as |languageSuggestion index|}}
       <div
         role="button"
