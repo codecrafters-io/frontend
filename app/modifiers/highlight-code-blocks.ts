@@ -22,7 +22,7 @@ import 'prismjs/components/prism-zig';
 import 'prismjs/components/prism-diff';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-scala';
-import 'prismjs/components/prism-dart'
+import 'prismjs/components/prism-dart';
 
 // Used in stage instructions
 import 'prismjs/components/prism-bash';
