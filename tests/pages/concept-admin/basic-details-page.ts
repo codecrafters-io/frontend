@@ -14,14 +14,14 @@ export default create({
 
   header: {
     draftLabel: {
-      scope: '[data-test-draft-label]'
+      scope: '[data-test-draft-label]',
     },
 
     scope: '[data-test-concept-admin-header]',
   },
 
   publishConceptToggle: {
-    scope: '[data-test-publish-concept-toggle]'
+    scope: '[data-test-publish-concept-toggle]',
   },
 
   visit: visitable('/concepts/:concept_slug/admin/basic-details'),

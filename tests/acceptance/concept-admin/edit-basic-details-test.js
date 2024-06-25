@@ -5,10 +5,10 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | concept-admin | edit-basic-details', function(hooks) {
+module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('editing the slug updates the url of other tab links', async function(assert) {
+  test('editing the slug updates the url of other tab links', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -32,7 +32,7 @@ module('Acceptance | concept-admin | edit-basic-details', function(hooks) {
     assert.strictEqual(currentURL(), '/concepts/new-slug/admin/blocks');
   });
 
-  test('pasting a link automatically converts the link to markdown format', async function(assert) {
+  test('pasting a link automatically converts the link to markdown format', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -67,7 +67,7 @@ module('Acceptance | concept-admin | edit-basic-details', function(hooks) {
     assert.strictEqual(basicDetailsPageTextarea.selectionStart, basicDetailsPageTextarea.selectionEnd);
   });
 
-  test('toggling publish concept changes concept status from draft to published', async function(assert) {
+  test('toggling publish concept changes concept status from draft to published', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 

@@ -589,7 +589,7 @@ module('Acceptance | concepts-test', function (hooks) {
     testScenario(this.server);
     createConcepts(this.server);
 
-    const concept = this.server.create('concept', {
+    this.server.create('concept', {
       slug: 'new-concept',
       title: 'New Concept',
       'description-markdown': 'This is a new concept.',
@@ -647,7 +647,7 @@ module('Acceptance | concepts-test', function (hooks) {
     testScenario(this.server);
     createConcepts(this.server);
 
-    const user = server.create('user', {
+    const user = this.server.create('user', {
       id: 'user1',
       avatarUrl: 'https://github.com/Gufran.png',
       createdAt: new Date(),
@@ -677,5 +677,5 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.strictEqual(conceptsPage.conceptCards.length, 4, 'Draft concepts are visible to concept author');
     assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
-  })
+  });
 });

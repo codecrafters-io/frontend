@@ -22,7 +22,7 @@ export default createPage({
     draftLabel: {
       hover: triggerable('mouseenter'),
       scope: '[data-test-draft-label]',
-    }
+    },
   }),
 
   visit: visitable('/concepts'),
