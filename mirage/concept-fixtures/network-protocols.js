@@ -115,6 +115,7 @@ export default {
       'description-markdown': 'Learn about various network protocols and the TCP/IP model.',
       slug: 'network-protocols',
       title: 'Network Protocols',
+      status: 'published'
     },
     relationships: {
       author: { data: null },

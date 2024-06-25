@@ -18,6 +18,11 @@ export default createPage({
     progressText: text('[data-test-concept-card-progress-text]'),
     progressBarStyle: attribute('style', '[data-test-concept-card-progress-bar]'),
     title: text('[data-test-concept-title]'),
+
+    draftLabel: {
+      hover: triggerable('mouseenter'),
+      scope: '[data-test-draft-label]',
+    }
   }),
 
   visit: visitable('/concepts'),

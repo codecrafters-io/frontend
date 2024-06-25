@@ -5,10 +5,10 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
+module('Acceptance | concept-admin | edit-basic-details', function(hooks) {
   setupApplicationTest(hooks);
 
-  test('editing the slug updates the url of other tab links', async function (assert) {
+  test('editing the slug updates the url of other tab links', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -32,7 +32,7 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
     assert.strictEqual(currentURL(), '/concepts/new-slug/admin/blocks');
   });
 
-  test('pasting a link automatically converts the link to markdown format', async function (assert) {
+  test('pasting a link automatically converts the link to markdown format', async function(assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -65,5 +65,28 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
     assert.strictEqual(basicDetailsPage.form.inputFields[2].value, 'this [url](https://test.url.com) should be changed');
     assert.strictEqual(basicDetailsPageTextarea.selectionStart, 32);
     assert.strictEqual(basicDetailsPageTextarea.selectionStart, basicDetailsPageTextarea.selectionEnd);
+  });
+
+  test('toggling publish concept changes concept status from draft to published', async function(assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const concept = this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+      status: 'draft',
+    });
+
+    await basicDetailsPage.visit({ concept_slug: 'dummy' });
+    await basicDetailsPage.publishConceptToggle.click();
+
+    assert.strictEqual(concept.reload().status, 'published', 'Concept status should be updated to published');
   });
 });

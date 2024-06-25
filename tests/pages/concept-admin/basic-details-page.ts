@@ -12,5 +12,17 @@ export default create({
     scope: '[data-test-basic-details-form]',
   },
 
+  header: {
+    draftLabel: {
+      scope: '[data-test-draft-label]'
+    },
+
+    scope: '[data-test-concept-admin-header]',
+  },
+
+  publishConceptToggle: {
+    scope: '[data-test-publish-concept-toggle]'
+  },
+
   visit: visitable('/concepts/:concept_slug/admin/basic-details'),
 });

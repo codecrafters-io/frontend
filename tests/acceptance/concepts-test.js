@@ -6,11 +6,12 @@ import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/netw
 import percySnapshot from '@percy/ember';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 
 function createConcepts(server) {
@@ -583,4 +584,98 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
   });
+
+  test('only published concepts are visible to users', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    const concept = this.server.create('concept', {
+      slug: 'new-concept',
+      title: 'New Concept',
+      'description-markdown': 'This is a new concept.',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+      status: 'draft',
+    });
+
+    signInAsSubscriber(this.owner, this.server);
+
+    await conceptsPage.visit();
+    assert.strictEqual(conceptsPage.conceptCards.length, 3, 'Only published concepts are visible to users');
+  });
+
+  test('draft concepts are visible to staff', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    this.server.create('concept', {
+      slug: 'new-concept',
+      title: 'New Concept',
+      'description-markdown': 'This is a new concept.',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+      status: 'draft',
+    });
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    assert.strictEqual(conceptsPage.conceptCards.length, 4, 'Draft concepts are visible to staff');
+    assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
+
+    await conceptsPage.conceptCards[3].draftLabel.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'This concept is only visible to staff',
+    });
+  });
+
+  test('draft concepts are visible to concept author', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    const user = server.create('user', {
+      id: 'user1',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    this.server.create('concept', {
+      slug: 'new-concept',
+      title: 'New Concept',
+      'description-markdown': 'This is a new concept.',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+      status: 'draft',
+      author: user,
+    });
+
+    signIn(this.owner, this.server, user);
+
+    await conceptsPage.visit();
+
+    assert.strictEqual(conceptsPage.conceptCards.length, 4, 'Draft concepts are visible to concept author');
+    assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
+  })
 });

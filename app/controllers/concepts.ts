@@ -19,21 +19,21 @@ export default class ConceptsController extends Controller {
   @service declare router: RouterService;
   @service declare authenticator: AuthenticatorService;
 
-  get currentUser(): UserModel {
+  get currentUser(): UserModel | null {
     return this.authenticator.currentUser as UserModel;
   }
 
   get shouldShowCreateConceptButton(): boolean {
-    if (!this.authenticator.currentUser) {
+    if (!this.currentUser) {
       return false;
     }
 
-    return this.authenticator.currentUser.isConceptAuthor || this.authenticator.currentUser.isStaff;
+    return this.currentUser.isConceptAuthor || this.currentUser.isStaff;
   }
 
   get visibleConcepts(): ConceptModel[] {
     return this.model.concepts.filter((concept) => {
-      const canViewDraft = this.currentUser.isStaff || concept.author === this.currentUser;
+      const canViewDraft = this.currentUser && this.currentUser.isStaff || concept.author === this.currentUser;
 
       return concept.statusIsPublished || (concept.statusIsDraft && canViewDraft);
     });

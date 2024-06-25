@@ -15,6 +15,7 @@ export default {
       'description-markdown': 'This is used for tests.',
       slug: 'dummy',
       title: 'Dummy Concept',
+      status: 'published'
     },
     relationships: {
       author: { data: { id: '8373d847-7cea-457c-94e2-7a1769d51cd6', type: 'users' } },

@@ -15,7 +15,7 @@
       {{/if}}
 
       {{#if (eq @concept.status "draft")}}
-        <Pill @color="gray">
+        <Pill @color="gray" data-test-draft-label>
           Draft
           <EmberTooltip @text="This concept is only visible to staff" />
         </Pill>
