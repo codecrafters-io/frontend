@@ -112,12 +112,7 @@
         </:description>
 
         <:content>
-          <Toggle
-            @isOn={{this.isConceptPublished}}
-            {{on "click" this.handlePublishConceptToggled}}
-            class="mt-1"
-            data-test-publish-concept-toggle
-          />
+          <Toggle @isOn={{this.isConceptPublished}} {{on "click" this.handlePublishConceptToggled}} class="mt-1" data-test-publish-concept-toggle />
 
           {{#if this.isConceptPublished}}
             <div class="text-gray-400 text-xs mt-0.5">
