@@ -96,7 +96,7 @@
     "@types/rsvp": "^4.0.9",
     "@types/showdown": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^6.21.0",
+    "@typescript-eslint/parser": "^7.14.1",
     "@uiw/codemirror-theme-github": "^4.22.2",
     "@vercel/edge": "^1.1.1",
     "autoprefixer": "^10.4.19",
