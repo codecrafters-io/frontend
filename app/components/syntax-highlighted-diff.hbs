@@ -1,5 +1,5 @@
 <div
-  class="overflow-x-scroll dark:text-gray-400 dark:bg-gray-900"
+  class="overflow-x-auto dark:text-gray-400 dark:bg-gray-900"
   {{did-insert (perform this.highlightCode)}}
   {{did-update (perform this.highlightCode) this.darkMode.isEnabled @forceDarkTheme @code @language}}
   ...attributes

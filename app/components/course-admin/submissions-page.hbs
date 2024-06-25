@@ -36,12 +36,12 @@
       @onSubmissionSelect={{mut this.selectedSubmission}}
       @submissions={{@submissions}}
       @selectedSubmission={{this.selectedSubmission}}
-      class="w-1/4 border-r overflow-y-scroll"
+      class="w-1/4 border-r overflow-y-auto"
     />
 
     <CourseAdmin::SubmissionsPage::SubmissionDetailsContainer
       @submission={{this.selectedSubmission}}
-      class="w-3/4 pr-0 overflow-y-scroll"
+      class="w-3/4 pr-0 overflow-y-auto"
       data-test-submission-details
     />
   </div>
