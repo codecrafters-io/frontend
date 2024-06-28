@@ -20,11 +20,11 @@ export default class ConceptModel extends Model {
   @hasMany('concept-engagement', { async: false, inverse: 'concept' }) declare engagements: ConceptEngagementModel[];
   @hasMany('concept-question', { async: false, inverse: 'concept' }) declare questions: SyncHasMany<ConceptQuestion>;
 
-  @attr('string') declare descriptionMarkdown: string;
   @attr() declare blocks: Array<BlockJSON>;
+  @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare slug: string;
-  @attr('string') declare title: string;
   @attr('string') declare status: 'draft' | 'published';
+  @attr('string') declare title: string;
   @attr('date') declare updatedAt: Date;
 
   @equal('status', 'draft') declare statusIsDraft: boolean;
