@@ -608,6 +608,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.visit();
     assert.strictEqual(conceptsPage.conceptCards.length, 3, 'Only published concepts are visible to users');
+    assert.notOk(conceptsPage.conceptCards.map((card) => card.title).includes('New Concept'), 'Draft concepts are not visible to users');
   });
 
   test('draft concepts are visible to staff', async function (assert) {
@@ -634,6 +635,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.visit();
 
     assert.strictEqual(conceptsPage.conceptCards.length, 4, 'Draft concepts are visible to staff');
+    assert.strictEqual(conceptsPage.conceptCards[3].title, 'New Concept', 'Draft concepts are visible to staff');
     assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
 
     await conceptsPage.conceptCards[3].draftLabel.hover();
@@ -676,6 +678,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.visit();
 
     assert.strictEqual(conceptsPage.conceptCards.length, 4, 'Draft concepts are visible to concept author');
+    assert.strictEqual(conceptsPage.conceptCards[3].title, 'New Concept', 'Draft concepts are visible to concept author');
     assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
   });
 });

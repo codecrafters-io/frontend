@@ -12,7 +12,6 @@ export default class BasicDetailsController extends Controller {
   @service declare store: Store;
   @service declare router: RouterService;
 
-  @tracked isConceptPublished = false;
   @tracked wasSavedRecently = false;
 
   declare model: {
@@ -21,8 +20,7 @@ export default class BasicDetailsController extends Controller {
 
   @action
   handlePublishConceptToggled() {
-    this.isConceptPublished = !this.isConceptPublished;
-    this.model.concept.status = this.isConceptPublished ? 'published' : 'draft';
+    this.model.concept.status = this.model.concept.status === 'draft' ? 'published' : 'draft';
     this.updateConceptDetails.perform();
   }
 

@@ -20,7 +20,7 @@ export default class ConceptsController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get currentUser(): UserModel | null {
-    return this.authenticator.currentUser as UserModel;
+    return this.authenticator.currentUser;
   }
 
   get shouldShowCreateConceptButton(): boolean {
@@ -33,7 +33,7 @@ export default class ConceptsController extends Controller {
 
   get visibleConcepts(): ConceptModel[] {
     return this.model.concepts.filter((concept) => {
-      const canViewDraft = (this.currentUser && this.currentUser.isStaff) || concept.author === this.currentUser;
+      const canViewDraft = this.currentUser?.isStaff || concept.author === this.currentUser;
 
       return concept.statusIsPublished || (concept.statusIsDraft && canViewDraft);
     });

@@ -112,17 +112,20 @@
         </:description>
 
         <:content>
-          <Toggle @isOn={{this.isConceptPublished}} {{on "click" this.handlePublishConceptToggled}} class="mt-1" data-test-publish-concept-toggle />
+          <Toggle
+            @isOn={{@model.concept.statusIsPublished}}
+            {{on "click" this.handlePublishConceptToggled}}
+            class="mt-1"
+            data-test-publish-concept-toggle
+          />
 
-          {{#if this.isConceptPublished}}
-            <div class="text-gray-400 text-xs mt-0.5">
+          <div class="text-gray-400 text-xs mt-0.5" data-test-publish-concept-toggle-description>
+            {{#if @model.concept.statusIsPublished}}
               This concept is published
-            </div>
-          {{else}}
-            <div class="text-gray-400 text-xs mt-0.5">
+            {{else}}
               This concept is currently in draft mode
-            </div>
-          {{/if}}
+            {{/if}}
+          </div>
         </:content>
       </ConceptAdmin::FormSection>
     </div>

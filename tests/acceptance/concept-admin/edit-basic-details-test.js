@@ -1,4 +1,5 @@
 import basicDetailsPage from 'codecrafters-frontend/tests/pages/concept-admin/basic-details-page';
+import conceptsPage from 'codecrafters-frontend/tests/pages/concepts-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -67,7 +68,7 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
     assert.strictEqual(basicDetailsPageTextarea.selectionStart, basicDetailsPageTextarea.selectionEnd);
   });
 
-  test('toggling publish concept changes concept status from draft to published', async function (assert) {
+  test('concept can be published', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -81,6 +82,7 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
           },
         },
       ],
+      title: 'Dummy Concept',
       status: 'draft',
     });
 
@@ -88,5 +90,39 @@ module('Acceptance | concept-admin | edit-basic-details', function (hooks) {
     await basicDetailsPage.publishConceptToggle.click();
 
     assert.strictEqual(concept.reload().status, 'published', 'Concept status should be updated to published');
+    assert.strictEqual(basicDetailsPage.publishConceptToggleDescriptionText, 'This concept is published');
+
+    await conceptsPage.visit();
+
+    assert.notOk(conceptsPage.conceptCards[0].draftLabel.isVisible, 'Draft label should not be visible for published concept');
+  });
+
+  test('concept can be unpublished', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const concept = this.server.create('concept', {
+      slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+      title: 'Dummy Concept',
+      status: 'published',
+    });
+
+    await basicDetailsPage.visit({ concept_slug: 'dummy' });
+    await basicDetailsPage.publishConceptToggle.click();
+
+    assert.strictEqual(concept.reload().status, 'draft', 'Concept status should be updated to published');
+    assert.strictEqual(basicDetailsPage.publishConceptToggleDescriptionText, 'This concept is currently in draft mode');
+
+    await conceptsPage.visit();
+
+    assert.ok(conceptsPage.conceptCards[0].draftLabel.isVisible, 'Draft label should be visible for draft concept');
   });
 });
