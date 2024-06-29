@@ -32,7 +32,26 @@
   </div>
 
   {{#unless @isCollapsed}}
-    <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" @shouldDisplayLineNumbers={{true}} class="text-sm" />
+    <CodeMirror
+      @document={{@code}}
+      @filename={{@filename}}
+      @language={{@language}}
+      @lineNumbers={{true}}
+      @allowMultipleSelections={{true}}
+      @bracketMatching={{true}}
+      @crosshairCursor={{true}}
+      @drawSelection={{true}}
+      @rectangularSelection={{true}}
+      @editable={{false}}
+      @readOnly={{true}}
+      @foldGutter={{true}}
+      @highlightActiveLine={{true}}
+      @highlightSelectionMatches={{true}}
+      @highlightSpecialChars={{true}}
+      @highlightTrailingWhitespace={{true}}
+      @theme="githubLight"
+      class="block text-sm"
+    />
 
     {{#if @isCollapsible}}
       <div class="flex items-center justify-center mb-3">
