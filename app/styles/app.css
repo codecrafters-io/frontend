@@ -77,6 +77,15 @@ code-mirror .cm-gutter.cm-lineNumbers .cm-gutterElement {
   color: #94a3b8;
 }
 
+code-mirror .cm-gutter.cm-foldGutter .cm-gutterElement {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 0.875em;
+  padding-right: 0.125rem;
+  color: #94a3b8;
+}
+
 code-mirror .cm-content .cm-line {
   line-height: 1.5rem;
   padding-left: 0.875rem;
