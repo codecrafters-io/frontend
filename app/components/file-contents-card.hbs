@@ -1,8 +1,12 @@
-<div class="bg-white shadow-sm rounded border border-gray-300" ...attributes {{did-insert this.handleDidInsertContainer}}>
+<div
+  class="bg-white dark:bg-gray-950 shadow-sm rounded border border-gray-300 dark:border-gray-800"
+  ...attributes
+  {{did-insert this.handleDidInsertContainer}}
+>
   {{! template-lint-disable no-invalid-interactive }}
   <div
-    class="flex items-center bg-gray-100 h-8 px-4 relative group/file-contents-card-header
-      {{if @isCollapsed 'rounded border-b-0' 'rounded-t border-b border-gray-200'}}
+    class="flex items-center bg-gray-100 dark:bg-gray-900 h-8 px-4 relative group/file-contents-card-header
+      {{if @isCollapsed 'rounded border-b-0' 'rounded-t border-b border-gray-200 dark:border-gray-800'}}
       {{if @isCollapsible 'cursor-pointer hover:bg-gray-50' 'cursor-default'}}"
     role={{if @isCollapsible "button"}}
     {{! @glint-expect-error doesn't allow mouse event since it has args }}
@@ -11,7 +15,7 @@
     {{#if (has-block "header")}}
       {{yield to="header"}}
     {{else}}
-      <span class="font-mono text-xs text-gray-600 bold flex">
+      <span class="font-mono text-xs text-gray-600 dark:text-gray-100 bold flex">
         {{@filename}}
       </span>
     {{/if}}
@@ -49,12 +53,12 @@
       @highlightSelectionMatches={{true}}
       @highlightSpecialChars={{true}}
       @highlightTrailingWhitespace={{true}}
-      @theme="githubLight"
+      @theme={{if this.darkMode.isEnabled "githubDark" "githubLight"}}
       class="block text-sm"
     />
 
     {{#if @isCollapsible}}
-      <div class="flex items-center justify-center mb-3">
+      <div class="flex items-center justify-center my-3">
         <TertiaryButton @size="small" {{on "click" this.handleCollapseButtonClick}}>
           Collapse File
         </TertiaryButton>

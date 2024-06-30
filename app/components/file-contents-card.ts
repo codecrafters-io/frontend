@@ -1,6 +1,8 @@
 import { action } from '@ember/object';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -22,6 +24,8 @@ interface Signature {
 }
 
 export default class FileContentsCardComponent extends Component<Signature> {
+  @service declare darkMode: DarkModeService;
+
   @tracked containerElement: HTMLDivElement | null = null;
 
   @action
