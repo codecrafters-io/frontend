@@ -24,6 +24,7 @@ export default class ConceptModel extends Model {
   @attr('string') declare slug: string;
   @attr('string') declare title: string;
   @attr('date') declare updatedAt: Date;
+  @attr('date') declare createdAt: Date;
 
   get estimatedReadingTimeInMinutes(): number {
     if (this.blocks) {

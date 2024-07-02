@@ -7,15 +7,32 @@ import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
+import type UserModel from 'codecrafters-frontend/models/user';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export default class BasicDetailsController extends Controller {
   @service declare store: Store;
   @service declare router: RouterService;
-  @tracked wasSavedRecently = false;
+  @service declare authenticator: AuthenticatorService;
+  @tracked wasSavedRecently: boolean = false;
+  @tracked deleteConceptModalIsOpen: boolean = false;
 
   declare model: {
     concept: ConceptModel;
   };
+
+  get currentUser(): UserModel {
+    return this.authenticator.currentUser as UserModel;
+  }
+
+  @action
+  async handleDeleteConceptActionClick() {
+    if (this.model.concept.author !== this.currentUser) {
+      return;
+    }
+
+    this.deleteConceptModalIsOpen = true;
+  }
 
   @action
   handleValueUpdated() {
