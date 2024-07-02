@@ -88,6 +88,13 @@ export default class DemoCodeMirrorController extends Controller {
       filename: 'test.md',
       language: 'markdown',
     }),
+    new ExampleDocument({
+      document:
+        '# syntax=docker/dockerfile:1.7-labs\nFROM mcr.microsoft.com/dotnet/sdk:8.0-alpine\n\nWORKDIR /app\n\n# .git & README.md are unique per-repository. We ignore them on first copy to prevent cache misses\nCOPY --exclude=.git --exclude=README.md . /app\n\n# This saves nuget packages to ~/.nuget\nRUN dotnet build --configuration Release .\n\n# This seems to cause a caching issue with the dotnet build command, where old contents are used\n# TODO: See if this needs to be brought back?\n# RUN rm -rf /app/obj\n# RUN rm -rf /app/bin\n\nRUN echo "cd \\${CODECRAFTERS_SUBMISSION_DIR} && dotnet build --configuration Release ." > /codecrafters-precompile.sh\nRUN chmod +x /codecrafters-precompile.sh\n\nENV CODECRAFTERS_DEPENDENCY_FILE_PATHS="codecrafters-redis.csproj,codecrafters-redis.sln"\n\n# Once the heavy steps are done, we can copy all files back\nCOPY . /app\n\n',
+      originalDocument: '# syntax=docker/dockerfile:1.7-labs\n',
+      filename: 'Dockerfile',
+      language: 'dockerfile',
+    }),
   ];
 
   @tracked indentUnits = [
