@@ -14,7 +14,7 @@ export default create({
 
   deleteMyConceptButton: {
     hover: triggerable('mouseenter'),
-    scope: '[data-test-delete-my-concept-button]',
+    scope: '[data-test-delete-concept-button]',
   },
 
   deleteConceptModal: {
@@ -28,7 +28,7 @@ export default create({
       },
 
       release: triggerable('mouseup'),
-      scope: '[data-test-delete-concept-button]',
+      scope: '[data-test-confirm-delete-concept-button]',
     },
 
     scope: '[data-test-delete-concept-modal]',

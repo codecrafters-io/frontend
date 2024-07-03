@@ -14,6 +14,7 @@ export default class BasicDetailsController extends Controller {
   @service declare store: Store;
   @service declare router: RouterService;
   @service declare authenticator: AuthenticatorService;
+
   @tracked wasSavedRecently: boolean = false;
   @tracked deleteConceptModalIsOpen: boolean = false;
 
@@ -25,9 +26,13 @@ export default class BasicDetailsController extends Controller {
     return this.authenticator.currentUser as UserModel;
   }
 
+  get currentUserCanDeleteConcept(): boolean {
+    return this.currentUser.isStaff || this.model.concept.author === this.currentUser;
+  }
+
   @action
-  async handleDeleteConceptActionClick() {
-    if (this.model.concept.author !== this.currentUser && !this.currentUser.isStaff) {
+  async handleDeleteConceptButtonClick() {
+    if (!this.currentUserCanDeleteConcept) {
       return;
     }
 

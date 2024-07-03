@@ -20,10 +20,6 @@ export default class DeleteConceptModalComponent extends Component<Signature> {
 
   @action
   async deleteConcept() {
-    if (!this.args.concept) {
-      return;
-    }
-
     this.router.transitionTo('concepts');
     await this.args.concept.destroyRecord();
   }
@@ -31,6 +27,6 @@ export default class DeleteConceptModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DeleteConceptModal: typeof DeleteConceptModalComponent;
+    'ConceptAdmin::DeleteConceptModal': typeof DeleteConceptModalComponent;
   }
 }

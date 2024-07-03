@@ -13,26 +13,6 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('can see delete concept button', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    this.server.create('concept', {
-      slug: 'dummy',
-      blocks: [
-        {
-          type: 'markdown',
-          args: {
-            markdown: `This is the first markdown block.`,
-          },
-        },
-      ],
-    });
-
-    await basicDetailsPage.visit({ concept_slug: 'dummy' });
-    assert.true(basicDetailsPage.deleteMyConceptButton.isVisible, 'delete concept button is visible');
-  });
-
   test('staff can delete any concept', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
@@ -54,7 +34,7 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
     assert.true(basicDetailsPage.deleteConceptModal.isVisible, 'delete concept modal is open');
 
     await basicDetailsPage.deleteMyConceptButton.hover();
-    assertTooltipNotRendered(assert, 'tool tip not rendered on hover');
+    assertTooltipNotRendered(assert, 'tooltip is not rendered on hover');
 
     await percySnapshot('Concept Admin - Delete Concept Modal');
 
