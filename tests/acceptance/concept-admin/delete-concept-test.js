@@ -2,7 +2,7 @@ import basicDetailsPage from 'codecrafters-frontend/tests/pages/concept-admin/ba
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { module, test } from 'qunit';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsConceptAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { currentURL, waitUntil, settled } from '@ember/test-helpers';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
@@ -33,12 +33,89 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
     assert.true(basicDetailsPage.deleteMyConceptButton.isVisible, 'delete concept button is visible');
   });
 
-  test('cannot open delete concept modal for concept created by other user', async function (assert) {
+  test('staff can delete any concept', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
     this.server.create('concept', {
       slug: 'dummy',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+    });
+
+    await basicDetailsPage.visit({ concept_slug: 'dummy' });
+    await basicDetailsPage.deleteMyConceptButton.click();
+    assert.true(basicDetailsPage.deleteConceptModal.isVisible, 'delete concept modal is open');
+
+    await basicDetailsPage.deleteMyConceptButton.hover();
+    assertTooltipNotRendered(assert, 'tool tip not rendered on hover');
+
+    await percySnapshot('Concept Admin - Delete Concept Modal');
+
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.hover();
+    assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
+
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.leave();
+    assert.notOk(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should not be visible');
+
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.press();
+    await waitUntil(() => currentURL() === '/concepts');
+    await settled(); // Delete request triggers after redirect
+    assert.strictEqual(conceptsPage.conceptCards.length, 0, 'Concept is deleted');
+  });
+
+  test('concept authors can delete their own concepts', async function (assert) {
+    testScenario(this.server);
+    signInAsConceptAuthor(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    this.server.create('concept', {
+      slug: 'dummy',
+      author: currentUser,
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+    });
+
+    await basicDetailsPage.visit({ concept_slug: 'dummy' });
+    await basicDetailsPage.deleteMyConceptButton.click();
+    assert.true(basicDetailsPage.deleteConceptModal.isVisible, 'delete concept modal is open');
+
+    await basicDetailsPage.deleteMyConceptButton.hover();
+    assertTooltipNotRendered(assert, 'tooltip is not rendered');
+
+    await percySnapshot('Concept Admin - Delete Concept Modal');
+
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.hover();
+    assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
+
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.leave();
+    assert.notOk(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should not be visible');
+
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.press();
+    await waitUntil(() => currentURL() === '/concepts');
+    await settled(); // Delete request triggers after redirect
+    assert.strictEqual(conceptsPage.conceptCards.length, 0, 'Concept is deleted');
+  });
+
+  test('concept authors cannot delete others concepts', async function (assert) {
+    testScenario(this.server);
+    signInAsConceptAuthor(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'dummy',
+      author: this.server.create('user', { username: 'other-user' }),
       blocks: [
         {
           type: 'markdown',
@@ -55,67 +132,7 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
 
     await basicDetailsPage.deleteMyConceptButton.hover();
     assertTooltipContent(assert, {
-      contentString: `This concept was created by , only they have permissions to delete it.`,
+      contentString: `This concept was created by ${this.server.schema.concepts.first().author.username}, only they have permissions to delete it.`,
     });
-  });
-
-  test('can open delete concept modal', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    this.server.create('concept', {
-      slug: 'dummy',
-      author: currentUser,
-      blocks: [
-        {
-          type: 'markdown',
-          args: {
-            markdown: `This is the first markdown block.`,
-          },
-        },
-      ],
-    });
-
-    await basicDetailsPage.visit({ concept_slug: 'dummy' });
-    await basicDetailsPage.deleteMyConceptButton.click();
-
-    assert.true(basicDetailsPage.deleteConceptModal.isVisible, 'delete concept modal is open');
-    assertTooltipNotRendered(assert);
-  });
-
-  test('can delete concept', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    this.server.create('concept', {
-      slug: 'dummy',
-      author: currentUser,
-      blocks: [
-        {
-          type: 'markdown',
-          args: {
-            markdown: `This is the first markdown block.`,
-          },
-        },
-      ],
-    });
-
-    await basicDetailsPage.visit({ concept_slug: 'dummy' });
-    await basicDetailsPage.deleteMyConceptButton.click();
-
-    await percySnapshot('Concept Admin - Delete Concept Modal');
-
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.hover();
-    assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
-
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.leave();
-    assert.notOk(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should not be visible');
-
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.press();
-    await waitUntil(() => currentURL() === '/concepts');
-    await settled(); // Delete request triggers after redirect
-    assert.strictEqual(conceptsPage.conceptCards.length, 0, 'Concept is deleted');
   });
 });

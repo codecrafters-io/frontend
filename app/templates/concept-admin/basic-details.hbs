@@ -108,13 +108,13 @@
         <:content>
           <DangerButton
             @size="small"
-            @isDisabled={{not (eq this.currentUser @model.concept.author)}}
+            @isDisabled={{not (or (current-user-is-concept-author @model.concept) (current-user-is-staff))}}
             {{on "click" this.handleDeleteConceptActionClick}}
             data-test-delete-my-concept-button
           >
             Delete concept
 
-            {{#unless (eq this.currentUser @model.concept.author)}}
+            {{#unless (or (current-user-is-concept-author @model.concept) (current-user-is-staff))}}
               <EmberTooltip @text="This concept was created by {{@model.concept.author.username}}, only they have permissions to delete it." />
             {{/unless}}
           </DangerButton>

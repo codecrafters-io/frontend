@@ -27,7 +27,7 @@ export default class BasicDetailsController extends Controller {
 
   @action
   async handleDeleteConceptActionClick() {
-    if (this.model.concept.author !== this.currentUser) {
+    if (this.model.concept.author !== this.currentUser && !this.currentUser.isStaff) {
       return;
     }
 
