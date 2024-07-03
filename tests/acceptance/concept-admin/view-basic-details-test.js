@@ -19,4 +19,52 @@ module('Acceptance | concept-admin | view-basic-details', function (hooks) {
 
     await percySnapshot('Concept Admin - Basic Details');
   });
+
+  test('draft label is present in concept admin page for draft concepts', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'new-concept',
+      title: 'New Concept',
+      'description-markdown': 'This is a new concept.',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+      status: 'draft',
+    });
+
+    await basicDetailsPage.visit({ concept_slug: 'new-concept' });
+
+    assert.ok(basicDetailsPage.header.draftLabel.isVisible, 'Expect draft label to be visible');
+  });
+
+  test('draft label is not present in concept admin page for published concepts', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    this.server.create('concept', {
+      slug: 'new-concept',
+      title: 'New Concept',
+      'description-markdown': 'This is a new concept.',
+      blocks: [
+        {
+          type: 'markdown',
+          args: {
+            markdown: `This is the first markdown block.`,
+          },
+        },
+      ],
+      status: 'published',
+    });
+
+    await basicDetailsPage.visit({ concept_slug: 'new-concept' });
+
+    assert.notOk(basicDetailsPage.header.draftLabel.isVisible, 'Expect draft label not to be visible');
+  });
 });

@@ -13,6 +13,13 @@
       {{#if (current-user-is-concept-author @concept)}}
         <Pill @color="green">Yours</Pill>
       {{/if}}
+
+      {{#if @concept.statusIsDraft}}
+        <Pill @color="gray" data-test-draft-label>
+          Draft
+          <EmberTooltip @text="This concept is only visible to staff" />
+        </Pill>
+      {{/if}}
     </div>
 
     <div class="prose prose-sm mb-5">
