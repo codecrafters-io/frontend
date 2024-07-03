@@ -4,6 +4,7 @@ export default function createConceptFromFixture(server, conceptFixture) {
   const concept = server.create('concept', {
     title: conceptAttributes['title'],
     slug: conceptAttributes['slug'],
+    status: conceptAttributes['status'],
     descriptionMarkdown: conceptAttributes['description-markdown'],
     blocks: conceptAttributes['blocks'],
   });

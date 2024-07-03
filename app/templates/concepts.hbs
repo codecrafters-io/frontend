@@ -23,7 +23,7 @@
   </div>
 
   <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
-    {{#each this.model.concepts as |concept|}}
+    {{#each this.visibleConcepts as |concept|}}
       <ConceptsPage::ConceptCard @concept={{concept}} />
     {{/each}}
   </div>

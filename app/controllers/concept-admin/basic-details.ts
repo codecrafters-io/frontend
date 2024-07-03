@@ -35,6 +35,12 @@ export default class BasicDetailsController extends Controller {
   }
 
   @action
+  handlePublishConceptToggled() {
+    this.model.concept.status = this.model.concept.status === 'draft' ? 'published' : 'draft';
+    this.updateConceptDetails.perform();
+  }
+
+  @action
   handleValueUpdated() {
     this.updateConceptDetails.perform();
   }

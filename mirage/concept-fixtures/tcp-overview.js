@@ -168,6 +168,7 @@ export default {
       'description-markdown': 'Learn about the TCP protocol and how it works.',
       slug: 'tcp-overview',
       title: 'TCP: An Overview',
+      status: 'published',
     },
     relationships: {
       author: { data: null },

@@ -1,4 +1,4 @@
-<div class="border-b">
+<div class="border-b" data-test-concept-admin-header>
   <div class="container lg:max-w-screen-lg mx-auto pt-8 px-6">
     <div class="flex justify-between items-start">
       <div>
@@ -11,8 +11,17 @@
           <span class="font-bold uppercase tracking-wide">Back to Concept</span>
         </LinkTo>
 
-        <div class="flex items-center mb-4">
+        <div class="flex flex-col justify-center mb-4">
           <div class="font-bold text-2xl text-gray-700">{{or @concept.title "Unnamed Concept"}}</div>
+
+          {{#if @concept.statusIsDraft}}
+            <LinkTo @route="concept-admin.basic-details" @model={{@concept.lastPersistedSlug}} class="mt-1">
+              <Pill @color="gray" data-test-draft-label>
+                Draft
+                <EmberTooltip @text="This concept is only visible to staff" />
+              </Pill>
+            </LinkTo>
+          {{/if}}
         </div>
       </div>
       <div>

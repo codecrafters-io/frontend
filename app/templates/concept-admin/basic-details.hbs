@@ -104,6 +104,31 @@
         </:content>
       </ConceptAdmin::FormSection>
 
+      <ConceptAdmin::FormSection @title="Publish">
+        <:description>
+          <label for="concept_published">
+            Unpublished concepts aren't visible to other users.
+          </label>
+        </:description>
+
+        <:content>
+          <Toggle
+            @isOn={{@model.concept.statusIsPublished}}
+            {{on "click" this.handlePublishConceptToggled}}
+            class="mt-1"
+            data-test-publish-concept-toggle
+          />
+
+          <div class="text-gray-400 text-xs mt-0.5" data-test-publish-concept-toggle-description>
+            {{#if @model.concept.statusIsPublished}}
+              This concept is published
+            {{else}}
+              This concept is currently in draft mode
+            {{/if}}
+          </div>
+        </:content>
+      </ConceptAdmin::FormSection>
+
       <ConceptAdmin::FormSection @title="Danger Zone">
         <:content>
           <DangerButton
