@@ -114,9 +114,9 @@
           >
             Delete concept
 
-            {{#unless (or (current-user-is-concept-author @model.concept) (current-user-is-staff))}}
+            {{#if (not (or (current-user-is-concept-author @model.concept) (current-user-is-staff)))}}
               <EmberTooltip @text="This concept was created by {{@model.concept.author.username}}, only they have permissions to delete it." />
-            {{/unless}}
+            {{/if}}
           </DangerButton>
 
           {{#if this.deleteConceptModalIsOpen}}
