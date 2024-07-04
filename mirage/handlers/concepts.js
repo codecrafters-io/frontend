@@ -48,6 +48,8 @@ export default function (server) {
     return concept;
   });
 
+  server.delete('/concepts/:id');
+
   server.post('/concepts/:id/update-blocks', function (schema, request) {
     const concept = schema.concepts.find(request.params.id);
     const jsonBody = JSON.parse(request.requestBody);

@@ -128,6 +128,30 @@
           </div>
         </:content>
       </ConceptAdmin::FormSection>
+
+      <ConceptAdmin::FormSection @title="Danger Zone">
+        <:content>
+          <DangerButton
+            @size="small"
+            @isDisabled={{(not this.currentUserCanDeleteConcept)}}
+            {{on "click" this.handleDeleteConceptButtonClick}}
+            data-test-delete-concept-button
+          >
+            Delete concept
+
+            {{#unless this.currentUserCanDeleteConcept}}
+              <EmberTooltip @text="This concept was created by {{@model.concept.author.username}}, only they have permissions to delete it." />
+            {{/unless}}
+          </DangerButton>
+
+          {{#if this.deleteConceptModalIsOpen}}
+            <ModalBackdrop>
+              {{! @glint-expect-error: mut not ts-ified yet }}
+              <ConceptAdmin::DeleteConceptModal @concept={{@model.concept}} @onClose={{fn (mut this.deleteConceptModalIsOpen) false}} />
+            </ModalBackdrop>
+          {{/if}}
+        </:content>
+      </ConceptAdmin::FormSection>
     </div>
   </div>
 </div>

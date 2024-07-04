@@ -25,7 +25,7 @@ export default class ConceptModel extends Model {
   @attr('string') declare slug: string;
   @attr('string') declare status: 'draft' | 'published';
   @attr('string') declare title: string;
-  @attr('date') declare updatedAt: Date;
+  @attr('date') declare createdAt: Date;
 
   @equal('status', 'draft') declare statusIsDraft: boolean;
   @equal('status', 'published') declare statusIsPublished: boolean;

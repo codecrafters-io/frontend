@@ -12,6 +12,28 @@ export default create({
     scope: '[data-test-basic-details-form]',
   },
 
+  deleteMyConceptButton: {
+    hover: triggerable('mouseenter'),
+    scope: '[data-test-delete-concept-button]',
+  },
+
+  deleteConceptModal: {
+    deleteConceptButton: {
+      hover: triggerable('mouseenter'),
+      leave: triggerable('mouseleave'),
+      press: triggerable('mousedown'),
+
+      progressIndicator: {
+        scope: '[data-test-progress-indicator]',
+      },
+
+      release: triggerable('mouseup'),
+      scope: '[data-test-confirm-delete-concept-button]',
+    },
+
+    scope: '[data-test-delete-concept-modal]',
+  },
+
   header: {
     draftLabel: {
       scope: '[data-test-draft-label]',
