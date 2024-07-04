@@ -25,8 +25,8 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
     assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Git');
     assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own grep');
-    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Docker');
-    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
+    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own SQLite');
+    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own Docker');
 
     assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasBetaLabel, 'live challenges should not have beta label');
@@ -42,7 +42,7 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 6, 'expected 6 course cards to be present');
 
-    assert.ok(catalogPage.courseCards[5].hasAlphaLabel, 'alpha challenges should have alpha label');
+    assert.ok(catalogPage.courseCards[4].hasAlphaLabel, 'alpha challenges should have alpha label');
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
@@ -180,8 +180,8 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
     assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Git');
     assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own grep');
-    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own Docker');
-    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own SQLite');
+    assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own SQLite');
+    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own Docker');
 
     assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
     assert.ok(catalogPage.courseCardByName('Build your own Redis').hasFreeLabel, 'free challenges should have free label');
