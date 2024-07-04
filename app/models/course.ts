@@ -20,6 +20,7 @@ import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 import httpServerLogo from '/assets/images/challenge-logos/challenge-logo-http-server.svg';
+import interpreterLogo from '/assets/images/challenge-logos/challenge-logo-interpreter.svg';
 import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import shellLogo from '/assets/images/challenge-logos/challenge-logo-shell.svg';
@@ -120,6 +121,7 @@ export default class CourseModel extends Model {
         git: gitLogo,
         grep: grepLogo,
         'http-server': httpServerLogo,
+        interpreter: interpreterLogo,
         react: reactLogo,
         redis: redisLogo,
         shell: shellLogo,
@@ -137,19 +139,9 @@ export default class CourseModel extends Model {
   }
 
   get sortPositionForTrack() {
-    return (
-      {
-        'http-server': 2,
-        'dns-server': 5,
-        bittorrent: 7,
-        docker: 8,
-        git: 4,
-        grep: 6,
-        redis: 1,
-        shell: 3,
-        sqlite: 9,
-      }[this.slug] || 100
-    );
+    const orderedSlugs = ['redis', 'http-server', 'shell', 'git', 'interpreter', 'dns-server', 'grep', 'bittorrent', 'sqlite'];
+
+    return orderedSlugs.indexOf(this.slug) || 100;
   }
 
   // TODO[Extensions]: Should we include stages from extensions?
