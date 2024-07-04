@@ -140,8 +140,9 @@ export default class CourseModel extends Model {
 
   get sortPositionForTrack() {
     const orderedSlugs = ['redis', 'http-server', 'shell', 'git', 'interpreter', 'dns-server', 'grep', 'bittorrent', 'sqlite'];
+    const index = orderedSlugs.indexOf(this.slug);
 
-    return orderedSlugs.indexOf(this.slug) || 100;
+    return index === -1 ? 100 : index;
   }
 
   // TODO[Extensions]: Should we include stages from extensions?
