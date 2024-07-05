@@ -21,7 +21,7 @@ export default class CatalogController extends Controller {
   get languages() {
     return this.model.courses
       .toArray()
-      .flatMap((course) => course.betaOrLiveLanguages.toArray())
+      .flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages.toArray() : []))
       .uniq();
   }
 
