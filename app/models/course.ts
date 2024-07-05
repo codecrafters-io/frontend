@@ -139,7 +139,7 @@ export default class CourseModel extends Model {
   }
 
   get sortPositionForTrack() {
-    const orderedSlugs = ['redis', 'http-server', 'shell', 'git', 'interpreter', 'dns-server', 'grep', 'bittorrent', 'sqlite'];
+    const orderedSlugs = ['redis', 'http-server', 'interpreter', 'shell', 'git', 'dns-server', 'grep', 'bittorrent', 'sqlite'];
     const index = orderedSlugs.indexOf(this.slug);
 
     return index === -1 ? 100 : index;
