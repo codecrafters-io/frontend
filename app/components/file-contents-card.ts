@@ -29,8 +29,14 @@ export default class FileContentsCardComponent extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
 
   @action
-  handleCollapseButtonClick() {
-    if (this.args.onCollapse) {
+  handleCollapseExpandButtonClick() {
+    if (!this.args.isCollapsible) {
+      return;
+    }
+
+    if (this.args.isCollapsed && this.args.onExpand) {
+      this.args.onExpand();
+    } else if (!this.args.isCollapsed && this.args.onCollapse) {
       this.args.onCollapse();
       this.containerElement!.scrollIntoView({ behavior: 'smooth' });
     }

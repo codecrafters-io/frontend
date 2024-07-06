@@ -10,7 +10,7 @@
       {{if @isCollapsible 'cursor-pointer hover:bg-gray-50' 'cursor-default'}}"
     role={{if @isCollapsible "button"}}
     {{! @glint-expect-error doesn't allow mouse event since it has args }}
-    {{on "click" (if @isCollapsed @onExpand this.handleCollapseButtonClick)}}
+    {{on "click" this.handleCollapseExpandButtonClick}}
   >
     {{#if (has-block "header")}}
       {{yield to="header"}}
@@ -35,7 +35,7 @@
     {{/if}}
   </div>
 
-  {{#unless @isCollapsed}}
+  {{#unless (and @isCollapsible @isCollapsed)}}
     <CodeMirror
       @document={{@code}}
       @filename={{@filename}}
@@ -59,7 +59,7 @@
 
     {{#if @isCollapsible}}
       <div class="flex items-center justify-center my-3">
-        <TertiaryButton @size="small" {{on "click" this.handleCollapseButtonClick}}>
+        <TertiaryButton @size="small" {{on "click" this.handleCollapseExpandButtonClick}}>
           Collapse File
         </TertiaryButton>
       </div>

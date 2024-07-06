@@ -33,8 +33,11 @@
   @code={{this.selectedDocument.document}}
   @filename={{this.selectedDocument.filename}}
   @language={{this.selectedDocument.language}}
+  @isCollapsed={{this.isCollapsed}}
   @isCollapsible={{this.isCollapsible}}
   @headerTooltipText={{if this.headerTooltipText "Example tooltip message"}}
+  @onExpand={{fn (mut this.isCollapsed) false}}
+  @onCollapse={{fn (mut this.isCollapsed) true}}
   class="my-4"
 />
 
