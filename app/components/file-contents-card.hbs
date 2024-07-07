@@ -9,7 +9,6 @@
       {{if @isCollapsed 'rounded border-b-0' 'rounded-t border-b border-gray-200 dark:border-gray-800'}}
       {{if @isCollapsible 'cursor-pointer hover:bg-gray-50' 'cursor-default'}}"
     role={{if @isCollapsible "button"}}
-    {{! @glint-expect-error doesn't allow mouse event since it has args }}
     {{on "click" this.handleCollapseExpandButtonClick}}
   >
     {{#if (has-block "header")}}
