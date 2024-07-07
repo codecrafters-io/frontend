@@ -21,6 +21,10 @@
         <Input @type="checkbox" @checked={{this.isCollapsible}} />
         <span class="ml-2">isCollapsible</span>
       </label>
+      <label class="{{labelClasses}}" title="Automatically scroll the component into view after it is collapsed">
+        <Input @type="checkbox" @checked={{this.scrollIntoViewOnCollapse}} disabled={{not this.isCollapsible}} />
+        <span class="ml-2 {{unless this.isCollapsible 'text-gray-300'}}">scrollIntoViewOnCollapse</span>
+      </label>
       <label class="{{labelClasses}}" title="Show a tooltip text in the header">
         <Input @type="checkbox" @checked={{this.headerTooltipText}} />
         <span class="ml-2">headerTooltipText</span>
@@ -35,6 +39,7 @@
   @language={{this.selectedDocument.language}}
   @isCollapsed={{this.isCollapsed}}
   @isCollapsible={{this.isCollapsible}}
+  @scrollIntoViewOnCollapse={{this.scrollIntoViewOnCollapse}}
   @headerTooltipText={{if this.headerTooltipText "Example tooltip message"}}
   @onExpand={{fn (mut this.isCollapsed) false}}
   @onCollapse={{fn (mut this.isCollapsed) true}}

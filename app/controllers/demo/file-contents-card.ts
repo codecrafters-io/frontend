@@ -65,6 +65,7 @@ export default class DemoFileContentsCardController extends Controller {
 
   @tracked isCollapsible: boolean = false;
   @tracked isCollapsed: boolean = false;
+  @tracked scrollIntoViewOnCollapse: boolean = true;
   @tracked headerTooltipText: boolean = false;
 
   @action selectedDocumentIndexDidChange(event: Event) {

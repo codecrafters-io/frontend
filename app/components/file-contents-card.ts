@@ -11,9 +11,10 @@ interface Signature {
     code: string;
     language: string;
     filename: string;
-    headerTooltipText?: string; // If collapsible, use this to provide a tooltip for the header
+    headerTooltipText?: string;
     isCollapsible?: boolean;
     isCollapsed?: boolean;
+    scrollIntoViewOnCollapse?: boolean;
     onExpand?: () => void;
     onCollapse?: () => void;
   };
@@ -36,9 +37,14 @@ export default class FileContentsCardComponent extends Component<Signature> {
 
     if (this.args.isCollapsed && this.args.onExpand) {
       this.args.onExpand();
-    } else if (!this.args.isCollapsed && this.args.onCollapse) {
-      this.args.onCollapse();
-      this.containerElement!.scrollIntoView({ behavior: 'smooth' });
+    } else if (!this.args.isCollapsed) {
+      if (this.args.onCollapse) {
+        this.args.onCollapse();
+      }
+
+      if (this.args.scrollIntoViewOnCollapse !== false) {
+        this.containerElement!.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
 
