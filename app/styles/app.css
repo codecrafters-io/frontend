@@ -65,6 +65,10 @@ code-mirror .cm-editor .cm-content {
   padding-bottom: 0.5rem;
 }
 
+code-mirror .cm-editor .cm-gutters {
+  border-right: none;
+}
+
 code-mirror .cm-gutter .cm-gutterElement {
   line-height: 1.5rem;
 }
