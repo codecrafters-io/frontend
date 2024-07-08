@@ -175,7 +175,7 @@
     "qunit": "^2.21.0",
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^3.2.0",
-    "shiki": "^1.7.0",
+    "shiki": "^1.10.3",
     "sinon": "^17.0.1",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "^36.0.1",
