@@ -58,7 +58,7 @@
     "@percy/ember": "^4.0.0",
     "@sentry/ember": "^8.15.0",
     "@sentry/webpack-plugin": "^2.20.1",
-    "@shikijs/rehype": "^1.10.1",
+    "@shikijs/rehype": "^1.10.3",
     "@shikijs/transformers": "^1.10.0",
     "@tsconfig/ember": "^3.0.8",
     "@types/canvas-confetti": "^1.6.4",
