@@ -47,7 +47,7 @@
       @rectangularSelection={{true}}
       @editable={{false}}
       @readOnly={{true}}
-      @foldGutter={{true}}
+      @foldGutter={{if (eq @foldGutter false) false true}}
       @highlightActiveLine={{false}}
       @highlightSelectionMatches={{true}}
       @highlightSpecialChars={{true}}

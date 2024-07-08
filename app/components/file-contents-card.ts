@@ -15,6 +15,7 @@ interface Signature {
     isCollapsible?: boolean;
     isCollapsed?: boolean;
     scrollIntoViewOnCollapse?: boolean;
+    foldGutter?: boolean;
     onExpand?: () => void;
     onCollapse?: () => void;
   };
