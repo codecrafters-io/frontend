@@ -34,8 +34,6 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
     await basicDetailsPage.deleteMyConceptButton.hover();
     assertTooltipNotRendered(assert, 'tooltip is not rendered on hover');
 
-    await percySnapshot('Concept Admin - Delete Concept Modal');
-
     await basicDetailsPage.deleteConceptModal.deleteConceptButton.hover();
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
