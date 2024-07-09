@@ -1,5 +1,4 @@
 import basicDetailsPage from 'codecrafters-frontend/tests/pages/concept-admin/basic-details-page';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { module, test } from 'qunit';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { signInAsConceptAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -11,7 +10,6 @@ import conceptsPage from 'codecrafters-frontend/tests/pages/concepts-page';
 
 module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('staff can delete any concept', async function (assert) {
     testScenario(this.server);
