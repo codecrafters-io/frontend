@@ -33,10 +33,15 @@ export default class ForceUpdateService extends Service {
       return;
     }
 
+    if (config.environment === 'test') {
+      return; // Don't poll in tests
+    }
+
+    // TODO: Is this still needed?
     // This workaround is required to skip the very first poll, so that tests don't lag
     // https://github.com/ember-lifeline/ember-lifeline/issues/72
     if (this.isFirstPollComplete) {
-      runTask(this, next, config.environment == 'test' ? 0 : this.POLL_INTERVAL_SECONDS * 1000);
+      runTask(this, next, this.POLL_INTERVAL_SECONDS * 1000);
     } else {
       this.isFirstPollComplete = true;
       next();

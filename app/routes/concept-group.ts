@@ -32,7 +32,6 @@ export default class ConceptGroupRoute extends BaseRoute {
     const conceptGroup = await this.store.queryRecord('concept-group', { slug: params.concept_group_slug, include: 'author' });
 
     if (!conceptGroup) {
-      console.error(`Unable to find concept-group "${params.concept_group_slug}", redirecting to /`);
       this.router.transitionTo('/');
     }
 

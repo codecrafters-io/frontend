@@ -90,8 +90,6 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
     await blocksPage.visit({ concept_slug: 'dummy' });
     assert.strictEqual(1, 1);
 
-    await percySnapshot('Concept Admin - Blocks');
-
     assert.strictEqual(blocksPage.editableBlocks.length, 6, 'expected 6 editable blocks to be present');
 
     assert.strictEqual(blocksPage.editableBlocks[0].preview.text, 'block 1');
@@ -130,8 +128,6 @@ module('Acceptance | concept-admin | edit-blocks', function (hooks) {
 
     await blocksPage.visit({ concept_slug: 'dummy' });
     assert.strictEqual(1, 1);
-
-    await percySnapshot('Concept Admin - Blocks');
 
     assert.strictEqual(blocksPage.editableBlocks.length, 2, 'expected 2 editable blocks to be present');
 
