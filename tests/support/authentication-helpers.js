@@ -1,4 +1,4 @@
-export async function signIn(owner, server, user) {
+export function signIn(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
   if (!user) {
@@ -13,42 +13,42 @@ export async function signIn(owner, server, user) {
   return user;
 }
 
-export async function signInAsAdmin(owner, server, user) {
+export function signInAsAdmin(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isAdmin', true);
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsAffiliate(owner, server, user) {
+export function signInAsAffiliate(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isAffiliate', true);
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsConceptAuthor(owner, server, user) {
+export function signInAsConceptAuthor(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isConceptAuthor', true);
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsCourseAuthor(owner, server, course, user) {
+export function signInAsCourseAuthor(owner, server, course, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('authoredCourseSlugs', [course.slug]);
 
-  await signInAsSubscriber(owner, server, user);
+  signInAsSubscriber(owner, server, user);
 }
 
-export async function signInAsStaff(owner, server, user) {
+export function signInAsStaff(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isStaff', true);
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsSubscriber(owner, server, user) {
+export function signInAsSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
   server.create('subscription', {
@@ -57,10 +57,10 @@ export async function signInAsSubscriber(owner, server, user) {
     currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsTeamAdmin(owner, server, user) {
+export function signInAsTeamAdmin(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });
 
@@ -72,10 +72,10 @@ export async function signInAsTeamAdmin(owner, server, user) {
     isAdmin: true,
   });
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsTeamMember(owner, server, user) {
+export function signInAsTeamMember(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });
 
@@ -87,10 +87,10 @@ export async function signInAsTeamMember(owner, server, user) {
     isAdmin: false,
   });
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsSubscribedTeamMember(owner, server) {
+export function signInAsSubscribedTeamMember(owner, server) {
   const user = server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });
 
@@ -104,10 +104,10 @@ export async function signInAsSubscribedTeamMember(owner, server) {
     isAdmin: false,
   });
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }
 
-export async function signInAsTrialingSubscriber(owner, server, user) {
+export function signInAsTrialingSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
   server.create('subscription', {
@@ -117,5 +117,5 @@ export async function signInAsTrialingSubscriber(owner, server, user) {
     trialEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
-  await signIn(owner, server, user);
+  signIn(owner, server, user);
 }

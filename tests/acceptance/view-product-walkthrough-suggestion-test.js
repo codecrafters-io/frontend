@@ -10,7 +10,7 @@ module('Acceptance | view-product-walkthrough-suggestion', function (hooks) {
 
   test('it renders suggestion if user has it', async function (assert) {
     testScenario(this.server);
-    const user = await signIn(this.owner, this.server);
+    const user = signIn(this.owner, this.server);
 
     this.server.create('feature-suggestion', { user: user, featureSlug: 'product-walkthrough' });
     this.server.create('concept', { slug: 'overview', blocks: [] });
@@ -34,7 +34,7 @@ module('Acceptance | view-product-walkthrough-suggestion', function (hooks) {
 
   test('it can be dismissed', async function (assert) {
     testScenario(this.server);
-    const user = await signIn(this.owner, this.server);
+    const user = signIn(this.owner, this.server);
 
     let featureSuggestion = this.server.create('feature-suggestion', { user: user, featureSlug: 'product-walkthrough' });
 

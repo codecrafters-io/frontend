@@ -14,7 +14,7 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
   test('can answer questions in onboarding survey', async function (assert) {
     testScenario(this.server);
-    const user = await signIn(this.owner, this.server);
+    const user = signIn(this.owner, this.server);
 
     const onboardingSurvey = this.server.create('onboarding-survey', {
       id: 'dummy-survey-id',
@@ -59,7 +59,7 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
   test('redirects to catalog if survey is already complete', async function (assert) {
     testScenario(this.server);
-    const user = await signIn(this.owner, this.server);
+    const user = signIn(this.owner, this.server);
 
     this.server.create('onboarding-survey', {
       id: 'dummy-survey-id',
@@ -73,7 +73,7 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
   test('stores ?next query param and redirects to it after survey completion', async function (assert) {
     testScenario(this.server);
-    const user = await signIn(this.owner, this.server);
+    const user = signIn(this.owner, this.server);
 
     this.server.create('onboarding-survey', {
       id: 'dummy-survey-id',
