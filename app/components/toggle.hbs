@@ -6,7 +6,7 @@
     {{if this.sizeIsRegular 'h-6 w-11'}}
     relative inline-flex flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-100 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"
   role="switch"
-  aria-checked="false"
+  aria-checked="{{if @isOn 'true' 'false'}}"
   ...attributes
 >
   <span
