@@ -18,4 +18,4 @@ snapshot:
 discovery:
   disable-cache: true
   disallowed-hostnames:
-    - github.com
+    - github.com # GitHub rate limits repeated requests from automated tests
