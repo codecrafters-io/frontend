@@ -74,6 +74,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
 
     await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
+    await animationsSettled();
     await percySnapshot('Start Course - Language Proficiency Selected');
 
     await coursePage.createRepositoryCard.clickOnNextQuestionButton();
