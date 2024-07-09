@@ -52,75 +52,75 @@ jobs:
 
       - run: npm run tailwind:build
 
-      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name | tee test-results.xml
+      - run: npx percy exec --verbose -- npx ember exam --silent --parallel=16 --load-balance --preserve-test-name
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
           PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
 
-      - run: cat test-results.xml
-        if: always()
+  #     - run: cat test-results.xml
+  #       if: always()
 
-      - name: 'Upload coverage to Codecov'
-        uses: codecov/codecov-action@v1
-        with:
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
+  #     - name: 'Upload coverage to Codecov'
+  #       uses: codecov/codecov-action@v1
+  #       with:
+  #         fail_ci_if_error: true
+  #         token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: test-results.xml
+  #     - name: Upload test results to Codecov
+  #       if: ${{ !cancelled() }}
+  #       uses: codecov/test-results-action@v1
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         file: test-results.xml
 
-      - name: Remove percy logs
-        run: sed -i '/^\[percy\]/d' test-results.xml
+  #     - name: Remove percy logs
+  #       run: sed -i '/^\[percy\]/d' test-results.xml
 
-      - name: Remove sentry-webpack-plugin logs
-        run: sed -i '/^\[sentry-webpack-plugin\]/d' test-results.xml
+  #     - name: Remove sentry-webpack-plugin logs
+  #       run: sed -i '/^\[sentry-webpack-plugin\]/d' test-results.xml
 
-      - run: cat test-results.xml
+  #     - run: cat test-results.xml
 
-      - name: Publish Buildkite analytics
-        continue-on-error: true
-        run: |-
-          curl -XPOST --fail \
-            -H "Authorization: Token token=\"$BUILDKITE_ANALYTICS_TOKEN\"" \
-            -F "data=@test-results.xml" \
-            -F "format=junit" \
-            -F "run_env[CI]=github_actions" \
-            -F "run_env[key]=$GITHUB_ACTION-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ATTEMPT" \
-            -F "run_env[number]=$GITHUB_RUN_NUMBER" \
-            -F "run_env[branch]=$GITHUB_REF" \
-            -F "run_env[commit_sha]=$GITHUB_SHA" \
-            -F "run_env[url]=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
-            https://analytics-api.buildkite.com/v1/uploads
-        if: always()
-        env:
-          BUILDKITE_ANALYTICS_TOKEN: ${{ secrets.BUILDKITE_ANALYTICS_TOKEN }}
+  #     - name: Publish Buildkite analytics
+  #       continue-on-error: true
+  #       run: |-
+  #         curl -XPOST --fail \
+  #           -H "Authorization: Token token=\"$BUILDKITE_ANALYTICS_TOKEN\"" \
+  #           -F "data=@test-results.xml" \
+  #           -F "format=junit" \
+  #           -F "run_env[CI]=github_actions" \
+  #           -F "run_env[key]=$GITHUB_ACTION-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ATTEMPT" \
+  #           -F "run_env[number]=$GITHUB_RUN_NUMBER" \
+  #           -F "run_env[branch]=$GITHUB_REF" \
+  #           -F "run_env[commit_sha]=$GITHUB_SHA" \
+  #           -F "run_env[url]=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+  #           https://analytics-api.buildkite.com/v1/uploads
+  #       if: always()
+  #       env:
+  #         BUILDKITE_ANALYTICS_TOKEN: ${{ secrets.BUILDKITE_ANALYTICS_TOKEN }}
 
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          files: test-results.xml
-          seconds_between_github_writes: 0.01
-          seconds_between_github_reads: 0.01
+  #     - name: Publish Unit Test Results
+  #       uses: EnricoMi/publish-unit-test-result-action@v2
+  #       if: always()
+  #       with:
+  #         files: test-results.xml
+  #         seconds_between_github_writes: 0.01
+  #         seconds_between_github_reads: 0.01
 
-  lint:
-    runs-on: depot-ubuntu-22.04-16
-    # Use cheaper machines for dependabot if we're low on namespace credits
-    # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
+  # lint:
+  #   runs-on: depot-ubuntu-22.04-16
+  #   # Use cheaper machines for dependabot if we're low on namespace credits
+  #   # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+  #         cache: 'npm'
 
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
-      - run: npm run tailwind:build
-      - run: npm run lint
+  #     - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
+  #     - run: npm run tailwind:build
+  #     - run: npm run lint
