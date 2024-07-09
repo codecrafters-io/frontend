@@ -17,3 +17,5 @@ snapshot:
     }
 discovery:
   disable-cache: true
+  disallowed-hostnames:
+    - github.com
