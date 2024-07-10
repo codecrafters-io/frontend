@@ -32,7 +32,7 @@ export default class PayRoute extends BaseRoute {
 
     return {
       courses: await this.store.findAll('course'), // For testimonials
-      regionalDiscount: this.authenticator.currentUser ? await this.store.createRecord('regional-discount').fetchCurrent() : null,
+      regionalDiscount: await this.store.createRecord('regional-discount').fetchCurrent(),
     };
   }
 }
