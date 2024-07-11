@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import Helper from '@ember/component/helper';
 import showdown from 'showdown';
 import { htmlSafe } from '@ember/template';
@@ -19,13 +20,23 @@ export default class MarkdownToHtml extends Helper<Signature> {
   }
 
   public convertMarkdownToHtml(markdown: string): string {
-    return new showdown.Converter({
-      simplifiedAutoLink: true,
-      openLinksInNewWindow: true,
-      strikethrough: true,
-      tables: true,
-      disableForced4SpacesIndentedSublists: true,
-    }).makeHtml(markdown);
+    DOMPurify.removeAllHooks();
+
+    DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+      if (node.nodeName === 'A') {
+        node.setAttribute('target', '_blank');
+        node.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+
+    return DOMPurify.sanitize(
+      new showdown.Converter({
+        simplifiedAutoLink: true,
+        strikethrough: true,
+        tables: true,
+        disableForced4SpacesIndentedSublists: true,
+      }).makeHtml(markdown),
+    );
   }
 }
 
