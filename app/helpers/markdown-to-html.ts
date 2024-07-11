@@ -20,10 +20,18 @@ export default class MarkdownToHtml extends Helper<Signature> {
   }
 
   public convertMarkdownToHtml(markdown: string): string {
+    DOMPurify.removeAllHooks();
+
+    DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+      if (node.nodeName === 'A') {
+        node.setAttribute('target', '_blank');
+        node.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+
     return DOMPurify.sanitize(
       new showdown.Converter({
         simplifiedAutoLink: true,
-        openLinksInNewWindow: true,
         strikethrough: true,
         tables: true,
         disableForced4SpacesIndentedSublists: true,
