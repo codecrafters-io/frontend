@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import Helper from '@ember/component/helper';
 import showdown from 'showdown';
 import { htmlSafe } from '@ember/template';
@@ -19,13 +20,15 @@ export default class MarkdownToHtml extends Helper<Signature> {
   }
 
   public convertMarkdownToHtml(markdown: string): string {
-    return new showdown.Converter({
-      simplifiedAutoLink: true,
-      openLinksInNewWindow: true,
-      strikethrough: true,
-      tables: true,
-      disableForced4SpacesIndentedSublists: true,
-    }).makeHtml(markdown);
+    return DOMPurify.sanitize(
+      new showdown.Converter({
+        simplifiedAutoLink: true,
+        openLinksInNewWindow: true,
+        strikethrough: true,
+        tables: true,
+        disableForced4SpacesIndentedSublists: true,
+      }).makeHtml(markdown),
+    );
   }
 }
 
