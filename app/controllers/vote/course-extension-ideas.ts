@@ -26,7 +26,12 @@ export default class CourseExtensionIdeasController extends Controller {
   }
 
   get orderedCourses() {
-    return this.model.courseExtensionIdeas.mapBy('course').uniq().sortBy('sortPositionForTrack');
+    return this.model.courseExtensionIdeas
+      .mapBy('course')
+      .uniq()
+      .rejectBy('releaseStatusIsDeprecated')
+      .rejectBy('releaseStatusIsAlpha')
+      .sortBy('sortPositionForTrack');
   }
 
   get selectedCourse() {
