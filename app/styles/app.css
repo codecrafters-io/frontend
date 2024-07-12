@@ -60,45 +60,6 @@
   );
 }
 
-code-mirror .cm-editor .cm-content {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-code-mirror .cm-editor .cm-gutters {
-  border-right: none;
-  /* background-color: #0d1117; */
-  background-color: transparent;
-}
-
-code-mirror .cm-gutter .cm-gutterElement {
-  line-height: 1.5rem;
-}
-
-code-mirror .cm-gutter.cm-lineNumbers .cm-gutterElement {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 0.875em;
-  color: #94a3b8;
-  padding: 0 0.5rem 0 1rem;
-}
-
-code-mirror .cm-gutter.cm-foldGutter .cm-gutterElement {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.875em;
-  min-width: 1.2rem;
-  color: #94a3b8;
-}
-
-code-mirror .cm-content .cm-line {
-  line-height: 1.5rem;
-  padding-left: 0.625rem;
-  padding-right: 1rem;
-}
-
 .syntax-highlighted-code pre {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
