@@ -20,7 +20,11 @@
     </div>
   </div>
 
-  <AffiliateLinkPage::AcceptReferralContainer @affiliateLink={{this.model.affiliateLink}} class="mt-20 md:mt-24 mb-52" />
+  <AffiliateLinkPage::AcceptReferralContainer
+    @affiliateLink={{this.model.affiliateLink}}
+    class="mt-20 md:mt-24 mb-52"
+    data-test-accept-referral-button
+  />
 
   <div class="space-y-6 text-center my-8 max-w-[640px] max-h-[198px] mx-auto">
     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Trusted by senior engineers at
@@ -35,7 +39,7 @@
 
   <img src={{this.ccBanner}} alt="CC Banner" class="w-4/5 mx-auto mt-16" />
 
-  <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{this.model.affiliateLink}} class="mt-16" />
+  <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{this.model.affiliateLink}} class="mt-16" data-test-accept-referral-button />
   <div class="text-sm text-slate-700 mt-4 text-center">Get access to 40% off via @{{@model.affiliateLink.usernameForDisplay}}</div>
 
   <h2 class="text-2xl font-bold text-gray-700 md:text-3xl text-center mt-16">
@@ -56,6 +60,6 @@
     {{/each}}
   </div>
 
-  <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{this.model.affiliateLink}} class="mt-16" />
+  <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{this.model.affiliateLink}} class="mt-16" data-test-accept-referral-button />
   <div class="text-sm text-slate-700 mt-4 text-center">Get access to 40% off via @{{@model.affiliateLink.usernameForDisplay}}</div>
 </div>

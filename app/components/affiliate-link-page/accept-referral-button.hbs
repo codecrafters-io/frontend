@@ -4,7 +4,6 @@
     @shouldShowSpinner={{this.isCreatingAffiliateReferral}}
     @isDisabled={{not this.acceptOfferButtonIsEnabled}}
     class="px-5 py-3"
-    data-test-accept-referral-button
     {{on "click" this.handleAcceptOfferButtonClick}}
   >
     {{#if this.currentUserIsAnonymous}}
