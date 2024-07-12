@@ -67,6 +67,7 @@ export default class DemoFileContentsCardController extends Controller {
   @tracked isCollapsed: boolean = false;
   @tracked scrollIntoViewOnCollapse: boolean = true;
   @tracked headerTooltipText: boolean = false;
+  @tracked foldGutter: boolean = true;
 
   @action selectedDocumentIndexDidChange(event: Event) {
     const target: HTMLSelectElement = event.target as HTMLSelectElement;

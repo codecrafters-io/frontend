@@ -29,6 +29,10 @@
         <Input @type="checkbox" @checked={{this.headerTooltipText}} />
         <span class="ml-2">headerTooltipText</span>
       </label>
+      <label class="{{labelClasses}}" title="Show code folding gutter">
+        <Input @type="checkbox" @checked={{this.foldGutter}} />
+        <span class="ml-2">foldGutter</span>
+      </label>
     </component-options-right>
   </component-options>
 {{/let}}
@@ -41,6 +45,7 @@
   @isCollapsible={{this.isCollapsible}}
   @scrollIntoViewOnCollapse={{this.scrollIntoViewOnCollapse}}
   @headerTooltipText={{if this.headerTooltipText "Example tooltip message"}}
+  @foldGutter={{this.foldGutter}}
   @onExpand={{fn (mut this.isCollapsed) false}}
   @onCollapse={{fn (mut this.isCollapsed) true}}
   class="my-4"
