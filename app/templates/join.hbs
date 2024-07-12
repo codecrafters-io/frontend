@@ -1,11 +1,42 @@
 {{page-title "Join"}}
 
 <div class="container mx-auto lg:max-w-screen-lg py-16 pb-48 px-3 md:px-6">
-  <h1 class="text-2xl font-bold text-gray-700 md:text-3xl text-center">
-    Join the best.
-  </h1>
+  <div class="flex flex-col md:flex-row md:items-center">
+    <div class="flex flex-col flex-1">
+      <h1 class="text-3xl text-gray-900 font-bold mb-6 md:text-4xl">
+        Become a
+        <span class="font-extrabold">better, confident</span>
+        programmer.
+      </h1>
+      <p class="text-lg text-gray-800">Stop letting advanced programming projects intimidate you. Start approaching them with the calm and confidence
+        of a craftsman who has seen it before.</p>
 
-  <AffiliateLinkPage::AcceptReferralContainer @affiliateLink={{this.model.affiliateLink}} class="mt-8" />
+      <hr class="h-1 text-gray-200 my-5" />
+      <p class="text-gray-600">On CodeCrafters, you’ll implement Git, SQLite, and BitTorrent from scratch, with your own hands. Once you realize that
+        even complex projects are actually rather approachable, you’ll never be the same again.</p>
+    </div>
+    <div class="flex-1">
+      <img src={{this.heroImage}} alt="Hero" class="w-full" />
+    </div>
+  </div>
+
+  <AffiliateLinkPage::AcceptReferralContainer @affiliateLink={{this.model.affiliateLink}} class="mt-20 md:mt-24 mb-52" />
+
+  <div class="space-y-6 text-center my-8 max-w-[640px] max-h-[198px] mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Trusted by senior engineers at
+      <span class="italic font-extrabold">the world's best companies</span></h2>
+    <p class="text-sm md:text-lg text-gray-800">Discover how core contributors to Docker and Next.js practice writing code at the edge of their
+      abilities — as well as senior engineers at companies like Apple, NVIDIA, and Stripe.</p>
+  </div>
+
+  <div><h2 class="text-gray-400 uppercase text-center text-xs mb-5">Trusted by engineers at top companies</h2>
+    <AffiliateLinkPage::LogoCloud />
+  </div>
+
+  <img src={{this.ccBanner}} alt="CC Banner" class="w-4/5 mx-auto mt-16" />
+
+  <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{this.model.affiliateLink}} class="mt-16" />
+  <div class="text-sm text-slate-700 mt-4 text-center">Get access to 40% off via @{{@model.affiliateLink.usernameForDisplay}}</div>
 
   <h2 class="text-2xl font-bold text-gray-700 md:text-3xl text-center mt-16">
     Hear it from our members
@@ -25,6 +56,6 @@
     {{/each}}
   </div>
 
-  {{!  <AffiliateLinkPage::LogoCloudContainer />}}
-  {{!  <AffiliateLinkPage::TestimonialsContainer />}}
+  <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{this.model.affiliateLink}} class="mt-16" />
+  <div class="text-sm text-slate-700 mt-4 text-center">Get access to 40% off via @{{@model.affiliateLink.usernameForDisplay}}</div>
 </div>

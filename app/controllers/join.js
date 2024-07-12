@@ -1,7 +1,11 @@
 import Controller from '@ember/controller';
 import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
+import heroImage from '/assets/images/affiliate-program-features/hero-image.png';
+import ccBanner from '/assets/images/affiliate-program-features/backed-by-ycombinator.png';
 
 export default class JoinController extends Controller {
+  heroImage = heroImage;
+  ccBanner = ccBanner;
   queryParams = [{ affiliateLinkSlug: 'via' }];
 
   get testimonialGroups() {
