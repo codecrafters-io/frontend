@@ -1,4 +1,4 @@
-import heroImage from '/assets/images/affiliate-program-features/hero-image.png';
+import heroImage from '/assets/images/affiliate-program-features/cc-profile-image.png';
 import Component from '@glimmer/component';
 
 export default class HeroSectionComponent extends Component {

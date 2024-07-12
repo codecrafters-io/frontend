@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import awsImage from '/assets/images/company-logos/aws.png';
 import coinbaseImage from '/assets/images/company-logos/coinbase.png';
 import vercelImage from '/assets/images/company-logos/vercel.png';
@@ -26,7 +25,7 @@ import visaImage from '/assets/images/company-logos/visa.png';
 import sourcegraphImage from '/assets/images/company-logos/sourcegraph.png';
 
 export default class LogoCloudComponent extends Component {
-  @tracked companiesData = [
+  companiesData = [
     {
       name: 'meta',
       image: metaImage,
