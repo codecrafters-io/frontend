@@ -7,9 +7,9 @@
 }}
   <codemirror-options class="{{groupClasses}} -mt-8">
     <codemirror-options-left class="flex flex-grow flex-wrap">
-      <label class="{{labelClasses}}" title="Show a border around the component's element">
-        <Input @type="checkbox" @checked={{this.border}} />
-        <span class="ml-2">border</span>
+      <label class="{{labelClasses}}" title="Show an outline around the component's element">
+        <Input @type="checkbox" @checked={{this.outline}} />
+        <span class="ml-2">outline</span>
       </label>
       <label class="{{labelClasses}}" title="Theme to use for the editor">
         <Input @type="checkbox" @checked={{this.theme}} />
@@ -290,7 +290,7 @@
   @scrollPastEnd={{this.scrollPastEnd}}
   @syntaxHighlighting={{this.syntaxHighlighting}}
   {{! Element classes }}
-  class="block overflow-auto my-4 h-72 {{if this.border 'border-2 border-dashed border-green-500'}}"
+  class="block overflow-auto my-4 h-72 {{if this.outline 'outline-2 outline-dashed outline-green-500'}}"
 />
 
 {{outlet}}

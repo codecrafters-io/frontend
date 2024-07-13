@@ -157,7 +157,7 @@ export default class DemoCodeMirrorController extends Controller {
     }
   }
 
-  @tracked border: boolean = true;
+  @tracked outline: boolean = true;
 
   @tracked allowMultipleSelections: boolean = true;
   @tracked autocompletion: boolean = true;
