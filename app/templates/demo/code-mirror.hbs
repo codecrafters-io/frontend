@@ -25,7 +25,7 @@
         </select>
       </label>
     </codemirror-options-left>
-    <codemirror-options-right class="flex">
+    <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Number of spaces to use for representing the TAB character visually">
         <Input @type="checkbox" @checked={{this.tabSize}} />
         <span class="mx-2">tabSize:</span>
@@ -104,7 +104,7 @@
         <span class="ml-2">originalDocument</span>
       </label>
     </codemirror-options-left>
-    <codemirror-options-right class="flex">
+    <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Placeholder text to show when document is empty or not passed">
         <Input @type="checkbox" @checked={{this.placeholder}} />
         <span class="ml-2">placeholder</span>
@@ -131,7 +131,7 @@
         <span class="ml-2">scrollPastEnd</span>
       </label>
     </codemirror-options-left>
-    <codemirror-options-right class="flex">
+    <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Enable showing accept/reject buttons in the diff editor">
         <Input @type="checkbox" @checked={{this.mergeControls}} disabled={{not this.originalDocument}} />
         <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
@@ -235,7 +235,7 @@
         <span class="ml-2 {{unless this.drawSelection 'text-gray-300'}}">rectangularSelection</span>
       </label>
     </codemirror-options-left>
-    <codemirror-options-right class="flex">
+    <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Use a crosshair cursor over the editor when ALT key is pressed">
         <Input @type="checkbox" @checked={{this.crosshairCursor}} />
         <span class="ml-2">crosshairCursor</span>
