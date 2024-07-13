@@ -1,7 +1,9 @@
 import Controller from '@ember/controller';
 import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
+import BYOBanner from '/assets/images/affiliate-program-features/build-your-own-x-banner.png';
 
 export default class JoinController extends Controller {
+  BYOBanner = BYOBanner;
   queryParams = [{ affiliateLinkSlug: 'via' }];
 
   get testimonialGroups() {

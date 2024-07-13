@@ -17,7 +17,9 @@ module('Acceptance | affiliate-link-page | view-affiliate-link', function (hooks
     this.server.create('affiliate-link', { user: this.server.schema.users.first() });
 
     await affiliateLinkPage.visit({ via: 'referral1' });
-    assert.ok(affiliateLinkPage.acceptReferralButton.isVisible);
+    assert.ok(affiliateLinkPage.acceptReferralButtons[0].isVisible);
+    assert.ok(affiliateLinkPage.acceptReferralButtons[1].isVisible);
+    assert.ok(affiliateLinkPage.acceptReferralButtons[2].isVisible);
 
     await percySnapshot('Affiliate Link Page | View Affiliate Link | Anonymous');
   });
@@ -29,7 +31,9 @@ module('Acceptance | affiliate-link-page | view-affiliate-link', function (hooks
     this.server.create('affiliate-link', { user: this.server.schema.users.first() });
 
     await affiliateLinkPage.visit({ via: 'referral1' });
-    assert.ok(affiliateLinkPage.acceptReferralButton.isVisible);
+    assert.ok(affiliateLinkPage.acceptReferralButtons[0].isVisible);
+    assert.ok(affiliateLinkPage.acceptReferralButtons[1].isVisible);
+    assert.ok(affiliateLinkPage.acceptReferralButtons[2].isVisible);
 
     await percySnapshot('Affiliate Link Page | View Affiliate Link (anonymous)');
   });

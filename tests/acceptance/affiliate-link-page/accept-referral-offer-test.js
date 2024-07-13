@@ -20,7 +20,7 @@ module('Acceptance | affiliate-link-page | accept-referral-offer', function (hoo
     this.server.create('affiliate-link', { user: this.server.schema.users.first() });
 
     await affiliateLinkPage.visit({ via: 'referral1' });
-    await affiliateLinkPage.acceptReferralButton.click();
+    await affiliateLinkPage.acceptReferralButtons[0].click();
 
     assert.strictEqual(
       windowMock.location.href,
@@ -43,7 +43,7 @@ module('Acceptance | affiliate-link-page | accept-referral-offer', function (hoo
     this.server.create('affiliate-link', { user: referrer });
 
     await affiliateLinkPage.visit({ via: 'referral1' });
-    await affiliateLinkPage.acceptReferralButton.click();
+    await affiliateLinkPage.acceptReferralButtons[0].click();
 
     // We make two separate HTTP requests, so we can't rely on waiting for the first in-progress request
     await waitUntil(() => currentURL() === '/pay');
