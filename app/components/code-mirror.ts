@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { waitFor } from '@ember/test-waiters';
 
 import {
   EditorView,
@@ -355,7 +356,9 @@ export default class CodeMirrorComponent extends Component<Signature> {
     );
   }
 
-  @action async optionDidChange(optionName: string, _element: Element, [newValue]: [boolean | string | number | Extension | undefined]) {
+  @action
+  @waitFor
+  async optionDidChange(optionName: string, _element: Element, [newValue]: [boolean | string | number | Extension | undefined]) {
     const compartment = this.compartments.get(optionName);
     const handlerMethod = OPTION_HANDLERS[optionName];
 
@@ -384,7 +387,9 @@ export default class CodeMirrorComponent extends Component<Signature> {
     }
   }
 
-  @action async renderEditor(element: Element) {
+  @action
+  @waitFor
+  async renderEditor(element: Element) {
     this.renderedView = new EditorView({
       parent: element,
       doc: this.args.document,

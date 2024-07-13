@@ -6,11 +6,9 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 
 module('Acceptance | course-admin | view-code-example', function (hooks) {
   setupApplicationTest(hooks);
-  setupAnimationTest(hooks);
 
   test('can view code example', async function (assert) {
     testScenario(this.server);
@@ -32,7 +30,6 @@ module('Acceptance | course-admin | view-code-example', function (hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards[0].unchangedFiles.length, 2, 'shows 2 unchanged files');
 
     await coursePage.codeExamplesTab.solutionCards[0].unchangedFiles[0].clickOnExpandButton();
-    await animationsSettled();
 
     assert.true(coursePage.codeExamplesTab.solutionCards[0].unchangedFiles[0].codeMirror.hasRendered, 'code mirror has rendered');
     assert.strictEqual(
