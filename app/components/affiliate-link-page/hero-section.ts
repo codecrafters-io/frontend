@@ -1,7 +1,11 @@
 import heroImage from '/assets/images/affiliate-program-features/cc-profile-image.png';
 import Component from '@glimmer/component';
 
-export default class HeroSectionComponent extends Component {
+interface Signature {
+  Element: HTMLDivElement;
+}
+
+export default class HeroSectionComponent extends Component<Signature> {
   heroImage = heroImage;
 }
 
