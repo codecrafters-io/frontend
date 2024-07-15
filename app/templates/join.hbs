@@ -2,8 +2,23 @@
 
 <div class="bg-white">
   <div class="container mx-auto lg:max-w-screen-xl pt-8 sm:pt-16 pb-48 px-3 md:px-6">
-    <AffiliateLinkPage::HeroSection class="mb-20 md:mb-24" />
-    <AffiliateLinkPage::AcceptReferralContainer @affiliateLink={{this.model.affiliateLink}} class="mb-20 md:mb-24" />
+    {{! TODO: Bring this back after design is finalized }}
+    {{! <AffiliateLinkPage::HeroSection class="mb-20 md:mb-24" /> }}
+
+    <div class="space-y-6 text-center max-w-[580px] mx-auto mb-8">
+      <h1 class="text-3xl text-gray-900 font-bold mb-6 md:text-4xl text-balance">
+        Become a
+        <span class="font-extrabold">better, confident</span>
+        programmer.
+      </h1>
+
+      <p class="text-gray-700 text-balance text-sm leading-relaxed sm:text-lg sm:leading-relaxed">
+        Stop letting advanced programming projects intimidate you. Start approaching them with the calm and confidence of a craftsman who has seen it
+        before.
+      </p>
+    </div>
+
+    <AffiliateLinkPage::AcceptReferralContainer @affiliateLink={{this.model.affiliateLink}} class="mb-20" />
 
     <div class="space-y-6 text-center my-8 max-w-[640px] mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
