@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-import codeMirror from 'codecrafters-frontend/tests/support/code-mirror-page-object';
+import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 
 module('Integration | Component | code-mirror', function (hooks) {
   setupRenderingTest(hooks);
