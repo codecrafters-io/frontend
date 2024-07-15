@@ -1,14 +1,13 @@
 <PrimaryButtonWithSpinner
-  @size="regular"
+  @size="large"
   @shouldShowSpinner={{this.isCreatingAffiliateReferral}}
   @isDisabled={{not this.acceptOfferButtonIsEnabled}}
-  class="px-5 py-3"
   {{on "click" this.handleAcceptOfferButtonClick}}
   data-test-accept-referral-button
   ...attributes
 >
   {{#if this.currentUserIsAnonymous}}
-    {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
+    {{svg-jar "github" class="fill-current w-6 transform transition-all mr-3"}}
   {{/if}}
 
   Accept offer →

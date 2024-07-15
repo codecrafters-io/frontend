@@ -1,5 +1,5 @@
 <div class="flex justify-center items-center" ...attributes>
-  <div class="flex flex-col items-center max-w-xs bg-white p-9 border rounded-lg shadow-lg">
+  <div class="flex flex-col items-center max-w-xs bg-white p-8 border rounded-lg shadow-lg">
     <div class="flex items-center justify-center">
       {{#if @affiliateLink.overriddenAffiliateAvatarUrl}}
         {{! No border for overridden avatars, we'll expect them to include a border in the image itself if needed }}
@@ -23,7 +23,7 @@
       if you upgrade.
     </div>
 
-    <div class="inline-flex mt-8">
+    <div class="inline-flex mt-6">
       <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{@affiliateLink}} />
     </div>
 
