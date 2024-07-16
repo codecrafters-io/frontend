@@ -53,6 +53,7 @@ export default create({
 
     solutionCards: collection('[data-test-community-solution-card]', {
       changedFiles: collection('[data-test-community-solution-changed-file]'),
+
       unchangedFiles: collection('[data-test-community-solution-unchanged-file]', {
         codeMirror,
         clickOnExpandButton: clickable('[data-test-file-contents-card-header]'),
