@@ -10,7 +10,7 @@
       {{if @isCollapsible 'cursor-pointer hover:bg-gray-50' 'cursor-default'}}"
     role={{if @isCollapsible "button"}}
     data-test-file-contents-card-header
-    {{on "click" this.handleCollapseExpandButtonClick}}
+    {{on "click" this.handleCollapseOrExpandButtonClick}}
   >
     {{#if (has-block "header")}}
       {{yield to="header"}}
@@ -59,7 +59,7 @@
 
     {{#if @isCollapsible}}
       <div class="flex items-center justify-center my-3">
-        <TertiaryButton @size="small" {{on "click" this.handleCollapseExpandButtonClick}}>
+        <TertiaryButton @size="small" {{on "click" this.handleCollapseOrExpandButtonClick}}>
           Collapse File
         </TertiaryButton>
       </div>

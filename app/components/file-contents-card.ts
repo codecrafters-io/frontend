@@ -36,7 +36,7 @@ export default class FileContentsCardComponent extends Component<Signature> {
   }
 
   @action
-  handleCollapseExpandButtonClick() {
+  handleCollapseOrExpandButtonClick() {
     if (!this.args.isCollapsible) {
       return;
     }
