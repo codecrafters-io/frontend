@@ -1,23 +1,22 @@
 import Controller from '@ember/controller';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 import { type Extension } from '@codemirror/state';
-import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
-import { service } from '@ember/service';
+
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
+import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 const THEME_EXTENSIONS: {
   [key: string]: Extension;
 } = {
-  githubDark,
-  githubLight,
+  codeCraftersLight,
+  codeCraftersDark,
 };
 
-const SUPPORTED_THEMES = [...Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init'))), 'Auto'];
-const DEFAULT_THEME = 'Auto';
-const DEFAULT_THEME_DARK = 'githubDark';
-const DEFAULT_THEME_LIGHT = 'githubLight';
+const SUPPORTED_THEMES = [...Object.keys(THEME_EXTENSIONS), 'codeCraftersAuto'];
+const DEFAULT_THEME = 'codeCraftersAuto';
 
 class ExampleDocument {
   @tracked document!: string;
@@ -111,13 +110,13 @@ export default class DemoCodeMirrorController extends Controller {
 
   @tracked tabSizes = [1, 2, 4, 6, 8, 10, 12, 16];
 
-  @tracked themes = SUPPORTED_THEMES;
+  @tracked themes = [...SUPPORTED_THEMES];
 
   @tracked selectedDocumentIndex: number = 1;
   @tracked selectedIndentUnitIndex: number = 1;
   @tracked selectedLineSeparatorIndex: number = 1;
   @tracked selectedTabSizeIndex: number = 2;
-  @tracked selectedThemeIndex: number = SUPPORTED_THEMES.indexOf(DEFAULT_THEME);
+  @tracked selectedThemeIndex: number = this.themes.indexOf(DEFAULT_THEME);
 
   get selectedDocument() {
     return this.documents[this.selectedDocumentIndex];
@@ -138,14 +137,18 @@ export default class DemoCodeMirrorController extends Controller {
   get selectedTheme() {
     const theme = this.themes[this.selectedThemeIndex];
 
-    return theme === 'Auto'
-      ? this.darkMode.isEnabled
-        ? this.themes[this.themes.indexOf(DEFAULT_THEME_DARK)]
-        : this.themes[this.themes.indexOf(DEFAULT_THEME_LIGHT)]
-      : theme;
+    const themeMap: {
+      [key: string]: Extension;
+    } = {
+      codeCraftersLight,
+      codeCraftersDark,
+      codeCraftersAuto: this.darkMode.isEnabled ? codeCraftersDark : codeCraftersLight,
+    };
+
+    return theme !== undefined ? themeMap[theme] : undefined;
   }
 
-  @tracked border: boolean = true;
+  @tracked outline: boolean = true;
 
   @tracked allowMultipleSelections: boolean = true;
   @tracked autocompletion: boolean = true;

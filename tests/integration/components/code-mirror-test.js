@@ -1,37 +1,11 @@
 import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-import { blurrable, create, clickable, collection, fillable, focusable, text } from 'ember-cli-page-object';
-import { alias } from 'ember-cli-page-object/macros';
+import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 
-const codeMirror = create({
-  scope: '[data-test-code-mirror-component]',
-  componentText: text(),
-
-  editor: {
-    scope: '> .cm-editor',
-    scroller: {
-      scope: '> .cm-scroller',
-      content: {
-        scope: '> .cm-content',
-        text: text(),
-        focus: focusable(),
-        blur: blurrable(),
-        lines: collection('> .cm-line', {
-          click: clickable(),
-          fillIn: fillable(),
-        }),
-      },
-    },
-  },
-
-  content: alias('editor.scroller.content'),
-
-  hasRendered: alias('content.isPresent'),
-  text: alias('content.text'),
-});
+import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
+import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 module('Integration | Component | code-mirror', function (hooks) {
   setupRenderingTest(hooks);
@@ -493,10 +467,10 @@ module('Integration | Component | code-mirror', function (hooks) {
 
     module('theme', function () {
       test("it doesn't break the editor when passed", async function (assert) {
-        this.set('theme', 'githubLight');
+        this.set('theme', codeCraftersLight);
         await render(hbs`<CodeMirror @theme={{this.theme}} />`);
         assert.ok(codeMirror.hasRendered);
-        this.set('theme', 'githubDark');
+        this.set('theme', codeCraftersDark);
         assert.ok(codeMirror.hasRendered);
       });
 

@@ -15,6 +15,7 @@ import SecondStageInstructionsCard from 'codecrafters-frontend/tests/pages/compo
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
+import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 import { collection, clickable, clickOnText, create, fillable, isVisible, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
 
 export default create({
@@ -51,6 +52,13 @@ export default create({
     languageDropdown: LanguageDropdown,
 
     solutionCards: collection('[data-test-community-solution-card]', {
+      changedFiles: collection('[data-test-community-solution-changed-file]'),
+
+      unchangedFiles: collection('[data-test-community-solution-unchanged-file]', {
+        codeMirror,
+        clickOnExpandButton: clickable('[data-test-file-contents-card-header]'),
+      }),
+
       clickOnCollapseButton: async function () {
         await this.collapseButtons[0].click();
       },

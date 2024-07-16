@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { waitFor } from '@ember/test-waiters';
 
 import {
   EditorView,
@@ -37,16 +38,19 @@ import {
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 
-import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
+function generateHTMLElement(src: string): HTMLElement {
+  const div = document.createElement('div');
+  div.innerHTML = src;
 
-const THEME_EXTENSIONS: {
-  [key: string]: Extension;
-} = {
-  githubDark,
-  githubLight,
-};
+  return div.firstChild as HTMLElement;
+}
 
-type Argument = boolean | string | number | ((newValue: string) => void) | undefined;
+enum FoldGutterIcon {
+  Expanded = '<svg aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display: inline-block; user-select: none; vertical-align: text-bottom; overflow: visible; cursor: pointer;"><path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path></svg>',
+  Collapsed = '<svg aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display: inline-block; user-select: none; vertical-align: text-bottom; overflow: visible; cursor: pointer;"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path></svg>',
+}
+
+type Argument = boolean | string | number | Extension | ((newValue: string) => void) | undefined;
 
 export interface Signature {
   Element: Element;
@@ -93,7 +97,7 @@ export interface Signature {
       /**
        * Theme to use for the editor
        */
-      theme?: string;
+      theme?: Extension;
       /**
        * Allow multiple selections by using CTRL/CMD key
        */
@@ -230,7 +234,7 @@ export interface OptionHandlersSignature {
   scrollPastEnd: (enabled?: boolean) => Extension[];
   syntaxHighlighting: (enabled?: boolean) => Extension[];
   tabSize: (tabSize?: number) => Extension[];
-  theme: (theme?: string) => Extension[];
+  theme: (theme?: Extension) => Extension[];
   languageOrFilename: (newValue: string | undefined, args: Signature['Args']['Named'], changedOptionName?: string) => Promise<Extension[]>;
   originalDocumentOrMergeControls: (
     newValue: string | boolean | undefined,
@@ -248,7 +252,6 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
   drawSelection: (enabled) => (enabled ? [drawSelection()] : []),
   dropCursor: (enabled) => (enabled ? [dropCursor()] : []),
   editable: (enabled) => [EditorView.editable.of(!!enabled)],
-  foldGutter: (enabled) => (enabled ? [foldGutter(), keymap.of(foldKeymap)] : []),
   highlightActiveLine: (enabled) => (enabled ? [highlightActiveLine(), highlightActiveLineGutter()] : []),
   highlightSelectionMatches: (enabled) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: (enabled) => (enabled ? [highlightSpecialChars()] : []),
@@ -259,6 +262,15 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
   indentUnit: (indentUnitText) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: (enabled) => (enabled ? [keymap.of([indentWithTab])] : []),
   lineNumbers: (enabled) => (enabled ? [lineNumbers()] : []),
+  foldGutter: (enabled) =>
+    enabled
+      ? [
+          foldGutter({
+            markerDOM: (open) => generateHTMLElement(open ? FoldGutterIcon.Expanded : FoldGutterIcon.Collapsed),
+          }),
+          keymap.of(foldKeymap),
+        ]
+      : [],
   lineSeparator: (lineSeparatorText) => (lineSeparatorText !== undefined ? [EditorState.lineSeparator.of(lineSeparatorText)] : []),
   lineWrapping: (enabled) => (enabled ? [EditorView.lineWrapping] : []),
   placeholder: (placeholderText) => (placeholderText !== undefined ? [placeholder(placeholderText)] : []),
@@ -267,7 +279,7 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
   scrollPastEnd: (enabled) => (enabled ? [scrollPastEnd()] : []),
   syntaxHighlighting: (enabled) => (enabled ? [syntaxHighlighting(defaultHighlightStyle, { fallback: true })] : []),
   tabSize: (tabSize) => (tabSize !== undefined ? [EditorState.tabSize.of(tabSize)] : []),
-  theme: (theme) => (theme !== undefined ? [THEME_EXTENSIONS[theme] || []] : []),
+  theme: (theme) => (theme !== undefined ? [theme] : []),
   languageOrFilename: async (_newValue, { language, filename }) => {
     const detectedLanguage = language
       ? LanguageDescription.matchLanguageName(languages, language)
@@ -335,7 +347,9 @@ export default class CodeMirrorComponent extends Component<Signature> {
     );
   }
 
-  @action async optionDidChange(optionName: string, _element: Element, [newValue]: [boolean | string | number | undefined]) {
+  @action
+  @waitFor
+  async optionDidChange(optionName: string, _element: Element, [newValue]: [boolean | string | number | Extension | undefined]) {
     const compartment = this.compartments.get(optionName);
     const handlerMethod = OPTION_HANDLERS[optionName];
 
@@ -364,7 +378,9 @@ export default class CodeMirrorComponent extends Component<Signature> {
     }
   }
 
-  @action async renderEditor(element: Element) {
+  @action
+  @waitFor
+  async renderEditor(element: Element) {
     this.renderedView = new EditorView({
       parent: element,
       doc: this.args.document,

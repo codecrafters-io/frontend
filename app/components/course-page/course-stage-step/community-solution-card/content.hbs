@@ -11,7 +11,10 @@
 {{/if}}
 
 {{#each this.changedFilesForRender key="filename" as |changedFile index|}}
-  <div class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300">
+  <div
+    class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}} bg-white shadow-sm rounded border border-gray-300"
+    data-test-community-solution-changed-file
+  >
     <div class="bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm flex items-center justify-between sticky top-10 z-10">
       <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
       <div>
@@ -60,7 +63,7 @@
     @filename={{unchangedFileComparison.path}}
     @code={{unchangedFileComparison.content}}
     @language={{@solution.language.slug}}
-    data-test-unchanged-file-contents-card
+    data-test-community-solution-unchanged-file
     {{! scroll-mt-16 accounts for the sticky menu bar}}
     class="mt-4 text-sm scroll-mt-16"
   >

@@ -1,19 +1,21 @@
-<div class="bg-white shadow-sm rounded border border-gray-300" ...attributes {{did-insert this.handleDidInsertContainer}}>
+<div
+  class="bg-white dark:bg-gray-950 shadow-sm rounded border border-gray-300 dark:border-gray-800"
+  ...attributes
+  {{did-insert this.handleDidInsertContainer}}
+>
   {{! template-lint-disable no-invalid-interactive }}
   <div
-    class="flex items-center bg-gray-100 h-8 px-4 relative group/file-contents-card-header
-      {{if @isCollapsed 'rounded' 'rounded-t'}}
-      {{if @isCollapsible 'hover:bg-gray-50' ''}}
-      {{if @isCollapsible 'cursor-pointer' 'cursor-default'}}
-      {{if @isCollapsed 'border-b-0' 'border-b border-gray-200'}}"
+    class="flex items-center bg-gray-100 dark:bg-gray-900 h-8 px-4 relative group/file-contents-card-header
+      {{if @isCollapsed 'rounded border-b-0' 'rounded-t border-b border-gray-200 dark:border-gray-800'}}
+      {{if @isCollapsible 'cursor-pointer hover:bg-gray-50' 'cursor-default'}}"
     role={{if @isCollapsible "button"}}
-    {{! @glint-expect-error doesn't allow mouse event since it has args }}
-    {{on "click" (if @isCollapsed @onExpand this.handleCollapseButtonClick)}}
+    data-test-file-contents-card-header
+    {{on "click" this.handleCollapseOrExpandButtonClick}}
   >
     {{#if (has-block "header")}}
       {{yield to="header"}}
     {{else}}
-      <span class="font-mono text-xs text-gray-600 bold flex">
+      <span class="font-mono text-xs text-gray-600 dark:text-gray-100 bold flex">
         {{@filename}}
       </span>
     {{/if}}
@@ -27,18 +29,37 @@
         {{/if}}
       </div>
 
-      {{#if @headerTooltipText}}
+      {{#if (and @isCollapsed @headerTooltipText)}}
         <EmberTooltip @text={{@headerTooltipText}} @side="top" />
       {{/if}}
     {{/if}}
   </div>
 
-  {{#unless @isCollapsed}}
-    <SyntaxHighlightedCode @code={{@code}} @language={{@language}} @theme="github-light" @shouldDisplayLineNumbers={{true}} class="text-sm" />
+  {{#unless (and @isCollapsible @isCollapsed)}}
+    <CodeMirror
+      @document={{@code}}
+      @filename={{@filename}}
+      @language={{@language}}
+      @lineNumbers={{true}}
+      @allowMultipleSelections={{true}}
+      @bracketMatching={{true}}
+      @crosshairCursor={{true}}
+      @drawSelection={{true}}
+      @rectangularSelection={{true}}
+      @editable={{false}}
+      @readOnly={{true}}
+      @foldGutter={{if (eq @foldGutter false) false true}}
+      @highlightActiveLine={{false}}
+      @highlightSelectionMatches={{true}}
+      @highlightSpecialChars={{true}}
+      @highlightTrailingWhitespace={{true}}
+      @theme={{this.codeMirrorTheme}}
+      class="block text-sm"
+    />
 
     {{#if @isCollapsible}}
-      <div class="flex items-center justify-center mb-3">
-        <TertiaryButton @size="small" {{on "click" this.handleCollapseButtonClick}}>
+      <div class="flex items-center justify-center my-3">
+        <TertiaryButton @size="small" {{on "click" this.handleCollapseOrExpandButtonClick}}>
           Collapse File
         </TertiaryButton>
       </div>

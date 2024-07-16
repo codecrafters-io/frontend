@@ -1,0 +1,54 @@
+{{page-title "FileContentsCard"}}
+
+{{#let
+  "flex flex-wrap text-sm font-semibold text-gray-600 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700 py-2"
+  "flex cursor-default select-none text-nowrap mx-2"
+  as |groupClasses labelClasses|
+}}
+  <component-options class="{{groupClasses}} -mt-8">
+    <component-options-left class="flex flex-grow flex-wrap">
+      <label class="{{labelClasses}}" title="File for the component to render (select a preset)">
+        <span class="mr-2">File:</span>
+        <select class="dark:bg-gray-700" {{on "change" this.selectedDocumentIndexDidChange}}>
+          {{#each this.documents as |doc index|}}
+            <option selected={{eq this.selectedDocumentIndex index}}>{{doc.filename}} ({{doc.language}})</option>
+          {{/each}}
+        </select>
+      </label>
+    </component-options-left>
+    <component-options-right class="flex flex-wrap">
+      <label class="{{labelClasses}}" title="Enable collapsing of the file card to just the header">
+        <Input @type="checkbox" @checked={{this.isCollapsible}} />
+        <span class="ml-2">isCollapsible</span>
+      </label>
+      <label class="{{labelClasses}}" title="Scroll the component into view after it's collapsed">
+        <Input @type="checkbox" @checked={{this.scrollIntoViewOnCollapse}} disabled={{not this.isCollapsible}} />
+        <span class="ml-2 {{unless this.isCollapsible 'text-gray-300'}}">scrollIntoViewOnCollapse</span>
+      </label>
+      <label class="{{labelClasses}}" title="Show a tooltip in the header when collapsible & collapsed">
+        <Input @type="checkbox" @checked={{this.headerTooltipText}} disabled={{not this.isCollapsible}} />
+        <span class="ml-2 {{unless this.isCollapsible 'text-gray-300'}}">headerTooltipText</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable code folding and fold gutter in CodeMirror">
+        <Input @type="checkbox" @checked={{this.foldGutter}} />
+        <span class="ml-2">foldGutter</span>
+      </label>
+    </component-options-right>
+  </component-options>
+{{/let}}
+
+<FileContentsCard
+  @code={{this.selectedDocument.document}}
+  @filename={{this.selectedDocument.filename}}
+  @language={{this.selectedDocument.language}}
+  @isCollapsed={{this.isCollapsed}}
+  @isCollapsible={{this.isCollapsible}}
+  @scrollIntoViewOnCollapse={{this.scrollIntoViewOnCollapse}}
+  @headerTooltipText={{if this.headerTooltipText "Example tooltip message"}}
+  @foldGutter={{this.foldGutter}}
+  @onExpand={{fn (mut this.isCollapsed) false}}
+  @onCollapse={{fn (mut this.isCollapsed) true}}
+  class="my-4"
+/>
+
+{{outlet}}
