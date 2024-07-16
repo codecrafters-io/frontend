@@ -20,7 +20,7 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
   get featureList(): string[] {
-    return ['No limits on content', 'Priority support', 'Priority Builds', 'Community features'];
+    return ['No limits on content', 'Turbo test runs', 'Anonymous mode', 'Priority support'];
   }
 
   get secondaryCopyMarkdown(): string {
