@@ -9,19 +9,53 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    /**
+     * Code to render in CodeMirror
+     */
     code: string;
-    language: string;
+    /**
+     * Filename to render in the header.
+     * Also used to auto-detect language for code formatting
+     */
     filename: string;
-    headerTooltipText?: string;
-    isCollapsible?: boolean;
-    isCollapsed?: boolean;
-    scrollIntoViewOnCollapse?: boolean;
+    /**
+     * Override language auto-detected from `filename` and set it manually
+     */
+    language: string;
+    /**
+     * Enable code folding and fold gutter in CodeMirror
+     */
     foldGutter?: boolean;
+    /**
+     * Enable collapsing of the file card to just the header
+     */
+    isCollapsible?: boolean;
+    /**
+     * Should the card be currently collapsed
+     */
+    isCollapsed?: boolean;
+    /**
+     * Show a tooltip in the header when collapsible & collapsed
+     */
+    headerTooltipText?: string;
+    /**
+     * Scroll the component into view after it's collapsed
+     */
+    scrollIntoViewOnCollapse?: boolean;
+    /**
+     *  Callback to call when Expand button is clicked
+     */
     onExpand?: () => void;
+    /**
+     *  Callback to call when Collapse button is clicked
+     */
     onCollapse?: () => void;
   };
 
   Blocks: {
+    /**
+     * Allows rendering custom content in the header
+     */
     header?: [];
   };
 }
