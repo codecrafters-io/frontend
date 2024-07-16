@@ -5,7 +5,7 @@
   ...attributes
 >
   <div class="flex justify-between flex-col @[640px]:flex-row @[640px]:items-center gap-6">
-    <div class="flex-shrink">
+    <div>
       <div class="font-bold text-slate-600 text-xl @[640px]:text-2xl">
         This stage requires a CodeCrafters Membership.
       </div>
@@ -33,7 +33,7 @@
       </PrimaryButton>
     </div>
 
-    <div class="flex flex-col gap-2 flex-shrink-0">
+    <div class="flex flex-col gap-2 grow-0 shrink-0">
       {{#each this.featureList as |feature|}}
         <div class="flex gap-1 items-stretch">
           <div class="flex border border-transparent">
