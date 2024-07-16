@@ -17,19 +17,19 @@
       </label>
     </component-options-left>
     <component-options-right class="flex flex-wrap">
-      <label class="{{labelClasses}}" title="Allow the card to be collapsed to only show the header">
+      <label class="{{labelClasses}}" title="Enable collapsing of the file card to just the header">
         <Input @type="checkbox" @checked={{this.isCollapsible}} />
         <span class="ml-2">isCollapsible</span>
       </label>
-      <label class="{{labelClasses}}" title="Automatically scroll the component into view after it is collapsed">
+      <label class="{{labelClasses}}" title="Scroll the component into view after it's collapsed">
         <Input @type="checkbox" @checked={{this.scrollIntoViewOnCollapse}} disabled={{not this.isCollapsible}} />
         <span class="ml-2 {{unless this.isCollapsible 'text-gray-300'}}">scrollIntoViewOnCollapse</span>
       </label>
-      <label class="{{labelClasses}}" title="Show a tooltip text in the header">
-        <Input @type="checkbox" @checked={{this.headerTooltipText}} />
-        <span class="ml-2">headerTooltipText</span>
+      <label class="{{labelClasses}}" title="Show a tooltip in the header when collapsible & collapsed">
+        <Input @type="checkbox" @checked={{this.headerTooltipText}} disabled={{not this.isCollapsible}} />
+        <span class="ml-2 {{unless this.isCollapsible 'text-gray-300'}}">headerTooltipText</span>
       </label>
-      <label class="{{labelClasses}}" title="Show code folding gutter">
+      <label class="{{labelClasses}}" title="Enable code folding and fold gutter in CodeMirror">
         <Input @type="checkbox" @checked={{this.foldGutter}} />
         <span class="ml-2">foldGutter</span>
       </label>

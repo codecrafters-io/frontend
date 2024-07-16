@@ -29,7 +29,7 @@
         {{/if}}
       </div>
 
-      {{#if @headerTooltipText}}
+      {{#if (and @isCollapsed @headerTooltipText)}}
         <EmberTooltip @text={{@headerTooltipText}} @side="top" />
       {{/if}}
     {{/if}}
