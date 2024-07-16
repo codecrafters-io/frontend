@@ -137,16 +137,15 @@ export default class DemoCodeMirrorController extends Controller {
   get selectedTheme() {
     const theme = this.themes[this.selectedThemeIndex];
 
-    switch (theme) {
-      case 'codeCraftersLight':
-        return codeCraftersLight;
-      case 'codeCraftersDark':
-        return codeCraftersDark;
-      case 'codeCraftersAuto':
-        return this.darkMode.isEnabled ? codeCraftersDark : codeCraftersLight;
-      default:
-        return;
-    }
+    const themeMap: {
+      [key: string]: Extension;
+    } = {
+      codeCraftersLight,
+      codeCraftersDark,
+      codeCraftersAuto: this.darkMode.isEnabled ? codeCraftersDark : codeCraftersLight,
+    };
+
+    return theme !== undefined ? themeMap[theme] : undefined;
   }
 
   @tracked outline: boolean = true;
