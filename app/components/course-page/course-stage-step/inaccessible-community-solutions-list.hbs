@@ -1,0 +1,21 @@
+<BlurredOverlay @isBlurred={{true}}>
+  <:content>
+    {{#each @inaccessibleSolutions as |solution|}}
+      <CoursePage::CourseStageStep::CommunitySolutionCard
+        @isCollapsedByDefault={{true}}
+        @metadataForDownvote={{hash}}
+        @metadataForUpvote={{hash}}
+        @onExpand={{(noop)}}
+        @onPublishToGithubButtonClick={{(noop)}}
+        @solution={{solution}}
+        {{! account for the sticky menu bar }}
+        class="scroll-mt-16"
+      />
+    {{/each}}
+  </:content>
+  <:overlay>
+    <div class="pt-4 px-4 sm:pt-8 sm:px-8 w-full">
+      <CoursePage::CourseStageStep::UpgradePrompt class="w-full shadow" />
+    </div>
+  </:overlay>
+</BlurredOverlay>

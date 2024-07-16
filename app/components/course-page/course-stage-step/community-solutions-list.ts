@@ -27,6 +27,27 @@ export default class CommunitySolutionsListComponent extends Component<Signature
 
   @tracked configureGithubIntegrationModalIsOpen = false;
 
+  get accessibleSolutions() {
+    if (this.shouldShowInaccessibleSolutionsList) {
+      return this.args.solutions.slice(0, 2);
+    }
+
+    return this.args.solutions;
+  }
+
+  get inaccessibleSolutions() {
+    if (this.shouldShowInaccessibleSolutionsList) {
+      return this.args.solutions.slice(2);
+    }
+
+    return [];
+  }
+
+  get shouldShowInaccessibleSolutionsList() {
+    // TODO: Filter by stage number also
+    return this.args.solutions.length >= 5 && this.authenticator.currentUser && !this.authenticator.currentUser.canAccessMembershipBenefits;
+  }
+
   get shouldShowStageIncompleteModal() {
     return (
       !this.args.stageIncompleteModalWasDismissed &&
