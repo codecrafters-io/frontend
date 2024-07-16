@@ -9,13 +9,13 @@
         @onPublishToGithubButtonClick={{(noop)}}
         @solution={{solution}}
         {{! account for the sticky menu bar }}
-        class="scroll-mt-16"
+        class="scroll-mt-16 pointer-events-none"
       />
     {{/each}}
   </:content>
   <:overlay>
     <div class="pt-4 px-4 sm:pt-8 sm:px-8 w-full">
-      <CoursePage::CourseStageStep::UpgradePrompt class="w-full shadow" />
+      <CoursePage::CourseStageStep::UpgradePrompt class="w-full shadow-lg" />
     </div>
   </:overlay>
 </BlurredOverlay>
