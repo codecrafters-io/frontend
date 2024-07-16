@@ -1,9 +1,11 @@
 import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
+import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
+
 import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
+import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 module('Integration | Component | code-mirror', function (hooks) {
   setupRenderingTest(hooks);
@@ -465,10 +467,10 @@ module('Integration | Component | code-mirror', function (hooks) {
 
     module('theme', function () {
       test("it doesn't break the editor when passed", async function (assert) {
-        this.set('theme', 'githubLight');
+        this.set('theme', codeCraftersLight);
         await render(hbs`<CodeMirror @theme={{this.theme}} />`);
         assert.ok(codeMirror.hasRendered);
-        this.set('theme', 'githubDark');
+        this.set('theme', codeCraftersDark);
         assert.ok(codeMirror.hasRendered);
       });
 

@@ -1,27 +1,21 @@
 import Controller from '@ember/controller';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
+import { tracked } from '@glimmer/tracking';
 
 import { type Extension } from '@codemirror/state';
-import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
+
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 const THEME_EXTENSIONS: {
   [key: string]: Extension;
 } = {
-  githubLight,
-  githubDark,
   codeCraftersLight,
   codeCraftersDark,
 };
 
-const SUPPORTED_THEMES = [
-  ...Object.keys(THEME_EXTENSIONS).filter((key) => !(key.startsWith('defaultSettings') || key.endsWith('Init'))),
-  'githubAuto',
-  'codeCraftersAuto',
-];
+const SUPPORTED_THEMES = [...Object.keys(THEME_EXTENSIONS), 'codeCraftersAuto'];
 const DEFAULT_THEME = 'codeCraftersAuto';
 
 class ExampleDocument {
@@ -144,8 +138,6 @@ export default class DemoCodeMirrorController extends Controller {
     const theme = this.themes[this.selectedThemeIndex];
 
     switch (theme) {
-      case 'githubAuto':
-        return this.darkMode.isEnabled ? 'githubDark' : 'githubLight';
       case 'codeCraftersLight':
         return codeCraftersLight;
       case 'codeCraftersDark':
@@ -153,7 +145,7 @@ export default class DemoCodeMirrorController extends Controller {
       case 'codeCraftersAuto':
         return this.darkMode.isEnabled ? codeCraftersDark : codeCraftersLight;
       default:
-        return theme;
+        return;
     }
   }
 

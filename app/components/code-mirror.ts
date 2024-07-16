@@ -38,15 +38,6 @@ import {
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 
-import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
-
-const THEME_EXTENSIONS: {
-  [key: string]: Extension;
-} = {
-  githubDark,
-  githubLight,
-};
-
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
   div.innerHTML = src;
@@ -106,7 +97,7 @@ export interface Signature {
       /**
        * Theme to use for the editor
        */
-      theme?: string | Extension;
+      theme?: Extension;
       /**
        * Allow multiple selections by using CTRL/CMD key
        */
@@ -243,7 +234,7 @@ export interface OptionHandlersSignature {
   scrollPastEnd: (enabled?: boolean) => Extension[];
   syntaxHighlighting: (enabled?: boolean) => Extension[];
   tabSize: (tabSize?: number) => Extension[];
-  theme: (theme?: string | Extension) => Extension[];
+  theme: (theme?: Extension) => Extension[];
   languageOrFilename: (newValue: string | undefined, args: Signature['Args']['Named'], changedOptionName?: string) => Promise<Extension[]>;
   originalDocumentOrMergeControls: (
     newValue: string | boolean | undefined,
@@ -288,7 +279,7 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
   scrollPastEnd: (enabled) => (enabled ? [scrollPastEnd()] : []),
   syntaxHighlighting: (enabled) => (enabled ? [syntaxHighlighting(defaultHighlightStyle, { fallback: true })] : []),
   tabSize: (tabSize) => (tabSize !== undefined ? [EditorState.tabSize.of(tabSize)] : []),
-  theme: (theme) => (theme !== undefined ? [typeof theme === 'string' ? THEME_EXTENSIONS[theme] || [] : theme] : []),
+  theme: (theme) => (theme !== undefined ? [theme] : []),
   languageOrFilename: async (_newValue, { language, filename }) => {
     const detectedLanguage = language
       ? LanguageDescription.matchLanguageName(languages, language)
