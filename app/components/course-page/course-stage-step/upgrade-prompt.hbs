@@ -1,17 +1,16 @@
 <div
-  class="py-6 px-5 rounded bg-teal-50 border border-teal-600"
+  class="py-6 px-5 rounded bg-teal-50 border border-teal-600 @container"
   {{did-insert this.handleDidInsert}}
-  {{did-resize this.onResize}}
   data-test-upgrade-prompt
   ...attributes
 >
-  <div class="flex justify-between {{if this.isLarge 'flex-row items-center' 'flex-col'}} gap-4">
+  <div class="flex justify-between flex-col @[640px]:flex-row @[640px]:items-center gap-6">
     <div>
-      <div class="font-bold text-slate-600 {{if this.isLarge 'text-2xl' 'text-xl'}}">
+      <div class="font-bold text-slate-600 text-xl @[640px]:text-2xl">
         This stage requires a CodeCrafters Membership.
       </div>
 
-      <div class="prose prose-compact py-3 {{if this.isLarge '' 'prose-sm'}}" data-test-upgrade-prompt-secondary-copy>
+      <div class="prose prose-compact prose-sm @[640px]:prose-base py-3" data-test-upgrade-prompt-secondary-copy>
         {{#if this.isLoadingRegionalDiscount}}
           <p>
             Plans start at $40/mo.
@@ -27,7 +26,7 @@
         </p>
       </div>
 
-      <PrimaryButton class="{{if this.isLarge 'w-fit' 'w-full'}}">
+      <PrimaryButton class="w-full @[640px]:w-fit">
         <LinkTo @route="pay">
           View Membership Plans →
         </LinkTo>

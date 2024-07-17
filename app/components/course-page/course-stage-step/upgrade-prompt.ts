@@ -15,7 +15,6 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
-  @tracked isLarge: boolean = false;
   @tracked isLoadingRegionalDiscount: boolean = true;
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
@@ -49,19 +48,6 @@ export default class UpgradePromptComponent extends Component<Signature> {
   async handleDidInsert(): Promise<void> {
     this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
     this.isLoadingRegionalDiscount = false;
-  }
-
-  @action
-  onResize(entry: ResizeObserverEntry): void {
-    if (!entry.borderBoxSize?.[0]?.inlineSize) {
-      return;
-    }
-
-    if (entry.borderBoxSize[0].inlineSize > 680) {
-      this.isLarge = true;
-    } else {
-      this.isLarge = false;
-    }
   }
 }
 
