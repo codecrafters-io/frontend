@@ -7,7 +7,7 @@
   <div class="flex justify-between flex-col @[640px]:flex-row @[640px]:items-center gap-6">
     <div>
       <div class="font-bold text-slate-600 text-xl @[640px]:text-2xl">
-        This stage requires a CodeCrafters Membership.
+        {{this.featureToHighlight.cta}}
       </div>
 
       <div class="prose prose-compact prose-sm @[640px]:prose-base py-3" data-test-upgrade-prompt-secondary-copy>
@@ -19,11 +19,13 @@
           {{markdown-to-html this.secondaryCopyMarkdown}}
         {{/if}}
 
-        <p>
-          Not ready for a membership? You can 🎁
-          <LinkTo @route="refer">refer friends</LinkTo>
-          to get free access.
-        </p>
+        {{#if this.featureToHighlight.isAccessibleByReferringUsers}}
+          <p>
+            Not ready for a membership? You can 🎁
+            <LinkTo @route="refer">refer friends</LinkTo>
+            to get free access.
+          </p>
+        {{/if}}
       </div>
 
       <PrimaryButton class="w-full @[640px]:w-fit">
@@ -34,14 +36,14 @@
     </div>
 
     <div class="flex flex-col gap-2 grow-0 shrink-0">
-      {{#each this.featureList as |feature|}}
+      {{#each this.sortedFeatureList as |feature|}}
         <div class="flex gap-1 items-stretch">
           <div class="flex border border-transparent">
             {{svg-jar "check" class="w-8 h-8 p-1 fill-current rounded bg-teal-500 text-white grow-0 shrink-0 shadow"}}
           </div>
 
           <div class="rounded shadow-sm bg-white border border-gray-300 px-2 text-gray-800 flex items-center w-fit grow-0 shrink-0">
-            {{feature}}
+            {{feature.name}}
           </div>
         </div>
       {{/each}}

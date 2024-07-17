@@ -9,7 +9,51 @@ import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
+
+  Args: {
+    featureSlugToHighlight: Feature['slug'];
+  };
 }
+
+interface Feature {
+  slug: 'content' | 'turbo-test-runs' | 'anonymous-mode' | 'code-examples' | 'perks';
+  name: string;
+  cta: string;
+  isAccessibleByReferringUsers: boolean;
+}
+
+const features: Feature[] = [
+  {
+    slug: 'content',
+    name: 'No limits on content',
+    cta: 'This stage requires a CodeCrafters Membership',
+    isAccessibleByReferringUsers: true,
+  },
+  {
+    slug: 'turbo-test-runs',
+    name: 'Turbo test runs',
+    cta: 'Get faster test runs with a CodeCrafters Membership',
+    isAccessibleByReferringUsers: false,
+  },
+  {
+    slug: 'anonymous-mode',
+    name: 'Anonymous mode',
+    cta: 'Get anonymous mode with a CodeCrafters Membership',
+    isAccessibleByReferringUsers: false,
+  },
+  {
+    slug: 'code-examples',
+    name: 'More code examples',
+    cta: 'View more code examples with a CodeCrafters Membership',
+    isAccessibleByReferringUsers: false,
+  },
+  {
+    slug: 'perks',
+    name: 'Access to Perks',
+    cta: 'Access perks with a CodeCrafters membership',
+    isAccessibleByReferringUsers: false,
+  },
+];
 
 export default class UpgradePromptComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
@@ -18,8 +62,8 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @tracked isLoadingRegionalDiscount: boolean = true;
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
-  get featureList(): string[] {
-    return ['No limits on content', 'Turbo test runs', 'Anonymous mode', 'Priority support'];
+  get featureToHighlight(): Feature {
+    return features.find((feature) => feature.slug === this.args.featureSlugToHighlight)!;
   }
 
   get secondaryCopyMarkdown(): string {
@@ -42,6 +86,10 @@ export default class UpgradePromptComponent extends Component<Signature> {
     } else {
       return 'Plans start at $40/mo.';
     }
+  }
+
+  get sortedFeatureList(): Feature[] {
+    return [this.featureToHighlight, ...features.filter((feature) => feature.slug !== this.args.featureSlugToHighlight)];
   }
 
   @action

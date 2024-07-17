@@ -43,7 +43,7 @@ export default class PricingCardComponent extends Component<Signature> {
       { text: 'No limits on content', link: 'https://docs.codecrafters.io/content' },
       { text: 'Turbo test runs', link: 'https://codecrafters.io/turbo' },
       { text: 'Anonymous Mode', link: 'https://docs.codecrafters.io/anon' },
-      { text: 'Community features' },
+      { text: 'More code examples', link: 'https://docs.codecrafters.io/code-examples' },
       { text: 'Access to Perks', link: 'https://codecrafters.io/perks' },
       { text: 'Priority support' },
     ];
