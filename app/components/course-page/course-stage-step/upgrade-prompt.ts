@@ -26,31 +26,31 @@ const features: Feature[] = [
   {
     slug: 'content',
     name: 'No limits on content',
-    cta: 'This stage requires a CodeCrafters Membership',
+    cta: 'Unlock all stages with a CodeCrafters membership. No limits.',
     isAccessibleByReferringUsers: true,
   },
   {
     slug: 'turbo-test-runs',
     name: 'Turbo test runs',
-    cta: 'Get faster test runs with a CodeCrafters Membership',
+    cta: 'Get faster test runs with a CodeCrafters Membership', // unused at the moment
+    isAccessibleByReferringUsers: false,
+  },
+  {
+    slug: 'code-examples',
+    name: 'Code examples',
+    cta: 'Unlock all available examples with a CodeCrafters Membership.',
     isAccessibleByReferringUsers: false,
   },
   {
     slug: 'anonymous-mode',
     name: 'Anonymous mode',
-    cta: 'Get anonymous mode with a CodeCrafters Membership',
-    isAccessibleByReferringUsers: false,
-  },
-  {
-    slug: 'code-examples',
-    name: 'More code examples',
-    cta: 'View more code examples with a CodeCrafters Membership',
+    cta: 'Get anonymous mode with a CodeCrafters Membership', // unused at the moment
     isAccessibleByReferringUsers: false,
   },
   {
     slug: 'priority-support',
     name: 'Priority support',
-    cta: 'Get priority support with a CodeCrafters Membership',
+    cta: 'Get priority support with a CodeCrafters Membership', // unused at the moment
     isAccessibleByReferringUsers: false,
   },
 ];
