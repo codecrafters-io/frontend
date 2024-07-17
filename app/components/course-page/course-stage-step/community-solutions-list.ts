@@ -7,12 +7,14 @@ import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    courseStage: CourseStageModel;
     solutions: CommunityCourseStageSolutionModel[];
     stageIncompleteModalWasDismissed: boolean;
     repository: RepositoryModel;
@@ -44,8 +46,12 @@ export default class CommunitySolutionsListComponent extends Component<Signature
   }
 
   get shouldShowInaccessibleSolutionsList() {
-    // TODO: Filter by stage number also
-    return this.args.solutions.length >= 5 && this.authenticator.currentUser && !this.authenticator.currentUser.canAccessMembershipBenefits;
+    return (
+      this.authenticator.currentUser &&
+      !this.authenticator.currentUser.canAccessMembershipBenefits &&
+      this.args.solutions.length >= 5 &&
+      this.args.courseStage.positionWithinCourse > 4 // Is there a better way to identify the stage position? Using stageList maybe?
+    );
   }
 
   get shouldShowStageIncompleteModal() {

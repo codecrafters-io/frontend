@@ -65,6 +65,7 @@
       </div>
     {{else if (gt this.sortedSolutions.length 0)}}
       <CoursePage::CourseStageStep::CommunitySolutionsList
+        @courseStage={{@model.courseStage}}
         @solutions={{this.sortedSolutions}}
         @repository={{@model.activeRepository}}
         @stageIncompleteModalWasDismissed={{this.stageIncompleteModalWasDismissed}}

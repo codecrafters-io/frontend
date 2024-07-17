@@ -16,7 +16,7 @@ interface Signature {
 }
 
 interface Feature {
-  slug: 'content' | 'turbo-test-runs' | 'anonymous-mode' | 'code-examples' | 'perks';
+  slug: 'content' | 'turbo-test-runs' | 'anonymous-mode' | 'code-examples' | 'priority-support';
   name: string;
   cta: string;
   isAccessibleByReferringUsers: boolean;
@@ -48,9 +48,9 @@ const features: Feature[] = [
     isAccessibleByReferringUsers: false,
   },
   {
-    slug: 'perks',
-    name: 'Access to Perks',
-    cta: 'Access perks with a CodeCrafters membership',
+    slug: 'priority-support',
+    name: 'Priority support',
+    cta: 'Get priority support with a CodeCrafters Membership',
     isAccessibleByReferringUsers: false,
   },
 ];
