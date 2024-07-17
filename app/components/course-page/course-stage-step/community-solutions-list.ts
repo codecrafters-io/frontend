@@ -7,12 +7,14 @@ import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    courseStage: CourseStageModel;
     solutions: CommunityCourseStageSolutionModel[];
     stageIncompleteModalWasDismissed: boolean;
     repository: RepositoryModel;
@@ -26,6 +28,31 @@ export default class CommunitySolutionsListComponent extends Component<Signature
   @service declare coursePageState: CoursePageStateService;
 
   @tracked configureGithubIntegrationModalIsOpen = false;
+
+  get accessibleSolutions() {
+    if (this.shouldShowInaccessibleSolutionsList) {
+      return this.args.solutions.slice(0, 2);
+    }
+
+    return this.args.solutions;
+  }
+
+  get inaccessibleSolutions() {
+    if (this.shouldShowInaccessibleSolutionsList) {
+      return this.args.solutions.slice(2);
+    }
+
+    return [];
+  }
+
+  get shouldShowInaccessibleSolutionsList() {
+    return (
+      this.authenticator.currentUser &&
+      !this.authenticator.currentUser.canAccessMembershipBenefits &&
+      this.args.solutions.length >= 5 &&
+      this.args.courseStage.positionWithinCourse > 4 // Is there a better way to identify the stage position? Using stageList maybe?
+    );
+  }
 
   get shouldShowStageIncompleteModal() {
     return (

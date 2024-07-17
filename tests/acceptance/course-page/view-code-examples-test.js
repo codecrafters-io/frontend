@@ -52,6 +52,7 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    assert.notOk(coursePage.upgradePrompt.isVisible, 'code examples list should not include upgrade prompt for early stages');
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2, 'expected 2 Go solutions to be present'); // Go is picked by default
 
     // Trigger logic that runs on expand
@@ -526,5 +527,51 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
 
     assert.notOk(coursePage.codeExamplesTab.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after updating course stage');
+  });
+
+  test('upgrade prompt is present when viewing code examples for higher stages', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    // 5 is the threshold
+    createCommunityCourseStageSolution(this.server, redis, 5, go);
+    createCommunityCourseStageSolution(this.server, redis, 5, go);
+    createCommunityCourseStageSolution(this.server, redis, 5, go);
+    createCommunityCourseStageSolution(this.server, redis, 5, go);
+    createCommunityCourseStageSolution(this.server, redis, 5, go);
+    createCommunityCourseStageSolution(this.server, redis, 5, go);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.sidebar.clickOnStepListItem('Implement the ECHO command');
+    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+
+    await coursePage.codeExamplesTab.languageDropdown.toggle();
+    await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Go');
+    await coursePage.codeExamplesTab.stageIncompleteModal.clickOnShowCodeButton();
+    await coursePage.codeExamplesTab.solutionCards[0].clickOnCollapseButton();
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 6, 'expected 6 Go solutions to be present');
+    assert.ok(coursePage.upgradePrompt.isVisible, 'code examples list should include upgrade prompt');
+
+    await percySnapshot('Community Solutions - Upgrade prompt');
   });
 });
