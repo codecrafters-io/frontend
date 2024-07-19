@@ -21,8 +21,6 @@ module('Acceptance | affiliate-link-page | view-affiliate-link', function (hooks
     assert.ok(affiliateLinkPage.acceptReferralButtons[1].isVisible);
     assert.ok(affiliateLinkPage.acceptReferralButtons[2].isVisible);
 
-    await this.pauseTest();
-
     await percySnapshot('Affiliate Link Page | View Affiliate Link | Anonymous');
   });
 
