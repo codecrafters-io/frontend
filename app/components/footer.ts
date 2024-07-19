@@ -27,8 +27,8 @@ export default class FooterComponent extends Component {
           url: 'https://app.codecrafters.io/courses/redis/overview',
         },
         {
-          text: 'Docker',
-          url: 'https://app.codecrafters.io/courses/docker/overview',
+          text: 'Shell',
+          url: 'https://app.codecrafters.io/courses/shell/overview',
         },
         {
           text: 'SQLite',
