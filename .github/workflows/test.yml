@@ -57,6 +57,7 @@ jobs:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
           PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
+          STRIPE_PUBLISHABLE_KEY: "dummy"
 
       - run: cat test-results.xml
         if: always()
