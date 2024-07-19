@@ -212,7 +212,7 @@
     "posthog-js": "^1.148.0",
     "showdown": "^2.1.0",
     "three": "^0.166.1",
-    "web-vitals": "^4.2.1"
+    "web-vitals": "^4.2.2"
   },
   "fastbootDependencies": [
     "crypto"
