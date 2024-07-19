@@ -50,7 +50,7 @@ export default class CommunitySolutionsListComponent extends Component<Signature
       this.authenticator.currentUser &&
       !this.authenticator.currentUser.canAccessMembershipBenefits &&
       this.args.solutions.length >= 5 &&
-      this.args.courseStage.positionWithinCourse > 4 // Is there a better way to identify the stage position? Using stageList maybe?
+      this.args.courseStage.positionWithinCourse > 2 // Don't interfere with stage 1 & 2 onboarding
     );
   }
 
