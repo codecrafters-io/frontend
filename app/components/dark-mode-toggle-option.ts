@@ -1,19 +1,17 @@
 import Component from '@glimmer/component';
 import { toRight, toLeft } from 'ember-animated/transitions/move-over';
 
-type Signature = {
+export interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
     isSelected: boolean;
   };
 
-  Blocks: {
-    default: [];
-  };
-};
+  Blocks: { default: [] };
+}
 
-export default class SelectableItemComponent extends Component<Signature> {
+export default class DarkModeToggleOptionComponent extends Component<Signature> {
   toRight = toRight;
   toLeft = toLeft;
 
@@ -28,6 +26,6 @@ export default class SelectableItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'WelcomePage::OnboardingSurveyWizard::SelectableItem': typeof SelectableItemComponent;
+    DarkModeToggleOption: typeof DarkModeToggleOptionComponent;
   }
 }

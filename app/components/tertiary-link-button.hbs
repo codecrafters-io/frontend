@@ -3,10 +3,10 @@
   @models={{@models}}
   @model={{@model}}
   @size={{@size}}
+  @isDisabled={{@isDisabled}}
   @query={{@query}}
   @shouldOpenInNewTab={{@shouldOpenInNewTab}}
-  class="bg-white dark:bg-transparent text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-300 light:hover:bg-gray-50 dark:hover:text-white dark:hover:border-gray-200
-    {{if @isDisabled 'cursor-not-allowed opacity-50'}}"
+  class="transition-colors duration-75 bg-white dark:bg-black hover:bg-gray-50 dark:text-gray-400 text-gray-800 border-gray-300 dark:border-gray-800 dark:hover:border-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
   ...attributes
 >
   {{yield}}

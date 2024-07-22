@@ -4,7 +4,8 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | settings-page | profile-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -47,6 +48,18 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     assert.strictEqual(userPage.avatar.src, 'https://github.com/rohitpaulk.png');
     assert.strictEqual(userPage.githubDetails.username, 'rohitpaulk');
     assert.strictEqual(userPage.githubDetails.link, 'https://github.com/rohitpaulk');
+  });
+
+  test('can enable dark mode', async function (assert) {
+    testScenario(this.server);
+    const user = signInAsStaff(this.owner, this.server);
+    user.update({ isVip: true });
+
+    await profilePage.visit();
+    await profilePage.darkModeToggle.clickOnOption('dark');
+
+    await percySnapshot('Settings Page - Dark Mode');
+    assert.strictEqual(1, 1); // TODO: Add more?
   });
 
   test('can refresh github username', async function (assert) {

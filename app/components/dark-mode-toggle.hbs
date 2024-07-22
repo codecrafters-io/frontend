@@ -1,9 +1,5 @@
 {{#each this.possiblePreferences as |preference|}}
-  {{#if (eq this.darkMode.localStoragePreference preference)}}
-    <PrimaryButton @size="small" class="capitalize" {{on "click" (fn this.setPreference preference)}}>{{or preference "unset"}}</PrimaryButton>
-  {{else}}
-    <TertiaryButton @size="small" class="capitalize" {{on "click" (fn this.setPreference preference)}}>{{or preference "unset"}}</TertiaryButton>
-  {{/if}}
+  <DarkModeToggleOption @isSelected={{eq this.darkMode.localStoragePreference preference}} {{on "click" (fn this.setPreference preference)}}>
+    {{or preference "unset"}}
+  </DarkModeToggleOption>
 {{/each}}
-
-{{yield}}

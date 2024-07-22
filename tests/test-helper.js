@@ -22,7 +22,11 @@ QUnit.testStart(function () {
   const localStorageCache = new Map();
 
   sinon.stub(window.localStorage, 'getItem').callsFake(function (key) {
-    return localStorageCache.get(key);
+    if (localStorageCache.has(key)) {
+      return localStorageCache.get(key);
+    } else {
+      return null;
+    }
   });
 
   sinon.stub(window.localStorage, 'setItem').callsFake(function (key, value) {
