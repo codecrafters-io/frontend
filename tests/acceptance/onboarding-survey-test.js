@@ -7,6 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | onboarding-survey-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -28,6 +29,8 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
     await welcomePage.visit();
     assert.strictEqual(currentURL(), '/welcome', 'current URL should be /welcome');
 
+    await percySnapshot('Onboarding Survey - Usage Purpose');
+
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Master a language');
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Interview prep');
     await welcomePage.onboardingSurveyWizard.fillInFreeFormInput('Dummy');
@@ -38,6 +41,8 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
     assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose[0], 'Master a language', 'First usage purpose option should be selected');
     assert.strictEqual(onboardingSurvey.selectedOptionsForUsagePurpose[1], 'Interview prep', 'Second usage purpose option should be selected');
     assert.strictEqual(onboardingSurvey.freeFormAnswerForUsagePurpose, 'Dummy', 'Free form input should be saved');
+
+    await percySnapshot('Onboarding Survey - Referral Source');
 
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('YouTube');
     await welcomePage.onboardingSurveyWizard.clickOnContinueButton();
