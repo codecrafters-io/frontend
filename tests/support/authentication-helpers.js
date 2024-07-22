@@ -17,35 +17,35 @@ export function signInAsAdmin(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isAdmin', true);
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
 export function signInAsAffiliate(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isAffiliate', true);
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
 export function signInAsConceptAuthor(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isConceptAuthor', true);
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
 export function signInAsCourseAuthor(owner, server, course, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('authoredCourseSlugs', [course.slug]);
 
-  signInAsSubscriber(owner, server, user);
+  return signInAsSubscriber(owner, server, user);
 }
 
 export function signInAsStaff(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   user.update('isStaff', true);
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
 export function signInAsSubscriber(owner, server, user) {
@@ -57,7 +57,7 @@ export function signInAsSubscriber(owner, server, user) {
     currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
 export function signInAsTeamAdmin(owner, server, user) {
@@ -72,7 +72,7 @@ export function signInAsTeamAdmin(owner, server, user) {
     isAdmin: true,
   });
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
 export function signInAsTeamMember(owner, server, user) {
@@ -87,7 +87,7 @@ export function signInAsTeamMember(owner, server, user) {
     isAdmin: false,
   });
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
 export function signInAsSubscribedTeamMember(owner, server) {
@@ -104,9 +104,10 @@ export function signInAsSubscribedTeamMember(owner, server) {
     isAdmin: false,
   });
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
 
+// TODO: Remove this?
 export function signInAsTrialingSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
@@ -117,5 +118,5 @@ export function signInAsTrialingSubscriber(owner, server, user) {
     trialEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
-  signIn(owner, server, user);
+  return signIn(owner, server, user);
 }
