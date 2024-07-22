@@ -7,6 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | onboarding-survey-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -27,6 +28,8 @@ module('Acceptance | onboarding-survey-test', function (hooks) {
 
     await welcomePage.visit();
     assert.strictEqual(currentURL(), '/welcome', 'current URL should be /welcome');
+
+    await percySnapshot('Onboarding Survey');
 
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Master a language');
     await welcomePage.onboardingSurveyWizard.clickOnSelectableItem('Interview prep');
