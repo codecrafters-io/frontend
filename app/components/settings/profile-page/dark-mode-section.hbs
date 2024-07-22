@@ -1,0 +1,15 @@
+<Settings::FormSection @title="Dark Mode" @description="Choose when CodeCrafters should use dark mode.">
+  <:belowDescription>
+    <Pill @color="green">
+      {{svg-jar "shield-check" class="w-4 h-4 text-green-500 mr-1"}}
+      Members only
+
+      <EmberTooltip @text="This feature is only available to CodeCrafters members." />
+    </Pill>
+  </:belowDescription>
+  <:default>
+    <div class="inline-flex items-center gap-3">
+      <DarkModeToggle />
+    </div>
+  </:default>
+</Settings::FormSection>
