@@ -1,4 +1,4 @@
-<TertiaryButton class="pl-2 {{if @isSelected 'border-teal-500 hover:bg-white'}}" ...attributes>
+<TertiaryButton class="pl-2 {{if @isSelected 'border-teal-500 hover:bg-white'}}" ...attributes data-test-dark-mode-toggle-option>
   <div class="flex items-center text-sm sm:text-base {{if @isSelected 'text-teal-500' 'text-gray-600'}}">
     <AnimatedContainer class="overflow-hidden">
       {{#animated-if @isSelected rules=this.rules duration=100}}

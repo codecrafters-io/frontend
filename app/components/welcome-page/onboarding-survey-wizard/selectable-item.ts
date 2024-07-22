@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import fade from 'ember-animated/transitions/fade';
 import { toRight, toLeft } from 'ember-animated/transitions/move-over';
 
 type Signature = {
@@ -15,7 +14,6 @@ type Signature = {
 };
 
 export default class SelectableItemComponent extends Component<Signature> {
-  transition = fade;
   toRight = toRight;
   toLeft = toLeft;
 
