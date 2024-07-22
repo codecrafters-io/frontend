@@ -13,7 +13,20 @@ type Signature = {
 };
 
 export default class Step2Component extends Component<Signature> {
-  options = ['Friend/Colleague', 'YouTube', 'Reddit', 'Hacker News', 'Twitter', 'GitHub', 'Google', 'Newsletter', "Don't remember"];
+  options = [
+    'Friend/Colleague',
+    'YouTube',
+    'GitHub',
+    'Google',
+    'Hacker News',
+    'Instagram',
+    'LinkedIn',
+    // 'Newsletter', // Not a lot of entries as of Jul 2024
+    'Reddit',
+    'TikTok',
+    'Twitter',
+    "Don't remember",
+  ];
 
   @action
   handleFreeFormInputBlur() {
