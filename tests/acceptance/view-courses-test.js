@@ -35,6 +35,22 @@ module('Acceptance | view-courses', function (hooks) {
     assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
   });
 
+  test('it renders with dark mode', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const darkMode = this.owner.lookup('service:dark-mode');
+    darkMode.updateLocalStoragePreference('dark');
+
+    const course = this.server.schema.courses.findBy({ slug: 'grep' });
+    course.update({ releaseStatus: 'beta' });
+
+    await catalogPage.visit();
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
+
+    await percySnapshot('Catalog Page - Dark Mode');
+  });
+
   test('it renders alpha courses if user is staff', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
