@@ -1,5 +1,5 @@
 <div
-  class="group bg-white p-5 rounded-md shadow-sm hover:shadow transition-all cursor-pointer flex flex-col justify-between border relative"
+  class="group bg-white dark:bg-gray-950 p-5 rounded-md shadow-sm hover:shadow transition-all cursor-pointer flex flex-col justify-between border dark:border-gray-800 relative"
   role="button"
   {{on "click" this.navigateToTrack}}
   data-test-track-card
@@ -12,7 +12,7 @@
   {{! Text }}
   <div class="mb-8">
     <div class="flex items-center flex-wrap gap-y-2 pr-16">
-      <div class="text-gray-600 mr-2" data-test-track-name>
+      <div class="text-gray-600 dark:text-gray-400 mr-2" data-test-track-name>
         {{@language.name}}
       </div>
 
@@ -28,16 +28,11 @@
   {{! Footer }}
   <div class="flex items-center justify-between">
     {{#if this.currentUserHasStartedTrack}}
-      {{! @glint-expect-error: not ts-ified yet }}
-      <TracksPage::TrackCard::ProgressBar
-        @language={{@language}}
-        @completedStagesCount={{this.completedStagesCount}}
-        @stagesCount={{this.stagesCount}}
-      />
+      <TracksPage::TrackCard::ProgressBar @completedStagesCount={{this.completedStagesCount}} @stagesCount={{this.stagesCount}} />
     {{else}}
       <div class="flex items-center">
-        {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300"}}
-        <span class="text-xs text-gray-400">{{this.stagesCount}} stages</span>
+        {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}
+        <span class="text-xs text-gray-400 dark:text-gray-600">{{this.stagesCount}} stages</span>
       </div>
     {{/if}}
 
@@ -50,7 +45,7 @@
         {{/if}}
       </span>
 
-      {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
+      {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 transition-colors"}}
     </div>
   </div>
 </div>
