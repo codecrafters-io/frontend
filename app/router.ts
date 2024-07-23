@@ -7,12 +7,12 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route('account-deleted');
+  this.route('account-deleted'); // TODO: Add dark mode support
   this.route('badges');
-  this.route('catalog');
-  this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' });
-  this.route('concepts');
-  this.route('concept', { path: '/concepts/:concept_slug' });
+  this.route('catalog'); // TODO: Add dark mode support
+  this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' }); // TODO: Add dark mode support
+  this.route('concepts'); // TODO: Add dark mode support
+  this.route('concept', { path: '/concepts/:concept_slug' }); // TODO: Add dark mode support
 
   this.route('concept-admin', { path: '/concepts/:concept_slug/admin' }, function () {
     this.route('basic-details');
@@ -21,7 +21,7 @@ Router.map(function () {
     this.route('questions');
   });
 
-  this.route('concept-group', { path: '/collections/:concept_group_slug' });
+  this.route('concept-group', { path: '/collections/:concept_group_slug' }); // TODO: Add dark mode support
   this.route('contests');
   this.route('contest', { path: '/contests/:contest_slug' });
   this.route('courses');
@@ -43,6 +43,7 @@ Router.map(function () {
     this.route('updates');
   });
 
+  // TODO: Add dark mode support
   this.route('course', { path: '/courses/:course_slug' }, function () {
     this.route('introduction');
     this.route('setup');
@@ -60,35 +61,36 @@ Router.map(function () {
     this.route('completed');
   });
 
-  this.route('course-overview', { path: '/courses/:course_slug/overview' });
+  this.route('course-overview', { path: '/courses/:course_slug/overview' }); // TODO: Add dark mode support
   this.route('debug');
-  this.route('join');
-  this.route('login');
-  this.route('logged-in');
-  this.route('membership');
-  this.route('pay');
+  this.route('join'); // TODO: Add dark mode support
+  this.route('login'); // TODO: Add dark mode support?
+  this.route('logged-in'); // TODO: Add dark mode support?
+  this.route('membership'); // TODO: Add dark mode support
+  this.route('pay'); // TODO: Add dark mode support
 
   this.route('perk', { path: '/perks/:slug' }, function () {
     this.route('claim');
   });
 
   this.route('partner');
-  this.route('refer');
-  this.route('referral-link', { path: '/r/:referral_link_slug' });
+  this.route('refer'); // TODO: Add dark mode support
+  this.route('referral-link', { path: '/r/:referral_link_slug' }); // TODO: Add dark mode support
 
   this.route('settings', function () {
     this.route('profile');
     this.route('account');
   });
 
-  this.route('team', { path: '/teams/:team_id' });
-  this.route('teams.create', { path: '/teams/create' });
+  this.route('team', { path: '/teams/:team_id' }); // TODO: Add dark mode support
+  this.route('teams.create', { path: '/teams/create' }); // TODO: Add dark mode support
   this.route('teams.pay', { path: '/teams/pay' });
-  this.route('track', { path: '/tracks/:track_slug' });
+  this.route('track', { path: '/tracks/:track_slug' }); // TODO: Add dark mode support
   this.route('tracks');
-  this.route('update-required');
-  this.route('user', { path: '/users/:username' });
+  this.route('update-required'); // TODO: Add dark mode support
+  this.route('user', { path: '/users/:username' }); // TODO: Add dark mode support
 
+  // TODO: Add dark mode support
   this.route('vote', function () {
     this.route('course-ideas', { path: '/challenge-ideas' });
     this.route('course-extension-ideas', { path: '/challenge-extension-ideas' });
@@ -96,7 +98,7 @@ Router.map(function () {
 
   this.route('welcome');
 
-  this.route('not-found', { path: '/*path' }); // Catch-all
+  this.route('not-found', { path: '/*path' }); // Catch-all (TODO: Add dark mode support)
   this.route('not-found', { path: '/404' }); // Allow redirecting to this route
 
   this.route('demo', function () {
