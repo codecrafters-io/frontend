@@ -9,7 +9,7 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('account-deleted'); // TODO: Add dark mode support
   this.route('badges');
-  this.route('catalog'); // TODO: Add dark mode support
+  this.route('catalog');
   this.route('code-walkthrough', { path: '/walkthroughs/:code_walkthrough_slug' }); // TODO: Add dark mode support
   this.route('concepts'); // TODO: Add dark mode support
   this.route('concept', { path: '/concepts/:concept_slug' }); // TODO: Add dark mode support
