@@ -52,7 +52,10 @@
           <CourseCard::ProgressBar @course={{@course}} @lastUsedRepository={{this.lastUsedRepository}} class="flex-shrink-0" />
         {{else}}
           {{#if @course.releaseStatusIsAlpha}}
-            <div class="text-xs text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 rounded px-1 py-0.25 mr-3" data-test-course-alpha-label>
+            <div
+              class="text-xs text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 rounded px-1 py-0.25 mr-3"
+              data-test-course-alpha-label
+            >
               ALPHA
             </div>
           {{else if @course.releaseStatusIsBeta}}
