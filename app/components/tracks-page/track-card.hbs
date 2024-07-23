@@ -28,12 +28,7 @@
   {{! Footer }}
   <div class="flex items-center justify-between">
     {{#if this.currentUserHasStartedTrack}}
-      {{! @glint-expect-error: not ts-ified yet }}
-      <TracksPage::TrackCard::ProgressBar
-        @language={{@language}}
-        @completedStagesCount={{this.completedStagesCount}}
-        @stagesCount={{this.stagesCount}}
-      />
+      <TracksPage::TrackCard::ProgressBar @completedStagesCount={{this.completedStagesCount}} @stagesCount={{this.stagesCount}} />
     {{else}}
       <div class="flex items-center">
         {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}

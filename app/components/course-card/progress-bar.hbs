@@ -1,7 +1,9 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="flex items-center" data-test-course-progress ...attributes>
   <div class="rounded overflow-hidden mr-2">
-    <div class="{{if @lastUsedRepository.allStagesAreComplete 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
+    <div
+      class="{{if @lastUsedRepository.allStagesAreComplete 'bg-teal-100 dark:bg-teal-900' 'bg-blue-100 dark:bg-blue-900'}}
+        h-3 w-16 flex items-stretch"
+    >
       {{#if (eq @lastUsedRepository.completedStages.length 0)}}
         <div class="bg-blue-500 w-1/12"></div>
       {{else}}

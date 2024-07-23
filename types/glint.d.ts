@@ -12,6 +12,7 @@ declare module '@glint/environment-ember-loose/registry' {
     autoresize: ModifierLike<{ Args: { Positional: [string] } }>;
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
+    div: HelperLike<{ Return: number; Args: { Positional: [number, number] } }>;
     EmberTooltip: ComponentLike<{
       Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right'; delay?: number; duration?: number } };
       Blocks: { default?: [] };
@@ -34,6 +35,7 @@ declare module '@glint/environment-ember-loose/registry' {
     'page-title': HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     range: HelperLike<{ Return: number[]; Args: { Positional: [number, number] } }>;
     repeat: HelperLike<{ Return: string[]; Args: { Positional: [number] } }>;
+    round: HelperLike<{ Return: number; Args: { Positional: [number] } }>;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     'sortable-group': ModifierLike<{ Args: { Named: { onChange: (items: any[], movedItem: any) => void } } }>;

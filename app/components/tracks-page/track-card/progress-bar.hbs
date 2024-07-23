@@ -1,10 +1,12 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="flex items-center" data-test-track-progress>
   <div class="rounded overflow-hidden mr-2">
-    <div class="{{if (eq @stagesCount @completedStagesCount) 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
+    <div
+      class="{{if (eq @stagesCount @completedStagesCount) 'bg-teal-100 dark:bg-teal-900' 'bg-blue-100 dark:bg-blue-900'}} h-3 w-16 flex items-stretch"
+    >
       <div
         data-test-track-progress-bar
         class={{if (eq @stagesCount @completedStagesCount) "bg-teal-500" "bg-blue-500"}}
+        {{! @glint-expect-error: or doesn't return number }}
         style={{html-safe (concat "width:" (round (mult 100 (div (or @completedStagesCount 1) @stagesCount))) "%")}}
       ></div>
     </div>

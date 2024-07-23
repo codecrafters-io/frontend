@@ -45,6 +45,16 @@ module('Acceptance | view-courses', function (hooks) {
     const course = this.server.schema.courses.findBy({ slug: 'grep' });
     course.update({ releaseStatus: 'beta' });
 
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
