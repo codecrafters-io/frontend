@@ -37,7 +37,7 @@ jobs:
 
       - id: compute_percy_enable_for_branch
         run: echo "::set-output name=percy_enable::true"
-        if: "github.ref == 'refs/heads/main'"
+        if: "github.event_name == 'schedule' && github.ref == 'refs/heads/main'"
 
       - id: compute_percy_enable_for_commit
         run: echo "::set-output name=percy_enable::true"
