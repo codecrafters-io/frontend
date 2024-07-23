@@ -127,7 +127,8 @@ export default class DarkModeService extends Service {
    * Writes the new Dark Mode preference to localStorage and updates loaded `localStoragePreference`
    * @param {'system'|'dark'|'light'|null} newValue New dark mode preference
    */
-  @action updateLocalStoragePreference(newValue?: LocalStoragePreference) {
+  @action
+  updateLocalStoragePreference(newValue?: LocalStoragePreference) {
     if (!newValue) {
       this.localStorage.removeItem(LOCAL_STORAGE_KEY);
     } else {

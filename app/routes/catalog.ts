@@ -6,6 +6,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import RSVP from 'rsvp';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   repositories?: RepositoryModel[];
@@ -16,6 +17,10 @@ export default class CatalogRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
+
+  buildRouteInfoMetadata(): RouteInfoMetadata {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  }
 
   model(): Promise<ModelType> {
     const modelPromises: {

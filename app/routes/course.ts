@@ -11,6 +11,7 @@ import type Transition from '@ember/routing/transition';
 import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   course: CourseModel;
