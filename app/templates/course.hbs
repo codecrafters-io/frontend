@@ -87,7 +87,7 @@
         {{outlet}}
       </CoursePage::StepContent>
 
-      <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 dark:bg-black hidden md:block group relative">
+      <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l dark:border-gray-800 bg-gray-50 dark:bg-black hidden md:block group relative">
         {{#if this.leaderboardIsExpanded}}
           <CoursePage::CollapseLeaderboardButton
             class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
