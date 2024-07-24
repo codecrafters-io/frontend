@@ -1,14 +1,20 @@
 <div
   class="flex flex-shrink-0 items-center px-2 py-2 mr-2 border-b-2 text-sm group
-    {{if @isActive 'border-teal-500' 'border-transparent hover:border-gray-300'}}"
+    {{if @isActive 'border-teal-500' 'border-transparent hover:border-gray-300 dark:hover:border-gray-800'}}"
   data-test-header-tab-link
   ...attributes
 >
   {{#if @iconUrl}}
     <img src={{@iconUrl}} alt="icon" class="h-5 mr-2" />
   {{else if @icon}}
-    {{svg-jar @icon class=(concat (if @isActive "text-gray-600" "text-gray-400 group-hover:text-gray-500") " w-5 mr-2 fill-current")}}
+    {{svg-jar
+      @icon
+      class=(concat
+        (if @isActive "text-gray-600 dark:text-gray-400" "text-gray-400 dark:text-gray-600 group-hover:text-gray-500 dark:group-hover:text-gray-500")
+        " w-5 mr-2 fill-current"
+      )
+    }}
   {{/if}}
 
-  <span class="whitespace-nowrap {{if @isActive 'text-gray-700' 'text-gray-600'}}">{{@text}}</span>
+  <span class="whitespace-nowrap {{if @isActive 'text-gray-700 dark:text-gray-300' 'text-gray-600 dark:text-gray-400'}}">{{@text}}</span>
 </div>
