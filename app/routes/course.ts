@@ -11,6 +11,8 @@ import type Transition from '@ember/routing/transition';
 import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   course: CourseModel;
@@ -32,6 +34,10 @@ export default class CourseRoute extends BaseRoute {
       refreshModel: true,
     },
   };
+
+  buildRouteInfoMetadata(): RouteInfoMetadata {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  }
 
   findOrCreateRepository(course: CourseModel, transition: Transition, repositories: RepositoryModel[]) {
     // @ts-ignore
