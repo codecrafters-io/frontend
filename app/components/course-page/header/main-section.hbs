@@ -13,14 +13,14 @@
       <div class="flex items-center flex-wrap gap-x-3">
         <div class="text-lg sm:text-xl md:text-2xl">
           {{#if (eq @currentStep.type "CourseStageStep")}}
-            {{! @glint-expect-error not typesafe }}
-            <span class="font-bold text-gray-700" data-test-step-name>{{@currentStep.courseStage.name}}</span>
+            <span class="font-bold text-gray-700 dark:text-gray-200" data-test-step-name>{{this.currentStepAsCourseStageStep.courseStage.name}}</span>
             <span class="font-mono text-base sm:text-lg md:text-xl">
-              {{! @glint-expect-error not typesafe }}
-              <span class="text-gray-300">#</span><span class="font-mono text-gray-400 uppercase">{{@currentStep.courseStage.slug}}</span>
+              <span class="text-gray-300">#</span><span
+                class="font-mono text-gray-400 dark:text-gray-600 uppercase"
+              >{{this.currentStepAsCourseStageStep.courseStage.slug}}</span>
             </span>
           {{else}}
-            <span class="font-bold text-gray-700" data-test-step-name>{{@currentStep.title}}</span>
+            <span class="font-bold text-gray-700 dark:text-gray-200" data-test-step-name>{{@currentStep.title}}</span>
           {{/if}}
         </div>
 
