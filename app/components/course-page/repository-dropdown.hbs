@@ -4,13 +4,13 @@
     <dd.Trigger>
       <div
         class="flex items-start gap-2 pl-3 py-3 rounded group/dropdown-trigger text-left w-full
-          {{if dd.isOpen 'bg-gray-300 bg-opacity-50' 'hover:bg-gray-300 hover:bg-opacity-50'}}"
+          {{if dd.isOpen 'bg-gray-300 dark:bg-gray-800 bg-opacity-50' 'hover:bg-gray-300 hover:bg-opacity-50 dark:hover:bg-gray-800'}}"
         data-test-repository-dropdown-trigger
       >
         <CourseLogo @course={{@activeRepository.course}} class="w-6 h-6 mt-0.25" />
 
         <div class="flex-grow">
-          <h1 class="text-gray-800 font-semibold tracking-tight w-full">
+          <h1 class="text-gray-800 dark:text-gray-200 font-semibold tracking-tight w-full">
             {{@activeRepository.course.name}}
           </h1>
           <div class="text-xs text-gray-500 mt-1 w-full">
@@ -35,8 +35,8 @@
       </div>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
-        <div class="text-sm text-gray-700">
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
+        <div class="text-sm text-gray-700 dark:text-gray-300">
           <CoursePage::RepositoryDropdownAction @icon="login" {{on "click" (fn this.handleBackToCatalogButtonClick dd.actions)}}>
             Back to Catalog
           </CoursePage::RepositoryDropdownAction>
@@ -113,6 +113,7 @@
             </CoursePage::RepositoryDropdownAction>
           {{/unless}}
         </div>
+
         {{#if (gt this.nonActiveRepositories.length 0)}}
           <div class="font-bold text-gray-600 mb-2 mt-3 pl-3 text-sm">
             Switch to a different repo:

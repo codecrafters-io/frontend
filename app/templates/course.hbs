@@ -67,7 +67,7 @@
       @activeStep={{this.coursePageState.activeStep}}
       @nextStep={{this.coursePageState.nextStep}}
       @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
-      class="px-3 md:px-6 lg:pl-10 bg-gray-50 pt-6 pb-5"
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-black pt-6 pb-5"
     />
 
     <CoursePage::Header::StickySection
@@ -76,9 +76,9 @@
       @currentStep={{this.coursePageState.currentStep}}
       @activeStep={{this.coursePageState.activeStep}}
       @nextStep={{this.coursePageState.nextStep}}
-      class="px-3 md:px-6 lg:pl-10 bg-gray-50"
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-black"
     />
-    <div class="flex flex-grow bg-white">
+    <div class="flex flex-grow bg-white dark:bg-black">
       <CoursePage::StepContent
         @step={{this.coursePageState.currentStep}}
         @repository={{@model.activeRepository}}
@@ -87,7 +87,10 @@
         {{outlet}}
       </CoursePage::StepContent>
 
-      <div class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}} pt-6 flex-shrink-0 border-l bg-gray-50 hidden md:block group relative">
+      <div
+        class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}}
+          pt-6 flex-shrink-0 border-l dark:border-gray-800 bg-gray-50 dark:bg-black hidden md:block group relative"
+      >
         {{#if this.leaderboardIsExpanded}}
           <CoursePage::CollapseLeaderboardButton
             class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"

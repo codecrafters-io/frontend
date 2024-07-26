@@ -21,6 +21,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
+    const darkMode = this.owner.lookup('service:dark-mode');
+    darkMode.updateLocalStoragePreference('dark');
+
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     course.update({ releaseStatus: 'live' });
 
@@ -44,6 +47,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, `expected ${baseRequestsCount} requests`);
 
+    // await this.pauseTest();
     await percySnapshot('Start Course - Select Language');
 
     assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
