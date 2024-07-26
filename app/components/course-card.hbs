@@ -1,5 +1,5 @@
 <LinkTo
-  class="group bg-white dark:bg-gray-950 p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border dark:border-gray-800 relative"
+  class="group bg-white dark:bg-gray-925 p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border dark:border-gray-800-alpha-70 relative"
   @route={{this.linkToRoute.name}}
   @model={{this.linkToRoute.model}}
   @query={{this.linkToRoute.query}}
@@ -17,7 +17,7 @@
   {{! Text }}
   <div class="mb-6">
     <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
-      <div class="text-lg font-semibold text-gray-600 dark:text-gray-300 mr-2" data-test-course-name>
+      <div class="text-lg font-semibold text-gray-800 dark:text-gray-200 mr-2" data-test-course-name>
         {{#if this.isSkeleton}}
           <span class="inline-block bg-gray-100 rounded">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
         {{else}}

@@ -30,7 +30,7 @@ module.exports = {
       black: 'black',
       blue: colors.sky,
       current: 'currentColor',
-      gray: colors.slate,
+      gray: colors.gray,
       green: colors.green,
       indigo: colors.indigo,
       red: colors.red,
@@ -48,6 +48,12 @@ module.exports = {
     extend: {
       brightness: {
         102: '1.02',
+      },
+      colors: {
+        gray: {
+          925: '#050A17',
+          '800-alpha-70': 'rgba(31, 41, 55, 0.7)', // #1f2937 with 70% opacity
+        },
       },
       typography: {
         DEFAULT: {
