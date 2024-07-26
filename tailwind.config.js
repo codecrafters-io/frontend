@@ -52,7 +52,6 @@ module.exports = {
       colors: {
         gray: {
           925: '#050A17',
-          '800-alpha-70': 'rgba(31, 41, 55, 0.7)', // #1f2937 with 70% opacity
         },
       },
       typography: {
