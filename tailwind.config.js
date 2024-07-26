@@ -31,7 +31,7 @@ module.exports = {
       blue: colors.sky,
       current: 'currentColor',
       gray: {
-        ...colors.slate,
+        ...colors.gray,
         ...{ 925: '#050A17' },
       },
       green: colors.green,
