@@ -11,7 +11,7 @@
 
   <BlurredOverlay
     @isBlurred={{this.shouldShowPreviousStepsIncompleteModal}}
-    @overlayClass="bg-gray-200 bg-opacity-20"
+    @overlayClass="bg-gray-200 bg-opacity-20 dark:bg-gray-900 dark:bg-opacity-20"
     class="px-3 md:px-6 lg:px-10"
     {{did-update this.handleStepIdUpdated @step.id}}
   >
@@ -22,14 +22,14 @@
       <ModalBody
         @allowManualClose={{false}}
         @onClose={{this.handlePreviousStepsIncompleteModalDismissed}}
-        class="w-full mt-8 border mx-3 md:mx-6"
+        class="w-full mt-8 mx-3 md:mx-6"
         data-test-previous-steps-incomplete-modal
       >
-        <div class="mb-4 font-semibold text-2xl text-gray-600 mr-6">
+        <div class="mb-4 font-semibold text-2xl text-gray-600 dark:text-gray-300 mr-6">
           Previous steps incomplete
         </div>
 
-        <div class="prose mb-6">
+        <div class="prose dark:prose-invert mb-6">
           <p>
             This step depends on previous steps that you haven't completed yet.
           </p>
@@ -49,7 +49,7 @@
           </PrimaryLinkButton>
 
           <div
-            class="text-gray-500 hover:text-gray-800 text-sm pb-0.25 border-b border-gray-400 hover:border-gray-600 flex-shrink-0"
+            class="text-gray-500 hover:text-gray-800 dark:text-gray-300 text-sm pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0"
             role="button"
             {{on "click" this.handlePreviousStepsIncompleteModalDismissed}}
             data-test-just-exploring-button

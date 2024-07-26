@@ -1,4 +1,4 @@
-<div class="text-gray-700 prose mb-5" data-test-select-expected-activity-frequency-section>
+<div class="prose dark:prose-invert mb-5" data-test-select-expected-activity-frequency-section>
   <p>
     Would you like us to email you occasional friendly nudges to help you stay accountable, as well as tips on maximising your learning experience?
   </p>
@@ -7,7 +7,10 @@
 <div>
   <div class="flex items-center flex-wrap max-w-3xl gap-3">
     <TertiaryButton
-      class="{{if (eq @repository.remindersAreEnabled true) 'border-teal-500 text-teal-500'}}"
+      class="{{if
+          (eq @repository.remindersAreEnabled true)
+          'border-teal-500 text-teal-500 hover:border-teal-500 dark:border-teal-400 dark:text-teal-400 dark:hover:border-teal-400'
+        }}"
       @isDisabled={{@isDisabled}}
       {{on "click" (fn this.handleSelect true)}}
     >
@@ -15,7 +18,10 @@
     </TertiaryButton>
 
     <TertiaryButton
-      class="{{if (eq @repository.remindersAreEnabled false) 'border-teal-500 text-teal-500'}}"
+      class="{{if
+          (eq @repository.remindersAreEnabled false)
+          'border-teal-500 text-teal-500 hover:border-teal-500 dark:border-teal-400 dark:text-teal-400 dark:hover:border-teal-400'
+        }}"
       @isDisabled={{@isDisabled}}
       {{on "click" (fn this.handleSelect false)}}
     >

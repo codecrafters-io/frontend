@@ -1,5 +1,5 @@
 <div
-  class="py-3.5 border-b border-green-200 bg-gradient-to-b from-0% to-100% from-green-50 to-green-100 flex items-center justify-between gap-4 flex-wrap"
+  class="py-3.5 border-b border-green-200 dark:border-green-900 bg-gradient-to-b from-0% to-100% from-green-50 to-green-100 dark:from-green-700/50 dark:to-green-900/50 flex items-center justify-between gap-4 flex-wrap"
   data-test-completed-step-notice
   ...attributes
 >
@@ -7,7 +7,7 @@
     <div class="text-2xl pl-1">
       🎉
     </div>
-    <div class="prose prose-sm prose-green">
+    <div class="prose prose-sm prose-green dark:prose-invert">
       {{markdown-to-html this.instructionsMarkdown}}
     </div>
 
