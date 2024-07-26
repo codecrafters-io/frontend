@@ -21,7 +21,7 @@ export default class PillComponent extends Component<Signature> {
       blue: 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-950 dark:text-blue-300 dark:ring-blue-400/20',
       gray: 'bg-gray-50 text-gray-700 ring-gray-600/20 dark:bg-gray-900 dark:text-gray-300 dark:ring-gray-400/20',
       'dark-gray': 'bg-gray-200 text-gray-700 ring-gray-600/20 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-400/20',
-      white: 'bg-white text-gray-600 ring-gray-600/20 dark:bg-gray-950 dark:text-gray-300 dark:ring-gray-400/20',
+      white: 'bg-white text-gray-600 ring-gray-600/20 dark:bg-gray-900 dark:text-gray-300 dark:ring-gray-400/20',
     }[this.args.color];
   }
 }

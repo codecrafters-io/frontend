@@ -30,7 +30,10 @@ module.exports = {
       black: 'black',
       blue: colors.sky,
       current: 'currentColor',
-      gray: colors.slate,
+      gray: {
+        ...colors.slate,
+        ...{ 925: '#050A17' },
+      },
       green: colors.green,
       indigo: colors.indigo,
       red: colors.red,
