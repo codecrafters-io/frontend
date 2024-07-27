@@ -4,7 +4,7 @@ import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/cou
 
 interface Signature {
   Args: {
-    feedbackSubmission: CourseStageFeedbackSubmissionModel; // Replace 'any' with the actual type of feedbackSubmission
+    feedbackSubmission: CourseStageFeedbackSubmissionModel;
   };
 }
 
