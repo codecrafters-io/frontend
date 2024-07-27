@@ -1,5 +1,4 @@
 import { module, test } from 'qunit';
-
 import { setupTest } from 'codecrafters-frontend/tests/helpers';
 
 module('Unit | Transform | boolean', function (hooks) {

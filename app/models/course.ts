@@ -7,13 +7,11 @@ import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import DateService from 'codecrafters-frontend/services/date';
 import LanguageModel from 'codecrafters-frontend/models/language';
-import Model from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
-import { attr, hasMany } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
-
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';

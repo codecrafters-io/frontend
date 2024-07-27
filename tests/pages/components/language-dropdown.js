@@ -1,4 +1,4 @@
-import { text, clickable, clickOnText, collection } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, text } from 'ember-cli-page-object';
 
 export default {
   currentLanguageName: text('[data-test-language-dropdown-trigger] [data-test-current-language-name]', { resetScope: true }),

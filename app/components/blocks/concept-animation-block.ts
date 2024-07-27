@@ -7,7 +7,6 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { run } from '@ember/runloop';
 import { ConceptAnimationBlock } from 'codecrafters-frontend/utils/blocks';
-
 // @ts-ignore
 import networkingProtocolsLayers from '/assets/concept-animations/network-protocols/layers.lottie.json';
 // @ts-ignore
@@ -20,7 +19,6 @@ import networkingProtocolsLayer2 from '/assets/concept-animations/network-protoc
 import networkingProtocolsLayer3 from '/assets/concept-animations/network-protocols/layer-3.lottie.json';
 // @ts-ignore
 import networkingProtocolsLayer4 from '/assets/concept-animations/network-protocols/layer-4.lottie.json';
-
 // @ts-ignore
 import tcpOverviewConnectionIdentifiers from '/assets/concept-animations/tcp-overview/connection-identifiers.lottie.json';
 // @ts-ignore

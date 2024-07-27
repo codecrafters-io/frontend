@@ -4,9 +4,8 @@ import CourseLeaderboardEntry from 'codecrafters-frontend/utils/course-leaderboa
 import fade from 'ember-animated/transitions/fade';
 import LeaderboardPoller from 'codecrafters-frontend/utils/leaderboard-poller';
 import move from 'ember-animated/motions/move';
-import { action } from '@ember/object';
+import { action, get } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
-import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';

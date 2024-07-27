@@ -1,5 +1,4 @@
-import { createConsumer, logger } from '@rails/actioncable';
-import { Consumer } from '@rails/actioncable';
+import { createConsumer, logger, Consumer } from '@rails/actioncable';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from './authenticator';
 import Service, { service } from '@ember/service';

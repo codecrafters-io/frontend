@@ -1,4 +1,4 @@
-import { blurrable, create, clickable, collection, fillable, focusable, text } from 'ember-cli-page-object';
+import { blurrable, clickable, collection, create, fillable, focusable, text } from 'ember-cli-page-object';
 import { alias } from 'ember-cli-page-object/macros';
 
 export default create({

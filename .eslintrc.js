@@ -15,11 +15,22 @@ module.exports = {
     },
   },
   plugins: ['ember', '@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended', 'plugin:import/recommended', 'plugin:import/typescript'],
   env: {
     browser: true,
   },
   rules: {
+    'import/order': [
+      'error',
+      {
+        groups: [],
+        'newlines-between': 'never',
+        // alphabetize: {
+        //   order: 'asc',
+        // },
+      },
+    ],
+    'import/no-unresolved': 'off',
     'padding-line-between-statements': [
       'error',
       { blankLine: 'always', prev: '*', next: 'return' },

@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { later } from '@ember/runloop';
-import { cancel } from '@ember/runloop';
+import { later, cancel } from '@ember/runloop';
 
 export default class LoadingController extends Controller {
   cancellable;

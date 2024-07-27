@@ -1,5 +1,4 @@
-import Model from '@ember-data/model';
-import { attr, belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import type CourseModel from './course';
 import type LanguageModel from './language';
 import type CommunitySolutionEvaluationModel from './community-solution-evaluation';

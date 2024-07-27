@@ -1,7 +1,7 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
-import posthog from 'posthog-js';
+import { posthog } from 'posthog-js';
 import type SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
 

@@ -1,4 +1,4 @@
-import { clickable, clickOnText, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, text } from 'ember-cli-page-object';
 import { settled } from '@ember/test-helpers';
 
 export default {

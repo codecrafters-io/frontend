@@ -1,8 +1,7 @@
 import BadgeModel from 'codecrafters-frontend/models/badge';
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
 import type CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
-import { attr, belongsTo } from '@ember-data/model';
 
 export default class BadgeAwardModel extends Model {
   @belongsTo('badge', { async: false, inverse: null }) declare badge: BadgeModel;

@@ -1,9 +1,7 @@
-import { module, test, skip } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
-
 import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 

@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { signInAsConceptAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { currentURL, waitUntil, settled } from '@ember/test-helpers';
+import { currentURL, settled, waitUntil } from '@ember/test-helpers';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import percySnapshot from '@percy/ember';
 import conceptsPage from 'codecrafters-frontend/tests/pages/concepts-page';

@@ -1,4 +1,4 @@
-import { clickOnText, collection, text, visitable, clickable, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, text, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({

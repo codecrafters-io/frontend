@@ -3,7 +3,7 @@ import RouterService from '@ember/routing/router-service';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import config from 'codecrafters-frontend/config/environment';
 import type { Metric } from 'web-vitals';
-import { onCLS, onFCP, onFID, onLCP, onTTFB, onINP } from 'web-vitals';
+import { onCLS, onFCP, onFID, onINP, onLCP, onTTFB } from 'web-vitals';
 
 export default class WebVitalsService extends Service {
   @service declare router: RouterService;

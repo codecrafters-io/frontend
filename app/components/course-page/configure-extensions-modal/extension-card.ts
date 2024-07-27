@@ -1,17 +1,15 @@
 import Component from '@glimmer/component';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
+import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
+import { next } from '@ember/runloop';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { next } from '@ember/runloop';
-
-// @ts-ignore
-import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 
 type Signature = {
   Element: HTMLDivElement;

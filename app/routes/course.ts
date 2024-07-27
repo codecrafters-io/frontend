@@ -1,5 +1,5 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RSVP from 'rsvp';
+import { all as RSVPAll } from 'rsvp';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
@@ -11,8 +11,7 @@ import type Transition from '@ember/routing/transition';
 import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
-import { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   course: CourseModel;
@@ -111,7 +110,7 @@ export default class CourseRoute extends BaseRoute {
       include: RepositoryPoller.defaultIncludedResources,
     }) as unknown as Promise<RepositoryModel[]>;
 
-    const [allCourses, allRepositories] = await RSVP.all([coursesPromise, repositoriesPromise, this.authenticator.authenticate()]);
+    const [allCourses, allRepositories] = await RSVPAll([coursesPromise, repositoriesPromise, this.authenticator.authenticate()]);
 
     return [allCourses, allRepositories];
   }

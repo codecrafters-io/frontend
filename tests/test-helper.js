@@ -6,8 +6,7 @@ import { setApplication } from '@ember/test-helpers';
 import { setup as setupQunitDom } from 'qunit-dom';
 import { setup as setupQunitAssertionsExtra } from 'qunit-assertions-extra';
 import setupSinon from 'ember-sinon-qunit';
-import sinon from 'sinon';
-
+import { stub } from 'sinon';
 import start from 'ember-exam/test-support/start';
 // import { start } from 'ember-qunit';
 
@@ -21,7 +20,7 @@ setupQunitAssertionsExtra(QUnit.assert);
 QUnit.testStart(function () {
   const localStorageCache = new Map();
 
-  sinon.stub(window.localStorage, 'getItem').callsFake(function (key) {
+  stub(window.localStorage, 'getItem').callsFake(function (key) {
     if (localStorageCache.has(key)) {
       return localStorageCache.get(key);
     } else {
@@ -29,23 +28,23 @@ QUnit.testStart(function () {
     }
   });
 
-  sinon.stub(window.localStorage, 'setItem').callsFake(function (key, value) {
+  stub(window.localStorage, 'setItem').callsFake(function (key, value) {
     localStorageCache.set(key, value);
   });
 
-  sinon.stub(window.localStorage, 'removeItem').callsFake(function (key) {
+  stub(window.localStorage, 'removeItem').callsFake(function (key) {
     localStorageCache.delete(key);
   });
 
-  sinon.stub(window.localStorage, 'clear').callsFake(function () {
+  stub(window.localStorage, 'clear').callsFake(function () {
     localStorageCache.clear();
   });
 
-  sinon.stub(window.localStorage, 'key').callsFake(function (index) {
+  stub(window.localStorage, 'key').callsFake(function (index) {
     return localStorageCache.key(index);
   });
 
-  sinon.stub(window.localStorage.__proto__, 'length').get(function () {
+  stub(window.localStorage.__proto__, 'length').get(function () {
     return localStorageCache.size;
   });
 });

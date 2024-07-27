@@ -1,4 +1,4 @@
-import { collection, clickOnText, clickable, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, text } from 'ember-cli-page-object';
 
 export default {
   toggle: clickable('[data-test-account-dropdown-trigger]', { resetScope: true }),

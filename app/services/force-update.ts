@@ -4,7 +4,7 @@ import config from 'codecrafters-frontend/config/environment';
 import type RouterService from '@ember/routing/router-service';
 import * as Sentry from '@sentry/ember';
 import { action } from '@ember/object';
-import { runTask, pollTask, cancelPoll } from 'ember-lifeline';
+import { cancelPoll, pollTask, runTask } from 'ember-lifeline';
 import { tracked } from 'tracked-built-ins';
 
 export default class ForceUpdateService extends Service {

@@ -2,8 +2,8 @@ import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagem
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
 import Model, { belongsTo } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
-import { MarkdownBlock, ConceptAnimationBlock, ClickToContinueBlock, ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
-import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
+import { ClickToContinueBlock, ConceptAnimationBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
+import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 

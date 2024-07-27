@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-
 import amazonImage from '/assets/images/company-logos/amazon-company-logo.svg';
 import appleImage from '/assets/images/company-logos/apple-company-logo.svg';
 import coinbaseImage from '/assets/images/company-logos/coinbase-company-logo.svg';

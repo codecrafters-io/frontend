@@ -1,6 +1,6 @@
 import accountPage from 'codecrafters-frontend/tests/pages/settings/account-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL, waitUntil, settled } from '@ember/test-helpers';
+import { currentURL, settled, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';

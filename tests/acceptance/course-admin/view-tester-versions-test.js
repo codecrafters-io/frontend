@@ -6,7 +6,7 @@ import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signInAsStaff, signInAsCourseAuthor } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | course-admin | view-tester-versions', function (hooks) {
   setupApplicationTest(hooks);

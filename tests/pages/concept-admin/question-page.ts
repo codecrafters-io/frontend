@@ -1,4 +1,4 @@
-import { collection, clickable, create, fillable, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, visitable } from 'ember-cli-page-object';
 
 export default create({
   clickOnPublishChangesButton: clickable('[data-test-publish-changes-button]'),

@@ -1,6 +1,5 @@
-import Model, { belongsTo } from '@ember-data/model';
+import Model, { belongsTo, attr } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
-import { attr } from '@ember-data/model';
 
 export default class ConceptGroupModel extends Model {
   @belongsTo('user', { async: false, inverse: null }) author!: UserModel;

@@ -5,7 +5,7 @@ import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import RSVP from 'rsvp';
+import { hash as RSVPHash } from 'rsvp';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
@@ -39,6 +39,6 @@ export default class CatalogRoute extends BaseRoute {
       include: 'stages,language-configurations.language',
     }) as unknown as Promise<CourseModel[]>;
 
-    return RSVP.hash(modelPromises) as Promise<ModelType>;
+    return RSVPHash(modelPromises) as Promise<ModelType>;
   }
 }

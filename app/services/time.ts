@@ -1,7 +1,6 @@
 import DateService from 'codecrafters-frontend/services/date';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
-import Service from '@ember/service';
-import { inject as service } from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class TimeService extends Service {

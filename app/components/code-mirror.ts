@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { waitFor } from '@ember/test-waiters';
-
 import {
   EditorView,
   crosshairCursor,
@@ -18,7 +17,7 @@ import {
   rectangularSelection,
   scrollPastEnd,
 } from '@codemirror/view';
-import { type Extension, Compartment, EditorState } from '@codemirror/state';
+import { Compartment, EditorState, type Extension } from '@codemirror/state';
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { highlightSelectionMatches } from '@codemirror/search';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';

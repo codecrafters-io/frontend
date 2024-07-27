@@ -1,4 +1,4 @@
-import { clickable, clickOnText, collection, fillable, hasClass, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, fillable, hasClass, text } from 'ember-cli-page-object';
 import CommentCard from '../comment-card';
 
 export default {

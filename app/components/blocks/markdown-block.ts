@@ -1,10 +1,8 @@
 import Component from '@glimmer/component';
 import { MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
 import { action } from '@ember/object';
-
 import Prism from 'prismjs';
 
-import 'prismjs';
 import 'prismjs/components/prism-rust'; // This is the only one we use in concepts at the moment
 
 type Signature = {

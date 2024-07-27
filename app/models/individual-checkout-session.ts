@@ -1,5 +1,4 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 
 export default class IndividualCheckoutSessionModel extends Model {

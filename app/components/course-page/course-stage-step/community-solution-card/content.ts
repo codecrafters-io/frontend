@@ -8,7 +8,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
-import { IsUnchangedFileComparison, type FileComparison, type UnchangedFileComparison } from 'codecrafters-frontend/utils/file-comparison';
+import { type FileComparison, IsUnchangedFileComparison, type UnchangedFileComparison } from 'codecrafters-frontend/utils/file-comparison';
 import { tracked } from '@glimmer/tracking';
 
 type Signature = {

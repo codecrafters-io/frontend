@@ -1,4 +1,4 @@
-import { clickOnText, clickable, collection, triggerable, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, text, triggerable } from 'ember-cli-page-object';
 import CommentForm from './course-page/course-stage-solution-modal/comment-form';
 
 export default {

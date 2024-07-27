@@ -2,9 +2,7 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-
 import { type Extension } from '@codemirror/state';
-
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 

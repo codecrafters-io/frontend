@@ -1,9 +1,8 @@
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import LanguageModel from 'codecrafters-frontend/models/language';
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import UserModel from 'codecrafters-frontend/models/user';
-import { attr, belongsTo } from '@ember-data/model';
 
 export default class CourseStageFeedbackSubmissionModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: null }) declare courseStage: CourseStageModel;

@@ -1,6 +1,5 @@
 import Concept from 'codecrafters-frontend/models/concept';
-import Model from '@ember-data/model';
-import { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 
 export type Option = {

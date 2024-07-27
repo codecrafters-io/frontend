@@ -1,6 +1,4 @@
-import Model from '@ember-data/model';
-import { attr, belongsTo } from '@ember-data/model';
-
+import Model, { attr, belongsTo } from '@ember-data/model';
 import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import type UserModel from 'codecrafters-frontend/models/user';
 

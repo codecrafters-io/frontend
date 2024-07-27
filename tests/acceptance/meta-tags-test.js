@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL } from '@ember/test-helpers';
+import { currentURL, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
 import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';

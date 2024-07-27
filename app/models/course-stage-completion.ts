@@ -1,8 +1,7 @@
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import type BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import { attr, belongsTo, hasMany } from '@ember-data/model';
 import type SubmissionModel from './submission';
 
 export default class CourseStageCompletionModel extends Model {

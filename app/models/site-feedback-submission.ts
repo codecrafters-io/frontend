@@ -1,6 +1,4 @@
-import { attr, belongsTo } from '@ember-data/model';
-import Model from '@ember-data/model';
-
+import Model, { attr, belongsTo } from '@ember-data/model';
 import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class SiteFeedbackSubmissionModel extends Model {

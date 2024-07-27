@@ -1,5 +1,4 @@
-import Model from '@ember-data/model';
-import { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import type CommunityCourseStageSolutionModel from './community-course-stage-solution';
 import { tracked } from '@glimmer/tracking';
 import type CommunitySolutionEvaluatorModel from './community-solution-evaluator';
