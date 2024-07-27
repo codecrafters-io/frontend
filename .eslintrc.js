@@ -15,7 +15,7 @@ module.exports = {
     },
   },
   plugins: ['ember', '@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended', 'plugin:import/recommended'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended', 'plugin:import/recommended', 'plugin:import/typescript'],
   env: {
     browser: true,
   },

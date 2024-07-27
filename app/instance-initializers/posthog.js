@@ -1,5 +1,5 @@
 import config from 'codecrafters-frontend/config/environment';
-import posthog from 'posthog-js';
+import { posthog } from 'posthog-js';
 
 export function initialize() {
   if (typeof FastBoot === 'undefined' && config.environment === 'production') {
