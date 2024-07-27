@@ -6,13 +6,13 @@ import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     submission: SubmissionModel;
   };
-};
+}
 
 export default class CreateAutofixPromptComponent extends Component<Signature> {
   @service declare store: Store;

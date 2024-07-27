@@ -7,14 +7,14 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RouterService from '@ember/routing/router-service';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     courseStage: CourseStageModel;
     repository: RepositoryModel;
   };
-};
+}
 
 export default class ActionButtonListComponent extends Component<Signature> {
   @service declare featureFlags: FeatureFlagsService;

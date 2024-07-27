@@ -5,14 +5,14 @@ import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type ConceptModel from 'codecrafters-frontend/models/concept';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     onClose?: () => void;
     concept: ConceptModel;
   };
-};
+}
 
 export default class DeleteConceptModalComponent extends Component<Signature> {
   @service router!: RouterService;

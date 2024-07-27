@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -8,7 +8,7 @@ type Signature = {
     isSelected: boolean;
     colorOnHoverAndSelect: 'green' | 'red';
   };
-};
+}
 
 export default class FeedbackPromptOptionComponent extends Component<Signature> {}
 

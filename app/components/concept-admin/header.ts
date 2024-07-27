@@ -3,13 +3,13 @@ import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     concept: ConceptModel;
   };
-};
+}
 
 type Tab = {
   icon: string;

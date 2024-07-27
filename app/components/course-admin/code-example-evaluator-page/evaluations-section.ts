@@ -5,7 +5,7 @@ import type { Tab } from 'codecrafters-frontend/components/tabs';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -14,7 +14,7 @@ export type Signature = {
     failEvaluations: CommunitySolutionEvaluationModel[];
     unsureEvaluations: CommunitySolutionEvaluationModel[];
   };
-};
+}
 
 export default class EvaluationsSection extends Component<Signature> {
   @tracked activeTabSlug: 'fail' | 'pass' | 'unsure' = 'fail';

@@ -5,14 +5,14 @@ import { tracked } from '@glimmer/tracking';
 import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
 import type UserModel from 'codecrafters-frontend/models/user';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     comparison: SolutionComparisonModel;
     firstUser: UserModel;
   };
-};
+}
 
 export default class ComparisonCard extends Component<Signature> {
   @tracked isExpanded = false;

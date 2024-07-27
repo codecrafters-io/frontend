@@ -3,13 +3,13 @@ import UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLImageElement;
 
   Args: {
     user: UserModel;
   };
-};
+}
 
 export default class AvatarImageComponent extends Component<Signature> {
   @tracked avatarImageFailedToLoad = false;

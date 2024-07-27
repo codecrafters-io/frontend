@@ -7,7 +7,7 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-rust'; // This is the only one we use in concepts at the moment
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -16,7 +16,7 @@ type Signature = {
     onStepBackButtonClick: () => void;
     isCurrentBlock: boolean;
   };
-};
+}
 
 export default class ConceptQuestionBlockComponent extends Component<Signature> {
   @tracked isSubmitted = false;

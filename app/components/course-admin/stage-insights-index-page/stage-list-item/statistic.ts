@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import { type CourseStageParticipationAnalysisStatistic } from 'codecrafters-frontend/models/course-stage-participation-analysis';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     statistic: CourseStageParticipationAnalysisStatistic;
   };
-};
+}
 
 export default class StatisticComponent extends Component<Signature> {
   get valueColorClasses(): string {

@@ -1,10 +1,10 @@
 import { modifier } from 'ember-modifier';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [];
   };
-};
+}
 
 function handlePaste(event: ClipboardEvent) {
   const pastedData = event.clipboardData?.getData('text');

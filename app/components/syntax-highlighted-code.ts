@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { transformerCompactLineOptions } from '@shikijs/transformers';
 import { task } from 'ember-concurrency';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -16,7 +16,7 @@ export type Signature = {
     theme: string;
     highlightedLines?: string;
   };
-};
+}
 
 export default class SyntaxHighlightedCodeComponent extends Component<Signature> {
   @tracked asyncHighlightedCode: string | null = null;

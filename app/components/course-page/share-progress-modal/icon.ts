@@ -5,7 +5,7 @@ import linkedinLogoImage from 'codecrafters-frontend/images/social-icons/linkedi
 import slackLogoImage from 'codecrafters-frontend/images/social-icons/slack.svg';
 import twitterLogoImage from 'codecrafters-frontend/images/social-icons/twitter.svg';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -13,7 +13,7 @@ type Signature = {
     platform: 'twitter' | 'discord' | 'linkedin' | 'slack';
     selectedSocialPlatform: string;
   };
-};
+}
 
 type SocialPlatform = 'twitter' | 'slack' | 'discord' | 'linkedin';
 

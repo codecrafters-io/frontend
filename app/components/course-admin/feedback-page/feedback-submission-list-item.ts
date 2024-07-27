@@ -2,11 +2,11 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/course-stage-feedback-submission';
 
-type Signature = {
+interface Signature {
   Args: {
     feedbackSubmission: CourseStageFeedbackSubmissionModel; // Replace 'any' with the actual type of feedbackSubmission
   };
-};
+}
 
 export default class FeedbackSubmissionListItemComponent extends Component<Signature> {
   @action

@@ -7,7 +7,7 @@ import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-reque
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -15,7 +15,7 @@ type Signature = {
     currentStep: Step;
     repository: RepositoryModel;
   };
-};
+}
 
 export default class AutofixSectionComponent extends Component<Signature> {
   @service declare store: Store;

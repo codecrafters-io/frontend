@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -10,7 +10,7 @@ type Signature = {
     repository: RepositoryModel;
     onSelect: () => void;
   };
-};
+}
 
 export default class SelectExpectedActivityFrequencySectionComponent extends Component<Signature> {
   @action

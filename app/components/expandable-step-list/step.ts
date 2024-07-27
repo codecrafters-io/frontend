@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -20,7 +20,7 @@ type Signature = {
   Blocks: {
     default: [];
   };
-};
+}
 
 export default class StepComponent extends Component<Signature> {
   @tracked previousIsComplete: boolean | null = null;

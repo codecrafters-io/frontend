@@ -21,7 +21,7 @@ import Component from "@glimmer/component";
 import UserModel from "codecrafters-frontend/models/user";
 import { action } from "@ember/object";
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {

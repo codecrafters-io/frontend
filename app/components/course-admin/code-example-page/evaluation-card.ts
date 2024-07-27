@@ -7,13 +7,13 @@ import type { Signature as TabsComponentSignature } from 'codecrafters-frontend/
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     evaluation: CommunitySolutionEvaluationModel;
   };
-};
+}
 
 export default class EvaluationCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

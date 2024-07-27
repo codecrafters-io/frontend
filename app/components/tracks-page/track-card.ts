@@ -6,13 +6,13 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     language: LanguageModel;
   };
-};
+}
 
 export default class TrackCardComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

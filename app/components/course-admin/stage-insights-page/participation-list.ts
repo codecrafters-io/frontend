@@ -3,13 +3,13 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type CourseStageParticipationModel from 'codecrafters-frontend/models/course-stage-participation';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     participations: CourseStageParticipationModel[];
   };
-};
+}
 
 export default class ParticipationListComponent extends Component<Signature> {
   @tracked visibleParticipationsCount = 10;

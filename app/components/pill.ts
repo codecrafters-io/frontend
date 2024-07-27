@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -10,7 +10,7 @@ type Signature = {
   Blocks: {
     default: [];
   };
-};
+}
 
 export default class PillComponent extends Component<Signature> {
   get colorClasses() {

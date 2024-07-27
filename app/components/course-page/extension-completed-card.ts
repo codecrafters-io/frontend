@@ -4,14 +4,14 @@ import congratulationsImage from '/assets/images/icons/congratulations.png';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
     extension: CourseExtensionModel;
   };
-};
+}
 
 export default class ExtensionCompletedCardComponent extends Component<Signature> {
   congratulationsImage = congratulationsImage;

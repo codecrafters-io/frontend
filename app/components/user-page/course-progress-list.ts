@@ -3,13 +3,13 @@ import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     user: UserModel;
   };
-};
+}
 
 export default class CourseProgressListComponent extends Component<Signature> {
   get courseParticipationGroups() {

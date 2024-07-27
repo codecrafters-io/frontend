@@ -6,14 +6,14 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
     onClose: () => void;
   };
-};
+}
 
 export default class ConfigureExtensionsModalComponent extends Component<Signature> {
   @service declare store: Store;

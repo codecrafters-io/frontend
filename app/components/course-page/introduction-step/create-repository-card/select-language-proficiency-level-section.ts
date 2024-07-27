@@ -3,14 +3,14 @@ import fade from 'ember-animated/transitions/fade';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     isDisabled: boolean;
     repository: RepositoryModel;
   };
-};
+}
 
 export default class SelectLanguageProficiencyLevelSectionComponent extends Component<Signature> {
   transition = fade;

@@ -3,13 +3,13 @@ import { inject as service } from '@ember/service';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
   };
-};
+}
 
 export default class RepositorySetupCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;

@@ -6,7 +6,7 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type UserModel from 'codecrafters-frontend/models/user';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -15,7 +15,7 @@ type Signature = {
     topEntries: LeaderboardEntryModel[];
     surroundingEntries: LeaderboardEntryModel[];
   };
-};
+}
 
 export default class ContestPageLeaderboardCardComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

@@ -11,14 +11,14 @@ import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
     extension: CourseExtensionModel;
   };
-};
+}
 
 export default class ExtensionCardComponent extends Component<Signature> {
   @service store!: Store;

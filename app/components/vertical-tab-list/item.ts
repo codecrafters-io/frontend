@@ -2,14 +2,14 @@ import type RouterService from '@ember/routing/router-service';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     label: string;
     route: string;
   };
-};
+}
 
 export default class VerticalTabListItemComponent extends Component<Signature> {
   @service declare router: RouterService;

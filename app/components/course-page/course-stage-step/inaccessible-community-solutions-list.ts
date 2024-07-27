@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     inaccessibleSolutions: CommunityCourseStageSolutionModel[];
   };
-};
+}
 
 export default class InaccessibleCommunitySolutionsListComponent extends Component<Signature> {}
 

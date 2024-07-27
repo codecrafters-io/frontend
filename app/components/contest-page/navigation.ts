@@ -3,14 +3,14 @@ import ContestModel from 'codecrafters-frontend/models/contest';
 import DateService from 'codecrafters-frontend/services/date';
 import { inject as service } from '@ember/service';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     allContests: ContestModel[];
     contest: ContestModel;
   };
-};
+}
 
 export default class ContestPageNavigationComponent extends Component<Signature> {
   @service declare date: DateService;

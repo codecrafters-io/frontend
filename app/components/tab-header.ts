@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -10,7 +10,7 @@ type Signature = {
     isActive: boolean;
     size?: 'small' | 'regular';
   };
-};
+}
 
 export default class TabHeaderComponent extends Component<Signature> {}
 

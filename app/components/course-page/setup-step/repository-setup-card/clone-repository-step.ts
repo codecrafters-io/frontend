@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
     isComplete: boolean;
   };
-};
+}
 
 export default class CloneRepositoryStepComponent extends Component<Signature> {}
 

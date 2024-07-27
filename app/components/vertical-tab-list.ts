@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Blocks: {
     default: [];
   };
-};
+}
 
 export default class VerticalTabListComponent extends Component<Signature> {}
 

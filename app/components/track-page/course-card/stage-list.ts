@@ -2,14 +2,14 @@ import Component from '@glimmer/component';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     completedStages: CourseStageModel[];
     course: CourseModel;
   };
-};
+}
 
 export default class StageListComponent extends Component<Signature> {}
 

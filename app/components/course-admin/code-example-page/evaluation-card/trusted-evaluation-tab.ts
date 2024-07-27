@@ -4,13 +4,13 @@ import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     evaluation: CommunitySolutionEvaluationModel;
   };
-};
+}
 
 export default class TrustedEvaluationTabComponent extends Component<Signature> {
   @service declare store: Store;

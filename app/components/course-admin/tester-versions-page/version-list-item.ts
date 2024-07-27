@@ -6,13 +6,13 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     courseTesterVersion: CourseTesterVersionModel;
   };
-};
+}
 
 export default class VersionListItemComponent extends Component<Signature> {
   @service declare router: RouterService;

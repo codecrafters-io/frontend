@@ -7,9 +7,9 @@ export type Faq = {
   answer: string;
 };
 
-type Signature = {
+interface Signature {
   Element: HTMLElement;
-};
+}
 
 export default class FaqListComponent extends Component<Signature> {
   @tracked openItem: Faq | null = null;

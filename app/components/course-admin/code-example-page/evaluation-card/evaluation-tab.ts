@@ -4,14 +4,14 @@ import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from 'tracked-built-ins';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     evaluation: CommunitySolutionEvaluationModel;
     onRegenerate: () => void;
   };
-};
+}
 
 export default class EvaluationTabComponent extends Component<Signature> {
   @tracked wasRecentlyCopied = false;

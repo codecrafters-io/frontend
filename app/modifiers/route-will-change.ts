@@ -7,11 +7,11 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [(transition: Transition) => void];
   };
-};
+}
 
 function cleanup(instance: RouteWillChangeModifier) {
   instance.router.off('routeWillChange', instance.eventHandler);

@@ -8,7 +8,7 @@ import { inject as service } from '@ember/service';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -19,7 +19,7 @@ type Signature = {
     onMobileSidebarButtonClick: () => void;
     stepList: StepList;
   };
-};
+}
 
 export default class NavigationControlsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

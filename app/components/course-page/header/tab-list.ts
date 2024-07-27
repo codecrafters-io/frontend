@@ -5,7 +5,7 @@ import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -15,7 +15,7 @@ type Signature = {
     nextStep: Step | null;
     stepList: StepList;
   };
-};
+}
 
 type Tab = {
   icon: string;

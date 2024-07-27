@@ -10,13 +10,13 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type Store from '@ember-data/store';
 import type UserModel from 'codecrafters-frontend/models/user';
 
-type Signature = {
+interface Signature {
   Args: {
     courseStage: CourseStageModel;
     language?: LanguageModel;
     shouldFilterByLanguage: boolean;
   };
-};
+}
 
 export default class CommentListComponent extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;

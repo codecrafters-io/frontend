@@ -8,7 +8,7 @@ import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -17,7 +17,7 @@ type Signature = {
     repository: RepositoryModel;
     stage: CourseStageModel;
   };
-};
+}
 
 export default class TestRunnerCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
