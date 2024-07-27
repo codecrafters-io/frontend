@@ -10,10 +10,6 @@ interface Signature {
     filePath: string;
     highlightedLines: string;
   };
-
-  Blocks: {
-    default: [];
-  };
 }
 
 export default class CodeWalkthroughSnippetComponent extends Component<Signature> {}
