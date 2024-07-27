@@ -8,7 +8,7 @@ export type Faq = {
 };
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 }
 
 export default class FaqListComponent extends Component<Signature> {

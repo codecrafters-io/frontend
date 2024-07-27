@@ -11,7 +11,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     acceptedReferralOfferFreeUsageGrant: FreeUsageGrantModel | null;

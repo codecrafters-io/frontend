@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import type { Faq } from './faq-list';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     faq: Faq;

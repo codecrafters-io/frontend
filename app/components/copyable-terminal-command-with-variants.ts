@@ -8,7 +8,7 @@ export type CopyableTerminalCommandVariant = {
 };
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     onCopyButtonClick?: () => void;

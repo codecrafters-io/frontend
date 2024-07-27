@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 import { format } from 'date-fns';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     freeUsageGrants: FreeUsageGrantModel[];
