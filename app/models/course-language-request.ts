@@ -1,5 +1,4 @@
 import Model, { belongsTo } from '@ember-data/model';
-
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type UserModel from 'codecrafters-frontend/models/user';

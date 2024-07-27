@@ -1,18 +1,18 @@
 import BaseStagesCompletedStep from './course-page-step-list/base-stages-completed-step';
 import BaseStagesStepGroup from './course-page-step-list/base-stages-step-group';
-import CourseCompletedStep from 'codecrafters-frontend/utils/course-page-step-list/course-completed-step';
 import CourseCompletedStepGroup from './course-page-step-list/course-completed-step-group';
-import IntroductionStep from 'codecrafters-frontend/utils/course-page-step-list/introduction-step';
-import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
-import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import ExtensionCompletedStep from './course-page-step-list/extension-completed-step';
 import ExtensionStepGroup from './course-page-step-list/extension-step-group';
+import { cached, tracked } from '@glimmer/tracking';
+import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
+import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
+import CourseCompletedStep from 'codecrafters-frontend/utils/course-page-step-list/course-completed-step';
+import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import IntroductionStep from 'codecrafters-frontend/utils/course-page-step-list/introduction-step';
 import SetupStep from 'codecrafters-frontend/utils/course-page-step-list/setup-step';
 import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
 import StepGroup from 'codecrafters-frontend/utils/course-page-step-list/step-group';
-import RepositoryModel from 'codecrafters-frontend/models/repository';
-import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
-import { cached, tracked } from '@glimmer/tracking';
 
 export { Step };
 

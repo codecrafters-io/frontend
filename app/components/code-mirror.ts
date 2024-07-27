@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { waitFor } from '@ember/test-waiters';
-
 import {
   EditorView,
   crosshairCursor,

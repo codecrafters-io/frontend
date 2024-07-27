@@ -1,5 +1,4 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 export default class GithubRepositorySyncConfiguration extends Model {

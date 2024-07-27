@@ -1,5 +1,4 @@
 import { modifier } from 'ember-modifier';
-
 import Prism from 'prismjs';
 
 import 'prismjs/components/prism-c';

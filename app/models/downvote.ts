@@ -1,5 +1,4 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-
 import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class DownvoteModel extends Model {

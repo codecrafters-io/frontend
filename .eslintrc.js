@@ -20,6 +20,16 @@ module.exports = {
     browser: true,
   },
   rules: {
+    'import/order': [
+      'error',
+      {
+        groups: [],
+        'newlines-between': 'never',
+        // alphabetize: {
+        //   order: 'asc',
+        // },
+      },
+    ],
     'import/no-unresolved': 'off',
     'padding-line-between-statements': [
       'error',

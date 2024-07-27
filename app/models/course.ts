@@ -12,7 +12,6 @@ import UserModel from 'codecrafters-frontend/models/user';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
-
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';

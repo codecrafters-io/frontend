@@ -3,7 +3,6 @@ import { collectionAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import RouterService from '@ember/routing/router-service';
-
 import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class SessionModel extends Model {

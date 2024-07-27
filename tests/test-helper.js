@@ -7,7 +7,6 @@ import { setup as setupQunitDom } from 'qunit-dom';
 import { setup as setupQunitAssertionsExtra } from 'qunit-assertions-extra';
 import setupSinon from 'ember-sinon-qunit';
 import { stub } from 'sinon';
-
 import start from 'ember-exam/test-support/start';
 // import { start } from 'ember-qunit';
 

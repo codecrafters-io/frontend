@@ -1,6 +1,5 @@
 /* eslint-disable ember/no-new-mixins */
 import Mixin from '@ember/object/mixin';
-
 import type UpvoteModel from 'codecrafters-frontend/models/upvote';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type DownvoteModel from 'codecrafters-frontend/models/downvote';

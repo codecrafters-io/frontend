@@ -1,5 +1,4 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-
 import type TeamModel from 'codecrafters-frontend/models/team';
 
 export default class SlackIntegration extends Model {

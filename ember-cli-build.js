@@ -3,18 +3,17 @@
 require('dotenv').config();
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
-const { Webpack } = require('@embroider/webpack');
+const config = require('./config/environment')(EmberApp.env());
+const customFilePlugin = require('./lib/custom-file-plugin');
+const fetch = require('node-fetch');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { Webpack } = require('@embroider/webpack');
 const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
+const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
 const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 
 const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
 const shouldUploadSentrySourcemaps = !!process.env.CI && !process.env.VERCEL;
-
-const fetch = require('node-fetch');
-const customFilePlugin = require('./lib/custom-file-plugin');
-const config = require('./config/environment')(EmberApp.env());
 
 module.exports = function (defaults) {
   const appOptions = {

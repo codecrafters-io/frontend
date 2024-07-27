@@ -3,10 +3,8 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
-
 import VotableMixin from '../mixins/votable';
 import IsCommentMixin from '../mixins/is-comment';
-
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type UserModel from 'codecrafters-frontend/models/user';

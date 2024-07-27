@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { capitalize } from '@ember/string';
-
 import discordLogoImage from 'codecrafters-frontend/images/social-icons/discord.svg';
 import linkedinLogoImage from 'codecrafters-frontend/images/social-icons/linkedin.svg';
 import slackLogoImage from 'codecrafters-frontend/images/social-icons/slack.svg';

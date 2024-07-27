@@ -1,12 +1,10 @@
 import Model, { attr, hasMany } from '@ember-data/model';
-
 import lockedBadgePreviewImage from '/assets/images/badges/locked-badge-preview.svg';
 import curieBadgeImage from '/assets/images/badges/curie-badge.svg';
 import hamiltonBadgeImage from '/assets/images/badges/hamilton-badge.svg';
 import hopperBadgeImage from '/assets/images/badges/hopper-badge.svg';
 import teslaBadgeImage from '/assets/images/badges/tesla-badge.svg';
 import turingBadgeImage from '/assets/images/badges/turing-badge.svg';
-
 import type BadgeAwardModel from './badge-award';
 
 export default class Badge extends Model {

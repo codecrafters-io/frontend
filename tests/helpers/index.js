@@ -3,7 +3,6 @@ import {
   setupRenderingTest as upstreamSetupRenderingTest,
   setupTest as upstreamSetupTest,
 } from 'ember-qunit';
-
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import setupFullscreenTest from './setup-fullscreen-test';
 

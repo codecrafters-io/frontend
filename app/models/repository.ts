@@ -6,21 +6,18 @@ import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import GithubRepositorySyncConfiguration from 'codecrafters-frontend/models/github-repository-sync-configuration';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import RepositoryStageListModel from 'codecrafters-frontend/models/repository-stage-list';
 import SubmissionModel from 'codecrafters-frontend/models/submission';
 import UserModel from 'codecrafters-frontend/models/user';
-import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/utils/pre-challenge-assessment-section-list';
-
-//@ts-ignore
-import { cached } from '@glimmer/tracking';
-
-import { memberAction } from 'ember-api-actions';
 import type AutofixRequestModel from './autofix-request';
 import type CourseExtensionModel from './course-extension';
 import type CourseStageSolutionModel from './course-stage-solution';
-import { service } from '@ember/service';
 import type Store from '@ember-data/store';
-import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
+import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'codecrafters-frontend/utils/pre-challenge-assessment-section-list';
+import { cached } from '@glimmer/tracking';
+import { memberAction } from 'ember-api-actions';
+import { service } from '@ember/service';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;

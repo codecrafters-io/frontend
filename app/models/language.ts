@@ -1,6 +1,5 @@
 import CourseLanguageConfigurationModel from './course-language-configuration';
 import Model, { attr, hasMany } from '@ember-data/model';
-
 import grayLogoC from '/assets/images/language-logos/c-gray-500.svg';
 import grayLogoCpp from '/assets/images/language-logos/cpp-gray-500.svg';
 import grayLogoClojure from '/assets/images/language-logos/clojure-gray-500.svg';
@@ -24,7 +23,6 @@ import grayLogoScala from '/assets/images/language-logos/scala-gray-500.svg';
 import grayLogoSwift from '/assets/images/language-logos/swift-gray-500.svg';
 import grayLogoTypescript from '/assets/images/language-logos/typescript-gray-500.svg';
 import grayLogoZig from '/assets/images/language-logos/zig-gray-500.svg';
-
 import tealLogoC from '/assets/images/language-logos/c-teal-500.svg';
 import tealLogoCpp from '/assets/images/language-logos/cpp-teal-500.svg';
 import tealLogoClojure from '/assets/images/language-logos/clojure-teal-500.svg';

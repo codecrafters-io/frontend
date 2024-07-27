@@ -1,7 +1,5 @@
 import { module, test } from 'qunit';
-
 import { setupTest } from 'codecrafters-frontend/tests/helpers';
-
 import ConceptGroup from 'codecrafters-frontend/models/concept-group';
 
 module('Unit | Serializer | application', function (hooks) {

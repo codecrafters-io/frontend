@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 import { AnsiUp } from 'ansi_up';
 import { action } from '@ember/object';
-
-// @ts-ignore
 import { cached, tracked } from '@glimmer/tracking';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
