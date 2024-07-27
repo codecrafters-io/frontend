@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
-import RSVP from 'rsvp';
+import { hash as RSVPHash } from 'rsvp';
 
 export default class BadgesRoute extends BaseRoute {
   allowsAnonymousAccess = true;
@@ -13,7 +13,7 @@ export default class BadgesRoute extends BaseRoute {
   }
 
   async model() {
-    return RSVP.hash({
+    return RSVPHash({
       badges: this.store.findAll('badge', {
         include: 'current-user-awards,current-user-awards.user,current-user-awards.badge',
       }),

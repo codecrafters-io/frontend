@@ -4,18 +4,14 @@ import Component from '@glimmer/component';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import config from 'codecrafters-frontend/config/environment';
-import { action } from '@ember/object';
 import type { Block } from 'codecrafters-frontend/models/concept';
-
-// @ts-ignore
-import { cached } from '@glimmer/tracking';
-
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
-import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
 import { TrackedSet } from 'tracked-built-ins';
+import { action } from '@ember/object';
+import { cached, tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
+import { task } from 'ember-concurrency';
 
 interface Signature {
   Args: {

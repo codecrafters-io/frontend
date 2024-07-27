@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RSVP from 'rsvp';
+import { hash as RSVPHash } from 'rsvp';
 
 export default class ConceptsRoute extends BaseRoute {
   allowsAnonymousAccess = true;
@@ -13,7 +13,7 @@ export default class ConceptsRoute extends BaseRoute {
       });
     }
 
-    return RSVP.hash({
+    return RSVPHash({
       concepts: this.store.findAll('concept', {
         include: 'author,questions',
       }),

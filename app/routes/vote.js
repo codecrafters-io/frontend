@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
-import RSVP from 'rsvp';
+import { hash as RSVPHash } from 'rsvp';
 
 export default class VoteRoute extends BaseRoute {
   allowsAnonymousAccess = true;
@@ -32,6 +32,6 @@ export default class VoteRoute extends BaseRoute {
       include: 'course,current-user-votes,current-user-votes.user',
     });
 
-    return await RSVP.hash(modelPromises);
+    return await RSVPHash(modelPromises);
   }
 }

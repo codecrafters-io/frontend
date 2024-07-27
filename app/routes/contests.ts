@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import type ContestModel from 'codecrafters-frontend/models/contest';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
-import RSVP from 'rsvp';
+import { hash as RSVPHash } from 'rsvp';
 
 export type ModelType = {
   contests: ContestModel[];
@@ -21,7 +21,7 @@ export default class ContestsRoute extends BaseRoute {
   }
 
   async model(): Promise<ModelType> {
-    return RSVP.hash({
+    return RSVPHash({
       contests: this.store.findAll('contest') as unknown as Promise<ContestModel[]>,
     });
   }

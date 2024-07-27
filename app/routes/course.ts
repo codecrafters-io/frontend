@@ -1,5 +1,5 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RSVP from 'rsvp';
+import { all as RSVPAll } from 'rsvp';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
@@ -110,7 +110,7 @@ export default class CourseRoute extends BaseRoute {
       include: RepositoryPoller.defaultIncludedResources,
     }) as unknown as Promise<RepositoryModel[]>;
 
-    const [allCourses, allRepositories] = await RSVP.all([coursesPromise, repositoriesPromise, this.authenticator.authenticate()]);
+    const [allCourses, allRepositories] = await RSVPAll([coursesPromise, repositoriesPromise, this.authenticator.authenticate()]);
 
     return [allCourses, allRepositories];
   }
