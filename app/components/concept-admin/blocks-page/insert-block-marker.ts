@@ -7,8 +7,8 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    onBlockAdded: (block: Block) => void;
     isVisibleWithoutHover: boolean;
+    onBlockAdded: (block: Block) => void;
   };
 }
 
