@@ -1,5 +1,4 @@
-import Model from '@ember-data/model';
-import { attr, hasMany } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 
 import lockedBadgePreviewImage from '/assets/images/badges/locked-badge-preview.svg';
 import curieBadgeImage from '/assets/images/badges/curie-badge.svg';

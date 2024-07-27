@@ -1,10 +1,9 @@
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
-import Model, { hasMany } from '@ember-data/model';
+import Model, { hasMany, attr, belongsTo } from '@ember-data/model';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubmissionEvaluationModel from 'codecrafters-frontend/models/submission-evaluation';
-import { attr, belongsTo } from '@ember-data/model';
 import { capitalize } from '@ember/string';
 import type AutofixRequestModel from './autofix-request';
 

@@ -1,7 +1,6 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import confetti from 'canvas-confetti';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
-import { inject as service } from '@ember/service';
 import type FocusService from './focus';
 
 export default class ConfettiService extends Service {

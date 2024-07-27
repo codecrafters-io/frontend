@@ -2,12 +2,11 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { visit } from '@ember/test-helpers';
 
 module('Acceptance | course-page | complete-challenge-test', function (hooks) {
   setupApplicationTest(hooks);

@@ -1,6 +1,5 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import * as Sentry from '@sentry/ember';
-import { inject as service } from '@ember/service';
 
 export default class SentryService extends Service {
   @service authenticator;

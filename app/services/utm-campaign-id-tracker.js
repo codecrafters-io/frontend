@@ -1,6 +1,5 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
-import { inject as service } from '@ember/service';
 
 export default class UtmCampaignIdService extends Service {
   @service cookies;

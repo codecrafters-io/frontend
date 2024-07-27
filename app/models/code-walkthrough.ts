@@ -1,5 +1,4 @@
-import Model from '@ember-data/model';
-import { attr } from '@ember-data/model';
+import Model, { attr } from '@ember-data/model';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';

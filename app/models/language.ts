@@ -1,6 +1,5 @@
 import CourseLanguageConfigurationModel from './course-language-configuration';
-import Model from '@ember-data/model';
-import { attr, hasMany } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 
 import grayLogoC from '/assets/images/language-logos/c-gray-500.svg';
 import grayLogoCpp from '/assets/images/language-logos/cpp-gray-500.svg';

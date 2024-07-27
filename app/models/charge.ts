@@ -1,4 +1,4 @@
-import { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import Model from '@ember-data/model';
 import config from 'codecrafters-frontend/config/environment';

@@ -1,5 +1,4 @@
-import { attr, belongsTo } from '@ember-data/model';
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';

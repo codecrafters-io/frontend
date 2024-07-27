@@ -5,7 +5,6 @@ import { parse } from 'node-html-parser';
 import Prism from 'prismjs';
 import showdown from 'showdown';
 
-import 'prismjs';
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-go';
 import 'prismjs/components/prism-nim';

@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-import 'prismjs';
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-go';
 import 'prismjs/components/prism-nim';

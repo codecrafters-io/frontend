@@ -1,10 +1,9 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import { inject as service } from '@ember/service';
-import type { ModelType as CourseRouteModelType } from 'codecrafters-frontend/routes/course';
+import type { ModelType as CourseRouteModelType, ModelType as CourseModelType } from 'codecrafters-frontend/routes/course';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
 import type RouterService from '@ember/routing/router-service';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import type { ModelType as CourseModelType } from 'codecrafters-frontend/routes/course';
 
 export type ModelType = CourseModelType & {
   extension: CourseExtensionModel;

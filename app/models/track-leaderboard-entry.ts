@@ -1,5 +1,4 @@
-import { attr, belongsTo } from '@ember-data/model';
-import Model from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 import LanguageModel from 'codecrafters-frontend/models/language';
 import UserModel from 'codecrafters-frontend/models/user';
