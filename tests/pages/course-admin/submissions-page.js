@@ -1,4 +1,4 @@
-import { collection, create, clickOnText, triggerable, visitable } from 'ember-cli-page-object';
+import { clickOnText, collection, create, triggerable, visitable } from 'ember-cli-page-object';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/language-dropdown';
 import CourseStageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/course-stage-dropdown';
 

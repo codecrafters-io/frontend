@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { toRight, toLeft } from 'ember-animated/transitions/move-over';
+import { toLeft, toRight } from 'ember-animated/transitions/move-over';
 
 type Signature = {
   Element: HTMLButtonElement;

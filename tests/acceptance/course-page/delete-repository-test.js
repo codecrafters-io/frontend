@@ -3,7 +3,7 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL, waitUntil, settled } from '@ember/test-helpers';
+import { currentURL, settled, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';

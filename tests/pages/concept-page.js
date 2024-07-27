@@ -1,4 +1,4 @@
-import { attribute, collection, clickable, clickOnText, isPresent, text, triggerable, visitable } from 'ember-cli-page-object';
+import { attribute, clickOnText, clickable, collection, isPresent, text, triggerable, visitable } from 'ember-cli-page-object';
 import { animationsSettled } from 'ember-animated/test-support';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 

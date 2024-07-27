@@ -1,5 +1,5 @@
 import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
-import { createServer, belongsTo, hasMany, Model } from 'miragejs';
+import { Model, belongsTo, createServer, hasMany } from 'miragejs';
 import config from 'codecrafters-frontend/config/environment';
 
 import affiliateEarningsPayouts from './handlers/affiliate-earnings-payouts';

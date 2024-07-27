@@ -46,6 +46,7 @@ module.exports = {
         },
       },
     ],
+    'sort-imports': 'error',
   },
   overrides: [
     // node files

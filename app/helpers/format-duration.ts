@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-import { formatDuration as libFormatDuration, intervalToDuration } from 'date-fns';
+import { intervalToDuration, formatDuration as libFormatDuration } from 'date-fns';
 
 const formatDuration = helper(function formatDuration([durationInSeconds]: [number] /*, named*/) {
   const duration = intervalToDuration({ start: 0, end: durationInSeconds * 1000 });

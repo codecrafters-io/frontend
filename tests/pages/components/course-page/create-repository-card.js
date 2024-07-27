@@ -1,4 +1,4 @@
-import { clickable, clickOnText, isVisible, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, isVisible, text } from 'ember-cli-page-object';
 import requestLanguageDropdown from './repository-setup-card/request-language-dropdown';
 
 export default {

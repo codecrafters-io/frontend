@@ -1,7 +1,7 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
 import Model from '@ember-data/model';
-import { attr, hasMany, type SyncHasMany } from '@ember-data/model';
+import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';

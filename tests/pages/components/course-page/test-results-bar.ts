@@ -1,5 +1,5 @@
 import SubmissionLogsPreview from 'codecrafters-frontend/tests/pages/components/submission-logs-preview';
-import { clickable, clickOnText, collection, text, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, text, triggerable } from 'ember-cli-page-object';
 import { find } from '@ember/test-helpers';
 
 export default {

@@ -1,4 +1,4 @@
-import { attribute, clickable, collection, create, clickOnText, visitable } from 'ember-cli-page-object';
+import { attribute, clickOnText, clickable, collection, create, visitable } from 'ember-cli-page-object';
 
 export default create({
   clickOnLink: clickOnText(),

@@ -1,4 +1,4 @@
-import { clickable, clickOnText, fillable, isVisible, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, fillable, isVisible, triggerable } from 'ember-cli-page-object';
 
 export default {
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),

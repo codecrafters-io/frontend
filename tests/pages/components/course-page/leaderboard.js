@@ -1,4 +1,4 @@
-import { clickable, clickOnText, collection, text, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, text, triggerable } from 'ember-cli-page-object';
 import LeaderboardEntry from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard-entry';
 
 export default {

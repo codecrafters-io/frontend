@@ -7,7 +7,7 @@ import type UserModel from './user';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
-import { FileComparisonFromJSON, type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
+import { type FileComparison, FileComparisonFromJSON } from 'codecrafters-frontend/utils/file-comparison';
 
 /* eslint-disable ember/no-mixins */
 import ViewableMixin from 'codecrafters-frontend/mixins/viewable';

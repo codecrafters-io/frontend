@@ -1,4 +1,4 @@
-import { clickable, collection, create, visitable, text } from 'ember-cli-page-object';
+import { clickable, collection, create, text, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminPanel: {

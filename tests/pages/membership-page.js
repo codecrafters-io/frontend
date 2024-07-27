@@ -1,4 +1,4 @@
-import { collection, clickable, clickOnText, create, fillable, hasClass, text, visitable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, create, fillable, hasClass, text, visitable } from 'ember-cli-page-object';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
 

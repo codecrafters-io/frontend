@@ -4,7 +4,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { waitFor, waitUntil, find, isSettled, settled } from '@ember/test-helpers';
+import { find, isSettled, settled, waitFor, waitUntil } from '@ember/test-helpers';
 
 module('Acceptance | view-tracks', function (hooks) {
   setupApplicationTest(hooks);

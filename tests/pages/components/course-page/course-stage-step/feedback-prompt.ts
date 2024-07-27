@@ -1,4 +1,4 @@
-import { attribute, clickable, clickOnText, fillable, text } from 'ember-cli-page-object';
+import { attribute, clickOnText, clickable, fillable, text } from 'ember-cli-page-object';
 
 export default {
   clickOnEditFeedbackButton: clickable('[data-test-edit-feedback-button]'),
