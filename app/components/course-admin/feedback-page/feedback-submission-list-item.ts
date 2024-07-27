@@ -3,6 +3,8 @@ import Component from '@glimmer/component';
 import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/course-stage-feedback-submission';
 
 interface Signature {
+  Element: HTMLDivElement;
+
   Args: {
     feedbackSubmission: CourseStageFeedbackSubmissionModel;
   };
