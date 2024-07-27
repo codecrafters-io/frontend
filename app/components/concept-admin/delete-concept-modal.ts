@@ -9,8 +9,8 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    onClose?: () => void;
     concept: ConceptModel;
+    onClose?: () => void;
   };
 }
 
