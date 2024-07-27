@@ -15,8 +15,8 @@ interface Signature {
 }
 
 export default class DeleteConceptModalComponent extends Component<Signature> {
-  @service router!: RouterService;
-  @service store!: Store;
+  @service declare router: RouterService;
+  @service declare store: Store;
 
   @action
   async deleteConcept() {

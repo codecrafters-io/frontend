@@ -20,7 +20,7 @@ function cleanup(instance: RouteWillChangeModifier) {
 export default class RouteWillChangeModifier extends Modifier<Signature> {
   callback?: (transition: Transition) => void;
 
-  @service router!: RouterService;
+  @service declare router: RouterService;
 
   @action
   eventHandler(transition: Transition) {

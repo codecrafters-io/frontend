@@ -15,7 +15,7 @@ interface Signature {
 }
 
 export default class ReferralLinkStatsContainerComponent extends Component<Signature> {
-  @service authenticator!: AuthenticatorService;
+  @service declare authenticator: AuthenticatorService;
 
   get activeFreeUsageGrantsCount() {
     return this.args.freeUsageGrants.filter((grant: FreeUsageGrantModel) => !grant.isExpired).length;

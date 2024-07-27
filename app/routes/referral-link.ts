@@ -10,8 +10,8 @@ import { inject as service } from '@ember/service';
 export default class ReferralLinkRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
-  @service authenticator!: AuthenticatorService;
-  @service store!: Store;
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
   @service declare router: RouterService;
 
   activate() {

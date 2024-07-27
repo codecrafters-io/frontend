@@ -21,8 +21,8 @@ interface Signature {
 }
 
 export default class ExtensionCardComponent extends Component<Signature> {
-  @service store!: Store;
-  @service coursePageState!: CoursePageStateService;
+  @service declare store: Store;
+  @service declare coursePageState: CoursePageStateService;
 
   @tracked unsavedIsActivatedValue: boolean | null = null;
 

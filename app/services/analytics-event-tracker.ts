@@ -8,7 +8,7 @@ export default class AnalyticsEventTrackerService extends Service {
   @service declare store: Store;
   @service declare router: RouterService;
   @service declare fastboot: FastBootService;
-  @service utmCampaignIdTracker: unknown;
+  @service declare utmCampaignIdTracker: unknown;
 
   track(eventName: string, eventProperties: Record<string, unknown>): void {
     // Don't track any analytics during FastBoot runs

@@ -5,8 +5,8 @@ import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 
 export default class ReferRoute extends BaseRoute {
-  @service authenticator!: AuthenticatorService;
-  @service store!: Store;
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
 
   activate() {
     scrollToTop();

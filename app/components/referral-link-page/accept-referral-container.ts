@@ -22,9 +22,9 @@ interface Signature {
 export default class AcceptReferralContainerComponent extends Component<Signature> {
   logoImage = logoImage;
 
-  @service authenticator!: AuthenticatorService;
-  @service store!: Store;
-  @service router!: RouterService;
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
+  @service declare router: RouterService;
 
   @tracked isAccepted: boolean = this.args.acceptedReferralOfferFreeUsageGrant ? true : false;
   @tracked isCreatingReferralActivation: boolean = false;

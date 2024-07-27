@@ -16,9 +16,10 @@ import slackImage from '/assets/images/company-logos/slack-company-logo.svg';
 import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
 
 export default class JoinReferralProgramContainerComponent extends Component {
-  @service authenticator!: AuthenticatorService;
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
+
   @tracked isCreatingReferralLink = false;
-  @service store!: Store;
 
   get companies() {
     return [
