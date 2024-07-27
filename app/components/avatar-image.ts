@@ -4,11 +4,11 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 type Signature = {
+  Element: HTMLImageElement;
+
   Args: {
     user: UserModel;
   };
-
-  Element: HTMLImageElement;
 };
 
 export default class AvatarImageComponent extends Component<Signature> {
