@@ -73,3 +73,9 @@ export default class HeaderComponent extends Component {
     this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    Header: typeof HeaderComponent;
+  }
+}
