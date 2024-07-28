@@ -61,7 +61,6 @@ module('Acceptance | affiliate-page | initiate-payout', function (hooks) {
     assert.strictEqual(affiliatePage.lineItemAmountText('Ready to payout'), '$354', 'ready to payout amount is correct');
     assert.strictEqual(affiliatePage.lineItemAmountText('Paid out'), '$0', 'paid out amount is correct');
 
-    await this.pauseTest();
     await affiliatePage.initiatePayoutButton.click();
 
     await percySnapshot('Affiliate Page | Create Payout Modal');
