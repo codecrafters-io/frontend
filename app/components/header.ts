@@ -11,7 +11,11 @@ import type FeatureFlagsService from 'codecrafters-frontend/services/feature-fla
 import type RouterService from '@ember/routing/router-service';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
 
-export default class HeaderComponent extends Component {
+interface Signature {
+  Element: HTMLDivElement;
+}
+
+export default class HeaderComponent extends Component<Signature> {
   logoImage = logoImage;
 
   @service declare authenticator: AuthenticatorService;
