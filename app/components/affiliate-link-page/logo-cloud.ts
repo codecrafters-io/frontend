@@ -64,6 +64,6 @@ export default class LogoCloudComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Affiliate::LinkPage::LogoCloud': typeof LogoCloudComponent;
+    'AffiliateLinkPage::LogoCloud': typeof LogoCloudComponent;
   }
 }
