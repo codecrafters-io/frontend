@@ -36,7 +36,6 @@ for hbs_file_path in hbs_file_paths:
         f.write(
             f"""import Component from '@glimmer/component';
 
-export default class {component_name}Component extends Component {{
-}}
+export default class {component_name}Component extends Component {{}}
 """
         )
