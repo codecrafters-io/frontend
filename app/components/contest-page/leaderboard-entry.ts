@@ -4,14 +4,14 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import { inject as service } from '@ember/service';
 
-type Signature = {
+interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
     entry: LeaderboardEntryModel;
     languages: LanguageModel[];
   };
-};
+}
 
 export default class ContestPageLeaderboardEntryComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

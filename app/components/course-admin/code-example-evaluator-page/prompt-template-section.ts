@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     evaluator: CommunitySolutionEvaluatorModel;
   };
-};
+}
 
 export default class PromptTemplateSection extends Component<Signature> {}
 

@@ -2,9 +2,11 @@ import Component from '@glimmer/component';
 
 interface Signature {
   Element: HTMLTableRowElement;
+
   Args: {
     title: string;
   };
+
   Blocks: {
     default: [];
   };

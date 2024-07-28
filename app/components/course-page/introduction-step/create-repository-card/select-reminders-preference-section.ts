@@ -2,14 +2,14 @@ import Component from '@glimmer/component';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     isDisabled: boolean;
     repository: RepositoryModel;
   };
-};
+}
 
 export default class SelectRemindersPreferenceSectionComponent extends Component<Signature> {
   @action

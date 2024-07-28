@@ -3,14 +3,14 @@ import Component from '@glimmer/component';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
-type Signature = {
+interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
     isComplete: boolean;
     stage: CourseStageModel;
   };
-};
+}
 
 export default class StageListItemComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

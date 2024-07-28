@@ -8,14 +8,14 @@ import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Args: {
     onboardingSurvey: OnboardingSurveyModel;
     onSurveyComplete: () => void;
   };
 
   Element: HTMLDivElement;
-};
+}
 
 export default class OnboardingSurveyWizardComponent extends Component<Signature> {
   fade = fade;

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { toLeft, toRight } from 'ember-animated/transitions/move-over';
 
-type Signature = {
+interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
@@ -11,7 +11,7 @@ type Signature = {
   Blocks: {
     default: [];
   };
-};
+}
 
 export default class SelectableItemComponent extends Component<Signature> {
   toRight = toRight;

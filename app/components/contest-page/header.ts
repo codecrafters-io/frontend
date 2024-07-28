@@ -5,14 +5,14 @@ import { formatDistanceStrict } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { inject as service } from '@ember/service';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     allContests: ContestModel[];
     contest: ContestModel;
   };
-};
+}
 
 export default class ContestPageHeaderComponent extends Component<Signature> {
   @service declare date: DateService;

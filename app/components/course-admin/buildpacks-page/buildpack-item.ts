@@ -3,13 +3,13 @@ import { inject as service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
 import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     buildpack: BuildpackModel;
   };
-};
+}
 
 export default class BuildpackComponent extends Component<Signature> {
   @service declare router: RouterService;

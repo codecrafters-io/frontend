@@ -7,14 +7,14 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
     step: Step;
   };
-};
+}
 
 export default class CompletedStepNoticeComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;

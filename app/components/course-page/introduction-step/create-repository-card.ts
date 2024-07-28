@@ -10,13 +10,13 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     repository: RepositoryModel;
   };
-};
+}
 
 export default class CreateRepositoryCardComponent extends Component<Signature> {
   @service declare router: RouterService;

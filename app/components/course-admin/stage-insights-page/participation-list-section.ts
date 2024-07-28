@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type CourseStageParticipationModel from 'codecrafters-frontend/models/course-stage-participation';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -11,7 +11,7 @@ type Signature = {
     tooltipText: string;
     participations: CourseStageParticipationModel[];
   };
-};
+}
 
 export default class ParticipationListSectionComponent extends Component<Signature> {
   @tracked shouldShowParticipationsWithSingleAttempt = false;

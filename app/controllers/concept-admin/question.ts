@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 
 export default class QuestionController extends Controller {
-  @service router!: RouterService;
+  @service declare router: RouterService;
 
   declare model: {
     question: ConceptQuestionModel;

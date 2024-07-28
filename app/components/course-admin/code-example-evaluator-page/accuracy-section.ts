@@ -6,13 +6,13 @@ import type { Tab } from 'codecrafters-frontend/components/tabs';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
 import type { CourseStageParticipationAnalysisStatistic } from 'codecrafters-frontend/models/course-stage-participation-analysis';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     evaluator: CommunitySolutionEvaluatorModel;
   };
-};
+}
 
 export default class AccuracySection extends Component<Signature> {
   @tracked activeTabSlug: 'false_positives' | 'false_negatives' | 'matches' = 'false_positives';

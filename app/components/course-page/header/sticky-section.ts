@@ -6,7 +6,7 @@ import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { tracked } from '@glimmer/tracking';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -16,7 +16,7 @@ type Signature = {
     nextStep: Step | null;
     stepList: StepList;
   };
-};
+}
 
 export default class StickySectionComponent extends Component<Signature> {
   @tracked scrollMarkerIsInViewport = true;

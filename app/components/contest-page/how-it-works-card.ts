@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import ContestModel from 'codecrafters-frontend/models/contest';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     contest: ContestModel;
   };
-};
+}
 
 export default class ContestPageHowItWorksCardComponent extends Component<Signature> {}
 

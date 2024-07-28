@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     barIsExpanded: boolean;
   };
-};
+}
 
 export default class ExpandOrCollapseIndicatorComponent extends Component<Signature> {}
 

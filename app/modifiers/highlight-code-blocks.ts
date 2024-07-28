@@ -26,11 +26,11 @@ import 'prismjs/components/prism-dart';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-yaml';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [contents: string];
   };
-};
+}
 
 const highlightCodeBlocks = modifier<Signature>((element, [_contents]) => {
   Prism.highlightAllUnder(element);

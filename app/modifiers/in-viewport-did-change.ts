@@ -1,10 +1,10 @@
 import { modifier } from 'ember-modifier';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [callback: (isSticky: boolean) => void];
   };
-};
+}
 
 const inViewportDidChange = modifier<Signature>(function inViewportDidChange(element, [callback]: [(isSticky: boolean) => void]) {
   const observer = new IntersectionObserver(

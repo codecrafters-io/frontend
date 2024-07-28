@@ -7,7 +7,7 @@ import Component from '@glimmer/component';
 import type RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -20,7 +20,7 @@ type Signature = {
   Blocks: {
     default: [{ isOpen: boolean; actions: { close: () => void } }];
   };
-};
+}
 
 export default class FeedbackButtonComponent extends Component<Signature> {
   @service declare router: RouterService;

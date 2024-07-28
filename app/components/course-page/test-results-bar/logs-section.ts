@@ -3,7 +3,7 @@ import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -11,7 +11,7 @@ type Signature = {
     currentStep: Step;
     repository: RepositoryModel;
   };
-};
+}
 
 export default class LogsSectionComponent extends Component<Signature> {
   get activeCourseStage() {

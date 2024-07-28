@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     commands: string[];

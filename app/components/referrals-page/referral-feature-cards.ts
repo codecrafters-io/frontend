@@ -4,7 +4,7 @@ import getOneYearFreeImage from '/assets/images/referral-program-features/get-on
 import giftOneWeekFreeImage from '/assets/images/referral-program-features/gift-one-week-free.png';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Blocks: {
     default: [];

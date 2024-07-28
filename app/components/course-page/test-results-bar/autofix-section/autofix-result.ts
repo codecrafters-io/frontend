@@ -8,13 +8,13 @@ import Logstream from 'codecrafters-frontend/utils/logstream';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     autofixRequest: AutofixRequestModel;
   };
-};
+}
 
 export default class AutofixResultComponent extends Component<Signature> {
   @service declare store: Store;

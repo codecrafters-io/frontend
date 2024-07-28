@@ -1,6 +1,6 @@
 import Modifier from 'ember-modifier';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [];
 
@@ -8,7 +8,7 @@ type Signature = {
       preventScroll?: boolean;
     };
   };
-};
+}
 
 export default class FocusOnInsertModifier extends Modifier<Signature> {
   modify(element: HTMLElement, _positional: [], named: Signature['Args']['Named']) {

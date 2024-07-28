@@ -8,7 +8,7 @@ interface Signature {
 }
 
 export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
-  @service authenticator!: AuthenticatorService;
+  @service declare authenticator: AuthenticatorService;
 
   get currentUser() {
     return this.authenticator.currentUser;

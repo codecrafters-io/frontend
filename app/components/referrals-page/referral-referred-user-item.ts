@@ -4,7 +4,7 @@ import ReferralActivationModel from 'codecrafters-frontend/models/referral-activ
 import { format } from 'date-fns';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     activation: ReferralActivationModel;

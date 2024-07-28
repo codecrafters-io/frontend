@@ -3,7 +3,7 @@ import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     freeUsageGrants: FreeUsageGrantModel[];

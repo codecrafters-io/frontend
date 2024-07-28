@@ -4,7 +4,7 @@ import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
 import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -15,7 +15,7 @@ type Signature = {
     onMobileSidebarButtonClick: () => void;
     stepList: StepList;
   };
-};
+}
 
 export default class MainSectionComponent extends Component<Signature> {
   get currentStepAsCourseStageStep(): CourseStageStep {

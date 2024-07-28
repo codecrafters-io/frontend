@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 
-type Signature = {
+interface Signature {
   Args: {
     freeFormInput: string;
     onContinueButtonClick: () => void;
@@ -16,7 +16,7 @@ type Signature = {
   };
 
   Element: HTMLDivElement;
-};
+}
 
 export default class StepComponent extends Component<Signature> {
   fade = fade;

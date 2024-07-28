@@ -3,11 +3,11 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 }
 
 export default class ReferralLinksContainerComponent extends Component<Signature> {
-  @service authenticator!: AuthenticatorService;
+  @service declare authenticator: AuthenticatorService;
 
   get currentUser() {
     return this.authenticator.currentUser;

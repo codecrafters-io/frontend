@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -14,7 +14,7 @@ type Signature = {
   Blocks: {
     default: [];
   };
-};
+}
 
 export default class ModalBodyComponent extends Component<Signature> {
   @action

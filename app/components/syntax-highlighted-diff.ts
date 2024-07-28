@@ -17,7 +17,7 @@ import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
  */
 const DELAY_BETWEEN_HIGHLIGHT_CODE_TASKS_IN_MS: number = 100;
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -28,7 +28,7 @@ type Signature = {
     forceDarkTheme?: boolean;
     onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
   };
-};
+}
 
 interface HighlightCodeParams {
   isDarkMode?: boolean;

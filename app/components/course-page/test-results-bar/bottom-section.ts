@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -11,7 +11,7 @@ type Signature = {
     onCollapseButtonClick: () => void;
     onExpandButtonClick: () => void;
   };
-};
+}
 
 export default class BottomSectionComponent extends Component<Signature> {
   get activeStepAsCourseStageStep() {

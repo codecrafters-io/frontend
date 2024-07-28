@@ -7,11 +7,11 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [(transition: Transition) => void];
   };
-};
+}
 
 function cleanup(instance: RouteWillChangeModifier) {
   instance.router.off('routeWillChange', instance.eventHandler);
@@ -20,7 +20,7 @@ function cleanup(instance: RouteWillChangeModifier) {
 export default class RouteWillChangeModifier extends Modifier<Signature> {
   callback?: (transition: Transition) => void;
 
-  @service router!: RouterService;
+  @service declare router: RouterService;
 
   @action
   eventHandler(transition: Transition) {

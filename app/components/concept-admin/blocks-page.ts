@@ -5,13 +5,13 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type Transition from '@ember/routing/transition';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     concept: ConceptModel;
   };
-};
+}
 
 type BlockWithMetadata = {
   id: string;

@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Blocks: {
     default: [];
   };
-};
+}
 
 export default class ModalBackdropComponent extends Component<Signature> {
   get containerElement() {

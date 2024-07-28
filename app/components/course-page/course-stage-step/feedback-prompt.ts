@@ -8,7 +8,7 @@ import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type Store from '@ember-data/store';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -16,7 +16,7 @@ type Signature = {
     repository: RepositoryModel;
     onSubmit: () => void;
   };
-};
+}
 
 export default class FeedbackPromptComponent extends Component<Signature> {
   @tracked isEditingClosedSubmission = false;

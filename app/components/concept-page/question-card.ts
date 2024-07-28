@@ -5,14 +5,14 @@ import type ConceptQuestionModel from 'codecrafters-frontend/models/concept-ques
 import type { Option } from 'codecrafters-frontend/models/concept-question';
 import { next } from '@ember/runloop';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     question: ConceptQuestionModel;
     onSubmit: () => void;
   };
-};
+}
 
 export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;

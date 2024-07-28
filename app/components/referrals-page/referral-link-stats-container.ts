@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 import { format } from 'date-fns';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     freeUsageGrants: FreeUsageGrantModel[];
@@ -15,7 +15,7 @@ interface Signature {
 }
 
 export default class ReferralLinkStatsContainerComponent extends Component<Signature> {
-  @service authenticator!: AuthenticatorService;
+  @service declare authenticator: AuthenticatorService;
 
   get activeFreeUsageGrantsCount() {
     return this.args.freeUsageGrants.filter((grant: FreeUsageGrantModel) => !grant.isExpired).length;

@@ -1,6 +1,6 @@
 import Modifier from 'ember-modifier';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [];
 
@@ -9,7 +9,7 @@ type Signature = {
       block?: ScrollLogicalPosition;
     };
   };
-};
+}
 
 export default class ScrollIntoViewModifier extends Modifier<Signature> {
   modify(element: Element, _positional: [], named: Signature['Args']['Named']) {

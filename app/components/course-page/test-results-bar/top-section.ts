@@ -1,7 +1,7 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -10,7 +10,7 @@ type Signature = {
     onCollapseButtonClick: () => void;
     onActiveTabSlugChange: (slug: string) => void;
   };
-};
+}
 
 export default class TopSectionComponent extends Component<Signature> {
   get tabs() {

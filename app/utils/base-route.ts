@@ -13,7 +13,7 @@ export default class BaseRoute extends Route {
   allowsAnonymousAccess = false;
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
-  @service utmCampaignIdTracker: unknown;
+  @service declare utmCampaignIdTracker: unknown;
   @service declare fastboot: FastBootService;
 
   beforeModel(transition: Transition) {

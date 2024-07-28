@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -11,7 +11,7 @@ type Signature = {
     metadataForUpvote?: Record<string, unknown>;
     solution: CommunityCourseStageSolutionModel;
   };
-};
+}
 
 export default class CommunitySolutionCardHeaderComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

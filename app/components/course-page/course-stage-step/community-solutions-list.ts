@@ -10,7 +10,7 @@ import type CoursePageStateService from 'codecrafters-frontend/services/course-p
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -19,7 +19,7 @@ type Signature = {
     stageIncompleteModalWasDismissed: boolean;
     repository: RepositoryModel;
   };
-};
+}
 
 export default class CommunitySolutionsListComponent extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;

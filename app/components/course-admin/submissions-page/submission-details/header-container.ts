@@ -7,11 +7,11 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type RouterService from '@ember/routing/router-service';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
-export type Signature = {
+export interface Signature {
   Args: {
     submission: SubmissionModel;
   };
-};
+}
 
 export default class HeaderContainerComponent extends Component<Signature> {
   @tracked isUpdatingTesterVersion = false;

@@ -8,7 +8,7 @@ import type RouterService from '@ember/routing/router-service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLButtonElement;
 
   Args: {
     affiliateLink: AffiliateLinkModel;

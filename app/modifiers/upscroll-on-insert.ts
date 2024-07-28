@@ -1,7 +1,7 @@
 import Modifier from 'ember-modifier';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
-type Signature = {
+interface Signature {
   Args: {
     Positional: [];
 
@@ -9,7 +9,7 @@ type Signature = {
       scrollableContainer?: string;
     };
   };
-};
+}
 
 export default class UpscrollOnInsertModifier extends Modifier<Signature> {
   modify(_: Element, _positional: [], named: Signature['Args']['Named']) {

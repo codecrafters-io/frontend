@@ -11,7 +11,7 @@ import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend
 import { type FileComparison, IsUnchangedFileComparison, type UnchangedFileComparison } from 'codecrafters-frontend/utils/file-comparison';
 import { tracked } from '@glimmer/tracking';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -19,7 +19,7 @@ type Signature = {
     fileComparisons: FileComparison[];
     onPublishToGithubButtonClick?: () => void;
   };
-};
+}
 
 export default class CommunitySolutionCardContentComponent extends Component<Signature> {
   @tracked expandedUnchangedFilePaths: string[] = [];

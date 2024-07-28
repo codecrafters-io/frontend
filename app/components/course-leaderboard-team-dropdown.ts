@@ -2,14 +2,14 @@ import Component from '@glimmer/component';
 import TeamModel from 'codecrafters-frontend/models/team';
 import { action } from '@ember/object';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
   Args: {
     team: TeamModel | null;
     teams: TeamModel[];
     onChange: (team: TeamModel | null) => void;
   };
-};
+}
 
 export default class CourseLeaderboardTeamDropdownComponent extends Component<Signature> {
   @action

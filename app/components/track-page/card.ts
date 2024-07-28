@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import UserModel from 'codecrafters-frontend/models/user';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -17,7 +17,7 @@ type Signature = {
     default: [];
     afterTitle?: [];
   };
-};
+}
 
 export default class TrackPageCardComponent extends Component<Signature> {
   get titleForDisplay() {

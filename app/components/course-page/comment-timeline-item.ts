@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type UserModel from 'codecrafters-frontend/models/user';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -11,7 +11,7 @@ type Signature = {
   Blocks: {
     default: [];
   };
-};
+}
 
 export default class CommentTimelineItemComponent extends Component<Signature> {}
 

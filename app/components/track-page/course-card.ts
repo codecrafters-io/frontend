@@ -9,7 +9,7 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -17,7 +17,7 @@ type Signature = {
     activeRepository?: RepositoryModel;
     language: LanguageModel;
   };
-};
+}
 
 export default class CourseCardComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

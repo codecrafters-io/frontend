@@ -2,7 +2,7 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import type OnboardingSurveyModel from 'codecrafters-frontend/models/onboarding-survey';
 
-type Signature = {
+interface Signature {
   Args: {
     onboardingSurvey: OnboardingSurveyModel;
     onContinueButtonClick: () => void;
@@ -10,7 +10,7 @@ type Signature = {
   };
 
   Element: HTMLDivElement;
-};
+}
 
 export default class Step2Component extends Component<Signature> {
   options = [

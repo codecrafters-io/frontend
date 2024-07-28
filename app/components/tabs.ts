@@ -8,7 +8,7 @@ export type Tab = {
   icon?: string;
 };
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -23,7 +23,7 @@ export type Signature = {
   Blocks: {
     default: [string];
   };
-};
+}
 
 export default class TabsComponent extends Component<Signature> {
   @tracked uncontrolledActiveTabSlug = this.args.tabs[0]!.slug;

@@ -19,7 +19,7 @@ interface Signature {
     latestConceptEngagement: ConceptEngagementModel;
   };
 
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 }
 
 interface BlockGroup {

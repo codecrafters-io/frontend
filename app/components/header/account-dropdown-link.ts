@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     text: string;
     icon: string;
   };
-};
+}
 
 export default class HeaderAccountDropdownLinkComponent extends Component<Signature> {}
 

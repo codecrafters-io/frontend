@@ -5,7 +5,7 @@ import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     backgroundColor?: 'gray' | 'white';

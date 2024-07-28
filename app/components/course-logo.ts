@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import type CourseModel from 'codecrafters-frontend/models/course';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     course: CourseModel;

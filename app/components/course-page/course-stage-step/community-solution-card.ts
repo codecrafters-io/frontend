@@ -9,7 +9,7 @@ import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/an
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import { type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -20,7 +20,7 @@ type Signature = {
     metadataForDownvote?: Record<string, unknown>;
     isCollapsedByDefault?: boolean;
   };
-};
+}
 
 export default class CommunitySolutionCardComponent extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;

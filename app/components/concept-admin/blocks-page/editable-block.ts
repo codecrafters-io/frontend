@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -22,7 +22,7 @@ type Signature = {
   Blocks: {
     dragHandler: [];
   };
-};
+}
 
 export default class EditableBlockComponent extends Component<Signature> {
   @tracked mutableBlock: Block | null = null;

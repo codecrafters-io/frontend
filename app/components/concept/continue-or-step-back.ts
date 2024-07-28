@@ -6,12 +6,12 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    continueButtonText: string;
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
     shouldHighlightKeyboardShortcuts: boolean;
-    shouldShowStepBackButton: boolean;
     shouldShowContinueButton: boolean;
-    continueButtonText: string;
+    shouldShowStepBackButton: boolean;
   };
 }
 

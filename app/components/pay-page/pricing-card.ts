@@ -4,7 +4,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import Store from '@ember-data/store';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -19,7 +19,7 @@ type Signature = {
     shouldShowAmortizedMonthlyPrice: boolean;
     title: string;
   };
-};
+}
 
 export default class PricingCardComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

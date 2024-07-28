@@ -13,7 +13,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -25,7 +25,7 @@ type Signature = {
     onSubmit?: () => void;
     target: CourseStageModel | CommunityCourseStageSolutionModel;
   };
-};
+}
 
 export default class CommentFormComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;

@@ -7,13 +7,13 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-export type Signature = {
+export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     featureSuggestion?: FeatureSuggestionModel;
   };
-};
+}
 
 export default class ProductWalkthroughFeatureSuggestion extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;

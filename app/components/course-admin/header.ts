@@ -3,13 +3,13 @@ import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 import type CourseModel from 'codecrafters-frontend/models/course';
 
-type Signature = {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     course: CourseModel;
   };
-};
+}
 
 type Tab = {
   icon: string;

@@ -2,15 +2,15 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import type { Faq } from './faq-list';
 
-type Signature = {
-  Element: HTMLElement;
+interface Signature {
+  Element: HTMLDivElement;
 
   Args: {
     faq: Faq;
     onToggle: (faq: Faq) => void;
     isOpen: boolean;
   };
-};
+}
 
 export default class FaqItemComponent extends Component<Signature> {
   @action

@@ -3,7 +3,7 @@ import logoImage from '/assets/images/logo/logomark-color.svg';
 import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     affiliateLink: AffiliateLinkModel;

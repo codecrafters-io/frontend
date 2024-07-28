@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 
 interface Signature {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
 
   Args: {
     testimonial: {
