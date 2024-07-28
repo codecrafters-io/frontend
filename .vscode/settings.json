@@ -2,5 +2,6 @@
   "eslint.validate": [
     "glimmer-ts",
     "glimmer-js"
-  ]
+  ],
+  "makefile.configureOnOpen": false
 }

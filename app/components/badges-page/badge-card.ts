@@ -7,7 +7,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    badge: BadgeModel | null;
+    badge?: BadgeModel;
   };
 }
 

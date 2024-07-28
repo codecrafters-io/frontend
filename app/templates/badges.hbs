@@ -8,6 +8,7 @@
 
     {{#if this.selectedBadge}}
       <ModalBackdrop class="backdrop-blur">
+        {{! @glint-expect-error mut types not correct !}}
         <BadgesPage::BadgeEarnedModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
       </ModalBackdrop>
     {{/if}}
@@ -16,6 +17,7 @@
       {{#each this.sortedBadges as |badge|}}
         <BadgesPage::BadgeCard @badge={{badge}} {{on "click" (fn this.handleBadgeCardClicked badge)}} />
       {{/each}}
+
       {{#each (repeat this.otherBadgesCount)}}
         <BadgesPage::BadgeCard />
       {{/each}}
