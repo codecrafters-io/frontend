@@ -19,6 +19,7 @@
 
             <PrimaryButtonWithSpinner
               @size="small"
+              {{! @glint-expect-error: @model.question.isSaving type is wrong, doesnt return boolean }}
               @isDisabled={{or (not this.unsavedChangesArePresent) @model.question.isSaving}}
               @shouldShowSpinner={{bool @model.question.isSaving}}
               {{on "click" this.handlePublishButtonClick}}

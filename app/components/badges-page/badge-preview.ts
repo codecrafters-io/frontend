@@ -1,15 +1,19 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import * as THREE from 'three';
+import Component from '@glimmer/component';
 import WebGL from 'three/addons/capabilities/WebGL.js';
+import { action } from '@ember/object';
 // import testBadgeModel from '/assets/models/engine.glb';
 import testBadgeModel from '/assets/models/test_badge.glb';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-export default class BadgePreviewComponent extends Component {
+interface Signature {
+  Element: HTMLDivElement;
+}
+
+export default class BadgePreviewComponent extends Component<Signature> {
   @action
-  didInsertPreviewContainer(element) {
+  didInsertPreviewContainer(element: HTMLDivElement) {
     const width = 300;
     const height = 300;
     const scene = new THREE.Scene();
@@ -29,19 +33,19 @@ export default class BadgePreviewComponent extends Component {
     scene.add(directionalLight);
 
     // Or create point light
-    let pointLight1 = new THREE.PointLight(0xffffff, 1); // white light
+    const pointLight1 = new THREE.PointLight(0xffffff, 1); // white light
     pointLight1.position.set(10, 10, 0); // some position in your scene
     scene.add(pointLight1);
 
-    let pointLight2 = new THREE.PointLight(0xffffff, 1); // white light
+    const pointLight2 = new THREE.PointLight(0xffffff, 1); // white light
     pointLight2.position.set(0, 10, 10); // some position in your scene
     scene.add(pointLight2);
 
-    let pointLight3 = new THREE.PointLight(0xffffff, 1); // white light
+    const pointLight3 = new THREE.PointLight(0xffffff, 1); // white light
     pointLight3.position.set(-10, 10, -10); // some position in your scene
     scene.add(pointLight3);
 
-    let pointLight4 = new THREE.PointLight(0xffffff, 1); // white light
+    const pointLight4 = new THREE.PointLight(0xffffff, 1); // white light
     pointLight4.position.set(10, 10, -10); // some position in your scene
     scene.add(pointLight4);
 
@@ -50,14 +54,15 @@ export default class BadgePreviewComponent extends Component {
       (gltf) => {
         scene.add(gltf.scene);
 
-        let box = new THREE.Box3().setFromObject(gltf.scene);
-        let center = box.getCenter(new THREE.Vector3());
+        const box = new THREE.Box3().setFromObject(gltf.scene);
+
+        const center = box.getCenter(new THREE.Vector3());
         camera.position.copy(center);
         camera.position.x += box.getSize(new THREE.Vector3()).length(); // Move the camera back by the length of the box
         camera.lookAt(center); // Make the camera look at the center of the box
       },
       () => {},
-      (error) => console.log('An error happened', error),
+      (error: unknown) => console.log('An error happened', error),
     );
 
     const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -86,7 +91,7 @@ export default class BadgePreviewComponent extends Component {
     });
 
     renderer.domElement.addEventListener('mouseout', function () {
-      var event = new PointerEvent('pointerup', {
+      const event = new PointerEvent('pointerup', {
         view: window,
         bubbles: true,
         cancelable: true,
@@ -116,8 +121,14 @@ export default class BadgePreviewComponent extends Component {
     if (WebGL.isWebGLAvailable()) {
       animate();
     } else {
-      var warning = WebGL.getWebGLErrorMessage();
+      const warning = WebGL.getWebGLErrorMessage();
       element.appendChild(warning);
     }
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'BadgesPage::BadgePreview': typeof BadgePreviewComponent;
   }
 }

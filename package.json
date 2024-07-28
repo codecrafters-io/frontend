@@ -97,6 +97,7 @@
     "@types/rails__actioncable": "^6.1.11",
     "@types/rsvp": "^4.0.9",
     "@types/showdown": "^2.0.2",
+    "@types/three": "^0.167.1",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@uiw/codemirror-theme-github": "^4.23.0",

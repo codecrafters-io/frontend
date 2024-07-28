@@ -7,7 +7,7 @@ import teslaBadgeImage from '/assets/images/badges/tesla-badge.svg';
 import turingBadgeImage from '/assets/images/badges/turing-badge.svg';
 import type BadgeAwardModel from './badge-award';
 
-export default class Badge extends Model {
+export default class BadgeModel extends Model {
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare instructionsMarkdown: string;
   @attr('string') declare name: string;

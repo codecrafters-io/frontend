@@ -16,7 +16,6 @@
       <div class="md:basis-2/3">
         <AffiliatePage::AffiliateLinksContainer />
         <AffiliatePage::AffiliateLinkStatsContainer @affiliateLink={{this.affiliateLink}} class="mt-4" />
-        {{! @glint-expect-error: Not ts-ified yet }}
         <AffiliatePage::EarningsContainer class="mt-4" />
         <AffiliatePage::AffiliateReferredUsersContainer @affiliateLink={{this.affiliateLink}} class="mt-4" />
       </div>
@@ -28,7 +27,6 @@
     {{! @glint-expect-error: Not ts-ified yet }}
     <TestimonialList />
   {{else}}
-    {{! @glint-expect-error: Not ts-ified yet }}
     <AffiliatePage::JoinAffiliateProgramContainer />
   {{/if}}
 </div>

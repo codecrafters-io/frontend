@@ -1,21 +1,28 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Store from '@ember-data/store';
+import type UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-export default class EarningsContainerComponent extends Component {
-  @service authenticator;
-  @service store;
+interface Signature {
+  Element: HTMLDivElement;
+}
+
+export default class EarningsContainerComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
   @tracked isCreatingPayout = false;
   @tracked isLoadingPayouts = true;
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: object) {
+    super(owner, args);
     this.loadPayouts();
   }
 
   get currentUser() {
-    return this.authenticator.currentUser;
+    return this.authenticator.currentUser as UserModel; // We know the user is logged in at this point
   }
 
   get lineItems() {
@@ -73,5 +80,11 @@ export default class EarningsContainerComponent extends Component {
   async loadPayouts() {
     await this.store.findAll('affiliate-earnings-payout', { include: 'user' });
     this.isLoadingPayouts = false;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'AffiliatePage::EarningsContainer': typeof EarningsContainerComponent;
   }
 }

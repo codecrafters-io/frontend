@@ -7,6 +7,7 @@
   {{#if this.userHasBadgeAward}}
     <BadgesPage::EarnedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
   {{else}}
+    {{! @glint-expect-error: not ts-ified yet }}
     <BadgesPage::LockedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
   {{/if}}
 
