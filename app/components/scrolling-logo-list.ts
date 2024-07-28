@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-interface ScrollingLogoListSignature {
+interface Signature {
   Element: HTMLDivElement;
 
   Args: {
@@ -8,7 +8,7 @@ interface ScrollingLogoListSignature {
   };
 }
 
-export default class ScrollingLogoListComponent extends Component<ScrollingLogoListSignature> {}
+export default class ScrollingLogoListComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
