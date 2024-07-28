@@ -4,14 +4,14 @@ import RouterService from '@ember/routing/router-service';
 import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 
 interface Signature {
-  Element: HTMLDivElement;
+  Element: HTMLAnchorElement;
 
   Args: {
     buildpack: BuildpackModel;
   };
 }
 
-export default class BuildpackComponent extends Component<Signature> {
+export default class BuildpackItemComponent extends Component<Signature> {
   @service declare router: RouterService;
 
   get wasUpdatedInLastHour() {
@@ -24,6 +24,6 @@ export default class BuildpackComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::BuildpacksPage::BuildpackItem': typeof BuildpackComponent;
+    'CourseAdmin::BuildpacksPage::BuildpackItem': typeof BuildpackItemComponent;
   }
 }
