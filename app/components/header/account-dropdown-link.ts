@@ -4,8 +4,8 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    text: string;
     icon: string;
+    text: string;
   };
 }
 
