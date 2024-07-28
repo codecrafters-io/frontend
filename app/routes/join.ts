@@ -21,16 +21,18 @@ export default class JoinRoute extends BaseRoute {
     scrollToTop();
   }
 
+  afterModel(model: ModelType) {
+    if (!model.affiliateLink) {
+      this.router.transitionTo('not-found');
+    }
+  }
+
   async model(params: { affiliateLinkSlug: string }) {
     const affiliateLinks = (await this.store.query('affiliate-link', {
       slug: params.affiliateLinkSlug,
       include: 'user',
     })) as unknown as AffiliateLinkModel[];
 
-    if (affiliateLinks.length === 0) {
-      this.router.transitionTo('not-found');
-    }
-
-    return { affiliateLink: affiliateLinks[0]! };
+    return { affiliateLink: affiliateLinks[0]! }; // afterModel ensures that this is never undefined
   }
 }
