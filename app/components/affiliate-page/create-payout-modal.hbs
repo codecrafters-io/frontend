@@ -31,7 +31,12 @@
         @isSelected={{eq this.selectedPayoutMethod "paypal"}}
       />
 
-      <AffiliatePage::CreatePayoutModal::PayoutMethodCard @name="Bank Transfer" @isDisabled={{true}} @imageUrl={{this.bankTransferImage}} />
+      <AffiliatePage::CreatePayoutModal::PayoutMethodCard
+        @name="Bank Transfer"
+        @isDisabled={{true}}
+        @imageUrl={{this.bankTransferImage}}
+        @isSelected={{false}}
+      />
     </div>
 
     {{#if (eq this.selectedPayoutMethod "paypal")}}
