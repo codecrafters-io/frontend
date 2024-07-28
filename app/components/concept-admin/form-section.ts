@@ -14,10 +14,10 @@ interface Signature {
   };
 }
 
-export default class BasicDetailsSectionComponent extends Component<Signature> {}
+export default class FormSectionComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::FormSection': typeof BasicDetailsSectionComponent;
+    'ConceptAdmin::FormSection': typeof FormSectionComponent;
   }
 }
