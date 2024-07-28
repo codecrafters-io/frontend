@@ -24,103 +24,46 @@ import tencentImage from '/assets/images/company-logos/tencent-company-logo.svg'
 import vercelImage from '/assets/images/company-logos/vercel-company-logo.svg';
 import visaImage from '/assets/images/company-logos/visa-company-logo.svg';
 
-export default class LogoCloudComponent extends Component {
-  companiesData = [
-    {
-      name: 'meta',
-      image: metaImage,
-    },
-    {
-      name: 'aws',
-      image: awsImage,
-    },
-    {
-      name: 'google',
-      image: googleImage,
-    },
-    {
-      name: 'apple',
-      image: appleImage,
-    },
-    {
-      name: 'stripe',
-      image: stripeImage,
-    },
-    {
-      name: 'docker',
-      image: dockerImage,
-    },
-    {
-      name: 'cloudflare',
-      image: cloudflareImage,
-    },
-    {
-      name: 'adobe',
-      image: adobeImage,
-    },
-    {
-      name: 'salesforce',
-      image: salesforceImage,
-    },
-    {
-      name: 'coinbase',
-      image: coinbaseImage,
-    },
-    {
-      name: 'vercel',
-      image: vercelImage,
-    },
-    {
-      name: 'NVIDIA',
-      image: nvidiaImage,
-    },
-    {
-      name: 'roblox',
-      image: robloxImage,
-    },
-    {
-      name: 'porsche',
-      image: porscheImage,
-    },
-    {
-      name: 'booking.com',
-      image: bookingImage,
-    },
-    {
-      name: 'supabase',
-      image: supabaseImage,
-    },
-    {
-      name: 'deliveroo',
-      image: deliverooImage,
-    },
-    {
-      name: 'grab',
-      image: grabImage,
-    },
-    {
-      name: 'substack',
-      image: substackImage,
-    },
-    {
-      name: 'tencent',
-      image: tencentImage,
-    },
-    {
-      name: 'mapbox',
-      image: mapboxImage,
-    },
-    {
-      name: 'jpmorgan',
-      image: jpmorganImage,
-    },
-    {
-      name: 'visa',
-      image: visaImage,
-    },
-    {
-      name: 'sourcegraph',
-      image: sourcegraphImage,
-    },
+interface Company {
+  name: string;
+  image: string;
+}
+
+interface Signature {
+  Element: HTMLDivElement;
+}
+
+export default class LogoCloudComponent extends Component<Signature> {
+  companiesData: Company[] = [
+    { name: 'NVIDIA', image: nvidiaImage },
+    { name: 'Adobe', image: adobeImage },
+    { name: 'Apple', image: appleImage },
+    { name: 'AWS', image: awsImage },
+    { name: 'Booking.com', image: bookingImage },
+    { name: 'Cloudflare', image: cloudflareImage },
+    { name: 'Coinbase', image: coinbaseImage },
+    { name: 'Deliveroo', image: deliverooImage },
+    { name: 'Docker', image: dockerImage },
+    { name: 'Grab', image: grabImage },
+    { name: 'Google', image: googleImage },
+    { name: 'JPMorgan', image: jpmorganImage },
+    { name: 'Mapbox', image: mapboxImage },
+    { name: 'Meta', image: metaImage },
+    { name: 'Porsche', image: porscheImage },
+    { name: 'Roblox', image: robloxImage },
+    { name: 'Salesforce', image: salesforceImage },
+    { name: 'Sourcegraph', image: sourcegraphImage },
+    { name: 'Stripe', image: stripeImage },
+    { name: 'Substack', image: substackImage },
+    { name: 'Supabase', image: supabaseImage },
+    { name: 'Tencent', image: tencentImage },
+    { name: 'Vercel', image: vercelImage },
+    { name: 'Visa', image: visaImage },
   ];
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'Affiliate::LinkPage::LogoCloud': typeof LogoCloudComponent;
+  }
 }
