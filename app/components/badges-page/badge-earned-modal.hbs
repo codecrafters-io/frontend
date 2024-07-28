@@ -13,7 +13,6 @@
     <div class="flex w-full md:w-5/12 justify-center items-center">
       <div class="w-full max-w-[250px]">
         {{#if this.userHasBadgeAward}}
-          {{! @glint-expect-error: not ts-ified yet }}
           <BadgesPage::EarnedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
         {{else}}
           {{! @glint-expect-error: not ts-ified yet }}
