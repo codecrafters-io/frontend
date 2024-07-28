@@ -6,7 +6,6 @@
       <div
         data-test-track-progress-bar
         class={{if (eq @stagesCount @completedStagesCount) "bg-teal-500" "bg-blue-500"}}
-        {{! @glint-expect-error: or doesn't return number }}
         style={{html-safe (concat "width:" (round (mult 100 (div (or @completedStagesCount 1) @stagesCount))) "%")}}
       ></div>
     </div>

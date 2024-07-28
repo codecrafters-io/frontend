@@ -19,18 +19,12 @@
 
     <div class="mt-6">
       {{#if (gt this.readyToPayoutEarningsAmountInCents 10000)}}
-        <PrimaryButton
-          @type="primary"
-          @size="small"
-          @onClick={{this.withdraw}}
-          {{on "click" (fn (mut this.isCreatingPayout) true)}}
-          data-test-initiate-payout-button
-        >
+        <PrimaryButton @size="small" {{on "click" (fn (mut this.isCreatingPayout) true)}} data-test-initiate-payout-button>
           Initiate Payout
         </PrimaryButton>
       {{else}}
         <div class="inline-flex">
-          <PrimaryButton @type="primary" @size="small" @isDisabled={{true}} @onClick={{this.withdraw}} data-test-initiate-payout-button>
+          <PrimaryButton @size="small" @isDisabled={{true}} data-test-initiate-payout-button>
             Initiate Payout
           </PrimaryButton>
           <EmberTooltip @text="This button will be enabled when you have $100+ ready to payout." />
