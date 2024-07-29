@@ -1,5 +1,5 @@
 {{#if this.solution}}
-  <div class="prose">
+  <div class="prose dark:prose-invert">
     <p>
       Navigate to the
       <code>{{this.filename}}</code>
@@ -10,14 +10,14 @@
     </p>
   </div>
 {{else if (not @repository.language)}}
-  <div class="prose">
+  <div class="prose dark:prose-invert">
     <p>
       <span class="text-lg">⚠️</span>
       Complete repository setup to see the instructions for this step.
     </p>
   </div>
 {{else}}
-  <div class="prose">
+  <div class="prose dark:prose-invert">
     <p>
       Navigate to the
       <code>README.md</code>
