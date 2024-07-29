@@ -42,7 +42,7 @@
       </SecondaryButton>
     </div>
   {{else}}
-    <div class="prose mb-4">
+    <div class="prose dark:prose-invert mb-4">
       Automatically sync changes to GitHub and share your progress.
     </div>
 
@@ -54,7 +54,7 @@
     {{#if this.githubAppInstallation}}
       <CoursePage::ConfigureGithubIntegrationModal::Step @title="Step 2: Connect your GitHub repository">
         {{#if this.selectedRepository}}
-          <div class="prose mb-3">
+          <div class="prose dark:prose-invert mb-3">
             <p>
               Select your repository below and click on "Publish".
             </p>
@@ -80,7 +80,7 @@
             Publish
           </PrimaryButtonWithSpinner>
 
-          <div class="prose mb-4">
+          <div class="prose dark:prose-invert mb-4">
             <p class="text-xs">
               Can't find your repository? Grant CodeCrafters access to your repository
               <a href={{this.githubAppInstallation.githubConfigureUrl}} target="_blank" rel="noopener noreferrer">here</a>.

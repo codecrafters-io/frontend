@@ -22,7 +22,7 @@
     </TertiaryButtonWithSpinner>
   </div>
 
-  <div class="prose prose-sm">
+  <div class="prose dark:prose-invert prose-sm">
     {{#if @evaluation.logsFileContents}}
       {{markdown-to-html @evaluation.logsFileContents}}
     {{else}}

@@ -3,7 +3,7 @@
     Delete Repository
   </div>
 
-  <div class="prose mb-4">
+  <div class="prose dark:prose-invert mb-4">
     Are you sure you want to delete your
     <span class="font-bold">{{@repository.name}}</span>
     repository on the
@@ -11,11 +11,11 @@
     challenge?
   </div>
 
-  <div class="prose mb-4">
+  <div class="prose dark:prose-invert mb-4">
     All code will be deleted, and will NOT be recoverable.
   </div>
 
-  <div class="prose mb-4" data-test-delete-repository-submissions-count-copy>
+  <div class="prose dark:prose-invert mb-4" data-test-delete-repository-submissions-count-copy>
     {{#if (or (eq @repository.submissionsCount 0) (eq @repository.submissionsCount null))}}
       You have not yet pushed code to this repository.
     {{else if (eq @repository.submissionsCount 1)}}
@@ -27,7 +27,7 @@
     {{/if}}
   </div>
 
-  <div class="prose mb-4 text-red-600">
+  <div class="prose dark:prose-invert mb-4 text-red-600">
     To proceed, press and hold the button below for
     <span class="font-bold">3 seconds</span>:
   </div>
