@@ -216,6 +216,10 @@ module.exports = {
               color: colors.slate[300],
               backgroundColor: colors.slate[800],
             },
+            pre: {
+              color: colors.slate[200],
+              backgroundColor: colors.slate[900],
+            },
           },
         },
       },
