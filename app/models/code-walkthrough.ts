@@ -21,7 +21,7 @@ type ReferencedCodeSection = {
 
 type Section = ProseSection | ReferencedCodeSection;
 
-export default class CodeWalkthrough extends Model {
+export default class CodeWalkthroughModel extends Model {
   @attr('string') declare conclusionMarkdown: string;
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare hackerNewsUrl: string;
