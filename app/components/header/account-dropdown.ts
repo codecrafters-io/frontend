@@ -7,9 +7,11 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 
 export default class AccountDropdownComponent extends Component {
   @service declare authenticator: AuthenticatorService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
   @service declare store: Store;
 
@@ -91,21 +93,9 @@ export default class AccountDropdownComponent extends Component {
   }
 
   @action
-  handleStatusPageClick(dropdownActions: { close: () => void }) {
-    window.open('https://status.codecrafters.io/', '_blank');
-    dropdownActions.close();
-  }
-
-  @action
   handleSubscribeClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
     this.router.transitionTo('pay');
-  }
-
-  @action
-  handleTestSentryClick() {
-    // @ts-expect-error this is supposed to raise an error
-    this.testingSentry.boom();
   }
 
   @action

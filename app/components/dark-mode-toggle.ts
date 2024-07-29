@@ -6,12 +6,16 @@ import type { LocalStoragePreference } from 'codecrafters-frontend/services/dark
 
 export interface Signature {
   Element: Element;
+
+  Args: {
+    size?: 'regular' | 'small';
+  };
 }
 
 export default class DarkModeToggleComponent extends Component<Signature> {
   @service declare darkMode: DarkModeService;
 
-  possiblePreferences: LocalStoragePreference[] = ['system', 'dark', 'light', null];
+  possiblePreferences: LocalStoragePreference[] = ['system', 'light', 'dark'];
 
   @action
   setPreference(newValue: LocalStoragePreference) {

@@ -19,6 +19,10 @@
     </div>
 
     <div class="flex items-center gap-x-3">
+      {{#if this.featureFlags.canSeeDarkModeToggle}}
+        <DarkModeToggle />
+      {{/if}}
+
       {{#if (or this.currentUser.isStaff (current-user-is-course-author @course))}}
         <TertiaryLinkButton @size="small" @route="course-admin.submissions" @model={{@course.slug}} data-test-course-admin-button>
           Admin

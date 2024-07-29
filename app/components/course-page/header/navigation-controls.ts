@@ -7,6 +7,7 @@ import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -24,6 +25,7 @@ interface Signature {
 export default class NavigationControlsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare billingStatusDisplay: BillingStatusDisplayService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
 
   get currentStepAsCourseStageStep() {

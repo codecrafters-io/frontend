@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class FeatureFlagsService extends Service {
   @service analyticsEventTracker;
@@ -12,6 +13,14 @@ export default class FeatureFlagsService extends Service {
 
   get canSeeConceptsIndex() {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
+  }
+
+  get canSeeDarkModeToggle() {
+    if (config.environment === 'test') {
+      return true;
+    }
+
+    return this.currentUser && this.currentUser.isStaff;
   }
 
   get currentUser() {
