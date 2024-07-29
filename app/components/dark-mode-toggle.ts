@@ -11,7 +11,7 @@ export interface Signature {
 export default class DarkModeToggleComponent extends Component<Signature> {
   @service declare darkMode: DarkModeService;
 
-  possiblePreferences: LocalStoragePreference[] = ['system', 'dark', 'light', null];
+  possiblePreferences: LocalStoragePreference[] = ['system', 'light', 'dark'];
 
   @action
   setPreference(newValue: LocalStoragePreference) {
