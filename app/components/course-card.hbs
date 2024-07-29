@@ -1,12 +1,12 @@
 <LinkTo
-  class="group bg-white dark:bg-gray-900 p-5 rounded-md shadow hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border dark:border-gray-800/60 relative"
+  class="group bg-white dark:bg-gray-900 p-5 rounded-md shadow hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between border dark:border-gray-800/60 relative"
   @route={{this.linkToRoute.name}}
   @model={{this.linkToRoute.model}}
   @query={{this.linkToRoute.query}}
   data-test-course-card={{not this.isSkeleton}}
 >
   {{! Logo }}
-  <div class="w-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-all absolute top-5 right-5">
+  <div class="w-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-transform absolute top-5 right-5">
     {{#if this.isSkeleton}}
       <div class="bg-gray-100 dark:bg-gray-800 w-8 h-8 rounded-full" />
     {{else}}
