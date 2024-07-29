@@ -1,9 +1,11 @@
 <div
-  class="flex flex-col items-stretch rounded bg-white dark:bg-gray-800 w-full max-w-2xl border border-gray-300 dark:border-gray-600 overflow-y-hidden"
+  class="flex flex-col items-stretch rounded bg-white dark:bg-gray-925 w-full max-w-2xl border border-gray-300 dark:border-gray-800/60 overflow-y-hidden"
   ...attributes
   data-test-copyable-terminal-command
 >
-  <div class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
+  <div
+    class="border-b border-gray-200 dark:border-gray-800/60 bg-gray-50 dark:bg-gray-950 rounded-t pl-3 pr-1 py-1 flex items-center justify-between"
+  >
     <div class="flex items-center gap-2">
       {{#if (gt @variantLabels.length 1)}}
         <div class="flex items-center gap-1">
@@ -48,6 +50,11 @@
   </div>
 
   <div class="w-full text-xs overflow-x-auto" data-test-copyable-text>
-    <SyntaxHighlightedCode @code={{this.codeForHighlighting}} @language="shellscript" @theme="github-light" @shouldDisplayLineNumbers={{false}} />
+    <SyntaxHighlightedCode
+      @code={{this.codeForHighlighting}}
+      @language="shellscript"
+      @theme={{if this.darkMode.isEnabled "github-dark" "github-light"}}
+      @shouldDisplayLineNumbers={{false}}
+    />
   </div>
 </div>

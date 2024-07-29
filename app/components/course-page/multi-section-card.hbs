@@ -1,10 +1,10 @@
-<div class="bg-gray-50 rounded-md w-full" ...attributes>
-  <div class="bg-white border border-gray-300 {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}">
-    <div class="bg-gray-50 border-gray-300 border-b border-opacity-75 rounded-t relative">
+<div class="bg-gray-50 dark:bg-gray-925 rounded-md w-full" ...attributes>
+  <div class="bg-white dark:bg-gray-925 border border-gray-300 dark:border-gray-800/60 {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}">
+    <div class="bg-gray-50 dark:bg-gray-925 border-gray-300/75 dark:border-gray-800/60 border-b rounded-t relative">
       {{yield to="header"}}
     </div>
 
-    <div class="divide-y divide-gray-200">
+    <div class="divide-y divide-gray-200 dark:divide-gray-800/60">
       {{#each @sections as |section|}}
         <AnimatedContainer>
           {{#animated-if (eq @expandedSection section) use=this.transition duration=300}}
@@ -18,7 +18,7 @@
               {{yield to="expandedSection"}}
             </div>
           {{else}}
-            <div class="px-4 sm:px-6 py-3 hover:bg-gray-50" {{on "click" (fn @onSectionClick section)}} role="button">
+            <div class="px-4 sm:px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-900" {{on "click" (fn @onSectionClick section)}} role="button">
               <div class="flex items-center justify-between">
                 {{#if section.isComplete}}
                   <div class="flex items-center text-lg text-gray-400">

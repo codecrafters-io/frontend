@@ -1,5 +1,5 @@
 <div data-test-clone-repository-step>
-  <div class="prose mb-5">
+  <div class="prose dark:prose-invert mb-5">
     <p>
       We've prepared a starter repository with some
       {{@repository.language.name}}
@@ -7,7 +7,7 @@
     </p>
   </div>
 
-  <div class="prose mb-3">
+  <div class="prose dark:prose-invert mb-3">
     <div class="inline-flex items-center gap-1">
       {{#if @isComplete}}
         {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
@@ -22,7 +22,7 @@
   <div class="mb-5">
     {{! @glint-expect-error isNew is not typed? }}
     {{#if @repository.isNew}}
-      <div class="prose">
+      <div class="prose dark:prose-invert">
         <p>
           <span class="text-lg">⚠️</span>
           Select a language to see instructions to clone your repository.
@@ -54,7 +54,7 @@
     <CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} />
   </div>
 
-  <div class="prose">
+  <div class="prose dark:prose-invert">
     <p class={{if @isComplete "line-through"}}>
       When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
     </p>
