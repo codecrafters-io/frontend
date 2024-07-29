@@ -36,7 +36,8 @@ export default class TestRunnerCardComponent extends Component<Signature> {
     } else {
       return {
         passed: 'bg-gradient-to-b from-white to-teal-50 hover:from-teal-50 hover:to-teal-100',
-        failed: 'bg-gradient-to-b from-white to-gray-50 hover:from-gray-50 hover:to-gray-100',
+        failed:
+          'bg-gradient-to-b from-white to-gray-50 dark:from-gray-900/10 dark:to-gray-900/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/40 dark:hover:to-gray-800/50',
         evaluating: 'bg-gradient-to-b from-white to-yellow-50 dark:from-yellow-900/10 dark:to-yellow-900/20 hover:from-yellow-50 hover:to-yellow-100',
         error_or_not_run:
           'bg-gradient-to-b from-white to-gray-50 dark:from-gray-900/10 dark:to-gray-900/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/40 dark:hover:to-gray-800/50',
