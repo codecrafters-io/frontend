@@ -1,11 +1,10 @@
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import profilePage from 'codecrafters-frontend/tests/pages/settings/profile-page';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | settings-page | profile-test', function (hooks) {
   setupApplicationTest(hooks);
