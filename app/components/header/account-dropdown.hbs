@@ -13,7 +13,7 @@
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border rounded shadow text-sm text-gray-600 max-w-xl bg-white" data-test-account-dropdown-content>
+    <div class="py-2 border rounded shadow max-w-xl bg-white" data-test-account-dropdown-content>
       {{#if this.currentUser.hasActiveSubscription}}
         <Header::AccountDropdownLink
           @text="Manage Membership"
@@ -52,13 +52,19 @@
       <Header::AccountDropdownLink @text="Perks" @icon="star" {{on "click" (fn this.handlePerksLinkClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Forum" @icon="chat-alt-2" {{on "click" (fn this.handleForumLinkClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />
-      <Header::AccountDropdownLink @text="Status Page" @icon="cloud" {{on "click" (fn this.handleStatusPageClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Settings" @icon="cog" {{on "click" (fn this.handleSettingsLinkClick dd.actions)}} />
-      <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
 
-      {{#if this.currentUser.isStaff}}
-        <Header::AccountDropdownLink @text="Test Sentry" @icon="fire" {{on "click" this.handleTestSentryClick}} />
-      {{/if}}
+      <div class="flex items-center justify-between gap-8 px-3 py-1.5">
+        <span class="text-sm text-gray-800">
+          Theme
+        </span>
+
+        <DarkModeToggle @size="small" />
+      </div>
+
+      <div class="h-px my-2 mx-3 bg-gray-200" />
+
+      <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>
   </dd.Content>
 </BasicDropdown>

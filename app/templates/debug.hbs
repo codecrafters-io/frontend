@@ -17,4 +17,10 @@
       {{/if}}
     </span>
   </div>
+
+  {{#if this.authenticator.currentUser.isStaff}}
+    <TertiaryButton {{on "click" this.handleTestSentryClick}}>
+      Test Sentry
+    </TertiaryButton>
+  {{/if}}
 </div>

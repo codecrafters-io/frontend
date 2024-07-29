@@ -7,7 +7,8 @@
     <input id="theme-switch-{{preference}}" class="sr-only" type="radio" value="{{preference}}" />
     <label
       for="theme-switch-{{preference}}"
-      class="p-1.5 flex rounded-full cursor-pointer border
+      class="{{if (eq @size 'small') 'p-1' 'p-1.5'}}
+        flex rounded-full cursor-pointer border
         {{if (eq preferenceIndex 1) '-mx-1' ''}}
         {{if (eq this.darkMode.localStoragePreference preference) 'bg-white dark:bg-gray-800 shadow-inner'}}
         {{if (eq this.darkMode.localStoragePreference preference) 'border-gray-300 dark:border-gray-800' 'border-transparent'}}"
@@ -17,7 +18,10 @@
       {{svg-jar
         (if (eq preference "system") "desktop-computer" (if (eq preference "light") "sun" "moon"))
         class=(concat
-          "h-4 w-4 fill-current "
+          "fill-current"
+          " "
+          (if (eq @size 'small') 'h-3 w-3' 'h-4 w-4')
+          " "
           (if (eq this.darkMode.localStoragePreference preference) "text-gray-700 dark:text-gray-200" "text-gray-600 dark:text-gray-400")
         )
       }}
