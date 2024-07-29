@@ -9,10 +9,10 @@
     <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} @isComplete={{this.isComplete}} />
 
     {{#if this.isComplete}}
-      <p class="text-gray-600 mt-4">
+      <div class="mt-4 prose dark:prose-invert">
         <span class="text-xl mr-1">🎉</span>
         Git push received! The first stage is now activated.
-      </p>
+      </div>
 
       <PrimaryLinkButton
         class="mt-4"

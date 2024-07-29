@@ -26,7 +26,7 @@
         </div>
       {{else}}
         <div class="flex items-center gap-1">
-          {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-600"}}
+          {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-500"}}
           <span class="text-gray-500 dark:text-gray-500 text-xs">command line</span>
         </div>
       {{/if}}
@@ -53,7 +53,7 @@
     <SyntaxHighlightedCode
       @code={{this.codeForHighlighting}}
       @language="shellscript"
-      @theme={{if this.darkMode.isEnabled "github-dark" "github-light"}}
+      @theme={{if this.darkMode.isEnabled "github-dark-default" "github-light"}}
       @shouldDisplayLineNumbers={{false}}
     />
   </div>
