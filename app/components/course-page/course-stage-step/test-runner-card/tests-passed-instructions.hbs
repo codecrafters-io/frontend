@@ -1,6 +1,6 @@
 {{#if @currentStep.courseStage.isFirst}}
   <div>
-    <div class="prose prose-sm prose-compact mb-3">
+    <div class="prose dark:prose-invert prose-sm prose-compact mb-3">
       <p>
         You can now mark
         <b>{{@currentStep.courseStage.name}}</b>
@@ -8,7 +8,7 @@
       </p>
     </div>
 
-    <div class="prose prose-sm prose-compact mb-3">
+    <div class="prose dark:prose-invert prose-sm prose-compact mb-3">
       <p>
         We recommend reviewing the code you just uncommented. You'll need to build on it in the next stages.
       </p>
@@ -17,7 +17,7 @@
     <CoursePage::CourseStageStep::TestRunnerCard::MoveToNextStepInstructions @currentStep={{@currentStep}} />
   </div>
 {{else}}
-  <div class="prose prose-sm prose-compact mb-3">
+  <div class="prose dark:prose-invert prose-sm prose-compact mb-3">
     <p>
       You can either refactor your code or move on the next step.
     </p>

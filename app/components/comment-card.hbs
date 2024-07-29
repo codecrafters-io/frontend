@@ -9,12 +9,16 @@
   {{else}}
     <div
       class="flex items-center justify-between flex-wrap
-        {{if @comment.parentComment 'py-1' 'bg-gray-100 rounded-t py-2 px-4 border-b border-gray-200 shadow-sm'}}"
+        {{if
+          @comment.parentComment
+          'py-1'
+          'bg-gray-100 dark:bg-gray-925 rounded-t py-2 px-4 border-b border-gray-200 dark:border-gray-800/60 shadow-sm'
+        }}"
     >
       <div class="flex items-center flex-wrap">
         <a
           href={{@comment.user.codecraftersProfileUrl}}
-          class="text-sm text-gray-600 font-bold hover:underline"
+          class="text-sm text-gray-600 dark:text-gray-400 font-bold hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >{{@comment.user.username}}</a>
@@ -22,18 +26,18 @@
         <UserLabel @user={{@comment.user}} @context={{@comment.contextForUserLabel}} class="ml-1" />
 
         {{#if (eq @comment.user.username "codecrafters-bot")}}
-          <span class="bg-gray-400 text-white ml-1 px-1 py-0.5 rounded font-semibold text-xs">
+          <span class="bg-gray-400 dark:bg-gray-600 text-white ml-1 px-1 py-0.5 rounded font-semibold text-xs">
             bot
           </span>
         {{/if}}
 
-        <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
-        <div class="text-xs text-gray-400">
+        <div class="bg-gray-300 dark:bg-gray-800/60 w-1 h-1 mx-1.5 rounded-full"></div>
+        <div class="text-xs text-gray-400 dark:text-gray-600">
           {{date-from-now @comment.createdAt}}
         </div>
 
         {{#if @comment.language}}
-          <div class="bg-gray-300 w-1 h-1 mx-1.5 rounded-full"></div>
+          <div class="bg-gray-300 dark:bg-gray-800/60 w-1 h-1 mx-1.5 rounded-full"></div>
 
           <Pill @color="gray">
             {{@comment.language.name}}
@@ -93,7 +97,7 @@
 
     <div class="{{if @comment.parentComment 'py-1' 'px-4 py-3'}}">
       <div
-        class="leading-relaxed prose-sm prose max-w-none break-words has-prism-highlighting"
+        class="leading-relaxed prose-sm prose dark:prose-invert max-w-none break-words has-prism-highlighting"
         {{did-insert this.handleDidInsertBodyHTML}}
         data-test-comment-body
       >
@@ -112,7 +116,9 @@
   {{/if}}
 
   {{#if (gt this.sortedChildComments.length 0)}}
-    <div class="bg-gray-50 py-2 px-4 border-t border-gray-200 {{if this.shouldShowReplyForm '' 'rounded-b'}}">
+    <div
+      class="bg-gray-50 dark:bg-gray-950 py-2 px-4 border-t border-gray-200 dark:border-gray-800/60 {{if this.shouldShowReplyForm '' 'rounded-b'}}"
+    >
       {{#each this.sortedChildComments as |childComment|}}
         <div class="flex items-start">
           <a
@@ -121,7 +127,10 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            <AvatarImage @user={{childComment.user}} class="w-6 h-6 mr-3 filter drop-shadow-sm ring-1 ring-white rounded-full shadow" />
+            <AvatarImage
+              @user={{childComment.user}}
+              class="w-6 h-6 mr-3 filter drop-shadow-sm ring-1 ring-white dark:ring-gray-800/60 rounded-full shadow"
+            />
           </a>
 
           <CommentCard @comment={{childComment}} />
@@ -136,7 +145,7 @@
       @commentModelType={{@comment.constructor.modelName}}
       @onCancel={{this.handleCancelReplyButtonClick}}
       @onSubmit={{this.handleReplySubmitted}}
-      class="border-t"
+      class="border-t dark:border-gray-800/60"
     />
   {{/if}}
 </div>

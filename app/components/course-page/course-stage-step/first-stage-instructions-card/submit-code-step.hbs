@@ -1,4 +1,4 @@
-<div class="prose mb-3">
+<div class="prose dark:prose-invert mb-3">
   <p>
     Run the following commands to submit your changes:
   </p>
@@ -9,7 +9,7 @@
   class="mb-3"
 />
 
-<div class="prose">
+<div class="prose dark:prose-invert">
   <p class={{if @isComplete "line-through"}}>
     Once you run the commands above, the
     <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
@@ -26,7 +26,7 @@
 </div>
 
 {{#unless @isComplete}}
-  <p class="prose prose-sm mt-3">
+  <p class="prose dark:prose-invert prose-sm mt-3">
     <b>Note:</b>
     If you're still seeing "Tests failed" after completing the steps above,
     <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>

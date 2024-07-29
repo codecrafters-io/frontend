@@ -1,14 +1,23 @@
 {{#if (eq @step.status "complete")}}
-  <div class="inline-flex border border-green-300 rounded-full bg-green-100 pl-1.5 pr-2.5 text-sm font-semibold text-green-700" ...attributes>
+  <div
+    class="inline-flex border rounded-full pl-1.5 pr-2.5 text-sm font-semibold text-green-700 bg-green-100 border-green-300 dark:text-green-400 dark:bg-green-950 dark:border-green-400/20"
+    ...attributes
+  >
     {{svg-jar "check-circle" class="w-4 mr-1"}}
     Completed
   </div>
 {{else if (eq @step.status "locked")}}
-  <div class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2.5 text-sm font-semibold text-gray-700" ...attributes>
+  <div
+    class="inline-flex border rounded-full px-2.5 text-sm font-semibold text-gray-700 bg-gray-100 border-gray-300 dark:text-gray-400 dark:bg-gray-950 dark:border-gray-400/20"
+    ...attributes
+  >
     Pending
   </div>
 {{else if (eq @step.status "in_progress")}}
-  <div class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2.5 text-sm font-semibold text-yellow-700" ...attributes>
+  <div
+    class="inline-flex border rounded-full pl-1.5 pr-2.5 text-sm font-semibold text-yellow-700 bg-yellow-100 border-yellow-300 dark:text-yellow-400 dark:bg-yellow-950 dark:border-yellow-400/20"
+    ...attributes
+  >
     In-progress
   </div>
 {{/if}}

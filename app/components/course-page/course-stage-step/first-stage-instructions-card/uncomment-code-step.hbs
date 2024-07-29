@@ -1,5 +1,5 @@
 {{#if this.solution}}
-  <div class="prose mb-3">
+  <div class="prose dark:prose-invert mb-3">
     <p>
       Uncomment the following code in
       <code>{{this.filename}}</code>:
@@ -12,14 +12,14 @@
     {{/each}}
   </div>
 {{else if (not @repository.language)}}
-  <div class="prose">
+  <div class="prose dark:prose-invert">
     <p>
       <span class="text-lg">⚠️</span>
       Complete repository setup to see the code you need to uncomment.
     </p>
   </div>
 {{else}}
-  <div class="prose">
+  <div class="prose dark:prose-invert">
     <p>
       View the README in your repository for instructions on how to uncomment the code.
     </p>

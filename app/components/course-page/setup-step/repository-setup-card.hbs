@@ -9,10 +9,10 @@
     <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} @isComplete={{this.isComplete}} />
 
     {{#if this.isComplete}}
-      <p class="text-gray-600 mt-4">
+      <div class="mt-4 prose dark:prose-invert">
         <span class="text-xl mr-1">🎉</span>
         Git push received! The first stage is now activated.
-      </p>
+      </div>
 
       <PrimaryLinkButton
         class="mt-4"
@@ -24,11 +24,11 @@
         Continue →
       </PrimaryLinkButton>
     {{else}}
-      <div class="px-4 py-3 bg-gray-50 inline-flex rounded border shadow-sm mt-4">
+      <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 inline-flex rounded border dark:border-gray-800 shadow-sm mt-4">
         <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
       </div>
 
-      <p class="prose mt-4 prose-sm">
+      <p class="prose mt-4 prose-sm dark:prose-invert">
         Running into issues with the git clone step?
         <a href="https://docs.codecrafters.io/troubleshooting/fix-clone-errors" target="_blank" rel="noopener noreferrer">Read this</a>.
       </p>

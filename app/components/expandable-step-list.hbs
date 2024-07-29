@@ -1,4 +1,8 @@
-<div class="divide-y divide-gray-200 border-t border-b" {{did-insert this.handleDidInsertContainer}} ...attributes>
+<div
+  class="divide-y divide-gray-200 dark:divide-gray-800 border-t border-b dark:border-gray-800"
+  {{did-insert this.handleDidInsertContainer}}
+  ...attributes
+>
   {{#each @steps key="id" as |step stepIndex|}}
     <div>
       <ExpandableStepList::Step

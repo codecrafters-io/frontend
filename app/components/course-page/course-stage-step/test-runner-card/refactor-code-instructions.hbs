@@ -1,5 +1,5 @@
 <div ...attributes>
-  <div class="prose prose-sm prose-compact mb-3">
+  <div class="prose dark:prose-invert prose-sm prose-compact mb-3">
     <p>
       Make changes to your code and run the
       {{#if (gt this.selectedCommandVariant.commands.length 1)}}
@@ -13,7 +13,7 @@
   <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
 
   {{#if (eq this.recommendedClientType "cli")}}
-    <div class="prose prose-sm prose-compact mt-3">
+    <div class="prose dark:prose-invert prose-sm prose-compact mt-3">
       <p>
         We recommend using the
         <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters CLI</a>, but you can use Git too.

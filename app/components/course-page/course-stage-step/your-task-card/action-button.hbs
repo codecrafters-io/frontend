@@ -1,12 +1,12 @@
 <button
   type="button"
-  class="flex items-center px-2.5 py-2 rounded border border-gray-200 hover:border-gray-400 group relative"
+  class="flex items-center px-2.5 py-2 rounded border border-gray-200 dark:border-gray-800/60 hover:border-gray-400 dark:hover:border-gray-700/60 group relative"
   data-test-action-button
   ...attributes
 >
-  {{svg-jar @icon class=(concat "w-5 mr-1.5 fill-current opacity-80 group-hover:opacity-100 text-teal-500")}}
+  {{svg-jar @icon class=(concat "w-5 mr-1.5 fill-current opacity-80 group-hover:opacity-100 text-teal-500 dark:text-teal-400")}}
 
-  <span class="text-gray-700">
+  <span class="text-gray-700 dark:text-gray-200">
     {{@text}}
   </span>
 </button>

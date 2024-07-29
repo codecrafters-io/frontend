@@ -152,6 +152,23 @@ module.exports = {
             },
           },
         },
+        'green-invert': {
+          css: {
+            color: colors.green[300],
+            a: { color: colors.green[300] },
+            strong: { color: colors.green[300] },
+            b: { color: colors.green[300] },
+            pre: {
+              color: colors.green[300],
+              backgroundColor: colors.green[800],
+              borderWidth: '1px',
+              borderColor: colors.green[700],
+            },
+            h3: {
+              color: colors.green[300],
+            },
+          },
+        },
         red: {
           css: {
             color: colors.red[700],
@@ -198,6 +215,10 @@ module.exports = {
             code: {
               color: colors.slate[300],
               backgroundColor: colors.slate[800],
+            },
+            pre: {
+              color: colors.slate[200],
+              backgroundColor: colors.slate[900],
             },
           },
         },
