@@ -1,11 +1,18 @@
 <button
   type="button"
-  class="hover:bg-white px-1 py-0.5 rounded flex items-center border
-    {{if this.currentUserHasDownvoted 'border-red-500 hover:border-red-600' 'border-gray-200 hover:border-gray-300'}}
+  class="hover:bg-white dark:hover:bg-gray-900 px-1 py-0.5 rounded flex items-center border
+    {{if
+      this.currentUserHasDownvoted
+      'border-red-500 hover:border-red-600'
+      'border-gray-200 dark:border-gray-800/60 hover:border-gray-300 dark:hover:border-gray-700/60'
+    }}
     transition-all duration-75 active:border-red-600"
   ...attributes
   data-test-downvote-button
   {{on "click" this.handleClick}}
 >
-  {{svg-jar "chevron-down" class=(concat "w-4 transition-all duration-75 " (if this.currentUserHasDownvoted "text-red-500" "text-gray-300"))}}
+  {{svg-jar
+    "chevron-down"
+    class=(concat "w-4 transition-all duration-75 " (if this.currentUserHasDownvoted "text-red-500" "text-gray-300 dark:text-gray-400"))
+  }}
 </button>

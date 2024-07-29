@@ -34,7 +34,10 @@
       {{else if (eq this.activeTab "preview")}}
         {{! template-lint-disable no-inline-styles }}
         <div class="px-2 py-2 border-b-2 dark:border-gray-800/60 mb-2" style="min-height: 135px;">
-          <div class="leading-relaxed prose-sm prose dark:prose-invert max-w-none break-words comment-body" {{did-insert this.handleDidInsertBodyHTML}}>
+          <div
+            class="leading-relaxed prose-sm prose dark:prose-invert max-w-none break-words comment-body"
+            {{did-insert this.handleDidInsertBodyHTML}}
+          >
             {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
             {{markdown-to-html this.commentMarkdown}}
           </div>
