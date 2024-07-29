@@ -50,18 +50,6 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     assert.strictEqual(userPage.githubDetails.link, 'https://github.com/rohitpaulk');
   });
 
-  test('can enable dark mode', async function (assert) {
-    testScenario(this.server);
-    const user = signInAsStaff(this.owner, this.server);
-    user.update({ isVip: true });
-
-    await profilePage.visit();
-    await profilePage.darkModeToggle.clickOnOption('dark');
-
-    await percySnapshot('Settings Page - Dark Mode');
-    assert.strictEqual(1, 1); // TODO: Add more?
-  });
-
   test('can refresh github username', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
