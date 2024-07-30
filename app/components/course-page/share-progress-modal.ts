@@ -42,9 +42,9 @@ export default class ShareProgressModalComponent extends Component<Signature> {
 
   get defaultCopyableText() {
     if (this.selectedSocialPlatform === 'twitter') {
-      return `Just completed Stage #2 of the @codecraftersio ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
+      return `I'm working on the the @codecraftersio ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
     } else {
-      return `Just completed Stage #2 of the CodeCrafters ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
+      return `I'm working on the CodeCrafters ${this.args.repository.course.name} challenge in ${this.args.repository.language?.name}.\n\nhttps://app.codecrafters.io/courses/${this.args.repository.course.slug}/overview`;
     }
   }
 
