@@ -1,7 +1,7 @@
-<div class="border rounded flex items-start p-4 border-red-300 bg-red-50" data-test-fix-github-app-installation-prompt ...attributes>
+<div class="border rounded flex items-start p-4 border-red-300 bg-red-50 dark:border-red-700/40 dark:bg-red-950/40" data-test-fix-github-app-installation-prompt ...attributes>
   {{svg-jar "exclamation" class="w-8 h-8 mr-2 mt-2 flex-shrink-0 text-red-400"}}
 
-  <div class="text-red-700 text-sm leading-relaxed">
+  <div class="text-red-700 dark:text-red-300 text-sm leading-relaxed">
     {{#if @githubAppInstallation.isUninstalled}}
       <div class="mb-3 leading-relaxed">
         Looks like the CodeCrafters GitHub app was uninstalled from your account. Click below to reinstall it.
