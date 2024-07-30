@@ -3,7 +3,7 @@ import CommentList from 'codecrafters-frontend/tests/pages/components/course-pag
 import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
-import DesktopHeader from 'codecrafters-frontend/tests/pages/components/course-page/desktop-header';
+import Header from 'codecrafters-frontend/tests/pages/components/course-page/header';
 import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
 import FirstStageInstructionsCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-instructions-card';
 import LanguageDropdown from './components/language-dropdown';
@@ -29,6 +29,7 @@ export default create({
   clickOnExpandLeaderboardButton: clickable('[data-test-expand-leaderboard-button]'),
   clickOnExpandSidebarButton: clickable('[data-test-expand-sidebar-button]'),
   clickOnHeaderTabLink: clickOnText('[data-test-course-page-header-sticky-section] [data-test-header-tab-link]'),
+  clickOnModalBackdrop: clickable('[data-test-modal-backdrop]'),
 
   completedStepNotice: {
     nextOrActiveStepButton: {
@@ -133,7 +134,7 @@ export default create({
     scope: '[data-test-delete-repository-modal]',
   },
 
-  desktopHeader: DesktopHeader,
+  header: Header,
 
   earnedBadgeNotice: {
     badgeEarnedModal: {
@@ -236,6 +237,10 @@ export default create({
 
     isExpanded: isVisible('[data-test-expanded-content]'),
     scope: '[data-test-test-runner-card]',
+  },
+
+  upgradeModal: {
+    scope: '[data-test-upgrade-modal]',
   },
 
   upgradePrompt: {

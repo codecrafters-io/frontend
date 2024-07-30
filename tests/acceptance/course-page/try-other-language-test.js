@@ -45,7 +45,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'The second stage', 'first stage should be active');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'first stage should be active');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
@@ -60,7 +60,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=new');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Go');
     await animationsSettled();
@@ -126,6 +126,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
   });
 });

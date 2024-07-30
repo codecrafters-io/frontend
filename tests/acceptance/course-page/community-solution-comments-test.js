@@ -57,7 +57,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await codeExamplesTab.languageDropdown.toggle();
     await codeExamplesTab.languageDropdown.clickOnLink('Python');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'title should be respond to ping');
     assert.strictEqual(codeExamplesTab.solutionCards.length, 1, 'should have 1 solution card');
 
     assert.notOk(coursePage.previousStepsIncompleteModal.isVisible, 'modal should be hidden'); // Assert before percy

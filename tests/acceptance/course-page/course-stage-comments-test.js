@@ -47,7 +47,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'title should be respond to ping');
     assert.strictEqual(coursePage.commentList.commentCards.length, 2);
 
     await percySnapshot('Course Stage Comments', {
@@ -71,7 +71,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
 
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'title should be respond to ping');
     assert.ok(coursePage.commentList.submitButtonIsDisabled, 'submit button should be disabled if no input is provided');
 
     await coursePage.commentList.fillInCommentInput('This is a comment');

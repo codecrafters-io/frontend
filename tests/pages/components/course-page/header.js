@@ -1,8 +1,10 @@
 import { clickable, text, triggerable } from 'ember-cli-page-object';
+import DarkModeToggle from 'codecrafters-frontend/tests/pages/components/dark-mode-toggle';
 
 export default {
   clickOnCloseCourseButton: clickable('[data-test-close-course-button]'),
   clickOnNextStepButton: clickable('[data-test-next-step-button]'),
+  darkModeToggle: DarkModeToggle,
 
   freeWeeksLeftButton: {
     hover: triggerable('mouseenter'),

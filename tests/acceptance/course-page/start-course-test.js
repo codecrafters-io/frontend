@@ -21,9 +21,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
-    const darkMode = this.owner.lookup('service:dark-mode');
-    darkMode.updateLocalStoragePreference('dark');
-
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     course.update({ releaseStatus: 'live' });
 
@@ -47,17 +44,12 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, `expected ${baseRequestsCount} requests`);
 
-    // await this.pauseTest();
     await percySnapshot('Start Course - Select Language');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
 
-    assert.strictEqual(
-      coursePage.desktopHeader.progressIndicatorText,
-      'Select a language to proceed',
-      'progress indicator says select language to proceed',
-    );
+    assert.strictEqual(coursePage.header.progressIndicatorText, 'Select a language to proceed', 'progress indicator says select language to proceed');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
@@ -95,7 +87,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnOptionButton('Yes please');
     await coursePage.createRepositoryCard.clickOnContinueButton();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Repository Setup', 'step name is repository setup');
+    assert.strictEqual(coursePage.header.stepName, 'Repository Setup', 'step name is repository setup');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
 
     await percySnapshot('Start Course - Listening for Git push');
@@ -189,11 +181,11 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
-    await coursePage.desktopHeader.clickOnCloseCourseButton();
+    await coursePage.header.clickOnCloseCourseButton();
     await catalogPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Dummy →');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
@@ -215,7 +207,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
     assert.contains(currentURL(), '/courses/dummy/introduction', 'has correct URL');
 
     await coursePage.repositoryDropdown.click();

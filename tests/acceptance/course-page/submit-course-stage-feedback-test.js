@@ -36,10 +36,10 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'stage 4 is active');
+    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'stage 4 is active');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'stage 3 is active');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'stage 3 is active');
 
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.', 'footer text is stage completed');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
@@ -47,7 +47,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', '2nd stage is expanded');
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.', 'footer text is stage completed');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
@@ -73,7 +73,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.feedbackPrompt.fillInExplanation('I love this course!');
 
     await coursePage.feedbackPrompt.clickOnSubmitButton();
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
+    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
 
     const submission = this.server.schema.courseStageFeedbackSubmissions.first();
     assert.strictEqual(submission.explanation, 'I love this course!', 'explanation is saved');
@@ -101,12 +101,12 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', '4th is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '4th is expanded');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', '2nd stage is expanded');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
     assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Nice work! How did we do?');
 
@@ -123,7 +123,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', '3rd stage is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '3rd stage is expanded');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
     assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Great streak! How did we do?');
 
@@ -133,7 +133,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     // TODO: Bring back the last & penultimate feedback prompts!
     //
-    // assert.strictEqual(coursePage.desktopHeader.stepName, 'Implement the SET & GET commands', 'penultimate stage is expanded');
+    // assert.strictEqual(coursePage.header.stepName, 'Implement the SET & GET commands', 'penultimate stage is expanded');
     // assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
     // assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Just one more to go! How did we do?');
 
@@ -141,7 +141,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     // await coursePage.sidebar.clickOnStepListItem('Expiry');
     // await animationsSettled();
 
-    // assert.strictEqual(coursePage.desktopHeader.stepName, 'Expiry', 'last stage is expanded');
+    // assert.strictEqual(coursePage.header.stepName, 'Expiry', 'last stage is expanded');
     // assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
     // assert.strictEqual(coursePage.feedbackPrompt.questionText, 'You did it! How did we do?');
   });
@@ -176,7 +176,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', '3rd stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '3rd stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is git push listener');
 
     await animationsSettled();
@@ -204,7 +204,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.feedbackPrompt.fillInExplanation('I love this course!');
 
     await coursePage.feedbackPrompt.clickOnSubmitButton();
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Base stages complete!', 'next stage is shown after feedback submission');
+    assert.strictEqual(coursePage.header.stepName, 'Base stages complete!', 'next stage is shown after feedback submission');
 
     const submission = this.server.schema.courseStageFeedbackSubmissions.first();
     assert.strictEqual(submission.explanation, 'I love this course!', 'explanation is saved');

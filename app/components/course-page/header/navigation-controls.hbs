@@ -1,7 +1,7 @@
 <div data-test-header-navigation-controls ...attributes>
   <div class="flex justify-between items-start gap-x-3">
     <div class="flex items-center gap-3 flex-wrap">
-      <button class="flex items-center lg:hidden" type="button" {{on "click" @onMobileSidebarButtonClick}}>
+      <button class="flex items-center py-1 lg:hidden" type="button" {{on "click" @onMobileSidebarButtonClick}}>
         {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
       </button>
 
@@ -18,9 +18,9 @@
       </div>
     </div>
 
-    <div class="flex items-center gap-x-3">
+    <div class="flex items-center gap-3 flex-wrap-reverse justify-end">
       {{#if this.featureFlags.canSeeDarkModeToggle}}
-        <DarkModeToggle />
+        <DarkModeToggleWithUpgradePrompt />
       {{/if}}
 
       {{#if (or this.currentUser.isStaff (current-user-is-course-author @course))}}
