@@ -1,12 +1,12 @@
 <CoursePage::InstructionsCard ...attributes data-test-course-completed-card>
   <:header>
-    <div class="flex items-center mb-6 border-b pb-2">
+    <div class="flex items-center mb-6 border-b dark:border-gray-800/60 pb-2">
       <img src={{this.congratulationsImage}} alt="Congratulations!" class="mr-3 w-10 h-10" />
-      <span class="font-semibold text-lg text-gray-700">Challenge Complete!</span>
+      <span class="font-semibold text-lg text-gray-800 dark:text-gray-50">Challenge Complete!</span>
     </div>
   </:header>
   <:content>
-    <div class="text-gray-700 leading-7 prose" data-test-instructions-text>
+    <div class="prose dark:prose-invert" data-test-instructions-text>
       <p>
         Congratulations are in order. Only ~{{@repository.course.roundedCompletionPercentage}}% of users that attempt this challenge end up completing
         all stages, and you're one of them!
