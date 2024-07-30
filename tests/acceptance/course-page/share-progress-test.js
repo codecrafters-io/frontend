@@ -67,20 +67,24 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     await coursePage.completedStepNotice.shareProgressButton.click();
     assert.ok(coursePage.shareProgressModal.isVisible, 'progress banner modal is visible');
-    assert.true(
-      coursePage.shareProgressModal.copyableText.value.includes(
-        'Just completed Stage #2 of the @codecraftersio Build your own Redis challenge in Go.',
-      ),
+
+    assert.contains(
+      coursePage.shareProgressModal.copyableText.value,
+      "I'm working on the @codecraftersio Build your own Redis challenge in Go.",
       'correct copyable text is shown',
     );
-    assert.true(
-      coursePage.shareProgressModal.copyableText.value.includes('https://app.codecrafters.io/courses/redis/overview'),
+
+    assert.contains(
+      coursePage.shareProgressModal.copyableText.value,
+      'https://app.codecrafters.io/courses/redis/overview',
       'correct link in copyable text is shown',
     );
 
     await coursePage.shareProgressModal.socialPlatformIcons[1].click();
-    assert.true(
-      coursePage.shareProgressModal.copyableText.value.includes('Just completed Stage #2 of the CodeCrafters Build your own Redis challenge in Go.'),
+
+    assert.contains(
+      coursePage.shareProgressModal.copyableText.value,
+      "I'm working on the CodeCrafters Build your own Redis challenge in Go.",
       'correct copyable text is shown',
     );
   });

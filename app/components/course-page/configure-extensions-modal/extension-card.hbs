@@ -1,6 +1,6 @@
 <div
-  class="group bg-white p-5 rounded-md shadow-sm flex flex-col border
-    {{if this.optimisticValueForIsActivated 'border-gray-300' 'border-gray-200'}}
+  class="group bg-white dark:bg-gray-900 p-5 rounded-md shadow-sm flex flex-col border
+    {{if this.optimisticValueForIsActivated 'border-gray-300 dark:border-gray-700/60' 'border-gray-200 dark:border-gray-800/60'}}
     relative"
   ...attributes
   data-test-course-extension-card
@@ -8,7 +8,8 @@
   <div class="flex items-start justify-between mb-3">
     <div class="flex items-center gap-3 mr-2 mb-0.5">
       <div
-        class="{{if this.optimisticValueForIsActivated 'text-teal-600' 'text-gray-700'}} font-bold text-xl tracking-tight"
+        class="{{if this.optimisticValueForIsActivated 'text-teal-600 dark:text-teal-500' 'text-gray-800 dark:text-gray-50'}}
+          font-bold text-xl tracking-tight"
         data-test-course-extension-name
       >
         {{@extension.name}}

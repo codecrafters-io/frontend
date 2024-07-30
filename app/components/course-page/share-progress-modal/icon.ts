@@ -1,9 +1,12 @@
 import Component from '@glimmer/component';
-import { capitalize } from '@ember/string';
+import DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import discordLogoImage from 'codecrafters-frontend/images/social-icons/discord.svg';
 import linkedinLogoImage from 'codecrafters-frontend/images/social-icons/linkedin.svg';
 import slackLogoImage from 'codecrafters-frontend/images/social-icons/slack.svg';
 import twitterLogoImage from 'codecrafters-frontend/images/social-icons/twitter.svg';
+import twitterWhiteLogoImage from 'codecrafters-frontend/images/social-icons/twitter-white.svg';
+import { capitalize } from '@ember/string';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -18,6 +21,8 @@ interface Signature {
 type SocialPlatform = 'twitter' | 'slack' | 'discord' | 'linkedin';
 
 export default class CoursePageShareProgressModalIconComponent extends Component<Signature> {
+  @service declare darkMode: DarkModeService;
+
   get isSelected(): boolean {
     return this.args.selectedSocialPlatform === this.args.platform;
   }
@@ -27,23 +32,12 @@ export default class CoursePageShareProgressModalIconComponent extends Component
   }
 
   get platformLogoImage(): string {
-    if (this.args.platform === 'discord') {
-      return discordLogoImage;
-    }
-
-    if (this.args.platform === 'linkedin') {
-      return linkedinLogoImage;
-    }
-
-    if (this.args.platform === 'slack') {
-      return slackLogoImage;
-    }
-
-    if (this.args.platform === 'twitter') {
-      return twitterLogoImage;
-    }
-
-    throw new Error(`Unknown platform: ${this.args.platform}`);
+    return {
+      discord: discordLogoImage,
+      linkedin: linkedinLogoImage,
+      slack: slackLogoImage,
+      twitter: this.darkMode.isEnabled ? twitterWhiteLogoImage : twitterLogoImage,
+    }[this.args.platform];
   }
 }
 
