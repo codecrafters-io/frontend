@@ -8,7 +8,7 @@ import type LocalStorageService from 'codecrafters-frontend/services/local-stora
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
-const LOCAL_STORAGE_KEY = 'dark-mode-preference';
+const LOCAL_STORAGE_KEY = 'dark-mode-preference-v2';
 
 export type LocalStoragePreference = 'system' | 'dark' | 'light' | null;
 export type SystemPreference = 'dark' | 'light';
