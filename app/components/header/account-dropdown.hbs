@@ -54,13 +54,15 @@
       <Header::AccountDropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />
       <Header::AccountDropdownLink @text="Settings" @icon="cog" {{on "click" (fn this.handleSettingsLinkClick dd.actions)}} />
 
-      <div class="flex items-center justify-between gap-8 px-3 py-1.5">
-        <span class="text-sm text-gray-800">
-          Theme
-        </span>
+      {{#if this.featureFlags.canSeeDarkModeToggle}}
+        <div class="flex items-center justify-between gap-8 px-3 py-1.5">
+          <span class="text-sm text-gray-800">
+            Theme
+          </span>
 
-        <DarkModeToggleWithUpgradePrompt @size="small" />
-      </div>
+          <DarkModeToggleWithUpgradePrompt @size="small" />
+        </div>
+      {{/if}}
 
       <div class="h-px my-2 mx-3 bg-gray-200" />
 

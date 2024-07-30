@@ -1,9 +1,8 @@
-{{! @glint-nocheck }}
 <LinkTo
   @route={{@route}}
   @model={{or @routeModel "dummy"}}
   class="flex items-center justify-between py-1.5 group/leaderboard-entry cursor-pointer pl-4 border-l-2
-    {{if @isForCurrentUser 'border-teal-500' 'border-transparent'}}"
+    {{if @isForCurrentUser 'border-teal-500 dark:border-teal-600' 'border-transparent'}}"
   data-test-leaderboard-entry
 >
   <div class="flex items-center min-w-0">
@@ -13,17 +12,17 @@
       {{else}}
         <AvatarImage
           @user={{@user}}
-          class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover/leaderboard-entry:shadow transition-shadow"
+          class="w-8 h-8 border border-gray-300 dark:border-gray-700 rounded shadow-sm group-hover/leaderboard-entry:shadow transition-shadow dark:opacity-90"
         />
       {{/if}}
     </div>
 
     {{#unless @isCollapsed}}
       {{#if this.isSkeleton}}
-        <span class="text-xs inline-block rounded bg-gray-200 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+        <span class="text-xs inline-block rounded bg-gray-200 dark:bg-gray-800 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
       {{else}}
         <span
-          class="text-xs text-gray-600 group-hover/leaderboard-entry:underline mr-2 flex-shrink truncate"
+          class="text-xs text-gray-600 dark:text-gray-400 group-hover/leaderboard-entry:underline mr-2 flex-shrink truncate"
           data-test-username
         >{{@user.username}}</span>
       {{/if}}
@@ -35,13 +34,13 @@
     <div class="flex items-center flex-shrink-0">
       <span
         class="mr-2 text-xs font-bold
-          {{if (eq @status 'evaluating') 'text-yellow-500' 'text-teal-500'}}
+          {{if (eq @status 'evaluating') 'text-yellow-500 dark:text-yellow-600' 'text-teal-500 dark:text-teal-600'}}
           {{if @isForCurrentUser 'opacity-100' 'opacity-0'}}
           group-hover/leaderboard-entry:opacity-100 transition-opacity"
         data-test-progress-text
       >
         {{#if this.isSkeleton}}
-          <span class="inline-block bg-gray-200">{{#each (repeat 6)}}&nbsp;{{/each}}</span>
+          <span class="inline-block bg-gray-200 dark:bg-gray-800">{{#each (repeat 6)}}&nbsp;{{/each}}</span>
         {{else}}
           {{@progressNumerator}}
           /
@@ -49,21 +48,25 @@
         {{/if}}
       </span>
       {{#if this.isSkeleton}}
-        <div class="w-12 h-3.5 rounded bg-gray-200" />
+        <div class="w-12 h-3.5 rounded bg-gray-200 dark:bg-gray-800" />
       {{else}}
         <div
-          class="w-12 h-3.5 rounded flex overflow-hidden border group-hover/leaderboard-entry:bg-white transition-all
+          class="w-12 h-3.5 rounded flex overflow-hidden border group-hover/leaderboard-entry:bg-white dark:group-hover/leaderboard-entry:bg-gray-800 transition-all
             {{if
               (eq @status 'evaluating')
-              'bg-yellow-50 border-yellow-500 animate-pulse'
-              'bg-teal-50 border-teal-500 group-hover/leaderboard-entry:shadow-sm'
+              'bg-yellow-50 dark:bg-yellow-900/80 border-yellow-500 dark:border-yellow-700 animate-pulse'
+              'bg-teal-50 dark:bg-teal-900/80 border-teal-500 dark:border-teal-700 group-hover/leaderboard-entry:shadow-sm'
             }}"
           data-test-progress-bar-container
         >
           {{!s Look like a tailwind 3.3.0 bug, from-0% and to-100% are required to make the gradient work }}
           <div
             class="bg-gradient-to-r from-0% to-100%
-              {{if (eq @status 'evaluating') 'from-yellow-500 to-yellow-400' 'from-teal-500 to-teal-400'}}
+              {{if
+                (eq @status 'evaluating')
+                'from-yellow-500 dark:from-yellow-600 to-yellow-400 dark:to-yellow-500'
+                'from-teal-500 dark:from-teal-600 to-teal-400 dark:to-teal-600'
+              }}
               transition-all"
             style={{this.progressBarWidthStyle}}
           >
