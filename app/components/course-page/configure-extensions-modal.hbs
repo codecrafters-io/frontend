@@ -1,5 +1,5 @@
 <ModalBody @isWide={{true}} @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-configure-extensions-modal>
-  <div class="mb-6 font-semibold text-2xl text-gray-600 mr-8">
+  <div class="mb-6 font-semibold text-2xl text-gray-800 dark:text-gray-50 mr-8">
     Configure Extensions
   </div>
 
@@ -13,11 +13,11 @@
     {{/each}}
   </div>
 
-  <div class="border-b pb-1 mb-6 flex items-center gap-2">
-    <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Vote on future extensions</h1>
+  <div class="border-b dark:border-gray-800/60 pb-1 mb-6 flex items-center gap-2">
+    <h1 class="text-2xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter">Vote on future extensions</h1>
 
     <div>
-      {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+      {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-300 dark:text-gray-700 hover:text-gray-400 dark:hover:text-gray-600"}}
       <EmberTooltip @text={{"These are ideas for extensions we'll build in the future. Vote to let us know which ones you're interested in!"}} />
     </div>
   </div>
