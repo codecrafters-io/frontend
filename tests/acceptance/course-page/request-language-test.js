@@ -20,7 +20,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
     await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
@@ -51,7 +51,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
     assert.ok(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
@@ -69,7 +69,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Introduction', 'step name is introduction');
+    assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
     await coursePage.createRepositoryCard.requestLanguageDropdown.fillInLanguage('Unknown');

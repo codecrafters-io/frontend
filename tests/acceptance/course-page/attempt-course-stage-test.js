@@ -45,7 +45,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       ].length,
     );
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withFailureStatus', {
@@ -81,7 +81,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withStageCompletion', {
@@ -112,7 +112,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
     assert.notOk(coursePage.testRunnerCard.borderIsTeal, 'test runner card is gray');
 
     this.server.create('submission', 'withSuccessStatus', {

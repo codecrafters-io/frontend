@@ -40,7 +40,7 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
 
     await coursePage.feedbackPrompt.clickOnOption('😍');
     await coursePage.feedbackPrompt.clickOnSubmitButton();
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
+    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
@@ -48,6 +48,6 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
     await coursePage.feedbackPrompt.clickOnOption('😭');
     await coursePage.feedbackPrompt.clickOnSubmitButton();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'same stage is shown after editing feedback');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'same stage is shown after editing feedback');
   });
 });

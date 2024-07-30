@@ -1,0 +1,9 @@
+<div class="flex w-full max-w-screen-md relative" {{on-click-outside @onClose}} data-test-upgrade-modal>
+  <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight="code-examples" class="w-full" />
+
+  <div class="absolute right-0 top-0">
+    <button type="button" class="w-12 h-12 flex items-center justify-center" {{on "click" @onClose}}>
+      {{svg-jar "x" class="w-5 h-5 text-gray-500"}}
+    </button>
+  </div>
+</div>

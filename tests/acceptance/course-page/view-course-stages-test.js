@@ -83,12 +83,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Implement the ECHO command');
+    assert.strictEqual(coursePage.header.stepName, 'Implement the ECHO command');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'course stage item is active if clicked on');
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
 
     await percySnapshot('Course Stages - Completed stage');
@@ -96,13 +96,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage yesterday.');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 
@@ -498,7 +498,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
   });
 
   test('transition from courses page has no loading page', async function (assert) {
@@ -532,7 +532,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
-    assert.strictEqual(coursePage.desktopHeader.stepName, 'Respond to PING');
+    assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
   });
 
   test('it should have a working expand/collapse sidebar button', async function (assert) {
@@ -735,7 +735,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
-    assert.true(coursePage.desktopHeader.freeWeeksLeftButton.text.includes('7 days free'), 'expect badge to show correct duration for days');
+    assert.true(coursePage.header.freeWeeksLeftButton.text.includes('7 days free'), 'expect badge to show correct duration for days');
   });
 
   test('header should have a badge that shows the remaining time in days when expiry is a couple months away', async function (assert) {
@@ -751,7 +751,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(
-      coursePage.desktopHeader.freeWeeksLeftButton.text.includes('60 days free'),
+      coursePage.header.freeWeeksLeftButton.text.includes('60 days free'),
       'expect badge to show correct duration for days when more than a week/month',
     );
   });
@@ -768,7 +768,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.desktopHeader.freeWeeksLeftButton.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
+    assert.true(coursePage.header.freeWeeksLeftButton.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
   });
 
   test('header should have a badge that shows the remaining time in minutes', async function (assert) {
@@ -783,7 +783,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.desktopHeader.freeWeeksLeftButton.text.includes('15 minutes free'), 'expect badge to show correct duration for minutes');
+    assert.true(coursePage.header.freeWeeksLeftButton.text.includes('15 minutes free'), 'expect badge to show correct duration for minutes');
   });
 
   test('header should have a badge that shows the remaining time in minutes when less than a minute left', async function (assert) {
@@ -799,7 +799,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(
-      coursePage.desktopHeader.freeWeeksLeftButton.text.includes('1 minute free'),
+      coursePage.header.freeWeeksLeftButton.text.includes('1 minute free'),
       'expect badge to show correct duration for minutes when less than a minute left',
     );
   });
@@ -817,8 +817,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.desktopHeader.vipBadge.isVisible, 'expect vip badge to be visible');
-    assert.false(coursePage.desktopHeader.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
+    assert.true(coursePage.header.vipBadge.isVisible, 'expect vip badge to be visible');
+    assert.false(coursePage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
   });
 
   test('header should show subscribe button when not vip and has expired free usage grants', async function (assert) {
@@ -861,9 +861,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.desktopHeader.upgradeButton.isVisible, 'expect upgrade button to be visible');
-    assert.false(coursePage.desktopHeader.vipBadge.isVisible, 'expect vip badge to be hidden');
-    assert.false(coursePage.desktopHeader.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
+    assert.true(coursePage.header.upgradeButton.isVisible, 'expect upgrade button to be visible');
+    assert.false(coursePage.header.vipBadge.isVisible, 'expect vip badge to be hidden');
+    assert.false(coursePage.header.freeWeeksLeftButton.isVisible, 'expect free weeks left badge to be hidden');
   });
 
   test('free weeks left button redirects to /pay', async function (assert) {
@@ -877,7 +877,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.desktopHeader.freeWeeksLeftButton.click();
+    await coursePage.header.freeWeeksLeftButton.click();
 
     assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
   });
@@ -890,9 +890,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.desktopHeader.memberBadge.isVisible, 'expect member badge to be visible');
+    assert.true(coursePage.header.memberBadge.isVisible, 'expect member badge to be visible');
 
-    await coursePage.desktopHeader.memberBadge.hover();
+    await coursePage.header.memberBadge.hover();
 
     assertTooltipContent(assert, {
       contentString: "You're a CodeCrafters member. Click here to view your membership details.",
@@ -906,7 +906,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.desktopHeader.memberBadge.click();
+    await coursePage.header.memberBadge.click();
 
     assert.strictEqual(currentURL(), '/membership', 'expect to be redirected to membership page');
   });
