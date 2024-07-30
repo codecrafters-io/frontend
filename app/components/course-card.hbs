@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="text-sm leading-relaxed text-gray-500 pr-10" data-test-course-description>
+    <div class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 pr-10" data-test-course-description>
       {{#if this.isSkeleton}}
         <div>
           <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
@@ -64,8 +64,8 @@
             <FreeCourseLabel @course={{@course}} />
           {{else}}
             <div class="flex items-center">
-              {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}
-              <span class="text-xs text-gray-400 dark:text-gray-600">{{@course.stages.length}} stages</span>
+              {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+              <span class="text-xs text-gray-500">{{@course.stages.length}} stages</span>
             </div>
           {{/if}}
         {{/if}}
