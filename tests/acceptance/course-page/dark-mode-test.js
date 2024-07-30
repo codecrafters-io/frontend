@@ -1,17 +1,12 @@
-import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import { currentURL } from '@ember/test-helpers';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import trackPage from 'codecrafters-frontend/tests/pages/track-page';
-import finishRender from 'codecrafters-frontend/tests/support/finish-render';
-import percySnapshot from '@percy/ember';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
-import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
-import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { setupAnimationTest } from 'ember-animated/test-support';
+import { module, test } from 'qunit';
 
 module('Acceptance | course-page | dark-mode', function (hooks) {
   setupApplicationTest(hooks);
