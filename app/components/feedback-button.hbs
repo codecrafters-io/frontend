@@ -7,15 +7,15 @@
   </dd.Trigger>
   <dd.Content>
     <div class="pt-2">
-      <div class="p-2 border rounded shadow text-sm text-gray-600 max-w-3xl w-full bg-white" data-test-feedback-dropdown-content>
+      <div class="p-2 border dark:border-gray-800 rounded shadow max-w-3xl w-full bg-white dark:bg-gray-925" data-test-feedback-dropdown-content>
         {{#if this.wasSaved}}
           <div class="p-4 flex flex-col items-center justify-center w-60">
             {{svg-jar "check-circle" class="w-12 h-12 text-teal-500 mb-2"}}
 
-            <div class="text-gray-600 text-center mb-1">
+            <div class="prose dark:prose-invert text-center mb-1">
               Your feedback has been received!
             </div>
-            <div class="text-gray-600 text-center">
+            <div class="prose dark:prose-invert text-center">
               Thank you for your help.
             </div>
           </div>
@@ -24,7 +24,7 @@
             {{! template-lint-disable require-input-label }}
             <Textarea
               @value={{this.feedbackSubmission.explanation}}
-              class="border border-gray-200 rounded w-full p-3 placeholder-gray-300 outline-teal-500 mb-1"
+              class="text-sm rounded px-3 py-2 placeholder-gray-300 dark:placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-200 dark:border-gray-800 shadow-sm w-full mb-1 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-925"
               cols="40"
               rows="5"
               placeholder={{or @placeholderText "Your feedback..."}}

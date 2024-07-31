@@ -1,6 +1,6 @@
-<div class="bg-gray-50 dark:bg-gray-925 rounded-md w-full" ...attributes>
-  <div class="bg-white dark:bg-gray-925 border border-gray-300 dark:border-gray-800/60 {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}">
-    <div class="bg-gray-50 dark:bg-gray-925 border-gray-300/75 dark:border-gray-800/60 border-b rounded-t relative">
+<div class="bg-gray-50 dark:bg-gray-900 rounded-md w-full" ...attributes>
+  <div class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800/60 {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}">
+    <div class="bg-gray-50 dark:bg-gray-900 border-gray-300/75 dark:border-gray-800/60 border-b rounded-t relative">
       {{yield to="header"}}
     </div>
 
@@ -18,22 +18,22 @@
               {{yield to="expandedSection"}}
             </div>
           {{else}}
-            <div class="px-4 sm:px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-900" {{on "click" (fn @onSectionClick section)}} role="button">
+            <div class="px-4 sm:px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-800" {{on "click" (fn @onSectionClick section)}} role="button">
               <div class="flex items-center justify-between">
                 {{#if section.isComplete}}
-                  <div class="flex items-center text-lg text-gray-400 dark:text-gray-600">
+                  <div class="flex items-center text-lg text-gray-400 dark:text-gray-500">
                     <span class="font-semibold">{{section.title}}</span>:
                     {{section.descriptionWhenCollapsed}}
                     {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 dark:text-teal-600 ml-1"}}
                   </div>
                 {{else}}
-                  <div class="font-semibold text-lg text-gray-700">
+                  <div class="font-semibold text-lg text-gray-700 dark:text-gray-300">
                     {{section.title}}
                   </div>
                 {{/if}}
 
                 <div>
-                  {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400"}}
+                  {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400 dark:text-gray-600"}}
                 </div>
               </div>
             </div>
