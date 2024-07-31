@@ -26,7 +26,11 @@ export default class CourseOverviewController extends Controller {
   }
 
   get formattedCourseIsFreeExpirationDate() {
-    return format(this.model.course.isFreeUntil, 'd MMMM yyyy');
+    if (this.model.course.isFreeUntil) {
+      return format(this.model.course.isFreeUntil, 'd MMMM yyyy');
+    } else {
+      return null;
+    }
   }
 
   get userRepositories() {
