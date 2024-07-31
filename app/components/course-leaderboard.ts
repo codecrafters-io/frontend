@@ -21,7 +21,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeRepository: RepositoryModel;
+    activeRepository: RepositoryModel | null;
     course: CourseModel;
     isCollapsed: boolean;
     repositories: RepositoryModel[];
@@ -88,9 +88,13 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
       return [];
     }
 
-    const allRepositories = this.args.repositories.toArray().concat([this.args.activeRepository]).uniq();
+    const allRepositories = this.args.repositories.toArray();
 
-    return allRepositories.map((repository) => {
+    if (this.args.activeRepository) {
+      allRepositories.push(this.args.activeRepository);
+    }
+
+    return allRepositories.uniq().map((repository) => {
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: repository.completedStageSlugs,

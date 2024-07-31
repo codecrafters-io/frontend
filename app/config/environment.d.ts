@@ -12,6 +12,7 @@ declare const config: {
   x: {
     backendUrl: string;
     isCI: boolean;
+    metaTagImagesBaseURL: string;
     stripePublishableKey: string;
     version: string;
   };

@@ -58,8 +58,9 @@
     {{else}}
       <CourseLeaderboard
         class="w-80 flex-shrink-0 ml-2 hidden lg:block"
-        @course={{this.model.course}}
         @activeRepository={{this.activeRepository}}
+        @course={{this.model.course}}
+        @isCollapsed={{false}}
         @repositories={{this.userRepositories}}
         @shouldShowLanguageIconsWithoutHover={{true}}
       />
