@@ -22,12 +22,12 @@
 
     <AnimatedContainer class="w-full">
       {{#animated-if this.feedbackAlertMarkdown use=this.transition duration=300}}
-        <Alert>
+        <AlertWithIcon>
           {{! The extra #if convinces glint that the value isn't null }}
           {{#if this.feedbackAlertMarkdown}}
             {{markdown-to-html this.feedbackAlertMarkdown}}
           {{/if}}
-        </Alert>
+        </AlertWithIcon>
       {{/animated-if}}
     </AnimatedContainer>
   </div>

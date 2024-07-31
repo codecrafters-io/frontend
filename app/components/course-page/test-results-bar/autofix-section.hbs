@@ -3,12 +3,12 @@
     {{#if this.lastAutofixRequest}}
       <CoursePage::TestResultsBar::AutofixSection::AutofixResult @autofixRequest={{this.lastAutofixRequest}} class="overflow-y-auto flex-grow" />
     {{else}}
-      <Alert class="mb-3">
+      <AlertWithIcon class="mb-3">
         <p>
           We're testing out a new feature called "AI Hints". This is currently only available on stage 2.
           <a href="https://docs.codecrafters.io/experimental/ai-hints" target="_blank" rel="noopener noreferrer">Learn more</a>.
         </p>
-      </Alert>
+      </AlertWithIcon>
 
       <CoursePage::TestResultsBar::AutofixSection::CreateAutofixPrompt @submission={{this.lastSubmission}} />
     {{/if}}

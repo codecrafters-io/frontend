@@ -9,11 +9,11 @@
 
     <div class="flex-grow md:ml-8 mt-8">
       {{#if this.shouldShowProfileCustomizationNotice}}
-        <Alert class="mb-8" data-test-profile-customization-notice>
+        <AlertWithIcon class="mb-8" data-test-profile-customization-notice>
           You can
           <LinkTo @route="settings.profile" target="_blank">customize your profile</LinkTo>
           to add a description or turn on anonymous mode.
-        </Alert>
+        </AlertWithIcon>
       {{/if}}
 
       {{#if this.model.profileDescriptionMarkdown}}

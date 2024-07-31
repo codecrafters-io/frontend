@@ -86,11 +86,11 @@
       </div>
 
       {{#if this.shouldShowDeprovisioningNotice}}
-        <Alert @type="success" class="relative mt-6" data-test-initiated-deprovisioning-notice>
+        <AlertWithIcon @type="success" class="relative mt-6" data-test-initiated-deprovisioning-notice>
           <span class="leading-7 inline-block mr-10">
             A job has been scheduled and test runners will be deprovisioned shortly.
           </span>
-        </Alert>
+        </AlertWithIcon>
       {{/if}}
     </div>
 

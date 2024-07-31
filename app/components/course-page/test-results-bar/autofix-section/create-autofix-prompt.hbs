@@ -33,10 +33,10 @@
   </PrimaryButtonWithSpinner>
 
   {{#if this.autofixCreationError}}
-    <Alert @type="error" class="mt-3">
+    <AlertWithIcon @type="error" class="mt-3">
       <p>
         Failed to generate hints. Try again? Contact us at hello@codecrafters.io if this persists.
       </p>
-    </Alert>
+    </AlertWithIcon>
   {{/if}}
 </div>
