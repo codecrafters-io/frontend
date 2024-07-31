@@ -14,7 +14,7 @@
     </:afterTitle>
 
     <:default>
-      <div class="leading-6 prose mb-6">
+      <div class="leading-6 prose dark:prose-invert mb-6">
         {{markdown-to-html this.introductionMarkdown}}
       </div>
 
@@ -49,12 +49,11 @@
     <:default>
       {{#if @activeRepository}}
         <div class="mb-4">
-          {{! @glint-expect-error not ts-ified yet }}
           <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
         </div>
       {{/if}}
 
-      <div class="leading-6 prose mb-6 pr-8 md:pr-12">
+      <div class="leading-6 prose dark:prose-invert mb-6 pr-8 md:pr-12">
         {{markdown-to-html this.introductionMarkdown}}
       </div>
 
