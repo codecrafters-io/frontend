@@ -24,7 +24,7 @@
     </div>
 
     {{#if (gt @model.concept.errors.length 0)}}
-      <Alert @type="error" class="mt-4">
+      <AlertWithIcon @type="error" class="mt-4">
         Found
         {{! @glint-expect-error length isn't seen as a string? }}
         {{@model.concept.errors.length}}
@@ -35,7 +35,7 @@
             <li>{{error.message}}</li>
           {{/each}}
         </ul>
-      </Alert>
+      </AlertWithIcon>
     {{/if}}
 
     <div class="divide-y divide-gray-100" data-test-basic-details-form>

@@ -10,10 +10,13 @@
       {{#if this.isSkeleton}}
         <div class="w-8 h-8 bg-gray-200 rounded"></div>
       {{else}}
-        <AvatarImage
-          @user={{@user}}
-          class="w-8 h-8 border border-gray-300 dark:border-gray-700 rounded shadow-sm group-hover/leaderboard-entry:shadow transition-shadow dark:opacity-90"
-        />
+        {{! additional if clause to satisfy glint }}
+        {{#if @user}}
+          <AvatarImage
+            @user={{@user}}
+            class="w-8 h-8 border border-gray-300 dark:border-gray-700 rounded shadow-sm group-hover/leaderboard-entry:shadow transition-shadow dark:opacity-90"
+          />
+        {{/if}}
       {{/if}}
     </div>
 

@@ -1,8 +1,8 @@
 <div class="flex items-center justify-between" ...attributes data-test-track-header>
   <div>
-    <h1 class="text-3xl md:text-5xl text-gray-700 font-bold tracking-tighter mb-3">{{@language.trackTitle}}</h1>
+    <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter mb-3">{{@language.trackTitle}}</h1>
 
-    <p class="text-gray-500 mb-4 max-w-xl" data-test-track-header-description>
+    <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-xl" data-test-track-header-description>
       {{markdown-to-html @language.trackDescriptionMarkdown}}
     </p>
 
@@ -21,12 +21,12 @@
             {{/each}}
           </div>
 
-          <span class="text-xs text-gray-500 ml-2">Join the best</span>
+          <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
         </div>
       {{/if}}
     </div>
   </div>
   <div class="ml-4 hidden md:block">
-    <LanguageLogo @language={{@language}} class="h-36" />
+    <LanguageLogo @language={{@language}} @variant="teal" class="h-36 dark:opacity-90" />
   </div>
 </div>

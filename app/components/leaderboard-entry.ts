@@ -6,14 +6,14 @@ interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
-    progressDenominator: number;
-    progressNumerator: number;
+    progressDenominator?: number;
+    progressNumerator?: number;
     route: string;
-    routeModel: string;
-    status: string;
+    routeModel?: string;
+    status?: string;
     isForCurrentUser?: boolean;
     isCollapsed?: boolean;
-    user: UserModel;
+    user?: UserModel; // undefined if skeleton
   };
 
   Blocks: {
@@ -31,6 +31,11 @@ export default class LeaderboardEntryComponent extends Component<Signature> {
   }
 
   get progressPercentage(): number {
+    // Skeleton
+    if (this.args.progressDenominator === undefined || this.args.progressNumerator === undefined) {
+      return 0;
+    }
+
     return 100 * (this.args.progressNumerator / this.args.progressDenominator);
   }
 }

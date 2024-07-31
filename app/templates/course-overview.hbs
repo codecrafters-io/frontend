@@ -6,14 +6,14 @@
   <div class="flex items-start flex-col lg:flex-row">
     <div class="flex-grow">
       {{#if this.model.course.releaseStatusIsBeta}}
-        <Alert @type="success" class="mb-4" data-test-course-beta-notice>
+        <AlertWithIcon @type="success" class="mb-4" data-test-course-beta-notice>
           This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
-        </Alert>
+        </AlertWithIcon>
       {{else if (and this.model.course.isFree this.model.course.isFreeUntil)}}
-        <Alert @type="success" class="mb-4" data-test-course-free-notice>
+        <AlertWithIcon @type="success" class="mb-4" data-test-course-free-notice>
           This challenge is free until
           {{this.formattedCourseIsFreeExpirationDate}}!
-        </Alert>
+        </AlertWithIcon>
       {{/if}}
 
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
@@ -58,8 +58,9 @@
     {{else}}
       <CourseLeaderboard
         class="w-80 flex-shrink-0 ml-2 hidden lg:block"
-        @course={{this.model.course}}
         @activeRepository={{this.activeRepository}}
+        @course={{this.model.course}}
+        @isCollapsed={{false}}
         @repositories={{this.userRepositories}}
         @shouldShowLanguageIconsWithoutHover={{true}}
       />

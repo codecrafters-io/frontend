@@ -3,25 +3,39 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Store from '@ember-data/store';
+import type MetaDataService from 'codecrafters-frontend/services/meta-data';
+import type CourseModel from 'codecrafters-frontend/models/course';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+
+export interface ModelType {
+  course: CourseModel;
+}
 
 export default class CourseOverviewRoute extends BaseRoute {
   allowsAnonymousAccess = true;
-  @service authenticator;
-  @service store;
-  @service metaData;
 
-  @tracked previousMetaImageUrl;
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
+  @service declare metaData: MetaDataService;
 
-  async afterModel({ course: { slug } = {} } = {}) {
+  @tracked previousMetaImageUrl: string | undefined;
+
+  async afterModel(model: ModelType) {
     this.previousMetaImageUrl = this.metaData.imageUrl;
-    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${slug}.jpg`;
+    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${model.course.slug}.jpg`;
+  }
+
+  buildRouteInfoMetadata(): RouteInfoMetadata {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
   }
 
   deactivate() {
     this.metaData.imageUrl = this.previousMetaImageUrl;
   }
 
-  async model(params) {
+  async model(params: { course_slug: string }): Promise<ModelType> {
     if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
       // Trigger a refresh anyway
       this.store.findAll('course', {
@@ -32,11 +46,11 @@ export default class CourseOverviewRoute extends BaseRoute {
         course: this.store.peekAll('course').findBy('slug', params.course_slug),
       };
     } else {
-      let courses = await this.store.findAll('course', {
+      const courses = await this.store.findAll('course', {
         include: 'extensions,stages,stages.solutions.language,language-configurations.language,',
       });
 
-      let course = courses.findBy('slug', params.course_slug);
+      const course = courses.findBy('slug', params.course_slug);
 
       if (this.authenticator.isAuthenticated) {
         await this.store.query('repository', {

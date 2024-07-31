@@ -28,11 +28,11 @@
   </div>
 
   {{#if this.extraInvoiceDetailsRequested}}
-    <Alert @type="success" @icon="check-circle" class="mb-4">
+    <AlertWithIcon @type="success" @icon="check-circle" class="mb-4">
       <p class="mb-0">
         During checkout you'll be able to enter extra details like tax ID, business address etc. that'll be included on your invoice.
       </p>
-    </Alert>
+    </AlertWithIcon>
   {{/if}}
 
   <div class="prose dark:prose-invert prose-sm mb-6">

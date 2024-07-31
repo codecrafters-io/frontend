@@ -43,7 +43,14 @@ export default class CourseModel extends Model {
   @attr('string') declare shortName: string;
   @attr('string') declare slug: string;
   @attr('string') declare testerRepositoryFullName: string;
-  @attr() declare testimonials: { [key: string]: string }; // free-form JSON
+
+  @attr() declare testimonials: {
+    author_name: string;
+    author_description: string;
+    author_avatar: string;
+    link: string;
+    text: string;
+  }[];
 
   @hasMany('buildpack', { async: false, inverse: 'course' }) declare buildpacks: BuildpackModel[];
   @hasMany('course-definition-update', { async: false, inverse: 'course' }) declare definitionUpdates: CourseDefinitionUpdateModel[];

@@ -72,7 +72,7 @@
   </:header>
 
   <:content>
-    <Alert class="mb-6">
+    <AlertWithIcon class="mb-6">
       <p class="mb-2">
         This guide is AI-generated, and may be highly inaccurate. We're releasing this early to get feedback.
         <a href="https://docs.codecrafters.io/experimental/language-guides" target="_blank" rel="noopener noreferrer">Learn more</a>.
@@ -93,7 +93,7 @@
           </FeedbackButton>
         </div>
       </p>
-    </Alert>
+    </AlertWithIcon>
 
     {{#if this.languageGuide}}
       <div class="prose dark:prose-invert has-prism-highlighting" {{highlight-code-blocks this.languageGuide.markdownForBeginner}}>

@@ -12,10 +12,10 @@ interface Signature {
 export default class CourseStageDifficultyLabel extends Component<Signature> {
   get barColorClass() {
     return {
-      very_easy: 'bg-teal-500',
-      easy: 'bg-teal-500',
-      medium: 'bg-teal-500',
-      hard: 'bg-yellow-500',
+      very_easy: 'bg-teal-500 dark:bg-teal-600',
+      easy: 'bg-teal-500 dark:bg-teal-600',
+      medium: 'bg-teal-500 dark:bg-teal-600',
+      hard: 'bg-yellow-500 dark:bg-yellow-600',
     }[this.args.stage.difficulty];
   }
 
