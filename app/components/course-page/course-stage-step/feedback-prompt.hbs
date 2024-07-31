@@ -1,4 +1,4 @@
-<div class="flex p-4 bg-teal-50 border border-teal-500 rounded relative" data-test-feedback-prompt ...attributes>
+<Alert @color="green" class="relative" data-test-feedback-prompt ...attributes>
   {{#if this.isEditingClosedSubmission}}
     <button
       class="absolute right-4 top-4 opacity-60 hover:opacity-100"
@@ -7,7 +7,7 @@
       {{on "click" (fn (mut this.isEditingClosedSubmission) false)}}
       data-test-close-feedback-prompt-button
     >
-      {{svg-jar "x" class="w-5 h-5 text-gray-400"}}
+      {{svg-jar "x" class="w-5 h-5 text-green-600 dark:text-green-400"}}
     </button>
   {{/if}}
 
@@ -18,7 +18,7 @@
   <div class="w-full">
     <div class="flex items-center">
       {{#if (and this.submissionIsClosed (not this.isEditingClosedSubmission))}}
-        <div class="text-teal-700 leading-7 text-sm">
+        <div class="prose-green dark:prose-green-invert prose-sm leading-7">
           Feedback submitted!
 
           <span
@@ -31,7 +31,7 @@
           </span>
         </div>
       {{else}}
-        <div class="text-teal-700 leading-7 text-base" data-test-question-text>
+        <div class="prose-green dark:prose-green-invert leading-7" data-test-question-text>
           {{#if this.isEditingClosedSubmission}}
             How did we do?
           {{else}}
@@ -56,7 +56,7 @@
       </div>
 
       {{#if this.feedbackSubmission.hasSelectedAnswer}}
-        <div class="mt-4 text-sm text-teal-700 leading-6">
+        <div class="prose-green dark:prose-green-invert prose-sm mt-4">
           P.S.
           <a
             href="https://forum.codecrafters.io/u/rohitpaulk/activity"
@@ -70,7 +70,7 @@
         {{! template-lint-disable require-input-label }}
         <Textarea
           @value={{this.feedbackSubmission.explanation}}
-          class="mt-4 border border-teal-500 border-opacity-50 rounded w-full p-4 placeholder-gray-400"
+          class="mt-4 border border-teal-500 border-opacity-50 rounded w-full p-4 placeholder-gray-400 dark:placeholder-gray-600 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100"
           rows="5"
           placeholder={{this.explanationTextareaPlaceholder}}
           {{on "blur" this.handleExplanationTextareaBlur}}
@@ -94,4 +94,4 @@
       {{/if}}
     {{/if}}
   </div>
-</div>
+</Alert>
