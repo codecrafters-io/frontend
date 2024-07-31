@@ -40,7 +40,12 @@
       {{svg-jar "clock" class="w-4 text-gray-400 dark:text-gray-600 mr-1"}}
 
       {{#if (current-user-is-staff)}}
-        <LinkTo @route="course-admin.code-example" @model={{@solution.id}} class="text-xs text-gray-500 dark:text-gray-400 hover:underline" target="_blank">
+        <LinkTo
+          @route="course-admin.code-example"
+          @model={{@solution.id}}
+          class="text-xs text-gray-500 dark:text-gray-400 hover:underline"
+          target="_blank"
+        >
           {{date-from-now @solution.submittedAt}}
         </LinkTo>
       {{else}}

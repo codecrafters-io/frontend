@@ -48,9 +48,15 @@
       {{on "click" this.handleShareProgressButtonClick}}
       data-test-share-progress-button
     >
-      <span class="text-sm text-green-800 group-hover/share-progress-button:underline group-hover/share-progress-button:text-green-700">Tell your
-        friends</span>
-      {{svg-jar "external-link" class="w-4 fill-current text-green-800 group-hover/share-progress-button:text-green-700"}}
+      <span
+        class="prose-green prose-sm dark:prose-green-invert group-hover/share-progress-button:underline group-hover/share-progress-button:text-green-700 dark:group-hover/share-progress-button:text-green-300"
+      >
+        Tell your friends
+      </span>
+      {{svg-jar
+        "external-link"
+        class="w-4 fill-current prose-green prose-sm dark:prose-green-invert group-hover/share-progress-button:text-green-700 dark:group-hover/share-progress-button:text-green-300"
+      }}
     </div>
   {{/if}}
 
