@@ -14,12 +14,12 @@ interface Signature {
 }
 
 export default class AlertWithIconComponent extends Component<Signature> {
-  get containerColorClasses(): string {
+  get color(): 'green' | 'blue' | 'red' {
     return {
-      success: 'bg-green-100 border-green-300 dark:bg-green-900 dark:border-green-900 dark:bg-opacity-40',
-      info: 'bg-blue-100 border-blue-300 dark:bg-blue-900 dark:border-blue-900 dark:bg-opacity-40',
-      error: 'bg-red-100 border-red-300 dark:bg-red-900 dark:border-red-900 dark:bg-opacity-40',
-    }[this.type];
+      success: 'green',
+      info: 'blue',
+      error: 'red',
+    }[this.type] as 'green' | 'blue' | 'red';
   }
 
   get icon(): string {
@@ -34,11 +34,11 @@ export default class AlertWithIconComponent extends Component<Signature> {
     }[this.type];
   }
 
-  get textColorClasses(): string {
+  get proseColorClasses(): string {
     return {
-      success: 'text-green-800 prose-green',
+      success: 'prose-green',
       info: 'prose-blue',
-      error: 'text-red-800 prose-red',
+      error: 'prose-red',
     }[this.type];
   }
 
