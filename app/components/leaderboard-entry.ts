@@ -6,14 +6,14 @@ interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
-    progressDenominator: number;
-    progressNumerator: number;
+    progressDenominator?: number;
+    progressNumerator?: number;
     route: string;
-    routeModel: string;
-    status: string;
+    routeModel?: string;
+    status?: string;
     isForCurrentUser?: boolean;
     isCollapsed?: boolean;
-    user: UserModel;
+    user?: UserModel; // undefined if skeleton
   };
 
   Blocks: {
