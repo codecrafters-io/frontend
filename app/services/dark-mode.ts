@@ -18,6 +18,9 @@ export default class DarkModeService extends Service {
   @service declare localStorage: LocalStorageService;
   @service declare fastboot: FastBootService;
 
+  // Used to temporarily enable Dark Mode
+  @tracked isEnabledTemporarily: boolean = false;
+
   /**
    * Currently loaded localStorage preference value
    */
@@ -112,7 +115,7 @@ export default class DarkModeService extends Service {
    * "dark route", or derived from localStorage & system preference
    */
   get isEnabled(): boolean {
-    return this.#currentRouteSupportsDarkMode && (this.#currentRouteRequiresDarkMode || this.#isEnabledViaPreferences);
+    return this.#currentRouteSupportsDarkMode && (this.#currentRouteRequiresDarkMode || this.#isEnabledViaPreferences || this.isEnabledTemporarily);
   }
 
   /**

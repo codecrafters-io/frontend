@@ -3,7 +3,10 @@
 {{#if this.shouldShowUpgradePrompt}}
   {{! z-1001 ensures that this is above any dropdowns }}
   <ModalBackdrop class="z-[1001]">
-    {{! @glint-expect-error: mut types don't agree }}
-    <UpgradeModal @featureSlugToHighlight="code-examples" @onClose={{fn (mut this.shouldShowUpgradePrompt) false}} />
+    <UpgradeModal
+      @featureSlugToHighlight="code-examples"
+      @onClose={{this.handleUpgradeModalClose}}
+      {{will-destroy this.handleWillDestroyUpgradeModal}}
+    />
   </ModalBackdrop>
 {{/if}}

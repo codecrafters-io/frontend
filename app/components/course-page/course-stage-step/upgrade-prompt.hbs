@@ -1,16 +1,16 @@
 <div
-  class="py-6 px-5 rounded bg-teal-50 dark:bg-teal-900 border border-teal-600 dark:border-teal-800 @container"
+  class="py-6 px-5 rounded bg-teal-50 border border-teal-600 @container"
   {{did-insert this.handleDidInsert}}
   data-test-upgrade-prompt
   ...attributes
 >
   <div class="flex justify-between flex-col @[640px]:flex-row @[640px]:items-center gap-6">
     <div>
-      <div class="font-bold text-gray-800 dark:text-gray-100 text-xl @[640px]:text-2xl">
+      <div class="font-bold text-gray-800 text-xl @[640px]:text-2xl">
         {{this.featureToHighlight.cta}}
       </div>
 
-      <div class="prose dark:prose-invert prose-compact prose-sm @[640px]:prose-base py-3" data-test-upgrade-prompt-secondary-copy>
+      <div class="prose prose-compact prose-sm @[640px]:prose-base py-3" data-test-upgrade-prompt-secondary-copy>
         {{#if this.isLoadingRegionalDiscount}}
           <p>
             Plans start at $40/mo.

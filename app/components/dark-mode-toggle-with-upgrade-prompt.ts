@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
 export interface Signature {
   Element: Element;
@@ -15,6 +16,7 @@ export interface Signature {
 
 export default class DarkModeToggleWithUpgradePromptComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+  @service declare darkMode: DarkModeService;
 
   @tracked shouldShowUpgradePrompt = false;
 
@@ -26,8 +28,20 @@ export default class DarkModeToggleWithUpgradePromptComponent extends Component<
   handleDarkModeToggleClick() {
     if (!this.userCanAccessMembershipBenefits) {
       this.shouldShowUpgradePrompt = true;
+      this.darkMode.isEnabledTemporarily = true;
       this.args.onUpgradePromptOpen?.();
     }
+  }
+
+  @action
+  handleUpgradeModalClose() {
+    this.shouldShowUpgradePrompt = false;
+    this.darkMode.isEnabledTemporarily = false;
+  }
+
+  @action
+  handleWillDestroyUpgradeModal() {
+    this.darkMode.isEnabledTemporarily = false;
   }
 }
 
