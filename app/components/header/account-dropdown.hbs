@@ -55,9 +55,18 @@
       <Header::AccountDropdownLink @text="Settings" @icon="cog" {{on "click" (fn this.handleSettingsLinkClick dd.actions)}} />
 
       <div class="flex items-center justify-between gap-8 px-3 py-1.5">
-        <span class="prose dark:prose-invert prose-sm">
-          Theme
-        </span>
+        <div class="flex items-center gap-1">
+          <span class="prose dark:prose-invert prose-sm">
+            Theme
+          </span>
+
+          {{#unless this.darkMode.currentRouteSupportsDarkMode}}
+            <div class="flex">
+              {{svg-jar "exclamation" class="w-5 h-5 text-yellow-500"}}
+              <EmberTooltip @text="This page does not support dark mode yet." />
+            </div>
+          {{/unless}}
+        </div>
 
         <DarkModeToggleWithUpgradePrompt @size="small" />
       </div>

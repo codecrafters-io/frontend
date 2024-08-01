@@ -90,7 +90,7 @@ export default class DarkModeService extends Service {
    * Returns whether current route supports Dark Mode
    * @private
    */
-  get #currentRouteSupportsDarkMode(): boolean {
+  get currentRouteSupportsDarkMode(): boolean {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
@@ -115,7 +115,7 @@ export default class DarkModeService extends Service {
    * "dark route", or derived from localStorage & system preference
    */
   get isEnabled(): boolean {
-    return this.#currentRouteSupportsDarkMode && (this.#currentRouteRequiresDarkMode || this.#isEnabledViaPreferences || this.isEnabledTemporarily);
+    return this.currentRouteSupportsDarkMode && (this.#currentRouteRequiresDarkMode || this.#isEnabledViaPreferences || this.isEnabledTemporarily);
   }
 
   /**

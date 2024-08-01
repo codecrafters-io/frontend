@@ -8,9 +8,11 @@ import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
 export default class AccountDropdownComponent extends Component {
   @service declare authenticator: AuthenticatorService;
+  @service declare darkMode: DarkModeService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
   @service declare store: Store;
