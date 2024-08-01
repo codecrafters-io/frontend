@@ -1,7 +1,7 @@
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
-import createCourseStageComment from 'codecrafters-frontend/mirage/utils/create-course-stage-comment';
+import createCommunitySolutionComment from 'codecrafters-frontend/mirage/utils/create-community-solution-comment';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
@@ -81,9 +81,10 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
     // Stage 2: Completed, has solutions in other languages, and comments
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 2, go);
-    createCourseStageComment(this.server, redis, 2);
+    const solution2_1 = createCommunityCourseStageSolution(this.server, redis, 2, python);
+    const solution2_2 = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    createCommunitySolutionComment(this.server, solution2_1);
+    createCommunitySolutionComment(this.server, solution2_2);
 
     // Stage 3: Incomplete, no solutions in other languages, no comments
     createCommunityCourseStageSolution(this.server, redis, 3, python);
@@ -93,13 +94,14 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     createCommunityCourseStageSolution(this.server, redis, 4, go);
 
     // Stage 5: Incomplete, no solutions in other language, has comments
-    createCommunityCourseStageSolution(this.server, redis, 5, python);
-    createCourseStageComment(this.server, redis, 5);
+    const solution5_1 = createCommunityCourseStageSolution(this.server, redis, 5, python);
+    createCommunitySolutionComment(this.server, solution5_1);
 
     // Stage 6: Incomplete, has solutions in other language & has comments
-    createCommunityCourseStageSolution(this.server, redis, 6, python);
-    createCommunityCourseStageSolution(this.server, redis, 6, go);
-    createCourseStageComment(this.server, redis, 6);
+    const solution6_1 = createCommunityCourseStageSolution(this.server, redis, 6, python);
+    const solution6_2 = createCommunityCourseStageSolution(this.server, redis, 6, go);
+    createCommunitySolutionComment(this.server, solution6_1);
+    createCommunitySolutionComment(this.server, solution6_2);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
