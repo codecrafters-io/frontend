@@ -22,31 +22,25 @@
       {{#if this.isCollapsed}}
         <div
           role="button"
-          class="absolute rounded inset-0 vertical-mask dark:vertical-mark-invert p-4 flex items-end justify-center group z-10"
+          class="absolute rounded inset-0 vertical-mask dark:vertical-mask-gray-900 p-4 flex items-end justify-center group z-10"
           data-test-expand-button
           {{on "click" this.handleExpandButtonClick}}
         >
-          <div
-            class="border dark:border-gray-800/60 bg-white dark:bg-gray-925 group-hover:bg-gray-100 dark:group-hover:bg-gray-900 group-hover:border-gray-300 dark:group-hover:border-gray-700/60 transition-colors px-4 py-5 text-gray-700 dark:text-gray-200 text-sm rounded flex flex-col items-center w-full group"
-          >
-            <div class="font-bold flex items-center sm:mb-0">
-              Expand
-              {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
-            </div>
-          </div>
+          <InstructionsCard::ExpandOrCollapseButton
+            @icon="arrow-down"
+            @text="Expand"
+            class="group-hover:bg-gray-100 dark:group-hover:bg-gray-800 group-hover:border-gray-300 dark:group-hover:border-gray-700"
+            {{on "click" this.handleExpandButtonClick}}
+          />
         </div>
       {{else if @isCollapsedByDefault}}
-        <button
-          class="mt-4 border dark:border-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-700/60 transition-colors px-4 py-5 text-gray-700 dark:text-gray-200 text-sm rounded flex flex-col items-center w-full group"
-          type="button"
-          {{on "click" this.handleCollapseButtonClick}}
+        <InstructionsCard::ExpandOrCollapseButton
+          class="mt-4"
+          @icon="arrow-up"
+          @text="Collapse"
           data-test-collapse-button
-        >
-          <div class="font-bold flex items-center sm:mb-0">
-            Collapse
-            {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
-          </div>
-        </button>
+          {{on "click" this.handleCollapseButtonClick}}
+        />
       {{/if}}
     </div>
   </div>

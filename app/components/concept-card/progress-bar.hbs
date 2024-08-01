@@ -1,11 +1,14 @@
 <div class="flex items-center" data-test-concept-card-progress ...attributes>
   <div class="rounded overflow-hidden mr-2">
-    <div class="{{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'bg-teal-100' 'bg-blue-100'}} h-3 w-16 flex items-stretch">
+    <div
+      class="{{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'bg-teal-100 dark:bg-teal-900' 'bg-blue-100 dark:bg-blue-900'}}
+        h-3 w-16 flex items-stretch"
+    >
       {{#if (eq @latestConceptEngagement.currentProgressPercentage 0)}}
         <div class="bg-blue-500 w-1/12"></div>
       {{else}}
         <div
-          class="bg-blue-500"
+          class="{{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'bg-teal-500 dark:bg-teal-600' 'bg-blue-500 dark:bg-blue-600'}}"
           style={{html-safe (concat "width: " @latestConceptEngagement.currentProgressPercentage "%")}}
           data-test-concept-card-progress-bar
         ></div>
@@ -13,7 +16,12 @@
     </div>
   </div>
 
-  <div class="text-xs text-blue-500 mr-3" data-test-concept-card-progress-text>
+  <div
+    class="text-xs
+      {{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'text-teal-500 dark:text-teal-600' 'text-blue-500 dark:text-blue-600'}}
+      mr-3"
+    data-test-concept-card-progress-text
+  >
     <b class="font-bold">{{@latestConceptEngagement.currentProgressPercentage}}%</b>
     complete
   </div>

@@ -1,12 +1,12 @@
 <LinkTo
-  class="group border p-5 bg-white rounded-md shadow-sm hover:shadow cursor-pointer flex flex-col justify-between"
+  class="group border dark:border-gray-800/60 p-5 bg-white dark:bg-gray-900 rounded-md shadow-sm hover:shadow cursor-pointer flex flex-col justify-between"
   @route="concept"
   @model={{@concept.slug}}
   data-test-concept-card
 >
   <div>
     <div class="flex items-center mb-2 gap-2">
-      <div class="text-lg font-bold text-gray-600" data-test-concept-title>
+      <div class="text-lg font-bold text-gray-800 dark:text-gray-100" data-test-concept-title>
         {{@concept.title}}
       </div>
 
@@ -41,9 +41,9 @@
           <ConceptCard::ProgressBar @latestConceptEngagement={{this.latestConceptEngagement}} class="flex shrink-0" />
         {{/if}}
       {{else}}
-        {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300"}}
+        {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}
 
-        <span class="text-xs text-gray-400">
+        <span class="text-xs text-gray-400 dark:text-gray-600">
           {{@concept.estimatedReadingTimeInMinutes}}
           mins
         </span>
@@ -63,7 +63,7 @@
         {{/if}}
       </span>
 
-      {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
+      {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 transition-colors"}}
     </div>
   </div>
 </LinkTo>

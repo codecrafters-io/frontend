@@ -11,6 +11,7 @@
 @import '@typeform/embed/build/css/popup.css';
 @import 'ember-animated/dist/styles/ember-animated.css';
 @import 'prism-light-theme.css';
+@import 'prism-dark-theme.css';
 
 .ember-basic-dropdown-trigger {
   outline: none !important;
@@ -40,11 +41,11 @@
 
 /* Override prism's 1em font-size */
 .prose pre[class*='language-'] {
-  font-size: 0.875em;
+  font-size: 0.875em !important;
 }
 
 .prose.prose-sm pre[class*='language-'] {
-  font-size: 1em;
+  font-size: 1em !important;
 }
 
 .prose pre code {
@@ -61,8 +62,12 @@
   );
 }
 
-.dark\:vertical-mark-invert:is(.dark *) {
+.dark\:vertical-mask-invert:is(.dark *) {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 1) 100%);
+}
+
+.dark\:vertical-mask-gray-900:is(.dark *) {
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0) 30%, rgba(15, 23, 42, 1) 80%, rgba(15, 23, 42, 1) 100%);
 }
 
 .syntax-highlighted-code pre {

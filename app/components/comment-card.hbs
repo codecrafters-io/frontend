@@ -51,29 +51,29 @@
           <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" as |dd|>
             <dd.Trigger>
               {{#if (eq @comment.approvalStatus "approved")}}
-                <button type="button" class="bg-green-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}
-                </button>
+                <Pill @color="green">{{@comment.approvalStatus}}</Pill>
               {{else if (eq @comment.approvalStatus "rejected")}}
-                <button type="button" class="bg-gray-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}
-                </button>
+                <Pill @color="gray">{{@comment.approvalStatus}}</Pill>
               {{else if (eq @comment.approvalStatus "awaiting_approval")}}
-                <button type="button" class="bg-yellow-500 text-white px-2 py-1 rounded font-semibold text-xs">{{@comment.approvalStatus}}
-                </button>
+                <Pill @color="yellow">{{@comment.approvalStatus}}</Pill>
               {{/if}}
             </dd.Trigger>
             <dd.Content>
-              <div class="py-2 border rounded shadow text-sm text-gray-600 min-w-[150px] max-w-xl bg-white" data-test-more-dropdown-content>
-                <div class="px-3 py-1 hover:bg-gray-50 flex items-center justify-between group">
+              <div
+                class="py-2 border rounded shadow text-sm text-gray-600 min-w-[150px] max-w-xl bg-white dark:bg-gray-925"
+                data-test-more-dropdown-content
+              >
+                <div class="px-3 py-1 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group">
                   <div role="button" {{on "click" (fn this.updateCommentStatus "approved" dd.actions)}}>
                     Approved
                   </div>
                 </div>
-                <div class="px-3 py-1 hover:bg-gray-50 flex items-center justify-between group">
+                <div class="px-3 py-1 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group">
                   <div role="button" {{on "click" (fn this.updateCommentStatus "rejected" dd.actions)}}>
                     Rejected
                   </div>
                 </div>
-                <div class="px-3 py-1 hover:bg-gray-50 flex items-center justify-between group">
+                <div class="px-3 py-1 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group">
                   <div role="button" {{on "click" (fn this.updateCommentStatus "awaiting_approval" dd.actions)}}>
                     Awaiting Approval
                   </div>

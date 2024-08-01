@@ -5,16 +5,19 @@
 
     This is a beta feature, please send us
     <div class="inline-flex">
-      <FeedbackButton @source="stage-concepts-index" class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton>
+      <FeedbackButton
+        @source="stage-concepts-index"
+        class="font-blue-500 hover:font-blue-600 dark:hover:font-blue-400 font-semibold underline"
+      >feedback</FeedbackButton>
     </div>.
   </AlertWithIcon>
 
   {{#if (gt this.model.courseStage.concepts.length 0)}}
-    <div class="border-b pb-1 mb-6 flex items-center gap-2">
-      <h1 class="text-xl text-gray-700 font-bold tracking-tighter">Related to this stage</h1>
+    <div class="border-b dark:border-gray-800/60 pb-1 mb-6 flex items-center gap-2">
+      <h1 class="text-xl text-gray-700 dark:text-gray-100 font-bold tracking-tighter">Related to this stage</h1>
 
       <div>
-        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 dark:text-gray-800 hover:text-gray-300 dark:hover:text-gray-700"}}
         <EmberTooltip @text={{"These concepts are directly related to this stage."}} />
       </div>
     </div>
@@ -27,10 +30,10 @@
   {{/if}}
 
   {{#if (gt this.model.courseStage.otherConceptsForCourse.length 0)}}
-    <div class="border-b pb-1 mb-6 flex items-center gap-2">
-      <h1 class="text-xl text-gray-700 font-bold tracking-tighter">Related to this challenge</h1>
+    <div class="border-b dark:border-gray-800/60 pb-1 mb-6 flex items-center gap-2">
+      <h1 class="text-xl text-gray-700 dark:text-gray-100 font-bold tracking-tighter">Related to this challenge</h1>
       <div>
-        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 dark:text-gray-800 hover:text-gray-300 dark:hover:text-gray-700"}}
         <EmberTooltip @text={{"These concepts are not directly related to this stage, but they're related to the challenge."}} />
       </div>
     </div>
