@@ -1,5 +1,4 @@
 import Service, { inject as service } from '@ember/service';
-import config from 'codecrafters-frontend/config/environment';
 
 export default class FeatureFlagsService extends Service {
   @service analyticsEventTracker;
