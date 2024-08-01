@@ -1,4 +1,10 @@
-<div class="flex w-full max-w-screen-md relative" {{on-click-outside @onClose}} data-test-upgrade-modal ...attributes>
+<div
+  class="flex w-full max-w-screen-md relative"
+  {{on-click-outside @onClose}}
+  data-test-upgrade-modal
+  {{did-insert this.handleDidInsert}}
+  ...attributes
+>
   <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight={{@featureSlugToHighlight}} class="w-full" />
 
   <div class="absolute right-0 top-0">
