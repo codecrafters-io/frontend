@@ -15,14 +15,6 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
 
-  get canSeeDarkModeToggle() {
-    if (config.environment === 'test') {
-      return true;
-    }
-
-    return this.currentUser && this.currentUser.isStaff;
-  }
-
   get currentUser() {
     return this.authenticator.currentUser;
   }
