@@ -7,7 +7,7 @@
   </AlertWithIcon>
 
   {{#if this.selectedScreencast}}
-    <div class="border-b mb-8 scroll-mt-16" {{did-insert this.handleDidInsertScreencastPlayer}}>
+    <div class="border-b dark:border-gray-800/60 mb-8 scroll-mt-16" {{did-insert this.handleDidInsertScreencastPlayer}}>
       {{! @glint-expect-error: not typesafe yet }}
       <CourseStageScreencastPlayer @screencast={{this.selectedScreencast}} />
 
@@ -15,18 +15,18 @@
         <Pill @color="green">
           {{this.selectedScreencast.language.name}}
         </Pill>
-        <div class="font-semibold text-gray-800 text-xl mt-2" data-test-screencasts-previews-title>
+        <div class="font-semibold text-gray-800 dark:text-gray-100 text-xl mt-2" data-test-screencasts-previews-title>
           {{this.selectedScreencast.title}}
         </div>
         <div class="flex items-center gap-3 mt-3">
           <div class="flex items-center gap-1">
             <img src={{this.selectedScreencast.sourceIconUrl}} class="h-5" alt="source" />
-            <div class="text-gray-600 text-xs">{{this.selectedScreencast.authorName}}</div>
+            <div class="text-gray-600 dark:text-gray-400 text-xs">{{this.selectedScreencast.authorName}}</div>
           </div>
-          <div class="w-px h-3 bg-gray-200"></div>
+          <div class="w-px h-3 bg-gray-200 dark:bg-gray-800/60"></div>
           <div class="flex items-center">
-            {{svg-jar "calendar" class="w-4 text-gray-300 mr-1.5"}}
-            <div class="text-gray-600 text-xs">{{date-from-now this.selectedScreencast.publishedAt}}</div>
+            {{svg-jar "calendar" class="w-4 text-gray-300 dark:text-gray-700 mr-1.5"}}
+            <div class="text-gray-600 dark:text-gray-400 text-xs">{{date-from-now this.selectedScreencast.publishedAt}}</div>
           </div>
         </div>
       </div>
