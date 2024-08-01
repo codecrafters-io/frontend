@@ -1,5 +1,5 @@
 <div class="flex w-full max-w-screen-md relative" {{on-click-outside @onClose}} data-test-upgrade-modal ...attributes>
-  <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight="code-examples" class="w-full" />
+  <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight={{@featureSlugToHighlight}} class="w-full" />
 
   <div class="absolute right-0 top-0">
     <button type="button" class="w-12 h-12 flex items-center justify-center" {{on "click" @onClose}}>

@@ -19,9 +19,7 @@
     </div>
 
     <div class="flex items-center gap-3 flex-wrap-reverse justify-end">
-      {{#if this.featureFlags.canSeeDarkModeToggle}}
-        <DarkModeToggleWithUpgradePrompt />
-      {{/if}}
+      <DarkModeToggleWithUpgradePrompt />
 
       {{#if (or this.currentUser.isStaff (current-user-is-course-author @course))}}
         <TertiaryLinkButton @size="small" @route="course-admin.submissions" @model={{@course.slug}} data-test-course-admin-button>

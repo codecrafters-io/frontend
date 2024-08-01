@@ -3,10 +3,6 @@
 {{#if this.shouldShowUpgradePrompt}}
   {{! z-1001 ensures that this is above any dropdowns }}
   <ModalBackdrop class="z-[1001]">
-    <UpgradeModal
-      @featureSlugToHighlight="code-examples"
-      @onClose={{this.handleUpgradeModalClose}}
-      {{will-destroy this.handleWillDestroyUpgradeModal}}
-    />
+    <UpgradeModal @featureSlugToHighlight="dark-mode" @onClose={{this.handleUpgradeModalClose}} {{will-destroy this.handleWillDestroyUpgradeModal}} />
   </ModalBackdrop>
 {{/if}}
