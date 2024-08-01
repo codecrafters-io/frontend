@@ -32,11 +32,11 @@ export default class DarkModeToggleComponent extends Component<Signature> {
       return;
     }
 
+    this.darkMode.updateLocalStoragePreference(newValue);
+
     this.analyticsEventTracker.track('changed_theme', {
       theme: newValue,
     });
-
-    this.darkMode.updateLocalStoragePreference(newValue);
   }
 }
 
