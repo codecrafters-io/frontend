@@ -60,6 +60,11 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
     this.highlightCode.perform();
   }
 
+  @action
+  handleDidUpdateTheme() {
+    this.highlightCode.perform();
+  }
+
   highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
     const highlighterPromise = getOrCreateCachedHighlighterPromise(`${this.args.theme}-${this.args.language}`, {
       themes: [this.args.theme],
