@@ -4,7 +4,7 @@
  * @author Lea Verou
  */
 
-pre[class*='language-'] {
+.has-prism-highlighting pre[class*='language-'] {
   color: black;
   background: none;
   text-shadow: 0 1px white;
@@ -27,102 +27,102 @@ pre[class*='language-'] {
   hyphens: none;
 }
 
-pre[class*='language-']::-moz-selection,
-pre[class*='language-'] ::-moz-selection {
+.has-prism-highlighting pre[class*='language-']::-moz-selection,
+.has-prism-highlighting pre[class*='language-'] ::-moz-selection {
   text-shadow: none;
   background: #b3d4fc;
 }
 
-pre[class*='language-']::selection,
-pre[class*='language-'] ::selection {
+.has-prism-highlighting pre[class*='language-']::selection,
+.has-prism-highlighting pre[class*='language-'] ::selection {
   text-shadow: none;
   background: #b3d4fc;
 }
 
 @media print {
-  pre[class*='language-'] {
+  .has-prism-highlighting pre[class*='language-'] {
     text-shadow: none;
   }
 }
 
 /* Code blocks */
-pre[class*='language-'] {
+.has-prism-highlighting pre[class*='language-'] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
 }
 
-pre[class*='language-'] {
+.has-prism-highlighting pre[class*='language-'] {
   background: #f5f2f0;
 }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
+.has-prism-highlighting .token.comment,
+.has-prism-highlighting .token.prolog,
+.has-prism-highlighting .token.doctype,
+.has-prism-highlighting .token.cdata {
   color: slategray;
 }
 
-.token.punctuation {
+.has-prism-highlighting .token.punctuation {
   color: #999;
 }
 
-.token.namespace {
+.has-prism-highlighting .token.namespace {
   opacity: 0.7;
 }
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
+.has-prism-highlighting .token.property,
+.has-prism-highlighting .token.tag,
+.has-prism-highlighting .token.boolean,
+.has-prism-highlighting .token.number,
+.has-prism-highlighting .token.constant,
+.has-prism-highlighting .token.symbol,
+.has-prism-highlighting .token.deleted {
   color: #905;
 }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
+.has-prism-highlighting .token.selector,
+.has-prism-highlighting .token.attr-name,
+.has-prism-highlighting .token.string,
+.has-prism-highlighting .token.char,
+.has-prism-highlighting .token.builtin,
+.has-prism-highlighting .token.inserted {
   color: #690;
 }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
+.has-prism-highlighting .token.operator,
+.has-prism-highlighting .token.entity,
+.has-prism-highlighting .token.url,
+.has-prism-highlighting .language-css .token.string,
+.has-prism-highlighting .style .token.string {
   color: #9a6e3a;
 }
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
+.has-prism-highlighting .token.atrule,
+.has-prism-highlighting .token.attr-value,
+.has-prism-highlighting .token.keyword {
   color: #07a;
 }
 
-.token.function,
-.token.class-name {
+.has-prism-highlighting .token.function,
+.has-prism-highlighting .token.class-name {
   color: #dd4a68;
 }
 
-.token.regex,
-.token.important,
-.token.variable {
+.has-prism-highlighting .token.regex,
+.has-prism-highlighting .token.important,
+.has-prism-highlighting .token.variable {
   color: #e90;
 }
 
-.token.important,
-.token.bold {
+.has-prism-highlighting .token.important,
+.has-prism-highlighting .token.bold {
   font-weight: bold;
 }
-.token.italic {
+.has-prism-highlighting .token.italic {
   font-style: italic;
 }
 
-.token.entity {
+.has-prism-highlighting .token.entity {
   cursor: help;
 }

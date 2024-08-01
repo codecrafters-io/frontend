@@ -1,0 +1,129 @@
+/**
+ * prism.js Dark theme for JavaScript, CSS and HTML
+ * Based on the slides of the talk "/Reg(exp){2}lained/"
+ * @author Lea Verou
+ */
+
+.has-prism-highlighting code[class*='language-']:is(.dark *),
+.has-prism-highlighting pre[class*='language-']:is(.dark *) {
+  color: white;
+  background: none;
+  text-shadow: 0 -0.1em 0.2em black;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+@media print {
+  .has-prism-highlighting code[class*='language-']:is(.dark *),
+  .has-prism-highlighting pre[class*='language-']:is(.dark *) {
+    text-shadow: none;
+  }
+}
+
+.has-prism-highlighting pre[class*='language-']:is(.dark *),
+.has-prism-highlighting :not(pre) > code[class*='language-']:is(.dark *) {
+  background: hsl(30, 20%, 25%);
+}
+
+/* Code blocks */
+.has-prism-highlighting pre[class*='language-']:is(.dark *) {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  /* border: 0.3em solid hsl(30, 20%, 40%);
+  border-radius: 0.5em; */
+  /* box-shadow: 1px 1px 0.5em black inset; */
+}
+
+/* Inline code */
+.has-prism-highlighting :not(pre) > code[class*='language-']:is(.dark *) {
+  padding: 0.15em 0.2em 0.05em;
+  border-radius: 0.3em;
+  border: 0.13em solid hsl(30, 20%, 40%);
+  box-shadow: 1px 1px 0.3em -0.1em black inset;
+  white-space: normal;
+}
+
+.has-prism-highlighting .token.comment:is(.dark *),
+.has-prism-highlighting .token.prolog:is(.dark *),
+.has-prism-highlighting .token.doctype:is(.dark *),
+.has-prism-highlighting .token.cdata:is(.dark *) {
+  color: hsl(30, 20%, 50%);
+}
+
+.has-prism-highlighting .token.punctuation:is(.dark *) {
+  opacity: 0.7;
+}
+
+.has-prism-highlighting .token.namespace:is(.dark *) {
+  opacity: 0.7;
+}
+
+.has-prism-highlighting .token.property:is(.dark *),
+.has-prism-highlighting .token.tag:is(.dark *),
+.has-prism-highlighting .token.boolean:is(.dark *),
+.has-prism-highlighting .token.number:is(.dark *),
+.has-prism-highlighting .token.constant:is(.dark *),
+.has-prism-highlighting .token.symbol:is(.dark *) {
+  color: hsl(350, 40%, 70%);
+}
+
+.has-prism-highlighting .token.selector:is(.dark *),
+.has-prism-highlighting .token.attr-name:is(.dark *),
+.has-prism-highlighting .token.string:is(.dark *),
+.has-prism-highlighting .token.char:is(.dark *),
+.has-prism-highlighting .token.builtin:is(.dark *),
+.has-prism-highlighting .token.inserted:is(.dark *) {
+  color: hsl(75, 70%, 60%);
+}
+
+.has-prism-highlighting .token.operator:is(.dark *),
+.has-prism-highlighting .token.entity:is(.dark *),
+.has-prism-highlighting .token.url:is(.dark *),
+.has-prism-highlighting .language-css .token.string:is(.dark *),
+.has-prism-highlighting .style .token.string:is(.dark *),
+.has-prism-highlighting .token.variable:is(.dark *) {
+  color: hsl(40, 90%, 60%);
+}
+
+.has-prism-highlighting .token.atrule:is(.dark *),
+.has-prism-highlighting .token.attr-value:is(.dark *),
+.has-prism-highlighting .token.keyword:is(.dark *) {
+  color: hsl(350, 40%, 70%);
+}
+
+.has-prism-highlighting .token.regex:is(.dark *),
+.has-prism-highlighting .token.important:is(.dark *) {
+  color: #e90;
+}
+
+.has-prism-highlighting .token.important:is(.dark *),
+.has-prism-highlighting .token.bold:is(.dark *) {
+  font-weight: bold;
+}
+.has-prism-highlighting .token.italic:is(.dark *) {
+  font-style: italic;
+}
+
+.has-prism-highlighting .token.entity:is(.dark *) {
+  cursor: help;
+}
+
+.has-prism-highlighting .token.deleted:is(.dark *) {
+  color: red;
+}
