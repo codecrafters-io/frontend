@@ -19,45 +19,11 @@
       {{yield}}
     </:content>
     <:overlay>
-      <ModalBody
-        @allowManualClose={{false}}
+      <CoursePage::PreviousStepsIncompleteModal
+        class="mt-8 mx-3 md:mx-6"
         @onClose={{this.handlePreviousStepsIncompleteModalDismissed}}
-        class="w-full mt-8 mx-3 md:mx-6"
-        data-test-previous-steps-incomplete-modal
-      >
-        <div class="mb-4 font-semibold text-2xl text-gray-600 dark:text-gray-300 mr-6">
-          Previous steps incomplete
-        </div>
-
-        <div class="prose dark:prose-invert mb-6">
-          <p>
-            This step depends on previous steps that you haven't completed yet.
-          </p>
-        </div>
-
-        <div class="flex items-center gap-x-6 gap-y-4 flex-wrap">
-          <PrimaryLinkButton
-            @route={{this.coursePageState.activeStep.routeParams.route}}
-            @models={{this.coursePageState.activeStep.routeParams.models}}
-            data-test-active-step-button
-            class="flex-shrink-0"
-          >
-            <div class="flex items-center">
-              {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
-              <span>Back to "{{this.coursePageState.activeStep.shortTitle}}"</span>
-            </div>
-          </PrimaryLinkButton>
-
-          <div
-            class="text-gray-500 hover:text-gray-800 dark:text-gray-300 text-sm pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0"
-            role="button"
-            {{on "click" this.handlePreviousStepsIncompleteModalDismissed}}
-            data-test-just-exploring-button
-          >
-            I'm just exploring 👀
-          </div>
-        </div>
-      </ModalBody>
+        @activeStep={{this.coursePageState.activeStep}}
+      />
     </:overlay>
   </BlurredOverlay>
 </div>
