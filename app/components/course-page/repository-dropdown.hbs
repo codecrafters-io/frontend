@@ -1,6 +1,6 @@
 <div data-test-repository-dropdown ...attributes>
   {{! @glint-expect-error not ts-ified yet !}}
-  <BasicDropdown @horizontalPosition="auto-right" as |dd|>
+  <BasicDropdown @horizontalPosition="auto-right" @destination="application-container" as |dd|>
     <dd.Trigger>
       <div
         class="flex items-start gap-2 pl-3 py-3 rounded group/dropdown-trigger text-left w-full
@@ -35,7 +35,10 @@
       </div>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg border py-2 my-1 max-h-[75vh] overflow-y-auto" data-test-repository-dropdown-content>
+      <div
+        class="bg-white dark:bg-gray-925 rounded-lg shadow-lg border dark:border-gray-800 py-2 my-1 max-h-[75vh] overflow-y-auto"
+        data-test-repository-dropdown-content
+      >
         <div class="text-sm text-gray-700 dark:text-gray-300">
           <CoursePage::RepositoryDropdownAction @icon="login" {{on "click" (fn this.handleBackToCatalogButtonClick dd.actions)}}>
             Back to Catalog
@@ -43,7 +46,7 @@
 
           <div
             {{! @glint-expect-error model.isNew has wrong type !}}
-            class="px-3 py-2 hover:bg-gray-50 flex group {{if @activeRepository.isNew 'text-gray-300'}}"
+            class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex group {{if @activeRepository.isNew 'text-gray-300 dark:text-gray-700'}}"
             role="button"
             {{on "click" (fn this.handleCopyGitRepositoryURLClick dd.actions)}}
             data-test-dropdown-action
@@ -57,7 +60,10 @@
               {{else}}
                 <div class="flex items-center justify-between">
                   <span>Copy Git Repository URL</span>
-                  {{svg-jar "clipboard-copy" class="w-5 ml-4 text-gray-300 {{unless @activeRepository.isNew 'group-hover:text-teal-500'}}"}}
+                  {{svg-jar
+                    "clipboard-copy"
+                    class="w-5 ml-4 text-gray-300 dark:text-gray-700 {{unless @activeRepository.isNew 'group-hover:text-teal-500 dark:group-hover:text-teal-500'}}"
+                  }}
                 </div>
               {{/animated-if}}
             </AnimatedContainer>

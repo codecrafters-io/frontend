@@ -1,10 +1,11 @@
 <div
-  class="px-3 py-2 hover:bg-gray-50 flex items-center justify-between group {{if @isDisabled 'text-gray-300'}}"
+  class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group
+    {{if @isDisabled 'text-gray-300 dark:text-gray-700'}}"
   role="button"
   data-test-dropdown-action
   ...attributes
 >
   {{yield}}
 
-  {{svg-jar @icon class=(concat "w-5 ml-8 text-gray-300 " (if @isDisabled "" "group-hover:text-teal-500"))}}
+  {{svg-jar @icon class=(concat "w-5 ml-8 text-gray-300 dark:text-gray-700 " (if @isDisabled "" "group-hover:text-teal-500"))}}
 </div>

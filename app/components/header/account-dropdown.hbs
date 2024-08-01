@@ -1,5 +1,5 @@
 {{! @glint-expect-error not ts-ified yet }}
-<BasicDropdown @horizontalPosition="right" as |dd|>
+<BasicDropdown @horizontalPosition="right" @destination="application-container" as |dd|>
   <dd.Trigger>
     <div
       class="text-gray-600 dark:text-gray-300 flex items-center justify-between py-3 outline-none w-full sm:w-auto"
@@ -13,7 +13,7 @@
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border rounded shadow max-w-xl bg-white" data-test-account-dropdown-content>
+    <div class="py-2 border dark:border-gray-800 rounded shadow max-w-xl bg-white dark:bg-gray-925" data-test-account-dropdown-content>
       {{#if this.currentUser.hasActiveSubscription}}
         <Header::AccountDropdownLink
           @text="Manage Membership"
@@ -56,7 +56,7 @@
 
       {{#if this.featureFlags.canSeeDarkModeToggle}}
         <div class="flex items-center justify-between gap-8 px-3 py-1.5">
-          <span class="text-sm text-gray-800">
+          <span class="prose dark:prose-invert prose-sm">
             Theme
           </span>
 
@@ -64,7 +64,7 @@
         </div>
       {{/if}}
 
-      <div class="h-px my-2 mx-3 bg-gray-200" />
+      <div class="h-px my-2 mx-3 bg-gray-200 dark:bg-gray-800/60" />
 
       <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>
