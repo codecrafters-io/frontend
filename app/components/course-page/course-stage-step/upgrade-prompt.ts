@@ -16,7 +16,7 @@ export interface Signature {
 }
 
 interface Feature {
-  slug: 'content' | 'turbo-test-runs' | 'anonymous-mode' | 'code-examples' | 'priority-support';
+  slug: 'content' | 'turbo-test-runs' | 'anonymous-mode' | 'code-examples' | 'dark-mode';
   name: string;
   cta: string;
   isAccessibleByReferringUsers: boolean;
@@ -42,15 +42,15 @@ const features: Feature[] = [
     isAccessibleByReferringUsers: false,
   },
   {
-    slug: 'anonymous-mode',
-    name: 'Anonymous mode',
-    cta: 'Get anonymous mode with a CodeCrafters Membership', // unused at the moment
+    slug: 'dark-mode',
+    name: 'Dark mode',
+    cta: 'Unlock dark mode with a CodeCrafters membership.',
     isAccessibleByReferringUsers: false,
   },
   {
-    slug: 'priority-support',
-    name: 'Priority support',
-    cta: 'Get priority support with a CodeCrafters Membership', // unused at the moment
+    slug: 'anonymous-mode',
+    name: 'Anonymous mode',
+    cta: 'Get anonymous mode with a CodeCrafters Membership', // unused at the moment
     isAccessibleByReferringUsers: false,
   },
 ];
