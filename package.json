@@ -55,7 +55,7 @@
     "@glint/core": "^1.4.0",
     "@glint/environment-ember-loose": "^1.4.0",
     "@glint/template": "^1.2.1",
-    "@percy/cli": "^1.29.0",
+    "@percy/cli": "^1.29.1",
     "@percy/ember": "^4.0.0",
     "@sentry/ember": "^8.22.0",
     "@sentry/webpack-plugin": "^2.21.1",
