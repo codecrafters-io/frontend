@@ -2,13 +2,15 @@
 
 <h3 class="mb-2 dark:text-gray-300">Set localStorage dark mode preference to:</h3>
 
-<DarkModeToggle />
+<div class="inline-flex">
+  <DarkModeToggle />
+</div>
 
 <hr class="my-4 dark:border-gray-700" />
 
 <h3 class="mb-2 dark:text-gray-300">Current localStorage preference:</h3>
 
-<code class="code dark:text-gray-400">
+<code class="code dark:text-gray-400" data-test-current-local-storage-preference>
   {{or this.darkMode.localStoragePreference "null"}}
 </code>
 
@@ -16,7 +18,7 @@
 
 <h3 class="mb-2 dark:text-gray-300">Current system preference:</h3>
 
-<code class="code dark:text-gray-400">
+<code class="code dark:text-gray-400" data-test-current-system-preference>
   {{this.darkMode.systemPreference}}
 </code>
 

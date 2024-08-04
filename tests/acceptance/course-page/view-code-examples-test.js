@@ -173,6 +173,36 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 2);
   });
 
+  test('can view unchanged files in code examples', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    createCommunityCourseStageSolution(this.server, redis, 2, python);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
+
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards[0].changedFiles.length, 2, 'shows 2 changed files');
+    assert.strictEqual(coursePage.codeExamplesTab.solutionCards[0].unchangedFiles.length, 2, 'shows 2 unchanged files');
+
+    await coursePage.codeExamplesTab.solutionCards[0].unchangedFiles[0].header.click();
+
+    assert.true(coursePage.codeExamplesTab.solutionCards[0].unchangedFiles[0].isPresent, 'FileContentsCard is present');
+    assert.true(coursePage.codeExamplesTab.solutionCards[0].unchangedFiles[0].codeMirror.hasRendered, 'CodeMirror has rendered');
+    assert.strictEqual(
+      coursePage.codeExamplesTab.solutionCards[0].unchangedFiles[0].codeMirror.text,
+      'Unchanged file content',
+      'file content is rendered correctly',
+    );
+  });
+
   test('stage incomplete modal shows up when code examples are viewed before completing a stage', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);

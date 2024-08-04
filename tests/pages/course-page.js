@@ -15,7 +15,7 @@ import SecondStageInstructionsCard from 'codecrafters-frontend/tests/pages/compo
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
-import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
+import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
 import { clickOnText, clickable, collection, create, fillable, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
@@ -55,10 +55,7 @@ export default create({
     solutionCards: collection('[data-test-community-solution-card]', {
       changedFiles: collection('[data-test-community-solution-changed-file]'),
 
-      unchangedFiles: collection('[data-test-community-solution-unchanged-file]', {
-        codeMirror,
-        clickOnExpandButton: clickable('[data-test-file-contents-card-header]'),
-      }),
+      unchangedFiles: collection('[data-test-community-solution-unchanged-file]', FileContentsCard),
 
       clickOnCollapseButton: async function () {
         await this.collapseButtons[0].click();

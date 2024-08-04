@@ -79,10 +79,7 @@ module('Integration | Component | code-mirror', function (hooks) {
       this.set('documentDidChange', documentDidChange);
       await render(hbs`<CodeMirror @document={{this.document}} @editable={{true}} @onDocumentUpdate={{fn this.documentDidChange this}} />`);
       assert.strictEqual(codeMirror.text, exampleText, 'initial text is rendered');
-      await codeMirror.content.focus();
-      await codeMirror.content.lines.objectAt(0).click();
-      await codeMirror.content.lines.objectAt(0).fillIn('New Content');
-      await codeMirror.content.blur();
+      await codeMirror.setLineText(0, 'New Content');
       assert.strictEqual(callCount, 1, 'onDocumentUpdate is called once');
       assert.strictEqual(codeMirror.text, 'New Content', 'text in the editor is updated');
     });
