@@ -1,5 +1,6 @@
 <div
   class="bg-white dark:bg-gray-900 shadow-sm rounded border border-gray-300 dark:border-gray-800"
+  data-test-file-contents-card-component
   ...attributes
   {{did-insert this.handleDidInsertContainer}}
 >
@@ -21,11 +22,14 @@
     {{/if}}
 
     {{#if @isCollapsible}}
-      <div class="absolute inset-0 flex items-center justify-center group-hover/file-contents-card-header:opacity-100 opacity-0 transition-opacity">
+      <div
+        class="absolute inset-0 flex items-center justify-center group-hover/file-contents-card-header:opacity-100 opacity-0 transition-opacity"
+        data-test-file-contents-card-header-hover-target
+      >
         {{#if @isCollapsed}}
-          <Pill @color="white">Click to expand</Pill>
+          <Pill @color="white" data-test-file-contents-card-header-expand-button>Click to expand</Pill>
         {{else}}
-          <Pill @color="white">Click to collapse</Pill>
+          <Pill @color="white" data-test-file-contents-card-header-collapse-button>Click to collapse</Pill>
         {{/if}}
       </div>
 
@@ -59,7 +63,7 @@
 
     {{#if @isCollapsible}}
       <div class="flex items-center justify-center my-3">
-        <TertiaryButton @size="small" {{on "click" this.handleCollapseOrExpandButtonClick}}>
+        <TertiaryButton @size="small" data-test-file-contents-card-collapse-button {{on "click" this.handleCollapseOrExpandButtonClick}}>
           Collapse File
         </TertiaryButton>
       </div>
