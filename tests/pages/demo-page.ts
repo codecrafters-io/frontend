@@ -1,4 +1,4 @@
-import { attribute, clickable, collection, create, hasClass, text, visitable } from 'ember-cli-page-object';
+import { attribute, clickable, collection, create, text, visitable } from 'ember-cli-page-object';
 import CodeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 import DarkModeToggle from 'codecrafters-frontend/tests/pages/components/dark-mode-toggle';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
@@ -29,12 +29,6 @@ export default create({
     darkModeToggle: {
       visit: visitable('/demo/dark-mode-toggle'),
       component: DarkModeToggle,
-
-      applicationContainer: {
-        scope: '[data-test-application-container]',
-        resetScope: true,
-        hasDarkClass: hasClass('dark'),
-      },
 
       currentLocalStoragePreference: {
         scope: '[data-test-current-local-storage-preference]',

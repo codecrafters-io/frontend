@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupAnimationTest } from 'ember-animated/test-support';
-import demoPage from 'codecrafters-frontend/tests/pages/demo-page';
 import { run } from '@ember/runloop';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import applicationPage from 'codecrafters-frontend/tests/pages/application-page';
+import demoPage from 'codecrafters-frontend/tests/pages/demo-page';
 
 function setLocalStoragePreference(darkModeService, preference) {
   run(() => {
@@ -19,7 +19,6 @@ function setSystemPreference(darkModeService, preference) {
 
 module('Acceptance | demo page | dark-mode-toggle', function (hooks) {
   setupApplicationTest(hooks);
-  setupAnimationTest(hooks);
 
   test('it works', async function (assert) {
     await demoPage.demoTabs.darkModeToggle.visit();
@@ -59,21 +58,15 @@ module('Acceptance | demo page | dark-mode-toggle', function (hooks) {
 
   test("it adds a '.dark' class to application container when Dark mode is active", async function (assert) {
     await demoPage.demoTabs.darkModeToggle.visit();
-    assert.notOk(demoPage.demoTabs.darkModeToggle.applicationContainer.hasDarkClass, 'class .dark is absent by default');
+    assert.notOk(applicationPage.hasDarkClass, 'class .dark is absent by default');
     await demoPage.demoTabs.darkModeToggle.component.clickOnLightOption();
-    assert.notOk(demoPage.demoTabs.darkModeToggle.applicationContainer.hasDarkClass, 'class .dark is absent when Light mode is selected');
+    assert.notOk(applicationPage.hasDarkClass, 'class .dark is absent when Light mode is selected');
     await demoPage.demoTabs.darkModeToggle.component.clickOnDarkOption();
-    assert.ok(demoPage.demoTabs.darkModeToggle.applicationContainer.hasDarkClass, 'class .dark is present when Dark mode is selected');
+    assert.ok(applicationPage.hasDarkClass, 'class .dark is present when Dark mode is selected');
     await demoPage.demoTabs.darkModeToggle.component.clickOnSystemOption();
     setSystemPreference(this.owner.lookup('service:dark-mode'), 'light');
-    assert.notOk(
-      demoPage.demoTabs.darkModeToggle.applicationContainer.hasDarkClass,
-      'class .dark is absent when System mode is selected & system preference is Light',
-    );
+    assert.notOk(applicationPage.hasDarkClass, 'class .dark is absent when System mode is selected & system preference is Light');
     setSystemPreference(this.owner.lookup('service:dark-mode'), 'dark');
-    assert.ok(
-      demoPage.demoTabs.darkModeToggle.applicationContainer.hasDarkClass,
-      'class .dark is present when System mode is selected & system preference is Dark',
-    );
+    assert.ok(applicationPage.hasDarkClass, 'class .dark is present when System mode is selected & system preference is Dark');
   });
 });
