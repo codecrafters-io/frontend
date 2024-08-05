@@ -102,7 +102,7 @@
     "@typescript-eslint/parser": "^6.21.0",
     "@uiw/codemirror-theme-github": "^4.23.0",
     "@vercel/edge": "^1.1.2",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "broccoli-asset-rev": "^3.0.0",
     "canvas-confetti": "^1.9.3",
     "codemirror": "^6.0.1",
