@@ -67,7 +67,6 @@ module('Acceptance | view-team-test', function (hooks) {
 
     await teamPage.visit({ team_id: team.id });
     assert.strictEqual(teamPage.members.length, 4, 'expected 4 members to be present');
-    assert.notOk(teamPage.subscriptionSettingsContainer.hasManageSubscriptionButton, 'manage subscription button must not be enabled for user');
 
     assert.strictEqual(
       teamPage.inviteURLDescription,

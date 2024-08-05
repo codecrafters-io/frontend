@@ -3,7 +3,6 @@ import AccountDropdown from 'codecrafters-frontend/tests/pages/components/accoun
 
 export default create({
   accountDropdown: AccountDropdown,
-  clickOnManageSubscriptionButton: clickable('[data-test-manage-subscription-button]'),
   inviteURLDescription: text('[data-test-invite-url-description]'),
 
   members: collection('[data-test-members-list-item-container]', {
@@ -32,7 +31,6 @@ export default create({
 
   subscriptionSettingsContainer: {
     instructionsText: text('[data-test-instructions-text]'),
-    hasManageSubscriptionButton: isVisible('[data-test-manage-subscription-button]'),
     scope: '[data-test-subscription-settings-container]',
   },
 

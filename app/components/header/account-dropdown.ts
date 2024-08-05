@@ -17,8 +17,6 @@ export default class AccountDropdownComponent extends Component {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  @tracked isCreatingBillingSession = false;
-
   get currentUser() {
     return this.authenticator.currentUser;
   }
