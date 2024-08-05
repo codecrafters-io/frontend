@@ -8,7 +8,8 @@
 .has-prism-highlighting pre[class*='language-']:is(.dark *) {
   color: white;
   background: none;
-  text-shadow: 0 -0.1em 0.2em black;
+  /* Disabled, looks bad in dark mode */
+  /* text-shadow: 0 -0.1em 0.2em black; */
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 1em;
   text-align: left;
