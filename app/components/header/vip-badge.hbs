@@ -1,5 +1,16 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="text-xs text-white font-semibold bg-teal-500 rounded px-1.5 py-1 flex items-center" data-test-vip-badge ...attributes>
   VIP
+
   {{svg-jar "shield-check" class="w-4 ml-1 fill-current"}}
+
+  {{#if this.currentUser.vipStatusExpiresAt}}
+    <EmberTooltip
+      @text="You have access to all CodeCrafters content & membership features until {{date-format
+        this.currentUser.vipStatusExpiresAt
+        format="PPP"
+      }}."
+    />
+  {{else}}
+    <EmberTooltip @text="You have access to all CodeCrafters content & membership features." />
+  {{/if}}
 </div>
