@@ -51,7 +51,7 @@ module.exports = {
       },
       colors: {
         gray: {
-          925: '#050A17',
+          925: '#0A1120',
         },
       },
       typography: {
