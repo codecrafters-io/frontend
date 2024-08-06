@@ -2,9 +2,9 @@
 
 {{page-title "CodeCrafters"}}
 
-<BasicDropdownWormhole />
-
 <div class="min-h-screen {{if this.darkMode.isEnabled 'dark bg-gray-950' 'bg-gray-50'}}" id="application-container" data-test-application-container>
+  <BasicDropdownWormhole />
+
   {{#if this.layout.shouldShowHeader}}
     <Header />
   {{/if}}
