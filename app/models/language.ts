@@ -14,6 +14,7 @@ import grayLogoJava from '/assets/images/language-logos/java-gray-500.svg';
 import grayLogoJavascript from '/assets/images/language-logos/javascript-gray-500.svg';
 import grayLogoKotlin from '/assets/images/language-logos/kotlin-gray-500.svg';
 import grayLogoNim from '/assets/images/language-logos/nim-gray-500.svg';
+import grayLogoOcaml from '/assets/images/language-logos/ocaml-gray-500.svg';
 import grayLogoPhp from '/assets/images/language-logos/php-gray-500.svg';
 import grayLogoPython from '/assets/images/language-logos/python-gray-500.svg';
 import grayLogoReasonml from '/assets/images/language-logos/reasonml-gray-500.svg';
@@ -37,6 +38,7 @@ import tealLogoJava from '/assets/images/language-logos/java-teal-500.svg';
 import tealLogoJavascript from '/assets/images/language-logos/javascript-teal-500.svg';
 import tealLogoKotlin from '/assets/images/language-logos/kotlin-teal-500.svg';
 import tealLogoNim from '/assets/images/language-logos/nim-teal-500.svg';
+import tealLogoOcaml from '/assets/images/language-logos/ocaml-teal-500.svg';
 import tealLogoPhp from '/assets/images/language-logos/php-teal-500.svg';
 import tealLogoPython from '/assets/images/language-logos/python-teal-500.svg';
 import tealLogoReasonml from '/assets/images/language-logos/reasonml-teal-500.svg';
@@ -70,6 +72,7 @@ export default class LanguageModel extends Model {
       javascript: grayLogoJavascript,
       kotlin: grayLogoKotlin,
       nim: grayLogoNim,
+      ocaml: grayLogoOcaml,
       php: grayLogoPhp,
       python: grayLogoPython,
       reasonml: grayLogoReasonml,
@@ -122,6 +125,7 @@ export default class LanguageModel extends Model {
       javascript: tealLogoJavascript,
       kotlin: tealLogoKotlin,
       nim: tealLogoNim,
+      ocaml: tealLogoOcaml,
       php: tealLogoPhp,
       python: tealLogoPython,
       reasonml: tealLogoReasonml,
