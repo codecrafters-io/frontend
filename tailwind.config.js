@@ -58,6 +58,12 @@ module.exports = {
         DEFAULT: {
           css: {
             '--tw-prose-links': colors.sky[500],
+            '--tw-prose-code': colors.slate[700],
+            '--tw-prose-pre-bg': colors.slate[100],
+            '--tw-prose-pre-code': colors.slate[700],
+            '--tw-prose-invert-code': colors.slate[200],
+            '--tw-prose-invert-pre-bg': colors.slate[800],
+            '--tw-prose-invert-pre-code': colors.slate[200],
             maxWidth: '90ch', // Default is 65ch
             a: {
               fontWeight: '600',
@@ -81,21 +87,17 @@ module.exports = {
               content: 'none',
             },
             code: {
-              color: colors.slate[700],
               fontWeight: 'normal',
+              backgroundColor: 'var(--tw-prose-pre-bg)',
               padding: '0.2em 0.4em',
-              backgroundColor: colors.slate[100],
               borderRadius: '4px',
               whiteSpace: 'nowrap',
             },
             'code::before': { content: 'none' },
             'code::after': { content: 'none' },
-            pre: {
-              color: colors.slate[700],
-              backgroundColor: colors.slate[100],
-            },
           },
         },
+
         blue: {
           css: {
             '--tw-prose-body': colors.sky[700],
@@ -135,79 +137,87 @@ module.exports = {
             },
           },
         },
-        'blue-invert': {
-          css: {
-            '--tw-prose-body': colors.sky[300],
-            '--tw-prose-headings': colors.sky[300],
-            '--tw-prose-lead': colors.sky[300],
-            '--tw-prose-links': colors.sky[200],
-            '--tw-prose-bold': colors.sky[300],
-            '--tw-prose-counters': colors.sky[300],
-            '--tw-prose-bullets': colors.sky[300],
-            '--tw-prose-hr': colors.sky[300],
-            '--tw-prose-quotes': colors.sky[300],
-            '--tw-prose-quote-borders': colors.sky[300],
-            '--tw-prose-captions': colors.sky[300],
-            '--tw-prose-code': colors.sky[300],
-            '--tw-prose-pre-code': colors.sky[300],
-            '--tw-prose-pre-bg': colors.sky[800],
-            '--tw-prose-th-borders': colors.sky[300],
-            '--tw-prose-td-borders': colors.sky[300],
-            'a:hover': {
-              color: colors.sky[200],
-            },
-          },
-        },
+
         green: {
           css: {
-            color: colors.green[800],
-            a: { color: colors.green[800] },
-            strong: { color: colors.green[800] },
-            b: { color: colors.green[800] },
-            pre: {
-              color: colors.green[800],
-              backgroundColor: colors.green[200],
-              borderWidth: '1px',
-              borderColor: colors.green[300],
-            },
-            h3: {
-              color: colors.green[800],
+            '--tw-prose-body': colors.green[700],
+            '--tw-prose-headings': colors.green[700],
+            '--tw-prose-lead': colors.green[700],
+            '--tw-prose-links': colors.green[800],
+            '--tw-prose-bold': colors.green[700],
+            '--tw-prose-counters': colors.green[700],
+            '--tw-prose-bullets': colors.green[700],
+            '--tw-prose-hr': colors.green[700],
+            '--tw-prose-quotes': colors.green[700],
+            '--tw-prose-quote-borders': colors.green[700],
+            '--tw-prose-captions': colors.green[700],
+            '--tw-prose-code': colors.green[700],
+            '--tw-prose-pre-code': colors.green[700],
+            '--tw-prose-pre-bg': colors.green[700],
+            '--tw-prose-th-borders': colors.green[700],
+            '--tw-prose-td-borders': colors.green[700],
+            '--tw-prose-invert-body': colors.green[500],
+            '--tw-prose-invert-headings': colors.green[500],
+            '--tw-prose-invert-lead': colors.green[500],
+            '--tw-prose-invert-links': colors.green[500],
+            '--tw-prose-invert-bold': colors.green[500],
+            '--tw-prose-invert-counters': colors.green[500],
+            '--tw-prose-invert-bullets': colors.green[500],
+            '--tw-prose-invert-hr': colors.green[500],
+            '--tw-prose-invert-quotes': colors.green[500],
+            '--tw-prose-invert-quote-borders': colors.green[500],
+            '--tw-prose-invert-captions': colors.green[500],
+            '--tw-prose-invert-code': colors.green[500],
+            '--tw-prose-invert-pre-code': colors.green[500],
+            '--tw-prose-invert-pre-bg': colors.green[500],
+            '--tw-prose-invert-th-borders': colors.green[500],
+            '--tw-prose-invert-td-borders': colors.green[500],
+            'a:hover': {
+              color: colors.green[400],
             },
           },
         },
-        'green-invert': {
-          css: {
-            color: colors.green[300],
-            a: { color: colors.green[300] },
-            strong: { color: colors.green[300] },
-            b: { color: colors.green[300] },
-            pre: {
-              color: colors.green[300],
-              backgroundColor: colors.green[800],
-              borderWidth: '1px',
-              borderColor: colors.green[700],
-            },
-            h3: {
-              color: colors.green[300],
-            },
-          },
-        },
+
         red: {
           css: {
-            color: colors.red[700],
-            a: { color: colors.red[700] },
-            strong: { color: colors.red[700] },
-            b: { color: colors.red[700] },
-            ul: {
-              listStyleType: 'disc',
-              li: {
-                '&::marker': {
-                  color: colors.red[300],
-                },
-              },
+            '--tw-prose-body': colors.red[700],
+            '--tw-prose-headings': colors.red[700],
+            '--tw-prose-lead': colors.red[700],
+            '--tw-prose-links': colors.red[800],
+            '--tw-prose-bold': colors.red[700],
+            '--tw-prose-counters': colors.red[700],
+            '--tw-prose-bullets': colors.red[700],
+            '--tw-prose-hr': colors.red[700],
+            '--tw-prose-quotes': colors.red[700],
+            '--tw-prose-quote-borders': colors.red[700],
+            '--tw-prose-captions': colors.red[700],
+            '--tw-prose-code': colors.red[700],
+            '--tw-prose-pre-code': colors.red[700],
+            '--tw-prose-pre-bg': colors.red[700],
+            '--tw-prose-th-borders': colors.red[700],
+            '--tw-prose-td-borders': colors.red[700],
+            '--tw-prose-invert-body': colors.red[500],
+            '--tw-prose-invert-headings': colors.red[500],
+            '--tw-prose-invert-lead': colors.red[500],
+            '--tw-prose-invert-links': colors.red[500],
+            '--tw-prose-invert-bold': colors.red[500],
+            '--tw-prose-invert-counters': colors.red[500],
+            '--tw-prose-invert-bullets': colors.red[500],
+            '--tw-prose-invert-hr': colors.red[500],
+            '--tw-prose-invert-quotes': colors.red[500],
+            '--tw-prose-invert-quote-borders': colors.red[500],
+            '--tw-prose-invert-captions': colors.red[500],
+            '--tw-prose-invert-code': colors.red[500],
+            '--tw-prose-invert-pre-code': colors.red[500],
+            '--tw-prose-invert-pre-bg': colors.red[500],
+            '--tw-prose-invert-th-borders': colors.red[500],
+            '--tw-prose-invert-td-borders': colors.red[500],
+            'a:hover': {
+              color: colors.red[400],
             },
           },
         },
+
         compact: {
           css: {
             ':where(p):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
@@ -230,18 +240,6 @@ module.exports = {
             pre: {
               marginTop: '0.5em',
               marginBottom: '0.5em',
-            },
-          },
-        },
-        invert: {
-          css: {
-            code: {
-              color: colors.slate[300],
-              backgroundColor: colors.slate[800],
-            },
-            pre: {
-              color: colors.slate[200],
-              backgroundColor: colors.slate[900],
             },
           },
         },
