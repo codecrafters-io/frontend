@@ -4,9 +4,9 @@
     <dd.Trigger>
       <button
         type="button"
-        class="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-gray-800
-          {{if dd.isOpen 'bg-gray-50 dark:bg-gray-900' 'bg-white dark:bg-gray-925'}}
-          shadow-sm px-4 py-2 text-sm font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-none"
+        class="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-white/10
+          {{if dd.isOpen 'bg-gray-50 dark:bg-gray-800' 'bg-white dark:bg-gray-900'}}
+          shadow-sm px-4 py-2 text-sm font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
         data-test-language-dropdown-trigger
       >
         <span class="mr-1" data-test-current-language-name>
@@ -21,7 +21,7 @@
       </button>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white dark:bg-gray-925 rounded-lg shadow-lg border dark:border-gray-800 py-2 my-1 w-56" data-test-language-dropdown-content>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-white/10 py-2 my-1 w-56" data-test-language-dropdown-content>
         {{#if @shouldShowAllLanguagesOption}}
           <AllLanguagesDropdownLink
             @isSelected={{this.isAllLanguagesOptionSelected}}

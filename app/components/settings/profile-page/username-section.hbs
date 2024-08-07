@@ -3,7 +3,7 @@
     {{! template-lint-disable require-input-label }}
     <Input
       @value={{@user.username}}
-      class="text-sm rounded px-3 py-2 bg-gray-50 border dark:border-gray-800 w-full text-gray-500 font-mono cursor-not-allowed dark:bg-gray-900"
+      class="text-sm rounded px-3 py-2 bg-gray-50 border dark:border-white/10 w-full text-gray-500 dark:text-gray-400 font-mono cursor-not-allowed dark:bg-gray-700"
       placeholder="cool_username"
       disabled={{true}}
     />
@@ -15,7 +15,7 @@
     {{/if}}
   </div>
 
-  <div class="text-gray-500 text-xs mt-2">
+  <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
     {{#if @user.hasAnonymousModeEnabled}}
       Your profile has anonymous mode enabled. Your GitHub username is not visible to others.
     {{else}}

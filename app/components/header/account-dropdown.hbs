@@ -2,18 +2,19 @@
 <BasicDropdown @horizontalPosition="right" @destination="application-container" as |dd|>
   <dd.Trigger>
     <div
-      class="text-gray-600 dark:text-gray-300 flex items-center justify-between py-3 outline-none w-full sm:w-auto"
+      class="flex items-center justify-between py-3 outline-none w-full sm:w-auto
+        {{if dd.isOpen 'text-gray-900 dark:text-gray-100' 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}}"
       data-test-account-dropdown-trigger
     >
       <span class="mr-0.5 text-sm md:text-xs">
         {{this.authenticator.currentUsername}}
       </span>
 
-      {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform " (if dd.isOpen "text-teal-500" ""))}}
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border dark:border-gray-800 rounded shadow max-w-xl bg-white dark:bg-gray-925" data-test-account-dropdown-content>
+    <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-800" data-test-account-dropdown-content>
       {{#if this.currentUser.hasActiveSubscription}}
         <Header::AccountDropdownLink
           @text="Manage Membership"
@@ -71,7 +72,7 @@
         <DarkModeToggleWithUpgradePrompt @size="small" />
       </div>
 
-      <div class="h-px my-2 mx-3 bg-gray-200 dark:bg-gray-800/60" />
+      <div class="h-px my-2 mx-3 bg-gray-200 dark:bg-white/5" />
 
       <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>

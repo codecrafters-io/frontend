@@ -24,7 +24,7 @@ export default class ContestPageLeaderboardEntryComponent extends Component<Sign
         return 'dark:border-green-500';
       }
     } else {
-      return 'dark:border-gray-800 dark:hover:border-gray-700';
+      return 'dark:border-white/10 dark:hover:border-gray-700';
     }
   }
 

@@ -13,7 +13,7 @@
   </AlertWithIcon>
 
   {{#if (gt this.model.courseStage.concepts.length 0)}}
-    <div class="border-b dark:border-gray-800/60 pb-1 mb-6 flex items-center gap-2">
+    <div class="border-b dark:border-white/5 pb-1 mb-6 flex items-center gap-2">
       <h1 class="text-xl text-gray-700 dark:text-gray-100 font-bold tracking-tighter">Related to this stage</h1>
 
       <div>
@@ -30,7 +30,7 @@
   {{/if}}
 
   {{#if (gt this.model.courseStage.otherConceptsForCourse.length 0)}}
-    <div class="border-b dark:border-gray-800/60 pb-1 mb-6 flex items-center gap-2">
+    <div class="border-b dark:border-white/5 pb-1 mb-6 flex items-center gap-2">
       <h1 class="text-xl text-gray-700 dark:text-gray-100 font-bold tracking-tighter">Related to this challenge</h1>
       <div>
         {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 dark:text-gray-800 hover:text-gray-300 dark:hover:text-gray-700"}}

@@ -15,7 +15,7 @@
         {{on "click" this.handleToggle}}
         data-test-anonymous-mode-toggle
       />
-      <div class="text-gray-500 text-sm">Enable anonymous mode</div>
+      <div class="text-gray-500 dark:text-gray-400 text-sm">Enable anonymous mode</div>
 
       {{#unless @user.canAccessMembershipBenefits}}
         {{#if @user.hasAnonymousModeEnabled}}
@@ -25,7 +25,7 @@
         {{/if}}
       {{/unless}}
     </div>
-    <p class="text-gray-500 text-xs mt-4 leading-relaxed">
+    <p class="text-gray-500 dark:text-gray-400 text-xs mt-4 leading-relaxed">
       When anonymous mode is enabled, your GitHub username &amp; avatar will be hidden on CodeCrafters. Your code examples &amp; profile page will
       still be visible to the public, but under a random username.
       <a href="https://codecrafters.io/anon" target="_blank" class="underline" rel="noopener noreferrer">Learn more.</a>

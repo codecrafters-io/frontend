@@ -1,8 +1,12 @@
-{{! @glint-nocheck: not typesafe yet }}
 {{#if (eq @type "route")}}
-  <LinkTo @route={{@route}} class="text-sm text-gray-600 dark:text-gray-200" data-test-header-link ...attributes>
+  <LinkTo
+    @route={{@route}}
+    class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+    data-test-header-link
+    ...attributes
+  >
     {{@text}}
   </LinkTo>
 {{else if (eq @type "link")}}
-  <a href={{@route}} class="text-sm text-gray-600 dark:text-gray-200" ...attributes>{{@text}}</a>
+  <a href={{@route}} class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" ...attributes>{{@text}}</a>
 {{/if}}

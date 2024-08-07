@@ -1,17 +1,17 @@
 <div
-  class="bg-gray-100 dark:bg-gray-950 border-r border-gray-300 dark:border-gray-800/60 flex flex-col pt-4 px-3"
+  class="bg-gray-100 dark:bg-gray-900 border-r border-gray-300 dark:border-white/5 flex flex-col pt-4 px-3"
   data-test-course-page-sidebar
   ...attributes
 >
   <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} />
 
   <div class="px-3 mt-1">
-    <div class="h-px bg-gray-200 dark:bg-gray-800/60 w-full"></div>
+    <div class="h-px bg-gray-200 dark:bg-white/5 w-full"></div>
   </div>
 
   {{! Top fade for scrollable area below }}
   <div class="relative pointer-events-none">
-    <div class="absolute top-0 left-0 right-0 w-full h-4 bg-gradient-to-b from-10% from-gray-100 dark:from-black to-transparent" />
+    <div class="absolute top-0 left-0 right-0 w-full h-4 bg-gradient-to-b from-10% from-gray-100 dark:from-gray-900 to-transparent" />
   </div>
 
   <div class="flex-grow overflow-y-auto pt-4">
@@ -26,10 +26,10 @@
 
   {{! Bottom fade for scrollable area above }}
   <div class="relative pointer-events-none">
-    <div class="absolute bottom-0 left-0 right-0 w-full h-6 bg-gradient-to-t from-10% from-gray-100 dark:from-black to-transparent" />
+    <div class="absolute bottom-0 left-0 right-0 w-full h-6 bg-gradient-to-t from-10% from-gray-100 dark:from-gray-900 to-transparent" />
   </div>
 
-  <div class="flex flex-col pt-2 border-t dark:border-gray-800/60">
+  <div class="flex flex-col pt-2 border-t dark:border-white/5">
     <CoursePage::Sidebar::Button @icon="chevron-left" @text="Collapse" {{on "click" @onCollapseButtonClick}} data-test-collapse-sidebar-button />
   </div>
 

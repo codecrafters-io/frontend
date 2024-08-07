@@ -1,13 +1,13 @@
 <LinkTo
   @route="course.stage.instructions"
   @models={{array @stage.course.slug @stage.identifierForURL}}
-  class="block hover:bg-gray-50 dark:hover:bg-gray-900 py-1.5 -mx-1.5 px-1.5 rounded"
+  class="block hover:bg-gray-50 dark:hover:bg-gray-700/50 py-1.5 -mx-1.5 px-1.5 rounded"
   data-test-stage-list-item
   ...attributes
 >
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <div class="w-2 h-2 {{if @isComplete 'bg-teal-500' 'bg-gray-200 dark:bg-gray-800'}} rounded-full mr-2"></div>
+      <div class="w-2 h-2 {{if @isComplete 'bg-teal-500' 'bg-gray-200 dark:bg-gray-700'}} rounded-full mr-2"></div>
 
       {{! TODO: Qualify all heroicons with solid/outline }}
       {{svg-jar "terminal-outline" class="w-6 mr-2 text-gray-400 dark:text-gray-600"}}
