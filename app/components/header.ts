@@ -35,8 +35,8 @@ export default class HeaderComponent extends Component<Signature> {
     return this.authenticator.currentUser;
   }
 
-  get links() {
-    const links = [
+  get links(): { text: string; route: string; type: 'route' | 'link' }[] {
+    const links: { text: string; route: string; type: 'route' | 'link' }[] = [
       { text: 'Catalog', route: 'catalog', type: 'route' },
       { text: 'Badges', route: 'badges', type: 'route' },
       { text: 'Vote', route: 'vote', type: 'route' },

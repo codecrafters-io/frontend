@@ -2,14 +2,15 @@
 <BasicDropdown @horizontalPosition="right" @destination="application-container" as |dd|>
   <dd.Trigger>
     <div
-      class="text-gray-600 dark:text-gray-300 flex items-center justify-between py-3 outline-none w-full sm:w-auto"
+      class="flex items-center justify-between py-3 outline-none w-full sm:w-auto
+        {{if dd.isOpen 'text-gray-900 dark:text-gray-100' 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}}"
       data-test-account-dropdown-trigger
     >
       <span class="mr-0.5 text-sm md:text-xs">
         {{this.authenticator.currentUsername}}
       </span>
 
-      {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform " (if dd.isOpen "text-teal-500" ""))}}
     </div>
   </dd.Trigger>
   <dd.Content>
