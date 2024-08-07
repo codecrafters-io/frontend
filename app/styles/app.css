@@ -173,11 +173,11 @@
 }
 
 .has-prism-highlighting pre[class*='language-'] {
-  background-color: #f1f5f9;
+  background-color: #f1f5f9; /* slate-100 */
 }
 
 .has-prism-highlighting pre[class*='language-']:is(.dark *) {
-  background-color: #1e293b;
+  background-color: #334155; /* slate-700 */
 }
 
 .sortable-item {
