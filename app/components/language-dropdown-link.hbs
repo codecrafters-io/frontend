@@ -1,11 +1,11 @@
 <div
-  class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+  class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer"
   role="button"
   data-test-language-link
   {{on "click" @onClick}}
 >
   <div class="flex items-center mr-8">
-    <span class="{{if (or @isRequested @isSelected) 'font-semibold'}} text-gray-800 dark:text-gray-100">
+    <span class="{{if (or @isRequested @isSelected) 'font-semibold'}} text-gray-800 dark:text-gray-200">
       {{@language.name}}
     </span>
   </div>

@@ -1,9 +1,9 @@
 <div
-  class="flex flex-col items-stretch rounded bg-white dark:bg-gray-925 w-full max-w-2xl border border-gray-300 dark:border-white/5 overflow-y-hidden"
+  class="flex flex-col items-stretch rounded bg-white dark:bg-gray-800 w-full max-w-2xl border border-gray-300 dark:border-white/10 overflow-y-hidden"
   ...attributes
   data-test-copyable-terminal-command
 >
-  <div class="border-b border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-900 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
+  <div class="border-b border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-700/50 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
     <div class="flex items-center gap-2">
       {{#if (gt @variantLabels.length 1)}}
         <div class="flex items-center gap-1">
@@ -12,7 +12,7 @@
               type="button"
               class="text-xs rounded px-1.5 py-0.5
                 {{if (eq variantLabel @selectedVariantLabel) 'text-white bg-teal-500 dark:bg-teal-500/60'}}
-                {{if (not-eq variantLabel @selectedVariantLabel) 'text-gray-800 bg-gray-200 dark:text-gray-200 dark:bg-white/5'}}
+                {{if (not-eq variantLabel @selectedVariantLabel) 'text-gray-800 bg-gray-200 dark:text-gray-200 dark:bg-white/10'}}
                 "
               {{! @glint-expect-error @onVariantSelect is nullable}}
               {{on "click" (fn @onVariantLabelClick variantLabel)}}
@@ -25,7 +25,7 @@
       {{else}}
         <div class="flex items-center gap-1">
           {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-500"}}
-          <span class="text-gray-500 dark:text-gray-500 text-xs">command line</span>
+          <span class="text-gray-500 dark:text-gray-400 text-xs">command line</span>
         </div>
       {{/if}}
     </div>
