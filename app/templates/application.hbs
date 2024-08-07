@@ -3,7 +3,9 @@
 {{page-title "CodeCrafters"}}
 
 <div class="min-h-screen {{if this.darkMode.isEnabled 'dark bg-gray-900' 'bg-gray-50'}}" id="application-container" data-test-application-container>
-  <BasicDropdownWormhole />
+  {{! TODO: revive once https://github.com/cibernox/ember-basic-dropdown/issues/931 is out }}
+  {{! <BasicDropdownWormhole /> }}
+  <div id="ember-basic-dropdown-wormhole"></div>
 
   {{#if this.layout.shouldShowHeader}}
     <Header />
