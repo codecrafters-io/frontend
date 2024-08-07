@@ -1,6 +1,6 @@
-<div class="w-full bg-white dark:bg-gray-925" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
+<div class="w-full bg-white dark:bg-gray-800" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
   <div
-    class="bg-gray-100 dark:bg-gray-900 pt-1.5 px-2 border-b border-gray-300 dark:border-white/5 flex items-center
+    class="bg-gray-100 dark:bg-gray-700/50 pt-1.5 px-2 border-b border-gray-300 dark:border-white/10 flex items-center
       {{if this.isReplying '' 'rounded-t'}}"
   >
     <div class="transform translate-y-px flex">
@@ -24,7 +24,7 @@
         <Textarea
           {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
           @value={{this.comment.bodyMarkdown}}
-          class="text-black dark:text-white leading-relaxed border border-gray-300 dark:border-white/5 rounded w-full p-2 text-sm bg-gray-100 dark:bg-gray-900 focus:bg-white dark:focus:bg-gray-925 placeholder-gray-500 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-600"
+          class="text-black dark:text-white leading-relaxed border border-gray-300 dark:border-white/10 rounded w-full p-2 text-sm bg-gray-100 dark:bg-gray-800 focus:bg-white dark:focus:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-600"
           placeholder={{this.placeholderText}}
           rows="5"
           required="true"
