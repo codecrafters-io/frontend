@@ -7,7 +7,7 @@
   </AlertWithIcon>
 
   {{#if this.selectedScreencast}}
-    <div class="border-b dark:border-gray-800/60 mb-8 scroll-mt-16" {{did-insert this.handleDidInsertScreencastPlayer}}>
+    <div class="border-b dark:border-white/5 mb-8 scroll-mt-16" {{did-insert this.handleDidInsertScreencastPlayer}}>
       {{! @glint-expect-error: not typesafe yet }}
       <CourseStageScreencastPlayer @screencast={{this.selectedScreencast}} />
 

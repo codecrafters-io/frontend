@@ -1,6 +1,6 @@
 <div data-test-comment-list {{did-update this.loadComments @courseStage}}>
   <CoursePage::CommentTimelineItem @author={{this.currentUser}}>
-    <div class="shadow-sm rounded border border-gray-300 dark:border-gray-800/60 w-full mb-4">
+    <div class="shadow-sm rounded border border-gray-300 dark:border-white/5 w-full mb-4">
       {{! TODO: Pass in language here so that users can choose whether their comment is language-specific }}
       <CommentForm @target={{@courseStage}} @commentModelType="course-stage-comment" class="rounded" />
     </div>
@@ -14,7 +14,7 @@
   {{else}}
     {{#each this.sortedComments key="id" as |comment|}}
       <CoursePage::CommentTimelineItem @author={{comment.user}}>
-        <div class="shadow-sm rounded border border-gray-300 dark:border-gray-800/60 w-full mb-4">
+        <div class="shadow-sm rounded border border-gray-300 dark:border-white/5 w-full mb-4">
           {{! @glint-expect-error Not ts-ified yet }}
           <CommentCard @comment={{comment}} />
         </div>
@@ -42,7 +42,7 @@
       {{#if this.rejectedCommentsAreExpanded}}
         {{#each this.rejectedComments key="id" as |comment|}}
           <CoursePage::CommentTimelineItem @author={{comment.user}}>
-            <div class="shadow-sm rounded border border-gray-300 dark:border-gray-800/60 w-full mb-4">
+            <div class="shadow-sm rounded border border-gray-300 dark:border-white/5 w-full mb-4">
               {{! @glint-expect-error Not ts-ified yet }}
               <CommentCard @comment={{comment}} />
             </div>
