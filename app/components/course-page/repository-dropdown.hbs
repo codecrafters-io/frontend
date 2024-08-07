@@ -36,92 +36,92 @@
     </dd.Trigger>
     <dd.Content>
       <div
-        class="bg-white dark:bg-gray-925 rounded-lg shadow-lg border dark:border-white/10 py-2 my-1 max-h-[75vh] overflow-y-auto"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-white/10 py-2 my-1 max-h-[75vh] overflow-y-auto"
         data-test-repository-dropdown-content
       >
-        <div class="text-sm text-gray-700 dark:text-gray-300">
-          <CoursePage::RepositoryDropdownAction @icon="login" {{on "click" (fn this.handleBackToCatalogButtonClick dd.actions)}}>
-            Back to Catalog
-          </CoursePage::RepositoryDropdownAction>
+        <CoursePage::RepositoryDropdownAction @icon="login" {{on "click" (fn this.handleBackToCatalogButtonClick dd.actions)}}>
+          Back to Catalog
+        </CoursePage::RepositoryDropdownAction>
 
-          <div
-            {{! @glint-expect-error model.isNew has wrong type !}}
-            class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex group {{if @activeRepository.isNew 'text-gray-300 dark:text-gray-700'}}"
-            role="button"
-            {{on "click" (fn this.handleCopyGitRepositoryURLClick dd.actions)}}
-            data-test-dropdown-action
-          >
-            <AnimatedContainer @class="w-full">
-              {{#animated-if this.gitRepositoryURLWasCopiedRecently use=this.transition}}
-                <div class="flex items-center justify-between">
-                  <span class="text-teal-500">Copied!</span>
-                  {{svg-jar "check" class="w-5 ml-4 text-teal-500"}}
-                </div>
-              {{else}}
-                <div class="flex items-center justify-between">
-                  <span>Copy Git Repository URL</span>
-                  {{svg-jar
-                    "clipboard-copy"
-                    class="w-5 ml-4 text-gray-300 dark:text-gray-700 {{unless @activeRepository.isNew 'group-hover:text-teal-500 dark:group-hover:text-teal-500'}}"
-                  }}
-                </div>
-              {{/animated-if}}
-            </AnimatedContainer>
+        <div
+          {{! @glint-expect-error model.isNew has wrong type !}}
+          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex group {{if @activeRepository.isNew 'text-gray-300 dark:text-gray-700'}}"
+          role="button"
+          {{on "click" (fn this.handleCopyGitRepositoryURLClick dd.actions)}}
+          data-test-dropdown-action
+        >
+          <AnimatedContainer @class="w-full">
+            {{#animated-if this.gitRepositoryURLWasCopiedRecently use=this.transition}}
+              <div class="flex items-center justify-between">
+                <span class="text-teal-500">Copied!</span>
+                {{svg-jar "check" class="w-5 ml-4 text-teal-500"}}
+              </div>
+            {{else}}
+              <div class="flex items-center justify-between">
+                <span class="text-sm {{unless @activeRepository.isNew 'text-gray-700 dark:text-gray-300' 'text-gray-300 dark:text-gray-600'}}">
+                  Copy Git Repository URL
+                </span>
+                {{svg-jar
+                  "clipboard-copy"
+                  class="w-5 ml-4 text-gray-300 dark:text-gray-700 {{unless @activeRepository.isNew 'group-hover:text-teal-500 dark:group-hover:text-teal-500'}}"
+                }}
+              </div>
+            {{/animated-if}}
+          </AnimatedContainer>
 
-            {{! @glint-expect-error model.isNew has wrong type !}}
-            {{#if @activeRepository.isNew}}
-              <EmberTooltip @text="Please select a language first" />
-            {{/if}}
-          </div>
-
-          {{#if @activeRepository.progressBannerUrl}}
-            <CoursePage::RepositoryDropdownAction @icon="photograph" {{on "click" (fn this.handleCopyGifBannerButtonClick dd.actions)}}>
-              Progress Banner
-            </CoursePage::RepositoryDropdownAction>
+          {{! @glint-expect-error model.isNew has wrong type !}}
+          {{#if @activeRepository.isNew}}
+            <EmberTooltip @text="Please select a language first" />
           {{/if}}
-
-          <CoursePage::RepositoryDropdownAction
-            @icon="github"
-            {{! @glint-expect-error model.isNew has wrong type !}}
-            @isDisabled={{@activeRepository.isNew}}
-            {{on "click" (fn this.handlePublishToGithubButtonClick dd.actions)}}
-          >
-            Publish to GitHub
-
-            {{! @glint-expect-error model.isNew has wrong type !}}
-            {{#if @activeRepository.isNew}}
-              <EmberTooltip @text="Please select a language first" />
-            {{/if}}
-          </CoursePage::RepositoryDropdownAction>
-
-          <CoursePage::RepositoryDropdownAction
-            @icon="beaker"
-            {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
-            {{! @glint-expect-error model.isNew has wrong type !}}
-            @isDisabled={{@activeRepository.isNew}}
-          >
-            Try a different language
-
-            {{! @glint-expect-error model.isNew has wrong type !}}
-            {{#if @activeRepository.isNew}}
-              <EmberTooltip @text="Please select a language first" />
-            {{/if}}
-          </CoursePage::RepositoryDropdownAction>
-
-          {{#unless @activeRepository.isNew}}
-            <CoursePage::RepositoryDropdownAction @icon="refresh" {{on "click" (fn this.handleRetryWithSameLanguageActionClick dd.actions)}}>
-              Retry using
-              {{@activeRepository.language.name}}
-            </CoursePage::RepositoryDropdownAction>
-
-            <CoursePage::RepositoryDropdownAction @icon="trash" {{on "click" (fn this.handleDeleteRepositoryActionClick dd.actions)}}>
-              Delete Repository
-            </CoursePage::RepositoryDropdownAction>
-          {{/unless}}
         </div>
 
+        {{#if @activeRepository.progressBannerUrl}}
+          <CoursePage::RepositoryDropdownAction @icon="photograph" {{on "click" (fn this.handleCopyGifBannerButtonClick dd.actions)}}>
+            Progress Banner
+          </CoursePage::RepositoryDropdownAction>
+        {{/if}}
+
+        <CoursePage::RepositoryDropdownAction
+          @icon="github"
+          {{! @glint-expect-error model.isNew has wrong type !}}
+          @isDisabled={{@activeRepository.isNew}}
+          {{on "click" (fn this.handlePublishToGithubButtonClick dd.actions)}}
+        >
+          Publish to GitHub
+
+          {{! @glint-expect-error model.isNew has wrong type !}}
+          {{#if @activeRepository.isNew}}
+            <EmberTooltip @text="Please select a language first" />
+          {{/if}}
+        </CoursePage::RepositoryDropdownAction>
+
+        <CoursePage::RepositoryDropdownAction
+          @icon="beaker"
+          {{on "click" (fn this.handleTryDifferentLanguageActionClick dd.actions)}}
+          {{! @glint-expect-error model.isNew has wrong type !}}
+          @isDisabled={{@activeRepository.isNew}}
+        >
+          Try a different language
+
+          {{! @glint-expect-error model.isNew has wrong type !}}
+          {{#if @activeRepository.isNew}}
+            <EmberTooltip @text="Please select a language first" />
+          {{/if}}
+        </CoursePage::RepositoryDropdownAction>
+
+        {{#unless @activeRepository.isNew}}
+          <CoursePage::RepositoryDropdownAction @icon="refresh" {{on "click" (fn this.handleRetryWithSameLanguageActionClick dd.actions)}}>
+            Retry using
+            {{@activeRepository.language.name}}
+          </CoursePage::RepositoryDropdownAction>
+
+          <CoursePage::RepositoryDropdownAction @icon="trash" {{on "click" (fn this.handleDeleteRepositoryActionClick dd.actions)}}>
+            Delete Repository
+          </CoursePage::RepositoryDropdownAction>
+        {{/unless}}
+
         {{#if (gt this.nonActiveRepositories.length 0)}}
-          <div class="font-bold text-gray-600 mb-2 mt-3 pl-3 text-sm">
+          <div class="font-bold text-gray-600 dark:text-gray-300 mb-2 mt-3 pl-3 text-sm">
             Switch to a different repo:
           </div>
           {{#each this.nonActiveRepositories as |repository|}}
