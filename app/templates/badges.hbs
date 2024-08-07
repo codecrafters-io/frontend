@@ -1,26 +1,24 @@
 {{page-title "Badges"}}
 
-<div class="dark:bg-gray-900">
-  <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
-    <div class="border-b border-gray-800 pb-2 mb-6">
-      <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">Badges</h1>
-    </div>
+<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+  <div class="border-b border-gray-800 pb-2 mb-6">
+    <h1 class="text-3xl text-gray-200 font-bold tracking-tighter">Badges</h1>
+  </div>
 
-    {{#if this.selectedBadge}}
-      <ModalBackdrop class="backdrop-blur">
-        {{! @glint-expect-error mut types not correct !}}
-        <BadgesPage::BadgeEarnedModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
-      </ModalBackdrop>
-    {{/if}}
+  {{#if this.selectedBadge}}
+    <ModalBackdrop class="backdrop-blur">
+      {{! @glint-expect-error mut types not correct !}}
+      <BadgesPage::BadgeEarnedModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
+    </ModalBackdrop>
+  {{/if}}
 
-    <div class="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-3">
-      {{#each this.sortedBadges as |badge|}}
-        <BadgesPage::BadgeCard @badge={{badge}} {{on "click" (fn this.handleBadgeCardClicked badge)}} />
-      {{/each}}
+  <div class="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-3">
+    {{#each this.sortedBadges as |badge|}}
+      <BadgesPage::BadgeCard @badge={{badge}} {{on "click" (fn this.handleBadgeCardClicked badge)}} />
+    {{/each}}
 
-      {{#each (repeat this.otherBadgesCount)}}
-        <BadgesPage::BadgeCard />
-      {{/each}}
-    </div>
+    {{#each (repeat this.otherBadgesCount)}}
+      <BadgesPage::BadgeCard />
+    {{/each}}
   </div>
 </div>
