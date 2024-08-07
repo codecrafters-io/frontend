@@ -29,9 +29,9 @@ export default class TestRunnerCardComponent extends Component<Signature> {
     if (this.isExpanded) {
       return {
         passed: 'bg-teal-50 dark:bg-teal-900/10',
-        failed: 'bg-white dark:bg-gray-900/10',
+        failed: 'bg-white dark:bg-gray-800/10',
         evaluating: 'bg-yellow-50 dark:bg-yellow-900/10',
-        error_or_not_run: 'bg-white dark:bg-gray-900/10',
+        error_or_not_run: 'bg-white dark:bg-gray-800/10',
       }[this.testsStatus];
     } else {
       return {

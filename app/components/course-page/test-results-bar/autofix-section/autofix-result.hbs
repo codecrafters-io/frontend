@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-3" ...attributes>
-  <div class="bg-gray-900 border border-gray-700 rounded relative flex-shrink-0 flex items-center justify-between">
+  <div class="bg-gray-800 border border-gray-700 rounded relative flex-shrink-0 flex items-center justify-between">
     <div class="flex items-center px-3 py-2 gap-2">
       {{#if (eq @autofixRequest.status "in_progress")}}
         <BlinkingDot @color="yellow" />
@@ -34,7 +34,7 @@
   </div>
 
   {{#if (eq @autofixRequest.status "in_progress")}}
-    <div class="bg-gray-900 border border-gray-700 rounded overflow-y-auto relative flex-grow">
+    <div class="bg-gray-800 border border-gray-700 rounded overflow-y-auto relative flex-grow">
       <div
         class="p-3"
         {{did-insert this.handleMarkdownStreamElementInserted}}
@@ -48,7 +48,7 @@
     </div>
   {{else}}
     {{#if this.shouldShowFullLog}}
-      <div class="bg-gray-900 border border-gray-700 rounded flex-grow overflow-y-auto">
+      <div class="bg-gray-800 border border-gray-700 rounded flex-grow overflow-y-auto">
         <div class="p-3">
           <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
         </div>
@@ -74,7 +74,7 @@
           >Learn more</a>.
         </div>
 
-        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @overlayClass="bg-gray-950 bg-opacity-20">
+        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @overlayClass="bg-gray-900 bg-opacity-20">
           <:content>
             {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
               <FileDiffCard

@@ -1,12 +1,12 @@
 <div
-  class="bg-white dark:bg-gray-900 shadow-sm rounded border border-gray-300 dark:border-gray-800"
+  class="bg-white dark:bg-gray-800 shadow-sm rounded border border-gray-300 dark:border-gray-800"
   data-test-file-contents-card-component
   ...attributes
   {{did-insert this.handleDidInsertContainer}}
 >
   {{! template-lint-disable no-invalid-interactive }}
   <div
-    class="flex items-center bg-gray-100 dark:bg-gray-900 h-8 px-4 relative group/file-contents-card-header
+    class="flex items-center bg-gray-100 dark:bg-gray-800 h-8 px-4 relative group/file-contents-card-header
       {{if @isCollapsed 'rounded border-b-0' 'rounded-t border-b border-gray-200 dark:border-gray-800'}}
       {{if @isCollapsible 'cursor-pointer hover:bg-gray-50' 'cursor-default'}}"
     role={{if @isCollapsible "button"}}
