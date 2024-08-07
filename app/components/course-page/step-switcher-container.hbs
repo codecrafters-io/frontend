@@ -4,7 +4,7 @@
       @route={{this.previousStep.routeParams.route}}
       @models={{this.previousStep.routeParams.models}}
       @replace={{true}}
-      class="rounded-l border-r-0 flex items-center border border-gray-300 dark:border-gray-800 transition-colors duration-75 pl-1 pr-2 py-2 text-gray-500 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
+      class="rounded-l border-r-0 flex items-center border border-gray-300 dark:border-white/10 transition-colors duration-75 pl-1 pr-2 py-2 text-gray-500 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
       data-test-previous-stage-button
     >
       {{svg-jar "chevron-left" class="w-4 fill-current"}}
@@ -12,7 +12,7 @@
     </LinkTo>
   {{else}}
     <div
-      class="rounded-l border-r-0 flex items-center border border-gray-300 dark:border-gray-800 transition-colors duration-75 pl-1 pr-2 py-2 text-gray-500 bg-white dark:bg-gray-800 cursor-not-allowed opacity-30"
+      class="rounded-l border-r-0 flex items-center border border-gray-300 dark:border-white/10 transition-colors duration-75 pl-1 pr-2 py-2 text-gray-500 bg-white dark:bg-gray-800 cursor-not-allowed opacity-30"
       data-test-previous-stage-button
     >
       {{svg-jar "chevron-left" class="w-4 fill-current"}}
@@ -27,7 +27,7 @@
       @route={{this.nextStep.routeParams.route}}
       @models={{this.nextStep.routeParams.models}}
       @replace={{true}}
-      class="rounded-r border-l-0 flex items-center border border-gray-300 dark:border-gray-800 transition-colors duration-75 pr-1 pl-2 py-1.5 text-gray-500 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
+      class="rounded-r border-l-0 flex items-center border border-gray-300 dark:border-white/10 transition-colors duration-75 pr-1 pl-2 py-1.5 text-gray-500 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800"
       data-test-next-stage-button
     >
       <span class="text-xs">next</span>
@@ -35,7 +35,7 @@
     </LinkTo>
   {{else}}
     <div
-      class="rounded-r border-l-0 flex items-center border border-gray-300 dark:border-gray-800 transition-colors duration-75 pr-1 pl-2 py-1.5 text-gray-500 bg-white dark:bg-gray-800 cursor-not-allowed opacity-30"
+      class="rounded-r border-l-0 flex items-center border border-gray-300 dark:border-white/10 transition-colors duration-75 pr-1 pl-2 py-1.5 text-gray-500 bg-white dark:bg-gray-800 cursor-not-allowed opacity-30"
       data-test-next-stage-button
     >
       <span class="text-xs">next</span>

@@ -12,7 +12,7 @@
               type="button"
               class="text-xs rounded px-1.5 py-0.5
                 {{if (eq variantLabel @selectedVariantLabel) 'text-white bg-teal-500 dark:bg-teal-500/60'}}
-                {{if (not-eq variantLabel @selectedVariantLabel) 'text-gray-800 bg-gray-200 dark:text-gray-200 dark:bg-gray-800/60'}}
+                {{if (not-eq variantLabel @selectedVariantLabel) 'text-gray-800 bg-gray-200 dark:text-gray-200 dark:bg-white/5'}}
                 "
               {{! @glint-expect-error @onVariantSelect is nullable}}
               {{on "click" (fn @onVariantLabelClick variantLabel)}}

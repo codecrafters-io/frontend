@@ -1,6 +1,6 @@
 <fieldset aria-label="Select a display theme:" class="flex items-center relative" data-test-dark-mode-toggle ...attributes>
   {{! inset-0 ensures that item borders overlap the outer border !}}
-  <div class="absolute inset-0 rounded-full border border-gray-200 dark:border-gray-800 pointer-events-none">
+  <div class="absolute inset-0 rounded-full border border-gray-200 dark:border-white/10 pointer-events-none">
   </div>
 
   {{#each this.possiblePreferences as |preference preferenceIndex|}}
@@ -11,7 +11,7 @@
         {{if (eq @size 'small') 'p-1' 'p-1.5'}}
         {{if (eq preferenceIndex 1) '-mx-1' ''}}
         {{if (eq this.currentPreference preference) 'bg-gray-200 dark:bg-gray-800'}}
-        {{if (eq this.currentPreference preference) 'border-gray-200 dark:border-gray-800' 'border-transparent'}}"
+        {{if (eq this.currentPreference preference) 'border-gray-200 dark:border-white/10' 'border-transparent'}}"
       {{on "click" (fn this.setPreference preference)}}
     >
       <span class="sr-only">{{preference}}</span>

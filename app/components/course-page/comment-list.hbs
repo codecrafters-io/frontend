@@ -23,7 +23,7 @@
 
     {{#if (and this.currentUser.isStaff (gt this.rejectedComments.length 0))}}
       <div class="flex flex-col items-center">
-        <div class="h-px my-4 bg-gray-200 dark:bg-gray-800/60 w-full" />
+        <div class="h-px my-4 bg-gray-200 dark:bg-white/5 w-full" />
         {{#if this.rejectedCommentsAreExpanded}}
           {{! @glint-expect-error mut helper not typed yet}}
           <TertiaryButton @size="small" {{on "click" (fn (mut this.rejectedCommentsAreExpanded) false)}} class="mb-4">

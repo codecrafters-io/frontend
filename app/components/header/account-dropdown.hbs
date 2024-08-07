@@ -14,7 +14,7 @@
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border dark:border-gray-800 rounded shadow max-w-xl bg-white dark:bg-gray-925" data-test-account-dropdown-content>
+    <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-800" data-test-account-dropdown-content>
       {{#if this.currentUser.hasActiveSubscription}}
         <Header::AccountDropdownLink
           @text="Manage Membership"
@@ -72,7 +72,7 @@
         <DarkModeToggleWithUpgradePrompt @size="small" />
       </div>
 
-      <div class="h-px my-2 mx-3 bg-gray-200 dark:bg-gray-800/60" />
+      <div class="h-px my-2 mx-3 bg-gray-200 dark:bg-white/5" />
 
       <Header::AccountDropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>

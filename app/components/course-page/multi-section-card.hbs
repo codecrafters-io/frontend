@@ -4,7 +4,7 @@
       {{yield to="header"}}
     </div>
 
-    <div class="divide-y divide-gray-200 dark:divide-gray-800/60">
+    <div class="divide-y divide-gray-200 dark:divide-white/5">
       {{#each @sections as |section|}}
         <AnimatedContainer>
           {{#animated-if (eq @expandedSection section) use=this.transition duration=300}}

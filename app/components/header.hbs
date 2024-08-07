@@ -31,7 +31,7 @@
     <div class="hidden md:flex items-center justify-between flex-grow">
       <div class="flex items-center">
         {{! Divider }}
-        <div class="bg-gray-200 dark:bg-gray-800/60 w-px h-5 mr-3"></div>
+        <div class="bg-gray-200 dark:bg-white/5 w-px h-5 mr-3"></div>
 
         {{! Top-level links }}
         {{#each this.links as |link|}}
@@ -50,7 +50,7 @@
             <div
               role="button"
               class="rounded border
-                {{if dd.isOpen 'border-gray-500 dark:border-gray-500' 'border-gray-200 dark:border-gray-800'}}
+                {{if dd.isOpen 'border-gray-500 dark:border-gray-500' 'border-gray-200 dark:border-white/10'}}
                 text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-gray-500 px-2 py-1 text-xs"
               data-test-feedback-button
             >

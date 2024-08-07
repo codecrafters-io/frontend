@@ -11,7 +11,7 @@
       {{#if (has-block "header")}}
         {{yield to="header"}}
       {{else}}
-        <h2 class="font-semibold border-b dark:border-gray-800 pb-2 mb-5 text-lg text-gray-700 dark:text-gray-100">{{@title}}</h2>
+        <h2 class="font-semibold border-b dark:border-white/10 pb-2 mb-5 text-lg text-gray-700 dark:text-gray-100">{{@title}}</h2>
       {{/if}}
 
       <div class="{{if this.isCollapsed 'h-60 overflow-hidden'}}">

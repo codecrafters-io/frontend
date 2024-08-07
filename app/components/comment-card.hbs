@@ -31,13 +31,13 @@
           </span>
         {{/if}}
 
-        <div class="bg-gray-300 dark:bg-gray-800/60 w-1 h-1 mx-1.5 rounded-full"></div>
+        <div class="bg-gray-300 dark:bg-white/5 w-1 h-1 mx-1.5 rounded-full"></div>
         <div class="text-xs text-gray-400 dark:text-gray-600">
           {{date-from-now @comment.createdAt}}
         </div>
 
         {{#if @comment.language}}
-          <div class="bg-gray-300 dark:bg-gray-800/60 w-1 h-1 mx-1.5 rounded-full"></div>
+          <div class="bg-gray-300 dark:bg-white/5 w-1 h-1 mx-1.5 rounded-full"></div>
 
           <Pill @color="gray">
             {{@comment.language.name}}
@@ -127,7 +127,7 @@
           >
             <AvatarImage
               @user={{childComment.user}}
-              class="w-6 h-6 mr-3 filter drop-shadow-sm ring-1 ring-white dark:ring-gray-800/60 rounded-full shadow"
+              class="w-6 h-6 mr-3 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 rounded-full shadow"
             />
           </a>
 

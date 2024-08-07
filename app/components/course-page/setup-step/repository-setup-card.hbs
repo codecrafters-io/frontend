@@ -1,6 +1,6 @@
 <CoursePage::InstructionsCard data-test-repository-setup-card ...attributes>
   <:header>
-    <div class="flex items-center gap-x-3 w-full border-b dark:border-gray-800 pb-2 mb-5">
+    <div class="flex items-center gap-x-3 w-full border-b dark:border-white/10 pb-2 mb-5">
       <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Repository Setup</h2>
       <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} data-test-status-text />
     </div>
@@ -24,7 +24,7 @@
         Continue →
       </PrimaryLinkButton>
     {{else}}
-      <div class="px-4 py-3 bg-gray-50 dark:bg-gray-800 inline-flex rounded border dark:border-gray-800 shadow-sm mt-4">
+      <div class="px-4 py-3 bg-gray-50 dark:bg-gray-800 inline-flex rounded border dark:border-white/10 shadow-sm mt-4">
         <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
       </div>
 
