@@ -6,12 +6,12 @@
   </dd.Trigger>
   <dd.Content>
     <div
-      class="py-2 border dark:border-white/10 rounded shadow text-sm text-gray-600 dark:text-gray-400 min-w-[150px] max-w-xl bg-white dark:bg-gray-925"
+      class="py-2 border dark:border-white/10 rounded shadow text-sm text-gray-600 dark:text-gray-300 min-w-[150px] max-w-xl bg-white dark:bg-gray-800"
       data-test-more-dropdown-content
     >
       {{#if this.shouldShowEditButton}}
         <div
-          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group"
+          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group"
           role="button"
           {{on "click" (fn this.handleEditButtonClick dd.actions)}}
         >
@@ -21,7 +21,7 @@
 
       {{#if this.shouldShowDeleteButton}}
         <div
-          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group text-red-600"
+          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group text-red-600"
           role="button"
           {{on "click" (fn this.handleDeleteButtonClick dd.actions)}}
         >
@@ -34,12 +34,12 @@
           href={{@comment.adminPanelEditUrl}}
           target="_blank"
           rel="noopener noreferrer"
-          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group"
+          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group"
         >
           Edit as admin
         </a>
 
-        <div class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group">
+        <div class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group">
           Score:
           <span class="font-mono">{{round @comment.score}}</span>
         </div>
