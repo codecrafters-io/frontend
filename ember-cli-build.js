@@ -95,6 +95,25 @@ module.exports = function (defaults) {
     packagerOptions: {
       publicAssetURL: '/',
       webpackConfig: {
+        resolve: {
+          fallback: {
+            async_hooks: false,
+            child_process: false,
+            crypto: require.resolve('crypto-browserify'),
+            fs: false, // require.resolve('browserify-fs'),
+            http: require.resolve('stream-http'),
+            https: require.resolve('https-browserify'),
+            net: false, // require.resolve('net-browserify'),
+            os: false, // require.resolve('os-browserify/browser'),
+            path: false, // require.resolve('path-browserify'),
+            process: false, // require.resolve('process/browser'),
+            querystring: false, // require.resolve('querystring-es3'),
+            stream: require.resolve('stream-browserify'),
+            tls: false, // require.resolve('tls-browserify'),
+            vm: require.resolve('vm-browserify'),
+            zlib: false, // require.resolve('browserify-zlib'),
+          },
+        },
         plugins: [
           customFilePlugin('version.txt', config.x.version),
 

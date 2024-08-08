@@ -11,7 +11,14 @@ module.exports = function (/* environment */) {
     */
     buildSandboxGlobals(defaultGlobals) {
       return Object.assign({}, defaultGlobals, {
+        crypto: require('crypto'),
+        global,
+        performance,
+        process,
         AbortController,
+        Buffer,
+        TextDecoder,
+        TextEncoder,
       });
     },
   };
