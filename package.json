@@ -206,6 +206,7 @@
     "@vimeo/player": "^2.23.0",
     "ansi_up": "^6.0.2",
     "array-to-sentence": "^2.0.0",
+    "canvas": "^2.11.2",
     "dompurify": "^3.1.6",
     "fuse.js": "^7.0.0",
     "https-browserify": "^1.0.0",
