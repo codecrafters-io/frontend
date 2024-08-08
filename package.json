@@ -14,6 +14,7 @@
     "tailwind:build": "npx tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css",
     "tailwind:watch": "npx tailwindcss -i ./app/tailwind-input.css -o ./app/styles/tailwind-compiled.css --watch",
     "build": "npm --version && npm run tailwind:build && ember build --environment=production",
+    "build:inspect": "npx --node-options=--inspect ember build --environment=production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
@@ -201,22 +202,31 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.14",
     "@typeform/embed": "^5.0.0",
+    "@types/jsdom": "^21.1.7",
     "@vimeo/player": "^2.23.0",
     "ansi_up": "^6.0.2",
     "array-to-sentence": "^2.0.0",
+    "canvas": "^2.11.2",
     "dompurify": "^3.1.6",
     "fuse.js": "^7.0.0",
+    "https-browserify": "^1.0.0",
+    "jsdom": "^24.1.1",
     "lottie-web": "^5.12.2",
     "mustache": "^4.2.0",
     "node-html-parser": "^6.1.13",
     "player.js": "^0.1.0",
     "posthog-js": "^1.154.5",
     "showdown": "^2.1.0",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
     "three": "^0.167.1",
+    "vm-browserify": "^1.1.2",
     "web-vitals": "^4.2.3"
   },
   "fastbootDependencies": [
-    "crypto"
+    "crypto",
+    "dompurify",
+    "jsdom"
   ],
   "ember-addon": {
     "paths": [

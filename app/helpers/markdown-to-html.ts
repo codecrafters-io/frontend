@@ -1,8 +1,11 @@
 import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 import Helper from '@ember/component/helper';
 import showdown from 'showdown';
+import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { SafeString } from '@ember/template/-private/handlebars';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
 
 export interface Signature {
   Args: {
@@ -12,6 +15,8 @@ export interface Signature {
 }
 
 export default class MarkdownToHtml extends Helper<Signature> {
+  @service declare fastboot: FastBootService;
+
   public compute(positional: [string]): SafeString {
     // Older usages of this helper may not pass in a markdown string, hence the default '' value
     const htmlContent = this.convertMarkdownToHtml(positional[0] || '');
@@ -20,16 +25,18 @@ export default class MarkdownToHtml extends Helper<Signature> {
   }
 
   public convertMarkdownToHtml(markdown: string): string {
-    DOMPurify.removeAllHooks();
+    const DOMPurifyInstance = DOMPurify(this.fastboot.isFastBoot ? new JSDOM('').window : window);
 
-    DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+    DOMPurifyInstance.removeAllHooks();
+
+    DOMPurifyInstance.addHook('afterSanitizeAttributes', (node) => {
       if (node.nodeName === 'A') {
         node.setAttribute('target', '_blank');
         node.setAttribute('rel', 'noopener noreferrer');
       }
     });
 
-    return DOMPurify.sanitize(
+    return DOMPurifyInstance.sanitize(
       new showdown.Converter({
         simplifiedAutoLink: true,
         strikethrough: true,
