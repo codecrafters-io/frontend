@@ -112,6 +112,7 @@ module.exports = function (defaults) {
             tls: false, // require.resolve('tls-browserify'),
             vm: require.resolve('vm-browserify'),
             zlib: false, // require.resolve('browserify-zlib'),
+            canvas: false,
           },
         },
         plugins: [
