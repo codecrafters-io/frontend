@@ -99,7 +99,7 @@ module.exports = function (defaults) {
           fallback: {
             async_hooks: false,
             child_process: false,
-            crypto: require.resolve('crypto-browserify'),
+            crypto: false, // require.resolve('crypto-browserify'),
             fs: false, // require.resolve('browserify-fs'),
             http: require.resolve('stream-http'),
             https: require.resolve('https-browserify'),
