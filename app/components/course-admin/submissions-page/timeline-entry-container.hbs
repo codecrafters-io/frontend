@@ -51,6 +51,11 @@
           {{svg-jar "terminal" class="text-gray-400 w-4 fill-current"}}
           <EmberTooltip @text="Submitted via CLI" />
         </div>
+      {{else if @submission.clientTypeIsSystem}}
+        <div>
+          {{svg-jar "chip" class="text-gray-400 w-4 fill-current"}}
+          <EmberTooltip @text="System submission" />
+        </div>
       {{/if}}
     </div>
   </div>

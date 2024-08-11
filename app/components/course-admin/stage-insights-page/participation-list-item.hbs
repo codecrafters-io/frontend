@@ -3,7 +3,7 @@
   data-test-version-list-item
   role="button"
   @route="course-admin.submissions"
-  @query={{hash usernames=@participation.user.username languages=@participation.language.slug}}
+  @query={{hash usernames=@participation.user.username languages=@participation.language.slug course_stage_slugs=@participation.stage.slug}}
   ...attributes
 >
   <div class="min-w-0">
