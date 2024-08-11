@@ -22,9 +22,9 @@ export default class StageInsightsController extends Controller {
       .reverse();
   }
 
-  get sortedDroppedOffParticipations() {
+  get sortedDroppedOffAfterAttemptParticipations() {
     return this.model.stage.participations
-      .filter((participation) => participation.status === 'dropped_off')
+      .filter((participation) => participation.status === 'dropped_off_after_attempt')
       .sortBy('firstAttemptAt')
       .reverse();
   }
