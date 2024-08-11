@@ -14,5 +14,5 @@ export default class CourseStageParticipationModel extends Model {
   @attr('date') declare completedAt: Date | null;
   @attr('date') declare firstAttemptAt: Date;
   @attr('date') declare lastAttemptAt: Date;
-  @attr('string') declare status: 'complete' | 'dropped_off' | 'active';
+  @attr('string') declare status: 'active' | 'complete' | 'dropped_off_after_attempt' | 'dropped_off_before_attempt';
 }

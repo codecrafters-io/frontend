@@ -10,6 +10,12 @@ export type CourseStageParticipationAnalysisStatistic = {
   explanationMarkdown: string;
 };
 
+const attemptRateStatisticExplanationMarkdown = `
+The percentage of users who've attempted this stage at least once.
+
+A well-designed stage should have an attempt rate of >75% (TODO: We haven't really calculated this number yet!).
+`.trim();
+
 const participationCountsStatisticExplanationMarkdown = `
 The number of users who've attempted this stage at least once.
 
@@ -33,17 +39,39 @@ A high number (> 3) suggests that the error messages or hints for this stage cou
 export default class CourseStageParticipationAnalysisModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'participationAnalyses' }) declare stage: CourseStageModel;
 
-  @attr('number') declare participationsCount: number;
-  @attr('number') declare completeParticipationsCount: number;
-  @attr('number') declare droppedOffParticipationsCount: number;
   @attr('number') declare activeParticipationsCount: number;
+  @attr('number') declare completeParticipationsCount: number;
+  @attr('number') declare droppedOffAfterAttemptParticipationsCount: number;
+  @attr('number') declare droppedOffBeforeAttemptParticipationsCount: number;
+  @attr('number') declare participationsCount: number;
 
   // These statistics might be null if there are no participations.
   @attr('number') declare attemptToCompletionPercentage: number | null;
+  @attr('number') declare attemptPercentage: number | null;
   @attr('number') declare medianAttemptsToCompletion: number | null;
 
   get activeParticipationsPercentage(): number {
     return parseFloat((100 * (this.activeParticipationsCount / this.participationsCount)).toFixed(2));
+  }
+
+  get attemptRateStatistic(): CourseStageParticipationAnalysisStatistic {
+    if (this.attemptPercentage === null) {
+      return {
+        title: 'Attempt Rate',
+        label: 'attempt rate',
+        value: null,
+        color: 'gray',
+        explanationMarkdown: attemptRateStatisticExplanationMarkdown,
+      };
+    } else {
+      return {
+        title: 'Attempt Rate',
+        label: 'attempt rate',
+        value: `${Math.floor(this.attemptPercentage)}%`,
+        color: this.attemptPercentage >= 75 ? 'green' : this.attemptPercentage >= 50 ? 'yellow' : 'red',
+        explanationMarkdown: attemptRateStatisticExplanationMarkdown,
+      };
+    }
   }
 
   get completeParticipationsPercentage(): number {
@@ -70,8 +98,12 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     }
   }
 
-  get droppedOffParticipationsPercentage(): number {
-    return parseFloat((100 * (this.droppedOffParticipationsCount / this.participationsCount)).toFixed(2));
+  get droppedOffAfterAttemptParticipationsPercentage(): number {
+    return parseFloat((100 * (this.droppedOffAfterAttemptParticipationsCount / this.participationsCount)).toFixed(2));
+  }
+
+  get droppedOffBeforeAttemptParticipationsPercentage(): number {
+    return parseFloat((100 * (this.droppedOffBeforeAttemptParticipationsCount / this.participationsCount)).toFixed(2));
   }
 
   get medianAttemptsToCompletionStatistic(): CourseStageParticipationAnalysisStatistic {

@@ -11,6 +11,7 @@
     <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
       <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.completionRateStatistic}} />
       <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.medianAttemptsToCompletionStatistic}} />
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.attemptRateStatistic}} />
     </div>
 
     <div class="border-b pb-1 flex items-center gap-2 mt-6">
@@ -29,17 +30,20 @@
           <li>Complete:
             {{this.participationAnalysis.completeParticipationsCount}}
             ({{this.participationAnalysis.completeParticipationsPercentage}}%)</li>
-          <li>Dropped off:
-            {{this.participationAnalysis.droppedOffParticipationsCount}}
-            ({{this.participationAnalysis.droppedOffParticipationsPercentage}}%)</li>
+          <li>Dropped off after attempt:
+            {{this.participationAnalysis.droppedOffAfterAttemptParticipationsCount}}
+            ({{this.participationAnalysis.droppedOffAfterAttemptParticipationsPercentage}}%)</li>
+          <li>Did not attempt:
+            {{this.participationAnalysis.droppedOffBeforeAttemptParticipationsCount}}
+            ({{this.participationAnalysis.droppedOffBeforeAttemptParticipationsPercentage}}%)</li>
         </ul>
       </ul>
     </div>
 
     <CourseAdmin::StageInsightsPage::ParticipationListSection
       @title="Dropped Off"
-      @tooltipText="These are users who attempted this stage more than once but didn't complete it."
-      @participations={{this.sortedDroppedOffParticipations}}
+      @tooltipText="These are users who attempted this stage at least once but didn't complete it."
+      @participations={{this.sortedDroppedOffAfterAttemptParticipations}}
       class="mt-6"
     />
 
