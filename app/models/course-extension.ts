@@ -7,6 +7,7 @@ export default class CourseExtensionModel extends Model {
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare name: string;
   @attr('string') declare slug: string;
+  @attr('number') declare position: number;
 
   get sortedStages() {
     return this.stages.sortBy('positionWithinExtension');
