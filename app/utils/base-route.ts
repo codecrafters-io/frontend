@@ -25,13 +25,13 @@ export default class BaseRoute extends Route {
     }
 
     if (!this.allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
-      const params = paramsFromRouteInfo(transition.to);
+      const params = transition.to ? paramsFromRouteInfo(transition.to) : [];
 
       if (params.length > 0) {
         const paramValues = params.map(([_, value]) => value);
-        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name, ...paramValues));
+        this.authenticator.initiateLogin(this.router.urlFor(transition.to?.name || 'catalog', ...paramValues));
       } else {
-        this.authenticator.initiateLogin(this.router.urlFor(transition.to.name));
+        this.authenticator.initiateLogin(this.router.urlFor(transition.to?.name || 'catalog'));
       }
 
       transition.abort();
@@ -44,9 +44,9 @@ export default class BaseRoute extends Route {
       }
     }
 
-    const queryParams = transition.to.queryParams;
+    const queryParams = transition.to?.queryParams;
 
-    if (queryParams['r'] && /^\d[a-zA-Z][a-zA-Z]$/.test(queryParams['r'])) {
+    if (queryParams && queryParams['r'] && /^\d[a-zA-Z][a-zA-Z]$/.test(queryParams['r'])) {
       // @ts-ignore
       this.utmCampaignIdTracker.setCampaignId(queryParams['r']);
       delete queryParams['r'];

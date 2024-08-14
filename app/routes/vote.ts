@@ -26,7 +26,7 @@ export default class VoteRoute extends BaseRoute {
   }
 
   afterModel(_model: ModelType, transition: Transition) {
-    if (transition.to.name === 'vote.index') {
+    if (transition.to?.name === 'vote.index') {
       this.router.transitionTo('vote.course-ideas');
     }
   }
