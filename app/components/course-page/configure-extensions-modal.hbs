@@ -8,7 +8,7 @@
   </AlertWithIcon>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-    {{#each @repository.course.extensions as |extension|}}
+    {{#each @repository.course.sortedExtensions as |extension|}}
       <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
     {{/each}}
   </div>

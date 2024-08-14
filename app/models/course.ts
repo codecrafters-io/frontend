@@ -160,7 +160,7 @@ export default class CourseModel extends Model {
   }
 
   get sortedExtensions() {
-    return this.extensions.sortBy('name');
+    return this.extensions.sortBy('position');
   }
 
   get testerRepositoryLink() {
