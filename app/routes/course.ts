@@ -134,7 +134,7 @@ export default class CourseRoute extends BaseRoute {
   }
 
   redirect(_model: ModelType, transition: Transition) {
-    if (transition.to.name === 'course.index') {
+    if (transition.to?.name === 'course.index') {
       const activeStep = this.coursePageState.stepListAsStepList.activeStep;
 
       // @ts-ignore not sure if we need to handle nullity here
