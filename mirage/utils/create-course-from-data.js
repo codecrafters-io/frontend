@@ -4,13 +4,18 @@ export default function createCourseFromData(server, courseData) {
   createStages(server, course, courseData);
   createLanguageConfigurations(server, course, courseData);
 
+  let courseExtensionPosition = 1;
+
   for (const courseExtensionData of courseData.extensions || []) {
     server.create('course-extension', {
       course: course,
       name: courseExtensionData.name,
       slug: courseExtensionData.slug,
+      position: courseExtensionPosition,
       descriptionMarkdown: courseExtensionData.description_md,
     });
+
+    courseExtensionPosition++;
   }
 
   return course;
