@@ -1,4 +1,5 @@
 {
+  "buildCommand": "npm run build  > >(tee -a build-output.log) 2> >(tee -a build-output.log >&2) && ! (cat build-output.log | grep -qi error) && echo \"No errors found in build output\"",
   "rewrites": [
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
