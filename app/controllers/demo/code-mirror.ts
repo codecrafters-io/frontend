@@ -46,7 +46,10 @@ export default class DemoCodeMirrorController extends Controller {
 
   @tracked documents: ExampleDocument[] = [
     new ExampleDocument({
-      document: 'An example plain-text document',
+      document:
+        'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document 8\nAn example plain-text document 9\nAn example plain-text modified document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19',
+      originalDocument:
+        'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document 8\nAn example plain-text document 9\nAn example plain-text document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19',
       filename: 'test.txt',
       language: 'text',
     }),
