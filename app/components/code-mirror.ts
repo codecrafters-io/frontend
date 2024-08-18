@@ -307,7 +307,7 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            // collapseUnchanged: { margin: 3, minSize: 4 },
+            collapseUnchanged: { margin: 2, minSize: 4 },
           }),
         ]
       : [];
