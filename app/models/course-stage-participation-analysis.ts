@@ -10,16 +10,36 @@ export type CourseStageParticipationAnalysisStatistic = {
   explanationMarkdown: string;
 };
 
+const attemptRateThresholds = {
+  green: 90,
+  yellow: 80,
+};
+
+const completionRateThresholds = {
+  green: 97,
+  yellow: 90,
+};
+
+const participationCountsThresholds = {
+  green: 100,
+  yellow: 50,
+};
+
+const medianAttemptsToCompletionThresholds = {
+  green: 3,
+  yellow: 7,
+};
+
 const attemptRateStatisticExplanationMarkdown = `
 The percentage of users who've attempted this stage at least once.
 
-A well-designed stage should have an attempt rate of >75% (TODO: We haven't really calculated this number yet!).
+A well-designed stage should have an attempt rate of >${attemptRateThresholds.green}%.
 `.trim();
 
 const participationCountsStatisticExplanationMarkdown = `
 The number of users who've attempted this stage at least once.
 
-A number greater than 100 is recommended for reliable insights.
+A number greater than ${participationCountsThresholds.green} is recommended for reliable insights.
 `.trim();
 
 const completionRateStatisticExplanationMarkdown = `
@@ -27,13 +47,13 @@ The percentage of users who've completed this stage after attempting it.
 
 Users who don't attempt the stage are excluded from this calculation.
 
-A well-designed stage should have a completion rate of >95%.
+A well-designed stage should have a completion rate of >${completionRateThresholds.green}%.
 `.trim();
 
 const medianAttemptsToCompletionStatisticExplanationMarkdown = `
 The median number of attempts users have made to complete this stage.
 
-A high number (> 3) suggests that the error messages or hints for this stage could be improved.
+A high number (> ${medianAttemptsToCompletionThresholds.green}) suggests that the error messages or hints for this stage could be improved.
 `.trim();
 
 export default class CourseStageParticipationAnalysisModel extends Model {
@@ -68,7 +88,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
         title: 'Attempt Rate',
         label: 'attempt rate',
         value: `${Math.floor(this.attemptPercentage)}%`,
-        color: this.attemptPercentage >= 75 ? 'green' : this.attemptPercentage >= 50 ? 'yellow' : 'red',
+        color: this.calculateColorUsingThresholds(this.attemptPercentage, attemptRateThresholds),
         explanationMarkdown: attemptRateStatisticExplanationMarkdown,
       };
     }
@@ -92,7 +112,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
         title: 'Attempt to Completion Rate',
         label: 'completion rate',
         value: `${Math.floor(this.attemptToCompletionPercentage)}%`,
-        color: this.attemptToCompletionPercentage >= 97 ? 'green' : this.attemptToCompletionPercentage >= 90 ? 'yellow' : 'red',
+        color: this.calculateColorUsingThresholds(this.attemptToCompletionPercentage, completionRateThresholds),
         explanationMarkdown: completionRateStatisticExplanationMarkdown,
       };
     }
@@ -120,7 +140,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
         title: 'Median Attempts To Completion',
         label: pluralize(this.medianAttemptsToCompletion, 'attempt', { withoutCount: true }),
         value: this.medianAttemptsToCompletion.toString(),
-        color: this.medianAttemptsToCompletion <= 3 ? 'green' : this.medianAttemptsToCompletion <= 7 ? 'yellow' : 'red',
+        color: this.calculateColorUsingInverseThresholds(this.medianAttemptsToCompletion, medianAttemptsToCompletionThresholds),
         explanationMarkdown: medianAttemptsToCompletionStatisticExplanationMarkdown,
       };
     }
@@ -131,8 +151,16 @@ export default class CourseStageParticipationAnalysisModel extends Model {
       title: 'Data Points',
       label: 'data points',
       value: this.participationsCount >= 250 ? '250+' : this.participationsCount.toString(),
-      color: this.participationsCount >= 100 ? 'green' : this.participationsCount >= 25 ? 'yellow' : 'red',
+      color: this.calculateColorUsingThresholds(this.participationsCount, participationCountsThresholds),
       explanationMarkdown: participationCountsStatisticExplanationMarkdown,
     };
+  }
+
+  calculateColorUsingInverseThresholds(value: number, thresholds: { green: number; yellow: number }): 'green' | 'yellow' | 'red' {
+    return value <= thresholds.green ? 'green' : value <= thresholds.yellow ? 'yellow' : 'red';
+  }
+
+  calculateColorUsingThresholds(value: number, thresholds: { green: number; yellow: number }): 'green' | 'yellow' | 'red' {
+    return value >= thresholds.green ? 'green' : value >= thresholds.yellow ? 'yellow' : 'red';
   }
 }
