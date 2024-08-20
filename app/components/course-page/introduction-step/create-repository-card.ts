@@ -15,6 +15,7 @@ interface Signature {
 
   Args: {
     repository: RepositoryModel;
+    preferredLanguageSlug: string | undefined;
   };
 }
 

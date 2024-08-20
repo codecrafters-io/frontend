@@ -7,5 +7,5 @@
   {{/if}}
 
   <CoursePage::IntroductionStep::WelcomeCard @repository={{@model.activeRepository}} class="mb-6" />
-  <CoursePage::IntroductionStep::CreateRepositoryCard @repository={{@model.activeRepository}} class="mb-6" />
+  <CoursePage::IntroductionStep::CreateRepositoryCard @repository={{@model.activeRepository}} @preferredLanguageSlug={{@model.track}} class="mb-6" />
 </div>

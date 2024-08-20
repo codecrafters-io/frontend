@@ -15,8 +15,7 @@
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
       {{! @glint-expect-error not ts-fied yet }}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
-        {{! TODO: Fetch this from query params? }}
-        @preferredLanguageSlug={{null}}
+        @preferredLanguageSlug={{@preferredLanguageSlug}}
         @errorMessage={{this.repositoryCreationErrorMessage}}
         @repository={{@repository}}
         @onLanguageSelection={{this.handleLanguageSelection}}
