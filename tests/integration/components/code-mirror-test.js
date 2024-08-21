@@ -374,6 +374,18 @@ module('Integration | Component | code-mirror', function (hooks) {
       skip('it does something useful with the editor');
     });
 
+    module('collapseUnchanged', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('collapseUnchanged', true);
+        await render(hbs`<CodeMirror @collapseUnchanged={{this.collapseUnchanged}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('collapseUnchanged', false);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('originalDocument', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('originalDocument', 'original content');

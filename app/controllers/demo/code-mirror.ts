@@ -176,6 +176,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked lineSeparator: boolean = true;
   @tracked lineWrapping: boolean = true;
   @tracked mergeControls: boolean = true;
+  @tracked collapseUnchanged: boolean = true;
   @tracked originalDocument: boolean = false;
   @tracked placeholder: boolean = true;
   @tracked preserveHistory: boolean = false;

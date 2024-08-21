@@ -132,6 +132,10 @@
       </label>
     </codemirror-options-left>
     <codemirror-options-right class="flex flex-wrap">
+      <label class="{{labelClasses}}" title="Enable collapsing unchanged lines in the diff editor">
+        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{not this.originalDocument}} />
+        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">collapseUnchanged</span>
+      </label>
       <label class="{{labelClasses}}" title="Enable showing accept/reject buttons in the diff editor">
         <Input @type="checkbox" @checked={{this.mergeControls}} disabled={{not this.originalDocument}} />
         <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
@@ -284,6 +288,7 @@
   @lineNumbers={{this.lineNumbers}}
   @lineWrapping={{this.lineWrapping}}
   @mergeControls={{this.mergeControls}}
+  @collapseUnchanged={{this.collapseUnchanged}}
   @preserveHistory={{this.preserveHistory}}
   @readOnly={{this.readOnly}}
   @rectangularSelection={{this.rectangularSelection}}
