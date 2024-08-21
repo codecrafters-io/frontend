@@ -17,6 +17,26 @@ module('Acceptance | course-page | start-course', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
+  test('can auto select language coming from track page', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    signIn(this.owner, this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnTrack('Python');
+    await trackPage.clickOnCourseCard('Build your own Dummy →');
+
+    await percySnapshot('Auto Select Language - Select Language');
+
+    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
+    assert.dom('button[data-test-language-button]').exists({ count: 1 }, 'show just one language button');
+    assert.ok(coursePage.createRepositoryCard.showOtherLanguageButton.isVisible, 'show other language button is visible');
+
+    await animationsSettled();
+  });
+
   test('can start course', async function (assert) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
