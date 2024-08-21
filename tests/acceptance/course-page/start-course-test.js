@@ -28,11 +28,18 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Dummy →');
 
-    await percySnapshot('Auto Select Language - Select Language');
+    await percySnapshot('Auto Select Language - Before Clicking Show-Other-Languages Button');
 
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
-    assert.dom('button[data-test-language-button]').exists({ count: 1 }, 'show just one language button');
-    assert.ok(coursePage.createRepositoryCard.showOtherLanguageButton.isVisible, 'show other language button is visible');
+    assert.strictEqual(coursePage.createRepositoryCard.languageButtons.length, 1, 'only one language-button can be visible');
+    assert.strictEqual(coursePage.createRepositoryCard.languageButtons[0].text, 'Python', 'the only one language-button must be Python');
+    assert.ok(coursePage.createRepositoryCard.showOtherLanguagesButton.isVisible, 'show-other-languages button is visible');
+
+    await coursePage.createRepositoryCard.clickOnShowOtherLanguagesButton();
+    await percySnapshot('Auto Select Language - After Clicking Show-Other-Languages Button');
+
+    assert.ok(coursePage.createRepositoryCard.languageButtons.length > 1, 'more than one language button are visible');
+    assert.ok(coursePage.createRepositoryCard.showOtherLanguagesButton.isHidden, 'show-other-languages button is hidden');
 
     await animationsSettled();
   });
