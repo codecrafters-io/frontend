@@ -13,7 +13,7 @@
           {{! #if ensures that language is typed and not null }}
           {{#if @submission.repository.language}}
             <SyntaxHighlightedDiff
-              @comments={{array}}
+              @comments={{(array)}}
               @code={{changedFile.diff}}
               @language={{@submission.repository.language.slug}}
               @shouldCollapseUnchangedLines={{true}}
