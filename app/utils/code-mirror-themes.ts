@@ -31,6 +31,10 @@ const BASE_STYLE = {
     lineHeight: '1.5rem',
     padding: '0 1rem 0 0.625rem',
   },
+  '.cm-deletedChunk': {
+    lineHeight: '1.5rem',
+    padding: '0 1rem 0 0.625rem',
+  },
 };
 
 export const codeCraftersLight = [EditorView.theme(Object.assign({}, BASE_STYLE), { dark: false }), githubLight];

@@ -178,6 +178,10 @@ export interface Signature {
        */
       mergeControls?: boolean;
       /**
+       * Enable collapsing unchanged lines in the diff editor
+       */
+      collapseUnchanged?: boolean;
+      /**
        * Preserve changes history when parent component passes a new `@document` to the component
        */
       preserveHistory?: boolean;
@@ -235,7 +239,7 @@ export interface OptionHandlersSignature {
   tabSize: (tabSize?: number) => Extension[];
   theme: (theme?: Extension) => Extension[];
   languageOrFilename: (newValue: string | undefined, args: Signature['Args']['Named'], changedOptionName?: string) => Promise<Extension[]>;
-  originalDocumentOrMergeControls: (
+  originalDocumentOrMergeControlsOrCollapseUnchanged: (
     newValue: string | boolean | undefined,
     args: Signature['Args']['Named'],
     changedOptionName?: string,
@@ -301,13 +305,13 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
 
     return loadedLanguage ? [loadedLanguage] : [];
   },
-  originalDocumentOrMergeControls: (_newValue, { originalDocument, mergeControls }) => {
+  originalDocumentOrMergeControlsOrCollapseUnchanged: (_newValue, { originalDocument, mergeControls, collapseUnchanged }) => {
     return originalDocument
       ? [
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            // collapseUnchanged: { margin: 3, minSize: 4 },
+            collapseUnchanged: collapseUnchanged ? { margin: 2, minSize: 4 } : undefined,
           }),
         ]
       : [];
@@ -353,7 +357,7 @@ export default class CodeMirrorComponent extends Component<Signature> {
     const handlerMethod = OPTION_HANDLERS[optionName];
 
     // some compartments need to be unloaded before new changes are applied
-    if (['originalDocumentOrMergeControls'].includes(optionName)) {
+    if (['originalDocumentOrMergeControlsOrCollapseUnchanged'].includes(optionName)) {
       this.renderedView?.dispatch({
         effects: compartment?.reconfigure([]),
       });
