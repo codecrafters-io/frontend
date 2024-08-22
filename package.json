@@ -98,7 +98,7 @@
     "@types/showdown": "^2.0.2",
     "@types/three": "^0.167.2",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^6.21.0",
+    "@typescript-eslint/parser": "^8.2.0",
     "@uiw/codemirror-theme-github": "^4.23.0",
     "@vercel/edge": "^1.1.2",
     "autoprefixer": "^10.4.20",
