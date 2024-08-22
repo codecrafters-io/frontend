@@ -94,6 +94,10 @@
           <div class="flex items-center">
             <span class="mr-2 text-gray-600">
               {{this.shortSubmissionCommitSha}}
+
+              {{#if @submission.commitIsEmpty}}
+                <span class="text-gray-400 text-sm">(empty commit)</span>
+              {{/if}}
             </span>
 
             <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleCopyCommitShaButtonClick}} data-test-copy-commit-sha-button>
