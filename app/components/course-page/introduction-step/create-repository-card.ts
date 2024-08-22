@@ -14,6 +14,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    preferredLanguageSlug: string | undefined;
     repository: RepositoryModel;
   };
 }

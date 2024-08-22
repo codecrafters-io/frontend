@@ -17,6 +17,7 @@ export type ModelType = {
   course: CourseModel;
   activeRepository: RepositoryModel;
   repositories: RepositoryModel[];
+  track: string | undefined;
 };
 
 export default class CourseRoute extends BaseRoute {
@@ -130,6 +131,7 @@ export default class CourseRoute extends BaseRoute {
       course: course,
       activeRepository: activeRepository,
       repositories: repositories,
+      track: transition.to?.queryParams['track'],
     };
   }
 
