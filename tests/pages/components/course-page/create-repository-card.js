@@ -7,7 +7,6 @@ export default {
   clickOnNextQuestionButton: clickable('[data-test-next-question-button]'),
   clickOnOptionButton: clickOnText('button'),
   clickOnRequestLanguageButton: clickable('.ember-basic-dropdown-trigger'),
-  clickOnShowOtherLanguagesButton: clickable('[data-test-show-other-languages-button]'),
   continueButton: { scope: '[data-test-continue-button]' },
   copyableCloneRepositoryInstructions: text('[data-test-copyable-repository-clone-instructions] .font-mono'),
   description: text('[data-test-course-description]'),
