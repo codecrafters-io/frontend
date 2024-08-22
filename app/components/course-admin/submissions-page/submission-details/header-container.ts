@@ -105,3 +105,9 @@ export default class HeaderContainerComponent extends Component<Signature> {
     window.open(this.args.submission.githubStorageHtmlUrl, '_blank')!.focus();
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainer': typeof HeaderContainerComponent;
+  }
+}
