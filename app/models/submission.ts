@@ -24,6 +24,7 @@ export default class SubmissionModel extends Model {
   @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
+  @attr('boolean') declare hasChanges: boolean;
   @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
   @attr('string') declare status: 'evaluating' | 'success' | 'failure' | 'error' | 'cancelled';
   @attr('string') declare treeSha: string | null;
