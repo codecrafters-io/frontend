@@ -1,7 +1,7 @@
-{{! @glint-nocheck: not typesafe yet }}
 <div class="p-6" ...attributes>
   {{#if @submission}}
     <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainer @submission={{@submission}} />
+
     <div class="border-b pb-4 mb-4"></div>
     <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
       <div class="mt-6">

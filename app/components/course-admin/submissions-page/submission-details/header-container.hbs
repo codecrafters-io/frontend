@@ -94,6 +94,10 @@
           <div class="flex items-center">
             <span class="mr-2 text-gray-600">
               {{this.shortSubmissionCommitSha}}
+
+              {{#if @submission.commitIsEmpty}}
+                <span class="text-gray-400 text-sm">(empty commit)</span>
+              {{/if}}
             </span>
 
             <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleCopyCommitShaButtonClick}} data-test-copy-commit-sha-button>
@@ -121,6 +125,27 @@
                 <EmberTooltip @text="Click to copy Git tree SHA" />
               {{/if}}
             </TertiaryButton>
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Commit message" data-test-user-description>
+          <div class="flex items-center">
+            {{#if (and @submission.userDescription (eq @submission.clientType "git"))}}
+              "{{@submission.userDescription}}"
+            {{else}}
+              -
+            {{/if}}
+
+            <div>
+              {{svg-jar "information-circle" class="ml-1 w-5 fill-current text-gray-300"}}
+              <EmberTooltip
+                @text={{if
+                  (eq @submission.clientType "git")
+                  "This is the first line of the commit message."
+                  "This field is only present for Git submissions, it's irrelevant for CLI/system submissions."
+                }}
+              />
+            </div>
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 

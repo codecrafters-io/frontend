@@ -20,12 +20,14 @@ export default class SubmissionModel extends Model {
 
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('string') declare clientType: 'cli' | 'git' | 'system';
+  @attr('boolean') declare commitIsEmpty: boolean;
   @attr('string') declare commitSha: string;
   @attr('date') declare createdAt: Date;
   @attr('string') declare githubStorageHtmlUrl: string;
   @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
   @attr('string') declare status: 'evaluating' | 'success' | 'failure' | 'error' | 'cancelled';
   @attr('string') declare treeSha: string | null;
+  @attr('string') declare userDescription: string;
 
   get canBeUsedForStageCompletion() {
     return !!this.treeSha && this.treeSha === this.repository.defaultBranchTreeSha;

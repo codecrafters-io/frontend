@@ -46,6 +46,13 @@
         </div>
       {{/if}}
 
+      {{#if @submission.commitIsEmpty}}
+        <div>
+          {{svg-jar "eye-off" class="text-gray-400 w-4 fill-current"}}
+          <EmberTooltip @text="This submission contains no changed files, i.e. it used an empty commit." />
+        </div>
+      {{/if}}
+
       {{#if @submission.clientTypeIsCli}}
         <div>
           {{svg-jar "terminal" class="text-gray-400 w-4 fill-current"}}
@@ -55,6 +62,11 @@
         <div>
           {{svg-jar "chip" class="text-gray-400 w-4 fill-current"}}
           <EmberTooltip @text="System submission" />
+        </div>
+      {{else if @submission.clientTypeIsGit}}
+        <div>
+          {{svg-jar "git" class="text-gray-400 w-4 fill-current"}}
+          <EmberTooltip @text="Submitted via Git" />
         </div>
       {{/if}}
     </div>
