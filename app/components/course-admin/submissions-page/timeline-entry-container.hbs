@@ -46,12 +46,12 @@
         </div>
       {{/if}}
 
-      {{#if @submission.commitIsEmpty}}
+      {{#unless @submission.hasChanges}}
         <div>
           {{svg-jar "eye-off" class="text-gray-400 w-4 fill-current"}}
-          <EmberTooltip @text="This submission contains no changed files, i.e. it used an empty commit." />
+          <EmberTooltip @text="This submission contains no changed files compared to the previous submission." />
         </div>
-      {{/if}}
+      {{/unless}}
 
       {{#if @submission.clientTypeIsCli}}
         <div>
