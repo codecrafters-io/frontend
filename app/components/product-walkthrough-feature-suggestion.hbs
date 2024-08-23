@@ -1,19 +1,14 @@
 <AlertWithIcon @type="info" class="relative" ...attributes data-test-product-walkthrough-feature-suggestion>
   <span class="leading-7 inline-block mr-10">
     New here?
-    <span
-      role="button"
-      class="font-bold underline text-blue-700"
-      {{on "click" this.handleViewWalkthroughButtonClick}}
-      data-test-start-here-button
-    >Start here</span>
+    <b role="button" class="underline" {{on "click" this.handleViewWalkthroughButtonClick}} data-test-start-here-button>Start here</b>
     to learn how challenges work.
   </span>
 
   {{#if this.isDismissable}}
     <div class="absolute right-3 top-0 bottom-0 flex items-center justify-center">
       <button
-        class="border border-blue-300 p-1 rounded hover:bg-blue-200"
+        class="border border-blue-300 dark:border-blue-700 p-1 rounded hover:bg-blue-200 dark:hover:bg-blue-800/50"
         type="button"
         {{on "click" this.handleDismissButtonClick}}
         data-test-dismiss-button
