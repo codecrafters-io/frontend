@@ -1,17 +1,10 @@
 import Component from '@glimmer/component';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type CourseModel from 'codecrafters-frontend/models/course';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
-
-  Args: {
-    repository: RepositoryModel;
-    course: CourseModel;
-  };
 }
 
 export default class HeaderComponent extends Component<Signature> {
