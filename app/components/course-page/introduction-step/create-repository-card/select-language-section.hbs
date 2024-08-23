@@ -17,7 +17,7 @@
       {{#if @repository.isSaving}}
         <div class="flex items-center">
           <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
-          <span class="ml-3 text-gray-700">Creating repository...</span>
+          <span class="ml-3 text-gray-700 dark:text-gray-300">Creating repository...</span>
         </div>
       {{else}}
         <CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton @language={{@repository.language}} @isSelected={{true}} />
