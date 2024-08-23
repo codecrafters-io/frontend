@@ -1,11 +1,12 @@
 <div
-  class="group bg-white p-5 rounded-md shadow-sm flex flex-col justify-between border {{if this.userHasVoted 'border-gray-300'}} relative"
+  class="relative group bg-white dark:bg-gray-800 p-5 rounded-md shadow-sm flex flex-col justify-between border
+    {{if this.userHasVoted 'border-gray-300 dark:border-gray-700' 'border-gray-200 dark:border-white/5'}}"
   data-test-course-extension-idea-card
 >
   {{! Text }}
   <div class="mb-4">
     <div class="flex items-start justify-between mb-3">
-      <div class="text-gray-700 mr-2 mb-0.5 font-bold text-xl tracking-tight" data-test-course-extension-idea-name>
+      <div class="text-gray-700 dark:text-gray-200 mr-2 mb-0.5 font-bold text-xl tracking-tight" data-test-course-extension-idea-name>
         {{@courseExtensionIdea.name}}
       </div>
 

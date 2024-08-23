@@ -28,14 +28,18 @@ export default class VoteButtonComponent extends Component<Signature> {
     <button
       type='button'
       class='pr-2.5 pl-2 py-1.5 rounded shadow-sm flex items-center border
-        {{if @userHasVoted "border-teal-500 hover:border-teal-600" "border-gray-300 hover:border-gray-400"}}
+        {{if
+          @userHasVoted
+          "border-teal-500 hover:border-teal-600"
+          "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600"
+        }}
         transition-all duration-75 active:shadow active:border-teal-600'
       data-test-vote-button
       ...attributes
     >
       {{svgJar 'chevron-up' class='w-5 mr-1 text-teal-500'}}
 
-      <span class='text-sm {{if @userHasVoted "text-teal-500" "text-gray-700"}} transition-all duration-75'>
+      <span class='text-sm {{if @userHasVoted "text-teal-500" "text-gray-700 dark:text-gray-300"}} transition-all duration-75'>
         <span class='font-semibold'>{{this.renderedVotesCount}}</span>
 
         {{#if (eq this.renderedVotesCount 1)}}

@@ -18,7 +18,7 @@
   <div class="w-full">
     <div class="flex items-center">
       {{#if (and this.submissionIsClosed (not this.isEditingClosedSubmission))}}
-        <div class="prose-green dark:prose-green-invert prose-sm leading-7">
+        <div class="prose prose-green dark:prose-invert leading-7">
           Feedback submitted!
 
           <span
@@ -31,7 +31,7 @@
           </span>
         </div>
       {{else}}
-        <div class="prose-green dark:prose-green-invert leading-7" data-test-question-text>
+        <div class="prose prose-green dark:prose-invert leading-7" data-test-question-text>
           {{#if this.isEditingClosedSubmission}}
             How did we do?
           {{else}}
@@ -56,7 +56,7 @@
       </div>
 
       {{#if this.feedbackSubmission.hasSelectedAnswer}}
-        <div class="prose-green dark:prose-green-invert prose-sm mt-4">
+        <div class="prose prose-sm prose-green dark:prose-invert mt-4">
           P.S.
           <a
             href="https://forum.codecrafters.io/u/rohitpaulk/activity"
