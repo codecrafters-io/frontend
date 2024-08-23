@@ -58,6 +58,12 @@ module.exports = {
         DEFAULT: {
           css: {
             '--tw-prose-links': colors.sky[500],
+            '--tw-prose-code': colors.slate[700],
+            '--tw-prose-pre-code': colors.slate[700],
+            '--tw-prose-pre-bg': colors.slate[100],
+            '--tw-prose-invert-code': colors.slate[300],
+            '--tw-prose-invert-pre-code': colors.slate[300],
+            '--tw-prose-invert-pre-bg': colors.slate[900],
             maxWidth: '90ch', // Default is 65ch
             a: {
               fontWeight: '600',
@@ -81,19 +87,14 @@ module.exports = {
               content: 'none',
             },
             code: {
-              color: colors.slate[700],
               fontWeight: 'normal',
               padding: '0.2em 0.4em',
-              backgroundColor: colors.slate[100],
               borderRadius: '4px',
               whiteSpace: 'nowrap',
+              backgroundColor: 'var(--tw-prose-pre-bg)',
             },
             'code::before': { content: 'none' },
             'code::after': { content: 'none' },
-            pre: {
-              color: colors.slate[700],
-              backgroundColor: colors.slate[100],
-            },
           },
         },
         blue: {
@@ -212,18 +213,6 @@ module.exports = {
             pre: {
               marginTop: '0.5em',
               marginBottom: '0.5em',
-            },
-          },
-        },
-        invert: {
-          css: {
-            code: {
-              color: colors.slate[300],
-              backgroundColor: colors.slate[800],
-            },
-            pre: {
-              color: colors.slate[200],
-              backgroundColor: colors.slate[900],
             },
           },
         },
