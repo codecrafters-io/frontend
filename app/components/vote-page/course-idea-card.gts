@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+// @ts-expect-error not ts-ified yet
 import EmberTooltip from 'ember-tooltips/components/ember-tooltip';
 import MarkdownToHtml from 'codecrafters-frontend/helpers/markdown-to-html';
 import svgJar from 'ember-svg-jar/helpers/svg-jar';
@@ -8,12 +9,24 @@ import { action } from '@ember/object';
 import { and } from 'ember-truth-helpers';
 import { inject as service } from '@ember/service';
 import { LinkTo } from '@ember/routing';
+// @ts-expect-error not ts-ified yet
 import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Store from '@ember-data/store';
+import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
 
-export default class CourseIdeaCardComponent extends Component {
-  @service authenticator;
-  @service store;
+export type Signature = {
+  Element: HTMLDivElement;
+
+  Args: {
+    courseIdea: CourseIdeaModel;
+  };
+};
+
+export default class CourseIdeaCardComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
 
   @tracked isVotingOrUnvoting = false;
 
@@ -22,7 +35,7 @@ export default class CourseIdeaCardComponent extends Component {
       return false;
     }
 
-    return this.authenticator.currentUser.courseIdeaVotes.mapBy('courseIdea').includes(this.args.courseIdea);
+    return this.authenticator.currentUser!.courseIdeaVotes.mapBy('courseIdea').includes(this.args.courseIdea);
   }
 
   @action
@@ -32,14 +45,14 @@ export default class CourseIdeaCardComponent extends Component {
     }
 
     this.isVotingOrUnvoting = true;
-    await this.args.courseIdea.unvote();
+    await this.args.courseIdea.unvote({});
     this.isVotingOrUnvoting = false;
   }
 
   @action
   async handleVoteButtonClick() {
     if (this.authenticator.isAnonymous) {
-      this.authenticator.initiateLogin();
+      this.authenticator.initiateLogin(null);
 
       return;
     }
@@ -51,7 +64,7 @@ export default class CourseIdeaCardComponent extends Component {
     this.isVotingOrUnvoting = true;
 
     if (this.userHasVoted) {
-      await this.args.courseIdea.unvote();
+      await this.args.courseIdea.unvote({});
     } else {
       await this.args.courseIdea.vote();
     }
@@ -127,7 +140,7 @@ export default class CourseIdeaCardComponent extends Component {
               ></path>
             </svg>
           {{else if this.userHasVoted}}
-            <UnvoteButton @courseIdea={{@courseIdea}} {{on 'click' this.handleUnvoteButtonClick}} />
+            <UnvoteButton {{on 'click' this.handleUnvoteButtonClick}} />
           {{/if}}
         </div>
       </div>

@@ -196,6 +196,7 @@
     "edition": "octane"
   },
   "dependencies": {
+    "@glint/environment-ember-template-imports": "^1.4.0",
     "@rails/actioncable": "^7.2.0",
     "@stripe/stripe-js": "^4.3.0",
     "@tailwindcss/container-queries": "^0.1.1",
