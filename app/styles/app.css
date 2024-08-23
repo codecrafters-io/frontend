@@ -177,7 +177,7 @@
 }
 
 .has-prism-highlighting pre[class*='language-']:is(.dark *) {
-  background-color: #334155; /* slate-700 */
+  background-color: #334155; /* slate-900 */
 }
 
 .sortable-item {
