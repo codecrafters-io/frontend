@@ -1,11 +1,24 @@
 import Component from '@glimmer/component';
+// @ts-expect-error not ts-ified yet
 import EmberTooltip from 'ember-tooltips/components/ember-tooltip';
 import { eq } from 'ember-truth-helpers';
 import { inject as service } from '@ember/service';
 import svgJar from 'ember-svg-jar/helpers/svg-jar';
+import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 
-export default class VoteButtonComponent extends Component {
-  @service authenticator;
+export type Signature = {
+  Element: HTMLButtonElement;
+
+  Args: {
+    idea: CourseIdeaModel | CourseExtensionIdeaModel;
+    userHasVoted: boolean;
+  };
+};
+
+export default class VoteButtonComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
 
   get renderedVotesCount() {
     return this.args.idea.votesCount;
@@ -37,4 +50,10 @@ export default class VoteButtonComponent extends Component {
       {{/if}}
     </button>
   </template>
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'VotePage::IdeaCard::VoteButton': typeof VoteButtonComponent;
+  }
 }

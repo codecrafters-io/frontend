@@ -3,16 +3,18 @@ import svgJar from 'ember-svg-jar/helpers/svg-jar';
 import { action } from '@ember/object';
 import { createPopup } from '@typeform/embed';
 import { inject as service } from '@ember/service';
+// @ts-expect-error not ts-ified yet
 import { on } from '@ember/modifier';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export default class SubmitCourseIdeaCardComponent extends Component {
-  @service authenticator;
+  @service declare authenticator: AuthenticatorService;
 
   @action
   handleClick() {
     createPopup('kJNvFVQM', {
       hidden: {
-        github_username: this.authenticator.currentUser.username,
+        github_username: this.authenticator.currentUser!.username,
       },
     }).toggle();
   }

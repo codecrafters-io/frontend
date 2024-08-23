@@ -67,7 +67,7 @@
           ></path>
         </svg>
       {{else if this.userHasVoted}}
-        <VotePage::IdeaCard::UnvoteButton @idea={{@courseExtensionIdea}} {{on "click" this.handleUnvoteButtonClick}} />
+        <VotePage::IdeaCard::UnvoteButton {{on "click" this.handleUnvoteButtonClick}} />
       {{/if}}
     </div>
   </div>
