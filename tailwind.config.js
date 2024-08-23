@@ -135,29 +135,6 @@ module.exports = {
             },
           },
         },
-        'blue-invert': {
-          css: {
-            '--tw-prose-body': colors.sky[300],
-            '--tw-prose-headings': colors.sky[300],
-            '--tw-prose-lead': colors.sky[300],
-            '--tw-prose-links': colors.sky[200],
-            '--tw-prose-bold': colors.sky[300],
-            '--tw-prose-counters': colors.sky[300],
-            '--tw-prose-bullets': colors.sky[300],
-            '--tw-prose-hr': colors.sky[300],
-            '--tw-prose-quotes': colors.sky[300],
-            '--tw-prose-quote-borders': colors.sky[300],
-            '--tw-prose-captions': colors.sky[300],
-            '--tw-prose-code': colors.sky[300],
-            '--tw-prose-pre-code': colors.sky[300],
-            '--tw-prose-pre-bg': colors.sky[800],
-            '--tw-prose-th-borders': colors.sky[300],
-            '--tw-prose-td-borders': colors.sky[300],
-            'a:hover': {
-              color: colors.sky[200],
-            },
-          },
-        },
         green: {
           css: {
             color: colors.green[800],
