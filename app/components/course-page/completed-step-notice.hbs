@@ -7,7 +7,7 @@
     <div class="text-2xl pl-1">
       🎉
     </div>
-    <div class="prose prose-sm prose-green dark:prose-green-invert">
+    <div class="prose prose-sm prose-green dark:prose-invert">
       {{markdown-to-html this.instructionsMarkdown}}
     </div>
 
@@ -49,13 +49,13 @@
       data-test-share-progress-button
     >
       <span
-        class="prose-green prose-sm dark:prose-green-invert group-hover/share-progress-button:underline group-hover/share-progress-button:text-green-700 dark:group-hover/share-progress-button:text-green-300"
+        class="prose prose-sm prose-green dark:prose-invert group-hover/share-progress-button:underline group-hover/share-progress-button:text-green-700 dark:group-hover/share-progress-button:text-green-300"
       >
         Tell your friends
       </span>
       {{svg-jar
         "external-link"
-        class="w-4 fill-current prose-green prose-sm dark:prose-green-invert group-hover/share-progress-button:text-green-700 dark:group-hover/share-progress-button:text-green-300"
+        class="w-4 fill-current prose prose-sm prose-green dark:prose-invert group-hover/share-progress-button:text-green-700 dark:group-hover/share-progress-button:text-green-300"
       }}
     </div>
   {{/if}}
