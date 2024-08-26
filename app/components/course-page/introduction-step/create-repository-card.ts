@@ -24,7 +24,7 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
   @service declare coursePageState: CoursePageStateService;
 
   @tracked expandedSectionIndex: number | null = null;
-  @tracked repositoryCreationErrorMessage: string | null = null;
+  @tracked repositoryCreationErrorMessage: string | undefined;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -55,7 +55,7 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
 
   @action
   async handleLanguageSelection(language: LanguageModel) {
-    this.repositoryCreationErrorMessage = null;
+    this.repositoryCreationErrorMessage = undefined;
     this.args.repository.language = language;
 
     try {

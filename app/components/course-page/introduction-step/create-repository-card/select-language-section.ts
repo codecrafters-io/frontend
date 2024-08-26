@@ -13,7 +13,7 @@ interface Signature {
 
   Args: {
     errorMessage?: string;
-    preferredLanguageSlug: string;
+    preferredLanguageSlug?: string;
     repository: RepositoryModel;
     onLanguageSelection: (language: LanguageModel) => void;
   };

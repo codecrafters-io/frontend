@@ -13,7 +13,6 @@
 
   <:expandedSection>
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
-      {{! @glint-expect-error not ts-fied yet }}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
         @preferredLanguageSlug={{@preferredLanguageSlug}}
         @errorMessage={{this.repositoryCreationErrorMessage}}
