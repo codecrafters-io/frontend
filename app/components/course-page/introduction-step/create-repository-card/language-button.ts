@@ -5,9 +5,9 @@ interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
+    isSelected: boolean;
     language: LanguageModel;
     releaseStatusIsAlpha: boolean;
-    isSelected: boolean;
   };
 }
 
