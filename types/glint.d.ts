@@ -1,12 +1,18 @@
 // eslint-disable-next-line ember/no-at-ember-render-modifiers
 import type RenderModifiersRegistry from '@ember/render-modifiers/template-registry';
+import type EmberBasicDropdownRegistry from 'ember-basic-dropdown/template-registry';
 import type EmberConcurrencyRegistry from 'ember-concurrency/template-registry';
 import type EmberTruthHelpersRegistry from 'ember-truth-helpers/template-registry';
 import type EmberMathHelpersRegistry from 'ember-math-helpers/template-registry';
 import type { ModifierLike, HelperLike, ComponentLike } from '@glint/template';
 
 declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry extends RenderModifiersRegistry, EmberConcurrencyRegistry, EmberTruthHelpersRegistry, EmberMathHelpersRegistry {
+  export default interface Registry
+    extends RenderModifiersRegistry,
+      EmberBasicDropdownRegistry,
+      EmberConcurrencyRegistry,
+      EmberTruthHelpersRegistry,
+      EmberMathHelpersRegistry {
     autoresize: ModifierLike<{ Args: { Positional: [string] } }>;
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;

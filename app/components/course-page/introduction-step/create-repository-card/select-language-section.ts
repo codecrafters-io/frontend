@@ -1,13 +1,27 @@
 import Component from '@glimmer/component';
+import fade from 'ember-animated/transitions/fade';
+import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
+import type LanguageModel from 'codecrafters-frontend/models/language';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
-import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
-export default class SelectLanguageSectionComponent extends Component {
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    errorMessage?: string;
+    preferredLanguageSlug: string;
+    repository: RepositoryModel;
+    onLanguageSelection: (language: LanguageModel) => void;
+  };
+}
+
+export default class SelectLanguageSectionComponent extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
-  @service store;
+  @service declare store: Store;
   requestedLanguagesPromptTransition = fade;
   @tracked shouldShowNonPreferredLanguages = false;
 
@@ -34,12 +48,18 @@ export default class SelectLanguageSectionComponent extends Component {
   }
 
   @action
-  handleLanguageButtonClick(language) {
+  handleLanguageButtonClick(language: LanguageModel) {
     this.args.onLanguageSelection(language);
   }
 
   @action
   handleShowOtherLanguagesButtonClick() {
     this.shouldShowNonPreferredLanguages = true;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection': typeof SelectLanguageSectionComponent;
   }
 }

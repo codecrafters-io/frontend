@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 
-export interface Signature {
+interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
-    isSelected: boolean;
     language: LanguageModel;
     releaseStatusIsAlpha: boolean;
+    isSelected: boolean;
   };
 }
 
