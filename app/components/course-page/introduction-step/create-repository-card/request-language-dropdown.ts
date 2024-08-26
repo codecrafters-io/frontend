@@ -28,7 +28,7 @@ export default class RequestLanguageDropdownComponent extends Component<Signatur
   @tracked isSyncing = false;
   @tracked searchQuery = '';
   @tracked selectedSuggestionIndex = 0;
-  @tracked suggestionListElement!: HTMLDivElement;
+  @tracked suggestionListElement: HTMLDivElement | undefined;
 
   get availableLanguages(): LanguageModel[] {
     return this.store
@@ -60,7 +60,7 @@ export default class RequestLanguageDropdownComponent extends Component<Signatur
   handleArrowDown() {
     if (this.selectedSuggestionIndex < this.languageSuggestions.length - 1) {
       this.selectedSuggestionIndex += 1;
-      this.suggestionListElement.children[this.selectedSuggestionIndex]!.scrollIntoView({ block: 'nearest' });
+      this.suggestionListElement!.children[this.selectedSuggestionIndex]!.scrollIntoView({ block: 'nearest' });
     }
   }
 
@@ -68,7 +68,7 @@ export default class RequestLanguageDropdownComponent extends Component<Signatur
   handleArrowUp() {
     if (this.selectedSuggestionIndex > 0) {
       this.selectedSuggestionIndex -= 1;
-      this.suggestionListElement.children[this.selectedSuggestionIndex]!.scrollIntoView({ block: 'nearest' });
+      this.suggestionListElement!.children[this.selectedSuggestionIndex]!.scrollIntoView({ block: 'nearest' });
     }
   }
 
