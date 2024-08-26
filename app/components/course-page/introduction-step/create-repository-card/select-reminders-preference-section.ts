@@ -14,6 +14,10 @@ interface Signature {
 export default class SelectRemindersPreferenceSectionComponent extends Component<Signature> {
   @action
   async handleSelect(remindersAreEnabled: RepositoryModel['remindersAreEnabled']) {
+    if (this.args.isDisabled) {
+      return;
+    }
+
     if (!this.args.repository.isSaving) {
       this.args.repository.remindersAreEnabled = remindersAreEnabled;
 
