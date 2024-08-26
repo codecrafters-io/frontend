@@ -35,6 +35,10 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
 
   @action
   async handleSelect(proficiencyLevel: RepositoryModel['languageProficiencyLevel']) {
+    if (this.args.isDisabled) {
+      return;
+    }
+
     if (!this.args.repository.isSaving) {
       this.args.repository.languageProficiencyLevel = proficiencyLevel;
 

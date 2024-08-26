@@ -15,6 +15,10 @@ interface Signature {
 export default class SelectExpectedActivityFrequencySectionComponent extends Component<Signature> {
   @action
   async handleSelect(frequency: RepositoryModel['expectedActivityFrequency']) {
+    if (this.args.isDisabled) {
+      return;
+    }
+
     if (!this.args.repository.isSaving) {
       this.args.repository.expectedActivityFrequency = frequency;
       this.args.onSelect(); // Saving can happen in the background, no need to await
