@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 
-export interface Signature {
+interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
