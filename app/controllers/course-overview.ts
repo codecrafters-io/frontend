@@ -25,6 +25,10 @@ export default class CourseOverviewController extends Controller {
     }
   }
 
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
   get formattedCourseIsFreeExpirationDate() {
     if (this.model.course.isFreeUntil) {
       return format(this.model.course.isFreeUntil, 'd MMMM yyyy');

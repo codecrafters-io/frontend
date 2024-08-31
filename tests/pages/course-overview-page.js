@@ -8,6 +8,7 @@ export default create({
 
   betaNoticeText: text('[data-test-course-beta-notice]'),
   clickOnStartCourse: clickable('[data-test-course-overview-header] [data-test-start-course-button]'),
+  deprecatedNoticeText: text('[data-test-course-deprecated-notice]'),
   freeNoticeText: text('[data-test-course-free-notice]'),
   stageListItems: collection('[data-test-stage-list-item]'),
   visit: visitable('/courses/:course_slug/overview'),
