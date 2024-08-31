@@ -6,7 +6,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | view-course-overview', function (hooks) {
   setupApplicationTest(hooks);
@@ -75,6 +75,28 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.strictEqual(
       courseOverviewPage.betaNoticeText,
       "This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.",
+    );
+  });
+
+  test('it has the notice for when a course is deprecated', async function (assert) {
+    testScenario(this.server);
+
+    this.server.schema.courses.findBy({ slug: 'docker' }).update('releaseStatus', 'deprecated');
+    await courseOverviewPage.visit({ course_slug: 'docker' });
+
+    assert.strictEqual(courseOverviewPage.deprecatedNoticeText, 'This challenge is deprecated.');
+  });
+
+  test('it has a longer notice for paid users when a course is deprecated', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    this.server.schema.courses.findBy({ slug: 'docker' }).update('releaseStatus', 'deprecated');
+    await courseOverviewPage.visit({ course_slug: 'docker' });
+
+    assert.strictEqual(
+      courseOverviewPage.deprecatedNoticeText,
+      "This challenge is deprecated. Since you're a member, you can still access the challenge if you'd like.",
     );
   });
 

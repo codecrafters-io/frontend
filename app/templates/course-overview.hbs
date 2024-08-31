@@ -14,6 +14,13 @@
           This challenge is free until
           {{this.formattedCourseIsFreeExpirationDate}}!
         </AlertWithIcon>
+      {{else if this.model.course.releaseStatusIsDeprecated}}
+        <AlertWithIcon @type="info" class="mb-4" data-test-course-deprecated-notice>
+          This challenge is deprecated.<br />
+          {{#if this.currentUser.canAccessMembershipBenefits}}
+            Since you're a member, you can still access the challenge if you'd like.
+          {{/if}}
+        </AlertWithIcon>
       {{/if}}
 
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
