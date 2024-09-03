@@ -15,17 +15,19 @@
       <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full" />
     </div>
 
-    {{#if this.model.course.releaseStatusIsAlpha}}
-      <CourseOverviewPage::SidebarAlphaNotice @course={{this.model.course}} class="hidden lg:block lg:w-80 lg:flex-shrink-0 ml-2 lg:px-4 py-2" />
-    {{else}}
-      <CourseLeaderboard
-        class="w-80 flex-shrink-0 ml-2 hidden lg:block"
-        @activeRepository={{this.activeRepository}}
-        @course={{this.model.course}}
-        @isCollapsed={{false}}
-        @repositories={{this.userRepositories}}
-        @shouldShowLanguageIconsWithoutHover={{true}}
-      />
-    {{/if}}
+    <div class="hidden lg:block w-80 flex-shrink-0 py-2 ml-2">
+      {{#if this.model.course.releaseStatusIsAlpha}}
+        <CourseOverviewPage::SidebarAlphaNotice @course={{this.model.course}} class="w-full px-4" />
+      {{else}}
+        <CourseLeaderboard
+          class="w-full"
+          @activeRepository={{this.activeRepository}}
+          @course={{this.model.course}}
+          @isCollapsed={{false}}
+          @repositories={{this.userRepositories}}
+          @shouldShowLanguageIconsWithoutHover={{true}}
+        />
+      {{/if}}
+    </div>
   </div>
 </div>
