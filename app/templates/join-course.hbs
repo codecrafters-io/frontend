@@ -4,12 +4,18 @@
 <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 px-3 md:px-6">
   <CourseOverviewPage::Header @course={{this.model.course}} class="mb-6 md:mb-10">
     <:cta>
-      <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{this.model.affiliateLink}} @shouldShowAffiliateName={{true}} />
+      {{! suppress CTA }}
     </:cta>
   </CourseOverviewPage::Header>
 
+  <div class="lg:hidden flex justify-center items-center pb-6 md:pb-10">
+    {{! @glint-expect-error: Not ts-ified yet !}}
+    <AffiliateLinkPage::AcceptReferralContainer @affiliateLink={{this.model.affiliateLink}} />
+  </div>
+
   <div class="flex items-start flex-row mb-4">
     <div class="flex-grow">
+
       <CourseOverviewPage::Notices @course={{this.model.course}} class="mb-4" />
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full" />
     </div>
