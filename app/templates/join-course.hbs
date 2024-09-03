@@ -34,10 +34,10 @@
 
         <CourseLeaderboard
           class="w-full"
-          @activeRepository={{this.activeRepository}}
+          @activeRepository={{null}}
           @course={{this.model.course}}
           @isCollapsed={{false}}
-          @repositories={{this.userRepositories}}
+          @repositories={{(array)}}
           @shouldShowLanguageIconsWithoutHover={{true}}
         />
       {{/if}}
