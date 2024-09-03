@@ -7,9 +7,16 @@ interface Signature {
 
   Args: {
     affiliateLink: AffiliateLinkModel;
+    verticalSize: 'tall' | 'compact';
   };
 }
 
 export default class AcceptReferralContainerComponent extends Component<Signature> {
   logoImage = logoImage;
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'AffiliateLinkPage::AcceptReferralContainer': typeof AcceptReferralContainerComponent;
+  }
 }

@@ -1,4 +1,9 @@
-<div class="flex flex-col items-center gap-y-6 bg-teal-50 border-teal-500 px-4 py-8 border rounded-md shadow-xl max-w-sm" ...attributes>
+<div
+  class="flex flex-col items-center gap-y-6 bg-teal-50/25 border-teal-500 px-4
+    {{if (eq @verticalSize 'tall') 'py-12' 'py-8'}}
+    border rounded-md shadow-xl"
+  ...attributes
+>
   <div class="flex items-center justify-center">
     {{#if @affiliateLink.overriddenAffiliateAvatarUrl}}
       {{! No border for overridden avatars, we'll expect them to include a border in the image itself if needed }}
