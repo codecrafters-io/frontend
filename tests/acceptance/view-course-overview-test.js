@@ -41,8 +41,13 @@ module('Acceptance | view-course-overview', function (hooks) {
   test('it renders when anonymous user views alpha course', async function (assert) {
     testScenario(this.server);
 
+    const course = this.server.schema.courses.findBy({ slug: 'grep' });
+    course.update('releaseStatus', 'alpha');
+
     await courseOverviewPage.visit({ course_slug: 'grep' });
     assert.strictEqual(currentURL(), '/courses/grep/overview');
+
+    await percySnapshot('Course Overview - Alpha Course');
   });
 
   test('it renders for course with extensions', async function (assert) {
