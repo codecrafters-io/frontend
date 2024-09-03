@@ -5,63 +5,18 @@
 
   <div class="flex items-start flex-col lg:flex-row">
     <div class="flex-grow">
-      {{#if this.model.course.releaseStatusIsBeta}}
-        <AlertWithIcon @type="success" class="mb-4" data-test-course-beta-notice>
-          This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
-        </AlertWithIcon>
-      {{else if (and this.model.course.isFree this.model.course.isFreeUntil)}}
-        <AlertWithIcon @type="success" class="mb-4" data-test-course-free-notice>
-          This challenge is free until
-          {{this.formattedCourseIsFreeExpirationDate}}!
-        </AlertWithIcon>
-      {{else if this.model.course.releaseStatusIsDeprecated}}
-        <AlertWithIcon @type="info" class="mb-4" data-test-course-deprecated-notice>
-          This challenge is deprecated.<br />
-          {{#if this.currentUser.canAccessMembershipBenefits}}
-            Since you're a member, you can still access the challenge if you'd like.
-          {{/if}}
-        </AlertWithIcon>
-      {{/if}}
-
+      <CourseOverviewPage::Notices @course={{this.model.course}} class="mb-4" />
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full mb-4" />
 
       {{#if (or (current-user-is-course-author this.model.course) (current-user-is-staff))}}
-        <PageSection @title="Admin Options" class="mb-6" data-test-admin-panel>
-          <div class="mb-4">
-            <TertiaryLinkButton @size="small" @route="course-admin.submissions" @model={{this.model.course.slug}}>
-              Admin Panel
-            </TertiaryLinkButton>
-          </div>
-
-          <div>
-            <CourseOverviewPage::StartCourseButton @size="regular" @course={{this.model.course}} />
-          </div>
-        </PageSection>
+        <CourseOverviewPage::AdminSection @course={{this.model.course}} class="mb-6" />
       {{/if}}
 
       <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full" />
     </div>
 
     {{#if this.model.course.releaseStatusIsAlpha}}
-      <div class="lg:w-80 lg:flex-shrink-0 ml-2">
-        <div class="lg:px-4 py-2">
-          <div class="lg:text-sm lg:leading-relaxed text-gray-500 leading-relaxed">
-            <p class="mb-3">
-              This is a preview of a CodeCrafters challenge that is launching soon.
-            </p>
-            <p class="mb-3">
-              Follow us on
-              <a
-                target="_blank"
-                href="https://twitter.com/@CodeCraftersIo"
-                class="font-bold text-teal-500 underline"
-                rel="noopener noreferrer"
-              >Twitter</a>
-              to be notified when this challenge is available.
-            </p>
-          </div>
-        </div>
-      </div>
+      <CourseOverviewPage::SidebarAlphaNotice @course={{this.model.course}} class="hidden lg:block lg:w-80 lg:flex-shrink-0 ml-2 lg:px-4 py-2" />
     {{else}}
       <CourseLeaderboard
         class="w-80 flex-shrink-0 ml-2 hidden lg:block"
