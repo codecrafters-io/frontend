@@ -12,6 +12,7 @@ interface Signature {
 
   Args: {
     affiliateLink: AffiliateLinkModel;
+    shouldShowAffiliateName?: boolean;
   };
 }
 
