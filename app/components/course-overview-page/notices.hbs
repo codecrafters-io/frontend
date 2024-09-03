@@ -1,0 +1,28 @@
+{{#if @course.releaseStatusIsBeta}}
+  <AlertWithIcon @type="success" data-test-course-beta-notice ...attributes>
+    This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
+  </AlertWithIcon>
+{{else if @course.releaseStatusIsAlpha}}
+  <AlertWithIcon @type="info" data-test-course-alpha-notice ...attributes>
+    <p>
+      This is a preview of a CodeCrafters challenge that is launching soon.
+    </p>
+    <p>
+      Follow us on
+      <a target="_blank" href="https://twitter.com/@CodeCraftersIo" class="font-bold" rel="noopener noreferrer">Twitter</a>
+      to be notified when this challenge is available.
+    </p>
+  </AlertWithIcon>
+{{else if (and @course.isFree @course.isFreeUntil)}}
+  <AlertWithIcon @type="success" data-test-course-free-notice ...attributes>
+    This challenge is free until
+    {{this.formattedCourseIsFreeExpirationDate}}!
+  </AlertWithIcon>
+{{else if @course.releaseStatusIsDeprecated}}
+  <AlertWithIcon @type="info" data-test-course-deprecated-notice ...attributes>
+    This challenge is deprecated.<br />
+    {{#if this.authenticator.currentUser.canAccessMembershipBenefits}}
+      Since you're a member, you can still access the challenge if you'd like.
+    {{/if}}
+  </AlertWithIcon>
+{{/if}}
