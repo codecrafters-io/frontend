@@ -26,7 +26,7 @@ export default class JoinCourseRoute extends BaseRoute {
 
   @tracked previousMetaImageUrl: string | undefined;
 
-  async afterModel(model: ModelType) {
+  afterModel(model: ModelType) {
     if (!model.affiliateLink || !model.course) {
       this.router.transitionTo('not-found');
 

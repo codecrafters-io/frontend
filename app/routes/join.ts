@@ -21,7 +21,7 @@ export default class JoinRoute extends BaseRoute {
     scrollToTop();
   }
 
-  async afterModel(model: ModelType) {
+  afterModel(model: ModelType) {
     if (!model.affiliateLink) {
       this.router.transitionTo('not-found');
     }

@@ -22,7 +22,7 @@ export default class CourseOverviewRoute extends BaseRoute {
 
   @tracked previousMetaImageUrl: string | undefined;
 
-  async afterModel(model: ModelType) {
+  afterModel(model: ModelType) {
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${model.course.slug}.jpg`;
   }
