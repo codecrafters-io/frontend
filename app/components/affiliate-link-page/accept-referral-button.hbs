@@ -10,12 +10,7 @@
     {{svg-jar "github" class="fill-current w-6 transform transition-all mr-3"}}
   {{/if}}
 
-  {{#if @shouldShowAffiliateName}}
-    Accept
-    {{@affiliateLink.usernameForDisplay}}'s offer →
-  {{else}}
-    Accept offer →
-  {{/if}}
+  Accept offer →
 
   {{#if this.currentUserIsAnonymous}}
     <EmberTooltip @text="Click to login via GitHub" />

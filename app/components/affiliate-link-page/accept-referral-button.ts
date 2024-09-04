@@ -6,13 +6,14 @@ import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseModel from 'codecrafters-frontend/models/course';
 
 interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
     affiliateLink: AffiliateLinkModel;
-    shouldShowAffiliateName?: boolean;
+    course?: CourseModel;
   };
 }
 
@@ -72,7 +73,12 @@ export default class AcceptReferralButtonComponent extends Component<Signature> 
         .save();
 
       await this.authenticator.currentUser!.fetchCurrent({}); // Refresh free usage grant columns
-      this.router.transitionTo('pay');
+
+      if (this.args.course) {
+        this.router.transitionTo('course', this.args.course.slug);
+      } else {
+        this.router.transitionTo('pay');
+      }
     }
   }
 }
