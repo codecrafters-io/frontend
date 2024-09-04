@@ -10,7 +10,7 @@ export default class CourseAdminRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  async afterModel(model: { concept: ConceptModel }) {
+  afterModel(model: { concept: ConceptModel }) {
     if (this.router.currentRouteName === 'concept-admin.index') {
       this.router.transitionTo('concept-admin.blocks', model.concept.slug);
     }

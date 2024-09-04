@@ -3,7 +3,7 @@
     <div class="flex items-center justify-center">
       <AvatarImage
         @user={{@referralLink.user}}
-        class="w-16 h-16 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
+        class="w-16 h-16 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow"
       />
 
       {{svg-jar "plus" class="w-10 h-10 text-gray-600 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
@@ -11,7 +11,7 @@
       <img class="h-14" src={{this.logoImage}} alt="CodeCrafters" />
     </div>
 
-    <div class="prose dark:prose-invert text-center max-w-sm mt-10 text-gry-600">
+    <div class="prose dark:prose-invert text-center mt-10 text-gry-600">
       <b>@{{@referralLink.user.username}}</b>
       wants to gift you<br />
       <b>1 free week</b>

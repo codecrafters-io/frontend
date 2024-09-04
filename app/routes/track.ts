@@ -28,7 +28,7 @@ export default class TrackRoute extends BaseRoute {
     scrollToTop();
   }
 
-  async afterModel({ language: { slug } = {} }: { language?: { slug?: string } } = {}): Promise<void> {
+  afterModel({ language: { slug } = {} }: { language?: { slug?: string } } = {}): void {
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
   }

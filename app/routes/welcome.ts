@@ -23,7 +23,7 @@ export default class WelcomeRoute extends BaseRoute {
     scrollToTop();
   }
 
-  async afterModel(model: { onboardingSurvey: OnboardingSurveyModel | null }) {
+  afterModel(model: { onboardingSurvey: OnboardingSurveyModel | null }) {
     // User must've been created before we started onboarding surveys.
     if (!model.onboardingSurvey) {
       this.router.transitionTo('catalog');

@@ -9,7 +9,7 @@ export default class PerksClaimRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
-  async afterModel(urlResponse: { claim_url: string }) {
+  afterModel(urlResponse: { claim_url: string }) {
     if (urlResponse?.claim_url) {
       window.location.href = urlResponse.claim_url;
     } else {

@@ -18,7 +18,7 @@ export default class ConceptGroupRoute extends BaseRoute {
   @service declare router: RouterService;
   @tracked previousMetaImageUrl: string | undefined = undefined;
 
-  async afterModel(model: { conceptGroup: ConceptGroupModel }) {
+  afterModel(model: { conceptGroup: ConceptGroupModel }) {
     this.previousMetaImageUrl = this.metaData.imageUrl;
     // @ts-ignore
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}collection-${model.conceptGroup.slug}.png`;
