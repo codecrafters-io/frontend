@@ -1,9 +1,9 @@
 import { Factory, trait } from 'miragejs';
 import config from 'codecrafters-frontend/config/environment';
 
-function generateRandomAlphanumericString(length) {
+function generateRandomSHA(length) {
   let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters = 'abcdef0123456789';
   const charactersLength = characters.length;
 
   for (let i = 0; i < length; i++) {
@@ -50,9 +50,9 @@ export default Factory.extend({
 
   clientType: 'git',
   createdAt: () => new Date(),
-  commitSha: () => generateRandomAlphanumericString(40),
+  commitSha: () => generateRandomSHA(40),
   status: 'evaluating',
-  treeSha: () => generateRandomAlphanumericString(40),
+  treeSha: () => generateRandomSHA(40),
 
   githubStorageHtmlUrl: 'https://github.com',
 
