@@ -28,7 +28,8 @@
   </div>
 
   <div class="flex flex-col items-center">
-    <div class="inline-flex">
+    {{! Disabled buttons can be translucent, the added background makes them more visible }}
+    <div class="inline-flex bg-white dark:bg-gray-800 rounded">
       <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{@affiliateLink}} @course={{@course}} />
     </div>
 
