@@ -12,6 +12,7 @@ if (config.environment === 'development' || config.environment === 'production')
     autoSessionTracking: true,
     dsn: config.environment === 'production' ? sentryDSN : '',
     environment: config.environment,
+    ignoreErrors: ['TypeError: Failed to fetch'],
     release: config.x.version,
     tracesSampleRate: 0.01,
   });
