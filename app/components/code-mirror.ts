@@ -312,6 +312,8 @@ const OPTION_HANDLERS: OptionHandlersSignature = {
             original: originalDocument,
             mergeControls: !!mergeControls,
             collapseUnchanged: collapseUnchanged ? { margin: 3, minSize: 4 } : undefined,
+            highlightChanges: true,
+            syntaxHighlightDeletions: true,
           }),
         ]
       : [];
