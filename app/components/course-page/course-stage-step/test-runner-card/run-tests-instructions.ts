@@ -30,7 +30,7 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
 
     const gitVariant = {
       label: 'git',
-      commands: ['git add .', 'git commit --allow-empty -m "pass stage" # any message', 'git push origin master'],
+      commands: ['git add .', 'git commit --allow-empty -m "[any message]"', 'git push origin master'],
     };
 
     if (this.recommendedClientType === 'cli') {

@@ -44,7 +44,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     assert.strictEqual(
       coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
-      ['git add .', 'git commit --allow-empty -m "pass stage" # any message', 'git push origin master'].join(' '),
+      ['git add .', 'git commit --allow-empty -m "[any message]"', 'git push origin master'].join(' '),
       'copyable text is updated to include git commands',
     );
 
