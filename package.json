@@ -37,7 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/plugin-proposal-decorators": "^7.24.7",
-    "@codecov/webpack-plugin": "^0.0.1-beta.10",
+    "@codecov/webpack-plugin": "^0.0.1-beta.12",
     "@codemirror/language-data": "^6.5.0",
     "@codemirror/merge": "^6.7.0",
     "@ember/optional-features": "^2.1.0",
