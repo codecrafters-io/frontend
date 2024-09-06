@@ -37,15 +37,16 @@ const BASE_STYLE = {
   },
 };
 
-export const codeCraftersLight = [EditorView.theme(Object.assign({}, BASE_STYLE), { dark: false }), githubLight];
+export const codeCraftersLight = [EditorView.theme(BASE_STYLE, { dark: false }), githubLight];
 export const codeCraftersDark = [
   EditorView.theme(
-    Object.assign({}, BASE_STYLE, {
+    {
       '.cm-gutters': {
         backgroundColor: '#0d1117',
       },
-    }),
+    },
     { dark: true },
   ),
+  EditorView.theme(BASE_STYLE, { dark: false }),
   githubDark,
 ];
