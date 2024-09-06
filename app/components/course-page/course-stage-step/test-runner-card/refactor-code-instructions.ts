@@ -29,7 +29,7 @@ export default class RefactorCodeInstructionsComponent extends Component<Signatu
 
     const gitVariant = {
       label: 'git',
-      commands: ['git add .', 'git commit --allow-empty -m "run tests" # any message', 'git push origin master'],
+      commands: ['git add .', 'git commit --allow-empty -m "[any message]"', 'git push origin master'],
     };
 
     if (this.recommendedClientType === 'cli') {
