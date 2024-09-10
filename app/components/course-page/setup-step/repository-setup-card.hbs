@@ -28,10 +28,27 @@
         <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
       </div>
 
-      <p class="prose mt-4 prose-sm dark:prose-invert">
-        Running into issues with the git clone step?
-        <a href="https://docs.codecrafters.io/troubleshooting/fix-clone-errors" target="_blank" rel="noopener noreferrer">Read this</a>.
-      </p>
+      <div class="mt-6 prose prose-compact prose-sm dark:prose-invert">
+        <p>Need help?</p>
+        <ul>
+          <li>
+            <a
+              data-test-run-git-commands-link
+              href="https://docs.codecrafters.io/challenges/how-challenges-work#how-to-run-git-commands"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Not sure how to run git commands</a>
+          </li>
+          <li>
+            <a
+              data-test-git-clone-issues-link
+              href="https://docs.codecrafters.io/troubleshooting/fix-clone-errors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Running into issues with the git clone step</a>
+          </li>
+        </ul>
+      </div>
     {{/if}}
   </:content>
 </CoursePage::InstructionsCard>

@@ -117,6 +117,14 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.header.stepName, 'Repository Setup', 'step name is repository setup');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
 
+    assert.strictEqual(coursePage.repositorySetupCard.gitCloneIssuesLink.text, 'Running into issues with the git clone step');
+    assert.strictEqual(coursePage.repositorySetupCard.gitCloneIssuesLink.href, 'https://docs.codecrafters.io/troubleshooting/fix-clone-errors');
+    assert.strictEqual(coursePage.repositorySetupCard.runGitCommandsLink.text, 'Not sure how to run git commands');
+    assert.strictEqual(
+      coursePage.repositorySetupCard.runGitCommandsLink.href,
+      'https://docs.codecrafters.io/challenges/how-challenges-work#how-to-run-git-commands',
+    );
+
     await percySnapshot('Start Course - Listening for Git push');
 
     let repository = this.server.schema.repositories.find(1);
