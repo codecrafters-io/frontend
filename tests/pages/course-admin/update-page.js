@@ -7,6 +7,10 @@ export default create({
 
   clickOnSyncWithGitHubButton: clickable('[data-test-sync-with-github-button]'),
 
+  errorMessage: {
+    scope: '[data-test-error-message]',
+  },
+
   fileContentsDiff: {
     expandableChunks: collection('[data-test-expandable-chunk]'),
 
