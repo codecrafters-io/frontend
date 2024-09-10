@@ -9,17 +9,27 @@
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
         </div>
 
-        <div class="text-sm leading-6">
-          {{! #if ensures that language is typed and not null }}
-          {{#if @submission.repository.language}}
-            <SyntaxHighlightedDiff
-              @comments={{(array)}}
-              @code={{changedFile.diff}}
-              @language={{@submission.repository.language.slug}}
-              @shouldCollapseUnchangedLines={{true}}
-            />
-          {{/if}}
-        </div>
+        {{#let (diff-to-document changedFile.diff) as |document|}}
+          <CodeMirror
+            @document={{document.current}}
+            @originalDocument={{document.original}}
+            @language={{@submission.repository.language.slug}}
+            @filename={{changedFile.filename}}
+            @collapseUnchanged={{true}}
+            @allowMultipleSelections={{true}}
+            @bracketMatching={{true}}
+            @crosshairCursor={{true}}
+            @drawSelection={{true}}
+            @rectangularSelection={{true}}
+            @readOnly={{true}}
+            @highlightSelectionMatches={{true}}
+            @highlightSpecialChars={{true}}
+            @highlightTrailingWhitespace={{true}}
+            @lineNumbers={{true}}
+            @theme={{this.codeMirrorTheme}}
+            class="block text-sm"
+          />
+        {{/let}}
       </div>
     {{/each}}
   {{else}}
