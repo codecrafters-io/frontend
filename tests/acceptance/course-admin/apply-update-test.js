@@ -60,8 +60,17 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
     assert.ok(updatePage.applyUpdateButton.isPresent);
+    assert.notOk(updatePage.errorMessage.isVisible);
+
     await updatePage.applyUpdateButton.click();
+
     assert.ok(updatePage.applyUpdateButton.isPresent);
+    assert.ok(updatePage.errorMessage.isVisible);
+
+    assert.strictEqual(
+      updatePage.errorMessage.text,
+      'We encountered an error when applying this update: Expected "slug" to be "redis", got: "docker". Change slug to "redis" to fix this.',
+    );
 
     await percySnapshot('Admin - Course Updates - Pending Update With Error');
   });
