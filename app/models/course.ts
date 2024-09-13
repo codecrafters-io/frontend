@@ -19,6 +19,7 @@ import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 import httpServerLogo from '/assets/images/challenge-logos/challenge-logo-http-server.svg';
 import interpreterLogo from '/assets/images/challenge-logos/challenge-logo-interpreter.svg';
+import kafkaLogo from '/assets/images/challenge-logos/challenge-logo-kafka.svg';
 import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import shellLogo from '/assets/images/challenge-logos/challenge-logo-shell.svg';
@@ -127,6 +128,7 @@ export default class CourseModel extends Model {
         grep: grepLogo,
         'http-server': httpServerLogo,
         interpreter: interpreterLogo,
+        kafka: kafkaLogo,
         react: reactLogo,
         redis: redisLogo,
         shell: shellLogo,
