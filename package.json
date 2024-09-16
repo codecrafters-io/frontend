@@ -60,7 +60,7 @@
     "@sentry/ember": "^8.30.0",
     "@sentry/webpack-plugin": "^2.22.4",
     "@shikijs/rehype": "^1.17.5",
-    "@shikijs/transformers": "^1.10.0",
+    "@shikijs/transformers": "^1.17.7",
     "@tsconfig/ember": "^3.0.8",
     "@types/canvas-confetti": "^1.6.4",
     "@types/dompurify": "^3.0.5",
