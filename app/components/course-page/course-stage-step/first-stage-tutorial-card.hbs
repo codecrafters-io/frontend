@@ -1,4 +1,4 @@
-<CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-instructions-card" ...attributes>
+<CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-tutorial-card" ...attributes>
   <:content>
     <div class="prose dark:prose-invert mb-5">
       <p>
@@ -9,19 +9,19 @@
 
     <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
       {{#if (eq stepList.expandedStep.id "navigate-to-file")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::NavigateToFileStep
+        <CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.navigateToFileStepIsComplete}}
         />
       {{else if (eq stepList.expandedStep.id "uncomment-code")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::UncommentCodeStep
+        <CoursePage::CourseStageStep::FirstStageTutorialCard::UncommentCodeStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.uncommentCodeStepIsComplete}}
         />
       {{else if (eq stepList.expandedStep.id "submit-code")}}
-        <CoursePage::CourseStageStep::FirstStageInstructionsCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
+        <CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
       {{/if}}
     </ExpandableStepList>
 

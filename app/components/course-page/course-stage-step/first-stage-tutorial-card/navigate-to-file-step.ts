@@ -24,6 +24,6 @@ export default class NavigateToFileStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageInstructionsCard::NavigateToFileStep': typeof NavigateToFileStepComponent;
+    'CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep': typeof NavigateToFileStepComponent;
   }
 }

@@ -3,7 +3,7 @@ import { clickable, collection, isVisible, text } from 'ember-cli-page-object';
 export default {
   clickOnCompleteStepButton: clickable('[data-test-complete-step-button]'),
   clickOnMarkStageAsCompleteButton: clickable('[data-test-mark-stage-as-complete-button]'),
-  scope: '#first-stage-instructions-card',
+  scope: '#first-stage-tutorial-card',
 
   scrollIntoView() {
     return document.querySelector(this.scope)!.scrollIntoView();

@@ -5,7 +5,7 @@ import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/componen
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import Header from 'codecrafters-frontend/tests/pages/components/course-page/header';
 import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
-import FirstStageInstructionsCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-instructions-card';
+import FirstStageTutorialCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-tutorial-card';
 import LanguageDropdown from './components/language-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
@@ -144,7 +144,7 @@ export default create({
   },
 
   feedbackPrompt: FeedbackPrompt,
-  firstStageInstructionsCard: FirstStageInstructionsCard,
+  firstStageTutorialCard: FirstStageTutorialCard,
 
   freeCourseLabel: {
     hover: triggerable('mouseenter'),
