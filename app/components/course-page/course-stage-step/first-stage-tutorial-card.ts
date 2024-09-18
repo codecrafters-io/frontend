@@ -1,11 +1,12 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import Store from '@ember-data/store';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import { action } from '@ember/object';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -64,6 +65,7 @@ class SubmitCodeStep extends BaseStep implements Step {
 }
 
 export default class FirstStageTutorialCardComponent extends Component<Signature> {
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
@@ -99,11 +101,21 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
   handleStepCompletedManually(step: Step) {
     if (step.id === 'navigate-to-file') {
       this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
+
+      this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
+        step_number: 1,
+        step_id: 'navigate-to-file',
+      });
     }
 
     if (step.id === 'uncomment-code') {
       this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('uncomment-code');
       this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
+
+      this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
+        step_number: 2,
+        step_id: 'uncomment-code',
+      });
     }
   }
 
