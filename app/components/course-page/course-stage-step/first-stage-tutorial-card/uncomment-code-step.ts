@@ -24,6 +24,6 @@ export default class UncommentCodeStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageInstructionsCard::UncommentCodeStep': typeof UncommentCodeStepComponent;
+    'CoursePage::CourseStageStep::FirstStageTutorialCard::UncommentCodeStep': typeof UncommentCodeStepComponent;
   }
 }

@@ -17,7 +17,7 @@
   {{/if}}
 
   {{#if @model.courseStage.isFirst}}
-    <CoursePage::CourseStageStep::FirstStageInstructionsCard
+    <CoursePage::CourseStageStep::FirstStageTutorialCard
       @repository={{@model.activeRepository}}
       @courseStage={{@model.courseStage}}
       class="mb-6"
@@ -48,13 +48,13 @@
             {{#if (eq this.currentStep.testsStatus "failed")}}
               <p>
                 This failure is expected! Check the
-                <a href="#first-stage-instructions-card">How to pass this stage</a>
+                <a href="#first-stage-tutorial-card">How to pass this stage</a>
                 section for instructions.
               </p>
             {{else}}
               <p>
                 Check the
-                <a href="#first-stage-instructions-card">How to pass this stage</a>
+                <a href="#first-stage-tutorial-card">How to pass this stage</a>
                 section for instructions.
               </p>
             {{/if}}
