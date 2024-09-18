@@ -105,6 +105,7 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
       this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
         step_number: 1,
         step_id: 'navigate-to-file',
+        repository_id: this.args.repository.id,
       });
     }
 
@@ -115,6 +116,7 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
       this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
         step_number: 2,
         step_id: 'uncomment-code',
+        repository_id: this.args.repository.id,
       });
     }
   }
