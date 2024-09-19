@@ -198,7 +198,7 @@
   },
   "dependencies": {
     "@rails/actioncable": "^7.2.100",
-    "@stripe/stripe-js": "^4.4.0",
+    "@stripe/stripe-js": "^4.5.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.15",
     "@typeform/embed": "^5.1.0",
