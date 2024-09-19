@@ -182,7 +182,6 @@ export const codeCraftersDark = [
 
       '.cm-gutters': {
         backgroundColor: 'rgb(15 23 42)', // bg-gray-900
-        borderRight: '1px solid rgba(255, 255, 255, 0.025)',
       },
 
       '.cm-collapsedLines': {
