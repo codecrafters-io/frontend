@@ -77,14 +77,14 @@ const BASE_STYLE = {
       content: '"Expand"',
       position: 'absolute',
       height: '1.75rem',
-      paddingLeft: '26px',
-      marginLeft: '-68px',
+      paddingLeft: '326px',
+      marginLeft: '-368px',
       fontSize: '0.75rem',
       lineHeight: '1rem',
       backgroundColor: 'rgb(240 249 255)', // bg-sky-50
       backgroundImage: 'url("/assets/images/svg-icons/expand-diff-middle.svg")',
       backgroundRepeat: 'no-repeat',
-      backgroundPosition: '6px center',
+      backgroundPosition: '306px center',
       borderColor: 'rgb(224 242 254)', // border-sky-100
       borderTopWidth: '1px',
       borderBottomWidth: '1px',
@@ -92,6 +92,7 @@ const BASE_STYLE = {
       paddingBottom: '5px',
       marginTop: '-6px',
       backgroundSize: '12px 12px',
+      zIndex: '200',
     },
 
     '&:after': {
