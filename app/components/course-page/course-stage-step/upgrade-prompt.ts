@@ -68,23 +68,23 @@ export default class UpgradePromptComponent extends Component<Signature> {
 
   get secondaryCopyMarkdown(): string {
     if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
-      return `Plans start at ~~$40/mo~~ $20/mo (discounted price for ${
+      return `Plans start at ~~$30/month~~ $15/month (discounted price for ${
         this.regionalDiscount.countryName
-      }). Save an additional 40% by joining within ${formatDistanceStrictWithOptions(
+      }) when billed annually. Save an additional 40% by joining within ${formatDistanceStrictWithOptions(
         {},
         new Date(),
         this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
       )}.`;
     } else if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount) {
-      return `Plans start at $40/mo. Save 40% by joining within ${formatDistanceStrictWithOptions(
+      return `Plans start at $30/month when billed annually. Save 40% by joining within ${formatDistanceStrictWithOptions(
         {},
         new Date(),
         this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
       )}.`;
     } else if (this.regionalDiscount) {
-      return `Plans start at ~~$40/mo~~ $20/mo (discounted price for ${this.regionalDiscount.countryName}).`;
+      return `Plans start at ~~$30/month~~ $15/month (discounted price for ${this.regionalDiscount.countryName}) when billed annually.`;
     } else {
-      return 'Plans start at $40/mo.';
+      return 'Plans start at $30/month when billed annually.';
     }
   }
 
