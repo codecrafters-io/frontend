@@ -8,7 +8,7 @@ import { signInAsStaff } from 'codecrafters-frontend/tests/support/authenticatio
 module('Acceptance | course-admin | view-diffs', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('expandable chunks has the correct number of lines', async function (assert) {
+  test('collapsed lines placeholders show correct number of lines', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -32,6 +32,12 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
         filename: 'server.rb',
         diff: `    end
 
+    def taste
+      loop do
+        @server.lick
+      end
+    end
+
     def listen
       loop do
         client = @server.accept
@@ -47,6 +53,12 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
         client.write("+PONG\\r\\n")
       end
     end
+
+    def feel
+      loop do
+        @server.touch
+      end
+    end
   end`,
       },
     ]);
@@ -55,18 +67,29 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     await submissionsPage.timelineContainer.entries.objectAt(1).click();
     await submissionsPage.clickOnLink('Diff');
 
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 2, 'There should be two expandable chunks');
-    assert.ok(
-      submissionsPage.diffTab.expandableChunks.objectAt(0).text.includes('Expand 2 lines'),
-      'The first chunk should have the correct number of lines',
-    );
-    assert.ok(
-      submissionsPage.diffTab.expandableChunks.objectAt(1).text.includes('Expand 2 lines'),
-      'The second chunk should have the correct number of lines',
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
+      2,
+      'There should be two collapsed lines placeholders',
     );
 
-    await submissionsPage.diffTab.expandableChunks.objectAt(0).click();
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'The first chunk should have been expanded');
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].text,
+      '⦚ 8 unchanged lines ⦚',
+      'The first placeholder should show correct number of lines',
+    );
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[1].text,
+      '⦚ 7 unchanged lines ⦚',
+      'The second placeholder should show correct number of lines',
+    );
+
+    await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
+      1,
+      'The first placeholder should be expanded after clicking',
+    );
   });
 
   test('expandable chunks display the hidden code when clicked', async function (assert) {
