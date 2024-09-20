@@ -7,7 +7,7 @@ import { signInAsStaff } from 'codecrafters-frontend/tests/support/authenticatio
 module('Acceptance | course-admin | view-diffs', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('collapsed lines placeholders show correct number of lines', async function (assert) {
+  test('collapsed lines placeholders show correct number of lines and expand when clicked', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -77,6 +77,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
       '⦚ 8 unchanged lines ⦚',
       'The first placeholder should show correct number of lines',
     );
+
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[1].text,
       '⦚ 7 unchanged lines ⦚',
@@ -84,83 +85,19 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     );
 
     await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
+
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
       1,
       'The first placeholder should be expanded after clicking',
-    );
-  });
-
-  test('collapsed lines placeholders reveal hidden code when clicked', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    let submission = this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
-    });
-
-    submission.update('changedFiles', [
-      {
-        filename: 'server.rb',
-        diff: `    end
-
-    def taste
-      loop do
-        @server.lick
-      end
-    end
-
-    def listen
-      loop do
-        client = @server.accept
-+       handle_client(client)
-+     end
-+   end
-+
-+   def handle_client(client)
-+     loop do
-+       client.gets
-+
-        # TODO: Handle commands other than PING
-        client.write("+PONG\\r\\n")
-      end
-    end
-
-    def feel
-      loop do
-        @server.touch
-      end
-    end
-  end`,
-      },
-    ]);
-
-    await submissionsPage.visit({ course_slug: 'redis' });
-    await submissionsPage.timelineContainer.entries.objectAt(1).click();
-    await submissionsPage.clickOnLink('Diff');
-
-    assert.strictEqual(
-      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
-      2,
-      'There should be two collapsed lines placeholders',
     );
 
     await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
+
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
-      1,
-      'The first placeholder should be expanded after clicking',
+      0,
+      'The second placeholder should be expanded after clicking',
     );
   });
 });
