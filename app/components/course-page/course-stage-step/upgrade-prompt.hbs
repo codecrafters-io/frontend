@@ -13,7 +13,7 @@
       <div class="prose dark:prose-invert prose-compact prose-sm @[640px]:prose-base py-3" data-test-upgrade-prompt-secondary-copy>
         {{#if this.isLoadingRegionalDiscount}}
           <p>
-            Plans start at $40/mo.
+            Plans start at $30/month when billed annually.
           </p>
         {{else}}
           {{markdown-to-html this.secondaryCopyMarkdown}}
@@ -21,9 +21,11 @@
 
         {{#if this.featureToHighlight.isAccessibleByReferringUsers}}
           <p>
-            Not ready for a membership? You can 🎁
+            Want CodeCrafters for free? You might be eligible to
+            <a href="https://codecrafters.io/expense" target="_blank" rel="noopener noreferrer">claim the membership fees</a>
+            back from your employer. Or you can
             <LinkTo @route="refer">refer friends</LinkTo>
-            to get free access.
+            to earn free weeks.
           </p>
         {{/if}}
       </div>
