@@ -6,6 +6,7 @@ interface Signature {
   Args: {
     contentMarkdown: string;
     imageUrl: string;
+    popover?: { targetId: string; html: string };
     title: string;
   };
 }
