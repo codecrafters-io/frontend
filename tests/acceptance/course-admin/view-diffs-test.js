@@ -44,11 +44,22 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 +     end
 +   end
 +
+    def taste
+      loop do
+        @server.lick
+      end
+    end
+
+    def taste
+      loop do
+        @server.lick
+      end
+    end
++
 +   def handle_client(client)
 +     loop do
 +       client.gets
 +
-        # TODO: Handle commands other than PING
         client.write("+PONG\\r\\n")
       end
     end
@@ -68,8 +79,8 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
-      2,
-      'There should be two collapsed lines placeholders',
+      3,
+      'There should be three collapsed lines placeholders',
     );
 
     assert.strictEqual(
@@ -80,15 +91,21 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[1].text,
-      '⦚ 7 unchanged lines ⦚',
+      '⦚ 4 unchanged lines ⦚',
       'The second placeholder should show correct number of lines',
+    );
+
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[2].text,
+      '⦚ 7 unchanged lines ⦚',
+      'The third placeholder should show correct number of lines',
     );
 
     await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
-      1,
+      2,
       'The first placeholder should be expanded after clicking',
     );
 
@@ -96,8 +113,16 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
-      0,
+      1,
       'The second placeholder should be expanded after clicking',
+    );
+
+    await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
+
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
+      0,
+      'The third placeholder should be expanded after clicking',
     );
   });
 });
