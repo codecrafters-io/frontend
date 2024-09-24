@@ -1,7 +1,16 @@
 <div ...attributes>
   {{#each this.featureList as |feature|}}
     <div class="flex justify-center">
-      <FeatureCard @contentMarkdown={{feature.bodyMarkdown}} @imageUrl={{feature.imageUrl}} @popover={{feature.popover}} @title={{feature.title}} />
+      <FeatureCard @contentMarkdown={{feature.bodyMarkdown}} @imageUrl={{feature.imageUrl}} @title={{feature.title}}>
+        <:popover>
+          {{#if feature.popover}}
+            {{! @glint-expect-error EmberPopover is not typed }}
+            <EmberPopover @targetId={{feature.popover.targetId}} @side="bottom">
+              {{html-safe feature.popover.html}}
+            </EmberPopover>
+          {{/if}}
+        </:popover>
+      </FeatureCard>
     </div>
   {{/each}}
 </div>

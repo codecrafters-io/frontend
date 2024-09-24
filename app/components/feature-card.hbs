@@ -7,12 +7,8 @@
     </div>
     <div class="text-gray-500 text-xs leading-5 markdown-list">
       {{markdown-to-html @contentMarkdown}}
-      {{#if @popover}}
-        {{! @glint-ignore }}
-        <EmberPopover @targetId={{@popover.targetId}} @side="bottom">
-          {{html-safe @popover.html}}
-        </EmberPopover>
-        {{! @glint-ignore }}
+      {{#if (has-block "popover")}}
+        {{yield to="popover"}}
       {{/if}}
     </div>
   </div>
