@@ -15,7 +15,6 @@
           <AnimatedContainer>
             {{#animated-value this.currentLanguage.name rules=this.languageNameAnimationRules duration=200 as |v|}}
               <div>
-                {{! @glint-ignore v is unknown type }}
                 {{v}}&nbsp;
               </div>
             {{/animated-value}}
