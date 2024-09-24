@@ -8,7 +8,6 @@
       <AnimatedContainer>
         {{#animated-value @latestConceptEngagement.currentProgressPercentage rules=this.rules duration=200 as |v|}}
           <div>
-            {{! @glint-ignore }}
             {{v}}%
           </div>
         {{/animated-value}}
@@ -21,7 +20,6 @@
       <AnimatedContainer>
         {{#animated-value @latestConceptEngagement.remainingBlocksCount rules=this.rules duration=200 as |v|}}
           <div>
-            {{! @glint-ignore }}
             <span class="font-medium">{{v}}</span>
             blocks left
           </div>

@@ -24,7 +24,7 @@
       <div class="flex ml-1 mb-px group/tooltip-trigger">
         {{svg-jar "question-mark-circle" class="w-4 h-4 fill-current text-gray-300 dark:text-gray-500 group-hover/tooltip-trigger:text-gray-400"}}
 
-        {{! @glint-ignore }}
+        {{! @glint-expect-error EmberPopover is not typed }}
         <EmberPopover @popperContainer="body">
           <div class="prose prose-sm prose-invert text-white">
             {{! The extra #if here is solely for type-checking }}
