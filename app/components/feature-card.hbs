@@ -9,7 +9,7 @@
     {{#if (has-block "content")}}
       {{yield to="content"}}
     {{else if @contentMarkdown}}
-      <div class="text-gray-500 text-xs leading-5">
+      <div class="text-gray-500 text-xs leading-5 markdown-list">
         {{markdown-to-html @contentMarkdown}}
       </div>
     {{/if}}
