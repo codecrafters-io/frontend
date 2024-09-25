@@ -57,7 +57,7 @@
     "@glint/template": "^1.2.1",
     "@percy/cli": "^1.29.3",
     "@percy/ember": "^4.0.0",
-    "@sentry/ember": "^8.30.0",
+    "@sentry/ember": "^8.32.0",
     "@sentry/webpack-plugin": "^2.22.4",
     "@shikijs/rehype": "^1.18.0",
     "@shikijs/transformers": "^1.18.0",
