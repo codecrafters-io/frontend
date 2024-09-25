@@ -5,11 +5,13 @@
     <div class="text-gray-700 font-semibold mb-2 transition-colors">
       {{@title}}
     </div>
-    <div class="text-gray-500 text-xs leading-5 markdown-list">
-      {{markdown-to-html @contentMarkdown}}
-      {{#if (has-block "popover")}}
-        {{yield to="popover"}}
-      {{/if}}
-    </div>
+
+    {{#if (has-block "content")}}
+      {{yield to="content"}}
+    {{else if @contentMarkdown}}
+      <div class="text-gray-500 text-xs leading-5">
+        {{markdown-to-html @contentMarkdown}}
+      </div>
+    {{/if}}
   </div>
 </div>

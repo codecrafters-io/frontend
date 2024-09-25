@@ -12,9 +12,8 @@ interface Signature {
 }
 
 type Feature = {
-  bodyMarkdown: string;
   imageUrl: string;
-  popover?: { targetId: string; html: string };
+  slug: string;
   title: string;
 };
 
@@ -23,26 +22,18 @@ export default class ReferralFeatureCardsComponent extends Component<Signature> 
     return [
       {
         title: 'Generate your link in 1 click.',
-        bodyMarkdown: 'Refer friends with a unique URL.',
         imageUrl: generateLinkImage,
+        slug: 'generate-link',
       },
       {
         title: '1 week free for your friends.',
-        bodyMarkdown: 'Each referral gets 1 week of <u id="popover-target-friends" class="decoration-dotted">paid content access</u>.',
         imageUrl: giftOneWeekFreeImage,
-        popover: {
-          targetId: 'popover-target-friends',
-          html: 'Includes all stages from paid challenges, but excludes other membership benefits like dark mode, turbo test runs etc. <a href="https://docs.codecrafters.io/membership/content" class="underline">Learn more</a>',
-        },
+        slug: 'gift-one-week-free',
       },
       {
         title: 'Up to 1 year free for you.',
-        bodyMarkdown: '1 week of <u id="popover-target-you" class="decoration-dotted">paid content access</u> per referral. Up to 52 weeks.',
         imageUrl: getOneYearFreeImage,
-        popover: {
-          targetId: 'popover-target-you',
-          html: 'Includes all stages from paid challenges, but excludes other membership benefits like dark mode, turbo test runs etc. <a href="https://docs.codecrafters.io/membership/content" class="underline">Learn more</a>',
-        },
+        slug: 'get-one-year-free',
       },
     ];
   }

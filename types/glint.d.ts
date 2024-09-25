@@ -20,6 +20,10 @@ declare module '@glint/environment-ember-loose/registry' {
       Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right'; delay?: number; duration?: number } };
       Blocks: { default?: [] };
     }>;
+    EmberPopover: ComponentLike<{
+      Args: { Named: { side?: 'top' | 'bottom' | 'left' | 'right'; popperContainer?: string } };
+      Blocks: { default?: [] };
+    }>;
     includes: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
     'html-safe': HelperLike<{ Return: string; Args: { Positional: [string | undefined] } }>;
     join: HelperLike<{ Return: string; Args: { Positional: [string, string[]] } }>;
