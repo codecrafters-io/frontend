@@ -1,7 +1,42 @@
 <div ...attributes>
   {{#each this.featureList as |feature|}}
     <div class="flex justify-center">
-      <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.title}} @contentMarkdown={{feature.bodyMarkdown}} />
+      <FeatureCard @imageUrl={{feature.imageUrl}} @title={{feature.title}}>
+        <:content>
+          <div class="text-gray-500 text-xs leading-5">
+            {{#if (eq feature.slug "generate-link")}}
+              <p>
+                Refer friends with a unique URL.
+              </p>
+            {{else if (eq feature.slug "gift-one-week-free")}}
+              <p>
+                Each referral gets 1 week of
+                <u class="decoration-dotted">
+                  paid content access
+
+                  <EmberPopover @side="bottom">
+                    Includes all stages from paid challenges, but excludes other membership benefits like dark mode, turbo test runs etc.
+                    <a href="https://docs.codecrafters.io/membership/content" class="underline">Learn more</a>
+                  </EmberPopover>
+                </u>
+              </p>
+            {{else if (eq feature.slug "get-one-year-free")}}
+              <p>
+                1 week of
+                <u class="decoration-dotted">
+                  paid content access
+
+                  <EmberPopover @side="bottom">
+                    Includes all stages from paid challenges, but excludes other membership benefits like dark mode, turbo test runs etc.
+                    <a href="https://docs.codecrafters.io/membership/content" class="underline">Learn more</a>
+                  </EmberPopover>
+                </u>
+                per referral. Up to 52 weeks.
+              </p>
+            {{/if}}
+          </div>
+        </:content>
+      </FeatureCard>
     </div>
   {{/each}}
 </div>

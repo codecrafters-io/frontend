@@ -4,9 +4,13 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    contentMarkdown: string;
+    contentMarkdown?: string;
     imageUrl: string;
     title: string;
+  };
+
+  Blocks: {
+    content?: [];
   };
 }
 

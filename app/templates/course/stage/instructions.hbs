@@ -38,7 +38,6 @@
       />
 
       {{#if this.shouldSuppressTestRunnerCardExpands}}
-        {{! @glint-expect-error: not ts-ified }}
         <EmberPopover @popperContainer="body">
           <div class="prose prose-sm prose-invert text-white">
             {{#if (eq this.currentStep.testsStatus "failed")}}

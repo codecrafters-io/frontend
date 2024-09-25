@@ -12,9 +12,9 @@ interface Signature {
 }
 
 type Feature = {
-  title: string;
-  bodyMarkdown: string;
   imageUrl: string;
+  slug: string;
+  title: string;
 };
 
 export default class ReferralFeatureCardsComponent extends Component<Signature> {
@@ -22,18 +22,18 @@ export default class ReferralFeatureCardsComponent extends Component<Signature> 
     return [
       {
         title: 'Generate your link in 1 click.',
-        bodyMarkdown: 'Refer friends with a unique URL.',
         imageUrl: generateLinkImage,
+        slug: 'generate-link',
       },
       {
         title: '1 week free for your friends.',
-        bodyMarkdown: 'Each referral gets 1 week free.',
         imageUrl: giftOneWeekFreeImage,
+        slug: 'gift-one-week-free',
       },
       {
         title: 'Up to 1 year free for you.',
-        bodyMarkdown: '1 week free per referral. Up to 52 weeks.',
         imageUrl: getOneYearFreeImage,
+        slug: 'get-one-year-free',
       },
     ];
   }
