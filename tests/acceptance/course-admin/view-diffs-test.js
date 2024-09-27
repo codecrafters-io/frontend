@@ -4,6 +4,51 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
+// Example diff is defined as array because VSCode strips trailing spaces
+// in blank lines when saving the file, even inside multiline strings
+const EXAMPLE_DIFF = [
+  ' import socket',
+  ' import logging',
+  ' import threading',
+  ' ',
+  ' # Configure the logging module',
+  " logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')",
+  ' ',
+  ' def handle_request(connection, address, redis_dict):',
+  '     logging.info(f"Accepted connection from {address}")',
+  ' ',
+  '     while True:',
+  '         data = connection.recv(1024)',
+  ' ',
+  '         if not data:',
+  '             break',
+  ' ',
+  '+        logging.info(f"Data received: {data}")',
+  ' ',
+  '         commands = parse_resp(data)',
+  ' ',
+  '         logging.info(f"Parsed commands: {commands}")',
+  ' ',
+  '     connection.close()',
+  '     logging.info(f"Connection closed from {address}")',
+  ' ',
+  ' def main():',
+  '     logging.info("Logs from your program will appear here!")',
+  ' ',
+  '     with socket.create_server(("localhost", 6379), reuse_port=True) as server_socket:',
+  '+        logging.info("Server is running and waiting for connections...")',
+  '         redis_dict = dict()',
+  '         while True:',
+  '             # Block until we receive an incoming connection',
+  '             connection, address = server_socket.accept()',
+  '             # Start a new thread to handle the request',
+  '             client_thread = threading.Thread(target=handle_request, args=(connection, address, redis_dict,))',
+  '             client_thread.start()',
+  ' ',
+  ' if __name__ == "__main__":',
+  '     main()',
+].join('\n');
+
 module('Acceptance | course-admin | view-diffs', function (hooks) {
   setupApplicationTest(hooks);
 
@@ -28,48 +73,8 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     submission.update('changedFiles', [
       {
-        filename: 'server.rb',
-        diff: `    end
-
-    def taste
-      loop do
-        @server.lick
-      end
-    end
-
-    def listen
-      loop do
-        client = @server.accept
-+       handle_client(client)
-+     end
-+   end
-+
-    def taste
-      loop do
-        @server.lick
-      end
-    end
-
-    def taste
-      loop do
-        @server.lick
-      end
-    end
-+
-+   def handle_client(client)
-+     loop do
-+       client.gets
-+
-        client.write("+PONG\\r\\n")
-      end
-    end
-
-    def feel
-      loop do
-        @server.touch
-      end
-    end
-  end`,
+        filename: 'server.py',
+        diff: EXAMPLE_DIFF,
       },
     ]);
 
@@ -85,13 +90,13 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].text,
-      '⦚ 8 unchanged lines ⦚',
+      '⦚ 13 unchanged lines ⦚',
       'The first placeholder should show correct number of lines',
     );
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[1].text,
-      '⦚ 4 unchanged lines ⦚',
+      '⦚ 6 unchanged lines ⦚',
       'The second placeholder should show correct number of lines',
     );
 
