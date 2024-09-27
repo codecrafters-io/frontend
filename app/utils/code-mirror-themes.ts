@@ -82,7 +82,7 @@ const BASE_STYLE = {
       fontSize: '0.75rem',
       lineHeight: '1rem',
       backgroundColor: 'rgb(240 249 255)', // bg-sky-50
-      backgroundImage: 'url("/assets/images/svg-icons/expand-diff-middle.svg")',
+      backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle.svg")',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: '306px center',
       borderColor: 'rgb(224 242 254)', // border-sky-100
@@ -128,7 +128,7 @@ const BASE_STYLE = {
       '&:before': {
         borderTop: 'none',
         marginTop: '-5px',
-        backgroundImage: 'url("/assets/images/svg-icons/expand-diff-top.svg")',
+        backgroundImage: 'url("/assets/images/codemirror/expand-diff-top.svg")',
       },
     },
 
@@ -139,7 +139,7 @@ const BASE_STYLE = {
 
       '&:before': {
         borderBottom: 'none',
-        backgroundImage: 'url("/assets/images/svg-icons/expand-diff-bottom.svg")',
+        backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom.svg")',
       },
     },
   },
@@ -191,7 +191,7 @@ export const codeCraftersDark = [
 
         '&:before': {
           backgroundColor: 'rgb(22.8 54.2 79.4)', // bg-sky-900/40
-          backgroundImage: 'url("/assets/images/svg-icons/expand-diff-middle-dark.svg")',
+          backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle-dark.svg")',
           borderColor: 'rgba(255, 255, 255, 0.05)', // border-white/5
         },
 
@@ -216,13 +216,13 @@ export const codeCraftersDark = [
 
         '&:first-child': {
           '&:before': {
-            backgroundImage: 'url("/assets/images/svg-icons/expand-diff-top-dark.svg")',
+            backgroundImage: 'url("/assets/images/codemirror/expand-diff-top-dark.svg")',
           },
         },
 
         '&:last-child': {
           '&:before': {
-            backgroundImage: 'url("/assets/images/svg-icons/expand-diff-bottom-dark.svg")',
+            backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom-dark.svg")',
           },
         },
       },
