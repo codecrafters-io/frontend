@@ -229,6 +229,6 @@ export const codeCraftersDark = [
     },
     { dark: true },
   ),
-  EditorView.theme(BASE_STYLE, { dark: false }),
+  EditorView.theme(BASE_STYLE, { dark: true }),
   githubDark,
 ];
