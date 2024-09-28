@@ -1,5 +1,6 @@
 import { EditorView } from '@codemirror/view';
 import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
+import tailwindColors from 'tailwindcss/colors';
 
 const BASE_STYLE = {
   '.cm-gutters': {
@@ -69,9 +70,9 @@ const BASE_STYLE = {
     fontSize: '0.75rem', // text-xs
     fontFamily: 'Montserrat, sans-serif',
     lineHeight: '1rem', // text-xs
-    background: 'rgb(240 249 255)', // bg-sky-50
-    color: 'rgb(3 105 161)', // text-sky-700
-    borderColor: 'rgb(224 242 254)', // border-sky-100
+    background: tailwindColors.sky['50'],
+    color: tailwindColors.sky['700'],
+    borderColor: tailwindColors.sky['100'],
 
     '&:before': {
       content: '"Expand"',
@@ -81,11 +82,11 @@ const BASE_STYLE = {
       marginLeft: '-368px',
       fontSize: '0.75rem',
       lineHeight: '1rem',
-      backgroundColor: 'rgb(240 249 255)', // bg-sky-50
+      backgroundColor: tailwindColors.sky['50'],
       backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle.svg")',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: '306px center',
-      borderColor: 'rgb(224 242 254)', // border-sky-100
+      borderColor: tailwindColors.sky['100'],
       borderTopWidth: '1px',
       borderBottomWidth: '1px',
       paddingTop: '5px',
@@ -102,21 +103,21 @@ const BASE_STYLE = {
       width: '20px',
       fontSize: '0.75rem',
       lineHeight: '1rem',
-      backgroundColor: 'rgb(240 249 255)', // bg-sky-50
+      backgroundColor: tailwindColors.sky['50'],
     },
 
     '&:hover': {
-      background: 'rgb(224 242 254)', // bg-sky-100
-      color: 'rgb(7 89 133)', // text-sky-800
+      background: tailwindColors.sky['100'],
+      color: tailwindColors.sky['800'],
 
       '&:before': {
-        backgroundColor: 'rgb(224 242 254)', // bg-sky-100
-        color: 'rgb(7 89 133)', // text-sky-800
+        backgroundColor: tailwindColors.sky['100'],
+        color: tailwindColors.sky['800'],
       },
 
       '&:after': {
-        backgroundColor: 'rgb(224 242 254)', // bg-sky-100
-        color: 'rgb(7 89 133)', // text-sky-800
+        backgroundColor: tailwindColors.sky['100'],
+        color: tailwindColors.sky['800'],
       },
     },
 
