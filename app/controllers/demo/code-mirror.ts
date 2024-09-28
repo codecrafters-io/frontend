@@ -42,6 +42,50 @@ class ExampleDocument {
 export default class DemoCodeMirrorController extends Controller {
   @service declare darkMode: DarkModeService;
 
+  queryParams = [
+    'allowMultipleSelections',
+    'autocompletion',
+    'bracketMatching',
+    'closeBrackets',
+    'collapseUnchanged',
+    'crosshairCursor',
+    'document',
+    'drawSelection',
+    'dropCursor',
+    'editable',
+    'filename',
+    'foldGutter',
+    'highlightActiveLine',
+    'highlightSelectionMatches',
+    'highlightSpecialChars',
+    'highlightTrailingWhitespace',
+    'highlightWhitespace',
+    'history',
+    'indentOnInput',
+    'indentUnit',
+    'indentWithTab',
+    'language',
+    'lineNumbers',
+    'lineSeparator',
+    'lineWrapping',
+    'mergeControls',
+    'originalDocument',
+    'outline',
+    'placeholder',
+    'preserveHistory',
+    'readOnly',
+    'rectangularSelection',
+    'scrollPastEnd',
+    'selectedDocumentIndex',
+    'selectedIndentUnitIndex',
+    'selectedLineSeparatorIndex',
+    'selectedTabSizeIndex',
+    'selectedThemeIndex',
+    'syntaxHighlighting',
+    'tabSize',
+    'theme',
+  ];
+
   @tracked placeholderMessage = 'Welcome to CodeCrafters test zone for CodeMirror! Start editing the document here...';
 
   @tracked documents: ExampleDocument[] = [
