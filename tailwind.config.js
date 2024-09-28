@@ -3,16 +3,6 @@
 
 const colors = require('tailwindcss/colors');
 
-const hexToRgb = (hex) => {
-  hex = hex.replace('#', '');
-  hex = hex.length === 3 ? hex.replace(/./g, '$&$&') : hex;
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-
-  return `${r} ${g} ${b}`;
-};
-
 module.exports = {
   content: [`./app/**/*.{html,js,ts,hbs}`],
   safelist: {
@@ -67,28 +57,16 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            '--tw-prose-bold': colors.slate[800],
             '--tw-prose-code': colors.slate[700],
             '--tw-prose-links': colors.sky[500],
             '--tw-prose-pre-bg': colors.slate[100],
             '--tw-prose-pre-code': colors.slate[700],
-            '--tw-prose-invert-body': colors.slate[300],
             '--tw-prose-invert-bold': colors.slate[200],
-            '--tw-prose-invert-bullets': colors.slate[600],
-            '--tw-prose-invert-captions': colors.slate[400],
             '--tw-prose-invert-code': colors.slate[300],
-            '--tw-prose-invert-counters': colors.slate[300],
             '--tw-prose-invert-headings': colors.slate[200],
-            '--tw-prose-invert-hr': colors.slate[700],
-            '--tw-prose-invert-kbd': colors.white,
-            '--tw-prose-invert-kbd-shadows': hexToRgb(colors.white),
-            '--tw-prose-invert-lead': colors.slate[300],
             '--tw-prose-invert-links': colors.sky[500],
             '--tw-prose-invert-pre-bg': colors.slate[900],
-            '--tw-prose-invert-pre-code': colors.slate[300],
-            '--tw-prose-invert-quote-borders': colors.slate[700],
-            '--tw-prose-invert-quotes': colors.slate[200],
-            '--tw-prose-invert-td-borders': colors.slate[700],
-            '--tw-prose-invert-th-borders': colors.slate[600],
             maxWidth: '90ch', // Default is 65ch
             a: {
               fontWeight: '600',
