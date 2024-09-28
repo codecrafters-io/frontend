@@ -1,8 +1,7 @@
-{{! @glint-nocheck: not typesafe yet }}
 <button
-  class="rounded-r-lg bg-white border-gray-300 border border-l-0 flex items-center justify-center p-1.5 hover:pl-2 hover:border-gray-400 hover:bg-gray-100 transition-all"
-  ...attributes
+  class="rounded-r-lg bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 border border-l-0 flex items-center justify-center p-1.5 hover:pl-2 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/60 transition-all"
   type="button"
+  ...attributes
 >
   {{svg-jar "chevron-double-right" class="w-4 h-4 text-gray-500"}}
   <EmberTooltip @text="Expand sidebar" @side="right" />
