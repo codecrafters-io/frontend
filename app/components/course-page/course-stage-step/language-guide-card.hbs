@@ -9,9 +9,9 @@
   {{did-insert this.loadLanguageGuides}}
 >
   <:header>
-    <div class="flex items-center justify-between border-b pb-2 mb-5 w-full">
+    <div class="flex items-center justify-between border-b dark:border-white/5 pb-2 mb-5 w-full">
       <div class="flex items-center gap-x-3">
-        <h2 class="font-semibold text-lg text-gray-700 flex items-center">
+        <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200 flex items-center">
           <AnimatedContainer>
             {{#animated-value this.currentLanguage.name rules=this.languageNameAnimationRules duration=200 as |v|}}
               <div>
@@ -22,10 +22,10 @@
           Guide
         </h2>
 
-        <div class="inline-flex text-xs text-white font-semibold border border-teal-500 bg-teal-500 rounded px-1.5 py-0.5 w-fit">
+        <Pill @color="green" class="text-xs">
           BETA
           <EmberTooltip @text="This is a beta feature, please send us feedback!" @side="top" />
-        </div>
+        </Pill>
 
         {{#if (and (current-user-is-staff) this.languageGuide.requiresRegeneration)}}
           <Pill @color="red" class="text-xs">
