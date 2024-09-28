@@ -178,16 +178,16 @@ export const codeCraftersDark = [
   EditorView.theme(
     {
       '&': {
-        backgroundColor: 'rgb(15 23 42)', // bg-gray-900
+        backgroundColor: tailwindColors.gray['900'],
       },
 
       '.cm-gutters': {
-        backgroundColor: 'rgb(15 23 42)', // bg-gray-900
+        backgroundColor: tailwindColors.gray['900'],
       },
 
       '.cm-collapsedLines': {
         background: 'rgb(22.8 54.2 79.4)', // bg-sky-900/40
-        color: 'rgb(56 189 248)', // text-sky-400
+        color: tailwindColors.sky['400'],
         borderColor: 'rgba(255, 255, 255, 0.05)', // border-white/5
 
         '&:before': {
@@ -202,16 +202,16 @@ export const codeCraftersDark = [
 
         '&:hover': {
           background: 'rgb(20.8 60.2 88.6)', // bg-sky-800/40
-          color: 'rgb(125 211 252)', // text-sky-300
+          color: tailwindColors.sky['300'],
 
           '&:before': {
             backgroundColor: 'rgb(20.8 60.2 88.6)', // bg-sky-800/40
-            color: 'rgb(125 211 252)', // text-sky-300
+            color: tailwindColors.sky['300'],
           },
 
           '&:after': {
             backgroundColor: 'rgb(20.8 60.2 88.6)', // bg-sky-800/40
-            color: 'rgb(125 211 252)', // text-sky-300
+            color: tailwindColors.sky['300'],
           },
         },
 
