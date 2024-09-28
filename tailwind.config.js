@@ -57,12 +57,15 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
-            '--tw-prose-links': colors.sky[500],
+            '--tw-prose-bold': colors.slate[800],
             '--tw-prose-code': colors.slate[700],
-            '--tw-prose-pre-code': colors.slate[700],
+            '--tw-prose-links': colors.sky[500],
             '--tw-prose-pre-bg': colors.slate[100],
+            '--tw-prose-pre-code': colors.slate[700],
+            '--tw-prose-invert-bold': colors.slate[200],
             '--tw-prose-invert-code': colors.slate[300],
-            '--tw-prose-invert-pre-code': colors.slate[300],
+            '--tw-prose-invert-headings': colors.slate[200],
+            '--tw-prose-invert-links': colors.sky[500],
             '--tw-prose-invert-pre-bg': colors.slate[900],
             maxWidth: '90ch', // Default is 65ch
             a: {
