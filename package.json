@@ -59,7 +59,7 @@
     "@percy/ember": "^4.0.0",
     "@sentry/ember": "^8.32.0",
     "@sentry/webpack-plugin": "^2.22.4",
-    "@shikijs/rehype": "^1.19.0",
+    "@shikijs/rehype": "^1.20.0",
     "@shikijs/transformers": "^1.18.0",
     "@tsconfig/ember": "^3.0.8",
     "@types/canvas-confetti": "^1.6.4",
