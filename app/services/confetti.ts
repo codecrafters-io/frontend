@@ -2,6 +2,7 @@ import Service, { inject as service } from '@ember/service';
 import confetti from 'canvas-confetti';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import type FocusService from './focus';
+import { registerDestructor } from '@ember/destroyable';
 
 export default class ConfettiService extends Service {
   @service declare focus: FocusService;
@@ -55,6 +56,10 @@ export default class ConfettiService extends Service {
           this.fire(options);
           this.focus.deregisterCallback(callbackId);
         }
+      });
+
+      registerDestructor(this, () => {
+        this.focus.deregisterCallback(callbackId);
       });
     }
   }
