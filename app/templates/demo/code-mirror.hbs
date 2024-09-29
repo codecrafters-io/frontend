@@ -295,7 +295,15 @@
   @scrollPastEnd={{this.scrollPastEnd}}
   @syntaxHighlighting={{this.syntaxHighlighting}}
   {{! Element classes }}
-  class="block overflow-auto my-4 h-72 {{if this.outline 'outline-2 outline-dashed outline-green-500'}}"
+  class="block overflow-auto mt-4 h-72 {{if this.outline 'outline-2 outline-dashed outline-green-500'}}"
 />
+
+<div class="my-2 text-right">
+  <span
+    role="button"
+    class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-200 dark:hover:text-blue-400 underline cursor-pointer"
+    {{on "click" this.resetAllOptions}}
+  >Reset all options</span>
+</div>
 
 {{outlet}}

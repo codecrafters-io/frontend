@@ -16,6 +16,50 @@ const THEME_EXTENSIONS: {
 const SUPPORTED_THEMES = [...Object.keys(THEME_EXTENSIONS), 'codeCraftersAuto'];
 const DEFAULT_THEME = 'codeCraftersAuto';
 
+const OPTION_DEFAULTS = {
+  allowMultipleSelections: true,
+  autocompletion: true,
+  bracketMatching: true,
+  closeBrackets: true,
+  collapseUnchanged: true,
+  crosshairCursor: true,
+  document: true,
+  drawSelection: true,
+  dropCursor: true,
+  editable: true,
+  filename: true,
+  foldGutter: true,
+  highlightActiveLine: true,
+  highlightSelectionMatches: true,
+  highlightSpecialChars: true,
+  highlightTrailingWhitespace: true,
+  highlightWhitespace: true,
+  history: true,
+  indentOnInput: true,
+  indentUnit: true,
+  indentWithTab: true,
+  language: true,
+  lineNumbers: true,
+  lineSeparator: true,
+  lineWrapping: true,
+  mergeControls: true,
+  originalDocument: false,
+  outline: true,
+  placeholder: true,
+  preserveHistory: false,
+  readOnly: false,
+  rectangularSelection: true,
+  scrollPastEnd: false,
+  selectedDocumentIndex: 1,
+  selectedIndentUnitIndex: 1,
+  selectedLineSeparatorIndex: 1,
+  selectedTabSizeIndex: 2,
+  selectedThemeIndex: SUPPORTED_THEMES.indexOf(DEFAULT_THEME),
+  syntaxHighlighting: true,
+  tabSize: true,
+  theme: true,
+};
+
 class ExampleDocument {
   @tracked document!: string;
   @tracked originalDocument!: string;
@@ -157,11 +201,11 @@ export default class DemoCodeMirrorController extends Controller {
 
   @tracked themes = [...SUPPORTED_THEMES];
 
-  @tracked selectedDocumentIndex: number = 1;
-  @tracked selectedIndentUnitIndex: number = 1;
-  @tracked selectedLineSeparatorIndex: number = 1;
-  @tracked selectedTabSizeIndex: number = 2;
-  @tracked selectedThemeIndex: number = this.themes.indexOf(DEFAULT_THEME);
+  @tracked selectedDocumentIndex = OPTION_DEFAULTS.selectedDocumentIndex;
+  @tracked selectedIndentUnitIndex = OPTION_DEFAULTS.selectedIndentUnitIndex;
+  @tracked selectedLineSeparatorIndex = OPTION_DEFAULTS.selectedLineSeparatorIndex;
+  @tracked selectedTabSizeIndex = OPTION_DEFAULTS.selectedTabSizeIndex;
+  @tracked selectedThemeIndex = OPTION_DEFAULTS.selectedThemeIndex;
 
   get selectedDocument() {
     return this.documents[this.selectedDocumentIndex];
@@ -193,43 +237,43 @@ export default class DemoCodeMirrorController extends Controller {
     return theme !== undefined ? themeMap[theme] : undefined;
   }
 
-  @tracked outline: boolean = true;
+  @tracked outline = OPTION_DEFAULTS.outline;
 
-  @tracked allowMultipleSelections: boolean = true;
-  @tracked autocompletion: boolean = true;
-  @tracked bracketMatching: boolean = true;
-  @tracked closeBrackets: boolean = true;
-  @tracked crosshairCursor: boolean = true;
-  @tracked document: boolean = true;
-  @tracked drawSelection: boolean = true;
-  @tracked dropCursor: boolean = true;
-  @tracked editable: boolean = true;
-  @tracked filename: boolean = true;
-  @tracked foldGutter: boolean = true;
-  @tracked highlightActiveLine: boolean = true;
-  @tracked highlightSelectionMatches: boolean = true;
-  @tracked highlightSpecialChars: boolean = true;
-  @tracked highlightTrailingWhitespace: boolean = true;
-  @tracked highlightWhitespace: boolean = true;
-  @tracked history: boolean = true;
-  @tracked indentOnInput: boolean = true;
-  @tracked indentUnit: boolean = true;
-  @tracked indentWithTab: boolean = true;
-  @tracked language: boolean = true;
-  @tracked lineNumbers: boolean = true;
-  @tracked lineSeparator: boolean = true;
-  @tracked lineWrapping: boolean = true;
-  @tracked mergeControls: boolean = true;
-  @tracked collapseUnchanged: boolean = true;
-  @tracked originalDocument: boolean = false;
-  @tracked placeholder: boolean = true;
-  @tracked preserveHistory: boolean = false;
-  @tracked readOnly: boolean = false;
-  @tracked rectangularSelection: boolean = true;
-  @tracked scrollPastEnd: boolean = false;
-  @tracked syntaxHighlighting: boolean = true;
-  @tracked tabSize: boolean = true;
-  @tracked theme: boolean = true;
+  @tracked allowMultipleSelections = OPTION_DEFAULTS.allowMultipleSelections;
+  @tracked autocompletion = OPTION_DEFAULTS.autocompletion;
+  @tracked bracketMatching = OPTION_DEFAULTS.bracketMatching;
+  @tracked closeBrackets = OPTION_DEFAULTS.closeBrackets;
+  @tracked crosshairCursor = OPTION_DEFAULTS.crosshairCursor;
+  @tracked document = OPTION_DEFAULTS.document;
+  @tracked drawSelection = OPTION_DEFAULTS.drawSelection;
+  @tracked dropCursor = OPTION_DEFAULTS.dropCursor;
+  @tracked editable = OPTION_DEFAULTS.editable;
+  @tracked filename = OPTION_DEFAULTS.filename;
+  @tracked foldGutter = OPTION_DEFAULTS.foldGutter;
+  @tracked highlightActiveLine = OPTION_DEFAULTS.highlightActiveLine;
+  @tracked highlightSelectionMatches = OPTION_DEFAULTS.highlightSelectionMatches;
+  @tracked highlightSpecialChars = OPTION_DEFAULTS.highlightSpecialChars;
+  @tracked highlightTrailingWhitespace = OPTION_DEFAULTS.highlightTrailingWhitespace;
+  @tracked highlightWhitespace = OPTION_DEFAULTS.highlightWhitespace;
+  @tracked history = OPTION_DEFAULTS.history;
+  @tracked indentOnInput = OPTION_DEFAULTS.indentOnInput;
+  @tracked indentUnit = OPTION_DEFAULTS.indentUnit;
+  @tracked indentWithTab = OPTION_DEFAULTS.indentWithTab;
+  @tracked language = OPTION_DEFAULTS.language;
+  @tracked lineNumbers = OPTION_DEFAULTS.lineNumbers;
+  @tracked lineSeparator = OPTION_DEFAULTS.lineSeparator;
+  @tracked lineWrapping = OPTION_DEFAULTS.lineWrapping;
+  @tracked mergeControls = OPTION_DEFAULTS.mergeControls;
+  @tracked collapseUnchanged = OPTION_DEFAULTS.collapseUnchanged;
+  @tracked originalDocument = OPTION_DEFAULTS.originalDocument;
+  @tracked placeholder = OPTION_DEFAULTS.placeholder;
+  @tracked preserveHistory = OPTION_DEFAULTS.preserveHistory;
+  @tracked readOnly = OPTION_DEFAULTS.readOnly;
+  @tracked rectangularSelection = OPTION_DEFAULTS.rectangularSelection;
+  @tracked scrollPastEnd = OPTION_DEFAULTS.scrollPastEnd;
+  @tracked syntaxHighlighting = OPTION_DEFAULTS.syntaxHighlighting;
+  @tracked tabSize = OPTION_DEFAULTS.tabSize;
+  @tracked theme = OPTION_DEFAULTS.theme;
 
   @action documentDidChange(_target: Controller, newValue: string) {
     if (!this.document) {
@@ -239,6 +283,10 @@ export default class DemoCodeMirrorController extends Controller {
     if (this.selectedDocument?.document !== newValue) {
       this.selectedDocument!.document = newValue;
     }
+  }
+
+  @action resetAllOptions() {
+    Object.assign(this, OPTION_DEFAULTS);
   }
 
   @action selectedDocumentIndexDidChange(event: Event) {
