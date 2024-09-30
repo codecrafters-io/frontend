@@ -35,7 +35,7 @@ function validateUrl(url: string): boolean {
     new URL(url);
 
     return true;
-  } catch (_) {
+  } catch {
     return false;
   }
 }

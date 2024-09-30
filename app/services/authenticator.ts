@@ -20,6 +20,7 @@ export default class AuthenticatorService extends Service {
 
   // TODO: Update this when User model is converted to typescript
   get currentUser() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.cacheBuster; // Force reload on cacheBuster change
 
     if (this.currentUserCacheStorage.userId) {
@@ -30,30 +31,35 @@ export default class AuthenticatorService extends Service {
   }
 
   get currentUserId(): string | null {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.currentUser ? this.currentUser.id : this.currentUserCacheStorage.userId;
   }
 
   get currentUserIsLoaded(): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.cacheBuster; // Force reload on cacheBuster change
 
     return !!this.currentUser;
   }
 
   get currentUsername(): string | null {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.currentUser ? this.currentUser.username : this.currentUserCacheStorage.username;
   }
 
   get isAnonymous(): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.cacheBuster; // Force reload on cacheBuster change
 
     return !this.isAuthenticated;
   }
 
   get isAuthenticated(): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.cacheBuster; // Force reload on cacheBuster change
 
     return this.sessionTokenStorage.hasToken;

@@ -177,7 +177,9 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
       this.lineNumberWithExpandedComments = lineNumber;
 
       (this.topLevelCommentsGroupedByLine[lineNumber] || []).forEach((comment: CommunityCourseStageSolutionCommentModel) => {
-        this.args.onCommentView && this.args.onCommentView(comment);
+        if (this.args.onCommentView) {
+          this.args.onCommentView(comment);
+        }
       });
     }
   }

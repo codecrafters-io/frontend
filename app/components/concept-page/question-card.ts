@@ -57,7 +57,7 @@ export default class QuestionCardComponent extends Component<Signature> {
     if (firstOptionElement instanceof HTMLElement) {
       // focus() doesn't seem to work unless it's called after the current runloop
       next(() => {
-        firstOptionElement && firstOptionElement.focus({ preventScroll: true });
+        firstOptionElement?.focus({ preventScroll: true });
       });
     }
   }
