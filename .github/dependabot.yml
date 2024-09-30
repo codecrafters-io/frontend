@@ -36,3 +36,6 @@ updates:
         patterns:
           - 'shiki'
           - '@shikijs/*'
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
