@@ -38,7 +38,7 @@ export default class WelcomeController extends Controller {
     try {
       new URL(this.stashedNext);
       window.location.href = this.stashedNext;
-    } catch (e) {
+    } catch {
       console.error(`${this.stashedNext} is not a valid URL`);
       this.router.transitionTo('catalog'); // Fallback to 'catalog' if not a valid URL
     }

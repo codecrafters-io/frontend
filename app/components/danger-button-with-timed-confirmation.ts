@@ -44,8 +44,7 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
 
   @action
   startProgress() {
-    let intervalDelay;
-    config.environment === 'test' ? (intervalDelay = 1) : (intervalDelay = 30);
+    const intervalDelay = config.environment === 'test' ? 1 : 30;
     this.progressWidth = 0;
 
     this.progressInterval = setInterval(() => {
