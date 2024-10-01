@@ -22,6 +22,10 @@ updates:
         patterns:
           - '@types/ember'
           - '@types/ember*'
+      eslint:
+        patterns:
+          - 'eslint'
+          - 'eslint-*'
       glint:
         patterns:
           - '@glint/*'
