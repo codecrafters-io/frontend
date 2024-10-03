@@ -58,7 +58,7 @@
     "@percy/cli": "^1.29.4",
     "@percy/ember": "^4.0.0",
     "@sentry/ember": "^8.33.1",
-    "@sentry/webpack-plugin": "^2.22.4",
+    "@sentry/webpack-plugin": "^2.22.5",
     "@shikijs/rehype": "^1.21.0",
     "@shikijs/transformers": "^1.21.0",
     "@tsconfig/ember": "^3.0.8",
