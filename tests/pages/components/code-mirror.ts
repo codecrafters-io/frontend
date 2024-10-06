@@ -23,6 +23,11 @@ export default create({
           scope: '> .cm-gutter.cm-foldGutter',
           elements: collection('> .cm-gutterElement'),
         },
+
+        changeGutter: {
+          scope: '> .cm-gutter.cm-changeGutter',
+          elements: collection('> .cm-gutterElement'),
+        },
       },
 
       content: {
@@ -31,9 +36,25 @@ export default create({
         focus: focusable(),
         blur: blurrable(),
 
+        collapsedLinesPlaceholders: collection('> .cm-collapsedLines', {
+          text: text(),
+          click: clickable(),
+        }),
+
         lines: collection('> .cm-line', {
+          text: text(),
           click: clickable(),
           fillIn: fillable(),
+        }),
+
+        changedLines: collection('> .cm-changedLine', {
+          text: text(),
+          click: clickable(),
+          fillIn: fillable(),
+        }),
+
+        deletedChunks: collection('> .cm-deletedChunk', {
+          text: text(),
         }),
       },
     },
