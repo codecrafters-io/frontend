@@ -1,6 +1,17 @@
 import { EditorView } from '@codemirror/view';
 import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
 import tailwindColors from 'tailwindcss/colors';
+import hexRgb from 'hex-rgb';
+import rgbHex from 'rgb-hex';
+
+function blendColors(fgColor = '#ffffff', opacity = 1, bgColor = '#ffffff') {
+  const fgRgb = hexRgb(fgColor, { format: 'array' });
+  const bgRgb = hexRgb(bgColor, { format: 'array' });
+
+  const blendedRgb = fgRgb.slice(0, 3).map<number>((colFg, idx) => opacity * colFg + (1 - opacity) * (bgRgb[idx] || 255)) as [number, number, number];
+
+  return `#${rgbHex(...blendedRgb)}`;
+}
 
 const BASE_STYLE = {
   '.cm-gutters': {
@@ -186,31 +197,31 @@ export const codeCraftersDark = [
       },
 
       '.cm-collapsedLines': {
-        background: 'rgb(22.8 54.2 79.4)', // bg-sky-900/40
+        background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
         color: tailwindColors.sky['400'],
-        borderColor: 'rgba(255, 255, 255, 0.05)', // border-white/5
+        borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
 
         '&:before': {
-          backgroundColor: 'rgb(22.8 54.2 79.4)', // bg-sky-900/40
+          backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle-dark.svg")',
-          borderColor: 'rgba(255, 255, 255, 0.05)', // border-white/5
+          borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
         },
 
         '&:after': {
-          backgroundColor: 'rgb(22.8 54.2 79.4)', // bg-sky-900/40
+          backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
         },
 
         '&:hover': {
-          background: 'rgb(20.8 60.2 88.6)', // bg-sky-800/40
+          background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
           color: tailwindColors.sky['300'],
 
           '&:before': {
-            backgroundColor: 'rgb(20.8 60.2 88.6)', // bg-sky-800/40
+            backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
             color: tailwindColors.sky['300'],
           },
 
           '&:after': {
-            backgroundColor: 'rgb(20.8 60.2 88.6)', // bg-sky-800/40
+            backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
             color: tailwindColors.sky['300'],
           },
         },
