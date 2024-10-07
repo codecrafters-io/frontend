@@ -51,7 +51,7 @@ export default class Charge extends Model {
     } else if (currency === 'jpy') {
       return `¥${normalizedAmount}`;
     } else if (currency === 'cny') {
-      return `CN¥${normalizedAmount}`;
+      return `¥${normalizedAmount}`;
     } else if (currency === 'chf') {
       return `CHF ${normalizedAmount}`;
     } else if (currency === 'cad') {
