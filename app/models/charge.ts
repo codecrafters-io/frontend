@@ -55,7 +55,7 @@ export default class Charge extends Model {
     } else if (currency === 'chf') {
       return `CHF ${normalizedAmount}`;
     } else if (currency === 'cad') {
-      return `C$${normalizedAmount}`;
+      return `CA$${normalizedAmount}`;
     } else if (currency === 'aud') {
       return `A$${normalizedAmount}`;
     } else if (currency === 'hkd') {
