@@ -15,12 +15,12 @@
         <div class="text-gray-600 text-sm">{{date-format charge.createdAt format="PPP"}}</div>
 
         <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right">
-          <span class="font-semibold">${{charge.amountInDollars}}</span>
-          {{#if (gt charge.amountRefundedInDollars 0)}}
-            {{#if (eq charge.amountRefundedInDollars charge.amountInDollars)}}
+          <span class="font-semibold">{{charge.displayString}}</span>
+          {{#if (gt charge.amountRefunded 0)}}
+            {{#if charge.isFullyRefunded}}
               (refunded)
             {{else}}
-              (<span class="font-semibold">${{charge.amountRefundedInDollars}}</span>
+              (<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
               refunded)
             {{/if}}
           {{/if}}
