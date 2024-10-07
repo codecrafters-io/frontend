@@ -3,6 +3,8 @@ import config from 'codecrafters-frontend/config/environment';
 import type UserModel from 'codecrafters-frontend/models/user';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
+const ZERO_DECIMAL_CURRENCIES = ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF'];
+
 export default class Charge extends Model {
   @attr('number') declare amount: number;
   @attr('number') declare amountRefunded: number;
@@ -19,10 +21,10 @@ export default class Charge extends Model {
 
   get displayString() {
     if (this.currency === 'usd') {
-      return `$${this.amount / 100}`;
+      return `$${this.normalizedAmount}`;
     }
 
-    return `${this.amount} ${this.currency}`;
+    return `${this.normalizedAmount} ${this.currency}`;
   }
 
   get invoiceDownloadUrl() {
@@ -35,6 +37,14 @@ export default class Charge extends Model {
 
   get isFullyRefunded() {
     return this.amountRefunded === this.amount;
+  }
+
+  get normalizedAmount() {
+    if (ZERO_DECIMAL_CURRENCIES.includes(this.currency)) {
+      return this.amount;
+    }
+
+    return this.amount / 100;
   }
 
   get refundedAmountDisplayString() {
