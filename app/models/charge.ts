@@ -20,11 +20,7 @@ export default class Charge extends Model {
   @equal('status', 'succeeded') declare statusIsSucceeded: boolean;
 
   get displayString() {
-    if (this.currency === 'usd') {
-      return `$${this.normalizedAmount}`;
-    }
-
-    return `${this.normalizedAmount} ${this.currency}`;
+    return Charge.buildDisplayString(this.amount, this.currency);
   }
 
   get invoiceDownloadUrl() {
@@ -39,19 +35,37 @@ export default class Charge extends Model {
     return this.amountRefunded === this.amount;
   }
 
-  get normalizedAmount() {
-    if (ZERO_DECIMAL_CURRENCIES.includes(this.currency)) {
-      return this.amount;
-    }
-
-    return this.amount / 100;
+  get refundedAmountDisplayString() {
+    return Charge.buildDisplayString(this.amountRefunded, this.currency);
   }
 
-  get refundedAmountDisplayString() {
-    if (this.currency === 'usd') {
-      return `$${this.amountRefunded / 100}`;
+  static buildDisplayString(amount: number, currency: string) {
+    const normalizedAmount = ZERO_DECIMAL_CURRENCIES.includes(currency) ? amount : amount / 100;
+
+    if (currency === 'usd') {
+      return `$${normalizedAmount}`;
+    } else if (currency === 'eur') {
+      return `€${normalizedAmount}`;
+    } else if (currency === 'gbp') {
+      return `£${normalizedAmount}`;
+    } else if (currency === 'jpy') {
+      return `¥${normalizedAmount}`;
+    } else if (currency === 'cny') {
+      return `¥${normalizedAmount}`;
+    } else if (currency === 'chf') {
+      return `CHF ${normalizedAmount}`;
+    } else if (currency === 'cad') {
+      return `C$${normalizedAmount}`;
+    } else if (currency === 'aud') {
+      return `A$${normalizedAmount}`;
+    } else if (currency === 'hkd') {
+      return `HK$${normalizedAmount}`;
+    } else if (currency === 'sgd') {
+      return `S$${normalizedAmount}`;
+    } else if (currency === 'inr') {
+      return `₹${normalizedAmount}`;
     }
 
-    return `${this.amountRefunded} ${this.currency}`;
+    return `${normalizedAmount} ${currency.toUpperCase()}`;
   }
 }
