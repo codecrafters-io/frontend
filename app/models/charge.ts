@@ -40,7 +40,7 @@ export default class Charge extends Model {
   }
 
   static buildDisplayString(amount: number, currency: string) {
-    const normalizedAmount = ZERO_DECIMAL_CURRENCIES.includes(currency) ? amount : amount / 100;
+    const normalizedAmount = ZERO_DECIMAL_CURRENCIES.includes(currency.toUpperCase()) ? amount : amount / 100;
 
     if (currency === 'usd') {
       return `$${normalizedAmount}`;
