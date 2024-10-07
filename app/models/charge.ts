@@ -17,12 +17,12 @@ export default class Charge extends Model {
   @equal('status', 'pending') declare statusIsPending: boolean;
   @equal('status', 'succeeded') declare statusIsSucceeded: boolean;
 
-  get amountInDollars() {
-    return this.amount / 100;
-  }
+  get displayString() {
+    if (this.currency === 'usd') {
+      return `$${this.amount / 100}`;
+    }
 
-  get amountRefundedInDollars() {
-    return this.amountRefunded / 100;
+    return `${this.amount} ${this.currency}`;
   }
 
   get invoiceDownloadUrl() {
@@ -31,5 +31,17 @@ export default class Charge extends Model {
     }
 
     return `${config.x.backendUrl}/invoices/${this.invoiceId}/download`;
+  }
+
+  get isFullyRefunded() {
+    return this.amountRefunded === this.amount;
+  }
+
+  get refundedAmountDisplayString() {
+    if (this.currency === 'usd') {
+      return `$${this.amountRefunded / 100}`;
+    }
+
+    return `${this.amountRefunded} ${this.currency}`;
   }
 }
