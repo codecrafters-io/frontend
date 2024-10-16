@@ -9,9 +9,13 @@ type SubscriptionCallbacks = {
 };
 
 export default class FakeActionCableConsumer {
-  #subscriptions: Record<string, SubscriptionCallbacks> = {};
+  #subscriptions: Record<string, { id: string; args: Record<string, string>; callbacks: SubscriptionCallbacks }[]> = {};
 
-  hasSubscriptionForChannel(channel: string): boolean {
+  hasSubscription(channel: string, args?: Record<string, string>): boolean {
+    if (args) {
+      return !!this.#subscriptions[channel]?.some((subscription) => JSON.stringify(subscription.args) === JSON.stringify(args));
+    }
+
     return !!this.#subscriptions[channel];
   }
 
@@ -20,20 +24,21 @@ export default class FakeActionCableConsumer {
       throw new Error(`No subscription for channel ${channel}`);
     }
 
-    const onDataCallback = this.#subscriptions[channel]?.onData;
-
-    if (onDataCallback) {
-      onDataCallback(data);
+    for (const subscription of this.#subscriptions[channel] || []) {
+      subscription.callbacks.onData?.(data);
     }
   }
 
-  subscribe(channel: string, _args: Record<string, string> = {}, callbacks: SubscriptionCallbacks): ActionCableSubscription {
-    this.#subscriptions[channel] = callbacks;
+  subscribe(channel: string, args: Record<string, string> = {}, callbacks: SubscriptionCallbacks): ActionCableSubscription {
+    const id = crypto.randomUUID();
+
+    this.#subscriptions[channel] ||= [];
+    this.#subscriptions[channel] = [...this.#subscriptions[channel], { id, args, callbacks }];
 
     return {
       send: () => {},
       unsubscribe: () => {
-        delete this.#subscriptions[channel];
+        this.#subscriptions[channel] = this.#subscriptions[channel]!.filter((subscription) => subscription.id !== id);
       },
     };
   }

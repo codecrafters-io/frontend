@@ -98,7 +98,7 @@
       {{/if}}
     </div>
 
-    <div class="prose">
+    <div class="prose" data-test-description>
       {{#if (gt @model.testerVersion.provisionedTestRunnersCount 0)}}
         This tester version has
         {{@model.testerVersion.provisionedTestRunnersCount}}

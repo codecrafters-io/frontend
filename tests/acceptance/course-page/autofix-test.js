@@ -45,7 +45,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await coursePage.testResultsBar.clickOnTab('AI Hints');
     await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
 
-    await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+    await waitUntil(() => fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
 
     const autofixRequest = this.server.schema.autofixRequests.first();
     const logstream = this.server.schema.fakeLogstreams.first();
@@ -99,7 +99,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     logstream.update({ isTerminated: true });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
-    await waitUntil(() => !fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+    await waitUntil(() => !fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
 
     await percySnapshot('Autofix - Success', { scope: '[data-test-test-results-bar]' });
   });
@@ -133,7 +133,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await coursePage.testResultsBar.clickOnTab('AI Hints');
     await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
 
-    await waitUntil(() => fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+    await waitUntil(() => fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
 
     const autofixRequest = this.server.schema.autofixRequests.first();
     const logstream = this.server.schema.fakeLogstreams.first();
@@ -146,7 +146,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     logstream.update({ isTerminated: true });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
 
-    await waitUntil(() => !fakeActionCableConsumer.hasSubscriptionForChannel('LogstreamChannel'));
+    await waitUntil(() => !fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
 
     await percySnapshot('Autofix - Failure', { scope: '[data-test-test-results-bar]' });
     assert.strictEqual(1, 1); // Add at least one assertion

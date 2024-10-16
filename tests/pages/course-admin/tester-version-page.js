@@ -1,4 +1,4 @@
-import { attribute, clickable, create, visitable } from 'ember-cli-page-object';
+import { attribute, clickable, create, text, visitable } from 'ember-cli-page-object';
 
 export default create({
   activateTesterVersionButton: {
@@ -6,6 +6,7 @@ export default create({
   },
 
   clickOnBackToTesterVersionsListButton: clickable('[data-test-back-to-tester-versions-list-button]'),
+  descriptionText: text('[data-test-description]'),
 
   deprovisionTestRunnersButton: {
     scope: '[data-test-deprovision-test-runners-button]',
