@@ -54,6 +54,14 @@ export default class CourseAdminTesterVersionController extends Controller {
   }
 
   @action
+  async handleCourseTesterVersionDidUpdate() {
+    await this.store.query('course-tester-version', {
+      course_id: this.model.course.id,
+      include: ['course', 'activator'].join(','),
+    });
+  }
+
+  @action
   async handleDeprovisionTestRunnersButtonClick() {
     this.isDeprovisioningTestRunners = true;
     this.shouldShowDeprovisioningNotice = true;

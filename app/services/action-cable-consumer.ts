@@ -34,6 +34,8 @@ export default class ActionCableConsumerService extends Service {
       onConnect?: () => void;
       onDisconnect?: () => void;
       onData?: (data: string) => void;
+      onReject?: () => void;
+      onInitialize?: () => void;
     },
   ): ActionCableSubscription {
     console.log(`subscribing to ${channel}`);
@@ -44,6 +46,8 @@ export default class ActionCableConsumerService extends Service {
         connected: callbacks.onConnect,
         disconnected: callbacks.onDisconnect,
         received: callbacks.onData,
+        rejected: callbacks.onReject,
+        initialized: callbacks.onInitialize,
       },
     );
   }

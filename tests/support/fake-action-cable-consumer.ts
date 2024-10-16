@@ -4,6 +4,8 @@ type SubscriptionCallbacks = {
   onConnect?: () => void;
   onDisconnect?: () => void;
   onData?: (data: string) => void;
+  onReject?: (error: Error) => void;
+  onInitialize?: () => void;
 };
 
 export default class FakeActionCableConsumer {
