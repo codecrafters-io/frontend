@@ -16,7 +16,7 @@ export default class FakeActionCableConsumer {
       return !!this.#subscriptions[channel]?.some((subscription) => JSON.stringify(subscription.args) === JSON.stringify(args));
     }
 
-    return !!this.#subscriptions[channel];
+    return !!(this.#subscriptions[channel] && this.#subscriptions[channel].length > 0);
   }
 
   sendData(channel: string, data: string): void {
