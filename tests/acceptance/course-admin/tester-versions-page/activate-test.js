@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { settled } from '@ember/test-helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testerVersionPage from 'codecrafters-frontend/tests/pages/course-admin/tester-version-page';
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
@@ -44,12 +43,10 @@ module('Acceptance | course-admin | tester-versions-page | activate', function (
     await testerVersionsPage.visit({ course_slug: 'redis' });
     await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
     await testerVersionPage.activateTesterVersionButton.click();
-    await settled(); // Investigate why clickable() doesn't call settled()
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     await testerVersionsPage.testerVersionListItem[1].viewTesterVersionButton.click();
     await testerVersionPage.activateTesterVersionButton.click();
-    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.strictEqual(lastConfirmationMessage, 'v11 is the latest version. Are you sure you want to activate v10 instead?');
 
