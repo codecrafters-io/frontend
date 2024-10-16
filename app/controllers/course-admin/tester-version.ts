@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import type { ModelType } from 'codecrafters-frontend/routes/course-admin/tester-version';
 import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
+import { waitFor } from '@ember/test-waiters';
 
 export default class CourseAdminTesterVersionController extends Controller {
   declare model: ModelType;
@@ -30,17 +32,14 @@ export default class CourseAdminTesterVersionController extends Controller {
       this.isActivating = true;
 
       await this.model.testerVersion.activate(null);
-
-      await this.store.query('course-tester-version', {
-        course_id: this.model.testerVersion.course.id,
-        include: ['course', 'activator'].join(','),
-      });
+      await this.reloadCourseTesterVersionsTask.perform();
 
       this.isActivating = false;
     }
   }
 
   @action
+  @waitFor
   async handleActivateButtonClick() {
     if (this.model.testerVersion.isLatest) {
       await this.activate();
@@ -55,11 +54,15 @@ export default class CourseAdminTesterVersionController extends Controller {
 
   @action
   async handleCourseTesterVersionDidUpdate() {
+    this.reloadCourseTesterVersionsTask.perform();
+  }
+
+  reloadCourseTesterVersionsTask = task({ keepLatest: true }, async (): Promise<void> => {
     await this.store.query('course-tester-version', {
       course_id: this.model.course.id,
       include: ['course', 'activator'].join(','),
     });
-  }
+  });
 
   @action
   async handleDeprovisionTestRunnersButtonClick() {

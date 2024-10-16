@@ -44,12 +44,10 @@ module('Acceptance | course-admin | tester-versions-page | activate', function (
     await testerVersionsPage.visit({ course_slug: 'redis' });
     await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
     await testerVersionPage.activateTesterVersionButton.click();
-    await settled(); // Investigate why clickable() doesn't call settled()
 
     await testerVersionsPage.visit({ course_slug: 'redis' });
     await testerVersionsPage.testerVersionListItem[1].viewTesterVersionButton.click();
     await testerVersionPage.activateTesterVersionButton.click();
-    await settled(); // Investigate why clickable() doesn't call settled()
 
     assert.strictEqual(lastConfirmationMessage, 'v11 is the latest version. Are you sure you want to activate v10 instead?');
 
