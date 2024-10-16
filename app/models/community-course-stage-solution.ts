@@ -37,6 +37,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @attr('number') declare approvedCommentsCount: number;
   @attr('string') declare explanationMarkdown: string;
   @attr('string') declare commitSha: string;
+  @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
   @attr('string') declare githubRepositoryName: string;
   @attr('boolean') declare githubRepositoryIsPrivate: boolean;
   @attr('boolean') declare isPinned: boolean;
