@@ -17,7 +17,7 @@ module('Acceptance | course-admin | tester-versions-page | deprovision-test-runn
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
-    const newTesterVersion = this.server.create('course-tester-version', {
+    this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
       course: this.server.schema.courses.findBy({ slug: 'redis' }),
       commitSha: '1234567890',
