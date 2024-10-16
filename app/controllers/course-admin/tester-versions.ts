@@ -4,6 +4,7 @@ import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
 
 export default class CourseTesterVersionsController extends Controller {
   declare model: {
@@ -24,25 +25,24 @@ export default class CourseTesterVersionsController extends Controller {
     return this.model.course.testerVersions.sortBy('createdAt').reverse();
   }
 
-  // TODO: Add debounce to prevent hammering
   @action
   async handleCourseTesterVersionDidUpdate() {
+    this.reloadCourseTesterVersionsTask.perform();
+  }
+
+  reloadCourseTesterVersionsTask = task({ keepLatest: true }, async (): Promise<void> => {
     await this.store.query('course-tester-version', {
       course_id: this.model.course.id,
       include: ['course', 'activator'].join(','),
     });
-  }
+  });
 
   @action
   async handleSyncWithGitHubButtonClick() {
     this.isSyncingWithGitHub = true;
 
     await this.model.course.syncCourseTesterVersions();
-
-    await this.store.query('course-tester-version', {
-      course_id: this.model.course.id,
-      include: ['course', 'activator'].join(','),
-    });
+    await this.reloadCourseTesterVersionsTask.perform();
 
     this.isSyncingWithGitHub = false;
   }
