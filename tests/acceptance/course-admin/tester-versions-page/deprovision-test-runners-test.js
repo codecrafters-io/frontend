@@ -5,7 +5,7 @@ import testerVersionPage from 'codecrafters-frontend/tests/pages/course-admin/te
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-admin | deprovision-tester-version', function (hooks) {
+module('Acceptance | course-admin | tester-versions-page | deprovision-test-runners', function (hooks) {
   setupApplicationTest(hooks);
 
   test('can deprovision tester version', async function (assert) {
@@ -39,5 +39,9 @@ module('Acceptance | course-admin | deprovision-tester-version', function (hooks
     await testerVersionsPage.testerVersionListItem[1].viewTesterVersionButton.click();
     await testerVersionPage.deprovisionTestRunnersButton.click();
     assert.ok(testerVersionPage.initiatedDeprovisioningNotice.isVisible, 'should show initiated deprovisioning notice');
+
+    await testerVersionPage.clickOnBackToTesterVersionsListButton();
+    await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
+    assert.notOk(testerVersionPage.initiatedDeprovisioningNotice.isVisible, 'should not show initiated deprovisioning notice after navigating away');
   });
 });

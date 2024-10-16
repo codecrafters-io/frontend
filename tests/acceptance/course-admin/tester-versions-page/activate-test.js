@@ -6,7 +6,7 @@ import testerVersionPage from 'codecrafters-frontend/tests/pages/course-admin/te
 import testerVersionsPage from 'codecrafters-frontend/tests/pages/course-admin/tester-versions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-admin | activate-tester-version', function (hooks) {
+module('Acceptance | course-admin | tester-versions-page | activate', function (hooks) {
   setupApplicationTest(hooks);
 
   test('can activate tester version', async function (assert) {
