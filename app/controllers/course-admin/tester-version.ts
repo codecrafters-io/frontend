@@ -70,4 +70,11 @@ export default class CourseAdminTesterVersionController extends Controller {
 
     this.isDeprovisioningTestRunners = false;
   }
+
+  @action
+  handleWillDestroyContainer() {
+    this.isDeprovisioningTestRunners = false;
+    this.shouldShowDeprovisioningNotice = false;
+    this.isActivating = false;
+  }
 }

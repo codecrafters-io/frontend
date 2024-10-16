@@ -1,4 +1,8 @@
-<div class="bg-white min-h-screen" {{model-did-update this.handleCourseTesterVersionDidUpdate @model.testerVersion}}>
+<div
+  class="bg-white min-h-screen"
+  {{model-did-update this.handleCourseTesterVersionDidUpdate @model.testerVersion}}
+  {{will-destroy this.handleWillDestroyContainer}}
+>
   <div class="container mx-auto pt-4 pb-10 px-6">
     <div class="pt-3 pb-6 border-b mb-6">
       <TertiaryLinkButton @route="course-admin.tester-versions" @models={{array @model.testerVersion.course.slug}} @size="small" class="pl-1.5 mb-3">
