@@ -36,6 +36,8 @@ export default class ActionCableConsumerService extends Service {
       onData?: (data: string) => void;
     },
   ): ActionCableSubscription {
+    console.log(`subscribing to ${channel}`);
+
     return this.#consumer().subscriptions.create(
       { channel, ...args },
       {
