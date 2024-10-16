@@ -24,6 +24,15 @@ export default class CourseTesterVersionsController extends Controller {
     return this.model.course.testerVersions.sortBy('createdAt').reverse();
   }
 
+  // TODO: Add debounce to prevent hammering
+  @action
+  async handleCourseTesterVersionDidUpdate() {
+    await this.store.query('course-tester-version', {
+      course_id: this.model.course.id,
+      include: ['course', 'activator'].join(','),
+    });
+  }
+
   @action
   async handleSyncWithGitHubButtonClick() {
     this.isSyncingWithGitHub = true;

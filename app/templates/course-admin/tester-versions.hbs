@@ -41,5 +41,9 @@
         </div>
       {{/each}}
     </ul>
+
+    {{#each this.sortedTesterVersions as |courseTesterVersion|}}
+      <div {{model-did-update this.handleCourseTesterVersionDidUpdate courseTesterVersion}}></div>
+    {{/each}}
   </div>
 </div>
