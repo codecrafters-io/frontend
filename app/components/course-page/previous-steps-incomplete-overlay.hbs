@@ -1,0 +1,17 @@
+<BlurredOverlay
+  @isBlurred={{this.shouldShowModal}}
+  {{did-update this.handleStepIdUpdated @currentStep.id}}
+  @overlayClass="bg-gray-200 bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-20"
+  ...attributes
+>
+  <:content>
+    {{yield}}
+  </:content>
+  <:overlay>
+    <CoursePage::PreviousStepsIncompleteModal
+      class="mt-8 mx-3 md:mx-6"
+      @onClose={{this.handleModalDismissed}}
+      @activeStep={{this.coursePageState.activeStep}}
+    />
+  </:overlay>
+</BlurredOverlay>

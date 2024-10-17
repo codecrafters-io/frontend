@@ -9,21 +9,5 @@
     />
   {{/if}}
 
-  <BlurredOverlay
-    @isBlurred={{this.shouldShowPreviousStepsIncompleteModal}}
-    @overlayClass="bg-gray-200 bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-20"
-    class="px-3 md:px-6 lg:px-10"
-    {{did-update this.handleStepIdUpdated @step.id}}
-  >
-    <:content>
-      {{yield}}
-    </:content>
-    <:overlay>
-      <CoursePage::PreviousStepsIncompleteModal
-        class="mt-8 mx-3 md:mx-6"
-        @onClose={{this.handlePreviousStepsIncompleteModalDismissed}}
-        @activeStep={{this.coursePageState.activeStep}}
-      />
-    </:overlay>
-  </BlurredOverlay>
+  {{yield}}
 </div>

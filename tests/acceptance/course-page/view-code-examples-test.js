@@ -187,7 +187,6 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
 
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards[0].changedFiles.length, 2, 'shows 2 changed files');
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards[0].unchangedFiles.length, 2, 'shows 2 unchanged files');
@@ -594,7 +593,6 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Implement the ECHO command');
-    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     await coursePage.codeExamplesTab.languageDropdown.toggle();
