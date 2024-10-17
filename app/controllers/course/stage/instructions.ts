@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
@@ -13,6 +14,7 @@ import { next } from '@ember/runloop';
 export default class CourseStageInstructionsController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
 
   @tracked commentListIsFilteredByLanguage = true;
@@ -45,7 +47,9 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowLanguageGuide() {
-    return !this.model.courseStage.isFirst && this.authenticator.currentUser?.isStaff;
+    const isInTestGroup = this.featureFlags.getFeatureFlagValue('language-guides') === 'test';
+
+    return !this.model.courseStage.isFirst && (this.authenticator.currentUser?.isStaff || isInTestGroup);
   }
 
   get shouldShowPrerequisites() {

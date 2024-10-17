@@ -39,12 +39,11 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     await coursePage.languageGuideCard.clickOnCollapseButton();
     await coursePage.languageGuideCard.clickOnExpandButton();
 
-    await coursePage.languageGuideCard.languageDropdown.toggle();
-    await coursePage.languageGuideCard.languageDropdown.clickOnLink('Go');
-    assert.strictEqual(coursePage.languageGuideCard.languageDropdown.currentLanguageName, 'Go');
-
-    await coursePage.languageGuideCard.backToRepositoryLanguageButton.click();
-    assert.strictEqual(coursePage.languageGuideCard.languageDropdown.currentLanguageName, 'Python');
+    assert.strictEqual(
+      coursePage.languageGuideCard.text,
+      'Python Guide BETA Share Feedback In this stage, blah blah… Collapse',
+      'Language guide card displays the correct content',
+    );
   });
 
   test('can submit feedback for language guides', async function (assert) {
@@ -73,7 +72,11 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     document.getElementById('language-guide-card')?.scrollIntoView();
 
     await coursePage.languageGuideCard.clickOnExpandButton();
-    assert.strictEqual(coursePage.languageGuideCard.languageDropdown.currentLanguageName, 'Go');
+    assert.strictEqual(
+      coursePage.languageGuideCard.text,
+      'Go Guide BETA Share Feedback In this stage, blah blah… Collapse',
+      'Language guide card displays the correct content',
+    );
 
     const feedbackDropdown = coursePage.languageGuideCard.feedbackDropdown;
     await feedbackDropdown.toggle();
