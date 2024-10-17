@@ -9,12 +9,7 @@
     />
   {{/if}}
 
-  <CoursePage::PreviousStepsIncompleteOverlay
-    @isBlurred={{this.shouldShowPreviousStepsIncompleteModal}}
-    @onClose={{this.handlePreviousStepsIncompleteModalDismissed}}
-    @activeStep={{this.coursePageState.activeStep}}
-    {{did-update this.handleStepIdUpdated @step.id}}
-  >
+  <CoursePage::PreviousStepsIncompleteOverlay @currentStep={{@step}}>
     {{yield}}
   </CoursePage::PreviousStepsIncompleteOverlay>
 </div>
