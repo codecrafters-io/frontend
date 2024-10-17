@@ -9,6 +9,8 @@
   </:content>
   <:overlay>
     <CoursePage::CurrentStepCompleteModal
+      {{! Confetti etc. makes more sense when the top section is focused }}
+      {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
       class="mt-8 mx-3 md:mx-6"
       @onClose={{this.handleModalDismissed}}
       @activeStep={{this.coursePageState.activeStep}}

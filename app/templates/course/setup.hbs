@@ -1,5 +1,7 @@
 <CoursePage::PreviousStepsIncompleteOverlay @currentStep={{this.currentStep}}>
-  <div class="w-full pt-8 pb-32 px-3 md:px-6 lg:px-10">
-    <CoursePage::SetupStep::RepositorySetupCard @repository={{@model.activeRepository}} />
-  </div>
+  <CoursePage::CurrentStepCompleteOverlay @currentStep={{this.currentStep}}>
+    <div class="w-full pt-8 pb-32 px-3 md:px-6 lg:px-10">
+      <CoursePage::SetupStep::RepositorySetupCard @repository={{@model.activeRepository}} />
+    </div>
+  </CoursePage::CurrentStepCompleteOverlay>
 </CoursePage::PreviousStepsIncompleteOverlay>

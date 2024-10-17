@@ -1,11 +1,17 @@
-<div class="w-full pt-8 pb-32 px-3 md:px-6 lg:px-10">
-  {{#if this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
-    <ProductWalkthroughFeatureSuggestion
-      @featureSuggestion={{this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+<CoursePage::CurrentStepCompleteOverlay @currentStep={{this.currentStep}}>
+  <div class="w-full pt-8 pb-32 px-3 md:px-6 lg:px-10">
+    {{#if this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+      <ProductWalkthroughFeatureSuggestion
+        @featureSuggestion={{this.authenticator.currentUser.pendingProductWalkthroughFeatureSuggestion}}
+        class="mb-6"
+      />
+    {{/if}}
+
+    <CoursePage::IntroductionStep::WelcomeCard @repository={{@model.activeRepository}} class="mb-6" />
+    <CoursePage::IntroductionStep::CreateRepositoryCard
+      @repository={{@model.activeRepository}}
+      @preferredLanguageSlug={{@model.track}}
       class="mb-6"
     />
-  {{/if}}
-
-  <CoursePage::IntroductionStep::WelcomeCard @repository={{@model.activeRepository}} class="mb-6" />
-  <CoursePage::IntroductionStep::CreateRepositoryCard @repository={{@model.activeRepository}} @preferredLanguageSlug={{@model.track}} class="mb-6" />
-</div>
+  </div>
+</CoursePage::CurrentStepCompleteOverlay>

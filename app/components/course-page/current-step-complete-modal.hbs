@@ -1,11 +1,11 @@
 <ModalBody @allowManualClose={{false}} @onClose={{@onClose}} class="w-full" data-test-current-step-complete-modal ...attributes>
-  <div class="mb-4 font-semibold text-2xl text-gray-800 dark:text-gray-100 mr-6">
-    Step Completed!
+  <div class="mb-8 font-semibold text-2xl text-gray-800 dark:text-gray-100 mr-6">
+    🎉&nbsp;&nbsp;{{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
   </div>
 
-  <div class="prose dark:prose-invert mb-6">
+  <div class="prose dark:prose-invert mb-8">
     <p>
-      Congratulations! You've successfully completed this step.
+      {{this.currentStep.completionNoticeMessage}}
     </p>
   </div>
 
@@ -17,7 +17,16 @@
       class="flex-shrink-0"
     >
       <div class="flex items-center">
-        <span>Continue to "{{@activeStep.shortTitle}}"</span>
+        {{#if (eq this.nextStep @activeStep)}}
+          {{#if (eq this.nextStep.type "CourseStageStep")}}
+            <span>View next stage</span>
+          {{else}}
+            <span>View next step</span>
+          {{/if}}
+        {{else}}
+          <span>Back to current step</span>
+        {{/if}}
+
         {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
       </div>
     </PrimaryLinkButton>
@@ -28,7 +37,7 @@
       {{on "click" @onClose}}
       data-test-stay-on-current-step-button
     >
-      Stay on this step
+      Show instructions again
     </div>
   </div>
 </ModalBody>
