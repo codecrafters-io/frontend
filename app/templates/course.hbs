@@ -89,34 +89,36 @@
 
       <div
         class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}}
-          pt-6 flex-shrink-0 border-l dark:border-white/5 bg-gray-50 dark:bg-gray-900 hidden md:block group relative"
+          pt-6 flex-shrink-0 border-l dark:border-white/5 bg-gray-50 dark:bg-gray-900 hidden md:block group"
       >
-        {{#if this.leaderboardIsExpanded}}
-          <CoursePage::CollapseLeaderboardButton
-            class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
-            {{on "click" this.handleCollapseLeaderboardButtonClick}}
-            data-test-collapse-leaderboard-button
-          />
-        {{else}}
-          <CoursePage::ExpandLeaderboardButton
-            class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
-            {{on "click" this.handleExpandLeaderboardButtonClick}}
-            data-test-expand-leaderboard-button
-          />
-        {{/if}}
+        <div class="sticky top-14">
+          {{#if this.leaderboardIsExpanded}}
+            <CoursePage::CollapseLeaderboardButton
+              class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+              {{on "click" this.handleCollapseLeaderboardButtonClick}}
+              data-test-collapse-leaderboard-button
+            />
+          {{else}}
+            <CoursePage::ExpandLeaderboardButton
+              class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+              {{on "click" this.handleExpandLeaderboardButtonClick}}
+              data-test-expand-leaderboard-button
+            />
+          {{/if}}
 
-        <CourseLeaderboard
-          class="sticky top-14"
-          @course={{@model.course}}
-          @activeRepository={{@model.activeRepository}}
-          @repositories={{@model.repositories}}
-          @isCollapsed={{not this.leaderboardIsExpanded}}
-        />
+          <CourseLeaderboard
+            class="sticky top-14"
+            @course={{@model.course}}
+            @activeRepository={{@model.activeRepository}}
+            @repositories={{@model.repositories}}
+            @isCollapsed={{not this.leaderboardIsExpanded}}
+          />
 
-        {{#if (and this.leaderboardIsExpanded this.visiblePrivateLeaderboardFeatureSuggestion)}}
-          {{! @glint-expect-error: not ts-ified yet }}
-          <PrivateLeaderboardFeatureSuggestion @featureSuggestion={{this.visiblePrivateLeaderboardFeatureSuggestion}} class="ml-4 mt-6" />
-        {{/if}}
+          {{#if (and this.leaderboardIsExpanded this.visiblePrivateLeaderboardFeatureSuggestion)}}
+            {{! @glint-expect-error: not ts-ified yet }}
+            <PrivateLeaderboardFeatureSuggestion @featureSuggestion={{this.visiblePrivateLeaderboardFeatureSuggestion}} class="ml-4 mt-6" />
+          {{/if}}
+        </div>
       </div>
     </div>
   </div>
