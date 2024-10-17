@@ -1,7 +1,3 @@
-.course-admin-submission-diff-container {
-  code-mirror {
-    .cm-collapsedLines {
-      margin-left: -24px;
-    }
-  }
+.course-admin-submission-diff-container code-mirror .cm-collapsedLines {
+  margin-left: -24px;
 }
