@@ -1,12 +1,15 @@
 import { clickOnText, collection, create, triggerable, visitable } from 'ember-cli-page-object';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/language-dropdown';
 import CourseStageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/course-stage-dropdown';
+import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 
 export default create({
   clickOnLink: clickOnText(),
 
   diffTab: {
-    expandableChunks: collection('[data-test-expandable-chunk]'),
+    changedFiles: collection('[data-test-changed-file]', {
+      codeMirror,
+    }),
 
     scope: '[data-test-diff-tab]',
   },

@@ -1,14 +1,58 @@
 import submissionsPage from 'codecrafters-frontend/tests/pages/course-admin/submissions-page';
-import SyntaxHighlightedDiffComponent from 'codecrafters-frontend/components/syntax-highlighted-diff';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
+// Example diff is defined as array because VSCode strips trailing spaces
+// in blank lines when saving the file, even inside multiline strings
+const EXAMPLE_DIFF = [
+  ' import socket',
+  ' import logging',
+  ' import threading',
+  ' ',
+  ' # Configure the logging module',
+  " logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')",
+  ' ',
+  ' def handle_request(connection, address, redis_dict):',
+  '     logging.info(f"Accepted connection from {address}")',
+  ' ',
+  '     while True:',
+  '         data = connection.recv(1024)',
+  ' ',
+  '         if not data:',
+  '             break',
+  ' ',
+  '+        logging.info(f"Data received: {data}")',
+  ' ',
+  '         commands = parse_resp(data)',
+  ' ',
+  '         logging.info(f"Parsed commands: {commands}")',
+  ' ',
+  '     connection.close()',
+  '     logging.info(f"Connection closed from {address}")',
+  ' ',
+  ' def main():',
+  '     logging.info("Logs from your program will appear here!")',
+  ' ',
+  '     with socket.create_server(("localhost", 6379), reuse_port=True) as server_socket:',
+  '+        logging.info("Server is running and waiting for connections...")',
+  '         redis_dict = dict()',
+  '         while True:',
+  '             # Block until we receive an incoming connection',
+  '             connection, address = server_socket.accept()',
+  '             # Start a new thread to handle the request',
+  '             client_thread = threading.Thread(target=handle_request, args=(connection, address, redis_dict,))',
+  '             client_thread.start()',
+  ' ',
+  ' if __name__ == "__main__":',
+  '     main()',
+].join('\n');
+
 module('Acceptance | course-admin | view-diffs', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('expandable chunks has the correct number of lines', async function (assert) {
+  test('collapsed lines placeholders show correct number of lines and expand when clicked', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -29,25 +73,8 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     submission.update('changedFiles', [
       {
-        filename: 'server.rb',
-        diff: `    end
-
-    def listen
-      loop do
-        client = @server.accept
-+       handle_client(client)
-+     end
-+   end
-+
-+   def handle_client(client)
-+     loop do
-+       client.gets
-+
-        # TODO: Handle commands other than PING
-        client.write("+PONG\\r\\n")
-      end
-    end
-  end`,
+        filename: 'server.py',
+        diff: EXAMPLE_DIFF,
       },
     ]);
 
@@ -55,228 +82,52 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     await submissionsPage.timelineContainer.entries.objectAt(1).click();
     await submissionsPage.clickOnLink('Diff');
 
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 2, 'There should be two expandable chunks');
-    assert.ok(
-      submissionsPage.diffTab.expandableChunks.objectAt(0).text.includes('Expand 2 lines'),
-      'The first chunk should have the correct number of lines',
-    );
-    assert.ok(
-      submissionsPage.diffTab.expandableChunks.objectAt(1).text.includes('Expand 2 lines'),
-      'The second chunk should have the correct number of lines',
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
+      3,
+      'There should be three collapsed lines placeholders',
     );
 
-    await submissionsPage.diffTab.expandableChunks.objectAt(0).click();
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'The first chunk should have been expanded');
-  });
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].text,
+      '⦚ 13 unchanged lines ⦚',
+      'The first placeholder should show correct number of lines',
+    );
 
-  test('expandable chunks display the hidden code when clicked', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[1].text,
+      '⦚ 6 unchanged lines ⦚',
+      'The second placeholder should show correct number of lines',
+    );
 
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[2].text,
+      '⦚ 7 unchanged lines ⦚',
+      'The third placeholder should show correct number of lines',
+    );
 
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
+    await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
 
-    let submission = this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
-    });
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
+      2,
+      'The first placeholder should be expanded after clicking',
+    );
 
-    submission.update('changedFiles', [
-      {
-        filename: 'server.rb',
-        diff: `    end
+    await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
 
-    def listen
-      loop do
-        client = @server.accept
-+       handle_client(client)
-+     end
-+   end
-+
-+   def handle_client(client)
-+     loop do
-+       client.gets
-+
-        # TODO: Handle commands other than PING
-        client.write("+PONG\\r\\n")
-      end
-    end
-  end`,
-      },
-    ]);
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
+      1,
+      'The second placeholder should be expanded after clicking',
+    );
 
-    await submissionsPage.visit({ course_slug: 'redis' });
-    await submissionsPage.timelineContainer.entries.objectAt(1).click();
-    await submissionsPage.clickOnLink('Diff');
+    await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
 
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 2, 'There should be two expandable chunks');
-    await submissionsPage.diffTab.expandableChunks.objectAt(0).click();
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'The first chunk should have been expanded');
-  });
-
-  test('expandable chunks do not collapse by default within a certain number of lines between changes', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    let submission = this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
-    });
-
-    SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK = 3;
-    SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
-
-    submission.update('changedFiles', [
-      {
-        filename: 'server.rb',
-        diff: `    end
-
-    def listen
-+     loop do
-        client = @server.accept
-        handle_client(client)
-      end
-    end
-
-    def handle_client(client)
-      loop do
-        client.gets
-
-        # TODO: Handle commands other than PING
-+       client.write("+PONG\\r\\n")
-      end
-    end
-  end`,
-      },
-    ]);
-
-    await submissionsPage.visit({ course_slug: 'redis' });
-    await submissionsPage.timelineContainer.entries.objectAt(1).click();
-    await submissionsPage.clickOnLink('Diff');
-
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 0, 'There should be no expandable chunk');
-  });
-
-  test('expandable chunks collapse by default within a certain number of lines between changes', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    let submission = this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
-    });
-
-    SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK = 3;
-    SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
-
-    submission.update('changedFiles', [
-      {
-        filename: 'server.rb',
-        diff: `    end
-
-    def listen
-+     loop do
-        client = @server.accept
-        handle_client(client)
-      end
-    end
-
-    def handle_client(client)
-      loop do
-        client.gets
-
-        # TODO: Handle commands other than PING
-        client.write("+PONG\\r\\n")
-+     end
-    end
-  end`,
-      },
-    ]);
-
-    await submissionsPage.visit({ course_slug: 'redis' });
-    await submissionsPage.timelineContainer.entries.objectAt(1).click();
-    await submissionsPage.clickOnLink('Diff');
-
-    assert.strictEqual(submissionsPage.diffTab.expandableChunks.length, 1, 'There should be one expandable chunk');
-  });
-
-  test('expandable chunks have no repeating lines when lines around changed chunks overlap', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    let submission = this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
-    });
-
-    SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK = 3;
-    SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING = 4;
-
-    submission.update('changedFiles', [
-      {
-        filename: 'server.rb',
-        diff: `    end
-
-    def listen
-     loop do
-        client = @server.accept
-        handle_client(client)
-+      end
-    end
-
-    def handle_client(client)
-+      loop do
-        client.gets
-
-        # TODO: Handle commands other than PING
-        client.write("+PONG\\r\\n")
-     end
-    end
-  end`,
-      },
-    ]);
-
-    await submissionsPage.visit({ course_slug: 'redis' });
-    await submissionsPage.timelineContainer.entries.objectAt(1).click();
-    await submissionsPage.clickOnLink('Diff');
-
-    assert.ok(submissionsPage.diffTab.text.includes('+ end end def handle_client(client) + loop do'), 'There are no repeating lines between changes');
+    assert.strictEqual(
+      submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
+      0,
+      'The third placeholder should be expanded after clicking',
+    );
   });
 });

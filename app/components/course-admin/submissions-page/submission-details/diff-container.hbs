@@ -1,25 +1,34 @@
-<div ...attributes>
+<div class="course-admin-submission-diff-container" ...attributes>
   {{#if @submission.hasChangedFiles}}
     {{#each @submission.changedFiles key="filename" as |changedFile index|}}
       <div
         class="{{if (not-eq index (sub @submission.changedFiles.length 1)) 'mb-4'}}
           bg-white shadow-sm rounded border border-gray-300 overflow-y-hidden"
+        data-test-changed-file
       >
         <div class="bg-gray-100 rounded-t py-1 px-4 border-b border-gray-200 shadow-sm">
           <span class="font-mono text-xs text-gray-600 bold">{{changedFile.filename}}</span>
         </div>
 
-        <div class="text-sm leading-6">
-          {{! #if ensures that language is typed and not null }}
-          {{#if @submission.repository.language}}
-            <SyntaxHighlightedDiff
-              @comments={{(array)}}
-              @code={{changedFile.diff}}
-              @language={{@submission.repository.language.slug}}
-              @shouldCollapseUnchangedLines={{true}}
-            />
-          {{/if}}
-        </div>
+        {{#let (diff-to-document changedFile.diff) as |document|}}
+          <CodeMirror
+            @document={{document.current}}
+            @originalDocument={{document.original}}
+            @language={{@submission.repository.language.slug}}
+            @filename={{changedFile.filename}}
+            @collapseUnchanged={{true}}
+            @allowMultipleSelections={{true}}
+            @bracketMatching={{true}}
+            @crosshairCursor={{true}}
+            @drawSelection={{true}}
+            @rectangularSelection={{true}}
+            @readOnly={{true}}
+            @highlightSelectionMatches={{true}}
+            @highlightSpecialChars={{true}}
+            @theme={{this.codeMirrorTheme}}
+            class="block text-sm"
+          />
+        {{/let}}
       </div>
     {{/each}}
   {{else}}
