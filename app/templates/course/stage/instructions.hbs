@@ -17,6 +17,16 @@
       <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
     {{/if}}
 
+    {{#if (and this.shouldShowTestRunnerCard (eq this.currentStep.testsStatus "passed"))}}
+      <CoursePage::CourseStageStep::TestRunnerCard
+        class="mb-6"
+        @isCollapsible={{false}}
+        @repository={{@model.activeRepository}}
+        @stage={{@model.courseStage}}
+        {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+      />
+    {{/if}}
+
     {{#if @model.courseStage.isFirst}}
       <CoursePage::CourseStageStep::FirstStageTutorialCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
     {{/if}}
@@ -29,7 +39,7 @@
       />
     {{/if}}
 
-    {{#if this.shouldShowTestRunnerCard}}
+    {{#if (and this.shouldShowTestRunnerCard (not-eq this.currentStep.testsStatus "passed"))}}
       <div class="mb-6">
         <CoursePage::CourseStageStep::TestRunnerCard
           @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}

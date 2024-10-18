@@ -92,10 +92,6 @@ export default class TestRunnerCardComponent extends Component<Signature> {
       element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    if (newTestsStatus === 'passed') {
-      element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
     this.previousTestsStatus = newTestsStatus;
   }
 
