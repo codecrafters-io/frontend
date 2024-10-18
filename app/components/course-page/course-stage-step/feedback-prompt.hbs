@@ -1,24 +1,8 @@
-<Alert @color="green" class="relative" data-test-feedback-prompt ...attributes>
-  {{#if this.isEditingClosedSubmission}}
-    <button
-      class="absolute right-4 top-4 opacity-60 hover:opacity-100"
-      type="button"
-      {{! @glint-expect-error fn/mut types don't work with false?}}
-      {{on "click" (fn (mut this.isEditingClosedSubmission) false)}}
-      data-test-close-feedback-prompt-button
-    >
-      {{svg-jar "x" class="w-5 h-5 text-green-600 dark:text-green-400"}}
-    </button>
-  {{/if}}
-
-  <div class="mr-2 mt-0.5 flex-shrink-0">
-    {{svg-jar "check-circle" class="w-6 fill-current text-teal-500"}}
-  </div>
-
+<div class="relative" ...attributes>
   <div class="w-full">
     <div class="flex items-center">
       {{#if (and this.submissionIsClosed (not this.isEditingClosedSubmission))}}
-        <div class="prose prose-green dark:prose-invert leading-7">
+        <div class="prose dark:prose-invert leading-7">
           Feedback submitted!
 
           <span
@@ -30,14 +14,10 @@
             Edit Feedback
           </span>
         </div>
-      {{else}}
-        <div class="prose prose-green dark:prose-invert leading-7" data-test-question-text>
-          {{#if this.isEditingClosedSubmission}}
-            How did we do?
-          {{else}}
-            {{this.congratulatoryMessage}}
-            How did we do?
-          {{/if}}
+      {{else if (not this.isEditingClosedSubmission)}}
+        <div class="prose dark:prose-invert leading-7" data-test-question-text>
+          {{this.congratulatoryMessage}}
+          How did we do?
         </div>
       {{/if}}
     </div>
@@ -56,7 +36,7 @@
       </div>
 
       {{#if this.feedbackSubmission.hasSelectedAnswer}}
-        <div class="prose prose-sm prose-green dark:prose-invert mt-4">
+        <div class="prose prose-sm dark:prose-invert mt-4">
           P.S.
           <a
             href="https://forum.codecrafters.io/u/rohitpaulk/activity"
@@ -94,4 +74,4 @@
       {{/if}}
     {{/if}}
   </div>
-</Alert>
+</div>

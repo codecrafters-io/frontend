@@ -1,116 +1,113 @@
 <CoursePage::PreviousStepsIncompleteOverlay @currentStep={{this.currentStep}}>
-  <div class="pt-6 pb-32 px-3 md:px-6 lg:px-10" {{did-update this.handleDidUpdateTestsStatus this.currentStep.testsStatus}}>
-    {{#if this.shouldShowUpgradePrompt}}
-      <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight="content" class="mb-6" />
-    {{/if}}
+  <CoursePage::CurrentStepCompleteOverlay @currentStep={{this.currentStep}}>
+    <div class="pt-6 pb-32 px-3 md:px-6 lg:px-10" {{did-update this.handleDidUpdateTestsStatus this.currentStep.testsStatus}}>
+      {{#if this.shouldShowUpgradePrompt}}
+        <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight="content" class="mb-6" />
+      {{/if}}
 
-    {{#if this.shouldShowFeedbackPrompt}}
-      <CoursePage::CourseStageStep::FeedbackPrompt
-        @courseStage={{@model.courseStage}}
-        @repository={{@model.activeRepository}}
-        @onSubmit={{this.handleStageFeedbackSubmitted}}
-        class="mb-6"
-      />
-    {{/if}}
+      {{#if (gt this.badgeAwards.length 0)}}
+        <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
+      {{/if}}
 
-    {{#if (gt this.badgeAwards.length 0)}}
-      <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
-    {{/if}}
-
-    {{#if (and this.shouldShowTestRunnerCard (eq this.currentStep.testsStatus "passed"))}}
-      <CoursePage::CourseStageStep::TestRunnerCard
-        class="mb-6"
-        id="test-runner-card"
-        @isCollapsible={{false}}
-        @repository={{@model.activeRepository}}
-        @stage={{@model.courseStage}}
-        {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-      />
-    {{/if}}
-
-    {{#if @model.courseStage.isFirst}}
-      <CoursePage::CourseStageStep::FirstStageTutorialCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
-    {{/if}}
-
-    {{#if @model.courseStage.isSecond}}
-      <CoursePage::CourseStageStep::SecondStageInstructionsCard
-        @repository={{@model.activeRepository}}
-        @courseStage={{@model.courseStage}}
-        class="mb-6"
-      />
-    {{/if}}
-
-    {{#if (and this.shouldShowTestRunnerCard (not-eq this.currentStep.testsStatus "passed"))}}
-      <div class="mb-6">
+      {{#if (and this.shouldShowTestRunnerCard (eq this.currentStep.testsStatus "passed"))}}
         <CoursePage::CourseStageStep::TestRunnerCard
-          {{! template-lint-disable no-duplicate-id }}
+          class="mb-6"
           id="test-runner-card"
-          @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
+          @isCollapsible={{false}}
           @repository={{@model.activeRepository}}
           @stage={{@model.courseStage}}
-          @onExpand={{if this.shouldSuppressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
+          {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
         />
+      {{/if}}
 
-        {{#if this.shouldSuppressTestRunnerCardExpands}}
-          <EmberPopover @popperContainer="body">
-            <div class="prose prose-sm prose-invert text-white">
-              {{#if (eq this.currentStep.testsStatus "failed")}}
-                <p>
-                  This failure is expected! Check the
-                  <a href="#first-stage-tutorial-card">How to pass this stage</a>
-                  section for instructions.
-                </p>
-              {{else}}
-                <p>
-                  Check the
-                  <a href="#first-stage-tutorial-card">How to pass this stage</a>
-                  section for instructions.
-                </p>
-              {{/if}}
-            </div>
-          </EmberPopover>
-        {{/if}}
-      </div>
-    {{/if}}
+      {{#if @model.courseStage.isFirst}}
+        <CoursePage::CourseStageStep::FirstStageTutorialCard
+          @repository={{@model.activeRepository}}
+          @courseStage={{@model.courseStage}}
+          class="mb-6"
+        />
+      {{/if}}
 
-    {{! TODO: Bring this back? }}
-    {{!-- {{#if this.shouldShowPrerequisites}}
+      {{#if @model.courseStage.isSecond}}
+        <CoursePage::CourseStageStep::SecondStageInstructionsCard
+          @repository={{@model.activeRepository}}
+          @courseStage={{@model.courseStage}}
+          class="mb-6"
+        />
+      {{/if}}
+
+      {{#if (and this.shouldShowTestRunnerCard (not-eq this.currentStep.testsStatus "passed"))}}
+        <div class="mb-6">
+          <CoursePage::CourseStageStep::TestRunnerCard
+            {{! template-lint-disable no-duplicate-id }}
+            id="test-runner-card"
+            @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
+            @repository={{@model.activeRepository}}
+            @stage={{@model.courseStage}}
+            @onExpand={{if this.shouldSuppressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
+          />
+
+          {{#if this.shouldSuppressTestRunnerCardExpands}}
+            <EmberPopover @popperContainer="body">
+              <div class="prose prose-sm prose-invert text-white">
+                {{#if (eq this.currentStep.testsStatus "failed")}}
+                  <p>
+                    This failure is expected! Check the
+                    <a href="#first-stage-tutorial-card">How to pass this stage</a>
+                    section for instructions.
+                  </p>
+                {{else}}
+                  <p>
+                    Check the
+                    <a href="#first-stage-tutorial-card">How to pass this stage</a>
+                    section for instructions.
+                  </p>
+                {{/if}}
+              </div>
+            </EmberPopover>
+          {{/if}}
+        </div>
+      {{/if}}
+
+      {{! TODO: Bring this back? }}
+      {{!-- {{#if this.shouldShowPrerequisites}}
       <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
     {{/if}} --}}
 
-    <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
+      <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
-    {{#if this.shouldShowLanguageGuide}}
-      <CoursePage::CourseStageStep::LanguageGuideCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
-    {{/if}}
+      {{#if this.shouldShowLanguageGuide}}
+        <CoursePage::CourseStageStep::LanguageGuideCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
+      {{/if}}
 
-    <div data-percy-hints-section>
-      <div class="border-b dark:border-white/5 pb-2 mb-6 mt-8 flex items-center justify-between">
-        <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-200">Hints</h2>
+      <div data-percy-hints-section>
+        <div class="border-b dark:border-white/5 pb-2 mb-6 mt-8 flex items-center justify-between">
+          <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-200">Hints</h2>
 
-        {{#if @model.activeRepository.language}}
-          <div class="flex items-center gap-1">
-            <span class="text-xs text-gray-500 mr-2">Filter by {{@model.activeRepository.language.name}}</span>
-            <Toggle @isOn={{this.commentListIsFilteredByLanguage}} {{on "click" this.handleCommentListFilterToggled}} />
+          {{#if @model.activeRepository.language}}
+            <div class="flex items-center gap-1">
+              <span class="text-xs text-gray-500 mr-2">Filter by {{@model.activeRepository.language.name}}</span>
+              <Toggle @isOn={{this.commentListIsFilteredByLanguage}} {{on "click" this.handleCommentListFilterToggled}} />
 
-            <EmberTooltip>
-              {{#if this.commentListIsFilteredByLanguage}}
-                You're currently viewing hints that are relevant to
-                {{@model.activeRepository.language.name}}. Turn this off to view hints for all languages.
-              {{else}}
-                You're currently viewing hints for all languages. Turn this on to filter hints that are relevant to
-                {{@model.activeRepository.language.name}}.
-              {{/if}}
-            </EmberTooltip>
-          </div>
-        {{/if}}
+              <EmberTooltip>
+                {{#if this.commentListIsFilteredByLanguage}}
+                  You're currently viewing hints that are relevant to
+                  {{@model.activeRepository.language.name}}. Turn this off to view hints for all languages.
+                {{else}}
+                  You're currently viewing hints for all languages. Turn this on to filter hints that are relevant to
+                  {{@model.activeRepository.language.name}}.
+                {{/if}}
+              </EmberTooltip>
+            </div>
+          {{/if}}
+        </div>
+
+        <CoursePage::CommentList
+          @courseStage={{@model.courseStage}}
+          @language={{@model.activeRepository.language}}
+          @shouldFilterByLanguage={{this.commentListIsFilteredByLanguage}}
+        />
       </div>
-
-      <CoursePage::CommentList
-        @courseStage={{@model.courseStage}}
-        @language={{@model.activeRepository.language}}
-        @shouldFilterByLanguage={{this.commentListIsFilteredByLanguage}}
-      />
     </div>
-  </div>
+  </CoursePage::CurrentStepCompleteOverlay>
 </CoursePage::PreviousStepsIncompleteOverlay>

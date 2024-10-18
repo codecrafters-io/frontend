@@ -14,7 +14,7 @@ interface Signature {
   Args: {
     courseStage: CourseStageModel;
     repository: RepositoryModel;
-    onSubmit: () => void;
+    onSubmit?: () => void;
   };
 }
 
@@ -103,7 +103,7 @@ export default class FeedbackPromptComponent extends Component<Signature> {
     this.feedbackSubmission!.status = 'closed';
 
     // Don't fire for editing submissions
-    if (!this.isEditingClosedSubmission) {
+    if (this.args.onSubmit && !this.isEditingClosedSubmission) {
       this.args.onSubmit();
     }
 

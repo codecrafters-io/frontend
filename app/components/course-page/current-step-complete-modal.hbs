@@ -4,11 +4,19 @@
     🎉&nbsp;&nbsp;{{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
   </div>
 
-  <div class="prose dark:prose-invert mb-8">
-    <p>
-      {{this.currentStep.completionNoticeMessage}}
-    </p>
-  </div>
+  {{#if this.shouldShowFeedbackPrompt}}
+    <CoursePage::CourseStageStep::FeedbackPrompt
+      @courseStage={{this.currentStepAsCourseStageStep.courseStage}}
+      @repository={{this.currentStepAsCourseStageStep.repository}}
+      class="mb-8"
+    />
+  {{else}}
+    <div class="prose dark:prose-invert mb-8">
+      <p>
+        {{this.currentStep.completionNoticeMessage}}
+      </p>
+    </div>
+  {{/if}}
 
   <div class="flex items-center gap-x-6 gap-y-4 flex-wrap">
     <PrimaryLinkButton
