@@ -34,7 +34,7 @@ export default class StepComponent extends Component<Signature> {
 
   @action
   handleDidUpdateIsComplete(_element: Signature['Element'], [newIsComplete]: [boolean]) {
-    if (this.args.isExpanded && this.previousIsComplete === false && newIsComplete === true) {
+    if (this.args.isExpanded && this.previousIsComplete != true && newIsComplete === true) {
       this.args.onCollapse();
     }
 
