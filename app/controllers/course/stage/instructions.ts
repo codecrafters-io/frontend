@@ -40,10 +40,6 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.courseStage.prerequisiteInstructionsMarkdownFor(this.model.activeRepository);
   }
 
-  get shouldShowFeedbackPrompt() {
-    return !this.currentStep.courseStage.isFirst && this.currentStep.status === 'complete';
-  }
-
   get shouldShowLanguageGuide() {
     return !this.model.courseStage.isFirst && this.authenticator.currentUser?.isStaff;
   }

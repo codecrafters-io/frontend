@@ -26,7 +26,7 @@ export default class StepContentComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   get shouldHideCompletionNotice(): boolean {
-    return this.args.step.type === 'IntroductionStep' || this.args.step.type === 'SetupStep';
+    return this.args.step.type === 'IntroductionStep' || this.args.step.type === 'SetupStep' || this.args.step.type === 'CourseStageStep';
   }
 
   get shouldShowPreviousStepsIncompleteModal(): boolean {
