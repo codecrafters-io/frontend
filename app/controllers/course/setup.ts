@@ -10,6 +10,6 @@ export default class CourseSetupController extends Controller {
   @service declare coursePageState: CoursePageStateService;
 
   get currentStep(): Step {
-    return this.coursePageState.activeStep as Step;
+    return this.coursePageState.currentStep as Step;
   }
 }

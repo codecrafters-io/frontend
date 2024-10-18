@@ -1,5 +1,5 @@
 <div class="flex-grow flex-shrink min-w-0" ...attributes>
-  {{#if @step.completionNoticeMessage}}
+  {{#if (and (not this.shouldHideCompletionNotice) @step.completionNoticeMessage)}}
     <CoursePage::CompletedStepNotice
       @step={{@step}}
       @repository={{@repository}}

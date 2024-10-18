@@ -134,7 +134,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await finishRender();
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
-    assert.ok(coursePage.completedStepNotice.isVisible, 'completed step notice is visible');
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
     await percySnapshot('Start Course - Git Push Received');
