@@ -25,7 +25,7 @@
             <span>View next step</span>
           {{/if}}
         {{else}}
-          <span>Back to current step</span>
+          <span>Back to current {{if (eq @activeStep.type "CourseStageStep") "stage" "step"}}</span>
         {{/if}}
 
         {{svg-jar "arrow-right" class="w-4 ml-1 fill-current flex-shrink-0"}}
