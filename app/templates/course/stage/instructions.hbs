@@ -1,5 +1,5 @@
 <CoursePage::PreviousStepsIncompleteOverlay @currentStep={{this.currentStep}}>
-  <div class="pt-6 pb-32 px-3 md:px-6 lg:px-10">
+  <div class="pt-6 pb-32 px-3 md:px-6 lg:px-10" {{did-update this.handleDidUpdateTestsStatus this.currentStep.testsStatus}}>
     {{#if this.shouldShowUpgradePrompt}}
       <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight="content" class="mb-6" />
     {{/if}}
@@ -17,6 +17,17 @@
       <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
     {{/if}}
 
+    {{#if (and this.shouldShowTestRunnerCard (eq this.currentStep.testsStatus "passed"))}}
+      <CoursePage::CourseStageStep::TestRunnerCard
+        class="mb-6"
+        id="test-runner-card"
+        @isCollapsible={{false}}
+        @repository={{@model.activeRepository}}
+        @stage={{@model.courseStage}}
+        {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+      />
+    {{/if}}
+
     {{#if @model.courseStage.isFirst}}
       <CoursePage::CourseStageStep::FirstStageTutorialCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
     {{/if}}
@@ -29,9 +40,11 @@
       />
     {{/if}}
 
-    {{#if this.shouldShowTestRunnerCard}}
+    {{#if (and this.shouldShowTestRunnerCard (not-eq this.currentStep.testsStatus "passed"))}}
       <div class="mb-6">
         <CoursePage::CourseStageStep::TestRunnerCard
+          {{! template-lint-disable no-duplicate-id }}
+          id="test-runner-card"
           @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
           @repository={{@model.activeRepository}}
           @stage={{@model.courseStage}}

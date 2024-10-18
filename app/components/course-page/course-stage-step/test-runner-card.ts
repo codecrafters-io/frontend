@@ -6,7 +6,6 @@ import { tracked } from '@glimmer/tracking';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -23,7 +22,6 @@ export default class TestRunnerCardComponent extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   @tracked wasExpandedByUser = false;
-  @tracked previousTestsStatus: string | null = null;
 
   get backgroundColorClasses() {
     if (this.isExpanded) {
@@ -80,23 +78,6 @@ export default class TestRunnerCardComponent extends Component<Signature> {
     next(() => {
       this.wasExpandedByUser = false;
     });
-  }
-
-  @action
-  handleDidUpdateTestsStatus(element: Signature['Element'], [newTestsStatus]: [CourseStageStep['testsStatus']]) {
-    if (newTestsStatus === this.previousTestsStatus) {
-      return;
-    }
-
-    if (newTestsStatus === 'evaluating') {
-      element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    if (newTestsStatus === 'passed') {
-      element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    this.previousTestsStatus = newTestsStatus;
   }
 
   @action
