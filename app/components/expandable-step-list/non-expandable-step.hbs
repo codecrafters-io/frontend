@@ -1,0 +1,15 @@
+<div class="py-2 px-1 cursor-not-allowed group/non-expandable-step relative" data-test-expandable-step-list-step ...attributes>
+  <div class="flex items-center justify-between gap-2">
+    <div class="prose dark:prose-invert opacity-25" data-test-step-title>
+      {{markdown-to-html (concat "**Step " @number "**: " @step.titleMarkdown)}}
+    </div>
+  </div>
+  <div
+    class="absolute inset-0 flex gap-1 items-center justify-center bg-white/70 dark:bg-gray-800/70 backdrop-blur-[3px] opacity-0 group-hover/non-expandable-step:opacity-100 transition-opacity"
+  >
+    {{svg-jar "information-circle" class="w-5 h-5 fill-current text-amber-500"}}
+    <div class="text-sm text-amber-500 font-semibold" data-test-step-title>
+      Complete previous step to expand this step
+    </div>
+  </div>
+</div>

@@ -27,6 +27,7 @@ module.exports = {
   theme: {
     colors: {
       // Build your palette here
+      amber: colors.amber,
       black: 'black',
       blue: colors.sky,
       current: 'currentColor',
