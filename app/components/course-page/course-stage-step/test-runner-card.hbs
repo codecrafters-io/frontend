@@ -3,7 +3,6 @@
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
-  {{did-update this.handleDidUpdateTestsStatus this.coursePageState.currentStepAsCourseStageStep.testsStatus}}
   data-test-test-runner-card
   ...attributes
 >
