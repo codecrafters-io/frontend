@@ -21,9 +21,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
       lastErrorMessage: null,
       lastSyncedAt: new Date(),
       newCommitSha: '1234567890',
-      newDefinitionFileContents: 'new contents',
       oldCommitSha: '0987654321',
-      oldDefinitionFileContents: 'old contents',
       status: 'pending',
       summary: 'test',
     });
@@ -49,9 +47,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
       lastErrorMessage: null,
       lastSyncedAt: new Date(),
       newCommitSha: '1234567890',
-      newDefinitionFileContents: 'new contents',
       oldCommitSha: '0987654321',
-      oldDefinitionFileContents: 'old contents',
       status: 'pending',
       summary: 'test [should_error]',
     });

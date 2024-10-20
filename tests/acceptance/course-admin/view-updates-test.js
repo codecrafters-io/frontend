@@ -32,9 +32,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
       lastErrorMessage: null,
       lastSyncedAt: new Date(2021, 1, 1),
       newCommitSha: '1234567890',
-      newDefinitionFileContents: 'new contents',
       oldCommitSha: '0987654321',
-      oldDefinitionFileContents: 'old contents',
       status: 'pending',
       summary: 'Update stage instructions',
     });
@@ -48,9 +46,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
       lastErrorMessage: null,
       lastSyncedAt: new Date(2020, 1, 1),
       newCommitSha: '1234567890',
-      newDefinitionFileContents: 'new contents',
       oldCommitSha: '0987654321',
-      oldDefinitionFileContents: 'old contents',
       status: 'applied',
       summary: 'Description update',
     });
@@ -78,9 +74,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
       lastErrorMessage: null,
       lastSyncedAt: new Date(),
       newCommitSha: '1234567890',
-      newDefinitionFileContents: 'new contents',
       oldCommitSha: '0987654321',
-      oldDefinitionFileContents: 'old contents',
       status: 'pending',
       summary: 'Update stage instructions',
     });
@@ -97,9 +91,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
       lastErrorMessage: null,
       lastSyncedAt: new Date(),
       newCommitSha: '1234567890',
-      newDefinitionFileContents: 'new contents',
       oldCommitSha: '0987654321',
-      oldDefinitionFileContents: 'old contents',
       status: 'applied',
       summary: 'Description update',
     });
