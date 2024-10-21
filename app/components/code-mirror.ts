@@ -56,14 +56,14 @@ type Argument = boolean | string | number | undefined | Extension | DocumentUpda
 type OptionHandler = (args: Signature['Args']['Named'], optionName?: string) => Extension[] | Promise<Extension[]>;
 
 const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
-  allowMultipleSelections: ({ allowMultipleSelections: enabled }) => [EditorState.allowMultipleSelections.of(!!enabled)],
+  allowMultipleSelections: ({ allowMultipleSelections }) => [EditorState.allowMultipleSelections.of(!!allowMultipleSelections)],
   autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
   bracketMatching: ({ bracketMatching: enabled }) => (enabled ? [bracketMatching()] : []),
   closeBrackets: ({ closeBrackets: enabled }) => (enabled ? [closeBrackets(), keymap.of(closeBracketsKeymap)] : []),
   crosshairCursor: ({ crosshairCursor: enabled }) => (enabled ? [crosshairCursor()] : []),
   drawSelection: ({ drawSelection: enabled }) => (enabled ? [drawSelection()] : []),
   dropCursor: ({ dropCursor: enabled }) => (enabled ? [dropCursor()] : []),
-  editable: ({ editable: enabled }) => [EditorView.editable.of(!!enabled)],
+  editable: ({ editable }) => [EditorView.editable.of(!!editable)],
   highlightActiveLine: ({ highlightActiveLine: enabled }) => (enabled ? [highlightActiveLine(), highlightActiveLineGutter()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
@@ -84,14 +84,14 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
         ]
       : [],
   lineSeparator: ({ lineSeparator: lineSeparatorText }) => (lineSeparatorText !== undefined ? [EditorState.lineSeparator.of(lineSeparatorText)] : []),
-  lineWrapping: ({ lineWrapping: enabled }) => (enabled ? [EditorView.lineWrapping] : []),
+  lineWrapping: ({ lineWrapping }) => (lineWrapping ? [EditorView.lineWrapping] : []),
   placeholder: ({ placeholder: placeholderText }) => (placeholderText !== undefined ? [placeholder(placeholderText)] : []),
-  readOnly: ({ readOnly: enabled }) => [EditorState.readOnly.of(!!enabled)],
+  readOnly: ({ readOnly }) => [EditorState.readOnly.of(!!readOnly)],
   rectangularSelection: ({ rectangularSelection: enabled }) => (enabled ? [rectangularSelection()] : []),
   scrollPastEnd: ({ scrollPastEnd: enabled }) => (enabled ? [scrollPastEnd()] : []),
   syntaxHighlighting: ({ syntaxHighlighting: enabled }) => (enabled ? [syntaxHighlighting(defaultHighlightStyle, { fallback: true })] : []),
-  tabSize: ({ tabSize: tabSize }) => (tabSize !== undefined ? [EditorState.tabSize.of(tabSize)] : []),
-  theme: ({ theme: theme }) => (theme !== undefined ? [theme] : []),
+  tabSize: ({ tabSize }) => (tabSize !== undefined ? [EditorState.tabSize.of(tabSize)] : []),
+  theme: ({ theme }) => (theme !== undefined ? [theme] : []),
   languageOrFilename: async ({ language, filename }) => {
     const detectedLanguage = language
       ? LanguageDescription.matchLanguageName(languages, language)
