@@ -57,6 +57,7 @@ const OPTION_DEFAULTS = {
   selectedTabSizeIndex: 2,
   selectedThemeIndex: SUPPORTED_THEMES.indexOf(DEFAULT_THEME),
   syntaxHighlighting: true,
+  syntaxHighlightDeletions: true,
   tabSize: true,
   theme: true,
 };
@@ -128,6 +129,7 @@ export default class DemoCodeMirrorController extends Controller {
     'selectedTabSizeIndex',
     'selectedThemeIndex',
     'syntaxHighlighting',
+    'syntaxHighlightDeletions',
     'tabSize',
     'theme',
   ];
@@ -275,6 +277,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked rectangularSelection = OPTION_DEFAULTS.rectangularSelection;
   @tracked scrollPastEnd = OPTION_DEFAULTS.scrollPastEnd;
   @tracked syntaxHighlighting = OPTION_DEFAULTS.syntaxHighlighting;
+  @tracked syntaxHighlightDeletions = OPTION_DEFAULTS.syntaxHighlightDeletions;
   @tracked tabSize = OPTION_DEFAULTS.tabSize;
   @tracked theme = OPTION_DEFAULTS.theme;
 

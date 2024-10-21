@@ -114,7 +114,14 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
 
     return loadedLanguage ? [loadedLanguage] : [];
   },
-  originalDocumentOrDiffRelatedOption: ({ originalDocument, mergeControls, collapseUnchanged, highlightChanges }) => {
+  originalDocumentOrDiffRelatedOption: ({
+    originalDocument,
+    mergeControls,
+    collapseUnchanged,
+    highlightChanges,
+    syntaxHighlighting,
+    syntaxHighlightDeletions,
+  }) => {
     return originalDocument
       ? [
           unifiedMergeView({
@@ -122,7 +129,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
             mergeControls: !!mergeControls,
             collapseUnchanged: collapseUnchanged ? { margin: 3, minSize: 4 } : undefined,
             highlightChanges: !!highlightChanges,
-            syntaxHighlightDeletions: true,
+            syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
           }),
         ]
       : [];
@@ -283,6 +290,10 @@ export interface Signature {
        * Enable syntax highlighting (using a theme enables syntax highlighting automatically)
        */
       syntaxHighlighting?: boolean;
+      /**
+       * Enable syntax highlighting in the deleted chunks of the diff
+       */
+      syntaxHighlightDeletions?: boolean;
     };
   };
   Blocks: { default?: [] };
@@ -340,6 +351,20 @@ export default class CodeMirrorComponent extends Component<Signature> {
         .get(optionName)
         ?.reconfigure(OPTION_HANDLERS[optionName] ? await OPTION_HANDLERS[optionName](this.args, optionName) : []),
     });
+
+    // When syntaxHighlighting changes - reload the diff compartment to also re-configure syntaxHighlightDeletions
+    if (optionName === 'syntaxHighlighting') {
+      this.renderedView.dispatch({
+        effects: this.compartments.get('originalDocumentOrDiffRelatedOption')?.reconfigure([]),
+      });
+      this.renderedView.dispatch({
+        effects: this.compartments
+          .get('originalDocumentOrDiffRelatedOption')
+          ?.reconfigure(
+            OPTION_HANDLERS['originalDocumentOrDiffRelatedOption'] ? await OPTION_HANDLERS['originalDocumentOrDiffRelatedOption'](this.args) : [],
+          ),
+      });
+    }
 
     // When lineSeparator changes - completely reload the document to avoid any side-effects
     if (optionName === 'lineSeparator') {

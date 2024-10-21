@@ -223,6 +223,10 @@
       <Input @type="checkbox" @checked={{this.highlightChanges}} disabled={{not this.originalDocument}} />
       <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">highlightChanges</span>
     </label>
+    <label class="{{labelClasses}}" title="Enable syntax highlighting in the deleted chunks of the diff">
+      <Input @type="checkbox" @checked={{this.syntaxHighlightDeletions}} disabled={{or (not this.originalDocument) (not this.syntaxHighlighting)}} />
+      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">syntaxHighlightDeletions</span>
+    </label>
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
@@ -299,6 +303,7 @@
   @rectangularSelection={{this.rectangularSelection}}
   @scrollPastEnd={{this.scrollPastEnd}}
   @syntaxHighlighting={{this.syntaxHighlighting}}
+  @syntaxHighlightDeletions={{this.syntaxHighlightDeletions}}
   {{! Element classes }}
   class="block overflow-auto mt-4 max-h-96 {{if this.outline 'outline outline-dotted outline-gray-200 dark:outline-gray-700'}}"
 />

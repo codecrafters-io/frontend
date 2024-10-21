@@ -41,6 +41,7 @@ const QUERY_PARAMS = [
   'selectedTabSizeIndex',
   'selectedThemeIndex',
   'syntaxHighlighting',
+  'syntaxHighlightDeletions',
   'tabSize',
   'theme',
 ];
