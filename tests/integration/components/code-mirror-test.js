@@ -507,5 +507,29 @@ module('Integration | Component | code-mirror', function (hooks) {
 
       skip('it does something useful with the editor');
     });
+
+    module('unchangedMargin', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('unchangedMargin', 3);
+        await render(hbs`<CodeMirror @unchangedMargin={{this.unchangedMargin}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('unchangedMargin', 4);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
+    module('unchangedMinSize', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('unchangedMinSize', 5);
+        await render(hbs`<CodeMirror @unchangedMinSize={{this.unchangedMinSize}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('unchangedMinSize', 6);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
   });
 });

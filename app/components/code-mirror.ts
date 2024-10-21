@@ -121,13 +121,15 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
     highlightChanges,
     syntaxHighlighting,
     syntaxHighlightDeletions,
+    unchangedMargin = 3,
+    unchangedMinSize = 4,
   }) => {
     return originalDocument
       ? [
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            collapseUnchanged: collapseUnchanged ? { margin: 3, minSize: 4 } : undefined,
+            collapseUnchanged: collapseUnchanged ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
           }),
@@ -294,6 +296,14 @@ export interface Signature {
        * Enable syntax highlighting in the deleted chunks of the diff
        */
       syntaxHighlightDeletions?: boolean;
+      /**
+       * Number of lines to leave visible after/before a change before collapsing unchanged lines
+       */
+      unchangedMargin?: number;
+      /**
+       * Minimum number of collapsible lines required to be present for collapsing unchanged lines
+       */
+      unchangedMinSize?: number;
     };
   };
   Blocks: { default?: [] };

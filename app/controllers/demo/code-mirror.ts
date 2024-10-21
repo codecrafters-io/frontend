@@ -56,10 +56,14 @@ const OPTION_DEFAULTS = {
   selectedLineSeparatorIndex: 1,
   selectedTabSizeIndex: 2,
   selectedThemeIndex: SUPPORTED_THEMES.indexOf(DEFAULT_THEME),
+  selectedUnchangedMarginIndex: 2,
+  selectedUnchangedMinSizeIndex: 3,
   syntaxHighlighting: true,
   syntaxHighlightDeletions: true,
   tabSize: true,
   theme: true,
+  unchangedMargin: true,
+  unchangedMinSize: true,
 };
 
 class ExampleDocument {
@@ -128,10 +132,14 @@ export default class DemoCodeMirrorController extends Controller {
     'selectedLineSeparatorIndex',
     'selectedTabSizeIndex',
     'selectedThemeIndex',
+    'selectedUnchangedMarginIndex',
+    'selectedUnchangedMinSizeIndex',
     'syntaxHighlighting',
     'syntaxHighlightDeletions',
     'tabSize',
     'theme',
+    'unchangedMargin',
+    'unchangedMinSize',
   ];
 
   @tracked placeholderMessage = 'Welcome to CodeCrafters test zone for CodeMirror! Start editing the document here...';
@@ -205,11 +213,16 @@ export default class DemoCodeMirrorController extends Controller {
 
   @tracked themes = [...SUPPORTED_THEMES];
 
+  @tracked unchangedMargins = [1, 2, 3, 4, 5, 8, 16];
+  @tracked unchangedMinSizes = [1, 2, 3, 4, 5, 8, 16];
+
   @tracked selectedDocumentIndex = OPTION_DEFAULTS.selectedDocumentIndex;
   @tracked selectedIndentUnitIndex = OPTION_DEFAULTS.selectedIndentUnitIndex;
   @tracked selectedLineSeparatorIndex = OPTION_DEFAULTS.selectedLineSeparatorIndex;
   @tracked selectedTabSizeIndex = OPTION_DEFAULTS.selectedTabSizeIndex;
   @tracked selectedThemeIndex = OPTION_DEFAULTS.selectedThemeIndex;
+  @tracked selectedUnchangedMarginIndex = OPTION_DEFAULTS.selectedUnchangedMarginIndex;
+  @tracked selectedUnchangedMinSizeIndex = OPTION_DEFAULTS.selectedUnchangedMinSizeIndex;
 
   get selectedDocument() {
     return this.documents[this.selectedDocumentIndex];
@@ -239,6 +252,14 @@ export default class DemoCodeMirrorController extends Controller {
     };
 
     return theme !== undefined ? themeMap[theme] : undefined;
+  }
+
+  get selectedUnchangedMargin() {
+    return this.unchangedMargins[this.selectedUnchangedMarginIndex];
+  }
+
+  get selectedUnchangedMinSize() {
+    return this.unchangedMinSizes[this.selectedUnchangedMinSizeIndex];
   }
 
   @tracked outline = OPTION_DEFAULTS.outline;
@@ -280,6 +301,8 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked syntaxHighlightDeletions = OPTION_DEFAULTS.syntaxHighlightDeletions;
   @tracked tabSize = OPTION_DEFAULTS.tabSize;
   @tracked theme = OPTION_DEFAULTS.theme;
+  @tracked unchangedMargin = OPTION_DEFAULTS.unchangedMargin;
+  @tracked unchangedMinSize = OPTION_DEFAULTS.unchangedMinSize;
 
   @action documentDidChange(_target: Controller, newValue: string) {
     if (!this.document) {
@@ -318,5 +341,15 @@ export default class DemoCodeMirrorController extends Controller {
   @action selectedThemeIndexDidChange(event: Event) {
     const target: HTMLSelectElement = event.target as HTMLSelectElement;
     this.selectedThemeIndex = target.selectedIndex;
+  }
+
+  @action selectedUnchangedMarginIndexDidChange(event: Event) {
+    const target: HTMLSelectElement = event.target as HTMLSelectElement;
+    this.selectedUnchangedMarginIndex = target.selectedIndex;
+  }
+
+  @action selectedUnchangedMinSizeIndexDidChange(event: Event) {
+    const target: HTMLSelectElement = event.target as HTMLSelectElement;
+    this.selectedUnchangedMinSizeIndex = target.selectedIndex;
   }
 }

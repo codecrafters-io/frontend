@@ -40,10 +40,14 @@ const QUERY_PARAMS = [
   'selectedLineSeparatorIndex',
   'selectedTabSizeIndex',
   'selectedThemeIndex',
+  'selectedUnchangedMarginIndex',
+  'selectedUnchangedMinSizeIndex',
   'syntaxHighlighting',
   'syntaxHighlightDeletions',
   'tabSize',
   'theme',
+  'unchangedMargin',
+  'unchangedMinSize',
 ];
 
 interface QueryParamOptions {
