@@ -17,7 +17,7 @@ import {
   rectangularSelection,
   scrollPastEnd,
 } from '@codemirror/view';
-import { Compartment, EditorState, type Extension } from '@codemirror/state';
+import { Compartment, EditorState, type Extension, type TransactionSpec } from '@codemirror/state';
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { highlightSelectionMatches } from '@codemirror/search';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
@@ -49,7 +49,94 @@ enum FoldGutterIcon {
   Collapsed = '<svg aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display: inline-block; user-select: none; vertical-align: text-bottom; overflow: visible; cursor: pointer;"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path></svg>',
 }
 
-type Argument = boolean | string | number | Extension | ((newValue: string) => void) | undefined;
+type DocumentUpdateCallback = (newValue: string) => void;
+
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback;
+
+type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
+
+const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
+  allowMultipleSelections: ({ allowMultipleSelections }) => [EditorState.allowMultipleSelections.of(!!allowMultipleSelections)],
+  autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
+  bracketMatching: ({ bracketMatching: enabled }) => (enabled ? [bracketMatching()] : []),
+  closeBrackets: ({ closeBrackets: enabled }) => (enabled ? [closeBrackets(), keymap.of(closeBracketsKeymap)] : []),
+  crosshairCursor: ({ crosshairCursor: enabled }) => (enabled ? [crosshairCursor()] : []),
+  drawSelection: ({ drawSelection: enabled }) => (enabled ? [drawSelection()] : []),
+  dropCursor: ({ dropCursor: enabled }) => (enabled ? [dropCursor()] : []),
+  editable: ({ editable }) => [EditorView.editable.of(!!editable)],
+  highlightActiveLine: ({ highlightActiveLine: enabled }) => (enabled ? [highlightActiveLine(), highlightActiveLineGutter()] : []),
+  highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
+  highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
+  highlightTrailingWhitespace: ({ highlightTrailingWhitespace: enabled }) => (enabled ? [highlightTrailingWhitespace()] : []),
+  highlightWhitespace: ({ highlightWhitespace: enabled }) => (enabled ? [highlightWhitespace()] : []),
+  history: ({ history: enabled }) => (enabled ? [history(), keymap.of(historyKeymap)] : []),
+  indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
+  indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
+  indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
+  lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
+  foldGutter: ({ foldGutter: enabled }) =>
+    enabled
+      ? [
+          foldGutter({
+            markerDOM: (open) => generateHTMLElement(open ? FoldGutterIcon.Expanded : FoldGutterIcon.Collapsed),
+          }),
+          keymap.of(foldKeymap),
+        ]
+      : [],
+  lineSeparator: ({ lineSeparator: lineSeparatorText }) => (lineSeparatorText !== undefined ? [EditorState.lineSeparator.of(lineSeparatorText)] : []),
+  lineWrapping: ({ lineWrapping }) => (lineWrapping ? [EditorView.lineWrapping] : []),
+  placeholder: ({ placeholder: placeholderText }) => (placeholderText !== undefined ? [placeholder(placeholderText)] : []),
+  readOnly: ({ readOnly }) => [EditorState.readOnly.of(!!readOnly)],
+  rectangularSelection: ({ rectangularSelection: enabled }) => (enabled ? [rectangularSelection()] : []),
+  scrollPastEnd: ({ scrollPastEnd: enabled }) => (enabled ? [scrollPastEnd()] : []),
+  syntaxHighlighting: ({ syntaxHighlighting: enabled }) => (enabled ? [syntaxHighlighting(defaultHighlightStyle, { fallback: true })] : []),
+  tabSize: ({ tabSize }) => (tabSize !== undefined ? [EditorState.tabSize.of(tabSize)] : []),
+  theme: ({ theme }) => (theme !== undefined ? [theme] : []),
+  languageOrFilename: async ({ language, filename }) => {
+    const detectedLanguage = language
+      ? LanguageDescription.matchLanguageName(languages, language)
+      : filename
+        ? LanguageDescription.matchFilename(languages, filename)
+        : undefined;
+
+    let loadedLanguage: Language | LanguageSupport | undefined;
+
+    if (detectedLanguage) {
+      switch (detectedLanguage.name.toLowerCase()) {
+        case 'markdown':
+          loadedLanguage = markdown({ codeLanguages: languages });
+          break;
+        default:
+          loadedLanguage = await detectedLanguage.load();
+          break;
+      }
+    }
+
+    return loadedLanguage ? [loadedLanguage] : [];
+  },
+  originalDocumentOrDiffRelatedOption: ({
+    originalDocument,
+    mergeControls,
+    collapseUnchanged,
+    highlightChanges,
+    syntaxHighlighting,
+    syntaxHighlightDeletions,
+    unchangedMargin = 3,
+    unchangedMinSize = 4,
+  }) => {
+    return originalDocument
+      ? [
+          unifiedMergeView({
+            original: originalDocument,
+            mergeControls: !!mergeControls,
+            collapseUnchanged: collapseUnchanged ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
+            highlightChanges: !!highlightChanges,
+            syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
+          }),
+        ]
+      : [];
+  },
+};
 
 export interface Signature {
   Element: Element;
@@ -64,7 +151,7 @@ export interface Signature {
        * Function to call when document is edited inside the editor
        * @param newValue string New value of the document
        */
-      onDocumentUpdate?: (newValue: string) => void;
+      onDocumentUpdate?: DocumentUpdateCallback;
       /**
        * Pass a filename to automatically detect language based on file name and extension
        */
@@ -138,6 +225,10 @@ export interface Signature {
        */
       highlightActiveLine?: boolean;
       /**
+       * Enable inline highlighting of changes in the diff
+       */
+      highlightChanges?: boolean;
+      /**
        * Enable highlighting of current selection matches in the document
        */
       highlightSelectionMatches?: boolean;
@@ -201,147 +292,45 @@ export interface Signature {
        * Enable syntax highlighting (using a theme enables syntax highlighting automatically)
        */
       syntaxHighlighting?: boolean;
+      /**
+       * Enable syntax highlighting in the deleted chunks of the diff
+       */
+      syntaxHighlightDeletions?: boolean;
+      /**
+       * Number of lines to leave visible after/before a change before collapsing unchanged lines
+       */
+      unchangedMargin?: number;
+      /**
+       * Minimum number of collapsible lines required to be present for collapsing unchanged lines
+       */
+      unchangedMinSize?: number;
     };
   };
   Blocks: { default?: [] };
 }
-
-type OptionHandler = (newValue: undefined, args: Signature['Args']['Named'], changedOptionName?: string) => Extension[] | Promise<Extension[]>;
-
-export interface OptionHandlersSignature {
-  [key: string]: OptionHandler;
-  allowMultipleSelections: (enabled?: boolean) => Extension[];
-  autocompletion: (enabled?: boolean) => Extension[];
-  bracketMatching: (enabled?: boolean) => Extension[];
-  closeBrackets: (enabled?: boolean) => Extension[];
-  crosshairCursor: (enabled?: boolean) => Extension[];
-  drawSelection: (enabled?: boolean) => Extension[];
-  dropCursor: (enabled?: boolean) => Extension[];
-  editable: (enabled?: boolean) => Extension[];
-  foldGutter: (enabled?: boolean) => Extension[];
-  highlightActiveLine: (enabled?: boolean) => Extension[];
-  highlightSelectionMatches: (enabled?: boolean) => Extension[];
-  highlightSpecialChars: (enabled?: boolean) => Extension[];
-  highlightTrailingWhitespace: (enabled?: boolean) => Extension[];
-  highlightWhitespace: (enabled?: boolean) => Extension[];
-  history: (enabled?: boolean) => Extension[];
-  indentOnInput: (enabled?: boolean) => Extension[];
-  indentUnit: (indentUnitText?: string) => Extension[];
-  indentWithTab: (enabled?: boolean) => Extension[];
-  lineNumbers: (enabled?: boolean) => Extension[];
-  lineSeparator: (lineSeparatorText?: string) => Extension[];
-  lineWrapping: (enabled?: boolean) => Extension[];
-  placeholder: (placeholderText?: string) => Extension[];
-  readOnly: (enabled?: boolean) => Extension[];
-  rectangularSelection: (enabled?: boolean) => Extension[];
-  scrollPastEnd: (enabled?: boolean) => Extension[];
-  syntaxHighlighting: (enabled?: boolean) => Extension[];
-  tabSize: (tabSize?: number) => Extension[];
-  theme: (theme?: Extension) => Extension[];
-  languageOrFilename: (newValue: string | undefined, args: Signature['Args']['Named'], changedOptionName?: string) => Promise<Extension[]>;
-  originalDocumentOrMergeControlsOrCollapseUnchanged: (
-    newValue: string | boolean | undefined,
-    args: Signature['Args']['Named'],
-    changedOptionName?: string,
-  ) => Extension[];
-}
-
-const OPTION_HANDLERS: OptionHandlersSignature = {
-  allowMultipleSelections: (enabled) => [EditorState.allowMultipleSelections.of(!!enabled)],
-  autocompletion: (enabled) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
-  bracketMatching: (enabled) => (enabled ? [bracketMatching()] : []),
-  closeBrackets: (enabled) => (enabled ? [closeBrackets(), keymap.of(closeBracketsKeymap)] : []),
-  crosshairCursor: (enabled) => (enabled ? [crosshairCursor()] : []),
-  drawSelection: (enabled) => (enabled ? [drawSelection()] : []),
-  dropCursor: (enabled) => (enabled ? [dropCursor()] : []),
-  editable: (enabled) => [EditorView.editable.of(!!enabled)],
-  highlightActiveLine: (enabled) => (enabled ? [highlightActiveLine(), highlightActiveLineGutter()] : []),
-  highlightSelectionMatches: (enabled) => (enabled ? [highlightSelectionMatches()] : []),
-  highlightSpecialChars: (enabled) => (enabled ? [highlightSpecialChars()] : []),
-  highlightTrailingWhitespace: (enabled) => (enabled ? [highlightTrailingWhitespace()] : []),
-  highlightWhitespace: (enabled) => (enabled ? [highlightWhitespace()] : []),
-  history: (enabled) => (enabled ? [history(), keymap.of(historyKeymap)] : []),
-  indentOnInput: (enabled) => (enabled ? [indentOnInput()] : []),
-  indentUnit: (indentUnitText) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
-  indentWithTab: (enabled) => (enabled ? [keymap.of([indentWithTab])] : []),
-  lineNumbers: (enabled) => (enabled ? [lineNumbers()] : []),
-  foldGutter: (enabled) =>
-    enabled
-      ? [
-          foldGutter({
-            markerDOM: (open) => generateHTMLElement(open ? FoldGutterIcon.Expanded : FoldGutterIcon.Collapsed),
-          }),
-          keymap.of(foldKeymap),
-        ]
-      : [],
-  lineSeparator: (lineSeparatorText) => (lineSeparatorText !== undefined ? [EditorState.lineSeparator.of(lineSeparatorText)] : []),
-  lineWrapping: (enabled) => (enabled ? [EditorView.lineWrapping] : []),
-  placeholder: (placeholderText) => (placeholderText !== undefined ? [placeholder(placeholderText)] : []),
-  readOnly: (enabled) => [EditorState.readOnly.of(!!enabled)],
-  rectangularSelection: (enabled) => (enabled ? [rectangularSelection()] : []),
-  scrollPastEnd: (enabled) => (enabled ? [scrollPastEnd()] : []),
-  syntaxHighlighting: (enabled) => (enabled ? [syntaxHighlighting(defaultHighlightStyle, { fallback: true })] : []),
-  tabSize: (tabSize) => (tabSize !== undefined ? [EditorState.tabSize.of(tabSize)] : []),
-  theme: (theme) => (theme !== undefined ? [theme] : []),
-  languageOrFilename: async (_newValue, { language, filename }) => {
-    const detectedLanguage = language
-      ? LanguageDescription.matchLanguageName(languages, language)
-      : filename
-        ? LanguageDescription.matchFilename(languages, filename)
-        : undefined;
-
-    let loadedLanguage: Language | LanguageSupport | undefined;
-
-    if (detectedLanguage) {
-      switch (detectedLanguage.name.toLowerCase()) {
-        case 'markdown':
-          loadedLanguage = markdown({ codeLanguages: languages });
-          break;
-        default:
-          loadedLanguage = await detectedLanguage.load();
-          break;
-      }
-    }
-
-    return loadedLanguage ? [loadedLanguage] : [];
-  },
-  originalDocumentOrMergeControlsOrCollapseUnchanged: (_newValue, { originalDocument, mergeControls, collapseUnchanged }) => {
-    return originalDocument
-      ? [
-          unifiedMergeView({
-            original: originalDocument,
-            mergeControls: !!mergeControls,
-            collapseUnchanged: collapseUnchanged ? { margin: 3, minSize: 4 } : undefined,
-            highlightChanges: false,
-            syntaxHighlightDeletions: true,
-          }),
-        ]
-      : [];
-  },
-};
 
 export default class CodeMirrorComponent extends Component<Signature> {
   renderedView: EditorView | null = null;
 
   compartments: Map<string, Compartment> = new Map(Object.keys(OPTION_HANDLERS).map((optionName) => [optionName, new Compartment()]));
 
-  @action documentDidChange(_element: Element, [newValue]: [string | undefined]) {
-    const documentChanged = this.renderedView?.state.doc.toString() !== newValue;
-
-    if (!documentChanged || !this.renderedView) {
+  @action
+  @waitFor
+  async documentDidChange(_element: Element, [newValue]: [string | undefined]) {
+    if (!this.renderedView || this.renderedView.state.doc.toString() === newValue) {
       return;
     }
 
     if (this.args.history && !this.args.preserveHistory) {
-      this.renderedView.dispatch({
-        effects: this.compartments.get('history')?.reconfigure([]),
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('history'),
       });
-      this.renderedView.dispatch({
-        effects: this.compartments.get('history')?.reconfigure(OPTION_HANDLERS.history(this.args.history)),
+      this.#updateRenderedView({
+        effects: await this.#updateCompartment('history'),
       });
     }
 
-    this.renderedView.dispatch(
+    this.#updateRenderedView(
       this.renderedView.state.update({
         changes: {
           from: 0,
@@ -354,25 +343,37 @@ export default class CodeMirrorComponent extends Component<Signature> {
 
   @action
   @waitFor
-  async optionDidChange(optionName: string, _element: Element, [newValue]: [boolean | string | number | Extension | undefined]) {
-    const compartment = this.compartments.get(optionName);
-    const handlerMethod = OPTION_HANDLERS[optionName];
+  async optionDidChange(_element: Element, [optionName, _monitoredProperty]: [string, unknown]) {
+    if (!this.renderedView) {
+      return;
+    }
 
-    // some compartments need to be unloaded before new changes are applied
-    if (['originalDocumentOrMergeControlsOrCollapseUnchanged'].includes(optionName)) {
-      this.renderedView?.dispatch({
-        effects: compartment?.reconfigure([]),
+    // When originalDocument changes - completely unload the diff compartment to avoid any side-effects
+    if (optionName === 'originalDocumentOrDiffRelatedOption') {
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
       });
     }
 
-    this.renderedView?.dispatch({
-      effects: compartment?.reconfigure(handlerMethod ? await handlerMethod(newValue as undefined, this.args, optionName) : []),
+    // Reconfigure the changed compartment with new options and dispatch new effects to the view
+    this.#updateRenderedView({
+      effects: await this.#updateCompartment(optionName),
     });
 
-    // some options need the document to be re-loaded after being applied
-    if (['lineSeparator'].includes(optionName)) {
-      this.renderedView?.dispatch(
-        this.renderedView?.state.update({
+    // When syntaxHighlighting changes - reload the diff compartment to also re-configure syntaxHighlightDeletions
+    if (optionName === 'syntaxHighlighting') {
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
+      });
+      this.#updateRenderedView({
+        effects: await this.#updateCompartment('originalDocumentOrDiffRelatedOption'),
+      });
+    }
+
+    // When lineSeparator changes - completely reload the document to avoid any side-effects
+    if (optionName === 'lineSeparator') {
+      this.#updateRenderedView(
+        this.renderedView.state.update({
           changes: {
             from: 0,
             to: this.renderedView.state.doc.length,
@@ -394,10 +395,7 @@ export default class CodeMirrorComponent extends Component<Signature> {
 
         ...(await Promise.all(
           Object.keys(OPTION_HANDLERS).map(async (optionName) => {
-            const compartment = this.compartments.get(optionName) || new Compartment();
-            const handlerMethod = OPTION_HANDLERS[optionName];
-
-            return compartment.of(handlerMethod ? await handlerMethod(this.args[optionName] as undefined, this.args) : []);
+            return this.compartments.get(optionName)?.of(OPTION_HANDLERS[optionName] ? await OPTION_HANDLERS[optionName](this.args) : []) || [];
           }),
         )),
 
@@ -408,6 +406,18 @@ export default class CodeMirrorComponent extends Component<Signature> {
         }),
       ],
     });
+  }
+
+  #resetCompartment(key: string) {
+    return this.compartments.get(key)?.reconfigure([]);
+  }
+
+  async #updateCompartment(key: string) {
+    return this.compartments.get(key)?.reconfigure(OPTION_HANDLERS[key] ? await OPTION_HANDLERS[key](this.args) : []);
+  }
+
+  #updateRenderedView(...specs: TransactionSpec[]) {
+    return this.renderedView?.dispatch(...specs);
   }
 }
 

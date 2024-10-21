@@ -14,6 +14,7 @@ const QUERY_PARAMS = [
   'filename',
   'foldGutter',
   'highlightActiveLine',
+  'highlightChanges',
   'highlightSelectionMatches',
   'highlightSpecialChars',
   'highlightTrailingWhitespace',
@@ -39,9 +40,14 @@ const QUERY_PARAMS = [
   'selectedLineSeparatorIndex',
   'selectedTabSizeIndex',
   'selectedThemeIndex',
+  'selectedUnchangedMarginIndex',
+  'selectedUnchangedMinSizeIndex',
   'syntaxHighlighting',
+  'syntaxHighlightDeletions',
   'tabSize',
   'theme',
+  'unchangedMargin',
+  'unchangedMinSize',
 ];
 
 interface QueryParamOptions {

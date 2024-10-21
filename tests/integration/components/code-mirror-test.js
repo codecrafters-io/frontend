@@ -206,6 +206,18 @@ module('Integration | Component | code-mirror', function (hooks) {
       skip('it does something useful with the editor');
     });
 
+    module('highlightChanges', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('highlightChanges', true);
+        await render(hbs`<CodeMirror @highlightChanges={{this.highlightChanges}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('highlightChanges', false);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('highlightSelectionMatches', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightSelectionMatches', true);
@@ -460,6 +472,18 @@ module('Integration | Component | code-mirror', function (hooks) {
       skip('it does something useful with the editor');
     });
 
+    module('syntaxHighlightDeletions', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('syntaxHighlightDeletions', true);
+        await render(hbs`<CodeMirror @syntaxHighlightDeletions={{this.syntaxHighlightDeletions}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('syntaxHighlightDeletions', false);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('tabSize', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('tabSize', 2);
@@ -478,6 +502,30 @@ module('Integration | Component | code-mirror', function (hooks) {
         await render(hbs`<CodeMirror @theme={{this.theme}} />`);
         assert.ok(codeMirror.hasRendered);
         this.set('theme', codeCraftersDark);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
+    module('unchangedMargin', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('unchangedMargin', 3);
+        await render(hbs`<CodeMirror @unchangedMargin={{this.unchangedMargin}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('unchangedMargin', 4);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
+    module('unchangedMinSize', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('unchangedMinSize', 5);
+        await render(hbs`<CodeMirror @unchangedMinSize={{this.unchangedMinSize}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('unchangedMinSize', 6);
         assert.ok(codeMirror.hasRendered);
       });
 

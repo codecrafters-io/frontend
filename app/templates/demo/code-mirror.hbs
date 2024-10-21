@@ -99,15 +99,60 @@
         <Input @type="checkbox" @checked={{this.filename}} disabled={{eq this.language true}} />
         <span class="ml-2 {{if this.language 'text-gray-300'}}">filename</span>
       </label>
-      <label class="{{labelClasses}}" title="Enable unified diff editor by passing the original document">
-        <Input @type="checkbox" @checked={{this.originalDocument}} />
-        <span class="ml-2">originalDocument</span>
-      </label>
     </codemirror-options-left>
     <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Placeholder text to show when document is empty or not passed">
         <Input @type="checkbox" @checked={{this.placeholder}} />
         <span class="ml-2">placeholder</span>
+      </label>
+    </codemirror-options-right>
+  </codemirror-options>
+
+  <codemirror-options class="{{groupClasses}} border-dotted">
+    <codemirror-options-left class="flex flex-grow flex-wrap">
+      <label class="{{labelClasses}}" title="Enable unified diff editor by passing the original document">
+        <Input @type="checkbox" @checked={{this.originalDocument}} />
+        <span class="ml-2">originalDocument</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable showing accept/reject buttons in the diff editor">
+        <Input @type="checkbox" @checked={{this.mergeControls}} disabled={{not this.originalDocument}} />
+        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable collapsing unchanged lines in the diff editor">
+        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{not this.originalDocument}} />
+        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">collapseUnchanged</span>
+      </label>
+    </codemirror-options-left>
+    <codemirror-options-right class="flex flex-wrap">
+      <label class="{{labelClasses}}" title="Number of lines to leave visible after/before a change before collapsing unchanged lines">
+        {{#let (not (and this.originalDocument this.collapseUnchanged)) as |isDisabled|}}
+          <Input @type="checkbox" @checked={{this.unchangedMargin}} disabled={{isDisabled}} />
+          <span class="mx-2 {{if isDisabled 'text-gray-300'}}">unchangedMargin:</span>
+          <select
+            class="text-right dark:bg-gray-700 {{if (or isDisabled (not this.unchangedMargin)) 'bg-gray-200'}}"
+            {{on "change" this.selectedUnchangedMarginIndexDidChange}}
+            disabled={{or isDisabled (not this.unchangedMargin)}}
+          >
+            {{#each this.unchangedMargins as |unchangedMargin index|}}
+              <option selected={{eq this.selectedUnchangedMarginIndex index}}>{{unchangedMargin}}</option>
+            {{/each}}
+          </select>
+        {{/let}}
+      </label>
+      <label class="{{labelClasses}}" title="Minimum number of collapsible lines required to be present for collapsing unchanged lines">
+        {{#let (not (and this.originalDocument this.collapseUnchanged)) as |isDisabled|}}
+          <Input @type="checkbox" @checked={{this.unchangedMinSize}} disabled={{isDisabled}} />
+          <span class="mx-2 {{if isDisabled 'text-gray-300'}}">unchangedMinSize:</span>
+          <select
+            class="text-right dark:bg-gray-700 {{if (or isDisabled (not this.unchangedMinSize)) 'bg-gray-200'}}"
+            {{on "change" this.selectedUnchangedMinSizeIndexDidChange}}
+            disabled={{or isDisabled (not this.unchangedMinSize)}}
+          >
+            {{#each this.unchangedMinSizes as |unchangedMinSize index|}}
+              <option selected={{eq this.selectedUnchangedMinSizeIndex index}}>{{unchangedMinSize}}</option>
+            {{/each}}
+          </select>
+        {{/let}}
       </label>
     </codemirror-options-right>
   </codemirror-options>
@@ -131,16 +176,6 @@
         <span class="ml-2">scrollPastEnd</span>
       </label>
     </codemirror-options-left>
-    <codemirror-options-right class="flex flex-wrap">
-      <label class="{{labelClasses}}" title="Enable collapsing unchanged lines in the diff editor">
-        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{not this.originalDocument}} />
-        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">collapseUnchanged</span>
-      </label>
-      <label class="{{labelClasses}}" title="Enable showing accept/reject buttons in the diff editor">
-        <Input @type="checkbox" @checked={{this.mergeControls}} disabled={{not this.originalDocument}} />
-        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
-      </label>
-    </codemirror-options-right>
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
@@ -219,6 +254,14 @@
       <Input @type="checkbox" @checked={{this.highlightTrailingWhitespace}} />
       <span class="ml-2">highlightTrailingWhitespace</span>
     </label>
+    <label class="{{labelClasses}}" title="Enable inline highlighting of changes in the diff">
+      <Input @type="checkbox" @checked={{this.highlightChanges}} disabled={{not this.originalDocument}} />
+      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">highlightChanges</span>
+    </label>
+    <label class="{{labelClasses}}" title="Enable syntax highlighting in the deleted chunks of the diff">
+      <Input @type="checkbox" @checked={{this.syntaxHighlightDeletions}} disabled={{or (not this.originalDocument) (not this.syntaxHighlighting)}} />
+      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">syntaxHighlightDeletions</span>
+    </label>
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
@@ -278,6 +321,7 @@
   @editable={{this.editable}}
   @foldGutter={{this.foldGutter}}
   @highlightActiveLine={{this.highlightActiveLine}}
+  @highlightChanges={{this.highlightChanges}}
   @highlightSelectionMatches={{this.highlightSelectionMatches}}
   @highlightSpecialChars={{this.highlightSpecialChars}}
   @highlightTrailingWhitespace={{this.highlightTrailingWhitespace}}
@@ -294,6 +338,9 @@
   @rectangularSelection={{this.rectangularSelection}}
   @scrollPastEnd={{this.scrollPastEnd}}
   @syntaxHighlighting={{this.syntaxHighlighting}}
+  @syntaxHighlightDeletions={{this.syntaxHighlightDeletions}}
+  @unchangedMargin={{if this.unchangedMargin this.selectedUnchangedMargin}}
+  @unchangedMinSize={{if this.unchangedMinSize this.selectedUnchangedMinSize}}
   {{! Element classes }}
   class="block overflow-auto mt-4 max-h-96 {{if this.outline 'outline outline-dotted outline-gray-200 dark:outline-gray-700'}}"
 />
