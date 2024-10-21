@@ -17,7 +17,7 @@ import {
   rectangularSelection,
   scrollPastEnd,
 } from '@codemirror/view';
-import { Compartment, EditorState, type Extension } from '@codemirror/state';
+import { Compartment, EditorState, type Extension, type TransactionSpec } from '@codemirror/state';
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { highlightSelectionMatches } from '@codemirror/search';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
@@ -53,7 +53,7 @@ type DocumentUpdateCallback = (newValue: string) => void;
 
 type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback;
 
-type OptionHandler = (args: Signature['Args']['Named'], optionName?: string) => Extension[] | Promise<Extension[]>;
+type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
 const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   allowMultipleSelections: ({ allowMultipleSelections }) => [EditorState.allowMultipleSelections.of(!!allowMultipleSelections)],
@@ -322,15 +322,15 @@ export default class CodeMirrorComponent extends Component<Signature> {
     }
 
     if (this.args.history && !this.args.preserveHistory) {
-      this.renderedView.dispatch({
-        effects: this.compartments.get('history')?.reconfigure([]),
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('history'),
       });
-      this.renderedView.dispatch({
-        effects: this.compartments.get('history')?.reconfigure(OPTION_HANDLERS['history'] ? await OPTION_HANDLERS['history'](this.args) : []),
+      this.#updateRenderedView({
+        effects: await this.#updateCompartment('history'),
       });
     }
 
-    this.renderedView.dispatch(
+    this.#updateRenderedView(
       this.renderedView.state.update({
         changes: {
           from: 0,
@@ -350,35 +350,29 @@ export default class CodeMirrorComponent extends Component<Signature> {
 
     // When originalDocument changes - completely unload the diff compartment to avoid any side-effects
     if (optionName === 'originalDocumentOrDiffRelatedOption') {
-      this.renderedView.dispatch({
-        effects: this.compartments.get('originalDocumentOrDiffRelatedOption')?.reconfigure([]),
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
       });
     }
 
     // Reconfigure the changed compartment with new options and dispatch new effects to the view
-    this.renderedView.dispatch({
-      effects: this.compartments
-        .get(optionName)
-        ?.reconfigure(OPTION_HANDLERS[optionName] ? await OPTION_HANDLERS[optionName](this.args, optionName) : []),
+    this.#updateRenderedView({
+      effects: await this.#updateCompartment(optionName),
     });
 
     // When syntaxHighlighting changes - reload the diff compartment to also re-configure syntaxHighlightDeletions
     if (optionName === 'syntaxHighlighting') {
-      this.renderedView.dispatch({
-        effects: this.compartments.get('originalDocumentOrDiffRelatedOption')?.reconfigure([]),
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
       });
-      this.renderedView.dispatch({
-        effects: this.compartments
-          .get('originalDocumentOrDiffRelatedOption')
-          ?.reconfigure(
-            OPTION_HANDLERS['originalDocumentOrDiffRelatedOption'] ? await OPTION_HANDLERS['originalDocumentOrDiffRelatedOption'](this.args) : [],
-          ),
+      this.#updateRenderedView({
+        effects: await this.#updateCompartment('originalDocumentOrDiffRelatedOption'),
       });
     }
 
     // When lineSeparator changes - completely reload the document to avoid any side-effects
     if (optionName === 'lineSeparator') {
-      this.renderedView.dispatch(
+      this.#updateRenderedView(
         this.renderedView.state.update({
           changes: {
             from: 0,
@@ -401,10 +395,7 @@ export default class CodeMirrorComponent extends Component<Signature> {
 
         ...(await Promise.all(
           Object.keys(OPTION_HANDLERS).map(async (optionName) => {
-            const compartment = this.compartments.get(optionName) || new Compartment();
-            const handlerMethod = OPTION_HANDLERS[optionName];
-
-            return compartment.of(handlerMethod ? await handlerMethod(this.args) : []);
+            return this.compartments.get(optionName)?.of(OPTION_HANDLERS[optionName] ? await OPTION_HANDLERS[optionName](this.args) : []) || [];
           }),
         )),
 
@@ -415,6 +406,18 @@ export default class CodeMirrorComponent extends Component<Signature> {
         }),
       ],
     });
+  }
+
+  #resetCompartment(key: string) {
+    return this.compartments.get(key)?.reconfigure([]);
+  }
+
+  async #updateCompartment(key: string) {
+    return this.compartments.get(key)?.reconfigure(OPTION_HANDLERS[key] ? await OPTION_HANDLERS[key](this.args) : []);
+  }
+
+  #updateRenderedView(...specs: TransactionSpec[]) {
+    return this.renderedView?.dispatch(...specs);
   }
 }
 
