@@ -219,6 +219,10 @@
       <Input @type="checkbox" @checked={{this.highlightTrailingWhitespace}} />
       <span class="ml-2">highlightTrailingWhitespace</span>
     </label>
+    <label class="{{labelClasses}}" title="Enable inline highlighting of changes in the diff">
+      <Input @type="checkbox" @checked={{this.highlightChanges}} disabled={{not this.originalDocument}} />
+      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">highlightChanges</span>
+    </label>
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
@@ -278,6 +282,7 @@
   @editable={{this.editable}}
   @foldGutter={{this.foldGutter}}
   @highlightActiveLine={{this.highlightActiveLine}}
+  @highlightChanges={{this.highlightChanges}}
   @highlightSelectionMatches={{this.highlightSelectionMatches}}
   @highlightSpecialChars={{this.highlightSpecialChars}}
   @highlightTrailingWhitespace={{this.highlightTrailingWhitespace}}

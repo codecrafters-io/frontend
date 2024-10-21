@@ -114,14 +114,14 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
 
     return loadedLanguage ? [loadedLanguage] : [];
   },
-  originalDocumentOrDiffRelatedOption: ({ originalDocument, mergeControls, collapseUnchanged }) => {
+  originalDocumentOrDiffRelatedOption: ({ originalDocument, mergeControls, collapseUnchanged, highlightChanges }) => {
     return originalDocument
       ? [
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
             collapseUnchanged: collapseUnchanged ? { margin: 3, minSize: 4 } : undefined,
-            highlightChanges: false,
+            highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: true,
           }),
         ]
@@ -215,6 +215,10 @@ export interface Signature {
        * Enable highlighting of active line
        */
       highlightActiveLine?: boolean;
+      /**
+       * Enable inline highlighting of changes in the diff
+       */
+      highlightChanges?: boolean;
       /**
        * Enable highlighting of current selection matches in the document
        */

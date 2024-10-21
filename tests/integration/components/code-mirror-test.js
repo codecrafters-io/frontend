@@ -206,6 +206,18 @@ module('Integration | Component | code-mirror', function (hooks) {
       skip('it does something useful with the editor');
     });
 
+    module('highlightChanges', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('highlightChanges', true);
+        await render(hbs`<CodeMirror @highlightChanges={{this.highlightChanges}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('highlightChanges', false);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('highlightSelectionMatches', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightSelectionMatches', true);

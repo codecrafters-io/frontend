@@ -30,6 +30,7 @@ const OPTION_DEFAULTS = {
   filename: true,
   foldGutter: true,
   highlightActiveLine: true,
+  highlightChanges: false,
   highlightSelectionMatches: true,
   highlightSpecialChars: true,
   highlightTrailingWhitespace: true,
@@ -100,6 +101,7 @@ export default class DemoCodeMirrorController extends Controller {
     'filename',
     'foldGutter',
     'highlightActiveLine',
+    'highlightChanges',
     'highlightSelectionMatches',
     'highlightSpecialChars',
     'highlightTrailingWhitespace',
@@ -251,6 +253,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked filename = OPTION_DEFAULTS.filename;
   @tracked foldGutter = OPTION_DEFAULTS.foldGutter;
   @tracked highlightActiveLine = OPTION_DEFAULTS.highlightActiveLine;
+  @tracked highlightChanges = OPTION_DEFAULTS.highlightChanges;
   @tracked highlightSelectionMatches = OPTION_DEFAULTS.highlightSelectionMatches;
   @tracked highlightSpecialChars = OPTION_DEFAULTS.highlightSpecialChars;
   @tracked highlightTrailingWhitespace = OPTION_DEFAULTS.highlightTrailingWhitespace;
