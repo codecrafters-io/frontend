@@ -29,11 +29,11 @@ export default class AffiliateFeatureCardsComponent extends Component<Signature>
       {
         title: 'No forms to fill. Simple payout.',
         bodyMarkdown:
-          'Activate your link with one click.<br /><br />Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or any of the 30+ gift cards that we support.',
+          'Activate your link with one click.<br /><br />Monitor the status of your referrals in real-time on your CodeCrafters dashboard. Get paid via PayPal or direct bank transfer.',
         imageUrl: simplePayoutImage,
       },
       {
-        title: '(Probably) Free for your friend.',
+        title: '(Probably) Free for your audience.',
         bodyMarkdown:
           'Most developers can get their CodeCrafters fees fully reimbursed through their corporate L&D budget.<br /><br />Remind them about it, help them save money, and help make their decision easier.',
         imageUrl: freeForFriendImage,
