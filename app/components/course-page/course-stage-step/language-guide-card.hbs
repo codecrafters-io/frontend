@@ -57,42 +57,22 @@
         <span class="text-gray-500">Proficiency:</span>
         <span class="text-gray-700 font-semibold">Beginner</span>
       </div> }}
-      <div>
-        <LanguageDropdown
-          @languages={{this.sortedLanguagesForDropdown}}
-          @requestedLanguage={{this.currentLanguage}}
-          @selectedLanguage={{this.currentLanguage}}
-          @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
-          @onDidInsertDropdown={{(noop)}}
-          class="flex-shrink-0"
-        />
-      </div>
+
+      <FeedbackButton
+        @source="course_stage_language_guide"
+        @sourceMetadata={{hash language_slug=this.currentLanguage.slug}}
+        class="inline-flex"
+        @dropdownPosition="left"
+        data-test-feedback-button
+      >
+        <TertiaryButton @size="small">
+          Share Feedback
+        </TertiaryButton>
+      </FeedbackButton>
     </div>
   </:header>
 
   <:content>
-    <AlertWithIcon class="mb-6">
-      <p class="mb-2">
-        This guide is AI-generated, and may be highly inaccurate. We're releasing this early to get feedback.
-        <a href="https://docs.codecrafters.io/experimental/language-guides" target="_blank" rel="noopener noreferrer">Learn more</a>.
-      </p>
-
-      <p class="mt-0">
-        <div class="inline-flex">
-          <FeedbackButton
-            @source="course_stage_language_guide"
-            @sourceMetadata={{hash language_slug=this.currentLanguage.slug}}
-            class="inline-flex"
-            @dropdownPosition="left"
-            data-test-feedback-button
-          >
-            <TertiaryButton @size="small">
-              Share Feedback
-            </TertiaryButton>
-          </FeedbackButton>
-        </div>
-      </p>
-    </AlertWithIcon>
 
     {{#if this.languageGuide}}
       <div class="prose dark:prose-invert has-prism-highlighting" {{highlight-code-blocks this.languageGuide.markdownForBeginner}}>
