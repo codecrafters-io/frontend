@@ -47,9 +47,7 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowLanguageGuide() {
-    const isInTestGroup = this.featureFlags.getFeatureFlagValue('language-guides') === 'test';
-
-    return !this.model.courseStage.isFirst && (this.authenticator.currentUser?.isStaff || isInTestGroup);
+    return !this.model.courseStage.isFirst && (this.featureFlags.canSeeLanguageGuidesForStage2 || this.authenticator.currentUser?.isStaff);
   }
 
   get shouldShowPrerequisites() {
