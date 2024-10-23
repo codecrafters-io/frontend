@@ -5,6 +5,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import * as Sentry from '@sentry/ember';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -63,6 +64,26 @@ export default class EarningsContainerComponent extends Component<Signature> {
 
   get readyToPayoutEarningsAmountInCents() {
     return Math.max(this.withdrawableEarningsAmountInCents - this.paidOutEarningsAmountInCents, 0);
+  }
+
+  get sortedPayouts() {
+    return this.currentUser.affiliateEarningsPayouts.sort((a, b) => {
+      if (a.completedAt && b.completedAt) {
+        return b.completedAt.getTime() - a.completedAt.getTime();
+      } else if (!a.completedAt && b.completedAt) {
+        return -1; // Show pending payouts first
+      } else if (a.completedAt && !b.completedAt) {
+        return 1; // Show completed payouts last
+      } else if (a.initiatedAt && b.initiatedAt) {
+        return b.initiatedAt.getTime() - a.initiatedAt.getTime();
+      }
+
+      Sentry.captureMessage(`No sorting condition matched for payouts.`, {
+        extra: { payoutA: a.id, payoutB: b.id, username: this.currentUser.username },
+      });
+
+      return 0;
+    });
   }
 
   get totalEarningsAmountInCents() {
