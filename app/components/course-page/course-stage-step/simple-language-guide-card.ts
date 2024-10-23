@@ -35,7 +35,6 @@ export default class SimpleLanguageGuideCardComponent extends Component<Signatur
   }
 
   loadLanguageGuidesTask = task({ keepLatest: true }, async (): Promise<void> => {
-    console.log('loadLanguageGuidesTask');
     await this.store.query('course-stage-language-guide', {
       course_stage_id: this.args.courseStage.id,
       include: 'course-stage,language',

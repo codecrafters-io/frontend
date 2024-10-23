@@ -15,7 +15,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get canSeeLanguageGuidesForStage2() {
-    return this.getFeatureFlagValue('can-see-language-guides-for-stage-2') === 'test';
+    return this.getFeatureFlagValue('can-see-language-guides-for-stage-2') === 'test' || this.currentUser?.isStaff;
   }
 
   get currentUser() {
