@@ -30,7 +30,7 @@ export default class EarningsContainerComponent extends Component<Signature> {
       {
         title: 'Pending',
         helpText: 'Earnings that are being withheld for upto 14 days to account for refunds / admin.',
-        amountInDollars: this.currentUser.affiliateLinks.mapBy('withheldEarningsAmountInCents').reduce((a, b) => a + b, 0) / 100,
+        amountInDollars: this.pendingEarningsAmountInCents / 100,
       },
       {
         title: 'Ready to payout',
@@ -50,6 +50,15 @@ export default class EarningsContainerComponent extends Component<Signature> {
       .rejectBy('statusIsFailed')
       .mapBy('amountInCents')
       .reduce((a, b) => a + b, 0);
+  }
+
+  get pendingEarningsAmountInCents() {
+    const withheldEarningsAmountInCents = this.currentUser.affiliateLinks.mapBy('withheldEarningsAmountInCents').reduce((a, b) => a + b, 0);
+
+    // If we've already paid more than the user's total earnings, we can subtract that from the pending value.
+    const prepaidEarningsAmountInCents = Math.max(this.paidOutEarningsAmountInCents - this.totalEarningsAmountInCents, 0);
+
+    return Math.max(withheldEarningsAmountInCents - prepaidEarningsAmountInCents, 0);
   }
 
   get readyToPayoutEarningsAmountInCents() {
