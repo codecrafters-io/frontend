@@ -1,0 +1,45 @@
+<div {{did-update this.loadLanguageGuides @courseStage}} {{did-insert this.loadLanguageGuides}}>
+  {{#if this.languageGuide}}
+    <CoursePage::InstructionsCard
+      @contentIdentifier={{@courseStage.id}}
+      @isCollapsedByDefault={{true}}
+      @onExpand={{this.handleExpand}}
+      id="language-guide-card"
+      data-test-language-guide-card
+      ...attributes
+    >
+      <:header>
+        <div class="flex items-center justify-between border-b dark:border-white/5 pb-2 mb-5 w-full">
+          <div class="flex items-center gap-x-3">
+            <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200 flex items-center">
+              {{@language.name}}&nbsp;Guide
+            </h2>
+
+            <Pill @color="green" class="text-xs">
+              BETA
+              <EmberTooltip @text="This is a beta feature, please send us feedback!" @side="top" />
+            </Pill>
+          </div>
+
+          <FeedbackButton
+            @source="course_stage_language_guide"
+            @sourceMetadata={{hash language_slug=@language.slug}}
+            class="inline-flex"
+            @dropdownPosition="right"
+            data-test-feedback-button
+          >
+            <TertiaryButton @size="small">
+              Share Feedback
+            </TertiaryButton>
+          </FeedbackButton>
+        </div>
+      </:header>
+
+      <:content>
+        <div class="prose dark:prose-invert has-prism-highlighting" {{highlight-code-blocks this.languageGuide.markdownForBeginner}}>
+          {{markdown-to-html this.languageGuide.markdownForBeginner}}
+        </div>
+      </:content>
+    </CoursePage::InstructionsCard>
+  {{/if}}
+</div>

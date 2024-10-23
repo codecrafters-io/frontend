@@ -81,7 +81,11 @@
     <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
     {{#if this.shouldShowLanguageGuide}}
-      <CoursePage::CourseStageStep::LanguageGuideCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mt-6" />
+      <CoursePage::CourseStageStep::SimpleLanguageGuideCard
+        @courseStage={{@model.courseStage}}
+        @language={{@model.activeRepository.language}}
+        class="mt-6"
+      />
     {{/if}}
 
     <div data-percy-hints-section>
