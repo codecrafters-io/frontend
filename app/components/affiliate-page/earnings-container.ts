@@ -54,11 +54,10 @@ export default class EarningsContainerComponent extends Component<Signature> {
 
   get pendingEarningsAmountInCents() {
     const withheldEarningsAmountInCents = this.currentUser.affiliateLinks.mapBy('withheldEarningsAmountInCents').reduce((a, b) => a + b, 0);
+    const totalUnpaidEarningsAmountInCents = Math.max(0, this.totalEarningsAmountInCents - this.paidOutEarningsAmountInCents);
 
-    // If we've already paid more than the user's total earnings, we can subtract that from the pending value.
-    const prepaidEarningsAmountInCents = Math.max(this.paidOutEarningsAmountInCents - this.totalEarningsAmountInCents, 0);
-
-    return Math.max(withheldEarningsAmountInCents - prepaidEarningsAmountInCents, 0);
+    // We only render "pending" earnings if we haven't paid out more than the user's total earnings.
+    return Math.min(withheldEarningsAmountInCents, totalUnpaidEarningsAmountInCents);
   }
 
   get readyToPayoutEarningsAmountInCents() {
