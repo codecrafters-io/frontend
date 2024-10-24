@@ -199,7 +199,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@rails/actioncable": "^7.2.101",
+    "@rails/actioncable": "^7.2.102",
     "@stripe/stripe-js": "^4.9.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.15",
