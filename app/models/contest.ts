@@ -35,4 +35,8 @@ export default class ContestModel extends Model {
   get leaderboardEntriesRevealedAt(): Date {
     return new Date(this.startsAt.getTime() + 1000 * 60 * 60 * 24); // 24 hours after contest starts
   }
+
+  get slugPrefix(): string {
+    return this.slug.replace(/-\d+$/, '');
+  }
 }
