@@ -32,23 +32,12 @@ export default class ContestPageNavigationComponent extends Component<Signature>
   }
 
   get nextContest(): ContestModel | null {
-    if (this.currentContestIndex < this.sortedNavigableContests.length - 1) {
-      const nextContest = this.sortedNavigableContests[this.currentContestIndex + 1] as ContestModel;
-      const oneWeekFromNow = new Date(this.date.now() + 7 * 24 * 60 * 60 * 1000);
-
-      if (nextContest.startsAt < oneWeekFromNow) {
-        return nextContest;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
+    return this.sortedNavigableContests[this.currentContestIndex + 1] || null;
   }
 
   get previousContest(): ContestModel | null {
     if (this.currentContestIndex > 0) {
-      return this.sortedNavigableContests[this.currentContestIndex - 1] as ContestModel;
+      return this.sortedNavigableContests[this.currentContestIndex - 1] || null;
     } else {
       return null;
     }
