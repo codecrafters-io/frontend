@@ -16,7 +16,7 @@ export default class ContestPageNavigationComponent extends Component<Signature>
   @service declare date: DateService;
 
   get currentContestIndex(): number {
-    return this.sortedContests.indexOf(this.args.contest);
+    return this.sortedNavigableContests.indexOf(this.args.contest);
   }
 
   get isNextContestDisabled(): boolean {
@@ -27,31 +27,24 @@ export default class ContestPageNavigationComponent extends Component<Signature>
     return !this.previousContest;
   }
 
-  get nextContest(): ContestModel | null {
-    if (this.currentContestIndex < this.sortedContests.length - 1) {
-      const nextContest = this.sortedContests[this.currentContestIndex + 1] as ContestModel;
-      const oneWeekFromNow = new Date(this.date.now() + 7 * 24 * 60 * 60 * 1000);
+  get navigableContests(): ContestModel[] {
+    return this.args.allContests.filter((contest) => contest.slugPrefix === this.args.contest.slugPrefix);
+  }
 
-      if (nextContest.startsAt < oneWeekFromNow) {
-        return nextContest;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
+  get nextContest(): ContestModel | null {
+    return this.sortedNavigableContests[this.currentContestIndex + 1] || null;
   }
 
   get previousContest(): ContestModel | null {
     if (this.currentContestIndex > 0) {
-      return this.sortedContests[this.currentContestIndex - 1] as ContestModel;
+      return this.sortedNavigableContests[this.currentContestIndex - 1] || null;
     } else {
       return null;
     }
   }
 
-  get sortedContests(): ContestModel[] {
-    return this.args.allContests.sortBy('startsAt');
+  get sortedNavigableContests(): ContestModel[] {
+    return this.navigableContests.sortBy('startsAt');
   }
 }
 

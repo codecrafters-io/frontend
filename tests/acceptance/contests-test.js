@@ -162,13 +162,19 @@ module('Acceptance | contests-test', function (hooks) {
     assert.strictEqual(currentURL(), '/contests/weekly-1', 'Previous button is disabled when there are no more previous contests');
 
     await contestsPage.headerNavigation.clickOnNextContestButton();
-    await contestsPage.headerNavigation.clickOnNextContestButton();
+    assert.strictEqual(currentURL(), '/contests/weekly-2', 'Next button works');
 
+    await contestsPage.headerNavigation.clickOnNextContestButton();
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button works');
 
     await contestsPage.headerNavigation.clickOnNextContestButton();
+    assert.strictEqual(currentURL(), '/contests/weekly-4', 'Next button works');
 
-    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
+    await contestsPage.headerNavigation.clickOnNextContestButton();
+    assert.strictEqual(currentURL(), '/contests/weekly-5', 'Next button works');
+
+    await contestsPage.headerNavigation.clickOnNextContestButton();
+    assert.strictEqual(currentURL(), '/contests/weekly-5', 'Next button is disabled when contest is last');
   });
 
   test('prize details navigation buttons work', async function (assert) {
@@ -192,7 +198,12 @@ module('Acceptance | contests-test', function (hooks) {
     assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button works');
 
     await contestsPage.prizeDetailsNavigation.clickOnNextContestButton();
+    assert.strictEqual(currentURL(), '/contests/weekly-4', 'Next button works');
 
-    assert.strictEqual(currentURL(), '/contests/weekly-3', 'Next button is disabled when the next contest is the second contest from present');
+    await contestsPage.prizeDetailsNavigation.clickOnNextContestButton();
+    assert.strictEqual(currentURL(), '/contests/weekly-5', 'Next button works');
+
+    await contestsPage.prizeDetailsNavigation.clickOnNextContestButton();
+    assert.strictEqual(currentURL(), '/contests/weekly-5', 'Next button is disabled when contest is last');
   });
 });
