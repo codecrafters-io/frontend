@@ -92,7 +92,7 @@
     "@types/ember-qunit": "^6.1.3",
     "@types/ember-resolver": "^9.0.2",
     "@types/mustache": "^4.2.3",
-    "@types/prismjs": "^1.26.4",
+    "@types/prismjs": "^1.26.5",
     "@types/qunit": "^2.19.10",
     "@types/rails__actioncable": "^6.1.11",
     "@types/rsvp": "^4.0.9",
