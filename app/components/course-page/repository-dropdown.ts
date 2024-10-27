@@ -2,12 +2,12 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { later } from '@ember/runloop';
 import fade from 'ember-animated/transitions/fade';
 import type RouterService from '@ember/routing/router-service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import config from 'codecrafters-frontend/config/environment';
+import { task, timeout } from 'ember-concurrency';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -58,8 +58,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
     this.progressBannerModalIsOpen = true;
   }
 
-  @action
-  async handleCopyGitRepositoryURLClick() {
+  handleCopyGitRepositoryURLClickTask = task({ keepLatest: true }, async (): Promise<void> => {
     // get('isNew') works around type bug
     if (this.args.activeRepository.get('isNew')) {
       return;
@@ -67,15 +66,9 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
 
     await navigator.clipboard.writeText(this.args.activeRepository.cloneUrl);
     this.gitRepositoryURLWasCopiedRecently = true;
-
-    later(
-      this,
-      () => {
-        this.gitRepositoryURLWasCopiedRecently = false;
-      },
-      config.x.copyConfirmationTimeout,
-    );
-  }
+    await timeout(config.x.copyConfirmationTimeout);
+    this.gitRepositoryURLWasCopiedRecently = false;
+  });
 
   @action
   async handleDeleteRepositoryActionClick(dropdownActions: { close: () => void }) {

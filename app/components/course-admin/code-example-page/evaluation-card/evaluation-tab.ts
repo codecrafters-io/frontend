@@ -29,8 +29,8 @@ export default class EvaluationTabComponent extends Component<Signature> {
   }
 
   copyToClipboardTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await navigator.clipboard.writeText(this.args.evaluation.logsFileContents!);
     this.wasRecentlyCopied = true;
-    navigator.clipboard.writeText(this.args.evaluation.logsFileContents!);
     await timeout(config.x.copyConfirmationTimeout);
     this.wasRecentlyCopied = false;
   });

@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
+import { task } from 'ember-concurrency';
 
 export interface Signature {
   Args: {
@@ -56,20 +57,17 @@ export default class HeaderContainerComponent extends Component<Signature> {
     }
   }
 
-  @action
-  async handleCopyCommitShaButtonClick() {
+  handleCopyCommitShaButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
     await navigator.clipboard.writeText(this.args.submission.commitSha);
-  }
+  });
 
-  @action
-  async handleCopyRepositoryURLButtonClick() {
+  handleCopyRepositoryURLButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
     await navigator.clipboard.writeText(this.args.submission.repository.cloneUrl);
-  }
+  });
 
-  @action
-  async handleCopyTreeShaButtonClick() {
+  handleCopyTreeShaButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
     await navigator.clipboard.writeText(this.args.submission.treeSha!);
-  }
+  });
 
   @action
   async handleForkButtonClick() {

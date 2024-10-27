@@ -30,7 +30,7 @@
       {{/if}}
     </div>
 
-    <TertiaryButton @size="extra-small" {{on "click" this.handleCopyButtonClick}}>
+    <TertiaryButton @size="extra-small" {{on "click" (perform this.handleCopyButtonClickTask)}}>
       <AnimatedContainer>
         {{#animated-if this.wasCopiedRecently use=this.transition duration=200}}
           <div class="flex items-center gap-1">

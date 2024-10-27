@@ -4,6 +4,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
 import type UserModel from 'codecrafters-frontend/models/user';
+import { task } from 'ember-concurrency';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -68,10 +69,9 @@ export default class ComparisonCard extends Component<Signature> {
     });
   }
 
-  @action
-  handleCopyIdToClipbardButtonClick() {
-    navigator.clipboard.writeText(this.args.comparison.id);
-  }
+  handleCopyIdToClipbardButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await navigator.clipboard.writeText(this.args.comparison.id);
+  });
 
   @action
   handleExpandButtonClick() {

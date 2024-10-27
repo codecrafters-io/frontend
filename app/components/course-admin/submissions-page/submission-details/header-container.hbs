@@ -66,7 +66,7 @@
               {{@submission.repository.language.name}}
             </span>
 
-            <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleCopyRepositoryURLButtonClick}}>
+            <TertiaryButton @size="extra-small" class="mr-2" {{on "click" (perform this.handleCopyRepositoryURLButtonClickTask)}}>
               {{svg-jar "download" class="w-4 text-gray-500"}}
               <EmberTooltip @text="Click to copy Git URL" />
             </TertiaryButton>
@@ -100,7 +100,12 @@
               {{/if}}
             </span>
 
-            <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleCopyCommitShaButtonClick}} data-test-copy-commit-sha-button>
+            <TertiaryButton
+              @size="extra-small"
+              class="mr-2"
+              {{on "click" (perform this.handleCopyCommitShaButtonClickTask)}}
+              data-test-copy-commit-sha-button
+            >
               {{svg-jar "clipboard-list" class="w-4 text-gray-500"}}
               <EmberTooltip @text="Click to copy Git commit SHA" />
             </TertiaryButton>
@@ -117,7 +122,7 @@
               @size="extra-small"
               @isDisabled={{eq this.shortSubmissionTreeSha "Unknown"}}
               class="mr-2"
-              {{on "click" this.handleCopyTreeShaButtonClick}}
+              {{on "click" (perform this.handleCopyTreeShaButtonClickTask)}}
               data-test-copy-tree-sha-button
             >
               {{svg-jar "clipboard-list" class="w-4 text-gray-500"}}

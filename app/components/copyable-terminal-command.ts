@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
+import { task, timeout } from 'ember-concurrency';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -34,24 +33,17 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
     return this.args.commands.map((command) => command.replace(/# .*$/, '')).join('\n');
   }
 
-  @action
-  handleCopyButtonClick() {
-    navigator.clipboard.writeText(this.copyableText);
-
+  handleCopyButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await navigator.clipboard.writeText(this.copyableText);
     this.wasCopiedRecently = true;
-
-    later(
-      this,
-      () => {
-        this.wasCopiedRecently = false;
-      },
-      config.x.copyConfirmationTimeout,
-    );
 
     if (this.args.onCopyButtonClick) {
       this.args.onCopyButtonClick();
     }
-  }
+
+    await timeout(config.x.copyConfirmationTimeout);
+    this.wasCopiedRecently = false;
+  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {

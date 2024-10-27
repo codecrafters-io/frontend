@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
+import { task, timeout } from 'ember-concurrency';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -17,24 +16,17 @@ interface Signature {
 export default class CopyableCodeComponent extends Component<Signature> {
   @tracked codeWasCopiedRecently: boolean = false;
 
-  @action
-  handleCopyButtonClick() {
-    navigator.clipboard.writeText(this.args.code);
-
+  handleCopyButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await navigator.clipboard.writeText(this.args.code);
     this.codeWasCopiedRecently = true;
-
-    later(
-      this,
-      () => {
-        this.codeWasCopiedRecently = false;
-      },
-      config.x.copyConfirmationTimeout,
-    );
 
     if (this.args.onCopyButtonClick) {
       this.args.onCopyButtonClick();
     }
-  }
+
+    await timeout(config.x.copyConfirmationTimeout);
+    this.codeWasCopiedRecently = false;
+  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {
