@@ -1,6 +1,5 @@
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
-import config from 'codecrafters-frontend/config/environment';
 import fade from 'ember-animated/transitions/fade';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
@@ -64,10 +63,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   }
 
   copyToClipboardAndFlashMessage = task({ keepLatest: true }, async (): Promise<void> => {
-    if (config.environment !== 'test') {
-      await navigator.clipboard.writeText(this.copyableText);
-    }
-
+    await navigator.clipboard.writeText(this.copyableText);
     this.wasCopiedRecently = true;
     await timeout(1000);
     this.wasCopiedRecently = false;
