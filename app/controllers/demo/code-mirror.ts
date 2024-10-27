@@ -130,6 +130,7 @@ const OPTION_DEFAULTS = {
   lineNumbers: true,
   lineSeparator: true,
   lineWrapping: true,
+  maxHeight: true,
   mergeControls: true,
   originalDocument: false,
   outline: true,
@@ -183,6 +184,7 @@ export default class DemoCodeMirrorController extends Controller {
     'lineNumbers',
     'lineSeparator',
     'lineWrapping',
+    'maxHeight',
     'mergeControls',
     'originalDocument',
     'outline',
@@ -234,6 +236,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked lineSeparator = OPTION_DEFAULTS.lineSeparator;
   @tracked lineSeparators = LINE_SEPARATORS;
   @tracked lineWrapping = OPTION_DEFAULTS.lineWrapping;
+  @tracked maxHeight = OPTION_DEFAULTS.maxHeight;
   @tracked mergeControls = OPTION_DEFAULTS.mergeControls;
   @tracked collapseUnchanged = OPTION_DEFAULTS.collapseUnchanged;
   @tracked originalDocument = OPTION_DEFAULTS.originalDocument;
