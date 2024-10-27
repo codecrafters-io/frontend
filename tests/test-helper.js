@@ -8,7 +8,7 @@ import { setup as setupQunitAssertionsExtra } from 'qunit-assertions-extra';
 import setupSinon from 'ember-sinon-qunit';
 import start from 'ember-exam/test-support/start';
 import stubLocalStorage from 'codecrafters-frontend/tests/support/stub-local-storage';
-// import { start } from 'ember-qunit';
+import stubClipboard from 'codecrafters-frontend/tests/support/stub-clipboard';
 
 setApplication(Application.create(config.APP));
 
@@ -19,6 +19,7 @@ setupQunitAssertionsExtra(QUnit.assert);
 
 QUnit.testStart(function () {
   stubLocalStorage();
+  stubClipboard();
 });
 
 QUnit.done(async function () {
