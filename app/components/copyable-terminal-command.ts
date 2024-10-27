@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { service } from '@ember/service';
+import config from 'codecrafters-frontend/config/environment';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -44,7 +45,7 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
       () => {
         this.wasCopiedRecently = false;
       },
-      1000,
+      config.x.copyConfirmationTimeout,
     );
 
     if (this.args.onCopyButtonClick) {

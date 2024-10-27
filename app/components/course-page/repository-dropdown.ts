@@ -7,6 +7,7 @@ import fade from 'ember-animated/transitions/fade';
 import type RouterService from '@ember/routing/router-service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import config from 'codecrafters-frontend/config/environment';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -72,7 +73,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
       () => {
         this.gitRepositoryURLWasCopiedRecently = false;
       },
-      1000,
+      config.x.copyConfirmationTimeout,
     );
   }
 
