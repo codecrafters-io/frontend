@@ -176,6 +176,12 @@
         <span class="ml-2">scrollPastEnd</span>
       </label>
     </codemirror-options-left>
+    <codemirror-options-right class="flex flex-wrap">
+      <label class="{{labelClasses}}" title="Limit maximum height of the component's element">
+        <Input @type="checkbox" @checked={{this.maxHeight}} />
+        <span class="ml-2">maxHeight</span>
+      </label>
+    </codemirror-options-right>
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
@@ -342,7 +348,9 @@
   @unchangedMargin={{if this.unchangedMargin this.selectedUnchangedMargin}}
   @unchangedMinSize={{if this.unchangedMinSize this.selectedUnchangedMinSize}}
   {{! Element classes }}
-  class="block overflow-auto mt-4 max-h-96 {{if this.outline 'outline outline-dotted outline-gray-200 dark:outline-gray-700'}}"
+  class="block overflow-auto mt-4
+    {{if this.maxHeight 'max-h-96'}}
+    {{if this.outline 'outline outline-dotted outline-gray-200 dark:outline-gray-700'}}"
 />
 
 <div class="my-2 text-right">

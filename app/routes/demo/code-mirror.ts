@@ -27,6 +27,7 @@ const QUERY_PARAMS = [
   'lineNumbers',
   'lineSeparator',
   'lineWrapping',
+  'maxHeight',
   'mergeControls',
   'originalDocument',
   'outline',

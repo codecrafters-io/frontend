@@ -53,9 +53,9 @@ const LINE_SEPARATORS = [
 const EXAMPLE_DOCUMENTS = [
   new ExampleDocument({
     document:
-      'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document 8\nAn example plain-text document 9\nAn example plain-text modified document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19',
+      'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document NEW LINE\nAn example plain-text document 8\nAn example plain-text document 9\nNEW LINE\nAn example plain-text document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19\nAn example plain-text document 20\nAn example plain-text document 21\nAn example plain-text document NEW LINE\nAn example plain-text document 22\nAn example plain-text document 23\nAn example plain-text document 24\nAn example plain-text MODIFIED document 25\nAn example plain-text document 26\nAn example plain-text document 27\nAn example plain-text document 28\nAn example plain-text document 29\nAn example plain-text document 30\nAn example plain-text document 31\nAn example plain-text document 32\nAn example plain-text document 33\nAn example plain-text document 34\nAn example plain-text document 35',
     originalDocument:
-      'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document 8\nAn example plain-text document 9\nAn example plain-text document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19',
+      'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document 8\nAn example plain-text document 9\nAn example plain-text document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19\nAn example plain-text document 20\nAn example plain-text document 21\nAn example plain-text document 22\nAn example plain-text document 23\nAn example plain-text document 24\nAn example plain-text document 25\nAn example plain-text document 26\nAn example plain-text document 27\nAn example plain-text document 28\nAn example plain-text document 29\nAn example plain-text document 30\nAn example plain-text document 31\nAn example plain-text document 32\nAn example plain-text document 33\nAn example plain-text document 34\nAn example plain-text document 35',
     filename: 'test.txt',
     language: 'text',
   }),
@@ -83,7 +83,9 @@ const EXAMPLE_DOCUMENTS = [
   }),
   new ExampleDocument({
     document:
-      '-- Table: customer\nCREATE TABLE customer (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);',
+      '-- Table: customer\nCREATE TABLE customer (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Table: customer_backup3\nCREATE TABLE customer_backup3 (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Extra comment\n-- Extra comment\n-- Extra comment\n-- Extra comment\n-- Extra comment\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment',
+    originalDocument:
+      '-- Table: customer\nCREATE TABLE customer (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Table: customer_backup\nCREATE TABLE customer_backup (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Table: customer_backup3\nCREATE TABLE customer_backup3 (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment',
     filename: 'test.sql',
     language: 'sql',
   }),
@@ -130,6 +132,7 @@ const OPTION_DEFAULTS = {
   lineNumbers: true,
   lineSeparator: true,
   lineWrapping: true,
+  maxHeight: true,
   mergeControls: true,
   originalDocument: false,
   outline: true,
@@ -183,6 +186,7 @@ export default class DemoCodeMirrorController extends Controller {
     'lineNumbers',
     'lineSeparator',
     'lineWrapping',
+    'maxHeight',
     'mergeControls',
     'originalDocument',
     'outline',
@@ -234,6 +238,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked lineSeparator = OPTION_DEFAULTS.lineSeparator;
   @tracked lineSeparators = LINE_SEPARATORS;
   @tracked lineWrapping = OPTION_DEFAULTS.lineWrapping;
+  @tracked maxHeight = OPTION_DEFAULTS.maxHeight;
   @tracked mergeControls = OPTION_DEFAULTS.mergeControls;
   @tracked collapseUnchanged = OPTION_DEFAULTS.collapseUnchanged;
   @tracked originalDocument = OPTION_DEFAULTS.originalDocument;
