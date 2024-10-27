@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
@@ -36,9 +35,7 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
 
   @action
   handleCopyButtonClick() {
-    if (config.environment !== 'test') {
-      navigator.clipboard.writeText(this.copyableText);
-    }
+    navigator.clipboard.writeText(this.copyableText);
 
     this.wasCopiedRecently = true;
 
