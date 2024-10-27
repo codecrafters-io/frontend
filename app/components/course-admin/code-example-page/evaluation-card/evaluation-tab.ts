@@ -3,6 +3,7 @@ import Component from '@glimmer/component';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from 'tracked-built-ins';
+import config from 'codecrafters-frontend/config/environment';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -30,7 +31,7 @@ export default class EvaluationTabComponent extends Component<Signature> {
   copyToClipboardTask = task({ keepLatest: true }, async (): Promise<void> => {
     this.wasRecentlyCopied = true;
     navigator.clipboard.writeText(this.args.evaluation.logsFileContents!);
-    await timeout(1000);
+    await timeout(config.x.copyConfirmationTimeout);
     this.wasRecentlyCopied = false;
   });
 
