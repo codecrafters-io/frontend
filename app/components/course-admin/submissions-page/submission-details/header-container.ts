@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { capitalize } from '@ember/string';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
+import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
-import { task } from 'ember-concurrency';
 
 export interface Signature {
   Args: {
@@ -20,6 +20,7 @@ export default class HeaderContainerComponent extends Component<Signature> {
 
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
+  @service declare clipboard: ClipboardService;
 
   get durationInMilliseconds() {
     return this.args.submission.evaluations[0]!.createdAt.getTime() - this.args.submission.createdAt.getTime();
@@ -56,18 +57,6 @@ export default class HeaderContainerComponent extends Component<Signature> {
       return 'Unknown';
     }
   }
-
-  handleCopyCommitShaButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await navigator.clipboard.writeText(this.args.submission.commitSha);
-  });
-
-  handleCopyRepositoryURLButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await navigator.clipboard.writeText(this.args.submission.repository.cloneUrl);
-  });
-
-  handleCopyTreeShaButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await navigator.clipboard.writeText(this.args.submission.treeSha!);
-  });
 
   @action
   async handleForkButtonClick() {
