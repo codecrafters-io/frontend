@@ -8,6 +8,7 @@ import { stub } from 'sinon';
  * - `clear`
  * - `key`
  * - `get length`
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
  * @param {Map<string, string>} [cache=new Map<string, string>()] Predefined contents of the fake localStorage cache
  * @returns {Map<string, string>} Fake localStorage cache
  */

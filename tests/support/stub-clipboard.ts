@@ -9,6 +9,7 @@ const TEXT_MIME_TYPE = 'text/plain';
  * - `write`
  * - `readText`
  * - `writeText`
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Clipboard}
  * @param {ClipboardItem[]} [cache=new Array<ClipboardItem>()] Predefined contents of the fake clipboard cache
  * @returns {ClipboardItem[]} Fake clipboard cache
  */
