@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import config from 'codecrafters-frontend/config/environment';
-import { task, timeout } from 'ember-concurrency';
+import { service } from '@ember/service';
+import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -9,24 +8,12 @@ interface Signature {
   Args: {
     backgroundColor?: 'gray' | 'white';
     code: string;
-    onCopyButtonClick?: () => void;
+    onCopyButtonClick?: () => void | Promise<void>;
   };
 }
 
 export default class CopyableCodeComponent extends Component<Signature> {
-  @tracked codeWasCopiedRecently: boolean = false;
-
-  handleCopyButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await navigator.clipboard.writeText(this.args.code);
-    this.codeWasCopiedRecently = true;
-
-    if (this.args.onCopyButtonClick) {
-      this.args.onCopyButtonClick();
-    }
-
-    await timeout(config.x.copyConfirmationTimeout);
-    this.codeWasCopiedRecently = false;
-  });
+  @service declare clipboard: ClipboardService;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
