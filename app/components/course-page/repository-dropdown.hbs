@@ -46,11 +46,11 @@
           {{! @glint-expect-error model.isNew has wrong type !}}
           class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex group {{if @activeRepository.isNew 'text-gray-300 dark:text-gray-700'}}"
           role="button"
-          {{on "click" (perform this.handleCopyGitRepositoryURLClickTask)}}
+          {{on "click" (unless @activeRepository.isNew (perform this.clipboard.copyTask @activeRepository.cloneUrl) this.doNothing)}}
           data-test-dropdown-action
         >
           <AnimatedContainer @class="w-full">
-            {{#animated-if this.gitRepositoryURLWasCopiedRecently use=this.transition}}
+            {{#animated-if this.clipboard.hasRecentlyCopied use=this.transition}}
               <div class="flex items-center justify-between">
                 <span class="text-teal-500">Copied!</span>
                 {{svg-jar "check" class="w-5 ml-4 text-teal-500"}}

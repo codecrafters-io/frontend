@@ -1,13 +1,12 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import type RouterService from '@ember/routing/router-service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import config from 'codecrafters-frontend/config/environment';
-import { task, timeout } from 'ember-concurrency';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -22,13 +21,13 @@ interface Signature {
   };
 }
 
-export default class CoursePageRepositoryDropdownComponent extends Component<Signature> {
+export default class RepositoryDropdownComponent extends Component<Signature> {
   transition = fade;
 
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
+  @service declare clipboard: ClipboardService;
 
-  @tracked gitRepositoryURLWasCopiedRecently: boolean = false;
   @tracked configureGithubIntegrationModalIsOpen: boolean = false;
   @tracked deleteRepositoryModalIsOpen: boolean = false;
   @tracked progressBannerModalIsOpen: boolean = false;
@@ -39,6 +38,10 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
 
   get nonActiveRepositories() {
     return this.args.repositories.filter((repository) => repository !== this.args.activeRepository);
+  }
+
+  @action doNothing() {
+    // called when trying to copy Git Repository URL of a repository that isNew
   }
 
   @action
@@ -57,18 +60,6 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
     dropdownActions.close();
     this.progressBannerModalIsOpen = true;
   }
-
-  handleCopyGitRepositoryURLClickTask = task({ keepLatest: true }, async (): Promise<void> => {
-    // get('isNew') works around type bug
-    if (this.args.activeRepository.get('isNew')) {
-      return;
-    }
-
-    await navigator.clipboard.writeText(this.args.activeRepository.cloneUrl);
-    this.gitRepositoryURLWasCopiedRecently = true;
-    await timeout(config.x.copyConfirmationTimeout);
-    this.gitRepositoryURLWasCopiedRecently = false;
-  });
 
   @action
   async handleDeleteRepositoryActionClick(dropdownActions: { close: () => void }) {
@@ -112,6 +103,6 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::RepositoryDropdown': typeof CoursePageRepositoryDropdownComponent;
+    'CoursePage::RepositoryDropdown': typeof RepositoryDropdownComponent;
   }
 }
