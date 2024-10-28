@@ -26,8 +26,7 @@ export default function stubClipboard(cache: ClipboardItem[] = new Array<Clipboa
   });
 
   stub(navigator.clipboard, 'writeText').callsFake(async function (text = '') {
-    const blob = new Blob([text], { type: TEXT_MIME_TYPE });
-    cache.splice(0, Infinity, ...[new ClipboardItem({ [TEXT_MIME_TYPE]: blob })]);
+    cache.splice(0, Infinity, ...[new ClipboardItem({ [TEXT_MIME_TYPE]: new Blob([text], { type: TEXT_MIME_TYPE }) })]);
   });
 
   return cache;

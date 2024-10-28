@@ -42,7 +42,11 @@
           Back to Catalog
         </CoursePage::RepositoryDropdownAction>
 
-        <CopyableAnything @value={{@activeRepository.cloneUrl}} @isDisabled={{@activeRepository.isNewAsBoolean}} as |performCopyTask hasRecentlyCopied|>
+        <CopyableAnything
+          @value={{@activeRepository.cloneUrl}}
+          @isDisabled={{@activeRepository.isNewAsBoolean}}
+          as |performCopyTask hasRecentlyCopied|
+        >
           <div
             class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex group
               {{if @activeRepository.isNewAsBoolean 'text-gray-300 dark:text-gray-700'}}"
