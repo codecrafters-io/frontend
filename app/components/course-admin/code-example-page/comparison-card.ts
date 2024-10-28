@@ -1,10 +1,11 @@
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
-import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
 import type UserModel from 'codecrafters-frontend/models/user';
-import { task } from 'ember-concurrency';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -15,7 +16,9 @@ export interface Signature {
   };
 }
 
-export default class ComparisonCard extends Component<Signature> {
+export default class ComparisonCardComponent extends Component<Signature> {
+  @service declare clipboard: ClipboardService;
+
   @tracked isExpanded = false;
 
   get firstUser() {
@@ -69,10 +72,6 @@ export default class ComparisonCard extends Component<Signature> {
     });
   }
 
-  handleCopyIdToClipbardButtonClickTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await navigator.clipboard.writeText(this.args.comparison.id);
-  });
-
   @action
   handleExpandButtonClick() {
     next(() => {
@@ -83,6 +82,6 @@ export default class ComparisonCard extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExamplePage::ComparisonCard': typeof ComparisonCard;
+    'CourseAdmin::CodeExamplePage::ComparisonCard': typeof ComparisonCardComponent;
   }
 }
