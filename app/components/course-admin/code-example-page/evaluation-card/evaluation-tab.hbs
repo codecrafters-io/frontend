@@ -1,11 +1,11 @@
 <div>
   <div class="flex items-center mb-4 gap-4 flex-wrap">
-    <TertiaryButton class="mb-4" {{on "click" this.handleCopyToClipboardButtonClick}} @isDisabled={{not @evaluation.logsFileContents}}>
-      {{#if this.wasRecentlyCopied}}
-        Copied!
-      {{else}}
-        Copy to Clipboard
-      {{/if}}
+    <TertiaryButton
+      class="mb-4"
+      {{on "click" (perform this.clipboard.copyTask @evaluation.logsFileContents)}}
+      @isDisabled={{not @evaluation.logsFileContents}}
+    >
+      {{if this.clipboard.hasRecentlyCopied "Copied!" "Copy to Clipboard"}}
     </TertiaryButton>
 
     <TertiaryButtonWithSpinner

@@ -1,9 +1,9 @@
-import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
-import { task, timeout } from 'ember-concurrency';
-import { tracked } from 'tracked-built-ins';
-import config from 'codecrafters-frontend/config/environment';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -15,25 +15,13 @@ export interface Signature {
 }
 
 export default class EvaluationTabComponent extends Component<Signature> {
-  @tracked wasRecentlyCopied = false;
-
-  @action
-  handleCopyToClipboardButtonClick() {
-    this.copyToClipboardTask.perform();
-  }
+  @service declare clipboard: ClipboardService;
 
   @action
   handleRegenerateButtonClick() {
     this.regenerateTask.perform();
     this.args.onRegenerate();
   }
-
-  copyToClipboardTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await navigator.clipboard.writeText(this.args.evaluation.logsFileContents!);
-    this.wasRecentlyCopied = true;
-    await timeout(config.x.copyConfirmationTimeout);
-    this.wasRecentlyCopied = false;
-  });
 
   regenerateTask = task({ keepLatest: true }, async (): Promise<void> => {
     await this.args.evaluation.regenerate({});
