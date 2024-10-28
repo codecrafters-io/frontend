@@ -24,9 +24,9 @@
       {{/each}}
     </div>
 
-    <PrimaryButton {{on "click" this.handleCopyButtonClick}} data-test-copy-button>
+    <PrimaryButton {{on "click" (perform this.clipboard.copyTask this.copyableText this.handleCopyButtonClick)}} data-test-copy-button>
       <AnimatedContainer>
-        {{#animated-if this.wasCopiedRecently use=this.fade duration=100}}
+        {{#animated-if this.clipboard.hasRecentlyCopied use=this.fade duration=100}}
           <div class="flex items-center gap-1.5">
             {{svg-jar "check-circle" class="w-5 h-5"}}
             <span>
