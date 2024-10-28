@@ -5,7 +5,6 @@ import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import type RouterService from '@ember/routing/router-service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 interface Signature {
@@ -26,7 +25,6 @@ export default class RepositoryDropdownComponent extends Component<Signature> {
 
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
-  @service declare clipboard: ClipboardService;
 
   @tracked configureGithubIntegrationModalIsOpen: boolean = false;
   @tracked deleteRepositoryModalIsOpen: boolean = false;
@@ -38,10 +36,6 @@ export default class RepositoryDropdownComponent extends Component<Signature> {
 
   get nonActiveRepositories() {
     return this.args.repositories.filter((repository) => repository !== this.args.activeRepository);
-  }
-
-  @action doNothing() {
-    // called when trying to copy Git Repository URL of a repository that isNew
   }
 
   @action

@@ -4,7 +4,6 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 
 interface Signature {
@@ -28,7 +27,6 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   socialPlatforms: SocialPlatform[] = ['twitter', 'slack', 'discord', 'linkedin'];
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-  @service declare clipboard: ClipboardService;
 
   @tracked selectedSocialPlatform: SocialPlatform = 'twitter';
 

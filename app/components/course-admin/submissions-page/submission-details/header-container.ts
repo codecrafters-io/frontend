@@ -5,7 +5,6 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
-import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
 export interface Signature {
@@ -20,7 +19,6 @@ export default class HeaderContainerComponent extends Component<Signature> {
 
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
-  @service declare clipboard: ClipboardService;
 
   get durationInMilliseconds() {
     return this.args.submission.evaluations[0]!.createdAt.getTime() - this.args.submission.createdAt.getTime();

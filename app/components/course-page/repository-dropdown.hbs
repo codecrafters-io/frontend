@@ -42,37 +42,39 @@
           Back to Catalog
         </CoursePage::RepositoryDropdownAction>
 
-        <div
-          {{! @glint-expect-error model.isNew has wrong type !}}
-          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex group {{if @activeRepository.isNew 'text-gray-300 dark:text-gray-700'}}"
-          role="button"
-          {{on "click" (unless @activeRepository.isNew (perform this.clipboard.copyTask @activeRepository.cloneUrl) this.doNothing)}}
-          data-test-dropdown-action
-        >
-          <AnimatedContainer @class="w-full">
-            {{#animated-if this.clipboard.hasRecentlyCopied use=this.transition}}
-              <div class="flex items-center justify-between">
-                <span class="text-teal-500">Copied!</span>
-                {{svg-jar "check" class="w-5 ml-4 text-teal-500"}}
-              </div>
-            {{else}}
-              <div class="flex items-center justify-between">
-                <span class="text-sm {{unless @activeRepository.isNew 'text-gray-700 dark:text-gray-300' 'text-gray-300 dark:text-gray-600'}}">
-                  Copy Git Repository URL
-                </span>
-                {{svg-jar
-                  "clipboard-copy"
-                  class="w-5 ml-4 text-gray-300 dark:text-gray-700 {{unless @activeRepository.isNew 'group-hover:text-teal-500 dark:group-hover:text-teal-500'}}"
-                }}
-              </div>
-            {{/animated-if}}
-          </AnimatedContainer>
+        <CopyableAnything @value={{@activeRepository.cloneUrl}} @isDisabled={{@activeRepository.isNewAsBoolean}} as |performCopyTask hasRecentlyCopied|>
+          <div
+            class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex group
+              {{if @activeRepository.isNewAsBoolean 'text-gray-300 dark:text-gray-700'}}"
+            role="button"
+            {{on "click" performCopyTask}}
+            data-test-dropdown-action
+          >
+            <AnimatedContainer @class="w-full">
+              {{#animated-if hasRecentlyCopied use=this.transition}}
+                <div class="flex items-center justify-between">
+                  <span class="text-teal-500">Copied!</span>
+                  {{svg-jar "check" class="w-5 ml-4 text-teal-500"}}
+                </div>
+              {{else}}
+                <div class="flex items-center justify-between">
+                  <span class="text-sm {{unless @activeRepository.isNew 'text-gray-700 dark:text-gray-300' 'text-gray-300 dark:text-gray-600'}}">
+                    Copy Git Repository URL
+                  </span>
+                  {{svg-jar
+                    "clipboard-copy"
+                    class="w-5 ml-4 text-gray-300 dark:text-gray-700 {{unless @activeRepository.isNew 'group-hover:text-teal-500 dark:group-hover:text-teal-500'}}"
+                  }}
+                </div>
+              {{/animated-if}}
+            </AnimatedContainer>
 
-          {{! @glint-expect-error model.isNew has wrong type !}}
-          {{#if @activeRepository.isNew}}
-            <EmberTooltip @text="Please select a language first" />
-          {{/if}}
-        </div>
+            {{! @glint-expect-error model.isNew has wrong type !}}
+            {{#if @activeRepository.isNew}}
+              <EmberTooltip @text="Please select a language first" />
+            {{/if}}
+          </div>
+        </CopyableAnything>
 
         {{#if @activeRepository.progressBannerUrl}}
           <CoursePage::RepositoryDropdownAction @icon="photograph" {{on "click" (fn this.handleCopyGifBannerButtonClick dd.actions)}}>

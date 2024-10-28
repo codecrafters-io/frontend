@@ -37,14 +37,16 @@
     </div>
     <div class="flex items-center gap-3">
       {{#if this.isExpanded}}
-        <button
-          class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
-          type="button"
-          {{on "click" (perform this.clipboard.copyTask @comparison.id)}}
-        >
-          {{svg-jar "clipboard-check" class="w-3 mr-1 fill-current"}}
-          {{if this.clipboard.hasRecentlyCopied "Copied!" "Copy ID"}}
-        </button>
+        <CopyableAnything @value={{@comparison.id}} as |performCopyTask hasRecentlyCopied|>
+          <button
+            class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
+            type="button"
+            {{on "click" performCopyTask}}
+          >
+            {{svg-jar "clipboard-check" class="w-3 mr-1 fill-current"}}
+            {{if hasRecentlyCopied "Copied!" "Copy ID"}}
+          </button>
+        </CopyableAnything>
         <button
           class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
           type="button"

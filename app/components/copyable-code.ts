@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -12,9 +10,7 @@ interface Signature {
   };
 }
 
-export default class CopyableCodeComponent extends Component<Signature> {
-  @service declare clipboard: ClipboardService;
-}
+export default class CopyableCodeComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

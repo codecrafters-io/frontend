@@ -144,6 +144,10 @@ export default class RepositoryModel extends Model {
     return this.courseStageCompletions.sortBy('courseStage.position').lastObject?.courseStage;
   }
 
+  get isNewAsBoolean() {
+    return Boolean(this.isNew);
+  }
+
   get isRecentlyCreated() {
     const now = new Date().getTime();
     const createdAt = this.createdAt.getTime();

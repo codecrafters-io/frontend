@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import { service } from '@ember/service';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
-import type ClipboardService from 'codecrafters-frontend/services/clipboard';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -20,7 +19,6 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
   transition = fade;
 
   @service declare darkMode: DarkModeService;
-  @service declare clipboard: ClipboardService;
 
   get codeForHighlighting(): string {
     return this.args.commands.join('\n');

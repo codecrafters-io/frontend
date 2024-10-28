@@ -9,14 +9,16 @@
   </div>
 
   <div class="relative flex items-stretch">
-    <button
-      type="button"
-      class="bg-teal-600 px-3 py-1 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
-      {{on "click" (perform this.clipboard.copyTask @code @onCopyButtonClick)}}
-      data-test-copy-button
-    >
-      {{if this.clipboard.hasRecentlyCopied "COPIED" "COPY"}}
-    </button>
+    <CopyableAnything @value={{@code}} @onCopied={{@onCopyButtonClick}} as |performCopyTask hasRecentlyCopied|>
+      <button
+        type="button"
+        class="bg-teal-600 px-3 py-1 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
+        {{on "click" performCopyTask}}
+        data-test-copy-button
+      >
+        {{if hasRecentlyCopied "COPIED" "COPY"}}
+      </button>
+    </CopyableAnything>
     <div class="absolute top-px bottom-px -left-6 w-6 bg-gray-300 border-text-mask">
     </div>
   </div>

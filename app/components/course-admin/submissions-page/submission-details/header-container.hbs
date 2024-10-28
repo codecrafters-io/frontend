@@ -66,10 +66,12 @@
               {{@submission.repository.language.name}}
             </span>
 
-            <TertiaryButton @size="extra-small" class="mr-2" {{on "click" (perform this.clipboard.copyTask @submission.repository.cloneUrl)}}>
-              {{svg-jar "download" class="w-4 {{if this.clipboard.hasRecentlyCopied 'text-green-500' 'text-gray-500'}}"}}
-              <EmberTooltip @text="Click to copy Git URL" />
-            </TertiaryButton>
+            <CopyableAnything @value={{@submission.repository.cloneUrl}} as |performCopyTask hasRecentlyCopied|>
+              <TertiaryButton @size="extra-small" class="mr-2" {{on "click" performCopyTask}}>
+                {{svg-jar "download" class=(concat "w-4" " " (if hasRecentlyCopied "text-teal-500" "text-gray-500"))}}
+                <EmberTooltip @text="Click to copy Git URL" />
+              </TertiaryButton>
+            </CopyableAnything>
 
             <TertiaryButton @size="extra-small" class="mr-2" {{on "click" this.handleForkButtonClick}}>
               {{#if this.isForking}}
@@ -100,15 +102,12 @@
               {{/if}}
             </span>
 
-            <TertiaryButton
-              @size="extra-small"
-              class="mr-2"
-              {{on "click" (perform this.clipboard.copyTask @submission.commitSha)}}
-              data-test-copy-commit-sha-button
-            >
-              {{svg-jar "clipboard-list" class="w-4 {{if this.clipboard.hasRecentlyCopied 'text-green-500' 'text-gray-500'}}"}}
-              <EmberTooltip @text="Click to copy Git commit SHA" />
-            </TertiaryButton>
+            <CopyableAnything @value={{@submission.commitSha}} as |performCopyTask hasRecentlyCopied|>
+              <TertiaryButton @size="extra-small" class="mr-2" {{on "click" performCopyTask}} data-test-copy-commit-sha-button>
+                {{svg-jar "clipboard-list" class=(concat "w-4" " " (if hasRecentlyCopied "text-teal-500" "text-gray-500"))}}
+                <EmberTooltip @text="Click to copy Git commit SHA" />
+              </TertiaryButton>
+            </CopyableAnything>
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 
@@ -118,18 +117,20 @@
               {{or this.shortSubmissionTreeSha "Unknown"}}
             </span>
 
-            <TertiaryButton
-              @size="extra-small"
-              @isDisabled={{eq this.shortSubmissionTreeSha "Unknown"}}
-              class="mr-2"
-              {{on "click" (perform this.clipboard.copyTask @submission.treeSha)}}
-              data-test-copy-tree-sha-button
-            >
-              {{svg-jar "clipboard-list" class="w-4 {{if this.clipboard.hasRecentlyCopied 'text-green-500' 'text-gray-500'}}"}}
-              {{#if (not-eq this.shortSubmissionTreeSha "Unknown")}}
-                <EmberTooltip @text="Click to copy Git tree SHA" />
-              {{/if}}
-            </TertiaryButton>
+            <CopyableAnything @value={{@submission.treeSha}} as |performCopyTask hasRecentlyCopied|>
+              <TertiaryButton
+                @size="extra-small"
+                @isDisabled={{eq this.shortSubmissionTreeSha "Unknown"}}
+                class="mr-2"
+                {{on "click" performCopyTask}}
+                data-test-copy-tree-sha-button
+              >
+                {{svg-jar "clipboard-list" class=(concat "w-4" " " (if hasRecentlyCopied "text-teal-500" "text-gray-500"))}}
+                {{#if (not-eq this.shortSubmissionTreeSha "Unknown")}}
+                  <EmberTooltip @text="Click to copy Git tree SHA" />
+                {{/if}}
+              </TertiaryButton>
+            </CopyableAnything>
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 

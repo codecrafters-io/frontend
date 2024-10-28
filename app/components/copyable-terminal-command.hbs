@@ -30,21 +30,23 @@
       {{/if}}
     </div>
 
-    <TertiaryButton @size="extra-small" {{on "click" (perform this.clipboard.copyTask this.copyableText @onCopyButtonClick)}}>
-      <AnimatedContainer>
-        {{#animated-if this.clipboard.hasRecentlyCopied use=this.transition duration=200}}
-          <div class="flex items-center gap-1">
-            {{svg-jar "clipboard-check" class="h-4 w-4 text-teal-500"}}
-            <span class="text-xs text-teal-500">copied!</span>
-          </div>
-        {{else}}
-          <div class="flex items-center gap-1">
-            {{svg-jar "clipboard-copy" class="h-4 w-4"}}
-            <span class="text-xs">copy</span>
-          </div>
-        {{/animated-if}}
-      </AnimatedContainer>
-    </TertiaryButton>
+    <CopyableAnything @value={{this.copyableText}} @onCopied={{@onCopyButtonClick}} as |performCopyTask hasRecentlyCopied|>
+      <TertiaryButton @size="extra-small" {{on "click" performCopyTask}}>
+        <AnimatedContainer>
+          {{#animated-if hasRecentlyCopied use=this.transition duration=200}}
+            <div class="flex items-center gap-1">
+              {{svg-jar "clipboard-check" class="h-4 w-4 text-teal-500"}}
+              <span class="text-xs text-teal-500">copied!</span>
+            </div>
+          {{else}}
+            <div class="flex items-center gap-1">
+              {{svg-jar "clipboard-copy" class="h-4 w-4"}}
+              <span class="text-xs">copy</span>
+            </div>
+          {{/animated-if}}
+        </AnimatedContainer>
+      </TertiaryButton>
+    </CopyableAnything>
   </div>
 
   <div class="w-full text-xs overflow-x-auto" data-test-copyable-text>

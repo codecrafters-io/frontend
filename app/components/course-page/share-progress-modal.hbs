@@ -24,21 +24,23 @@
       {{/each}}
     </div>
 
-    <PrimaryButton {{on "click" (perform this.clipboard.copyTask this.copyableText this.handleCopyButtonClick)}} data-test-copy-button>
-      <AnimatedContainer>
-        {{#animated-if this.clipboard.hasRecentlyCopied use=this.fade duration=100}}
-          <div class="flex items-center gap-1.5">
-            {{svg-jar "check-circle" class="w-5 h-5"}}
+    <CopyableAnything @value={{this.copyableText}} @onCopied={{this.handleCopyButtonClick}} as |performCopyTask hasRecentlyCopied|>
+      <PrimaryButton {{on "click" performCopyTask}} data-test-copy-button>
+        <AnimatedContainer>
+          {{#animated-if hasRecentlyCopied use=this.fade duration=100}}
+            <div class="flex items-center gap-1.5">
+              {{svg-jar "check-circle" class="w-5 h-5"}}
+              <span>
+                Copied!
+              </span>
+            </div>
+          {{else}}
             <span>
-              Copied!
+              Copy to clipboard
             </span>
-          </div>
-        {{else}}
-          <span>
-            Copy to clipboard
-          </span>
-        {{/animated-if}}
-      </AnimatedContainer>
-    </PrimaryButton>
+          {{/animated-if}}
+        </AnimatedContainer>
+      </PrimaryButton>
+    </CopyableAnything>
   </div>
 </ModalBody>
