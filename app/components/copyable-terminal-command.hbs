@@ -30,9 +30,9 @@
       {{/if}}
     </div>
 
-    <TertiaryButton @size="extra-small" {{on "click" (perform this.handleCopyButtonClickTask)}}>
+    <TertiaryButton @size="extra-small" {{on "click" (perform this.clipboard.copyTask this.copyableText @onCopyButtonClick)}}>
       <AnimatedContainer>
-        {{#animated-if this.wasCopiedRecently use=this.transition duration=200}}
+        {{#animated-if this.clipboard.hasRecentlyCopied use=this.transition duration=200}}
           <div class="flex items-center gap-1">
             {{svg-jar "clipboard-check" class="h-4 w-4 text-teal-500"}}
             <span class="text-xs text-teal-500">copied!</span>
