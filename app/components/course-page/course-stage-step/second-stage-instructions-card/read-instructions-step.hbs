@@ -9,9 +9,16 @@
   </p>
   <ul>
     <li>
-      The
-      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
-      tab, which contains code examples from other users.
+      {{#if @isShowingLanguageGuide}}
+        The
+        <a href="#language-guide-card">{{this.currentLanguageName}} Guide</a>
+        card, which contains
+        {{this.currentLanguageName}}-specific instructions for this stage.
+      {{else}}
+        The
+        <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
+        tab, which contains code examples from other users.
+      {{/if}}
     </li>
 
     {{! Let's limit to 2 suggestions for now so that we don't overwhelm the user.}}

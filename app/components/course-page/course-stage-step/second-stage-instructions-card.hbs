@@ -1,4 +1,10 @@
-<CoursePage::InstructionsCard @title="How to pass this stage" id="second-stage-instructions-card" ...attributes>
+<CoursePage::InstructionsCard
+  @title="How to pass this stage"
+  id="second-stage-instructions-card"
+  ...attributes
+  {{did-update this.loadLanguageGuides @courseStage}}
+  {{did-insert this.loadLanguageGuides}}
+>
   <:content>
     <div class="prose dark:prose-invert mb-5">
       <p>
@@ -18,12 +24,14 @@
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.readInstructionsStepIsComplete}}
+          @isShowingLanguageGuide={{this.isShowingLanguageGuide}}
         />
       {{else if (eq stepList.expandedStep.id "implement-solution")}}
         <CoursePage::CourseStageStep::SecondStageInstructionsCard::ImplementSolutionStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.implementSolutionStepIsComplete}}
+          @isShowingLanguageGuide={{this.isShowingLanguageGuide}}
         />
       {{else if (eq stepList.expandedStep.id "run-tests")}}
         <CoursePage::CourseStageStep::SecondStageInstructionsCard::RunTestsStep

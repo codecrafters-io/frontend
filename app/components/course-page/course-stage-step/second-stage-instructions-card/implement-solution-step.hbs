@@ -3,7 +3,13 @@
     Head over to your editor / IDE and implement your solution.
   </p>
   <p>
-    If you want a quick look at what functions to use or how to structure your code, we recommend looking at
-    <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
+    {{#if @isShowingLanguageGuide}}
+      If you want a quick look at what functions to use, we recommend looking at
+      <a href="#language-guide-card">{{this.currentLanguageName}} Guide</a>.
+    {{else}}
+      If you want a quick look at what functions to use or how to structure your code, we recommend looking at
+      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
+    {{/if}}
+
   </p>
 </div>
