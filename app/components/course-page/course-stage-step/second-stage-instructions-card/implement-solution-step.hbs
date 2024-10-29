@@ -4,11 +4,15 @@
   </p>
   <p>
     {{#if @shouldRecommendLanguageGuide}}
-      If you want a quick look at what functions to use, we recommend looking at
-      <a href="#language-guide-card">{{@repository.language.name}} Guide</a>.
+      If you want a quick look at what functions to use or how to structure your code, we recommend looking at
+      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
+      tab or the
+      <a href="#language-guide-card">{{@repository.language.name}} Guide</a>
+      card.
     {{else}}
       If you want a quick look at what functions to use or how to structure your code, we recommend looking at
-      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
+      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
+      tab.
     {{/if}}
   </p>
 </div>

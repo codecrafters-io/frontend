@@ -9,17 +9,19 @@
   </p>
   <ul>
     <li>
-      {{#if @shouldRecommendLanguageGuide}}
+      The
+      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
+      tab, which contains code examples from other users.
+    </li>
+
+    {{#if @shouldRecommendLanguageGuide}}
+      <li>
         The
         <a href="#language-guide-card">{{@repository.language.name}} Guide</a>
         card, which contains
         {{@repository.language.name}}-specific instructions for this stage.
-      {{else}}
-        The
-        <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
-        tab, which contains code examples from other users.
-      {{/if}}
-    </li>
+      </li>
+    {{/if}}
 
     {{! Let's limit to 2 suggestions for now so that we don't overwhelm the user.}}
     {{#if (gt @courseStage.screencasts.length 0)}}
