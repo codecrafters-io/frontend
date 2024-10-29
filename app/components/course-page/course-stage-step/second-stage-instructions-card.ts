@@ -13,6 +13,7 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
+    shouldRecommendLanguageGuide: boolean;
   };
 }
 

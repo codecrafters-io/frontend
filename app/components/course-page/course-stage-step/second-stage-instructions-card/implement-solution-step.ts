@@ -9,6 +9,7 @@ interface Signature {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
     isComplete: boolean;
+    shouldRecommendLanguageGuide: boolean;
   };
 }
 

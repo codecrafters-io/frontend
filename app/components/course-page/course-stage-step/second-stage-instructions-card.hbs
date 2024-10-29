@@ -18,12 +18,14 @@
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.readInstructionsStepIsComplete}}
+          @shouldRecommendLanguageGuide={{@shouldRecommendLanguageGuide}}
         />
       {{else if (eq stepList.expandedStep.id "implement-solution")}}
         <CoursePage::CourseStageStep::SecondStageInstructionsCard::ImplementSolutionStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.implementSolutionStepIsComplete}}
+          @shouldRecommendLanguageGuide={{@shouldRecommendLanguageGuide}}
         />
       {{else if (eq stepList.expandedStep.id "run-tests")}}
         <CoursePage::CourseStageStep::SecondStageInstructionsCard::RunTestsStep
