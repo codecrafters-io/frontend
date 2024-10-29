@@ -10,12 +10,15 @@ import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-l
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';
 import { next } from '@ember/runloop';
+import { task } from 'ember-concurrency';
+import type Store from '@ember-data/store';
 
 export default class CourseStageInstructionsController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
+  @service declare store: Store;
 
   @tracked commentListIsFilteredByLanguage = true;
 
@@ -47,7 +50,13 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowLanguageGuide() {
-    return !this.model.courseStage.isFirst && (this.featureFlags.canSeeLanguageGuidesForStage2 || this.authenticator.currentUser?.isStaff);
+    const languageGuide = this.model.courseStage.languageGuides.findBy('language', this.model.activeRepository.language);
+
+    return (
+      !this.model.courseStage.isFirst &&
+      !!languageGuide &&
+      (this.featureFlags.canSeeLanguageGuidesForStage2 || this.authenticator.currentUser?.isStaff)
+    );
   }
 
   get shouldShowPrerequisites() {
@@ -109,4 +118,16 @@ export default class CourseStageInstructionsController extends Controller {
   handleTestRunnerCardExpandedOnFirstStage() {
     document.getElementById('first-stage-tutorial-card')?.scrollIntoView({ behavior: 'smooth' });
   }
+
+  @action
+  loadLanguageGuides(): void {
+    this.loadLanguageGuidesTask.perform();
+  }
+
+  loadLanguageGuidesTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await this.store.query('course-stage-language-guide', {
+      course_stage_id: this.model.courseStage.id,
+      include: 'course-stage,language',
+    });
+  });
 }

@@ -9,15 +9,11 @@ interface Signature {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
     isComplete: boolean;
-    isShowingLanguageGuide: boolean;
+    shouldRecommendLanguageGuide: boolean;
   };
 }
 
-export default class ImplementSolutionStepComponent extends Component<Signature> {
-  get currentLanguageName(): string {
-    return this.args.repository.language!.name;
-  }
-}
+export default class ImplementSolutionStepComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

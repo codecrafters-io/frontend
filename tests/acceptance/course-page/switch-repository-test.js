@@ -45,6 +45,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
       'fetch hints (course page)',
+      'fetch language guides (course page)',
     ].length;
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');

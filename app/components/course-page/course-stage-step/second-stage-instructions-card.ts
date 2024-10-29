@@ -5,9 +5,7 @@ import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -15,6 +13,7 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
+    shouldRecommendLanguageGuide: boolean;
   };
 }
 
@@ -56,7 +55,6 @@ class RunTestsStep extends BaseStep implements Step {
 }
 
 export default class SecondStageInstructionsCardComponent extends Component<Signature> {
-  @service declare featureFlags: FeatureFlagsService;
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
@@ -70,12 +68,6 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
 
   get implementSolutionStepWasMarkedAsComplete() {
     return this.coursePageState.manuallyCompletedStepIdsInSecondStageInstructions.includes('implement-solution');
-  }
-
-  get isShowingLanguageGuide() {
-    const languageGuide = this.args.courseStage.languageGuides.findBy('language', this.args.repository.language);
-
-    return this.featureFlags.canSeeLanguageGuidesForStage2 && !!languageGuide;
   }
 
   get readInstructionsStepIsComplete() {
@@ -119,18 +111,6 @@ export default class SecondStageInstructionsCardComponent extends Component<Sign
   handleViewLogsButtonClick() {
     this.coursePageState.testResultsBarIsExpanded = true;
   }
-
-  @action
-  loadLanguageGuides(): void {
-    this.loadLanguageGuidesTask.perform();
-  }
-
-  loadLanguageGuidesTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await this.store.query('course-stage-language-guide', {
-      course_stage_id: this.args.courseStage.id,
-      include: 'course-stage,language',
-    });
-  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {

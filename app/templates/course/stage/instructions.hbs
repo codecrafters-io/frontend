@@ -1,4 +1,8 @@
-<CoursePage::PreviousStepsIncompleteOverlay @currentStep={{this.currentStep}}>
+<CoursePage::PreviousStepsIncompleteOverlay
+  @currentStep={{this.currentStep}}
+  {{did-update this.loadLanguageGuides @model.courseStage}}
+  {{did-insert this.loadLanguageGuides}}
+>
   <div class="pt-6 pb-32 px-3 md:px-6 lg:px-10" {{did-update this.handleDidUpdateTestsStatus this.currentStep.testsStatus}}>
     {{#if this.shouldShowUpgradePrompt}}
       <CoursePage::CourseStageStep::UpgradePrompt @featureSlugToHighlight="content" class="mb-6" />
@@ -36,6 +40,7 @@
       <CoursePage::CourseStageStep::SecondStageInstructionsCard
         @repository={{@model.activeRepository}}
         @courseStage={{@model.courseStage}}
+        @shouldRecommendLanguageGuide={{this.shouldShowLanguageGuide}}
         class="mb-6"
       />
     {{/if}}
