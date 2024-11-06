@@ -94,6 +94,7 @@ export default class CommentFormComponent extends Component<Signature> {
   @action
   async handleFormSubmit(e: SubmitEvent) {
     e.preventDefault();
+    if (this.submitButtonIsDisabled) return;
     (e.target as HTMLFormElement).reportValidity();
 
     if ((e.target as HTMLFormElement).checkValidity()) {
