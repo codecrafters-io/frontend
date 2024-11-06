@@ -36,7 +36,9 @@ export default class CourseOverviewResumeTrackButtonComponent extends Component<
 
   @action
   handleClicked() {
-    this.router.transitionTo('course', (this.activeCourse || this.args.courses.reverse()[0]!).slug);
+    this.router.transitionTo('course', (this.activeCourse || this.args.courses.reverse()[0]!).slug, {
+      queryParams: { track: this.args.language.slug },
+    });
   }
 }
 
