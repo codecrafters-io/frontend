@@ -18,8 +18,8 @@ export default class CopyableCodeComponent extends Component<Signature> {
   @tracked codeWasCopiedRecently: boolean = false;
 
   @action
-  handleCopyButtonClick() {
-    navigator.clipboard.writeText(this.args.code);
+  async handleCopyButtonClick() {
+    await navigator.clipboard.writeText(this.args.code);
 
     this.codeWasCopiedRecently = true;
 

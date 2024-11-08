@@ -35,8 +35,8 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
   }
 
   @action
-  handleCopyButtonClick() {
-    navigator.clipboard.writeText(this.copyableText);
+  async handleCopyButtonClick() {
+    await navigator.clipboard.writeText(this.copyableText);
 
     this.wasCopiedRecently = true;
 
