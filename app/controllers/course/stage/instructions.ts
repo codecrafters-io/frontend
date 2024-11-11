@@ -54,11 +54,15 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowLanguageGuide() {
-    return !this.model.courseStage.isFirst && !!this.languageGuide && this.featureFlags.canSeeLanguageGuidesForStage2;
+    return !this.model.courseStage.isFirst && !!this.languageGuide;
   }
 
   get shouldShowPrerequisites() {
     return !!this.prerequisiteInstructionsMarkdown;
+  }
+
+  get shouldShowSolution() {
+    return this.featureFlags.canSeeSolutionsForStage2;
   }
 
   get shouldShowTestRunnerCard() {

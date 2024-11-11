@@ -1,8 +1,13 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { service } from '@ember/service';
+import ViewableMixin from 'codecrafters-frontend/mixins/viewable'; // eslint-disable-line ember/no-mixins
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 
-export default class CourseStageSolutionModel extends Model {
+export default class CourseStageSolutionModel extends Model.extend(ViewableMixin) {
+  @service declare authenticator: AuthenticatorService;
+
   @attr() declare authorDetails: { [key: string]: string }; // free-form JSON
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('string') declare explanationMarkdown: string;

@@ -200,6 +200,14 @@ export default class RepositoryModel extends Model {
     return buildPreChallengeAssessmentSectionList(this);
   }
 
+  get secondStageSolution(): CourseStageSolutionModel | null {
+    if (!this.course.secondStage) {
+      return null;
+    }
+
+    return this.course.secondStage.solutions.find((solution) => solution.language === this.language) || null;
+  }
+
   courseStageCompletionFor(courseStage: CourseStageModel) {
     return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
   }
