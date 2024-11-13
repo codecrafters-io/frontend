@@ -25,9 +25,11 @@ export default class DeleteRepositoryModalComponent extends Component<Signature>
       return;
     }
 
-    this.router.transitionTo('catalog');
+    // Store this before we destroy the record
+    const trackSlug = this.args.repository.language?.slug;
+
     await this.args.repository.destroyRecord();
-    window.location.reload();
+    this.router.transitionTo('course.introduction', { queryParams: { repo: 'new', track: trackSlug } }).followRedirects();
   }
 }
 
