@@ -5,6 +5,7 @@ import Store from '@ember-data/store';
 import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -16,6 +17,8 @@ interface Signature {
 }
 
 export default class DeleteRepositoryModalComponent extends Component<Signature> {
+  @tracked isDeleting: boolean = false;
+
   @service declare router: RouterService;
   @service declare store: Store;
 
@@ -25,10 +28,14 @@ export default class DeleteRepositoryModalComponent extends Component<Signature>
       return;
     }
 
-    // Store this before we destroy the record
-    const trackSlug = this.args.repository.language?.slug;
+    if (this.isDeleting) {
+      return;
+    }
 
-    await this.args.repository.destroyRecord();
+    this.isDeleting = true;
+
+    const trackSlug = this.args.repository.language?.slug; // Store this before we destroy the record
+    await this.args.repository.destroyRecord(); // TODO: Add failure handling
     this.router.transitionTo('course.introduction', { queryParams: { repo: 'new', track: trackSlug } }).followRedirects();
   }
 }

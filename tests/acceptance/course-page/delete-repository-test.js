@@ -155,6 +155,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     await settled(); // Delete request triggers after redirect
 
     await coursePage.repositoryDropdown.click();
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'no repositories should be available');
     assert.notOk(coursePage.repositoryDropdown.content.text.includes('Delete Repository'), 'delete repository action should not be available');
   });
 });
