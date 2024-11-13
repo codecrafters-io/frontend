@@ -46,7 +46,7 @@ export default class CourseCardComponent extends Component {
       return {
         name: 'course',
         model: this.args.course.slug,
-        query: { repo: this.lastUsedRepository.id },
+        query: { repo: null }, // Route will pickup the last used repository by default
       };
     } else {
       return {
