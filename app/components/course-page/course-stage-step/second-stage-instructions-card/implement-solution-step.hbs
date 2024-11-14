@@ -25,7 +25,12 @@
         {{#each this.solution.changedFiles as |changedFile|}}
           {{! Extra if condition convinces typescript that solution isn't null }}
           {{#if this.solution}}
-            <FileDiffCard @filename={{changedFile.filename}} @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
+            <FileDiffCard
+              @filename={{changedFile.filename}}
+              @code={{changedFile.diff}}
+              @language={{this.solution.language.slug}}
+              data-test-file-diff-card
+            />
           {{/if}}
         {{/each}}
       </div>
@@ -40,7 +45,7 @@
     </:content>
 
     <:overlay>
-      <PrimaryButton {{on "click" this.toggleSolution}} class="self-center">
+      <PrimaryButton {{on "click" this.handleRevealSolutionButtonClick}} class="self-center" data-test-reveal-solution-button>
         <div class="flex items-center gap-2">
           {{svg-jar "eye" class="size-6"}}
           <span>Reveal Solution</span>

@@ -61,8 +61,8 @@ export default class CourseStageInstructionsController extends Controller {
     return !!this.prerequisiteInstructionsMarkdown;
   }
 
-  get shouldShowSolution() {
-    return this.featureFlags.canSeeSolutionsForStage2;
+  get shouldShowStage2Solution() {
+    return this.featureFlags.canSeeSolutionsForStage2 && !!this.model.activeRepository.secondStageSolution;
   }
 
   get shouldShowTestRunnerCard() {
