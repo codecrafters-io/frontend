@@ -25,7 +25,7 @@
             </div>
           </PrimaryButton>
         {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
-          <PrimaryButton @size="extra-small">
+          <PrimaryButton @size="extra-small" data-test-expand-step-button>
             <div class="font-bold flex items-center gap-1">
               {{svg-jar "arrow-down" class="w-3 fill-current"}}
               Expand

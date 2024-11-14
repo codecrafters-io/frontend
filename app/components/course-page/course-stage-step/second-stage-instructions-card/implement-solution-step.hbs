@@ -2,6 +2,7 @@
   <p>
     Head over to your editor / IDE and implement your solution.
   </p>
+
   <p>
     {{#if @shouldRecommendLanguageGuide}}
       If you want a quick look at what functions to use or how to structure your code, we recommend looking at
@@ -16,3 +17,40 @@
     {{/if}}
   </p>
 </div>
+
+{{#if (and @shouldShowSolution this.solution)}}
+  <BlurredOverlay @isBlurred={{this.solutionIsBlurred}}>
+    <:content>
+      <div class="flex flex-col gap-4 my-3">
+        {{#each this.solution.changedFiles as |changedFile|}}
+          {{! Extra if condition convinces typescript that solution isn't null }}
+          {{#if this.solution}}
+            <FileDiffCard
+              @filename={{changedFile.filename}}
+              @code={{changedFile.diff}}
+              @language={{this.solution.language.slug}}
+              data-test-file-diff-card
+            />
+          {{/if}}
+        {{/each}}
+      </div>
+
+      {{#if @shouldRecommendLanguageGuide}}
+        <p class="prose dark:prose-invert prose-compact">
+          For a more detailed explanation on how this solution works, view the
+          <a href="#language-guide-card">{{@repository.language.name}} Guide</a>
+          card.
+        </p>
+      {{/if}}
+    </:content>
+
+    <:overlay>
+      <PrimaryButton {{on "click" this.handleRevealSolutionButtonClick}} class="self-center" data-test-reveal-solution-button>
+        <div class="flex items-center gap-2">
+          {{svg-jar "eye" class="size-6"}}
+          <span>Reveal Solution</span>
+        </div>
+      </PrimaryButton>
+    </:overlay>
+  </BlurredOverlay>
+{{/if}}
