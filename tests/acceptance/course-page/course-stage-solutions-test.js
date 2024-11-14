@@ -45,11 +45,11 @@ module('Acceptance | course-page | course-stage-solutions', function (hooks) {
 
   test('can view solution', async function (assert) {
     assert.ok(coursePage.secondStageInstructionsCard.hasRevealSolutionButton, 'Expect reveal solution button to be visible');
-    await percySnapshot('Course Stage Solutions - Before Reveal');
+    await percySnapshot('Second Stage Solution - Before Reveal');
 
     await coursePage.secondStageInstructionsCard.clickOnRevealSolutionButton();
     assert.false(coursePage.secondStageInstructionsCard.hasRevealSolutionButton, 'Expect reveal solution button to be hidden');
     assert.ok(coursePage.secondStageInstructionsCard.hasFileDiffCard, 'Expect file diff card to be visible');
-    await percySnapshot('Course Stage Solutions - After Reveal');
+    await percySnapshot('Second Stage Solution - After Reveal');
   });
 });

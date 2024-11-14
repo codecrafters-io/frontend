@@ -4,11 +4,9 @@ export default {
   clickOnCompleteStepButton: clickable('[data-test-complete-step-button]'),
   clickOnExpandStepButton: clickable('[data-test-expand-step-button]'),
   clickOnRevealSolutionButton: clickable('[data-test-reveal-solution-button]'),
-
+  hasFileDiffCard: isVisible('[data-test-file-diff-card]'),
   hasRevealSolutionButton: isVisible('[data-test-reveal-solution-button]'),
   hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
-  hasFileDiffCard: isVisible('[data-test-file-diff-card]'),
-
   scope: '#second-stage-instructions-card',
 
   scrollIntoView() {
