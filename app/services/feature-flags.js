@@ -14,8 +14,9 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
 
+  // Check for staff first so that we don't trigger "Feature flag called" events for staff users
   get canSeeSolutionsForStage2() {
-    return this.getFeatureFlagValue('can-see-solutions-for-stage-2') === 'test' || this.currentUser?.isStaff;
+    return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-solutions-for-stage-2') === 'test';
   }
 
   get currentUser() {

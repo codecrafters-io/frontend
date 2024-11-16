@@ -61,8 +61,9 @@ export default class CourseStageInstructionsController extends Controller {
     return !!this.prerequisiteInstructionsMarkdown;
   }
 
+  // Check for solution first so that we don't trigger "Feature flag called" events when solutions aren't present
   get shouldShowStage2Solution() {
-    return this.featureFlags.canSeeSolutionsForStage2 && !!this.model.activeRepository.secondStageSolution;
+    return !!this.model.activeRepository.secondStageSolution && this.featureFlags.canSeeSolutionsForStage2;
   }
 
   get shouldShowTestRunnerCard() {
