@@ -151,12 +151,11 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     assert.notOk(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should not be visible');
 
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.press();
-    await waitUntil(() => currentURL() === '/catalog');
+    await waitUntil(() => currentURL() === '/courses/dummy/introduction?repo=new&track=python');
     await settled(); // Delete request triggers after redirect
 
-    await catalogPage.clickOnCourse('Build your own Dummy');
-    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'no repositories should be available');
     assert.notOk(coursePage.repositoryDropdown.content.text.includes('Delete Repository'), 'delete repository action should not be available');
   });
 });

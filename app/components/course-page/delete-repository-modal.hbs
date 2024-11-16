@@ -33,6 +33,10 @@
   </div>
 
   <DangerButtonWithTimedConfirmation @onConfirm={{this.deleteRepository}} @size="regular" data-test-delete-repository-button>
-    Delete
+    {{#if this.isDeleting}}
+      Deleting...
+    {{else}}
+      Delete
+    {{/if}}
   </DangerButtonWithTimedConfirmation>
 </ModalBody>
