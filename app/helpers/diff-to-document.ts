@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 
-const diffToDocument = helper(function diffToDocument([diff = '']: [string | undefined]) {
+export function parseDiff(diff: string = '') {
   const diffLines = diff.split('\n');
 
   const current = [];
@@ -21,6 +21,10 @@ const diffToDocument = helper(function diffToDocument([diff = '']: [string | und
     current: current.join('\n'),
     original: original.join('\n'),
   };
+}
+
+const diffToDocument = helper(function diffToDocument([diff = '']: [string | undefined]) {
+  return parseDiff(diff);
 });
 
 export default diffToDocument;
