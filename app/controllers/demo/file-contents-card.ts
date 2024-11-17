@@ -6,17 +6,16 @@ import EXAMPLE_DOCUMENTS, { ExampleDocument } from 'codecrafters-frontend/utils/
 export default class DemoFileContentsCardController extends Controller {
   @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;
 
+  @tracked foldGutter: boolean = true;
+  @tracked headerTooltipText: boolean = false;
+  @tracked isCollapsed: boolean = false;
+  @tracked isCollapsible: boolean = false;
+  @tracked scrollIntoViewOnCollapse: boolean = true;
   @tracked selectedDocumentIndex: number = 1;
 
   get selectedDocument() {
     return this.documents[this.selectedDocumentIndex] || ExampleDocument.createEmpty();
   }
-
-  @tracked isCollapsible: boolean = false;
-  @tracked isCollapsed: boolean = false;
-  @tracked scrollIntoViewOnCollapse: boolean = true;
-  @tracked headerTooltipText: boolean = false;
-  @tracked foldGutter: boolean = true;
 
   @action selectedDocumentIndexDidChange(event: Event) {
     const target: HTMLSelectElement = event.target as HTMLSelectElement;
