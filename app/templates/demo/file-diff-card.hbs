@@ -18,6 +18,10 @@ py-2"
       </label>
     </component-options-left>
     <component-options-right class="flex flex-wrap">
+      <label class="{{labelClasses}}" title="Use CodeMirror instead of SyntaxHighlightedDiff for rendering the diff">
+        <Input @type="checkbox" @checked={{this.useCodeMirror}} />
+        <span class="ml-2">useCodeMirror</span>
+      </label>
       <label class="{{labelClasses}}" title="Always render CodeMirror using Dark Theme">
         <Input @type="checkbox" @checked={{this.forceDarkTheme}} />
         <span class="ml-2">forceDarkTheme</span>
@@ -27,6 +31,7 @@ py-2"
 {{/let}}
 
 <FileDiffCard
+  @useCodeMirror={{this.useCodeMirror}}
   @code={{this.selectedDocument.diff}}
   @filename={{this.selectedDocument.filename}}
   @language={{this.selectedDocument.language}}

@@ -6,6 +6,7 @@ import EXAMPLE_DOCUMENTS, { DiffBasedExampleDocument } from 'codecrafters-fronte
 const OPTION_DEFAULTS = {
   forceDarkTheme: false,
   selectedDocumentIndex: 1,
+  useCodeMirror: true,
 };
 
 export default class DemoFileDiffCardController extends Controller {
@@ -13,6 +14,7 @@ export default class DemoFileDiffCardController extends Controller {
 
   @tracked forceDarkTheme: boolean = OPTION_DEFAULTS.forceDarkTheme;
   @tracked selectedDocumentIndex: number = OPTION_DEFAULTS.selectedDocumentIndex;
+  @tracked useCodeMirror: boolean = OPTION_DEFAULTS.useCodeMirror;
 
   get selectedDocument() {
     return this.documents[this.selectedDocumentIndex] || DiffBasedExampleDocument.createEmpty();
