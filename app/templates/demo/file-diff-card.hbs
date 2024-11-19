@@ -1,0 +1,45 @@
+{{page-title "FileDiffCard"}}
+
+{{#let
+  "flex flex-wrap text-sm font-semibold text-gray-600 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700
+py-2"
+  "flex cursor-default select-none text-nowrap mx-2"
+  as |groupClasses labelClasses|
+}}
+  <component-options class="{{groupClasses}} -mt-8">
+    <component-options-left class="flex flex-grow flex-wrap">
+      <label class="{{labelClasses}}" title="File for the component to render (select a preset)">
+        <span class="mr-2">File:</span>
+        <select class="dark:bg-gray-700" {{on "change" this.selectedDocumentIndexDidChange}}>
+          {{#each this.documents as |doc index|}}
+            <option selected={{eq this.selectedDocumentIndex index}}>{{doc.filename}} ({{doc.language}})</option>
+          {{/each}}
+        </select>
+      </label>
+    </component-options-left>
+    <component-options-right class="flex flex-wrap">
+      <label class="{{labelClasses}}" title="Always render CodeMirror using Dark Theme">
+        <Input @type="checkbox" @checked={{this.forceDarkTheme}} />
+        <span class="ml-2">forceDarkTheme</span>
+      </label>
+    </component-options-right>
+  </component-options>
+{{/let}}
+
+<FileDiffCard
+  @code={{this.selectedDocument.diff}}
+  @filename={{this.selectedDocument.filename}}
+  @language={{this.selectedDocument.language}}
+  @forceDarkTheme={{this.forceDarkTheme}}
+  class="mt-4 {{if this.forceDarkTheme 'dark'}}"
+/>
+
+<div class="my-2 text-right">
+  <span
+    role="button"
+    class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-200 dark:hover:text-blue-400 underline cursor-pointer"
+    {{on "click" this.resetAllOptions}}
+  >Reset all options</span>
+</div>
+
+{{outlet}}
