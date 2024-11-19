@@ -10,7 +10,7 @@ interface Signature {
     /**
      * Code to render in CodeMirror/SyntaxHighlightedDiff
      */
-    code: string;
+    code?: string;
     /**
      * Filename to render in the header.
      * Also used to auto-detect language for code formatting

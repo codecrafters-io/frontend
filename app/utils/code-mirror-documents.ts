@@ -44,6 +44,10 @@ export class DiffBasedExampleDocument extends ExampleDocument {
 
     this.diff = diff;
   }
+
+  static createEmpty() {
+    return new this({ filename: 'empty.txt', language: 'text' });
+  }
 }
 
 export default [

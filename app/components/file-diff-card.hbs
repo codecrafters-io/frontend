@@ -26,7 +26,12 @@
   {{else}}
     <div class="text-sm leading-6">
       {{! @glint-expect-error: not ts-ified yet }}
-      <SyntaxHighlightedDiff @code={{@code}} @language={{@language}} @shouldCollapseUnchangedLines={{true}} @forceDarkTheme={{@forceDarkTheme}} />
+      <SyntaxHighlightedDiff
+        @code={{or @code ""}}
+        @language={{@language}}
+        @shouldCollapseUnchangedLines={{true}}
+        @forceDarkTheme={{@forceDarkTheme}}
+      />
     </div>
   {{/if}}
 </div>
