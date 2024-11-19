@@ -1,3 +1,8 @@
-<BaseButton @size={{@size}} @isDisabled={{@isDisabled}} class="border-teal-500 hover:border-teal-600 text-teal-500 hover:text-teal-600" ...attributes>
+<BaseButton
+  @size={{@size}}
+  @isDisabled={{@isDisabled}}
+  class="border-teal-500 hover:border-teal-600 dark:hover:border-teal-400 text-teal-500 hover:text-teal-600 dark:hover:text-teal-400"
+  ...attributes
+>
   {{yield}}
 </BaseButton>
