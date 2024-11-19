@@ -1,26 +1,8 @@
 import { helper } from '@ember/component/helper';
+import parseDiffAsDocument from 'codecrafters-frontend/utils/parse-diff-as-document';
 
 const diffToDocument = helper(function diffToDocument([diff = '']: [string | undefined]) {
-  const diffLines = diff.split('\n');
-
-  const current = [];
-  const original = [];
-
-  for (const line of diffLines) {
-    if (line.startsWith('-')) {
-      original.push(line.substring(1));
-    } else if (line.startsWith('+')) {
-      current.push(line.substring(1));
-    } else {
-      original.push(line.substring(1));
-      current.push(line.substring(1));
-    }
-  }
-
-  return {
-    current: current.join('\n'),
-    original: original.join('\n'),
-  };
+  return parseDiffAsDocument(diff);
 });
 
 export default diffToDocument;

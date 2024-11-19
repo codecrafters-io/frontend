@@ -48,7 +48,15 @@
   @foldGutter={{this.foldGutter}}
   @onExpand={{fn (mut this.isCollapsed) false}}
   @onCollapse={{fn (mut this.isCollapsed) true}}
-  class="my-4"
+  class="mt-4"
 />
+
+<div class="my-2 text-right">
+  <span
+    role="button"
+    class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-200 dark:hover:text-blue-400 underline cursor-pointer"
+    {{on "click" this.resetAllOptions}}
+  >Reset all options</span>
+</div>
 
 {{outlet}}

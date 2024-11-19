@@ -5,29 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { type Extension } from '@codemirror/state';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
-
-class ExampleDocument {
-  @tracked document!: string;
-  @tracked originalDocument!: string;
-  @tracked filename!: string;
-  @tracked language!: string;
-  constructor({
-    document,
-    originalDocument,
-    filename,
-    language,
-  }: {
-    document: string;
-    originalDocument?: string;
-    filename: string;
-    language: string;
-  }) {
-    this.document = document;
-    this.originalDocument = originalDocument || document;
-    this.filename = filename;
-    this.language = language;
-  }
-}
+import EXAMPLE_DOCUMENTS, { ExampleDocument } from 'codecrafters-frontend/utils/code-mirror-documents';
 
 const THEME_EXTENSIONS: {
   [key: string]: Extension;
@@ -48,61 +26,6 @@ const LINE_SEPARATORS = [
   { name: '\\r\\n', symbol: '\r\n' },
   { name: '\\n', symbol: '\n' },
   { name: '\\r', symbol: '\r' },
-];
-
-const EXAMPLE_DOCUMENTS = [
-  new ExampleDocument({
-    document:
-      'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document NEW LINE\nAn example plain-text document 8\nAn example plain-text document 9\nNEW LINE\nAn example plain-text document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19\nAn example plain-text document 20\nAn example plain-text document 21\nAn example plain-text document NEW LINE\nAn example plain-text document 22\nAn example plain-text document 23\nAn example plain-text document 24\nAn example plain-text MODIFIED document 25\nAn example plain-text document 26\nAn example plain-text document 27\nAn example plain-text document 28\nAn example plain-text document 29\nAn example plain-text document 30\nAn example plain-text document 31\nAn example plain-text document 32\nAn example plain-text document 33\nAn example plain-text document 34\nAn example plain-text document 35',
-    originalDocument:
-      'An example plain-text document 1\nAn example plain-text document 2\nAn example plain-text document 3\nAn example plain-text document 4\nAn example plain-text document 5\nAn example plain-text document 6\nAn example plain-text document 7\nAn example plain-text document 8\nAn example plain-text document 9\nAn example plain-text document 10\nAn example plain-text document 11\nAn example plain-text document 12\nAn example plain-text document 13\nAn example plain-text document 14\nAn example plain-text document 15\nAn example plain-text document 16\nAn example plain-text document 17\nAn example plain-text document 18\nAn example plain-text document 19\nAn example plain-text document 20\nAn example plain-text document 21\nAn example plain-text document 22\nAn example plain-text document 23\nAn example plain-text document 24\nAn example plain-text document 25\nAn example plain-text document 26\nAn example plain-text document 27\nAn example plain-text document 28\nAn example plain-text document 29\nAn example plain-text document 30\nAn example plain-text document 31\nAn example plain-text document 32\nAn example plain-text document 33\nAn example plain-text document 34\nAn example plain-text document 35',
-    filename: 'test.txt',
-    language: 'text',
-  }),
-  new ExampleDocument({
-    document:
-      "// Some comment\n\nvar x = function functionName() { return `test ${abc}`; };\n\nconst LONG_CONSTANT = \"A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. \";\n\n/**\n * Useful comment about method foo()\n * Some trailing whitespace:      \n * Tab charachers: \t\t\t ≪—— here\n * Some invisible characters: ‎‎‎ ≪—— here\n*/\n\nasync function foo() {\n  var x = 1;\n  alert('123' + x);\n}\n\nasync function fooTwo() {\n  var x = 1;\n  alert('123' + x);\n}\n\nasync function fooThree() {\n  var x = 1;\n  alert('123' + x);\n}\n",
-    originalDocument:
-      '// Some comment\n\nvar x = function functionName() { return `test ${abc}`; };\n\n/**\n *Completely irrelevant comment\n*/\n\nconst SOME_CONSTANT = "A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. A very long constant. ";\n\n/**\n * Un-useful comment about method foo()\n * More information about the method\n*/\n\nasync function foo() {\n  var x = 1;\n  alert("123" + x);\n}\n\nasync function fooTwo() {\n  var x = 1;\n  alert("123" + x);\n}\n\nasync function fooThree() {\n  var x = 1;\n  alert("123" + x);\n}\n',
-    filename: 'test.js',
-    language: 'javascript',
-  }),
-  new ExampleDocument({
-    document: '<html>\n\t<body>\n\t\tAn example HTML document\n\t\tWith an invisible  -> ‎ <-  characer\n\t</body>\n</html>',
-    originalDocument: '<html><body>An example HTML document</body></html>',
-    filename: 'test.html',
-    language: 'html',
-  }),
-  new ExampleDocument({
-    document:
-      '# Assign a numeric value\nnumber = 70\n\n# Check the value is more than 70 or not\nif (number >= 70):\n\tprint("You have passed")\nelse:\n\tprint("You have not passed")',
-    originalDocument:
-      '# Assign a numeric value\nnumber = 70\n\n# Check the is more than 70 or not\nif (number >= 70):\n\tprint("They have passed")\nelse:\n\tprint("They have not passed")',
-    filename: 'test.py',
-    language: 'python',
-  }),
-  new ExampleDocument({
-    document:
-      '-- Table: customer\nCREATE TABLE customer (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Table: customer_backup3\nCREATE TABLE customer_backup3 (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Extra comment\n-- Extra comment\n-- Extra comment\n-- Extra comment\n-- Extra comment\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment',
-    originalDocument:
-      '-- Table: customer\nCREATE TABLE customer (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Table: customer_backup\nCREATE TABLE customer_backup (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Table: customer_backup3\nCREATE TABLE customer_backup3 (\n\tid int  NOT NULL IDENTITY(1, 1),\n\tcustomer_name varchar(255)  NOT NULL,\n\tcity_id int  NOT NULL,\n\tcustomer_address varchar(255)  NOT NULL,\n\tnext_call_date date  NULL,\n\tts_inserted datetime  NOT NULL,\n\tCONSTRAINT customer_pk PRIMARY KEY  (id)\n);\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment\n-- Unchanged comment',
-    filename: 'test.sql',
-    language: 'sql',
-  }),
-  new ExampleDocument({
-    document:
-      "# Example Markdown document\n### Another header\n###### Another header\n-----------\n__Bold text__\n_Italic text_\n\nThis in a example document with code snippets\n\n```ts\nfunction myTestFunction({ world = 'world' } : { world!: string } = {}) {\n  return window.confirm(`Hello ${world}!`)\n}\n```\n\n```html\n<body>\n  <head></head>\n</body>\n```",
-    originalDocument: '### Example Markdown document',
-    filename: 'test.md',
-    language: 'markdown',
-  }),
-  new ExampleDocument({
-    document:
-      '# syntax=docker/dockerfile:1.7-labs\nFROM mcr.microsoft.com/dotnet/sdk:8.0-alpine\n\nWORKDIR /app\n\n# .git & README.md are unique per-repository. We ignore them on first copy to prevent cache misses\nCOPY --exclude=.git --exclude=README.md . /app\n\n# This saves nuget packages to ~/.nuget\nRUN dotnet build --configuration Release .\n\n# This seems to cause a caching issue with the dotnet build command, where old contents are used\n# TODO: See if this needs to be brought back?\n# RUN rm -rf /app/obj\n# RUN rm -rf /app/bin\n\nRUN echo "cd \\${CODECRAFTERS_SUBMISSION_DIR} && dotnet build --configuration Release ." > /codecrafters-precompile.sh\nRUN chmod +x /codecrafters-precompile.sh\n\nENV CODECRAFTERS_DEPENDENCY_FILE_PATHS="codecrafters-redis.csproj,codecrafters-redis.sln"\n\n# Once the heavy steps are done, we can copy all files back\nCOPY . /app\n\n',
-    originalDocument: '# syntax=docker/dockerfile:1.7-labs\n',
-    filename: 'Dockerfile',
-    language: 'dockerfile',
-  }),
 ];
 
 const OPTION_DEFAULTS = {
@@ -268,7 +191,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked unchangedMinSizes = [1, 2, 3, 4, 5, 8, 16];
 
   get selectedDocument() {
-    return this.documents[this.selectedDocumentIndex];
+    return this.documents[this.selectedDocumentIndex] || ExampleDocument.createEmpty();
   }
 
   get selectedIndentUnit() {

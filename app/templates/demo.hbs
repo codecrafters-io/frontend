@@ -20,16 +20,6 @@
         >CodeMirror</span>
       </LinkTo>
       <LinkTo
-        @route="demo.dark-mode-toggle"
-        role="button"
-        class="flex flex-shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
-          {{if (eq this.router.currentRouteName 'demo.dark-mode-toggle') 'border-teal-500' 'border-gray-100 dark:border-gray-700'}}"
-      >
-        <span
-          class={{if (eq this.router.currentRouteName "demo.dark-mode-toggle") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
-        >DarkModeToggle</span>
-      </LinkTo>
-      <LinkTo
         @route="demo.file-contents-card"
         role="button"
         class="flex flex-shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
@@ -38,6 +28,16 @@
         <span
           class={{if (eq this.router.currentRouteName "demo.file-contents-card") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
         >FileContentsCard</span>
+      </LinkTo>
+      <LinkTo
+        @route="demo.dark-mode-toggle"
+        role="button"
+        class="flex flex-shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+          {{if (eq this.router.currentRouteName 'demo.dark-mode-toggle') 'border-teal-500' 'border-gray-100 dark:border-gray-700'}}"
+      >
+        <span
+          class={{if (eq this.router.currentRouteName "demo.dark-mode-toggle") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
+        >DarkModeToggle</span>
       </LinkTo>
     </div>
 
