@@ -1,5 +1,5 @@
 import { tracked } from '@glimmer/tracking';
-import { parseDiff } from 'codecrafters-frontend/helpers/diff-to-document';
+import parseDiffAsDocument from 'codecrafters-frontend/utils/parse-diff-as-document';
 
 export class ExampleDocument {
   @tracked document: string = '';
@@ -33,7 +33,7 @@ export class DiffBasedExampleDocument extends ExampleDocument {
   @tracked diff?: string;
 
   constructor({ diff, filename, language }: { diff?: string; filename: string; language: string }) {
-    const { current: document, original: originalDocument } = parseDiff(diff);
+    const { current: document, original: originalDocument } = parseDiffAsDocument(diff);
 
     super({
       document,
