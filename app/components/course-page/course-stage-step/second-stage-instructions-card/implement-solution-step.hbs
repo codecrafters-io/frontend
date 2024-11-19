@@ -7,7 +7,7 @@
     {{on "click" this.handleRevealSolutionButtonClick}}
     class="mb-3"
     @isBlurred={{this.solutionIsBlurred}}
-    @overlayClass="inset-px rounded cursor-pointer hover:backdrop-blur-[3px] group"
+    @overlayClass="inset-px rounded cursor-pointer hover:backdrop-blur-[3px] group bg-gray-50/20 hover:bg-gray-50/0 dark:bg-gray-900/20 dark:hover:bg-gray-900/0"
   >
     <:content>
       <div class="flex flex-col gap-4">
