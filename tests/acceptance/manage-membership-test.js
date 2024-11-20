@@ -118,7 +118,7 @@ module('Acceptance | manage-membership-test', function (hooks) {
 
     assert.strictEqual(
       membershipPage.membershipPlanSection.descriptionText,
-      `Your CodeCrafters membership is valid until ${formatWithOptions({}, 'PPPp', subscription.currentPeriodEnd)}.`,
+      `Your CodeCrafters membership is valid until ${formatWithOptions({}, 'PPPp', subscription.currentPeriodEnd)}. Your membership doesn’t renew automatically. To restart your membership, make a new one-time payment.`,
     );
   });
 
