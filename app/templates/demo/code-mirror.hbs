@@ -5,7 +5,7 @@
   "flex cursor-default select-none text-nowrap mx-2"
   as |groupClasses labelClasses|
 }}
-  <codemirror-options class="{{groupClasses}} -mt-8">
+  <codemirror-options class="{{groupClasses}} border-dotted -mt-8">
     <codemirror-options-left class="flex flex-grow flex-wrap">
       <label class="{{labelClasses}}" title="Show an outline around the component's element">
         <Input @type="checkbox" @checked={{this.outline}} />
@@ -270,7 +270,7 @@
     </label>
   </codemirror-options>
 
-  <codemirror-options class="{{groupClasses}} border-dotted">
+  <codemirror-options class="{{groupClasses}}">
     <codemirror-options-left class="flex flex-grow flex-wrap">
       <label
         class="{{labelClasses}}"
