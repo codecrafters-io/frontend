@@ -5,7 +5,6 @@
       {{if @chunk.isCollapsedAtBottom 'mb-0' 'border-b'}}"
     role="button"
     {{on "click" this.handleClick}}
-    data-test-expandable-chunk
   >
     <span class="flex flex-col justify-center h-full pr-2">
       {{#if @chunk.isCollapsedAtTop}}
