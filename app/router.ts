@@ -106,5 +106,6 @@ Router.map(function () {
     this.route('code-mirror');
     this.route('dark-mode-toggle');
     this.route('file-contents-card');
+    this.route('file-diff-card');
   });
 });

@@ -58,7 +58,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
 
     const update = this.server.create('course-definition-update', {
       course: this.server.schema.courses.findBy({ slug: 'redis' }),
-      definitionFileContentsDiff: 'old contents',
+      definitionFileContentsDiff: ' old contents\n',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
       lastSyncedAt: new Date(2020, 1, 1),
@@ -70,12 +70,21 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     await updatesPage.visit({ course_slug: 'redis' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
-    update.update('definitionFileContentsDiff', '+ updated diff');
+    update.update('definitionFileContentsDiff', '-old contents\n+updated diff\n');
 
     await updatePage.clickOnSyncWithGitHubButton();
     await settled(); // Investigate why clickable() doesn't call settled()
 
-    assert.ok(updatePage.fileContentsDiff.text.includes('+ updated diff'), 'diff should be updated after syncing with github');
+    assert.strictEqual(
+      updatePage.fileContentsDiff.codeMirror.content.changedLines[0].text,
+      'updated diff',
+      'diff should be updated after syncing with github',
+    );
+    assert.strictEqual(
+      updatePage.fileContentsDiff.codeMirror.content.deletedChunks[0].text,
+      'old contents',
+      'diff should be updated after syncing with github',
+    );
   });
 
   test('it should properly be properly rendered as an html', async function (assert) {

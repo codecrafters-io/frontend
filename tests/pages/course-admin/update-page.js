@@ -1,4 +1,5 @@
-import { attribute, clickable, collection, create, visitable } from 'ember-cli-page-object';
+import { attribute, clickable, create, visitable } from 'ember-cli-page-object';
+import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 
 export default create({
   applyUpdateButton: {
@@ -12,9 +13,8 @@ export default create({
   },
 
   fileContentsDiff: {
-    expandableChunks: collection('[data-test-expandable-chunk]'),
-
     scope: '[data-test-file-contents-diff]',
+    codeMirror,
   },
 
   description: {

@@ -3,8 +3,35 @@
     <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{@filename}}</span>
   </div>
 
-  <div class="text-sm leading-6">
-    {{! @glint-expect-error: not ts-ified yet }}
-    <SyntaxHighlightedDiff @code={{@code}} @language={{@language}} @shouldCollapseUnchangedLines={{true}} @forceDarkTheme={{@forceDarkTheme}} />
-  </div>
+  {{#if @useCodeMirror}}
+    {{#let (diff-to-document @code) as |document|}}
+      <CodeMirror
+        @document={{document.current}}
+        @originalDocument={{document.original}}
+        @filename={{@filename}}
+        @language={{@language}}
+        @allowMultipleSelections={{true}}
+        @bracketMatching={{true}}
+        @collapseUnchanged={{true}}
+        @crosshairCursor={{true}}
+        @drawSelection={{true}}
+        @rectangularSelection={{true}}
+        @readOnly={{true}}
+        @highlightSelectionMatches={{true}}
+        @highlightSpecialChars={{true}}
+        @theme={{this.codeMirrorTheme}}
+        class="block text-sm"
+      />
+    {{/let}}
+  {{else}}
+    <div class="text-sm leading-6">
+      {{! @glint-expect-error: not ts-ified yet }}
+      <SyntaxHighlightedDiff
+        @code={{or @code ""}}
+        @language={{@language}}
+        @shouldCollapseUnchangedLines={{true}}
+        @forceDarkTheme={{@forceDarkTheme}}
+      />
+    </div>
+  {{/if}}
 </div>

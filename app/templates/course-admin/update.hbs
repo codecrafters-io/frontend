@@ -1,5 +1,5 @@
 <div class="bg-white min-h-screen">
-  <div class="container mx-auto pt-4 pb-10 px-6">
+  <div class="container mx-auto pt-4 pb-10 px-6 course-admin-updates-diff-container">
     <div class="pt-3 pb-6 border-b mb-6">
       <TertiaryLinkButton @route="course-admin.updates" @models={{array @model.update.course.slug}} @size="small" class="pl-1.5 mb-3">
         <div class="flex items-center">
@@ -78,6 +78,7 @@
       @filename="course-definition.yml"
       @code={{@model.update.definitionFileContentsDiff}}
       @language="yaml"
+      @useCodeMirror={{true}}
       data-test-file-contents-diff
     />
   </div>
