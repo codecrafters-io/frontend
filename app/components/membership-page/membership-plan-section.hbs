@@ -7,8 +7,11 @@
       plan is currently active.
     {{else if @subscription.isActive}}
       {{#if @subscription.cancelAt}}
-        Your CodeCrafters membership is valid until
-        <b class="font-semibold">{{date-format @subscription.cancelAt format="PPPp"}}</b>.
+        <p class="mb-3">
+          Your CodeCrafters membership is valid until
+          <b class="font-semibold">{{date-format @subscription.cancelAt format="PPPp"}}</b>.
+        </p>
+        <p>Your membership doesn’t renew automatically. To restart your membership, make a new one-time payment.</p>
       {{else}}
         You are currently subscribed to the
         <b class="font-semibold">{{@subscription.pricingPlanName}}</b>
