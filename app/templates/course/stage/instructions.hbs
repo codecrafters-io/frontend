@@ -37,7 +37,7 @@
     {{/if}}
 
     {{#if @model.courseStage.isSecond}}
-      <CoursePage::CourseStageStep::SecondStageInstructionsCard
+      <CoursePage::CourseStageStep::SecondStageTutorialCard
         @repository={{@model.activeRepository}}
         @courseStage={{@model.courseStage}}
         @shouldRecommendLanguageGuide={{this.shouldShowLanguageGuide}}

@@ -39,17 +39,17 @@ module('Acceptance | course-page | course-stage-solutions', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    await coursePage.secondStageInstructionsCard.clickOnExpandStepButton();
-    await coursePage.secondStageInstructionsCard.clickOnCompleteStepButton();
+    await coursePage.secondStageTutorialCard.clickOnExpandStepButton();
+    await coursePage.secondStageTutorialCard.clickOnCompleteStepButton();
   });
 
   test('can view solution', async function (assert) {
-    assert.ok(coursePage.secondStageInstructionsCard.hasRevealSolutionButton, 'Expect reveal solution button to be visible');
+    assert.ok(coursePage.secondStageTutorialCard.hasRevealSolutionButton, 'Expect reveal solution button to be visible');
     await percySnapshot('Second Stage Solution - Before Reveal');
 
-    await coursePage.secondStageInstructionsCard.clickOnRevealSolutionButton();
-    assert.false(coursePage.secondStageInstructionsCard.hasRevealSolutionButton, 'Expect reveal solution button to be hidden');
-    assert.ok(coursePage.secondStageInstructionsCard.hasFileDiffCard, 'Expect file diff card to be visible');
+    await coursePage.secondStageTutorialCard.clickOnRevealSolutionButton();
+    assert.false(coursePage.secondStageTutorialCard.hasRevealSolutionButton, 'Expect reveal solution button to be hidden');
+    assert.ok(coursePage.secondStageTutorialCard.hasFileDiffCard, 'Expect file diff card to be visible');
     await percySnapshot('Second Stage Solution - After Reveal');
   });
 });
