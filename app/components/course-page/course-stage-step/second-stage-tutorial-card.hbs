@@ -1,4 +1,4 @@
-<CoursePage::InstructionsCard @title="How to pass this stage" id="second-stage-instructions-card" ...attributes>
+<CoursePage::InstructionsCard @title="How to pass this stage" id="second-stage-tutorial-card" ...attributes>
   <:content>
     <div class="prose dark:prose-invert mb-5">
       <p>
@@ -14,14 +14,14 @@
 
     <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
       {{#if (eq stepList.expandedStep.id "read-instructions")}}
-        <CoursePage::CourseStageStep::SecondStageInstructionsCard::ReadInstructionsStep
+        <CoursePage::CourseStageStep::SecondStageTutorialCard::ReadInstructionsStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.readInstructionsStepIsComplete}}
           @shouldRecommendLanguageGuide={{@shouldRecommendLanguageGuide}}
         />
       {{else if (eq stepList.expandedStep.id "implement-solution")}}
-        <CoursePage::CourseStageStep::SecondStageInstructionsCard::ImplementSolutionStep
+        <CoursePage::CourseStageStep::SecondStageTutorialCard::ImplementSolutionStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.implementSolutionStepIsComplete}}
@@ -29,7 +29,7 @@
           @shouldShowSolution={{@shouldShowSolution}}
         />
       {{else if (eq stepList.expandedStep.id "run-tests")}}
-        <CoursePage::CourseStageStep::SecondStageInstructionsCard::RunTestsStep
+        <CoursePage::CourseStageStep::SecondStageTutorialCard::RunTestsStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.runTestsStepIsComplete}}

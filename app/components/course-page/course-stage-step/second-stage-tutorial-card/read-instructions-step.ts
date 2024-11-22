@@ -17,6 +17,6 @@ export default class ReadInstructionsStepComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageInstructionsCard::ReadInstructionsStep': typeof ReadInstructionsStepComponent;
+    'CoursePage::CourseStageStep::SecondStageTutorialCard::ReadInstructionsStep': typeof ReadInstructionsStepComponent;
   }
 }

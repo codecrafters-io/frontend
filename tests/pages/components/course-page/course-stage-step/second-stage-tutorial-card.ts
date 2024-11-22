@@ -7,7 +7,7 @@ export default {
   hasFileDiffCard: isVisible('[data-test-file-diff-card]'),
   hasRevealSolutionButton: isVisible('[data-test-reveal-solution-button]'),
   hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
-  scope: '#second-stage-instructions-card',
+  scope: '#second-stage-tutorial-card',
 
   scrollIntoView() {
     return document.querySelector(this.scope)!.scrollIntoView();
