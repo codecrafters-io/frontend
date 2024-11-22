@@ -44,16 +44,16 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
     return this.args.currentStep.repository.lastSubmission;
   }
 
-  get lastSubmissionWasForCurrentStage() {
-    return this.lastSubmission?.courseStage === this.args.currentStep.courseStage;
-  }
-
   get recommendedClientType() {
     if (this.args.currentStep.courseStage.isFirst) {
       return 'git';
     } else {
       return 'cli';
     }
+  }
+
+  get userHasRunTestsForStageAtLeastOnce() {
+    return !this.lastSubmission.clientTypeIsSystem && this.lastSubmission?.courseStage === this.args.currentStep.courseStage;
   }
 
   @action

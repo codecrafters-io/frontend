@@ -17,5 +17,6 @@ export default {
     title: text('[data-test-step-title]'),
     isExpanded: isVisible('[data-test-expanded-step-content]'),
     isComplete: isVisible('[data-test-step-complete-icon]'),
+    instructions: text('[data-test-expanded-step-content]'),
   }),
 };
