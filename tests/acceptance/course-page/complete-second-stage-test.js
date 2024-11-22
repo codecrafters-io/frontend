@@ -73,6 +73,17 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     await coursePage.secondStageInstructionsCard.clickOnCompleteStepButton();
 
+    assert.ok(coursePage.secondStageInstructionsCard.steps[0].isComplete, 'First step is complete');
+    assert.ok(coursePage.secondStageInstructionsCard.steps[1].isComplete, 'Second step is complete');
+    assert.notOk(coursePage.secondStageInstructionsCard.steps[2].isComplete, 'Third step is not complete');
+
+    assert.notOk(coursePage.secondStageInstructionsCard.steps[0].isExpanded, 'First step is collapsed');
+    assert.notOk(coursePage.secondStageInstructionsCard.steps[1].isExpanded, 'Second step is collapsed');
+    assert.ok(coursePage.secondStageInstructionsCard.steps[2].isExpanded, 'Third step is expanded');
+
+    // Asserts that we don't show the "To run tests again..." message for a system submission
+    assert.contains(coursePage.secondStageInstructionsCard.steps[2].instructions, 'To run tests, make changes to your code');
+
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
       courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),

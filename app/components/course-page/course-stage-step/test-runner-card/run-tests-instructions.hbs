@@ -1,5 +1,5 @@
 <div class="prose dark:prose-invert prose-sm prose-compact mb-3">
-  {{#if this.lastSubmissionWasForCurrentStage}}
+  {{#if this.userHasRunTestsForStageAtLeastOnce}}
     <p class="mb-3">
       {{#if (eq this.lastSubmission.status "evaluating")}}
         <b>Running tests...</b>
@@ -14,7 +14,7 @@
     </p>
   {{/if}}
 
-  {{#if this.lastSubmissionWasForCurrentStage}}
+  {{#if this.userHasRunTestsForStageAtLeastOnce}}
     <p>
       To run tests again, make changes to your code and run the
       {{#if (gt this.selectedCommandVariant.commands.length 1)}}
