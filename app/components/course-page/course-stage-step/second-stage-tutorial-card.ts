@@ -1,3 +1,4 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
@@ -56,6 +57,7 @@ class RunTestsStep extends BaseStep implements Step {
 }
 
 export default class SecondStageTutorialCardComponent extends Component<Signature> {
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
@@ -100,11 +102,23 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
   handleStepCompletedManually(step: Step) {
     if (step.id === 'read-instructions') {
       this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('read-instructions');
+
+      this.analyticsEventTracker.track('completed_second_stage_tutorial_step', {
+        step_number: 1,
+        step_id: 'read-instructions',
+        repository_id: this.args.repository.id,
+      });
     }
 
     if (step.id === 'implement-solution') {
       this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('read-instructions');
       this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('implement-solution');
+
+      this.analyticsEventTracker.track('completed_second_stage_tutorial_step', {
+        step_number: 2,
+        step_id: 'implement-solution',
+        repository_id: this.args.repository.id,
+      });
     }
   }
 
