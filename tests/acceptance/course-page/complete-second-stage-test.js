@@ -81,6 +81,8 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     assert.notOk(coursePage.secondStageTutorialCard.steps[1].isExpanded, 'Second step is collapsed');
     assert.ok(coursePage.secondStageTutorialCard.steps[2].isExpanded, 'Third step is expanded');
 
+    await this.pauseTest();
+
     // Asserts that we don't show the "To run tests again..." message for a system submission
     assert.contains(coursePage.secondStageTutorialCard.steps[2].instructions, 'To run tests, make changes to your code');
 
