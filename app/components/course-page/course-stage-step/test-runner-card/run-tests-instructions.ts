@@ -36,7 +36,7 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
     if (this.recommendedClientType === 'cli') {
       return [cliVariant, gitVariant];
     } else {
-      return [gitVariant];
+      return [gitVariant, cliVariant];
     }
   }
 
@@ -45,7 +45,7 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
   }
 
   get recommendedClientType() {
-    if (this.args.currentStep.courseStage.isFirst) {
+    if (this.args.currentStep.courseStage.isFirst || this.args.currentStep.courseStage.isSecond) {
       return 'git';
     } else {
       return 'cli';
