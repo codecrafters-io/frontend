@@ -4,7 +4,6 @@
     <div class="block md:hidden px-3 border-b flex-shrink-0 sticky top-0 backdrop-blur-sm bg-white/80 z-20 w-full">
       {{#if (gt this.currentProgressPercentage 0)}}
         <div class="py-5">
-          {{! @glint-expect-error not ts-ified yet}}
           <ConceptProgress @latestConceptEngagement={{@latestConceptEngagement}} />
         </div>
       {{else}}
@@ -21,7 +20,6 @@
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6">
     <div class="flex flex-col-reverse items-stretch md:flex-row">
       <div class="md:pr-8 pt-10 pb-[75vh] min-w-0 flex-grow">
-        {{! @glint-expect-error not ts-ified yet}}
         <Concept @concept={{@concept}} @latestConceptEngagement={{@latestConceptEngagement}} />
 
         {{#animated-if this.hasCompletedConcept}}
@@ -67,7 +65,6 @@
       <div class="hidden md:block border-l pl-8 flex-shrink-0 py-2 w-64">
         {{#if (gt this.currentProgressPercentage 0)}}
           <div class="sticky py-9 top-0 bg-white">
-            {{! @glint-expect-error not ts-ified yet}}
             <ConceptProgress @latestConceptEngagement={{@latestConceptEngagement}} data-test-concept-progress />
           </div>
         {{else}}
