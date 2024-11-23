@@ -50,10 +50,10 @@
   {{#each this.allBlocks as |block|}}
     {{#if (eq block.type "markdown")}}
       {{! @glint-expect-error: block isn't typed as MarkdownBlock }}
-      <Blocks::MarkdownBlock @model={{block}} class="mb-6" data-test-block />
+      <Blocks::MarkdownBlock @model={{block}} />
     {{else if (eq block.type "concept_animation")}}
       {{! @glint-expect-error: block isn't typed as ConceptAnimationBlock }}
-      <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" data-test-block />
+      <Blocks::ConceptAnimationBlock @model={{block}} />
     {{/if}}
   {{/each}}
 </div>
