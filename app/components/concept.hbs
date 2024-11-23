@@ -44,3 +44,16 @@
     </div>
   {{/each}}
 </div>
+
+{{! Preload all blocks that might contain images }}
+<div class="hidden">
+  {{#each this.allBlocks as |block|}}
+    {{#if (eq block.type "markdown")}}
+      {{! @glint-expect-error: block isn't typed as MarkdownBlock }}
+      <Blocks::MarkdownBlock @model={{block}} class="mb-6" data-test-block />
+    {{else if (eq block.type "concept_animation")}}
+      {{! @glint-expect-error: block isn't typed as ConceptAnimationBlock }}
+      <Blocks::ConceptAnimationBlock @model={{block}} class="mb-6 py-4" data-test-block />
+    {{/if}}
+  {{/each}}
+</div>
