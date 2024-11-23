@@ -19,3 +19,9 @@ export default class ConceptProgressComponent extends Component<Signature> {
     return fade;
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    ConceptProgress: typeof ConceptProgressComponent;
+  }
+}
