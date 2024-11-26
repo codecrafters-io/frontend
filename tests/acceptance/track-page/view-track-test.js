@@ -7,7 +7,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
 
-module('Acceptance | view-track', function (hooks) {
+module('Acceptance | track-page | view-track', function (hooks) {
   setupApplicationTest(hooks);
 
   test('it renders for anonymous user', async function (assert) {

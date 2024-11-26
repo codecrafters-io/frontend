@@ -27,10 +27,9 @@ export default class CourseOverviewResumeTrackButtonComponent extends Component<
     }
 
     return this.args.courses.find((course) => {
-      return !this.authenticator
-        .currentUser!.repositories.filterBy('course', course)
-        .filterBy('language', this.args.language)
-        .some((repository) => repository.allStagesAreComplete);
+      const courseRepositories = this.authenticator.currentUser!.repositories.filterBy('course', course).filterBy('language', this.args.language);
+
+      return courseRepositories.length > 0 && !courseRepositories.some((repository) => repository.allStagesAreComplete);
     });
   }
 
