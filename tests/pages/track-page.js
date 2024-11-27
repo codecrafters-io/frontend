@@ -12,7 +12,7 @@ export default createPage({
     await finishRender(); // Page has poller
   },
 
-  clickResumeTrackButton: clickable('[data-test-resume-track-button]'),
+  clickOnResumeTrackButton: clickable('[data-test-resume-track-button]'),
   hasResumeTrackButton: isVisible('[data-test-resume-track-button]'),
 
   header: {
