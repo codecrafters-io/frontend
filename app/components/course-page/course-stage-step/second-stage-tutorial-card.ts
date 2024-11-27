@@ -29,15 +29,6 @@ class BaseStep {
   }
 }
 
-class ReadInstructionsStep extends BaseStep implements Step {
-  id = 'read-instructions';
-  canBeCompletedManually = true;
-
-  get titleMarkdown() {
-    return 'Read instructions';
-  }
-}
-
 class ImplementSolutionStep extends BaseStep implements Step {
   id = 'implement-solution';
   canBeCompletedManually = true;
@@ -92,7 +83,6 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
 
   get steps() {
     return [
-      new ReadInstructionsStep(this.args.repository, this.readInstructionsStepIsComplete),
       new ImplementSolutionStep(this.args.repository, this.implementSolutionStepIsComplete),
       new RunTestsStep(this.args.repository, this.runTestsStepIsComplete),
     ];

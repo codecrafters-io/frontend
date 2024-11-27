@@ -1,6 +1,10 @@
-<p class="prose dark:prose-invert prose-compact mb-3">
-  Head over to your editor / IDE and implement your solution.
-</p>
+<div class="prose dark:prose-invert prose-compact mb-3">
+  {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
+
+  <p>
+    Head over to your editor / IDE and implement your solution.
+  </p>
+</div>
 
 {{#if (and @shouldShowSolution this.solution)}}
   <BlurredOverlay
@@ -39,14 +43,11 @@
   </BlurredOverlay>
 {{/if}}
 
-<p class="prose dark:prose-invert prose-compact">
-  {{#if @shouldRecommendLanguageGuide}}
-    For a more detailed explanation on how this solution works, view the
-    <a href="#language-guide-card">{{@repository.language.name}} Guide</a>
-    card.
-  {{else}}
-    If you want a quick look at what functions to use or how to structure your code, we recommend looking at
-    <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>
-    tab.
-  {{/if}}
-</p>
+
+{{!-- <div class="flex justify-stretch items-center mb-5">
+  <TertiaryButton class="w-full">👀&nbsp;&nbsp;Show explanation</TertiaryButton>
+</div> --}}
+
+{{!-- <p class="prose dark:prose-invert prose-compact">
+  Mark this step as complete once you've implemented your solution.
+</p> --}}

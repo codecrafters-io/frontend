@@ -142,6 +142,19 @@ Our interactive concepts can help with this:
     return this.course.extensions.filter((extension) => this.secondaryExtensionSlugs.includes(extension.slug));
   }
 
+  get shortInstructionsMarkdown() {
+    return `
+In this stage, you'll implement support for handling missing commands in your shell.
+
+Example:
+
+\`\`\`
+$ missing_command
+missing_command: not found
+\`\`\`
+`;
+  }
+
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
   }

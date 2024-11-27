@@ -13,14 +13,7 @@
     </div>
 
     <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
-      {{#if (eq stepList.expandedStep.id "read-instructions")}}
-        <CoursePage::CourseStageStep::SecondStageTutorialCard::ReadInstructionsStep
-          @repository={{@repository}}
-          @courseStage={{@courseStage}}
-          @isComplete={{this.readInstructionsStepIsComplete}}
-          @shouldRecommendLanguageGuide={{@shouldRecommendLanguageGuide}}
-        />
-      {{else if (eq stepList.expandedStep.id "implement-solution")}}
+      {{#if (eq stepList.expandedStep.id "implement-solution")}}
         <CoursePage::CourseStageStep::SecondStageTutorialCard::ImplementSolutionStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
