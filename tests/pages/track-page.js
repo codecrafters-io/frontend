@@ -1,4 +1,4 @@
-import { collection, text, visitable } from 'ember-cli-page-object';
+import { collection, clickable, isVisible, text, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
@@ -11,6 +11,9 @@ export default createPage({
     this.cards.toArray().findBy('title', courseName).click();
     await finishRender(); // Page has poller
   },
+
+  clickOnResumeTrackButton: clickable('[data-test-resume-track-button]'),
+  hasResumeTrackButton: isVisible('[data-test-resume-track-button]'),
 
   header: {
     descriptionText: text('[data-test-track-header-description]'),
