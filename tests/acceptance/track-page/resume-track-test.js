@@ -12,7 +12,7 @@ module('Acceptance | track-page | resume-track', function (hooks) {
     testScenario(this.server);
 
     await visit('/tracks/go');
-    assert.notOk(trackPage.hasResumeTrackButton, 'resume track button is not visible');
+    assert.notOk(trackPage.hasResumeTrackButton, 'resume track button should not be visible for anonymous users');
   });
 
   test('it does not display the resume-track-button for logged-in user who has not started course in the track', async function (assert) {
@@ -20,7 +20,7 @@ module('Acceptance | track-page | resume-track', function (hooks) {
     signIn(this.owner, this.server);
 
     await visit('/tracks/go');
-    assert.notOk(trackPage.hasResumeTrackButton, 'resume track button is not visible');
+    assert.notOk(trackPage.hasResumeTrackButton, 'resume track button should not be visible for users without course progress');
   });
 
   test('it resumes track for logged-in user who has started course in the track', async function (assert) {
@@ -39,7 +39,7 @@ module('Acceptance | track-page | resume-track', function (hooks) {
     await visit('/tracks/go');
     assert.ok(trackPage.hasResumeTrackButton, 'resume track button is visible');
 
-    await trackPage.clickResumeTrackButton();
+    await trackPage.clickOnResumeTrackButton();
     assert.ok(currentURL().startsWith('/courses/git/stages/ic4'), 'resumed course page shows correct URL path at stage 2');
   });
 });
