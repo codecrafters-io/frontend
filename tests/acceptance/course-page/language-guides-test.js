@@ -44,7 +44,7 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    await coursePage.secondStageTutorialCard.clickOnRevealSolutionButton();
+    await coursePage.secondStageTutorialCard.clickOnSolutionBlurredOverlay();
 
     assert.strictEqual(coursePage.languageGuideCard.text, 'In this stage, blah blah…', 'Language guide card displays the correct content');
   });

@@ -33,6 +33,7 @@
         <TertiaryButton
           class="w-full mb-6 flex justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
           {{on "click" this.handleHideSolutionButtonClick}}
+          data-test-hide-solution-button
         >
           {{svg-jar "eye-off" class="size-4"}}
           Hide Solution
@@ -51,7 +52,12 @@
     </:content>
 
     <:overlay>
-      <button class="grid w-full h-full place-items-center" type="button" {{on "click" this.handleRevealSolutionButtonClick}}>
+      <button
+        class="grid w-full h-full place-items-center"
+        type="button"
+        {{on "click" this.handleRevealSolutionButtonClick}}
+        data-test-solution-blurred-overlay
+      >
         <SecondaryButton
           class="bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
           data-test-reveal-solution-button

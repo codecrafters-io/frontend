@@ -149,8 +149,8 @@ In this stage, you'll implement support for handling missing commands in your sh
 Example:
 
 \`\`\`
-$ missing_command
-missing_command: not found
+$ invalid_command
+invalid_command: not found
 \`\`\`
 `;
   }

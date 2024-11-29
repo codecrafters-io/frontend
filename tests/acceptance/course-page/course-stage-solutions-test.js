@@ -41,12 +41,23 @@ module('Acceptance | course-page | course-stage-solutions', function (hooks) {
   });
 
   test('can view solution', async function (assert) {
+    assert.ok(coursePage.secondStageTutorialCard.hasFileDiffCard, 'Expect file diff card to be visible');
+
+    assert.ok(coursePage.secondStageTutorialCard.hasSolutionBlurredOverlay, 'Expect solution blurred overlay to be visible');
     assert.ok(coursePage.secondStageTutorialCard.hasRevealSolutionButton, 'Expect reveal solution button to be visible');
+    assert.notOk(coursePage.secondStageTutorialCard.hasHideSolutionButton, 'Expect hide solution button to be hidden');
     await percySnapshot('Second Stage Solution - Before Reveal');
 
-    await coursePage.secondStageTutorialCard.clickOnRevealSolutionButton();
-    assert.false(coursePage.secondStageTutorialCard.hasRevealSolutionButton, 'Expect reveal solution button to be hidden');
-    assert.ok(coursePage.secondStageTutorialCard.hasFileDiffCard, 'Expect file diff card to be visible');
+    await coursePage.secondStageTutorialCard.clickOnSolutionBlurredOverlay();
+    assert.notOk(coursePage.secondStageTutorialCard.hasSolutionBlurredOverlay, 'Expect solution blurred overlay to be hidden');
+    assert.notOk(coursePage.secondStageTutorialCard.hasRevealSolutionButton, 'Expect reveal solution button to be hidden');
+    assert.ok(coursePage.secondStageTutorialCard.hasHideSolutionButton, 'Expect hide solution button to be visible');
     await percySnapshot('Second Stage Solution - After Reveal');
+
+    await coursePage.secondStageTutorialCard.clickOnHideSolutionButton();
+    assert.ok(coursePage.secondStageTutorialCard.hasSolutionBlurredOverlay, 'Expect solution blurred overlay to be visible');
+    assert.ok(coursePage.secondStageTutorialCard.hasRevealSolutionButton, 'Expect reveal solution button to be visible');
+    assert.notOk(coursePage.secondStageTutorialCard.hasHideSolutionButton, 'Expect hide solution button to be hidden');
+    await percySnapshot('Second Stage Solution - After Hide');
   });
 });
