@@ -52,21 +52,16 @@
     </:content>
 
     <:overlay>
-      <button
-        class="grid w-full h-full place-items-center"
-        type="button"
-        {{on "click" this.handleRevealSolutionButtonClick}}
-        data-test-solution-blurred-overlay
+      <SecondaryButton
+        class="self-center bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
+        data-test-reveal-solution-button
       >
-        <SecondaryButton
-          class="bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
-          data-test-reveal-solution-button
-        >
-          <div class="flex items-center gap-2">
-            {{svg-jar "eye" class="size-6"}}
-            <span>Click to reveal solution</span>
-          </div>
-        </SecondaryButton>
+        <div class="flex items-center gap-2">
+          {{svg-jar "eye" class="size-6"}}
+          <span>Click to reveal solution</span>
+        </div>
+      </SecondaryButton>
+      <button class="absolute inset-0" type="button" {{on "click" this.handleRevealSolutionButtonClick}} data-test-solution-blurred-overlay>
       </button>
     </:overlay>
   </BlurredOverlay>
