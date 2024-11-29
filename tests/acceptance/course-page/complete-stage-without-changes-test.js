@@ -76,7 +76,6 @@ module('Acceptance | course-page | complete-stage-without-changes', function (ho
 
     assert.ok(coursePage.secondStageTutorialCard.steps[0].isComplete, 'First step is complete');
     assert.ok(coursePage.secondStageTutorialCard.steps[1].isComplete, 'Second step is complete');
-    assert.ok(coursePage.secondStageTutorialCard.steps[2].isComplete, 'Third step is complete');
 
     assert.ok(coursePage.testRunnerCard.isExpanded, 'Test runner card is expanded');
     assert.notOk(coursePage.testRunnerCard.markStageAsCompleteButton.isVisible, 'Mark stage as complete button is not visible');

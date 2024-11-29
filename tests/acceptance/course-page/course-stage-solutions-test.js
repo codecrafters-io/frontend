@@ -38,9 +38,6 @@ module('Acceptance | course-page | course-stage-solutions', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-
-    await coursePage.secondStageTutorialCard.clickOnExpandStepButton();
-    await coursePage.secondStageTutorialCard.clickOnCompleteStepButton();
   });
 
   test('can view solution', async function (assert) {

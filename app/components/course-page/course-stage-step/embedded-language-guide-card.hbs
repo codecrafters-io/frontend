@@ -3,6 +3,7 @@
     <TertiaryButton
       class="flex justify-center items-center gap-1 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
       {{on "click" this.handleToggleExplanationButtonClick}}
+      data-test-toggle-explanation-button
     >
       {{#if this.explanationIsVisible}}
         Hide explanation
