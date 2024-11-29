@@ -10,13 +10,12 @@
 
 {{#if (and @shouldShowSolution this.solution)}}
   <BlurredOverlay
-    {{on "click" this.handleRevealSolutionButtonClick}}
     class="mb-3 group"
     @isBlurred={{this.solutionIsBlurred}}
     @overlayClass="inset-px rounded cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
   >
     <:content>
-      <div class="flex flex-col gap-4">
+      <div class="grid gap-3 mb-3">
         {{#each this.solution.changedFiles as |changedFile|}}
           {{! Extra if condition convinces typescript that solution isn't null }}
           {{#if this.solution}}
@@ -29,24 +28,40 @@
           {{/if}}
         {{/each}}
       </div>
+
+      {{#unless this.solutionIsBlurred}}
+        <TertiaryButton
+          class="w-full mb-6 flex justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
+          {{on "click" this.handleHideSolutionButtonClick}}
+        >
+          {{svg-jar "eye-off" class="size-4"}}
+          Hide Solution
+        </TertiaryButton>
+
+        {{#if @languageGuide}}
+          <div
+            class="prose dark:prose-invert has-prism-highlighting"
+            {{highlight-code-blocks @languageGuide.markdownForBeginner}}
+            data-test-language-guide-card
+          >
+            {{markdown-to-html @languageGuide.markdownForBeginner}}
+          </div>
+        {{/if}}
+      {{/unless}}
     </:content>
 
     <:overlay>
-      <SecondaryButton
-        class="self-center bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
-        data-test-reveal-solution-button
-      >
-        <div class="flex items-center gap-2">
-          {{svg-jar "eye" class="size-6"}}
-          <span>Click to reveal solution</span>
-        </div>
-      </SecondaryButton>
+      <button class="grid w-full h-full place-items-center" type="button" {{on "click" this.handleRevealSolutionButtonClick}}>
+        <SecondaryButton
+          class="bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
+          data-test-reveal-solution-button
+        >
+          <div class="flex items-center gap-2">
+            {{svg-jar "eye" class="size-6"}}
+            <span>Click to reveal solution</span>
+          </div>
+        </SecondaryButton>
+      </button>
     </:overlay>
   </BlurredOverlay>
 {{/if}}
-
-{{#unless this.solutionIsBlurred}}
-  {{#if @languageGuide}}
-    <CoursePage::CourseStageStep::EmbeddedLanguageGuideCard @languageGuide={{@languageGuide}} />
-  {{/if}}
-{{/unless}}

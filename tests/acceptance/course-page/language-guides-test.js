@@ -44,18 +44,8 @@ module('Acceptance | course-page | language-guides', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    document.getElementById('language-guide-card')?.scrollIntoView();
-
     await coursePage.secondStageTutorialCard.clickOnRevealSolutionButton();
 
-    await coursePage.languageGuideCard.clickOnToggleExplanationButton();
-    assert.strictEqual(
-      coursePage.languageGuideCard.text,
-      'Hide explanation In this stage, blah blah…',
-      'Language guide card displays the correct content',
-    );
-
-    await coursePage.languageGuideCard.clickOnToggleExplanationButton();
-    assert.strictEqual(coursePage.languageGuideCard.text, 'Show explanation', 'Toggle explanation button hides explanation');
+    assert.strictEqual(coursePage.languageGuideCard.text, 'In this stage, blah blah…', 'Language guide card displays the correct content');
   });
 });

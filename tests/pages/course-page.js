@@ -165,7 +165,6 @@ export default create({
 
     clickOnExpandButton: clickable('[data-test-expand-button]'),
     clickOnCollapseButton: clickable('[data-test-collapse-button]'),
-    clickOnToggleExplanationButton: clickable('[data-test-toggle-explanation-button]'),
 
     feedbackDropdown: {
       clickOnSendButton: clickable('[data-test-send-button]'),

@@ -25,6 +25,11 @@ export default class ImplementSolutionStepComponent extends Component<Signature>
   }
 
   @action
+  handleHideSolutionButtonClick() {
+    this.solutionIsBlurred = true;
+  }
+
+  @action
   handleRevealSolutionButtonClick() {
     this.solution?.createView();
     this.solutionIsBlurred = false;
