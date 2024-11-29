@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import { action } from '@ember/object';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
@@ -14,7 +15,7 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
-    shouldRecommendLanguageGuide: boolean;
+    languageGuide?: CourseStageLanguageGuideModel;
     shouldShowSolution: boolean;
   };
 }

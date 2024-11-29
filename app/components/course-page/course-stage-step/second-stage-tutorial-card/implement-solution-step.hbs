@@ -1,5 +1,7 @@
 <div class="prose dark:prose-invert prose-compact mb-3">
-  {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
+  {{#if (eq @repository.course.slug "shell")}}
+    {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
+  {{/if}}
 
   <p>
     Head over to your editor / IDE and implement your solution.
@@ -43,11 +45,8 @@
   </BlurredOverlay>
 {{/if}}
 
-
-{{!-- <div class="flex justify-stretch items-center mb-5">
-  <TertiaryButton class="w-full">👀&nbsp;&nbsp;Show explanation</TertiaryButton>
-</div> --}}
-
-{{!-- <p class="prose dark:prose-invert prose-compact">
-  Mark this step as complete once you've implemented your solution.
-</p> --}}
+{{#unless this.solutionIsBlurred}}
+  {{#if @languageGuide}}
+    <CoursePage::CourseStageStep::EmbeddedLanguageGuideCard @languageGuide={{@languageGuide}} />
+  {{/if}}
+{{/unless}}

@@ -15,24 +15,6 @@
           {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
         </div>
       {{/if}}
-
-      <div class="flex ml-2">
-        {{#if (and @isExpanded @step.isComplete @nextIncompleteStep)}}
-          <PrimaryButton {{on "click" @onCollapse}} @size="extra-small">
-            <div class="flex items-center gap-1">
-              {{svg-jar "arrow-down" class="w-3 h-3"}}
-              <span>Next Step</span>
-            </div>
-          </PrimaryButton>
-        {{else if (and (not @isExpanded) @isFirstIncompleteStep)}}
-          <PrimaryButton @size="extra-small" data-test-expand-step-button>
-            <div class="font-bold flex items-center gap-1">
-              {{svg-jar "arrow-down" class="w-3 fill-current"}}
-              Expand
-            </div>
-          </PrimaryButton>
-        {{/if}}
-      </div>
     </div>
 
     <div>
