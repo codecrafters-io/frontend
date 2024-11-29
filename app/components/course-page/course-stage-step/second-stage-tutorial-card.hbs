@@ -1,10 +1,11 @@
 <CoursePage::InstructionsCard @title="How to pass this stage" id="second-stage-tutorial-card" ...attributes>
   <:content>
     <div class="prose dark:prose-invert mb-5">
-      <p>
-        In this stage, you'll implement your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.
-      </p>
-
+      {{#unless (eq @repository.course.slug "shell")}}
+        <p>
+          In this stage, you'll implement your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.
+        </p>
+      {{/unless}}
       <p>
         {{! TODO: Aggregate stat across all stages, try to fetch challenge-specific values from the backend. }}
         <b class="text-teal-600">98%</b>
@@ -13,19 +14,12 @@
     </div>
 
     <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
-      {{#if (eq stepList.expandedStep.id "read-instructions")}}
-        <CoursePage::CourseStageStep::SecondStageTutorialCard::ReadInstructionsStep
-          @repository={{@repository}}
-          @courseStage={{@courseStage}}
-          @isComplete={{this.readInstructionsStepIsComplete}}
-          @shouldRecommendLanguageGuide={{@shouldRecommendLanguageGuide}}
-        />
-      {{else if (eq stepList.expandedStep.id "implement-solution")}}
+      {{#if (eq stepList.expandedStep.id "implement-solution")}}
         <CoursePage::CourseStageStep::SecondStageTutorialCard::ImplementSolutionStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.implementSolutionStepIsComplete}}
-          @shouldRecommendLanguageGuide={{@shouldRecommendLanguageGuide}}
+          @languageGuide={{@languageGuide}}
           @shouldShowSolution={{@shouldShowSolution}}
         />
       {{else if (eq stepList.expandedStep.id "run-tests")}}

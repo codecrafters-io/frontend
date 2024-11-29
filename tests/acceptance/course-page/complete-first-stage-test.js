@@ -40,11 +40,9 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     await coursePage.firstStageTutorialCard.scrollIntoView();
 
     assert.notOk(coursePage.firstStageTutorialCard.steps[0].isComplete, 'First step is not complete');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[0].isExpanded, 'First step is not expanded');
+    assert.ok(coursePage.firstStageTutorialCard.steps[0].isExpanded, 'First step is expanded');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isComplete, 'Second step is not complete');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isExpanded, 'Second step is not expanded');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[2].isComplete, 'Third step is not complete');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[2].isExpanded, 'Third step is not expanded');
 
     await coursePage.firstStageTutorialCard.steps[0].click();
 
@@ -52,8 +50,6 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.ok(coursePage.firstStageTutorialCard.steps[0].isExpanded, 'First step is expanded');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isComplete, 'Second step is not complete');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isExpanded, 'Second step is not expanded');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[2].isComplete, 'Third step is not complete');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[2].isExpanded, 'Third step is not expanded');
 
     await coursePage.firstStageTutorialCard.clickOnCompleteStepButton();
 
@@ -61,8 +57,6 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageTutorialCard.steps[0].isExpanded, 'First step is collapsed');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isComplete, 'Second step is not complete');
     assert.ok(coursePage.firstStageTutorialCard.steps[1].isExpanded, 'Second step is expanded');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[2].isComplete, 'Third step is not complete');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[2].isExpanded, 'Third step is not expanded');
 
     await coursePage.firstStageTutorialCard.clickOnCompleteStepButton();
 
@@ -78,8 +72,6 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageTutorialCard.steps[0].isExpanded, 'First step is collapsed');
     assert.ok(coursePage.firstStageTutorialCard.steps[1].isComplete, 'Second step is complete');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isExpanded, 'Second step is collapsed');
-    assert.notOk(coursePage.firstStageTutorialCard.steps[2].isExpanded, 'Third step is collapsed');
-    assert.ok(coursePage.firstStageTutorialCard.steps[2].isComplete, 'Third step is complete');
 
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 

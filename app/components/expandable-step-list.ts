@@ -36,9 +36,8 @@ export default class ExpandableStepListComponent extends Component<Signature> {
     super(owner, args);
 
     const firstIncompleteStep = this.firstIncompleteStep;
-    const firstStep = this.args.steps[0];
 
-    if (firstIncompleteStep && firstStep && firstIncompleteStep.id !== firstStep.id) {
+    if (firstIncompleteStep) {
       this.expandedStepId = firstIncompleteStep.id;
     }
   }

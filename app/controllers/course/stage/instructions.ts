@@ -53,10 +53,6 @@ export default class CourseStageInstructionsController extends Controller {
     return !this.currentStep.courseStage.isFirst && this.currentStep.status === 'complete';
   }
 
-  get shouldShowLanguageGuide() {
-    return !this.model.courseStage.isFirst && !!this.languageGuide;
-  }
-
   get shouldShowPrerequisites() {
     return !!this.prerequisiteInstructionsMarkdown;
   }

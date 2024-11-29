@@ -142,6 +142,19 @@ Our interactive concepts can help with this:
     return this.course.extensions.filter((extension) => this.secondaryExtensionSlugs.includes(extension.slug));
   }
 
+  get shortInstructionsMarkdown() {
+    return `
+In this stage, you'll implement support for handling invalid commands in your shell.
+
+Example:
+
+\`\`\`
+$ invalid_command
+invalid_command: not found
+\`\`\`
+`;
+  }
+
   get solutionIsAccessibleToMembersOnly() {
     return this.position > 3;
   }

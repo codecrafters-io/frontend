@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
@@ -11,7 +12,7 @@ interface Signature {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
     isComplete: boolean;
-    shouldRecommendLanguageGuide: boolean;
+    languageGuide?: CourseStageLanguageGuideModel;
     shouldShowSolution: boolean;
   };
 }
@@ -21,6 +22,11 @@ export default class ImplementSolutionStepComponent extends Component<Signature>
 
   get solution() {
     return this.args.repository.secondStageSolution;
+  }
+
+  @action
+  handleHideSolutionButtonClick() {
+    this.solutionIsBlurred = true;
   }
 
   @action

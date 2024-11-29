@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import { action } from '@ember/object';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
@@ -14,7 +15,7 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
-    shouldRecommendLanguageGuide: boolean;
+    languageGuide?: CourseStageLanguageGuideModel;
     shouldShowSolution: boolean;
   };
 }
@@ -26,15 +27,6 @@ class BaseStep {
   constructor(repository: RepositoryModel, isComplete: boolean) {
     this.isComplete = isComplete;
     this.repository = repository;
-  }
-}
-
-class ReadInstructionsStep extends BaseStep implements Step {
-  id = 'read-instructions';
-  canBeCompletedManually = true;
-
-  get titleMarkdown() {
-    return 'Read instructions';
   }
 }
 
@@ -92,7 +84,6 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
 
   get steps() {
     return [
-      new ReadInstructionsStep(this.args.repository, this.readInstructionsStepIsComplete),
       new ImplementSolutionStep(this.args.repository, this.implementSolutionStepIsComplete),
       new RunTestsStep(this.args.repository, this.runTestsStepIsComplete),
     ];
