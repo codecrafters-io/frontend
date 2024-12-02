@@ -1,7 +1,7 @@
 <div
   role="button"
   class="group border rounded-full text-4xl w-12 h-12 flex items-center justify-center
-    {{unless @isSelected 'bg-white dark:bg-gray-800 border-opacity-50 border-teal-500'}}
+    {{unless @isSelected 'bg-white dark:bg-gray-850 border-opacity-50 border-teal-500'}}
     {{if (and @isSelected (eq @colorOnHoverAndSelect 'green')) 'bg-teal-200 dark:bg-teal-900 border-teal-500'}}
     {{if (and (not @isSelected) (eq @colorOnHoverAndSelect 'green')) 'hover:bg-teal-100 dark:hover:bg-teal-800 hover:border-teal-400'}}
     {{if (and @isSelected (eq @colorOnHoverAndSelect 'red')) 'bg-red-200 dark:bg-red-900 border-red-500'}}
