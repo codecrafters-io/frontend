@@ -112,7 +112,7 @@
     "dotenv": "^16.4.5",
     "ember-animated": "~2.1.0",
     "ember-api-actions": "github:codecrafters-io/ember-api-actions",
-    "ember-auto-import": "^2.9.0",
+    "ember-auto-import": "^2.10.0",
     "ember-autoresize-modifier": "^0.7.0",
     "ember-basic-dropdown": "^8.2.1",
     "ember-cli": "~5.8.0",
