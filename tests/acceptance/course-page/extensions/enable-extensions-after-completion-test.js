@@ -1,7 +1,7 @@
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL, settled } from '@ember/test-helpers';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
