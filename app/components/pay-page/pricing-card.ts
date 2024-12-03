@@ -43,8 +43,8 @@ export default class PricingCardComponent extends Component<Signature> {
       { text: 'No limits on content', link: 'https://docs.codecrafters.io/content' },
       { text: 'Turbo test runs', link: 'https://codecrafters.io/turbo' },
       { text: 'Code examples', link: 'https://docs.codecrafters.io/code-examples' },
-      { text: 'Dark mode', link: 'https://docs.codecrafters.io/membership/dark-mode' }, // TODO: Short link doesn't work?
-      { text: 'Anonymous mode', link: 'https://docs.codecrafters.io/anonymous-mode' },
+      { text: 'Dark mode', link: 'https://docs.codecrafters.io/membership/dark-mode' },
+      { text: 'Anonymous mode', link: 'https://docs.codecrafters.io/membership/anonymous-mode' },
       { text: 'Access to Perks', link: 'https://codecrafters.io/perks' },
       { text: 'Priority support' },
     ];
