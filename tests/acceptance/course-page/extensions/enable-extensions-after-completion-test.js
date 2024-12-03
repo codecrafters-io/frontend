@@ -1,7 +1,7 @@
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL, settled } from '@ember/test-helpers';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -14,11 +14,12 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
   test('can enable extensions after completing base stages', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update('releaseStatus', 'live');
 
     const repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: course,
@@ -87,11 +88,12 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
   test('can enable more extensions after completing an extension (regression)', async function (assert) {
     testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update('releaseStatus', 'live');
 
     const repository = this.server.create('repository', 'withBaseStagesCompleted', {
       course: course,
