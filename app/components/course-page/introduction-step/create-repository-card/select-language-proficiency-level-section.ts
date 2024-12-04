@@ -19,11 +19,9 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
     const languageDescriptor = this.args.repository.language ? this.args.repository.language.name : 'this language';
 
     if (this.args.repository.languageProficiencyLevel === 'never_tried') {
-      return `We recommend learning basic ${
-        this.args.repository.language ? this.args.repository.language.name : ''
-      } syntax before attempting this challenge. [Exercism](https://exercism.org) is a good place to start.`;
+      return `First time with ${languageDescriptor} and want to get familiar with its core syntax first? [Browse](https://docs.codecrafters.io/community/learning-resources) our recommended learning resources.`;
     } else if (this.args.repository.languageProficiencyLevel === 'beginner') {
-      return ` If you're just starting out with ${languageDescriptor}, CodeCrafters can be a good way to learn. We recommend using our **Code Examples** feature to see code from other users before attempting each stage.`;
+      return `If you're just starting out with ${languageDescriptor}, CodeCrafters can be a good way to learn. To brush up on ${languageDescriptor} syntax first, [check out](https://docs.codecrafters.io/community/learning-resources#picking-up-language-basics) our recommended learning resources.`;
     } else if (this.args.repository.languageProficiencyLevel === 'intermediate') {
       return `If you're already familiar with ${languageDescriptor}, CodeCrafters can be a good way to improve. We recommend using our **Code Examples** feature to see code from other users.`;
     } else if (this.args.repository.languageProficiencyLevel === 'advanced') {
