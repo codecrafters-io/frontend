@@ -69,7 +69,7 @@ export default class ComparisonCard extends Component<Signature> {
   }
 
   @action
-  async handleCopyIdToClipbardButtonClick() {
+  async handleCopyIdToClipboardButtonClick() {
     await navigator.clipboard.writeText(this.args.comparison.id);
   }
 
