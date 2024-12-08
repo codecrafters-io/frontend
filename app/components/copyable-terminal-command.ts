@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { service } from '@ember/service';
+import config from 'codecrafters-frontend/config/environment';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -35,10 +35,8 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
   }
 
   @action
-  handleCopyButtonClick() {
-    if (config.environment !== 'test') {
-      navigator.clipboard.writeText(this.copyableText);
-    }
+  async handleCopyButtonClick() {
+    await navigator.clipboard.writeText(this.copyableText);
 
     this.wasCopiedRecently = true;
 
@@ -47,7 +45,7 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
       () => {
         this.wasCopiedRecently = false;
       },
-      1000,
+      config.environment !== 'test' ? 1000 : 10,
     );
 
     if (this.args.onCopyButtonClick) {
