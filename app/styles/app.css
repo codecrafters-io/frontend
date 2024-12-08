@@ -2,12 +2,14 @@
 @import 'tailwind-compiled.css';
 @import 'utilities.css';
 
-@import 'modals.scss';
-@import 'pages/affiliate-link-page.scss';
-@import 'pages/course-stage-solution-page.scss';
-@import 'pages/code-walkthrough-page.scss';
-@import 'pages/course-admin-submission-diff.scss';
-@import 'pages/course-admin-updates-diff.scss';
+@import 'modals.css';
+
+/* Custom styles for individual pages */
+@import 'pages/affiliate-link-page.css';
+@import 'pages/code-walkthrough-page.css';
+@import 'pages/course-admin-submission-diff.css';
+@import 'pages/course-admin-updates-diff.css';
+@import 'pages/course-stage-solution-page.css';
 
 /* purgecss start ignore */
 @import '@typeform/embed/build/css/popup.css';

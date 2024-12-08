@@ -1,0 +1,4 @@
+/* stylelint-disable-next-line selector-class-pattern -- .cm-collapsedLines is a class from CodeMirror */
+.course-admin-submission-diff-container code-mirror .cm-collapsedLines {
+  margin-left: -24px;
+}
