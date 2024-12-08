@@ -28,7 +28,7 @@ export default class CopyableCodeComponent extends Component<Signature> {
       () => {
         this.codeWasCopiedRecently = false;
       },
-      config.x.copyConfirmationTimeout,
+      config.environment !== 'test' ? 1000 : 10,
     );
 
     if (this.args.onCopyButtonClick) {

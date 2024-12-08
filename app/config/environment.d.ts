@@ -11,7 +11,6 @@ declare const config: {
   rootURL: string;
   x: {
     backendUrl: string;
-    copyConfirmationTimeout: number;
     isCI: boolean;
     metaTagImagesBaseURL: string;
     stripePublishableKey: string;

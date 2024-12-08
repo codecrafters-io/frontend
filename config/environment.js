@@ -28,8 +28,6 @@ module.exports = function (environment) {
     x: {
       backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
 
-      copyConfirmationTimeout: 1000,
-
       defaultMetaTags: {
         type: 'website',
         siteName: 'CodeCrafters',
@@ -85,7 +83,6 @@ module.exports = function (environment) {
 
     ENV.x.percyIsEnabled = process.env.PERCY_ENABLE === 'true';
     ENV.x.isCI = !!process.env.CI;
-    ENV.x.copyConfirmationTimeout = 10;
   }
 
   return ENV;

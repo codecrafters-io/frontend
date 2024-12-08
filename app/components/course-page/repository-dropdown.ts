@@ -73,7 +73,7 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
       () => {
         this.gitRepositoryURLWasCopiedRecently = false;
       },
-      config.x.copyConfirmationTimeout,
+      config.environment !== 'test' ? 1000 : 10,
     );
   }
 

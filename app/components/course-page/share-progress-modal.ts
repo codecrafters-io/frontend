@@ -66,7 +66,7 @@ export default class ShareProgressModalComponent extends Component<Signature> {
   copyToClipboardAndFlashMessage = task({ keepLatest: true }, async (): Promise<void> => {
     await navigator.clipboard.writeText(this.copyableText);
     this.wasCopiedRecently = true;
-    await timeout(config.x.copyConfirmationTimeout);
+    await timeout(config.environment !== 'test' ? 1000 : 10);
     this.wasCopiedRecently = false;
   });
 }

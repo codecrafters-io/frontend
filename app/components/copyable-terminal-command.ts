@@ -45,7 +45,7 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
       () => {
         this.wasCopiedRecently = false;
       },
-      config.x.copyConfirmationTimeout,
+      config.environment !== 'test' ? 1000 : 10,
     );
 
     if (this.args.onCopyButtonClick) {
