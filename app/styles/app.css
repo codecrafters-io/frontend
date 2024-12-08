@@ -3,6 +3,8 @@
 @import 'utilities.css';
 
 @import 'modals.css';
+
+/* Custom styles for individual pages */
 @import 'pages/affiliate-link-page.css';
 @import 'pages/code-walkthrough-page.css';
 @import 'pages/course-admin-submission-diff.css';
