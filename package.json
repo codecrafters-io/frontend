@@ -215,7 +215,7 @@
     "player.js": "^0.1.0",
     "posthog-js": "^1.187.2",
     "showdown": "^2.1.0",
-    "three": "^0.170.0",
+    "three": "^0.171.0",
     "web-vitals": "^4.2.4"
   },
   "fastbootDependencies": [
