@@ -179,7 +179,7 @@
     "prismjs": "^1.28.0",
     "qunit": "^2.22.0",
     "qunit-assertions-extra": "^1.0",
-    "qunit-dom": "^3.2.1",
+    "qunit-dom": "^3.4.0",
     "rgb-hex": "^4.1.0",
     "shiki": "^1.17.7",
     "sinon": "^19.0.2",
