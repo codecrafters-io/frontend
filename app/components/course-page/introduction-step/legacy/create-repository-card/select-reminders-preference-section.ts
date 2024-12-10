@@ -8,20 +8,18 @@ interface Signature {
   Args: {
     isDisabled: boolean;
     repository: RepositoryModel;
-    onSelect: () => void;
   };
 }
 
-export default class SelectExpectedActivityFrequencySectionComponent extends Component<Signature> {
+export default class SelectRemindersPreferenceSectionComponent extends Component<Signature> {
   @action
-  async handleSelect(frequency: RepositoryModel['expectedActivityFrequency']) {
+  async handleSelect(remindersAreEnabled: RepositoryModel['remindersAreEnabled']) {
     if (this.args.isDisabled) {
       return;
     }
 
     if (!this.args.repository.isSaving) {
-      this.args.repository.expectedActivityFrequency = frequency;
-      this.args.onSelect(); // Saving can happen in the background, no need to await
+      this.args.repository.remindersAreEnabled = remindersAreEnabled;
 
       await this.args.repository.save();
     }
@@ -30,6 +28,6 @@ export default class SelectExpectedActivityFrequencySectionComponent extends Com
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection': typeof SelectExpectedActivityFrequencySectionComponent;
+    'CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectRemindersPreferenceSection': typeof SelectRemindersPreferenceSectionComponent;
   }
 }

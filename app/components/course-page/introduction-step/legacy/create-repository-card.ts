@@ -82,6 +82,6 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard': typeof CreateRepositoryCardComponent;
+    'CoursePage::IntroductionStep::Legacy::CreateRepositoryCard': typeof CreateRepositoryCardComponent;
   }
 }

@@ -60,6 +60,6 @@ export default class SelectLanguageSectionComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection': typeof SelectLanguageSectionComponent;
+    'CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectLanguageSection': typeof SelectLanguageSectionComponent;
   }
 }

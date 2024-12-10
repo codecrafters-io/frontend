@@ -13,14 +13,14 @@
 
   <:expandedSection>
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
+      <CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectLanguageSection
         @preferredLanguageSlug={{@preferredLanguageSlug}}
         @errorMessage={{this.repositoryCreationErrorMessage}}
         @repository={{@repository}}
         @onLanguageSelection={{this.handleLanguageSelection}}
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
+      <CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
         @isDisabled={{bool this.expandedSection.isDisabled}}
         @repository={{@repository}}
       />
@@ -29,13 +29,13 @@
         <PrimaryButton class="mt-6" {{on "click" this.expandNextSection}} data-test-next-question-button>↓ Next question</PrimaryButton>
       {{/if}}
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
+      <CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectExpectedActivityFrequencySection
         @isDisabled={{bool this.expandedSection.isDisabled}}
         @repository={{@repository}}
         @onSelect={{this.expandNextSection}}
       />
     {{else if (eq this.expandedSection.type "SelectRemindersPreferenceSection")}}
-      <CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection
+      <CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectRemindersPreferenceSection
         @repository={{@repository}}
         @isDisabled={{bool this.expandedSection.isDisabled}}
       />
