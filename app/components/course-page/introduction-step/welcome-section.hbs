@@ -1,0 +1,18 @@
+<div ...attributes>
+  <div class="prose dark:prose-invert mb-6">
+    <p>
+      Welcome to the
+      {{@repository.course.name}}
+      challenge!
+    </p>
+
+    {{markdown-to-html @repository.course.descriptionMarkdown}}
+  </div>
+
+  <CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectLanguageSection
+    @preferredLanguageSlug={{null}}
+    @errorMessage={{null}}
+    @repository={{@repository}}
+    @onLanguageSelection={{this.handleLanguageSelection}}
+  />
+</div>

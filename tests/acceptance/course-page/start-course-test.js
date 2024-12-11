@@ -54,6 +54,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
+    await this.pauseTest();
 
     assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
 
