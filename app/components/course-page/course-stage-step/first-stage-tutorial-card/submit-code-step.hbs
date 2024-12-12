@@ -6,7 +6,35 @@
 
 <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"' "git push origin master"}} class="mb-3" />
 
-<div class="prose dark:prose-invert">
+<div class="prose dark:prose-invert mb-3">
+  <p>
+    When you run the <code>git push</code> command, CodeCrafters will run tests your code.
+  </p>
+</div>
+
+<div class="mt-6 prose prose-compact prose-sm dark:prose-invert">
+  <p>Need help?</p>
+  <ul>
+    <li>
+      <a
+        data-test-run-git-commands-link
+        href="https://docs.codecrafters.io/challenges/how-challenges-work#how-to-run-git-commands"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Git push says "Everything up-to-date"</a>
+    </li>
+    <li>
+      <a
+        data-test-run-git-commands-link
+        href="https://docs.codecrafters.io/challenges/how-challenges-work#how-to-run-git-commands"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Git push hangs after "Streaming logs..."</a>
+    </li>
+  </ul>
+</div>
+
+{{!-- <div class="prose dark:prose-invert">
   <p class={{if @isComplete "line-through"}}>
     Once you run the commands above, the
     <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
@@ -20,13 +48,13 @@
       <b class="text-teal-500 ml-1">Tests passed!</b>
     </p>
   {{/if}}
-</div>
+</div> --}}
 
-{{#unless @isComplete}}
+{{!-- {{#unless @isComplete}}
   <p class="prose dark:prose-invert prose-sm mt-3">
     <b>Note:</b>
     If you're still seeing "Tests failed" after completing the steps above,
     <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
     to troubleshoot.
   </p>
-{{/unless}}
+{{/unless}} --}}
