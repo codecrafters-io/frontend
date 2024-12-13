@@ -29,9 +29,7 @@
         </div>
       </div>
 
-      {{! For complete steps, we have the "You've completed this step" banner" }}
-      {{! For in-progress steps, users shouldn't be focused on this area anyway }}
-      {{#if (not (or (eq @currentStep.status "complete") (eq @currentStep.status "in_progress")))}}
+      {{#if this.shouldShowProgressIndicator}}
         <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
       {{/if}}
     </div>

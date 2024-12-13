@@ -1,5 +1,5 @@
 <div ...attributes>
-  <div class="prose dark:prose-invert mb-6">
+  <div class="prose dark:prose-invert mb-4">
     <p>
       Welcome to the
       {{@repository.course.name}}
@@ -10,8 +10,8 @@
   </div>
 
   <CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectLanguageSection
-    @preferredLanguageSlug={{null}}
-    @errorMessage={{null}}
+    @preferredLanguageSlug={{undefined}}
+    @errorMessage={{undefined}}
     @repository={{@repository}}
     @onLanguageSelection={{this.handleLanguageSelection}}
   />

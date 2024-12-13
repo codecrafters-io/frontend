@@ -139,7 +139,6 @@ export class SectionList {
 
 export function buildSectionList(repository: RepositoryModel) {
   return new SectionList([
-    new SelectLanguageSection(repository),
     new SelectLanguageProficiencyLevelSection(repository),
     new SelectExpectedActivityFrequencySection(repository),
     new SelectRemindersPreferenceSection(repository),

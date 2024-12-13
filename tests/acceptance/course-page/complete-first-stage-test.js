@@ -44,6 +44,8 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isComplete, 'Second step is not complete');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isExpanded, 'Second step is not expanded');
 
+    // await this.pauseTest();
+
     await coursePage.firstStageTutorialCard.steps[0].click();
 
     assert.notOk(coursePage.firstStageTutorialCard.steps[0].isComplete, 'First step is not complete');
