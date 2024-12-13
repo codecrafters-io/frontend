@@ -1,13 +1,13 @@
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import Store from '@ember-data/store';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-
 interface Signature {
   Element: HTMLDivElement;
 
@@ -67,6 +67,7 @@ class SubmitCodeStep extends BaseStep implements Step {
 export default class FirstStageTutorialCardComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
   get navigateToFileStepIsComplete() {
@@ -75,6 +76,10 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
 
   get navigateToFileStepWasMarkedAsComplete() {
     return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('navigate-to-file');
+  }
+
+  get shouldShowStage1Tweaks() {
+    return this.featureFlags.canSeeTweaksForStage1;
   }
 
   get steps() {
