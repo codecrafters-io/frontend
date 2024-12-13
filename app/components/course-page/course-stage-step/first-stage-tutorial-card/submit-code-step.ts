@@ -8,6 +8,7 @@ interface Signature {
 
   Args: {
     isComplete: boolean;
+    shouldShowStage1Help: boolean;
   };
 }
 

@@ -1,4 +1,12 @@
 {{#if this.solution}}
+  {{#if @shouldShowStage1Help}}
+    <p class="prose dark:prose-invert mb-3">
+      Run the following command to view the files in your repository:
+    </p>
+
+    <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} class="mb-3" />
+  {{/if}}
+
   <div class="prose dark:prose-invert">
     <p>
       Navigate to the
