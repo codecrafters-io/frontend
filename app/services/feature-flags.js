@@ -19,6 +19,10 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-solutions-for-stage-2') === 'test';
   }
 
+  get canSeeTweaksForStage1() {
+    return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-tweaks-for-stage-1') === 'test';
+  }
+
   get currentUser() {
     return this.authenticator.currentUser;
   }

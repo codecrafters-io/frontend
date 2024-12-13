@@ -1,30 +1,88 @@
-{{#if this.solution}}
-  <div class="prose dark:prose-invert">
-    <p>
-      Navigate to the
-      <code>{{this.filename}}</code>
-      file in your repository.
-    </p>
-    <p>
-      We recommend using an editor / IDE since you'll need to edit this file in the next step.
-    </p>
-  </div>
-{{else if (not @repository.language)}}
-  <div class="prose dark:prose-invert">
-    <p>
-      <span class="text-lg">⚠️</span>
-      Complete repository setup to see the instructions for this step.
-    </p>
-  </div>
+{{#if @shouldShowStage1Tweaks}}
+  {{#if this.solution}}
+    <div class="prose dark:prose-invert prose-compact mb-3">
+      <p>
+        Open your repository in your editor / IDE of choice and navigate to
+        <code>{{this.filename}}</code>.
+      </p>
+
+      <p>
+        If you're using VS Code, run this command:
+      </p>
+    </div>
+
+    <CopyableTerminalCommand @commands={{array (concat "code --goto " this.filename " .")}} class="mb-3" />
+
+    <div class="prose dark:prose-invert prose-sm mb-3">
+      <p>
+        <b>Note:</b>
+        If the
+        <code>code</code>
+        command is not available,
+        <a href="https://code.visualstudio.com/docs/editor/command-line#_launching-from-command-line" target="_blank" rel="noopener noreferrer">read
+          VS Code's documentation</a>.
+      </p>
+    </div>
+  {{else if (not @repository.language)}}
+    <div class="prose dark:prose-invert">
+      <p>
+        <span class="text-lg">⚠️</span>
+        Complete repository setup to see the instructions for this step.
+      </p>
+    </div>
+  {{else}}
+    <div class="prose dark:prose-invert mb-3">
+      <p>
+        Open your repository in your editor / IDE of choice and navigate to
+        <code>README.md</code>.
+      </p>
+
+      <p>
+        If you're using VS Code, run this command:
+      </p>
+    </div>
+
+    <CopyableTerminalCommand @commands={{array "code --goto README.md ."}} class="mb-3" />
+
+    <div class="prose dark:prose-invert prose-sm">
+      <p>
+        <b>Note:</b>
+        If the
+        <code>code</code>
+        command is not available,
+        <a href="https://code.visualstudio.com/docs/editor/command-line#_launching-from-command-line">read VS Code's documentation</a>.
+      </p>
+    </div>
+  {{/if}}
 {{else}}
-  <div class="prose dark:prose-invert">
-    <p>
-      Navigate to the
-      <code>README.md</code>
-      file in your repository.
-    </p>
-    <p>
-      You'll need to make changes to this file, so we recommend opening the repository in your editor / IDE of choice.
-    </p>
-  </div>
+  {{#if this.solution}}
+    <div class="prose dark:prose-invert">
+      <p>
+        Navigate to the
+        <code>{{this.filename}}</code>
+        file in your repository.
+      </p>
+      <p>
+        We recommend using an editor / IDE since you'll need to edit this file in the next step.
+      </p>
+    </div>
+  {{else if (not @repository.language)}}
+    <div class="prose dark:prose-invert">
+      <p>
+        <span class="text-lg">⚠️</span>
+        Complete repository setup to see the instructions for this step.
+      </p>
+    </div>
+  {{else}}
+    <div class="prose dark:prose-invert">
+      <p>
+        Navigate to the
+        <code>README.md</code>
+        file in your repository.
+      </p>
+      <p>
+        You'll need to make changes to this file, so we recommend opening the repository in your editor / IDE of choice.
+      </p>
+    </div>
+  {{/if}}
 {{/if}}
