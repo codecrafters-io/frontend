@@ -13,15 +13,20 @@
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.navigateToFileStepIsComplete}}
+          @shouldShowStage1Help={{this.shouldShowStage1Help}}
         />
       {{else if (eq stepList.expandedStep.id "uncomment-code")}}
         <CoursePage::CourseStageStep::FirstStageTutorialCard::UncommentCodeStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.uncommentCodeStepIsComplete}}
+          @shouldShowStage1Help={{this.shouldShowStage1Help}}
         />
       {{else if (eq stepList.expandedStep.id "submit-code")}}
-        <CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
+        <CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep
+          @isComplete={{this.submitCodeStepIsComplete}}
+          @shouldShowStage1Help={{this.shouldShowStage1Help}}
+        />
       {{/if}}
     </ExpandableStepList>
 

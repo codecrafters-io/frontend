@@ -1,9 +1,16 @@
 {{#if this.solution}}
   <div class="prose dark:prose-invert mb-3">
-    <p>
-      Uncomment the following code in
-      <code>{{this.filename}}</code>:
-    </p>
+    {{#if @shouldShowStage1Help}}
+      <p>
+        Uncomment the following code in
+        <code>{{this.filename}}</code>, and save the file:
+      </p>
+    {{else}}
+      <p>
+        Uncomment the following code in
+        <code>{{this.filename}}</code>:
+      </p>
+    {{/if}}
   </div>
 
   <div class="flex flex-col gap-4">

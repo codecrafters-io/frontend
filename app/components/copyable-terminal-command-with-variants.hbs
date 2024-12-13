@@ -5,8 +5,9 @@
     @onVariantLabelClick={{this.handleVariantSelect}}
     @selectedVariantLabel={{this.selectedVariant.label}}
     @variantLabels={{this.variantLabels}}
+    ...attributes
   />
 {{else}}
   {{! If there's only one variant, don't show variant labels }}
-  <CopyableTerminalCommand @commands={{this.commandsForSelectedVariant}} />
+  <CopyableTerminalCommand @commands={{this.commandsForSelectedVariant}} ...attributes />
 {{/if}}
