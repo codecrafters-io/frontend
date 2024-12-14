@@ -4,6 +4,12 @@
     <span class="text-xs font-semibold leading-5 text-gray-700">Private</span>
     <EmberTooltip @text="This solution is only visible to users within your team." />
   </div>
+{{else if (and (eq @solution.flakinessCheckStatus "failure") (current-user-is-staff))}}
+  <Pill @color="yellow" ...attributes>
+    Flaky
+
+    <EmberTooltip @text="This solution failed tests when run multiple times in a row, so it might not be reliable." />
+  </Pill>
 {{else if @solution.isPinned}}
   <Pill @color="green" ...attributes>
     Editor's choice
