@@ -53,7 +53,7 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
   }
 
   get userHasRunTestsForStageAtLeastOnce() {
-    return !this.lastSubmission.clientTypeIsSystem && this.lastSubmission?.courseStage === this.args.currentStep.courseStage;
+    return !this.lastSubmission?.clientTypeIsSystem && this.lastSubmission?.courseStage === this.args.currentStep.courseStage;
   }
 
   @action

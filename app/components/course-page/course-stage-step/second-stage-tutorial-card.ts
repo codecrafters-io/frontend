@@ -78,7 +78,7 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
       this.args.repository.stageIsComplete(this.args.courseStage) ||
       (this.args.repository.lastSubmissionHasSuccessStatus &&
         this.args.repository.lastSubmission.courseStage === this.args.courseStage &&
-        !this.args.repository.lastSubmission.clientTypeIsSystem)
+        !this.args.repository.lastSubmission?.clientTypeIsSystem)
     );
   }
 
