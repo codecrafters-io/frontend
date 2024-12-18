@@ -62,7 +62,7 @@
     "@shikijs/rehype": "^1.24.2",
     "@shikijs/transformers": "^1.24.2",
     "@tsconfig/ember": "^3.0.8",
-    "@types/canvas-confetti": "^1.6.4",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/dompurify": "^3.0.5",
     "@types/ember": "^4.0.11",
     "@types/ember__application": "^4.0.11",
