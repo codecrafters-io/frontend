@@ -150,7 +150,7 @@ Example:
 
 \`\`\`
 $ invalid_command
-invalid_command: not found
+invalid_command: command not found
 \`\`\`
 `;
   }
