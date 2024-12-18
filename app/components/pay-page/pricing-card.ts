@@ -12,11 +12,13 @@ interface Signature {
     discountedPrice: number | null;
     highlightedText?: string;
     footerText: string;
-    onStartMembershipButtonClick: () => void;
+    onStartMembershipButtonClick: (pricingFrequency: 'quarterly' | 'yearly' | 'lifetime') => void;
     isRecommended: boolean;
     pricingFrequency: 'quarterly' | 'yearly' | 'lifetime';
-    regionalDiscount?: RegionalDiscountModel;
+    regionalDiscount?: RegionalDiscountModel | null; // The "| null" makes it easier to use {{(if ..)}} in the template
     shouldShowAmortizedMonthlyPrice: boolean;
+    temporaryNoticeText?: string;
+    temporaryNoticeTooltipText?: string;
     title: string;
   };
 }
@@ -62,5 +64,11 @@ export default class PricingCardComponent extends Component<Signature> {
 
   get user() {
     return this.authenticator.currentUser;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'PayPage::PricingCard': typeof PricingCardComponent;
   }
 }
