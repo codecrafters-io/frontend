@@ -23,9 +23,9 @@
     {{/if}}
 
     <div class="flex flex-col lg:flex-row gap-x-8 gap-y-8 items-start mt-12">
-      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::PricingCard
         @actualPrice={{120}}
+        @discountedPrice={{null}}
         @footerText="Single payment of $120."
         @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{true}}
@@ -36,7 +36,6 @@
         data-test-quarterly-pricing-card
       />
 
-      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::PricingCard
         @actualPrice={{360}}
         @discountedPrice={{this.discountedYearlyPrice}}
@@ -50,9 +49,9 @@
         data-test-yearly-pricing-card
       />
 
-      {{! @glint-expect-error not ts-ified yet }}
       <PayPage::PricingCard
         @actualPrice={{990}}
+        @discountedPrice={{null}}
         @footerText="Pay once, access for life."
         @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{false}}
