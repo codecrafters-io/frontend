@@ -114,7 +114,7 @@
     "ember-api-actions": "github:codecrafters-io/ember-api-actions",
     "ember-auto-import": "^2.10.0",
     "ember-autoresize-modifier": "^0.7.0",
-    "ember-basic-dropdown": "^8.2.1",
+    "ember-basic-dropdown": "^8.4.0",
     "ember-cli": "~5.8.0",
     "ember-cli-app-version": "^7.0.0",
     "ember-cli-babel": "^8.2.0",
