@@ -97,9 +97,7 @@
   <div class="p-6 rounded-b-lg relative">
     {{#if @temporaryNoticeText}}
       <div class="absolute -top-4 left-0 right-0 flex items-center justify-center">
-        <div
-          class="text-xs bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-semibold px-3 h-8 inline-flex items-center rounded-full hover:from-indigo-600 hover:to-pink-600 cursor-pointer"
-        >
+        <div class="text-xs bg-teal-500 text-white font-semibold px-3 h-8 inline-flex items-center rounded-full hover:bg-teal-600 cursor-pointer">
           {{@temporaryNoticeText}}
           {{svg-jar "question-mark-circle" class="w-4 h-4 fill-current text-white ml-1"}}
           <EmberTooltip @text={{@temporaryNoticeTooltipText}} />
