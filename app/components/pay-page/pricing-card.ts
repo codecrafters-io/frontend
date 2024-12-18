@@ -17,6 +17,8 @@ interface Signature {
     pricingFrequency: 'quarterly' | 'yearly' | 'lifetime';
     regionalDiscount?: RegionalDiscountModel | null; // The "| null" makes it easier to use {{(if ..)}} in the template
     shouldShowAmortizedMonthlyPrice: boolean;
+    temporaryNoticeText?: string;
+    temporaryNoticeTooltipText?: string;
     title: string;
   };
 }
