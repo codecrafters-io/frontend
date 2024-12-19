@@ -8,8 +8,13 @@ export default create({
   members: collection('[data-test-members-list-item-container]', {
     clickLeaveTeamButton: clickable('[data-test-leave-team-button]'),
     clickRemoveButton: clickable('[data-test-remove-button]'),
+    githubName: text('[data-test-github-name]'),
     username: text('[data-test-username]'),
   }),
+
+  memberByGithubName(githubName) {
+    return this.members.toArray().findBy('githubName', githubName);
+  },
 
   memberByUsername(username) {
     return this.members.toArray().findBy('username', username);

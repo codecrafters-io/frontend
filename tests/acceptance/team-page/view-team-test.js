@@ -113,7 +113,7 @@ module('Acceptance | view-team-test', function (hooks) {
     assert.strictEqual(teamPage.members.length, 4, 'expected 4 members to be present');
 
     window.confirm = () => true;
-    await teamPage.memberByUsername('rohitpaulk').clickLeaveTeamButton();
+    await teamPage.memberByGithubName('Paul Kuruvilla').clickLeaveTeamButton();
 
     assert.strictEqual(currentURL(), '/catalog', 'should redirect to catalog page');
   });
