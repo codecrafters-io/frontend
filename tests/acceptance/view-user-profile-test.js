@@ -1,12 +1,13 @@
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import profilePage from 'codecrafters-frontend/tests/pages/settings/profile-page';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn, signInAsAdmin } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsAdmin, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | view-user-profile', function (hooks) {
   setupApplicationTest(hooks);
@@ -90,6 +91,30 @@ module('Acceptance | view-user-profile', function (hooks) {
     await percySnapshot('User profile');
 
     assert.strictEqual(1, 1);
+  });
+
+  test('it should show the GitHub name if it is set', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+
+    await userPage.visit({ username: user.username });
+    assert.ok(userPage.githubName.isVisible, 'GitHub name should be visible');
+    assert.strictEqual(userPage.githubName.text, 'Paul Kuruvilla');
+  });
+
+  test('it should not show the GitHub name when anonymous mode is enabled', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    const user = this.server.schema.users.findBy({ username: 'rohitpaulk' });
+
+    await profilePage.visit();
+    await profilePage.anonymousModeToggle.toggle();
+
+    await userPage.visit({ username: user.username });
+    assert.notOk(userPage.githubName.isVisible, 'GitHub name should not be visible');
   });
 
   // TODO: Add test for not found

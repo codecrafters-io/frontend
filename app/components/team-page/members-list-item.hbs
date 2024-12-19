@@ -10,7 +10,11 @@
 
     <div>
       <div class="text-gray-700 text-sm">
-        <span class="font-semibold" data-test-username>{{@membership.user.username}}</span>
+        {{#if @membership.user.githubName}}
+          <span class="font-semibold" data-test-github-name>{{@membership.user.githubName}}</span>
+        {{else}}
+          <span class="font-semibold" data-test-username>{{@membership.user.username}}</span>
+        {{/if}}
 
         {{#if @membership.isAdmin}}
           <span class="text-gray-400"> (admin)</span>
