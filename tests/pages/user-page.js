@@ -20,6 +20,11 @@ export default createPage({
     link: attribute('href'),
   },
 
+  githubName: {
+    scope: '[data-test-github-name]',
+    text: text(),
+  },
+
   profileCustomizationNotice: { scope: '[data-test-profile-customization-notice]' },
 
   profileDescriptionMarkdown: {

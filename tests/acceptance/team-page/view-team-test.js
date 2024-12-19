@@ -43,6 +43,7 @@ module('Acceptance | view-team-test', function (hooks) {
     const member1 = this.server.create('user', {
       avatarUrl: 'https://github.com/sarupbanskota.png',
       createdAt: new Date(),
+      githubName: 'Sarup Banskota',
       githubUsername: 'sarupbanskota',
       username: 'sarupbanskota',
     });
