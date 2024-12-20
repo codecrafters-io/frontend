@@ -1,10 +1,6 @@
 <div ...attributes>
   <img alt="avatar" src={{@user.avatarUrl}} class="border-2 border-white shadow rounded w-48 h-48 mb-6" />
 
-  <div class="font-bold text-2xl text-gray-600">
-    {{@user.name}}
-  </div>
-
   {{#if @user.hasAnonymousModeEnabled}}
     <a
       class="group inline-flex items-center text-gray-400 mb-4 w-full"
@@ -20,6 +16,10 @@
       {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
     </a>
   {{else}}
+    <div class="font-bold text-2xl text-gray-600" data-test-github-name>
+      {{@user.githubName}}
+    </div>
+
     <a
       class="group inline-flex items-center text-gray-400 mb-4 w-full"
       href={{@user.githubProfileUrl}}
