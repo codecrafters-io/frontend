@@ -109,7 +109,7 @@
     "concurrently": "^9.1.0",
     "date-fns": "4.1.0",
     "date-fns-tz": "^3.2.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "ember-animated": "~2.1.0",
     "ember-api-actions": "github:codecrafters-io/ember-api-actions",
     "ember-auto-import": "^2.10.0",
