@@ -36,7 +36,7 @@ export default class CatalogRoute extends BaseRoute {
     }
 
     modelPromises.courses = this.store.findAll('course', {
-      include: 'stages,language-configurations.language',
+      include: 'extensions,stages,language-configurations.language',
     }) as unknown as Promise<CourseModel[]>;
 
     return RSVPHash(modelPromises) as Promise<ModelType>;
