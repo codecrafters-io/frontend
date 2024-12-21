@@ -13,6 +13,7 @@ interface Signature {
     courseStage: CourseStageModel;
     isComplete: boolean;
     languageGuide?: CourseStageLanguageGuideModel;
+    shouldShowShortInstructions: boolean;
     shouldShowSolution: boolean;
   };
 }
