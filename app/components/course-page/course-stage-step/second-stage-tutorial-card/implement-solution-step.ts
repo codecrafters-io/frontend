@@ -14,7 +14,6 @@ interface Signature {
     isComplete: boolean;
     languageGuide?: CourseStageLanguageGuideModel;
     shouldShowShortInstructions: boolean;
-    shouldShowSolution: boolean;
   };
 }
 

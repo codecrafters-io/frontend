@@ -17,7 +17,6 @@ interface Signature {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
     languageGuide?: CourseStageLanguageGuideModel;
-    shouldShowSolution: boolean;
   };
 }
 

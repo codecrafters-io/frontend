@@ -18,11 +18,6 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-short-instructions-for-stage-2') === 'test';
   }
 
-  // Check for staff first so that we don't trigger "Feature flag called" events for staff users
-  get canSeeSolutionsForStage2() {
-    return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-solutions-for-stage-2') === 'test';
-  }
-
   get canSeeTweaksForStage1() {
     return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-tweaks-for-stage-1') === 'test';
   }

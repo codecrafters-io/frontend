@@ -21,7 +21,6 @@
           @isComplete={{this.implementSolutionStepIsComplete}}
           @languageGuide={{@languageGuide}}
           @shouldShowShortInstructions={{this.shouldShowShortInstructions}}
-          @shouldShowSolution={{@shouldShowSolution}}
         />
       {{else if (eq stepList.expandedStep.id "run-tests")}}
         <CoursePage::CourseStageStep::SecondStageTutorialCard::RunTestsStep
