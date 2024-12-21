@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
@@ -16,7 +15,6 @@ import type Store from '@ember-data/store';
 export default class CourseStageInstructionsController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
-  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
   @service declare store: Store;
 
@@ -55,11 +53,6 @@ export default class CourseStageInstructionsController extends Controller {
 
   get shouldShowPrerequisites() {
     return !!this.prerequisiteInstructionsMarkdown;
-  }
-
-  // Check for solution first so that we don't trigger "Feature flag called" events when solutions aren't present
-  get shouldShowStage2Solution() {
-    return !!this.model.activeRepository.secondStageSolution && this.featureFlags.canSeeSolutionsForStage2;
   }
 
   get shouldShowTestRunnerCard() {
