@@ -47,6 +47,6 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection': typeof SelectLanguageProficiencyLevelSectionComponent;
+    'CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::SelectLanguageProficiencyLevelSection': typeof SelectLanguageProficiencyLevelSectionComponent;
   }
 }

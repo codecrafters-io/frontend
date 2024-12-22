@@ -31,12 +31,13 @@ export default class TabListComponent extends Component<Signature> {
 
   get allTabs(): Tab[] {
     return {
-      SetupStep: this.setupTabs,
+      SetupStep: this.introductionTabs, // Can be the same as IntroductionStep for now
       CourseCompletedStep: this.courseCompletedTabs,
       CourseStageStep: this.stageTabs,
       IntroductionStep: this.introductionTabs,
       BaseStagesCompletedStep: this.courseCompletedTabs, // Can be the same as CourseCompletedStep for now
       ExtensionCompletedStep: this.courseCompletedTabs, // Can be the same as CourseCompletedStep for now
+      PreChallengeAssessmentStep: this.introductionTabs, // Can be the same as IntroductionStep for now
     }[this.args.currentStep.type];
   }
 
@@ -60,21 +61,6 @@ export default class TabListComponent extends Component<Signature> {
   }
 
   get introductionTabs(): Tab[] {
-    return [
-      {
-        icon: 'document-text',
-        name: 'Instructions',
-        slug: 'instructions',
-        internalLink: {
-          route: this.args.currentStep.routeParams.route,
-          models: this.args.currentStep.routeParams.models,
-        },
-        isActive: this.router.currentRouteName === this.args.currentStep.routeParams.route,
-      },
-    ];
-  }
-
-  get setupTabs(): Tab[] {
     return [
       {
         icon: 'document-text',

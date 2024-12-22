@@ -46,6 +46,7 @@ Router.map(function () {
   // TODO: Add dark mode support
   this.route('course', { path: '/courses/:course_slug' }, function () {
     this.route('introduction');
+    this.route('pre-challenge-assessment');
     this.route('setup');
 
     // Stage identifier either be '1' (for base stages) or 'ext2:1' (for extension stages)

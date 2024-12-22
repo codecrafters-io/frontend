@@ -13,6 +13,6 @@ export default class WelcomeCardComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::WelcomeCard': typeof WelcomeCardComponent;
+    'CoursePage::IntroductionStep::Legacy::WelcomeCard': typeof WelcomeCardComponent;
   }
 }
