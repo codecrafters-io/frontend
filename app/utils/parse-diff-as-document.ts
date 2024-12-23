@@ -5,6 +5,10 @@ export default function parseDiffAsDocument(diff: string = '') {
   const original = [];
 
   for (const line of diffLines) {
+    if (line === '\\ No newline at end of file') {
+      continue;
+    }
+
     if (line.startsWith('-')) {
       original.push(line.substring(1));
     } else if (line.startsWith('+')) {
