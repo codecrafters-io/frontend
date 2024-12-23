@@ -13,7 +13,6 @@
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.navigateToFileStepIsComplete}}
-          @shouldShowStage1Tweaks={{this.shouldShowStage1Tweaks}}
         />
       {{else if (eq stepList.expandedStep.id "uncomment-code")}}
         <CoursePage::CourseStageStep::FirstStageTutorialCard::UncommentCodeStep
