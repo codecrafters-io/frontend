@@ -29,13 +29,13 @@
     </ExpandableStepList>
 
     {{#if @shouldHideTestRunnerCardBeforeUserHasSubmitted}}
-      {{#if (not-eq @testsStatus "passed")}}
+      {{#if @shouldShowLinkToForum}}
         <div class="prose dark:prose-invert prose-sm prose-compact mt-6">
           <p>Need help?</p>
           <ul>
             <li>
               <a
-                href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3Ashell&title=%5B{{this.courseShortName}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
+                href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3A{{this.courseSlug}}&title=%5B{{this.courseSlug}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -56,6 +56,15 @@ export default class CourseStageInstructionsController extends Controller {
     return !this.currentStep.courseStage.isFirst && this.currentStep.status === 'complete';
   }
 
+  get shouldShowLinkToForum() {
+    return (
+      this.isCurrentStage &&
+      this.currentStep.status !== 'complete' &&
+      this.currentStep.testsStatus !== 'passed' &&
+      this.shouldHideTestRunnerCardBeforeUserHasSubmitted
+    );
+  }
+
   get shouldShowPrerequisites() {
     return !!this.prerequisiteInstructionsMarkdown;
   }
