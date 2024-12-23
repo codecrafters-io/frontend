@@ -14,6 +14,8 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
+    shouldHideTestRunnerCardBeforeUserHasSubmitted: boolean;
+    testsStatus: string;
   };
 }
 
@@ -69,6 +71,10 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
   @service declare coursePageState: CoursePageStateService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
+
+  get courseShortName() {
+    return this.args.courseStage.course.shortName;
+  }
 
   get navigateToFileStepIsComplete() {
     return this.navigateToFileStepWasMarkedAsComplete || this.uncommentCodeStepIsComplete;

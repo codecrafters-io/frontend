@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import { action } from '@ember/object';
@@ -11,10 +12,10 @@ import type RouterService from '@ember/routing/router-service';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 import type Store from '@ember-data/store';
-
 export default class CourseStageInstructionsController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
   @service declare store: Store;
 
@@ -47,6 +48,10 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.courseStage.prerequisiteInstructionsMarkdownFor(this.model.activeRepository);
   }
 
+  get shouldHideTestRunnerCardBeforeUserHasSubmitted() {
+    return this.featureFlags.hideTestRunnerCardBeforeUserHasSubmitted;
+  }
+
   get shouldShowFeedbackPrompt() {
     return !this.currentStep.courseStage.isFirst && this.currentStep.status === 'complete';
   }
@@ -56,7 +61,10 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowTestRunnerCard() {
-    return this.isCurrentStage && this.currentStep.status !== 'complete';
+    const shouldHideTestRunnerCard =
+      this.model.courseStage.isFirst && this.model.activeRepository.submissions.length <= 1 && this.shouldHideTestRunnerCardBeforeUserHasSubmitted;
+
+    return this.isCurrentStage && this.currentStep.status !== 'complete' && !shouldHideTestRunnerCard;
   }
 
   get shouldShowUpgradePrompt() {
