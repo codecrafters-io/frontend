@@ -72,8 +72,8 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
   @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
-  get courseSlug() {
-    return this.args.courseStage.course.slug;
+  get currentCourse() {
+    return this.args.courseStage.course;
   }
 
   get navigateToFileStepIsComplete() {
