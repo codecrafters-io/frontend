@@ -33,7 +33,13 @@
     {{/if}}
 
     {{#if @model.courseStage.isFirst}}
-      <CoursePage::CourseStageStep::FirstStageTutorialCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
+      <CoursePage::CourseStageStep::FirstStageTutorialCard
+        @repository={{@model.activeRepository}}
+        @courseStage={{@model.courseStage}}
+        @currentStep={{this.currentStep}}
+        @shouldHideTestRunnerCardRelatedCopy={{this.shouldHideTestRunnerCardBeforeStage1Submission}}
+        class="mb-6"
+      />
     {{/if}}
 
     {{#if @model.courseStage.isSecond}}

@@ -4,6 +4,7 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import Store from '@ember-data/store';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
 import { action } from '@ember/object';
@@ -14,6 +15,8 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
+    currentStep: CourseStageStep;
+    shouldHideTestRunnerCardRelatedCopy: boolean;
   };
 }
 
@@ -70,12 +73,22 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
   @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
+  get currentCourse() {
+    return this.args.courseStage.course;
+  }
+
   get navigateToFileStepIsComplete() {
     return this.navigateToFileStepWasMarkedAsComplete || this.uncommentCodeStepIsComplete;
   }
 
   get navigateToFileStepWasMarkedAsComplete() {
     return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('navigate-to-file');
+  }
+
+  get shouldShowLinkToForum() {
+    const currentStep = this.args.currentStep;
+
+    return currentStep.testsStatus !== 'passed' && currentStep.status !== 'complete';
   }
 
   get steps() {
