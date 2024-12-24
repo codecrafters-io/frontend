@@ -18,12 +18,12 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-short-instructions-for-stage-2') === 'test';
   }
 
-  get currentUser() {
-    return this.authenticator.currentUser;
+  get cannotSeeTestRunnerCardBeforeStage1Submission() {
+    return this.currentUser?.isStaff || this.getFeatureFlagValue('cannot-see-test-runner-card-before-stage1-submission') === 'test';
   }
 
-  get hideTestRunnerCardBeforeUserHasSubmitted() {
-    return this.currentUser?.isStaff || this.getFeatureFlagValue('hide-test-runner-card-before-user-has-submitted') === 'test';
+  get currentUser() {
+    return this.authenticator.currentUser;
   }
 
   getFeatureFlagValue(flagName) {

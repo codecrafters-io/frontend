@@ -23,13 +23,13 @@
       {{else if (eq stepList.expandedStep.id "submit-code")}}
         <CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep
           @isComplete={{this.submitCodeStepIsComplete}}
-          @shouldHideTestRunnerCardBeforeUserHasSubmitted={{@shouldHideTestRunnerCardBeforeUserHasSubmitted}}
+          @shouldHideTestRunnerCardRelatedCopy={{@shouldHideTestRunnerCardRelatedCopy}}
         />
       {{/if}}
     </ExpandableStepList>
 
-    {{#if @shouldHideTestRunnerCardBeforeUserHasSubmitted}}
-      {{#if @shouldShowLinkToForum}}
+    {{#if @shouldHideTestRunnerCardRelatedCopy}}
+      {{#if this.shouldShowLinkToForum}}
         <div class="prose dark:prose-invert prose-sm prose-compact mt-6">
           <p>Need help?</p>
           <ul>
@@ -40,7 +40,7 @@
                 rel="noopener noreferrer"
               >
                 Post your issue</a>
-              on the forum—Andy is quick to reply, typically within 6 hours.
+              on the forum — Andy usually replies within 6 hours.
             </li>
           </ul>
         </div>

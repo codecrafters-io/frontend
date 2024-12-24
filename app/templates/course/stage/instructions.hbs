@@ -36,8 +36,8 @@
       <CoursePage::CourseStageStep::FirstStageTutorialCard
         @repository={{@model.activeRepository}}
         @courseStage={{@model.courseStage}}
-        @shouldHideTestRunnerCardBeforeUserHasSubmitted={{this.shouldHideTestRunnerCardBeforeUserHasSubmitted}}
-        @shouldShowLinkToForum={{this.shouldShowLinkToForum}}
+        @currentStep={{this.currentStep}}
+        @shouldHideTestRunnerCardRelatedCopy={{this.shouldHideTestRunnerCardBeforeStage1Submission}}
         class="mb-6"
       />
     {{/if}}

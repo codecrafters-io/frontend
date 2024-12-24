@@ -8,7 +8,7 @@
 
 <div class="prose dark:prose-invert">
   <p class={{if @isComplete "line-through"}}>
-    Once you run the commands above, our system will automatically run tests on your code.
+    Once you run the commands above, our system will automatically test your code.
   </p>
 
   {{#if @isComplete}}
@@ -20,7 +20,7 @@
 </div>
 
 {{#unless @isComplete}}
-  {{#unless @shouldHideTestRunnerCardBeforeUserHasSubmitted}}
+  {{#unless @shouldHideTestRunnerCardRelatedCopy}}
     <p class="prose dark:prose-invert prose-sm mt-3">
       <b>Note:</b>
       If you're still seeing "Tests failed" after completing the steps above,

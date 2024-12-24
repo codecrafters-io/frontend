@@ -48,21 +48,12 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.courseStage.prerequisiteInstructionsMarkdownFor(this.model.activeRepository);
   }
 
-  get shouldHideTestRunnerCardBeforeUserHasSubmitted() {
-    return this.featureFlags.hideTestRunnerCardBeforeUserHasSubmitted;
+  get shouldHideTestRunnerCardBeforeStage1Submission() {
+    return this.featureFlags.cannotSeeTestRunnerCardBeforeStage1Submission;
   }
 
   get shouldShowFeedbackPrompt() {
     return !this.currentStep.courseStage.isFirst && this.currentStep.status === 'complete';
-  }
-
-  get shouldShowLinkToForum() {
-    return (
-      this.isCurrentStage &&
-      this.currentStep.status !== 'complete' &&
-      this.currentStep.testsStatus !== 'passed' &&
-      this.shouldHideTestRunnerCardBeforeUserHasSubmitted
-    );
   }
 
   get shouldShowPrerequisites() {
@@ -70,10 +61,21 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get shouldShowTestRunnerCard() {
-    const shouldHideTestRunnerCard =
-      this.model.courseStage.isFirst && this.model.activeRepository.submissions.length <= 1 && this.shouldHideTestRunnerCardBeforeUserHasSubmitted;
+    if (!this.isCurrentStage) {
+      return false;
+    }
 
-    return this.isCurrentStage && this.currentStep.status !== 'complete' && !shouldHideTestRunnerCard;
+    if (this.currentStep.status === 'complete') {
+      return false;
+    }
+
+    if (this.model.courseStage.isFirst) {
+      // For stage 1, we hide the test runner card until the user's submission.
+      return !(this.model.activeRepository.submissionsCount <= 1 && this.shouldHideTestRunnerCardBeforeStage1Submission);
+    } else {
+      // For other stages, we always show the test runner card
+      return true;
+    }
   }
 
   get shouldShowUpgradePrompt() {
