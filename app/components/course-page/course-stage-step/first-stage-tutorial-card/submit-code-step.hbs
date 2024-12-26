@@ -8,7 +8,10 @@
 
 <div class="prose dark:prose-invert">
   <p class={{if @isComplete "line-through"}}>
-    Once you run the commands above, our system will automatically test your code.
+    Once you run the commands above, the
+    <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+    message below this card will change to
+    <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
   </p>
 
   {{#if @isComplete}}
@@ -20,12 +23,10 @@
 </div>
 
 {{#unless @isComplete}}
-  {{#unless @shouldHideTestRunnerCardRelatedCopy}}
-    <p class="prose dark:prose-invert prose-sm mt-3">
-      <b>Note:</b>
-      If you're still seeing "Tests failed" after completing the steps above,
-      <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
-      to troubleshoot.
-    </p>
-  {{/unless}}
+  <p class="prose dark:prose-invert prose-sm mt-3">
+    <b>Note:</b>
+    If you're still seeing "Tests failed" after completing the steps above,
+    <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
+    to troubleshoot.
+  </p>
 {{/unless}}

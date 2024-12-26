@@ -8,7 +8,6 @@ interface Signature {
 
   Args: {
     isComplete: boolean;
-    shouldHideTestRunnerCardRelatedCopy: boolean;
   };
 }
 
