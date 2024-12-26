@@ -6,7 +6,7 @@
   {{#if this.isLoading}}
     <div class="flex items-center mt-3">
       <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
-      <span class="ml-3 text-gray-700">Loading...</span>
+      <span class="ml-3 text-gray-700 dark:text-gray-200">Loading...</span>
     </div>
   {{else if (and this.githubRepositorySyncConfiguration (not this.githubRepositorySyncConfiguration.isNew))}}
     {{#if this.githubAppInstallation.isBroken}}
@@ -20,7 +20,7 @@
     <div class="py-16 flex flex-col items-center justify-center">
       {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
 
-      <div class="text-gray-600 text-center mb-6">
+      <div class="text-gray-600 dark:text-gray-200 text-center mb-6">
         This repository is configured to publish to
         <a
           href="https://github.com/{{this.githubRepositorySyncConfiguration.githubRepositoryName}}"
@@ -33,7 +33,7 @@
         </a>
       </div>
 
-      <div class="text-gray-600 text-center mb-6">
+      <div class="text-gray-600 dark:text-gray-200 text-center mb-6">
         Code pushed to your CodeCrafters Git repository will automatically be synced to GitHub.
       </div>
 
@@ -61,7 +61,10 @@
           </div>
 
           {{! template-lint-disable require-input-label }}
-          <select class="p-2 border rounded mb-3 block" {{on "change" this.handleRepositoryOptionSelected}}>
+          <select
+            class="p-2 border rounded mb-3 block bg-white dark:bg-gray-850 dark:text-gray-200 dark:border-white/10"
+            {{on "change" this.handleRepositoryOptionSelected}}
+          >
             {{#each this.accessibleRepositoryGroups as |repositoryGroup|}}
               <optgroup label={{repositoryGroup.title}}>
                 {{#each repositoryGroup.repositories as |repository|}}
@@ -81,7 +84,7 @@
           </PrimaryButtonWithSpinner>
 
           <div class="prose dark:prose-invert mb-4">
-            <p class="text-xs">
+            <p class="text-xs dark:text-gray-200">
               Can't find your repository? Grant CodeCrafters access to your repository
               <a href={{this.githubAppInstallation.githubConfigureUrl}} target="_blank" rel="noopener noreferrer">here</a>.
             </p>
