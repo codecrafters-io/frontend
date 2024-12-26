@@ -84,6 +84,32 @@
       </div>
     {{/if}}
 
+    {{! TODO: Remove this temporary card  }}
+    {{#if (and @model.courseStage.isSecond (eq @model.courseStage.course.slug "shell"))}}
+      <div class="my-10 mx-6 flex items-start gap-4">
+        <img
+          alt="avatar"
+          src="https://avatars.githubusercontent.com/u/1450947"
+          class="shrink-0 overflow-hidden rounded-full size-8 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 shadow"
+        />
+        <div class="prose prose-compact dark:prose-invert text-sm">
+          <h4 class="text-base text-gray-600 dark:text-gray-300">Hi there! I'm Andy 👋</h4>
+          <p>
+            I'm working on improving our stage 2 experience.
+          </p>
+          <p>
+            If you find anything confusing here, mind letting me know on
+            <a
+              href="https://forum.codecrafters.io/t/shell-help-us-improve-cz2-handle-invalid-commands/3691"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              this forum post</a>?
+          </p>
+        </div>
+      </div>
+    {{/if}}
+
     {{! TODO: Bring this back? }}
     {{!-- {{#if this.shouldShowPrerequisites}}
       <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
