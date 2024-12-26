@@ -6,7 +6,7 @@ import { module, test } from 'qunit';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | publish-to-github-test', function (hooks) {
@@ -16,7 +16,7 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
   test('can initiate GitHub integration setup', async function (assert) {
     testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server); // Temporarily using subscriber to verify dark mode
+    signInAsStaff(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
