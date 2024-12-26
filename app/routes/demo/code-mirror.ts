@@ -15,6 +15,7 @@ const QUERY_PARAMS = [
   'foldGutter',
   'highlightActiveLine',
   'highlightChanges',
+  'highlightNewlines',
   'highlightSelectionMatches',
   'highlightSpecialChars',
   'highlightTrailingWhitespace',
