@@ -84,16 +84,9 @@
       </div>
     {{/if}}
 
-    {{! TODO: Bring this back? }}
-    {{!-- {{#if this.shouldShowPrerequisites}}
-      <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
-    {{/if}} --}}
-
-    <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
-
     {{! TODO: Remove this temporary card  }}
     {{#if (and @model.courseStage.isSecond (eq @model.courseStage.course.slug "shell"))}}
-      <div class="pt-12 pb-8 pr-4 flex items-start gap-4">
+      <div class="my-10 mx-6 flex items-start gap-4">
         <img
           alt="avatar"
           src="https://avatars.githubusercontent.com/u/1450947"
@@ -111,12 +104,18 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              this forum post
-            </a>?
+              this forum post</a>?
           </p>
         </div>
       </div>
     {{/if}}
+
+    {{! TODO: Bring this back? }}
+    {{!-- {{#if this.shouldShowPrerequisites}}
+      <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
+    {{/if}} --}}
+
+    <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
 
     <div data-percy-hints-section>
       <div class="border-b dark:border-white/5 pb-2 mb-6 mt-8 flex items-center justify-between">
