@@ -18,8 +18,8 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-short-instructions-for-stage-2') === 'test';
   }
 
-  get cannotSeeTestRunnerCardBeforeStage1Submission() {
-    return this.currentUser?.isStaff || this.getFeatureFlagValue('cannot-see-test-runner-card-before-stage1-submission') === 'test';
+  get canSeeTweaksForStage1() {
+    return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-tweaks-for-stage-1') === 'test';
   }
 
   get currentUser() {
