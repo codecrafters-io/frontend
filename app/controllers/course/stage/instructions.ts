@@ -55,12 +55,12 @@ export default class CourseStageInstructionsController extends Controller {
     return !this.currentStep.courseStage.isFirst && this.currentStep.status === 'complete';
   }
 
-  get shouldShowNeedHelpForumLink() {
-    return this.model.courseStage.isFirst && this.currentStep.testsStatus !== 'passed' && this.currentStep.status !== 'complete';
-  }
-
   get shouldShowPrerequisites() {
     return !!this.prerequisiteInstructionsMarkdown;
+  }
+
+  get shouldShowStage1ForumLinkCTA() {
+    return this.model.courseStage.isFirst && this.currentStep.testsStatus !== 'passed' && this.currentStep.status !== 'complete';
   }
 
   get shouldShowTestRunnerCard() {
