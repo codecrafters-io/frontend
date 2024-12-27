@@ -1,7 +1,11 @@
 <CoursePage::InstructionsCard @title="How to pass this stage" id="second-stage-tutorial-card" ...attributes>
   <:content>
     <div class="prose dark:prose-invert mb-5">
-      {{#if (or (not (eq @repository.course.slug "shell")) (not this.shouldShowShortInstructions))}}
+      {{#if (and this.shouldShowShortInstructions (eq @repository.course.slug "shell"))}}
+        <div class="mb-5 prose-compact">
+          {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
+        </div>
+      {{else}}
         <p>
           In this stage, you'll implement your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.
         </p>
@@ -20,7 +24,6 @@
           @courseStage={{@courseStage}}
           @isComplete={{this.implementSolutionStepIsComplete}}
           @languageGuide={{@languageGuide}}
-          @shouldShowShortInstructions={{this.shouldShowShortInstructions}}
         />
       {{else if (eq stepList.expandedStep.id "run-tests")}}
         <CoursePage::CourseStageStep::SecondStageTutorialCard::RunTestsStep
