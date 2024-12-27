@@ -1,42 +1,144 @@
-<CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-tutorial-card" ...attributes>
-  <:content>
-    <div class="prose dark:prose-invert mb-5">
-      <p>
-        Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
-        submit your changes.
-      </p>
-    </div>
+{{#if this.shouldShowAllStepsAtOnceForStage1}}
+  <CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-tutorial-card" ...attributes>
+    <:content>
+      <div class="prose dark:prose-invert mb-5">
+        <p>
+          Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
+          submit your changes.
+        </p>
+      </div>
 
-    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
-      {{#if (eq stepList.expandedStep.id "navigate-to-file")}}
-        <CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep
-          @repository={{@repository}}
-          @courseStage={{@courseStage}}
-          @isComplete={{this.navigateToFileStepIsComplete}}
-        />
-      {{else if (eq stepList.expandedStep.id "uncomment-code")}}
+      <div class="prose dark:prose-invert mb-3">
+        <div class="inline-flex items-center gap-1">
+          {{#if this.hasPassedTests}}
+            {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+          {{else}}
+            <b class="text-teal-600">Step 1:</b>
+          {{/if}}
+          Open a file
+        </div>
+      </div>
+      <CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep
+        @repository={{@repository}}
+        @courseStage={{@courseStage}}
+        @isComplete={{this.navigateToFileStepIsComplete}}
+      />
+
+      <div class="prose dark:prose-invert mt-6 mb-3 pt-4 border-t dark:border-white/5">
+        <div class="inline-flex items-center gap-1">
+          {{#if this.hasPassedTests}}
+            {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+          {{else}}
+            <b class="text-teal-600">Step 2:</b>
+          {{/if}}
+          Uncomment code
+        </div>
+      </div>
+      <div class="max-w-2xl">
         <CoursePage::CourseStageStep::FirstStageTutorialCard::UncommentCodeStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
           @isComplete={{this.uncommentCodeStepIsComplete}}
         />
-      {{else if (eq stepList.expandedStep.id "submit-code")}}
-        <CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
-      {{/if}}
-    </ExpandableStepList>
+      </div>
 
-    {{! After step 2, step 3 already contains a note on Tests Failed, so we can hide this !}}
-    {{#unless this.uncommentCodeStepIsComplete}}
-      <div class="prose dark:prose-invert prose-sm prose-compact mt-5">
+      <div class="prose dark:prose-invert mt-8 mb-3 pt-4 border-t dark:border-white/5">
+        <div class="inline-flex items-center gap-1">
+          {{#if this.hasPassedTests}}
+            {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 inline-flex mb-0.5"}}
+          {{else}}
+            <b class="text-teal-600">Step 3:</b>
+          {{/if}}
+          Submit changes
+        </div>
+      </div>
+      <div class="prose dark:prose-invert mb-3">
         <p>
-          {{svg-jar "information-circle" class="w-5 h-5 mb-1 inline-flex text-sky-500"}}
-          <b>Note:</b>
-          After your first Git push, you should see
-          <code class="font-semibold text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800/40">Tests
-            failed</code>
-          in the bar below this card. This is expected! Complete the steps above to pass the tests.
+          Save your changes and run the following commands to submit your changes:
         </p>
       </div>
-    {{/unless}}
-  </:content>
-</CoursePage::InstructionsCard>
+
+      <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"' "git push origin master"}} class="mb-3" />
+
+      <div class="prose dark:prose-invert">
+        <p class={{if this.hasPassedTests "line-through"}}>
+          Once you run the commands above, the
+          <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+          message below should be changed to
+          <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
+        </p>
+
+        {{#if this.hasPassedTests}}
+          <p>
+            🎉
+            <b class="text-teal-500 ml-1">Tests passed!</b>
+          </p>
+        {{else}}
+          <div class="prose dark:prose-invert prose-sm prose-compact mt-6">
+            <p>Need help?</p>
+            <ul>
+              <li>
+                <a
+                  href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3A{{this.currentCourse.slug}}&title=%5B{{this.currentCourse.shortName}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Post your issue</a>
+                on the forum —
+                <img
+                  alt="avatar"
+                  src="https://avatars.githubusercontent.com/u/1450947"
+                  class="inline-block ml-1 mr-1.5 my-0 -translate-y-px overflow-hidden rounded-full size-4 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 shadow"
+                />Andy usually replies within 6 hours.
+              </li>
+            </ul>
+          </div>
+        {{/if}}
+      </div>
+    </:content>
+  </CoursePage::InstructionsCard>
+{{else}}
+  <CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-tutorial-card" ...attributes>
+    <:content>
+      <div class="prose dark:prose-invert mb-5">
+        <p>
+          Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
+          submit your changes.
+        </p>
+      </div>
+
+      <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
+        {{#if (eq stepList.expandedStep.id "navigate-to-file")}}
+          <CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep
+            @repository={{@repository}}
+            @courseStage={{@courseStage}}
+            @isComplete={{this.navigateToFileStepIsComplete}}
+          />
+        {{else if (eq stepList.expandedStep.id "uncomment-code")}}
+          <CoursePage::CourseStageStep::FirstStageTutorialCard::UncommentCodeStep
+            @repository={{@repository}}
+            @courseStage={{@courseStage}}
+            @isComplete={{this.uncommentCodeStepIsComplete}}
+          />
+        {{else if (eq stepList.expandedStep.id "submit-code")}}
+          <CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep @isComplete={{this.submitCodeStepIsComplete}} />
+        {{/if}}
+      </ExpandableStepList>
+
+      {{! After step 2, step 3 already contains a note on Tests Failed, so we can hide this !}}
+      {{#unless this.uncommentCodeStepIsComplete}}
+        <div class="prose dark:prose-invert prose-sm prose-compact mt-5">
+          <p>
+            {{svg-jar "information-circle" class="w-5 h-5 mb-1 inline-flex text-sky-500"}}
+            <b>Note:</b>
+            After your first Git push, you should see
+            <code
+              class="font-semibold text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800/40"
+            >Tests failed</code>
+            in the bar below this card. This is expected! Complete the steps above to pass the tests.
+          </p>
+        </div>
+      {{/unless}}
+    </:content>
+  </CoursePage::InstructionsCard>
+{{/if}}
