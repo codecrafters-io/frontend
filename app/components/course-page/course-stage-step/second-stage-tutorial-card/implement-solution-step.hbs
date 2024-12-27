@@ -1,21 +1,14 @@
 <div class="prose dark:prose-invert prose-compact mb-3">
-  {{#if (and @shouldShowShortInstructions (eq @repository.course.slug "shell"))}}
-    {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
-    <p>
-      Head over to your editor / IDE and implement your solution.
-    </p>
-  {{else}}
-    <p>
-      Head over to your editor / IDE and implement your solution.
-    </p>
+  <p>
+    Head over to your editor / IDE and implement your solution.
+  </p>
 
-    {{#unless this.solution}}
-      <p>
-        If you want a quick look at what functions to use or how to structure your code, we recommend looking at
-        <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
-      </p>
-    {{/unless}}
-  {{/if}}
+  {{#unless this.solution}}
+    <p>
+      If you want a quick look at what functions to use or how to structure your code, we recommend looking at
+      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
+    </p>
+  {{/unless}}
 </div>
 
 {{#if this.solution}}
