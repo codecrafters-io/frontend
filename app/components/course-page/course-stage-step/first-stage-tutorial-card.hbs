@@ -21,7 +21,7 @@
       <CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep
         @repository={{@repository}}
         @courseStage={{@courseStage}}
-        @isComplete={{this.navigateToFileStepIsComplete}}
+        @isComplete={{false}}
       />
 
       <div class="prose dark:prose-invert mt-6 mb-3 pt-4 border-t dark:border-white/5">
@@ -38,7 +38,7 @@
         <CoursePage::CourseStageStep::FirstStageTutorialCard::UncommentCodeStep
           @repository={{@repository}}
           @courseStage={{@courseStage}}
-          @isComplete={{this.uncommentCodeStepIsComplete}}
+          @isComplete={{false}}
         />
       </div>
 
@@ -52,49 +52,7 @@
           Submit changes
         </div>
       </div>
-      <div class="prose dark:prose-invert mb-3">
-        <p>
-          Save your changes and run the following commands to submit your changes:
-        </p>
-      </div>
-
-      <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"' "git push origin master"}} class="mb-3" />
-
-      <div class="prose dark:prose-invert">
-        <p class={{if this.hasPassedTests "line-through"}}>
-          Once you run the commands above, the
-          <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
-          message below should be changed to
-          <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
-        </p>
-
-        {{#if this.hasPassedTests}}
-          <p>
-            🎉
-            <b class="text-teal-500 ml-1">Tests passed!</b>
-          </p>
-        {{else}}
-          <div class="prose dark:prose-invert prose-sm prose-compact mt-6">
-            <p>Need help?</p>
-            <ul>
-              <li>
-                <a
-                  href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3A{{this.currentCourse.slug}}&title=%5B{{this.currentCourse.shortName}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Post your issue</a>
-                on the forum —
-                <img
-                  alt="avatar"
-                  src="https://avatars.githubusercontent.com/u/1450947"
-                  class="inline-block ml-1 mr-1.5 my-0 -translate-y-px overflow-hidden rounded-full size-4 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 shadow"
-                />Andy usually replies within 6 hours.
-              </li>
-            </ul>
-          </div>
-        {{/if}}
-      </div>
+      <CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep @isComplete={{this.hasPassedTests}} />
     </:content>
   </CoursePage::InstructionsCard>
 {{else}}

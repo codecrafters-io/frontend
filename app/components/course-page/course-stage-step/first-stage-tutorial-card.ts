@@ -73,10 +73,6 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
   @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
-  get currentCourse() {
-    return this.args.courseStage.course;
-  }
-
   get hasPassedTests() {
     return this.args.currentStep.testsStatus === 'passed' || this.args.currentStep.status === 'complete';
   }
