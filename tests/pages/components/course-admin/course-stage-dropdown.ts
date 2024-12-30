@@ -1,4 +1,4 @@
-import { clickOnText, clickable, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, isVisible, text } from 'ember-cli-page-object';
 import { settled } from '@ember/test-helpers';
 
 export default {
@@ -19,5 +19,10 @@ export default {
   },
 
   currentStageName: text('[data-test-current-course-stage-name]'),
+  isOpen: isVisible('[data-test-course-stage-dropdown-content]'),
+  stageLinks: collection('[data-test-course-stage-link]', {
+    name: text('[data-test-stage-name]'),
+    slug: text('[data-test-stage-slug]'),
+  }),
   scope: '[data-test-course-stage-dropdown]',
 };

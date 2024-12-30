@@ -210,6 +210,29 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
+  test('it displays stage slugs in the dropdown menu', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.stageDropdown.click();
+
+    assert.ok(submissionsPage.stageDropdown.isOpen, 'Stage dropdown is open');
+
+    const stages = this.server.schema.courseStages.all().models;
+    const stageLinks = submissionsPage.stageDropdown.stageLinks;
+    
+    // Skip the "All Stages" option when comparing
+    assert.strictEqual(stageLinks.length - 1, stages.length, 'Number of stage links matches number of stages (excluding "All Stages" option)');
+    
+    // Start from index 1 to skip "All Stages" option
+    stages.forEach((stage, index) => {
+      const stageLink = stageLinks[index + 1];
+      assert.strictEqual(stageLink.name.trim(), stage.name, `Stage name "${stage.name}" exists in dropdown`);
+      assert.strictEqual(stageLink.slug.trim(), `#${stage.slug}`, `Stage slug "#${stage.slug}" exists in dropdown`);
+    });
+  });
+
   test('it should be able to filter by language(s) through a dropdown menu', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);

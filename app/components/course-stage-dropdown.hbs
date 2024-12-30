@@ -46,8 +46,11 @@
             data-test-course-stage-link
             {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
           >
-            <span class="text-gray-600 text-sm">
-              {{stage.name}}
+            <span class="text-gray-600 text-sm flex justify-between items-center w-full">
+              <span data-test-stage-name>{{stage.name}}</span>
+              <span data-test-stage-slug class="text-gray-400 text-2xs uppercase">
+                #{{stage.slug}}
+              </span>
             </span>
           </div>
         {{/each}}
@@ -67,8 +70,11 @@
               data-test-course-stage-link
               {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
             >
-              <span class="text-gray-600 text-sm">
-                {{stage.name}}
+              <span class="text-gray-600 text-sm flex justify-between items-center w-full">
+                <span data-test-stage-name>{{stage.name}}</span>
+                <span data-test-stage-slug class="text-gray-400 text-2xs uppercase">
+                  #{{stage.slug}}
+                </span>
               </span>
             </div>
           {{/each}}
