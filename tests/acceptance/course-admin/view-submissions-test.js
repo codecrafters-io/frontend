@@ -223,7 +223,12 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     const stageLinks = submissionsPage.stageDropdown.stageLinks;
     
     // Skip the "All Stages" option when comparing
-    assert.strictEqual(stageLinks.length - 1, stages.length, 'Number of stage links matches number of stages (excluding "All Stages" option)');
+    // We need to account for both base stages and extension stages
+    const baseStages = this.server.schema.courseStages.where({ primaryExtensionSlug: null }).models;
+    const extensionStages = this.server.schema.courseStages.where((stage) => stage.primaryExtensionSlug !== null).models;
+    const totalStages = baseStages.length + extensionStages.length;
+    
+    assert.strictEqual(stageLinks.length - 1, totalStages, 'Number of stage links matches total number of stages (excluding "All Stages" option)');
     
     // Start from index 1 to skip "All Stages" option
     stages.forEach((stage, index) => {
