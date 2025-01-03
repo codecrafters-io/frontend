@@ -13,7 +13,9 @@ export default createPage({
   },
 
   clickOnResumeTrackButton: clickable('[data-test-resume-track-button]'),
+  clickOnStartTrackButton: clickable('[data-test-primary-start-track-button]'),
   hasResumeTrackButton: isVisible('[data-test-resume-track-button]'),
+  hasStartTrackButton: isVisible('[data-test-primary-start-track-button]'),
 
   header: {
     descriptionText: text('[data-test-track-header-description]'),
