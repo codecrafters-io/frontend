@@ -7,8 +7,6 @@
 /* Custom styles for individual pages */
 @import 'pages/affiliate-link-page.css';
 @import 'pages/code-walkthrough-page.css';
-@import 'pages/course-admin-submission-diff.css';
-@import 'pages/course-admin-updates-diff.css';
 @import 'pages/course-stage-solution-page.css';
 
 /* purgecss start ignore */

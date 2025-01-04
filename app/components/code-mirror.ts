@@ -37,6 +37,7 @@ import {
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
+import { collapseUnchangedGutterWidgetClass } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter-widget-class';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -135,6 +136,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
           }),
+          collapseUnchangedGutterWidgetClass(),
         ]
       : [];
   },
@@ -397,6 +399,10 @@ export default class CodeMirrorComponent extends Component<Signature> {
       parent: element,
       doc: this.args.document,
       extensions: [
+        EditorState.phrases.of({
+          '$ unchanged lines': 'Expand $ unchanged lines',
+        }),
+
         keymap.of(defaultKeymap),
 
         ...(await Promise.all(
