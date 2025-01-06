@@ -10,10 +10,6 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
-  get canSeeAllStepsAtOnceForStage1() {
-    return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-all-steps-at-once-for-stage-1') === 'test';
-  }
-
   get canSeeConceptsIndex() {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
