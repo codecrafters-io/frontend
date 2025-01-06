@@ -1,4 +1,4 @@
-<PrimaryButton class="mr-2 flex items-center" data-test-start-track-button {{on "click" this.handleClicked}} @size="large" ...attributes>
+<PrimaryButton class="mr-2 flex items-center" data-test-primary-start-track-button {{on "click" this.handleClicked}} @size="large" ...attributes>
   {{#if this.currentUserIsAnonymous}}
     {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}
   {{/if}}

@@ -31,6 +31,10 @@ export default class CourseStageInstructionsController extends Controller {
     });
   }
 
+  get currentCourse() {
+    return this.model.courseStage.course;
+  }
+
   get currentStep(): CourseStageStep {
     return this.coursePageState.currentStep as CourseStageStep;
   }
@@ -53,6 +57,10 @@ export default class CourseStageInstructionsController extends Controller {
 
   get shouldShowPrerequisites() {
     return !!this.prerequisiteInstructionsMarkdown;
+  }
+
+  get shouldShowStage1ForumLinkCTA() {
+    return this.model.courseStage.isFirst && this.currentStep.testsStatus !== 'passed' && this.currentStep.status !== 'complete';
   }
 
   get shouldShowTestRunnerCard() {

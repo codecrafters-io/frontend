@@ -36,6 +36,7 @@ import {
 } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
+import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -65,6 +66,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   dropCursor: ({ dropCursor: enabled }) => (enabled ? [dropCursor()] : []),
   editable: ({ editable }) => [EditorView.editable.of(!!editable)],
   highlightActiveLine: ({ highlightActiveLine: enabled }) => (enabled ? [highlightActiveLine(), highlightActiveLineGutter()] : []),
+  highlightNewlines: ({ highlightNewlines: enabled }) => (enabled ? [highlightNewlines()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
   highlightTrailingWhitespace: ({ highlightTrailingWhitespace: enabled }) => (enabled ? [highlightTrailingWhitespace()] : []),
@@ -228,6 +230,10 @@ export interface Signature {
        * Enable inline highlighting of changes in the diff
        */
       highlightChanges?: boolean;
+      /**
+       * Enable highlighting of new line symbols
+       */
+      highlightNewlines?: boolean;
       /**
        * Enable highlighting of current selection matches in the document
        */

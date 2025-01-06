@@ -30,7 +30,7 @@ export default class CourseOverviewStartTrackButtonComponent extends Component<S
     if (this.currentUserIsAnonymous) {
       this.authenticator.initiateLogin(null);
     } else {
-      this.router.transitionTo('course', this.args.courses[0]!.slug, { queryParams: { track: this.args.language.slug } });
+      this.router.transitionTo('course', this.args.courses[0]!.slug, { queryParams: { repo: null, track: this.args.language.slug } });
     }
   }
 }
